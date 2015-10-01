@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "caded77db28bee597119ecc4a594005a",
-    "content-hash": "492aa4f37362667582a4d440f1ab143d",
+    "hash": "f271695fc813d74bcece6b735b18b060",
+    "content-hash": "84de816aa33cc44eb8a16015fe32b2c6",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -404,6 +404,50 @@
                 "html"
             ],
             "time": "2013-11-30 08:25:19"
+        },
+        {
+            "name": "funson86/yii2-blog",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/funson86/yii2-blog.git",
+                "reference": "657458955e9b6bbbb7e4e584752d67089b675a49"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/funson86/yii2-blog/zipball/657458955e9b6bbbb7e4e584752d67089b675a49",
+                "reference": "657458955e9b6bbbb7e4e584752d67089b675a49",
+                "shasum": ""
+            },
+            "require": {
+                "mihaildev/yii2-ckeditor": "*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "bootstrap": "funson86\\blog\\Bootstrap"
+            },
+            "autoload": {
+                "psr-4": {
+                    "funson86\\blog\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Funson Lee",
+                    "email": "funson86@gmail.com"
+                }
+            ],
+            "description": "Yii2 Blog for other application",
+            "keywords": [
+                "extension",
+                "yii2"
+            ],
+            "time": "2015-08-07 03:54:44"
         },
         {
             "name": "funson86/yii2-cms",
@@ -1294,7 +1338,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "dektrium/yii2-user": 20
+        "dektrium/yii2-user": 20,
+        "funson86/yii2-blog": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
