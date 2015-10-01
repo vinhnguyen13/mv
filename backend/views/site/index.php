@@ -22,7 +22,6 @@ $this->title = 'My Yii Application';
                 <ol class="list-unstyled">
                     <li><a href="<?=Yii::$app->urlManager->createUrl(['gii', 'id' => 0])?>">Gii</a></li>
                     <li><a href="<?=Yii::$app->urlManager->createUrl(['setting'])?>">Setting</a></li>
-                    <li><a href="<?=Yii::$app->urlManager->createUrl(['translatemanager/language/list'])?>">Translate</a></li>
                 </ol>
             </div>
 

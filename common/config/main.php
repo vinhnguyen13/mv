@@ -72,5 +72,8 @@ return [
 
             ]
         ],
+        'setting' => [
+            'class' => 'funson86\setting\Setting',
+        ],
     ],
 ];

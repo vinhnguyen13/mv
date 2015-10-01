@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fcd1f7b0dba8daf1acf547d0c902731c",
-    "content-hash": "5fd804ac095dd5b609eb27ccd1e9d3c4",
+    "hash": "caded77db28bee597119ecc4a594005a",
+    "content-hash": "492aa4f37362667582a4d440f1ab143d",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -406,6 +406,96 @@
             "time": "2013-11-30 08:25:19"
         },
         {
+            "name": "funson86/yii2-cms",
+            "version": "2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/funson86/yii2-cms.git",
+                "reference": "b6bbf3effbab0cf0071edb5e6cac16ec2670d90a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/funson86/yii2-cms/zipball/b6bbf3effbab0cf0071edb5e6cac16ec2670d90a",
+                "reference": "b6bbf3effbab0cf0071edb5e6cac16ec2670d90a",
+                "shasum": ""
+            },
+            "require": {
+                "funson86/yii2-setting": "*",
+                "mihaildev/yii2-ckeditor": "*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "bootstrap": "funson86\\cms\\Bootstrap"
+            },
+            "autoload": {
+                "psr-4": {
+                    "funson86\\cms\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Funson Lee",
+                    "email": "funson86@gmail.com"
+                }
+            ],
+            "description": "Yii2 Cms for other application",
+            "keywords": [
+                "cms",
+                "extension",
+                "yii2"
+            ],
+            "time": "2015-01-31 02:46:08"
+        },
+        {
+            "name": "funson86/yii2-setting",
+            "version": "0.01",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/funson86/yii2-setting.git",
+                "reference": "4488822bb7ae5bcdf3d80f32fecceb398a3a22ea"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/funson86/yii2-setting/zipball/4488822bb7ae5bcdf3d80f32fecceb398a3a22ea",
+                "reference": "4488822bb7ae5bcdf3d80f32fecceb398a3a22ea",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "bootstrap": "funson86\\setting\\Bootstrap"
+            },
+            "autoload": {
+                "psr-4": {
+                    "funson86\\setting\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Funson Lee",
+                    "email": "funson86@gmail.com"
+                }
+            ],
+            "description": "Yii2 Setting for other application",
+            "keywords": [
+                "extension",
+                "setting",
+                "yii2"
+            ],
+            "time": "2015-01-27 00:39:55"
+        },
+        {
             "name": "mdmsoft/yii2-admin",
             "version": "2.1",
             "source": {
@@ -455,6 +545,57 @@
                 "yii"
             ],
             "time": "2015-08-05 03:43:41"
+        },
+        {
+            "name": "mihaildev/yii2-ckeditor",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MihailDev/yii2-ckeditor.git",
+                "reference": "d20aa7f6bcf610fee226d6eb15212a279875bf87"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MihailDev/yii2-ckeditor/zipball/d20aa7f6bcf610fee226d6eb15212a279875bf87",
+                "reference": "d20aa7f6bcf610fee226d6eb15212a279875bf87",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "asset-installer-paths": {
+                    "npm-asset-library": "vendor/npm",
+                    "bower-asset-library": "vendor/bower"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "mihaildev\\ckeditor\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Mihail",
+                    "email": "mihail.kucher@gmail.com",
+                    "homepage": "https://github.com/MihailDev",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Yii2 CKEditor",
+            "homepage": "https://github.com/MihailDev/yii2-ckeditor",
+            "keywords": [
+                "CKEditor",
+                "editor",
+                "wysiwyg",
+                "yii"
+            ],
+            "time": "2014-11-19 22:04:08"
         },
         {
             "name": "swiftmailer/swiftmailer",

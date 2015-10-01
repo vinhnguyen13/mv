@@ -11,7 +11,16 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'cms' => [
+            'class' => 'funson86\cms\Module',
+            'controllerNamespace' => 'funson86\cms\controllers\backend'
+        ],
+        'setting' => [
+            'class' => 'funson86\setting\Module',
+            'controllerNamespace' => 'funson86\setting\controllers'
+        ],
+    ],
     'components' => [
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
