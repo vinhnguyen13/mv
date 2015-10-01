@@ -1,5 +1,4 @@
 <?php
-
 /* @var $this yii\web\View */
 
 $this->title = 'My Yii Application';
@@ -7,7 +6,7 @@ $this->title = 'My Yii Application';
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Congratulations!</h1>
+        <h1>Administrator!</h1>
 
         <p class="lead">You have successfully created your Yii-powered application.</p>
 
@@ -18,36 +17,35 @@ $this->title = 'My Yii Application';
 
         <div class="row">
             <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+                <h2>Development</h2>
+                <p>Start the fun with the following code generators</p>
+                <ol class="list-unstyled">
+                    <li><a href="<?=Yii::$app->urlManager->createUrl(['gii', 'id' => 0])?>">Gii</a></li>
+                    <li><a href="<?=Yii::$app->urlManager->createUrl(['setting'])?>">Setting</a></li>
+                    <li><a href="<?=Yii::$app->urlManager->createUrl(['translatemanager/language/list'])?>">Translate</a></li>
+                </ol>
             </div>
+
             <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
+                <h2>CMS</h2>
+                <p>Content management systems</p>
+                <ol class="list-unstyled">
+                    <li><a href="<?=Yii::$app->urlManager->createUrl(['cms/cms-show'])?>">Content</a></li>
+                    <li><a href="<?=Yii::$app->urlManager->createUrl(['cms/cms-catalog'])?>">Categories</a></li>
+                    <li><a href="<?=Yii::$app->urlManager->createUrl(['gallery'])?>">Gallery</a></li>
+                </ol>
             </div>
+
+
             <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+                <h2>User Management</h2>
+                <p>Yii2 User Management</p>
+                <ol class="list-unstyled">
+                    <li><a href="<?=Yii::$app->urlManager->createUrl(['user/admin'])?>">User</a></li>
+                    <li><a href="<?=Yii::$app->urlManager->createUrl(['admin'])?>">User ACL</a></li>
+                </ol>
             </div>
+
         </div>
-
     </div>
 </div>
