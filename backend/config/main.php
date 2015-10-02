@@ -50,7 +50,16 @@ return [
         ],
         'news' => [
             'class' => 'vsoft\news\Module',
-            'controllerNamespace' => 'vsoft\news\controllers\backend',
+        ],
+        'building-project' => [
+            'class' => 'vsoft\buildingProject\Module',
+        ],
+        'express' => [
+            'class' => 'vsoft\express\Module',
+        ],
+        'cms' => [
+            'class' => 'funson86\cms\Module',
+            'controllerNamespace' => 'funson86\cms\controllers\backend'
         ],
     ],
     'components' => [

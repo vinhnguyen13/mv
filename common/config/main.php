@@ -9,18 +9,8 @@ return [
         '@vsoft/express' => dirname(__DIR__) . '/vendor/vsoft/express',
     ),
     'modules' => [
-        'news' => [
-            'class' => 'vsoft\news\Module',
-        ],
-        'building-project' => [
-            'class' => 'vsoft\buildingProject\Module',
-        ],
         'express' => [
             'class' => 'vsoft\express\Module',
-        ],
-        'cms' => [
-            'class' => 'funson86\cms\Module',
-            'controllerNamespace' => 'funson86\cms\controllers\backend'
         ],
     ],
     'components' => [

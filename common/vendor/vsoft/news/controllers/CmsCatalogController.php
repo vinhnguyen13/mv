@@ -1,6 +1,6 @@
 <?php
 
-namespace vsoft\news\controllers\backend;
+namespace vsoft\news\controllers;
 
 use Yii;
 use vsoft\news\models\CmsCatalog;

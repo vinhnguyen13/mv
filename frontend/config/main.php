@@ -12,10 +12,6 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'modules' => [
-        'news' => [
-            'class' => 'vsoft\news\Module',
-            'controllerNamespace' => 'vsoft\news\controllers\frontend',
-        ],
     ],
     'components' => [
         'request' => [
