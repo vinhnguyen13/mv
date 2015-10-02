@@ -8,12 +8,15 @@ class m151002_024804_cms_show extends Migration
     public function up()
     {
         $this->addColumn('{{%cms_show}}', 'slug', Schema::TYPE_STRING . '(255) NOT NULL AFTER `title`');
-        $this->addColumn('{{%cms_show}}', 'updated_by', Schema::TYPE_INTEGER . '(11) DEFAULT 0');
+        $this->addColumn('{{%cms_show}}', 'created_by', Schema::TYPE_INTEGER . '(11) DEFAULT 0');
         $this->addColumn('{{%cms_show}}', 'updated_by', Schema::TYPE_INTEGER . '(11) DEFAULT 0');
     }
 
     public function down()
     {
+        $this->dropColumn('{{%cms_show}}', 'slug');
+        $this->dropColumn('{{%cms_show}}', 'created_by');
+        $this->dropColumn('{{%cms_show}}', 'updated_by');
         echo "m151002_024804_cms_show cannot be reverted.\n";
 
         return false;
