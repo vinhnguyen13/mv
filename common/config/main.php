@@ -21,7 +21,7 @@ return [
         'request' => [
             'enableCookieValidation' => true,
             'enableCsrfValidation' => true,
-            'cookieValidationKey' => 'xyctuyvibonp',
+            'cookieValidationKey' => '6zRXJTEnacve8RrgN6K5eoXf0JI0AwFs',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
