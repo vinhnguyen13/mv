@@ -1,9 +1,10 @@
 <?php
 namespace common\widgets;
 
-use mihaildev\ckeditor\CKEditor;
+use yii\helpers\Url;
+use yii\web\View;
 
-class CKEditor extends CKEditor {
+class CKEditor extends \mihaildev\ckeditor\CKEditor {
 	public function run() {
 		$this->editorOptions['filebrowserUploadUrl'] = Url::to('/express/upload/editor-image');
 	
