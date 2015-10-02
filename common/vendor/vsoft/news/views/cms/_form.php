@@ -28,7 +28,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'seo_description')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'banner')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'banner')->widget(\kartik\file\FileInput::classname(), [
+        'options' => ['multiple' => true, 'accept' => 'image/*'],
+        'pluginOptions' => ['previewFileType' => 'image']
+    ]); ?>
 
     <?= $form->field($model, 'template_show')->textInput(['maxlength' => true]) ?>
 
