@@ -18,6 +18,10 @@ return [
         'express' => [
             'class' => 'vsoft\express\Module',
         ],
+        'cms' => [
+            'class' => 'funson86\cms\Module',
+            'controllerNamespace' => 'funson86\cms\controllers\backend'
+        ],
     ],
     'components' => [
         'cache' => [
@@ -39,6 +43,9 @@ return [
         'user' => [
             'identityClass' => 'dektrium\user\models\User',
             'enableAutoLogin' => true,
+        ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
         ],
         'urlManager' => [
             'class' => 'yii\web\UrlManager',

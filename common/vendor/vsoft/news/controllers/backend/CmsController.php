@@ -3,7 +3,7 @@
 namespace vsoft\news\controllers\backend;
 
 use Yii;
-use funson86\cms\models\CmsShow;
+use vsoft\news\models\CmsShow;
 use vsoft\news\models\CmsShowSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

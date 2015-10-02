@@ -19,4 +19,9 @@ class Module extends \yii\base\Module
         // custom initialization code goes here
     }
 
+    public static function t($category, $message, $params = [], $language = null)
+    {
+        return \Yii::t('funson86/' . $category, $message, $params, $language);
+    }
+
 }

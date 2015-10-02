@@ -18,7 +18,7 @@ class CmsShowSearch extends CmsShow
     public function rules()
     {
         return [
-            [['id', 'catalog_id', 'click', 'status', 'created_at', 'updated_at', 'create_by', 'update_by'], 'integer'],
+            [['id', 'catalog_id', 'click', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['title', 'slug', 'surname', 'brief', 'content', 'seo_title', 'seo_keywords', 'seo_description', 'banner', 'template_show', 'author'], 'safe'],
         ];
     }
@@ -62,8 +62,8 @@ class CmsShowSearch extends CmsShow
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'create_by' => $this->create_by,
-            'update_by' => $this->update_by,
+            'created_by' => $this->created_by,
+            'updated_by' => $this->updated_by,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
