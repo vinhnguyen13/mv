@@ -56,5 +56,9 @@ return [
         'setting' => [
             'class' => 'funson86\setting\Setting',
         ],
+        'image' => [
+            'class' => 'yii\image\ImageDriver',
+            'driver' => 'GD',  //GD or Imagick
+        ],
     ],
 ];

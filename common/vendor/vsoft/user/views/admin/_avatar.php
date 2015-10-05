@@ -20,48 +20,38 @@ use yii\helpers\Html;
 
 ?>
 <?php $this->beginContent('@dektrium/user/views/admin/update.php', ['user' => $user]) ?>
-
-
+<?php $form = ActiveForm::begin([
+    'layout' => 'horizontal',
+    'enableAjaxValidation' => true,
+    'enableClientValidation' => false,
+    'fieldConfig' => [
+        'horizontalCssClasses' => [
+            'wrapper' => 'col-sm-9',
+        ],
+    ],
+]); ?>
 <?= \dosamigos\fileupload\FileUploadUI::widget([
     'model' => $profile,
     'attribute' => 'avatar',
-    'url' => ['media/upload', 'id' => $profile->user_id],
-    'gallery' => false,
-    'fieldOptions' => [
-        'accept' => 'image/*'
-    ],
+    'url' => ['media/upload', 'id' => $profile->user_id], // your url, this is just for demo purposes,
+    'options' => ['accept' => 'image/*'],
     'clientOptions' => [
-//        'maxFileSize' => 2000000
+        'maxFileSize' => 2000000
     ],
-    // ...
+    // Also, you can specify jQuery-File-Upload events
+    // see: https://github.com/blueimp/jQuery-File-Upload/wiki/Options#processing-callback-options
     'clientEvents' => [
         'fileuploaddone' => 'function(e, data) {
-                                    console.log(e);
-                                    console.log(data);
-                                }',
+                                console.log(e);
+                                console.log(data);
+                            }',
         'fileuploadfail' => 'function(e, data) {
-                                    console.log(e);
-                                    console.log(data);
-                                }',
+                                console.log(e);
+                                console.log(data);
+                            }',
     ],
-]);
-?>
+]);?>
 
-
-
-<?=1
-//$form->field($profile, 'avatar')->widget(\kartik\file\FileInput::classname(), [
-//    'options' => ['multiple' => true, 'accept' => 'image/*'],
-//    'pluginOptions' => [
-//        'previewFileType' => 'image',
-//        'uploadUrl' => \yii\helpers\Url::to(['/user/admin/update-profile?id=1']),
-//        'uploadExtraData' => [
-//            'album_id' => 20,
-//            'cat_id' => 'Nature'
-//        ],
-//        'maxFileCount' => 1,
-//    ]
-//]);
-?>
+<?php ActiveForm::end(); ?>
 
 <?php $this->endContent() ?>

@@ -23,7 +23,8 @@
         "funson86/yii2-cms": "*",
         "funson86/yii2-blog": "dev-master",
         "kartik-v/yii2-widget-fileinput": "@dev",
-        "2amigos/yii2-file-upload-widget": "~1.0"
+        "2amigos/yii2-file-upload-widget": "~1.0",
+        "yurkinx/yii2-image": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

@@ -16,6 +16,7 @@ use dektrium\user\models\Profile;
 use dektrium\user\models\User;
 use dektrium\user\models\UserSearch;
 use dektrium\user\Module;
+use vsoft\express\components\UploadHelper;
 use Yii;
 use yii\base\ExitException;
 use yii\base\Model;
@@ -26,6 +27,7 @@ use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
+use yii\web\UploadedFile;
 use yii\widgets\ActiveForm;
 
 /**
@@ -209,6 +211,15 @@ class AdminController extends Controller
         $user    = $this->findModel($id);
         $profile = $user->profile;
 
+        if($_FILES){
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            $file = UploadedFile::getInstance($profile, 'avatar');
+            $upload = new UploadHelper($file, \Yii::getAlias('@store/avatar'));
+            $fileUploaded =  $upload->upload();
+            $profile->avatar = $fileUploaded;
+            $profile->save();
+            return $profile;
+        }
         if ($profile == null) {
             $profile = Yii::createObject(Profile::className());
             $profile->link('user', $user);
