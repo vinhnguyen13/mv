@@ -20,7 +20,6 @@ $areaTypes = [
 ?>
 
 <div id="project-building-form" class="cms-show-form">
-
     <?php $form = ActiveForm::begin([
 		'id' => 'bp-form',
     	'enableClientValidation' => false,
@@ -53,6 +52,18 @@ $areaTypes = [
     <div class="main-content">
     	<ul class="bp-fields">
 		    <li>
+		    	<?= $form->field($model, 'bpLogo')->widget(\kartik\file\FileInput::classname(), [
+    'options' => ['multiple' => true, 'accept' => 'image/*'],
+    'pluginOptions' => [
+        'previewFileType' => 'image',
+        'uploadUrl' => \yii\helpers\Url::to(['/user/admin/avatar?id=1']),
+        'uploadExtraData' => [
+            'album_id' => 20,
+            'cat_id' => 'Nature'
+        ],
+        'maxFileCount' => 10,
+    ]
+]); ?>
 		    	<?= $form->field($model, 'bpLocation') ?>
 		    	<?= $form->field($model, 'bpType') ?>
 		    	<?= $form->field($model, 'bpAcreage') ?>
