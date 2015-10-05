@@ -75,3 +75,9 @@ function customChecbox(els) {
 		}
 	});
 }
+
+var customFileUpload = {
+	filebatchselected: function(event, files) {
+		$(event.target).fileinput('upload');
+	}
+};

@@ -53,17 +53,28 @@ $areaTypes = [
     	<ul class="bp-fields">
 		    <li>
 		    	<?= $form->field($model, 'bpLogo')->widget(\kartik\file\FileInput::classname(), [
-    'options' => ['multiple' => true, 'accept' => 'image/*'],
-    'pluginOptions' => [
-        'previewFileType' => 'image',
-        'uploadUrl' => \yii\helpers\Url::to(['/user/admin/avatar?id=1']),
-        'uploadExtraData' => [
-            'album_id' => 20,
-            'cat_id' => 'Nature'
-        ],
-        'maxFileCount' => 10,
-    ]
-]); ?>
+						'options' => ['multiple' => false, 'accept' => 'image/*'],
+						'pluginOptions' => [
+							'dropZoneEnabled' => false,
+				        	'previewFileType' => 'image',
+				        	'uploadUrl' => Url::to('/express/upload/building-project-image'),
+				        	'maxFileCount' => 1,
+					]]); ?>
+		    	<?= $form->field($model, 'bpGallery')->widget(\kartik\file\FileInput::classname(), [
+						'options' => ['multiple' => true, 'accept' => 'image/*', 'name' => 'BuildingProject[bpGallery][]'],
+						'pluginEvents' => [
+							'filebatchselected' => 'function(event, files) { customFileUpload.filebatchselected(event, files) }'
+						],
+						'pluginOptions' => [
+							'dropZoneEnabled' => false,
+				        	'previewFileType' => 'image',
+				        	'uploadUrl' => Url::to('/express/upload/building-project-image'),
+				        	'maxFileCount' => 10,
+							'showRemove' => false,
+							'showUpload' => false,
+							'showClose' => false,
+							'uploadAsync' => false,
+					]]); ?>
 		    	<?= $form->field($model, 'bpLocation') ?>
 		    	<?= $form->field($model, 'bpType') ?>
 		    	<?= $form->field($model, 'bpAcreage') ?>
