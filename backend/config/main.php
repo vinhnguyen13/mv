@@ -23,6 +23,9 @@ return [
                 'Profile' => 'dektrium\user\models\Profile',
                 'Account' => 'dektrium\user\models\Account',
             ],
+            'controllerMap' => [
+                'admin' => 'vsoft\user\controllers\AdminController',
+            ],
         ],
         'admin' => [
             'class' => 'mdm\admin\Module',
@@ -78,6 +81,18 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+
+        'view' => [
+            'theme' => [
+                'basePath' => '@webroot/themes/metvuong1',
+                'baseUrl' => '@webroot/themes/metvuong1',
+                'pathMap' => [
+                    '@app/views' => '@webroot/themes/metvuong1/views',
+                    '@dektrium/user/views' => '@common/vendor/vsoft/user/views',
+                ],
+            ],
+        ],
+
     ],
     'params' => $params,
 ];

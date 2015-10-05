@@ -7,6 +7,7 @@ return [
         '@vsoft/news' => dirname(__DIR__) . '/vendor/vsoft/news',
         '@vsoft/buildingProject' => dirname(__DIR__) . '/vendor/vsoft/building-project',
         '@vsoft/express' => dirname(__DIR__) . '/vendor/vsoft/express',
+        '@vsoft/user' => dirname(__DIR__) . '/vendor/vsoft/user',
         '@store' => dirname(dirname(__DIR__)) . '/store'
     ),
     'modules' => [
