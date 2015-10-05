@@ -33,13 +33,13 @@ use yii\helpers\Html;
 <?= \dosamigos\fileupload\FileUploadUI::widget([
     'model' => $profile,
     'attribute' => 'avatar',
-    'url' => ['media/upload', 'id' => $profile->user_id], // your url, this is just for demo purposes,
+    'url' => ['admin/avatar', 'id' => $profile->user_id], // your url, this is just for demo purposes,
     'options' => ['accept' => 'image/*'],
     'clientOptions' => [
-        'maxFileSize' => 2000000
+        'maxFileSize' => 2000000,
+        'autoUpload' => true,
     ],
     // Also, you can specify jQuery-File-Upload events
-    // see: https://github.com/blueimp/jQuery-File-Upload/wiki/Options#processing-callback-options
     'clientEvents' => [
         'fileuploaddone' => 'function(e, data) {
                                 console.log(e);

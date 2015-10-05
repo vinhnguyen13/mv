@@ -23,6 +23,7 @@ use yii\base\Model;
 use yii\base\Module as Module2;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\helpers\Json;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -218,7 +219,16 @@ class AdminController extends Controller
             $fileUploaded =  $upload->upload();
             $profile->avatar = $fileUploaded;
             $profile->save();
-            return $profile;
+            $response['files'][] = [
+                'url'           => Url::to('/store/avatar/'.$profile->avatar),
+                'thumbnailUrl'  => Url::to('/store/avatar/'.$profile->avatar),
+                'name'          => $file->name,
+                'type'          => $file->type,
+                'size'          => $file->size,
+                'deleteUrl'     => Url::to(['gallery-photo/delete']),
+                'deleteType'    => 'POST',
+            ];
+            return $response;
         }
         if ($profile == null) {
             $profile = Yii::createObject(Profile::className());
