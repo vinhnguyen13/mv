@@ -1,0 +1,86 @@
+a {
+	color: inherit;
+}
+.custom-checkbox {
+	display: none;
+}
+.vcheck {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	background-image: url(images/checkbox.png);
+	vertical-align: middle;
+	margin-right: 4px;
+}
+.vcheck.hover {
+	background-position: -24px 0px;
+}
+.vcheck.checked {
+	background-position: -48px 0px;
+}
+.vcheck.disabled {
+	cursor: not-allowed;
+	background-position: -72px 0px;
+}
+.vcheck.disabled.checked {
+	background-position: -96px 0px;
+}
+ul {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+.bp-contents li {
+	cursor: pointer;
+}
+.bp-contents li.active a {
+	color: #FFF;
+}
+.bp-contents {
+	font-size: 13px;
+	color: #737373;
+}
+.bp-contents a {
+	display: block;
+	vertical-align: middle;
+	min-height: 24px;
+	line-height: 24px;
+	text-decoration: none;
+	padding: 4px 16px;
+}
+.bp-contents a:hover {
+	background-color: #E7E7E7;
+}
+.bp-contents li.active a {
+	background-color: #42A5F5;
+}
+.bp-contents label {
+	font-weight: normal;
+	margin-bottom: 0px;
+}
+.col-md-3 {
+	padding-left: 0px;
+}
+.bp-subcontents ul {
+	height: 0px;
+	overflow: hidden;
+	transition: all 0.2s;
+}
+.bp-subcontents li a {
+	padding-left: 32px;
+}
+.seperator {
+	height: 1px;
+	background-color: #E6E5E5;
+}
+.side-bar {
+	float: left;
+	margin-right: 32px;
+	background-color: #F5F5F5;
+}
+.bp-fields li {
+	display: none;
+}
+.main-content {
+	overflow: hidden;
+}

@@ -6,59 +6,64 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use funson86\cms\models\CmsCatalog;
 use common\widgets\CKEditor;
+use yii\helpers\Url;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\CmsShow */
-/* @var $form yii\widgets\ActiveForm */
+$this->registerJsFile(Yii::getAlias('@web') . '/js/building-project.js', ['depends' => ['yii\web\YiiAsset']]);
+$this->registerCssFile(Yii::getAlias('@web') . '/css/building-project.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
+
+$areaTypes = [
+	'bpfApartmentArea' => 'Khu căn hộ',
+	'bpfCommercialArea' => 'Khu thương mại',
+	'bpfTownhouseArea' => 'Khu nhà phố',
+	'bpfOffice' => 'Khu Office - Officetel'
+];
 ?>
 
-<div class="cms-show-form">
+<div id="project-building-form" class="cms-show-form">
 
     <?php $form = ActiveForm::begin([
-        'options'=>['class' => 'form-horizontal', 'enctype'=>'multipart/form-data'],
-        'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-5\">{input}</div>\n<div class=\"col-lg-2\">{hint}{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-1 control-label'],
-        ],
+		'id' => 'bp-form',
+    	'enableClientValidation' => false,
+    	'enableAjaxValidation' => false
     ]); ?>
-
-    <?= $form->field($model, 'catalog_id')->dropDownList(ArrayHelper::map(CmsCatalog::get(0, CmsCatalog::find()->where(['status' => \funson86\blog\models\Status::STATUS_ACTIVE, 'page_type' => CmsCatalog::PAGE_TYPE_LIST])->asArray()->all()), 'id', 'label')) ?>
-
-    <?= $form->field($model, 'title')->textInput(['maxlength' => 255]) ?>
-
-    <?= $form->field($model, 'surname')->textInput(['maxlength' => 128]) ?>
-
-    <?= $form->field($model, 'brief')->textInput(['maxlength' => 1022]) ?>
-
-    <?= $form->field($model, 'content')->widget(CKEditor::className(),[
-        'editorOptions' => [
-            'preset' => 'full',
-            'inline' => false,
-        ],
-    ]); ?>
-
-    <?= $form->field($model, 'seo_title')->textInput(['maxlength' => 128]) ?>
-
-    <?= $form->field($model, 'seo_keywords')->textInput(['maxlength' => 128]) ?>
-
-    <?= $form->field($model, 'seo_description')->textInput(['maxlength' => 128]) ?>
-
-    <?= $form->field($model, 'banner')->textInput(['maxlength' => 255]) ?>
-
-    <?= $form->field($model, 'template_show')->textInput(['maxlength' => 255]) ?>
-
-    <?= $form->field($model, 'author')->textInput(['maxlength' => 255]) ?>
-
-    <?= $form->field($model, 'click')->textInput() ?>
-
-    <?= $form->field($model, 'status')->dropDownList(\funson86\cms\models\Status::labels()) ?>
-
-    <div class="form-group">
-        <div class="col-lg-3 col-lg-offset-2">
-            <?= Html::submitButton($model->isNewRecord ? Module::t('cms', 'Create') : Module::t('cms', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-        </div>
+    <div class="side-bar">
+    	<ul class="bp-contents">
+		    <li class="show-content"><a href="#">Tổng quan dự án</a></li>
+		    <li class="show-content"><a href="#">Bản đồ vị trí</a></li>
+		    <li class="show-content"><a href="#">Tiện ích</a></li>
+		    <li class="show-content"><a href="#">Phim 3D dự án</a></li>
+		    <li class="show-content"><a href="#">Thư viện ảnh</a></li>
+		    <li class="show-content"><a href="#">Tiến độ xây dựng</a></li>
+		</ul>
+		<div class="seperator"></div>
+		<ul class="bp-contents">
+		    <?php foreach($areaTypes as $f => $areaType): ?>
+		    <li class="bp-subcontents">
+		    	<a href="#"><?= $areaType ?></a>
+		    	<ul>
+		    		<li class="show-content"><a href="#">Mặt bằng</a></li>
+			    	<li class="show-content"><a href="#">Giá bán & thanh toán</a></li>
+			    	<li class="show-content"><a href="#">Chương trình bán hàng</a></li>
+			    	<li class="show-content"><a href="#">Tài liệu bán hàng</a></li>
+		    	</ul>
+		    </li>
+		    <?php endforeach; ?>
+		</ul>
     </div>
-
+    <div class="main-content">
+    	<ul class="bp-fields">
+		    <li>
+		    	<?= $form->field($model, 'bpLocation') ?>
+		    	<?= $form->field($model, 'bpType') ?>
+		    	<?= $form->field($model, 'bpAcreage') ?>
+		    	<?= $form->field($model, 'bpApartmentNo') ?>
+		    	<?= $form->field($model, 'bpFloorNo') ?>
+		    	<?= $form->field($model, 'bpFacilities') ?>
+		    </li>
+		</ul>
+		<div class="form-group">
+	        <?= Html::submitButton($model->isNewRecord ? Module::t('cms', 'Create') : Module::t('cms', 'Update'), ['id' => 'bp-save-button', 'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+	    </div>
+    </div>
     <?php ActiveForm::end(); ?>
-
 </div>

@@ -34,6 +34,13 @@ class UploadController extends Controller
     	}
     }
     
+    public function actionBuildingProjectImage() {
+    	if(\Yii::$app->request->isPost) {
+    		var_dump($_POST);
+    		var_dump($_FILES);
+    	}
+    }
+    
     public function isImage($pathToImage) {
     	$check = getimagesize($pathToImage);
     	
