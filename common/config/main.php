@@ -11,6 +11,21 @@ return [
         '@store' => dirname(dirname(__DIR__)) . '/store'
     ),
     'modules' => [
+        'user' => [
+            'class' => 'dektrium\user\Module',
+            'enableConfirmation' => true,
+            'confirmWithin' => 21600,
+            'cost' => 12,
+            'admins' => ['superadmin'],
+            'modelMap' => [
+                'User' => 'dektrium\user\models\User',
+                'Profile' => 'dektrium\user\models\Profile',
+                'Account' => 'dektrium\user\models\Account',
+            ],
+            'controllerMap' => [
+                'admin' => 'vsoft\user\controllers\AdminController',
+            ],
+        ],
         'express' => [
             'class' => 'vsoft\express\Module',
         ],
