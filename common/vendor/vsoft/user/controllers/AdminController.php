@@ -199,6 +199,36 @@ class AdminController extends Controller
     }
 
     /**
+     * @param $id
+     * @return string
+     * @throws NotFoundHttpException
+     */
+    public function actionAvatar($id)
+    {
+        Url::remember('', 'actions-redirect');
+        $user    = $this->findModel($id);
+        $profile = $user->profile;
+
+        if ($profile == null) {
+            $profile = Yii::createObject(Profile::className());
+            $profile->link('user', $user);
+        }
+
+        $this->performAjaxValidation($profile);
+
+        if ($profile->load(Yii::$app->request->post()) && $profile->save()) {
+            Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Profile details have been updated'));
+
+            return $this->refresh();
+        }
+
+        return $this->render('_avatar', [
+            'user'    => $user,
+            'profile' => $profile,
+        ]);
+    }
+
+    /**
      * If "dektrium/yii2-rbac" extension is installed, this page displays form
      * where user can assign multiple auth items to user.
      *

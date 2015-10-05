@@ -39,19 +39,6 @@ use yii\helpers\Html;
 <?= $form->field($profile, 'location') ?>
 <?= $form->field($profile, 'gravatar_email') ?>
 <?= $form->field($profile, 'bio')->textarea() ?>
-<?= $form->field($profile, 'avatar')->widget(\kartik\file\FileInput::classname(), [
-    'options' => ['multiple' => true, 'accept' => 'image/*'],
-    'pluginOptions' => [
-        'previewFileType' => 'image',
-        'uploadUrl' => \yii\helpers\Url::to(['/user/admin/update-profile?id=1']),
-        'uploadExtraData' => [
-            'album_id' => 20,
-            'cat_id' => 'Nature'
-        ],
-        'maxFileCount' => 1,
-    ]
-]); ?>
-
 
 <div class="form-group">
     <div class="col-lg-offset-3 col-lg-9">
