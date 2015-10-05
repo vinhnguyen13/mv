@@ -43,7 +43,7 @@ class CmsCatalogSearch extends CmsCatalog
     {
         $query = CmsCatalog::find();
 
-        $query->orderBy(['sort_order' => SORT_ASC, 'create_time' => SORT_DESC]);
+//        $query->orderBy(['sort_order' => SORT_ASC, 'created_at' => SORT_DESC]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

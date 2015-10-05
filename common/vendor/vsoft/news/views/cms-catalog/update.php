@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use funson86\cms\Module;
+use vsoft\news\Module;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\CmsCatalog */

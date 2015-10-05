@@ -1,8 +1,9 @@
 <?php
 
+use vsoft\news\Module;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
-use funson86\cms\Module;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\CmsCatalog */
@@ -33,33 +34,38 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => $model->parent_id ? $model->parent->title : Module::t('cms', 'Root Catalog'),
             ],
             'title',
-            'surname',
-            'brief',
+//            'surname',
+//            'brief',
             'content:ntext',
             'seo_title',
             'seo_keywords',
             'seo_description',
-            'banner',
+//            'banner',
+            [
+                'attribute' => 'banner',
+                'format' => 'html',
+                'value' => Html::img( Yii::$app->request->getHostInfo() . '/store/news/catalog/' . $model->banner,['width' => 200, 'alt' => $model->banner]),
+            ],
             [
                 'attribute' => 'is_nav',
-                'value' => \funson86\cms\models\YesNo::labels($model->is_nav),
+                'value' => \vsoft\news\models\YesNo::labels($model->is_nav),
             ],
             'sort_order',
             [
                 'attribute' => 'page_type',
-                'value' => \funson86\cms\models\CmsCatalog::getCatalogPageTypeLabels($model->page_type),
+                'value' => \vsoft\news\models\CmsCatalog::getCatalogPageTypeLabels($model->page_type),
             ],
             'page_type',
             'page_size',
-            'template_list',
-            'template_show',
-            'template_page',
-            'redirect_url:url',
-            [
-                'attribute' => 'status',
-                'value' => \funson86\cms\models\Status::labels($model->status),
-            ],
-            'created_at:datetime',
+//            'template_list',
+//            'template_show',
+//            'template_page',
+//            'redirect_url:url',
+//            [
+//                'attribute' => 'status',
+//                'value' => \vsoft\news\models\Status::labels($model->status),
+//            ],
+//            'created_at:datetime',
             'updated_at:datetime',
         ],
     ]) ?>

@@ -1,14 +1,14 @@
 <?php
 
+use vsoft\news\models\CmsCatalog;
+use vsoft\news\models\YesNo;
+use vsoft\news\Module;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
-use \funson86\cms\models\CmsCatalog;
-use funson86\cms\Module;
-use mihaildev\ckeditor\CKEditor;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\CmsCatalog */
+/* @var $model vsoft\news\models\CmsCatalog */
 /* @var $form yii\widgets\ActiveForm */
 
 //fix the issue that it can assign itself as parent
@@ -20,24 +20,20 @@ unset($parentCatalog[$model->id]);
 <div class="cms-catalog-form">
 
     <?php $form = ActiveForm::begin([
-        'options'=>['class' => 'form-horizontal', 'enctype'=>'multipart/form-data'],
+        'options' => ['class' => 'form-horizontal', 'enctype' => 'multipart/form-data'],
         'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-5\">{input}</div>\n<div class=\"col-lg-2\">{hint}{error}</div>",
+            'template' => "{label}\n<div class=\"col-lg-11\">{input}</div><div class=\"col-lg-1\"></div>\n<div class=\"col-lg-11\">{hint}{error}</div>",
             'labelOptions' => ['class' => 'col-lg-1 control-label'],
         ],
     ]); ?>
 
     <?= $form->field($model, 'parent_id')->dropDownList($parentCatalog) ?>
 
-    <?= $form->field($model, 'page_type')->dropDownList(CmsCatalog::getCatalogPageTypeLabels())->hint(Module::t('cms', 'Page need content')) ?>
+    <?= $form->field($model, 'page_type')->dropDownList(CmsCatalog::getCatalogPageTypeLabels())//->hint(Module::t('cms', 'Page need content'))     ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'surname')->textInput(['maxlength' => 128]) ?>
-
-    <?= $form->field($model, 'brief')->textInput(['maxlength' => 1022]) ?>
-
-    <?= $form->field($model, 'content')->widget(CKEditor::className(),[
+    <?= $form->field($model, 'content')->widget(\common\widgets\CKEditor::className(), [
         'editorOptions' => [
             'preset' => 'full',
             'inline' => false,
@@ -50,25 +46,39 @@ unset($parentCatalog[$model->id]);
 
     <?= $form->field($model, 'seo_description')->textInput(['maxlength' => 128]) ?>
 
-    <?= $form->field($model, 'banner')->textInput(['maxlength' => 255]) ?>
+    <?= $model->isNewRecord ? $form->field($model, 'banner')->widget(\kartik\file\FileInput::classname(), [
+        'options' => ['accept' => 'image/*'],
+        'pluginOptions' => [
+            'previewFileType' => 'image',
+            'showUpload' => false,
+            'browseLabel' => '',
+            'removeLabel' => '',
+            'mainClass' => 'input-group-lg'
+        ]
+    ]) : $form->field($model, 'banner')->widget(\kartik\file\FileInput::classname(), [
+        'options' => ['accept' => 'image/*'],
+        'pluginOptions' => [
+            'previewFileType' => 'image',
+            'showUpload' => false,
+            'browseLabel' => '',
+            'removeLabel' => '',
+            'initialPreview'=>[
+                Html::img("/store/news/catalog/".$model->banner, ['class'=>'file-preview-image', 'alt'=>'Banner', 'title'=>$model->banner]),
+            ],
+            'initialCaption'=> $model->banner,
+//            'overwriteInitial'=>false, // used in multi upload case
+            'mainClass' => 'input-group-lg'
+        ]]) ?>
 
-    <?= $form->field($model, 'is_nav')->dropDownList(\funson86\cms\models\YesNo::labels()) ?>
+    <?= $form->field($model, 'is_nav')->dropDownList(YesNo::labels()) ?>
 
     <?= $form->field($model, 'sort_order')->textInput() ?>
 
     <?= $form->field($model, 'page_size')->textInput() ?>
 
-    <?= $form->field($model, 'template_list')->textInput(['maxlength' => 255]) ?>
-
-    <?= $form->field($model, 'template_show')->textInput(['maxlength' => 255]) ?>
-
-    <?= $form->field($model, 'template_page')->textInput(['maxlength' => 255]) ?>
-
-    <?= $form->field($model, 'redirect_url')->textInput(['maxlength' => 255]) ?>
-
     <?= $form->field($model, 'click')->textInput() ?>
 
-    <?= $form->field($model, 'status')->dropDownList(\funson86\cms\models\Status::labels()) ?>
+    <?= $form->field($model, 'status')->dropDownList(\vsoft\news\models\Status::labels()) ?>
 
     <div class="form-group">
         <div class="col-lg-3 col-lg-offset-2">

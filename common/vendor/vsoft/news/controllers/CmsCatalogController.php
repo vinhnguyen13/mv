@@ -6,6 +6,7 @@ use Yii;
 use vsoft\news\models\CmsCatalog;
 use vsoft\news\models\CmsCatalogSearch as CmsCatalogSearch;
 use yii\helpers\FileHelper;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -75,8 +76,10 @@ class CmsCatalogController extends \funson86\cms\controllers\backend\CmsCatalogC
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
+
     public function actionCreate()
     {
+//        date_default_timezone_set('Asia/Ho_Chi_Minh');
         //if(!Yii::$app->user->can('createYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
 
         $model = new CmsCatalog();
@@ -93,16 +96,19 @@ class CmsCatalogController extends \funson86\cms\controllers\backend\CmsCatalogC
                 $model->page_type = $parentCatalog->page_type;
             }
 
-            $model->banner = UploadedFile::getInstance($model, 'banner');
+            $upload_image = UploadedFile::getInstance($model, 'banner');
+            if(!empty($upload_image)) {
+                $image_name = $upload_image->baseName;
+                $model->banner = $image_name . '_' . date('mdYhis') . '.' . $upload_image->extension ;
+            }
+
             if ($model->validate()) {
                 if ($model->banner) {
-                    $bannerName = Yii::$app->params['blogUploadPath'] . date('Ymdhis') . rand(1000, 9999) . '.' . $model->banner->extension;
-                    $model->banner->saveAs(Yii::getAlias('@frontend/web') . DIRECTORY_SEPARATOR . $bannerName);
-                    $model->banner = $bannerName;
+                    $upload_image->saveAs(Yii::getAlias('@store'). '/news/catalog/' . $model->banner);
                 }
                 $model->save(false);
 
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect('index');
             } else {
                 return $this->render('create', [
                     'model' => $model,
@@ -123,6 +129,7 @@ class CmsCatalogController extends \funson86\cms\controllers\backend\CmsCatalogC
      */
     public function actionUpdate($id)
     {
+//        date_default_timezone_set('Asia/Ho_Chi_Minh');
         //if(!Yii::$app->user->can('updateYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
 
         $model = $this->findModel($id);
@@ -130,19 +137,21 @@ class CmsCatalogController extends \funson86\cms\controllers\backend\CmsCatalogC
         $oldPageType = $model->page_type;
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->banner = UploadedFile::getInstance($model, 'banner');
+            $upload_image = UploadedFile::getInstance($model, 'banner');
+            if(!empty($upload_image)) {
+                $image_name = $upload_image->baseName;
+                $model->banner = $image_name . '_' . date('mdYhis') . '.' . $upload_image->extension ;
+            }
             $model->page_type = $oldPageType;
+
             if ($model->validate()) {
                 if($model->banner){
-                    $bannerName = Yii::$app->params['blogUploadPath'] . date('Ymdhis') . rand(1000, 9999) . '.' . $model->banner->extension;
-                    $model->banner->saveAs(Yii::getAlias('@frontend/web') . DIRECTORY_SEPARATOR . $bannerName);
-                    $model->banner = $bannerName;
+                    $upload_image->saveAs(Yii::getAlias('@store'). '/news/catalog/' . $model->banner);
                 } else {
                     $model->banner = $oldBanner;
                 }
-
                 $model->save(false);
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect('index');
             } else {
                 return $this->render('create', [
                     'model' => $model,

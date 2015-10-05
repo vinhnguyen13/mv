@@ -25,11 +25,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'catalog_id',
+//            'id',
             'title',
-            'slug',
-            'surname',
+//            'catalog_id',
+            [
+                'label' => 'Catalog',
+                'attribute' => 'catalog_id',
+                'value' => function ($model) {
+                    return $model->catalog->title;
+                },
+            ],
+//            'slug',
+//            'surname',
             // 'brief',
             // 'content:ntext',
             // 'seo_title',
@@ -41,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'click',
             // 'status',
             // 'created_at',
-            // 'updated_at',
+             'updated_at:datetime',
             // 'create_by',
             // 'update_by',
 

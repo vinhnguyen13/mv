@@ -21,10 +21,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title') ?>
 
-    <?= $form->field($model, 'surname') ?>
-
-    <?= $form->field($model, 'brief') ?>
-
     <?php // echo $form->field($model, 'content') ?>
 
     <?php // echo $form->field($model, 'seo_title') ?>
