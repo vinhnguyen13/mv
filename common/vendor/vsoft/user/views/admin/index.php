@@ -40,7 +40,13 @@ $this->params['breadcrumbs'][] = $this->title;
     'filterModel'  	=> $searchModel,
     'layout'  		=> "{items}\n{pager}",
     'columns' => [
-        'username',
+        [
+            'attribute' => 'username',
+            'value' => function ($model) {
+                    return Html::a($model->username, ['update', 'id' => $model->id]);
+            },
+            'format' => 'raw',
+        ],
         'email:email',
         [
             'attribute' => 'registration_ip',
