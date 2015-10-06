@@ -7,8 +7,7 @@ use yii\helpers\ArrayHelper;
 use funson86\cms\models\CmsCatalog;
 use common\widgets\CKEditor;
 use yii\helpers\Url;
-use common\widgets\FileInput;
-use dosamigos\fileupload\FileUploadUI;
+use common\widgets\FileUploadUI;
 
 $this->registerJsFile(Yii::getAlias('@web') . '/js/building-project.js', ['depends' => ['yii\web\YiiAsset']]);
 $this->registerCssFile(Yii::getAlias('@web') . '/css/building-project.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
