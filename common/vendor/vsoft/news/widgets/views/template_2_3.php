@@ -8,16 +8,10 @@
  */
 echo '<br><br>';
 foreach ($template_2_3 as $k => $s) {
-    if ($k === 1) {
-        ?>
-        <div class="show_content_1">
-            <div><?= $s->title ?></div>
-            <div>Content substring a lots of words</div>
-        </div>
-    <? } else { ?>
-        <div class="show_content">
-            <div><?= $s->title ?></div>
-            <div>Content substring a little words</div>
-        </div>
-    <?php }
+    ?>
+    <div class="show_content">
+        <div><?= $k + 1 . '/' . $s->title ?></div>
+        <div><?php // strlen($s->content) > 50 ? substr($s->content, 0, 50) . '...' : $s->content ?></div>
+    </div>
+    <?php
 } ?>

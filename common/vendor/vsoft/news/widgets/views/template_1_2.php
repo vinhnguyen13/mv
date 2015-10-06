@@ -6,9 +6,9 @@
  *
  * Template Du an noi bat 1 col 2 rows
  */
-foreach ($template_1_2 as $s) { ?>
+foreach ($template_1_2 as $k => $s) { ?>
 <div>
-    <span><?=$s->title?></span>
+    <span><?=$k+1 . '/'?><?=$s->title?></span>
 </div>
 <?php } ?>
 

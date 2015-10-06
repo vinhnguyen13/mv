@@ -7,14 +7,13 @@
 
 namespace vsoft\news\widgets;
 
-
-use funson86\cms\models\CmsShow;
+use vsoft\news\models\CmsShow;
 use Yii;
 use yii\base\Widget;
 
 class NewsWidget extends Widget
 {
-    public $c_id, $s_id, $view;
+    public $c_id, $s_id, $view, $care, $after_slider;
 
     public function run()
     {
@@ -30,45 +29,51 @@ class NewsWidget extends Widget
                     Yii::$app->response->redirect(['/news/list', 'list' => $list]);
                 } else {
                     // show template by catalog id
-
+                    // tai chinh : 4
                     if ($this->c_id == 4) {
-                        $show = CmsShow::find()->where('catalog_id = :catalog_id', [':catalog_id' => $this->c_id])
-                            ->orderBy([
-                                'id' => SORT_DESC,
-                            ])->limit(4)->all();
-                        return $this->render('template_2_3', [
-                            'template_2_3' => $show
-                        ]);
-                    }
-                    else if ($this->c_id == 5) {
-                        $show = CmsShow::find()->where('catalog_id = :catalog_id', [':catalog_id' => $this->c_id])
-                            ->orderBy([
-                                'id' => SORT_DESC,
-                            ])->limit(2)->all();
+                        if (!empty($this->after_slider)) {
+                            $show = CmsShow::find()->where('catalog_id = :catalog_id', [':catalog_id' => $this->c_id])
+                                ->orderBy([
+                                    'id' => SORT_DESC,
+                                ])->limit(2)->all();
 
-                        return $this->render('template_1_2', [
-                            'template_1_2' => $show
-                        ]);
+                            return $this->render('template_1_2', [
+                                'template_1_2' => $show
+                            ]);
+                        } else {
+                            $show = CmsShow::find()->where('catalog_id = :catalog_id', [':catalog_id' => $this->c_id])
+                                ->orderBy([
+                                    'id' => SORT_DESC,
+                                ])->limit(1)->all();
+                            return $this->render('template_1_1', [
+                                'template_1_1' => $show
+                            ]);
+                        }
                     }
-                    else if ($this->c_id == 6) {
-                        $show = CmsShow::find()->where('catalog_id = :catalog_id', [':catalog_id' => $this->c_id])
-                            ->orderBy([
-                                'id' => SORT_DESC,
-                            ])->limit(1)->all();
-                        return $this->render('template_1_1', [
-                            'template_1_1' => $show
-                        ]);
+                    // bat dong san : 2
+                    else if ($this->c_id == 2) {
+                        // dang quan tam
+                        if (!empty($this->care)) {
+                            $show = CmsShow::find()->where('catalog_id = :catalog_id', [':catalog_id' => $this->c_id])
+                                ->orderBy([
+                                    'id' => SORT_DESC,
+                                ])->limit(8)->all();
+                            return $this->render('template_1_8', [
+                                'template_1_8' => $show
+                            ]);
+                        } // bat dong san binh thuong
+                        else {
+                            $show = CmsShow::find()->where('catalog_id = :catalog_id', [':catalog_id' => $this->c_id])
+                                ->orderBy([
+                                    'id' => SORT_DESC,
+                                ])->limit(4)->all();
+                            return $this->render('template_2_3', [
+                                'template_2_3' => $show
+                            ]);
+                        }
                     }
-                    else if ($this->c_id == 7) {
-                        $show = CmsShow::find()->where('catalog_id = :catalog_id', [':catalog_id' => $this->c_id])
-                            ->orderBy([
-                                'id' => SORT_DESC,
-                            ])->limit(8)->all();
-                        return $this->render('template_1_8', [
-                            'template_1_8' => $show
-                        ]);
-                    }
-                    else if ($this->c_id == 8) {
+                    // doanh nghiep : 5
+                    else if ($this->c_id == 5) {
                         $show = CmsShow::find()->where('catalog_id = :catalog_id', [':catalog_id' => $this->c_id])->limit(3)->all();
                         return $this->render('template_3_1', [
                             'template_3_1' => $show

@@ -1,7 +1,7 @@
 <?php
 
-use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel vsoft\news\models\CmsShowSearch */
@@ -27,11 +27,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
 //            'id',
 //            'title',
-//            'catalog_id',
+            'catalog_id',
             [
                 'attribute' => 'title',
                 'format' => 'raw',
-                'value' => function($model){return "<a href=\"cms/view?id={$model->id}\" style=\"text-decoration: none; color: black;\">{$model->title}</a>";}
+                'value' => function ($model) {
+                    return Html::a($model->title, ['view', 'id' => $model->id], ['style' => ['text-decoration' => 'none']]);
+                    //return "<a href=\"view?id={$model->id}\" style=\"text-decoration: none; color: black;\">{$model->title}</a>";
+                }
             ],
             [
                 'label' => 'Catalog',
@@ -61,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'updated_at',
-                'value' =>  function ($model) {
+                'value' => function ($model) {
                     return $model->updated_at;
                 },
                 'format' => ['datetime', 'dd-MM-Y HH:i:s']

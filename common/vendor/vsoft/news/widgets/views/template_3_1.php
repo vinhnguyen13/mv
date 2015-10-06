@@ -7,12 +7,12 @@
  * Template 3 columns 1 rows
  */
 
-foreach (template_3_1 as $s) {
+foreach ($template_3_1 as $k => $s) {
     ?>
     <div class="show_content">
         <img src="" alt="">
 
-        <div><?=$s->title?></div>
-        <div>Content substring a little words</div>
+        <div><?= $k+1 .'/'. $s->title?></div>
+        <div><br></div>
     </div>
 <?php } ?>

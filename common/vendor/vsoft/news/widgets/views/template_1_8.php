@@ -8,19 +8,10 @@
  */
 
 foreach ($template_1_8 as $k => $s) {
-    if ($k === 1) {
-        ?>
-        <div class="show_content_1">
-            <img src="" alt="">
-
-            <div><?=$s->title?></div>
-            <div>Content substring a lots of words</div>
-        </div>
-    <? } else { ?>
-        <div class="show_content">
-            <img src="" alt="">
-            <div><?=$s->title?></div>
-            <div>Content substring a little words</div>
-        </div>
-    <?php }
+    ?>
+    <div class="show_content">
+        <div><?= $k + 1 . '/' . $s->title ?></div>
+        <div><br></div>
+    </div>
+    <?php
 } ?>
