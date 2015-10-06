@@ -54,18 +54,23 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'author',
             'click',
             'status',
-//            'created_at',
-//            'updated_at:datetime',
+            [
+                'attribute' => 'created_by',
+                'value' =>  $model->getUserName($model->created_by)
+            ],
+            [
+                'attribute' => 'updated_by',
+                'value' =>  $model->getUserName($model->updated_by)
+            ],
             [
                 'attribute' => 'updated_at',
                 'value' => $model->updated_at,
                 'format' => ['datetime', 'dd-MM-Y h:i:s']
             ],
-            'created_by',
-            'updated_by',
+
         ],
     ]) ?>
-    <a id="back-to-top" href="#" class="btn btn-primary btn-sm back-to-top pull-right"
+    <a id="back-to-top" href="#" class="btn btn-default btn-sm back-to-top pull-right"
        role="button" title="Back to Top" data-toggle="tooltip" data-placement="top">
         <span class="glyphicon glyphicon-chevron-up"></span>
     </a>

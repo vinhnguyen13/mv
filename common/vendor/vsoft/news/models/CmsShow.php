@@ -2,7 +2,13 @@
 
 namespace vsoft\news\models;
 
+use dektrium\user\models\User;
 use Yii;
+use yii\behaviors\AttributeBehavior;
+use yii\behaviors\SluggableBehavior;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "cms_show".
@@ -39,12 +45,43 @@ class CmsShow extends \funson86\cms\models\CmsShow
         return 'cms_show';
     }
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => SluggableBehavior::className(),
+                'attribute' => 'title',
+                'slugAttribute' => 'slug',
+            ],
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => 'updated_at',
+                ],
+                'value' => new Expression('UNIX_TIMESTAMP()'),
+            ],
+            [
+                'class' => AttributeBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_by', 'updated_by'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => 'updated_by',
+                ],
+                'value' => function ($event) {
+                    return Yii::$app->user->id;
+                },
+            ],
+            // BlameableBehavior::className(),
+        ];
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
-        return array_merge(parent::rules(),[
+        return array_merge(parent::rules(), [
+            [['created_at', 'updated_at'], 'integer'],
             [['created_by', 'updated_by'], 'integer']
         ]);
     }
@@ -58,19 +95,13 @@ class CmsShow extends \funson86\cms\models\CmsShow
         return $this->hasOne(CmsCatalog::className(), ['id' => 'catalog_id']);
     }
 
-//    public function beforeSave($insert)
-//    {
-//        echo "<pre>";
-//        print_r('12345');
-//        echo "<pre>";
-//        exit();
-//        if(parent::beforeSave($insert)) {
-//
-//            if ($this->isNewRecord || $this->created_by < 1)
-//                $this->created_by = Yii::$app->user->id;
-//            $this->updated_by = Yii::$app->user->id;
-//            return true;
-//        } else
-//            return false;
-//    }
+    public function getUserName($IDuser=NULL)
+    {
+        if($IDuser!=NULL)
+            $username=User::findOne($IDuser);
+        else
+            $username=User::findOne(Yii::$app->user->getId());
+        return $username->username;
+    }
+
 }

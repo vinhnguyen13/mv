@@ -75,6 +75,7 @@ use yii\widgets\ActiveForm;
         <label class="col-lg-1 control-label"></label>
         <div class="col-lg-11">
             <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+            <?= Html::a(Yii::t('app', 'Cancel'), 'index', ['class' => 'btn btn-default']) ?>
         </div>
     </div>
 

@@ -92,8 +92,8 @@ class CmsController extends CmsShowController
             if ($model->banner) {
                 $upload_image->saveAs(Yii::getAlias('@store'). '/news/show/' . $model->banner);
             }
-            $model->created_by = Yii::$app->user->id;
-            $model->updated_by = Yii::$app->user->id;
+//            $model->created_by = Yii::$app->user->id;
+//            $model->updated_by = Yii::$app->user->id;
             $model->save();
             return $this->redirect('index');
         } else {
@@ -121,9 +121,9 @@ class CmsController extends CmsShowController
             } else {
                 $model->banner = $oldBanner;
             }
-            if($model->created_by === 0)
-                $model->created_by = Yii::$app->user->id;
-            $model->updated_by = Yii::$app->user->id;
+//            if($model->created_by === 0)
+//                $model->created_by = Yii::$app->user->id;
+//            $model->updated_by = Yii::$app->user->id;
 
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
