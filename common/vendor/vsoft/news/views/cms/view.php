@@ -52,8 +52,12 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'banner',
 //            'template_show',
 //            'author',
-            'click',
-            'status',
+//            'click',
+//            'status',
+            [
+                'attribute' => 'status',
+                'value' => \vsoft\news\models\Status::labels($model->status)
+            ],
             [
                 'attribute' => 'created_by',
                 'value' =>  $model->getUserName($model->created_by)

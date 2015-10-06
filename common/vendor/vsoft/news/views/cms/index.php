@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'title',
                 'format' => 'raw',
-                'value' => function($model){return "<a href=\"view?id={$model->id}\" style=\"text-decoration: none; color: black;\">{$model->title}</a>";}
+                'value' => function($model){return "<a href=\"cms/view?id={$model->id}\" style=\"text-decoration: none; color: black;\">{$model->title}</a>";}
             ],
             [
                 'label' => 'Catalog',
@@ -52,10 +52,20 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'author',
             // 'click',
             // 'status',
-            // 'created_at',
-             'updated_at:datetime',
-            // 'create_by',
-            // 'update_by',
+            [
+                'attribute' => 'status',
+                'value' => function ($model) {
+                    return \vsoft\news\models\Status::labels($model->status);
+                },
+                'options' => ['width' => '100']
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value' =>  function ($model) {
+                    return $model->updated_at;
+                },
+                'format' => ['datetime', 'dd-MM-Y HH:i:s']
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
