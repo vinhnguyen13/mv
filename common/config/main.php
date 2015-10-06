@@ -29,6 +29,9 @@ return [
         'express' => [
             'class' => 'vsoft\express\Module',
         ],
+        'news' => [
+            'class' => 'vsoft\news\Module'
+        ]
     ],
     'components' => [
         'cache' => [

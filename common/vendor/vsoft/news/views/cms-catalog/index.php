@@ -1,8 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
-use yii\helpers\ArrayHelper;
 use vsoft\news\models\CmsCatalog;
 use vsoft\news\Module;
 
@@ -24,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <table class="table table-striped table-bordered">
         <thead>
         <tr>
-            <th>No.</th>
+            <th>#</th>
             <th><?= Module::t('cms', 'Title') ?> </th>
             <th><?= Module::t('cms', 'Update At') ?></th>
             <th><?= Module::t('cms', 'Actions') ?></th>

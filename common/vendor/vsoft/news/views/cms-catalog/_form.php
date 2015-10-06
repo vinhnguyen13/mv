@@ -81,7 +81,8 @@ unset($parentCatalog[$model->id]);
     <?= $form->field($model, 'status')->dropDownList(\vsoft\news\models\Status::labels()) ?>
 
     <div class="form-group">
-        <div class="col-lg-3 col-lg-offset-2">
+        <label class="col-lg-1 control-label"></label>
+        <div class="col-lg-11">
             <?= Html::submitButton($model->isNewRecord ? Module::t('cms', 'Create') : Module::t('cms', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
     </div>

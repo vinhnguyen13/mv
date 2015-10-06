@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model funson86\cms\models\CmsShow */
+/* @var $model vsoft\news\models\CmsShow */
 
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Cms Shows'), 'url' => ['index']];
@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::a(Yii::t('app', 'Back'), 'index', ['class' => 'btn btn-success pull-right']) ?>
     </p>
 
     <?= DetailView::widget([
@@ -33,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Catalog',
                 'attribute' => 'catalog_id',
-                'value' => $model->getCatalog()->one()->title,
+                'value' => $model->getCatalog1()->one()->title,
             ],
             'title',
             'slug',
@@ -46,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'banner',
                 'format' => 'html',
-                'value' => Html::img( Yii::$app->request->getHostInfo() . '/store/news/show/' . $model->banner,['width' => 200, 'alt' => $model->banner]),
+                'value' => Html::img(Yii::$app->request->getHostInfo() . '/store/news/show/' . $model->banner, ['width' => 200, 'alt' => $model->banner]),
             ],
 //            'banner',
 //            'template_show',
@@ -55,14 +56,19 @@ $this->params['breadcrumbs'][] = $this->title;
             'status',
 //            'created_at',
 //            'updated_at:datetime',
-        [
-            'attribute' => 'updated_at',
-            'value' => $model->updated_at,
-            'format' => ['datetime','dd-MM-Y h:i:s A']
-        ]
-//            'create_by',
-//            'update_by',
+            [
+                'attribute' => 'updated_at',
+                'value' => $model->updated_at,
+                'format' => ['datetime', 'dd-MM-Y h:i:s']
+            ],
+            'created_by',
+            'updated_by',
         ],
     ]) ?>
+    <a id="back-to-top" href="#" class="btn btn-primary btn-sm back-to-top pull-right"
+       role="button" title="Back to Top" data-toggle="tooltip" data-placement="top">
+        <span class="glyphicon glyphicon-chevron-up"></span>
+    </a>
+
 
 </div>

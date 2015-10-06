@@ -4,7 +4,11 @@ namespace vsoft\news\controllers;
 
 use funson86\cms\controllers\backend\CmsShowController;
 use vsoft\news\models\CmsShow;
+use vsoft\news\models\CmsShowSearch;
 use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
 /**
@@ -12,6 +16,61 @@ use yii\web\UploadedFile;
  */
 class CmsController extends CmsShowController
 {
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['post'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@']
+                    ]
+                ]
+            ],
+        ];
+    }
+
+    public function findModel1($id)
+    {
+        if (($model = CmsShow::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    /**
+     * Lists all CmsShow models.
+     * @return mixed
+     */
+    public function actionIndex()
+    {
+        //if(!Yii::$app->user->can('viewYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
+
+        $searchModel = new CmsShowSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionView($id)
+    {
+        //if(!Yii::$app->user->can('viewYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
+
+        return $this->render('view', [
+            'model' => $this->findModel1($id),
+        ]);
+    }
 
     public function actionCreate()
     {
@@ -33,6 +92,8 @@ class CmsController extends CmsShowController
             if ($model->banner) {
                 $upload_image->saveAs(Yii::getAlias('@store'). '/news/show/' . $model->banner);
             }
+            $model->created_by = Yii::$app->user->id;
+            $model->updated_by = Yii::$app->user->id;
             $model->save();
             return $this->redirect('index');
         } else {
@@ -46,8 +107,8 @@ class CmsController extends CmsShowController
     {
         //if(!Yii::$app->user->can('updateYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
 
-        $model = $this->findModel($id);
-        $oldBanner = $model -> banner;
+        $model = $this->findModel1($id);
+        $oldBanner = $model->banner;
 
         if ($model->load(Yii::$app->request->post())) {
             $upload_image = UploadedFile::getInstance($model, 'banner');
@@ -60,6 +121,9 @@ class CmsController extends CmsShowController
             } else {
                 $model->banner = $oldBanner;
             }
+            if($model->created_by === 0)
+                $model->created_by = Yii::$app->user->id;
+            $model->updated_by = Yii::$app->user->id;
 
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
@@ -70,4 +134,15 @@ class CmsController extends CmsShowController
         }
     }
 
+    public function actionDelete($id)
+    {
+        //if(!Yii::$app->user->can('deleteYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
+
+        $this->findModel1($id)->delete();
+        /*$model = $this->findModel($id);
+        $model->status = Status::STATUS_DELETED;
+        $model->save();*/
+
+        return $this->redirect(['index']);
+    }
 }

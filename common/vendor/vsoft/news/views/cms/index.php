@@ -26,13 +26,18 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
 //            'id',
-            'title',
+//            'title',
 //            'catalog_id',
+            [
+                'attribute' => 'title',
+                'format' => 'raw',
+                'value' => function($model){return "<a href=\"view?id={$model->id}\" style=\"text-decoration: none; color: black;\">{$model->title}</a>";}
+            ],
             [
                 'label' => 'Catalog',
                 'attribute' => 'catalog_id',
                 'value' => function ($model) {
-                    return $model->catalog->title;
+                    return $model->getCatalog1()->one()->title;
                 },
             ],
 //            'slug',
