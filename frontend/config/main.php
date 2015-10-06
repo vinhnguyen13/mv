@@ -8,6 +8,9 @@ $params = array_merge(
 $baseUrl = str_replace('/frontend/web', '', (new \yii\web\Request())->getBaseUrl());
 return [
     'id' => 'app-frontend',
+    'name'=>'MetVuong',
+//    'language'=>'vi-VN',
+    'language'=>'en-US',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
@@ -46,10 +49,36 @@ return [
             'rules' => [
                 'site/login' => 'user/security/login',
                 'site/signup' => 'user/registration/register',
+                'abc/<action:\w+>' => 'news/<action>',
+
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',
 //                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
 //                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
 
+            ]
+        ],
+        'i18n' => [
+            'translations' => [
+                'user' => [
+                    'class'          => 'yii\i18n\PhpMessageSource',
+                    'sourceLanguage' => 'ru',
+                    'basePath'       => '@vendor/dektrium/yii2-user/messages',
+                    'fileMap'        => [
+                        'modules/user/user' => 'user.php',
+                    ],
+                ],
+                '*' => [
+                    'class'          => 'yii\i18n\PhpMessageSource',
+                    'sourceLanguage' => 'vi',
+                    'basePath'       => '@frontend/messages',
+                    'fileMap'        => [
+                        'express' => 'express.php',
+                        'express/about' => 'about.php',
+                        'express/booking' => 'booking.php',
+                        'express/contact' => 'contact.php',
+                        'express/news' => 'news.php',
+                    ],
+                ],
             ]
         ],
     ],
