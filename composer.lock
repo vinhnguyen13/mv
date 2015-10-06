@@ -1080,16 +1080,16 @@
         },
         {
             "name": "mdmsoft/yii2-admin",
-            "version": "2.1",
+            "version": "2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mdmsoft/yii2-admin.git",
-                "reference": "835875b0cc0bef1f12998c4c713494947b45cfcb"
+                "reference": "99f828c8cc70602a5c9a7abc67591fdd6dfda889"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mdmsoft/yii2-admin/zipball/835875b0cc0bef1f12998c4c713494947b45cfcb",
-                "reference": "835875b0cc0bef1f12998c4c713494947b45cfcb",
+                "url": "https://api.github.com/repos/mdmsoft/yii2-admin/zipball/99f828c8cc70602a5c9a7abc67591fdd6dfda889",
+                "reference": "99f828c8cc70602a5c9a7abc67591fdd6dfda889",
                 "shasum": ""
             },
             "require": {
@@ -1127,7 +1127,7 @@
                 "rbac",
                 "yii"
             ],
-            "time": "2015-08-05 03:43:41"
+            "time": "2015-10-06 02:49:00"
         },
         {
             "name": "mihaildev/yii2-ckeditor",

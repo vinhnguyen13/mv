@@ -72,11 +72,7 @@ return [
                     'sourceLanguage' => 'vi',
                     'basePath'       => '@frontend/messages',
                     'fileMap'        => [
-                        'express' => 'express.php',
-                        'express/about' => 'about.php',
-                        'express/booking' => 'booking.php',
-                        'express/contact' => 'contact.php',
-                        'express/news' => 'news.php',
+                        'news' => 'news.php',
                     ],
                 ],
             ]
