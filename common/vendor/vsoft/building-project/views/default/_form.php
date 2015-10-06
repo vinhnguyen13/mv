@@ -7,6 +7,8 @@ use yii\helpers\ArrayHelper;
 use funson86\cms\models\CmsCatalog;
 use common\widgets\CKEditor;
 use yii\helpers\Url;
+use common\widgets\FileInput;
+use dosamigos\fileupload\FileUploadUI;
 
 $this->registerJsFile(Yii::getAlias('@web') . '/js/building-project.js', ['depends' => ['yii\web\YiiAsset']]);
 $this->registerCssFile(Yii::getAlias('@web') . '/css/building-project.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
@@ -52,29 +54,16 @@ $areaTypes = [
     <div class="main-content">
     	<ul class="bp-fields">
 		    <li>
-		    	<?= $form->field($model, 'bpLogo')->widget(\kartik\file\FileInput::classname(), [
-						'options' => ['multiple' => false, 'accept' => 'image/*'],
-						'pluginOptions' => [
-							'dropZoneEnabled' => false,
-				        	'previewFileType' => 'image',
-				        	'uploadUrl' => Url::to('/express/upload/building-project-image'),
-				        	'maxFileCount' => 1,
-					]]); ?>
-		    	<?= $form->field($model, 'bpGallery')->widget(\kartik\file\FileInput::classname(), [
-						'options' => ['multiple' => true, 'accept' => 'image/*', 'name' => 'BuildingProject[bpGallery][]'],
-						'pluginEvents' => [
-							'filebatchselected' => 'function(event, files) { customFileUpload.filebatchselected(event, files) }'
-						],
-						'pluginOptions' => [
-							'dropZoneEnabled' => false,
-				        	'previewFileType' => 'image',
-				        	'uploadUrl' => Url::to('/express/upload/building-project-image'),
-				        	'maxFileCount' => 10,
-							'showRemove' => false,
-							'showUpload' => false,
-							'showClose' => false,
-							'uploadAsync' => false,
-					]]); ?>
+		    	<?= $form->field($model, 'bpLogo')->widget(FileInput::classname(), [
+						'options' => ['multiple' => false, 'accept' => 'image/*', 'name' => 'BuildingProject[bpLogo][]'],
+						'pluginOptions' => ['maxFileCount' => 1]]); ?>
+		    	<?= $form->field($model, 'bpGallery')->widget(FileInput::classname(), [
+						'options' => ['multiple' => true, 'accept' => 'image/*', 'name' => 'BuildingProject[bpGallery][]']]); ?>
+				<?= $form->field($model, 'bpLogo')->widget(FileUploadUI::className(), [
+					'model' => $model,
+					'attribute' => 'image',
+					'url' => Url::to('/express/upload/building-project-image'),
+				]) ?>
 		    	<?= $form->field($model, 'bpLocation') ?>
 		    	<?= $form->field($model, 'bpType') ?>
 		    	<?= $form->field($model, 'bpAcreage') ?>

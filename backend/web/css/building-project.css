@@ -78,7 +78,7 @@ ul {
 	margin-right: 32px;
 	background-color: #F5F5F5;
 }
-.bp-fields li {
+.bp-fields > li {
 	display: none;
 }
 .main-content {

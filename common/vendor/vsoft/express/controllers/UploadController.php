@@ -35,9 +35,61 @@ class UploadController extends Controller
     }
     
     public function actionBuildingProjectImage() {
-    	if(\Yii::$app->request->isPost) {
-    		var_dump($_FILES['BuildingProject']);
+//     	if(\Yii::$app->request->isPost) {
+//     		if(!empty($_FILES)) {
+//     			$fileAttributes = current($_FILES);
+//     			$total = count(current($fileAttributes['name']));
+//     			$files = [];
+    			
+//     			for($i = 0; $i < $total; $i++) {
+//     				$files[$i] = [];
+    				 
+//     				foreach ($fileAttributes as $k => $v) {
+//     					$v = current($v);
+    			
+//     					$files[$i][$k] = $v[$i];
+//     				}
+//     			}
+    			
+//     			$initialPreview = [];
+//     			$initialPreviewConfig = [];
+    			
+//     			foreach ($files as $file) {
+//     				$initial = $this->uploadPB($file);
+    				 
+//     				$initialPreview[] = $initial['initialPreview'];
+//     				$initialPreviewConfig[] = $initial['initialPreviewConfig'];
+//     			}
+    			
+//     			echo json_encode(['initialPreview' => $initialPreview, 'initialPreviewConfig' => $initialPreviewConfig]);
+//     		} else {
+//     			echo json_encode(['initialPreview' => $initialPreview, 'initialPreviewConfig' => $initialPreviewConfig]);
+//     		}
+//     	}
+    }
+    
+    private function uploadPB($file) {
+    	$targetDir = \Yii::getAlias('@store') . '/building-project-images';
+    	$fileName = uniqid() . '.' . pathinfo($file["name"], PATHINFO_EXTENSION);
+    	$targetFile = $targetDir . '/' . $fileName;
+    	
+    	if(move_uploaded_file($file["tmp_name"], $targetFile)) {
+    		$imageUrl = Url::to('/store/building-project-images/') . $fileName;
+    	} else {
+    		return false;
     	}
+    	
+    	return [
+				'initialPreview' => '<img src="' . $imageUrl . '" class="file-preview-image" alt="Desert" title="Desert">',
+				'initialPreviewConfig' =>
+				[
+					'caption' => 'desert.jpg',
+					'width' => '120px',
+					'url' => 's',
+					'key' => '100',
+					'extra' => ['id' => '11']
+				]	
+    		];
     }
     
     public function isImage($pathToImage) {
