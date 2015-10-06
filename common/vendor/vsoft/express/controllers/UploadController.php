@@ -17,7 +17,7 @@ class UploadController extends Controller
     		$funcNum = $_GET['CKEditorFuncNum'];
     		$message = '';
     		
-    		$valid = $this->isImage($_FILES["upload"]["tmp_name"]) && $this->allowImageType($_FILES["upload"]["name"]);
+    		$valid = UploadHelper::isImage($_FILES["upload"]["tmp_name"]) && UploadHelper::allowImageType($_FILES["upload"]["name"]);
     		
     		if($valid) {
     			$targetDir = \Yii::getAlias('@store') . '/editor-images';
@@ -41,10 +41,13 @@ class UploadController extends Controller
     	if($_FILES) {
     		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     		
-    		$fieldName = isset($_POST['name']) ? $_POST['name'] : 'upload';
-    		$file = UploadedFile::getInstanceByName($fieldName);
+    		$file = UploadedFile::getInstanceByName('upload');
     		
-    		$fileName = $this->uploadPB($file);
+    		$targetDir = \Yii::getAlias('@store') . '/building-project-images';
+	    	$fileName = uniqid() . '.' . pathinfo($file->name, PATHINFO_EXTENSION);
+	    	$targetFile = $targetDir . '/' . $fileName;
+	    	
+	    	$file->saveAs($targetFile);
     		
     		$response['files'][] = [
 	    		'url'           => Url::to('/store/building-project-images/' . $fileName),
@@ -57,36 +60,5 @@ class UploadController extends Controller
     		];
     		return $response;
     	}
-    }
-    
-    private function uploadPB($file) {
-    	$targetDir = \Yii::getAlias('@store') . '/building-project-images';
-    	$fileName = uniqid() . '.' . pathinfo($file->name, PATHINFO_EXTENSION);
-    	$targetFile = $targetDir . '/' . $fileName;
-    	
-    	move_uploaded_file($file->tempName, $targetFile);
-    	
-    	return $fileName;
-    }
-    
-    public function isImage($pathToImage) {
-    	$check = getimagesize($pathToImage);
-    	
-    	if($check !== false) {
-    		return true;
-    	}
-    	
-    	return false;
-    }
-    
-    public function allowImageType($imageFileName) {
-    	$imageFileType = pathinfo($imageFileName, PATHINFO_EXTENSION);
-    	$allowImageType = ['jpg', 'png', 'jpeg', 'gif'];
-    	
-    	if(in_array($imageFileType, $allowImageType)) {
-    		return true;
-    	}
-    	
-    	return false;
     }
 }

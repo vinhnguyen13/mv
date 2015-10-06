@@ -36,4 +36,25 @@ class UploadHelper{
             }
         }
     }
+    
+    public static function isImage($pathToImage) {
+    	$check = getimagesize($pathToImage);
+    	 
+    	if($check !== false) {
+    		return true;
+    	}
+    	 
+    	return false;
+    }
+    
+    public static function allowImageType($imageFileName) {
+    	$imageFileType = pathinfo($imageFileName, PATHINFO_EXTENSION);
+    	$allowImageType = ['jpg', 'png', 'jpeg', 'gif'];
+    	 
+    	if(in_array($imageFileType, $allowImageType)) {
+    		return true;
+    	}
+    	 
+    	return false;
+    }
 }

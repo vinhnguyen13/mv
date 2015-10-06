@@ -55,28 +55,38 @@ $areaTypes = [
 		    <li>
 		    	<?= $form->field($model, 'bpGallery')->widget(FileUploadUI::className(), [
 					'url' => Url::to('/express/upload/building-project-image'),
-					'options' => ['name' => 'upload'],
 					'clientOptions' => [
-						'formData' => ['name' => 'BuildingProject[bpGallery]'],
 						'maxNumberOfFiles' => 1,
 						'autoUpload' => true,
+						'uploadTemplateId' => null,
+						'downloadTemplateId' => null,
+						'previewCrop' => true,
+						'previewMinWidth' => 120,
+						'previewMinHeight' => 120,
+						'previewMaxWidth' => 120,
+						'previewMaxHeight' => 120,
 					],
 					'clientEvents' => [
 						'fileuploaddone' => 'function(e, data) {customFileUpload.fileuploaddone(e, data);}',
 						'fileuploadfail' => 'function(e, data) {console.log(e); console.log(data);}',
 					],
+					'fieldOptions' => ['name' => 'upload']
 				]) ?>
 				<?= $form->field($model, 'bpLogo')->widget(FileUploadUI::className(), [
 					'url' => Url::to('/express/upload/building-project-image'),
-					'options' => ['name' => 'upload'],
 					'clientOptions' => [
-						'formData' => ['name' => 'BuildingProject[bpLogo]'],
 						'autoUpload' => true,
+						'uploadTemplateId' => null,
+						'downloadTemplateId' => null,
+						'previewCrop' => true,
+						'previewMinWidth' => 120,
+						'previewMinHeight' => 120
 					],
 					'clientEvents' => [
 						'fileuploaddone' => 'function(e, data) {customFileUpload.fileuploaddone(e, data);}',
 						'fileuploadfail' => 'function(e, data) {console.log(e); console.log(data);}',
 					],
+					'fieldOptions' => ['name' => 'upload']
 				]) ?>
 		    	<?= $form->field($model, 'bpLocation') ?>
 		    	<?= $form->field($model, 'bpType') ?>

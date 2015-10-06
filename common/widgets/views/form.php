@@ -45,5 +45,5 @@ $context = $this->context;
         </div>
     </div>
     <!-- The table listing the files available for upload/download -->
-    <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+    <ul class="files"></ul>
 <?= Html::endTag('div');?>
