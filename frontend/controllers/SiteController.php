@@ -12,6 +12,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\web\Cookie;
 
 /**
  * Site controller
@@ -209,5 +210,18 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+
+    public function actionLanguage(){
+        $language = Yii::$app->request->get('language');
+        Yii::$app->language = $language;
+        $cookie = new Cookie([
+            'name' => 'language',
+            'value' => $language,
+            'expire' => time() + 60 * 60 * 24 * 30, // 30 days
+//            'domain' => '.lancaster.vn' // <<<=== HERE
+        ]);
+        \Yii::$app->getResponse()->getCookies()->add($cookie);
+        $this->redirect(Yii::$app->request->referrer);
     }
 }

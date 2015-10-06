@@ -12,7 +12,13 @@ return [
 //    'language'=>'vi-VN',
     'language'=>'en-US',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => [
+        'log',
+        'languageSelector' => [
+            'class' => 'frontend\components\LanguageSelector',
+            'supportedLanguages' => ['en-US', 'vi-VN'],
+        ],
+    ],
     'controllerNamespace' => 'frontend\controllers',
     'modules' => [
     ],
