@@ -26,12 +26,6 @@ return [
                 'admin' => 'vsoft\user\controllers\AdminController',
             ],
         ],
-        'express' => [
-            'class' => 'vsoft\express\Module',
-        ],
-        'news' => [
-            'class' => 'vsoft\news\Module'
-        ]
     ],
     'components' => [
         'cache' => [
