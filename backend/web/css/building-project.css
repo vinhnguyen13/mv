@@ -84,3 +84,13 @@ ul {
 .main-content {
 	overflow: hidden;
 }
+.table > tbody > tr > td {
+	vertical-align: middle;
+}
+.preview img {
+	width: 80px;
+	height: 80px;
+}
+.fileupload-buttonbar .start, .fileupload-buttonbar .cancel, .fileupload-buttonbar .delete, .fileupload-buttonbar .toggle, .fileupload-progress {
+	display: none;
+}

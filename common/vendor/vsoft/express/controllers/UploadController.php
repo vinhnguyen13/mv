@@ -4,6 +4,9 @@ namespace vsoft\express\controllers;
 
 use yii\web\Controller;
 use yii\helpers\Url;
+use \Yii;
+use yii\web\UploadedFile;
+use vsoft\express\components\UploadHelper;
 
 class UploadController extends Controller
 {
@@ -66,30 +69,76 @@ class UploadController extends Controller
 //     			echo json_encode(['initialPreview' => $initialPreview, 'initialPreviewConfig' => $initialPreviewConfig]);
 //     		}
 //     	}
+    	
+//     	if($_FILES){
+//     		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+//     		$file = UploadedFile::getInstance($profile, 'avatar');
+//     		$upload = new UploadHelper($file, \Yii::getAlias('@store/avatar'));
+//     		$fileUploaded =  $upload->upload();
+//     		$profile->avatar = $fileUploaded;
+//     		$profile->save();
+//     		$response['files'][] = [
+//     		'url'           => Url::to('/store/avatar/'.$profile->avatar),
+//     		'thumbnailUrl'  => Url::to('/store/avatar/'.$profile->avatar),
+//     		'name'          => $file->name,
+//     		'type'          => $file->type,
+//     		'size'          => $file->size,
+//     		'deleteUrl'     => Url::to(['gallery-photo/delete']),
+//     		'deleteType'    => 'POST',
+//     		];
+//     		return $response;
+//     	}
+    	if($_FILES) {
+    		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    		
+    		$fieldName = isset($_POST['name']) ? $_POST['name'] : 'upload';
+    		$file = UploadedFile::getInstanceByName($fieldName);
+    		
+    		$fileName = $this->uploadPB($file);
+    		
+    		$response['files'][] = [
+	    		'url'           => Url::to('/store/building-project-images/' . $fileName),
+	    		'thumbnailUrl'  => Url::to('/store/building-project-images/' . $fileName),
+	    		'name'          => $fileName,
+	    		'type'          => $file->type,
+	    		'size'          => $file->size,
+	    		'deleteUrl'     => Url::to(['gallery-photo/delete']),
+	    		'deleteType'    => 'POST',
+    		];
+    		return $response;
+    	}
     }
     
     private function uploadPB($file) {
     	$targetDir = \Yii::getAlias('@store') . '/building-project-images';
-    	$fileName = uniqid() . '.' . pathinfo($file["name"], PATHINFO_EXTENSION);
+    	$fileName = uniqid() . '.' . pathinfo($file->name, PATHINFO_EXTENSION);
     	$targetFile = $targetDir . '/' . $fileName;
     	
-    	if(move_uploaded_file($file["tmp_name"], $targetFile)) {
-    		$imageUrl = Url::to('/store/building-project-images/') . $fileName;
-    	} else {
-    		return false;
-    	}
+    	move_uploaded_file($file->tempName, $targetFile);
     	
-    	return [
-				'initialPreview' => '<img src="' . $imageUrl . '" class="file-preview-image" alt="Desert" title="Desert">',
-				'initialPreviewConfig' =>
-				[
-					'caption' => 'desert.jpg',
-					'width' => '120px',
-					'url' => 's',
-					'key' => '100',
-					'extra' => ['id' => '11']
-				]	
-    		];
+    	return $fileName;
+    	
+//     	$targetDir = \Yii::getAlias('@store') . '/building-project-images';
+//     	$fileName = uniqid() . '.' . pathinfo($file["name"], PATHINFO_EXTENSION);
+//     	$targetFile = $targetDir . '/' . $fileName;
+    	
+//     	if(move_uploaded_file($file["tmp_name"], $targetFile)) {
+//     		$imageUrl = Url::to('/store/building-project-images/') . $fileName;
+//     	} else {
+//     		return false;
+//     	}
+    	
+//     	return [
+// 				'initialPreview' => '<img src="' . $imageUrl . '" class="file-preview-image" alt="Desert" title="Desert">',
+// 				'initialPreviewConfig' =>
+// 				[
+// 					'caption' => 'desert.jpg',
+// 					'width' => '120px',
+// 					'url' => 's',
+// 					'key' => '100',
+// 					'extra' => ['id' => '11']
+// 				]	
+//     		];
     }
     
     public function isImage($pathToImage) {

@@ -54,15 +54,30 @@ $areaTypes = [
     <div class="main-content">
     	<ul class="bp-fields">
 		    <li>
-		    	<?= $form->field($model, 'bpLogo')->widget(FileInput::classname(), [
-						'options' => ['multiple' => false, 'accept' => 'image/*', 'name' => 'BuildingProject[bpLogo][]'],
-						'pluginOptions' => ['maxFileCount' => 1]]); ?>
-		    	<?= $form->field($model, 'bpGallery')->widget(FileInput::classname(), [
-						'options' => ['multiple' => true, 'accept' => 'image/*', 'name' => 'BuildingProject[bpGallery][]']]); ?>
-				<?= $form->field($model, 'bpLogo')->widget(FileUploadUI::className(), [
-					'model' => $model,
-					'attribute' => 'image',
+		    	<?= $form->field($model, 'bpGallery')->widget(FileUploadUI::className(), [
 					'url' => Url::to('/express/upload/building-project-image'),
+					'options' => ['name' => 'upload'],
+					'clientOptions' => [
+						'formData' => ['name' => 'BuildingProject[bpGallery]'],
+						'maxNumberOfFiles' => 1,
+						'autoUpload' => true,
+					],
+					'clientEvents' => [
+						'fileuploaddone' => 'function(e, data) {customFileUpload.fileuploaddone(e, data);}',
+						'fileuploadfail' => 'function(e, data) {console.log(e); console.log(data);}',
+					],
+				]) ?>
+				<?= $form->field($model, 'bpLogo')->widget(FileUploadUI::className(), [
+					'url' => Url::to('/express/upload/building-project-image'),
+					'options' => ['name' => 'upload'],
+					'clientOptions' => [
+						'formData' => ['name' => 'BuildingProject[bpLogo]'],
+						'autoUpload' => true,
+					],
+					'clientEvents' => [
+						'fileuploaddone' => 'function(e, data) {customFileUpload.fileuploaddone(e, data);}',
+						'fileuploadfail' => 'function(e, data) {console.log(e); console.log(data);}',
+					],
 				]) ?>
 		    	<?= $form->field($model, 'bpLocation') ?>
 		    	<?= $form->field($model, 'bpType') ?>

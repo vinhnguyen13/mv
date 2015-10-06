@@ -77,8 +77,16 @@ function customChecbox(els) {
 }
 
 var customFileUpload = {
-	filebatchselected: function(event, files) {
-		$(event.target).fileinput('upload');
+	fileuploaddone: function(event, files) {
+		var input = $('#' + event.target.id.replace('-fileupload', '')).prev();
+		
+		var val = input.val();
+		var filesName = val ? val.split(',') : [];
+		
+		filesName.push(files.result['files'][0].name);
+		input.val(filesName.join(','));
+		
+		console.log(input.val());
 	},
 	filebatchuploadsuccess: function(event, data, previewId, index) {
 		console.log(event);
