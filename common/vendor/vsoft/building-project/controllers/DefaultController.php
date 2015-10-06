@@ -19,23 +19,20 @@ class DefaultController extends Controller
     	$buildingProject->isNewRecord = true;
     	
     	if(Yii::$app->request->isPost) {
+    		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    		
     		$buildingProject->load(Yii::$app->request->post());
+    		
+    		var_dump($buildingProject->bpLocation);
     		
     		if($buildingProject->validate()) {
     			
     		} else {
     			var_dump($buildingProject->getErrors());
     		}
+    		
+    		return [];
     	}
-    	
-//     	if($buildingProject->load(Yii::$app->request->post()) && ) {
-//     		if($buildingProject->save()) {
-//     			return $this->redirect(['view', 'id' => $model->id]);
-//     		} else {
-//     			echo json_encode($buildingProject->getErrors());
-//     			exit();
-//     		}
-//         }
         
     	return $this->render('create', ['model' => $buildingProject]);
     }

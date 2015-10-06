@@ -104,7 +104,9 @@ ul {
 }
 .files li {
 	position: relative;
-	float: left;
+    float: left;
+    margin-right: 6px;
+    margin-top: 6px;
 }
 .files li .preview {
 	display: block;
@@ -120,4 +122,20 @@ ul {
 .files li .button-wrap {
 	position: absolute;
 	top: 0px;
+}
+.files .delete {
+	position: absolute;
+    top: 6px;
+    right: 6px;
+    font-size: 12px;
+    border: none;
+    padding: 4px;
+}
+.files .delete span {
+	display: none;
+}
+.files .delete .glyphicon {
+	display: block;
+    height: 14px;
+    width: 14px;
 }

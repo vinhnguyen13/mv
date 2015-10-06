@@ -65,6 +65,7 @@ $areaTypes = [
 						'previewMinHeight' => 120,
 						'previewMaxWidth' => 120,
 						'previewMaxHeight' => 120,
+						'disableExifThumbnail' => true,
 					],
 					'clientEvents' => [
 						'fileuploaddone' => 'function(e, data) {customFileUpload.fileuploaddone(e, data);}',
@@ -80,7 +81,9 @@ $areaTypes = [
 						'downloadTemplateId' => null,
 						'previewCrop' => true,
 						'previewMinWidth' => 120,
-						'previewMinHeight' => 120
+						'previewMinHeight' => 120,
+						'previewMaxWidth' => 120,
+						'previewMaxHeight' => 120,
 					],
 					'clientEvents' => [
 						'fileuploaddone' => 'function(e, data) {customFileUpload.fileuploaddone(e, data);}',

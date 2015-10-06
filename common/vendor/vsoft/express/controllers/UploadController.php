@@ -7,6 +7,7 @@ use yii\helpers\Url;
 use \Yii;
 use yii\web\UploadedFile;
 use vsoft\express\components\UploadHelper;
+use yii\image\drivers\Image;
 
 class UploadController extends Controller
 {
@@ -41,24 +42,45 @@ class UploadController extends Controller
     	if($_FILES) {
     		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     		
-    		$file = UploadedFile::getInstanceByName('upload');
+    		$image = UploadedFile::getInstanceByName('upload');
+    		$dir = \Yii::getAlias('@store') . '/building-project-images';
+    		$uniqid = uniqid();
+    		$extension = pathinfo($image->name, PATHINFO_EXTENSION);
     		
-    		$targetDir = \Yii::getAlias('@store') . '/building-project-images';
-	    	$fileName = uniqid() . '.' . pathinfo($file->name, PATHINFO_EXTENSION);
-	    	$targetFile = $targetDir . '/' . $fileName;
+    		$orginal = $uniqid . '.' . $extension;
+    		$thumbnail = $uniqid . '.thumb.' . $extension;
+    		
+    		$orginalPath = $dir . '/' . $orginal;
+    		$thumbnailPath = $dir . '/' . $thumbnail;
+    		
+    		$image->saveAs($orginalPath);
+    		
+    		$orginalRes = \Yii::$app->image->load($orginalPath);
+    		$resizingConstraints = ($orginalRes->width > $orginalRes->height) ? Image::HEIGHT : Image::WIDTH;
+    		$orginalRes->resize(120, 120, $resizingConstraints)->crop(120, 120)->save($thumbnailPath);
 	    	
-	    	$file->saveAs($targetFile);
-    		
     		$response['files'][] = [
-	    		'url'           => Url::to('/store/building-project-images/' . $fileName),
-	    		'thumbnailUrl'  => Url::to('/store/building-project-images/' . $fileName),
-	    		'name'          => $fileName,
-	    		'type'          => $file->type,
-	    		'size'          => $file->size,
-	    		'deleteUrl'     => Url::to(['gallery-photo/delete']),
+	    		'url'           => Url::to('/store/building-project-images/' . $orginal),
+	    		'thumbnailUrl'  => Url::to('/store/building-project-images/' . $thumbnail),
+	    		'name'          => $orginal,
+	    		'type'          => $image->type,
+	    		'size'          => $image->size,
+	    		'deleteUrl'     => Url::to(['upload/delete-image', 'orginal' => $orginal, 'thumbnail' => $thumbnail]),
 	    		'deleteType'    => 'POST',
     		];
     		return $response;
     	}
+    }
+    public function actionDeleteImage($orginal, $thumbnail) {
+    	$dir = \Yii::getAlias('@store') . '/building-project-images';
+    	
+    	unlink($dir . '/' . $orginal);
+    	unlink($dir . '/' . $thumbnail);
+    	
+    	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    	
+    	return ['files' => [
+    		"picture1.jpg" => true
+    	]];
     }
 }
