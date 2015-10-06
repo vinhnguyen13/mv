@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50626
 File Encoding         : 65001
 
-Date: 2015-10-02 13:34:04
+Date: 2015-10-06 09:50:32
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -259,6 +259,26 @@ CREATE TABLE `cms_show` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for `gallery_image`
+-- ----------------------------
+DROP TABLE IF EXISTS `gallery_image`;
+CREATE TABLE `gallery_image` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(255) DEFAULT NULL,
+  `ownerId` varchar(255) NOT NULL,
+  `rank` int(11) NOT NULL DEFAULT '0',
+  `name` varchar(255) DEFAULT NULL,
+  `description` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of gallery_image
+-- ----------------------------
+INSERT INTO `gallery_image` VALUES ('1', 'product', '1', '2', 'kakak', '654654');
+INSERT INTO `gallery_image` VALUES ('2', 'product', '1', '1', '', '');
+
+-- ----------------------------
 -- Table structure for `menu`
 -- ----------------------------
 DROP TABLE IF EXISTS `menu`;
@@ -300,12 +320,14 @@ INSERT INTO `migration` VALUES ('m140506_102106_rbac_init', '1443752877');
 INSERT INTO `migration` VALUES ('m140602_111327_create_menu_table', '1443752758');
 INSERT INTO `migration` VALUES ('m140830_171933_fix_ip_field', '1443752351');
 INSERT INTO `migration` VALUES ('m140830_172703_change_account_table_name', '1443752351');
+INSERT INTO `migration` VALUES ('m140930_003227_gallery_manager', '1443774230');
 INSERT INTO `migration` VALUES ('m141208_201488_setting_init', '1443753325');
 INSERT INTO `migration` VALUES ('m141222_110026_update_ip_field', '1443752352');
 INSERT INTO `migration` VALUES ('m141222_135246_alter_username_length', '1443752352');
 INSERT INTO `migration` VALUES ('m150614_103145_update_social_account_table', '1443752354');
 INSERT INTO `migration` VALUES ('m150623_212711_fix_username_notnull', '1443752355');
 INSERT INTO `migration` VALUES ('m151002_024804_cms_show', '1443757436');
+INSERT INTO `migration` VALUES ('m151002_081136_profile', '1443778999');
 
 -- ----------------------------
 -- Table structure for `profile`
@@ -320,6 +342,7 @@ CREATE TABLE `profile` (
   `location` varchar(255) DEFAULT NULL,
   `website` varchar(255) DEFAULT NULL,
   `bio` text,
+  `avatar` varchar(255) NOT NULL,
   PRIMARY KEY (`user_id`),
   CONSTRAINT `fk_user_profile` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -327,7 +350,9 @@ CREATE TABLE `profile` (
 -- ----------------------------
 -- Records of profile
 -- ----------------------------
-INSERT INTO `profile` VALUES ('1', null, null, null, null, null, null, null);
+INSERT INTO `profile` VALUES ('1', 'Nguyễn Quang Vinh', 'quangvinh@abc.com', '', 'd41d8cd98f00b204e9800998ecf8427e', '', 'http://local.mv.com', '', 'tulips.jpg');
+INSERT INTO `profile` VALUES ('2', null, null, null, null, null, null, null, '');
+INSERT INTO `profile` VALUES ('3', null, null, null, null, null, null, null, '');
 
 -- ----------------------------
 -- Table structure for `session`
@@ -343,7 +368,12 @@ CREATE TABLE `session` (
 -- ----------------------------
 -- Records of session
 -- ----------------------------
-INSERT INTO `session` VALUES ('1e5bgs92kcib15bgv1ju0bm5n1', '1443768289', 0x5F5F666C6173687C613A303A7B7D5F5F72657475726E55726C7C733A31373A222F61646D696E2F736974652F696E646578223B5F5F69647C693A313B);
+INSERT INTO `session` VALUES ('4bp5pum7gf9so2rjgja4hdboa3', '1444039853', 0x5F5F666C6173687C613A303A7B7D);
+INSERT INTO `session` VALUES ('5c8bksi3gntr337ir0trglrp16', '1444039846', 0x5F5F666C6173687C613A303A7B7D);
+INSERT INTO `session` VALUES ('d93dcldbflftn34eru40bf2il6', '1444039963', 0x5F5F666C6173687C613A303A7B7D);
+INSERT INTO `session` VALUES ('g10tn7g754dgsfbkd2f17lk6l3', '1444100380', 0x5F5F666C6173687C613A303A7B7D5F5F72657475726E55726C7C733A373A222F61646D696E2F223B5F5F69647C693A313B);
+INSERT INTO `session` VALUES ('tisiqk0nes1olblo34pagctia5', '1444039195', 0x5F5F666C6173687C613A303A7B7D);
+INSERT INTO `session` VALUES ('uqs2kkkqado15r0nlt48o0j772', '1444039033', 0x5F5F666C6173687C613A303A7B7D);
 
 -- ----------------------------
 -- Table structure for `setting`
@@ -400,11 +430,13 @@ CREATE TABLE `social_account` (
   UNIQUE KEY `account_unique_code` (`code`),
   KEY `fk_user_account` (`user_id`),
   CONSTRAINT `fk_user_account` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of social_account
 -- ----------------------------
+INSERT INTO `social_account` VALUES ('1', '2', 'facebook', '100003885175023', '{\"name\":\"Anh Map\",\"email\":\"quangvinhit2010@gmail.com\",\"id\":\"100003885175023\"}', null, null, null, null);
+INSERT INTO `social_account` VALUES ('2', '3', 'facebook', '1068833803128500', '{\"name\":\"Nhut Tran\",\"email\":\"nhut.love@gmail.com\",\"id\":\"1068833803128500\"}', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `token`
@@ -444,9 +476,11 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_unique_email` (`email`),
   UNIQUE KEY `user_unique_username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES ('1', 'superadmin', 'quangvinh.nguyen@trungthuygroup.vn', '$2y$12$dOo38UxtuownHx4aXmnCC.EKu4ZbPu6UBR6ljcPTQGMn5i5nIw1VG', 'vD8-Xl41YKbPJHUHMhIRKbAE7QTh1VXk', '1443753608', null, null, '127.0.0.1', '1443753608', '1443753680', '0');
+INSERT INTO `user` VALUES ('2', 'quangvinhit2010', 'quangvinhit2010@gmail.com', '$2y$12$b5zdpeMTVQiaCf./piPOC.iYwwQJSpQnI5vsSB7EHA0GSFVDvCta6', 'ixZhHBjcvw-U9OqLNz7Z4a9-J4_C_--P', '1444038310', null, null, '127.0.0.1', '1444038310', '1444038310', '0');
+INSERT INTO `user` VALUES ('3', 'nhuttran', 'nhut.tran@trungthuygroup.vn', '$2y$12$79YPtcSQaoZS6/O1lG5.EuYBtK0SZXDSwj7YPnzAGN11/VVqkY8eC', 'pcLqflnXuVmWbn1LdPqhoOPr_LZlgGof', '1444038490', null, null, '127.0.0.1', '1444038490', '1444038490', '0');

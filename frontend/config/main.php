@@ -29,6 +29,15 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'view' => [
+            'theme' => [
+                'basePath' => '@webroot/themes/metvuong1',
+                'baseUrl' => '@webroot/themes/metvuong1',
+                'pathMap' => [
+                    '@app/views' => '@webroot/themes/metvuong1/views',
+                ],
+            ],
+        ],
     ],
     'params' => $params,
 ];
