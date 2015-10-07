@@ -26,6 +26,9 @@ return [
                 'admin' => 'vsoft\user\controllers\AdminController',
             ],
         ],
+        'express' => [
+            'class' => 'vsoft\express\Module',
+        ],
     ],
     'components' => [
         'cache' => [
