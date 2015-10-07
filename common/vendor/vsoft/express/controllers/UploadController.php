@@ -79,17 +79,11 @@ class UploadController extends Controller
     	$image = $dir . '/' . $orginal;
     	$thumbnail = $dir . '/' . $thumbnail;
     	
-    	if(file_exists($image)) {
-    		unlink($image);
-    	}
-    	if(file_exists($thumbnail)) {
-    		unlink($thumbnail);
-    	}
+    	unlink($image);
+    	unlink($thumbnail);
     	
     	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     	
-    	return ['files' => [
-    		["picture1.jpg" => true]
-    	]];
+    	return ['files' => []];
     }
 }
