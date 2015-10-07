@@ -13,20 +13,18 @@ class DefaultController extends Controller
     {
         return $this->render('index');
     }
-    public function actionCreate() {
+    public function actionCreate()
+    {
     	$buildingProject = new BuildingProject();
     	$buildingProject->loadDefaultValues();
-    	$buildingProject->isNewRecord = true;
     	
     	if(Yii::$app->request->isPost) {
     		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     		
     		$buildingProject->load(Yii::$app->request->post());
     		
-    		var_dump($buildingProject->bpLocation);
-    		
     		if($buildingProject->validate()) {
-    			
+    			$buildingProject->save(false);
     		} else {
     			var_dump($buildingProject->getErrors());
     		}
@@ -35,5 +33,25 @@ class DefaultController extends Controller
     	}
         
     	return $this->render('create', ['model' => $buildingProject]);
+    }
+    public function actionUpdate($id)
+    {
+    	$buildingProject = BuildingProject::findOne($id);
+    	
+    	if(Yii::$app->request->isPost) {
+    		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    	
+    		$buildingProject->load(Yii::$app->request->post());
+    	
+    		if($buildingProject->validate()) {
+    			$buildingProject->save(false);
+    		} else {
+    			var_dump($buildingProject->getErrors());
+    		}
+    	
+    		return [];
+    	}
+    	
+    	return $this->render('update', ['model' => $buildingProject]);
     }
 }

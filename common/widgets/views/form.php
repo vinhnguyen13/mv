@@ -11,11 +11,13 @@ $context = $this->context;
             <!-- The fileinput-button span is used to style the file input field as button -->
             <span class="btn btn-success fileinput-button">
                 <i class="glyphicon glyphicon-plus"></i>
-                <span><?= Yii::t('fileupload', 'Add files') ?>...</span>
+                <span><?= Yii::t('fileupload', 'Chọn ảnh') ?>...</span>
 
                 <?= $context->model instanceof \yii\base\Model && $context->attribute !== null
-                    ? Html::activeFileInput($context->model, $context->attribute, $context->fieldOptions)
-                    : Html::fileInput($context->name, $context->value, $context->fieldOptions);?>
+                    ? Html::activeHiddenInput($context->model, $context->attribute, ['id' => null, 'value' => $context->value])
+                    . Html::activeInput('file', $context->model, $context->attribute, $context->fieldOptions)
+                    : Html::hiddenInput($context->name, $context->fieldOptions['values'])
+                	. Html::fileInput('upload', $context->value, $context->fieldOptions);?>
 
             </span>
             <a class="btn btn-primary start">

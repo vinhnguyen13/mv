@@ -41,6 +41,8 @@ class UploadController extends Controller
     public function actionBuildingProjectImage() {
     	if($_FILES) {
     		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+    		// $fieldName = key($_FILES) . '[' . key(current(current($_FILES))) . ']';
     		
     		$image = UploadedFile::getInstanceByName('upload');
     		$dir = \Yii::getAlias('@store') . '/building-project-images';
@@ -66,7 +68,7 @@ class UploadController extends Controller
 	    		'type'          => $image->type,
 	    		'size'          => $image->size,
 	    		'deleteUrl'     => Url::to(['upload/delete-image', 'orginal' => $orginal, 'thumbnail' => $thumbnail]),
-	    		'deleteType'    => 'POST',
+	    		'deleteType'    => 'DELETE',
     		];
     		return $response;
     	}
@@ -74,13 +76,20 @@ class UploadController extends Controller
     public function actionDeleteImage($orginal, $thumbnail) {
     	$dir = \Yii::getAlias('@store') . '/building-project-images';
     	
-    	unlink($dir . '/' . $orginal);
-    	unlink($dir . '/' . $thumbnail);
+    	$image = $dir . '/' . $orginal;
+    	$thumbnail = $dir . '/' . $thumbnail;
+    	
+    	if(file_exists($image)) {
+    		unlink($image);
+    	}
+    	if(file_exists($thumbnail)) {
+    		unlink($thumbnail);
+    	}
     	
     	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     	
     	return ['files' => [
-    		"picture1.jpg" => true
+    		["picture1.jpg" => true]
     	]];
     }
 }
