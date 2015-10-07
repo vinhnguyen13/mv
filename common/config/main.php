@@ -75,5 +75,17 @@ return [
             'class' => 'yii\image\ImageDriver',
             'driver' => 'GD',  //GD or Imagick
         ],
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@common/messages', // if advanced application, set @frontend/messages
+                    'sourceLanguage' => 'vi',
+                    'fileMap' => [
+                        'banner' => 'banner.php',
+                    ],
+                ],
+            ],
+        ],
     ],
 ];

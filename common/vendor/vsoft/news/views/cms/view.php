@@ -69,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'updated_at',
                 'value' => $model->updated_at,
-                'format' => ['datetime', 'dd-MM-Y h:i:s']
+                'format' => ['datetime', 'php: d/m/Y H:i a']
             ],
 
         ],

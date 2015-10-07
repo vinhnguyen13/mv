@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($model) {
                     return $model->updated_at;
                 },
-                'format' => ['datetime', 'dd-MM-Y HH:i:s']
+                'format' => ['datetime', 'php: d/m/Y H:i a']
             ],
 
             ['class' => 'yii\grid\ActionColumn'],
