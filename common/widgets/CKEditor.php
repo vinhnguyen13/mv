@@ -5,7 +5,25 @@ use yii\helpers\Url;
 use yii\web\View;
 
 class CKEditor extends \mihaildev\ckeditor\CKEditor {
+	private $ttgPreset;
+	
+	public function init()
+	{
+		$this->ttgPreset = $this->editorOptions['preset'];
+		
+		parent::init();
+	}
+	
 	public function run() {
+		if($this->ttgPreset == 'basic') {
+			$toolbarGroups = [
+				['name' => 'paragraph', 'groups' => ['templates', 'list', 'indent', 'align']],
+				['name' => 'styles'],
+			];
+			
+			$this->editorOptions['toolbarGroups'] = array_merge($this->editorOptions['toolbarGroups'], $toolbarGroups);
+		}
+		
 		$this->editorOptions['filebrowserUploadUrl'] = Url::to('/express/upload/editor-image');
 	
 		parent::run();

@@ -9,12 +9,12 @@ $(document).ready(function(){
 		
 		if(!self.hasClass('active')) {
 			var currentActive = $('.show-content.active').removeClass('active');
-			$('.bp-fields > li').eq(showContent.index(currentActive)).hide();
+			$('.bp-fields > li').eq(showContent.index(currentActive)).removeClass('active');
 			
 			self.addClass('active');
 			currentActive = self;
 			
-			$('.bp-fields > li').eq(showContent.index(self)).show();
+			$('.bp-fields > li').eq(showContent.index(self)).addClass('active');
 		}
 	});
 	

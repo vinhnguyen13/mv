@@ -79,7 +79,12 @@ ul {
 	background-color: #F5F5F5;
 }
 .bp-fields > li {
-	display: none;
+	height: 0px;
+	overflow: hidden;
+}
+.bp-fields > li.active {
+	height: auto;
+	overflow: visible;
 }
 .main-content {
 	overflow: hidden;

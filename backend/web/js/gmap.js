@@ -26,8 +26,7 @@ function buildMaker() {
 	infowindow.open(map, marker);
 	
 	marker.addListener('dragend', function(evt) {
-		$('#buildingproject-bplat').val(evt.latLng.lat());
-		$('#buildingproject-bplng').val(evt.latLng.lng());
+		setField({lat: evt.latLng.lat(), lng: evt.latLng.lng()});
 	});
 	marker.addListener('mousedown', function() {
 		infowindow.close();
@@ -62,6 +61,7 @@ function buildGeoCodeButton() {
 				if(response.length > 0) {
 					response = response[0];
 					var latLng = {lat: response.geometry.location.lat(), lng: response.geometry.location.lng()};
+					setField(latLng);
 				}
 				
 				marker.setPosition(latLng);
@@ -71,4 +71,9 @@ function buildGeoCodeButton() {
 	};
 
 	map.controls[google.maps.ControlPosition.TOP_CENTER].push(geoCodeButton);
+}
+
+function setField(latLng) {
+	$('#buildingproject-bplat').val(latLng.lat);
+	$('#buildingproject-bplng').val(latLng.lng);
 }

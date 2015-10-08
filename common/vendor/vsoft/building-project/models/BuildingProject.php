@@ -14,7 +14,7 @@ class BuildingProject extends CmsShow {
 	
 	private static $areaTypes = [];
 	private static $_customFields = [];
-	private static $customFields = ['bpGallery', 'bpLogo', 'bpLocation', 'bpType', 'bpAcreage', 'bpApartmentNo', 'bpFloorNo', 'bpFacilities', 
+	private static $customFields = ['bpGallery', 'bpLogo', 'bpLocation', 'bpType', 'bpAcreage', 'bpAcreageCenter', 'bpApartmentNo', 'bpFloorNo', 'bpFacilities', 
 									'bpMapLocation', 'bpMapLocationDes', 'bpFacilitiesDetail', 'bpFacilitiesDetailDes', 'bpVideo', 'bpProgress', 'bpLat', 'bpLng', 'bpHotline'];
 	
 	public static function getAreaTypes() {
@@ -107,11 +107,13 @@ class BuildingProject extends CmsShow {
 			'bpLocation' => Module::t('cms', 'Vị trí dự án'),
 			'bpType' => Module::t('cms', 'Loại hình đầu tư'),
 			'bpAcreage' => Module::t('cms', 'Diện tích khu đất'),
+			'bpAcreageCenter' => Module::t('cms', 'Diện tích trung tâm văn phòng dịch vụ'),
 			'bpApartmentNo' => Module::t('cms', 'Số lượng căn hộ'),
 			'bpFloorNo' => Module::t('cms', 'Số tầng'),
 			'bpFacilities' => Module::t('cms', 'Tiện ích'),
 			'bpMapLocation' => Module::t('cms', 'Bản đồ vị trí'),
 			'bpFacilitiesDetail' => Module::t('cms', 'Tiện ích'),
+			'bpFacilitiesDetailDes' =>  Module::t('cms', 'Mô tả thêm'),
 			'bpVideo' => Module::t('cms', 'Phim 3D dự án'),
 			'bpProgress' => Module::t('cms', 'Tiến độ xây dựng'),
 			'bpHotline' => Module::t('cms', 'Hotline'),

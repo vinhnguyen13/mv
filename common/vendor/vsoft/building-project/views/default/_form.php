@@ -68,7 +68,7 @@ for($i = 1998; $i <= 2020; $i++) {
 	    </div>
     	<div style="min-height: 400px;">
     		<ul class="bp-fields">
-			    <li style="display: block;">
+			    <li class="active">
 			    	<?= $form->field($model, 'title') ?>
 			    	<?= $form->field($model, 'bpLogo')->widget(FileUploadUI::className(), [
 						'url' => Url::to('/express/upload/building-project-image'),
@@ -85,7 +85,8 @@ for($i = 1998; $i <= 2020; $i++) {
 						<?= Html::activeHiddenInput($model, 'bpLng') ?>
 					</div>
 			    	<?= $form->field($model, 'bpType') ?>
-			    	<?= $form->field($model, 'bpAcreage')->hint('Đơn vị m<sup>2</sup>') ?>
+			    	<?= $form->field($model, 'bpAcreage') ?>
+			    	<?= $form->field($model, 'bpAcreageCenter') ?>
 			    	<?= $form->field($model, 'bpApartmentNo') ?>
 			    	<?= $form->field($model, 'bpFloorNo') ?>
 			    	<?= $form->field($model, 'bpFacilities') ?>
@@ -96,7 +97,9 @@ for($i = 1998; $i <= 2020; $i++) {
 			    		'editorOptions' => [
 							'preset' => 'basic',
 							'inline' => false,
-							'removePlugins' => 'image'
+							'removePlugins' => 'image',
+							'height' => 150,
+							'resize_enabled' => true
 			    		]
 			    	]) ?>
 			    	<?= $form->field($model, 'bpMapLocation')->widget(FileUploadUI::className(), ['url' => Url::to('/express/upload/building-project-image')]) ?>
@@ -106,7 +109,9 @@ for($i = 1998; $i <= 2020; $i++) {
 			    		'editorOptions' => [
 							'preset' => 'basic',
 							'inline' => false,
-							'removePlugins' => 'image'
+							'removePlugins' => 'image',
+							'height' => 150,
+							'resize_enabled' => true
 			    		]
 			    	]) ?>
 			    	<?= $form->field($model, 'bpFacilitiesDetail')->widget(FileUploadUI::className(), ['url' => Url::to('/express/upload/building-project-image')]) ?>
@@ -189,6 +194,8 @@ for($i = 1998; $i <= 2020; $i++) {
 						'editorOptions' => [
 							'preset' => 'basic',
 							'inline' => false,
+							'height' => 150,
+							'resize_enabled' => true
 						]
 					]); ?>
 			    </li>
@@ -199,6 +206,8 @@ for($i = 1998; $i <= 2020; $i++) {
 						'editorOptions' => [
 							'preset' => 'basic',
 							'inline' => false,
+							'height' => 150,
+							'resize_enabled' => true
 						]
 					]); ?>
 			    </li>
