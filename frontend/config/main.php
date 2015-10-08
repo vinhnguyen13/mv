@@ -41,9 +41,19 @@ return [
         'view' => [
             'theme' => [
                 'basePath' => '@webroot/themes/metvuong1',
-                'baseUrl' => '@webroot/themes/metvuong1',
+                'baseUrl' => '/frontend/web/themes//metvuong1',
                 'pathMap' => [
                     '@app/views' => '@webroot/themes/metvuong1/views',
+                ],
+            ],
+        ],
+        'assetManager' => [
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'jsOptions' => ['position'=>\yii\web\View::POS_HEAD]
+                ],
+                'yii\web\YiiAsset' => [
+                    'jsOptions' => ['position'=>\yii\web\View::POS_HEAD]
                 ],
             ],
         ],
