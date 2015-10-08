@@ -152,10 +152,9 @@ for($i = 1998; $i <= 2020; $i++) {
 			    </li>
 			    <?php foreach($areaTypes as $name => $areaType): $area = json_decode($model->$name); ?>
 			    <li>
+			    	<?= Html::hiddenInput('BuildingProject[' . $name . '][floorPlan]', '') ?>
 			    	<div class="floor-plan-list dynamic-list">
 			    		<?php
-			    			$count = 0;
-			    			
 			    			$count = count($area->floorPlan);
 			    			foreach($area->floorPlan as $k => $bpa):
 			    		?>

@@ -6,6 +6,7 @@ use Yii;
 use yii\web\Controller;
 use yii\helpers\Url;
 use vsoft\buildingProject\models\BuildingProject;
+use yii\web\NotFoundHttpException;
 
 class DefaultController extends Controller
 {
@@ -28,6 +29,7 @@ class DefaultController extends Controller
     		if($buildingProject->validate()) {
     			$buildingProject->save(false);
     		} else {
+    			$response['success'] = false;
     			$response['errors'] = $buildingProject->getErrors();
     		}
     		
@@ -40,32 +42,36 @@ class DefaultController extends Controller
     {
     	$buildingProject = BuildingProject::findOne($id);
     	
-    	if(Yii::$app->request->isPost) {
-    		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    	
-    		$buildingProject->load(Yii::$app->request->post());
-    	
-    		if($buildingProject->validate()) {
-    			$buildingProject->save(false);
-    			
-    			$deleteLater = array_filter(explode(',', Yii::$app->request->post('deleteLater')));
-    			
-    			foreach ($deleteLater as $orginal) {
-    				$pathInfo = pathinfo($orginal);
-    				$thumb = $pathInfo['filename'] .  '.thumb.' . $pathInfo['extension'];
-    				
-    				$dir = \Yii::getAlias('@store') . '/building-project-images';
-    		 
-		    		unlink($dir . '/' . $orginal);
-		    		unlink($dir . '/' . $thumb);
+    	if($buildingProject) {
+    		if(Yii::$app->request->isPost) {
+    			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    			 
+    			$buildingProject->load(Yii::$app->request->post());
+    			 
+    			if($buildingProject->validate()) {
+    				$buildingProject->save(false);
+    				 
+    				$deleteLater = array_filter(explode(',', Yii::$app->request->post('deleteLater')));
+    				 
+    				foreach ($deleteLater as $orginal) {
+    					$pathInfo = pathinfo($orginal);
+    					$thumb = $pathInfo['filename'] .  '.thumb.' . $pathInfo['extension'];
+    		
+    					$dir = \Yii::getAlias('@store') . '/building-project-images';
+    					 
+    					unlink($dir . '/' . $orginal);
+    					unlink($dir . '/' . $thumb);
+    				}
+    			} else {
+    				var_dump($buildingProject->getErrors());
     			}
-    		} else {
-    			var_dump($buildingProject->getErrors());
+    			 
+    			return [];
     		}
-    	
-    		return [];
+    		 
+    		return $this->render('update', ['model' => $buildingProject]);
+    	} else {
+    		throw new NotFoundHttpException('The requested page does not exist.');
     	}
-    	
-    	return $this->render('update', ['model' => $buildingProject]);
     }
 }

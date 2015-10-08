@@ -44,7 +44,7 @@ class BuildingProject extends CmsShow {
 		
 		return [
 			[['catalog_id', 'click', 'status'], 'integer'],
-			[['title', 'bpLocation'], 'required'],
+			[['title', 'bpLocation'], 'required', 'message' => '{attribute} Không được để trống.'],
 			[array_merge(['content'], $customFields), 'string'],
 			[['title', 'seo_title', 'seo_keywords', 'seo_description', 'banner', 'template_show', 'author'], 'string', 'max' => 255],
 			[['surname'], 'string', 'max' => 128],
@@ -86,12 +86,14 @@ class BuildingProject extends CmsShow {
 		
 		foreach ($typeAreas as $k => $typeArea) {
 			if(isset($data['BuildingProject'][$k])) {
-				if(isset($data['BuildingProject'][$k]['floorPlan'])) {
+				if($data['BuildingProject'][$k]['floorPlan']) {
 					$data['BuildingProject'][$k]['floorPlan'] = array_values($data['BuildingProject'][$k]['floorPlan']);
+				} else {
+					$data['BuildingProject'][$k]['floorPlan'] = [];
 				}
 				$this->$k = json_encode($data['BuildingProject'][$k]);
 			} else {
-				$this->$k = null;
+				$this->$k = '';
 			}
 		}
 	}
@@ -145,10 +147,13 @@ class BuildingProject extends CmsShow {
     public static function findOne($condition)
     {
     	$buildingProject = static::findByCondition($condition)->one();
-    	$customFields = json_decode($buildingProject->content);
     	
-    	foreach ($customFields as $field => $value) {
-    		$buildingProject->$field = $value;
+    	if($buildingProject) {
+    		$customFields = json_decode($buildingProject->content);
+    		 
+    		foreach ($customFields as $field => $value) {
+    			$buildingProject->$field = $value;
+    		}
     	}
     	
     	return $buildingProject;

@@ -33,6 +33,8 @@ $(document).ready(function(){
 	$('#project-building-form .btn-block').click(function(e){
 		e.preventDefault();
 		
+		var loading = $('<div class="loading"></div>');
+		$('body').append(loading);
 		for (instance in CKEDITOR.instances) {
 			CKEDITOR.instances[instance].updateElement();
 		}
@@ -42,7 +44,16 @@ $(document).ready(function(){
 		var data = form.serialize();
 		
 		$.post(url, data, function(response){
+			loading.remove();
 			
+			if(response.success) {
+				
+			} else {
+				for(error in response.errors) {
+					var parent = $('#buildingproject-' + error.toLowerCase()).closest('.form-group');
+					parent.addClass('has-error').find('.help-block').text(response.errors[error]);
+				}
+			}
 		});
 	});
 	
