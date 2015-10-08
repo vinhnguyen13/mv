@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'image',
                 'format' => 'html',
-                'value' => function ($model) { return Html::img(Yii::$app->request->getHostInfo() . '/store/news/banner/' . $model->image, ['width' => 200, 'alt' => $model->name]);}
+                'value' => function ($model) { return Html::img(Yii::$app->request->getHostInfo() . '/store/news/banner/' . $model->image, ['width' => 150, 'alt' => $model->name]);}
             ],
             [
                 'attribute' => 'name',

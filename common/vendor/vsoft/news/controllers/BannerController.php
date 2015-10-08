@@ -5,6 +5,7 @@ namespace vsoft\news\controllers;
 use Yii;
 use vsoft\news\models\Banner;
 use vsoft\news\models\BannerSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -23,6 +24,15 @@ class BannerController extends Controller
                 'actions' => [
                     'delete' => ['post'],
                 ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@']
+                    ]
+                ]
             ],
         ];
     }

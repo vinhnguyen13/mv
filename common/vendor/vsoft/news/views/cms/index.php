@@ -27,7 +27,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
 //            'id',
 //            'title',
-            'catalog_id',
+            [
+                'attribute' => 'banner',
+                'format' => 'html',
+                'value' => function ($model) { return Html::img(Yii::$app->request->getHostInfo() . '/store/news/show/' . $model->banner, ['width' => 100, 'alt' => $model->banner]); }
+            ],
             [
                 'attribute' => 'title',
                 'format' => 'raw',

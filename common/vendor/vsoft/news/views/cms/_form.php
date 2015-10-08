@@ -30,6 +30,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'brief')->textarea(['raw'=>4]) ?>
+
     <?= $form->field($model, 'content')->widget(\common\widgets\CKEditor::className(), [
         'editorOptions' => [
             'preset' => 'full',

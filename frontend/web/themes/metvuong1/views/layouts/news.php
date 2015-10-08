@@ -8,7 +8,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 <?php $this->beginContent('@app/views/layouts/main.php'); ?>
     <?php $this->beginContent('@app/views/layouts/_partials/header.php'); ?><?php $this->endContent();?>
     <div class="layout">
-        <?= $content ?>
+        <?php $this->beginContent('@app/views/news/index.php'); ?><?php $this->endContent();?>
     </div>
     <?php $this->beginContent('@app/views/layouts/_partials/footer.php'); ?><?php $this->endContent();?>
 <?php $this->endContent();?>

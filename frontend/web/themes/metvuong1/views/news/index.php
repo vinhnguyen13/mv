@@ -1,134 +1,108 @@
-<?php
-/* @var $this yii\web\View */
-use vsoft\news\widgets\NewsWidget;
-?>
-<style>
-    .carousel .item {
-        height: 330px;
-    }
-    .item > img {
-        width: 100%;
-    }
-</style>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 slider">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                </ol>
 
-<h1>NEWS</h1>
-<!-- Header Carousel -->
-<div class="col-lg-12">
-    <div id="myCarousel" class="carousel slide">
-        <!-- Indicators -->
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-        </ol>
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <img src="<?= Yii::$app->view->theme->baseUrl ?>/resources/img/01.png" alt="...">
 
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner">
-            <div class="item active">
-                <img src="https://c1.staticflickr.com/1/688/21331645963_a401b9fa3b_b.jpg">
-                <div class="carousel-caption">
-                    <h3>Caption 1</h3>
+                        <div class="carousel-caption">
+                            <h3>9 dự án đang và sẽ thay đổi diện mạo Quận 4</h3>
+                            <b>by Mr Property</b>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <img src="<?= Yii::$app->view->theme->baseUrl ?>/resources/img/02.png" alt="...">
+
+                        <div class="carousel-caption">
+                            <h3>9 dự án đang và sẽ thay đổi diện mạo Quận 4</h3>
+                            <b>by Mr Property</b>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <img src="<?= Yii::$app->view->theme->baseUrl ?>/resources/img/03.png" alt="...">
+
+                        <div class="carousel-caption">
+                            <h3>9 dự án đang và sẽ thay đổi diện mạo Quận 4</h3>
+                            <b>by Mr Property</b>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="item">
-                <img src="https://c2.staticflickr.com/6/5723/21787103720_cae2be80bf_b.jpg">
 
-                <div class="carousel-caption">
-                    <h3>Caption 2</h3>
-                </div>
+                <!-- Controls -->
+                <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                    <span class="fa fa-angle-left"></span>
+                </a>
+                <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                    <span class="fa fa-angle-right"></span>
+                </a>
             </div>
-            <div class="item">
-                <img src="https://c2.staticflickr.com/6/5819/21784781758_e39965778f_b.jpg">
-
-                <div class="carousel-caption">
-                    <h3>Caption 3</h3>
-                </div>
-                </img>
-            </div>
-
-            <!-- Controls -->
-            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                <span class="icon-prev"></span>
-            </a>
-            <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                <span class="icon-next"></span>
-            </a>
+            <!-- Carousel -->
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 sibarnew">
+            <?= \vsoft\news\widgets\NewsWidget::widget(['view' => 'sidebar']) ?>
         </div>
     </div>
-    <br>
+    <!--row01-->
+    <div class="row">
+        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 catbox">
+            <div class="rowone">
+                <?= \vsoft\news\widgets\NewsWidget::widget(['view' => 'batdongsan']) ?>
+            </div>
+            <!---rowone-->
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 grd11cover">
+                <?= \vsoft\news\widgets\NewsWidget::widget(['view' => 'taichinh']) ?>
+            </div>
+            <!---grd11cover-->
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 grd11cover2">
+                <?= \vsoft\news\widgets\NewsWidget::widget(['view' => 'doanhnghiep']) ?>
+            </div>
+            <!---grd11cover2-->
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 "></div>
+            <!---grdtin noi bat-->
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 rgtcol">
+            <?= \vsoft\news\widgets\NewsWidget::widget(['view' => 'quantam']) ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h2 class="titlebar">Dư an nổi bật</h2>
+
+            <div class="brandbar">
+                <div class="grd6">
+                    <h3 class="cap rotobobold">Nông nghiệp Việt Nam đón nhận làn </h3>
+
+                    <p class="textcatbox">Nông nghiệp Việt Nam đón nhận làn sóng đầu tư chưa từng có Nông nghiệp Việt
+                        Nam đón nhận làn sóng đầu tư chưa từng có Nông nghiệp Việt Nam đón nhận làn sóng đầu tư chưa
+                        từng có </p>
+
+                    <ul class="listsel">
+                        <li><i class="iconlist"></i>Plaschem Plaza</li>
+                        <li><i class="iconlist"></i>Tòa nhà văn phòng 360 Tây Sơn</li>
+                        <li><i class="iconlist"></i>Handico Tower</li>
+                    </ul>
+                </div>
+                <ul class="grd3">
+                    <li class="imageshow"><img src="<?= Yii::$app->view->theme->baseUrl ?>/resources/img/001.png"></li>
+                    <li class="imageshow"><img src="<?= Yii::$app->view->theme->baseUrl ?>/resources/img/001.png"></li>
+                    <li class="imageshow"><img src="<?= Yii::$app->view->theme->baseUrl ?>/resources/img/001.png"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!---du an noi bat-->
+    <div class="row">
+        <?= \vsoft\news\widgets\NewsWidget::widget(['view'=>'kinhte'])?>
+    </div>
+    <!---kinh te vi mo-->
 </div>
-
-<div class="content">
-    <div class="template_1_2">
-        <hr>
-        <b>
-            Khu vuc Ben Phai Slider
-        </b>
-        <?= NewsWidget::widget(['c_id' => 4, 's_id' => 0, 'view' => null, 'care' => null, 'after_slider' => true]) // tai chinh   ?>
-    </div>
-
-    <div class="template_2_3">
-        <hr>
-        <b>
-            Khu vuc Bat dong san
-        </b>
-        <?= NewsWidget::widget(['c_id' => 2, 's_id' => 0, 'view' => null]) // template_2_3   ?>
-    </div>
-
-
-    <div class="template_1_8">
-        <hr>
-        <b>
-            Khu vuc Dang Quan Tam 1_8
-        </b>
-        <?= NewsWidget::widget(['c_id' => 2, 's_id' => 0, 'view' => null, 'care' => true, 'after_slider' => null]) ?>
-    </div>
-
-
-    <div class="template_1_1">
-        <hr>
-        <b>
-            Khu vuc Tai Chinh Template_1_1
-        </b>
-        <?= NewsWidget::widget(['c_id' => 4, 's_id' => 0, 'view' => null, 'care' => null, 'after_slider' => null]) // tai chinh   ?>
-    </div>
-
-    <div class="template_1_1">
-        <hr>
-        <b>
-            Khu vuc Doanh Nghiep Template_1_1
-        </b>
-        <?= NewsWidget::widget(['c_id' => 4, 's_id' => 0, 'view' => null, 'care' => null, 'after_slider' => null]) // tai chinh   ?>
-    </div>
-
-    <div class="template_duan">
-        <hr>
-        <b>
-            Khu vuc Du An Noi Bat
-        </b>
-        <br>
-    </div>
-
-    <div class="template_3_1">
-        <hr>
-        <b>
-            Khu vuc Template_3_1
-        </b>
-        <?= NewsWidget::widget(['c_id' => 5, 's_id' => 0, 'view' => null, 'care' => null, 'after_slider' => null]) // doanh nghiep last widget   ?>
-    </div>
-
-    <div>
-        <hr>
-        <b>
-            Khu vuc Footer
-        </b>
-
-    </div>
-</div>
-
-<!-- Script to Activate the Carousel -->
-<script>
-    $('.carousel').carousel({
-        interval: 1000 //changes the speed
-    })
-</script>

@@ -46,10 +46,11 @@ use yii\widgets\ActiveForm;
             'mainClass' => 'input-group-lg'
         ]]) ?>
 
+    <?= $form->field($model, 'alt_text')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'alt_text')->textInput(['maxlength' => true]) ?>
+    <?= $model->isNewRecord ? $form->field($model, 'keyword')->textInput(['maxlength' => true, 'readonly' => true]) : 'a' ?>
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
