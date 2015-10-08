@@ -41,7 +41,7 @@ return [
         'view' => [
             'theme' => [
                 'basePath' => '@webroot/themes/metvuong1',
-                'baseUrl' => '/frontend/web/themes//metvuong1',
+                'baseUrl' => '/frontend/web/themes/metvuong1',
                 'pathMap' => [
                     '@app/views' => '@webroot/themes/metvuong1/views',
                 ],
