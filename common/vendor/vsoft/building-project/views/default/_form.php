@@ -9,18 +9,16 @@ use common\widgets\CKEditor;
 use yii\helpers\Url;
 use common\widgets\FileUploadUI;
 use yii\web\View;
+use vsoft\buildingProject\models\BuildingProject;
 
 $this->registerJsFile(Yii::getAlias('@web') . '/js/building-project.js', ['depends' => ['yii\web\YiiAsset']]);
 $this->registerJsFile(Yii::getAlias('@web') . '/js/jquery-ui.min.js', ['depends' => ['yii\web\YiiAsset']]);
+$this->registerJsFile(Yii::getAlias('@web') . '/js/gmap.js', ['depends' => ['yii\web\YiiAsset']]);
+$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=initMap', ['depends' => ['yii\web\YiiAsset']]);
 $this->registerCssFile(Yii::getAlias('@web') . '/css/building-project.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
 $this->registerCssFile(Yii::getAlias('@web') . '/css/jquery-ui.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
 
-$areaTypes = [
-	'bpfApartmentArea' => 'Khu căn hộ',
-	'bpfCommercialArea' => 'Khu thương mại',
-	'bpfTownhouseArea' => 'Khu nhà phố',
-	'bpfOffice' => 'Khu Office - Officetel'
-];
+$areaTypes = BuildingProject::getAreaTypes();
 
 $month = [];
 for($i = 1; $i <= 12; $i++) {
@@ -36,12 +34,13 @@ for($i = 1998; $i <= 2020; $i++) {
 <div id="project-building-form" class="cms-show-form">
     <?php $form = ActiveForm::begin([
 		'id' => 'bp-form',
+    	'options' => ['spellcheck' => 'false'],
     	'enableClientValidation' => false,
     	'enableAjaxValidation' => false
     ]); ?>
     <div class="side-bar">
     	<ul class="bp-contents">
-		    <li class="show-content"><a href="#">Tổng quan dự án</a></li>
+		    <li class="show-content active"><a href="#">Tổng quan dự án</a></li>
 		    <li class="show-content"><a href="#">Bản đồ vị trí</a></li>
 		    <li class="show-content"><a href="#">Tiện ích</a></li>
 		    <li class="show-content"><a href="#">Phim 3D dự án</a></li>
@@ -64,34 +63,59 @@ for($i = 1998; $i <= 2020; $i++) {
     </div>
     <div class="main-content">
 		<div class="form-group">
+			<?= $model->isNewRecord ? '' : Html::hiddenInput('deleteLater', '', ['id' => 'delete-later']) ?>
 	        <?= Html::submitButton($model->isNewRecord ? Module::t('cms', 'Lưu lại') : Module::t('cms', 'Update'), ['class' => 'btn btn-primary btn-block']) ?>
 	    </div>
     	<div style="min-height: 400px;">
     		<ul class="bp-fields">
-			    <li>
+			    <li style="display: block;">
 			    	<?= $form->field($model, 'title') ?>
 			    	<?= $form->field($model, 'bpLogo')->widget(FileUploadUI::className(), [
 						'url' => Url::to('/express/upload/building-project-image'),
 						'clientOptions' => ['maxNumberOfFiles' => 1] ]) ?>
 					<?= $form->field($model, 'bpGallery')->widget(FileUploadUI::className(), ['url' => Url::to('/express/upload/building-project-image')]) ?>
-			    	<?= $form->field($model, 'bpLocation') ?>
+			    	<div class="form-group">
+						<label class="control-label"><?= $model->getAttributeLabel('bpLocation') ?></label>
+						<div>
+							<?= Html::activeTextInput($model, 'bpLocation', ['class' => 'form-control']) ?>
+						</div>
+						<div class="help-block"></div>
+						<div id="map" style="height: 320px; width: 100%"></div>
+						<?= Html::activeHiddenInput($model, 'bpLat') ?>
+						<?= Html::activeHiddenInput($model, 'bpLng') ?>
+					</div>
 			    	<?= $form->field($model, 'bpType') ?>
-			    	<?= $form->field($model, 'bpAcreage') ?>
+			    	<?= $form->field($model, 'bpAcreage')->hint('Đơn vị m<sup>2</sup>') ?>
 			    	<?= $form->field($model, 'bpApartmentNo') ?>
 			    	<?= $form->field($model, 'bpFloorNo') ?>
 			    	<?= $form->field($model, 'bpFacilities') ?>
+			    	<?= $form->field($model, 'bpHotline')->textArea()->hint('Mổi số điện thoại trên 1 dòng') ?>
 			    </li>
 			    <li>
+			    	<?= $form->field($model, 'bpMapLocationDes')->widget(CKEditor::className(), [
+			    		'editorOptions' => [
+							'preset' => 'basic',
+							'inline' => false,
+							'removePlugins' => 'image'
+			    		]
+			    	]) ?>
 			    	<?= $form->field($model, 'bpMapLocation')->widget(FileUploadUI::className(), ['url' => Url::to('/express/upload/building-project-image')]) ?>
 			    </li>
 			    <li>
+			    	<?= $form->field($model, 'bpFacilitiesDetailDes')->widget(CKEditor::className(), [
+			    		'editorOptions' => [
+							'preset' => 'basic',
+							'inline' => false,
+							'removePlugins' => 'image'
+			    		]
+			    	]) ?>
 			    	<?= $form->field($model, 'bpFacilitiesDetail')->widget(FileUploadUI::className(), ['url' => Url::to('/express/upload/building-project-image')]) ?>
 			    </li>
 			    <li>
-			    	<?= $form->field($model, 'bpVideo') ?>
+			    	<?= $form->field($model, 'bpVideo')->textArea(['style' => 'height: 120px;'])->hint('Nhập đường dẫn youtube, mổi video trên 1 dòng') ?>
 			    </li>
 			    <li>
-			    	<div id="progress-list">
+			    	<div id="progress-list" class="dynamic-list">
 			    		<?php
 			    			$countBpp = 0;
 			    			if($model->bpProgress):
@@ -126,6 +150,72 @@ for($i = 1998; $i <= 2020; $i++) {
 			    	</div>
 			    	<?= Html::button('<i class="glyphicon glyphicon-plus"></i><span style="margin-left: 4px;">Thêm</span>', ['class' => 'btn', 'id' => 'btn-add-progress', 'data-count' => $countBpp]) ?>
 			    </li>
+			    <?php foreach($areaTypes as $name => $areaType): $area = json_decode($model->$name); ?>
+			    <li>
+			    	<div class="floor-plan-list dynamic-list">
+			    		<?php
+			    			$count = 0;
+			    			
+			    			$count = count($area->floorPlan);
+			    			foreach($area->floorPlan as $k => $bpa):
+			    		?>
+				    	<div class="panel panel-default">
+				    		<div class="panel-body">
+				    			<i class="glyphicon glyphicon-remove"></i>
+				    			<div class="form-group">
+									<label class="control-label" for="buildingproject-bpvideo">Tầng</label>
+									<?= Html::textInput('BuildingProject[' . $name . '][floorPlan][' . $k . '][title]', $bpa->title, ['class' => 'form-control']) ?>
+									<div class="help-block"></div>
+								</div>
+								<div class="form-group">
+									<label class="control-label" for="buildingproject-bpvideo">Ảnh</label>
+									<?= FileUploadUI::widget([
+											'name' => 'BuildingProject[' . $name . '][floorPlan][' . $k . '][images]',
+											'id' => $name . '0',
+											'url' => Url::to('/express/upload/building-project-image'),
+											'fieldOptions' => ['values' => $bpa->images]
+										]) ?>
+									<div class="help-block"></div>
+								</div>
+				    		</div>
+				    	</div>
+				    	<?php endforeach;?>
+			    	</div>
+			    	<?= Html::button('<i class="glyphicon glyphicon-plus"></i><span style="margin-left: 4px;">Thêm</span>', ['class' => 'btn btn-clone', 'data-name' => $name, 'data-count' => $count]) ?>
+			    </li>
+			    <li>
+			    	<?= CKEditor::widget([
+			    		'value' => $area->payment,
+						'name' => 'BuildingProject[' . $name . '][payment]',
+						'editorOptions' => [
+							'preset' => 'basic',
+							'inline' => false,
+						]
+					]); ?>
+			    </li>
+			    <li>
+			    	<?= CKEditor::widget([
+			    		'value' => $area->promotion,
+						'name' => 'BuildingProject[' . $name . '][promotion]',
+						'editorOptions' => [
+							'preset' => 'basic',
+							'inline' => false,
+						]
+					]); ?>
+			    </li>
+			    <li>
+			    	<div class="form-group">
+						<label class="control-label" for="buildingproject-bpvideo">Tài liệu bán hàng</label>
+						<?= FileUploadUI::widget([
+							'name' => 'BuildingProject[' . $name . '][document]',
+							'url' => Url::to('/express/upload/building-project-image'),
+							'fieldOptions' => ['values' => $area->document],
+				    		'clientOptions' => ['maxNumberOfFiles' => 1],
+						]) ?>
+						<div class="help-block"></div>
+					</div>
+			    </li>
+			    <?php endforeach; ?>
 			</ul>
     	</div>
 		<div class="form-group">

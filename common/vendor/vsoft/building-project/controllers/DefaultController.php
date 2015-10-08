@@ -23,13 +23,15 @@ class DefaultController extends Controller
     		
     		$buildingProject->load(Yii::$app->request->post());
     		
+    		$response = ['success' => true];
+    		
     		if($buildingProject->validate()) {
     			$buildingProject->save(false);
     		} else {
-    			var_dump($buildingProject->getErrors());
+    			$response['errors'] = $buildingProject->getErrors();
     		}
     		
-    		return [];
+    		return $response;
     	}
         
     	return $this->render('create', ['model' => $buildingProject]);
@@ -45,6 +47,18 @@ class DefaultController extends Controller
     	
     		if($buildingProject->validate()) {
     			$buildingProject->save(false);
+    			
+    			$deleteLater = array_filter(explode(',', Yii::$app->request->post('deleteLater')));
+    			
+    			foreach ($deleteLater as $orginal) {
+    				$pathInfo = pathinfo($orginal);
+    				$thumb = $pathInfo['filename'] .  '.thumb.' . $pathInfo['extension'];
+    				
+    				$dir = \Yii::getAlias('@store') . '/building-project-images';
+    		 
+		    		unlink($dir . '/' . $orginal);
+		    		unlink($dir . '/' . $thumb);
+    			}
     		} else {
     			var_dump($buildingProject->getErrors());
     		}

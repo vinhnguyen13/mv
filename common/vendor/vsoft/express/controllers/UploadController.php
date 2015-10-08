@@ -69,20 +69,20 @@ class UploadController extends Controller
 	    		'size'          => $image->size,
 	    		'deleteUrl'     => Url::to(['upload/delete-image', 'orginal' => $orginal, 'thumbnail' => $thumbnail]),
 	    		'deleteType'    => 'DELETE',
+				'deleteLater'	=> 0,
     		];
     		return $response;
     	}
     }
-    public function actionDeleteImage($orginal, $thumbnail) {
-    	$dir = \Yii::getAlias('@store') . '/building-project-images';
-    	
-    	$image = $dir . '/' . $orginal;
-    	$thumbnail = $dir . '/' . $thumbnail;
-    	
-    	unlink($image);
-    	unlink($thumbnail);
-    	
+    public function actionDeleteImage($orginal, $thumbnail, $deleteLater = false) {
     	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    	
+    	if(! $deleteLater) {
+    		$dir = \Yii::getAlias('@store') . '/building-project-images';
+    		 
+    		unlink($dir . '/' . $orginal);
+    		unlink($dir . '/' . $thumbnail);
+    	}
     	
     	return ['files' => []];
     }

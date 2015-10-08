@@ -139,10 +139,10 @@ ul {
     height: 14px;
     width: 14px;
 }
-#progress-list .panel-body {
+.panel-body {
 	position: relative;
 }
-#progress-list .glyphicon-remove {
+.panel-body .glyphicon-remove {
 	position: absolute;
 	right: 8px;
 	top: 8px;
