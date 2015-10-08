@@ -65,7 +65,7 @@ return [
             'rules' => [
                 'site/login' => 'user/security/login',
                 'site/signup' => 'user/registration/register',
-                'abc/<action:\w+>' => 'news/<action>',
+                'news/<action:\w+>' => 'news/<action>',
 
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',
 //                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
