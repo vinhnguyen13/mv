@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 facebookft">
-        <img src="img\facebookfooter.png">
+        <img src="<?=Yii::$app->view->theme->baseUrl."/resources/img/facebookfooter.png"?>">
     </div>
     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 contact">
         <h2 class="titlebar">metvuong.com</h2>
