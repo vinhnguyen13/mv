@@ -55,7 +55,11 @@ $this->registerJs('buildingProject.initView()', View::POS_READY, 'initform');
 		    <tr class="info"><th colspan="2">Bản đồ vị trí</th></tr>
 		    <tr>
 		    	<td><?= $model->getAttributeLabel('bpMapLocationDes') ?></td>
-		    	<td><?= $model->bpMapLocationDes ?></td>
+		    	<td>
+		    		<?php if($model->bpMapLocationDes): ?>
+		    		<a href="#" data-content="<?= htmlentities($model->bpMapLocationDes) ?>" class="content-popup">Xem</a>
+		    		<?php endif; ?>
+		    	</td>
 		    </tr>
 		    <tr>
 		    	<td><?= $model->getAttributeLabel('bpMapLocation') ?></td>
@@ -64,7 +68,11 @@ $this->registerJs('buildingProject.initView()', View::POS_READY, 'initform');
 		    <tr class="info"><th colspan="2">Tiện ích</th></tr>
 		    <tr>
 		    	<td><?= $model->getAttributeLabel('bpFacilitiesDetailDes') ?></td>
-		    	<td><?= $model->bpFacilitiesDetailDes ?></td>
+		    	<td>
+		    		<?php if($model->bpFacilitiesDetailDes): ?>
+		    		<a href="#" data-content="<?= htmlentities($model->bpFacilitiesDetailDes) ?>" class="content-popup">Xem</a>
+		    		<?php endif; ?>
+		    	</td>
 		    </tr>
 		    <tr>
 		    	<td><?= $model->getAttributeLabel('bpFacilitiesDetail') ?></td>
@@ -123,11 +131,19 @@ $this->registerJs('buildingProject.initView()', View::POS_READY, 'initform');
 		    </tr>
 		    <tr>
 		    	<td>Giá bán & thanh toán</td>
-		    	<td><?= $areaType['payment'] ?></td>
+		    	<td>
+		    		<?php if($areaType['payment']) : ?>
+		    		<a href="#" data-content="<?= htmlentities($areaType['payment']) ?>" class="content-popup">Xem</a>
+		    		<?php endif; ?>
+		    	</td>
 		    </tr>
 		    <tr>
 		    	<td>Chương trình bán hàng</td>
-		    	<td><?= $areaType['promotion'] ?></td>
+		    	<td>
+		    		<?php if($areaType['promotion']) : ?>
+		    		<a href="#" data-content="<?= htmlentities($areaType['promotion']) ?>" class="content-popup">Xem</a>
+		    		<?php endif; ?>
+		    	</td>
 		    </tr>
 		    <tr>
 		    	<td>Tài liệu bán hàng</td>

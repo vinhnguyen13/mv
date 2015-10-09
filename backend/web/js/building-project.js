@@ -158,6 +158,13 @@ var buildingProject = {
 			}
 		});
 		$('.video').colorbox({current: '', rel: 'video', iframe:true, innerWidth:640, innerHeight:390});
+		$('.content-popup').colorbox({
+			inline: true,
+			href: function() {
+				var content = $(this).data('content');
+				return $('<div style="max-width: 800px;">' + content + '</div>');
+			}
+		});
 	}
 };
 
