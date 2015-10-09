@@ -28,6 +28,7 @@ class DefaultController extends Controller
     		
     		if($buildingProject->validate()) {
     			$buildingProject->save(false);
+    			$response['redirect'] = Url::to(['view', 'id' => $buildingProject->id]);
     		} else {
     			$response['success'] = false;
     			$response['errors'] = $buildingProject->getErrors();
@@ -70,6 +71,23 @@ class DefaultController extends Controller
     		}
     		 
     		return $this->render('update', ['model' => $buildingProject]);
+    	} else {
+    		throw new NotFoundHttpException('The requested page does not exist.');
+    	}
+    }
+    /**
+     * Displays a single CmsShow model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionView($id)
+    {
+    	$buildingProject = BuildingProject::findOne($id);
+    	
+    	if($buildingProject) {
+    		return $this->render('view', [
+				'model' => $buildingProject,
+			]);
     	} else {
     		throw new NotFoundHttpException('The requested page does not exist.');
     	}

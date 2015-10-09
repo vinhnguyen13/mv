@@ -47,7 +47,7 @@ $(document).ready(function(){
 			loading.remove();
 			
 			if(response.success) {
-				
+				location.href = response.redirect;
 			} else {
 				for(error in response.errors) {
 					var parent = $('#buildingproject-' + error.toLowerCase()).closest('.form-group');

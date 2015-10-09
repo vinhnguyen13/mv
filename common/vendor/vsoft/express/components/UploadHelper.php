@@ -7,6 +7,9 @@ namespace vsoft\express\components;
  * Time: 1:32 PM
  */
 use yii\image\drivers\Image;
+use yii\helpers\Url;
+use yii\helpers\Html;
+
 class UploadHelper{
     public $image;
     public $destination;
@@ -56,5 +59,18 @@ class UploadHelper{
     	}
     	 
     	return false;
+    }
+    
+    public static function getThumbs($files, $html = false, $options = []) {
+    	$gallery = explode(',', $files);
+    	$images = '';
+    	
+    	foreach($gallery as $gal) {
+    		$pathInfo = pathinfo($gal);
+    		$image = Url::to('/store/building-project-images/' . $pathInfo['filename'] .  '.thumb.' . $pathInfo['extension']);
+    		
+    		$images .= Html::img($image, $options);
+    	}
+    	return $images;
     }
 }

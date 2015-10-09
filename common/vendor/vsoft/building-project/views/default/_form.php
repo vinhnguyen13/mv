@@ -45,6 +45,7 @@ for($i = 1998; $i <= 2020; $i++) {
 		    <li class="show-content"><a href="#">Tiện ích</a></li>
 		    <li class="show-content"><a href="#">Phim 3D dự án</a></li>
 		    <li class="show-content"><a href="#">Tiến độ xây dựng</a></li>
+		    <li class="show-content"><a href="#">SEO</a></li>
 		</ul>
 		<div class="seperator"></div>
 		<ul class="bp-contents">
@@ -114,6 +115,7 @@ for($i = 1998; $i <= 2020; $i++) {
 							'resize_enabled' => true
 			    		]
 			    	]) ?>
+			    	
 			    	<?= $form->field($model, 'bpFacilitiesDetail')->widget(FileUploadUI::className(), ['url' => Url::to('/express/upload/building-project-image')]) ?>
 			    </li>
 			    <li>
@@ -155,6 +157,11 @@ for($i = 1998; $i <= 2020; $i++) {
 			    	</div>
 			    	<?= Html::button('<i class="glyphicon glyphicon-plus"></i><span style="margin-left: 4px;">Thêm</span>', ['class' => 'btn', 'id' => 'btn-add-progress', 'data-count' => $countBpp]) ?>
 			    </li>
+			    <li>
+			    	<?= $form->field($model, 'seo_title') ?>
+			    	<?= $form->field($model, 'seo_keywords') ?>
+			    	<?= $form->field($model, 'seo_description') ?>
+			    </li>
 			    <?php foreach($areaTypes as $name => $areaType): $area = json_decode($model->$name); ?>
 			    <li>
 			    	<?= Html::hiddenInput('BuildingProject[' . $name . '][floorPlan]', '') ?>
@@ -175,7 +182,7 @@ for($i = 1998; $i <= 2020; $i++) {
 									<label class="control-label" for="buildingproject-bpvideo">Ảnh</label>
 									<?= FileUploadUI::widget([
 											'name' => 'BuildingProject[' . $name . '][floorPlan][' . $k . '][images]',
-											'id' => $name . '0',
+											'id' => $name . $k,
 											'url' => Url::to('/express/upload/building-project-image'),
 											'fieldOptions' => ['values' => $bpa->images]
 										]) ?>
@@ -195,7 +202,8 @@ for($i = 1998; $i <= 2020; $i++) {
 							'preset' => 'basic',
 							'inline' => false,
 							'height' => 150,
-							'resize_enabled' => true
+							'resize_enabled' => true,
+							'removePlugins' => '',
 						]
 					]); ?>
 			    </li>
@@ -207,7 +215,8 @@ for($i = 1998; $i <= 2020; $i++) {
 							'preset' => 'basic',
 							'inline' => false,
 							'height' => 150,
-							'resize_enabled' => true
+							'resize_enabled' => true,
+							'removePlugins' => '',
 						]
 					]); ?>
 			    </li>
