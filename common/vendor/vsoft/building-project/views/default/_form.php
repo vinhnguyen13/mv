@@ -12,11 +12,10 @@ use yii\web\View;
 use vsoft\buildingProject\models\BuildingProject;
 
 $this->registerJsFile(Yii::getAlias('@web') . '/js/building-project.js', ['depends' => ['yii\web\YiiAsset']]);
-$this->registerJsFile(Yii::getAlias('@web') . '/js/jquery-ui.min.js', ['depends' => ['yii\web\YiiAsset']]);
 $this->registerJsFile(Yii::getAlias('@web') . '/js/gmap.js', ['depends' => ['yii\web\YiiAsset']]);
 $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=initMap', ['depends' => ['yii\web\YiiAsset']]);
 $this->registerCssFile(Yii::getAlias('@web') . '/css/building-project.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
-$this->registerCssFile(Yii::getAlias('@web') . '/css/jquery-ui.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
+$this->registerJs('buildingProject.initForm()', View::POS_READY, 'initform');
 
 $areaTypes = BuildingProject::getAreaTypes();
 
@@ -87,11 +86,12 @@ for($i = 1998; $i <= 2020; $i++) {
 					</div>
 			    	<?= $form->field($model, 'bpType') ?>
 			    	<?= $form->field($model, 'bpAcreage') ?>
-			    	<?= $form->field($model, 'bpAcreageCenter') ?>
+			    	<?= $form->field($model, 'bpAcreageCenter')->textArea() ?>
 			    	<?= $form->field($model, 'bpApartmentNo') ?>
 			    	<?= $form->field($model, 'bpFloorNo') ?>
 			    	<?= $form->field($model, 'bpFacilities') ?>
 			    	<?= $form->field($model, 'bpHotline')->textArea()->hint('Mổi số điện thoại trên 1 dòng') ?>
+			    	<?= $form->field($model, 'bpWebsite') ?>
 			    </li>
 			    <li>
 			    	<?= $form->field($model, 'bpMapLocationDes')->widget(CKEditor::className(), [
@@ -119,7 +119,7 @@ for($i = 1998; $i <= 2020; $i++) {
 			    	<?= $form->field($model, 'bpFacilitiesDetail')->widget(FileUploadUI::className(), ['url' => Url::to('/express/upload/building-project-image')]) ?>
 			    </li>
 			    <li>
-			    	<?= $form->field($model, 'bpVideo')->textArea(['style' => 'height: 120px;'])->hint('Nhập đường dẫn youtube, mổi video trên 1 dòng') ?>
+			    	<?= $form->field($model, 'bpVideo')->textArea(['style' => 'height: 120px;'])->hint('Nhập đường dẫn youtube, mổi video trên 1 dòng.<br />Ví dụ:<br />https://www.youtube.com/watch?v=BNJIcJyN3o4<br />https://www.youtube.com/watch?v=G1Xi8zDD37I') ?>
 			    </li>
 			    <li>
 			    	<div id="progress-list" class="dynamic-list">

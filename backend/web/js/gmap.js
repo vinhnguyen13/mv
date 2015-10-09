@@ -14,6 +14,10 @@ function initMap() {
 	buildGeoCodeButton();
 }
 
+function initMapView() {
+	
+}
+
 function buildMaker() {
 	marker = new google.maps.Marker({
 		draggable: true,

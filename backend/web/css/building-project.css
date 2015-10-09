@@ -33,9 +33,6 @@ ul {
 .bp-contents li {
 	cursor: pointer;
 }
-.bp-contents li.active a {
-	color: #FFF;
-}
 .bp-contents {
 	font-size: 13px;
 	color: #737373;
@@ -51,8 +48,9 @@ ul {
 .bp-contents a:hover {
 	background-color: #E7E7E7;
 }
-.bp-contents li.active a {
+.bp-contents .show-content.active a {
 	background-color: #42A5F5;
+	color: #FFF;
 }
 .bp-contents label {
 	font-weight: normal;
@@ -159,6 +157,52 @@ ul {
     bottom: 0px;
     left: 0px;
     right: 0px;
-    background: rgba(0, 0, 0, 0.3) url(images/loading.gif) center center no-repeat;
+    background: rgba(0, 0, 0, 0.3) url(images/submit-loading.gif) center center no-repeat;
     z-index: 9999;
+}
+ul.list {
+	padding-left: 18px;
+	margin: 0;
+	list-style-type: disc;
+}
+.gal {
+	margin-right: 8px;
+	cursor: pointer;
+}
+button {
+	outline: none;
+}
+.videos:after {
+	content: '';
+	display: block;
+	clear: left;
+}
+.videos li {
+	float: left;
+	margin-right: 8px;
+}
+.videos li:last-child {
+	margin-right: 0px;
+}
+.videos li a {
+	position: relative;
+}
+.videos li .play {
+	position: absolute;
+	width: 32px;
+	height: 32px;
+	background-image: url(images/play.png);
+	left: 50%;
+	top: 50%;
+	margin-left: -16px;
+	margin-top: -16px;
+}
+.bp-detail td {
+	height: 34px;
+}
+.floorplan {
+	margin-bottom: 12px;
+}
+td .floorplan:last-child {
+	margin-bottom: 0px;
 }

@@ -62,12 +62,16 @@ class UploadHelper{
     }
     
     public static function getThumbs($files, $html = false, $options = []) {
-    	$gallery = explode(',', $files);
+    	$gallery = array_filter(explode(',', $files));
     	$images = '';
     	
     	foreach($gallery as $gal) {
     		$pathInfo = pathinfo($gal);
     		$image = Url::to('/store/building-project-images/' . $pathInfo['filename'] .  '.thumb.' . $pathInfo['extension']);
+    		
+    		if($options['class'] = 'gal') {
+    			$options['data-href'] = Url::to('/store/building-project-images/' . $gal);
+    		}
     		
     		$images .= Html::img($image, $options);
     	}

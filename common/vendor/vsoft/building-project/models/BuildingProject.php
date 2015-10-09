@@ -15,7 +15,7 @@ class BuildingProject extends CmsShow {
 	private static $areaTypes = [];
 	private static $_customFields = [];
 	private static $customFields = ['bpGallery', 'bpLogo', 'bpLocation', 'bpType', 'bpAcreage', 'bpAcreageCenter', 'bpApartmentNo', 'bpFloorNo', 'bpFacilities', 
-									'bpMapLocation', 'bpMapLocationDes', 'bpFacilitiesDetail', 'bpFacilitiesDetailDes', 'bpVideo', 'bpProgress', 'bpLat', 'bpLng', 'bpHotline'];
+									'bpMapLocation', 'bpMapLocationDes', 'bpFacilitiesDetail', 'bpFacilitiesDetailDes', 'bpVideo', 'bpProgress', 'bpLat', 'bpLng', 'bpHotline', 'bpWebsite'];
 	
 	public static function getAreaTypes() {
 		if(!self::$areaTypes) {
@@ -111,8 +111,8 @@ class BuildingProject extends CmsShow {
 			'bpApartmentNo' => Module::t('cms', 'Số lượng căn hộ'),
 			'bpFloorNo' => Module::t('cms', 'Số tầng'),
 			'bpFacilities' => Module::t('cms', 'Tiện ích'),
-			'bpMapLocation' => Module::t('cms', 'Bản đồ vị trí'),
-			'bpFacilitiesDetail' => Module::t('cms', 'Tiện ích'),
+			'bpMapLocation' => Module::t('cms', 'Ảnh bản đồ vị trí'),
+			'bpFacilitiesDetail' => Module::t('cms', 'Ảnh thể hiện tiện ích'),
 			'bpFacilitiesDetailDes' =>  Module::t('cms', 'Mô tả thêm'),
 			'bpVideo' => Module::t('cms', 'Phim 3D dự án'),
 			'bpProgress' => Module::t('cms', 'Tiến độ xây dựng'),
@@ -159,5 +159,35 @@ class BuildingProject extends CmsShow {
     	}
     	
     	return $buildingProject;
+    }
+    
+    public function formatMultiline($field) {
+    	$values = explode(PHP_EOL, $this->$field);
+    	$string = '';
+    	
+    	if(count($values) > 1) {
+    		$string .= '<ul class="list">';
+    		foreach ($values as $value) {
+    			$string .= '<li>' . $value . '</li>';
+    		}
+    		$string .= '</ul>';
+    	} else {
+    		$string = $this->$field;
+    	}
+    	
+    	return $string;
+    }
+    
+    public function getVideos() {
+    	$bpVideos = explode(PHP_EOL, $this->bpVideo);
+    	$string = '<ul class="videos">';
+    	foreach($bpVideos as $bpVideo) {
+    		parse_str(parse_url($bpVideo, PHP_URL_QUERY), $videoParams);
+    		$videoId = $videoParams['v'];
+    		$string .= '<li><a class="video" href="https://www.youtube.com/embed/' . $videoId . '?autoplay=1"><span class="play"></span><img src="http://img.youtube.com/vi/' . $videoId . '/1.jpg" /></a></li>';
+    	}
+    	$string .= '</ul>';
+    	
+    	return $string;
     }
 }
