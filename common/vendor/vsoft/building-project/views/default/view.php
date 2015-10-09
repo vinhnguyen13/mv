@@ -78,13 +78,18 @@ $this->registerJs('buildingProject.initView()', View::POS_READY, 'initform');
 		    <tr class="info"><th colspan="2">Tiến độ xây dựng</th></tr>
 	    	<?php
 	    		$bpProgress = json_decode($model->bpProgress, true);
-	    		foreach($bpProgress as $bpp) :
+	    		if($bpProgress) :
+	    			foreach($bpProgress as $bpp) :
 	    	?>
 	    	<tr>
 		    	<td>Tháng <?= $bpp['month']?>, năm <?= $bpp['year']?></td>
 		    	<td><?= UploadHelper::getThumbs($bpp['images'], true, ['class' => 'gal']) ?></td>
 	    	</tr>
-	    	<?php endforeach; ?>
+	    	<?php endforeach; else: ?>
+	    	<tr>
+		    	<td colspan="2"></td>
+	    	</tr>
+	    	<?php endif; ?>
 		    <tr class="info"><th colspan="2">SEO</th></tr>
 		    <tr>
 		    	<td><?= $model->getAttributeLabel('seo_title') ?></td>

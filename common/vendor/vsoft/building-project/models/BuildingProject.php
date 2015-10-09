@@ -10,7 +10,6 @@ use funson86\cms\Module;
  * @property string $bpProgress
  */
 class BuildingProject extends CmsShow {
-	const BUILDING_CATEGORY_ID = 1;
 	
 	private static $areaTypes = [];
 	private static $_customFields = [];
@@ -58,7 +57,7 @@ class BuildingProject extends CmsShow {
 	function loadDefaultValues($skipIfSet = true) {
 		parent::loadDefaultValues($skipIfSet);
 		
-		$this->catalog_id = self::BUILDING_CATEGORY_ID;
+		$this->catalog_id = \Yii::$app->params['buildingCatID'];
 		$this->bpLat = '10.783233';
 		$this->bpLng = '106.704479';
 		
@@ -179,7 +178,7 @@ class BuildingProject extends CmsShow {
     }
     
     public function getVideos() {
-    	$bpVideos = explode(PHP_EOL, $this->bpVideo);
+    	$bpVideos = array_filter(explode(PHP_EOL, $this->bpVideo));
     	$string = '<ul class="videos">';
     	foreach($bpVideos as $bpVideo) {
     		parse_str(parse_url($bpVideo, PHP_URL_QUERY), $videoParams);
