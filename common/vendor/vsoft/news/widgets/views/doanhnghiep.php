@@ -6,6 +6,8 @@
  *
  * Template 1 columns 1 rows
  */
+use yii\bootstrap\Html;
+
 ?>
 
 <div class="titlebg">
@@ -15,12 +17,12 @@
 foreach ($news as $k => $n) {
     ?>
     <div class="grd7">
-        <img src="store/news/show/<?= $n->banner ?>" alt="<?= $n->title ?>">
+        <?= Html::a("<img src=\"/store/news/show/$n->banner \" alt=\"$n->title\">" , ['view', 'id' => $n->id], ['style' => ['text-decoration' => 'none']]) ?>
 
-        <h3 class="cap rotobobold"><?= $n->title ?> </h3>
+        <h3 class="cap rotobobold"> <?= Html::a($n->title, ['view', 'id' => $n->id], ['style' => ['text-decoration' => 'none']]) ?> </h3>
 
         <p class="textcatbox">
-            <?= $n->brief?>
+            <?= strlen($n->brief) > 300 ? mb_substr($n->brief, 0, 300) . '...' : $n->brief ?>
         </p>
 
     </div>

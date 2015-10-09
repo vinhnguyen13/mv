@@ -104,4 +104,9 @@ class CmsShow extends \funson86\cms\models\CmsShow
         return $username->username;
     }
 
+    // ajax function to load next post
+    public function getShowOne(){
+
+    }
+
 }

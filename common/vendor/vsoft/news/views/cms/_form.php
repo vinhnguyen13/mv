@@ -69,7 +69,7 @@ use yii\widgets\ActiveForm;
             'mainClass' => 'input-group-lg'
         ]]) ?>
 
-    <?= $form->field($model, 'click')->textInput(['readonly' => true]) ?>
+    <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'status')->dropDownList(\vsoft\news\models\Status::labels()) ?>
 
