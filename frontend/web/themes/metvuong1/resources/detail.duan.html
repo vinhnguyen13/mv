@@ -26,7 +26,7 @@
 <body>
     <div class="headertop">
         <nav class="navbar navbar-default">
-            <div class="container-fluid">
+            <div class="container">
                 <div class="navbar-header">
                     <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
                         <span class="sr-only">Toggle navigation</span>
@@ -87,16 +87,6 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="login">
-                        <ul class="nav-pills">
-                            <li class="fa fa-twitter"></li>
-                            <li class="fa fa-facebook"></li>
-                            <li class="fa fa-google-plus"></li>
-                            <li class="falogin">Log In</li>
-                            <li class="linefa">|</li>
-                            <li class="Register">Register</li>
-                        </ul>
-                    </div>
                 </div>
                 <div class="navbar-collapse collapse" id="navbar" aria-expanded="false" style="height: 1px;">
                     <div class="input_searchshow">
@@ -117,32 +107,29 @@
                         </div>
                     </div>
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Bất động sản</a>
-                        </li>
-                        <li class="lines"></li>
-                        <li><a href="#">Chứng khoán</a>
-                        </li>
-                        <li class="lines"></li>
-                        <li><a href="#">Tài chính & ngân hàng</a>
-                        </li>
-                        <li class="lines"></li>
-                        <li><a href="#">Doanh Nghiệp</a>
-                        </li>
-                        <li class="lines"></li>
-                        <li><a href="#">kinh tế vĩ mô</a>
-                        </li>
-                        <li class="lines"></li>
-                        <li><a href="#">phong thủy</a>
-                        </li>
+                        <li class="active">
+                            <a href="#" class="home"></a>
+                            <li><a href="#">Bất động sản</a>
+                            </li>
+                            <li><a href="#">Chứng khoán</a>
+                            </li>
+                            <li><a href="#">Tài chính & ngân hàng</a>
+                            </li>
+                            <li><a href="#">Doanh Nghiệp</a>
+                            </li>
+                            <li><a href="#">kinh tế vĩ mô</a>
+                            </li>
+                            <li><a href="#">phong thủy</a>
+                            </li>
                     </ul>
                 </div>
                 <!--/.nav-collapse -->
             </div>
-            <!--/.container-fluid -->
+            <!--/.container -->
         </nav>
     </div>
     <div class="layout">
-        <div class="container-fluid">
+        <div class="container">
             <div class="row">
                 <div class="fromdk">
                     <form class="navbar-form navbar-left" role="search">
@@ -156,7 +143,7 @@
             <div class="row">
                 <h2 class="titleduan">Golden Mansion<span class="iconmenusmall"></span></h2>
 
-                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 listmenubar">
+                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 listmenubar">
                     <ul class="menubar">
                         <li class="active">
                             <span class="glyphicon glyphicon-menu-right"></span>Tổng quan dự án</li>
@@ -214,7 +201,7 @@
                             <span class="glyphicon glyphicon-menu-right"></span>Chương trình bán hàng</li>
                     </ul>
                 </div>
-                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 viewbar">
+                <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 viewbar">
                     <div class="barleft">
                         <span class="logoduan">
                             <img src="img\logoduan.png">
@@ -307,41 +294,45 @@
         </div>
     </div>
     <!---content-->
-    <footer>
-        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-            <h2 class="titlebar">metvuong.com</h2>
-            <p class="textfooter">metvuong.com là trang thông tin hàng đầu về thị trường bất động sản phục vụ nhà đầu tư. REIC viết chính về ngành bất động sản như: thị trường nhà ở, văn phòng, bán lẻ, nghỉ dưỡng...; và các ngành liên quan đến bất đtộng sản như vật liệu xây dựng, trang trí nội thất, bất động sản phục vụ công nghiệp... REIC trở thành một trong những mạng lưới thông tin bất động sản có nhiều độc giả yêu thích nhất tại Việt Nam.</p>
-            <div class="dkemail">
-                <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Nhập địa chỉ Email">
-                        <button type="submit" class="btn btn-default">đăng ký</button>
-                    </div>
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <h2 class="titlebar">metvuong.com</h2>
+                    <p class="textfooter">metvuong.com là trang thông tin hàng đầu về thị trường bất động sản phục vụ nhà đầu tư. REIC viết chính về ngành bất động sản như: thị trường nhà ở, văn phòng, bán lẻ, nghỉ dưỡng...; và các ngành liên quan đến bất đtộng sản như vật liệu xây dựng, trang trí nội thất, bất động sản phục vụ công nghiệp... REIC trở thành một trong những mạng lưới thông tin bất động sản có nhiều độc giả yêu thích nhất tại Việt Nam.</p>
+                    <div class="dkemail">
+                        <form class="navbar-form navbar-left" role="search">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Nhập địa chỉ Email">
+                                <button type="submit" class="btn btn-default">đăng ký</button>
+                            </div>
 
-                </form>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 facebookft">
+                    <img src="img\facebookfooter.png">
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 contact">
+                    <h2 class="titlebar">metvuong.com</h2>
+                    <ul>
+                        <li class="litextleft">Address</li>
+                        <li class="litextright">22 &ndash; 22 Bis Lê Thánh Tôn, P. Bến Nghé, Quận 1, Hồ Chí Minh</li>
+                        <li class="litextleft">Phone</li>
+                        <li class="litextright">+ 84 8 3 8246666</li>
+                        <li class="litextleft">Fax</li>
+                        <li class="litextright">+ 84 8 3 8299556</li>
+                        <li class="litextleft">Email</li>
+                        <li class="litextright">sales@trungthuygroup.vn</li>
+                        <li class="litextleft">Hotline</li>
+                        <li class="litextright"><b>0903 090 909</b>
+                        </li>
+                    </ul>
+
+                </div>
             </div>
         </div>
-        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 facebookft">
-            <img src="img\facebookfooter.png">
-        </div>
-        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 contact">
-            <h2 class="titlebar">metvuong.com</h2>
-            <ul>
-                <li class="litextleft">Address</li>
-                <li class="litextright">22 &ndash; 22 Bis Lê Thánh Tôn, P. Bến Nghé, Quận 1, Hồ Chí Minh</li>
-                <li class="litextleft">Phone</li>
-                <li class="litextright">+ 84 8 3 8246666</li>
-                <li class="litextleft">Fax</li>
-                <li class="litextright">+ 84 8 3 8299556</li>
-                <li class="litextleft">Email</li>
-                <li class="litextright">sales@trungthuygroup.vn</li>
-                <li class="litextleft">Hotline</li>
-                <li class="litextright"><b>0903 090 909</b>
-                </li>
-            </ul>
-        </div>
-    </footer>
-
+    </div>
 
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.js"></script>
