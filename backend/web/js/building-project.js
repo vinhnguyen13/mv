@@ -160,6 +160,12 @@ var buildingProject = {
 			}
 		});
 		$('.video').colorbox({current: '', rel: 'video', iframe:true, innerWidth:640, innerHeight:390});
+		$('#map-view').colorbox({
+			inline: true,
+			href: $('#map'),
+			width: '920px',
+			height: '490px'
+		});
 		$('.content-popup').colorbox({
 			inline: true,
 			href: function() {

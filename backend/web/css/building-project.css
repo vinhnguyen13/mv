@@ -216,3 +216,11 @@ td .floorplan:last-child {
 #map-view {
 	float: right;
 }
+.map-view {
+	height: 420px;
+	width: 878px;
+	position: absolute;
+	visibility: hidden;
+	top: -1000px;
+	left: -1000px;
+}

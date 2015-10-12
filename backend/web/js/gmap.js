@@ -17,7 +17,16 @@ function initMap() {
 }
 
 function initMapView() {
-	
+	$(document).ready(function(){
+		initialCenter = {lat: Number($('#buildingproject-bplat').val()), lng: Number($('#buildingproject-bplng').val())};
+		
+		map = new google.maps.Map(document.getElementById('map'), {
+			center: initialCenter,
+		    zoom: 16
+		});
+		
+		buildMaker(false);
+	});
 }
 
 function buildMaker(draggable) {
@@ -28,15 +37,17 @@ function buildMaker(draggable) {
 	    position: initialCenter
 	});
 	
-	var infowindow = new google.maps.InfoWindow({content: '<div style="font-size: 12px;">Di chuyển con trỏ đến đúng vị trí mong muốn</div>'});
-	infowindow.open(map, marker);
-	
-	marker.addListener('dragend', function(evt) {
-		setField({lat: evt.latLng.lat(), lng: evt.latLng.lng()});
-	});
-	marker.addListener('mousedown', function() {
-		infowindow.close();
-	});
+	if(draggable) {
+		var infowindow = new google.maps.InfoWindow({content: '<div style="font-size: 12px;">Di chuyển con trỏ đến đúng vị trí mong muốn</div>'});
+		infowindow.open(map, marker);
+		
+		marker.addListener('dragend', function(evt) {
+			setField({lat: evt.latLng.lat(), lng: evt.latLng.lng()});
+		});
+		marker.addListener('mousedown', function() {
+			infowindow.close();
+		});
+	}
 }
 
 function buildGeoCodeButton() {

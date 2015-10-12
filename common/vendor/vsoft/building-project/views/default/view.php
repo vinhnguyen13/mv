@@ -43,7 +43,7 @@ $this->registerJs('buildingProject.initView()', View::POS_READY, 'initform');
 		    	<th><?= $model->getAttributeLabel('bpGallery') ?></th>
 		    	<td><?= UploadHelper::getThumbs($model->bpGallery, true, ['class' => 'gal', 'data-current' => 'Thư viện ảnh']) ?></td>
 		    </tr>
-		    <tr><th><?= $model->getAttributeLabel('bpLocation') ?></th><td><?= $model->bpLocation ?><a id="map-view" href="#">Xem bản đồ</a></td></tr>
+		    <tr><th><?= $model->getAttributeLabel('bpLocation') ?></th><td><?= $model->bpLocation ?><a id="map-view" href="#map">Xem bản đồ</a></td></tr>
 		    <tr><th><?= $model->getAttributeLabel('bpType') ?></th><td><?= $model->bpType ?></td></tr>
 		    <tr><th><?= $model->getAttributeLabel('bpAcreage') ?></th><td><?= $model->bpAcreage ?></td></tr>
 		    <tr><th><?= $model->getAttributeLabel('bpAcreageCenter') ?></th><td><?= $model->formatMultiline('bpAcreageCenter') ?></td></tr>
@@ -152,4 +152,9 @@ $this->registerJs('buildingProject.initView()', View::POS_READY, 'initform');
 		    <?php endif; endforeach; ?>
 		</tbody>
 	</table>
+	<div class="map-view" >
+		<div id="map" style="height: 100%; width: 100%"></div>
+	</div>
+	<?= Html::activeHiddenInput($model, 'bpLat') ?>
+	<?= Html::activeHiddenInput($model, 'bpLng') ?>
 </div>
