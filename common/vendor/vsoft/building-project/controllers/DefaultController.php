@@ -3,16 +3,24 @@
 namespace vsoft\buildingProject\controllers;
 
 use Yii;
-use yii\web\Controller;
 use yii\helpers\Url;
 use vsoft\buildingProject\models\BuildingProject;
 use yii\web\NotFoundHttpException;
+use vsoft\buildingProject\models\BuildingProjectSearch;
+use funson86\cms\controllers\backend\CmsShowController;
 
-class DefaultController extends Controller
+class DefaultController extends CmsShowController
 {
     public function actionIndex()
     {
-        return $this->render('index');
+        $searchModel = new BuildingProjectSearch();
+        $searchModel->catalog_id = \Yii::$app->params['buildingCatID'];
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
     public function actionCreate()
     {
@@ -48,7 +56,9 @@ class DefaultController extends Controller
     			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     			 
     			$buildingProject->load(Yii::$app->request->post());
-    			 
+    			
+    			$response = ['success' => true];
+    			
     			if($buildingProject->validate()) {
     				$buildingProject->save(false);
     				 
@@ -63,11 +73,14 @@ class DefaultController extends Controller
     					unlink($dir . '/' . $orginal);
     					unlink($dir . '/' . $thumb);
     				}
+    				
+    				$response['redirect'] = Url::to(['view', 'id' => $buildingProject->id]);
     			} else {
-    				var_dump($buildingProject->getErrors());
+    				$response['success'] = false;
+    				$response['errors'] = $buildingProject->getErrors();
     			}
     			 
-    			return [];
+    			return $response;
     		}
     		 
     		return $this->render('update', ['model' => $buildingProject]);

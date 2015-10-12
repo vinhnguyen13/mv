@@ -89,6 +89,9 @@ for($i = 1998; $i <= 2020; $i++) {
 			    	<?= $form->field($model, 'bpAcreageCenter')->textArea() ?>
 			    	<?= $form->field($model, 'bpApartmentNo') ?>
 			    	<?= $form->field($model, 'bpFloorNo') ?>
+			    	<?= $form->field($model, 'bpStartTime') ?>
+			    	<?= $form->field($model, 'bpEstimateFinished') ?>
+			    	<?= $form->field($model, 'bpOwnerType') ?>
 			    	<?= $form->field($model, 'bpFacilities') ?>
 			    	<?= $form->field($model, 'bpHotline')->textArea()->hint('Mổi số điện thoại trên 1 dòng') ?>
 			    	<?= $form->field($model, 'bpWebsite') ?>

@@ -149,7 +149,9 @@ var buildingProject = {
 	},
 	initView: function() {
 		$('.gal').colorbox({
-			current: '',
+			current: function() {
+				return $(this).data('current');
+			},
 			rel: function() {
 				return 'gal';
 			},

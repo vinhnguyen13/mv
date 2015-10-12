@@ -3,24 +3,26 @@ var marker;
 var initialCenter;
 
 function initMap() {
-	initialCenter = {lat: Number($('#buildingproject-bplat').val()), lng: Number($('#buildingproject-bplng').val())};
-	
-	map = new google.maps.Map(document.getElementById('map'), {
-		center: initialCenter,
-	    zoom: 16
+	$(document).ready(function(){
+		initialCenter = {lat: Number($('#buildingproject-bplat').val()), lng: Number($('#buildingproject-bplng').val())};
+		
+		map = new google.maps.Map(document.getElementById('map'), {
+			center: initialCenter,
+		    zoom: 16
+		});
+		
+		buildMaker(true);
+		buildGeoCodeButton();
 	});
-	
-	buildMaker();
-	buildGeoCodeButton();
 }
 
 function initMapView() {
 	
 }
 
-function buildMaker() {
+function buildMaker(draggable) {
 	marker = new google.maps.Marker({
-		draggable: true,
+		draggable: draggable,
 	    animation: google.maps.Animation.DROP,
 	    map: map,
 	    position: initialCenter

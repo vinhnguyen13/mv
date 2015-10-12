@@ -14,7 +14,8 @@ class BuildingProject extends CmsShow {
 	private static $areaTypes = [];
 	private static $_customFields = [];
 	private static $customFields = ['bpGallery', 'bpLogo', 'bpLocation', 'bpType', 'bpAcreage', 'bpAcreageCenter', 'bpApartmentNo', 'bpFloorNo', 'bpFacilities', 
-									'bpMapLocation', 'bpMapLocationDes', 'bpFacilitiesDetail', 'bpFacilitiesDetailDes', 'bpVideo', 'bpProgress', 'bpLat', 'bpLng', 'bpHotline', 'bpWebsite'];
+									'bpMapLocation', 'bpMapLocationDes', 'bpFacilitiesDetail', 'bpFacilitiesDetailDes', 'bpVideo', 'bpProgress', 'bpLat', 'bpLng',
+									'bpHotline', 'bpWebsite', 'bpStartTime', 'bpEstimateFinished', 'bpOwnerType'];
 	
 	public static function getAreaTypes() {
 		if(!self::$areaTypes) {
@@ -117,6 +118,9 @@ class BuildingProject extends CmsShow {
 			'bpProgress' => Module::t('cms', 'Tiến độ xây dựng'),
 			'bpHotline' => Module::t('cms', 'Hotline'),
 			'bpMapLocationDes' => Module::t('cms', 'Mô tả thêm'),
+			'bpStartTime' => Module::t('cms', 'Thời gian xây dựng'),
+			'bpEstimateFinished' => Module::t('cms', 'Dự kiến hoàn thành'),
+			'bpOwnerType' => Module::t('cms', 'Hình thức sở hữu'),
 		];
 	}
 	
@@ -149,15 +153,17 @@ class BuildingProject extends CmsShow {
     {
     	$buildingProject = static::findByCondition($condition)->one();
     	
-    	if($buildingProject) {
-    		$customFields = json_decode($buildingProject->content);
-    		 
-    		foreach ($customFields as $field => $value) {
-    			$buildingProject->$field = $value;
-    		}
+    	return $buildingProject;
+    }
+    
+    public function afterFind() {
+    	$customFields = json_decode($this->content);
+    	 
+    	foreach ($customFields as $field => $value) {
+    		$this->$field = $value;
     	}
     	
-    	return $buildingProject;
+    	parent::afterFind();
     }
     
     public function formatMultiline($field) {

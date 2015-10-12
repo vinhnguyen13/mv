@@ -38,12 +38,12 @@ $this->registerJs('buildingProject.initView()', View::POS_READY, 'initform');
     	<tbody>
     		<tr class="info"><th colspan="2">Tổng quan dự án</th></tr>
 		    <tr><th><?= $model->getAttributeLabel('title') ?></th><td><?= $model->title ?></td></tr>
-		    <tr><th><?= $model->getAttributeLabel('bpLogo') ?></th><td><?= UploadHelper::getThumbs($model->bpLogo, true, ['class' => 'gal']) ?></td></tr>
+		    <tr><th><?= $model->getAttributeLabel('bpLogo') ?></th><td><?= UploadHelper::getThumbs($model->bpLogo, true, ['class' => 'gal', 'data-current' => 'Logo']) ?></td></tr>
 		    <tr>
 		    	<th><?= $model->getAttributeLabel('bpGallery') ?></th>
-		    	<td><?= UploadHelper::getThumbs($model->bpGallery, true, ['class' => 'gal']) ?></td>
+		    	<td><?= UploadHelper::getThumbs($model->bpGallery, true, ['class' => 'gal', 'data-current' => 'Thư viện ảnh']) ?></td>
 		    </tr>
-		    <tr><th><?= $model->getAttributeLabel('bpLocation') ?></th><td><?= $model->bpLocation ?></td></tr>
+		    <tr><th><?= $model->getAttributeLabel('bpLocation') ?></th><td><?= $model->bpLocation ?><a id="map-view" href="#">Xem bản đồ</a></td></tr>
 		    <tr><th><?= $model->getAttributeLabel('bpType') ?></th><td><?= $model->bpType ?></td></tr>
 		    <tr><th><?= $model->getAttributeLabel('bpAcreage') ?></th><td><?= $model->bpAcreage ?></td></tr>
 		    <tr><th><?= $model->getAttributeLabel('bpAcreageCenter') ?></th><td><?= $model->formatMultiline('bpAcreageCenter') ?></td></tr>
@@ -63,7 +63,7 @@ $this->registerJs('buildingProject.initView()', View::POS_READY, 'initform');
 		    </tr>
 		    <tr>
 		    	<td><?= $model->getAttributeLabel('bpMapLocation') ?></td>
-		    	<td><?= UploadHelper::getThumbs($model->bpMapLocation, true, ['class' => 'gal']) ?></td>
+		    	<td><?= UploadHelper::getThumbs($model->bpMapLocation, true, ['class' => 'gal', 'data-current' => 'Bản đồ']) ?></td>
 		    </tr>
 		    <tr class="info"><th colspan="2">Tiện ích</th></tr>
 		    <tr>
@@ -76,7 +76,7 @@ $this->registerJs('buildingProject.initView()', View::POS_READY, 'initform');
 		    </tr>
 		    <tr>
 		    	<td><?= $model->getAttributeLabel('bpFacilitiesDetail') ?></td>
-		    	<td><?= UploadHelper::getThumbs($model->bpFacilitiesDetail, true, ['class' => 'gal']) ?></td>
+		    	<td><?= UploadHelper::getThumbs($model->bpFacilitiesDetail, true, ['class' => 'gal', 'data-current' => 'Tiện ích']) ?></td>
 		    </tr>
 		    <tr class="info"><th colspan="2"><?= $model->getAttributeLabel('bpVideo') ?></th></tr>
 		    <tr>
@@ -91,7 +91,7 @@ $this->registerJs('buildingProject.initView()', View::POS_READY, 'initform');
 	    	?>
 	    	<tr>
 		    	<td>Tháng <?= $bpp['month']?>, năm <?= $bpp['year']?></td>
-		    	<td><?= UploadHelper::getThumbs($bpp['images'], true, ['class' => 'gal']) ?></td>
+		    	<td><?= UploadHelper::getThumbs($bpp['images'], true, ['class' => 'gal', 'data-current' => 'Tiến độ xây dựng ' . $bpp['month'] . '-' . $bpp['year']]) ?></td>
 	    	</tr>
 	    	<?php endforeach; else: ?>
 	    	<tr>
@@ -123,8 +123,8 @@ $this->registerJs('buildingProject.initView()', View::POS_READY, 'initform');
 		    	<td>
 		    		<?php foreach ($areaType['floorPlan'] as $bpfp): ?>
 		    		<div class="floorplan">
-		    			<div><?= $bpfp['title'] ?></div>
-		    			<?= UploadHelper::getThumbs($bpfp['images']) ?>
+		    			<div><?= $bpfp['title'] ?>:</div>
+		    			<?= UploadHelper::getThumbs($bpfp['images'], true, ['class' => 'gal', 'data-current' => $bpfp['title']]) ?>
 		    		</div>
 		    		<?php endforeach; ?>
 		    	</td>

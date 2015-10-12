@@ -1,12 +1,35 @@
-<div class="buildingProject-default-index">
-    <h1><?= $this->context->action->uniqueId ?></h1>
+<?php
+
+use yii\helpers\Html;
+use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
+use funson86\cms\Module;
+
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\CmsShowSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = Module::t('cms', 'Cms Shows');
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<div class="cms-show-index">
+
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
     <p>
-        This is the view content for action "<?= $this->context->action->id ?>".
-        The action belongs to the controller "<?= get_class($this->context) ?>"
-        in the "<?= $this->context->module->id ?>" module.
+        <?= Html::a(Module::t('cms', 'Thêm dự án'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <p>
-        You may customize this page by editing the following file:<br>
-        <code><?= __FILE__ ?></code>
-    </p>
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            'title',
+			'created_at:date',
+			'updated_at:date',
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
+
 </div>
