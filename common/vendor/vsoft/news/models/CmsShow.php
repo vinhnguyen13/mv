@@ -97,7 +97,7 @@ class CmsShow extends \funson86\cms\models\CmsShow
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCatalog1()
+    public function getCatalog()
     {
         return $this->hasOne(CmsCatalog::className(), ['id' => 'catalog_id']);
     }
@@ -109,11 +109,6 @@ class CmsShow extends \funson86\cms\models\CmsShow
         else
             $username=User::findOne(Yii::$app->user->getId());
         return $username->username;
-    }
-
-    // ajax function to load next post
-    public function getShowOne(){
-
     }
 
 }
