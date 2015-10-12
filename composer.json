@@ -25,7 +25,8 @@
         "kartik-v/yii2-widget-fileinput": "@dev",
         "2amigos/yii2-file-upload-widget": "~1.0",
         "yurkinx/yii2-image": "dev-master",
-        "yiisoft/yii2-mongodb": "~2.0.0"
+        "yiisoft/yii2-mongodb": "~2.0.0",
+        "zelenin/yii2-slug-behavior": "~1.0@stable"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

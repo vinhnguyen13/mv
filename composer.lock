@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "27cb5c52104d748dd319233dd7632f18",
-    "content-hash": "d6ffd649f4e90272e2940131c119c6b0",
+    "hash": "c4d5487314edb75fe2484c154636fac1",
+    "content-hash": "60744225763168191eb2d7ddbab37d56",
     "packages": [
         {
             "name": "2amigos/yii2-file-upload-widget",
@@ -1656,6 +1656,95 @@
                 "yii2"
             ],
             "time": "2015-06-24 13:41:22"
+        },
+        {
+            "name": "zelenin/slugifier",
+            "version": "0.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zelenin/slugifier.git",
+                "reference": "c893d33536f7c2c9f445cac84a7ea428168dc1f0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zelenin/slugifier/zipball/c893d33536f7c2c9f445cac84a7ea428168dc1f0",
+                "reference": "c893d33536f7c2c9f445cac84a7ea428168dc1f0",
+                "shasum": ""
+            },
+            "require": {
+                "ext-intl": "*",
+                "php": ">=5.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Zelenin\\Slugifier\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aleksandr Zelenin",
+                    "email": "aleksandr@zelenin.me",
+                    "homepage": "http://zelenin.me",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Slug generation library",
+            "homepage": "https://github.com/zelenin/slugifier",
+            "keywords": [
+                "slug"
+            ],
+            "time": "2015-07-31 16:00:22"
+        },
+        {
+            "name": "zelenin/yii2-slug-behavior",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zelenin/yii2-slug-behavior.git",
+                "reference": "555b7d29cc4166316da9808f68cc177251124903"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zelenin/yii2-slug-behavior/zipball/555b7d29cc4166316da9808f68cc177251124903",
+                "reference": "555b7d29cc4166316da9808f68cc177251124903",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0",
+                "zelenin/slugifier": "~0.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "Zelenin\\yii\\behaviors\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aleksandr Zelenin",
+                    "email": "aleksandr@zelenin.me",
+                    "homepage": "http://zelenin.me",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Yii2 slug behavior",
+            "homepage": "https://github.com/zelenin/yii2-slug-behavior",
+            "keywords": [
+                "Behavior",
+                "slug",
+                "yii",
+                "yii2"
+            ],
+            "time": "2015-08-21 14:42:56"
         }
     ],
     "packages-dev": [
@@ -1971,7 +2060,8 @@
         "dektrium/yii2-user": 20,
         "funson86/yii2-blog": 20,
         "kartik-v/yii2-widget-fileinput": 20,
-        "yurkinx/yii2-image": 20
+        "yurkinx/yii2-image": 20,
+        "zelenin/yii2-slug-behavior": 0
     },
     "prefer-stable": false,
     "prefer-lowest": false,
