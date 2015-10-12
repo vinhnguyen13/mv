@@ -117,6 +117,7 @@ class BuildingProject extends CmsShow {
 			'bpVideo' => Module::t('cms', 'Phim 3D dự án'),
 			'bpProgress' => Module::t('cms', 'Tiến độ xây dựng'),
 			'bpHotline' => Module::t('cms', 'Hotline'),
+			'bpWebsite' => Module::t('cms', 'Website'),
 			'bpMapLocationDes' => Module::t('cms', 'Mô tả thêm'),
 			'bpStartTime' => Module::t('cms', 'Thời gian xây dựng'),
 			'bpEstimateFinished' => Module::t('cms', 'Dự kiến hoàn thành'),
