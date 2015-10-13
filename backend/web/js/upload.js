@@ -48,7 +48,7 @@ var customFileUpload = {
 		input.val(value.join(','));
 	},
 	attachUploadWidget: function(el) {
-		el.fileupload({"autoUpload":true,"uploadTemplateId":null,"downloadTemplateId":null,"previewCrop":true,"previewMinWidth":120,"previewMinHeight":120,"previewMaxWidth":120,"previewMaxHeight":120,"disableExifThumbnail":true,"formData":[],"url":"/express/upload/building-project-image"});
+		el.fileupload({"autoUpload":true,"uploadTemplateId":null,"downloadTemplateId":null,"previewCrop":true,"previewMinWidth":120,"previewMinHeight":120,"previewMaxWidth":120,"previewMaxHeight":120,"disableExifThumbnail":true,"formData":[],"url":"/express/upload/image"});
 		el.on('fileuploadadd', function(e, data) {return customFileUpload.fileuploadadd(e, data, this);});
 		el.on('fileuploaddone', function(e, data) {customFileUpload.fileuploaddone(e, data, this);});
 		el.on('fileuploaddestroyed', function(e, data) {customFileUpload.fileuploaddestroyed(e, data, this);});
