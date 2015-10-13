@@ -15,6 +15,8 @@ use yii\bootstrap\Html;
     <!--row01-->
     <div class="row">
         <input id="current_id" type="hidden" value="<?=$news->id?>">
+        <input id="current_slug" type="hidden" value="<?=$news->slug?>">
+        <input id="current_title" type="hidden" value="<?=$news->title?>">
         <input id="cat_id" type="hidden" value="<?=$news->catalog_id?>">
 
         <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 rowleft" id="postResult">
@@ -59,9 +61,14 @@ use yii\bootstrap\Html;
 </div>
 
 <script type="text/javascript">
+    $(document).ready(function(){
+        document.title = '<?=$news->title?>';
+    });
+
     $(window).scroll(function () {
         var currentID = $('#current_id').val();
         var catID = $('#cat_id').val();
+        var height = $(window).scrollTop();
         if ($(window).scrollTop() == $(document).height() - $(window).height()) {
             if(currentID > 0) {
                 $.ajax({
@@ -70,6 +77,9 @@ use yii\bootstrap\Html;
                     success: function (data) {
                         if (data) {
                             $('#current_id').val(data.id);
+                            $('#current_slug').val(data.slug);
+                            $('#current_title').val(data.title);
+                            document.title = data.title;
                             var time = timeConverter(data.created_at);
                             $('#postResult').append(
                                 '<hr><div class="post_info"><?= Html::a($news->getCatalog()->one()->title .' ', ['list', 'cat_id' => $news->catalog_id], ['style' => ['text-decoration' => 'none']]) ?>' + time + '</div>' +
@@ -94,7 +104,7 @@ use yii\bootstrap\Html;
                                     '<div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news/view')?>?id=' + data.id + '" data-width="600" data-numposts="3" ></div>' +
                                     '</div>' +
                                 '</div>');
-
+                            window.history.pushState("", data.title, data.id+"-"+data.slug);
 //                        console.log(data);
                         }
                         FB.XFBML.parse(document.getElementById('postResult'));
@@ -106,7 +116,6 @@ use yii\bootstrap\Html;
                 });
             }
         }
-
     });
 
 
@@ -127,5 +136,6 @@ use yii\bootstrap\Html;
         var time = dateFormatted + '/' + month + '/' + year + ' ' + hourFormatted + ':' + minuteFormatted + ' ' + morning ;
         return time;
     }
+
 
 </script>
