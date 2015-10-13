@@ -68,6 +68,8 @@ class FileUploadUI extends FU {
 		
 		$values = array_filter(explode(',', $values));
 		
+		$folder = isset($this->fieldOptions['folder']) ? $this->fieldOptions['folder'] : 'building-project-images';
+		
 		if($values) {
 			$files = [];
 			
@@ -77,8 +79,8 @@ class FileUploadUI extends FU {
 				$thumb = $pathInfo['filename'] .  '.thumb.' . $pathInfo['extension'];
 					
 				$files[] = [
-					'url'           => Url::to('/store/building-project-images/' . $value),
-					'thumbnailUrl'  => Url::to('/store/building-project-images/' . $thumb),
+					'url'           => Url::to("/store/$folder/" . $value),
+					'thumbnailUrl'  => Url::to("/store/$folder/" . $thumb),
 					'name'          => $value,
 					'type'          => 'image/jpeg',
 					'size'          => '1',
