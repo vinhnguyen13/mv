@@ -38,14 +38,14 @@ class UploadController extends Controller
     	}
     }
     
-    public function actionBuildingProjectImage() {
+    public function actionImage($folder = 'building-project-images') {
     	if($_FILES) {
     		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
     		// $fieldName = key($_FILES) . '[' . key(current(current($_FILES))) . ']';
     		
     		$image = UploadedFile::getInstanceByName('upload');
-    		$dir = \Yii::getAlias('@store') . '/building-project-images';
+    		$dir = \Yii::getAlias('@store') . "/$folder";
     		$uniqid = uniqid();
     		$extension = pathinfo($image->name, PATHINFO_EXTENSION);
     		
@@ -62,23 +62,23 @@ class UploadController extends Controller
     		$orginalRes->resize(120, 120, $resizingConstraints)->crop(120, 120)->save($thumbnailPath);
 	    	
     		$response['files'][] = [
-	    		'url'           => Url::to('/store/building-project-images/' . $orginal),
-	    		'thumbnailUrl'  => Url::to('/store/building-project-images/' . $thumbnail),
+	    		'url'           => Url::to("/store/$folder/". $orginal),
+	    		'thumbnailUrl'  => Url::to("/store/$folder/" . $thumbnail),
 	    		'name'          => $orginal,
 	    		'type'          => $image->type,
 	    		'size'          => $image->size,
-	    		'deleteUrl'     => Url::to(['upload/delete-image', 'orginal' => $orginal, 'thumbnail' => $thumbnail]),
+	    		'deleteUrl'     => Url::to(['upload/delete-image', 'orginal' => $orginal, 'thumbnail' => $thumbnail, 'folder' => $folder]),
 	    		'deleteType'    => 'DELETE',
 				'deleteLater'	=> 0,
     		];
     		return $response;
     	}
     }
-    public function actionDeleteImage($orginal, $thumbnail, $deleteLater = false) {
+    public function actionDeleteImage($orginal, $thumbnail, $deleteLater = false, $folder = 'building-project-images') {
     	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     	
     	if(! $deleteLater) {
-    		$dir = \Yii::getAlias('@store') . '/building-project-images';
+    		$dir = \Yii::getAlias('@store') . '/' . $folder;
     		 
     		unlink($dir . '/' . $orginal);
     		unlink($dir . '/' . $thumbnail);

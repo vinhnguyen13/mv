@@ -71,9 +71,9 @@ for($i = 1998; $i <= 2020; $i++) {
 			    <li class="active">
 			    	<?= $form->field($model, 'title') ?>
 			    	<?= $form->field($model, 'bpLogo')->widget(FileUploadUI::className(), [
-						'url' => Url::to('/express/upload/building-project-image'),
+						'url' => Url::to('/express/upload/image'),
 						'clientOptions' => ['maxNumberOfFiles' => 1] ]) ?>
-					<?= $form->field($model, 'bpGallery')->widget(FileUploadUI::className(), ['url' => Url::to('/express/upload/building-project-image')]) ?>
+					<?= $form->field($model, 'bpGallery')->widget(FileUploadUI::className(), ['url' => Url::to('/express/upload/image')]) ?>
 			    	<div class="form-group">
 						<label class="control-label"><?= $model->getAttributeLabel('bpLocation') ?></label>
 						<div>
@@ -106,7 +106,7 @@ for($i = 1998; $i <= 2020; $i++) {
 							'resize_enabled' => true
 			    		]
 			    	]) ?>
-			    	<?= $form->field($model, 'bpMapLocation')->widget(FileUploadUI::className(), ['url' => Url::to('/express/upload/building-project-image')]) ?>
+			    	<?= $form->field($model, 'bpMapLocation')->widget(FileUploadUI::className(), ['url' => Url::to('/express/upload/image')]) ?>
 			    </li>
 			    <li>
 			    	<?= $form->field($model, 'bpFacilitiesDetailDes')->widget(CKEditor::className(), [
@@ -119,7 +119,7 @@ for($i = 1998; $i <= 2020; $i++) {
 			    		]
 			    	]) ?>
 			    	
-			    	<?= $form->field($model, 'bpFacilitiesDetail')->widget(FileUploadUI::className(), ['url' => Url::to('/express/upload/building-project-image')]) ?>
+			    	<?= $form->field($model, 'bpFacilitiesDetail')->widget(FileUploadUI::className(), ['url' => Url::to('/express/upload/image')]) ?>
 			    </li>
 			    <li>
 			    	<?= $form->field($model, 'bpVideo')->textArea(['style' => 'height: 120px;'])->hint('Nhập đường dẫn youtube, mổi video trên 1 dòng.<br />Ví dụ:<br />https://www.youtube.com/watch?v=BNJIcJyN3o4<br />https://www.youtube.com/watch?v=G1Xi8zDD37I') ?>
@@ -148,7 +148,7 @@ for($i = 1998; $i <= 2020; $i++) {
 									<label class="control-label" for="buildingproject-bpvideo">Ảnh</label>
 									<?= FileUploadUI::widget([
 											'name' => 'BuildingProject[bpProgress][' . $k . '][images]',
-											'url' => Url::to('/express/upload/building-project-image'),
+											'url' => Url::to('/express/upload/image'),
 											'fieldOptions' => ['values' => $bpp->images]
 										]) ?>
 									<div class="help-block"></div>
@@ -186,7 +186,7 @@ for($i = 1998; $i <= 2020; $i++) {
 									<?= FileUploadUI::widget([
 											'name' => 'BuildingProject[' . $name . '][floorPlan][' . $k . '][images]',
 											'id' => $name . $k,
-											'url' => Url::to('/express/upload/building-project-image'),
+											'url' => Url::to('/express/upload/image'),
 											'fieldOptions' => ['values' => $bpa->images]
 										]) ?>
 									<div class="help-block"></div>
@@ -228,7 +228,7 @@ for($i = 1998; $i <= 2020; $i++) {
 						<label class="control-label" for="buildingproject-bpvideo">Tài liệu bán hàng</label>
 						<?= FileUploadUI::widget([
 							'name' => 'BuildingProject[' . $name . '][document]',
-							'url' => Url::to('/express/upload/building-project-image'),
+							'url' => Url::to('/express/upload/image'),
 							'fieldOptions' => ['values' => $area->document],
 				    		'clientOptions' => ['maxNumberOfFiles' => 1],
 						]) ?>

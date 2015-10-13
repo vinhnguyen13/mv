@@ -11,12 +11,16 @@
 
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
+use common\widgets\FileUploadUI;
+use yii\helpers\Url;
 
 /**
  * @var yii\web\View 					$this
  * @var dektrium\user\models\User 		$user
  * @var dektrium\user\models\Profile 	$profile
  */
+$this->registerJsFile(Yii::getAlias('@web') . '/js/building-project.js', ['depends' => ['yii\web\YiiAsset']]);
+$this->registerCssFile(Yii::getAlias('@web') . '/css/building-project.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
 
 ?>
 <?php $this->beginContent('@dektrium/user/views/admin/update.php', ['user' => $user]) ?>
@@ -30,6 +34,7 @@ use yii\helpers\Html;
         ],
     ],
 ]); ?>
+<?= $form->field($profile, 'avatar')->widget(FileUploadUI::className(), ['url' => Url::to(['/express/upload/image', 'folder'=>'avatar'])]) ?>
 <?= \dosamigos\fileupload\FileUploadUI::widget([
     'model' => $profile,
     'attribute' => 'avatar',
