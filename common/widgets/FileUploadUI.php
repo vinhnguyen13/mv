@@ -38,8 +38,6 @@ class FileUploadUI extends FU {
 		$this->clientEvents = array_merge($clientEvents, $this->clientEvents);
 		$this->gallery = false;
 		
-		parent::init();
-		
 		if(isset($this->clientOptions['maxNumberOfFiles']) && $this->clientOptions['maxNumberOfFiles'] == 1) {
 			$this->fieldOptions['multiple'] = false;
 		}
