@@ -50,8 +50,13 @@ class FileUploadUI extends FU {
      */
     public function registerClientScript()
     {
+    	$view = $this->getView();
+    	
+    	$view->registerJsFile(\Yii::getAlias('@web') . '/js/upload.js', ['depends' => ['yii\web\YiiAsset']]);
+    	$view->registerCssFile(\Yii::getAlias('@web') . '/css/upload.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
+    	
 		parent::registerClientScript();
-		$view = $this->getView();
+		
 		$id = $this->options['id'];
 		$fieldVar = $this->attribute . 'upload';
 		
