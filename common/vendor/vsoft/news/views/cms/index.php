@@ -30,13 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'banner',
                 'format' => 'html',
-                'value' => function ($model) { return Html::img(Yii::$app->request->getHostInfo() . '/store/news/show/' . $model->banner, ['width' => 100, 'alt' => $model->banner]); }
+                'value' => function ($model) { return Html::img(Yii::$app->request->getHostInfo() . '/store/news/show/' . $model->banner, ['width' => 100, 'alt' => $model->banner, 'title' => $model->brief]); }
             ],
             [
                 'attribute' => 'title',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return Html::a($model->title, ['view', 'id' => $model->id], ['style' => ['text-decoration' => 'none']]);
+                    return Html::a($model->title, ['view', 'id' => $model->id], ['style' => ['text-decoration' => 'none'],'data-toggle' => 'tooltip', 'data-placement' => 'right', 'title' => $model->brief]);
                     //return "<a href=\"view?id={$model->id}\" style=\"text-decoration: none; color: black;\">{$model->title}</a>";
                 }
             ],

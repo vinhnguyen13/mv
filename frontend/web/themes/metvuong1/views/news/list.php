@@ -21,19 +21,19 @@ use yii\bootstrap\Html;
             <?php foreach ($list_news as $k => $news) {
                 if ($k === 0) { ?>
                     <div class="banner">
-                        <img src="/store/news/show/<?= $news->banner ?>" alt="<?= $news->title ?>">
+                        <img src="/store/news/show/<?= $news->banner ?>" alt="<?= $news->title ?>" title="<?=$news->brief?>">
 
                         <div class="hotnew">
                             <div class="block"></div>
                             <div class="text">
                                 <h2 class="titlehotnew">
-                                    <?= Html::a($news->title, ['view', 'id' => $news->id], ['style' => ['text-decoration' => 'none']]) ?>
+                                    <?= Html::a($news->title, ['view', 'id' => $news->id, 'slug' => $news->slug], ['style' => ['text-decoration' => 'none'], 'title' => $news->brief, ]) ?>
                                 </h2>
                                 <span class="tgpost">by Steve</span>
                                 <span class="showtextcontent">
                                     <?= strlen($news->brief) > 320 ? mb_substr($news->brief, 0, 320) . '...' : $news->brief ?>
                                 </span>
-                                <span class="btndeitail"><button><?= Html::a('Xem chi tiết', ['view', 'id' => $news->id], ['style' => ['text-decoration' => 'none']]) ?></button></span>
+                                <span class="btndeitail"><button><?= Html::a('Xem chi tiết', ['view', 'id' => $news->id, 'slug' => $news->slug], ['style' => ['text-decoration' => 'none']]) ?></button></span>
                             </div>
                         </div>
                     </div>
@@ -42,11 +42,11 @@ use yii\bootstrap\Html;
                     <div class="listitemcontent">
                         <div class="grd4">
                             <div class="newstbl">
-                                <?= Html::a("<img src=\"/store/news/show/$news->banner \" alt=\"$news->title\">", ['view', 'id' => $news->id], ['style' => ['text-decoration' => 'none']]) ?>
+                                <?= Html::a("<img src=\"/store/news/show/$news->banner \" alt=\"$news->title\" title=\"$news->brief\" >", ['view', 'id' => $news->id, 'slug' =>  $news->slug], ['style' => ['text-decoration' => 'none']]) ?>
 
                             </div>
                             <div class="frst pdl">
-                                <h3 class="title rotobobold"><?= Html::a($news->title, ['view', 'id' => $news->id], ['style' => ['text-decoration' => 'none']]) ?></h3>
+                                <h3 class="title rotobobold"><?= Html::a($news->title, \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug]), ['style' => ['text-decoration' => 'none']]) ?></h3>
 
                                 <p class="textfrst">
                                     <?= strlen($news->brief) > 300 ? mb_substr($news->brief, 0, 300) . '...' : $news->brief ?>

@@ -16,25 +16,40 @@ use yii\bootstrap\Html;
     <div class="row">
         <input id="current_id" type="hidden" value="<?=$news->id?>">
         <input id="cat_id" type="hidden" value="<?=$news->catalog_id?>">
+
         <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 rowleft" id="postResult">
 
             <div class="post_info">
                 <?= Html::a($news->getCatalog()->one()->title .' ', ['list', 'cat_id' => $news->catalog_id], ['style' => ['text-decoration' => 'none']]) ?>
                 <?=date("d/m/Y g:i a",$news->created_at)?>
-                <?=' Tác giả ' . $author->name?>
             </div>
-            <h2 class="titleditail"><?= $news->title ?></h2>
-            <div class="contentdeitail">
-                <?= $news->content ?>
-            </div>
-            <br>
-            <div id="social">
-                <div class="fb-like" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl(['news/view','id' => $news->id])?>" data-layout="button_count" style="margin-right: 10px;"></div>
-                <div class="fb-send" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl(['news/view','id' => $news->id])?>" data-show-faces="false" style="margin-right: 10px;"></div>
-                <div class="fb-share-button" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl(['news/view','id' => $news->id])?>" data-layout="button_count"></div>
+            <h2 class="titleditail"><?= $news->title ?></h2><br>
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 titleprofile">
+                <div class="name">
+                    <span class="tg">Tác giả </span>
+                    <span class="bv"><?=$author->name?></span>
+                </div>
+                <div class="blockprofile">
+                    <img src="/store/avatar/<?=$author->avatar?>">
+                    <p class="profiletext"><?=$author->bio?></p>
+
+                </div>
+                <div class="bt"><button>yêu thích</button></div>
+            </div><!--contenleft-->
+            <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 contennew">
+                <div class="contentdeitail">
+                    <?= $news->content ?>
+                </div>
                 <br>
-                <div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl(['news/view','id' => $news->id])?>" data-width="600" data-numposts="3"></div>
+                <div id="social">
+                    <div class="fb-like" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl(['news/view','id' => $news->id])?>" data-layout="button_count" style="margin-right: 10px;"></div>
+                    <div class="fb-send" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl(['news/view','id' => $news->id])?>" data-show-faces="false" style="margin-right: 10px;"></div>
+                    <div class="fb-share-button" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl(['news/view','id' => $news->id])?>" data-layout="button_count"></div>
+                    <br>
+                    <div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl(['news/view','id' => $news->id])?>" data-width="600" data-numposts="3"></div>
+                </div>
             </div>
+
         </div>
         <div id="loader"></div>
         <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 rgtcol">
@@ -58,13 +73,26 @@ use yii\bootstrap\Html;
                             var time = timeConverter(data.created_at);
                             $('#postResult').append(
                                 '<hr><div class="post_info"><?= Html::a($news->getCatalog()->one()->title .' ', ['list', 'cat_id' => $news->catalog_id], ['style' => ['text-decoration' => 'none']]) ?>' + time + '</div>' +
-                                '<h2 class="titleditail">' + data.title + '</h2>' +
-                                '<div class="contentdeitail">' + data.content + '</div><br>' +
-                                '<div id="social">' +
-                                '<div class="fb-like" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news/view')?>?id=' + data.id + '" data-layout="button_count" style="margin-right: 10px;"></div>' +
-                                '<div class="fb-send" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news/view')?>?id=' + data.id + '" data-show-faces="false" style="margin-right: 10px;"></div>' +
-                                '<div class="fb-share-button" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news/view')?>?id=' + data.id + '" data-layout="button_count"></div><br>' +
-                                '<div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news/view')?>?id=' + data.id + '" data-width="600" data-numposts="3" ></div>' +
+                                '<h2 class="titleditail">' + data.title + '</h2><br>' +
+                                '<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 titleprofile">' +
+                                    '<div class="name">' +
+                                        '<span class="tg">Tác giả </span>' +
+                                        '<span class="bv">keni pham </span>' +
+                                    '</div>' +
+                                    '<div class="blockprofile">' +
+                                        '<img src="/store/avatar/toyota-hilux-2015-5.jpg">' +
+                                        '<p class="profiletext">Nông nghiệp Việt Nam đón nhận làn sóng đầu tư chưa từng có Nông nghiệp Việt Nam đón nhận làn sóng đầu tư chưa từng có Nông nghiệp Việt Nam đón nhận làn sóng đầu tư chưa từng có</p>' +
+                                    '</div>' +
+                                    '<div class="bt"><button>yêu thích</button></div>'+
+                                '</div>'+
+                                '<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 contennew">' +
+                                    '<div class="contentdeitail">' + data.content + '</div><br>' +
+                                    '<div id="social">' +
+                                    '<div class="fb-like" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news/view')?>?id=' + data.id + '" data-layout="button_count" style="margin-right: 10px;"></div>' +
+                                    '<div class="fb-send" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news/view')?>?id=' + data.id + '" data-show-faces="false" style="margin-right: 10px;"></div>' +
+                                    '<div class="fb-share-button" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news/view')?>?id=' + data.id + '" data-layout="button_count"></div><br>' +
+                                    '<div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news/view')?>?id=' + data.id + '" data-width="600" data-numposts="3" ></div>' +
+                                    '</div>' +
                                 '</div>');
 
 //                        console.log(data);

@@ -18,7 +18,7 @@ if (!empty($news)) {
             <img src="/store/news/show/<?= $n->banner ?>" alt="<?= $n->title ?>">
 
             <div class="showtext">
-                <h4> <?= Html::a($n->title, ['view', 'id' => $n->id], ['style' => ['text-decoration' => 'none']]) ?></h4>
+                <h4> <?= Html::a($n->title, ['view', 'id' => $n->id, 'slug' => $n->slug], ['style' => ['text-decoration' => 'none']]) ?></h4>
             </div>
         </div>
     <?php }

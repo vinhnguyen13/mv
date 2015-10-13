@@ -19,10 +19,10 @@ foreach ($news as $k => $n) {
     if ($k === 0) {
         ?>
         <div class="grd7 pdr">
-            <?= Html::a("<img src=\"/store/news/show/$n->banner \" alt=\"$n->title\">" , ['view', 'id' => $n->id], ['style' => ['text-decoration' => 'none']]) ?>
+            <?= Html::a("<img src=\"/store/news/show/$n->banner \" alt=\"$n->title\">" , ['view', 'id' => $n->id, 'slug' => $n->slug], ['style' => ['text-decoration' => 'none']]) ?>
 
             <h3 class="cap rotobobold">
-                <?= Html::a($n->title, ['view', 'id' => $n->id], ['style' => ['text-decoration' => 'none']]) ?>
+                <?= Html::a($n->title, ['view', 'id' => $n->id, 'slug' => $n->slug], ['style' => ['text-decoration' => 'none']]) ?>
             </h3>
             <p class="textcatbox">
                 <?= strlen($n->brief) > 300 ? mb_substr($n->brief, 0, 300) . '...' : $n->brief  ?>
@@ -32,10 +32,10 @@ foreach ($news as $k => $n) {
     <?php } else { ?>
         <div class="grd4">
             <div class="newstbl">
-                <?= Html::a("<img src=\"/store/news/show/$n->banner \" alt=\"$n->title\">" , ['view', 'id' => $n->id], ['style' => ['text-decoration' => 'none']]) ?>
+                <?= Html::a("<img src=\"/store/news/show/$n->banner \" alt=\"$n->title\">" , ['view', 'id' => $n->id, 'slug' => $n->slug], ['style' => ['text-decoration' => 'none']]) ?>
             </div>
             <div class="frst pdl">
-                <h3 class="title rotobobold"> <?= Html::a($n->title, ['view', 'id' => $n->id], ['style' => ['text-decoration' => 'none']]) ?> </h3>
+                <h3 class="title rotobobold"> <?= Html::a($n->title, ['view', 'id' => $n->id, 'slug' => $n->slug], ['style' => ['text-decoration' => 'none']]) ?> </h3>
 
                 <p class="textfrst">
                     <?= strlen($n->brief) > 200 ? mb_substr($n->brief, 0, 200) . '...' : $n->brief ?>

@@ -16,9 +16,9 @@ use yii\bootstrap\Html;
 <?php foreach ($news as $k => $n) {
     ?>
     <div class="grd7">
-        <?= Html::a("<img src=\"/store/news/show/$n->banner \" alt=\"$n->title\">" , ['view', 'id' => $n->id], ['style' => ['text-decoration' => 'none']]) ?>
+        <?= Html::a("<img src=\"/store/news/show/$n->banner \" alt=\"$n->title\">" , ['view', 'id' => $n->id, 'slug' => $n->slug], ['style' => ['text-decoration' => 'none']]) ?>
 
-        <h3 class="cap rotobobold"><?= Html::a($n->title, ['view', 'id' => $n->id], ['style' => ['text-decoration' => 'none']]) ?></h3>
+        <h3 class="cap rotobobold"><?= Html::a($n->title, ['view', 'id' => $n->id, 'slug' => $n->slug], ['style' => ['text-decoration' => 'none']]) ?></h3>
 
         <p class="textcatbox">
             <?= strlen($n->brief) > 300 ? mb_substr($n->brief, 0, 300) . '...' : $n->brief ?>

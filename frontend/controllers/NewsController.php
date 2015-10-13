@@ -46,11 +46,14 @@ class NewsController extends \yii\web\Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
 //        $sql = "SELECT * FROM cms_show WHERE id NOT IN (" . $current_id . ") and id < " . $current_id . " AND catalog_id = " . $cat_id . " ORDER BY id DESC LIMIT 1 ";
 //        $model = CmsShow::findBySql($sql)->one();
-        $model = CmsShow::find()->where('id NOT IN (:id)', [':id' => $current_id])
-            ->andWhere('catalog_id = :cat_id', [':cat_id' => $cat_id])
-            ->andWhere('id < :_id', [':_id' => $current_id])
-            ->andWhere('status = :status', [':status' => 1])
-            ->orderBy(['id' => SORT_DESC])
+        $model = CmsShow::find()
+            ->innerJoin('profile','cms_show.created_by = profile.user_id')
+            ->select(['cms_show.*','profile.*'])
+            ->where('cms_show.id NOT IN (:id)', [':id' => $current_id])
+            ->andWhere('cms_show.catalog_id = :cat_id', [':cat_id' => $cat_id])
+            ->andWhere('cms_show.id < :_id', [':_id' => $current_id])
+            ->andWhere('cms_show.status = :status', [':status' => 1])
+            ->orderBy(['cms_show.id' => SORT_DESC])
             ->one();
         return $model;
     }
