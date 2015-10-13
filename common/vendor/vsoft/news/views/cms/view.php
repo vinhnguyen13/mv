@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Catalog',
                 'attribute' => 'catalog_id',
-                'value' => $model->getCatalog1()->one()->title,
+                'value' => $model->getCatalog()->one()->title,
             ],
             'title',
             'slug',
