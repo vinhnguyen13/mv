@@ -19,8 +19,6 @@ use yii\helpers\Url;
  * @var dektrium\user\models\User 		$user
  * @var dektrium\user\models\Profile 	$profile
  */
-$this->registerJsFile(Yii::getAlias('@web') . '/js/building-project.js', ['depends' => ['yii\web\YiiAsset']]);
-$this->registerCssFile(Yii::getAlias('@web') . '/css/building-project.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
 
 ?>
 <?php $this->beginContent('@dektrium/user/views/admin/update.php', ['user' => $user]) ?>
@@ -34,29 +32,18 @@ $this->registerCssFile(Yii::getAlias('@web') . '/css/building-project.css', ['de
         ],
     ],
 ]); ?>
-<?= $form->field($profile, 'avatar')->widget(FileUploadUI::className(), ['url' => Url::to(['/express/upload/image', 'folder'=>'avatar'])]) ?>
-<?= \dosamigos\fileupload\FileUploadUI::widget([
-    'model' => $profile,
-    'attribute' => 'avatar',
-    'url' => ['admin/avatar', 'id' => $profile->user_id], // your url, this is just for demo purposes,
-    'options' => ['accept' => 'image/*'],
-    'clientOptions' => [
-        'maxFileSize' => 2000000,
-        'autoUpload' => true,
-    ],
-    // Also, you can specify jQuery-File-Upload events
-    'clientEvents' => [
-        'fileuploaddone' => 'function(e, data) {
-                                console.log(e);
-                                console.log(data);
-                            }',
-        'fileuploadfail' => 'function(e, data) {
-                                console.log(e);
-                                console.log(data);
-                            }',
-    ],
-]);?>
+<?=Html::hiddenInput('deleteLater', '', ['id' => 'delete-later']);?>
+<?= $form->field($profile, 'avatar')->widget(FileUploadUI::className(), [
+    'url' => Url::to(['/express/upload/image', 'folder'=>'avatar']),
+    'clientOptions' => ['maxNumberOfFiles' => 1],
+    'fieldOptions' => ['folder'=>'avatar'],
+]) ?>
 
+<div class="form-group">
+    <div class="col-lg-offset-3 col-lg-2">
+        <?= Html::submitButton(Yii::t('user', 'Update'), ['class' => 'btn btn-block btn-success']) ?>
+    </div>
+</div>
 <?php ActiveForm::end(); ?>
 
 <?php $this->endContent() ?>

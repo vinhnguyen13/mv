@@ -84,7 +84,7 @@ class FileUploadUI extends FU {
 					'name'          => $value,
 					'type'          => 'image/jpeg',
 					'size'          => '1',
-					'deleteUrl'     => Url::to(['/express/upload/delete-image', 'orginal' => $value, 'thumbnail' => $thumb, 'deleteLater' => 1]),
+					'deleteUrl'     => Url::to(['/express/upload/delete-image', 'orginal' => $value, 'thumbnail' => $thumb, 'deleteLater' => 1, 'folder'=>$folder]),
 					'deleteType'    => 'DELETE',
 					'deleteLater'	=> 1,
 				];

@@ -212,24 +212,7 @@ class AdminController extends Controller
         $user    = $this->findModel($id);
         $profile = $user->profile;
 
-        if($_FILES){
-            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            $file = UploadedFile::getInstance($profile, 'avatar');
-            $upload = new UploadHelper($file, \Yii::getAlias('@store/avatar'));
-            $fileUploaded =  $upload->upload();
-            $profile->avatar = $fileUploaded;
-            $profile->save();
-            $response['files'][] = [
-                'url'           => Url::to('/store/avatar/'.$profile->avatar),
-                'thumbnailUrl'  => Url::to('/store/avatar/'.$profile->avatar),
-                'name'          => $file->name,
-                'type'          => $file->type,
-                'size'          => $file->size,
-                'deleteUrl'     => Url::to(['gallery-photo/delete']),
-                'deleteType'    => 'POST',
-            ];
-            return $response;
-        }
+
         if ($profile == null) {
             $profile = Yii::createObject(Profile::className());
             $profile->link('user', $user);
@@ -237,7 +220,26 @@ class AdminController extends Controller
 
         $this->performAjaxValidation($profile);
 
+        $profileData = Yii::$app->request->post('Profile');
+        if(!empty($profileData)){
+            $profile->avatar = $profileData['avatar'];
+        }
         if ($profile->load(Yii::$app->request->post()) && $profile->save()) {
+            $profile->avatar = Yii::$app->request->post('Profile[avatar]');
+            $deleteLater = array_filter(explode(',', Yii::$app->request->post('deleteLater')));
+            if(!empty($deleteLater)){
+                foreach ($deleteLater as $orginal) {
+                    $pathInfo = pathinfo($orginal);
+                    $thumb = $pathInfo['filename'] .  '.thumb.' . $pathInfo['extension'];
+
+                    $dir = \Yii::getAlias('@store') . '/avatar';
+
+                    unlink($dir . '/' . $orginal);
+                    unlink($dir . '/' . $thumb);
+                }
+            }
+
+
             Yii::$app->getSession()->setFlash('success', Yii::t('user', 'Profile details have been updated'));
 
             return $this->refresh();
