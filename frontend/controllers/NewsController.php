@@ -31,6 +31,11 @@ class NewsController extends \yii\web\Controller
         $user_id = $detail->created_by;
         $author = Profile::findOne($user_id);
 
+        // add 1 for each click news link
+        $click = $detail->click;
+        $detail->click = $click + 1;
+        $detail->update();
+
         return $this->render('detail', ['news' => $detail, 'author' => $author]);
     }
 
@@ -55,6 +60,11 @@ class NewsController extends \yii\web\Controller
             ->andWhere('cms_show.status = :status', [':status' => 1])
             ->orderBy(['cms_show.id' => SORT_DESC])
             ->one();
+        // add 1 for each click news link
+        $click = $model->click;
+        $model->click = $click + 1;
+        $model->update();
+
         return $model;
     }
 
