@@ -41,6 +41,7 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
 			      </div>
 			    </div>
             </div>
+			<?php if(false){?>
             <div class="col-lg-3 item">
             	<div class="panel panel-primary">
 			      <div class="panel-heading">Development</div>
@@ -52,6 +53,7 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
 			      </div>
 			    </div>
             </div>
+			<?php }?>
             <div class="col-lg-3 item">
             	<div class="panel panel-primary">
 			      <div class="panel-heading">CMS</div>
