@@ -233,9 +233,10 @@ class AdminController extends Controller
                     $thumb = $pathInfo['filename'] .  '.thumb.' . $pathInfo['extension'];
 
                     $dir = \Yii::getAlias('@store') . '/avatar';
-
-                    unlink($dir . '/' . $orginal);
-                    unlink($dir . '/' . $thumb);
+                    if(file_exists($dir . '/' . $orginal)){
+                        unlink($dir . '/' . $orginal);
+                        unlink($dir . '/' . $thumb);
+                    }
                 }
             }
 
