@@ -224,4 +224,11 @@ class SiteController extends Controller
         \Yii::$app->getResponse()->getCookies()->add($cookie);
         $this->redirect(Yii::$app->request->referrer);
     }
+
+    public function actionInfo(){
+        echo "<pre>";
+        print_r(phpinfo());
+        echo "</pre>";
+        exit;
+    }
 }
