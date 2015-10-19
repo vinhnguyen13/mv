@@ -47,9 +47,9 @@ class CmsCatalogController extends \funson86\cms\controllers\backend\CmsCatalogC
     public function actionIndex()
     {
         //if(!Yii::$app->user->can('viewYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
-
+        $catIDs = Yii::$app->params['newsCatIDs'];
         $searchModel = new CmsCatalogSearch();
-        $dataProvider = CmsCatalog::get(0, CmsCatalog::find()->asArray()->all());
+        $dataProvider = CmsCatalog::findAll($catIDs);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

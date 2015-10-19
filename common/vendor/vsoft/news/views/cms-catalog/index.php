@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php foreach($dataProvider as $k => $item){ ?>
         <tr data-key="1">
             <td><?= $k+1 ?></td>
-            <td><?= Html::a($item['label'], ['view', 'id' => $item['id']], ['style' => ['text-decoration' => 'none']]); ?></td>
+            <td><?= Html::a($item['title'], ['view', 'id' => $item['id']], ['style' => ['text-decoration' => 'none']]); ?></td>
             <td><?= date("d-M-Y H:i:s", $item['updated_at']); ?></td>
             <?php // CmsCatalog::getCatalogPageTypeLabels($item['page_type']); ?>
             <?php // \vsoft\news\models\YesNo::labels()[$item['is_nav']]; ?>
