@@ -31,8 +31,6 @@ unset($parentCatalog[$model->id]);
 
     <?= $form->field($model, 'parent_id')->dropDownList($parentCatalog) ?>
 
-    <input type="hidden" id="cmscatalog-page_type" class="form-control" name="CmsCatalog[page_type]" value="list">
-
     <?= $form->field($model, 'title')->textInput(['maxlength' => 255]) ?>
 
     <?= $form->field($model, 'content')->widget(\common\widgets\CKEditor::className(), [
@@ -85,6 +83,11 @@ unset($parentCatalog[$model->id]);
             <?= Html::submitButton($model->isNewRecord ? Module::t('cms', 'Create') : Module::t('cms', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
     </div>
+
+    <div style="display: none;">
+        <?= $form->field($model, 'page_type')->hiddenInput(['value' => 'list'])->label(false) ?>
+    </div>
+
 
     <?php ActiveForm::end(); ?>
 

@@ -134,7 +134,7 @@ class CmsCatalogController extends \funson86\cms\controllers\backend\CmsCatalogC
 
         $model = $this->findModel($id);
         $oldBanner = $model->banner;
-        $oldPageType = $model->page_type;
+//        $oldPageType = $model->page_type;
 
         if ($model->load(Yii::$app->request->post())) {
             $upload_image = UploadedFile::getInstance($model, 'banner');
@@ -142,7 +142,7 @@ class CmsCatalogController extends \funson86\cms\controllers\backend\CmsCatalogC
                 $image_name = $upload_image->baseName;
                 $model->banner = $image_name . '_' . date('mdYhis') . '.' . $upload_image->extension ;
             }
-            $model->page_type = $oldPageType;
+//            $model->page_type = $oldPageType;
 
             if ($model->validate()) {
                 if($model->banner){
@@ -150,6 +150,7 @@ class CmsCatalogController extends \funson86\cms\controllers\backend\CmsCatalogC
                 } else {
                     $model->banner = $oldBanner;
                 }
+                
                 $model->save(false);
                 return $this->redirect('index');
             } else {
