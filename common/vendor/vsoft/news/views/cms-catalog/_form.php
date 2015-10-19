@@ -29,7 +29,7 @@ unset($parentCatalog[$model->id]);
 
     <?= $form->field($model, 'parent_id')->dropDownList($parentCatalog) ?>
 
-    <?= $form->field($model, 'page_type')->dropDownList(CmsCatalog::getCatalogPageTypeLabels())//->hint(Module::t('cms', 'Page need content'))     ?>
+    <?= $form->field($model, 'page_type')->dropDownList(CmsCatalog::getCatalogPageTypeLabels(),[])//->hint(Module::t('cms', 'Page need content'))     ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => 255]) ?>
 

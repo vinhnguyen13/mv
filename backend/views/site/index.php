@@ -56,7 +56,7 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
 			<?php }?>
             <div class="col-lg-3 item">
             	<div class="panel panel-primary">
-			      <div class="panel-heading">CMS</div>
+			      <div class="panel-heading">News</div>
 			      <div class="panel-body">
 			      	<ol class="list-unstyled">
 	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['news/cms'])?>">Content</a></li>

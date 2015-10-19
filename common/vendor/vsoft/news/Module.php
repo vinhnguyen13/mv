@@ -14,7 +14,7 @@ class Module extends \yii\base\Module
 
     public static function t($category, $message, $params = [], $language = null)
     {
-        return \Yii::t('funson86/' . $category, $message, $params, $language);
+        return \Yii::t('vsoft/news/' . $category, $message, $params, $language);
     }
 
 }
