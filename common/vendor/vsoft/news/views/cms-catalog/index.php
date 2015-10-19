@@ -25,6 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <th>#</th>
             <th><?= Module::t('cms', 'Title') ?> </th>
             <th><?= Module::t('cms', 'Update At') ?></th>
+            <th><?= Module::t('cms', 'Navigation') ?></th>
+            <th><?= Module::t('cms', 'Status') ?></th>
             <th><?= Module::t('cms', 'Actions') ?></th>
 
         </tr>
@@ -36,8 +38,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <td><?= Html::a($item['label'], ['view', 'id' => $item['id']], ['style' => ['text-decoration' => 'none']]); ?></td>
             <td><?= date("d-M-Y H:i:s", $item['updated_at']); ?></td>
             <?php // CmsCatalog::getCatalogPageTypeLabels($item['page_type']); ?>
-            <?php // \vsoft\news\models\YesNo::labels()[$item['is_nav']]; ?>
-            <?php // \vsoft\news\models\Status::labels()[$item['status']]; ?>
+            <td><?= \vsoft\news\models\YesNo::labels()[$item['is_nav']]; ?></td>
+            <td><?= \vsoft\news\models\Status::labels()[$item['status']]; ?></td>
             <td>
                 <?php if ($item['page_type'] == CmsCatalog::PAGE_TYPE_LIST) { ?><a href="<?= \Yii::$app->getUrlManager()->createUrl(['news/cms/create','catalog_id'=>$item['id']]); ?>" title="<?= Module::t('cms', 'Add Show');?>" data-pjax="0"><span class="glyphicon glyphicon-file"></span></a> <?php } ?>
                 <a href="<?= \Yii::$app->getUrlManager()->createUrl(['news/cms-catalog/create','parent_id'=>$item['id']]); ?>" title="<?= Module::t('cms', 'Add Sub Catelog');?>" data-pjax="0"><span class="glyphicon glyphicon-plus-sign"></span></a>

@@ -12,7 +12,9 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 
 //fix the issue that it can assign itself as parent
-$parentCatalog = ArrayHelper::merge([0 => Module::t('blog', 'Root Catalog')], ArrayHelper::map(CmsCatalog::get(0, CmsCatalog::find()->asArray()->all()), 'id', 'label'));
+//$parentCatalog = ArrayHelper::merge([0 => Module::t('blog', 'Root Catalog')], ArrayHelper::map(CmsCatalog::get(0, CmsCatalog::find()->asArray()->all()), 'id', 'label'));
+// get List Catalog of News
+$parentCatalog = ArrayHelper::merge([2 => 'News'], ArrayHelper::map(CmsCatalog::get(Yii::$app->params['newsCatID'], CmsCatalog::find()->asArray()->all()), 'id', 'label'));
 unset($parentCatalog[$model->id]);
 
 ?>
@@ -29,7 +31,7 @@ unset($parentCatalog[$model->id]);
 
     <?= $form->field($model, 'parent_id')->dropDownList($parentCatalog) ?>
 
-    <?= $form->field($model, 'page_type')->dropDownList(CmsCatalog::getCatalogPageTypeLabels(),[])//->hint(Module::t('cms', 'Page need content'))     ?>
+    <input type="hidden" id="cmscatalog-page_type" class="form-control" name="CmsCatalog[page_type]" value="list">
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => 255]) ?>
 
@@ -74,11 +76,8 @@ unset($parentCatalog[$model->id]);
 
     <?= $form->field($model, 'sort_order')->textInput() ?>
 
-    <?= $form->field($model, 'page_size')->textInput() ?>
-
-    <?= $form->field($model, 'click')->textInput() ?>
-
     <?= $form->field($model, 'status')->dropDownList(\vsoft\news\models\Status::labels()) ?>
+
 
     <div class="form-group">
         <label class="col-lg-1 control-label"></label>

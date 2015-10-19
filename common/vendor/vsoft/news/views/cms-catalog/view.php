@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             [
                 'attribute' => 'parent_id',
-                'value' => $model->parent_id ? $model->parent->title : Module::t('cms', 'Root Catalog'),
+                'value' => $model->parent_id ? $model->parent->title : Module::t('cms', 'News'),
             ],
             'title',
 //            'surname',
@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'page_type',
                 'value' => \vsoft\news\models\CmsCatalog::getCatalogPageTypeLabels($model->page_type),
             ],
-            'page_type',
+//            'page_type',
             'page_size',
 //            'template_list',
 //            'template_show',

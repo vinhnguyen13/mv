@@ -5,6 +5,7 @@ namespace vsoft\news\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 
 /**
  * CmsShowSearch represents the model behind the search form about `funson86\cms\models\CmsShow`.
@@ -27,7 +28,10 @@ class CmsShowSearch extends \funson86\cms\models\CmsShowSearch
      */
     public function search($params)
     {
-        $query = CmsShow::find();
+        //get list parent catalog
+        $parentCatalog = ArrayHelper::map(CmsCatalog::get(Yii::$app->params['newsCatID'], CmsCatalog::find()->asArray()->all()), 'id', 'label');
+        $keys = array_keys($parentCatalog);
+        $query = CmsShow::find()->where('catalog_id in ('. implode (", ", $keys) . ')');
 
         $query->orderBy(['created_at' => SORT_DESC]);
 

@@ -2,6 +2,7 @@
 
 use vsoft\news\models\CmsCatalog;
 use vsoft\news\models\Status;
+use vsoft\user\Module;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -23,8 +24,9 @@ use yii\widgets\ActiveForm;
     ]); ?>
 
     <?php
-    $catalog_data = ArrayHelper::map(CmsCatalog::find()->where(['status' => Status::STATUS_ACTIVE])->all(), 'id', 'title');
-    echo $form->field($model, 'catalog_id')->dropDownList($catalog_data, [
+    $parentCatalog = ArrayHelper::merge([2 => 'News'], ArrayHelper::map(CmsCatalog::get(Yii::$app->params['newsCatID'], CmsCatalog::find()->where(['status' => Status::STATUS_ACTIVE])->asArray()->all()), 'id', 'label'));
+//    $catalog_data = ArrayHelper::map(CmsCatalog::find()->where(['status' => Status::STATUS_ACTIVE])->all(), 'id', 'title');
+    echo $form->field($model, 'catalog_id')->dropDownList($parentCatalog, [
         'options' => [$model->title => ['selected ' => true]],
     ]); ?>
 
@@ -69,7 +71,7 @@ use yii\widgets\ActiveForm;
             'mainClass' => 'input-group-lg'
         ]]) ?>
 
-    <?= $form->field($model, 'slug')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'readOnly' => true]) ?>
 
     <?= $form->field($model, 'status')->dropDownList(\vsoft\news\models\Status::labels()) ?>
 

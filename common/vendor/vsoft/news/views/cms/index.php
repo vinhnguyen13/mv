@@ -25,8 +25,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-//            'id',
-//            'title',
             [
                 'attribute' => 'banner',
                 'format' => 'html',
@@ -47,18 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->getCatalog()->one()->title;
                 },
             ],
-//            'slug',
-//            'surname',
-            // 'brief',
-            // 'content:ntext',
-            // 'seo_title',
-            // 'seo_keywords',
-            // 'seo_description',
-            // 'banner',
-            // 'template_show',
-            // 'author',
-            // 'click',
-            // 'status',
+
             [
                 'attribute' => 'status',
                 'value' => function ($model) {
