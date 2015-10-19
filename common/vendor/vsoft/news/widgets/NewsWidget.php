@@ -29,7 +29,7 @@ class NewsWidget extends Widget
         switch ($view) {
             case 'sidebar':
                 $limit = 2;
-                $cat_id = 4; // tai chinh
+                $cat_id = 3; // tai chinh
                 break;
             case 'batdongsan':
                 $limit = 4;
@@ -46,12 +46,12 @@ class NewsWidget extends Widget
                 break;
             case 'taichinh':
                 $limit = 1;
-                $cat_id = 4; // tai chinh
+                $cat_id = 3; // tai chinh
 //                $order_by = ['id' => SORT_ASC];
                 break;
             case 'doanhnghiep':
                 $limit = 1;
-                $cat_id = 5; // doanh nghiep
+                $cat_id = 4; // doanh nghiep
 //                $order_by = ['id' => SORT_ASC];
                 break;
             case 'kinhte':

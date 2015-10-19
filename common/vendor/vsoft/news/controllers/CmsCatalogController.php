@@ -150,7 +150,7 @@ class CmsCatalogController extends \funson86\cms\controllers\backend\CmsCatalogC
                 } else {
                     $model->banner = $oldBanner;
                 }
-                
+
                 $model->save(false);
                 return $this->redirect('index');
             } else {
