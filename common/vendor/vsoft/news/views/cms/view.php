@@ -40,7 +40,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'slug',
 //            'surname',
             'brief',
-            'content:html',
+//            'content:html',
+            [
+                'attribute' => 'content',
+                'format' => 'raw',
+                'value' => $model->content,
+            ],
             'seo_title',
             'seo_keywords',
             'seo_description',
@@ -78,6 +83,5 @@ $this->params['breadcrumbs'][] = $this->title;
        role="button" title="Back to Top" data-toggle="tooltip" data-placement="top">
         <span class="glyphicon glyphicon-chevron-up"></span>
     </a>
-
 
 </div>

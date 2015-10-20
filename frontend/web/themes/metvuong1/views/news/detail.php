@@ -9,7 +9,7 @@
  */
 use yii\bootstrap\Html;
 
-echo $news->click;
+//echo $news->click;
 ?>
 
 <div class="container-fluid">
@@ -78,6 +78,7 @@ echo $news->click;
         right: 1.5em;
         text-decoration: none;
         font-weight: 700;
+        font-size: 14px;
     }
     #postResult > a.top:hover{
         opacity:1;

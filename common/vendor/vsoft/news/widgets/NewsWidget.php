@@ -29,15 +29,15 @@ class NewsWidget extends Widget
         switch ($view) {
             case 'sidebar':
                 $limit = 2;
-                $cat_id = 3; // tai chinh
+                $cat_id = 4; // tai chinh
                 break;
             case 'batdongsan':
                 $limit = 4;
-                $cat_id = 2; // bat dong san
+                $cat_id = 3; // bat dong san
                 break;
             case 'quantam':
                 $limit = 6;
-                $cat_id = 2; // bat dong san
+                $cat_id = 3; // bat dong san
                 break;
             case 'hotnews':
                 $limit = 6;
