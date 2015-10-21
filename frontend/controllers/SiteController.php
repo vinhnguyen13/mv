@@ -19,6 +19,7 @@ use yii\web\Cookie;
  */
 class SiteController extends Controller
 {
+    public $layout = '@app/views/layouts/news';
     /**
      * @inheritdoc
      */

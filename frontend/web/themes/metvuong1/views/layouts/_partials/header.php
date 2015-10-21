@@ -1,111 +1,42 @@
-<div class="headertop">
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse"
-                        class="navbar-toggle collapsed" type="button">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="#" class="navbar-brand logo"></a>
-            </div>
-            <div class="topright_Responsive">
-                <div class="avatar">
-                    <ul class="nav-pills">
-                        <li class="language"></li>
-                        <li class="glyphicon glyphicon-user user"></li>
-                    </ul>
-                </div>
-                <div class="showblockuser">
-                    <ul class="list-group">
-                        <li>Nguyễn văn A</li>
-                        <li>Nguyễn văn A</li>
-                        <li>Nguyễn văn A</li>
-                        <li>Nguyễn văn A</li>
-                        <li>logout</li>
-                    </ul>
-                </div>
-                <div class="login">
-                    <ul class="nav-pills">
-
-                    </ul>
-                </div>
-            </div>
-            <div class="searchtop">
-                <div class="input_search">
-                    <div class="listicon">
-                        <ul class="nav-pills">
-                            <li class="iconmua"></li>
-                            <li class="textsearch">Mua</li>
-                            <li class="iconban"></li>
-                            <li class="textsearch">Bán</li>
-                            <li class="iconthue"></li>
-                            <li class="textsearch">Thuê</li>
-                            <li class="iconmoigioi"></li>
-                            <li class="textsearch">Môi giới</li>
-                        </ul>
-                    </div>
-                    <div class="btnsearch">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="topright">
-                <div class="avatar">
-                    <ul class="nav-pills">
-                        <li class="language"></li>
-                        <li class="glyphicon glyphicon-user"></li>
-                        <li class="nameuse rotobo">Mr. nguyen ong</li>
-                        <li class="logout"><a href="#">logout</a></li>
-                    </ul>
-                </div>
-                <div class="login">
-                    <ul class="nav-pills">
-                        <li class="fa fa-twitter"></li>
-                        <li class="fa fa-facebook"></li>
-                        <li class="fa fa-google-plus"></li>
-                        <li class="falogin">Log In</li>
-                        <li class="linefa">|</li>
-                        <li class="Register">Register</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="navbar-collapse collapse" id="navbar" aria-expanded="false" style="height: 1px;">
-                <div class="input_searchshow">
-                    <div class="listicon">
-                        <ul class="nav-pills">
-                            <li class="iconmua"></li>
-                            <li class="textsearch">Mua</li>
-                            <li class="iconban"></li>
-                            <li class="textsearch">Bán</li>
-                            <li class="iconthue"></li>
-                            <li class="textsearch">Thuê</li>
-                            <li class="iconmoigioi"></li>
-                            <li class="textsearch">Môi giới</li>
-                        </ul>
-                    </div>
-                    <div class="btnsearch">
-                        <span class="glyphicon glyphicon-search"></span>
-                    </div>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Bất động sản</a></li>
-                    <li class="lines"></li>
-                    <li><a href="#">Chứng khoán</a></li>
-                    <li class="lines"></li>
-                    <li><a href="#">Tài chính & ngân hàng</a></li>
-                    <li class="lines"></li>
-                    <li><a href="#">Doanh Nghiệp</a></li>
-                    <li class="lines"></li>
-                    <li><a href="#">kinh tế vĩ mô</a></li>
-                    <li class="lines"></li>
-                    <li><a href="#">phong thủy</a></li>
-                </ul>
-            </div>
-            <!--/.nav-collapse -->
+<header>
+    <a href="#" class="logo-header pull-left"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png" alt="logo"></a>
+    <div class="pull-right user-setting">
+        <div class="dropdown select-lang">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                <span class="icon-lang-select lang-vi"></span>
+                <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+                <li><a class="icon-lang lang-en" href="#">ENGLISH</a></li>
+                <li><a class="icon-lang lang-vi" href="#">VIETNAMESE</a></li>
+            </ul>
         </div>
-        <!--/.container-fluid -->
-    </nav>
-</div>
+        <a class="user-option" href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Mr.Nguyen Ong</a>
+        <a href="#">logout</a>
+    </div>
+    <div class="box-search-header clearfix">
+        <div class="pull-left">
+            <span class="icon-sale pull-left"></span>
+            <form class="form-inline pull-left" action="" id="search-kind">
+                <div class="form-group">
+                    <input type="text" class="form-control">
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                        <span class="txt-selected">LOẠI</span>
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">LOẠI 1</a></li>
+                        <li><a href="#">LOẠI 2</a></li>
+                        <li><a href="#">LOẠI 3</a></li>
+                    </ul>
+                </div>
+                <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+            </form>
+            <div class="pull-right text-right">
+                <a href="#" class="icon-cart"></a>
+                <a href="#" class="icon-door"></a>
+                <a href="#" class="icon-handhome"></a>
+            </div>
+        </div>
+    </div>
+</header>
