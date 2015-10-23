@@ -43,6 +43,9 @@ return [
             'class' => 'funson86\cms\Module',
             'controllerNamespace' => 'funson86\cms\controllers\backend'
         ],
+        'news' => [
+            'class' => 'vsoft\news\Module',
+        ],
         'blog' => [
             'class' => 'funson86\blog\Module',
             'controllerNamespace' => 'funson86\blog\controllers\backend'

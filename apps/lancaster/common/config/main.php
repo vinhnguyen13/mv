@@ -7,7 +7,8 @@ return [
     'sourceLanguage' => 'en-US',
     'aliases' => array(
 //        'webvimark' => dirname(dirname(__DIR__)) . '/vendor/webvimark'
-        '@store' => dirname(dirname(__DIR__)) . '/store'
+        '@store' => dirname(dirname(__DIR__)) . '/store',
+        '@vsoft/news' => dirname(__DIR__) . '/vendor/vsoft/news',
     ),
     'modules'=>[
         /*'user-management' => [
