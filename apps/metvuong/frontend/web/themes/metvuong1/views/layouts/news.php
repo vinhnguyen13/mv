@@ -7,6 +7,8 @@ $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/style-cus
 
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.min.js', ['position'=>View::POS_HEAD]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/bootstrap.min.js', ['position'=>View::POS_HEAD]);
+Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/menu.min.js', ['position'=>View::POS_HEAD]);
+Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/common.js', ['position'=>View::POS_HEAD]);
 
 Yii::$app->view->registerLinkTag([
     'rel'=>'shortcut icon',
@@ -17,11 +19,13 @@ Yii::$app->view->registerLinkTag([
 
 
 <?php $this->beginContent('@app/views/layouts/main.php'); ?>
-    <div class="container">
-        <?php $this->beginContent('@app/views/layouts/_partials/header.php'); ?><?php $this->endContent();?>
-        <?php $this->beginContent('@app/views/layouts/_partials/news/nav.php'); ?><?php $this->endContent();?>
-        <?= $content ?>
+    <?php $this->beginContent('@app/views/layouts/_partials/news/nav.php'); ?><?php $this->endContent();?>
+    <div class="o-wrapper clearfix">
+        <div class="container">
+            <?php $this->beginContent('@app/views/layouts/_partials/header.php'); ?><?php $this->endContent();?>
+            <?= $content ?>
+        </div>
+        <?php $this->beginContent('@app/views/layouts/_partials/footer.php'); ?><?php $this->endContent();?>
     </div>
-    <?php $this->beginContent('@app/views/layouts/_partials/footer.php'); ?><?php $this->endContent();?>
 <?php $this->endContent();?>
 
