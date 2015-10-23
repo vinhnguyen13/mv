@@ -28,7 +28,7 @@ foreach ($composerAutoload as $autoload) {
 }
 
 
-require(__DIR__ . '/../vendor/yiisoft/yii2/Yii.php');
+require(__DIR__ . '/../../../vendor/yiisoft/yii2/Yii.php');
 
 $config = array_merge(
     require(__DIR__ . '/config/main.php'),
