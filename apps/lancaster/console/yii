@@ -1,0 +1,43 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Yii console bootstrap file.
+ *
+ * @link http://www.yiiframework.com/
+ * @copyright Copyright (c) 2008 Yii Software LLC
+ * @license http://www.yiiframework.com/license/
+ */
+
+defined('YII_DEBUG') or define('YII_DEBUG', true);
+
+// fcgi doesn't have STDIN and STDOUT defined by default
+defined('STDIN') or define('STDIN', fopen('php://stdin', 'r'));
+defined('STDOUT') or define('STDOUT', fopen('php://stdout', 'w'));
+
+$composerAutoload = [
+    __DIR__ . '/../vendor/autoload.php', // in yii2-dev repo
+    __DIR__ . '/../../autoload.php', // installed as a composer binary
+];
+$vendorPath = null;
+foreach ($composerAutoload as $autoload) {
+    if (file_exists($autoload)) {
+        require($autoload);
+        $vendorPath = dirname($autoload);
+        break;
+    }
+}
+
+
+require(__DIR__ . '/../vendor/yiisoft/yii2/Yii.php');
+
+$config = array_merge(
+    require(__DIR__ . '/config/main.php'),
+    require(__DIR__ . '/config/main-local.php')
+);
+
+$application = new yii\console\Application($config);
+if (isset($vendorPath)) {
+    $application->setVendorPath($vendorPath);
+}
+$exitCode = $application->run();
+exit($exitCode);
