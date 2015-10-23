@@ -1,0 +1,226 @@
+a {
+	color: inherit;
+}
+.custom-checkbox {
+	display: none;
+}
+.vcheck {
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	background-image: url(images/checkbox.png);
+	vertical-align: middle;
+	margin-right: 4px;
+}
+.vcheck.hover {
+	background-position: -24px 0px;
+}
+.vcheck.checked {
+	background-position: -48px 0px;
+}
+.vcheck.disabled {
+	cursor: not-allowed;
+	background-position: -72px 0px;
+}
+.vcheck.disabled.checked {
+	background-position: -96px 0px;
+}
+.bp-fields, .bp-contents, .files, .bp-subcontents > ul {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+.bp-contents li {
+	cursor: pointer;
+}
+.bp-contents {
+	font-size: 13px;
+	color: #737373;
+}
+.bp-contents a {
+	display: block;
+	vertical-align: middle;
+	min-height: 24px;
+	line-height: 24px;
+	text-decoration: none;
+	padding: 4px 16px;
+}
+.bp-contents a:hover {
+	background-color: #E7E7E7;
+}
+.bp-contents .show-content.active a {
+	background-color: #42A5F5;
+	color: #FFF;
+}
+.bp-contents label {
+	font-weight: normal;
+	margin-bottom: 0px;
+}
+.col-md-3 {
+	padding-left: 0px;
+}
+.bp-subcontents ul {
+	height: 0px;
+	overflow: hidden;
+	transition: all 0.2s;
+}
+.bp-subcontents li a {
+	padding-left: 32px;
+}
+.seperator {
+	height: 1px;
+	background-color: #E6E5E5;
+}
+.side-bar {
+	float: left;
+	margin-right: 32px;
+	background-color: #F5F5F5;
+}
+.bp-fields > li {
+	height: 0px;
+	overflow: hidden;
+}
+.bp-fields > li.active {
+	height: auto;
+	overflow: visible;
+}
+.main-content {
+	overflow: hidden;
+}
+.table > tbody > tr > td {
+	vertical-align: middle;
+}
+.preview img {
+	width: 120px;
+	height: 120px;
+}
+.files .name, .files .size {
+	display: none;
+}
+.fileupload-buttonbar .start, .fileupload-buttonbar .cancel, .fileupload-buttonbar .delete, .fileupload-buttonbar .toggle, .fileupload-progress {
+	display: none;
+}
+.files:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+.files li {
+	position: relative;
+    float: left;
+    margin-right: 6px;
+    margin-top: 6px;
+}
+.files li .preview {
+	display: block;
+	font-size: 0px;
+}
+.files li .progress {
+	position: absolute;
+	width: 90%;
+	margin: 0px 5% 0px 5%;
+	bottom: 8px;
+	height: 8px;
+}
+.files li .button-wrap {
+	position: absolute;
+	top: 0px;
+}
+.files .delete {
+	position: absolute;
+    top: 6px;
+    right: 6px;
+    font-size: 12px;
+    border: none;
+    padding: 4px;
+}
+.files .delete span {
+	display: none;
+}
+.files .delete .glyphicon {
+	display: block;
+    height: 14px;
+    width: 14px;
+}
+.panel-body {
+	position: relative;
+}
+.panel-body .glyphicon-remove {
+	position: absolute;
+	right: 8px;
+	top: 8px;
+	cursor: pointer;
+}
+.loading {
+	position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background: rgba(0, 0, 0, 0.3) url(images/submit-loading.gif) center center no-repeat;
+    z-index: 9999;
+}
+ul.list {
+	padding-left: 18px;
+	margin: 0;
+	list-style-type: disc;
+}
+.gal {
+	margin-right: 8px;
+	cursor: pointer;
+}
+button {
+	outline: none;
+}
+.videos:after {
+	content: '';
+	display: block;
+	clear: left;
+}
+.videos li {
+	float: left;
+	margin-right: 8px;
+}
+.videos li:last-child {
+	margin-right: 0px;
+}
+.videos li a {
+	position: relative;
+}
+.videos li .play {
+	position: absolute;
+	width: 32px;
+	height: 32px;
+	background-image: url(images/play.png);
+	left: 50%;
+	top: 50%;
+	margin-left: -16px;
+	margin-top: -16px;
+}
+.bp-detail td {
+	height: 34px;
+}
+.floorplan {
+	margin-bottom: 12px;
+}
+td .floorplan:last-child {
+	margin-bottom: 0px;
+}
+.bp-detail a {
+	color: #337ab7;
+}
+.bp-detail .floorplan > div {
+	display: inline-block;
+	margin-right: 12px;
+}
+#map-view {
+	float: right;
+}
+.map-view {
+	height: 420px;
+	width: 878px;
+	position: absolute;
+	visibility: hidden;
+	top: -1000px;
+	left: -1000px;
+}
