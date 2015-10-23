@@ -1,10 +1,10 @@
 <?php
 
-namespace vsoft\express\controllers\backend;
+namespace vsoft\news\controllers;
 
 use Yii;
-use vsoft\express\models\LcMeta;
-use vsoft\express\models\LcMetaSearch;
+use vsoft\news\models\LcMeta;
+use vsoft\news\models\LcMetaSearch;
 use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

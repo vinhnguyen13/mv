@@ -8,6 +8,7 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use yii\base\InvalidParamException;
+use yii\helpers\Json;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -74,6 +75,12 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $meta = Yii::$app->meta->getMeta(Yii::$app->request->absoluteUrl);
+        if(!empty($meta)){
+            $json_data = Json::decode($meta->metadata, true);
+            Yii::$app->meta->addMeta($json_data);
+        }
+
         return $this->render('index');
     }
 

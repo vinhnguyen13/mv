@@ -1,12 +1,10 @@
 <?php
 
-namespace vsoft\express\models;
+namespace vsoft\news\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use vsoft\express\models\LcMeta;
-
 /**
  * LcMetaSearch represents the model behind the search form about `vsoft\express\models\LcMeta`.
  */

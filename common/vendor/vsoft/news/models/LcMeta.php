@@ -1,10 +1,9 @@
 <?php
 
-namespace vsoft\express\models;
+namespace vsoft\news\models;
 
-use vsoft\express\models\base\LcMetaBase;
 use Yii;
-use yii\helpers\Json;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "lc_meta".
@@ -13,8 +12,13 @@ use yii\helpers\Json;
  * @property string $url
  * @property string $metadata
  */
-class LcMeta extends LcMetaBase
+class LcMeta extends ActiveRecord
 {
+    public static function tableName()
+    {
+        return 'lc_meta';
+    }
+
     public function rules()
     {
         return [
@@ -22,6 +26,15 @@ class LcMeta extends LcMetaBase
             [['url'], 'string', 'max' => 255],
             [['url'], 'unique'],
             [['url'], 'required'],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('meta', 'ID'),
+            'url' => Yii::t('meta', 'Url'),
+            'metadata' => Yii::t('meta', 'Metadata'),
         ];
     }
 

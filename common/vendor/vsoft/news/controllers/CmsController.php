@@ -37,7 +37,7 @@ class CmsController extends CmsShowController
         ];
     }
 
-    public function findModel1($id)
+    public function findModel($id)
     {
         if (($model = CmsShow::findOne($id)) !== null) {
             return $model;
@@ -57,7 +57,7 @@ class CmsController extends CmsShowController
         $searchModel = new CmsShowSearch();
 
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->pagination->pageSize=10;
+        $dataProvider->pagination->pageSize = 10;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -70,7 +70,7 @@ class CmsController extends CmsShowController
         //if(!Yii::$app->user->can('viewYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
 
         return $this->render('view', [
-            'model' => $this->findModel1($id),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -109,7 +109,7 @@ class CmsController extends CmsShowController
     {
         //if(!Yii::$app->user->can('updateYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
 
-        $model = $this->findModel1($id);
+        $model = $this->findModel($id);
         $oldBanner = $model->banner;
 
         if ($model->load(Yii::$app->request->post())) {
@@ -140,7 +140,7 @@ class CmsController extends CmsShowController
     {
         //if(!Yii::$app->user->can('deleteYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
 
-        $this->findModel1($id)->delete();
+        $this->findModel($id)->delete();
         /*$model = $this->findModel($id);
         $model->status = Status::STATUS_DELETED;
         $model->save();*/
