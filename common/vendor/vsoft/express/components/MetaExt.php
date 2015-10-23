@@ -5,7 +5,7 @@
  * Date: 10/22/2015 1:07 PM
  */
 
-namespace frontend\components;
+namespace vsoft\express\components;
 
 
 use vsoft\express\models\LcMeta;

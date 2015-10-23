@@ -4,7 +4,6 @@ namespace vsoft\express\models;
 
 use vsoft\express\models\base\LcMetaBase;
 use Yii;
-use yii\helpers\Json;
 
 /**
  * This is the model class for table "lc_meta".
