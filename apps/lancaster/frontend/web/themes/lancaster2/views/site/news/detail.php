@@ -21,7 +21,7 @@ use yii\helpers\Url;
                     <?php foreach($relatedPost as $key=>$new):?>
                         <div class="item">
                         <div class="item-wrap-content">
-                            <a class="item-img-wrap" href="<?=Url::toRoute(['/site/news-detail', 'id' => $new->id, 'slug' => $new->slug]);?>">
+                            <a class="item-img-wrap" href="<?=Url::toRoute(['/site/news-detail', 'id' => $new->id, 'slug' => $new->slug, 'cat'=>strtolower($new->catalog->surname)]);?>">
                                 <img alt="" src="<?=$new->getUrlBanner($new->banner);?>" />
                                 <span class="post-date">
                                     <span class="date"><?=date('d', $new->created_at);?></span>
