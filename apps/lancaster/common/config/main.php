@@ -9,6 +9,7 @@ return [
 //        'webvimark' => dirname(dirname(__DIR__)) . '/vendor/webvimark'
         '@store' => dirname(dirname(__DIR__)) . '/store',
         '@vsoft/news' => dirname(__DIR__) . '/vendor/vsoft/news',
+        '@vsoft/express' => dirname(__DIR__) . '/vendor/vsoft/express',
     ),
     'modules'=>[
         /*'user-management' => [
@@ -134,16 +135,29 @@ return [
                 'path' => '/',*/
             ],
         ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
-            'transport' => [
-                'class' => 'Swift_SmtpTransport',
-                'host' => 'localhost',
-                'username' => 'username',
-                'password' => 'password',
-                'port' => '587',
-                'encryption' => 'tls',
-            ],
+        'i18n' => [
+            'translations' => [
+                'user' => [
+                    'class'          => 'yii\i18n\PhpMessageSource',
+                    'sourceLanguage' => 'ru',
+                    'basePath'       => '@vendor/dektrium/yii2-user/messages',
+                    'fileMap'        => [
+                        'modules/user/user' => 'user.php',
+                    ],
+                ],
+                '*' => [
+                    'class'          => 'yii\i18n\PhpMessageSource',
+                    'sourceLanguage' => 'vi',
+                    'basePath'       => '@frontend/messages',
+                    'fileMap'        => [
+                        'express' => 'express.php',
+                        'express/about' => 'about.php',
+                        'express/booking' => 'booking.php',
+                        'express/contact' => 'contact.php',
+                        'express/news' => 'news.php',
+                    ],
+                ],
+            ]
         ],
     ],
 ];

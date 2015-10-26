@@ -103,29 +103,8 @@ return [
                 ],
             ],
         ],
-        'i18n' => [
-            'translations' => [
-                'user' => [
-                    'class'          => 'yii\i18n\PhpMessageSource',
-                    'sourceLanguage' => 'ru',
-                    'basePath'       => '@vendor/dektrium/yii2-user/messages',
-                    'fileMap'        => [
-                        'modules/user/user' => 'user.php',
-                    ],
-                ],
-                '*' => [
-                    'class'          => 'yii\i18n\PhpMessageSource',
-                    'sourceLanguage' => 'vi',
-                    'basePath'       => '@frontend/messages',
-                    'fileMap'        => [
-                        'express' => 'express.php',
-                        'express/about' => 'about.php',
-                        'express/booking' => 'booking.php',
-                        'express/contact' => 'contact.php',
-                        'express/news' => 'news.php',
-                    ],
-                ],
-            ]
+        'meta' =>[
+            'class' => 'frontend\components\MetaExt',
         ],
     ],
     'params' => $params,
