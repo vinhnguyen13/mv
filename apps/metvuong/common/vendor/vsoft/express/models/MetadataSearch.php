@@ -41,7 +41,7 @@ class MetadataSearch extends Metadata
      */
     public function search($params)
     {
-        $query = LcMeta::find();
+        $query = Metadata::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

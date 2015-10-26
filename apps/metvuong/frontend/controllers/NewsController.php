@@ -22,6 +22,8 @@ class NewsController extends \yii\web\Controller
 
     public function actionIndex()
     {
+        // Pass url of request
+        Yii::$app->meta->add(Yii::$app->request->absoluteUrl);
         return $this->render('index');
     }
 
@@ -52,8 +54,8 @@ class NewsController extends \yii\web\Controller
 //        $sql = "SELECT * FROM cms_show WHERE id NOT IN (" . $current_id . ") and id < " . $current_id . " AND catalog_id = " . $cat_id . " ORDER BY id DESC LIMIT 1 ";
 //        $model = CmsShow::findBySql($sql)->one();
         $model = CmsShow::find()
-            ->innerJoin('profile','cms_show.created_by = profile.user_id')
-            ->select(['cms_show.*','profile.*'])
+            ->innerJoin('profile', 'cms_show.created_by = profile.user_id')
+            ->select(['cms_show.*', 'profile.*'])
             ->where('cms_show.id NOT IN (:id)', [':id' => $current_id])
             ->andWhere('cms_show.catalog_id = :cat_id', [':cat_id' => $cat_id])
             ->andWhere('cms_show.id < :_id', [':_id' => $current_id])

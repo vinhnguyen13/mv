@@ -10,7 +10,6 @@ use Yii;
 use yii\base\InvalidParamException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
-use yii\helpers\Json;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\Cookie;
@@ -76,11 +75,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $meta = Yii::$app->meta->getMeta(Yii::$app->request->absoluteUrl);
-        if (!empty($meta)) {
-            $json_data = Json::decode($meta->metadata, true);
-            Yii::$app->meta->addMeta($json_data);
-        }
+        Yii::$app->meta->add(Yii::$app->request->absoluteUrl);
         return $this->render('index');
     }
 

@@ -69,7 +69,7 @@ class MetaController extends Controller
                 'og:url'=>$data["Metadata"]["url"],
             ];
             unset($data["_csrf"]);
-            unset($data["LcMeta"]);
+            unset($data["Metadata"]);
 
             $arr_data = array_merge($data, $seo, [
                 'fb:app_id' => '856286731156793',
@@ -107,10 +107,10 @@ class MetaController extends Controller
             $data = Yii::$app->request->post();
             $seo = [
                 'og:description' => $data["description"],
-                'og:url'=>$data["LcMeta"]["url"],
+                'og:url'=>$data["Metadata"]["url"],
             ];
             unset($data["_csrf"]);
-            unset($data["LcMeta"]);
+            unset($data["Metadata"]);
 
             $arr_data = array_merge($data, $seo, [
                 'fb:app_id' => '856286731156793',

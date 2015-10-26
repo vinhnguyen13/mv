@@ -11,6 +11,7 @@ namespace frontend\components;
 use vsoft\express\models\LcMeta;
 use Yii;
 use yii\base\Component;
+use yii\helpers\Json;
 
 class MetaExt extends Component
 {
@@ -27,8 +28,7 @@ class MetaExt extends Component
     public function getMeta($url)
     {
         $model = LcMeta::find()
-            ->where(['LIKE', 'url', $url])
-            ->orderBy(['id' => SORT_DESC])
+            ->where('url = :_url', [':_url' => $url])
             ->one();
         return $model;
     }
@@ -50,6 +50,15 @@ class MetaExt extends Component
                     }
                 }
             }
+        }
+
+    }
+
+    public function add($url){
+        $meta = $this->getMeta($url);
+        if (!empty($meta)) {
+            $json_data = Json::decode($meta->metadata, true);
+            $this->addMeta($json_data);
         }
 
     }

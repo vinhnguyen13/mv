@@ -7,11 +7,10 @@
 
 namespace frontend\components;
 
-
-use vsoft\express\models\LcMeta;
 use vsoft\express\models\Metadata;
 use Yii;
 use yii\base\Component;
+use yii\helpers\Json;
 
 class MetaExt extends Component
 {
@@ -28,8 +27,7 @@ class MetaExt extends Component
     public function getMeta($url)
     {
         $model = Metadata::find()
-            ->where(['LIKE', 'url', $url])
-            ->orderBy(['id' => SORT_DESC])
+            ->where('url = :_url', [':_url' => $url])
             ->one();
         return $model;
     }
@@ -41,9 +39,9 @@ class MetaExt extends Component
              * check key exist in mapping, return key mapping
              */
             if (!empty($item)) {
-                foreach(Yii::$app->params['meta']['attributes'] as $mapKey => $value) {
+                foreach (Yii::$app->params['meta']['attributes'] as $mapKey => $value) {
                     $checkKey = array_keys($value, $key);
-                    if(!empty($checkKey)){
+                    if (!empty($checkKey)) {
                         Yii::$app->view->registerMetaTag([
                             $mapKey => $key,
                             'content' => $item
@@ -51,6 +49,15 @@ class MetaExt extends Component
                     }
                 }
             }
+        }
+
+    }
+
+    public function add($url){
+        $meta = $this->getMeta($url);
+        if (!empty($meta)) {
+            $json_data = Json::decode($meta->metadata, true);
+            $this->addMeta($json_data);
         }
 
     }
