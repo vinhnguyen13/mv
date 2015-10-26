@@ -2,9 +2,9 @@
 
 namespace vsoft\express\controllers;
 
+use vsoft\express\models\Metadata;
+use vsoft\express\models\MetadataSearch;
 use Yii;
-use vsoft\express\models\LcMeta;
-use vsoft\express\models\LcMetaSearch;
 use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -33,7 +33,7 @@ class MetaController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new LcMetaSearch();
+        $searchModel = new MetadataSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -61,12 +61,12 @@ class MetaController extends Controller
      */
     public function actionCreate()
     {
-        $model = new LcMeta();
+        $model = new Metadata();
         if(!empty($_POST)){
             $data = Yii::$app->request->post();
             $seo = [
                 'og:description' => $data["description"],
-                'og:url'=>$data["LcMeta"]["url"],
+                'og:url'=>$data["Metadata"]["url"],
             ];
             unset($data["_csrf"]);
             unset($data["LcMeta"]);
@@ -150,12 +150,12 @@ class MetaController extends Controller
      * Finds the LcMeta model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return LcMeta the loaded model
+     * @return Metadata the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = LcMeta::findOne($id)) !== null) {
+        if (($model = Metadata::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

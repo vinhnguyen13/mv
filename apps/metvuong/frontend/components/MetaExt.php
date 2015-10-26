@@ -9,6 +9,7 @@ namespace frontend\components;
 
 
 use vsoft\express\models\LcMeta;
+use vsoft\express\models\Metadata;
 use Yii;
 use yii\base\Component;
 
@@ -26,7 +27,7 @@ class MetaExt extends Component
 
     public function getMeta($url)
     {
-        $model = LcMeta::find()
+        $model = Metadata::find()
             ->where(['LIKE', 'url', $url])
             ->orderBy(['id' => SORT_DESC])
             ->one();

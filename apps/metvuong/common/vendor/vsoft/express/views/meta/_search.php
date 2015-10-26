@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model vsoft\express\models\LcMetaSearch */
+/* @var $model vsoft\express\models\MetadataSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 

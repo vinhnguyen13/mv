@@ -10,7 +10,7 @@ use vsoft\express\models\LcMeta;
 /**
  * LcMetaSearch represents the model behind the search form about `vsoft\express\models\LcMeta`.
  */
-class LcMetaSearch extends LcMeta
+class MetadataSearch extends Metadata
 {
     /**
      * @inheritdoc

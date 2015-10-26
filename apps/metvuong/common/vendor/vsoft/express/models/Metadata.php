@@ -2,7 +2,7 @@
 
 namespace vsoft\express\models;
 
-use vsoft\express\models\base\LcMetaBase;
+use vsoft\express\models\base\MetadataBase;
 use Yii;
 use yii\helpers\Json;
 
@@ -13,7 +13,7 @@ use yii\helpers\Json;
  * @property string $url
  * @property string $metadata
  */
-class LcMeta extends LcMetaBase
+class Metadata extends MetadataBase
 {
     public function rules()
     {

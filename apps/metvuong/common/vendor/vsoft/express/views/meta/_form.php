@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model vsoft\express\models\LcMeta */
+/* @var $model vsoft\express\models\Metadata */
 /* @var $form yii\widgets\ActiveForm */
 
 $metadata = \yii\helpers\Json::decode($model->metadata,true);

@@ -11,14 +11,14 @@ use Yii;
  * @property string $url
  * @property string $metadata
  */
-class LcMetaBase extends \yii\db\ActiveRecord
+class MetadataBase extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'lc_meta';
+        return 'mv_meta';
     }
 
     /**

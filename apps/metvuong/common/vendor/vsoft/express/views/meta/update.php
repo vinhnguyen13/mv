@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model vsoft\express\models\LcMeta */
+/* @var $model vsoft\express\models\Metadata */
 
 $this->title = Yii::t('meta', 'Update {modelClass}: ', [
     'modelClass' => 'Meta',

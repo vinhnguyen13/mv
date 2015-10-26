@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model vsoft\express\models\LcMeta */
+/* @var $model vsoft\express\models\Metadata */
 
 $this->title = Yii::t('meta', 'Create Meta');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('meta', 'Meta'), 'url' => ['index']];
