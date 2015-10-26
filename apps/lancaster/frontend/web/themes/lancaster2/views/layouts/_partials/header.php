@@ -18,7 +18,7 @@ use yii\helpers\Url;
             </ul>
         </div>
         <?php endif;?>
-        <a href="#" id="logo" class="left"><span class="logo"></span><span class="arrow"></span></a>
+        <a href="<?=Url::home()?>" id="logo" class="left"><span class="logo"></span><span class="arrow"></span></a>
         <a href="#" class="menu-button" id="mobile-menu-button"></a>
         <div id="mobile-menu">
             <a href="#" class="book-now right"><?=\Yii::t('express/booking', 'Book Now');?></a>
