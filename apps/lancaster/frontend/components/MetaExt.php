@@ -5,9 +5,10 @@
  * Date: 10/22/2015 1:07 PM
  */
 
-namespace vsoft\express\components;
+namespace frontend\components;
 
-use vsoft\express\models\MvMeta;
+
+use vsoft\express\models\LcMeta;
 use Yii;
 use yii\base\Component;
 
@@ -25,7 +26,7 @@ class MetaExt extends Component
 
     public function getMeta($url)
     {
-        $model = MvMeta::find()
+        $model = LcMeta::find()
             ->where(['LIKE', 'url', $url])
             ->orderBy(['id' => SORT_DESC])
             ->one();
@@ -39,8 +40,8 @@ class MetaExt extends Component
              * check key exist in mapping, return key mapping
              */
             if (!empty($item)) {
-                foreach (Yii::$app->params['meta']['attributes'] as $mapKey => $value) {
-                    if (!empty(array_keys($value, $key))) {
+                foreach(Yii::$app->params['meta']['attributes'] as $mapKey => $value) {
+                    if(!empty(array_keys($value, $key))){
                         Yii::$app->view->registerMetaTag([
                             $mapKey => $key,
                             'content' => $item

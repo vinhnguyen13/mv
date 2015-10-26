@@ -5,11 +5,12 @@ namespace vsoft\express\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use vsoft\express\models\LcMeta;
 
 /**
- * MvMetaSearch represents the model behind the search form about `vsoft\express\models\MvMeta`.
+ * LcMetaSearch represents the model behind the search form about `vsoft\express\models\LcMeta`.
  */
-class MvMetaSearch extends MvMeta
+class LcMetaSearch extends LcMeta
 {
     /**
      * @inheritdoc
@@ -40,7 +41,7 @@ class MvMetaSearch extends MvMeta
      */
     public function search($params)
     {
-        $query = MvMeta::find();
+        $query = LcMeta::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

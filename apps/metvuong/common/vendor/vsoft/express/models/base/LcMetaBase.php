@@ -1,24 +1,24 @@
 <?php
 
-namespace vsoft\express\models;
+namespace vsoft\express\models\base;
 
 use Yii;
 
 /**
- * This is the model class for table "mv_meta".
+ * This is the model class for table "lc_meta".
  *
  * @property string $id
  * @property string $url
  * @property string $metadata
  */
-class MvMeta extends \yii\db\ActiveRecord
+class LcMetaBase extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'mv_meta';
+        return 'lc_meta';
     }
 
     /**
@@ -29,8 +29,7 @@ class MvMeta extends \yii\db\ActiveRecord
         return [
             [['metadata'], 'string'],
             [['url'], 'string', 'max' => 255],
-            [['url'], 'unique'],
-            [['url'], 'required'],
+            [['url'], 'unique']
         ];
     }
 

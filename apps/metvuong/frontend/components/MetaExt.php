@@ -5,9 +5,10 @@
  * Date: 10/22/2015 1:07 PM
  */
 
-namespace frontend\components;
+namespace apps\lancaster\frontend\components;
 
-use vsoft\news\models\LcMeta;
+
+use vsoft\express\models\LcMeta;
 use Yii;
 use yii\base\Component;
 

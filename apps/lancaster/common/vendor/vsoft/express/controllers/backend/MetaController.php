@@ -1,19 +1,19 @@
 <?php
 
-namespace vsoft\express\controllers;
+namespace vsoft\express\controllers\backend;
 
 use Yii;
-use vsoft\express\models\MvMeta;
-use vsoft\express\models\MvMetaSearch;
+use vsoft\express\models\LcMeta;
+use vsoft\express\models\LcMetaSearch;
 use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * MvMetaController implements the CRUD actions for MvMeta model.
+ * MetaController implements the CRUD actions for LcMeta model.
  */
-class MvMetaController extends Controller
+class MetaController extends Controller
 {
     public function behaviors()
     {
@@ -33,7 +33,7 @@ class MvMetaController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new MvMetaSearch();
+        $searchModel = new LcMetaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -61,7 +61,7 @@ class MvMetaController extends Controller
      */
     public function actionCreate()
     {
-        $model = new MvMeta();
+        $model = new LcMeta();
         if(!empty($_POST)){
             $data = Yii::$app->request->post();
             $seo = [
@@ -107,10 +107,10 @@ class MvMetaController extends Controller
             $data = Yii::$app->request->post();
             $seo = [
                 'og:description' => $data["description"],
-                'og:url'=>$data["MvMeta"]["url"],
+                'og:url'=>$data["LcMeta"]["url"],
             ];
             unset($data["_csrf"]);
-            unset($data["MvMeta"]);
+            unset($data["LcMeta"]);
 
             $arr_data = array_merge($data, $seo, [
                 'fb:app_id' => '856286731156793',

@@ -1,6 +1,6 @@
 <?php
 
-namespace vsoft\express\controllers;
+namespace vsoft\express\controllers\backend;
 
 use Yii;
 use vsoft\express\models\LcMeta;
