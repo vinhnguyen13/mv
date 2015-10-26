@@ -1,17 +1,18 @@
 <?php
 namespace frontend\controllers;
 
-use Yii;
 use common\models\LoginForm;
+use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
-use frontend\models\ContactForm;
+use Yii;
 use yii\base\InvalidParamException;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\helpers\Json;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use yii\web\Cookie;
 
 /**
@@ -20,6 +21,7 @@ use yii\web\Cookie;
 class SiteController extends Controller
 {
     public $layout = '@app/views/layouts/news';
+
     /**
      * @inheritdoc
      */
@@ -74,6 +76,11 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $meta = Yii::$app->meta->getMeta(Yii::$app->request->absoluteUrl);
+        if (!empty($meta)) {
+            $json_data = Json::decode($meta->metadata, true);
+            Yii::$app->meta->addMeta($json_data);
+        }
         return $this->render('index');
     }
 
@@ -213,7 +220,8 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionLanguage(){
+    public function actionLanguage()
+    {
         $language = Yii::$app->request->get('language');
         Yii::$app->language = $language;
         $cookie = new Cookie([
@@ -226,7 +234,8 @@ class SiteController extends Controller
         $this->redirect(Yii::$app->request->referrer);
     }
 
-    public function actionInfo(){
+    public function actionInfo()
+    {
         echo "<pre>";
         print_r(phpinfo());
         echo "</pre>";

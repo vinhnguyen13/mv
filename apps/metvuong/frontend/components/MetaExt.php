@@ -5,7 +5,7 @@
  * Date: 10/22/2015 1:07 PM
  */
 
-namespace apps\lancaster\frontend\components;
+namespace frontend\components;
 
 
 use vsoft\express\models\LcMeta;
