@@ -9,7 +9,7 @@ use yii\db\Expression;
 
 class ContactController extends \yii\web\Controller
 {
-    public $layout = '@app/views/layouts/news';
+    public $layout = '@app/views/layouts/layout';
     public function actionIndex()
     {
         return $this->render('index');

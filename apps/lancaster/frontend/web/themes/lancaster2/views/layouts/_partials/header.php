@@ -27,7 +27,7 @@ use yii\helpers\Url;
                 <ul class="menu clear">
                     <li><a href="<?=Url::toRoute(['site/about-us'])?>"><?=\Yii::t('express/about', 'About Us');?></a></li>
                     <li><a href="<?=Url::toRoute(['site/news'])?>"><?=\Yii::t('express/news', 'News');?></a></li>
-                    <li><a href="#"><?=\Yii::t('express/contact', 'Contact');?></a></li>
+                    <li><a href="<?=Url::toRoute(['express/contact/index']);?>"><?=\Yii::t('express/contact', 'Contact');?></a></li>
                 </ul>
                 <i class="separator"></i>
                 <?php $supportedLanguages = Yii::$app->bootstrap['languageSelector']['supportedLanguages']; ?>
