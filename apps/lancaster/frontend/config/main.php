@@ -105,15 +105,6 @@ return [
         ],
         'i18n' => [
             'translations' => [
-                '*' => [
-                    'class' => 'yii\i18n\DbMessageSource',
-                    'db' => 'db',
-                    'sourceLanguage' => 'xx-XX', // ???? ????????????
-                    'sourceMessageTable' => 'language_source',
-                    'messageTable' => 'language_translate',
-                    'cachingDuration' => 86400,
-                    'enableCaching' => true,
-                ],
                 'user' => [
                     'class'          => 'yii\i18n\PhpMessageSource',
                     'sourceLanguage' => 'ru',
@@ -122,11 +113,10 @@ return [
                         'modules/user/user' => 'user.php',
                     ],
                 ],
-                'express*' => [
+                '*' => [
                     'class'          => 'yii\i18n\PhpMessageSource',
-                    'sourceLanguage' => 'en-US',
-                    'forceTranslation' => true,
-                    'basePath'       => '@vendor/vsoft/express/messages',
+                    'sourceLanguage' => 'vi',
+                    'basePath'       => '@frontend/messages',
                     'fileMap'        => [
                         'express' => 'express.php',
                         'express/about' => 'about.php',
