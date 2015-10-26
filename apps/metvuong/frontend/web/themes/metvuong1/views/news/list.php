@@ -11,13 +11,6 @@ use yii\bootstrap\Html;
 ?>
 <div class="row">
     <div class="col-xs-8 col-lg-9 pdR-5">
-        <div class="news-hot">
-            <div class="wrap-img"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/bg-banner.jpg" alt=""></div>
-            <div class="content-news-hot">
-                <h2>9 dự án đang và sẽ thay đổi diện mạo Quận 4</h2>
-                <p>ngày đầu tiên là tên một trong những cuốn sách trên bàn làm việc của Nguyễn Trung Tín, mới được bổ nhiệm vào vị trí  mới được bổ nhiệm vào vị trí  mới được bổ nhiệm vào vị trí  mới được bổ nhiệm vào vị trí  mới được bổ nhiệm vào vị trí  mới được bổ nhiệm vào vị trí Tổng Giám đốc Công ty Cổ phần Tập đoàn ổng Giám đốc Công ty Cổ phần Tập đoàn ổng Giám đốc Công ty Cổ phần Tập đoàn ổng Giám đốc Công ty Công ty Cổ phần Tập đoàn ổng Giám đốc Công ty Công ty Cổ phần Tập đoàn ổng Giám đốc Công ty  Cổ phần Tập đoàn ổng Giám đốc Công ty Cổ phần Tập đoàn Trung Thủy (TTG) hôm 15.1, đúng vào dịp sinh nhật lần thứ 52 của thân mẫu, bà Dương Thanh Thủy</p>
-            </div>
-        </div>
         <div class="news-bds">
             <div class="widget-title clearfix"><h2>bất động sản</h2></div>
             <div class="row">
