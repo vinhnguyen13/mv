@@ -9,6 +9,7 @@ use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "cms_show".
@@ -111,4 +112,21 @@ class CmsShow extends \funson86\cms\models\CmsShow
         return $username->username;
     }
 
+    /**
+     * @param null $fileName
+     * @return string
+     */
+    public function getPathBanner($fileName = null)
+    {
+        return \Yii::getAlias('@store/news/show/').(!empty($fileName) ? $fileName: '');
+    }
+
+    /**
+     * @param null $fileName
+     * @return string
+     */
+    public function getUrlBanner($fileName = null)
+    {
+        return Url::to('/store/news/show/').(!empty($fileName) ? $fileName: '');
+    }
 }

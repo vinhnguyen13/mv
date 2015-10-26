@@ -1,6 +1,9 @@
 <?php
 namespace frontend\controllers;
 
+use vsoft\news\models\CmsShow;
+use funson86\cms\models\Status;
+use vsoft\news\models\CmsCatalog;
 use Yii;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
@@ -8,12 +11,14 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use yii\base\InvalidParamException;
+use yii\data\Pagination;
 use yii\helpers\Json;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Cookie;
+use yii\helpers\ArrayHelper;
 
 /**
  * Site controller
@@ -242,5 +247,74 @@ class SiteController extends Controller
         ]);
         \Yii::$app->getResponse()->getCookies()->add($cookie);
         $this->redirect(Yii::$app->request->referrer);
+    }
+
+    public function actionAboutUs(){
+        $ids = CmsCatalog::getArraySubCatalogId(0, CmsCatalog::find()->where([
+            'surname' => 'ABOUT',
+        ])->asArray()->all());
+        $query = CmsShow::find();
+        $query->where([
+            'status' => Status::STATUS_ACTIVE,
+            'catalog_id' => $ids,
+        ]);
+
+        $pagination = new Pagination([
+            'defaultPageSize' => isset(\Yii::$app->params['cmsListPageCount']) ? Yii::$app->params['cmsListPageCount'] : 20,
+            'totalCount' => $query->count(),
+        ]);
+
+        $news = $query->orderBy(['created_at' => SORT_DESC])
+            ->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+        return $this->render('about/index', ['news'=>$news]);
+    }
+
+    public function actionNews(){
+        $ids = CmsCatalog::getArraySubCatalogId(0, CmsCatalog::find()->where([
+            'surname' => 'NEWS',
+        ])->asArray()->all());
+        $query = CmsShow::find();
+        $query->where([
+            'status' => Status::STATUS_ACTIVE,
+            'catalog_id' => $ids,
+        ]);
+
+        $pagination = new Pagination([
+            'defaultPageSize' => isset(\Yii::$app->params['cmsListPageCount']) ? Yii::$app->params['cmsListPageCount'] : 30,
+            'totalCount' => $query->count(),
+        ]);
+
+        $news = $query->orderBy(['created_at' => SORT_DESC])
+            ->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+        return $this->render('news/index', ['news'=>$news, 'pagination' => $pagination]);
+    }
+
+    public function actionNewsDetail()
+    {
+        $id = \Yii::$app->request->get('id');
+        if (!$id) $this->goHome();
+
+        $detail = CmsShow::findOne($id);
+        /**
+         * Related post
+         */
+        $surname = $detail->catalog->surname;
+        $catids = ArrayHelper::map(CmsCatalog::find()->where([
+            'surname' => $surname,
+        ])->asArray()->all(),
+            'id', 'id');
+
+        $relatedPost = CmsShow::find()->where([
+            'status' => Status::STATUS_ACTIVE,
+            'catalog_id' => $catids,
+        ])->andWhere(['<>', 'id', $id])->all();
+
+        return $this->render('news/detail', ['detail'=>$detail, 'relatedPost'=>$relatedPost]);
     }
 }
