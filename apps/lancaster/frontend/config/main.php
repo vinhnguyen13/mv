@@ -137,9 +137,6 @@ return [
                 ],
             ]
         ],
-        'meta' =>[
-            'class' => 'frontend\components\MetaExt',
-        ],
     ],
     'params' => $params,
 ];
