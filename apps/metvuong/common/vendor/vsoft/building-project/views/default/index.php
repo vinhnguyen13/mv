@@ -9,7 +9,7 @@ use funson86\cms\Module;
 /* @var $searchModel app\models\CmsShowSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Module::t('cms', 'Cms Shows');
+$this->title = Module::t('cms', 'Building Project');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cms-show-index">
