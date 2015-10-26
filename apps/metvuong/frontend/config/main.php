@@ -93,8 +93,8 @@ return [
                 ],
             ]
         ],
-        'metadata' =>[
-            'class' => 'frontend\components\Metadata',
+        'meta' =>[
+            'class' => 'frontend\components\MetaExt',
         ],
     ],
     'params' => $params,

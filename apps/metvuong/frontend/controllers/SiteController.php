@@ -76,11 +76,11 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $meta = Yii::$app->metadata->welcome();
-        /*if (!empty($meta)) {
+        $meta = Yii::$app->meta->getMeta(Yii::$app->request->absoluteUrl);
+        if (!empty($meta)) {
             $json_data = Json::decode($meta->metadata, true);
             Yii::$app->meta->addMeta($json_data);
-        }*/
+        }
         return $this->render('index');
     }
 
