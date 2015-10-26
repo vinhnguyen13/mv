@@ -2,7 +2,7 @@
     <div class="wrap-footer">
         <div class="container">
             <div class="row">
-                <div class="col-xs-4 info-email">
+                <div class="col-sm-4 info-email">
                     <h2>metvuong.com</h2>
                     <p>metvuong.com là trang thông tin hàng đầu về thị trường bất động sản phục vụ nhà đầu tư. REIC viết chính về ngành bất động sản như: thị trường nhà ở, văn phòng, bán lẻ, nghỉ dưỡng...; và các ngành liên quan đến bất đtộng sản như vật liệu xây dựng, trang trí nội thất, bất động sản phục vụ công nghiệp... REIC trở thành một trong những mạng lưới thông tin bất động sản có nhiều độc giả yêu thích nhất tại Việt Nam.</p>
                     <form action="" id="frm-email">
@@ -10,12 +10,12 @@
                         <input type="submit" value="Đăng ký">
                     </form>
                 </div>
-                <div class="col-xs-4 box-social">
+                <div class="col-sm-4 box-social">
                     <div class="wrap-img"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/img379x238.jpg" alt=""></div>
                     <p>Hãy là người đầu tiên trong số bạn bè của bạn thích nội dung này</p>
                     <div class="wrap-img"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/img-demo-social.jpg" alt=""></div>
                 </div>
-                <div class="col-xs-4 box-address">
+                <div class="col-sm-4 box-address">
                     <h2>Met vuong</h2>
                     <ul>
                         <li>
@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class="row copyright-footer">
-                <div class="pull-left">&copy;<span>2015 metvuong.com, LLC</span></div>
+                <div class="pull-left">©<span>2015 metvuong.com, LLC</span></div>
                 <div class="pull-right">
                     <ul>
                         <li><a href="#">Về Met Vuong</a></li>
