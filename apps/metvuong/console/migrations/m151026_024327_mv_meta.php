@@ -3,21 +3,21 @@
 use yii\db\Schema;
 use yii\db\Migration;
 
-class m151023_071327_lc_meta extends Migration
+class m151026_024327_mv_meta extends Migration
 {
     public function up()
     {
-        $this->createTable('{{%lc_meta}}', [
+        $this->createTable('{{%mv_meta}}', [
             'id'      => Schema::TYPE_INTEGER . '(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY',
             'url' => Schema::TYPE_STRING . '(255) NOT NULL DEFAULT "/"',
             'metadata'  => Schema::TYPE_TEXT ,
         ]);
-        $this->createIndex('idx_url', '{{%lc_meta}}', 'url', true);
+        $this->createIndex('idx_url', '{{%mv_meta}}', 'url', true);
     }
 
     public function down()
     {
-        $this->dropTable('{{%lc_meta}}');
+        $this->dropTable('{{%mv_meta}}');
     }
 
     /*
