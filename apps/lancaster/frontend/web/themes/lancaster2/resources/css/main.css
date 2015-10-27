@@ -724,6 +724,13 @@ span.hr {
 	overflow: hidden;
 	padding-left: 20px;
 }
+.neighborhood-wrap {
+	position: relative;
+	height: 100%;
+}
+#neighborhood-map {
+	height: 100%;
+}
 /* Home */
 
 /* News */

@@ -23,9 +23,9 @@
 				<div id="branch-wrap">
 					<ul>
 						<li><a href="#">Lancaster Legacy</a></li>
-						<li><a href="#">Lancaster Lê Thánh Tôn</a></li>
-						<li><a href="#">Lancaster Nguyễn Trãi</a></li>
-						<li><a href="#">Lancaster Hà Nội</a></li>
+						<li><a href="#">Lancaster LÃª ThÃ¡nh TÃ´n</a></li>
+						<li><a href="#">Lancaster Nguyá»…n TrÃ£i</a></li>
+						<li><a href="#">Lancaster HÃ  Ná»™i</a></li>
 					</ul>
 				</div>
 				<a href="#" id="logo" class="left"><span class="logo"></span><span class="arrow"></span></a>
@@ -204,55 +204,17 @@
 								</div>
 							</div>
 						</div>
-						<div class="section section-swiper">
-							<div class="swiper-group">
-								<div class="swiper-container">
-								    <div class="swiper-wrapper">
-								        <div class="swiper-slide"><img src="images/restaurants.jpg" /></div>
-								        <div class="swiper-slide"><img src="images/markets.jpg" /></div>
-								        <div class="swiper-slide"><img src="images/shopping.jpg" /></div>
-								        <div class="swiper-slide"><img src="images/entertainment.jpg" /></div>
-								        <div class="swiper-slide"><img src="images/park.jpg" /></div>
-								    </div>
-								    <div class="swiper-button swiper-button-prev"></div>
- 									<div class="swiper-button swiper-button-next"></div>
-								</div>
+						<div class="section section-neighborhood">
+							<div class="neighborhood-wrap">
+								<div id="neighborhood-map"></div>
 								<div class="swiper-map">
 								    <div class="swiper-wrapper">
-								        <div class="swiper-slide"><div class="arrow-down"></div><div class="arrow-up"></div><div class="slide-button">RESTAURANTS</div></div>
-								        <div class="swiper-slide"><div class="arrow-down"></div><div class="arrow-up"></div><div class="slide-button">MARKETS</div></div>
-								        <div class="swiper-slide"><div class="arrow-down"></div><div class="arrow-up"></div><div class="slide-button">SHOPPING</div></div>
-								        <div class="swiper-slide"><div class="arrow-down"></div><div class="arrow-up"></div><div class="slide-button">ENTERTAINMENT</div></div>
-								        <div class="swiper-slide"><div class="arrow-down"></div><div class="arrow-up"></div><div class="slide-button">PARKS</div></div>
-									</div>
-								</div>
-								<div class="slide-contents">
-									<div class="slide-content">
-										<p class="bold">Restaurants</p>
-										<p class="restaurant-name">El Gaucho</p>
-										<p class="restaurant-address">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-										<p class="restaurant-name">Le Jardin</p>
-										<p class="restaurant-address">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-										<p class="restaurant-name">Red Wine Bar</p>
-										<p class="restaurant-address">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-										<p class="restaurant-name">Monocle</p>
-										<p class="restaurant-address">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-									</div>
-									<div class="slide-content">
-										<p class="bold">Markets</p>
-										<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-									</div>
-									<div class="slide-content">
-										<p class="bold">Shopping</p>
-										<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-									</div>
-									<div class="slide-content">
-										<p class="bold">Entertaiment</p>
-										<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-									</div>
-									<div class="slide-content">
-										<p class="bold">Parks</p>
-										<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+								        <div data-type="" class="swiper-slide active"><div class="arrow-up"></div><div class="slide-button">ALL</div></div>
+								        <div data-type="r" class="swiper-slide"><div class="arrow-up"></div><div class="slide-button">RESTAURANTS</div></div>
+								        <div data-type="m" class="swiper-slide"><div class="arrow-up"></div><div class="slide-button">MARKETS</div></div>
+								        <div data-type="s" class="swiper-slide"><div class="arrow-up"></div><div class="slide-button">SHOPPING</div></div>
+								        <div data-type="e" class="swiper-slide"><div class="arrow-up"></div><div class="slide-button">ENTERTAINMENT</div></div>
+								        <div data-type="p" class="swiper-slide"><div class="arrow-up"></div><div class="slide-button">PARKS</div></div>
 									</div>
 								</div>
 							</div>
@@ -264,8 +226,8 @@
 							            <tr class="bgtitle">
 							                <th>AREA (SQM)</th>
 											<th>KIND OF APATMENT</th>
-											<th>MONTHLY RATES (VNĐ)</th>
-											<th>DAILY RATES (VNĐ)</th>
+											<th>MONTHLY RATES (VNÄ�)</th>
+											<th>DAILY RATES (VNÄ�)</th>
 							            </tr>
 							            <tr>
 							                <td>150</td>
@@ -336,11 +298,11 @@
 												<div class="content-wrap">
 													<div class="content">
 														<div class="label">ADDRESS</div>
-														<div class="text">22 – 22 Bis Le Thanh Ton Street, Ben Nghe </div>
+														<div class="text">22 â€“ 22 Bis Le Thanh Ton Street, Ben Nghe </div>
 														<div class="label">PHONE</div>
 														<div class="text">+ 84 8 3 8246666</div>
 														<div class="label">FAX</div>
-														<div class="text">+ 84 8 3 8299556 – 3 8298700</div>
+														<div class="text">+ 84 8 3 8299556 â€“ 3 8298700</div>
 														<div class="label">EMAIL</div>
 														<div class="text">sales@trungthuygroup.vn</div>
 														<div class="label">HOTLINE</div>
@@ -420,9 +382,9 @@
 						<div class="clear foot-nav">
 							<div class="left">
 								<ul class="menu clear">
-									<li><a href="#">Về Chúng Tôi</a></li>
-									<li><a href="#">Tin Tức</a></li>
-									<li><a href="#">Liên Hệ</a></li>
+									<li><a href="#">Vá»� ChÃºng TÃ´i</a></li>
+									<li><a href="#">Tin Tá»©c</a></li>
+									<li><a href="#">LiÃªn Há»‡</a></li>
 									<li><a href="#">Newsletter</a></li>
 								</ul>
 							</div>

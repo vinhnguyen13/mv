@@ -11,6 +11,8 @@ doc.ready(function(){
 var home = {
 	collapseButton: null,
 	map: null,
+	nMap: null,
+	nMarkers: [],
 	ratio: 1920/996,
 	sections: null,
 	sectionTop: [],
@@ -130,7 +132,7 @@ var home = {
 		});
 	},
 	centerSlideMap: function() {
-		$('.swiper-group .swiper-map').each(function(){
+		$('.swiper-map').each(function(){
 			var self = $(this);
 			var space = win.width() - self.width();
 			var left = (space > 0) ? space/2 : 0;
@@ -163,6 +165,12 @@ var home = {
 				});
 			}
 		});
+		
+		if(isMobile) {
+			this.sections.filter('.section-neighborhood').height(280);;
+		} else {
+			this.sections.filter('.section-neighborhood').height(height);
+		}
 	},
 	initEl: function() {
 		this.sections = $('#paralax-page').find('div.section');
@@ -291,6 +299,78 @@ var home = {
 			center: {lat: 10.753647, lng: 106.711543},
 		    zoom: 16
 		});
+		
+		this.initNeighMap();
+	},
+	initNeighMap: function() {
+		this.nMap = new google.maps.Map(document.getElementById('neighborhood-map'), {
+			center: {lat: 10.784094, lng: 106.701859},
+		    zoom: 16,
+		    scrollwheel: false
+		});
+		
+		var swiperMap = $('.neighborhood-wrap .swiper-map').swiper({
+			slidesPerView: 'auto',
+			spaceBetween: 0,
+	        freeMode: true,
+	        onTap: function(sm, event) {
+	        	var type = $(sm.clickedSlide).data('type');
+	        	
+	        	if(type) {
+	        		for(index in home.nMarkers) {
+		        		var nMarker = home.nMarkers[index];
+		        		
+	        			if(type == nMarker.marker.type) {
+	        				nMarker.mapMaker.setVisible(true);
+	        			} else {
+	        				nMarker.mapMaker.setVisible(false);
+	        			}
+		        	}
+	        	} else {
+	        		for(index in home.nMarkers) {
+		        		var nMarker = home.nMarkers[index];
+		        		nMarker.mapMaker.setVisible(true);
+		        	}
+	        	}
+	        }
+		});
+		
+		var markers = [
+		 	{
+		 		type: 'r',
+		 		position: {lat: 10.784094, lng: 106.701859},
+		 	},
+		 	{
+		 		type: 'm',
+		 		position: {lat: 10.785917, lng: 106.700079},
+		 	},
+		 	{
+		 		type: 's',
+		 		position: {lat: 10.781470, lng: 106.702139},
+		 	},
+		 	{
+		 		type: 'e',
+		 		position: {lat: 10.782218, lng: 106.699253},
+		 	},
+		 	{
+		 		type: 'p',
+		 		position: {lat: 10.785896, lng: 106.704124},
+		 	},
+		];
+		
+		for(index in markers) {
+			var marker = markers[index];
+			
+			this.nMarkers.push({
+				mapMaker: new google.maps.Marker({
+					draggable: false,
+				    map: home.nMap,
+				    position: marker.position,
+				    icon: 'http://local.lancaster.com/frontend/web/themes/lancaster2/resources/images/marker-restaurant.png'
+				}),
+				marker: marker
+			});
+		}
 	},
 	addMarker: function(position, text) {
 		var marker = new google.maps.Marker({
