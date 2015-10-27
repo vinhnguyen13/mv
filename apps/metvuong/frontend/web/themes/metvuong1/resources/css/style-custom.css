@@ -1262,7 +1262,7 @@ footer {
 }
 .lists-page .item-list .bgcover {
     float: left;
-    width: 145px;
+    width: 40%;
     height: 100px;
     margin-bottom: 0;
     margin-right: 10px;
@@ -1287,4 +1287,13 @@ footer {
     margin-right: 5px;
     position: relative;
     top: -1px;
+}
+@media (max-width: 991px) {
+    .lists-page .item-list .bgcover {
+        width: 30%;
+    }
+    .lists-page .item-list {
+        width: 100%;
+        float: left;
+    }
 }
