@@ -725,7 +725,6 @@ span.hr {
 }
 .neighborhood-wrap {
 	position: relative;
-	height: 100%;
 }
 #neighborhood-map {
 	height: 100%;
@@ -1574,6 +1573,7 @@ footer .menu a:hover {
 	.section-pricing {
 		padding-top: 34px;
 		padding-bottom: 30px;
+		clear: left;
 	}
 	.section-pricing .phone {
 		margin-right: 0px;

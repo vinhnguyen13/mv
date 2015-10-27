@@ -167,9 +167,9 @@ var home = {
 		});
 		
 		if(isMobile) {
-			this.sections.filter('.section-neighborhood').height(280);;
+			this.sections.filter('.section-neighborhood').find('.map-wrap').height(280);;
 		} else {
-			this.sections.filter('.section-neighborhood').height(height);
+			this.sections.filter('.section-neighborhood').find('.map-wrap').height(height);
 		}
 	},
 	initEl: function() {

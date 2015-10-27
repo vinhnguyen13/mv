@@ -206,7 +206,7 @@
 						</div>
 						<div class="section section-neighborhood">
 							<div class="neighborhood-wrap">
-								<div id="neighborhood-map"></div>
+								<div class="map-wrap"><div id="neighborhood-map"></div></div>
 								<div class="swiper-map">
 								    <div class="swiper-wrapper">
 								        <div data-type="" class="swiper-slide active"><div class="arrow-up"></div><div class="slide-button">ALL</div></div>
