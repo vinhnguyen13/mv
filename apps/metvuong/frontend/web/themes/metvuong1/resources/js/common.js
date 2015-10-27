@@ -43,6 +43,20 @@ $(document).ready(function() {
 			scrollTop: 0
 		}, 800);
     });
+
+    $('.search-select a').on('click', function() {
+    	var _this = $(this);
+    	$('.search-select').removeClass('active');
+    	_this.parent().addClass('active');
+    	return false;
+    });
+
+    $('#search-kind .dropdown-menu a').on('click', function() {
+    	var _this = $(this),
+    		valueID = _this.data('valueId'),
+    		txt = _this.data('valueText');
+    	$('#search-kind .txt-selected').html(txt);
+    });
 	
 });
 

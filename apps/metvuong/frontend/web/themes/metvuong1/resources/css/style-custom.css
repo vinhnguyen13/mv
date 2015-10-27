@@ -12,6 +12,7 @@
 }
 body {
     font-family: 'Roboto';
+    border-top: 2px solid #4a933a;
 }
 body .container {
     padding-top: 10px;
@@ -25,51 +26,56 @@ body .container {
     margin: 0 auto 0;
 }
 .box-search-header > div {
-    border: 1px solid #4a933a;
-    padding: 10px;
+    /* border: 1px solid #4a933a; */
+    padding: 0 0 0 0;
     width: 100%;
 }
 header {
-    margin-bottom: 5px;
+    margin-bottom: 20px;
 }
 .icon-sale {
     display: inline-block;
-    width: 37px;
-    height: 24px;
+    width: 45px;
+    height: 29px;
     background: url(../images/icon-sale.png) no-repeat top left;
     margin-top: 1px;
-    margin-right: 10px;
+    /* margin-right: 20px; */
+    background-size: 100%;
 }
 #search-kind {
     display: inline-block;
     position: relative;
     margin-top: 3px;
     padding-right: 0;
-    width: 285px;
+    width: 532px;
 }
 #search-kind .dropdown {
     display: inline-block;
-    width: 75px;
+    width: 123px;
+    float: left;
 }
 .icon-cart {
     display: inline-block;
-    width: 30px;
-    height: 26px;
+    width: 39px;
+    height: 33px;
     background: url(../images/icon--cart.png) no-repeat top left;
+    background-size: 100%;
 }
 .icon-door {
     display: inline-block;
-    width: 28px;
-    height: 26px;
+    width: 35px;
+    height: 33px;
     background: url(../images/icon-door.png) no-repeat top left;
-    margin-left: 15px;
+    /* margin-left: 20px; */
+    background-size: 100%;
 }
 .icon-handhome {
     display: inline-block;
-    width: 35px;
-    height: 26px;
+    width: 43px;
+    height: 31px;
     background: url(../images/icon-handhome.png) no-repeat top left;
-    margin-left: 15px;
+    /* margin-left: 20px; */
+    background-size: 100%;
 }
 #search-kind .dropdown button,
 #search-kind input {
@@ -78,7 +84,10 @@ header {
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     -ms-border-radius: 0;
-    border: 1px solid #155d05;
+    border: 1px solid #78B112;
+}
+#search-kind .dropdown button {
+    border-left: none;
 }
 #search-kind button {
     background: none;
@@ -88,14 +97,18 @@ header {
     margin: 0px 0 0 0;
     position: absolute;
     top: 3px;
-    right: -7px;
+    right: -17px;
+    font-size: 1.7em;
 }
 #search-kind button span {
     font-size: 1.2em;
 }
+#search-kind button .caret {
+    margin: 10px 0 0 4px;
+}
 #search-kind .dropdown button {
     padding: 0 5px;
-    font-size: .9em;
+    font-size: 1.2em;
     background: none;
     color: #333;
     height: auto;
@@ -103,23 +116,40 @@ header {
     position: static;
     width: 100%;
     text-align: left;
+    height: 30px;
 }
 #search-kind .txt-selected {
-    border-right: 1px solid #155d05;
+    border-right: 1px solid #78B112;
     display: inline-block;
     margin-right: 3px;
     padding: 6px 7px 5px 5px;
     font-size: inherit;
-    width: 50px;
+    width: 95px;
+    float: left;
+    height: 28px;
+    line-height: 16px;
+    color: #294000;
 }
 #search-kind .form-group {
-    width: 190px;
+    width: 390px;
     display: inline-block;
     margin-bottom: 0;
+    float: left;
+    position: relative;
+}
+#search-kind .form-group em {
+    position: absolute;
+    bottom: -13px;
+    left: 31px;
+    font-size: 1.8em;
+    color: #78B112;
+    background: #fff;
 }
 #search-kind .form-group input {
     width: 100%;
     padding-left: 5px;
+    height: 30px;
+    color: #294000;
 }
 .navbar-default {
     background: #4a933a;
@@ -903,4 +933,39 @@ footer {
     opacity: 0;
     cursor: pointer;
     display: none;
+}
+.search-select {
+    float: left;
+    position: relative;
+    margin-right: 25px;
+}
+.search-select:after,
+.search-select:before {
+    top: -16px;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    display: none;
+    -webkit-transition: all .25s ease;
+    transition: all .25s ease;
+}
+.search-select:before {
+    border-color: rgba(194,225,245,0);
+    border-top-color: #78B112;
+    border-width: 10px;
+    margin-left: -12px;
+}
+.search-select:after {
+    border-color: rgba(136,183,213,0);
+    border-top-color: #fff;
+    border-width: 9px;
+    margin-left: -11px;
+}
+.search-select.active:after,
+.search-select.active:before {
+    display: block;
 }
