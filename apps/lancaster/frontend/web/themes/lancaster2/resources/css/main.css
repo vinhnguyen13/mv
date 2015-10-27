@@ -729,6 +729,12 @@ span.hr {
 #neighborhood-map {
 	height: 100%;
 }
+.neighborhood-wrap .slide-button {
+	border-bottom: 4px solid;
+}
+.neighborhood-wrap .active .slide-button {
+	border-bottom: none;
+}
 /* Home */
 
 /* News */

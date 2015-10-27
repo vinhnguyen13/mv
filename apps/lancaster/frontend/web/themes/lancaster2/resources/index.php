@@ -209,12 +209,12 @@
 								<div class="map-wrap"><div id="neighborhood-map"></div></div>
 								<div class="swiper-map">
 								    <div class="swiper-wrapper">
-								        <div data-type="" class="swiper-slide active"><div class="arrow-up"></div><div class="slide-button">ALL</div></div>
-								        <div data-type="r" class="swiper-slide"><div class="arrow-up"></div><div class="slide-button">RESTAURANTS</div></div>
-								        <div data-type="m" class="swiper-slide"><div class="arrow-up"></div><div class="slide-button">MARKETS</div></div>
-								        <div data-type="s" class="swiper-slide"><div class="arrow-up"></div><div class="slide-button">SHOPPING</div></div>
-								        <div data-type="e" class="swiper-slide"><div class="arrow-up"></div><div class="slide-button">ENTERTAINMENT</div></div>
-								        <div data-type="p" class="swiper-slide"><div class="arrow-up"></div><div class="slide-button">PARKS</div></div>
+								        <div data-type="" class="swiper-slide active"><div class="arrow-up"></div><div class="slide-button" style="border-color: transparent;">ALL</div></div>
+								        <div data-type="r" class="swiper-slide"><div class="arrow-up"></div><div class="slide-button" style="border-color: #44A3D3;">RESTAURANTS</div></div>
+								        <div data-type="m" class="swiper-slide"><div class="arrow-up"></div><div class="slide-button" style="border-color: #4CAF50;">MARKETS</div></div>
+								        <div data-type="s" class="swiper-slide"><div class="arrow-up"></div><div class="slide-button" style="border-color: #E91E63;">SHOPPING</div></div>
+								        <div data-type="e" class="swiper-slide"><div class="arrow-up"></div><div class="slide-button" style="border-color: #9C27B0;">ENTERTAINMENT</div></div>
+								        <div data-type="p" class="swiper-slide"><div class="arrow-up"></div><div class="slide-button" style="border-color: #009688;">PARKS</div></div>
 									</div>
 								</div>
 								<div style="display: none;" id="markers">
