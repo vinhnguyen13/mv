@@ -328,10 +328,28 @@ var home = {
 		}
 	},
 	initNeighMap: function() {
+		var infoOpened;
+		
 		this.nMap = new google.maps.Map(document.getElementById('neighborhood-map'), {
 			center: {lat: 10.784094, lng: 106.701859},
 		    zoom: 16,
-		    scrollwheel: false
+		    scrollwheel: false,
+		    styles: [
+		            {
+			            "featureType": "administrative.locality.sub_locality",
+			                "elementType": "labels",
+			                "stylers": [{
+			                "visibility": "off"
+			            }]
+			        },
+			        {
+			            "featureType": "road",
+			                "elementType": "labels",
+			                "stylers": [{
+			                "visibility": "on"
+			            }]
+			        },
+	        ]
 		});
 		
 		var swiperMap = $('.neighborhood-wrap .swiper-map').swiper({
@@ -339,6 +357,10 @@ var home = {
 			spaceBetween: 0,
 	        freeMode: true,
 	        onTap: function(sm, event) {
+	        	if(infoOpened) {
+					infoOpened.close();
+				}
+	        	
 	        	sm.slideTo(sm.clickedIndex);
 	        	$(sm.slides).removeClass('active');
 				$(sm.slides[sm.clickedIndex]).addClass('active');
@@ -349,57 +371,45 @@ var home = {
 	        		for(index in home.nMarkers) {
 		        		var nMarker = home.nMarkers[index];
 		        		
-	        			if(type == nMarker.marker.type) {
-	        				home.showMarker(nMarker.mapMaker);
+	        			if(type == nMarker.type) {
+	        				home.showMarker(nMarker);
 	        			} else {
-	        				home.hideMarker(nMarker.mapMaker);
+	        				home.hideMarker(nMarker);
 	        			}
 		        	}
 	        	} else {
 	        		for(index in home.nMarkers) {
 		        		var nMarker = home.nMarkers[index];
-        				home.showMarker(nMarker.mapMaker);
+        				home.showMarker(nMarker);
 		        	}
 	        	}
 	        }
 		});
 		
-		var markers = [
-		 	{
-		 		type: 'r',
-		 		position: {lat: 10.784094, lng: 106.701859},
-		 	},
-		 	{
-		 		type: 'm',
-		 		position: {lat: 10.785917, lng: 106.700079},
-		 	},
-		 	{
-		 		type: 's',
-		 		position: {lat: 10.781470, lng: 106.702139},
-		 	},
-		 	{
-		 		type: 'e',
-		 		position: {lat: 10.782218, lng: 106.699253},
-		 	},
-		 	{
-		 		type: 'p',
-		 		position: {lat: 10.785896, lng: 106.704124},
-		 	},
-		];
-		
-		for(index in markers) {
-			var marker = markers[index];
-			
-			this.nMarkers.push({
-				mapMaker: new google.maps.Marker({
-					draggable: false,
-				    map: home.nMap,
-				    position: marker.position,
-				    opacity: 1
-				}),
-				marker: marker
+		$('#markers').find('> div').each(function(){
+			var self = $(this);
+
+			var info = new google.maps.InfoWindow({content: '<div style="width: 260px; font-family: Roboto, sans-serif;"><div style="font-weight: bold; margin-bottom: 12px; font-family: Noticia Text, serif; font-style: italic;">' + self.data('title') + '</div><img alt="" src="' + self.find('img').attr('src') + '" style="width: 100%; height: auto" /><table style="margin-top: 8px; color: black; font-weight: normal;"><tr><td style="vertical-align: top; padding: 4px 8px 4px 4px;">Address</td><td style="vertical-align: top; padding: 4px;">' + self.data('address') + '</td></tr><tr><td style="vertical-align: top; padding: 4px 8px 4px 4px;">Phone</td><td style="vertical-align: top; padding: 4px;">' + self.data('phone') + '</td></tr></table></div>'});
+			var marker = new google.maps.Marker({
+				draggable: false,
+			    map: home.nMap,
+			    position: {lat: Number(self.data('lat')), lng: Number(self.data('lng'))},
+			    opacity: 1,
+			    icon: '/frontend/web/themes/lancaster2/resources/images/marker-' + self.data('type') + '.png',
+			    type: self.data('type')
 			});
-		}
+			
+			marker.addListener('click', function(evt) {
+				if(infoOpened) {
+					infoOpened.close();
+				}
+				
+				info.open(home.nMap, marker);
+				infoOpened = info;
+			});
+			
+			home.nMarkers.push(marker);
+		});
 	},
 	addMarker: function(position, text) {
 		var marker = new google.maps.Marker({

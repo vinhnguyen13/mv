@@ -217,6 +217,62 @@
 								        <div data-type="p" class="swiper-slide"><div class="arrow-up"></div><div class="slide-button">PARKS</div></div>
 									</div>
 								</div>
+								<div style="display: none;" id="markers">
+									<div data-type="r"
+											data-lng="106.701859"
+											data-lat="10.784094"
+											data-title="Celler de Can Roca"
+											data-address="78 Ton That Thuyet Street, Ward 16, District 4, HCMC, Viet Nam"
+											data-phone="+84 919 866 993"><img alt="" src="/frontend/web/themes/lancaster2/resources/images/restaurants.jpg" /></div>
+									<div data-type="r"
+											data-lng="106.693775"
+											data-lat="10.788132"
+											data-title="Celler de Can Roca"
+											data-address="78 Ton That Thuyet Street, Ward 16, District 4, HCMC, Viet Nam"
+											data-phone="+84 919 866 993"><img alt="" src="/frontend/web/themes/lancaster2/resources/images/restaurants.jpg" /></div>
+									<div data-type="r"
+											data-lng="106.695417"
+											data-lat="10.789231"
+											data-title="Celler de Can Roca"
+											data-address="78 Ton That Thuyet Street, Ward 16, District 4, HCMC, Viet Nam"
+											data-phone="+84 919 866 993"><img alt="" src="/frontend/web/themes/lancaster2/resources/images/restaurants.jpg" /></div>
+									<div data-type="r"
+											data-lng="106.704064"
+											data-lat="10.781139"
+											data-title="Celler de Can Roca"
+											data-address="78 Ton That Thuyet Street, Ward 16, District 4, HCMC, Viet Nam"
+											data-phone="+84 919 866 993"><img alt="" src="/frontend/web/themes/lancaster2/resources/images/restaurants.jpg" /></div>
+									<div data-type="m"
+											data-lng="106.700079"
+											data-lat="10.785917"
+											data-title="Maximax Supermarket"
+											data-address="78 Ton That Thuyet Street, Ward 16, District 4, HCMC, Viet Nam"
+											data-phone="+84 919 866 993"><img alt="" src="/frontend/web/themes/lancaster2/resources/images/markets.jpg" /></div>
+									<div data-type="m"
+											data-lng="106.695803"
+											data-lat="10.782572"
+											data-title="Maximax Supermarket"
+											data-address="78 Ton That Thuyet Street, Ward 16, District 4, HCMC, Viet Nam"
+											data-phone="+84 919 866 993"><img alt="" src="/frontend/web/themes/lancaster2/resources/images/markets.jpg" /></div>
+									<div data-type="s"
+											data-lng="106.702139"
+											data-lat="10.781470"
+											data-title="Shopping"
+											data-address="78 Ton That Thuyet Street, Ward 16, District 4, HCMC, Viet Nam"
+											data-phone="+84 919 866 993"><img alt="" src="/frontend/web/themes/lancaster2/resources/images/shopping.jpg" /></div>
+									<div data-type="e"
+											data-lng="106.699253"
+											data-lat="10.782218"
+											data-title="Entertament"
+											data-address="78 Ton That Thuyet Street, Ward 16, District 4, HCMC, Viet Nam"
+											data-phone="+84 919 866 993"><img alt="" src="/frontend/web/themes/lancaster2/resources/images/entertainment.jpg" /></div>
+									<div data-type="p"
+											data-lng="106.704124"
+											data-lat="10.785896"
+											data-title="Park"
+											data-address="78 Ton That Thuyet Street, Ward 16, District 4, HCMC, Viet Nam"
+											data-phone="+84 919 866 993"><img alt="" src="/frontend/web/themes/lancaster2/resources/images/park.jpg" /></div>
+								</div>
 							</div>
 						</div>
 						<div class="section section-pricing">
