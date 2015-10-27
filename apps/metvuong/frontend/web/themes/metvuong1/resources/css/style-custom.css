@@ -1212,6 +1212,10 @@ footer {
     -o-transition: all 0.3s ease-in-out;
     -ms-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
+    -webkit-transition-delay: .5s; /* Safari */
+    transition-delay: .5s;
+    -o-transition-delay: .5s;
+    -ms-transition-delay: .5s;
 }
 .item-list > div {
     position: relative;
@@ -1235,6 +1239,10 @@ footer {
     -o-transition: all 0.3s ease-in-out;
     -ms-transition: all 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
+    -webkit-transition-delay: .5s; /* Safari */
+    transition-delay: .5s;
+    -o-transition-delay: .5s;
+    -ms-transition-delay: .5s;
 }
 .item-list:hover .wrap-img-duan {
     -webkit-transform: translateX(300px);
