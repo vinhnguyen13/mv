@@ -51,12 +51,12 @@
         </div>
         <div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Bất động sản  </a></li>
-                <li><a href="#">Chứng khoán</a></li>
-                <li><a href="#">Tài chính &amp; ngân hàng</a></li>
-                <li><a href="#">Doanh Nghiệp</a></li>
-                <li><a href="#">kinh tế vĩ mô</a></li>
-                <li><a href="#">phong thủy</a></li>
+                <li class="active"><a href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => 3]) ?>">Bất động sản  </a></li>
+                <li><a href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => 4]) ?>">Chứng khoán</a></li>
+                <li><a href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => 5]) ?>">Tài chính &amp; ngân hàng</a></li>
+                <li><a href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => 6]) ?>">Doanh Nghiệp</a></li>
+                <li><a href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => 7]) ?>">kinh tế vĩ mô</a></li>
+                <li><a href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => 8]) ?>">phong thủy</a></li>
             </ul>
         </div>
     </div>

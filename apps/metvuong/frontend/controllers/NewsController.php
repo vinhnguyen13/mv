@@ -50,7 +50,7 @@ class NewsController extends \yii\web\Controller
             'query' => CmsShow::find()->where('catalog_id = :cat_id', [':cat_id' => $cat_id])
                 ->orderBy('id DESC'),
             'pagination' => [
-                'pageSize' => 9,
+                'pageSize' => 10,
             ],
         ]);
         $this->view->title = CmsCatalog::findOne($cat_id)->title;

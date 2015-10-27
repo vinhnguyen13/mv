@@ -152,7 +152,7 @@
                 scrollTop: 0}, scrollDuration);
         });
 
-        $('.detail-news').bind('contextmenu',function(e){return false;});
+//        $('.detail-news').bind('contextmenu',function(e){return false;});
 
         $(window).scroll(function () {
             var currentID = parseInt($('#current_id').val());
