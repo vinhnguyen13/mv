@@ -13,20 +13,45 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'aliases' => [
-        '@statics/web/gallery/images/'=>dirname(dirname(__DIR__)).'/store/gallery'
+        '@statics/web/gallery/images/'=>dirname(dirname(__DIR__)).'/store/gallery',
+        '@mdm/admin' => dirname(dirname(dirname(dirname(__DIR__)))) . '/vendor/mdmsoft/yii2-admin',
+        '@vsoft/user' => dirname(dirname(__DIR__)) . '/common/vendor/vsoft/user',
     ],
     'modules' => [
-        'gii' => [
-            'class' => 'yii\gii\Module',
-            'allowedIPs' => ['127.0.0.1', '::1', '192.168.0.*', '192.168.178.20'],
-            'generators' => [
-                'myCrud' => [
-                    'class' => 'yii\gii\generators\crud\Generator',
-                    'templates' => [
-                        'my' => '@app/myTemplates/crud/default',
-                    ]
-                ]
+        'user' => [
+            'class' => 'dektrium\user\Module',
+            'enableConfirmation' => true,
+            'confirmWithin' => 21600,
+            'cost' => 12,
+            'admins' => ['superadmin'],
+            'modelMap' => [
+                'User' => 'dektrium\user\models\User',
+                'Profile' => 'dektrium\user\models\Profile',
+                'Account' => 'dektrium\user\models\Account',
             ],
+            'controllerMap' => [
+                'admin' => 'vsoft\user\controllers\AdminController',
+            ],
+        ],
+        'admin' => [
+            'class' => 'mdm\admin\Module',
+            'layout' => 'left-menu',
+            'controllerMap' => [
+                'assignment' => [
+                    'class' => 'mdm\admin\controllers\AssignmentController',
+                    'userClassName' => 'dektrium\user\models\User', // fully qualified class name of your User model
+                    // Usually you don't need to specify it explicitly, since the module will detect it automatically
+                    'idField' => 'id',        // id field of your User model that corresponds to Yii::$app->user->id
+                    'usernameField' => 'username', // username field of your User model
+//                    'searchClass' => 'common\models\UserSearch'    // fully qualified class name of your User model for searching
+                ],
+            ],
+            /*'menus' => [
+                'assignment' => [
+                    'label' => 'Grand Access' // change label
+                ],
+                'route' => null, // disable menu route
+            ]*/
         ],
         'express' => [
             'class' => 'vsoft\express\Module',

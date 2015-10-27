@@ -9,7 +9,6 @@ return [
 //        'webvimark' => dirname(dirname(__DIR__)) . '/vendor/webvimark'
         '@store' => dirname(dirname(__DIR__)) . '/store',
         '@vsoft/news' => dirname(__DIR__) . '/vendor/vsoft/news',
-        '@vsoft/express' => dirname(__DIR__) . '/vendor/vsoft/express',
     ),
     'modules'=>[
         /*'user-management' => [
@@ -24,26 +23,6 @@ return [
                 };
             },
         ],*/
-        'admin' => [
-            'class' => 'mdm\admin\Module',
-            'layout' => 'left-menu',
-            'controllerMap' => [
-                'assignment' => [
-                    'class' => 'mdm\admin\controllers\AssignmentController',
-                    'userClassName' => 'common\models\User', // fully qualified class name of your User model
-                    // Usually you don't need to specify it explicitly, since the module will detect it automatically
-                    'idField' => 'id',        // id field of your User model that corresponds to Yii::$app->user->id
-                    'usernameField' => 'username', // username field of your User model
-//                    'searchClass' => 'common\models\UserSearch'    // fully qualified class name of your User model for searching
-                ]
-            ],
-            /*'menus' => [
-                'assignment' => [
-                    'label' => 'Grand Access' // change label
-                ],
-                'route' => null, // disable menu route
-            ]*/
-        ],
         'user' => [
             'class' => 'dektrium\user\Module',
             'enableConfirmation' => true,
@@ -90,19 +69,6 @@ return [
         'authManager' => [
             'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
         ],
-        'as access' => [
-            'class' => 'mdm\admin\components\AccessControl',
-            'allowActions' => [
-                'site/*',
-                'admin/*',
-                'some-controller/some-action',
-                // The actions listed here will be allowed to everyone including guests.
-                // So, 'admin/*' should not appear here in the production, of course.
-                // But in the earlier stages of your development, you may probably want to
-                // add a lot of actions here until you finally completed setting up rbac,
-                // otherwise you may not even take a first step.
-            ]
-        ],
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
@@ -137,6 +103,15 @@ return [
         ],
         'i18n' => [
             'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\DbMessageSource',
+                    'db' => 'db',
+                    'sourceLanguage' => 'xx-XX', // ???? ????????????
+                    'sourceMessageTable' => 'language_source',
+                    'messageTable' => 'language_translate',
+                    'cachingDuration' => 86400,
+                    'enableCaching' => true,
+                ],
                 'user' => [
                     'class'          => 'yii\i18n\PhpMessageSource',
                     'sourceLanguage' => 'ru',
@@ -145,10 +120,11 @@ return [
                         'modules/user/user' => 'user.php',
                     ],
                 ],
-                '*' => [
+                'express*' => [
                     'class'          => 'yii\i18n\PhpMessageSource',
-                    'sourceLanguage' => 'vi',
-                    'basePath'       => '@frontend/messages',
+                    'sourceLanguage' => 'en-US',
+                    'forceTranslation' => true,
+                    'basePath'       => '@vendor/vsoft/express/messages',
                     'fileMap'        => [
                         'express' => 'express.php',
                         'express/about' => 'about.php',
@@ -158,6 +134,17 @@ return [
                     ],
                 ],
             ]
+        ],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'localhost',
+                'username' => 'username',
+                'password' => 'password',
+                'port' => '587',
+                'encryption' => 'tls',
+            ],
         ],
     ],
 ];
