@@ -15,27 +15,28 @@
     </div>
     <div class="box-search-header clearfix">
         <div class="pull-left">
-            <span class="icon-sale pull-left"></span>
+
             <form class="form-inline pull-left" action="" id="search-kind">
                 <div class="form-group">
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" placeholder="Nhập địa điểm...">
                 </div>
                 <div class="dropdown">
                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                        <span class="txt-selected">LOẠI</span>
+                        <span class="txt-selected">Loại</span>
                         <span class="caret"></span></button>
                     <ul class="dropdown-menu">
-                        <li><a href="#">LOẠI 1</a></li>
-                        <li><a href="#">LOẠI 2</a></li>
-                        <li><a href="#">LOẠI 3</a></li>
+                        <li><a data-value-id="1" data-value-text="Loại 1" href="#">Loại 1</a></li>
+                        <li><a  data-value-id="2" data-value-text="Loại 2" href="#">Loại 2</a></li>
+                        <li><a  data-value-id="3" data-value-text="Loại 3" href="#">Loại 3</a></li>
                     </ul>
                 </div>
                 <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
             </form>
-            <div class="pull-right text-right">
-                <a href="#" class="icon-cart"></a>
-                <a href="#" class="icon-door"></a>
-                <a href="#" class="icon-handhome"></a>
+            <div class="pull-left text-right mgT-15 mgL-15">
+                <div class="search-select active"><a href="#" class="icon-sale"></a></div>
+                <div class="search-select"><a href="#" class="icon-cart"></a></div>
+                <div class="search-select"><a href="#" class="icon-door"></a></div>
+                <div class="search-select"><a href="#" class="icon-handhome"></a></div>
             </div>
         </div>
     </div>

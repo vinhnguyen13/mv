@@ -16,7 +16,7 @@ use yii\bootstrap\Html;
     <ul>
         <?php foreach ($news as $k => $n) { ?>
             <li>
-                <a class="pull-left wrap-img" href="<?=\yii\helpers\Url::toRoute(['view', 'id' => $n->id, 'slug' => $n->slug])?>">
+                <a class="pull-left wrap-img" href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n->id, 'slug' => $n->slug])?>">
                     <img src="/store/news/show/<?= $n->banner ?>" alt="<?= $n->title ?>" style="width: 82px; height: 55px;">
                 </a>
                 <div>

@@ -33,6 +33,7 @@ $this->title = 'My Yii Application';
                     <li><a href="<?=Yii::$app->urlManager->createUrl(['news/cms'])?>">Content</a></li>
                     <li><a href="<?=Yii::$app->urlManager->createUrl(['news/cms-catalog'])?>">Categories</a></li>
                     <li><a href="<?=Yii::$app->urlManager->createUrl(['gallery'])?>">Gallery</a></li>
+                    <li><a href="<?=Yii::$app->urlManager->createUrl(['express/meta'])?>">Meta</a></li>
                 </ol>
             </div>
 

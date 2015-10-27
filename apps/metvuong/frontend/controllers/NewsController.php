@@ -3,8 +3,10 @@
 namespace frontend\controllers;
 
 use dektrium\user\models\Profile;
+use vsoft\news\models\CmsCatalog;
 use vsoft\news\models\CmsShow;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\web\Response;
 
 class NewsController extends \yii\web\Controller
@@ -38,14 +40,21 @@ class NewsController extends \yii\web\Controller
         $detail->click = $click + 1;
         $detail->update();
 
+        $this->view->title = $detail->title;
         return $this->render('detail', ['news' => $detail, 'author' => $author]);
     }
 
     public function actionList($cat_id)
     {
-        $list = CmsShow::find()->where('catalog_id = :cat_id', [':cat_id' => $cat_id])
-            ->orderBy(['id' => SORT_DESC])->all();
-        return $this->render('list', ['list_news' => $list, 'cat_id' => $cat_id]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => CmsShow::find()->where('catalog_id = :cat_id', [':cat_id' => $cat_id])
+                                ->orderBy('id DESC'),
+            'pagination' => [
+                'pageSize' => 9,
+            ],
+        ]);
+        $this->view->title = CmsCatalog::findOne($cat_id)->title;
+        return $this->render('list', ['dataProvider' => $dataProvider, 'cat_id' => $cat_id]);
     }
 
     public function actionGetone($current_id, $cat_id)

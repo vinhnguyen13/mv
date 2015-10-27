@@ -4,7 +4,7 @@
             <div class="wrap-img"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/bg-banner.jpg" alt=""></div>
             <div class="content-news-hot">
                 <h2>9 dự án đang và sẽ thay đổi diện mạo Quận 4</h2>
-                <p>ngày đầu tiên là tên một trong những cuốn sách trên bàn làm việc của Nguyễn Trung Tín, mới được bổ nhiệm vào vị trí  mới được bổ nhiệm vào vị trí  mới được bổ nhiệm vào vị trí  mới được bổ nhiệm vào vị trí  mới được bổ nhiệm vào vị trí  mới được bổ nhiệm vào vị trí Tổng Giám đốc Công ty Cổ phần Tập đoàn ổng Giám đốc Công ty Cổ phần Tập đoàn ổng Giám đốc Công ty Cổ phần Tập đoàn ổng Giám đốc Công ty Công ty Cổ phần Tập đoàn ổng Giám đốc Công ty Công ty Cổ phần Tập đoàn ổng Giám đốc Công ty  Cổ phần Tập đoàn ổng Giám đốc Công ty Cổ phần Tập đoàn Trung Thủy (TTG) hôm 15.1, đúng vào dịp sinh nhật lần thứ 52 của thân mẫu, bà Dương Thanh Thủy</p>
+                <p>Ngày đầu tiên là tên một trong những cuốn sách trên bàn làm việc của Nguyễn Trung Tín, mới được bổ nhiệm vào vị trí  mới được bổ nhiệm vào vị trí  mới được bổ nhiệm vào vị trí  mới được bổ nhiệm vào vị trí  mới được bổ nhiệm vào vị trí  mới được bổ nhiệm vào vị trí Tổng Giám đốc Công ty Cổ phần Tập đoàn ổng Giám đốc Công ty Cổ phần Tập đoàn ổng Giám đốc Công ty Cổ phần Tập đoàn ổng Giám đốc Công ty Công ty Cổ phần Tập đoàn ổng Giám đốc Công ty Công ty Cổ phần Tập đoàn ổng Giám đốc Công ty  Cổ phần Tập đoàn ổng Giám đốc Công ty Cổ phần Tập đoàn Trung Thủy (TTG) hôm 15.1, đúng vào dịp sinh nhật lần thứ 52 của thân mẫu, bà Dương Thanh Thủy</p>
             </div>
         </div>
         <!-- Bat Dong San-->

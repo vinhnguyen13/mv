@@ -14,12 +14,12 @@
     if (!empty($news)) {
         foreach ($news as $k => $n) { ?>
             <div class="wrap-img">
-                <a class="pull-left wrap-img" href="<?=\yii\helpers\Url::toRoute(['view', 'id' => $n->id, 'slug' => $n->slug])?>">
+                <a class="pull-left wrap-img" href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n->id, 'slug' => $n->slug])?>">
                     <img src="/store/news/show/<?= $n->banner ?>" alt="<?= $n->title ?>" style="width: 442px; height: 294px;">
                 </a>
             </div>
             <p>
-                <a class="color-title-link" href="<?=\yii\helpers\Url::toRoute(['view', 'id' => $n->id, 'slug' => $n->slug])?>">
+                <a class="color-title-link" href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n->id, 'slug' => $n->slug])?>">
                     <?=strlen($n->title) > 30 ? mb_substr($n->title, 0, 30) . '...' : $n->title?>
                 </a>
             </p>
