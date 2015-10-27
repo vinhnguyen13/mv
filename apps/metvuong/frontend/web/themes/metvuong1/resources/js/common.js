@@ -48,6 +48,8 @@ $(document).ready(function() {
     	var _this = $(this);
     	$('.search-select').removeClass('active');
     	_this.parent().addClass('active');
+    	_this.hasClass('type-text') ? ($('#search-kind>.dropdown').hide(), $('.box-search-header').addClass('resize-width')) : ($('#search-kind>.dropdown').show(),$('.box-search-header').removeClass('resize-width'));
+    	
     	return false;
     });
 

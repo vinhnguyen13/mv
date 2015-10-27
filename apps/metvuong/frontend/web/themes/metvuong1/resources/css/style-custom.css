@@ -49,6 +49,12 @@ header {
     padding-right: 0;
     width: 532px;
 }
+.resize-width {
+    width: 410px;
+}
+.resize-width #search-kind {
+    width: 100%;
+}
 #search-kind .dropdown {
     display: inline-block;
     width: 123px;
