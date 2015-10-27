@@ -48,7 +48,7 @@ class NewsController extends \yii\web\Controller
     {
         $dataProvider = new ActiveDataProvider([
             'query' => CmsShow::find()->where('catalog_id = :cat_id', [':cat_id' => $cat_id])
-                                ->orderBy('id DESC'),
+                ->orderBy('id DESC'),
             'pagination' => [
                 'pageSize' => 9,
             ],
@@ -57,26 +57,29 @@ class NewsController extends \yii\web\Controller
         return $this->render('list', ['dataProvider' => $dataProvider, 'cat_id' => $cat_id]);
     }
 
-    public function actionGetone($current_id, $cat_id)
+    public function actionGetone()
     {
+        $current_id = Yii::$app->request->get('current_id');
+        $cat_id = Yii::$app->request->get('cat_id');
+
         Yii::$app->response->format = Response::FORMAT_JSON;
-//        $sql = "SELECT * FROM cms_show WHERE id NOT IN (" . $current_id . ") and id < " . $current_id . " AND catalog_id = " . $cat_id . " ORDER BY id DESC LIMIT 1 ";
-//        $model = CmsShow::findBySql($sql)->one();
-        $model = CmsShow::find()
-            ->innerJoin('profile', 'cms_show.created_by = profile.user_id')
-            ->select(['cms_show.*', 'profile.*'])
+        $model = CmsShow::find()->asArray()
+//            ->innerJoin('profile p', 'cms_show.created_by = p.user_id')
+//            ->select(['cms_show.*', 'p.name as author_name', 'p.avatar', 'p.bio'])
             ->where('cms_show.id NOT IN (:id)', [':id' => $current_id])
             ->andWhere('cms_show.catalog_id = :cat_id', [':cat_id' => $cat_id])
             ->andWhere('cms_show.id < :_id', [':_id' => $current_id])
             ->andWhere('cms_show.status = :status', [':status' => 1])
             ->orderBy(['cms_show.id' => SORT_DESC])
             ->one();
-        // add 1 for each click news link
-        $click = $model->click;
-        $model->click = $click + 1;
-        $model->update();
 
-        return $model;
+        $catalog = CmsCatalog::find()->asArray()->select(['title as catalog_name'])->where('id = :id', [':id' => $cat_id])->one();
+        $user_id = $model["created_by"];
+        $profile = Profile::find()->asArray()->select(['name as author_name', 'avatar', 'bio'])->where('user_id = :uid', [':uid' => $user_id])->one();
+
+        $result = array_merge($profile, $catalog, $model);
+
+        return $result;
     }
 
 }
