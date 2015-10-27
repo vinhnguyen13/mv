@@ -367,11 +367,15 @@ var home = {
 				
 	        	var type = $(sm.clickedSlide).data('type');
 	        	
+	        	var checkInView = [];
+	        	
 	        	if(type) {
 	        		for(index in home.nMarkers) {
 		        		var nMarker = home.nMarkers[index];
 		        		
 	        			if(type == nMarker.type) {
+	        				checkInView.push(nMarker);
+	        				
 	        				home.showMarker(nMarker);
 	        			} else {
 	        				home.hideMarker(nMarker);
@@ -380,8 +384,25 @@ var home = {
 	        	} else {
 	        		for(index in home.nMarkers) {
 		        		var nMarker = home.nMarkers[index];
+		        		
+		        		checkInView.push(nMarker);
+		        		
         				home.showMarker(nMarker);
 		        	}
+	        	}
+	        	
+	        	var marker;
+	        	
+	        	for(index in checkInView) {
+	        		marker = checkInView[index];
+	        		if(home.nMap.getBounds().contains(marker.getPosition())) {
+	        			marker = null;
+	        			break;
+	        		}
+	        	}
+	        	
+	        	if(marker) {
+	        		home.nMap.setCenter(marker.getPosition());
 	        	}
 	        }
 		});
