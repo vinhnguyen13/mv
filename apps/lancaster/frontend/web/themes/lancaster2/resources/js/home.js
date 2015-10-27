@@ -167,7 +167,7 @@ var home = {
 		});
 		
 		if(isMobile) {
-			this.sections.filter('.section-neighborhood').find('.map-wrap').height(280);;
+			this.sections.filter('.section-neighborhood').find('.map-wrap').height(260);;
 		} else {
 			this.sections.filter('.section-neighborhood').find('.map-wrap').height(height);
 		}
