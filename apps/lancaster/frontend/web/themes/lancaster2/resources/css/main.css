@@ -396,9 +396,8 @@ header .book-now br {
 #paralax-wrapper {
 	visibility: hidden;
 	opacity: 0;
-	transition: all 1s;
-	-webkit-transition: all 1s;
 	-moz-transition: all 1s;
+	transition: all 1s;
 }
 .loaded #paralax-wrapper {
 	visibility: visible;

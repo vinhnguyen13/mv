@@ -302,6 +302,31 @@ var home = {
 		
 		this.initNeighMap();
 	},
+	hideMarker: function(marker) {
+		if(marker.getOpacity() == 0) {
+			marker.setVisible(false);
+		} else {
+			var opacity = marker.getOpacity() - 0.1;
+			marker.setOpacity(Number(opacity.toFixed(1)));
+			setTimeout(function(){
+				home.hideMarker(marker);
+			}, 20);
+		}
+	},
+	showMarker: function(marker) {
+		if(marker.getOpacity() != 1) {
+			if(marker.getOpacity() == 0) {
+				marker.setVisible(true);
+			}
+			
+			var opacity = marker.getOpacity() + 0.1;
+			marker.setOpacity(Number(opacity.toFixed(1)));
+			
+			setTimeout(function(){
+				home.showMarker(marker);
+			}, 20);
+		}
+	},
 	initNeighMap: function() {
 		this.nMap = new google.maps.Map(document.getElementById('neighborhood-map'), {
 			center: {lat: 10.784094, lng: 106.701859},
@@ -314,6 +339,10 @@ var home = {
 			spaceBetween: 0,
 	        freeMode: true,
 	        onTap: function(sm, event) {
+	        	sm.slideTo(sm.clickedIndex);
+	        	$(sm.slides).removeClass('active');
+				$(sm.slides[sm.clickedIndex]).addClass('active');
+				
 	        	var type = $(sm.clickedSlide).data('type');
 	        	
 	        	if(type) {
@@ -321,15 +350,15 @@ var home = {
 		        		var nMarker = home.nMarkers[index];
 		        		
 	        			if(type == nMarker.marker.type) {
-	        				nMarker.mapMaker.setVisible(true);
+	        				home.showMarker(nMarker.mapMaker);
 	        			} else {
-	        				nMarker.mapMaker.setVisible(false);
+	        				home.hideMarker(nMarker.mapMaker);
 	        			}
 		        	}
 	        	} else {
 	        		for(index in home.nMarkers) {
 		        		var nMarker = home.nMarkers[index];
-		        		nMarker.mapMaker.setVisible(true);
+        				home.showMarker(nMarker.mapMaker);
 		        	}
 	        	}
 	        }
@@ -366,7 +395,7 @@ var home = {
 					draggable: false,
 				    map: home.nMap,
 				    position: marker.position,
-				    icon: 'http://local.lancaster.com/frontend/web/themes/lancaster2/resources/images/marker-restaurant.png'
+				    opacity: 1
 				}),
 				marker: marker
 			});
