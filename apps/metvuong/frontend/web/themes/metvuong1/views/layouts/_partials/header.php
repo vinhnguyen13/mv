@@ -23,8 +23,8 @@
                 </div>
                 <div class="dropdown">
                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                        <span class="txt-selected">Loại</span>
-                        <span class="caret"></span></button>
+                                    <span class="txt-selected">Loại</span>
+                                <span class="wrap-arrow-dropdown"><span class="caret"></span></span></button>
                     <ul class="dropdown-menu">
                         <li><a data-value-id="1" data-value-text="Loại 1" href="#">Loại 1</a></li>
                         <li><a  data-value-id="2" data-value-text="Loại 2" href="#">Loại 2</a></li>
@@ -36,8 +36,8 @@
             <div class="pull-left text-right mgT-15 mgL-15">
                 <div class="search-select active"><a href="#" class="icon-sale"></a></div>
                 <div class="search-select"><a href="#" class="icon-cart"></a></div>
-                <div class="search-select"><a href="#" class="icon-door"></a></div>
-                <div class="search-select"><a href="#" class="icon-handhome"></a></div>
+                <div class="search-select"><a href="#" class="icon-door type-text"></a></div>
+                <div class="search-select"><a href="#" class="icon-handhome type-text"></a></div>
             </div>
         </div>
     </div>

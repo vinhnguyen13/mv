@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/simple-line-icons.css" />
     <link rel="stylesheet" href="css/style-custom.css" />
     <!--[if lt IE 9]>
         <script src="js/html5shiv.js"></script>
@@ -18,8 +19,9 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/menu.min.js"></script>
-    <script src="js/common.js"></script>
     <script src="js/jquery.bxslider.js"></script>
+    <script src="js/jquery.ad-gallery.js"></script>
+    <script src="js/common.js"></script>
     <script>
         $(document).ready(function() {
             $('.bxslider').bxSlider({
@@ -27,6 +29,7 @@
                 auto: true,
                 autoHover: true
             });
+            var galleries = $('.box-gallery').adGallery();
         });
     </script>
 </head>
@@ -118,7 +121,7 @@
             </nav>
 
             <div class="row">
-                <div class="col-sm-8 col-lg-9 col-right-home lists-page">
+                <div class="col-sm-8 col-lg-9 col-right-home duan-page">
                     <div class="news-hot box-danb-slide bxslider">
                         <div class="">
                             <div class="wrap-img bgcover" style="background-image: url(images/galaxy9.jpg);"><a href="#"></a></div>
@@ -149,72 +152,114 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6 item-list">
-                            <div class="wrap-img bgcover" style="background-image: url(images/img283x190-1.jpg);"><a href="#"></a></div>
-                            <p><span><em class="fa fa-calendar"></em>27/10/2015</span><a class="color-title-link" href="#">Nông nghiệp Việt Nam đón nhận làn sóng đầu tư chưa</a></p>
-                            <p>Việt Nam có điều kiện tự nhiên thuận lợi để sản xuất nông nghiệp nhưng bao đời nay chỉ sản xuất nhỏ lẻ, manh mún nên không xây dựng được thương hiệu... </p>
-                        </div>
-                        <div class="col-md-6 col-sm-6 item-list">
-                            <div class="wrap-img bgcover" style="background-image: url(images/img283x190-2.jpg);"><a href="#"></a></div>
-                            <p><span><em class="fa fa-calendar"></em>27/10/2015</span><a class="color-title-link" href="#">Nông nghiệp Việt Nam đón nhận làn sóng đầu tư chưa</a></p>
-                            <p>Việt Nam có điều kiện tự nhiên thuận lợi để sản xuất nông nghiệp nhưng bao đời nay chỉ sản xuất nhỏ lẻ, manh mún nên không xây dựng được thương hiệu... </p>
-                        </div>
-                        <div class="col-md-6 col-sm-6 item-list">
-                            <div class="wrap-img bgcover" style="background-image: url(images/img283x190.jpg);"><a href="#"></a></div>
-                            <p><span><em class="fa fa-calendar"></em>27/10/2015</span><a class="color-title-link" href="#">Nông nghiệp Việt Nam đón nhận làn sóng đầu tư chưa</a></p>
-                            <p>Việt Nam có điều kiện tự nhiên thuận lợi để sản xuất nông nghiệp nhưng bao đời nay chỉ sản xuất nhỏ lẻ, manh mún nên không xây dựng được thương hiệu... </p>
-                        </div>
-                        <div class="col-md-6 col-sm-6 item-list">
-                            <div class="wrap-img bgcover" style="background-image: url(images/img283x190.jpg);"><a href="#"></a></div>
-                            <p><span><em class="fa fa-calendar"></em>27/10/2015</span><a class="color-title-link" href="#">Nông nghiệp Việt Nam đón nhận làn sóng đầu tư chưa</a></p>
-                            <p>Việt Nam có điều kiện tự nhiên thuận lợi để sản xuất nông nghiệp nhưng bao đời nay chỉ sản xuất nhỏ lẻ, manh mún nên không xây dựng được thương hiệu... </p>
-                        </div>
-                        <div class="col-md-6 col-sm-6 item-list">
-                            <div class="wrap-img bgcover" style="background-image: url(images/img283x190-1.jpg);"><a href="#"></a></div>
-                            <p><span><em class="fa fa-calendar"></em>27/10/2015</span><a class="color-title-link" href="#">Nông nghiệp Việt Nam đón nhận làn sóng đầu tư chưa</a></p>
-                            <p>Việt Nam có điều kiện tự nhiên thuận lợi để sản xuất nông nghiệp nhưng bao đời nay chỉ sản xuất nhỏ lẻ, manh mún nên không xây dựng được thương hiệu... </p>
-                        </div>
-                        <div class="col-md-6 col-sm-6 item-list">
-                            <div class="wrap-img bgcover" style="background-image: url(images/img283x190-2.jpg);"><a href="#"></a></div>
-                            <p><span><em class="fa fa-calendar"></em>27/10/2015</span><a class="color-title-link" href="#">Nông nghiệp Việt Nam đón nhận làn sóng đầu tư chưa</a></p>
-                            <p>Việt Nam có điều kiện tự nhiên thuận lợi để sản xuất nông nghiệp nhưng bao đời nay chỉ sản xuất nhỏ lẻ, manh mún nên không xây dựng được thương hiệu... </p>
-                        </div>
-                        <div class="col-md-6 col-sm-6 item-list">
-                            <div class="wrap-img bgcover" style="background-image: url(images/img283x190-1.jpg);"><a href="#"></a></div>
-                            <p><span><em class="fa fa-calendar"></em>27/10/2015</span><a class="color-title-link" href="#">Nông nghiệp Việt Nam đón nhận làn sóng đầu tư chưa</a></p>
-                            <p>Việt Nam có điều kiện tự nhiên thuận lợi để sản xuất nông nghiệp nhưng bao đời nay chỉ sản xuất nhỏ lẻ, manh mún nên không xây dựng được thương hiệu... </p>
-                        </div>
-                        <div class="col-md-6 col-sm-6 item-list">
-                            <div class="wrap-img bgcover" style="background-image: url(images/img283x190.jpg);"><a href="#"></a></div>
-                            <p><span><em class="fa fa-calendar"></em>27/10/2015</span><a class="color-title-link" href="#">Nông nghiệp Việt Nam đón nhận làn sóng đầu tư chưa</a></p>
-                            <p>Việt Nam có điều kiện tự nhiên thuận lợi để sản xuất nông nghiệp nhưng bao đời nay chỉ sản xuất nhỏ lẻ, manh mún nên không xây dựng được thương hiệu... </p>
-                        </div>
-                        <div class="col-md-6 col-sm-6 item-list">
-                            <div class="wrap-img bgcover" style="background-image: url(images/img283x190-2.jpg);"><a href="#"></a></div>
-                            <p><span><em class="fa fa-calendar"></em>27/10/2015</span><a class="color-title-link" href="#">Nông nghiệp Việt Nam đón nhận làn sóng đầu tư chưa</a></p>
-                            <p>Việt Nam có điều kiện tự nhiên thuận lợi để sản xuất nông nghiệp nhưng bao đời nay chỉ sản xuất nhỏ lẻ, manh mún nên không xây dựng được thương hiệu... </p>
-                        </div>
-                        <div class="col-md-6 col-sm-6 item-list">
-                            <div class="wrap-img bgcover" style="background-image: url(images/img283x190-2.jpg);"><a href="#"></a></div>
-                            <p><span><em class="fa fa-calendar"></em>27/10/2015</span><a class="color-title-link" href="#">Nông nghiệp Việt Nam đón nhận làn sóng đầu tư chưa</a></p>
-                            <p>Việt Nam có điều kiện tự nhiên thuận lợi để sản xuất nông nghiệp nhưng bao đời nay chỉ sản xuất nhỏ lẻ, manh mún nên không xây dựng được thương hiệu... </p>
-                        </div>
-                        <div class="text-center">
-                            <ul class="pagination">
-                               <li><a href="#"><em class="fa fa-chevron-left"></em></a></li>
-                               <li class="active"><a href="#">1</a></li>
-                               <li><a href="#">2</a></li>
-                               <li><a href="#">3</a></li>
-                               <li><a href="#">4</a></li>
-                               <li><a href="#">5</a></li>
-                               <li><a href="#">6</a></li>
-                               <li><a href="#">7</a></li>
-                               <li><a href="#">8</a></li>
-                               <li><a href="#">9</a></li>
-                               <li><a href="#">10</a></li>
-                               <li><a href="#"><em class="fa fa-chevron-right"></em></a></li>
+                    <div class="col-md-3 menu-detail-duan">
+                        <div class="wrap-menu-duan">
+                            <ul>
+                                <li class="active"><a href="#">Tổng quan dự án</a></li>
+                                <li><a href="#">Bản đồ vị trí</a></li>
+                                <li><a href="#">Thư viện ảnh</a></li>
                             </ul>
+                            <ul>
+                                <li class="title-list">KHU CĂN HỘ</li>
+                                <li><a href="#">Mặt bằng</a></li>
+                                <li><a href="#">Giá bán & thanh toán</a></li>
+                                <li><a href="#">Chương trình bán hàng</a></li>
+                            </ul>
+                        </div>
+                        <div class="logo-duan">
+                            <div class="logo-duan">
+                              <img src="images/logosunriseriverside_221x100.jpg" alt="">
+                            </div>
+                            <div class="hotline-duan">
+                                <em class="icon-call-out"></em>HOTLINE: <span>0938 55 08 08</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9 show-detail-duan pdL-15">
+                        <h2>SUNRISE RIVERSIDE</h2>
+                        <div class="box-gallery ad-gallery">
+                            <div class="ad-image-wrapper"></div>
+                            <div class="ad-controls"></div>
+                            <div class="ad-nav">
+                                <div class="ad-thumbs">
+                                    <ul class="ad-thumb-list">
+                                        <li>
+                                            <a href="images/22311_Khai-truong-Pearl-Plaza-7.jpg">
+                                                <img src="images/22311_Khai-truong-Pearl-Plaza-7.jpg" class="image0">
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="images/22311_Khai-truong-Pearl-Plaza-8.jpg">
+                                                <img src="images/22311_Khai-truong-Pearl-Plaza-8.jpg" title="" alt="This is a nice, and incredibly descriptive, description of the image 10.jpg" class="image1">
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="images/22311_Khai-truong-Pearl-Plaza-7.jpg">
+                                                <img src="images/22311_Khai-truong-Pearl-Plaza-7.jpg" class="image0">
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="images/22311_Khai-truong-Pearl-Plaza-8.jpg">
+                                                <img src="images/22311_Khai-truong-Pearl-Plaza-8.jpg" title="" alt="This is a nice, and incredibly descriptive, description of the image 10.jpg" class="image1">
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="images/2013080515PDR.jpg">
+                                                <img src="images/2013080515PDR.jpg" class="image0">
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="images/22311_Khai-truong-Pearl-Plaza-8.jpg">
+                                                <img src="images/22311_Khai-truong-Pearl-Plaza-8.jpg" title="" alt="This is a nice, and incredibly descriptive, description of the image 10.jpg" class="image1">
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="images/23311_Khai-truong-Pearl-Plaza-11.jpg">
+                                                <img src="images/23311_Khai-truong-Pearl-Plaza-11.jpg" class="image0">
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="images/22311_Khai-truong-Pearl-Plaza-8.jpg">
+                                                <img src="images/22311_Khai-truong-Pearl-Plaza-8.jpg" title="" alt="This is a nice, and incredibly descriptive, description of the image 10.jpg" class="image1">
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="images/22311_Khai-truong-Pearl-Plaza-10.jpg">
+                                                <img src="images/22311_Khai-truong-Pearl-Plaza-10.jpg" class="image0">
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="images/23311_Khai-truong-Pearl-Plaza-12.jpg">
+                                                <img src="images/23311_Khai-truong-Pearl-Plaza-12.jpg" title="" alt="This is a nice, and incredibly descriptive, description of the image 10.jpg" class="image1">
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tbl-detail-duan">
+                            <table>
+                                <tr>
+                                    <th>VỊ TRÍ DỰ ÁN</th>
+                                    <td>130 – 132 Hồng Hà, Phường 9, Quận Phú Nhuận, Tp.HCM</td>
+                                </tr>
+                                <tr>
+                                    <th>LOẠI HÌNH ĐẦU TƯ</th>
+                                    <td>Căn hộ - officetel – thương mại – dịch vụ - văn phòng</td>
+                                </tr>
+                                <tr>
+                                    <th>DIỆN TÍCH KHU ĐẤT</th>
+                                    <td>9.184 m²</td>
+                                </tr>
+                                <tr>
+                                    <th>SỐ TẦNG</th>
+                                    <td>25 tầng</td>
+                                </tr>
+                                <tr>
+                                    <th>TIỆN ÍCH</th>
+                                    <td>Hồ bơi tràn, phòng tập gym, phòng sauna, nhà hàng, sân vườn, thương mại...</td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>
