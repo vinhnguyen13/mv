@@ -6,15 +6,15 @@
  */
 use yii\helpers\StringHelper;
 
+$catalog = \vsoft\news\models\CmsCatalog::findOne($cat_id);
+
 ?>
 <div class="news-bds">
-    <div class="widget-title clearfix">
-        <h2>
-            <a class="color-title-link" href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => $cat_id]) ?>">
-                bất động sản
-            </a>
-        </h2>
-    </div>
+    <a class="color-title-link" href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => $cat_id, 'slug' => $catalog->slug]) ?>">
+        <div class="widget-title clearfix">
+            <h2>bất động sản</h2>
+        </div>
+    </a>
     <?php if (!empty($news)) { ?>
         <div class="row">
             <?php foreach ($news as $k => $n) { ?>

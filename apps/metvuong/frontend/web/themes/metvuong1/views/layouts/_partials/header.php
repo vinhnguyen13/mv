@@ -1,5 +1,6 @@
 <header class="clearfix">
-    <a href="#" class="logo-header pull-left"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png" alt="logo"></a>
+    <a href="#" class="logo-header pull-left"><img src="<?=
+        Yii::$app->view->theme->baseUrl?>/resources/images/logo.png" alt="logo"></a>
     <div class="pull-right user-setting">
         <div class="dropdown select-lang">
             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
@@ -42,7 +43,16 @@
     </div>
     <a href="#" id="slide-menu-right"><em class="fa fa-reorder"></em></a>
 </header>
+<?php
+use vsoft\news\models\CmsCatalog;
+use vsoft\news\models\Status;
 
+//$catalog = CmsCatalog::getDb()->cache(function($db){
+//    return CmsCatalog::find()->where(['status' => Status::STATUS_ACTIVE])->asArray()->orderBy('id')->all();
+//});
+$catalog = CmsCatalog::find()->where(['status' => Status::STATUS_ACTIVE])->andWhere('parent_id = :pid',[':pid' => Yii::$app->params['newsCatID']])->asArray()->orderBy('id')->limit(6)->all();
+
+?>
 
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -51,12 +61,20 @@
         </div>
         <div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => 3]) ?>">Bất động sản  </a></li>
-                <li><a href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => 4]) ?>">Chứng khoán</a></li>
-                <li><a href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => 5]) ?>">Tài chính &amp; ngân hàng</a></li>
-                <li><a href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => 6]) ?>">Doanh Nghiệp</a></li>
-                <li><a href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => 7]) ?>">kinh tế vĩ mô</a></li>
-                <li><a href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => 8]) ?>">phong thủy</a></li>
+                <?php
+                    if(!empty($catalog)){
+                        foreach($catalog as $value){       ?>
+                        <li><a href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => $value["id"], 'slug' => $value["slug"]]) ?>"><?=$value["title"]?></a></li>
+                <?php   }
+                    }
+                    else { ?>
+                    <li><a href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => 3, 'slug' => $parentCatalog[3]]) ?>">Bất động sản  </a></li>
+                    <li><a href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => 6, 'slug' => $parentCatalog[6]]) ?>">Chứng khoán</a></li>
+                    <li><a href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => 5, 'slug' => $parentCatalog[5]]) ?>">Tài chính &amp; ngân hàng</a></li>
+                    <li><a href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => 7, 'slug' => $parentCatalog[7]]) ?>">Doanh Nghiệp</a></li>
+                    <li><a href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => 8, 'slug' => $parentCatalog[8]]) ?>">kinh tế vĩ mô</a></li>
+                    <li><a href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => 9, 'slug' => $parentCatalog[9]]) ?>">phong thủy</a></li>
+                <?php }?>
             </ul>
         </div>
     </div>

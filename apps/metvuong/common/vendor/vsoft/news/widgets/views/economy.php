@@ -8,11 +8,13 @@
  */
 use yii\bootstrap\Html;
 use yii\helpers\StringHelper;
-
+$catalog = \vsoft\news\models\CmsCatalog::findOne($cat_id);
 ?>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 listgrd8">
     <div class="titlebg">
+        <a class="color-title-link" href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => $cat_id, 'slug' => $catalog->slug]) ?>">
         <h2 class="title">kinh tế vĩ mô</h2>
+        </a>
     </div>
 </div>
 <?php

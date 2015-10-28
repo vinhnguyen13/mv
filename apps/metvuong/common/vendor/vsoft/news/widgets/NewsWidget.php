@@ -40,12 +40,12 @@ class NewsWidget extends Widget
                 break;
             case 'finance':
                 $limit = 1;
-                $cat_id = 4; // tai chinh
+                $cat_id = 5; // tai chinh
 //                $order_by = ['id' => SORT_ASC];
                 break;
             case 'business':
                 $limit = 1;
-                $cat_id = 5; // doanh nghiep
+                $cat_id = 7; // doanh nghiep
 //                $order_by = ['id' => SORT_ASC];
                 break;
 //            case 'economy':

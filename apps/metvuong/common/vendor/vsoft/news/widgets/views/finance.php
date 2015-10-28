@@ -7,11 +7,13 @@
  * Template 1 columns 1 rows
  */
 use yii\helpers\StringHelper;
-
+$catalog = \vsoft\news\models\CmsCatalog::findOne($cat_id);
 ?>
 
 <div class="col-xs-6">
-    <div class="widget-title clearfix"><h2>tài chính - ngân hàng</h2></div>
+    <a class="color-title-link" href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => $cat_id, 'slug' => $catalog->slug]) ?>">
+        <div class="widget-title clearfix"><h2>tài chính - ngân hàng</h2></div>
+    </a>
     <?php
     if (!empty($news)) {
         foreach ($news as $k => $n) { ?>
