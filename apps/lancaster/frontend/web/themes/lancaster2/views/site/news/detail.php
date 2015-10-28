@@ -1,6 +1,9 @@
 <?php
 $this->title = Yii::t('news', ucfirst(strtolower($detail->catalog->surname)));
 /* @var $this yii\web\View */
+
+$this->registerCssFile('https://fonts.googleapis.com/css?family=Roboto:400,700|Noticia+Text:400italic,400,700,700italic', ['type' => 'text/css']);
+
 use yii\helpers\Url;
 ?>
 <div id="detail-page">

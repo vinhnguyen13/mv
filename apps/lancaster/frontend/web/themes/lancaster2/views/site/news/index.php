@@ -5,6 +5,9 @@ use yii\helpers\StringHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 /* @var $this yii\web\View */
+
+$this->registerCssFile('https://fonts.googleapis.com/css?family=Roboto:400,700|Noticia+Text:400italic,400,700,700italic', ['type' => 'text/css']);
+
 $this->title = Yii::t('express/news', 'News');
 $oneNews = null;
 ?>

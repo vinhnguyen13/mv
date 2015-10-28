@@ -5,6 +5,8 @@ use yii\helpers\Url;
 
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 
+$this->registerCssFile('https://fonts.googleapis.com/css?family=Roboto:400,700|Noticia+Text:400italic,400,700,700italic', ['type' => 'text/css']);
+
 $this->title = Yii::t('express/contact', 'Contact');
 /* @var $this yii\web\View */
 ?>
