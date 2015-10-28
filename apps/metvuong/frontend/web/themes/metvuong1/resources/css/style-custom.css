@@ -1493,3 +1493,11 @@ footer {
     text-align: center;
     width: 100%;
 }
+.pagination>.disabled>a, .pagination>.disabled>a:focus, .pagination>.disabled>a:hover, .pagination>.disabled>span, .pagination>.disabled>span:focus, .pagination>.disabled>span:hover {
+    border: none;
+    font-size: 1.4em;
+    padding: 0;
+    height: 30px;
+    line-height: 30px;
+    width: 30px;
+}
