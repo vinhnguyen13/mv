@@ -1,10 +1,8 @@
 <?php
 use yii\web\View;
-use yii\helpers\Html;
-use yii\helpers\Url;
+//Yii::$app->getView()->registerAssetBundle('yii\web\JqueryAsset', \yii\web\View::POS_HEAD);
 
-$this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/main.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()]], 'css-main');
-
+$this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/main.css", ['depends' => ''], 'css-main');
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/plugins/jquery.min.js', ['position'=>View::POS_HEAD]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/main.js', ['position'=>View::POS_HEAD]);
 ?>

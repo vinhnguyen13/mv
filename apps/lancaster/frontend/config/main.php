@@ -86,23 +86,6 @@ return [
         'setting' => [
             'class' => 'funson86\setting\Setting',
         ],
-        'assetManager' => [
-            'bundles' => [
-                'yii\bootstrap\BootstrapAsset' => [
-                    'css' => [],
-                ],
-                'yii\web\JqueryAsset' => [
-                    'sourcePath' => null,
-                    'jsOptions' => ['position'=>\yii\web\View::POS_HEAD],
-                    'js' => [
-//                        '//code.jquery.com/jquery-1.10.2.min.js',
-                    ]
-                ],
-                'yii\web\YiiAsset' => [
-                    'jsOptions' => ['position'=>\yii\web\View::POS_HEAD]
-                ],
-            ],
-        ],
         'meta' =>[
             'class' => 'frontend\components\MetaExt',
         ],
