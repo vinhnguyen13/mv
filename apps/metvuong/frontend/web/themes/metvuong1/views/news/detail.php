@@ -66,9 +66,6 @@
         </article>
     </div>
 
-    <div id="loader"></div>
-    <a href="#" class="top">&uarr;</a>
-
     <div class="col-sm-4 col-lg-3 col-left-home">
         <?= \vsoft\news\widgets\NewsWidget::widget(['view' => 'hotnews'])?>
         <div class="siderbar widget-ads clearfix">
@@ -142,15 +139,15 @@
 </style>
 <script type="text/javascript">
     $(document).ready(function(){
-        var offset=350, // At what pixels show Back to Top Button
-            scrollDuration=400; // Duration of scrolling to top
-
-        // Smooth animation when scrolling
-        $('.top').click(function(event) {
-            event.preventDefault();
-            $('html, body').animate({
-                scrollTop: 0}, scrollDuration);
-        });
+//        var offset=350, // At what pixels show Back to Top Button
+//            scrollDuration=400; // Duration of scrolling to top
+//
+//        // Smooth animation when scrolling
+//        $('.top').click(function(event) {
+//            event.preventDefault();
+//            $('html, body').animate({
+//                scrollTop: 0}, scrollDuration);
+//        });
 
 //        $('.detail-news').bind('contextmenu',function(e){return false;});
 
@@ -158,11 +155,11 @@
             var currentID = parseInt($('#current_id').val());
             var catID = parseInt($('#cat_id').val());
 
-            if ($(this).scrollTop() > offset) {
-                $('.top').fadeIn(500); // Time(in Milliseconds) of appearing of the Button when scrolling down.
-            } else {
-                $('.top').fadeOut(500); // Time(in Milliseconds) of disappearing of Button when scrolling up.
-            }
+//            if ($(this).scrollTop() > offset) {
+//                $('.top').fadeIn(500); // Time(in Milliseconds) of appearing of the Button when scrolling down.
+//            } else {
+//                $('.top').fadeOut(500); // Time(in Milliseconds) of disappearing of Button when scrolling up.
+//            }
 
             if ($(window).scrollTop() == $(document).height() - $(window).height()) {
 
