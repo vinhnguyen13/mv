@@ -47,7 +47,7 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-home"></span></a>
+            <a class="navbar-brand" href="<?=\yii\helpers\Url::home()?>"><span class="glyphicon glyphicon-home"></span></a>
         </div>
         <div>
             <ul class="nav navbar-nav">

@@ -80,7 +80,7 @@ use yii\widgets\Pjax;
     <div class="col-sm-4 col-lg-3 col-left-home">
         <?= \vsoft\news\widgets\NewsWidget::widget(['view' => 'hotnews'])?>
         <div class="siderbar widget-ads clearfix">
-            <a class="wrap-img" href="#"><img src="<?= Yii::$app->view->theme->baseUrl?>/resources/images/img295x210.jpg" alt=""></a>
+            <a class="wrap-img" href="http://www.dreamplex.co/"><img src="http://www.reic.info/Content/themes/v1/Images/banner/Dreamplex-300x250.jpg" alt="dreamplex"></a>
         </div>
         <?= \vsoft\news\widgets\NewsWidget::widget(['view' => 'important'])?>
     </div>
