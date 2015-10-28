@@ -15,7 +15,8 @@ use yii\widgets\Pjax;
     $(document).ready(function() {
         $('.bxslider').bxSlider({
             mode: 'fade',
-            auto: true
+            auto: true,
+            autoHover: true
         });
     });
 </script>
@@ -62,6 +63,9 @@ use yii\widgets\Pjax;
                 'id' => 'list-wrapper',
             ],
             'summary' => '',
+            'itemOptions' => [
+                'tag' => false,
+            ],
             'itemView' => 'list_item',
             'pager' => [
                 'firstPageLabel' => false,
