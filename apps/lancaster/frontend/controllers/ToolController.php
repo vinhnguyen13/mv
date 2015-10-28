@@ -49,8 +49,8 @@ class ToolController extends Controller
         return $this->render('index');
     }
 
-    public function actionTest()
+    public function actionChart()
     {
-        return $this->render('test');
+        return $this->renderPartial('chart');
     }
 }
