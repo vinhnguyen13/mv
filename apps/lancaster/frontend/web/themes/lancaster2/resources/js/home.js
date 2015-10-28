@@ -17,7 +17,6 @@ var home = {
 	ratio: 1920/996,
 	sections: null,
 	sectionTop: [],
-	offsetHeader: 109,
 	offsetSwitchSection: 300,
 	currentActiveSection: 0,
 	arrowDown: null,
@@ -177,15 +176,14 @@ var home = {
 		this.sections = $('#paralax-page').find('div.section');
 		this.paralaxNav = $('#paralax-nav');
 		this.paralaxNavItem = this.paralaxNav.find('.items > li');
-		this.offsetHeader = $('header').outerHeight() + $('#paralax-nav').outerHeight();
 		this.collapseButton = $('.lancaster-list').find('.title');
 	},
 	attachWindowEvent: function() {
 		win.resize(function(){
 			isMobile = ($('#mobile-menu-button').css('display') == 'none') ? false : true;
 			
-			home.pushSectionTop();
 			home.calSection();
+			home.pushSectionTop();
 			home.centerSlideMap();
 		}).scroll(function(){
 			var scrollTop = win.scrollTop();
@@ -207,7 +205,7 @@ var home = {
 			e.preventDefault();
 			
 			var index = home.paralaxNavItem.index($(this).parent());
-			var top = Math.ceil(home.sections.eq(index).position().top - home.offsetHeader);
+			var top = Math.ceil(home.sections.eq(index).position().top - ($('header').outerHeight() + $('#paralax-nav').outerHeight()));
 			var duration = (Math.abs(index - home.currentActiveSection) - 1) * 200 + 800;
 			
 			var easing = 'easeOutCubic';
