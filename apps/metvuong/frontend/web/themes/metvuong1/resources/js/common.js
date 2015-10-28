@@ -17,7 +17,7 @@ $(document).ready(function() {
 		pushRight.open();
 	});
 
-	var btnScrollTop = $('<div id="topcontrol" title="Lên đầu trang"><img src="images/scrolltop.png" style="width:40px; height:40px"></div>')
+	var btnScrollTop = $('<div id="topcontrol" title="Lên đầu trang"><img src="./images/scrolltop.png" style="width:40px; height:40px"></div>')
 	$('body').append(btnScrollTop);
 	$(window).scroll(function(){
 		var valScroll = $(this).scrollTop();
