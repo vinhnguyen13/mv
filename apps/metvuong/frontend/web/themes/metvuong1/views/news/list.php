@@ -63,15 +63,13 @@ use yii\widgets\Pjax;
             ],
             'summary' => '',
             'itemView' => 'list_item',
-            'itemOptions' => [
-                'tag' => false,
-            ],
             'pager' => [
                 'firstPageLabel' => false,
                 'lastPageLabel' => false,
                 'nextPageLabel' => '<em class="fa fa-chevron-right"></em>',
                 'prevPageLabel' => '<em class="fa fa-chevron-left"></em>',
                 'maxButtonCount' => 10,
+                'options' => ['class' => 'pagination text-center'],
             ],
         ]);
         Pjax::end();
