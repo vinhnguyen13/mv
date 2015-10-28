@@ -8,6 +8,7 @@ use vsoft\news\models\CmsShowSearch;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\helpers\Inflector;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
@@ -88,7 +89,7 @@ class CmsController extends CmsShowController
         if ($model->load(Yii::$app->request->post())) {
             $upload_image = UploadedFile::getInstance($model, 'banner');
             if (!empty($upload_image)) {
-                $image_name = $upload_image->baseName;
+                $image_name = Inflector::slug($upload_image->baseName);
                 $model->banner = $image_name . '_' . date('mdYhis') . '.' . $upload_image->extension;
             }
             if ($model->banner) {
@@ -115,7 +116,7 @@ class CmsController extends CmsShowController
         if ($model->load(Yii::$app->request->post())) {
             $upload_image = UploadedFile::getInstance($model, 'banner');
             if (!empty($upload_image)) {
-                $image_name = $upload_image->baseName;
+                $image_name = Inflector::slug($upload_image->baseName);
                 $model->banner = $image_name . '_' . date('mdYhis') . '.' . $upload_image->extension;
             }
             if ($model->banner) {

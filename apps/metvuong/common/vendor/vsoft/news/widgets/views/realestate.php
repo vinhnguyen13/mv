@@ -4,6 +4,7 @@
  * User: Nhut Tran
  * Date: 10/1/2015 9:09 AM
  */
+use yii\helpers\StringHelper;
 
 ?>
 <div class="news-bds">
@@ -23,11 +24,11 @@
                     <p>
                         <a class="color-title-link"
                            href="<?= \yii\helpers\Url::to(['news/view', 'id' => $n->id, 'slug' => $n->slug]) ?>">
-                            <?= strlen($n->title) > 30 ? mb_substr($n->title, 0, 30) . '...' : $n->title ?>
+                            <?= StringHelper::truncate($n->title, 30) ?>
                         </a>
                     </p>
 
-                    <p> <?= strlen($n->brief) > 120 ? mb_substr($n->brief, 0, 120) . '...' : $n->brief ?></p>
+                    <p> <?= StringHelper::truncate($n->brief, 120) ?></p>
                 </div>
             <?php } ?>
         </div>

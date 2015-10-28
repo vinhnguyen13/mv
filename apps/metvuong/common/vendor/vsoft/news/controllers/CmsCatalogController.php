@@ -6,6 +6,7 @@ use Yii;
 use vsoft\news\models\CmsCatalog;
 use vsoft\news\models\CmsCatalogSearch as CmsCatalogSearch;
 use yii\helpers\FileHelper;
+use yii\helpers\Inflector;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -98,7 +99,7 @@ class CmsCatalogController extends \funson86\cms\controllers\backend\CmsCatalogC
 
             $upload_image = UploadedFile::getInstance($model, 'banner');
             if(!empty($upload_image)) {
-                $image_name = $upload_image->baseName;
+                $image_name = Inflector::slug($upload_image->baseName);
                 $model->banner = $image_name . '_' . date('mdYhis') . '.' . $upload_image->extension ;
             }
 
@@ -139,7 +140,7 @@ class CmsCatalogController extends \funson86\cms\controllers\backend\CmsCatalogC
         if ($model->load(Yii::$app->request->post())) {
             $upload_image = UploadedFile::getInstance($model, 'banner');
             if(!empty($upload_image)) {
-                $image_name = $upload_image->baseName;
+                $image_name = Inflector::slug($upload_image->baseName);
                 $model->banner = $image_name . '_' . date('mdYhis') . '.' . $upload_image->extension ;
             }
 //            $model->page_type = $oldPageType;

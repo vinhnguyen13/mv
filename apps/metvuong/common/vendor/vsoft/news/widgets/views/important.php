@@ -7,6 +7,7 @@
  * Template 1 columns 8 rows
  */
 use yii\bootstrap\Html;
+use yii\helpers\StringHelper;
 
 ?>
 <div class="siderbar widget-dqt clearfix siderbar-style">
@@ -19,8 +20,8 @@ use yii\bootstrap\Html;
                     <img src="/store/news/show/<?= $n->banner ?>" alt="<?= $n->title ?>" style="width: 82px; height: 55px;">
                 </a>
                 <div>
-                    <?= Html::a(strlen($n->title) > 30 ? mb_substr($n->title, 0, 30) . '...' : $n->title, ['view', 'id' => $n->id, 'slug' => $n->slug], ['class' => 'color-title-link']) ?>
-                    <p> <?= strlen($n->brief) > 100 ? mb_substr($n->brief, 0, 100) : $n->brief ?> </p>
+                    <?= Html::a(StringHelper::truncate($n->title, 30), ['view', 'id' => $n->id, 'slug' => $n->slug], ['class' => 'color-title-link']) ?>
+                    <p> <?= StringHelper::truncate($n->brief, 100) ?> </p>
                 </div>
             </li>
         <?php } ?>

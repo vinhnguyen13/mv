@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'banner',
                 'format' => 'html',
-                'value' => Html::img( Yii::$app->request->getHostInfo() . '/store/news/catalog/' . $model->banner,['width' => 200, 'alt' => $model->banner]),
+                'value' => Html::img( Yii::$app->request->getHostInfo() . '/store/news/catalog/' . $model->banner,['width' => 200, 'alt' => $model->banner, 'title' => $model->banner]),
             ],
             [
                 'attribute' => 'is_nav',

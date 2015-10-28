@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'banner',
                 'format' => 'html',
-                'value' => Html::img(Yii::$app->request->getHostInfo() . '/store/news/show/' . $model->banner, ['width' => 200, 'alt' => $model->banner]),
+                'value' => Html::img(Yii::$app->request->getHostInfo() . '/store/news/show/' . $model->banner, ['width' => 200, 'alt' => $model->banner, 'title' => $model->banner]),
             ],
 //            'banner',
 //            'template_show',

@@ -8,7 +8,7 @@
  */
 ?>
 <div class="col-xs-6">
-    <div class="widget-title clearfix"><h2>tài chính - ngân hàng</h2></div>
+    <div class="widget-title clearfix"><h2>doanh nghiệp</h2></div>
     <?php
     if (!empty($news)) {
         foreach ($news as $k => $n) { ?>

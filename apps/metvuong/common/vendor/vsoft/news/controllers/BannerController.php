@@ -6,6 +6,7 @@ use Yii;
 use vsoft\news\models\Banner;
 use vsoft\news\models\BannerSearch;
 use yii\filters\AccessControl;
+use yii\helpers\Inflector;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -76,7 +77,7 @@ class BannerController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $upload_image = UploadedFile::getInstance($model, 'image');
             if (!empty($upload_image)) {
-                $image_name = $upload_image->baseName;
+                $image_name = Inflector::slug($upload_image->baseName);
                 $model->image = $image_name . '_' . date('mdYhis') . '.' . $upload_image->extension;
             }
             if ($model->image) {
@@ -105,7 +106,7 @@ class BannerController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $upload_image = UploadedFile::getInstance($model, 'image');
             if (!empty($upload_image)) {
-                $image_name = $upload_image->baseName;
+                $image_name = Inflector::slug($upload_image->baseName);
                 $model->image = $image_name . '_' . date('mdYhis') . '.' . $upload_image->extension;
             }
             if ($model->image) {

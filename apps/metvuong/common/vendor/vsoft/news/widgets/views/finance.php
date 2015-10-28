@@ -6,6 +6,8 @@
  *
  * Template 1 columns 1 rows
  */
+use yii\helpers\StringHelper;
+
 ?>
 
 <div class="col-xs-6">
@@ -20,11 +22,11 @@
             </div>
             <p>
                 <a class="color-title-link" href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n->id, 'slug' => $n->slug])?>">
-                    <?=strlen($n->title) > 30 ? mb_substr($n->title, 0, 30) . '...' : $n->title?>
+                    <?=StringHelper::truncate($n->title, 30)?>
                 </a>
             </p>
             <p>
-                <?= strlen($n->brief) > 200 ? mb_substr($n->brief, 0, 200) : $n->brief ?>
+                <?= StringHelper::truncate($n->brief, 200)?>
             </p>
         <?php }
     } ?>
