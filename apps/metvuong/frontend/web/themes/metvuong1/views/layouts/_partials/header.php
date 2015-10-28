@@ -47,10 +47,9 @@
 use vsoft\news\models\CmsCatalog;
 use vsoft\news\models\Status;
 
-//$catalog = CmsCatalog::getDb()->cache(function($db){
-//    return CmsCatalog::find()->where(['status' => Status::STATUS_ACTIVE])->asArray()->orderBy('id')->all();
-//});
-$catalog = CmsCatalog::find()->where(['status' => Status::STATUS_ACTIVE])->andWhere('parent_id = :pid',[':pid' => Yii::$app->params['newsCatID']])->asArray()->orderBy('id')->limit(6)->all();
+$catalog = CmsCatalog::getDb()->cache(function($db){
+    return CmsCatalog::find()->where(['status' => Status::STATUS_ACTIVE])->andWhere('parent_id = :pid',[':pid' => Yii::$app->params['newsCatID']])->asArray()->orderBy('id')->limit(6)->all();
+});
 
 ?>
 

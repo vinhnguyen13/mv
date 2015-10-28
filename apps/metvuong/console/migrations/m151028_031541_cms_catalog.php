@@ -5,14 +5,22 @@ use yii\db\Migration;
 
 class m151028_031541_cms_catalog extends Migration
 {
+    private $table = 'cms_catalog';
+    private $column = 'slug';
     public function up()
     {
-        $this->addColumn('cms_catalog','slug', 'varchar(255) NOT NULL after title');
+        $table_to_check = Yii::$app->db->schema->getTableSchema($this->table);
+        if (! isset( $table_to_check->columns[$this->column] )) {
+            $this->addColumn($this->table, $this->column, 'varchar(255) NOT NULL after title');
+        }
     }
 
     public function down()
     {
-        $this->dropColumn('cms_catalog','slug');
+        $table_to_check = Yii::$app->db->schema->getTableSchema($this->table);
+        if (isset( $table_to_check->columns[$this->column] )) {
+            $this->dropColumn($this->table, $this->column);
+        }
     }
 
     /*
