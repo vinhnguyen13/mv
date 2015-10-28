@@ -9,6 +9,7 @@ doc.ready(function(){
 });
 
 var home = {
+	infoOpened: null,
 	collapseButton: null,
 	map: null,
 	nMap: null,
@@ -155,9 +156,9 @@ var home = {
 			
 			if(self.hasClass('section-swiper')) {
 				if(win.width() / height < home.ratio) {
-					self.find('.swiper-container').width('auto');
+					self.find('.swiper-container').height(win.width() / home.ratio);
 				} else {
-					self.find('.swiper-container').width(height * home.ratio);
+					self.find('.swiper-container').height(height);
 				}
 			} else {
 				self.css({
@@ -328,8 +329,6 @@ var home = {
 		}
 	},
 	initNeighMap: function() {
-		var infoOpened;
-		
 		this.nMap = new google.maps.Map(document.getElementById('neighborhood-map'), {
 			center: {lat: 10.784094, lng: 106.701859},
 		    zoom: 16,
@@ -357,8 +356,8 @@ var home = {
 			spaceBetween: 0,
 	        freeMode: true,
 	        onTap: function(sm, event) {
-	        	if(infoOpened) {
-					infoOpened.close();
+	        	if(home.infoOpened) {
+					home.infoOpened.close();
 				}
 	        	
 	        	sm.slideTo(sm.clickedIndex);
@@ -407,30 +406,38 @@ var home = {
 	        }
 		});
 		
-		$('#markers').find('> div').each(function(){
+		var markers = $('#markers');
+		
+		home.addnMarker(markers, 'building-icon.png');
+		
+		markers.find('> div').each(function(){
 			var self = $(this);
-
-			var info = new google.maps.InfoWindow({content: '<div style="width: 260px; font-family: Roboto, sans-serif;"><div style="font-weight: bold; margin-bottom: 12px; font-family: Noticia Text, serif; font-style: italic;">' + self.data('title') + '</div><img alt="" src="' + self.find('img').attr('src') + '" style="width: 100%; height: auto" /><table style="margin-top: 8px; color: black; font-weight: normal;"><tr><td style="vertical-align: top; padding: 4px 8px 4px 4px;">Address</td><td style="vertical-align: top; padding: 4px;">' + self.data('address') + '</td></tr><tr><td style="vertical-align: top; padding: 4px 8px 4px 4px;">Phone</td><td style="vertical-align: top; padding: 4px;">' + self.data('phone') + '</td></tr></table></div>'});
-			var marker = new google.maps.Marker({
-				draggable: false,
-			    map: home.nMap,
-			    position: {lat: Number(self.data('lat')), lng: Number(self.data('lng'))},
-			    opacity: 1,
-			    icon: '/frontend/web/themes/lancaster2/resources/images/marker-' + self.data('type') + '.png',
-			    type: self.data('type')
-			});
-			
-			marker.addListener('click', function(evt) {
-				if(infoOpened) {
-					infoOpened.close();
-				}
-				
-				info.open(home.nMap, marker);
-				infoOpened = info;
-			});
+			var marker = home.addnMarker(self, 'marker-' + self.data('type') + '.png');
 			
 			home.nMarkers.push(marker);
 		});
+	},
+	addnMarker: function(self, icon) {
+		var info = new google.maps.InfoWindow({content: '<div style="width: 260px; font-family: Roboto, sans-serif;"><div style="font-weight: bold; margin-bottom: 12px; font-family: Noticia Text, serif; font-style: italic;">' + self.data('title') + '</div><img alt="" src="' + self.find('img').attr('src') + '" style="width: 100%; height: auto" /><table style="margin-top: 8px; color: black; font-weight: normal;"><tr><td style="vertical-align: top; padding: 4px 8px 4px 4px;">Address</td><td style="vertical-align: top; padding: 4px;">' + self.data('address') + '</td></tr><tr><td style="vertical-align: top; padding: 4px 8px 4px 4px;">Phone</td><td style="vertical-align: top; padding: 4px;">' + self.data('phone') + '</td></tr></table></div>'});
+		var marker = new google.maps.Marker({
+			draggable: false,
+		    map: home.nMap,
+		    position: {lat: Number(self.data('lat')), lng: Number(self.data('lng'))},
+		    opacity: 1,
+		    icon: '/frontend/web/themes/lancaster2/resources/images/' + icon,
+		    type: self.data('type')
+		});
+		
+		marker.addListener('click', function(evt) {
+			if(home.infoOpened) {
+				home.infoOpened.close();
+			}
+			
+			info.open(home.nMap, marker);
+			home.infoOpened = info;
+		});
+		
+		return marker;
 	},
 	addMarker: function(position, text) {
 		var marker = new google.maps.Marker({

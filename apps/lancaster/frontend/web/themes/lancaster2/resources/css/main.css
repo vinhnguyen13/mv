@@ -394,13 +394,12 @@ header .book-now br {
     z-index: 9;
 }
 #paralax-wrapper {
-	visibility: hidden;
 	opacity: 0;
-	-moz-transition: all 1s;
 	transition: all 1s;
+	-moz-transition: all 1s;
+	-webkit-transition: all 1s;
 }
 .loaded #paralax-wrapper {
-	visibility: visible;
 	opacity: 1;
 }
 #paralax-overlay {
@@ -529,14 +528,15 @@ span.hr {
 	overflow: visible;
 }
 .swiper-group .swiper-container .swiper-slide {
-	opacity: 0.3;
-	transition: opacity 0.5s;
-	-webkit-transition: opacity 0.5s;
-	-moz-transition: opacity 0.5s;
+/* 	opacity: 0.3; */
+/* 	transition: opacity 0.5s; */
+/* 	-webkit-transition: opacity 0.5s; */
+/* 	-moz-transition: opacity 0.5s; */
+	background-size: cover;
 }
-.swiper-group .swiper-container .swiper-slide-active {
-	opacity: 1;
-}
+/* .swiper-group .swiper-container .swiper-slide-active { */
+/* 	opacity: 1; */
+/* } */
 .swiper-map {
 	position: absolute;
 	max-width: 100%;
@@ -553,6 +553,36 @@ span.hr {
 .swiper-map .active .slide-button {
 	background-color: #335764;
 	color: #FFF;
+}
+.swiper-map .swiper-slide-r.active .slide-button {
+	background-color: #44A3D3;
+}
+.swiper-slide-r .arrow-up {
+	border-bottom-color: #44A3D3;
+}
+.swiper-map .swiper-slide-m.active .slide-button {
+	background-color: #4CAF50;
+}
+.swiper-slide-m .arrow-up {
+	border-bottom-color: #4CAF50;
+}
+.swiper-map .swiper-slide-s.active .slide-button {
+	background-color: #E91E63;
+}
+.swiper-slide-s .arrow-up {
+	border-bottom-color: #E91E63;
+}
+.swiper-map .swiper-slide-e.active .slide-button {
+	background-color: #9C27B0;
+}
+.swiper-slide-e .arrow-up {
+	border-bottom-color: #9C27B0;
+}
+.swiper-map .swiper-slide-p.active .slide-button {
+	background-color: #009688;
+}
+.swiper-slide-p .arrow-up {
+	border-bottom-color: #009688;
 }
 .swiper-map .arrow-up {
 	position: absolute;
@@ -666,7 +696,13 @@ span.hr {
     margin-top: -30px;
 }
 .swiper-button:hover {
-	background-color: rgba(255, 255, 255, 0.2);
+	background-color: rgba(255, 255, 255, 0.3);
+}
+.swiper-button-prev:hover {
+	animation: swiperButtonPrev .6s ease-in-out;
+}
+.swiper-button-next:hover {
+	animation: swiperButtonNext .6s ease-in-out;
 }
 .swiper-button-prev {
 	background-image: url('images/slide-prev.png');
@@ -730,7 +766,7 @@ span.hr {
 	height: 100%;
 }
 .neighborhood-wrap .slide-button {
-	border-bottom: 4px solid;
+	border-bottom: 3px solid;
 }
 .neighborhood-wrap .active .slide-button {
 	border-bottom: none;
@@ -1266,6 +1302,30 @@ footer .menu a:hover {
 		margin-right: 20%;
 		margin-bottom: 80px;
 	}
+	.section-building h2 {
+		position: relative;
+		top: -60px;
+		opacity: 0;
+		transition: all 0.5s ease 0.8s;
+		-webkit-transition: all 0.5s ease 0.8s;
+		-moz-transition: all 0.5s ease 0.8s;
+	}
+	.loaded .section-building h2 {
+		top: 0px;
+		opacity: 1;
+	}
+	.section-building p {
+		position: relative;
+		bottom: -60px;
+		opacity: 0;
+		transition: all 0.5s ease 1s;
+		-webkit-transition: all 0.5s ease 1s;
+		-moz-transition: all 0.5s ease 1s;
+	}
+	.loaded .section-building p {
+		bottom: 0px;
+		opacity: 1;
+	}
 }
 @media screen and (min-width: 768px) and (max-width: 1600px) {
 	.section-pricing {
@@ -1351,8 +1411,8 @@ footer .menu a:hover {
 	    background: #234959;
 	    height: 49px;
 	    line-height: 49px;
-	    padding-left: 12px;
-	    padding-right: 20px;
+	    padding-left: 8px;
+	    padding-right: 12px;
 	   	transition: all 0.2s;
 	   	-webkit-transition: all 0.2s;
 	   	-moz-transition: all 0.2s;
@@ -1361,6 +1421,7 @@ footer .menu a:hover {
 		top: 33px;
 		opacity: 0;
 		border-radius: 4px;
+		margin-right: 0px;
 	}
 	.nav.show {
 		visibility: visible;
@@ -1908,5 +1969,16 @@ footer .menu a:hover {
 @keyframes sk-cubeGridScaleDelay {
 	0%, 70%, 100% {-webkit-transform: scale3D(1, 1, 1); transform: scale3D(1, 1, 1);}
 	35% {-webkit-transform: scale3D(0, 0, 1); transform: scale3D(0, 0, 1);} 
+}
+
+@keyframes swiperButtonNext {
+	0% {right: 30px; background-color: rgba(255, 255, 255, 0.1);}
+	50% {right: 20px; background-color: rgba(255, 255, 255, 0.2);}
+	100% {right: 30px; background-color: rgba(255, 255, 255, 0.3);}
+}
+@keyframes swiperButtonPrev {
+	0% {left: 30px; background-color: rgba(255, 255, 255, 0.1);}
+	50% {left: 20px; background-color: rgba(255, 255, 255, 0.2);}
+	100% {left: 30px; background-color: rgba(255, 255, 255, 0.3);}
 }
 /* Spinner */

@@ -35,9 +35,9 @@
 					<a href="#" class="menu-button" id="menu-nav"></a>
 					<div class="right nav">
 						<ul class="menu clear">
-							<li><a href="#">About Us</a></li>
-							<li><a href="#">News</a></li>
-							<li><a href="#">Contact Us</a></li>
+							<li><a href="#">Về Chúng Tôi</a></li>
+							<li><a href="#">Tin Tức</a></li>
+							<li><a href="#">Liên Hệ</a></li>
 						</ul>
 						<i class="separator"></i>
 						<ul class="langs clear">
@@ -88,10 +88,10 @@
 							<div class="swiper-group">
 								<div class="swiper-container">
 								    <div class="swiper-wrapper">
-								        <div class="swiper-slide"><img src="images/living-room.jpg" /></div>
-								        <div class="swiper-slide"><img src="images/kitchen.jpg" /></div>
-								        <div class="swiper-slide"><img src="images/bathroom.jpg" /></div>
-								        <div class="swiper-slide"><img src="images/bedroom.jpg" /></div>
+								        <div class="swiper-slide" style="background-image: url(images/living-room.jpg)"></div>
+								        <div class="swiper-slide" style="background-image: url(images/kitchen.jpg)"></div>
+								        <div class="swiper-slide" style="background-image: url(images/bathroom.jpg)"></div>
+								        <div class="swiper-slide" style="background-image: url(images/bedroom.jpg)"></div>
 								    </div>
 								    <div class="swiper-button swiper-button-prev"></div>
  									<div class="swiper-button swiper-button-next"></div>
@@ -128,10 +128,10 @@
 							<div class="swiper-group">
 								<div class="swiper-container">
 								    <div class="swiper-wrapper">
-								        <div class="swiper-slide"><img src="images/swiming-pool.jpg" /></div>
-								        <div class="swiper-slide"><img src="images/fitness-center.jpg" /></div>
-								        <div class="swiper-slide"><img src="images/healthy-care.jpg" /></div>
-								        <div class="swiper-slide"><img src="images/skybar.jpg" /></div>
+								        <div class="swiper-slide" style="background-image: url(images/swiming-pool.jpg)"></div>
+								        <div class="swiper-slide" style="background-image: url(images/fitness-center.jpg)"></div>
+								        <div class="swiper-slide" style="background-image: url(images/healthy-care.jpg)"></div>
+								        <div class="swiper-slide" style="background-image: url(images/skybar.jpg)"></div>
 								    </div>
 								    <div class="swiper-button swiper-button-prev"></div>
  									<div class="swiper-button swiper-button-next"></div>
@@ -168,10 +168,10 @@
 							<div class="swiper-group">
 								<div class="swiper-container">
 								    <div class="swiper-wrapper">
-								        <div class="swiper-slide"><img src="images/north.jpg" /></div>
-								        <div class="swiper-slide"><img src="images/east.jpg" /></div>
-								        <div class="swiper-slide"><img src="images/south.jpg" /></div>
-								        <div class="swiper-slide"><img src="images/west.jpg" /></div>
+								        <div class="swiper-slide" style="background-image: url(images/north.jpg)"></div>
+								        <div class="swiper-slide" style="background-image: url(images/east.jpg)"></div>
+								        <div class="swiper-slide" style="background-image: url(images/south.jpg)"></div>
+								        <div class="swiper-slide" style="background-image: url(images/west.jpg)"></div>
 								    </div>
 								    <div class="swiper-button swiper-button-prev"></div>
  									<div class="swiper-button swiper-button-next"></div>
@@ -210,14 +210,15 @@
 								<div class="swiper-map">
 								    <div class="swiper-wrapper">
 								        <div data-type="" class="swiper-slide active"><div class="arrow-up"></div><div class="slide-button" style="border-color: transparent;">ALL</div></div>
-								        <div data-type="r" class="swiper-slide"><div class="arrow-up"></div><div class="slide-button" style="border-color: #44A3D3;">RESTAURANTS</div></div>
-								        <div data-type="m" class="swiper-slide"><div class="arrow-up"></div><div class="slide-button" style="border-color: #4CAF50;">MARKETS</div></div>
-								        <div data-type="s" class="swiper-slide"><div class="arrow-up"></div><div class="slide-button" style="border-color: #E91E63;">SHOPPING</div></div>
-								        <div data-type="e" class="swiper-slide"><div class="arrow-up"></div><div class="slide-button" style="border-color: #9C27B0;">ENTERTAINMENT</div></div>
-								        <div data-type="p" class="swiper-slide"><div class="arrow-up"></div><div class="slide-button" style="border-color: #009688;">PARKS</div></div>
+								        <div data-type="r" class="swiper-slide swiper-slide-r"><div class="arrow-up"></div><div class="slide-button" style="border-color: #44A3D3;">RESTAURANTS</div></div>
+								        <div data-type="m" class="swiper-slide swiper-slide-m"><div class="arrow-up"></div><div class="slide-button" style="border-color: #4CAF50;">MARKETS</div></div>
+								        <div data-type="s" class="swiper-slide swiper-slide-s"><div class="arrow-up"></div><div class="slide-button" style="border-color: #E91E63;">SHOPPING</div></div>
+								        <div data-type="e" class="swiper-slide swiper-slide-e"><div class="arrow-up"></div><div class="slide-button" style="border-color: #9C27B0;">ENTERTAINMENT</div></div>
+								        <div data-type="p" class="swiper-slide swiper-slide-p"><div class="arrow-up"></div><div class="slide-button" style="border-color: #009688;">PARKS</div></div>
 									</div>
 								</div>
-								<div style="display: none;" id="markers">
+								<div style="display: none;" id="markers" data-lng="106.697443" data-lat="10.786618" data-title="Lancaster Legency" data-address="78 Ton That Thuyet Street, Ward 16, District 4, HCMC, Viet Nam" data-phone="+84 919 866 993">
+									<img alt="" src="/frontend/web/themes/lancaster2/resources/images/about-1.jpg" />
 									<div data-type="r"
 											data-lng="106.701859"
 											data-lat="10.784094"
