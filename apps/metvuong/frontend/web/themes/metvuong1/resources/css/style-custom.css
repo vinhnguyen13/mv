@@ -95,7 +95,7 @@ header {
 #search-kind .dropdown button {
     border-left: none;
 }
-#search-kind button {
+button.btn.btn-default {
     background: none;
     border: none;
     padding: 0;
@@ -112,7 +112,7 @@ header {
 #search-kind button .caret {
 }
 #search-kind .dropdown button {
-    padding: 0 5% 0 0;
+    padding: 0;
     font-size: 1.2em;
     background: none;
     color: #333;
@@ -127,13 +127,21 @@ header {
 #search-kind .txt-selected {
     border-right: 1px solid #78B112;
     display: inline-block;
-    margin-right: 6px;
+    /* margin-right: 3%; */
     padding: 6px 7px 5px 10px;
     font-size: inherit;
-    width: 88%;
+    width: 80%;
     height: 28px;
     line-height: 16px;
     color: #294000;
+    float: left;
+}
+#search-kind .wrap-arrow-dropdown {
+    height: 28px;
+    width: 20%;
+    float: left;
+    text-align: center;
+    line-height: 28px;
 }
 #search-kind .form-group {
     width: 65%;
@@ -634,27 +642,6 @@ footer {
         border: none;
         padding: 0;
     }
-    #search-kind {
-        width: 85%;
-        margin-bottom: 10px;
-        float: none !important;
-        overflow: hidden;
-    }
-    #search-kind .form-group {
-        margin-bottom: 5px;
-        width: 100%;
-    }
-    #search-kind .dropdown {
-        width: 85%;
-    }
-    #search-kind .txt-selected {
-        width: 93%;
-    }
-    #search-kind button {
-        top: inherit;
-        bottom: 0;
-        right: 10px;
-    }
     .option-search {
         width: 100%;
         float: none !important;
@@ -664,10 +651,6 @@ footer {
     }
     .option-search div {
         /* text-align: center; */
-    }
-    .icon-sale {
-        width: 15%;
-        margin-right: 0;
     }
     .widget-ads {
         text-align: center;
@@ -919,7 +902,7 @@ footer {
 .item-list p {
     line-height: 15px;
 }
-.lists-page .pagination a {
+.col-right-home .pagination a {
     border: 0;
     font-size: 1.4em;
     border-radius: 50%;
@@ -929,7 +912,7 @@ footer {
     height: 30px;
     line-height: 30px;
 }
-.lists-page .pagination li {
+.pagination li {
     display: inline-block;
 }
 @media (min-width: 320px) and (max-width: 480px) {
@@ -1299,6 +1282,17 @@ footer {
         float: left;
     }
 }
+.lists-page .news-hot .content-news-hot,
 .duan-page .news-hot .content-news-hot {
     height: 84px;
+}
+@media (max-width: 845px) {
+    .box-search-header {
+        width: 100%;
+        margin-top: 10px;
+        float: left;
+    }
+    #search-kind button {
+        right: -2%;
+    }
 }
