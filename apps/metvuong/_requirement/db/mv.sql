@@ -10,13 +10,13 @@ Target Server Type    : MYSQL
 Target Server Version : 50626
 File Encoding         : 65001
 
-Date: 2015-10-06 09:50:32
+Date: 2015-10-28 10:38:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for `auth_assignment`
+-- Table structure for auth_assignment
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_assignment`;
 CREATE TABLE `auth_assignment` (
@@ -32,7 +32,7 @@ CREATE TABLE `auth_assignment` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `auth_item`
+-- Table structure for auth_item
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_item`;
 CREATE TABLE `auth_item` (
@@ -54,7 +54,7 @@ CREATE TABLE `auth_item` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `auth_item_child`
+-- Table structure for auth_item_child
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_item_child`;
 CREATE TABLE `auth_item_child` (
@@ -71,7 +71,7 @@ CREATE TABLE `auth_item_child` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `auth_rule`
+-- Table structure for auth_rule
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_rule`;
 CREATE TABLE `auth_rule` (
@@ -87,7 +87,7 @@ CREATE TABLE `auth_rule` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `blog_catalog`
+-- Table structure for blog_catalog
 -- ----------------------------
 DROP TABLE IF EXISTS `blog_catalog`;
 CREATE TABLE `blog_catalog` (
@@ -116,7 +116,7 @@ CREATE TABLE `blog_catalog` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `blog_comment`
+-- Table structure for blog_comment
 -- ----------------------------
 DROP TABLE IF EXISTS `blog_comment`;
 CREATE TABLE `blog_comment` (
@@ -141,7 +141,7 @@ CREATE TABLE `blog_comment` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `blog_post`
+-- Table structure for blog_post
 -- ----------------------------
 DROP TABLE IF EXISTS `blog_post`;
 CREATE TABLE `blog_post` (
@@ -172,7 +172,7 @@ CREATE TABLE `blog_post` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `blog_tag`
+-- Table structure for blog_tag
 -- ----------------------------
 DROP TABLE IF EXISTS `blog_tag`;
 CREATE TABLE `blog_tag` (
@@ -188,7 +188,7 @@ CREATE TABLE `blog_tag` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `cms_catalog`
+-- Table structure for cms_catalog
 -- ----------------------------
 DROP TABLE IF EXISTS `cms_catalog`;
 CREATE TABLE `cms_catalog` (
@@ -219,21 +219,29 @@ CREATE TABLE `cms_catalog` (
   KEY `sort_order` (`sort_order`),
   KEY `status` (`status`),
   KEY `created_at` (`created_at`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cms_catalog
 -- ----------------------------
-INSERT INTO `cms_catalog` VALUES ('1', '0', 'News', 'News', 'News', '<p>News</p>\r\n', '', '', '', null, '1', '50', 'page', '10', 'list', 'show', 'page', '', '0', '1', '1443756042', '1443756042');
+INSERT INTO `cms_catalog` VALUES ('1', '0', 'Projects', 'Projects', 'Projects', '<p>Projects</p>\r\n', '', '', '', null, '1', '50', 'page', '10', 'list', 'show', 'page', '', '0', '1', '1443756042', '1443756042');
+INSERT INTO `cms_catalog` VALUES ('2', '0', 'News', 'News', 'News', 'News', null, null, null, null, '1', '50', 'page', '10', 'list', 'show', 'page', null, '0', '1', '0', '0');
+INSERT INTO `cms_catalog` VALUES ('3', '2', 'Bất động sản', null, null, null, null, null, null, null, '1', '50', 'page', '10', 'list', 'show', 'page', null, '0', '1', '0', '0');
+INSERT INTO `cms_catalog` VALUES ('4', '3', 'Bất động sản lel 1', null, null, null, null, null, null, null, '1', '50', 'page', '10', 'list', 'show', 'page', null, '0', '1', '0', '0');
+INSERT INTO `cms_catalog` VALUES ('5', '2', 'Dự án', null, null, null, null, null, null, null, '1', '50', 'page', '10', 'list', 'show', 'page', null, '0', '1', '0', '0');
+INSERT INTO `cms_catalog` VALUES ('6', '1', 'Projects lel 1-1', null, null, null, null, null, null, null, '1', '50', 'page', '10', 'list', 'show', 'page', null, '0', '1', '0', '0');
+INSERT INTO `cms_catalog` VALUES ('7', '1', 'Projects lel 1-2', null, null, null, null, null, null, null, '1', '50', 'page', '10', 'list', 'show', 'page', null, '0', '1', '0', '0');
+INSERT INTO `cms_catalog` VALUES ('8', '6', 'Projects lel 1-1-1', null, null, null, null, null, null, null, '1', '50', 'page', '10', 'list', 'show', 'page', null, '0', '1', '0', '0');
 
 -- ----------------------------
--- Table structure for `cms_show`
+-- Table structure for cms_show
 -- ----------------------------
 DROP TABLE IF EXISTS `cms_show`;
 CREATE TABLE `cms_show` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `catalog_id` int(11) NOT NULL DEFAULT '0',
   `title` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
   `surname` varchar(128) DEFAULT NULL,
   `brief` varchar(1022) DEFAULT NULL,
   `content` text,
@@ -247,19 +255,23 @@ CREATE TABLE `cms_show` (
   `status` int(11) NOT NULL DEFAULT '1',
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL,
+  `created_by` int(11) DEFAULT '0',
+  `updated_by` int(11) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `catalog_id` (`catalog_id`),
   KEY `status` (`status`),
   KEY `created_at` (`created_at`),
   CONSTRAINT `FK_cms_catalog` FOREIGN KEY (`catalog_id`) REFERENCES `cms_catalog` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cms_show
 -- ----------------------------
+INSERT INTO `cms_show` VALUES ('2', '1', 'Toyota Việt Nam ra mắt Hilux 2016, 3 phiên bản, giá từ 693 triệu đồng việt', 'toyota-viet-nam-ra-mat-hilux-2016-3-phien-ban-gia-tu-693-trieu-dong-viet', null, '', '<p style=\"text-align:center\"><span style=\"background-color:rgb(255, 255, 255); color:rgb(20, 20, 20); font-family:helvetica,arial,sans-serif; font-size:14.6667px\">Thương hiệu </span><a class=\"Tinhte_XenTag_TagLink\" href=\"https://tinhte.vn/tags/nikon/\" style=\"color: rgb(23, 96, 147); text-decoration: none; border-radius: 0px; padding: 0px 3px; margin: 0px -3px; font-family: Helvetica, Arial, sans-serif; font-size: 14.6667px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 20.5333px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);\">Nikon</a><span style=\"background-color:rgb(255, 255, 255); color:rgb(20, 20, 20); font-family:helvetica,arial,sans-serif; font-size:14.6667px\"> được ra đời v&agrave;o ng&agrave;y 25 th&aacute;ng 07 năm 1917 v&agrave; trong gần hai năm tới đ&acirc;y, họ sẽ tổ chức ch&agrave;o mừng kỷ niệm 100 năm ng&agrave;y th&agrave;nh lập của m&igrave;nh. Song song với sự kiện n&agrave;y, Nikon đ&atilde; quyết định mở một </span><a class=\"Tinhte_XenTag_TagLink\" href=\"https://tinhte.vn/tags/bao-tang/\" style=\"color: rgb(23, 96, 147); text-decoration: none; border-radius: 0px; padding: 0px 3px; margin: 0px -3px; font-family: Helvetica, Arial, sans-serif; font-size: 14.6667px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 20.5333px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255);\">bảo t&agrave;ng</a><span style=\"background-color:rgb(255, 255, 255); color:rgb(20, 20, 20); font-family:helvetica,arial,sans-serif; font-size:14.6667px\"> mới ri&ecirc;ng của m&igrave;nh v&agrave; n&oacute; sẽ được ch&iacute;nh thức mở cửa v&agrave;o ng&agrave;y 17 th&aacute;ng 10 năm 2015 tới đ&acirc;y. Bảo t&agrave;ng Nikon n&agrave;y sẽ được đặt tại tầng hai của to&agrave; nh&agrave; trụ sở ch&iacute;nh Nikon tại Shinagawa. V&agrave;o cửa miễn ph&iacute;.</span><br />\r\n<br />\r\n<img alt=\"Nikon-Museum-4.\" class=\"LbImage bbCodeImage\" src=\"https://photo.tinhte.vn/store/2015/10/3155491_Nikon-Museum-4.jpg\" style=\"-webkit-text-stroke-width:0px; background-color:rgb(255, 255, 255); border:0px; color:rgb(20, 20, 20); font-family:helvetica,arial,sans-serif; font-size:14.6667px; font-style:normal; font-variant:normal; font-weight:normal; letter-spacing:normal; line-height:20.5333px; max-width:100%; orphans:auto; text-align:left; text-indent:0px; text-transform:none; white-space:normal; widows:1; word-spacing:0px\" /><br />\r\n<span style=\"background-color:rgb(255, 255, 255); color:rgb(20, 20, 20); font-family:helvetica,arial,sans-serif; font-size:14.6667px\">Bảo t&agrave;ng Nikon sẽ l&agrave; nơi đầu ti&ecirc;n trưng b&agrave;y to&agrave;n bộ qu&aacute; tr&igrave;nh lịch sử, c&aacute;c sản phẩm v&agrave; c&ocirc;ng nghệ của Nikon qua c&aacute;c thời kỳ.</span><br />\r\n&nbsp;</p>\r\n\r\n<div style=\"margin: 0px; padding: 0px; color: rgb(20, 20, 20); font-family: Helvetica,Arial,sans-serif; font-size: 14.6667px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 20.5333px; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; background-color: rgb(255, 255, 255); text-align: center;\"><img alt=\"Nikon-Museum-6.\" class=\"LbImage bbCodeImage\" src=\"https://photo.tinhte.vn/store/2015/10/3155493_Nikon-Museum-6.jpg\" style=\"border:0px; max-width:100%\" />​</div>\r\n\r\n<p style=\"text-align:center\"><span style=\"background-color:rgb(255, 255, 255); color:rgb(20, 20, 20); font-family:helvetica,arial,sans-serif; font-size:14.6667px\">Nikon (thời điểm đ&oacute; l&agrave; Nippon Kogaku K.K.) được th&agrave;nh lập v&agrave;o năm 1917, được biết đến l&agrave; một tập đo&agrave;n chuy&ecirc;n sản xuất v&agrave; b&aacute;n c&aacute;c dụng cụ quang học dựa tr&ecirc;n c&ocirc;ng nghệ quang-điện tử v&agrave; c&ocirc;ng nghệ ch&iacute;nh x&aacute;c tr&ecirc;n to&agrave;n thế giới. Mục đ&iacute;ch của Bảo t&agrave;ng Nikon l&agrave; để triển l&atilde;m c&aacute;c c&ocirc;ng nghệ v&agrave; truyền thống từ nền tảng của họ cũng như những s&aacute;ng kiến v&agrave; sự ph&aacute;t triển của Nikon.</span><br />\r\n&nbsp;</p>\r\n\r\n<div style=\"margin: 0px; padding: 0px; color: rgb(20, 20, 20); font-family: Helvetica,Arial,sans-serif; font-size: 14.6667px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 20.5333px; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; background-color: rgb(255, 255, 255); text-align: center;\"><img alt=\"Nikon-Museum.\" class=\"LbImage bbCodeImage\" src=\"https://photo.tinhte.vn/store/2015/10/3155496_Nikon-Museum.jpg\" style=\"border:0px; max-width:100%\" />​</div>\r\n\r\n<p style=\"text-align:center\"><span style=\"background-color:rgb(255, 255, 255); color:rgb(20, 20, 20); font-family:helvetica,arial,sans-serif; font-size:14.6667px\">Bảo t&agrave;ng Nikon sẽ bao gồm 580 m2 kh&ocirc;ng gian triển l&atilde;m, trưng b&agrave;y c&aacute;c sản phẩm c&oacute; gi&aacute; trị của Nikon như: hệ thống sản xuất b&aacute;n dẫn step&amp;repeat của Nikon &quot;NSR-1505G2A&rdquo; từ 1984, khoảng hơn 450 m&aacute;y ảnh Nikon từ đời &quot;Nikon đời 1&rdquo;, đ&acirc;y l&agrave; chiếc m&aacute;y ảnh Nikon đầu ti&ecirc;n được c&ocirc;ng bố v&agrave;o năm 1948, cho tới c&aacute;c m&aacute;y ảnh kỹ thuật số mới nhất, k&iacute;nh hiển vi, dụng cụ đo lường, v&agrave; c&aacute;c thiết bị hỗ trợ kh&aacute;c trong sự ph&aacute;t triển của Nikon.</span><br />\r\n&nbsp;</p>\r\n\r\n<div style=\"margin: 0px; padding: 0px; color: rgb(20, 20, 20); font-family: Helvetica,Arial,sans-serif; font-size: 14.6667px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 20.5333px; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; background-color: rgb(255, 255, 255); text-align: center;\"><img alt=\"Nikon-Museum-3.\" class=\"LbImage bbCodeImage\" src=\"https://photo.tinhte.vn/store/2015/10/3155489_Nikon-Museum-3.jpg\" style=\"border:0px; max-width:100%\" /><img alt=\"Nikon-Museum-7.\" class=\"LbImage bbCodeImage\" src=\"https://photo.tinhte.vn/store/2015/10/3155492_Nikon-Museum-7.jpg\" style=\"border:0px; max-width:100%\" />​</div>\r\n\r\n<p style=\"text-align:center\"><span style=\"background-color:rgb(255, 255, 255); color:rgb(20, 20, 20); font-family:helvetica,arial,sans-serif; font-size:14.6667px\">Trong cửa h&agrave;ng của bảo t&agrave;ng, c&oacute; sẵn c&aacute;c loại h&agrave;ng lưu niệm kh&aacute;c nhau cho kh&aacute;ch tham quan, bao gồm c&aacute;c phi&ecirc;n bản giới hạn của Bảo t&agrave;ng Nikon như bưu thiếp, khăn lau mặt kiểu Nhật, folder bằng nhựa trong, t&uacute;i đeo, &quot;Nikon Yokan&rdquo; với kiểu đ&oacute;ng g&oacute;i nguy&ecirc;n bản (một loại b&aacute;nh của Nhật Bản), v&agrave; c&aacute;c mặt h&agrave;ng kh&aacute;c thường thấy tr&ecirc;n c&aacute;c shop online của Nhật như những con lật đật phi&ecirc;n bản giới hạn.</span><br />\r\n<br />\r\n<span style=\"background-color:rgb(255, 255, 255); color:rgb(20, 20, 20); font-family:helvetica,arial,sans-serif; font-size:14.6667px\">Một số h&igrave;nh ảnh của bảo t&agrave;ng Nikon:</span><br />\r\n<img alt=\"Nikon-Museum-5.\" class=\"LbImage bbCodeImage\" src=\"https://photo.tinhte.vn/store/2015/10/3155490_Nikon-Museum-5.jpg\" style=\"-webkit-text-stroke-width:0px; background-color:rgb(255, 255, 255); border:0px; color:rgb(20, 20, 20); font-family:helvetica,arial,sans-serif; font-size:14.6667px; font-style:normal; font-variant:normal; font-weight:normal; letter-spacing:normal; line-height:20.5333px; max-width:100%; orphans:auto; text-align:left; text-indent:0px; text-transform:none; white-space:normal; widows:1; word-spacing:0px\" /></p>\r\n\r\n<div style=\"margin: 0px; padding: 0px; color: rgb(20, 20, 20); font-family: Helvetica,Arial,sans-serif; font-size: 14.6667px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: 20.5333px; text-indent: 0px; text-transform: none; white-space: normal; widows: 1; word-spacing: 0px; background-color: rgb(255, 255, 255); text-align: center;\"><img alt=\"Nikon-Museum2.\" class=\"LbImage bbCodeImage\" src=\"https://photo.tinhte.vn/store/2015/10/3155505_Nikon-Museum2.jpg\" style=\"border:0px; max-width:100%\" /><br />\r\n<br />\r\n<em>Nikon sẽ mở cửa Bảo t&agrave;ng Nikon v&agrave;o ng&agrave;y 17 th&aacute;ng 10 năm 2015 tại Nhật nh&acirc;n kỷ niệm 100 năm th&agrave;nh lập Nikon</em>​</div>\r\n', 'Nikon sẽ mở cửa Bảo tàng Nikon tại Nhật nhân kỷ niệm 100 năm Nikon vào ngày 17/10/2015', 'Nikon sẽ mở cửa Bảo tàng Nikon tại Nhật nhân kỷ niệm 100 năm Nikon vào ngày 17/10/2015', 'Nikon sẽ mở cửa Bảo tàng Nikon tại Nhật nhân kỷ niệm 100 năm Nikon vào ngày 17/10/2015', 'Koala_10062015101939.jpg', 'show', 'admin', '0', '1', '1444119579', '1444646383', '1', '1');
+INSERT INTO `cms_show` VALUES ('6', '1', 'Phương án thiết kế Khách sạn và căn hộ Oceanus Nha Trang', 'phuong-an-thiet-ke-khach-san-va-can-ho-oceanus-nha-trang', null, null, '{\"bpGallery\":\"561cd703ebb20.jpg\",\"bpLogo\":\"\",\"bpLocation\":\"21 Nguy\\u1ec5n Trung Ng\\u1ea1n\",\"bpType\":\"\",\"bpAcreage\":\"\",\"bpAcreageCenter\":\"\",\"bpApartmentNo\":\"\",\"bpFloorNo\":\"\",\"bpFacilities\":\"\",\"bpMapLocation\":\"\",\"bpMapLocationDes\":\"\",\"bpFacilitiesDetail\":\"\",\"bpFacilitiesDetailDes\":\"\",\"bpVideo\":\"\",\"bpProgress\":null,\"bpLat\":\"10.783233\",\"bpLng\":\"106.704479\",\"bpHotline\":\"\",\"bpWebsite\":\"\",\"bpStartTime\":\"\",\"bpEstimateFinished\":\"\",\"bpOwnerType\":\"\",\"bpfApartmentArea\":\"{\\\"floorPlan\\\":[],\\\"payment\\\":\\\"\\\",\\\"promotion\\\":\\\"\\\",\\\"document\\\":\\\"\\\"}\",\"bpfCommercialArea\":\"{\\\"floorPlan\\\":[],\\\"payment\\\":\\\"\\\",\\\"promotion\\\":\\\"\\\",\\\"document\\\":\\\"\\\"}\",\"bpfTownhouseArea\":\"{\\\"floorPlan\\\":[],\\\"payment\\\":\\\"\\\",\\\"promotion\\\":\\\"\\\",\\\"document\\\":\\\"\\\"}\",\"bpfOffice\":\"{\\\"floorPlan\\\":[],\\\"payment\\\":\\\"\\\",\\\"promotion\\\":\\\"\\\",\\\"document\\\":\\\"\\\"}\"}', '', '', '', null, 'show', 'admin', '0', '1', '0', '0', '0', '0');
 
 -- ----------------------------
--- Table structure for `gallery_image`
+-- Table structure for gallery_image
 -- ----------------------------
 DROP TABLE IF EXISTS `gallery_image`;
 CREATE TABLE `gallery_image` (
@@ -279,7 +291,7 @@ INSERT INTO `gallery_image` VALUES ('1', 'product', '1', '2', 'kakak', '654654')
 INSERT INTO `gallery_image` VALUES ('2', 'product', '1', '1', '', '');
 
 -- ----------------------------
--- Table structure for `menu`
+-- Table structure for menu
 -- ----------------------------
 DROP TABLE IF EXISTS `menu`;
 CREATE TABLE `menu` (
@@ -299,7 +311,7 @@ CREATE TABLE `menu` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `migration`
+-- Table structure for migration
 -- ----------------------------
 DROP TABLE IF EXISTS `migration`;
 CREATE TABLE `migration` (
@@ -314,6 +326,7 @@ CREATE TABLE `migration` (
 INSERT INTO `migration` VALUES ('m000000_000000_base', '1443752329');
 INSERT INTO `migration` VALUES ('m140209_132017_init', '1443752345');
 INSERT INTO `migration` VALUES ('m140403_174025_create_account_table', '1443752346');
+INSERT INTO `migration` VALUES ('m140501_075311_add_oauth2_server', '1445329980');
 INSERT INTO `migration` VALUES ('m140504_113157_update_tables', '1443752349');
 INSERT INTO `migration` VALUES ('m140504_130429_create_token_table', '1443752350');
 INSERT INTO `migration` VALUES ('m140506_102106_rbac_init', '1443752877');
@@ -326,11 +339,29 @@ INSERT INTO `migration` VALUES ('m141222_110026_update_ip_field', '1443752352');
 INSERT INTO `migration` VALUES ('m141222_135246_alter_username_length', '1443752352');
 INSERT INTO `migration` VALUES ('m150614_103145_update_social_account_table', '1443752354');
 INSERT INTO `migration` VALUES ('m150623_212711_fix_username_notnull', '1443752355');
-INSERT INTO `migration` VALUES ('m151002_024804_cms_show', '1443757436');
-INSERT INTO `migration` VALUES ('m151002_081136_profile', '1443778999');
+INSERT INTO `migration` VALUES ('m151002_024804_cms_show', '1444119260');
+INSERT INTO `migration` VALUES ('m151002_081136_profile', '1444119315');
 
 -- ----------------------------
--- Table structure for `profile`
+-- Table structure for mv_meta
+-- ----------------------------
+DROP TABLE IF EXISTS `mv_meta`;
+CREATE TABLE `mv_meta` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `url` varchar(255) NOT NULL DEFAULT '/',
+  `metadata` text,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_url` (`url`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of mv_meta
+-- ----------------------------
+INSERT INTO `mv_meta` VALUES ('1', 'http://local.lancaster.com/news', '{\"keywords\":\"Metvuong News, metvuong, news \",\"description\":\"Là đội ngũ những người có cùng niềm đam mê và giàu kinh nghiệm trong lĩnh vực bất động sản. Chúng tôi mong muốn tạo ra một thứ gì đó thú vị để đóng góp vào sự phát triển của thị trường bất động sản Việt Nam.\",\"og:title\":\"Metvuong News\",\"og:image\":\"http://local.metvuong.com/store/news/show/GDP_10062015045857.jpg\",\"article:author\":\"tmnhut\",\"article:publisher\":\"admin\",\"og:description\":\"Là đội ngũ những người có cùng niềm đam mê và giàu kinh nghiệm trong lĩnh vực bất động sản. Chúng tôi mong muốn tạo ra một thứ gì đó thú vị để đóng góp vào sự phát triển của thị trường bất động sản Việt Nam.\",\"og:url\":\"http://local.lancaster.com/news\",\"fb:app_id\":\"856286731156793\",\"og:site_name\":\"Lancaster\",\"og:type\":\"article\",\"og:locale\":\"vi_VN\",\"og:locale:alternate\":\"en_US\"}');
+INSERT INTO `mv_meta` VALUES ('2', 'http://local.metvuong.com/', '{\"keywords\":\"Metvuong, metvuong\",\"description\":\"Là đội ngũ những người có cùng niềm đam mê và giàu kinh nghiệm trong lĩnh vực bất động sản. Chúng tôi mong muốn tạo ra một thứ gì đó thú vị để đóng góp vào sự phát triển của thị trường bất động sản Việt Nam.\",\"og:title\":\"Metvuong\",\"og:image\":\"http://local.metvuong.com/store/news/show/GDP_10062015045857.jpg\",\"article:author\":\"tmnhut\",\"article:publisher\":\"admin\",\"og:description\":\"Là đội ngũ những người có cùng niềm đam mê và giàu kinh nghiệm trong lĩnh vực bất động sản. Chúng tôi mong muốn tạo ra một thứ gì đó thú vị để đóng góp vào sự phát triển của thị trường bất động sản Việt Nam.\",\"og:url\":\"http://local.metvuong.com/\",\"fb:app_id\":\"856286731156793\",\"og:site_name\":\"Lancaster\",\"og:type\":\"article\",\"og:locale\":\"vi_VN\",\"og:locale:alternate\":\"en_US\"}');
+
+-- ----------------------------
+-- Table structure for profile
 -- ----------------------------
 DROP TABLE IF EXISTS `profile`;
 CREATE TABLE `profile` (
@@ -350,12 +381,12 @@ CREATE TABLE `profile` (
 -- ----------------------------
 -- Records of profile
 -- ----------------------------
-INSERT INTO `profile` VALUES ('1', 'Nguyễn Quang Vinh', 'quangvinh@abc.com', '', 'd41d8cd98f00b204e9800998ecf8427e', '', 'http://local.mv.com', '', 'tulips.jpg');
+INSERT INTO `profile` VALUES ('1', 'Nguyễn Quang Vinh', 'quangvinh@abc.com', '', 'd41d8cd98f00b204e9800998ecf8427e', '', 'http://local.mv.com', '', '561ce59f056fe.jpg');
 INSERT INTO `profile` VALUES ('2', null, null, null, null, null, null, null, '');
 INSERT INTO `profile` VALUES ('3', null, null, null, null, null, null, null, '');
 
 -- ----------------------------
--- Table structure for `session`
+-- Table structure for session
 -- ----------------------------
 DROP TABLE IF EXISTS `session`;
 CREATE TABLE `session` (
@@ -368,15 +399,28 @@ CREATE TABLE `session` (
 -- ----------------------------
 -- Records of session
 -- ----------------------------
+INSERT INTO `session` VALUES ('1q4m78o7opd5ngl0378bbpgok6', '1445570062', 0x5F5F666C6173687C613A303A7B7D5F5F72657475726E55726C7C733A373A222F61646D696E2F223B5F5F69647C693A313B);
 INSERT INTO `session` VALUES ('4bp5pum7gf9so2rjgja4hdboa3', '1444039853', 0x5F5F666C6173687C613A303A7B7D);
+INSERT INTO `session` VALUES ('4v61d18aa89c39btp15njcg742', '1444280677', 0x5F5F666C6173687C613A303A7B7D);
 INSERT INTO `session` VALUES ('5c8bksi3gntr337ir0trglrp16', '1444039846', 0x5F5F666C6173687C613A303A7B7D);
+INSERT INTO `session` VALUES ('b6f1s07h2otimev198itioa8k0', '1444123047', 0x5F5F666C6173687C613A303A7B7D);
+INSERT INTO `session` VALUES ('blohurbv6vtqcodmuagqmuta42', '1445591194', 0x5F5F666C6173687C613A303A7B7D5F5F72657475726E55726C7C733A373A222F61646D696E2F223B5F5F69647C693A313B);
+INSERT INTO `session` VALUES ('ctmt3s71trkjh4lfnvf7t91o06', '1444725408', 0x5F5F666C6173687C613A303A7B7D5F5F72657475726E55726C7C733A32393A222F61646D696E2F757365722F61646D696E2F6176617461723F69643D33223B5F5F69647C693A313B616374696F6E732D72656469726563747C733A32393A222F61646D696E2F757365722F61646D696E2F6176617461723F69643D33223B);
 INSERT INTO `session` VALUES ('d93dcldbflftn34eru40bf2il6', '1444039963', 0x5F5F666C6173687C613A303A7B7D);
-INSERT INTO `session` VALUES ('g10tn7g754dgsfbkd2f17lk6l3', '1444100380', 0x5F5F666C6173687C613A303A7B7D5F5F72657475726E55726C7C733A373A222F61646D696E2F223B5F5F69647C693A313B);
+INSERT INTO `session` VALUES ('g5q91noi0uj6e8nj9dhhdd1fj4', '1445914667', 0x5F5F666C6173687C613A303A7B7D5F5F72657475726E55726C7C733A363A222F61646D696E223B5F5F69647C693A313B);
+INSERT INTO `session` VALUES ('hs2eecuvrfisjetn6h97dag6n4', '1444280677', 0x5F5F666C6173687C613A303A7B7D5F5F72657475726E55726C7C733A373A222F61646D696E2F223B);
+INSERT INTO `session` VALUES ('j170kn4ucu72hrso81p9uop2m2', '1444123053', 0x5F5F666C6173687C613A303A7B7D);
+INSERT INTO `session` VALUES ('la3dk7ivs2bgu3cs3n75k7qrj0', '1444619371', 0x5F5F666C6173687C613A303A7B7D);
+INSERT INTO `session` VALUES ('ljgtbet7thvn9vlbb4ehq9kpp3', '1445998213', 0x5F5F666C6173687C613A303A7B7D5F5F72657475726E55726C7C733A363A222F61646D696E223B);
+INSERT INTO `session` VALUES ('nkvpg1kv5oqrsree8av0aintf7', '1445239065', 0x5F5F666C6173687C613A303A7B7D);
+INSERT INTO `session` VALUES ('pbbrlol5tti21bsstbrss1gvl7', '1445998213', 0x5F5F666C6173687C613A303A7B7D);
+INSERT INTO `session` VALUES ('qb6afen96lb5mk1bcu9t0gn3r7', '1446004710', 0x5F5F666C6173687C613A303A7B7D5F5F72657475726E55726C7C733A373A222F61646D696E2F223B5F5F69647C693A313B);
+INSERT INTO `session` VALUES ('t2i9rnnk56e7s3or7bmg8ej367', '1444619370', 0x5F5F666C6173687C613A303A7B7D5F5F72657475726E55726C7C733A363A222F61646D696E223B);
 INSERT INTO `session` VALUES ('tisiqk0nes1olblo34pagctia5', '1444039195', 0x5F5F666C6173687C613A303A7B7D);
 INSERT INTO `session` VALUES ('uqs2kkkqado15r0nlt48o0j772', '1444039033', 0x5F5F666C6173687C613A303A7B7D);
 
 -- ----------------------------
--- Table structure for `setting`
+-- Table structure for setting
 -- ----------------------------
 DROP TABLE IF EXISTS `setting`;
 CREATE TABLE `setting` (
@@ -412,7 +456,7 @@ INSERT INTO `setting` VALUES ('3114', '31', 'smtpPassword', 'password', '', '', 
 INSERT INTO `setting` VALUES ('3115', '31', 'smtpMail', 'text', '', '', '', '50');
 
 -- ----------------------------
--- Table structure for `social_account`
+-- Table structure for social_account
 -- ----------------------------
 DROP TABLE IF EXISTS `social_account`;
 CREATE TABLE `social_account` (
@@ -439,7 +483,7 @@ INSERT INTO `social_account` VALUES ('1', '2', 'facebook', '100003885175023', '{
 INSERT INTO `social_account` VALUES ('2', '3', 'facebook', '1068833803128500', '{\"name\":\"Nhut Tran\",\"email\":\"nhut.love@gmail.com\",\"id\":\"1068833803128500\"}', null, null, null, null);
 
 -- ----------------------------
--- Table structure for `token`
+-- Table structure for token
 -- ----------------------------
 DROP TABLE IF EXISTS `token`;
 CREATE TABLE `token` (
@@ -457,7 +501,7 @@ CREATE TABLE `token` (
 INSERT INTO `token` VALUES ('1', 'EX3f_-rFGty2JvcQr5P-YW0wWe0Vw2Su', '1443753609', '0');
 
 -- ----------------------------
--- Table structure for `user`
+-- Table structure for user
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
