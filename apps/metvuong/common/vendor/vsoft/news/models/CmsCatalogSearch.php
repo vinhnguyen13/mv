@@ -19,7 +19,7 @@ class CmsCatalogSearch extends CmsCatalog
     {
         return [
             [['id', 'parent_id', 'is_nav', 'sort_order', 'page_type', 'page_size', 'click', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['title', 'surname', 'brief', 'content', 'seo_title', 'seo_keywords', 'seo_description', 'banner', 'template_list', 'template_show', 'template_page', 'redirect_url'], 'safe'],
+            [['title', 'surname', 'brief', 'content', 'seo_title', 'seo_keywords', 'seo_description', 'banner', 'template_list', 'template_show', 'template_page', 'redirect_url', 'slug'], 'safe'],
         ];
     }
 

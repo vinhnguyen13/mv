@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => $model->parent_id ? $model->parent->title : Module::t('cms', 'News'),
             ],
             'title',
-//            'surname',
+            'slug',
 //            'brief',
             'content:ntext',
             'seo_title',

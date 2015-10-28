@@ -70,6 +70,8 @@ unset($parentCatalog[$model->id]);
             'mainClass' => 'input-group-lg'
         ]]) ?>
 
+    <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'readOnly' => true]) ?>
+
     <?= $form->field($model, 'is_nav')->dropDownList(YesNo::labels()) ?>
 
     <?= $form->field($model, 'sort_order')->textInput() ?>
