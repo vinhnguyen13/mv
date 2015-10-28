@@ -168,59 +168,78 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                     </div>
                 </div>
             </div>
-            <div class="section section-swiper">
-                <div class="swiper-group">
-                    <div class="swiper-container">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/restaurants.jpg" /></div>
-                            <div class="swiper-slide"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/markets.jpg" /></div>
-                            <div class="swiper-slide"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/shopping.jpg" /></div>
-                            <div class="swiper-slide"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/entertainment.jpg" /></div>
-                            <div class="swiper-slide"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/park.jpg" /></div>
-                        </div>
-                        <div class="swiper-button swiper-button-prev"></div>
-                        <div class="swiper-button swiper-button-next"></div>
-                    </div>
-                    <div class="swiper-map">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide"><div class="arrow-down"></div><div class="arrow-up"></div><div class="slide-button">RESTAURANTS</div></div>
-                            <div class="swiper-slide"><div class="arrow-down"></div><div class="arrow-up"></div><div class="slide-button">MARKETS</div></div>
-                            <div class="swiper-slide"><div class="arrow-down"></div><div class="arrow-up"></div><div class="slide-button">SHOPPING</div></div>
-                            <div class="swiper-slide"><div class="arrow-down"></div><div class="arrow-up"></div><div class="slide-button">ENTERTAINMENT</div></div>
-                            <div class="swiper-slide"><div class="arrow-down"></div><div class="arrow-up"></div><div class="slide-button">PARKS</div></div>
-                        </div>
-                    </div>
-                    <div class="slide-contents">
-                        <div class="slide-content">
-                            <p class="bold">Restaurants</p>
-                            <p class="restaurant-name">El Gaucho</p>
-                            <p class="restaurant-address">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                            <p class="restaurant-name">Le Jardin</p>
-                            <p class="restaurant-address">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                            <p class="restaurant-name">Red Wine Bar</p>
-                            <p class="restaurant-address">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                            <p class="restaurant-name">Monocle</p>
-                            <p class="restaurant-address">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                        </div>
-                        <div class="slide-content">
-                            <p class="bold">Markets</p>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                        </div>
-                        <div class="slide-content">
-                            <p class="bold">Shopping</p>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                        </div>
-                        <div class="slide-content">
-                            <p class="bold">Entertaiment</p>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                        </div>
-                        <div class="slide-content">
-                            <p class="bold">Parks</p>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="section section-neighborhood">
+				<div class="neighborhood-wrap">
+					<div class="map-wrap"><div id="neighborhood-map"></div></div>
+					<div class="swiper-map">
+					    <div class="swiper-wrapper">
+					        <div data-type="" class="swiper-slide active"><div class="arrow-up"></div><div class="slide-button" style="border-color: transparent;">ALL</div></div>
+					        <div data-type="r" class="swiper-slide swiper-slide-r"><div class="arrow-up"></div><div class="slide-button" style="border-color: #44A3D3;">RESTAURANTS</div></div>
+					        <div data-type="m" class="swiper-slide swiper-slide-m"><div class="arrow-up"></div><div class="slide-button" style="border-color: #4CAF50;">MARKETS</div></div>
+					        <div data-type="s" class="swiper-slide swiper-slide-s"><div class="arrow-up"></div><div class="slide-button" style="border-color: #E91E63;">SHOPPING</div></div>
+					        <div data-type="e" class="swiper-slide swiper-slide-e"><div class="arrow-up"></div><div class="slide-button" style="border-color: #9C27B0;">ENTERTAINMENT</div></div>
+					        <div data-type="p" class="swiper-slide swiper-slide-p"><div class="arrow-up"></div><div class="slide-button" style="border-color: #009688;">PARKS</div></div>
+						</div>
+					</div>
+					<div style="display: none;" id="markers" data-lng="106.697443" data-lat="10.786618" data-title="Lancaster Legency" data-address="78 Ton That Thuyet Street, Ward 16, District 4, HCMC, Viet Nam" data-phone="+84 919 866 993">
+						<img alt="" src="/frontend/web/themes/lancaster2/resources/images/about-1.jpg" />
+						<div data-type="r"
+								data-lng="106.701859"
+								data-lat="10.784094"
+								data-title="Celler de Can Roca"
+								data-address="78 Ton That Thuyet Street, Ward 16, District 4, HCMC, Viet Nam"
+								data-phone="+84 919 866 993"><img alt="" src="/frontend/web/themes/lancaster2/resources/images/restaurants.jpg" /></div>
+						<div data-type="r"
+								data-lng="106.693775"
+								data-lat="10.788132"
+								data-title="Celler de Can Roca"
+								data-address="78 Ton That Thuyet Street, Ward 16, District 4, HCMC, Viet Nam"
+								data-phone="+84 919 866 993"><img alt="" src="/frontend/web/themes/lancaster2/resources/images/restaurants.jpg" /></div>
+						<div data-type="r"
+								data-lng="106.695417"
+								data-lat="10.789231"
+								data-title="Celler de Can Roca"
+								data-address="78 Ton That Thuyet Street, Ward 16, District 4, HCMC, Viet Nam"
+								data-phone="+84 919 866 993"><img alt="" src="/frontend/web/themes/lancaster2/resources/images/restaurants.jpg" /></div>
+						<div data-type="r"
+								data-lng="106.704064"
+								data-lat="10.781139"
+								data-title="Celler de Can Roca"
+								data-address="78 Ton That Thuyet Street, Ward 16, District 4, HCMC, Viet Nam"
+								data-phone="+84 919 866 993"><img alt="" src="/frontend/web/themes/lancaster2/resources/images/restaurants.jpg" /></div>
+						<div data-type="m"
+								data-lng="106.700079"
+								data-lat="10.785917"
+								data-title="Maximax Supermarket"
+								data-address="78 Ton That Thuyet Street, Ward 16, District 4, HCMC, Viet Nam"
+								data-phone="+84 919 866 993"><img alt="" src="/frontend/web/themes/lancaster2/resources/images/markets.jpg" /></div>
+						<div data-type="m"
+								data-lng="106.695803"
+								data-lat="10.782572"
+								data-title="Maximax Supermarket"
+								data-address="78 Ton That Thuyet Street, Ward 16, District 4, HCMC, Viet Nam"
+								data-phone="+84 919 866 993"><img alt="" src="/frontend/web/themes/lancaster2/resources/images/markets.jpg" /></div>
+						<div data-type="s"
+								data-lng="106.702139"
+								data-lat="10.781470"
+								data-title="Shopping"
+								data-address="78 Ton That Thuyet Street, Ward 16, District 4, HCMC, Viet Nam"
+								data-phone="+84 919 866 993"><img alt="" src="/frontend/web/themes/lancaster2/resources/images/shopping.jpg" /></div>
+						<div data-type="e"
+								data-lng="106.699253"
+								data-lat="10.782218"
+								data-title="Entertament"
+								data-address="78 Ton That Thuyet Street, Ward 16, District 4, HCMC, Viet Nam"
+								data-phone="+84 919 866 993"><img alt="" src="/frontend/web/themes/lancaster2/resources/images/entertainment.jpg" /></div>
+						<div data-type="p"
+								data-lng="106.704124"
+								data-lat="10.785896"
+								data-title="Park"
+								data-address="78 Ton That Thuyet Street, Ward 16, District 4, HCMC, Viet Nam"
+								data-phone="+84 919 866 993"><img alt="" src="/frontend/web/themes/lancaster2/resources/images/park.jpg" /></div>
+					</div>
+				</div>
+			</div>
             <div class="section section-pricing">
                 <div class="container">
                     <table>
