@@ -78,7 +78,7 @@ class BannerController extends Controller
             $upload_image = UploadedFile::getInstance($model, 'image');
             if (!empty($upload_image)) {
                 $image_name = Inflector::slug($upload_image->baseName);
-                $model->image = $image_name . '_' . date('mdYhis') . '.' . $upload_image->extension;
+                $model->image = 'banner_'.strtolower($image_name). '_' . date('mdYhis') . '.' . $upload_image->extension;
             }
             if ($model->image) {
                 $upload_image->saveAs(Yii::getAlias('@store'). '/news/banner/' . $model->image);
@@ -107,7 +107,7 @@ class BannerController extends Controller
             $upload_image = UploadedFile::getInstance($model, 'image');
             if (!empty($upload_image)) {
                 $image_name = Inflector::slug($upload_image->baseName);
-                $model->image = $image_name . '_' . date('mdYhis') . '.' . $upload_image->extension;
+                $model->image ='banner_'.strtolower($image_name) . '_' . date('mdYhis') . '.' . $upload_image->extension;
             }
             if ($model->image) {
                 $upload_image->saveAs(Yii::getAlias('@store'). '/news/banner/' . $model->image);

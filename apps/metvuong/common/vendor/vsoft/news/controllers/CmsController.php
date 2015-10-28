@@ -90,7 +90,7 @@ class CmsController extends CmsShowController
             $upload_image = UploadedFile::getInstance($model, 'banner');
             if (!empty($upload_image)) {
                 $image_name = Inflector::slug($upload_image->baseName);
-                $model->banner = $image_name . '_' . date('mdYhis') . '.' . $upload_image->extension;
+                $model->banner = 'news_' . strtolower($image_name) . '_' . date('mdY') . '.' . $upload_image->extension;
             }
             if ($model->banner) {
                 $upload_image->saveAs(Yii::getAlias('@store'). '/news/show/' . $model->banner);
@@ -117,7 +117,7 @@ class CmsController extends CmsShowController
             $upload_image = UploadedFile::getInstance($model, 'banner');
             if (!empty($upload_image)) {
                 $image_name = Inflector::slug($upload_image->baseName);
-                $model->banner = $image_name . '_' . date('mdYhis') . '.' . $upload_image->extension;
+                $model->banner = 'news_' . strtolower($image_name) . '_' . date('mdY') . '.' . $upload_image->extension;
             }
             if ($model->banner) {
                 $upload_image->saveAs(Yii::getAlias('@store'). '/news/show/' . $model->banner);

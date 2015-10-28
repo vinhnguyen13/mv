@@ -100,7 +100,7 @@ class CmsCatalogController extends \funson86\cms\controllers\backend\CmsCatalogC
             $upload_image = UploadedFile::getInstance($model, 'banner');
             if(!empty($upload_image)) {
                 $image_name = Inflector::slug($upload_image->baseName);
-                $model->banner = $image_name . '_' . date('mdYhis') . '.' . $upload_image->extension ;
+                $model->banner = 'catalog_'.strtolower($image_name) . '_' . date('mdYhis') . '.' . $upload_image->extension ;
             }
 
             if ($model->validate()) {
@@ -141,7 +141,7 @@ class CmsCatalogController extends \funson86\cms\controllers\backend\CmsCatalogC
             $upload_image = UploadedFile::getInstance($model, 'banner');
             if(!empty($upload_image)) {
                 $image_name = Inflector::slug($upload_image->baseName);
-                $model->banner = $image_name . '_' . date('mdYhis') . '.' . $upload_image->extension ;
+                $model->banner = 'catalog_'.strtolower($image_name) . '_' . date('mdYhis') . '.' . $upload_image->extension ;
             }
 //            $model->page_type = $oldPageType;
 
