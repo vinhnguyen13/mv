@@ -1,6 +1,6 @@
 <?php
 
-use kartik\datetime\DateTimePicker;
+//use kartik\datetime\DateTimePicker;
 use vsoft\express\models\LcBuilding;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -25,7 +25,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'checkin')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'checkout')->textInput(['maxlength' => true]) ?>
-    
+
     <?php
     $apart_type = \vsoft\express\models\LcApartmentType::find()->all();
     $apart_data = ArrayHelper::map($apart_type, 'id', 'name');

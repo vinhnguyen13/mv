@@ -18,7 +18,19 @@ Yii::$app->getView()->registerJsFile($path . '/resources/js/book.js');
     <div class="container">
         <div class="center">
             <h1 class="title">Booking</h1>
+            <?php
+            if(Yii::$app->getSession()->hasFlash('reSuccess')) {
+                \yii\bootstrap\Alert::begin([
+                    'options' => [
+                        'class' => 'alert alert-success',
+                    ],
+                ]);
 
+                echo Yii::$app->getSession()->getFlash('reSuccess');
+
+                \yii\bootstrap\Alert::end();
+            }
+            ?>
             <div class="form-wrap">
 
                 <?php
@@ -32,21 +44,26 @@ Yii::$app->getView()->registerJsFile($path . '/resources/js/book.js');
                         'method' => 'post'
                     ],
                     'enableClientScript' => false,
+                    'enableClientValidation' => true,
+                    'encodeErrorSummary' => true
                 ]);
                 ?>
                 <div class="table">
                     <div class="table-row">
-                        <label class="table-cell">Checkin date *</label>
+                        <label class="table-cell"><?= Yii::t('booking','Checkin date')?> *</label>
 
                         <div class="table-cell">
-                            <input class="date-picker text-field" type="text" name="checkin" readonly/>
+<!--                            <input id="checkin" class="date-picker text-field" type="text" name="checkin" readonly/> -->
+                            <?= $form->field($model, 'checkin')->textInput(['maxlength' => true, 'class' => 'date-picker text-field', 'readOnly' => 'true'])->label(false) ?>
                         </div>
                     </div>
                     <div class="table-row">
                         <label class="table-cell">Checkout date *</label>
 
                         <div class="table-cell">
-                            <input class="date-picker text-field" type="text" name="checkout" readonly/>
+<!--                            <input id="checkout" class="date-picker text-field" type="text" name="checkout" readonly/> -->
+                            <?= $form->field($model, 'checkout')->textInput(['maxlength' => true, 'class' => 'date-picker text-field', 'readOnly' => 'true'])->label(false) ?>
+
                         </div>
                     </div>
                     <div class="table-row">
@@ -107,51 +124,44 @@ Yii::$app->getView()->registerJsFile($path . '/resources/js/book.js');
                     </div>
                     <div class="table-row">
                         <label class="table-cell">Full name *</label>
-
                         <div class="table-cell">
-                            <input class="text-field" type="text" name="fullname"/>
+                            <?= $form->field($model, 'fullname')->textInput(['maxlength' => true, 'class' => 'text-field'])->label(false) ?>
                         </div>
                     </div>
                     <div class="table-row">
                         <label class="table-cell">Phone number *</label>
-
                         <div class="table-cell">
-                            <input class="text-field" type="text" name="phone"/>
+                            <?= $form->field($model, 'phone')->textInput(['maxlength' => true, 'class' => 'text-field'])->label(false) ?>
                         </div>
                     </div>
                     <div class="table-row">
                         <label class="table-cell">Email *</label>
-
                         <div class="table-cell">
-                            <input class="text-field" type="text" name="email"/>
+                            <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'class' => 'text-field'])->label(false) ?>
                         </div>
                     </div>
                     <div class="table-row">
                         <label class="table-cell">Address</label>
-
                         <div class="table-cell">
-                            <input class="text-field" type="text" name="address"/>
+                            <?= $form->field($model, 'address')->textInput(['maxlength' => true, 'class' => 'text-field'])->label(false) ?>
                         </div>
                     </div>
                     <div class="table-row">
                         <label class="table-cell">Passport No.</label>
-
                         <div class="table-cell">
-                            <input class="text-field" type="text" name="passport"/>
+                            <?= $form->field($model, 'passport_no')->textInput(['maxlength' => true, 'class' => 'text-field'])->label(false) ?>
                         </div>
                     </div>
                     <div class="table-row">
                         <label class="table-cell">Nationality</label>
-
                         <div class="table-cell">
-                            <input class="text-field" type="text" name="nation"/>
+                            <?= $form->field($model, 'nationality')->textInput(['maxlength' => true, 'class' => 'text-field'])->label(false) ?>
                         </div>
                     </div>
                     <div class="table-row">
                         <label class="table-cell v-top">Infomation</label>
-
                         <div class="table-cell">
-                            <textarea class="textarea-field" rows="4" name="info"></textarea>
+                            <?= $form->field($model, 'info')->textarea(['maxlength' => true, 'class' => 'textarea-field', 'rows' => 4])->label(false) ?>
                         </div>
                     </div>
                     <div class="table-row">
@@ -170,6 +180,34 @@ Yii::$app->getView()->registerJsFile($path . '/resources/js/book.js');
 </div>
 <script>
     $(".book-now").hide();
+    $("#checkout").change(function(){
+        var c_in = $("#checkin").val();
+        var c_out = $("#checkout").val();
+        var result = fn_DateCompare(c_in, c_out)
+        if(result == -1){
+            $("#checkin").css('border-color', '#006600');
+            $("#checkout").css('border-color', '#006600');
+            return false;
+        }
+
+    });
+
+    function fn_DateCompare(DateA, DateB) {
+        var a = new Date(DateA);
+        var b = new Date(DateB);
+
+        var msDateA = Date.UTC(a.getFullYear(), a.getMonth()+1, a.getDate());
+        var msDateB = Date.UTC(b.getFullYear(), b.getMonth()+1, b.getDate());
+
+        if (parseFloat(msDateA) < parseFloat(msDateB))
+            return -1;  // less than
+        else if (parseFloat(msDateA) == parseFloat(msDateB))
+            return 0;  // equal
+        else if (parseFloat(msDateA) > parseFloat(msDateB))
+            return 1;  // greater than
+        else
+            return null;  // error
+    }
 </script>
 
 

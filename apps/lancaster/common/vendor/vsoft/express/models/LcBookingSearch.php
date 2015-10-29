@@ -48,6 +48,7 @@ class LcBookingSearch extends LcBooking
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['id' => 'DESC']]
         ]);
 
         /**

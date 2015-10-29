@@ -68,7 +68,12 @@ class LcBooking extends LcBookingBase
         $this->ip = Enum::userIP(); //Yii::$app->request->userIP;
         $this->agent = Enum::getBrowser()['agent']; //Yii::$app->request->userAgent;
         $this->browser_type = Enum::getBrowser()['agent'];
-        $this->browser_name = Enum::getBrowser()['name'];
+        $check_browser_name = strpos($this->browser_type , 'coc_coc_browser');
+        if ($check_browser_name !== false) {
+            $this->browser_name = 'Cốc Cốc Chrome';
+        } else {
+            $this->browser_name = Enum::getBrowser()['name'];
+        }
         $this->browser_version = Enum::getBrowser()['version'];
         $this->platform = Enum::getBrowser()['platform'];
         return parent::beforeSave($insert);

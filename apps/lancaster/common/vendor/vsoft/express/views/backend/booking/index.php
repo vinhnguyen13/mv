@@ -47,12 +47,12 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'checkout',
             [
                 'attribute' => 'checkin',
-                'format' =>  ['date', 'php:d-m-Y H:i'],
+                'format' =>  ['date', 'php:d-m-Y'],
 //                'options' => ['width' => '200']
             ],
             [
                 'attribute' => 'checkout',
-                'format' =>  ['date', 'php:d-m-Y H:i'],
+                'format' =>  ['date', 'php:d-m-Y'],
 //                'options' => ['width' => '200']
             ],
 //            'apart_type',
@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'phone',
             'email:email',
             'address',
-            'passport_no',
+//            'passport_no',
             // 'nationality',
             // 'info:ntext',
             // 'ip',
