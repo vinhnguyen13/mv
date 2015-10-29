@@ -168,6 +168,12 @@ var home = {
 		
 		if(isMobile) {
 			this.sections.filter('.section-neighborhood').find('.map-wrap').height(260);;
+
+			var sectionBuilding = this.sections.filter('.section-building');
+			var winHeight = win.height() - 80;
+			if(sectionBuilding.outerHeight() < winHeight) {
+				sectionBuilding.outerHeight(winHeight);
+			}
 		} else {
 			this.sections.filter('.section-neighborhood').find('.map-wrap').height(height);
 		}
