@@ -11,6 +11,7 @@ use frontend\assets\AppAsset;
 use common\widgets\Alert;
 
 AppAsset::register($this);
+Yii::$app->getView()->registerAssetBundle('yii\web\JqueryAsset', \yii\web\View::POS_HEAD);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

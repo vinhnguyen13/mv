@@ -9,6 +9,8 @@ return [
 //        'webvimark' => dirname(dirname(__DIR__)) . '/vendor/webvimark'
         '@store' => dirname(dirname(__DIR__)) . '/store',
         '@vsoft/news' => dirname(__DIR__) . '/vendor/vsoft/news',
+        '@vsoft/express' => dirname(__DIR__) . '/vendor/vsoft/express',
+        '@vsoft/user' => dirname(__DIR__) . '/vendor/vsoft/user',
     ),
     'modules'=>[
         /*'user-management' => [

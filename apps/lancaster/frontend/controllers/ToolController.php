@@ -12,7 +12,7 @@ use yii\filters\AccessControl;
  */
 class ToolController extends Controller
 {
-    public $layout = 'base';
+    public $layout = '@app/views/layouts/tool';
     /**
      * @inheritdoc
      */
@@ -48,6 +48,9 @@ class ToolController extends Controller
      */
     public function actionIndex()
     {
+        if(Yii::$app->request->isPost){
+            $this->redirect(['chart']);
+        }
         return $this->render('index');
     }
 
