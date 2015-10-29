@@ -65,9 +65,9 @@ class LcBooking extends LcBookingBase
         $this->updated_at = $at;
 //        $this->updated_by = Yii::$app->user->id;
 
-        $this->ip = Yii::$app->request->userIP;
-        $this->agent = Yii::$app->request->userAgent;
-        $this->browser_type = Enum::getBrowser()['code'];
+        $this->ip = Enum::userIP(); //Yii::$app->request->userIP;
+        $this->agent = Enum::getBrowser()['agent']; //Yii::$app->request->userAgent;
+        $this->browser_type = Enum::getBrowser()['agent'];
         $this->browser_name = Enum::getBrowser()['name'];
         $this->browser_version = Enum::getBrowser()['version'];
         $this->platform = Enum::getBrowser()['platform'];
