@@ -265,6 +265,9 @@ header .book-now br {
 	color: #3c3c3c;
 	line-height: 24px;
 }
+.detail .content img {
+	max-width: 100%;
+}
 .detail img {
 	width: 100%;
 	height: auto;
