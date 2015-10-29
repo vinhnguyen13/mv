@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-xs-8 col-lg-9 pdR-5">
+    <div class="col-sm-8 col-lg-9 col-right-home">
         <div class="news-hot">
             <div class="wrap-img"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/bg-banner.jpg" alt=""></div>
             <div class="content-news-hot">
@@ -17,7 +17,7 @@
             <?= \vsoft\news\widgets\NewsWidget::widget(['view' => 'business'])?>
         </div>
     </div>
-    <div class="col-xs-4 col-lg-3 pdL-5">
+    <div class="col-sm-4 col-lg-3 col-left-home">
         <!-- Tin Moi -->
         <?= \vsoft\news\widgets\NewsWidget::widget(['view' => 'hotnews'])?>
 
