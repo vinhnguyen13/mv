@@ -23,38 +23,9 @@ use yii\widgets\ActiveForm;
         'options' => [$model->lc_building_id => ['selected ' => true]],
     ])->label('Building Name') ?>
 
-    <?= $form->field($model, 'checkin')->widget(DateTimePicker::className(),[
-        'name' => 'check_in',
-        'type' => DateTimePicker::TYPE_COMPONENT_PREPEND,
-        'options' => [
-            'placeholder' => 'Input check in date & time ...',
-            'size' => '100%',
-        ],
-        'readonly' => true,
-        'removeButton' => false,
-        'pluginOptions' => [
-            'autoclose' => true,
-            'format' => 'yyyy-mm-dd hh:ii',
-            'todayHighlight' => true,
-        ],
-    ]) ?>
-
-    <?= $form->field($model, 'checkout')->widget(DateTimePicker::className(),[
-        'name' => 'check_out',
-        'type' => DateTimePicker::TYPE_COMPONENT_PREPEND,
-        'options' => [
-            'placeholder' => 'Input check out date & time ...',
-            'size' => '100%',
-        ],
-        'readonly' => true,
-        'removeButton' => false,
-        'pluginOptions' => [
-            'autoclose' => true,
-            'format' => 'yyyy-mm-dd hh:ii',
-            'todayHighlight' => true,
-        ],
-    ])?>
-
+    <?= $form->field($model, 'checkin')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'checkout')->textInput(['maxlength' => true]) ?>
+    
     <?php
     $apart_type = \vsoft\express\models\LcApartmentType::find()->all();
     $apart_data = ArrayHelper::map($apart_type, 'id', 'name');
