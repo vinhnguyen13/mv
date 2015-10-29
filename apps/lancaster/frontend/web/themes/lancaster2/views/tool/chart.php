@@ -1,436 +1,285 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-    <style>
-        .SimpleChart {
-            position: relative;
-        }
+<?php
+use yii\web\View;
+Yii::$app->getView()->registerAssetBundle('yii\web\JqueryAsset', \yii\web\View::POS_HEAD);
+$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/chart/chart.css', ['depends' => ''], 'css-chart');
+//Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/chart/chart.js', ['position' => View::POS_END]);
 
-        .SimpleChart #tip {
-            background-color: #f0f0f0;
-            border: 1px solid #d0d0d0;
-            position: absolute;
-            left: -200px;
-            top: 30px;
-        }
+?>
 
-        .down-triangle {
-            width: 0;
-            height: 0;
-            border-top: 10px solid #d0d0d0;
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-            position: absolute;
-            left: -200px;
-        }
+<div class="row main_content">
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+</div>
 
 
-        .SimpleChart #highlighter {
-            position: absolute;
-            left: -200px;
-        }
-
-        .-simple-chart-holder {
-            float: left;
-            position: relative;
-            width: 100%;
-            background-color: #fff;
-            border: 1px solid #cecece;
-            /*padding: 6px;*/
-        }
 
 
-        .SimpleChart .legendsli {
-            list-style: none;
-        }
+<script>
+    $(function () {
+        /**
+         * Dark theme for Highcharts JS
+         * @author Torstein Honsi
+         */
 
-        .SimpleChart .legendsli span {
-            float: left;
-            vertical-align: middle;
-        }
+// Load the fonts
+        Highcharts.createElement('link', {
+            href: '//fonts.googleapis.com/css?family=Unica+One',
+            rel: 'stylesheet',
+            type: 'text/css'
+        }, null, document.getElementsByTagName('head')[0]);
 
-        .SimpleChart .legendsli span.legendindicator {
-            position: relative;
-            top: 5px;
-        }
+        Highcharts.theme = {
+            colors: ["#2b908f", "#90ee7e", "#f45b5b", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee",
+                "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
+            chart: {
+                backgroundColor: {
+                    linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+                    stops: [
+                        [0, '#2a2a2b'],
+                        [1, '#3e3e40']
+                    ]
+                },
+                style: {
+                    fontFamily: "'Unica One', sans-serif"
+                },
+                plotBorderColor: '#606063'
+            },
+            title: {
+                style: {
+                    color: '#E0E0E3',
+                    textTransform: 'uppercase',
+                    fontSize: '20px'
+                }
+            },
+            subtitle: {
+                style: {
+                    color: '#E0E0E3',
+                    textTransform: 'uppercase'
+                }
+            },
+            xAxis: {
+                gridLineColor: '#707073',
+                labels: {
+                    style: {
+                        color: '#E0E0E3'
+                    }
+                },
+                lineColor: '#707073',
+                minorGridLineColor: '#505053',
+                tickColor: '#707073',
+                title: {
+                    style: {
+                        color: '#A0A0A3'
 
-        .SimpleChart .legendsli span.legendindicator .line {
-            width: 30px;
-            height: 3px;
-        }
+                    }
+                }
+            },
+            yAxis: {
+                gridLineColor: '#707073',
+                labels: {
+                    style: {
+                        color: '#E0E0E3'
+                    }
+                },
+                lineColor: '#707073',
+                minorGridLineColor: '#505053',
+                tickColor: '#707073',
+                tickWidth: 1,
+                title: {
+                    style: {
+                        color: '#A0A0A3'
+                    }
+                }
+            },
+            tooltip: {
+                backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                style: {
+                    color: '#F0F0F0'
+                }
+            },
+            plotOptions: {
+                series: {
+                    dataLabels: {
+                        color: '#B0B0B3'
+                    },
+                    marker: {
+                        lineColor: '#333'
+                    }
+                },
+                boxplot: {
+                    fillColor: '#505053'
+                },
+                candlestick: {
+                    lineColor: 'white'
+                },
+                errorbar: {
+                    color: 'white'
+                }
+            },
+            legend: {
+                itemStyle: {
+                    color: '#E0E0E3'
+                },
+                itemHoverStyle: {
+                    color: '#FFF'
+                },
+                itemHiddenStyle: {
+                    color: '#606063'
+                }
+            },
+            credits: {
+                style: {
+                    color: '#666'
+                }
+            },
+            labels: {
+                style: {
+                    color: '#707073'
+                }
+            },
 
-        .SimpleChart .legendsli span.legendindicator .circle {
-            width: 12px;
-            height: 12px;
-            border-radius: 20px;
-            position: relative;
-            top: -5px;
-            right: 20px;
-        }
+            drilldown: {
+                activeAxisLabelStyle: {
+                    color: '#F0F0F3'
+                },
+                activeDataLabelStyle: {
+                    color: '#F0F0F3'
+                }
+            },
 
+            navigation: {
+                buttonOptions: {
+                    symbolStroke: '#DDDDDD',
+                    theme: {
+                        fill: '#505053'
+                    }
+                }
+            },
 
-        /******Starts::Horizontal Alignment of Legends******/
+            // scroll charts
+            rangeSelector: {
+                buttonTheme: {
+                    fill: '#505053',
+                    stroke: '#000000',
+                    style: {
+                        color: '#CCC'
+                    },
+                    states: {
+                        hover: {
+                            fill: '#707073',
+                            stroke: '#000000',
+                            style: {
+                                color: 'white'
+                            }
+                        },
+                        select: {
+                            fill: '#000003',
+                            stroke: '#000000',
+                            style: {
+                                color: 'white'
+                            }
+                        }
+                    }
+                },
+                inputBoxBorderColor: '#505053',
+                inputStyle: {
+                    backgroundColor: '#333',
+                    color: 'silver'
+                },
+                labelStyle: {
+                    color: 'silver'
+                }
+            },
 
-        .simple-chart-legends {
-            background: #E7E7E7;
-            border: 1px solid #d6d7dd;
-            padding: 5px;
-            margin: 2px 0px;
-        }
+            navigator: {
+                handles: {
+                    backgroundColor: '#666',
+                    borderColor: '#AAA'
+                },
+                outlineColor: '#CCC',
+                maskFill: 'rgba(255,255,255,0.1)',
+                series: {
+                    color: '#7798BF',
+                    lineColor: '#A6C7ED'
+                },
+                xAxis: {
+                    gridLineColor: '#505053'
+                }
+            },
 
-        .simple-chart-legends ul {
-        }
+            scrollbar: {
+                barBackgroundColor: '#808083',
+                barBorderColor: '#808083',
+                buttonArrowColor: '#CCC',
+                buttonBackgroundColor: '#606063',
+                buttonBorderColor: '#606063',
+                rifleColor: '#FFF',
+                trackBackgroundColor: '#404043',
+                trackBorderColor: '#404043'
+            },
 
-        .simple-chart-legends ul li {
-            display: inline;
-            border-right: 1px solid #d6d7dd;
-            float: left;
-            padding: 10px;
-        }
-
-        .simple-chart-legends ul li:last-child {
-            border-right: 0px;
-        }
-
-
-        .simple-chart-legends.vertical {
-            margin: 0px 10px;
-        }
-
-        .simple-chart-legends.vertical ul li {
-            display: block;
-            border: 0px;
-            border-bottom: 1px solid #d6d7dd;
-        }
-
-        .simple-chart-legends.vertical ul li:last-child {
-            border-bottom: 0px;
-        }
-
-        .simple-chart-legends .legendvalue {
-            padding-left: 2px;
-            background: #fff;
-        }
-
-        /******Starts::Horizontal Alignment of Legends******/
-        .simple-chart-Header {
-            position: absolute;
-            font-size: 16px;
-        }
-    </style>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"></script>
-    <script src="<?=Yii::$app->view->theme->baseUrl.'/resources/js/SimpleChart.js'?>"></script>
-    <script>
-        var graphdata1 = {
-            linecolor: "#CCA300",
-            title: "Monday",
-            values: [
-                { X: "6:00", Y: 10.00 },
-                { X: "7:00", Y: 20.00 },
-                { X: "8:00", Y: 40.00 },
-                { X: "9:00", Y: 34.00 },
-                { X: "10:00", Y: 40.25 },
-                { X: "11:00", Y: 28.56 },
-                { X: "12:00", Y: 18.57 },
-                { X: "13:00", Y: 34.00 },
-                { X: "14:00", Y: 40.89 },
-                { X: "15:00", Y: 12.57 },
-                { X: "16:00", Y: 28.24 },
-                { X: "17:00", Y: 18.00 },
-                { X: "18:00", Y: 34.24 },
-                { X: "19:00", Y: 40.58 },
-                { X: "20:00", Y: 12.54 },
-                { X: "21:00", Y: 28.00 },
-                { X: "22:00", Y: 18.00 },
-                { X: "23:00", Y: 34.89 },
-                { X: "0:00", Y: 40.26 },
-                { X: "1:00", Y: 28.89 },
-                { X: "2:00", Y: 18.87 },
-                { X: "3:00", Y: 34.00 },
-                { X: "4:00", Y: 40.00 }
-            ]
+            // special colors for some of the
+            legendBackgroundColor: 'rgba(0, 0, 0, 0.5)',
+            background2: '#505053',
+            dataLabelsColor: '#B0B0B3',
+            textColor: '#C0C0C0',
+            contrastTextColor: '#F0F0F3',
+            maskColor: 'rgba(255,255,255,0.3)'
         };
-        var graphdata2 = {
-            linecolor: "#00CC66",
-            title: "Tuesday",
-            values: [
-                { X: "6:00", Y: 100.00 },
-                { X: "7:00", Y: 120.00 },
-                { X: "8:00", Y: 140.00 },
-                { X: "9:00", Y: 134.00 },
-                { X: "10:00", Y: 140.25 },
-                { X: "11:00", Y: 128.56 },
-                { X: "12:00", Y: 118.57 },
-                { X: "13:00", Y: 134.00 },
-                { X: "14:00", Y: 140.89 },
-                { X: "15:00", Y: 112.57 },
-                { X: "16:00", Y: 128.24 },
-                { X: "17:00", Y: 118.00 },
-                { X: "18:00", Y: 134.24 },
-                { X: "19:00", Y: 140.58 },
-                { X: "20:00", Y: 112.54 },
-                { X: "21:00", Y: 128.00 },
-                { X: "22:00", Y: 118.00 },
-                { X: "23:00", Y: 134.89 },
-                { X: "0:00", Y: 140.26 },
-                { X: "1:00", Y: 128.89 },
-                { X: "2:00", Y: 118.87 },
-                { X: "3:00", Y: 134.00 },
-                { X: "4:00", Y: 180.00 }
-            ]
-        };
-        var graphdata3 = {
-            linecolor: "#FF99CC",
-            title: "Wednesday",
-            values: [
-                { X: "6:00", Y: 230.00 },
-                { X: "7:00", Y: 210.00 },
-                { X: "8:00", Y: 214.00 },
-                { X: "9:00", Y: 234.00 },
-                { X: "10:00", Y: 247.25 },
-                { X: "11:00", Y: 218.56 },
-                { X: "12:00", Y: 268.57 },
-                { X: "13:00", Y: 274.00 },
-                { X: "14:00", Y: 280.89 },
-                { X: "15:00", Y: 242.57 },
-                { X: "16:00", Y: 298.24 },
-                { X: "17:00", Y: 208.00 },
-                { X: "18:00", Y: 214.24 },
-                { X: "19:00", Y: 214.58 },
-                { X: "20:00", Y: 211.54 },
-                { X: "21:00", Y: 248.00 },
-                { X: "22:00", Y: 258.00 },
-                { X: "23:00", Y: 234.89 },
-                { X: "0:00", Y: 210.26 },
-                { X: "1:00", Y: 248.89 },
-                { X: "2:00", Y: 238.87 },
-                { X: "3:00", Y: 264.00 },
-                { X: "4:00", Y: 270.00 }
-            ]
-        };
-        var graphdata4 = {
-            linecolor: "Random",
-            title: "Thursday",
-            values: [
-                { X: "6:00", Y: 300.00 },
-                { X: "7:00", Y: 410.98 },
-                { X: "8:00", Y: 310.00 },
-                { X: "9:00", Y: 314.00 },
-                { X: "10:00", Y: 310.25 },
-                { X: "11:00", Y: 318.56 },
-                { X: "12:00", Y: 318.57 },
-                { X: "13:00", Y: 314.00 },
-                { X: "14:00", Y: 310.89 },
-                { X: "15:00", Y: 512.57 },
-                { X: "16:00", Y: 318.24 },
-                { X: "17:00", Y: 318.00 },
-                { X: "18:00", Y: 314.24 },
-                { X: "19:00", Y: 310.58 },
-                { X: "20:00", Y: 312.54 },
-                { X: "21:00", Y: 318.00 },
-                { X: "22:00", Y: 318.00 },
-                { X: "23:00", Y: 314.89 },
-                { X: "0:00", Y: 310.26 },
-                { X: "1:00", Y: 318.89 },
-                { X: "2:00", Y: 518.87 },
-                { X: "3:00", Y: 314.00 },
-                { X: "4:00", Y: 310.00 }
-            ]
-        };
-        var Piedata = {
-            linecolor: "Random",
-            title: "Profit",
-            values: [
-                { X: "Monday", Y: 50.00 },
-                { X: "Tuesday", Y: 110.98 },
-                { X: "Wednesday", Y: 70.00 },
-                { X: "Thursday", Y: 204.00 },
-                { X: "Friday", Y: 80.25 },
-                { X: "Saturday", Y: 38.56 },
-                { X: "Sunday", Y: 98.57 }
-            ]
-        };
-        $(function () {
-            $("#Bargraph").SimpleChart({
-                ChartType: "Bar",
-                toolwidth: "50",
-                toolheight: "25",
-                axiscolor: "#E6E6E6",
-                textcolor: "#6E6E6E",
-                showlegends: true,
-                data: [graphdata4, graphdata3, graphdata2, graphdata1],
-                legendsize: "140",
-                legendposition: 'bottom',
-                xaxislabel: 'Hours',
-                title: 'Weekly Profit',
-                yaxislabel: 'Profit in $'
-            });
-            $("#sltchartype").on('change', function () {
-                $("#Bargraph").SimpleChart('ChartType', $(this).val());
-                $("#Bargraph").SimpleChart('reload', 'true');
-            });
-            $("#Hybridgraph").SimpleChart({
-                ChartType: "Hybrid",
-                toolwidth: "50",
-                toolheight: "25",
-                axiscolor: "#E6E6E6",
-                textcolor: "#6E6E6E",
-                showlegends: true,
-                data: [graphdata4],
-                legendsize: "140",
-                legendposition: 'bottom',
-                xaxislabel: 'Hours',
-                title: 'Weekly Profit',
-                yaxislabel: 'Profit in $'
-            });
-            $("#Linegraph").SimpleChart({
-                ChartType: "Line",
-                toolwidth: "50",
-                toolheight: "25",
-                axiscolor: "#E6E6E6",
-                textcolor: "#6E6E6E",
-                showlegends: true,
-                data: [graphdata4, graphdata3, graphdata2, graphdata1],
-                legendsize: "140",
-                legendposition: 'bottom',
-                xaxislabel: 'Hours',
-                title: 'Weekly Profit',
-                yaxislabel: 'Profit in $'
-            });
-            $("#Areagraph").SimpleChart({
-                ChartType: "Area",
-                toolwidth: "50",
-                toolheight: "25",
-                axiscolor: "#E6E6E6",
-                textcolor: "#6E6E6E",
-                showlegends: true,
-                data: [graphdata4, graphdata3, graphdata2, graphdata1],
-                legendsize: "140",
-                legendposition: 'bottom',
-                xaxislabel: 'Hours',
-                title: 'Weekly Profit',
-                yaxislabel: 'Profit in $'
-            });
-            $("#Scatterredgraph").SimpleChart({
-                ChartType: "Scattered",
-                toolwidth: "50",
-                toolheight: "25",
-                axiscolor: "#E6E6E6",
-                textcolor: "#6E6E6E",
-                showlegends: true,
-                data: [graphdata4, graphdata3, graphdata2, graphdata1],
-                legendsize: "140",
-                legendposition: 'bottom',
-                xaxislabel: 'Hours',
-                title: 'Weekly Profit',
-                yaxislabel: 'Profit in $'
-            });
-            $("#Piegraph").SimpleChart({
-                ChartType: "Pie",
-                toolwidth: "50",
-                toolheight: "25",
-                axiscolor: "#E6E6E6",
-                textcolor: "#6E6E6E",
-                showlegends: true,
-                showpielables: true,
-                data: [Piedata],
-                legendsize: "250",
-                legendposition: 'right',
-                xaxislabel: 'Hours',
-                title: 'Weekly Profit',
-                yaxislabel: 'Profit in $'
-            });
 
-            $("#Stackedbargraph").SimpleChart({
-                ChartType: "Stacked",
-                toolwidth: "50",
-                toolheight: "25",
-                axiscolor: "#E6E6E6",
-                textcolor: "#6E6E6E",
-                showlegends: true,
-                data: [graphdata3, graphdata2, graphdata1],
-                legendsize: "140",
-                legendposition: 'bottom',
-                xaxislabel: 'Hours',
-                title: 'Weekly Profit',
-                yaxislabel: 'Profit in $'
-            });
+// Apply the theme
+        Highcharts.setOptions(Highcharts.theme);
+    });
 
-            $("#StackedHybridbargraph").SimpleChart({
-                ChartType: "StackedHybrid",
-                toolwidth: "50",
-                toolheight: "25",
-                axiscolor: "#E6E6E6",
-                textcolor: "#6E6E6E",
-                showlegends: true,
-                data: [graphdata3, graphdata2, graphdata1],
-                legendsize: "140",
-                legendposition: 'bottom',
-                xaxislabel: 'Hours',
-                title: 'Weekly Profit',
-                yaxislabel: 'Profit in $'
-            });
+</script>
+
+<script>
+    $(function () {
+        $('#container').highcharts({
+            title: {
+                text: 'Timeline Money Chart',
+                x: -20 //center
+            },
+            subtitle: {
+                text: 'trungthuygroup.vn',
+                x: -20
+            },
+            xAxis: {
+                categories: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12', 'T13', 'T14', 'T15', 'T16']
+            },
+            yAxis: {
+                title: {
+                    text: 'Money $'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: ' VND'
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: [{
+                name: 'Scenario 1',
+                color: '#5698D3',
+                data: [-270, -342, -373, -389, -534, -547, -560, -580, -651, -565, -648, -599, -606, -586, -596, -494, -557, -527, -606, -593, -671, -664, -774, -743, -858, -625, -671, -403, -492, 453, 595, 595]
+            }, {
+                name: 'Scenario 2',
+                color: '#EE863F',
+                data: [-270, -342, -373, -318, -456, -462, -468, -480, -544, -303, -378, -226, -222, -89, -75, 142, 147, 297, 218, 281, 203, 260, 150, 75, -41, -85, -131, -168, -256, 455, 597, 597]
+            }]
         });
 
-    </script>
-</head>
-<body>
-Select Chart Type:
 
 
+    });
 
-
-
-
-
-<select id="sltchartype">
-    <option>Bar</option>
-    <option>Hybrid</option>
-    <option>Line</option>
-    <option>Area</option>
-    <option>Scattered</option>
-    <option>Pie</option>
-    <option>Stacked</option>
-    <option>StackedHybrid</option>
-</select>
-<h2>Bar</h2>
-<div id="Bargraph" style="width: 98%; height: 500px">
-</div>
-<br />
-<br />
-<h2>Hybrid</h2>
-<div id="Hybridgraph" style="width: 98%; height: 500px">
-</div>
-<br />
-<br />
-<h2>Line</h2>
-<div id="Linegraph" style="width: 98%; height: 500px">
-</div>
-<br />
-<br />
-<h2>Area</h2>
-<div id="Areagraph" style="width: 98%; height: 500px">
-</div>
-<br />
-<br />
-<h2>Scattered</h2>
-<div id="Scatterredgraph" style="width: 98%; height: 500px">
-</div>
-<br />
-<br />
-<h2>Pie</h2>
-<div id="Piegraph" style="width: 600px; height: 500px">
-</div>
-<br />
-<br />
-<h2>Stacked</h2>
-<div id="Stackedbargraph" style="width: 98%; height: 500px">
-</div>
-<br />
-<br />
-<h2>Stacked Hybrid</h2>
-<div id="StackedHybridbargraph" style="width: 98%; height: 500px">
-</div>
-</body>
-</html>
+</script>
