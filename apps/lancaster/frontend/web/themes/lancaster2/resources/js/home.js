@@ -216,7 +216,7 @@ var home = {
 			
 			$('html, body').stop(true, false).animate({
 				scrollTop: top
-			}, duration, 'easeOutCubic');
+			}, duration, easing);
 		});
 	},
 	activeHomeItem: function(index) {
