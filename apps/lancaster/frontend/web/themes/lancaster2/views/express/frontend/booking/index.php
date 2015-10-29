@@ -1,213 +1,149 @@
 <?php
-$this->title = Yii::t('express/booking', 'Booking');
-/**
- * Created by PhpStorm.
- * User: Nhut Tran
- * Date: 9/18/2015 11:16 AM
- */
-use kartik\datetime\DateTimePicker;
-use yii\bootstrap\Modal;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\web\View;
 
-date_default_timezone_set('Asia/Ho_Chi_Minh');
+$pathCss = Yii::$app->view->theme->baseUrl .'/resources/css';
 
+Yii::$app->getView()->registerCssFile($pathCss.'/select2.css');
+Yii::$app->getView()->registerCssFile($pathCss.'/jquery-ui.css');
+Yii::$app->getView()->registerCssFile('https://fonts.googleapis.com/css?family=Roboto:400,700|Noticia+Text:400italic,400,700,700italic', ['type' => 'text/css']);
+Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl .'/resources/js/plugins/select2.min.js');
+Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl .'/resources/js/plugins/jquery-ui.min.js');
+Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl .'/resources/js/book.js');
 ?>
 
-<div class="container-fluid booking">
-    <div class="row main_content">
-        <span class="btn_back"><img src="<?= Yii::$app->view->theme->baseUrl ?>/resources/IMG/btn_back.png"><a
-                href="<?= \yii\helpers\Url::home() ?>"><?=Yii::t('express/booking', 'Back to Lancaster Legacy')?></a></span>
 
-        <h1><?= Yii::t('express/booking', 'Booking'); ?></h1>
-        <?php
-        if(Yii::$app->getSession()->hasFlash('reSuccess')) {
-            \yii\bootstrap\Alert::begin([
-                'options' => [
-                    'class' => 'alert alert-success',
-                ],
-            ]);
+<div id="book-page">
+    <div class="container">
+        <div class="center">
+            <h1 class="title">Booking</h1>
 
-            echo Yii::$app->getSession()->getFlash('reSuccess');
+            <div class="form-wrap">
 
-            \yii\bootstrap\Alert::end();
-        }
-        ?>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mainbooking">
-            <div class="btnpic">
-                <a href="http://www.be3.com/asia/vietnam/ho_chi_minh_city/lancaster_saigon_serviced_apartments_le_thanh_ton.html?cur=USD&setcookienew=1">
-                    <button class="btnclick" type="submit">Click here <span class="glyphicon glyphicon-play-circle"></span>
-                    </button>
-                </a>
-            </div>
-            <div class="btnpic">
-                <a href="http://www.be3.com/asia/vietnam/ho_chi_minh_city/lancaster_saigon_serviced_apartments_le_thanh_ton.html?cur=USD&setcookienew=1">
-                    <button class="btnclick" type="submit">Click here <span class="glyphicon glyphicon-play-circle"></span>
-                    </button>
-                </a>
-            </div>
-            <!-- <form action="#" method="post" class="form" role="form"> -->
-            <?php
-            $model = new \vsoft\express\models\LcBooking();
-            $form = \yii\widgets\ActiveForm::begin([
-                'id' => 'create-booking-form',
-                'action' => Url::toRoute('/express/booking/booking-hotel'),
-                'options' => [
-                    'class' => 'form',
-                    'role' => 'form',
-                    'method' => 'post'
-                ]
-            ]); ?>
-            
-            <div class="frorminput">
-                <div class="live">
-                    <?= $form->field($model, 'checkin')->widget(DateTimePicker::className(),[
-                        'name' => 'check_in',
-                        'type' => DateTimePicker::TYPE_COMPONENT_APPEND,
-                        'options' => [
-                            'placeholder' => 'Input check in date & time ...',
-                            'size' => '100%',
-                        ],
-                        'readonly' => true,
-                        'removeButton' => false,
-                        'pluginOptions' => [
-                            'autoclose' => true,
-                            'format' => 'yyyy-mm-dd hh:ii',
-                            'todayHighlight' => true
-//                            'pickerPosition' => 'bottom-left',
-//                            'linkField' =>  Html::getInputId($model, 'checkin'),
-//                            'linkFormat' => 'yyyy-mm-dd hh:ii:ss',
-                        ],
-                    ]) ?>
+                <?php
+                $form = \yii\widgets\ActiveForm::begin([
+                    'id' => 'create-booking-form',
+                    'action' => Url::toRoute('/express/booking/booking-hotel'),
+                ]); ?>
+                    <div class="table">
+                        <div class="table-row">
+                            <label class="table-cell">Checkin date *</label>
 
-                </div>
-                <div class="live">
-                    <!--<input class="form-control" name="checkout" placeholder="Select" type="text" required
-                           autofocus/><span class="glyphicon glyphicon-calendar"></span>-->
-                    <?= $form->field($model, 'checkout')->widget(DateTimePicker::className(),[
-                        'name' => 'check_out',
-                        'type' => DateTimePicker::TYPE_COMPONENT_APPEND,
-                        'options' => [
-                            'placeholder' => 'Input check out date & time ...',
-                            'size' => '100%',
-                        ],
-                        'readonly' => true,
-                        'removeButton' => false,
-                        'pluginOptions' => [
-                            'autoclose' => true,
-                            'format' => 'yyyy-mm-dd hh:ii',
-                            'todayHighlight' => true
-//                            'pickerPosition' => 'bottom-left',
-//                            'linkField' =>  Html::getInputId($model, 'checkout'),
-//                            'linkFormat' => 'yyyy-mm-dd hh:ii:ss',
-                        ],
-                    ])?>
-
-                </div>
-                <div class="live">
-                    <!--<select class="form-control">
-                        <option value="Year">Year</option>
-                    </select>-->
-                    <?php
-                    $buildings = \vsoft\express\models\LcBuilding::find()->all();
-                    $listData = ArrayHelper::map($buildings, 'id', 'building_name');
-                    echo $form->field($model, 'lc_building_id')->dropDownList($listData, [
-                        'onchange' => '
-                                $.get( "' . Url::toRoute('/express/booking/view-floor-by-building') . '", { id: $(this).val() } )
-                                    .done(function( data ) {
-                                        $( "#' . Html::getInputId($model, 'floorplan') . '" ).html( data );
-                                    }
-                                );
-                            ',
-                    ]);
-                    ?>
-                </div>
-                <div class="apartment">
-                    
-                        <div class="inputapert">
-                            <?php
-                            $apart_type = \vsoft\express\models\LcApartmentType::find()->all();
-                            $apart_data = ArrayHelper::map($apart_type, 'id', 'name');
-                            echo $form->field($model, 'apart_type')->dropDownList(
-                                $apart_data,
-                                [
-                                    'options' => [1 => ['selected ' => true]],
-//                                    'class' => 'form-control medium-width'
-                                ]
-                            );
-                            ?>
+                            <div class="table-cell">
+                                <input class="date-picker text-field" type="text" name="checkin" readonly/>
+                            </div>
                         </div>
-                        <div class="inputapert">
-                            <?php
-                            $floorNum = [];
-                            foreach($buildings as $building){
-                                if($building->building_name === 'Lancaster Legacy'){
-                                    for($x=1;$x <= $building->floor; $x++){
-                                        $floorNum[$x] = $x;
-                                    }
-                                }
-                            }
-                            echo $form->field($model, 'floorplan')->dropDownList($floorNum,
-                                [
-                                    'options' => [22 => ['selected ' => true]],
-//                                    'class' => 'form-control medium-width'
-                                ]
-                            ) ?>
-                        </div>
-                   
-                </div>
-                <div class="namephone">
-<!--                    <input class="form-control" name="" placeholder="Full name" type=""/>-->
-                    <?= $form->field($model, 'fullname')->textInput(['maxlength' => true])?>
-                </div>
-                <div class="deafall">
-<!--                    <input class="form-control" name="" placeholder="Phone number" type=""/>-->
+                        <div class="table-row">
+                            <label class="table-cell">Checkout date *</label>
 
-                    <?= $form->field($model, 'phone')->widget(\yii\widgets\MaskedInput::className(),[
-                        'mask' => '9999 999 999[9]'
-                    ]) ?>
-                </div>
-                <div class="deafall">
-<!--                    <input class="form-control" name="" placeholder="Email" type=""/>-->
-                    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-                </div>
-                <div class="deafall">
-<!--                    <input class="form-control" name="" placeholder="Address" type=""/>-->
-                    <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
-                </div>
-                <div class="deafall">
-<!--                    <input class="form-control" name="" placeholder="Passport No" type=""/>-->
-                    <?= $form->field($model, 'passport_no')->textInput(['maxlength' => true])?>
-                </div>
-                <div class="deafall">
-<!--                    <input class="form-control" name="" placeholder="Nationality" type=""/>-->
-                    <?= $form->field($model, 'nationality')->textInput(['maxlength' => true]) ?>
-                </div>
-                <div class="deafall">
-<!--                    <textarea class="form-control" name="" placeholder="Text here" cols="" rows="5"></textarea>-->
-                    <?= $form->field($model, 'info')->textarea(['maxlength' => true, 'rows' => '4'])?>
-                </div>
-                <div class="btnsubmit">
-<!--                    <button class="btn btn-lg btn_primary btn-block" type="submit">-->
-<!--                        Submit-->
-<!--                    </button>-->
-                    <?= Html::submitButton(Yii::t('express/booking','Submit'), ['class' => 'btn btn-lg btn_primary btn-block']) ?>
-                </div>
+                            <div class="table-cell">
+                                <input class="date-picker text-field" type="text" name="checkout" readonly/>
+                            </div>
+                        </div>
+                        <div class="table-row">
+                            <label class="table-cell">Building *</label>
+
+                            <div class="table-cell">
+                                <select class="custom-select">
+                                    <?php
+                                    $buildings = \vsoft\express\models\LcBuilding::find()->where('isbooking = :is',[':is' => 1])->all();
+                                    $listData = ArrayHelper::map($buildings, 'id', 'building_name');
+                                    foreach($listData as $data){ ?>
+                                    <option><?=$data?></option>
+                                    <?php }?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="table-row break">
+                            <div class="table-cell"><label>Apartment type *</label></div>
+                            <div class="table-cell">
+                                <select class="custom-select atype" name="apart" >
+                                <?php
+                                $apart_type = \vsoft\express\models\LcApartmentType::find()->all();
+                                $apart_data = ArrayHelper::map($apart_type, 'id', 'name');
+                                foreach($apart_data as $apart){ ?>
+                                    <option><?=$apart?></option>
+                                <?php }?>
+                                ?>
+                                </select>
+                                <div class="break-on-mobile"></div>
+                                <label>Floorplan *</label>
+                                <select class="custom-select" name="floor">
+                                    <?php
+                                    $floorNum = [];
+                                    foreach($buildings as $building){
+                                        if($building->building_name === 'Lancaster Legacy'){
+                                            for($x=1;$x <= $building->floor; $x++){ ?>
+                                                <option><?=$x?></option>
+                                           <?php }
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="table-row">
+                            <label class="table-cell">Full name *</label>
+
+                            <div class="table-cell">
+                                <input class="text-field" type="text" name="fullname" />
+                            </div>
+                        </div>
+                        <div class="table-row">
+                            <label class="table-cell">Phone number *</label>
+
+                            <div class="table-cell">
+                                <input class="text-field" type="text" name="phone" />
+                            </div>
+                        </div>
+                        <div class="table-row">
+                            <label class="table-cell">Email *</label>
+
+                            <div class="table-cell">
+                                <input class="text-field" type="text" name="email" />
+                            </div>
+                        </div>
+                        <div class="table-row">
+                            <label class="table-cell">Address</label>
+
+                            <div class="table-cell">
+                                <input class="text-field" type="text" name="address" />
+                            </div>
+                        </div>
+                        <div class="table-row">
+                            <label class="table-cell">Passport No.</label>
+
+                            <div class="table-cell">
+                                <input class="text-field" type="text" name="passport" />
+                            </div>
+                        </div>
+                        <div class="table-row">
+                            <label class="table-cell">Nationality</label>
+
+                            <div class="table-cell">
+                                <input class="text-field" type="text" name="nation" />
+                            </div>
+                        </div>
+                        <div class="table-row">
+                            <label class="table-cell v-top">Infomation</label>
+
+                            <div class="table-cell">
+                                <textarea class="textarea-field" rows="4" name="info" ></textarea>
+                            </div>
+                        </div>
+                        <div class="table-row">
+                            <div class="table-cell"></div>
+                            <div class="table-cell center">
+                                <?= Html::submitButton(Yii::t('express/booking','Submit'), ['class' => 'submit']) ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php \yii\widgets\ActiveForm::end(); ?>
+
             </div>
-            <?php \yii\widgets\ActiveForm::end(); ?>
-            <!-- </form> -->
+
         </div>
     </div>
 </div>
-
-<!--
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
--->
-<script src="<?= Yii::$app->view->theme->baseUrl ?>/js/jquery.js"></script>
-<script src="<?= Yii::$app->view->theme->baseUrl ?>/js/bootstrap.js"></script>
-<script src="<?= Yii::$app->view->theme->baseUrl ?>/js/holder.htm"></script>
-<script src="<?= Yii::$app->view->theme->baseUrl ?>/js/ie10-viewport-bug-workaround.js"></script>
-
-

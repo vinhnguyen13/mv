@@ -13,7 +13,7 @@ use yii\web\Controller;
 
 class BookingController extends Controller
 {
-    public $layout = '@app/views/layouts/news';
+    public $layout = '@app/views/layouts/layout';
     public function actionIndex()
     {
         return $this->render('index');
@@ -43,18 +43,22 @@ class BookingController extends Controller
     public function actionBookingHotel()
     {
         $booking = new LcBooking();
-
-        if ($booking->load(Yii::$app->request->post())) {
-            if($booking->save()) {
-                if(!empty($booking->email)) {
-                    // call send mail method after click submit button
-                    $booking->sendBookingMail($booking);
-                }
-                Yii::$app->getSession()->setFlash('reSuccess', 'Create booking successfully.');
+        if(!empty($_POST)) {
+            $post = Yii::$app->request->post();
+            echo "<pre>";
+            print_r($post);
+            echo "<pre>";
+            exit();
+        }
+        if($booking->save()) {
+            if(!empty($booking->email)) {
+                // call send mail method after click submit button
+                $booking->sendBookingMail($booking);
             }
-            return $this->redirect(['/booking']);
-        } else
-            return $this->redirect(['/']);
+            Yii::$app->getSession()->setFlash('reSuccess', 'Create booking successfully.');
+        }
+        return $this->redirect(['/booking']);
+
 
     }
 
