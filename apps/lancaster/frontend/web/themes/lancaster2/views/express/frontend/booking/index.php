@@ -10,9 +10,9 @@ Yii::$app->getView()->registerCssFile('https://fonts.googleapis.com/css?family=R
 Yii::$app->getView()->registerCssFile($path . '/resources/css/select2.css');
 Yii::$app->getView()->registerCssFile($path . '/resources/css/jquery-ui.css');
 
-Yii::$app->getView()->registerJsFile($path . '/resources/js/plugins/select2.min.js');
-Yii::$app->getView()->registerJsFile($path . '/resources/js/plugins/jquery-ui.min.js');
-Yii::$app->getView()->registerJsFile($path . '/resources/js/book.js');
+//Yii::$app->getView()->registerJsFile($path . '/resources/js/plugins/select2.min.js');
+//Yii::$app->getView()->registerJsFile($path . '/resources/js/plugins/jquery-ui.min.js');
+//Yii::$app->getView()->registerJsFile($path . '/resources/js/book.js');
 ?>
 <div id="book-page">
     <div class="container">
@@ -43,9 +43,7 @@ Yii::$app->getView()->registerJsFile($path . '/resources/js/book.js');
                         'role' => 'form',
                         'method' => 'post'
                     ],
-                    'enableClientScript' => false,
-                    'enableClientValidation' => true,
-                    'encodeErrorSummary' => true
+                    'enableClientScript' => true
                 ]);
                 ?>
                 <div class="table">
@@ -92,7 +90,7 @@ Yii::$app->getView()->registerJsFile($path . '/resources/js/book.js');
                     <div class="table-row break">
                         <div class="table-cell"><label>Apartment type *</label></div>
                         <div class="table-cell">
-                            <select class="custom-select atype" name="apart">
+                            <select class="custom-select atype" name="apart_type">
                                 <?php
                                 $apart_type = \vsoft\express\models\LcApartmentType::find()->all();
                                 $apart_data = ArrayHelper::map($apart_type, 'id', 'name');
@@ -104,7 +102,7 @@ Yii::$app->getView()->registerJsFile($path . '/resources/js/book.js');
 
                             <div class="break-on-mobile"></div>
                             <label>Floorplan *</label>
-                            <select class="custom-select" name="floor" id="floor">
+                            <select class="custom-select" name="floorplan" id="floor">
                                 <?php
                                 $floorNum = [];
                                 foreach ($buildings as $building) {
@@ -180,34 +178,6 @@ Yii::$app->getView()->registerJsFile($path . '/resources/js/book.js');
 </div>
 <script>
     $(".book-now").hide();
-    $("#checkout").change(function(){
-        var c_in = $("#checkin").val();
-        var c_out = $("#checkout").val();
-        var result = fn_DateCompare(c_in, c_out)
-        if(result == -1){
-            $("#checkin").css('border-color', '#006600');
-            $("#checkout").css('border-color', '#006600');
-            return false;
-        }
-
-    });
-
-    function fn_DateCompare(DateA, DateB) {
-        var a = new Date(DateA);
-        var b = new Date(DateB);
-
-        var msDateA = Date.UTC(a.getFullYear(), a.getMonth()+1, a.getDate());
-        var msDateB = Date.UTC(b.getFullYear(), b.getMonth()+1, b.getDate());
-
-        if (parseFloat(msDateA) < parseFloat(msDateB))
-            return -1;  // less than
-        else if (parseFloat(msDateA) == parseFloat(msDateB))
-            return 0;  // equal
-        else if (parseFloat(msDateA) > parseFloat(msDateB))
-            return 1;  // greater than
-        else
-            return null;  // error
-    }
 </script>
 
 
