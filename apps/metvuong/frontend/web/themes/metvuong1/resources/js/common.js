@@ -1,23 +1,6 @@
 $(document).ready(function() {
 	
-	/**
-	* Push right instantiation and action.
-	*/
-	var pushRight = new Menu({
-		wrapper: '.o-wrapper',
-		type: 'push-right',
-		menuOpenerClass: '.c-button',
-		maskId: '#c-mask'
-	});
-
-	var pushRightBtn = document.querySelector('#slide-menu-right');
-
-	pushRightBtn.addEventListener('click', function(e) {
-		e.preventDefault;
-		pushRight.open();
-	});
-
-	var btnScrollTop = $('<div id="topcontrol" title="Lên đầu trang"><img src="./images/scrolltop.png" style="width:40px; height:40px"></div>')
+	var btnScrollTop = $('<div id="topcontrol" title="Lên đầu trang"></div>')
 	$('body').append(btnScrollTop);
 	$(window).scroll(function(){
 		var valScroll = $(this).scrollTop();
@@ -44,21 +27,43 @@ $(document).ready(function() {
 		}, 800);
     });
 
+    var txtResetDropdown = 'Loại...',
+    	flagReset = false,
+    	$textSearch = $('#search-kind .form-group input'),
+    	$dropdown = $('#search-kind .dropdown ul'),
+    	$txtDropdownSelected = $('#search-kind .txt-selected');
+
     $('.search-select a').on('click', function() {
-    	var _this = $(this);
+    	var _this = $(this),
+    		txtPlaceholder = _this.data('placeholder'),
+    		getId = _this.attr('rel');
+    	
+    	$txtDropdownSelected.html(txtResetDropdown);
+
     	$('.search-select').removeClass('active');
+    	$textSearch.attr('placeholder', txtPlaceholder);
+    	$dropdown.removeClass('dropdown-menu')
+    	$(getId).addClass('dropdown-menu');
     	_this.parent().addClass('active');
     	_this.hasClass('type-text') ? ($('#search-kind>.dropdown').hide(), $('.box-search-header').addClass('resize-width')) : ($('#search-kind>.dropdown').show(),$('.box-search-header').removeClass('resize-width'));
-    	
-    	return false;
+
+		return false;
     });
 
-    $('#search-kind .dropdown-menu a').on('click', function() {
+
+    $('#search-kind ul a').on('click', function(){
+    	var _this = $(this),
+    		valueID = _this.data('valueId'),
+    		txt = _this.data('valueText');
+    	$txtDropdownSelected.html(txt);
+    });
+
+    /*$('#search-kind .dropdown-menu a').on('click', function() {
     	var _this = $(this),
     		valueID = _this.data('valueId'),
     		txt = _this.data('valueText');
     	$('#search-kind .txt-selected').html(txt);
-    });
+    });*/
 	
 });
 

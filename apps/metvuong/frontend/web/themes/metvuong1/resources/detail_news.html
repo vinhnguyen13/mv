@@ -22,30 +22,10 @@
 </head>
 
 <body>
-    <nav id="c-menu--push-right" class="c-menu c-menu--push-right">
-        <button class="c-menu__close">Close Menu →</button>
-        <ul class="c-menu__items">
-            <li class="c-menu__item"><a href="#" class="c-menu__link">Bất động sản</a></li>
-            <li class="c-menu__item"><a href="#" class="c-menu__link">Chứng khoán</a></li>
-            <li class="c-menu__item"><a href="#" class="c-menu__link">Tài chính &amp; ngân hàng</a></li>
-            <li class="c-menu__item"><a href="#" class="c-menu__link">Doanh Nghiệp</a></li>
-            <li class="c-menu__item"><a href="#" class="c-menu__link">kinh tế vĩ mô</a></li>
-            <li class="c-menu__item"><a href="#" class="c-menu__link">phong thủy</a></li>
-            <li class="c-menu__item clearfix user-setting-mb">
-                <a class="user-option pull-left" href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Mr.Nguyen Ong</a>
-                <a class="pull-right" href="#">logout<em class="fa fa-sign-out"></em></a>
-            </li>
-            <li class="c-menu__item lang-mb">
-                <a class="icon-lang lang-vi" href="#"></a>
-                <a class="icon-lang lang-en" href="#"></a>
-            </li>
-        </ul>
-    </nav>
-    <div id="c-mask" class="c-mask"></div>
     <div class="o-wrapper clearfix">
         <div class="container">
             <header class="clearfix">
-                <a href="#" class="logo-header pull-left"><img src="images/logo.png" alt="logo"></a>
+                <a href="#" class="logo-header pull-left bgcover" style="background-image:url('images/logo.png');"></a>
                 <div class="pull-right user-setting">
                     <div class="dropdown select-lang">
                         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
@@ -64,48 +44,40 @@
                         
                         <form class="form-inline pull-left" action="" id="search-kind">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Nhập địa điểm...">
+                                <input type="text" class="form-control" placeholder="Tìm Kiếm...">
                             </div>
                             <div class="dropdown">
                                 <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                                    <span class="txt-selected">Loại</span>
-                                <span class="caret"></span></button>
-                                <ul class="dropdown-menu">
-                                    <li><a data-value-id="1" data-value-text="Loại 1" href="#">Loại 1</a></li>
-                                    <li><a  data-value-id="2" data-value-text="Loại 2" href="#">Loại 2</a></li>
-                                    <li><a  data-value-id="3" data-value-text="Loại 3" href="#">Loại 3</a></li>
+                                    <span class="txt-selected">Loại...</span>
+                                    <span class="wrap-arrow-dropdown"><span class="caret"></span></span>
+                                </button>
+                                <ul id="dd-search" class="dropdown-menu">
+                                    <li><a data-value-id="1" data-value-text="Chung cư" href="#">Chung cư</a></li>
+                                    <li><a  data-value-id="2" data-value-text="Nhà riêng" href="#">Nhà riêng</a></li>
+                                    <li><a  data-value-id="3" data-value-text="Văn phòng" href="#">Văn phòng</a></li>
+                                    <li><a  data-value-id="3" data-value-text="DAT" href="#">DAT</a></li>
+                                </ul>
+                                <ul id="dd-dky" class="">
+                                    <li><a data-value-id="1" data-value-text="Chung cư" href="#">Chung cư</a></li>
+                                    <li><a  data-value-id="2" data-value-text="Căn hộ" href="#">Căn hộ</a></li>
+                                    <li><a  data-value-id="3" data-value-text="Nhà riêng" href="#">Nhà riêng</a></li>
+                                    <li><a  data-value-id="3" data-value-text="Văn phòng" href="#">Văn phòng</a></li>
+                                    <li><a  data-value-id="3" data-value-text="DAT" href="#">DAT</a></li>
+                                </ul>
+                                <ul id="dd-news" class="">
+                                    <li><a data-value-id="1" data-value-text="Dự án" href="#">Dự án</a></li>
                                 </ul>
                             </div>
                             <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                         </form>
-                        <div class="pull-left text-right mgT-15 mgL-15">
-                            <div class="search-select active"><a href="#" class="icon-sale"></a></div>
-                            <div class="search-select"><a href="#" class="icon-cart"></a></div>
-                            <div class="search-select"><a href="#" class="icon-door"></a></div>
-                            <div class="search-select"><a href="#" class="icon-handhome"></a></div>
+                        <div class="pull-left text-right mgT-10 mgL-15">
+                            <div class="search-select active"><a href="#" data-placeholder="Tìm Kiếm..." rel="#dd-search"><em class="fa fa-home"></em><em class="fa fa-search"></em></a></div>
+                            <div class="search-select"><a href="#" data-placeholder="Đăng Ký..." rel="#dd-dky"><em class="fa fa-home"></em><em class="fa fa-usd"></em></a></div>
+                            <div class="search-select"><a href="#" class="" data-placeholder="Tin Tức..." rel="#dd-news"><em class="fa fa-home"></em><em class="fa fa-file-text"></em></a></div>
                         </div>
                     </div>
                 </div>
-                <a href="#" id="slide-menu-right"><em class="fa fa-reorder"></em></a>
             </header>
-            
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="#"><span class="glyphicon glyphicon-home"></span></a>
-                    </div>
-                    <div>
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="#">Bất động sản  </a></li>
-                            <li><a href="#">Chứng khoán</a></li>
-                            <li><a href="#">Tài chính &amp; ngân hàng</a></li> 
-                            <li><a href="#">Doanh Nghiệp</a></li> 
-                            <li><a href="#">kinh tế vĩ mô</a></li> 
-                            <li><a href="#">phong thủy</a></li> 
-                        </ul>
-                    </div>
-                </div>
-            </nav>
 
             <div class="row">
                 <div class="col-sm-8 col-lg-9 col-right-home detail-news">
