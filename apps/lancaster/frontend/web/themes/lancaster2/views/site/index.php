@@ -52,10 +52,10 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                 <div class="swiper-group">
                     <div class="swiper-container">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/living-room.jpg" /></div>
-                            <div class="swiper-slide"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/kitchen.jpg" /></div>
-                            <div class="swiper-slide"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/bathroom.jpg" /></div>
-                            <div class="swiper-slide"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/bedroom.jpg" /></div>
+                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/living-room.jpg)"></div>
+                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/kitchen.jpg)"></div>
+                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/bathroom.jpg)"></div>
+                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/bedroom.jpg)"></div>
                         </div>
                         <div class="swiper-button swiper-button-prev"></div>
                         <div class="swiper-button swiper-button-next"></div>
@@ -92,10 +92,10 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                 <div class="swiper-group">
                     <div class="swiper-container">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/swiming-pool.jpg" /></div>
-                            <div class="swiper-slide"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/fitness-center.jpg" /></div>
-                            <div class="swiper-slide"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/healthy-care.jpg" /></div>
-                            <div class="swiper-slide"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/skybar.jpg" /></div>
+                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/swiming-pool.jpg)"></div>
+                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/fitness-center.jpg)"></div>
+                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/healthy-care.jpg)"></div>
+                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/skybar.jpg)"></div>
                         </div>
                         <div class="swiper-button swiper-button-prev"></div>
                         <div class="swiper-button swiper-button-next"></div>
@@ -132,10 +132,10 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                 <div class="swiper-group">
                     <div class="swiper-container">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/north.jpg" /></div>
-                            <div class="swiper-slide"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/east.jpg" /></div>
-                            <div class="swiper-slide"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/south.jpg" /></div>
-                            <div class="swiper-slide"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/west.jpg" /></div>
+                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/north.jpg)"></div>
+                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/east.jpg)"></div>
+                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/south.jpg)"></div>
+                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/west.jpg)"></div>
                         </div>
                         <div class="swiper-button swiper-button-prev"></div>
                         <div class="swiper-button swiper-button-next"></div>
