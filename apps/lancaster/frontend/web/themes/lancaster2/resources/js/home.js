@@ -329,7 +329,7 @@ var home = {
 	initNeighMap: function() {
 		this.nMap = new google.maps.Map(document.getElementById('neighborhood-map'), {
 			center: {lat: 10.784094, lng: 106.701859},
-		    zoom: 16,
+		    zoom: 15,
 		    scrollwheel: false,
 		    styles: [
 		            {
