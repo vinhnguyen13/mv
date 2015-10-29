@@ -13,6 +13,7 @@ use yii\filters\AccessControl;
 class ToolController extends Controller
 {
     public $layout = '@app/views/layouts/tool';
+    private $_session;
     /**
      * @inheritdoc
      */
@@ -62,6 +63,19 @@ class ToolController extends Controller
         return $this->render('chart', [
             'data'=>$fileContent
         ]);
+    }
+
+    public function actionSaveStep()
+    {
+        $app = Yii::$app;
+        if(empty($this->_session)){
+            $this->_session = $app->getSession();
+        }
+        if($app->request->isPost){
+            $step = $app->request->get('step');
+            $this->_session[$step] = $app->request->post();
+        }
+        return $this->render('index');
     }
 
     private function getData(){

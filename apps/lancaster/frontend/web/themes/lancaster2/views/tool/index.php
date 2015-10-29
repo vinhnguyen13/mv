@@ -1,11 +1,12 @@
 <?php
 use yii\web\View;
+use yii\helpers\Html;
 /* @var $this yii\web\View */
 
 $this->title = 'My Yii Application';
 
 $this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/chart/chart.css', ['depends' => ''], 'css-chart');
-Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/chart/autoNumeric-min.js', ['position' => View::POS_BEGIN]);
+Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/chart/autoNumeric-min.js', ['position' => View::POS_END]);
 
 
 $items[] = [
@@ -13,12 +14,12 @@ $items[] = [
 	'options' => ['id' => 'developmentCostPlan'],
 	'content'=>$this->render('_partials/development_cost_plan')
 ];
+$items = null;
 $items[] = [
 	'label'=>'Profit Margin Calculation',
 	'options' => ['id' => 'profitMarginCalculation'],
 	'content'=>$this->render('_partials/profit_margin_calculation')
 ];
-$items = null;
 $items[] = [
 	'label'=>'Cashflow (Scenario 1)',
 	'options' => ['id' => 'scenario_1'],
@@ -44,7 +45,7 @@ echo \yii\bootstrap\Tabs::widget([
 
 <script>
 	$(function () {
-		$('.mainConfigSetParams').find('input.number').autoNumeric('init', {vMin: 0});
+		$('.mainConfigSetParams').find('input.number').autoNumeric('init', {aPad: false});
 	})
 </script>
 

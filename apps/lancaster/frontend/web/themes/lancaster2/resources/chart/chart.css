@@ -90,3 +90,8 @@ a.desc:after {
     margin: 0 0 15px 0;
 }
 
+
+/*======================================================================*/
+.mainConfigSetParams .tab-content div{
+    padding-top: 20px;
+}
