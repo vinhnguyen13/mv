@@ -22,7 +22,7 @@ class NewsWidget extends Widget
         $cat_id = Yii::$app->params["news"]["widget-category"][$view];
         $limit = Yii::$app->params["news"]["widget-limit"][$view];
         $offset = 0;
-        $order_by = ['id' => SORT_ASC];
+        $order_by = ['id' => SORT_DESC];
 
         $news = CmsShow::find();
 
