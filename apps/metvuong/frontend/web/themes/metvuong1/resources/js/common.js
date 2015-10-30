@@ -58,12 +58,12 @@ $(document).ready(function() {
     	$txtDropdownSelected.html(txt);
     });
 
-    /*$('#search-kind .dropdown-menu a').on('click', function() {
-    	var _this = $(this),
-    		valueID = _this.data('valueId'),
-    		txt = _this.data('valueText');
-    	$('#search-kind .txt-selected').html(txt);
-    });*/
+    $('.menu-detail-duan li').on('click',function() {
+        //$('.collapse').collapse();
+        if($(this).hasClass('submenu')) {
+            $(this).toggleClass('active');
+        }
+    });
 	
 });
 
