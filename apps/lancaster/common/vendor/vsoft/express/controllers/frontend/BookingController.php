@@ -40,38 +40,17 @@ class BookingController extends Controller
     public function actionBookingHotel()
     {
         $booking = new LcBooking();
-
-//            $post["LcBooking"];
-//            $str_in = strtotime($post["checkin"]);
-//            $str_out = strtotime($post["checkout"]);
-//
-//            if($str_out > $str_in) {
-//                $booking->checkin = date('Y-m-d',$str_in);
-//                $booking->checkout = date('Y-m-d',$str_out);
-//            }
-//            else
-//            {
-//                Yii::$app->getSession()->setFlash('reError', 'Check out greater than!');
-//            }
-
-//            $booking->lc_building_id = ["lc_building_id"];
-//            $booking->apart_type = $post["apart"];
-//            $booking->floorplan = $post["floor"];
-//            $booking->fullname = $post["fullname"];
-//            $booking->phone = $post["phone"];
-//            $booking->email = $post["email"];
-//            $booking->address = $post["address"];
-//            $booking->passport_no = $post["passport"];
-//            $booking->nationality = $post["nation"];
-//            $booking->info = $post["info"];
-
-
-        if ($booking->load(Yii::$app->request->post())) {
+        if(!empty($_POST)) {
+            $post = Yii::$app->request->post();
+            $booking->apart_type = $post["apart_type"];
+            $booking->floorplan = $post["floorplan"];
+        }
+        if ($booking->load($post)) {
             if ($booking->save()) {
-//            if(!empty($booking->email)) {
-//                // call send mail method after click submit button
-//                $booking->sendBookingMail($booking);
-//            }
+                if (!empty($booking->email)) {
+                    // call send mail method after click submit button
+                    $resultEmail = $booking->sendBookingMail($booking);
+                }
                 Yii::$app->getSession()->setFlash('reSuccess', 'Create booking successfully.');
             }
         }

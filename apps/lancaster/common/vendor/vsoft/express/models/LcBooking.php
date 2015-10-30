@@ -59,8 +59,14 @@ class LcBooking extends LcBookingBase
             $this->created_at = $at;
 //            $this->created_by = Yii::$app->user->id;
         }
-        $this->checkin = date("Y-m-d H:i:s", strtotime($this->checkin));
-        $this->checkout = date("Y-m-d H:i:s", strtotime($this->checkout));
+        $time_in = strtotime($this->checkin);
+        $time_out = strtotime($this->checkout);
+
+        if($time_out > $time_in) {
+            $this->checkin = date("Y-m-d", $time_in);
+            $this->checkout = date("Y-m-d", $time_out);
+        } else
+            return false;
 
         $this->updated_at = $at;
 //        $this->updated_by = Yii::$app->user->id;
@@ -70,7 +76,7 @@ class LcBooking extends LcBookingBase
         $this->browser_type = Enum::getBrowser()['agent'];
         $check_browser_name = strpos($this->browser_type , 'coc_coc_browser');
         if ($check_browser_name !== false) {
-            $this->browser_name = 'Cốc Cốc Chrome';
+            $this->browser_name = 'Coc Coc Chrome';
         } else {
             $this->browser_name = Enum::getBrowser()['name'];
         }
@@ -85,9 +91,10 @@ class LcBooking extends LcBookingBase
     }
 
     public function sendBookingMail(LcBooking $objContact){
+        $emailTo = strtolower($objContact->email);
         return Yii::$app->mailer->compose(['text' => 'notifyReceivedEmail-text',], ['contact' => $objContact, 'isbooking' => 'Y'])
             ->setFrom(Yii::$app->params['adminEmail'])
-            ->setTo([$objContact->email])
+            ->setTo([$emailTo])
             ->setSubject('[No-reply] Notify contact email***')
             ->send();
     }

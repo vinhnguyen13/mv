@@ -35,9 +35,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'lc_building_id',
                 'value' => $model->getLcBuilding()->building_name,
             ],
-            'checkin',
-            'checkout',
-//            'apart_type',
+            [
+                'attribute' => 'checkin',
+                'format' =>  ['date', 'php:d F Y']
+            ],
+            [
+                'attribute' => 'checkout',
+                'format' =>  ['date', 'php:d F Y']
+            ],
             [
                 'label' => 'Apartment Type',
                 'attribute' => 'apart_type',
@@ -57,7 +62,11 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'browser_name',
 //            'browser_version',
 //            'platform',
-            'created_at',
+//            'created_at',
+            [
+                'attribute' => 'created_at',
+                'format' =>  ['date', 'php:l d F Y H:i']
+            ],
         ],
     ]) ?>
 

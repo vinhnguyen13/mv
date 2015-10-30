@@ -48,7 +48,7 @@ Yii::$app->getView()->registerCssFile($path . '/resources/css/jquery-ui.css');
                 ?>
                 <div class="table">
                     <div class="table-row">
-                        <label class="table-cell"><?= Yii::t('booking','Checkin date')?> *</label>
+                        <label class="table-cell">Checkin date*</label>
 
                         <div class="table-cell">
 <!--                            <input id="checkin" class="date-picker text-field" type="text" name="checkin" readonly/> -->
