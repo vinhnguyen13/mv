@@ -7,8 +7,7 @@ $this->title = 'My Yii Application';
 
 $this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/chart/chart.css', ['depends' => ''], 'css-chart');
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/chart/autoNumeric-min.js', ['position' => View::POS_END]);
-
-
+Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/chart/chart.js', ['position' => View::POS_END]);
 $items[] = [
 	'label'=>'Development Cost Plan',
 	'options' => ['id' => 'developmentCostPlan'],
@@ -20,16 +19,18 @@ $items[] = [
 	'options' => ['id' => 'profitMarginCalculation'],
 	'content'=>$this->render('_partials/profit_margin_calculation')
 ];
+$items = null;
 $items[] = [
 	'label'=>'Cashflow (Scenario 1)',
 	'options' => ['id' => 'scenario_1'],
-	'content'=>$this->render('_partials/cashflow_1')
+	'content'=>$this->render('_partials/cashflow_1', ['total_project_cost'=>!empty($total_project_cost) ? $total_project_cost : 0])
 ];
 $items[] = [
 	'label'=>'Cashflow (Scenario 2)',
 	'options' => ['id' => 'scenario_2'],
 	'content'=>$this->render('_partials/cashflow_2')
 ];
+
 ?>
 <div class="mainConfigSetParams">
 <?php

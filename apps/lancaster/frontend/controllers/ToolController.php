@@ -6,6 +6,7 @@ use yii\helpers\FileHelper;
 use yii\helpers\Json;
 use yii\web\Controller;
 use yii\filters\AccessControl;
+use yii\web\Response;
 
 /**
  * Tool controller
@@ -13,7 +14,7 @@ use yii\filters\AccessControl;
 class ToolController extends Controller
 {
     public $layout = '@app/views/layouts/tool';
-    private $_session;
+    public $_session;
     /**
      * @inheritdoc
      */
@@ -50,7 +51,7 @@ class ToolController extends Controller
     public function actionIndex()
     {
         if(Yii::$app->request->isPost){
-            $this->redirect(['chart']);
+//            $this->redirect(['chart']);
         }
         return $this->render('index');
     }
@@ -72,10 +73,14 @@ class ToolController extends Controller
             $this->_session = $app->getSession();
         }
         if($app->request->isPost){
+            Yii::$app->response->format = Response::FORMAT_JSON;
             $step = $app->request->get('step');
-            $this->_session[$step] = $app->request->post();
+//            $this->_session[$step] = $app->request->post();
+            $this->_session = Yii::$app->session;
+            $this->_session->set($step, filter_var($app->request->post('total_project_cost'), FILTER_SANITIZE_NUMBER_INT));
+
+            return ['total_project_cost'=>filter_var($app->request->post('total_project_cost'), FILTER_SANITIZE_NUMBER_INT)];
         }
-        return $this->render('index');
     }
 
     private function getData(){

@@ -8,24 +8,10 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
-$this->registerJs(
-    '$("document").ready(function(){
-        $("#profitMarginCalculation").on("pjax:end", function() {
-            $(".mainConfigSetParams").find(".nav-tabs a[href=\"#scenario_1\"]").trigger("click");
-        });
-    });'
-);
 ?>
-<?php Pjax::begin([
-    'enableReplaceState'=>false,
-    'enablePushState'=>false,
-    'id' => 'profitMarginCalculation',
-    'clientOptions'=>[
-        'container'=>'p_profitMarginCalculation',
-    ]
-]); ?>
+<h1>Profit Margin Calculation</h1>
 <?php $form = ActiveForm::begin([
-    'options' => ['enctype' => 'multipart/form-data', 'data-pjax'=>'#p_profitMarginCalculation'],
+    'options' => ['enctype' => 'multipart/form-data', 'id'=>'p_profitMarginCalculation'],
     'action' => \yii\helpers\Url::toRoute(['tool/save-step', 'step'=>'profitMarginCalculation'])
 ]); ?>
 <div class="col-lg-12">
@@ -39,4 +25,19 @@ $this->registerJs(
     </div>
 </div>
 <?php ActiveForm::end(); ?>
-<?php Pjax::end(); ?>
+
+<script>
+    $(document).on("click",'#profitMarginCalculation .btn-primary',function() {
+        chart.next('/tool/save-step', 'p_profitMarginCalculation', 'profitMarginCalculation/afterNext');
+        return false;
+    });
+    /**
+     * trigger event after success ajax
+     */
+    $(document).bind( 'profitMarginCalculation/afterNext', function(event, json, string){
+        $(".mainConfigSetParams").find(".nav-tabs a[href='#scenario_1']").trigger("click");
+        if(json.data.total_project_cost){
+            $(".mainConfigSetParams").find('#scenario_1 .total_project_cost').val(json.data.total_project_cost);
+        }
+    });
+</script>

@@ -4,7 +4,18 @@ $(function () {
 
 var chart = {
     init: function() {
-
+        $('.mainConfigSetParams').find('input.number').autoNumeric('init', {aPad: false});
+    },
+    next: function(callUrl, formId, event) {
+        $.ajax({
+            type: "post",
+            dataType: 'json',
+            url: callUrl,
+            data: ($('#' + formId).serializeArray()),
+            success: function(data) {
+                $("#"+formId).trigger(event, [{data: data}, 'something'] );
+            },
+        });
     },
     themes: function() {
         Highcharts.createElement('link', {
