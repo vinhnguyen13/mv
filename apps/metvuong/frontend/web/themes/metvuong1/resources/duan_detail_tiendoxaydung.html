@@ -36,8 +36,8 @@
 <body>
     
     <div class="o-wrapper clearfix">
-        <div class="container">
-            <header class="clearfix">
+        <header class="clearfix cd-secondary-nav">
+            <div class="container">
                 <a href="#" class="logo-header pull-left bgcover" style="background-image:url('images/logo.png');"></a>
                 <div class="pull-right user-setting">
                     <div class="dropdown select-lang">
@@ -90,8 +90,9 @@
                         </div>
                     </div>
                 </div>
-            </header>
-
+            </div>
+        </header>
+        <div class="container cd-main-content">
             <div class="row">
                 <div class="duan-page clearfix">
                     
@@ -102,18 +103,30 @@
                                 <li><a href="#">Bản đồ vị trí</a></li>
                                 <li><a href="#">Tiện ích</a></li>
                                 <li><a href="#">Phim 3D dự án</a></li>
-                                <li class="active"><a href="#">Tiến độ xây dựng</a></li>
+                                <li><a href="#">Tiến độ xây dựng</a></li>
                             </ul>
                             <ul>
                                 <li class="title-list">KHU CĂN HỘ</li>
-                                <li><a href="#">Mặt bằng</a></li>
+                                <li class="submenu">
+                                    <a href="#" data-toggle="collapse" data-target="#sub-kch">Mặt bằng<em class="fa fa-chevron-right pull-right"></em></a>
+                                    <ul id="sub-kch" class="collapse">
+                                        <li><a class="fadeInLeft" href="#">Căn hộ: Tầng 4-5</a></li>
+                                        <li><a class="fadeInLeft" href="#">Căn hộ: Tầng 6-20</a></li>
+                                    </ul>
+                                </li>
                                 <li><a href="#">Giá bán & thanh toán</a></li>
                                 <li><a href="#">Chương trình bán hàng</a></li>
                                 <li><a href="#">Tài liệu bán hàng</a></li>
                             </ul>
                             <ul>
                                 <li class="title-list">KHU THƯƠNG MẠI</li>
-                                <li><a href="#">Mặt bằng</a></li>
+                                <li class="submenu">
+                                    <a href="#" data-toggle="collapse" data-target="#sub-ktm">Mặt bằng<em class="fa fa-chevron-right pull-right"></em></a>
+                                    <ul id="sub-ktm" class="collapse">
+                                        <li><a class="fadeInLeft" href="#">Căn hộ: Tầng 4-5</a></li>
+                                        <li><a class="fadeInLeft" href="#">Căn hộ: Tầng 6-20</a></li>
+                                    </ul>
+                                </li>
                                 <li><a href="#">Giá bán & thanh toán</a></li>
                                 <li><a href="#">Chương trình bán hàng</a></li>
                             </ul>

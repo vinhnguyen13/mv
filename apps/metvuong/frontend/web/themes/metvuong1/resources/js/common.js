@@ -56,6 +56,8 @@ $(document).ready(function() {
     		valueID = _this.data('valueId'),
     		txt = _this.data('valueText');
     	$txtDropdownSelected.html(txt);
+        $('#search-kind .dropdown').removeClass('open');
+        return false;
     });
 
     $('.menu-detail-duan li').on('click',function() {
@@ -64,7 +66,27 @@ $(document).ready(function() {
             $(this).toggleClass('active');
         }
     });
-	
+
+    var secondaryNav = $('.cd-secondary-nav'),
+        secondaryNavTopPosition = secondaryNav.offset().top,
+        contentSections = $('.cd-section'),
+        hFirstNav = secondaryNav.outerHeight(),
+        valShow;
+
+    $(window).on('scroll', function(){
+        valShow = $(window).scrollTop() - hFirstNav
+        if( valShow > 0 ) {
+            secondaryNav.addClass('is-fixed');
+            setTimeout(function() {
+                secondaryNav.addClass('animate-children');
+            }, 50);
+        } else {
+            secondaryNav.removeClass('is-fixed');
+            setTimeout(function() {
+                secondaryNav.removeClass('animate-children');
+            }, 50);
+        }
+    });
 });
 
 function l(x){console.log(x);}

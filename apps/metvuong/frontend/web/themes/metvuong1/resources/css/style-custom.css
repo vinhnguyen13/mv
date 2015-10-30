@@ -23,12 +23,14 @@
 }
 body {
     font-family: 'Roboto';
-    border-top: 2px solid #4a933a;
     background: #fff;
 }
 body .container {
-    padding-top: 10px;
+    /* padding-top: 10px; */
     position: relative;
+}
+body .o-wrapper > .container {
+    padding-top: 140px;
 }
 #slide-menu-right {
   display: none;
@@ -36,14 +38,20 @@ body .container {
 .box-search-header {
     width: 60%;
     margin: 5px auto 0;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
 }
 .box-search-header > div {
     /* border: 1px solid #4a933a; */
     padding: 0 0 0 0;
     width: 100%;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
 }
 header {
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
 }
 .icon-sale {
     display: inline-block;
@@ -194,6 +202,10 @@ button.btn.btn-default:hover {
     -moz-border-radius: 3px 0px 0px 3px;
     -ms-border-radius: 3px 0px 0px 3px;
     -o-border-radius: 3px 0px 0px 3px;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+
 }
 .resize-width #search-kind .form-group input {
     border-radius: 3px;
@@ -1707,9 +1719,12 @@ footer {
 .logo-header {
     width: 185px;
     height: 75px;
-    background-position: 0;
+    background-position: top left;
     display: block;
     background-size: contain !important;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
 }
 .show-detail-duan .video-item * {
     line-height: 100%;
@@ -1863,4 +1878,120 @@ footer {
     -moz-transform:rotate(90deg);
     -ms-transform:rotate(90deg);
     -o-transform:rotate(90deg);
+}
+.cd-secondary-nav {
+    position: fixed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    z-index: 10;
+    height: 115px;
+    -webkit-transition: height 0.3s;
+    -moz-transition: height 0.3s;
+    transition: height 0.3s;
+    background: #fff;
+    padding: 10px 0 0 0;
+    width: 100%;
+    top: 0;
+    border-top: 2px solid #4a933a;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+.cd-secondary-nav.is-fixed {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 70px;
+    width: 100%;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+@-webkit-keyframes animate-margin-top {
+    0% {
+        margin-top: 100px;
+    }
+
+    100% {
+        margin-top: 70px;
+    }
+}
+@-moz-keyframes animate-margin-top {
+    0% {
+        margin-top: 100px;
+    }
+
+    100% {
+        margin-top: 70px;
+    }
+}
+@keyframes animate-margin-top {
+    0% {
+        margin-top: 100px;
+    }
+
+    100% {
+        margin-top: 70px;
+    }
+}
+.has-top-margin {
+    margin-top: 70px;
+    -webkit-animation: animate-margin-top 0.3s;
+    -moz-animation: animate-margin-top 0.3s;
+    animation: animate-margin-top 0.3s;
+}
+.cd-main-content {
+    position: relative;
+    z-index: 3;
+}
+.animate-children .logo-header {
+    width: 125px;
+    height: 48px;
+}
+.animate-children .box-search-header {
+    margin-top: 0;
+}
+.animate-children .box-search-header > div {
+    margin-top: -6px;
+}
+.animate-children #search-kind .form-group input {
+    height: 27px;
+    font-size: 1em;
+}
+.search-select a,
+#search-kind .dropdown button {
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+}
+.animate-children #search-kind .dropdown button {
+    height: 27px;
+}
+.animate-children #search-kind .dropdown button span {
+    height: 25px;
+    line-height: 100%;
+    font-size: .9em;
+}
+.animate-children  #search-kind .dropdown button .wrap-arrow-dropdown {
+    line-height: 23px;
+}
+.animate-children #search-kind .dropdown button .caret {
+    height: auto;
+}
+.animate-children .search-select a {
+    font-size: 1.9em;
+}
+.animate-children .search-select a .fa-file-text, 
+.animate-children .search-select a .fa-usd, 
+.animate-children .search-select a .fa-search {
+    font-size: .7em;
+    color: #DADE22;
+}
+.animate-children .search-select a .fa-search {
+    top: 1px;
+    left: -5px;
+}
+.animate-children .search-select a .fa-usd {
+    top: 2px;
+    left: -3px;
+}
+.animate-children .search-select a .fa-file-text {
+    top: 1px;
+    left: -6px;
 }
