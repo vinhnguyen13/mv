@@ -76,6 +76,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         Yii::$app->meta->add(Yii::$app->request->absoluteUrl);
+        $this->redirect('/news');
         return $this->render('index');
     }
 

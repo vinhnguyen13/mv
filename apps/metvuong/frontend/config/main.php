@@ -20,7 +20,7 @@ return [
         ],
     ],
     'controllerNamespace' => 'frontend\controllers',
-    'defaultRoute' => 'news/index',
+//    'defaultRoute' => 'news/index',
     'modules' => [
     ],
     'components' => [
