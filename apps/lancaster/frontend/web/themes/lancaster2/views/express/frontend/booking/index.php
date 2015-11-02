@@ -176,8 +176,5 @@ Yii::$app->getView()->registerCssFile($path . '/resources/css/jquery-ui.css');
         </div>
     </div>
 </div>
-<script>
-    $(".book-now").hide();
-</script>
 
 
