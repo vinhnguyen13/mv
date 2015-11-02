@@ -51,16 +51,6 @@ class ToolController extends Controller
      */
     public function actionIndex()
     {
-        $route = array('index/index', 'subdomain' => 'kiev');
-
-        echo Url::to($route);
-        echo "<pre>";
-        print_r(54);
-        echo "</pre>";
-        exit;
-        if(Yii::$app->request->isPost){
-//            $this->redirect(['chart']);
-        }
         return $this->render('index');
     }
 
