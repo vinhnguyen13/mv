@@ -225,6 +225,10 @@ var buildingProject = {
 	floorDetail: function(action, event, data, ins) {
 		$.colorbox.resize();
 		
-		console.log(action);
+		if(action == 'action') {
+			console.log('upload');
+		} else {
+			console.log('xóa');
+		}
 	}
 };
