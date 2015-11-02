@@ -193,11 +193,6 @@ var buildingProject = {
 			var popupHide = $('<div class="popup-hide"></div>').append(popup);
 
 			el.after(popupHide);
-
-			
-			
-			
-			
 			
 			var name = superParent.find('.fileinput-button').find('input[type="hidden"]').attr('name').replace('[images]', '[imagesDetail][]');
 			var nameId = superParent.attr('id').replace('-fileupload', '-');
@@ -209,15 +204,13 @@ var buildingProject = {
 			var elu = $('#' + nameId + total + '-fileupload-fileupload');
 			customFileUpload.attachUploadWidget(elu);
 			
-			
 			// elu.fileupload('option', 'done').call(elu, $.Event('done'), {result: {files: [{"url":"\/store\/building-project-images\/56318158d5d92.jpg","thumbnailUrl":"\/store\/building-project-images\/56318158d5d92.thumb.jpg","name":"563338988a8d6.jpg","type":"image\/jpeg","size":"1","deleteUrl":"\/admin\/express\/upload\/delete-image?orginal=563338988a8d6.jpg&thumbnail=563338988a8d6.thumb.jpg&deleteLater=1&folder=building-project-images","deleteType":"DELETE","deleteLater":1}]}});
-			
-			
-			
-			
 			
 			var coordinateInput = $('<input type="hidden" name="' + name.replace('[imagesDetail][]', '[imagesCoordinate][]') + '" />');
 			popup.append(coordinateInput);
+			
+			//coordinateInput
+			//img
 			
 			img.load(function(){
 				el.colorbox({
