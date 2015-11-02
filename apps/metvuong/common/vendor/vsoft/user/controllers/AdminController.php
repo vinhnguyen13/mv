@@ -246,7 +246,7 @@ class AdminController extends Controller
             return $this->refresh();
         }
 
-        return $this->render('_avatar', [
+        return $this->render('@vsoft/user/views/admin/_avatar', [
             'user'    => $user,
             'profile' => $profile,
         ]);
