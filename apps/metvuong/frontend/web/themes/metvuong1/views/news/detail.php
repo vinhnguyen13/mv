@@ -50,7 +50,7 @@
                 <div class="col-xs-9 detail-content pdL-5">
                     <div class="box-content">
                         <div><?=$news->content?></div>
-                        <div id="social" class="share-social mgT-10 wrap-img">
+                        <div id="social<?=$news->id?>" class="share-social mgT-10 wrap-img">
                             <div class="fb-like" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug]) ?>" data-layout="button_count" style="margin-right: 10px;"></div>
                             <div class="fb-send" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug]) ?>" data-show-faces="false" style="margin-right: 10px;"></div>
                             <div class="fb-share-button" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug]) ?>" data-layout="button_count"></div><br>
@@ -60,10 +60,13 @@
                     </div>
                 </div>
             </div>
-            <div class="height_<?=$news->id?>"></div>
         </article>
     </div>
 
+    <div class="toHeight" style="height: 10px;"></div>
+    <div class="loading text-center" >
+        <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/loader.gif" alt="Loading..." title="<?=$news->title?>" />
+    </div>
     <div class="col-sm-4 col-lg-3 col-left-home">
         <?= \vsoft\news\widgets\NewsWidget::widget(['view' => 'hotnews'])?>
         <div class="siderbar widget-ads clearfix">
@@ -85,7 +88,7 @@
     </ul>
 </div>
 <style>
-
+    .loading { display: none; margin-bottom: 20px;}
     .animated, .box-content img {
         -webkit-animation-duration: 2s;
         animation-duration: 2s;
@@ -124,20 +127,26 @@
 
 
 //        $('.detail-news').bind('contextmenu',function(e){return false;});
-
+        var timer;
         $(window).scroll(function () {
             var currentID = parseInt($('#current_id').val());
             var catID = parseInt($('#cat_id').val());
 
-            if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+            var divHeight = $(".toHeight").position().top;
+            var h = $(document).height() - $(window).height();
 
+            if ($(window).scrollTop() > h - divHeight ) {
+                $(".loading").show();
                 if(currentID > 0) {
-                    setTimeout(function(){
+                    if ( timer ) clearTimeout(timer);
+                    timer = setTimeout(function(){
+                        
                         $.ajax({
                             url: '<?php echo Yii::$app->getUrlManager()->createUrl(["news/getone?current_id="]); ?>' + currentID + '&cat_id=' + catID,
                             type: 'POST',
                             success: function (data) {
                                 if (data) {
+                                    loadError = false;
                                     $('#current_id').val(data.id);
                                     $('#current_slug').val(data.slug);
                                     $('#current_title').val(data.title);
@@ -165,7 +174,7 @@
                                             '<div class="col-xs-9 detail-content pdL-5">'+
                                                 '<div class="box-content">'+
                                                     '<div>'+data.content+'</div>'+
-                                                    '<div id="social" class="share-social mgT-10 wrap-img">'+
+                                                    '<div id="social'+data.id+'" class="share-social mgT-10 wrap-img">'+
                                                         '<div class="fb-like" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news/view')?>?id=' + data.id + '" data-layout="button_count" style="margin-right: 10px;"></div>' +
                                                         '<div class="fb-send" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news/view')?>?id=' + data.id + '" data-show-faces="false" style="margin-right: 10px;"></div>' +
                                                         '<div class="fb-share-button" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news/view')?>?id=' + data.id + '" data-layout="button_count"></div><br>' +
@@ -174,18 +183,18 @@
                                                 '</div>'+
                                             '</div>'+
                                         '</div>' +
-                                        '<div class="height_'+data.id+'"></div>' );
-
+                                        '</article>' );
                                     // console.log(data);
                                 }
-//                                FB.XFBML.parse($('.detail-news'));
+                                FB.XFBML.parse();
                             },
                             error: function() {
                                 $('#current_id').val(0);
                                 $('#loader').html('<div>Đã hết dữ liệu</div>');
                             }
-                        })
-                    }, 800);
+                        });
+                        $(".loading").hide();
+                    }, 2000);
                 }
 
             }
