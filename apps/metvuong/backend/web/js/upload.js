@@ -15,7 +15,7 @@ var customFileUpload = {
 		}
 	},
 	fileuploaddone: function(event, data, ins) {
-		var input = $('#' + event.target.id.replace('-fileupload', '')).prev();
+		var input = $('#' + event.target.id.replace(/\-fileupload$/, '')).prev();
 		
 		var val = input.val();
 		var filesName = val ? val.split(',') : [];
