@@ -113,7 +113,7 @@ var buildingProject = {
 			
 			self.data('count', total + 1);
 			
-			floorList.append('<div class="panel panel-default"> <div class="panel-body"> <i class="glyphicon glyphicon-remove"></i> <div class="form-group"> <label class="control-label" for="buildingproject-bpvideo">Tầng</label> <input type="text" class="form-control" name="BuildingProject[' + name + '][floorPlan][' + total + '][title]" value=""> <div class="help-block"></div> </div> <div class="form-group"> <label class="control-label" for="buildingproject-bpvideo">Ảnh</label> <!-- The template to display files available for upload --> <script id="template-upload" type="text/x-tmpl"> {% for (var i=0, file; file=o.files[i]; i++) { %} <li class="template-upload fade"> <span class="preview"></span> <p class="name">{%=file.name%}</p> <strong class="error text-danger"></strong> <p class="size">Processing...</p> <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div> </li> {% } %} </script><!-- The template to display files available for download --> <script id="template-download" type="text/x-tmpl"> {% for (var i=0, file; file=o.files[i]; i++) { %} <li data-delete-later="{%=file.deleteLater%}" class="template-download fade"> <span class="preview"> {% if (file.thumbnailUrl) { %} <a target="_blank" href="{%=file.url%}" title="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a> {% } %} </span> <p class="name"> {% if (file.url) { %} <a target="_blank" href="{%=file.url%}" title="{%=file.name%}" {%=file.thumbnailUrl?\'data-gallery\':\'\'%}>{%=file.name%}</a> {% } else { %} <span>{%=file.name%}</span> {% } %} </p> {% if (file.error) { %} <div><span class="label label-danger">Error</span> {%=file.error%}</div> {% } %} <span class="size">{%=o.formatFileSize(file.size)%}</span> {% if (file.deleteUrl) { %} <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields=\'{"withCredentials":true}\'{% } %}> <i class="glyphicon glyphicon-trash"></i> <span>Delete</span> </button> {% } else { %} <button class="btn btn-warning cancel"> <i class="glyphicon glyphicon-ban-circle"></i> <span>Cancel</span> </button> {% } %} </li> {% } %} </script> <!-- The file upload form used as target for the file upload widget --> <div id="' + name + total + '-fileupload-fileupload" data-upload-template-id="template-upload" data-download-template-id="template-download"> <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload --> <div class="row fileupload-buttonbar"> <div class="col-lg-7"> <!-- The fileinput-button span is used to style the file input field as button --> <span class="btn btn-success fileinput-button"> <i class="glyphicon glyphicon-plus"></i> <span>Chọn ảnh...</span> <input type="hidden" name="BuildingProject[' + name + '][floorPlan][' + total + '][images]"><input type="file" id="' + name + total + '-fileupload" name="upload" multiple=""> </span> <a class="btn btn-primary start"> <i class="glyphicon glyphicon-upload"></i> <span>Start upload</span> </a> <a class="btn btn-warning cancel"> <i class="glyphicon glyphicon-ban-circle"></i> <span>Cancel upload</span> </a> <a class="btn btn-danger delete"> <i class="glyphicon glyphicon-trash"></i> <span>Delete</span> </a> <input type="checkbox" class="toggle"> <!-- The global file processing state --> <span class="fileupload-process"></span> </div> <!-- The global progress state --> <div class="col-lg-5 fileupload-progress fade"> <!-- The global progress bar --> <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100"> <div class="progress-bar progress-bar-success" style="width:0%;"></div> </div> <!-- The extended global progress state --> <div class="progress-extended">&nbsp;</div> </div> </div> <!-- The table listing the files available for upload/download --> <ul class="files"></ul> </div> <div class="help-block"></div> </div> </div> </div>');
+			floorList.append('<div class="panel panel-default"> <div class="panel-body"> <i class="glyphicon glyphicon-remove"></i> <div class="form-group"> <label class="control-label" for="buildingproject-bpvideo">Tầng</label> <input type="text" class="form-control" name="BuildingProject[' + name + '][floorPlan][' + total + '][title]" value=""> <div class="help-block"></div> </div> <div class="form-group"> <label class="control-label" for="buildingproject-bpvideo">Ảnh</label> <!-- The template to display files available for upload --> <script id="template-upload" type="text/x-tmpl"> {% for (var i=0, file; file=o.files[i]; i++) { %} <li class="template-upload fade"> <span class="preview"></span> <p class="name">{%=file.name%}</p> <strong class="error text-danger"></strong> <p class="size">Processing...</p> <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div> </li> {% } %} </script><!-- The template to display files available for download --> <script id="template-download" type="text/x-tmpl"> {% for (var i=0, file; file=o.files[i]; i++) { %} <li data-delete-later="{%=file.deleteLater%}" class="template-download fade"> <span class="preview"> {% if (file.thumbnailUrl) { %} <a target="_blank" href="{%=file.url%}" title="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a> {% } %} </span> <p class="name"> {% if (file.url) { %} <a target="_blank" href="{%=file.url%}" title="{%=file.name%}" {%=file.thumbnailUrl?\'data-gallery\':\'\'%}>{%=file.name%}</a> {% } else { %} <span>{%=file.name%}</span> {% } %} </p> {% if (file.error) { %} <div><span class="label label-danger">Error</span> {%=file.error%}</div> {% } %} <span class="size">{%=o.formatFileSize(file.size)%}</span> {% if (file.deleteUrl) { %} <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields=\'{"withCredentials":true}\'{% } %}> <i class="glyphicon glyphicon-trash"></i> <span>Delete</span> </button> {% } else { %} <button class="btn btn-warning cancel"> <i class="glyphicon glyphicon-ban-circle"></i> <span>Cancel</span> </button> {% } %} </li> {% } %} </script> <!-- The file upload form used as target for the file upload widget --> <div id="' + name + total + '-fileupload-fileupload" class="map-area" data-callback="buildingProject.makeMapArea" data-upload-template-id="template-upload" data-download-template-id="template-download"> <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload --> <div class="row fileupload-buttonbar"> <div class="col-lg-7"> <!-- The fileinput-button span is used to style the file input field as button --> <span class="btn btn-success fileinput-button"> <i class="glyphicon glyphicon-plus"></i> <span>Chọn ảnh...</span> <input type="hidden" name="BuildingProject[' + name + '][floorPlan][' + total + '][images]"><input type="file" id="' + name + total + '-fileupload" name="upload" multiple=""> </span> <a class="btn btn-primary start"> <i class="glyphicon glyphicon-upload"></i> <span>Start upload</span> </a> <a class="btn btn-warning cancel"> <i class="glyphicon glyphicon-ban-circle"></i> <span>Cancel upload</span> </a> <a class="btn btn-danger delete"> <i class="glyphicon glyphicon-trash"></i> <span>Delete</span> </a> <input type="checkbox" class="toggle"> <!-- The global file processing state --> <span class="fileupload-process"></span> </div> <!-- The global progress state --> <div class="col-lg-5 fileupload-progress fade"> <!-- The global progress bar --> <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100"> <div class="progress-bar progress-bar-success" style="width:0%;"></div> </div> <!-- The extended global progress state --> <div class="progress-extended">&nbsp;</div> </div> </div> <!-- The table listing the files available for upload/download --> <ul class="files"></ul> </div> <div class="help-block"></div> </div> </div> </div>');
 			
 			var el = $('#' + name + total + '-fileupload-fileupload');
 			customFileUpload.attachUploadWidget(el);
@@ -173,9 +173,66 @@ var buildingProject = {
 				return $('<div style="max-width: 800px;">' + content + '</div>');
 			}
 		});
+	},
+	makeMapArea: function(action, event, data, ins) {
+		if(action == "done") {
+			setTimeout(function(){
+				buildingProject.customColorbox($(event.target).find('>.files >li >.preview >a:not(.cboxElement)'), true);
+			}, 210);
+		} else {
+			
+		}
+	},
+	customColorbox: function(els, open) {
+		els.each(function(){
+			var el = $(this);
+			var superParent = el.closest('.map-area');
+			
+			
+
+			var img = $('<img src="' + el.attr('href') + '" />');
+			var popup = $('<div></div>').append(img);
+			var popupHide = $('<div class="popup-hide"></div>').append(popup);
+
+			el.after(popupHide);
+
+			
+			
+			
+			
+			
+			var name = superParent.find('.fileinput-button').find('input[type="hidden"]').attr('name').replace('[images]', '[imagesDetail][]');
+			var nameId = superParent.attr('id').replace('-fileupload', '-');
+			var total = (superParent.data('count')) ? Number(superParent.data('count')) : 0;
+			superParent.data('count', total + 1);
+			
+			popup.append('<div class="form-group"> <label class="control-label" for="buildingproject-bpvideo">Ảnh</label> <!-- The template to display files available for upload --> <script id="template-upload" type="text/x-tmpl"> {% for (var i=0, file; file=o.files[i]; i++) { %} <li class="template-upload fade"> <span class="preview"></span> <p class="name">{%=file.name%}</p> <strong class="error text-danger"></strong> <p class="size">Processing...</p> <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div> </li> {% } %} </script> <!-- The template to display files available for download --> <script id="template-download" type="text/x-tmpl"> {% for (var i=0, file; file=o.files[i]; i++) { %} <li data-delete-later="{%=file.deleteLater%}" class="template-download fade"> <span class="preview"> {% if (file.thumbnailUrl) { %} <a target="_blank" href="{%=file.url%}" title="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a> {% } %} </span> <p class="name"> {% if (file.url) { %} <a target="_blank" href="{%=file.url%}" title="{%=file.name%}" {%=file.thumbnailUrl?\'data-gallery\':\'\'%}>{%=file.name%}</a> {% } else { %} <span>{%=file.name%}</span> {% } %} </p> {% if (file.error) { %} <div><span class="label label-danger">Error</span> {%=file.error%}</div> {% } %} <span class="size">{%=o.formatFileSize(file.size)%}</span> {% if (file.deleteUrl) { %} <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields=\'{"withCredentials":true}\'{% } %}> <i class="glyphicon glyphicon-trash"></i> <span>Delete</span> </button> {% } else { %} <button class="btn btn-warning cancel"> <i class="glyphicon glyphicon-ban-circle"></i> <span>Cancel</span> </button> {% } %} </li> {% } %} </script> <!-- The file upload form used as target for the file upload widget --> <div id="' + nameId + total + '-fileupload-fileupload" data-upload-template-id="template-upload" data-download-template-id="template-download" data-callback="buildingProject.floorDetail"> <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload --> <div class="row fileupload-buttonbar"> <div class="col-lg-7"> <!-- The fileinput-button span is used to style the file input field as button --> <span class="btn btn-success fileinput-button"> <i class="glyphicon glyphicon-plus"></i> <span>Chọn ảnh...</span> <input type="hidden" name="' + name + '"><input type="file" id="' + nameId + total + '-fileupload" name="upload"> </span> <a class="btn btn-primary start"> <i class="glyphicon glyphicon-upload"></i> <span>Start upload</span> </a> <a class="btn btn-warning cancel"> <i class="glyphicon glyphicon-ban-circle"></i> <span>Cancel upload</span> </a> <a class="btn btn-danger delete"> <i class="glyphicon glyphicon-trash"></i> <span>Delete</span> </a> <input type="checkbox" class="toggle"> <!-- The global file processing state --> <span class="fileupload-process"></span> </div> <!-- The global progress state --> <div class="col-lg-5 fileupload-progress fade"> <!-- The global progress bar --> <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100"> <div class="progress-bar progress-bar-success" style="width: 0%;"></div> </div> <!-- The extended global progress state --> <div class="progress-extended">&nbsp;</div> </div> </div> <!-- The table listing the files available for upload/download --> <ul class="files"></ul> </div> <div class="help-block"></div> </div>');
+			
+			var elu = $('#' + nameId + total + '-fileupload-fileupload');
+			customFileUpload.attachUploadWidget(elu);
+			
+			
+			// elu.fileupload('option', 'done').call(elu, $.Event('done'), {result: {files: [{"url":"\/store\/building-project-images\/56318158d5d92.jpg","thumbnailUrl":"\/store\/building-project-images\/56318158d5d92.thumb.jpg","name":"563338988a8d6.jpg","type":"image\/jpeg","size":"1","deleteUrl":"\/admin\/express\/upload\/delete-image?orginal=563338988a8d6.jpg&thumbnail=563338988a8d6.thumb.jpg&deleteLater=1&folder=building-project-images","deleteType":"DELETE","deleteLater":1}]}});
+			
+			
+			
+			
+			
+			
+			
+			img.load(function(){
+				el.colorbox({
+					open: open,
+					inline: true,
+					href: popup,
+					title: false
+				});
+			});
+		});
+	},
+	floorDetail: function(action, event, data, ins) {
+		$.colorbox.resize();
+		
+		console.log(action);
 	}
 };
-
-var map = {
-	
-}

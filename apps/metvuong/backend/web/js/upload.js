@@ -22,6 +22,10 @@ var customFileUpload = {
 		
 		filesName.push(data.result['files'][0].name);
 		input.val(filesName.join(','));
+		
+		if($(ins).data('callback')) {
+			eval($(ins).data('callback') + '("done", event, data, ins)');
+		}
 	},
 	fileuploaddestroy: function(event, data, ins) {
 		if(data.context.data('delete-later')) {
@@ -46,6 +50,10 @@ var customFileUpload = {
 
 		var input = $('#' + event.target.id.replace('-fileupload', '')).prev();
 		input.val(value.join(','));
+		
+		if($(ins).data('callback')) {
+			eval($(ins).data('callback') + '("destroyed", event, data, ins)');
+		}
 	},
 	attachUploadWidget: function(el) {
 		el.fileupload({"autoUpload":true,"uploadTemplateId":null,"downloadTemplateId":null,"previewCrop":true,"previewMinWidth":120,"previewMinHeight":120,"previewMaxWidth":120,"previewMaxHeight":120,"disableExifThumbnail":true,"formData":[],"url":"/express/upload/image"});

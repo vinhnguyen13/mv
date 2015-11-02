@@ -224,3 +224,12 @@ td .floorplan:last-child {
 	top: -1000px;
 	left: -1000px;
 }
+.fileupload-buttonbar {
+	margin-right: 0px;
+}
+.popup-hide {
+	display: none;
+}
+#cboxLoadedContent {
+    overflow-x: hidden !important;
+}

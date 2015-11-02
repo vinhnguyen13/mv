@@ -15,7 +15,10 @@ $this->registerJsFile(Yii::getAlias('@web') . '/js/building-project.js', ['depen
 $this->registerJsFile(Yii::getAlias('@web') . '/js/gmap.js', ['depends' => ['yii\web\YiiAsset']]);
 $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=initMap', ['depends' => ['yii\web\YiiAsset']]);
 $this->registerCssFile(Yii::getAlias('@web') . '/css/building-project.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
-$this->registerJs('buildingProject.initForm()', View::POS_READY, 'initform');
+$this->registerJs('buildingProject.initForm();', View::POS_READY, 'initform');
+
+$this->registerJsFile(Yii::getAlias('@web') . '/js/jquery.colorbox-min.js', ['depends' => ['yii\web\YiiAsset']]);
+$this->registerCssFile(Yii::getAlias('@web') . '/css/colorbox.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
 
 $areaTypes = BuildingProject::getAreaTypes();
 
@@ -184,6 +187,7 @@ for($i = 1998; $i <= 2020; $i++) {
 								<div class="form-group">
 									<label class="control-label" for="buildingproject-bpvideo">Ảnh</label>
 									<?= FileUploadUI::widget([
+											'options' => ['data-callback' => 'buildingProject.makeMapArea', 'class' => 'map-area'],
 											'name' => 'BuildingProject[' . $name . '][floorPlan][' . $k . '][images]',
 											'id' => $name . $k,
 											'url' => Url::to('/express/upload/image'),
@@ -244,3 +248,6 @@ for($i = 1998; $i <= 2020; $i++) {
     </div>
     <?php ActiveForm::end(); ?>
 </div>
+<?php 
+	$this->registerJs('buildingProject.customColorbox($(".map-area >.files >li >.preview >"), false);', View::POS_READY, 'colorboxMapArea');
+?>
