@@ -74,7 +74,7 @@ class MetaController extends Controller
             $arr_data = array_merge($data, $seo, [
                 'fb:app_id' => '856286731156793',
                 'og:site_name' => 'Lancaster',
-                'og:type' => 'article',
+                'og:type' => 'website',
                 'og:locale' => 'vi_VN',
                 'og:locale:alternate' => 'en_US',
             ]);
