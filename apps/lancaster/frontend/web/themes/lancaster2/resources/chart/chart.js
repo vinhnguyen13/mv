@@ -1,5 +1,4 @@
 $(function () {
-    chart.init();
 });
 
 var chart = {
