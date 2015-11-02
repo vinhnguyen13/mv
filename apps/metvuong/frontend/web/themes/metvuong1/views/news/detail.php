@@ -27,9 +27,6 @@
 
 <div class="row">
     <div class="col-sm-8 col-lg-9 col-right-home detail-news">
-        <div id="list_news">
-            <input id="news_<?=$news->id?>" type="hidden" value="<?=$news->id?>-<?=$news->slug?>">
-        </div>
         <input id="current_id" type="hidden" value="<?=$news->id?>">
         <input id="current_slug" type="hidden" value="<?=$news->slug?>">
         <input id="current_title" type="hidden" value="<?=$news->title?>">
@@ -63,6 +60,7 @@
                     </div>
                 </div>
             </div>
+            <div class="height_<?=$news->id?>"></div>
         </article>
     </div>
 
@@ -87,23 +85,6 @@
     </ul>
 </div>
 <style>
-    .detail-news > a.top{
-        background-color: #2f781f;
-        bottom: 2em;
-        color: #fff;
-        display: none;
-        opacity:0.6;
-        padding: 1.5em;
-        position: fixed;
-        right: 1.5em;
-        text-decoration: none;
-        font-weight: 700;
-        font-size: 14px;
-    }
-    .detail-news > a.top:hover{
-        opacity:1;
-        transition:1s;
-    }
 
     .animated, .box-content img {
         -webkit-animation-duration: 2s;
@@ -139,27 +120,14 @@
 </style>
 <script type="text/javascript">
     $(document).ready(function(){
-//        var offset=350, // At what pixels show Back to Top Button
-//            scrollDuration=400; // Duration of scrolling to top
-//
-//        // Smooth animation when scrolling
-//        $('.top').click(function(event) {
-//            event.preventDefault();
-//            $('html, body').animate({
-//                scrollTop: 0}, scrollDuration);
-//        });
+//        var offset=350; // At what pixels show Back to Top Button
+
 
 //        $('.detail-news').bind('contextmenu',function(e){return false;});
 
         $(window).scroll(function () {
             var currentID = parseInt($('#current_id').val());
             var catID = parseInt($('#cat_id').val());
-
-//            if ($(this).scrollTop() > offset) {
-//                $('.top').fadeIn(500); // Time(in Milliseconds) of appearing of the Button when scrolling down.
-//            } else {
-//                $('.top').fadeOut(500); // Time(in Milliseconds) of disappearing of Button when scrolling up.
-//            }
 
             if ($(window).scrollTop() == $(document).height() - $(window).height()) {
 
@@ -170,7 +138,6 @@
                             type: 'POST',
                             success: function (data) {
                                 if (data) {
-                                    $('#list_news').append('<input id="news_'+data.id+'" type="hidden" value="'+data.id+'-'+data.slug+'">');
                                     $('#current_id').val(data.id);
                                     $('#current_slug').val(data.slug);
                                     $('#current_title').val(data.title);
@@ -206,18 +173,19 @@
                                                     '</div>'+
                                                 '</div>'+
                                             '</div>'+
-                                        '</div>' );
+                                        '</div>' +
+                                        '<div class="height_'+data.id+'"></div>' );
 
                                     // console.log(data);
                                 }
-                                FB.XFBML.parse($('.detail-news'));
+//                                FB.XFBML.parse($('.detail-news'));
                             },
                             error: function() {
                                 $('#current_id').val(0);
                                 $('#loader').html('<div>Đã hết dữ liệu</div>');
                             }
                         })
-                    }, 700);
+                    }, 800);
                 }
 
             }
