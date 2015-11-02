@@ -64,6 +64,17 @@ class ToolController extends Controller
         ]);
     }
 
+    public function actionGetChart()
+    {
+        if(Yii::$app->request->isAjax){
+            $filePath = Yii::$app->view->theme->basePath . '/resources/chart/data.json';
+            $fileContent = $this->readFile($filePath);
+            return $this->renderAjax('_partials/chart_view', [
+                'data'=>$fileContent
+            ]);
+        }
+    }
+
     public function actionSaveStep()
     {
         $app = Yii::$app;

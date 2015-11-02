@@ -44,8 +44,10 @@ use yii\widgets\Pjax;
 
 <script>
     $(document).on("blur",'#scenario_1 .cashflow',function() {
-        var total = ($('#scenario_1 .total_project_cost').val() * $('#scenario_1 .cashflow').val())/100
-        $('#scenario_1 .net_cashflow').html(total);
-        $('#scenario_1 .net_cashflow').autoNumeric('init', {aPad: false});
+        var fieldset = $(this).closest('fieldset');
+        console.log(fieldset.find('.total_project_cost').val());
+        var total = (fieldset.find('.total_project_cost').val() * fieldset.find('.cashflow').val())/100
+        fieldset.find('.net_cashflow').html(total);
+        fieldset.find('.net_cashflow').autoNumeric('init', {aPad: false});
     });
 </script>

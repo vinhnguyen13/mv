@@ -1,14 +1,6 @@
-<?php
-use yii\web\View;
-$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/chart/chart.css', ['depends' => ''], 'css-chart');
-Yii::$app->getView()->registerJsFile('http://code.highcharts.com/highcharts.js', ['position' => View::POS_BEGIN]);
-Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporting.js', ['position' => View::POS_BEGIN]);
-Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/chart/chart.js', ['position' => View::POS_END]);
-?>
 <div class="row main_content">
     <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 </div>
-
 
 <script>
     $(function () {
