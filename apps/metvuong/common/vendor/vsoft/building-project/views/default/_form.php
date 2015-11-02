@@ -249,5 +249,5 @@ for($i = 1998; $i <= 2020; $i++) {
     <?php ActiveForm::end(); ?>
 </div>
 <?php 
-	$this->registerJs('buildingProject.customColorbox($(".map-area >.files >li >.preview >"), false);', View::POS_READY, 'colorboxMapArea');
+	$this->registerJs('buildingProject.customColorbox($(".map-area >.files >li >.preview >a"), false);', View::POS_READY, 'colorboxMapArea');
 ?>
