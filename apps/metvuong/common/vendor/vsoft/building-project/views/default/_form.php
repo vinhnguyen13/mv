@@ -11,6 +11,7 @@ use common\widgets\FileUploadUI;
 use yii\web\View;
 use vsoft\buildingProject\models\BuildingProject;
 
+$this->registerJsFile(Yii::getAlias('@web') . '/js/jquery.maphilight.min.js', ['depends' => ['yii\web\YiiAsset']]);
 $this->registerJsFile(Yii::getAlias('@web') . '/js/building-project.js', ['depends' => ['yii\web\YiiAsset']]);
 $this->registerJsFile(Yii::getAlias('@web') . '/js/gmap.js', ['depends' => ['yii\web\YiiAsset']]);
 $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=initMap', ['depends' => ['yii\web\YiiAsset']]);
