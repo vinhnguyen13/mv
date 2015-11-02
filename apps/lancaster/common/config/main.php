@@ -13,6 +13,7 @@ return [
         '@vsoft/user' => dirname(__DIR__) . '/vendor/vsoft/user',
         '@funson86' => dirname(__DIR__) . '/vendor/funson86',
         '@funson86/cms' => dirname(__DIR__) . '/vendor/funson86/yii2-cms',
+        '@funson86/setting' => dirname(__DIR__) . '/vendor/funson86/yii2-setting',
     ),
     'modules'=>[
         /*'user-management' => [

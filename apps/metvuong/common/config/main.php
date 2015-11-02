@@ -4,11 +4,14 @@ return [
     'language' => 'en',
     'sourceLanguage' => 'en',
     'aliases' => array(
+        '@store' => dirname(dirname(__DIR__)) . '/store',
         '@vsoft/news' => dirname(__DIR__) . '/vendor/vsoft/news',
         '@vsoft/buildingProject' => dirname(__DIR__) . '/vendor/vsoft/building-project',
         '@vsoft/express' => dirname(__DIR__) . '/vendor/vsoft/express',
         '@vsoft/user' => dirname(__DIR__) . '/vendor/vsoft/user',
-        '@store' => dirname(dirname(__DIR__)) . '/store'
+        '@funson86' => dirname(__DIR__) . '/vendor/funson86',
+        '@funson86/cms' => dirname(__DIR__) . '/vendor/funson86/yii2-cms',
+        '@funson86/setting' => dirname(__DIR__) . '/vendor/funson86/yii2-setting',
     ),
     'modules' => [
         'user' => [
