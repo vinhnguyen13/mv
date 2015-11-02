@@ -20,7 +20,7 @@ class NewsWidget extends Widget
         $result = null;
         $view = $this->view;
         $cat_id = Yii::$app->params["news"]["widget-category"][$view];
-        $limit = Yii::$app->params["news"]["widget-limit"][$view];
+        $limit = Yii::$app->params["news"]["limit"][$view];
         $offset = 0;
         $order_by = ['id' => SORT_DESC];
 

@@ -34,6 +34,7 @@ class NewsController extends \yii\web\Controller
         $detail = CmsShow::findOne($id);
         $user_id = $detail->created_by;
         $author = Profile::findOne($user_id);
+        $catalog = CmsCatalog::findOne($detail->catalog_id);
 
         // add 1 for each click news link
         $click = $detail->click;
@@ -41,7 +42,7 @@ class NewsController extends \yii\web\Controller
         $detail->update();
 
         $this->view->title = $detail->title;
-        return $this->render('detail', ['news' => $detail, 'author' => $author]);
+        return $this->render('detail', ['news' => $detail, 'author' => $author, 'catalog' => $catalog]);
     }
 
     public function actionList($cat_id)
@@ -73,7 +74,7 @@ class NewsController extends \yii\web\Controller
             ->orderBy(['cms_show.id' => SORT_DESC])
             ->one();
 
-        $catalog = CmsCatalog::find()->asArray()->select(['title as catalog_name'])->where('id = :id', [':id' => $cat_id])->one();
+        $catalog = CmsCatalog::find()->asArray()->select(['title as catalog_name', 'slug as cat_slug'])->where('id = :id', [':id' => $cat_id])->one();
         $user_id = $model["created_by"];
         $profile = Profile::find()->asArray()->select(['name as author_name', 'avatar', 'bio'])->where('user_id = :uid', [':uid' => $user_id])->one();
 

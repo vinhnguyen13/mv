@@ -56,7 +56,7 @@ Yii::$app->view->registerMetaTag([
         <input id="cat_id" type="hidden" value="<?=$news->catalog_id?>">
         <article>
             <div class="time-post">
-                <a href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => $news->catalog_id]) ?>" class="color-title-link">Bất động sản</a>
+                <a href="<?=  \yii\helpers\Url::to(['news/list', 'cat_id' => $news->catalog_id, 'slug' => $catalog->slug]) ?>" class="color-title-link"><?=$catalog->title?></a>
                 <span class="">&nbsp;&nbsp;<?=date("d/m/Y g:i a",$news->created_at)?></span>
             </div>
             <h1 class="big-title"><?=$news->title?></h1>
@@ -180,7 +180,7 @@ Yii::$app->view->registerMetaTag([
                                     $('.detail-news').append(
                                         '<article>' +
                                         '<div class="time-post">'+
-                                            '<a href="<?= Yii::$app->urlManager->createAbsoluteUrl('news/list')?>?cat_id=' + data.catalog_id + '"  class="color-title-link">' + data.catalog_name + '</a>'+
+                                            '<a href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + data.catalog_id + '-' + data.cat_slug + '"  class="color-title-link">' + data.catalog_name + '</a>'+
                                             '<span>&nbsp;&nbsp;'+time+'</span>'+
                                         '</div>'+
                                         '<h1 class="big-title">'+data.title+'</h1>'+
