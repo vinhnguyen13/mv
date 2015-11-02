@@ -6,6 +6,29 @@
  * @var $news is a cms_show
  * @var $author get data from dektrium\user\models\Profile
  */
+
+Yii::$app->view->registerMetaTag([
+    'name' => 'keywords',
+    'content' => $news->title
+]);
+Yii::$app->view->registerMetaTag([
+    'name' => 'description',
+    'content' => $news->brief
+]);
+
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:title',
+    'content' => $news->title
+]);
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:description',
+    'content' => $news->brief
+]);
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:type',
+    'content' => 'article'
+]);
+
 ?>
 <script>
     window.fbAsyncInit = function() {
