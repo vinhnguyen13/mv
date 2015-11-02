@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use Yii;
 use yii\helpers\FileHelper;
 use yii\helpers\Json;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\web\Response;
@@ -50,6 +51,13 @@ class ToolController extends Controller
      */
     public function actionIndex()
     {
+        $route = array('index/index', 'subdomain' => 'kiev');
+
+        echo Url::to($route);
+        echo "<pre>";
+        print_r(54);
+        echo "</pre>";
+        exit;
         if(Yii::$app->request->isPost){
 //            $this->redirect(['chart']);
         }

@@ -11,6 +11,8 @@ return [
         '@vsoft/news' => dirname(__DIR__) . '/vendor/vsoft/news',
         '@vsoft/express' => dirname(__DIR__) . '/vendor/vsoft/express',
         '@vsoft/user' => dirname(__DIR__) . '/vendor/vsoft/user',
+        '@funson86' => dirname(__DIR__) . '/vendor/funson86',
+        '@funson86/cms' => dirname(__DIR__) . '/vendor/funson86/yii2-cms',
     ),
     'modules'=>[
         /*'user-management' => [

@@ -43,12 +43,9 @@ use yii\widgets\Pjax;
 </div>
 
 <script>
-    $(document).on("click",'#scenario_1 .net_cashflow',function() {
-
+    $(document).on("blur",'#scenario_1 .cashflow',function() {
         var total = ($('#scenario_1 .total_project_cost').val() * $('#scenario_1 .cashflow').val())/100
         $('#scenario_1 .net_cashflow').html(total);
         $('#scenario_1 .net_cashflow').autoNumeric('init', {aPad: false});
-        console.log($('#scenario_1 .total_project_cost').val() + '__' + $(this).val() + '____' + $('#scenario_1 .net_cashflow').val());
-
     });
 </script>

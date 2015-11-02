@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "33faacd2adbce1943b277415c07c6a53",
-    "content-hash": "0ee1165207cf386e3b6bad279e266dce",
+    "hash": "47b1ad62259d5f043ce13b71055fb458",
+    "content-hash": "75f29b0a0d147d7356adee90894f7fb7",
     "packages": [
         {
             "name": "2amigos/yii2-file-upload-widget",
@@ -799,140 +799,6 @@
                 "html"
             ],
             "time": "2013-11-30 08:25:19"
-        },
-        {
-            "name": "funson86/yii2-blog",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/funson86/yii2-blog.git",
-                "reference": "657458955e9b6bbbb7e4e584752d67089b675a49"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/funson86/yii2-blog/zipball/657458955e9b6bbbb7e4e584752d67089b675a49",
-                "reference": "657458955e9b6bbbb7e4e584752d67089b675a49",
-                "shasum": ""
-            },
-            "require": {
-                "mihaildev/yii2-ckeditor": "*",
-                "yiisoft/yii2": "*"
-            },
-            "type": "yii2-extension",
-            "extra": {
-                "bootstrap": "funson86\\blog\\Bootstrap"
-            },
-            "autoload": {
-                "psr-4": {
-                    "funson86\\blog\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Funson Lee",
-                    "email": "funson86@gmail.com"
-                }
-            ],
-            "description": "Yii2 Blog for other application",
-            "keywords": [
-                "extension",
-                "yii2"
-            ],
-            "time": "2015-08-07 03:54:44"
-        },
-        {
-            "name": "funson86/yii2-cms",
-            "version": "2.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/funson86/yii2-cms.git",
-                "reference": "b6bbf3effbab0cf0071edb5e6cac16ec2670d90a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/funson86/yii2-cms/zipball/b6bbf3effbab0cf0071edb5e6cac16ec2670d90a",
-                "reference": "b6bbf3effbab0cf0071edb5e6cac16ec2670d90a",
-                "shasum": ""
-            },
-            "require": {
-                "funson86/yii2-setting": "*",
-                "mihaildev/yii2-ckeditor": "*",
-                "yiisoft/yii2": "*"
-            },
-            "type": "yii2-extension",
-            "extra": {
-                "bootstrap": "funson86\\cms\\Bootstrap"
-            },
-            "autoload": {
-                "psr-4": {
-                    "funson86\\cms\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Funson Lee",
-                    "email": "funson86@gmail.com"
-                }
-            ],
-            "description": "Yii2 Cms for other application",
-            "keywords": [
-                "cms",
-                "extension",
-                "yii2"
-            ],
-            "time": "2015-01-31 02:46:08"
-        },
-        {
-            "name": "funson86/yii2-setting",
-            "version": "0.01",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/funson86/yii2-setting.git",
-                "reference": "4488822bb7ae5bcdf3d80f32fecceb398a3a22ea"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/funson86/yii2-setting/zipball/4488822bb7ae5bcdf3d80f32fecceb398a3a22ea",
-                "reference": "4488822bb7ae5bcdf3d80f32fecceb398a3a22ea",
-                "shasum": ""
-            },
-            "require": {
-                "yiisoft/yii2": "*"
-            },
-            "type": "yii2-extension",
-            "extra": {
-                "bootstrap": "funson86\\setting\\Bootstrap"
-            },
-            "autoload": {
-                "psr-4": {
-                    "funson86\\setting\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "authors": [
-                {
-                    "name": "Funson Lee",
-                    "email": "funson86@gmail.com"
-                }
-            ],
-            "description": "Yii2 Setting for other application",
-            "keywords": [
-                "extension",
-                "setting",
-                "yii2"
-            ],
-            "time": "2015-01-27 00:39:55"
         },
         {
             "name": "kartik-v/bootstrap-fileinput",
@@ -2104,7 +1970,6 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "dektrium/yii2-user": 20,
-        "funson86/yii2-blog": 20,
         "kartik-v/yii2-widget-fileinput": 20,
         "kartik-v/yii2-helpers": 20,
         "yurkinx/yii2-image": 20,
