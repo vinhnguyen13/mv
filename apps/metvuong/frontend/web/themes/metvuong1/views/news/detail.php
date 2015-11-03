@@ -114,13 +114,6 @@ Yii::$app->view->registerMetaTag([
     </ul>
 </div>
 
-<div class="fb-post" data-href="https://www.facebook.com/FacebookDevelopers/posts/10151471074398553" data-width="500">
-    <div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/FacebookDevelopers/posts/10151471074398553">
-            <p>Be the first to know when we release a new video by subscribing to our official Facebook Developers YouTube channel!  http://www.youtube.com/facebookdevelopers</p>
-            Posted by <a href="https://www.facebook.com/FacebookDevelopers/">Facebook Developers</a> on&nbsp;
-            <a href="https://www.facebook.com/FacebookDevelopers/posts/10151471074398553">29 Tháng 5 2013</a></blockquote>
-    </div>
-</div>
 <style>
     .loading { display: none; margin-bottom: 20px;}
     .animated, .box-content img {
