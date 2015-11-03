@@ -23,8 +23,14 @@ use yii\widgets\ActiveForm;
         'options' => [$model->lc_building_id => ['selected ' => true]],
     ])->label('Building Name') ?>
 
-    <?= $form->field($model, 'checkin')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'checkout')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'checkin')->widget(\yii\jui\DatePicker::class,[
+        'options' => ['class' => 'form-control'],
+        'dateFormat' => 'dd-MM-yyyy',
+    ]) ?>
+    <?= $form->field($model, 'checkout')->widget(\yii\jui\DatePicker::class,[
+        'dateFormat' => 'dd-MM-yyyy',
+        'options' => ['class' => 'form-control'],
+    ]) ?>
 
     <?php
     $apart_type = \vsoft\express\models\LcApartmentType::find()->all();

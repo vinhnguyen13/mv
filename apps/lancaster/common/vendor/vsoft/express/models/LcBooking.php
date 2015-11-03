@@ -43,7 +43,7 @@ class LcBooking extends LcBookingBase
         return array_merge(
             parent::rules(),
             [
-                [['checkin','checkout','phone', 'fullname', 'email'], 'required'],
+                [['checkin','checkout','phone', 'fullname', 'email', 'floorplan'], 'required'],
                 [['email'], 'email'],
 //                [['phone'], 'number'],
 //                [['checkin'], 'compare', 'compareAttribute'=>'checkout', 'operator'=>'<', 'skipOnEmpty'=>true],
