@@ -42,6 +42,7 @@ return [
         ],
         'translatemanager' => [
 			'class' => 'lajax\translatemanager\Module',
+			'tmpDir' => '@frontend/runtime'
         ],
     ],
     'components' => [
@@ -118,7 +119,7 @@ return [
 			        'sourceMessageTable' => '{{%language_source}}',
 			        'messageTable' => '{{%language_translate}}',
 			        'cachingDuration' => 86400,
-			        'enableCaching' => true,
+			        'enableCaching' => false,
 		        ],
 	        ],
         ],
