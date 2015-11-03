@@ -173,7 +173,7 @@ Yii::$app->view->registerMetaTag([
                             type: 'POST',
                             success: function (data) {
                                 if (data) {
-                                    loadError = false;
+                                    $(".loading").hide();
                                     $('#current_id').val(data.id);
                                     $('#current_slug').val(data.slug);
                                     $('#current_title').val(data.title);
@@ -217,10 +217,10 @@ Yii::$app->view->registerMetaTag([
                             },
                             error: function() {
                                 $('#current_id').val(0);
-                                $('#loader').html('<div>Đã hết dữ liệu</div>');
+                                $(".loading").hide();
                             }
                         });
-                        $(".loading").hide();
+
                     }, 2000);
                 }
 
