@@ -86,6 +86,15 @@ input, textarea {
     -webkit-appearance: none;
     border-radius: 0;
 }
+.help-block {
+	color: #F44336;
+    font-size: 14px;
+    margin-top: 4px;
+    display: none;
+}
+.has-error .help-block {
+	display: block;
+}
 /* Common */
 
 /* ------------------------------------------------------------------------------------------------------------------------------ */
@@ -352,6 +361,8 @@ header .book-now br {
 	font-family: 'Roboto', sans-serif;
 	font-size: 16px;
 	padding: 8px;
+}
+.contact-form-wrap .form-group {
 	margin-bottom: 8px;
 }
 .contact-form-wrap textarea {
