@@ -67,7 +67,7 @@ return [
                 'site/login' => 'user/security/login',
                 'site/signup' => 'user/registration/register',
 //                'news/<action:\w+>' => 'news/<action>',
-                'news/detail/<id:\d+>-<slug>' => 'news/view',
+                'news/<cat_id:\d+>-<cat_slug>/<id:\d+>-<slug>' => 'news/view',
                 'news/<cat_id:\d+>-<slug>' => 'news/list',
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',
 //                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',

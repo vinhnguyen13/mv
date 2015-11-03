@@ -23,7 +23,7 @@ $catalog = \vsoft\news\models\CmsCatalog::findOne($cat_id);
                          style="background-image: url('/store/news/show/<?= $n->banner ?>');"></div>
                     <p>
                         <a class="color-title-link"
-                           href="<?= \yii\helpers\Url::to(['news/view', 'id' => $n->id, 'slug' => $n->slug]) ?>">
+                           href="<?= \yii\helpers\Url::to(['news/view', 'id' => $n->id, 'slug' => $n->slug, 'cat_id' => $catalog->id, 'cat_slug' => $catalog->slug]) ?>">
                             <?= StringHelper::truncate($n->title, 30) ?>
                         </a>
                     </p>

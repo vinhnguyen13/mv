@@ -18,12 +18,12 @@ $catalog = \vsoft\news\models\CmsCatalog::findOne($cat_id);
     if (!empty($news)) {
         foreach ($news as $k => $n) { ?>
             <div class="wrap-img">
-                <a class="pull-left wrap-img" href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n->id, 'slug' => $n->slug])?>">
+                <a class="pull-left wrap-img" href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n->id, 'slug' => $n->slug, 'cat_id' => $cat_id, 'cat_slug' => $catalog->slug])?>">
                     <img src="/store/news/show/<?= $n->banner ?>" alt="<?= $n->title ?>" style="width: 442px; height: 294px;">
                 </a>
             </div>
             <p>
-                <a class="color-title-link" href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n->id, 'slug' => $n->slug])?>">
+                <a class="color-title-link" href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n->id, 'slug' => $n->slug, 'cat_id' => $cat_id, 'cat_slug' => $catalog->slug])?>">
                     <?=StringHelper::truncate($n->title, 30)?>
                 </a>
             </p>

@@ -22,9 +22,9 @@ foreach ($news as $n) {
     ?>
     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
         <div class="grd7">
-            <?= Html::a("<img src=\"/store/news/show/$n->banner \" alt=\"$n->title\">" , ['news/view', 'id' => $n->id, 'slug' => $n->slug], ['style' => ['text-decoration' => 'none']]) ?>
+            <?= Html::a("<img src=\"/store/news/show/$n->banner \" alt=\"$n->title\">" , ['news/view', 'id' => $n->id, 'slug' => $n->slug, 'cat_id' => $cat_id, 'cat_slug' => $catalog->slug], ['style' => ['text-decoration' => 'none']]) ?>
 
-            <h3 class="cap rotobobold"> <?= Html::a($n->title, ['news/view', 'id' => $n->id, 'slug' => $n->slug], ['style' => ['text-decoration' => 'none']]) ?> </h3>
+            <h3 class="cap rotobobold"> <?= Html::a($n->title, ['news/view', 'id' => $n->id, 'slug' => $n->slug, 'cat_id' => $cat_id, 'cat_slug' => $catalog->slug], ['style' => ['text-decoration' => 'none']]) ?> </h3>
 
             <p class="textcatbox"><?= StringHelper::truncate($n->brief, 150) ?></p>
 
