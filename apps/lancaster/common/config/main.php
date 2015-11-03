@@ -40,6 +40,9 @@ return [
                 'Account' => 'dektrium\user\models\Account',
             ],
         ],
+        'translatemanager' => [
+			'class' => 'lajax\translatemanager\Module',
+        ],
     ],
     'components' => [
         'user' => [
@@ -107,38 +110,17 @@ return [
             ],
         ],
         'i18n' => [
-            'translations' => [
-                '*' => [
-                    'class' => 'yii\i18n\DbMessageSource',
-                    'db' => 'db',
-                    'sourceLanguage' => 'xx-XX', // ???? ????????????
-                    'sourceMessageTable' => 'language_source',
-                    'messageTable' => 'language_translate',
-                    'cachingDuration' => 86400,
-                    'enableCaching' => true,
-                ],
-                'user' => [
-                    'class'          => 'yii\i18n\PhpMessageSource',
-                    'sourceLanguage' => 'ru',
-                    'basePath'       => '@vendor/dektrium/yii2-user/messages',
-                    'fileMap'        => [
-                        'modules/user/user' => 'user.php',
-                    ],
-                ],
-                'express*' => [
-                    'class'          => 'yii\i18n\PhpMessageSource',
-                    'sourceLanguage' => 'en-US',
-                    'forceTranslation' => true,
-                    'basePath'       => '@vendor/vsoft/express/messages',
-                    'fileMap'        => [
-                        'express' => 'express.php',
-                        'express/about' => 'about.php',
-                        'express/booking' => 'booking.php',
-                        'express/contact' => 'contact.php',
-                        'express/news' => 'news.php',
-                    ],
-                ],
-            ]
+	        'translations' => [
+		        '*' => [
+			        'class' => 'yii\i18n\DbMessageSource',
+			        'db' => 'db',
+			        'sourceLanguage' => 'en-US',
+			        'sourceMessageTable' => '{{%language_source}}',
+			        'messageTable' => '{{%language_translate}}',
+			        'cachingDuration' => 86400,
+			        'enableCaching' => true,
+		        ],
+	        ],
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',

@@ -440,6 +440,7 @@ header .book-now br {
     padding: 0px 18px;
     line-height: 50px;
     display: block;
+    text-transform: uppercase;
 }
 #paralax-nav .active a {
 	color: #234959;

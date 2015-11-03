@@ -81,6 +81,18 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
 			      </div>
 			    </div>
             </div>
+            <div class="col-lg-3 item">
+            	<div class="panel panel-primary">
+			      <div class="panel-heading">Languages</div>
+			      <div class="panel-body">
+			      	<ol class="list-unstyled">
+						<li><a href="<?=Yii::$app->urlManager->createUrl(['translatemanager'])?>">Manager</a></li>
+						<li><a href="<?=Yii::$app->urlManager->createUrl(['translatemanager/language/scan'])?>">Scan</a></li>
+						<li><a href="<?=Yii::$app->urlManager->createUrl(['translatemanager/language/optimizer'])?>">Optimizer</a></li>
+	                </ol>
+			      </div>
+			    </div>
+            </div>
 			<?php
 			if (Yii::$app->user->can('accessSystems')) {
 				?>

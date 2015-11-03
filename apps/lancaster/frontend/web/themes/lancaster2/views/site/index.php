@@ -30,13 +30,13 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
     <div id="paralax-wrapper">
         <div id="paralax-nav">
             <ul class="items">
-                <li class="active"><a href="#">THE BUILDING</a><div class="arrow-down"></div></li>
-                <li><a href="#">APARTMENTS</a><div class="arrow-down"></div></li>
-                <li><a href="#">AMENITIES</a><div class="arrow-down"></div></li>
-                <li><a href="#">VIEWS</a><div class="arrow-down"></div></li>
-                <li><a href="#">NEIGHBORHOOD</a><div class="arrow-down"></div></li>
-                <li><a href="#">PRICING</a><div class="arrow-down"></div></li>
-                <li><a href="#">LOCATION</a><div class="arrow-down"></div></li>
+                <li class="active"><a href="#"><?= Yii::t('home', 'The Building') ?></a><div class="arrow-down"></div></li>
+                <li><a href="#"><?= Yii::t('home', 'Apartments') ?></a><div class="arrow-down"></div></li>
+                <li><a href="#"><?= Yii::t('home', 'Amenities') ?></a><div class="arrow-down"></div></li>
+                <li><a href="#"><?= Yii::t('home', 'Views') ?></a><div class="arrow-down"></div></li>
+                <li><a href="#"><?= Yii::t('home', 'Neighborhood') ?></a><div class="arrow-down"></div></li>
+                <li><a href="#"><?= Yii::t('home', 'Pricing') ?></a><div class="arrow-down"></div></li>
+                <li><a href="#"><?= Yii::t('home', 'Location') ?></a><div class="arrow-down"></div></li>
             </ul>
         </div>
         <div id="paralax-page">

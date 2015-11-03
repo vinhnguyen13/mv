@@ -10,6 +10,9 @@ return [
     'id' => 'app-console',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'aliases' => [
+	    '@vendor'=>dirname(dirname(dirname(dirname(__DIR__)))).'/vendor',
+    ],
     'controllerNamespace' => 'console\controllers',
     'components' => [
         'log' => [
