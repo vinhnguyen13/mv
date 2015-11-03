@@ -60,11 +60,16 @@ $(document).ready(function() {
         return false;
     });
 
-    $('.menu-detail-duan li').on('click',function() {
-        //$('.collapse').collapse();
-        if($(this).hasClass('submenu')) {
-            $(this).toggleClass('active');
+    $('.item-infor a').on('click',function() {
+        var _this = $(this);
+        if( _this.parent().find('>.show-infor').length > 0 ) {
+            var hItem = _this.parent().find('>.show-infor').outerHeight();
+            $('.show-infor').slideUp('fast');
+            $('.item-infor').removeClass('active');
+            _this.parent().addClass('active');
+            _this.parent().find('>.show-infor').slideDown('fast');
         }
+        return false;
     });
 
     var secondaryNav = $('.cd-secondary-nav'),

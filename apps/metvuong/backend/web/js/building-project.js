@@ -295,8 +295,9 @@ var buildingProject = {
 			});
 
 			popup.find('.fileinput-button').click(function(){
-				$('#coordsText')
-				console.log(getValueCoord);
+				$('#coordsText').val('');
+				var arr = getValueCoord.split(',');
+				arrTotal.push(arr);
 			});
 		});
 	},
