@@ -28,12 +28,15 @@ Yii::$app->view->registerMetaTag([
     'property' => 'og:type',
     'content' => 'article'
 ]);
-
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:image',
+    'content' => Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'. $news->banner)
+]);
 ?>
 <script>
     window.fbAsyncInit = function() {
         FB.init({
-            appId      : '736950189771012',
+            appId      : '526268097523112',
             xfbml      : true,
             version    : 'v2.5'
         });
@@ -74,10 +77,10 @@ Yii::$app->view->registerMetaTag([
                     <div class="box-content">
                         <div><?=$news->content?></div>
                         <div id="social<?=$news->id?>" class="share-social mgT-10 wrap-img">
-                            <div class="fb-like" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug]) ?>" data-layout="button_count" style="margin-right: 10px;"></div>
-                            <div class="fb-send" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug]) ?>" data-show-faces="false" style="margin-right: 10px;"></div>
-                            <div class="fb-share-button" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug]) ?>" data-layout="button_count"></div><br>
-                            <div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl(['news/view','id' => $news->id])?>" data-width="100%" data-numposts="3"></div>
+                            <div class="fb-like" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug, 'cat_id' => $news->catalog_id, 'cat_slug' => $catalog->slug]) ?>" data-layout="button_count" style="margin-right: 10px;"></div>
+                            <div class="fb-send" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug, 'cat_id' => $news->catalog_id, 'cat_slug' => $catalog->slug]) ?>" data-show-faces="false" style="margin-right: 10px;"></div>
+                            <div class="fb-share-button" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug, 'cat_id' => $news->catalog_id, 'cat_slug' => $catalog->slug]) ?>" data-layout="button_count"></div><br>
+                            <div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl(['news/view', 'id' => $news->id, 'slug' => $news->slug, 'cat_id' => $news->catalog_id, 'cat_slug' => $catalog->slug])?>" data-width="100%" data-numposts="3"></div>
                         </div>
 
                     </div>
@@ -109,6 +112,14 @@ Yii::$app->view->registerMetaTag([
         <li><a href="#"><em class="fa fa-pinterest"></em></a></li>
         <li><a href="#"><em class="fa fa-linkedin"></em></a></li>
     </ul>
+</div>
+
+<div class="fb-post" data-href="https://www.facebook.com/FacebookDevelopers/posts/10151471074398553" data-width="500">
+    <div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/FacebookDevelopers/posts/10151471074398553">
+            <p>Be the first to know when we release a new video by subscribing to our official Facebook Developers YouTube channel!  http://www.youtube.com/facebookdevelopers</p>
+            Posted by <a href="https://www.facebook.com/FacebookDevelopers/">Facebook Developers</a> on&nbsp;
+            <a href="https://www.facebook.com/FacebookDevelopers/posts/10151471074398553">29 Tháng 5 2013</a></blockquote>
+    </div>
 </div>
 <style>
     .loading { display: none; margin-bottom: 20px;}
@@ -198,10 +209,10 @@ Yii::$app->view->registerMetaTag([
                                                 '<div class="box-content">'+
                                                     '<div>'+data.content+'</div>'+
                                                     '<div id="social'+data.id+'" class="share-social mgT-10 wrap-img">'+
-                                                        '<div class="fb-like" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news/view')?>?id=' + data.id + '" data-layout="button_count" style="margin-right: 10px;"></div>' +
-                                                        '<div class="fb-send" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news/view')?>?id=' + data.id + '" data-show-faces="false" style="margin-right: 10px;"></div>' +
-                                                        '<div class="fb-share-button" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news/view')?>?id=' + data.id + '" data-layout="button_count"></div><br>' +
-                                                        '<div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news/view')?>?id=' + data.id + '" data-width="600" data-numposts="3" ></div>' +
+                                                        '<div class="fb-like" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/'+data.catalog_id+'-'+data.cat_slug+'/' + data.id + '-'+data.slug+'" data-layout="button_count" style="margin-right: 10px;"></div>' +
+                                                        '<div class="fb-send" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/'+data.catalog_id+'-'+data.cat_slug+'/' + data.id + '-'+data.slug+'" data-show-faces="false" style="margin-right: 10px;"></div>' +
+                                                        '<div class="fb-share-button" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/'+data.catalog_id+'-'+data.cat_slug+'/' + data.id + '-'+data.slug+'" data-layout="button_count"></div><br>' +
+                                                        '<div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/'+data.catalog_id+'-'+data.cat_slug+'/' + data.id + '-'+data.slug+'" data-width="600" data-numposts="3" ></div>' +
                                                     '</div>'+
                                                 '</div>'+
                                             '</div>'+
