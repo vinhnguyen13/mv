@@ -95,6 +95,7 @@ $(document).ready(function() {
     });
 
     $('.item-infor > a').on('click',function() {
+        player.pause();
         var _this = $(this);
 
         if( _this.parents('.show-infor').length > 0 ) {
