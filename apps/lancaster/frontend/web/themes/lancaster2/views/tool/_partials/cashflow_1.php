@@ -12,7 +12,7 @@ use yii\widgets\Pjax;
 ?>
 <h1>Scenario 1</h1>
 <?php $form = ActiveForm::begin([
-    'options' => ['enctype' => 'multipart/form-data', 'data-pjax'=>'#p_scenario_1'],
+    'options' => ['enctype' => 'multipart/form-data', 'id'=>'p_scenario_1'],
     'action' => \yii\helpers\Url::toRoute(['tool/save-step', 'step'=>'scenario_1'])
 ]); ?>
 
@@ -31,7 +31,7 @@ use yii\widgets\Pjax;
     <div class="form-group">
         <label class="col-lg-1 control-label"></label>
         <div class="col-lg-11">
-        <?= Html::submitButton('Next', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('Next', ['class' => 'btn btn-primary next']) ?>
         </div>
     </div>
 <?php ActiveForm::end(); ?>
@@ -43,11 +43,21 @@ use yii\widgets\Pjax;
 </div>
 
 <script>
+    $(document).on("click",'#scenario_1 .next',function() {
+        chart.next('/tool/save-step', 'p_scenario_1', 'scenario_1/afterNext');
+        return false;
+    });
+
+    $(document).bind( 'scenario_1/afterNext', function(event, json, string){
+        console.log(json);
+    });
+
     $(document).on("blur",'#scenario_1 .cashflow',function() {
         var fieldset = $(this).closest('fieldset');
-        console.log(fieldset.find('.total_project_cost').val());
-        var total = (fieldset.find('.total_project_cost').val() * fieldset.find('.cashflow').val())/100
-        fieldset.find('.net_cashflow').html(total);
-        fieldset.find('.net_cashflow').autoNumeric('init', {aPad: false});
+        console.log($('.total_project_cost').val());
+        var total = ($('.total_project_cost').val() * fieldset.find('.cashflow').val())/100
+        fieldset.find('label.net_cashflow').html(total);
+        fieldset.find('label.net_cashflow').autoNumeric('init', {aPad: false});
+        fieldset.find('input.net_cashflow').val(total);
     });
 </script>
