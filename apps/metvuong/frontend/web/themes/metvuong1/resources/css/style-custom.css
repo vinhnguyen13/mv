@@ -1762,6 +1762,9 @@ footer {
     box-shadow: 1px 1px 2px #e6e6e6;
     overflow: hidden;
 }
+.item-pics div.wrap-img.active {
+    border: 1px solid #49B12F;
+}
 .item-pics div.wrap-img div {
     overflow: hidden;
 }
@@ -2039,7 +2042,7 @@ button.btn.btn-default,
     color: #5BB249;
 }
 .group-menu.active > a {
-    border-bottom: none;
+    /* border-bottom: none; */
 }
 .item-infor a:hover {
     text-decoration: none;
@@ -2194,7 +2197,7 @@ button.btn.btn-default,
 }
 .wrap-detail-duan {
     height: 620px;
-    border: 1px solid #EAEAEA;
+    /* border: 1px solid #EAEAEA; */
     border-radius: 4px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
@@ -2219,4 +2222,10 @@ button.btn.btn-default,
 }
 .item-ti {
     padding: 10px;
+}
+.item-detail img {
+    max-width: 100%;
+}
+.item-tab {
+    display: none;
 }
