@@ -55,7 +55,7 @@ class CmsCatalogSearch extends CmsCatalog
 
         $query->andFilterWhere([
             'id' => $this->id,
-            'parent_id' => $this->parent_id,
+//            'parent_id' => $this->parent_id,
             'is_nav' => $this->is_nav,
             'sort_order' => $this->sort_order,
             'page_type' => $this->page_type,

@@ -41,9 +41,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'label' => 'Catalog',
-                'attribute' => 'parent_id',
+                'attribute' => 'catalog_id',
                 'value' => function ($model) {
-                    return $model->getCatalog()->one()->title;
+                    if($model->getCatalog())
+                        return $model->getCatalog()->one()->title;
+                    return '';
                 },
             ],
 
