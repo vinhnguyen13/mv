@@ -1,3 +1,15 @@
+<?php
+$scenario_1 = $data["scenario_1"];
+$categories = '';
+$data_1 = '';
+foreach($scenario_1 as $key => $value){
+    $categories = $categories . $key . ',';
+    $data_1 = $data_1 . $value . ',';
+}
+$categories = [ rtrim($categories, ',') ];
+$data_1 = '[' .rtrim($data_1, ',') . ']';
+
+?>
 <div class="row main_content">
     <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 </div>
@@ -39,11 +51,11 @@
             series: [{
                 name: 'Scenario 1',
                 color: '#5698D3',
-                data: [-270, -342, -373, -389, -534, -547, -560, -580, -651, -565, -648, -599, -606, -586, -596, -494, -557, -527, -606, -593, -671, -664, -774, -743, -858, -625, -671, -403, -492, 453, 595, 595]
+                data: <?=$data_1?>
             }, {
                 name: 'Scenario 2',
                 color: '#EE863F',
-                data: [-270, -342, -373, -318, -456, -462, -468, -480, -544, -303, -378, -226, -222, -89, -75, 142, 147, 297, 218, 281, 203, 260, 150, 75, -41, -85, -131, -168, -256, 455, 597, 597]
+                data: [-270, -342, -373, -318, -456, -462]
             }]
         });
 

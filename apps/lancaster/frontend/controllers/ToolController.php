@@ -69,6 +69,7 @@ class ToolController extends Controller
         if(Yii::$app->request->isAjax){
             $filePath = Yii::$app->view->theme->basePath . '/resources/chart/data.json';
             $fileContent = $this->readFile($filePath);
+            $fileContent = Json::decode($fileContent);
             return $this->renderAjax('_partials/chart_view', [
                 'data'=>$fileContent
             ]);
@@ -94,7 +95,7 @@ class ToolController extends Controller
                 $net_cashflow = $app->request->post()["net_cashflow"];
                 $scenario_1 = ['scenario_1' => $net_cashflow];
                 $path = Yii::$app->view->theme->basePath.'\\resources\\chart\\';
-                $file_name = 'data1.json';
+                $file_name = 'data.json';
                 $fp = fopen($path.$file_name,'w');
                 $data = Json::encode($scenario_1);
                 fwrite($fp, $data);

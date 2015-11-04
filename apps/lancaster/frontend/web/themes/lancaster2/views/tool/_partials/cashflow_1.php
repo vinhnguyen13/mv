@@ -71,7 +71,7 @@ use yii\widgets\Pjax;
         /**
          * save data of form to json (file)
          */
-        console.log(json);
+        console.log(json.data);
     });
 
     $(document).on("blur",'#scenario_1 .cashflow',function() {
