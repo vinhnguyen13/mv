@@ -11,6 +11,7 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/font-awesome.min.css" />
     <link rel="stylesheet" href="css/owl.carousel.css" />
+    <link rel="stylesheet" href="css/simple-line-icons.css" />
     <link rel="stylesheet" href="css/style-custom.css" />
     <!--[if lt IE 9]>
         <script src="js/html5shiv.js"></script>
@@ -21,9 +22,9 @@
     <script src="js/owl.carousel.js"></script>
     <script src="js/common.js"></script>
     <script>
-        $(document).ready(function() {
-            var sync1 = $("#sync1");
-            var sync2 = $("#sync2");
+        function runSlideDuAn(item1, item2) {
+            var sync1 = $(item1);
+            var sync2 = $(item2);
 
             sync1.owlCarousel({
                 singleItem : true,
@@ -49,17 +50,17 @@
 
             function syncPosition(el){
                 var current = this.currentItem;
-                $("#sync2")
+                sync2
                 .find(".owl-item")
                 .removeClass("synced")
                 .eq(current)
                 .addClass("synced")
-                if($("#sync2").data("owlCarousel") !== undefined){
+                if(sync2.data("owlCarousel") !== undefined){
                     center(current)
                 }
             }
 
-            $("#sync2").on("click", ".owl-item", function(e){
+            sync2.on("click", ".owl-item", function(e){
                 e.preventDefault();
                 var number = $(this).data("owlItem");
                 sync1.trigger("owl.goTo",number);
@@ -90,6 +91,9 @@
                     sync2.trigger("owl.goTo", num-1)
                 }
             }
+        }
+        $(document).ready(function() {
+            runSlideDuAn('#sync1','#sync2');
         });
     </script>
 </head>
@@ -155,21 +159,41 @@
         <div class="container cd-main-content">
             <div class="row">
                 <div class="col-xs-6 pdR-0">
-                    <div id="sync1" class="owl-carousel">
-                        <div class="item bgcover img-big-duan" style="background-image:url(images/21311_Khai-truong-Pearl-Plaza-1.jpg)"></div>
-                        <div class="item bgcover img-big-duan" style="background-image:url(images/87bbds2.jpg)"></div>
-                        <div class="item bgcover img-big-duan" style="background-image:url(images/22311_Khai-truong-Pearl-Plaza-8.jpg)"></div>
-                        <div class="item bgcover img-big-duan" style="background-image:url(images/22311_Khai-truong-Pearl-Plaza-10.jpg)"></div>
-                        <div class="item bgcover img-big-duan" style="background-image:url(images/21311_Khai-truong-Pearl-Plaza-1.jpg)"></div>
-                        <div class="item bgcover img-big-duan" style="background-image:url(images/21311_Khai-truong-Pearl-Plaza-1.jpg)"></div>
-                    </div>
-                    <div id="sync2" class="owl-carousel">
-                        <div class="item bgcover" style="background-image:url(images/21311_Khai-truong-Pearl-Plaza-1.jpg)"></div>
-                        <div class="item bgcover" style="background-image:url(images/87bbds2.jpg)"></div>
-                        <div class="item bgcover" style="background-image:url(images/22311_Khai-truong-Pearl-Plaza-8.jpg)"></div>
-                        <div class="item bgcover" style="background-image:url(images/22311_Khai-truong-Pearl-Plaza-10.jpg)"></div>
-                        <div class="item bgcover" style="background-image:url(images/21311_Khai-truong-Pearl-Plaza-1.jpg)"></div>
-                        <div class="item bgcover" style="background-image:url(images/21311_Khai-truong-Pearl-Plaza-1.jpg)"></div>
+                    <div class="wrap-detail-duan">
+                        <div id="item-tqda" class="item-detail item-tqda">
+                            <div id="sync1" class="owl-carousel custom-slide">
+                                <div class="item bgcover img-big-duan" style="background-image:url(images/21311_Khai-truong-Pearl-Plaza-1.jpg)"></div>
+                                <div class="item bgcover img-big-duan" style="background-image:url(images/87bbds2.jpg)"></div>
+                                <div class="item bgcover img-big-duan" style="background-image:url(images/22311_Khai-truong-Pearl-Plaza-8.jpg)"></div>
+                                <div class="item bgcover img-big-duan" style="background-image:url(images/22311_Khai-truong-Pearl-Plaza-10.jpg)"></div>
+                                <div class="item bgcover img-big-duan" style="background-image:url(images/21311_Khai-truong-Pearl-Plaza-1.jpg)"></div>
+                                <div class="item bgcover img-big-duan" style="background-image:url(images/21311_Khai-truong-Pearl-Plaza-1.jpg)"></div>
+                            </div>
+                            <div id="sync2" class="owl-carousel thumnail-list">
+                                <div class="item bgcover" style="background-image:url(images/21311_Khai-truong-Pearl-Plaza-1.jpg)"></div>
+                                <div class="item bgcover" style="background-image:url(images/87bbds2.jpg)"></div>
+                                <div class="item bgcover" style="background-image:url(images/22311_Khai-truong-Pearl-Plaza-8.jpg)"></div>
+                                <div class="item bgcover" style="background-image:url(images/22311_Khai-truong-Pearl-Plaza-10.jpg)"></div>
+                                <div class="item bgcover" style="background-image:url(images/21311_Khai-truong-Pearl-Plaza-1.jpg)"></div>
+                                <div class="item bgcover" style="background-image:url(images/21311_Khai-truong-Pearl-Plaza-1.jpg)"></div>
+                            </div>
+                        </div>
+                        <div id="item-bdvt" class="item-detail item-bdvt">
+                            <div class="wrap-img">
+                                <img src="images/Galaxy_Ban do_800x500px.jpg" alt="">
+                            </div>
+                            <p>Galaxy 9 tọa lạc tại mặt tiền đường Nguyễn Khoái, Quận 4, sở hữu vị trí giao thông liên vùng thuận lợi.</p>
+                            <ul>
+                                <li>Cách Quận 1 chỉ 5 phút qua cầu Calmette.<span></span></li>
+                                <li>Cách Quận 5 chỉ 3 phút qua cầu Nguyễn Văn Cừ.<span></span></li>
+                            </ul>
+                        </div>
+                        <div id="item-ti" class="item-detail item-ti">
+                            <div class="wrap-img"><img src="images/Galaxy Siteplan.jpg" alt=""></div>
+                        </div>
+                        <div id="item-tdxd" class="item-detail item-tdxd">
+                            
+                        </div>
                     </div>
                 </div>
                 <div class="col-xs-6 pdL-10">
@@ -178,9 +202,9 @@
                         <h2>KINGSTON RESIDENCE</h2>
                     </div>
                     <div class="wrap-infor-duan">
-                        <div class="item-infor active">
-                            <a href="#" class="clearfix" href ="#collapseOne">TỔNG QUAN DỰ ÁN<em class="fa fa-chevron-right pull-right"></em></a>
-                            <div id="collapseOne" class="show-infor in">
+                        <div class="item-infor active group-menu">
+                            <a href="#item-tqda" class="clearfix" href ="#collapseOne">TỔNG QUAN DỰ ÁN<em class="fa fa-chevron-right pull-right"></em></a>
+                            <div id="collapseOne" class="show-infor in fadeInLeft">
                                 <table>
                                     <tr>
                                         <th>VỊ TRÍ DỰ ÁN</th>
@@ -222,20 +246,65 @@
                             </div>
                         </div>
                         <div class="item-infor">
-                            <a href="#" class="clearfix">BẢN ĐỒ VỊ TRÍ</a>
+                            <a href="#item-bdvt" class="clearfix">BẢN ĐỒ VỊ TRÍ</a>
                         </div>
                         <div class="item-infor">
-                            <a href="#" class="clearfix">TIỆN ÍCH</a>
+                            <a href="#item-ti" class="clearfix">TIỆN ÍCH</a>
                         </div>
-                        <div class="item-infor">
-                            <a href="#" class="clearfix">TIẾN ĐỘ XÂY DỰNG<em class="fa fa-chevron-right pull-right"></em></a>
+                        <div class="item-infor tab-tdxd">
+                            <a href="#item-tdxd" class="clearfix">TIẾN ĐỘ XÂY DỰNG<em class="fa fa-chevron-right pull-right"></em></a>
                             <div class="show-infor">
-                                
+                                <h4><em class="fa fa-angle-right mgR-5"></em>2014</h4>
+                                <div class="row list-pics-tdxd">
+                                    <div class="col-md-3 item-pics">
+                                        <div class="wrap-img">
+                                            <div>
+                                                <a class="group1" href="#" title="" data-imgsrc='["images/tdgalaxy9754.jpg","images/21311_Khai-truong-Pearl-Plaza-2.jpg","images/21311_Khai-truong-Pearl-Plaza-1.jpg","images/22311_Khai-truong-Pearl-Plaza-7.jpg","images/22311_Khai-truong-Pearl-Plaza-8.jpg","images/22311_Khai-truong-Pearl-Plaza-9.jpg","images/tdgalaxy9754.jpg"]'><img src="images/tdgalaxy9754.jpg"></a>
+                                            </div>
+                                        </div>
+                                        <span><em class="icon-calendar"></em>THÁNG 09/2015</span>
+                                    </div>
+                                    <div class="col-md-3 item-pics">
+                                        <div class="wrap-img">
+                                            <div>
+                                                <a class="group2" href="#" title="" data-imgsrc='["images/galaxy9_250515-4.jpg","images/21311_Khai-truong-Pearl-Plaza-2.jpg","images/21311_Khai-truong-Pearl-Plaza-1.jpg"]'><img src="images/công-tác-sơn-nước.jpg"></a>
+                                            </div>
+                                        </div>
+                                        <span><em class="icon-calendar"></em>THÁNG 09/2015</span>
+                                    </div>
+                                    <div class="col-md-3 item-pics">
+                                        <div class="wrap-img"><div><img src="images/tdxd-galaxy965.jpg"></div></div>
+                                        <span><em class="icon-calendar"></em>THÁNG 09/2015</span>
+                                    </div>
+                                    <div class="col-md-3 item-pics">
+                                        <div class="wrap-img"><div><img src="images/1công-tác-xây-gạch.jpg"></div></div>
+                                        <span><em class="icon-calendar"></em>THÁNG 09/2015</span>
+                                    </div>
+                                </div>
+                                <h4><em class="fa fa-angle-right mgR-5"></em>2015</h4>
+                                <div class="row list-pics-tdxd">
+                                    <div class="col-md-3 item-pics">
+                                        <div class="wrap-img"><div><img src="images/galaxy9_250515-4.jpg"></div></div>
+                                        <span><em class="icon-calendar"></em>THÁNG 09/2015</span>
+                                    </div>
+                                    <div class="col-md-3 item-pics">
+                                        <div class="wrap-img"><div><img src="images/tdgalaxy9754.jpg"></div></div>
+                                        <span><em class="icon-calendar"></em>THÁNG 09/2015</span>
+                                    </div>
+                                    <div class="col-md-3 item-pics">
+                                        <div class="wrap-img"><div><img src="images/tdgalaxy9754.jpg"></div></div>
+                                        <span><em class="icon-calendar"></em>THÁNG 09/2015</span>
+                                    </div>
+                                    <div class="col-md-3 item-pics">
+                                        <div class="wrap-img"><div><img src="images/tdgalaxy9754.jpg"></div></div>
+                                        <span><em class="icon-calendar"></em>THÁNG 09/2015</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="item-infor group-menu">
                             <a href="#" class="clearfix">KHU CĂN HỘ<em class="fa fa-chevron-right pull-right"></em></a>
-                            <div id="collapseTwo" class="show-infor">
+                            <div id="collapseTwo" class="show-infor fadeInLeft">
                                 <div class="item-infor">
                                     <a href="#" class="clearfix">MẶT BẰNG<em class="fa fa-chevron-right pull-right"></em></a>
                                     <div class="show-infor" id="">

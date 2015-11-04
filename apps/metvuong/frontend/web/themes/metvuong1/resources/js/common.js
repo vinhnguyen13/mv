@@ -60,17 +60,49 @@ $(document).ready(function() {
         return false;
     });
 
-    $('.item-infor a').on('click',function() {
+    //start page du-an
+    $('.item-infor a').each(function() {
         var _this = $(this);
+        if(_this.parent().hasClass('active')) {
+            var idShowBox = _this.attr('href');
+            $(idShowBox).fadeIn();
+        }
+    });
+    $('.list-pics-tdxd .item-pics a').on('click',function() {
+        $('#item-tdxd').html('');
+        var _this = $(this),
+            arrPic = _this.data('imgsrc'),
+            $wrapSlide = $('<div id="slideTDXD" class="owl-carousel"></div>'),
+            $thumSlide = $('<div id="slideTDXD-thum" class="owl-carousel thumnail-list"></div>');
+        for(var i = 0; i < arrPic.length; i++) {
+            var $itemWrap = $('<div class="item bgcover img-big-duan" style="background-image:url('+arrPic[i]+')"></div>'),
+                $itemThum = $('<div class="item bgcover img-big-duan" style="background-image:url('+arrPic[i]+')"></div>');
+            $wrapSlide.append($itemWrap);
+            $thumSlide.append($itemThum);
+        }
+        $('#item-tdxd').append($wrapSlide).append($thumSlide);
+        runSlideDuAn('#slideTDXD','#slideTDXD-thum');
+    });
+    $('.item-infor > a').on('click',function() {
+        var _this = $(this);
+        $('.show-infor').slideUp('fast');
+        $('.item-infor').removeClass('active');
+        _this.parent().addClass('active');
         if( _this.parent().find('>.show-infor').length > 0 ) {
             var hItem = _this.parent().find('>.show-infor').outerHeight();
-            $('.show-infor').slideUp('fast');
-            $('.item-infor').removeClass('active');
-            _this.parent().addClass('active');
             _this.parent().find('>.show-infor').slideDown('fast');
         }
+        var idShowBox = _this.attr('href');
+        $('.item-detail').hide();
+        $(idShowBox).css({
+            display: 'block',
+            visibility: 'hidden'
+        });
+        $(idShowBox).css('visibility','visible').hide().fadeIn();
+
         return false;
     });
+    //end page du-an
 
     var secondaryNav = $('.cd-secondary-nav'),
         secondaryNavTopPosition = secondaryNav.offset().top,
@@ -79,7 +111,7 @@ $(document).ready(function() {
         valShow;
 
     $(window).on('scroll', function(){
-        valShow = $(window).scrollTop() - hFirstNav
+        valShow = $(window).scrollTop() - hFirstNav/2
         if( valShow > 0 ) {
             secondaryNav.addClass('is-fixed');
             setTimeout(function() {
