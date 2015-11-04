@@ -42,7 +42,8 @@ return [
         ],
         'translatemanager' => [
 			'class' => 'lajax\translatemanager\Module',
-			'tmpDir' => '@frontend/runtime'
+			'tmpDir' => '@frontend/runtime',
+			'roles' => ['@']
         ],
     ],
     'components' => [
