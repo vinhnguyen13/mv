@@ -6,9 +6,12 @@
                 <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
                     <span class="icon-lang-select lang-vi"></span>
                 <span class="caret"></span></button>
+                <?php $supportedLanguages = Yii::$app->bootstrap['languageSelector']['supportedLanguages']; ?>
                 <ul class="dropdown-menu">
-                    <li><a class="icon-lang lang-en" href="#">ENGLISH</a></li>
-                    <li><a class="icon-lang lang-vi" href="#">VIETNAMESE</a></li>
+                    <li><a class="icon-lang lang-vi<?=(!empty($supportedLanguages[1]) && Yii::$app->language == $supportedLanguages[1]) ? ' active' : '';?>" href="<?=\yii\helpers\Url::toRoute(['/site/language', 'language' => !empty($supportedLanguages[1]) ? $supportedLanguages[1] : ''])?>">VIETNAMESE</a></li>
+                    <li><a class="icon-lang lang-en<?=(!empty($supportedLanguages[0]) && Yii::$app->language == $supportedLanguages[0]) ? ' active' : '';?>" href="<?=\yii\helpers\Url::toRoute(['/site/language', 'language' => !empty($supportedLanguages[0]) ? $supportedLanguages[0] : ''])?>">ENGLISH</a></li>
+<!--                    <li><a class="icon-lang lang-en" href="#">ENGLISH</a></li>-->
+<!--                    <li><a class="icon-lang lang-vi" href="#">VIETNAMESE</a></li>-->
                 </ul>
             </div>
             <a class="user-option" href="#"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Mr.Nguyen Ong</a>
