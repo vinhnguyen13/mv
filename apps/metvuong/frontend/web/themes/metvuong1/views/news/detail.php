@@ -210,7 +210,7 @@ Yii::$app->view->registerMetaTag([
                                                 '</div>'+
                                             '</div>'+
                                         '</div>' +
-                                        '</article>').hide().appendTo("article:last").fadeIn();
+                                        '</article>');
                                     // console.log(data);
                                 }
                                 FB.XFBML.parse();

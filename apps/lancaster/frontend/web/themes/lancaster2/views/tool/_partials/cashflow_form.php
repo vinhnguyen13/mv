@@ -10,14 +10,14 @@ use yii\helpers\Html;
 <div class="col-lg-3">
     <div class="form-group field-cmscatalog-parent_id">
         <?=Html::label('Outgoing Cashflow (%)');?>
-        <?=Html::input('text','cashflow[t1]',null,['class'=>'form-control form-group cashflow']);?>
+        <?=Html::input('text','cashflow[T1]',null,['class'=>'form-control form-group cashflow']);?>
         <div class="hint-block"></div>
     </div>
 </div>
 <div class="col-lg-3">
     <div class="form-group field-cmscatalog-parent_id">
         <?=Html::label('Sales (%)');?>
-        <?=Html::input('text','sales[t1]',null,['class'=>'form-control form-group sales']);?>
+        <?=Html::input('text','sales[T1]',null,['class'=>'form-control form-group sales']);?>
         <div class="hint-block"></div>
     </div>
 </div>
@@ -25,7 +25,7 @@ use yii\helpers\Html;
     <div class="form-group field-cmscatalog-parent_id">
         <?=Html::label('Net Accumulative Cashflow');?>
         <?=Html::label('', null, ['class'=>'form-control form-group net_cashflow']);?>
-        <?=Html::hiddenInput('net_cashflow[t1]', null,['class'=>'form-control form-group net_cashflow']);?>
+        <?=Html::hiddenInput('net_cashflow[T1]', null,['class'=>'form-control form-group net_cashflow']);?>
         <div class="hint-block"></div>
     </div>
 </div>

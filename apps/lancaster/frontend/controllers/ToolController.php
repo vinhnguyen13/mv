@@ -87,8 +87,22 @@ class ToolController extends Controller
 //            $this->_session[$step] = $app->request->post();
             $this->_session = Yii::$app->session;
             $this->_session->set($step, filter_var($app->request->post('total_project_cost'), FILTER_SANITIZE_NUMBER_INT));
-
-            return ['total_project_cost'=>filter_var($app->request->post('total_project_cost'), FILTER_SANITIZE_NUMBER_INT)];
+            if($step == 'scenario_1'){
+                /**
+                 * save json to file
+                 */
+                $net_cashflow = $app->request->post()["net_cashflow"];
+                $scenario_1 = ['scenario_1' => $net_cashflow];
+                $path = Yii::$app->view->theme->basePath.'\\resources\\chart\\';
+                $file_name = 'data1.json';
+                $fp = fopen($path.$file_name,'w');
+                $data = Json::encode($scenario_1);
+                fwrite($fp, $data);
+                fclose($fp);
+                return ['status'=>'OK', 'file'=>$file_name, 'json' => $data];
+            }else{
+                return ['total_project_cost'=>filter_var($app->request->post('total_project_cost'), FILTER_SANITIZE_NUMBER_INT)];
+            }
         }
     }
 
