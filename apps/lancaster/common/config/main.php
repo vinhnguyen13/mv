@@ -116,7 +116,6 @@ return [
 		        '*' => [
 			        'class' => 'yii\i18n\DbMessageSource',
 			        'db' => 'db',
-			        'sourceLanguage' => 'en-US',
 			        'sourceMessageTable' => '{{%language_source}}',
 			        'messageTable' => '{{%language_translate}}',
 			        'cachingDuration' => 86400,
