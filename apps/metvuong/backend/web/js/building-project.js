@@ -1,3 +1,9 @@
+var objMap = [], objItem = {
+	id_area : '',
+	coordinates : 0,
+	urlImage : '',
+	nameImage : ''
+}, arrCoordinates = [];
 $.fn.tabSwitch = function(tabContent) {
 	var tabs = this;
 	
@@ -205,7 +211,7 @@ var buildingProject = {
 			var htmlButtons = $('<div id="clearStyleButtons"><p>Nhấn vào ảnh để thiết lập giá trị tọa độ.</p><div class="effect clearCurrentButton"><i class="icon icon-clear"></i> Clear Last</div><div class="effect clearAllButton"><i class="icon icon-clear"></i> Clear All</div></div>');
 			popup.append(htmlButtons);
 
-			popup.append('<div class="form-group"> <label class="control-label" for="buildingproject-bpvideo">Ảnh chi tiết căn hộ</label> <!-- The template to display files available for upload --> <script id="template-upload" type="text/x-tmpl"> {% for (var i=0, file; file=o.files[i]; i++) { %} <li class="template-upload fade"> <span class="preview"></span> <p class="name">{%=file.name%}</p> <strong class="error text-danger"></strong> <p class="size">Processing...</p> <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div> </li> {% } %} </script> <!-- The template to display files available for download --> <script id="template-download" type="text/x-tmpl"> {% for (var i=0, file; file=o.files[i]; i++) { %} <li data-delete-later="{%=file.deleteLater%}" class="template-download fade"> <span class="preview"> {% if (file.thumbnailUrl) { %} <a target="_blank" href="{%=file.url%}" title="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a> {% } %} </span> <p class="name"> {% if (file.url) { %} <a target="_blank" href="{%=file.url%}" title="{%=file.name%}" {%=file.thumbnailUrl?\'data-gallery\':\'\'%}>{%=file.name%}</a> {% } else { %} <span>{%=file.name%}</span> {% } %} </p> {% if (file.error) { %} <div><span class="label label-danger">Error</span> {%=file.error%}</div> {% } %} <span class="size">{%=o.formatFileSize(file.size)%}</span> {% if (file.deleteUrl) { %} <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields=\'{"withCredentials":true}\'{% } %}> <i class="glyphicon glyphicon-trash"></i> <span>Delete</span> </button> {% } else { %} <button class="btn btn-warning cancel"> <i class="glyphicon glyphicon-ban-circle"></i> <span>Cancel</span> </button> {% } %} </li> {% } %} </script> <!-- The file upload form used as target for the file upload widget --> <div id="' + nameId + total + '-fileupload-fileupload" data-upload-template-id="template-upload" data-download-template-id="template-download" data-callback="buildingProject.floorDetail"> <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload --> <div class="row fileupload-buttonbar"> <div class="col-lg-7"> <!-- The fileinput-button span is used to style the file input field as button --> <span class="btn btn-success fileinput-button"> <i class="glyphicon glyphicon-plus"></i> <span>Chọn ảnh...</span> <input type="hidden" name="' + name + '"><input type="file" id="' + nameId + total + '-fileupload" name="upload"> </span> <a class="btn btn-primary start"> <i class="glyphicon glyphicon-upload"></i> <span>Start upload</span> </a> <a class="btn btn-warning cancel"> <i class="glyphicon glyphicon-ban-circle"></i> <span>Cancel upload</span> </a> <a class="btn btn-danger delete"> <i class="glyphicon glyphicon-trash"></i> <span>Delete</span> </a> <input type="checkbox" class="toggle"> <!-- The global file processing state --> <span class="fileupload-process"></span> </div> <!-- The global progress state --> <div class="col-lg-5 fileupload-progress fade"> <!-- The global progress bar --> <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100"> <div class="progress-bar progress-bar-success" style="width: 0%;"></div> </div> <!-- The extended global progress state --> <div class="progress-extended">&nbsp;</div> </div> </div> <!-- The table listing the files available for upload/download --> <ul class="files"></ul> </div> <div class="help-block"></div> </div>');
+			popup.append('<div class="form-group"><label class="control-label" for="buildingproject-bpvideo">Ảnh chi tiết căn hộ</label> <!-- The template to display files available for upload --> <script id="template-upload" type="text/x-tmpl"> {% for (var i=0, file; file=o.files[i]; i++) { %} <li class="template-upload fade"> <span class="preview"></span> <p class="name">{%=file.name%}</p> <strong class="error text-danger"></strong> <p class="size">Processing...</p> <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div> </li> {% } %} </script> <!-- The template to display files available for download --> <script id="template-download" type="text/x-tmpl"> {% for (var i=0, file; file=o.files[i]; i++) { %} <li data-delete-later="{%=file.deleteLater%}" class="template-download fade"> <span class="preview"> {% if (file.thumbnailUrl) { %} <a target="_blank" href="{%=file.url%}" title="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a> {% } %} </span> <p class="name"> {% if (file.url) { %} <a target="_blank" href="{%=file.url%}" title="{%=file.name%}" {%=file.thumbnailUrl?\'data-gallery\':\'\'%}>{%=file.name%}</a> {% } else { %} <span>{%=file.name%}</span> {% } %} </p> {% if (file.error) { %} <div><span class="label label-danger">Error</span> {%=file.error%}</div> {% } %} <span class="size">{%=o.formatFileSize(file.size)%}</span> {% if (file.deleteUrl) { %} <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields=\'{"withCredentials":true}\'{% } %}> <i class="glyphicon glyphicon-trash"></i> <span>Delete</span> </button> {% } else { %} <button class="btn btn-warning cancel"> <i class="glyphicon glyphicon-ban-circle"></i> <span>Cancel</span> </button> {% } %} </li> {% } %} </script> <!-- The file upload form used as target for the file upload widget --> <div id="' + nameId + total + '-fileupload-fileupload" data-upload-template-id="template-upload" data-download-template-id="template-download" data-callback="buildingProject.floorDetail"> <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload --> <div class="row fileupload-buttonbar"> <div class="col-lg-7"> <!-- The fileinput-button span is used to style the file input field as button --> <span class="btn btn-success fileinput-button"> <i class="glyphicon glyphicon-plus"></i> <span>Chọn ảnh tương ứng...</span> <input type="hidden" name="' + name + '"><input type="file" id="' + nameId + total + '-fileupload" name="upload"> </span> <a class="btn btn-primary start"> <i class="glyphicon glyphicon-upload"></i> <span>Start upload</span> </a> <a class="btn btn-warning cancel"> <i class="glyphicon glyphicon-ban-circle"></i> <span>Cancel upload</span> </a> <a class="btn btn-danger delete"> <i class="glyphicon glyphicon-trash"></i> <span>Delete</span> </a> <input type="checkbox" class="toggle"> <!-- The global file processing state --> <span class="fileupload-process"></span> </div> <!-- The global progress state --> <div class="col-lg-5 fileupload-progress fade"> <!-- The global progress bar --> <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100"> <div class="progress-bar progress-bar-success" style="width: 0%;"></div> </div> <!-- The extended global progress state --> <div class="progress-extended">&nbsp;</div> </div> </div> <!-- The table listing the files available for upload/download --> <ul class="files"></ul> </div> <div class="help-block"></div> </div>');
 			
 			var elu = $('#' + nameId + total + '-fileupload-fileupload');
 			customFileUpload.attachUploadWidget(elu);
@@ -227,68 +233,6 @@ var buildingProject = {
 				});
 			});
 
-			function hightlight() {
-				$('.imgmapMainImage').maphilight({
-					strokeColor: '4F95EA',
-					alwaysOn: true,
-					fillColor: '365E71',
-					fillOpacity: 0.2,
-					shadow: true,
-					shadowColor: '000000',
-					shadowRadius: 5,
-					shadowOpacity: 0.6,
-					shadowPosition: 'outside'
-				});
-			}
-
-			var counter = 1, 
-				coordsLength = 0, 
-				textarea = '',
-				arrTotal = [],
-				getValueCoord = 0;
-			function setCoordinates(e, status) {
-				var x = e.pageX;
-				var y = e.pageY;
-
-				$('#dots').append('<img class="dot" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAADCAYAAABWKLW/AAAABGdBTUEAALGPC/xhBQAAABh0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjM2qefiJQAAACFJREFUGFdj9J/6KomBgUEYiN8yADmlQPwfRIM4SVCBJAAiRREoec4ImAAAAABJRU5ErkJggg==" style="left: '+ (x-1) +'px; top: '+ (y-1) +'px;" />');
-
-				var offset = $('#mapContainer img').offset();
-				x -= parseInt(offset.left);
-				y -= parseInt(offset.top);
-				if(x < 0) { x = 0; }
-				if(y < 0) { y = 0; }
-				
-				var value = $('#coordsText').val();
-				if(value == '') {
-					value = x+','+y;
-					coordsLength = value.length;
-					counter++;
-				} else {
-					value = value+','+x+','+y;
-					coordsLength = value.length;
-				}
-				if(status)
-					$('#coordsText').val(value);
-				
-				if($('#area'+counter).length != 0)
-					$('#area'+counter).remove();
-				var countKomma = value.split(',').length;
-				var shape = (countKomma <= 4) ? 'rect' : 'poly';
-				if(countKomma >= 4) {
-					var html = '<area shape="'+shape+'" id="area'+counter+'" class="area" coords="'+value+'" href="#" alt="" title="">';
-					$('map').append(html);
-				}
-				
-				$('#mapContainer').append($('.imgmapMainImage'));
-				$('#mapContainer').children('div').remove();
-				$('.imgmapMainImage').removeClass('maphilighted');
-				//$('canvas').remove();
-
-				hightlight();
-				
-				getValueCoord = value;
-			}
-
 			$('#mapContainer').click(function(e) {
 				setCoordinates(e, 1);
 				e.preventDefault();
@@ -296,18 +240,182 @@ var buildingProject = {
 
 			popup.find('.fileinput-button').click(function(){
 				$('#coordsText').val('');
-				var arr = getValueCoord.split(',');
-				arrTotal.push(arr);
+				var lenArea = $('#mapContainer').find('map .area').length;
+				if( lenArea <= 0 ) {
+					alert('Bạn chưa chọn vùng Area trên hình ảnh !!!');
+					return false;
+				}
+			});
+
+			$('.clearCurrentButton').click(function() {
+				$('#coordsText').val('');
+				
+				var idArea = $('#mapContainer').find('area:last').attr('id');
+				for( var i = 0; i < objMap.length; i++ ) {
+					if( idArea === objMap[i].id_area ) {
+						var nameCurrent = objMap[i].nameImage;
+						$('.area#'+objMap[i].id_area).remove();
+
+						for( var j = 0; j < arrCoordinates.length; j++ ) {
+							var str = arrCoordinates[j].toString();
+							if( str === objMap[i].coordinates ) {
+								arrCoordinates.splice(j,1);
+								$('#valCoordinate').val(arrayAreaChange(arrCoordinates));
+							}
+						}
+
+						objMap.splice(i,1);
+						$('#cboxContent button[data-type=DELETE]').each(function() {
+							var _this = $(this),
+								getUrl = _this.data('url');
+							if( getUrl.search(nameCurrent) >= 0 ) {
+								_this.trigger('click');
+							}
+						});
+						hightlight();
+						return;
+					}
+				}
+				if( objItem.coordinates != 0 || objMap.length <= 0 ) {
+					$('#mapContainer').find('area:last').remove();
+				}
+				hightlight();
+			});
+
+			$('.clearAllButton').click(function() {
+				$('#coordsText').val('');
+				$('#areaText').val('');
+				$('#mapContainer').find('map').html('');
+				$('#dots').html('');
+				var lengthArea = objMap.length;
+				$('#cboxContent button[data-type=DELETE]').each(function() {
+					var _this = $(this);
+					_this.trigger('click');
+				});
+				objMap = [];
+				arrCoordinates = [];
+				$('#valCoordinate').val(arrayAreaChange(arrCoordinates));
+				hightlight();
 			});
 		});
 	},
 	floorDetail: function(action, event, data, ins) {
 		$.colorbox.resize();
-		
 		if(action == 'done') {
-			console.log('upload');
+			//console.log('upload');
+			var flag = true;
+			for( var i = 0; i < objMap.length; i++ ) {
+				if( objMap[i].id_area === 'area'+counter ) {
+					flag = false;
+				}
+			}
+			if( flag && objItem.coordinates != 0 ) {
+				var fileResponse = data.getFilesFromResponse(data)[0];
+				objItem.id_area = 'area'+counter;
+				objItem.urlImage = fileResponse.url;
+				objItem.nameImage = fileResponse.name;
+				objMap.push(objItem);
+				var arrCoordinatesItem = objItem.coordinates.split(',');
+				arrCoordinates.push(arrCoordinatesItem);
+				$('#valCoordinate').val(arrayAreaChange(arrCoordinates));
+				objItem = {};
+			}
 		} else {
-			console.log('xóa');
+			//console.log('xóa');
+			var urlDelete = data.url;
+			for( var i = 0; i < objMap.length; i++ ) {
+				if( urlDelete.search(objMap[i].nameImage) >= 0 ) {
+					$('.area#'+objMap[i].id_area).remove();
+					hightlight();
+					for( var j = 0; j < arrCoordinates.length; j++ ) {
+						var str = arrCoordinates[j].toString();
+						if( str === objMap[i].coordinates ) {
+							arrCoordinates.splice(j,1);
+							$('#valCoordinate').val(arrayAreaChange(arrCoordinates));
+						}
+					}
+					objMap.splice(i,1);
+				}
+			}
 		}
 	}
 };
+
+function hightlight() {
+	$('.imgmapMainImage').maphilight({
+		strokeColor: 'f00b00',
+		alwaysOn: true,
+		fillColor: '71f000',
+		fillOpacity: 0.2,
+		shadow: true,
+		shadowColor: '000000',
+		shadowRadius: 5,
+		shadowOpacity: 0.6,
+		shadowPosition: 'outside'
+	});
+}
+
+var counter = 1;
+var coordsLength = 0;
+var textarea = '';
+var getValueCoord = 0;
+function setCoordinates(e, status) {
+	var x = e.pageX;
+	var y = e.pageY;
+
+	//$('#dots').append('<img class="dot" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAADCAYAAABWKLW/AAAABGdBTUEAALGPC/xhBQAAABh0RVh0U29mdHdhcmUAUGFpbnQuTkVUIHYzLjM2qefiJQAAACFJREFUGFdj9J/6KomBgUEYiN8yADmlQPwfRIM4SVCBJAAiRREoec4ImAAAAABJRU5ErkJggg==" style="left: '+ (x-1) +'px; top: '+ (y-1) +'px;" />');
+
+	var offset = $('#mapContainer img').offset();
+	x -= parseInt(offset.left);
+	y -= parseInt(offset.top);
+	if(x < 0) { x = 0; }
+	if(y < 0) { y = 0; }
+	
+	var value = $('#coordsText').val();
+	
+	if( value == '' ) {
+		value = x+','+y;
+		coordsLength = value.length;
+		counter++;
+	} else {
+		value = value+','+x+','+y;
+		coordsLength = value.length;
+	}
+	if( status )
+		$('#coordsText').val(value);
+	
+	if( $('#area'+counter).length != 0 ) {
+		$('.area#area'+counter).remove();
+	}
+	var countKomma = value.split(',').length;
+	var shape = (countKomma <= 4) ? 'rect' : 'poly';
+	if(countKomma >= 4) {
+		var html = '<area shape="'+shape+'" id="area'+counter+'" class="area" coords="'+value+'" href="#" alt="" title="">';
+		$('map').append(html);
+	}
+	
+	$('#mapContainer').append($('.imgmapMainImage'));
+	$('#mapContainer').children('div').remove();
+	$('.imgmapMainImage').removeClass('maphilighted');
+	
+	hightlight();
+	objItem.coordinates = value;
+}
+
+function arrayAreaChange(arrCoordinates) {
+	var strArrFirst = '[',
+		strArrLast = ']';
+	for( var i = 0; i < arrCoordinates.length; i++ ) {
+		var strTemp = '['+arrCoordinates[i].toString()+']';
+		if( arrCoordinates.length === 1 || (i+1) === arrCoordinates.length) {
+			strArrFirst += strTemp;
+		}else {
+			strArrFirst += strTemp+',';
+		}
+	}
+	strArrFirst += strArrLast;
+
+	return strArrFirst;
+}
+
+function l(x){console.log(x);}
