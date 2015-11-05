@@ -32,6 +32,11 @@ return [
         'express' => [
             'class' => 'vsoft\express\Module',
         ],
+        'translatemanager' => [
+            'class' => 'lajax\translatemanager\Module',
+            'tmpDir' => '@frontend/runtime',
+            'roles' => ['@']
+        ],
     ],
     'components' => [
         'cache' => [
@@ -81,12 +86,13 @@ return [
         'i18n' => [
             'translations' => [
                 '*' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath' => '@common/messages', // if advanced application, set @frontend/messages
-                    'sourceLanguage' => 'vi',
-                    'fileMap' => [
-                        'banner' => 'banner.php',
-                    ],
+                    'class' => 'yii\i18n\DbMessageSource',
+                    'db' => 'db',
+                    'sourceLanguage' => 'en-US',
+                    'sourceMessageTable' => '{{%language_source}}',
+                    'messageTable' => '{{%language_translate}}',
+                    'cachingDuration' => 86400,
+                    'enableCaching' => false,
                 ],
             ],
         ],

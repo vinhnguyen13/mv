@@ -14,6 +14,7 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => [
         'log',
+//        'languagepicker',
         'languageSelector' => [
             'class' => 'frontend\components\LanguageSelector',
             'supportedLanguages' => ['en-US', 'vi-VN'],
@@ -59,7 +60,8 @@ return [
             ],
         ],
         'urlManager' => [
-            'class' => 'yii\web\UrlManager',
+//            'class' => 'yii\web\UrlManager',
+            'class' => 'frontend\components\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'enableStrictParsing' => false,
@@ -67,13 +69,33 @@ return [
                 'site/login' => 'user/security/login',
                 'site/signup' => 'user/registration/register',
 //                'news/<action:\w+>' => 'news/<action>',
-                'news/<cat_id:\d+>-<cat_slug>/<id:\d+>-<slug>' => 'news/view',
-                'news/<cat_id:\d+>-<slug>' => 'news/list',
+                '<cat_id:\d+>-<cat_slug>/<id:\d+>-<slug>' => 'news/view',
+                '<cat_id:\d+>-<slug>' => 'news/list',
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',
 //                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
 //                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
 
-            ]
+            ],
+            'languages' => ['en-us'=>'en-us', 'vi-vn'=>'vi-vn'],
+            'enableDefaultLanguageUrlCode'=>true,
+            'ignoreLanguageUrlPatterns'=>[
+                '#^site/language#' => '#^site/language#'
+            ],
+//            'ruleConfig' => ['class' => frontend\components\LanguageUrlRule::className()]
+        ],
+        'languagepicker' => [
+            'class' => 'lajax\languagepicker\Component',
+            'languages' => ['en-US', 'de-DE', 'fr-FR', 'vi-VN'],         // List of available languages (icons only)
+            'cookieName' => 'language',                         // Name of the cookie.
+            'cookieDomain' => 'example.com',                    // Domain of the cookie.
+            'expireDays' => 64,                                 // The expiration time of the cookie is 64 days.
+            'callback' => function() {
+                if (!\Yii::$app->user->isGuest) {
+                    /*$user = \Yii::$app->user->identity;
+                    $user->language = \Yii::$app->language;
+                    $user->save();*/
+                }
+            }
         ],
         'i18n' => [
             'translations' => [
@@ -86,12 +108,13 @@ return [
                     ],
                 ],
                 '*' => [
-                    'class'          => 'yii\i18n\PhpMessageSource',
-                    'sourceLanguage' => 'vi',
-                    'basePath'       => '@frontend/messages',
-                    'fileMap'        => [
-                        'news' => 'news.php',
-                    ],
+                    'class' => 'yii\i18n\DbMessageSource',
+                    'db' => 'db',
+                    'sourceLanguage' => 'en-US',
+                    'sourceMessageTable' => '{{%language_source}}',
+                    'messageTable' => '{{%language_translate}}',
+                    'cachingDuration' => 86400,
+                    'enableCaching' => false,
                 ],
             ]
         ],

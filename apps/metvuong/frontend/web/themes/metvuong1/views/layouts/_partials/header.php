@@ -1,3 +1,6 @@
+<?php
+use yii\helpers\Url;
+?>
 <header class="clearfix cd-secondary-nav">
     <div class="container">
         <a href="#" class="logo-header pull-left bgcover" style="background-image:url('<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png');"></a>
@@ -6,10 +9,10 @@
                 <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
                     <span class="icon-lang-select lang-vi"></span>
                 <span class="caret"></span></button>
-                <?php $supportedLanguages = Yii::$app->bootstrap['languageSelector']['supportedLanguages']; ?>
+                <?php $supportedLanguages = Yii::$app->bootstrap['languageSelector']['supportedLanguages'];?>
                 <ul class="dropdown-menu">
-                    <li><a class="icon-lang lang-vi<?=(!empty($supportedLanguages[1]) && Yii::$app->language == $supportedLanguages[1]) ? ' active' : '';?>" href="<?=\yii\helpers\Url::toRoute(['/site/language', 'language' => !empty($supportedLanguages[1]) ? $supportedLanguages[1] : ''])?>">VIETNAMESE</a></li>
-                    <li><a class="icon-lang lang-en<?=(!empty($supportedLanguages[0]) && Yii::$app->language == $supportedLanguages[0]) ? ' active' : '';?>" href="<?=\yii\helpers\Url::toRoute(['/site/language', 'language' => !empty($supportedLanguages[0]) ? $supportedLanguages[0] : ''])?>">ENGLISH</a></li>
+                    <li><a class="icon-lang lang-vi<?=(!empty($supportedLanguages[1]) && Yii::$app->language == $supportedLanguages[1]) ? ' active' : '';?>" href="<?=Url::current(['language-change' => $supportedLanguages[1]])?>">VIETNAMESE</a></li>
+                    <li><a class="icon-lang lang-en<?=(!empty($supportedLanguages[0]) && Yii::$app->language == $supportedLanguages[0]) ? ' active' : '';?>" href="<?=Url::current(['language-change' => $supportedLanguages[0]])?>">ENGLISH</a></li>
 <!--                    <li><a class="icon-lang lang-en" href="#">ENGLISH</a></li>-->
 <!--                    <li><a class="icon-lang lang-vi" href="#">VIETNAMESE</a></li>-->
                 </ul>
@@ -22,7 +25,7 @@
                 
                 <form class="form-inline pull-left" action="" id="search-kind">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Tìm Kiếm...">
+                        <input type="text" class="form-control" placeholder="<?=Yii::t('header', 'Find')?>...">
                     </div>
                     <div class="dropdown">
                         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
@@ -57,12 +60,3 @@
         </div>
     </div>
 </header>
-<?php
-use vsoft\news\models\CmsCatalog;
-use vsoft\news\models\Status;
-
-$catalog = CmsCatalog::getDb()->cache(function($db){
-    return CmsCatalog::find()->where(['status' => Status::STATUS_ACTIVE])->andWhere('parent_id = :pid',[':pid' => Yii::$app->params['newsCatID']])->asArray()->orderBy('id')->limit(6)->all();
-});
-
-?>
