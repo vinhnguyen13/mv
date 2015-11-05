@@ -1,6 +1,6 @@
 <?php
-
 use yii\web\View;
+
 /* @var $this yii\web\View */
 $this->registerCssFile('https://fonts.googleapis.com/css?family=Roboto:400,700|Noticia+Text:400italic,400,700,700italic', ['type' => 'text/css']);
 $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/swiper.css");
@@ -10,6 +10,8 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/plugins/jquery.scrollspeed.js', ['position'=>View::POS_END]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/home.js', ['position'=>View::POS_END]);
 Yii::$app->getView()->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=initMap', ['position'=>View::POS_END, 'defer'=>'', 'async'=>'']);
+
+if ($this->beginCache('homepage', ['duration' => 3600])) {
 
 $this->title = Yii::t('express','We offer exeptional amenities and renowned white - glove services');
 ?>
@@ -385,3 +387,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
         </div>
     </div>
 </div>
+<?php
+    $this->endCache();
+}
+?>
