@@ -87,12 +87,15 @@ Yii::$app->view->registerMetaTag([
                 </div>
             </div>
         </article>
+        <div class="load-more-article">
+            <div class="toHeight" style="height: 10px;"></div>
+            <div class="loading text-center pull-right col-xs-9" >
+                <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/loader.gif" alt="Loading..." title="<?=$news->title?>" />
+            </div>
+        </div>
     </div>
 
-    <div class="toHeight" style="height: 10px;"></div>
-    <div class="loading text-center" >
-        <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/loader.gif" alt="Loading..." title="<?=$news->title?>" />
-    </div>
+    
     <div class="col-sm-4 col-lg-3 col-left-home">
         <?= \vsoft\news\widgets\NewsWidget::widget(['view' => 'hotnews'])?>
         <div class="siderbar widget-ads clearfix">

@@ -709,7 +709,6 @@ footer {
 }
 .col-right-home {
     padding-right: 5px;
-    padding-bottom: 50px;
 }
 .col-left-home {
     padding-left: 5px;
@@ -2232,9 +2231,4 @@ button.btn.btn-default,
 }
 .item-infor .video-item a {
     border: none;
-}
-.load-more-article {
-    position: absolute;
-    bottom: 0;
-    right: 0;
 }
