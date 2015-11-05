@@ -89,8 +89,8 @@ Yii::$app->view->registerMetaTag([
                 </div>
             </article>
         </div>
-        <div class="toHeight" style="height: 10px;"></div>
-        <div class="load-more-article">
+        <!-- <div class="toHeight" style="height: 10px;"></div> -->
+        <div class="load-more-article pull-right col-xs-9">
             <div class="loading text-center pull-right col-xs-9" >
                 <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/loader.gif" alt="Loading..." title="<?=$news->title?>" />
             </div>
