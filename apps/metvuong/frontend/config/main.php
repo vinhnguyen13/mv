@@ -14,7 +14,6 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => [
         'log',
-//        'languagepicker',
         'languageSelector' => [
             'class' => 'frontend\components\LanguageSelector',
             'supportedLanguages' => ['en-US', 'vi-VN'],
@@ -82,20 +81,6 @@ return [
                 '#^site/language#' => '#^site/language#'
             ],
 //            'ruleConfig' => ['class' => frontend\components\LanguageUrlRule::className()]
-        ],
-        'languagepicker' => [
-            'class' => 'lajax\languagepicker\Component',
-            'languages' => ['en-US', 'de-DE', 'fr-FR', 'vi-VN'],         // List of available languages (icons only)
-            'cookieName' => 'language',                         // Name of the cookie.
-            'cookieDomain' => 'example.com',                    // Domain of the cookie.
-            'expireDays' => 64,                                 // The expiration time of the cookie is 64 days.
-            'callback' => function() {
-                if (!\Yii::$app->user->isGuest) {
-                    /*$user = \Yii::$app->user->identity;
-                    $user->language = \Yii::$app->language;
-                    $user->save();*/
-                }
-            }
         ],
         'i18n' => [
             'translations' => [
