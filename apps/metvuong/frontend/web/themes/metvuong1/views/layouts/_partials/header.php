@@ -7,7 +7,7 @@ use yii\helpers\Url;
         <div class="pull-right user-setting">
             <div class="dropdown select-lang">
                 <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                    <span class="icon-lang-select lang-vi"></span>
+                    <span class="icon-lang-select lang-<?=substr(Yii::$app->language, 0, 2)?>"></span>
                 <span class="caret"></span></button>
                 <?php $supportedLanguages = Yii::$app->bootstrap['languageSelector']['supportedLanguages'];?>
                 <ul class="dropdown-menu">
