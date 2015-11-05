@@ -1,14 +1,21 @@
 <?php
-$scenario_1 = $data["scenario_1"];
-$categories = '';
-$data_1 = '';
-foreach($scenario_1 as $key => $value){
-    $categories = $categories . $key . ',';
-    $data_1 = $data_1 . $value . ',';
+$scenario_1 = empty($data["scenario_1"]) == false ? $data["scenario_1"] : [];
+$data_1 = [];
+if(!empty($scenario_1)){
+    foreach($scenario_1 as $key => $value){
+        $data_1[] = $value;
+    }
 }
-$categories = [ rtrim($categories, ',') ];
-$data_1 = '[' .rtrim($data_1, ',') . ']';
 
+$scenario_2 = empty($data["scenario_2"]) == false ? $data["scenario_2"] : [];
+$data_2 = [];
+if(!empty($scenario_2)) {
+    foreach ($scenario_2 as $key => $value) {
+        $data_2[] = $value;
+    }
+}
+$categories = array_merge($scenario_1, $scenario_2);
+$months = array_keys($categories);
 ?>
 <div class="row main_content">
     <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
@@ -27,7 +34,7 @@ $data_1 = '[' .rtrim($data_1, ',') . ']';
                 x: -20
             },
             xAxis: {
-                categories: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12', 'T13', 'T14', 'T15', 'T16', 'T17', 'T18', 'T19', 'T20', 'T21', 'T22', 'T23', 'T24', 'T25', 'T26', 'T27', 'T28', 'T29', 'T30', 'T31', 'T32']
+                categories: <?= \yii\helpers\Json::encode($months)?>
             },
             yAxis: {
                 title: {
@@ -51,11 +58,11 @@ $data_1 = '[' .rtrim($data_1, ',') . ']';
             series: [{
                 name: 'Scenario 1',
                 color: '#5698D3',
-                data: <?=$data_1?>
+                data: <?=json_encode($data_1, JSON_NUMERIC_CHECK )?>
             }, {
                 name: 'Scenario 2',
                 color: '#EE863F',
-                data: [-270, -342, -373, -318, -456, -462]
+                data: <?=json_encode($data_2, JSON_NUMERIC_CHECK )?>
             }]
         });
 

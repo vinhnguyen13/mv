@@ -88,20 +88,31 @@ class ToolController extends Controller
 //            $this->_session[$step] = $app->request->post();
             $this->_session = Yii::$app->session;
             $this->_session->set($step, filter_var($app->request->post('total_project_cost'), FILTER_SANITIZE_NUMBER_INT));
+            $path = Yii::$app->view->theme->basePath.'\\resources\\chart\\';
+            $file_name = 'data.json';
+
             if($step == 'scenario_1'){
-                /**
-                 * save json to file
-                 */
                 $net_cashflow = $app->request->post()["net_cashflow"];
                 $scenario_1 = ['scenario_1' => $net_cashflow];
-                $path = Yii::$app->view->theme->basePath.'\\resources\\chart\\';
-                $file_name = 'data.json';
-                $fp = fopen($path.$file_name,'w');
-                $data = Json::encode($scenario_1);
-                fwrite($fp, $data);
-                fclose($fp);
-                return ['status'=>'OK', 'file'=>$file_name, 'json' => $data];
-            }else{
+                $data_1 = Json::encode($scenario_1, JSON_NUMERIC_CHECK);
+                if($this->writeFile($path.$file_name, $data_1))
+                    return ['status'=>'Scenario 1 OK', 'file'=>$file_name];
+                else
+                    return ['status' => 'Failed'];
+            }
+            else if($step == 'scenario_2'){
+                $net_cashflow_2 = $app->request->post()["net_cashflow"];
+                $file = $this->readFile($path.$file_name);
+                if(!empty($file)) {
+                    $arr_file = Json::decode($file, true);
+                    $arr_file['scenario_2'] = $net_cashflow_2;
+                    $data_2 = Json::encode($arr_file, JSON_NUMERIC_CHECK);
+                    $this->writeFile($path . $file_name, $data_2);
+                    return ['status' => 'Scenario 2 OK', 'file' => $file_name];
+                } else
+                    return ['status' => 'Failed'];
+            }
+            else{
                 return ['total_project_cost'=>filter_var($app->request->post('total_project_cost'), FILTER_SANITIZE_NUMBER_INT)];
             }
         }
@@ -148,12 +159,17 @@ class ToolController extends Controller
     private function writeFile($filePath, $data){
         $handle = fopen($filePath, 'w') or die('Cannot open file:  '.$filePath);
         fwrite($handle, $data);
+        fclose($handle);
         return true;
     }
 
     private function readFile($filePath){
         $handle = fopen($filePath, 'r') or die('Cannot open file:  '.$filePath);
-        $data = fread($handle,filesize($filePath));
-        return $data;
+        if(filesize($filePath) > 0) {
+            $data = fread($handle, filesize($filePath));
+            return $data;
+        }
+        else return null;
+
     }
 }
