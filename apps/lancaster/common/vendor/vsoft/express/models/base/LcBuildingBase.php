@@ -4,6 +4,7 @@ namespace vsoft\express\models\base;
 
 use vsoft\express\models\LcBooking;
 use Yii;
+use common\components\ActiveRecordTranslation;
 
 /**
  * This is the model class for table "lc_building".
@@ -25,7 +26,7 @@ use Yii;
  *
  * @property LcBooking[] $lcBookings
  */
-class LcBuildingBase extends \yii\db\ActiveRecord
+class LcBuildingBase extends ActiveRecordTranslation
 {
     /**
      * @inheritdoc
@@ -41,7 +42,6 @@ class LcBuildingBase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['building_name'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
             [['created_by', 'updated_by', 'isbooking', 'floor'], 'integer'],
             [['building_name', 'email'], 'string', 'max' => 60],
@@ -59,6 +59,8 @@ class LcBuildingBase extends \yii\db\ActiveRecord
             'id' => Yii::t('building', 'ID'),
             'building_name' => Yii::t('building', 'Building Name'),
             'address' => Yii::t('building', 'Address'),
+            'introduction_title' => Yii::t('building', 'Introduction Title'),
+            'introduction_content' => Yii::t('building', 'Introduction Content'),
             'phone' => Yii::t('building', 'Phone'),
             'fax' => Yii::t('building', 'Fax'),
             'email' => Yii::t('building', 'Email'),

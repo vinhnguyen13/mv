@@ -55,8 +55,12 @@ class BuildingController extends Controller
      * Lists all LcBuilding models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($l = null)
     {
+    	if($l) {
+    		LcBuildingSearch::$forceShowLang = $l;
+    	}
+    	
         $searchModel = new LcBuildingSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

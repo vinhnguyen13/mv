@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
+use lajax\translatemanager\models\Language;
 
 /* @var $this yii\web\View */
 /* @var $searchModel vsoft\express\models\LcBuildingSearch */
@@ -9,6 +11,17 @@ use yii\grid\GridView;
 
 $this->title = 'Buildings';
 $this->params['breadcrumbs'][] = $this->title;
+
+$this->registerJsFile(Yii::getAlias('@web') . '/js/building.js', ['depends' => ['yii\web\YiiAsset']]);
+
+$languages = Language::getLanguageNames(true);
+$languagesUrl = [];
+
+foreach ($languages as $languageCode => $languageName) {
+	$languagesUrl[Url::to(['index', 'l' => $languageCode])] = $languageName;
+}
+
+$l = Yii::$app->request->get('l') ? Url::to(['index', 'l' => Yii::$app->request->get('l')]) : Url::to(['index', 'l' => Yii::$app->sourceLanguage]);
 ?>
 <div class="lc-building-index">
 
@@ -19,6 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Building', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
+	<div class="form-group">
+		<label class="control-label" for="lcbuilding-building_name">Hiển thị danh sách bằng ngôn ngữ</label>
+		<?= Html::dropDownList('language', $l, $languagesUrl, ['class' => 'form-control', 'id' => 'language-switch-view']) ?>
+	</div>
+	
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
