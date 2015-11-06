@@ -80,6 +80,7 @@ return [
             'ignoreLanguageUrlPatterns'=>[
                 '#^site/language#' => '#^site/language#',
                 '#^express/upload/image#' => '#^express/upload/image#',
+                '#^express/upload/editor-image#' => '#^express/upload/editor-image#',
             ],
 //            'ruleConfig' => ['class' => frontend\components\LanguageUrlRule::className()]
         ],
