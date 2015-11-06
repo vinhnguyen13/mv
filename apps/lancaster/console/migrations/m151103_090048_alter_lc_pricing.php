@@ -11,9 +11,9 @@ class m151103_090048_alter_lc_pricing extends Migration
     	 
     	$this->execute("TRUNCATE TABLE `lc_pricing`;");
     	
-    	$this->execute("ALTER TABLE `lancaster`.`lc_pricing`   
+    	$this->execute("ALTER TABLE `lc_pricing`   
 			ADD COLUMN `building_id` INT(11) NOT NULL AFTER `apart_type_id`,
-			ADD CONSTRAINT `lc_pricing:building_id&lc_building:id` FOREIGN KEY (`building_id`) REFERENCES `lancaster`.`lc_building`(`id`);
+			ADD CONSTRAINT `lc_pricing:building_id&lc_building:id` FOREIGN KEY (`building_id`) REFERENCES `lc_building`(`id`);
 		");
     	
     	$buildingMigration = new m151103_090004_create_lc_building_translation();
@@ -21,7 +21,7 @@ class m151103_090048_alter_lc_pricing extends Migration
     	
     	foreach ($buildings as $building) {
     		foreach ($pricings as $pricing) {
-    			$sql = "INSERT INTO `lancaster`.`lc_pricing` (`apart_type_id`, `building_id`,`area`, `monthly_rates`, `daily_rates`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
+    			$sql = "INSERT INTO `lc_pricing` (`apart_type_id`, `building_id`,`area`, `monthly_rates`, `daily_rates`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
     				(". $pricing['apart_type_id'] . ", " . $building['id'] . ",". $pricing['area'] . ", ". $pricing['monthly_rates'] . ", ". $pricing['daily_rates'] . ", 
 					'" . $pricing['description'] . "', '" . $pricing['created_at'] . "', '" . $pricing['updated_at'] . "', 1, 1);";
     			$this->execute($sql);
@@ -31,7 +31,7 @@ class m151103_090048_alter_lc_pricing extends Migration
 
     public function down()
     {
-		$this->execute("ALTER TABLE `lancaster`.`lc_pricing`   
+		$this->execute("ALTER TABLE `lc_pricing`   
 			DROP COLUMN `building_id`, 
 			DROP INDEX `lc_pricing:building_id&lc_building:id`,
 			DROP FOREIGN KEY `lc_pricing:building_id&lc_building:id`;");
@@ -39,7 +39,7 @@ class m151103_090048_alter_lc_pricing extends Migration
     
     public function getAllPricing() {
     	$connection = \Yii::$app->db;
-    	$model = $connection->createCommand('SELECT * FROM `lancaster`.`lc_pricing`');
+    	$model = $connection->createCommand('SELECT * FROM `lc_pricing`');
     	$pricings = $model->queryAll();
     	 
     	return $pricings;

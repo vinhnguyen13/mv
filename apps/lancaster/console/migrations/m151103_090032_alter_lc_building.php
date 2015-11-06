@@ -17,7 +17,7 @@ class m151103_090032_alter_lc_building extends Migration
     {
     	$buildings = $this->getAllBuilding();
     	
-    	$this->execute("ALTER TABLE `lancaster`.`lc_building`   
+    	$this->execute("ALTER TABLE `lc_building`   
 			DROP COLUMN `building_name`,
 			DROP COLUMN `address`,
 			ADD COLUMN `slug` VARCHAR(32) NOT NULL AFTER `floor`,
@@ -27,7 +27,7 @@ class m151103_090032_alter_lc_building extends Migration
 			ADD COLUMN `neighborhood` TEXT NOT NULL AFTER `views`;");
 		
 		foreach ($buildings as $building) {
-			$sql = "UPDATE `lancaster`.`lc_building` SET `slug` = '" . $this->map[$building['building_name']] . "' WHERE `id` = " . $building['id'];
+			$sql = "UPDATE `lc_building` SET `slug` = '" . $this->map[$building['building_name']] . "' WHERE `id` = " . $building['id'];
 			$this->execute($sql);
 		}
     }
@@ -36,7 +36,7 @@ class m151103_090032_alter_lc_building extends Migration
     {
     	$buildings = $this->getAllBuilding();
     	
-        $this->execute("ALTER TABLE `lancaster`.`lc_building`   
+        $this->execute("ALTER TABLE `lc_building`   
 			DROP COLUMN `slug`,
 			DROP COLUMN `apartments`,
 			DROP COLUMN `amenities`,
@@ -46,14 +46,14 @@ class m151103_090032_alter_lc_building extends Migration
 			ADD COLUMN `address` VARCHAR(255) NULL AFTER `building_name`;");
         
         foreach ($buildings as $building) {
-        	$sql = "UPDATE `lancaster`.`lc_building` SET `building_name` = '" . array_search($building['slug'], $this->map) . "' WHERE `id` = " . $building['id'];
+        	$sql = "UPDATE `lc_building` SET `building_name` = '" . array_search($building['slug'], $this->map) . "' WHERE `id` = " . $building['id'];
         	$this->execute($sql);
         }
     }
 
     public function getAllBuilding() {
     	$connection = \Yii::$app->db;
-    	$model = $connection->createCommand('SELECT * FROM `lancaster`.`lc_building`');
+    	$model = $connection->createCommand('SELECT * FROM `lc_building`');
     	$buildings = $model->queryAll();
     	 
     	return $buildings;
