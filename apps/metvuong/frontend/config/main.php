@@ -78,7 +78,8 @@ return [
             'languages' => ['en-us'=>'en-us', 'vi-vn'=>'vi-vn'],
             'enableDefaultLanguageUrlCode'=>true,
             'ignoreLanguageUrlPatterns'=>[
-                '#^site/language#' => '#^site/language#'
+                '#^site/language#' => '#^site/language#',
+                '#^express/upload/image#' => '#^express/upload/image#',
             ],
 //            'ruleConfig' => ['class' => frontend\components\LanguageUrlRule::className()]
         ],
