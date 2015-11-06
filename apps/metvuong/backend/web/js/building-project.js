@@ -254,8 +254,9 @@ var buildingProject = {
 
 			popup.find('.fileinput-button').click(function(){
 				$('#coordsText-'+countItemMap).val('');
-				var lenArea = $('#mapContainer-'+countItemMap).find('#map-'+countItemMap+' .area').length;
-				if( lenArea <= 0 ) {
+				var lenArea = $('#mapContainer-'+countItemMap).find('#map-'+countItemMap+' .area').length,
+					lenImageUpload = $('#' + nameId + total + '-fileupload-fileupload').find('.files li').length;
+				if( lenArea <= 0 || lenImageUpload === lenArea ) {
 					alert('Bạn chưa chọn vùng Area trên hình ảnh !!!');
 					return false;
 				}
