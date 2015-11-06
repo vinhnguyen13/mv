@@ -13,7 +13,7 @@ use yii\helpers\Url;
         <div id="branch-wrap">
             <ul>
                 <?php foreach($buildings as $building):?>
-                    <li><a href="<?= Url::to(['site/index', 'lancaster' => $building->slug]) ?>"><?= $building->building_name ?></a></li>
+                    <li><a href="<?= Url::to(['/site/index', 'lancaster' => $building->slug]) ?>"><?= $building->building_name ?></a></li>
                 <?php endforeach;?>
             </ul>
         </div>

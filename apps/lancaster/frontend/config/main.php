@@ -73,9 +73,9 @@ return [
 //                'news/<action:\w+>' => 'news/<action>',
                 '<cat_id:\d+>-<cat_slug>/<id:\d+>-<slug>' => 'news/view',
                 '<cat_id:\d+>-<slug>' => 'news/list',
-                'lancaster/lien-he' => 'express/contact/index',
-                'lancaster/contact' => 'express/contact/index',
-                '<lancaster>' => 'site/index',
+                'contact' => 'express/contact/index',
+				'<lancaster>' => 'site/index',
+                
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',
 //                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
 //                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
