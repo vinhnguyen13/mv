@@ -234,7 +234,7 @@ td .floorplan:last-child {
     overflow-x: hidden !important;
 }
 
-div#clearStyleButtons {
+div.clearStyleButtons {
     width: 100%;
     margin-top: 10px;
     text-align: center;
@@ -249,7 +249,7 @@ div#clearStyleButtons {
     border-radius: 3px;
     text-shadow: 0 1px 0 #fff;
 }
-div#clearStyleButtons div {
+div.clearStyleButtons div {
     padding: 3px 10px 3px 5px;
     margin: 0 10px;
     height: 30px;
@@ -264,7 +264,7 @@ div#clearStyleButtons div {
     -ms-transition: all .3s ease-out;
     font-family: 'arial';
 }
-div#clearStyleButtons .icon {
+div.clearStyleButtons .icon {
     width: 16px;
     height: 16px;
     display: inline-block;
@@ -273,19 +273,19 @@ div#clearStyleButtons .icon {
     position: relative;
     top: 3px;
 }
-div#clearStyleButtons .icon-clear {
+div.clearStyleButtons .icon-clear {
     background-position: -202px -8px;
 }
-div#clearStyleButtons .icon-clear {
+div.clearStyleButtons .icon-clear {
     background-position: -202px -8px;
 }
-div#clearStyleButtons div:hover {
+div.clearStyleButtons div:hover {
 	background-color: #85B8FF;
 }
 #cboxLoadedContent img {
 	border: 1px solid #E2E2E2;
 }
-#mapContainer {
+.mapContainer {
     margin: 2px auto;
     border: none;
     background-color: transparent;
@@ -297,7 +297,7 @@ div#clearStyleButtons div:hover {
     height: 3px;
     z-index: 200;
 }
-#mapContainer img {
+.mapContainer img {
     cursor: crosshair;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;

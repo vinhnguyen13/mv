@@ -242,7 +242,6 @@ var buildingProject = {
 					},
 					onClosed: function() {
 						objItem = {};
-						countItemMap = $('.mapContainer').length;
 					}
 				});
 			});
@@ -268,6 +267,18 @@ var buildingProject = {
 				for( var i = 0; i < objMap.length; i++ ) {
 					if( idArea === objMap[i].id_area ) {
 						var nameCurrent = objMap[i].nameImage;
+
+						/*$('.area#'+objMap[i].id_area).remove();
+
+						getArrValueCoor(countItemMap);
+						for( var j = 0; j < arrCoordinates.length; j++ ) {
+							var str = arrCoordinates[j].toString();
+							if( str === objMap[i].coordinates ) {
+								arrCoordinates.splice(j,1);
+								$('#valCoordinate-'+countItemMap).val(arrayAreaChange(arrCoordinates));
+							}
+						}
+						objMap.splice(i,1);*/
 
 						removeArrCoordinates(i);
 
@@ -297,15 +308,7 @@ var buildingProject = {
 					var _this = $(this);
 					_this.trigger('click');
 				});
-				$('#mapContainer-'+countItemMap).find('map area').each(function(i) {
-					var _this = $(this),
-						idArea = _this.attr('id');
-					for( var j = 0; j < objMap.length; j++ ) {
-						if( objMap[j].id_area == idArea ) {
-							removeArrCoordinates(j);
-						}
-					}	
-				});
+				objMap = [];
 				arrCoordinates = [];
 				$('#valCoordinate-'+countItemMap).val(arrayAreaChange(arrCoordinates));
 				hightlight(countItemMap);
@@ -347,7 +350,16 @@ var buildingProject = {
 					removeArrCoordinates(i);
 
 					hightlight(countItemMap);
-					
+
+					/*for( var j = 0; j < arrCoordinates.length; j++ ) {
+						var str = arrCoordinates[j].toString();
+						if( str === objMap[i].coordinates ) {
+							arrCoordinates.splice(j,1);
+							$('#valCoordinate-'+countItemMap).val(arrayAreaChange(arrCoordinates));
+							l('delete #valCoordinate-'+ countItemMap +' '+ $('#valCoordinate-'+countItemMap).val() +'');
+						}
+					}
+					objMap.splice(i,1);*/
 				}else {
 
 				}
