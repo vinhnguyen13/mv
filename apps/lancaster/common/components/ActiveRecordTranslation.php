@@ -177,6 +177,8 @@ class ActiveRecordTranslation extends ActiveRecord {
 				$this->delete();
 			}
 		}
+		
+		return parent::afterSave($insert, $changedAttributes);
 	}
 	
 	public function insertTranslation($languageCode, $translation) {
