@@ -86,6 +86,7 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
+            	'<lancaster:\w+>' => 'site/index',
                 'site/login' => 'user/security/login',
                 'site/signup' => 'user/registration/register',
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',

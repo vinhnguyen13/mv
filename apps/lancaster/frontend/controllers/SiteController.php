@@ -82,9 +82,9 @@ class SiteController extends Controller
      *
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($lancaster = false)
     {
-        Yii::$app->meta->add(Yii::$app->request->absoluteUrl);
+    	Yii::$app->meta->add(Yii::$app->request->absoluteUrl);
         $this->layout = '@app/views/layouts/layout';
         \Yii::$app->getSession()->setFlash('reLog', 'Password Changed Successfully.');
         return $this->render('index');

@@ -54,6 +54,16 @@ class LcBuildingSearch extends LcBuilding
             // $query->where('0=1');
             return $dataProvider;
         }
+        
+        $dataProvider->sort->attributes['building_name'] = [
+	        'asc' => ['lc_building_translation.building_name' => SORT_ASC],
+	        'desc' => ['lc_building_translation.building_name' => SORT_DESC],
+        ];
+        
+        $dataProvider->sort->attributes['address'] = [
+	        'asc' => ['lc_building_translation.address' => SORT_ASC],
+	        'desc' => ['lc_building_translation.address' => SORT_DESC],
+        ];
 
         $query->andFilterWhere([
             'id' => $this->id,
