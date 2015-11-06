@@ -13,7 +13,7 @@ use yii\helpers\Url;
         <div id="branch-wrap">
             <ul>
                 <?php foreach($buildings as $building):?>
-                    <li><a href="#"><?= $building->building_name ?></a></li>
+                    <li><a href="<?= Url::to(['site/index', 'lancaster' => $building->slug]) ?>"><?= $building->building_name ?></a></li>
                 <?php endforeach;?>
             </ul>
         </div>
@@ -32,8 +32,8 @@ use yii\helpers\Url;
                 <i class="separator"></i>
                 <?php $supportedLanguages = Yii::$app->bootstrap['languageSelector']['supportedLanguages']; ?>
                 <ul class="langs clear">
-                    <li <?=(!empty($supportedLanguages[1]) && Yii::$app->language == $supportedLanguages[1]) ? 'class="active"' : '';?>><a href="<?=\yii\helpers\Url::toRoute(['/site/language', 'language' => !empty($supportedLanguages[1]) ? $supportedLanguages[1] : ''])?>">Vi</a></li>
-                    <li <?=(!empty($supportedLanguages[0]) && Yii::$app->language == $supportedLanguages[0]) ? 'class="active"' : '';?>><a href="<?=\yii\helpers\Url::toRoute(['/site/language', 'language' => !empty($supportedLanguages[0]) ? $supportedLanguages[0] : ''])?>">En</a></li>
+                    <li <?=(!empty($supportedLanguages[1]) && Yii::$app->language == strtolower($supportedLanguages[1])) ? 'class="active"' : '';?>><a href="<?=Url::current(['language-change' => $supportedLanguages[1]])?>">Vi</a></li>
+                    <li <?=(!empty($supportedLanguages[0]) && Yii::$app->language == strtolower($supportedLanguages[0])) ? 'class="active"' : '';?>><a href="<?=Url::current(['language-change' => $supportedLanguages[0]])?>">En</a></li>
                 </ul>
             </div>
         </div>

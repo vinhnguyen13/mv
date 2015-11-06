@@ -11,8 +11,6 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/home.js', ['position'=>View::POS_END]);
 Yii::$app->getView()->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=initMap', ['position'=>View::POS_END, 'defer'=>'', 'async'=>'']);
 
-if ($this->beginCache('homepage', ['duration' => 3600])) {
-
 $this->title = Yii::t('express','We offer exeptional amenities and renowned white - glove services');
 ?>
 <div id="home-page">
@@ -45,8 +43,8 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
             <div class="section section-building">
                 <div class="container">
                     <div class="flyout">
-                        <h2 class="noti">Lancaster Legacy offers you a sweeping panoramic view of the city skyline<span class="hr"></span></h2>
-                        <p>Besides 109 ultra-luxury and graciously furnished apartments ranging from studios to penthouses, the building also features 6 floors of working space for setting up professional and supreme offices.</p>
+                        <h2 class="noti"><?= $building->introduction_title ?><span class="hr"></span></h2>
+                        <p><?= $building->introduction_content ?></p>
                     </div>
                 </div>
             </div>
@@ -387,7 +385,3 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
         </div>
     </div>
 </div>
-<?php
-    $this->endCache();
-}
-?>

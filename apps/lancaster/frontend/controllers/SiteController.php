@@ -19,6 +19,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Cookie;
 use yii\helpers\ArrayHelper;
+use vsoft\express\models\LcBuilding;
 
 /**
  * Site controller
@@ -84,10 +85,16 @@ class SiteController extends Controller
      */
     public function actionIndex($lancaster = false)
     {
+    	if($lancaster) {
+    		$building = LcBuilding::findOne(['slug' => $lancaster]);
+    	} else {
+    		$building = LcBuilding::find()->one();
+    	}
+    	
     	Yii::$app->meta->add(Yii::$app->request->absoluteUrl);
         $this->layout = '@app/views/layouts/layout';
         \Yii::$app->getSession()->setFlash('reLog', 'Password Changed Successfully.');
-        return $this->render('index');
+        return $this->render('index', ['building' => $building]);
     }
 
     public function actionTest()

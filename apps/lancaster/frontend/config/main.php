@@ -42,7 +42,7 @@ return [
         'request' => [
             'baseUrl' => $baseUrl,
         ],
-        'urlManager' => [
+        /* 'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -60,7 +60,36 @@ return [
 //                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
 
             ]
-        ],
+        ], */
+        'urlManager' => [
+//            'class' => 'yii\web\UrlManager',
+            'class' => 'frontend\components\UrlManager',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'enableStrictParsing' => false,
+            'rules' => [
+                'site/login' => 'user/security/login',
+                'site/signup' => 'user/registration/register',
+//                'news/<action:\w+>' => 'news/<action>',
+                '<cat_id:\d+>-<cat_slug>/<id:\d+>-<slug>' => 'news/view',
+                '<cat_id:\d+>-<slug>' => 'news/list',
+                'lancaster/lien-he' => 'express/contact/index',
+                'lancaster/contact' => 'express/contact/index',
+                '<lancaster>' => 'site/index',
+//                '<controller:\w+>/<id:\d+>' => '<controller>/view',
+//                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+//                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+
+            ],
+            'languages' => ['en-us'=>'en-us', 'vi-vn'=>'vi-vn'],
+            'enableDefaultLanguageUrlCode'=>true,
+            'ignoreLanguageUrlPatterns'=>[
+                '#^site/language#' => '#^site/language#',
+                '#^express/upload/image#' => '#^express/upload/image#',
+            ],
+//            'ruleConfig' => ['class' => frontend\components\LanguageUrlRule::className()]
+        ],       
+        
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
