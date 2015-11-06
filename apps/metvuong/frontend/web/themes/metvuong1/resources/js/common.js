@@ -60,6 +60,7 @@ $(document).ready(function() {
     		txt = _this.data('valueText');
     	$txtDropdownSelected.html(txt);
         $('#search-kind .dropdown').removeClass('open');
+        $('#search-kind').attr('action', _this.attr('href'));
         return false;
     });
     //end header

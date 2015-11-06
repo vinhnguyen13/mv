@@ -47,7 +47,7 @@ use yii\helpers\Url;
                         </ul>
                         <ul id="dd-news" class="dropdown-menu">
                             <li><a data-value-id="1" data-value-text="Tin tức" href="<?=Url::to(['news/index'])?>">Tin tức</a></li>
-                            <li><a data-value-id="2" data-value-text="Dự án" href="#">Dự án</a></li>
+                            <li><a data-value-id="2" data-value-text="Dự án" href="<?=Url::to(['/building-project'])?>">Dự án</a></li>
                         </ul>
                     </div>
                     <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>

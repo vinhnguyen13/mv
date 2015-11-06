@@ -1,5 +1,6 @@
 <?php
 use yii\web\View;
+use yii\helpers\Url;
 
 	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/jquery.bxslider.js', [ 
 			'depends' => [ 
@@ -64,11 +65,11 @@ use yii\web\View;
 		<div class="row">
 			<div class="col-md-4 item-list col-sm-6 col-xs-6">
 				<div>
-					<a href="#" class="wrap-img-duan"> <span class="wrap-img bgcover"
+					<a href="<?= Url::to(['/building-project/view']) ?>" class="wrap-img-duan"> <span class="wrap-img bgcover"
 						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/img283x190-1.jpg);"></span> <span
 						class="name-duan">Sunrise Riverside</span> <span>Khu căn hộ -
 							H.Nhà Bè, TP. HCM</span>
-					</a> <a href="#" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
+					</a> <a href="<?= Url::to(['/building-project/view']) ?>" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
 							Hữu Thọ, Xã Phước Kiển, Huyện Nhà Bè, TP.HCM</span> <strong>DIỆN
 							TÍCH KHU ĐẤT</strong> <span>39.305m²</span> <strong>SỐ LƯỢNG CĂN
 							HỘ</strong> <span>Khoảng 2200 căn</span> <strong>SỐ TẦNG</strong>
@@ -78,11 +79,11 @@ use yii\web\View;
 			</div>
 			<div class="col-md-4 item-list col-sm-6 col-xs-6">
 				<div>
-					<a href="#" class="wrap-img-duan"> <span class="wrap-img bgcover"
+					<a href="<?= Url::to(['/building-project/view']) ?>" class="wrap-img-duan"> <span class="wrap-img bgcover"
 						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg);"></span>
 						<span class="name-duan">Sunrise Riverside</span> <span>Khu căn hộ
 							- H.Nhà Bè, TP. HCM</span>
-					</a> <a href="#" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
+					</a> <a href="<?= Url::to(['/building-project/view']) ?>" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
 							Hữu Thọ, Xã Phước Kiển, Huyện Nhà Bè, TP.HCM</span> <strong>DIỆN
 							TÍCH KHU ĐẤT</strong> <span>39.305m²</span> <strong>SỐ LƯỢNG CĂN
 							HỘ</strong> <span>Khoảng 2200 căn</span> <strong>SỐ TẦNG</strong>
@@ -92,11 +93,11 @@ use yii\web\View;
 			</div>
 			<div class="item-list col-md-4 col-sm-6 col-xs-6">
 				<div>
-					<a href="#" class="wrap-img-duan"> <span class="wrap-img bgcover"
+					<a href="<?= Url::to(['/building-project/view']) ?>" class="wrap-img-duan"> <span class="wrap-img bgcover"
 						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/22311_Khai-truong-Pearl-Plaza-10.jpg);"></span>
 						<span class="name-duan">Sunrise Riverside</span> <span>Khu căn hộ
 							- H.Nhà Bè, TP. HCM</span>
-					</a> <a href="#" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
+					</a> <a href="<?= Url::to(['/building-project/view']) ?>" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
 							Hữu Thọ, Xã Phước Kiển, Huyện Nhà Bè, TP.HCM</span> <strong>DIỆN
 							TÍCH KHU ĐẤT</strong> <span>39.305m²</span> <strong>SỐ LƯỢNG CĂN
 							HỘ</strong> <span>Khoảng 2200 căn</span> <strong>SỐ TẦNG</strong>
@@ -106,11 +107,11 @@ use yii\web\View;
 			</div>
 			<div class="item-list col-md-4 col-sm-6 col-xs-6">
 				<div>
-					<a href="#" class="wrap-img-duan"> <span class="wrap-img bgcover"
+					<a href="<?= Url::to(['/building-project/view']) ?>" class="wrap-img-duan"> <span class="wrap-img bgcover"
 						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-4.jpg);"></span>
 						<span class="name-duan">Sunrise Riverside</span> <span>Khu căn hộ
 							- H.Nhà Bè, TP. HCM</span>
-					</a> <a href="#" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
+					</a> <a href="<?= Url::to(['/building-project/view']) ?>" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
 							Hữu Thọ, Xã Phước Kiển, Huyện Nhà Bè, TP.HCM</span> <strong>DIỆN
 							TÍCH KHU ĐẤT</strong> <span>39.305m²</span> <strong>SỐ LƯỢNG CĂN
 							HỘ</strong> <span>Khoảng 2200 căn</span> <strong>SỐ TẦNG</strong>
@@ -120,11 +121,11 @@ use yii\web\View;
 			</div>
 			<div class="item-list col-md-4 col-sm-6 col-xs-6">
 				<div>
-					<a href="#" class="wrap-img-duan"> <span class="wrap-img bgcover"
+					<a href="<?= Url::to(['/building-project/view']) ?>" class="wrap-img-duan"> <span class="wrap-img bgcover"
 						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/img283x190-1.jpg);"></span> <span
 						class="name-duan">Sunrise Riverside</span> <span>Khu căn hộ -
 							H.Nhà Bè, TP. HCM</span>
-					</a> <a href="#" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
+					</a> <a href="<?= Url::to(['/building-project/view']) ?>" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
 							Hữu Thọ, Xã Phước Kiển, Huyện Nhà Bè, TP.HCM</span> <strong>DIỆN
 							TÍCH KHU ĐẤT</strong> <span>39.305m²</span> <strong>SỐ LƯỢNG CĂN
 							HỘ</strong> <span>Khoảng 2200 căn</span> <strong>SỐ TẦNG</strong>
@@ -134,11 +135,11 @@ use yii\web\View;
 			</div>
 			<div class="item-list col-md-4 col-sm-6 col-xs-6">
 				<div>
-					<a href="#" class="wrap-img-duan"> <span class="wrap-img bgcover"
+					<a href="<?= Url::to(['/building-project/view']) ?>" class="wrap-img-duan"> <span class="wrap-img bgcover"
 						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/23311_Khai-truong-Pearl-Plaza-11.jpg);"></span>
 						<span class="name-duan">Sunrise Riverside</span> <span>Khu căn hộ
 							- H.Nhà Bè, TP. HCM</span>
-					</a> <a href="#" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
+					</a> <a href="<?= Url::to(['/building-project/view']) ?>" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
 							Hữu Thọ, Xã Phước Kiển, Huyện Nhà Bè, TP.HCM</span> <strong>DIỆN
 							TÍCH KHU ĐẤT</strong> <span>39.305m²</span> <strong>SỐ LƯỢNG CĂN
 							HỘ</strong> <span>Khoảng 2200 căn</span> <strong>SỐ TẦNG</strong>
@@ -148,11 +149,11 @@ use yii\web\View;
 			</div>
 			<div class="item-list col-md-4 col-sm-6 col-xs-6">
 				<div>
-					<a href="#" class="wrap-img-duan"> <span class="wrap-img bgcover"
+					<a href="<?= Url::to(['/building-project/view']) ?>" class="wrap-img-duan"> <span class="wrap-img bgcover"
 						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-2.jpg);"></span>
 						<span class="name-duan">Sunrise Riverside</span> <span>Khu căn hộ
 							- H.Nhà Bè, TP. HCM</span>
-					</a> <a href="#" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
+					</a> <a href="<?= Url::to(['/building-project/view']) ?>" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
 							Hữu Thọ, Xã Phước Kiển, Huyện Nhà Bè, TP.HCM</span> <strong>DIỆN
 							TÍCH KHU ĐẤT</strong> <span>39.305m²</span> <strong>SỐ LƯỢNG CĂN
 							HỘ</strong> <span>Khoảng 2200 căn</span> <strong>SỐ TẦNG</strong>
@@ -162,11 +163,11 @@ use yii\web\View;
 			</div>
 			<div class="item-list col-md-4 col-sm-6 col-xs-6">
 				<div>
-					<a href="#" class="wrap-img-duan"> <span class="wrap-img bgcover"
+					<a href="<?= Url::to(['/building-project/view']) ?>" class="wrap-img-duan"> <span class="wrap-img bgcover"
 						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/img283x190-1.jpg);"></span> <span
 						class="name-duan">Sunrise Riverside</span> <span>Khu căn hộ -
 							H.Nhà Bè, TP. HCM</span>
-					</a> <a href="#" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
+					</a> <a href="<?= Url::to(['/building-project/view']) ?>" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
 							Hữu Thọ, Xã Phước Kiển, Huyện Nhà Bè, TP.HCM</span> <strong>DIỆN
 							TÍCH KHU ĐẤT</strong> <span>39.305m²</span> <strong>SỐ LƯỢNG CĂN
 							HỘ</strong> <span>Khoảng 2200 căn</span> <strong>SỐ TẦNG</strong>
@@ -176,11 +177,11 @@ use yii\web\View;
 			</div>
 			<div class="item-list col-md-4 col-sm-6 col-xs-6">
 				<div>
-					<a href="#" class="wrap-img-duan"> <span class="wrap-img bgcover"
+					<a href="<?= Url::to(['/building-project/view']) ?>" class="wrap-img-duan"> <span class="wrap-img bgcover"
 						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/2013080515PDR.jpg);"></span> <span
 						class="name-duan">Sunrise Riverside</span> <span>Khu căn hộ -
 							H.Nhà Bè, TP. HCM</span>
-					</a> <a href="#" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
+					</a> <a href="<?= Url::to(['/building-project/view']) ?>" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
 							Hữu Thọ, Xã Phước Kiển, Huyện Nhà Bè, TP.HCM</span> <strong>DIỆN
 							TÍCH KHU ĐẤT</strong> <span>39.305m²</span> <strong>SỐ LƯỢNG CĂN
 							HỘ</strong> <span>Khoảng 2200 căn</span> <strong>SỐ TẦNG</strong>
