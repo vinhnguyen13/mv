@@ -75,7 +75,7 @@ return [
 //                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
 
             ],
-            'languages' => ['en-us'=>'en-us', 'vi-vn'=>'vi-vn'],
+            'languages' => ['en-US'=>'en-US', 'vi-VN'=>'vi-VN'],
             'enableDefaultLanguageUrlCode'=>true,
             'ignoreLanguageUrlPatterns'=>[
                 '#^site/language#' => '#^site/language#',

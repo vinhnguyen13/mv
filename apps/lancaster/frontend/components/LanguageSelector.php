@@ -42,7 +42,7 @@ class LanguageSelector implements BootstrapInterface
         $cookie = new \yii\web\Cookie([
             'name' => $this->cookieName,
             'domain' => $this->cookieDomain,
-            'value' => strtolower($language),
+            'value' => $language,
             'expire' => time() + 86400 * $this->expireDays
         ]);
         Yii::$app->response->cookies->add($cookie);

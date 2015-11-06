@@ -187,7 +187,7 @@ class UrlManager extends BaseUrlManager
                 if (is_string($key)) {
                     $language = $key;
                 }
-                $language = strtolower($language);
+                $language = $language;
                 // Remove any trailing slashes unless one is configured as suffix
                 if ($this->suffix!=='/') {
                     if (count($params)!==1) {
@@ -235,7 +235,7 @@ class UrlManager extends BaseUrlManager
                 list($language,$country) = $this->matchCode($code);
                 if ($country!==null) {
                     if ($code==="$language-$country") {
-                        $this->redirectToLanguage(strtolower($code));
+                        $this->redirectToLanguage($code);
                     } else {
                         $language = "$language-$country";
                     }
@@ -303,7 +303,7 @@ class UrlManager extends BaseUrlManager
             if ($key && is_string($key)) {
                 $language = $key;
             }
-            $this->redirectToLanguage(strtolower($language));
+            $this->redirectToLanguage($language);
         }
     }
     /**
