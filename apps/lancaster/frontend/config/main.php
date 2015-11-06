@@ -73,6 +73,7 @@ return [
 //                'news/<action:\w+>' => 'news/<action>',
                 '<cat_id:\d+>-<cat_slug>/<id:\d+>-<slug>' => 'news/view',
                 '<cat_id:\d+>-<slug>' => 'news/list',
+                'lien-he' => 'express/contact/index',
                 'contact' => 'express/contact/index',
 				'<lancaster>' => 'site/index',
                 
