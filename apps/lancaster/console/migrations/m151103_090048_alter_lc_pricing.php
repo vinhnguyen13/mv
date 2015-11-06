@@ -22,7 +22,7 @@ class m151103_090048_alter_lc_pricing extends Migration
     	foreach ($buildings as $building) {
     		foreach ($pricings as $pricing) {
     			$sql = "INSERT INTO `lancaster`.`lc_pricing` (`apart_type_id`, `building_id`,`area`, `monthly_rates`, `daily_rates`, `description`, `created_at`, `updated_at`, `created_by`, `updated_by`) VALUES
-    				(". $pricing['id'] . ", " . $building['id'] . ",". $pricing['area'] . ", ". $pricing['monthly_rates'] . ", ". $pricing['daily_rates'] . ", 
+    				(". $pricing['apart_type_id'] . ", " . $building['id'] . ",". $pricing['area'] . ", ". $pricing['monthly_rates'] . ", ". $pricing['daily_rates'] . ", 
 					'" . $pricing['description'] . "', '" . $pricing['created_at'] . "', '" . $pricing['updated_at'] . "', 1, 1);";
     			$this->execute($sql);
     		}
