@@ -32,8 +32,8 @@ use yii\helpers\Url;
                 <i class="separator"></i>
                 <?php $supportedLanguages = Yii::$app->bootstrap['languageSelector']['supportedLanguages']; ?>
                 <ul class="langs clear">
-                    <li <?=(!empty($supportedLanguages[1]) && Yii::$app->language == strtolower($supportedLanguages[1])) ? 'class="active"' : '';?>><a href="<?=Url::current(['language-change' => $supportedLanguages[1]])?>">Vi</a></li>
-                    <li <?=(!empty($supportedLanguages[0]) && Yii::$app->language == strtolower($supportedLanguages[0])) ? 'class="active"' : '';?>><a href="<?=Url::current(['language-change' => $supportedLanguages[0]])?>">En</a></li>
+                    <li <?=(!empty($supportedLanguages[1]) && Yii::$app->language == $supportedLanguages[1]) ? 'class="active"' : '';?>><a href="<?=Url::current(['language-change' => $supportedLanguages[1]])?>">Vi</a></li>
+                    <li <?=(!empty($supportedLanguages[0]) && Yii::$app->language == $supportedLanguages[0]) ? 'class="active"' : '';?>><a href="<?=Url::current(['language-change' => $supportedLanguages[0]])?>">En</a></li>
                 </ul>
             </div>
         </div>
