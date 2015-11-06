@@ -61,9 +61,6 @@ return [
             'class' => 'johnb0\gallery\Module',
             'imageUrl' => '/store/gallery'
         ],
-        'translatemanager' => [
-            'class' => 'lajax\translatemanager\Module',
-        ],
         'cms' => [
             'class' => 'funson86\cms\Module',
             'controllerNamespace' => 'funson86\cms\controllers\backend'
