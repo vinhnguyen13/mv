@@ -66,6 +66,7 @@ $loop = [
     <?= $form->field($model, 'main_background')->widget(FileUploadUI::className(), ['url' => Url::to('/express/upload/image'), 'clientOptions' => ['maxNumberOfFiles' => 1]]) ?>
 
     <?php foreach($loop as $section => $value): ?>
+    	<?php $sectionValue = json_decode($model->$section); ?>
     	<div class="panel panel-default">
 			<div class="panel-heading"><?= $model->getAttributeLabel($section) ?></div>
 			<div class="panel-body">
@@ -76,12 +77,24 @@ $loop = [
 				</ul>
 				<div class="tab-content">
 					<?php foreach ($value as $k => $v): ?>
+					<?php
+						$field = $v[0];
+						
+						if($sectionValue) {
+							$tabValue = $sectionValue->$field;
+							$tabValueContent = $tabValue->content;
+							$tabValueImage = $tabValue->image;
+						} else {
+							$tabValueContent = '';
+							$tabValueImage = '';
+						}
+					?>
 					<div id="<?= $section . $v[0] ?>" class="tab-pane fade in <?= $k == 0 ? 'active' : '' ?>">
 						<div class="form-group">
 							<label class="control-label" for="<?= 'content-' . $section . $v[0] ?>">Nội dung</label>
 							<?= CKEditor::widget([
 								'id' => 'content-' . $section . $v[0],
-					    		'value' => '',
+					    		'value' => $tabValueContent,
 								'name' => 'LcBuilding[' . $section . '][' . $v[0] . '][content]',
 								'editorOptions' => [
 									'preset' => 'basic',
@@ -99,7 +112,7 @@ $loop = [
 								'id' => 'image-' . $section . $v[0],
 								'name' => 'LcBuilding[' . $section . '][' . $v[0] . '][image]',
 								'url' => Url::to('/express/upload/image'),
-								'fieldOptions' => ['values' => null],
+								'fieldOptions' => ['values' => $tabValueImage],
 								'clientOptions' => ['maxNumberOfFiles' => 1]
 							]) ?>
 							<div class="help-block"></div>
