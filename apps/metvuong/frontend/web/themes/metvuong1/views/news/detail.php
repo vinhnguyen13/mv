@@ -171,8 +171,8 @@ Yii::$app->view->registerMetaTag([
 
             $(window).scrollTop(function() {
                 var scroll = $(this).scrollTop();
-                $(".loading").show();
                 if(hArticle - scroll <= 500){
+                    $(".loading").show();
                     if ( timer ) clearTimeout(timer);
                     timer = setTimeout(function() {
                         $.ajax({
