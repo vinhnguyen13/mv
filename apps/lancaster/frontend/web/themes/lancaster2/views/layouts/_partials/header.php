@@ -1,5 +1,5 @@
 <?php
-use vsoft\express\models\LcBuilding;
+use vsoft\building\models\LcBuilding;
 use yii\helpers\Url;
 ?>
 <header>

@@ -8,7 +8,7 @@
 namespace frontend\components;
 
 
-use vsoft\express\models\LcMeta;
+use vsoft\express\models\Metadata;
 use Yii;
 use yii\base\Component;
 use yii\helpers\Json;
@@ -27,7 +27,7 @@ class MetaExt extends Component
 
     public function getMeta($url)
     {
-        $model = LcMeta::find()
+        $model = Metadata::find()
             ->where('url = :_url', [':_url' => $url])
             ->one();
         return $model;

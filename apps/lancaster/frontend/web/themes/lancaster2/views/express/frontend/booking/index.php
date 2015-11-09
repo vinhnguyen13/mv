@@ -3,6 +3,9 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+use vsoft\building\models\LcBooking;
+use vsoft\building\models\LcBuilding;
+use vsoft\building\models\LcApartmentType;
 
 $path = Yii::$app->view->theme->baseUrl;
 
@@ -34,7 +37,7 @@ Yii::$app->getView()->registerCssFile($path . '/resources/css/jquery-ui.css');
             <div class="form-wrap">
 
                 <?php
-                $model = new \vsoft\express\models\LcBooking();
+                $model = new LcBooking();
                 $form = \yii\widgets\ActiveForm::begin([
                     'id' => 'create-booking-form',
                     'action' => Url::toRoute('/express/booking/booking-hotel'),
@@ -69,7 +72,7 @@ Yii::$app->getView()->registerCssFile($path . '/resources/css/jquery-ui.css');
 
                         <div class="table-cell">
                             <?php
-                            $buildings = \vsoft\express\models\LcBuilding::find()->where('isbooking = :is', [':is' => 1])->all();
+                            $buildings = LcBuilding::find()->where('isbooking = :is', [':is' => 1])->all();
                             $listData = ArrayHelper::map($buildings, 'id', 'building_name');
                             echo $form->field($model, 'lc_building_id')->dropDownList($listData, [
                                 'class' => 'custom-select',
@@ -92,7 +95,7 @@ Yii::$app->getView()->registerCssFile($path . '/resources/css/jquery-ui.css');
                         <div class="table-cell">
                             <select class="custom-select atype" name="apart_type">
                                 <?php
-                                $apart_type = \vsoft\express\models\LcApartmentType::find()->all();
+                                $apart_type = LcApartmentType::find()->all();
                                 $apart_data = ArrayHelper::map($apart_type, 'id', 'name');
                                 foreach ($apart_data as $a_key => $apart) { ?>
                                     <option value="<?=$a_key?>"><?= $apart ?></option>

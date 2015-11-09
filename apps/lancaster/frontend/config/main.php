@@ -27,7 +27,9 @@ return [
     'modules'=>[
         'express' => [
             'class' => 'vsoft\express\Module',
-            'controllerNamespace' => 'vsoft\express\controllers\frontend'
+        ],
+        'building' => [
+            'class' => 'vsoft\building\Module',
         ],
         'cms' => [
             'class' => 'funson86\cms\Module',
@@ -75,7 +77,7 @@ return [
                 '<cat_id:\d+>-<slug>' => 'news/list',
                 'lien-he' => 'express/contact/index',
                 'contact' => 'express/contact/index',
-                'booking' => 'express/booking',
+                'booking' => 'booking',
 				'<lancaster>' => 'site/index',
                 
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',

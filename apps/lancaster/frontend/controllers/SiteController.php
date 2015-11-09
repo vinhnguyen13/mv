@@ -19,7 +19,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Cookie;
 use yii\helpers\ArrayHelper;
-use vsoft\express\models\LcBuilding;
+use vsoft\building\models\LcBuilding;
 
 /**
  * Site controller
