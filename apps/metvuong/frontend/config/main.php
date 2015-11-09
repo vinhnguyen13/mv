@@ -81,6 +81,7 @@ return [
                 '#^site/language#' => '#^site/language#',
                 '#^express/upload/image#' => '#^express/upload/image#',
                 '#^express/upload/editor-image#' => '#^express/upload/editor-image#',
+                '#^store/news/show#' => '#^store/news/show#',
             ],
 //            'ruleConfig' => ['class' => frontend\components\LanguageUrlRule::className()]
         ],
