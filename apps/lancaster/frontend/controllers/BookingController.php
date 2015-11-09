@@ -16,7 +16,11 @@ class BookingController extends \yii\web\Controller
     public function actionViewFloorByBuilding($id)
     {
         if ($id > 0) {
-            $building = LcBuilding::find()->where(['id' => $id])->one();
+            $building = LcBuilding::findOne($id);
+            echo "<pre>";
+            print_r($building);
+            echo "<pre>";
+            exit();
             $floor = $building->floor;
             if ($building) {
 //                echo "<option value='333'>$building->floor</option>";

@@ -40,7 +40,7 @@ Yii::$app->getView()->registerCssFile($path . '/resources/css/jquery-ui.css');
                 $model = new LcBooking();
                 $form = \yii\widgets\ActiveForm::begin([
                     'id' => 'create-booking-form',
-                    'action' => Url::toRoute('/express/booking/booking-hotel'),
+                    'action' => Url::toRoute('booking/booking-hotel'),
                     'options' => [
                         'class' => 'form',
                         'role' => 'form',
@@ -78,7 +78,7 @@ Yii::$app->getView()->registerCssFile($path . '/resources/css/jquery-ui.css');
                                 'class' => 'custom-select',
                                 'style' => 'width: 100%',
                                 'onchange' => '
-                                $.get( "' . Url::toRoute('/express/booking/view-floor-by-building') . '", { id: $(this).val() } )
+                                $.get( "' . Url::toRoute('booking/view-floor-by-building') . '", { id: $(this).val() } )
                                     .done(function( data ) {
                                         $("#floor option").remove();
                                         $("#floor").append(data);
@@ -168,7 +168,7 @@ Yii::$app->getView()->registerCssFile($path . '/resources/css/jquery-ui.css');
                     <div class="table-row">
                         <div class="table-cell"></div>
                         <div class="table-cell center">
-                            <?= Html::submitButton(Yii::t('express/booking', 'Submit'), ['class' => 'submit']) ?>
+                            <?= Html::submitButton(Yii::t('booking', 'Submit'), ['class' => 'submit']) ?>
                         </div>
                     </div>
                 </div>
