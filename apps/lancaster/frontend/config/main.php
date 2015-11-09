@@ -89,6 +89,7 @@ return [
             'ignoreLanguageUrlPatterns'=>[
                 '#^site/language#' => '#^site/language#',
                 '#^express/upload/image#' => '#^express/upload/image#',
+                '#^tool/index#' => '#^tool/index#',
             ],
 //            'ruleConfig' => ['class' => frontend\components\LanguageUrlRule::className()]
         ],       
