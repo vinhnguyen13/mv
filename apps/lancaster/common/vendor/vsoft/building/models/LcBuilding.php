@@ -47,7 +47,11 @@ class LcBuilding extends LcBuildingBase
         }
         $this->updated_at = $at;
         $this->updated_by = Yii::$app->user->id;
+        
+        $this->apartments = json_encode($this->apartments);
+        $this->amenities = json_encode($this->amenities);
+        $this->views = json_encode($this->views);
+        
         return parent::beforeSave($insert);
     }
-
 }

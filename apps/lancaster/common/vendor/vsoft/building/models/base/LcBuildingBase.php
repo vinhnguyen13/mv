@@ -42,7 +42,7 @@ class LcBuildingBase extends ActiveRecordTranslation
     public function rules()
     {
         return [
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at', 'main_background', 'apartments', 'amenities', 'views'], 'safe'],
             [['created_by', 'updated_by', 'isbooking', 'floor'], 'integer'],
             [['building_name', 'email'], 'string', 'max' => 60],
             [['address', 'description'], 'string', 'max' => 255],
