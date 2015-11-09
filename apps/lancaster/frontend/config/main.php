@@ -75,6 +75,7 @@ return [
                 '<cat_id:\d+>-<slug>' => 'news/list',
                 'lien-he' => 'express/contact/index',
                 'contact' => 'express/contact/index',
+                'booking' => 'express/booking',
 				'<lancaster>' => 'site/index',
                 
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',
