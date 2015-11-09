@@ -56,7 +56,7 @@ class BuildingProject extends CmsShow {
 	 * @override
 	 */
 	function loadDefaultValues($skipIfSet = true) {
-		parent::loadDefaultValues($skipIfSet);
+		$return = parent::loadDefaultValues($skipIfSet);
 		
 		$this->catalog_id = \Yii::$app->params['buildingCatID'];
 		$this->bpLat = '10.783233';
@@ -72,6 +72,8 @@ class BuildingProject extends CmsShow {
 				'document' => ''
 			]);
 		}
+		
+		return $return;
 	}
 	
 	/*
