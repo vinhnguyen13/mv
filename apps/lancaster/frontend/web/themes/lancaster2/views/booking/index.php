@@ -51,7 +51,7 @@ Yii::$app->getView()->registerCssFile($path . '/resources/css/jquery-ui.css');
                 ?>
                 <div class="table">
                     <div class="table-row">
-                        <label class="table-cell"><?=Yii::t("express/booking","Checkin date")?>*</label>
+                        <label class="table-cell"><?=Yii::t("express/booking","Checkin")?>*</label>
 
                         <div class="table-cell">
 <!--                            <input id="checkin" class="date-picker text-field" type="text" name="checkin" readonly/> -->
@@ -59,7 +59,7 @@ Yii::$app->getView()->registerCssFile($path . '/resources/css/jquery-ui.css');
                         </div>
                     </div>
                     <div class="table-row">
-                        <label class="table-cell"><?=Yii::t("express/booking","Checkout date")?>*</label>
+                        <label class="table-cell"><?=Yii::t("express/booking","Checkout")?>*</label>
 
                         <div class="table-cell">
 <!--                            <input id="checkout" class="date-picker text-field" type="text" name="checkout" readonly/> -->
@@ -68,7 +68,7 @@ Yii::$app->getView()->registerCssFile($path . '/resources/css/jquery-ui.css');
                         </div>
                     </div>
                     <div class="table-row">
-                        <label class="table-cell"><?=Yii::t("express/booking","Building")?>*</label>
+                        <label class="table-cell">Building*</label>
 
                         <div class="table-cell">
                             <?php
@@ -124,13 +124,13 @@ Yii::$app->getView()->registerCssFile($path . '/resources/css/jquery-ui.css');
                         </div>
                     </div>
                     <div class="table-row">
-                        <label class="table-cell"><?=Yii::t("express/booking","Full name")?> *</label>
+                        <label class="table-cell"><?=Yii::t("express/booking","Fullname")?> *</label>
                         <div class="table-cell">
                             <?= $form->field($model, 'fullname')->textInput(['maxlength' => true, 'class' => 'text-field'])->label(false) ?>
                         </div>
                     </div>
                     <div class="table-row">
-                        <label class="table-cell"><?=Yii::t("express/booking","Phone number")?>*</label>
+                        <label class="table-cell"><?=Yii::t("express/booking","Phone")?>*</label>
                         <div class="table-cell">
                             <?= $form->field($model, 'phone')->textInput(['maxlength' => true, 'class' => 'text-field'])->label(false) ?>
                         </div>
@@ -148,7 +148,7 @@ Yii::$app->getView()->registerCssFile($path . '/resources/css/jquery-ui.css');
                         </div>
                     </div>
                     <div class="table-row">
-                        <label class="table-cell"><?=Yii::t("express/booking","Passport No.")?></label>
+                        <label class="table-cell"><?=Yii::t("express/booking","Passport No")?></label>
                         <div class="table-cell">
                             <?= $form->field($model, 'passport_no')->textInput(['maxlength' => true, 'class' => 'text-field'])->label(false) ?>
                         </div>
@@ -160,7 +160,7 @@ Yii::$app->getView()->registerCssFile($path . '/resources/css/jquery-ui.css');
                         </div>
                     </div>
                     <div class="table-row">
-                        <label class="table-cell v-top"><?=Yii::t("express/booking","Infomation")?></label>
+                        <label class="table-cell v-top"><?=Yii::t("express/booking","Info")?></label>
                         <div class="table-cell">
                             <?= $form->field($model, 'info')->textarea(['maxlength' => true, 'class' => 'textarea-field', 'rows' => 4])->label(false) ?>
                         </div>
