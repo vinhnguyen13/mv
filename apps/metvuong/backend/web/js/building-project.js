@@ -201,8 +201,8 @@ var buildingProject = {
 			var superParent = el.closest('.map-area');
 			
 			var img = $('<img src="' + el.attr('href') + '" class="main-map" id="imgmapMainImage-'+countItemMap+'" alt="" usemap="#map-'+countItemMap+'" />');
-			var wrapImgCanvas = $('<div data-map-id="'+countItemMap+'" id="mapContainer-'+countItemMap+'" class="effect mapContainer"><map name="map-'+countItemMap+'" class="map" id="map-'+countItemMap+'"></map></div>');
-			wrapImgCanvas.prepend(img);
+			var wrapImgCanvas = $('<div data-map-id="'+countItemMap+'" id="mapContainer-'+countItemMap+'" class="effect mapContainer"><h3></h3><map name="map-'+countItemMap+'" class="map" id="map-'+countItemMap+'"></map></div>');
+			wrapImgCanvas.append(img);
 			var popup = $('<div></div>').append(wrapImgCanvas);
 			var popupHide = $('<div class="popup-hide"></div>').append(popup);
 
@@ -239,6 +239,7 @@ var buildingProject = {
 						arrCoordinates = [];
 						var idMap = popup.find('.mapContainer').data('mapId');
 						countItemMap = idMap;
+						//$('#mapContainer-'+countItemMap+')find('h3')
 					},
 					onClosed: function() {
 						objItem = {};

@@ -283,7 +283,7 @@ div.clearStyleButtons div:hover {
 	background-color: #85B8FF;
 }
 #cboxLoadedContent img {
-	border: 1px solid #E2E2E2;
+	/* border: 1px solid #E2E2E2; */
 }
 .mapContainer {
     margin: 2px auto;
@@ -301,7 +301,7 @@ div.clearStyleButtons div:hover {
     cursor: crosshair;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
-    border-radius: 3px;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3), 0 4px 5px rgba(0, 0, 0, 0.6) inset, 0 1px 0 #000000 inset;
+    /* border-radius: 3px; */
+    /* box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3), 0 4px 5px rgba(0, 0, 0, 0.6) inset, 0 1px 0 #000000 inset; */
     border: none;
 }
