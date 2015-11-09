@@ -1,10 +1,10 @@
 <?php
 
-namespace vsoft\express;
+namespace vsoft\building;
 
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'vsoft\express\controllers';
+    public $controllerNamespace = 'vsoft\building\controllers';
 
     public function init()
     {

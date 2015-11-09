@@ -53,9 +53,11 @@ return [
                 'route' => null, // disable menu route
             ]*/
         ],
+        'building' => [
+            'class' => 'vsoft\building\Module',
+        ],
         'express' => [
             'class' => 'vsoft\express\Module',
-            'controllerNamespace' => 'vsoft\express\controllers\backend'
         ],
         'gallery' => [
             'class' => 'johnb0\gallery\Module',

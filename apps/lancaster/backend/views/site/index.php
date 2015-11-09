@@ -32,15 +32,15 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
         	<div class="col-lg-3 sizer"></div>
             <div class="col-lg-3 item">
             	<div class="panel panel-primary">
-			      <div class="panel-heading">Express</div>
+			      <div class="panel-heading">Building Manage</div>
 			      <div class="panel-body">
 			      	<ol class="list-unstyled">
-						<li><a href="<?=Yii::$app->urlManager->createUrl(['express/booking'])?>">Booking</a></li>
-						<li><a href="<?=Yii::$app->urlManager->createUrl(['express/building'])?>">Building</a></li>
-						<li><a href="<?=Yii::$app->urlManager->createUrl(['express/contact'])?>">Contact</a></li>
-						<li><a href="<?=Yii::$app->urlManager->createUrl(['express/banner'])?>">Banner</a></li>
-						<li><a href="<?=Yii::$app->urlManager->createUrl(['express/pricing'])?>">Pricing</a></li>
-						<li><a href="<?=Yii::$app->urlManager->createUrl(['express/apartment-type'])?>">Apartment Type</a></li>
+						<li><a href="<?=Yii::$app->urlManager->createUrl(['building/booking'])?>">Booking</a></li>
+						<li><a href="<?=Yii::$app->urlManager->createUrl(['building/building'])?>">Building</a></li>
+						<li><a href="<?=Yii::$app->urlManager->createUrl(['building/contact'])?>">Contact</a></li>
+						<li><a href="<?=Yii::$app->urlManager->createUrl(['building/banner'])?>">Banner</a></li>
+						<li><a href="<?=Yii::$app->urlManager->createUrl(['building/pricing'])?>">Pricing</a></li>
+						<li><a href="<?=Yii::$app->urlManager->createUrl(['building/apartment-type'])?>">Apartment Type</a></li>
 	                </ol>
 			      </div>
 			    </div>
