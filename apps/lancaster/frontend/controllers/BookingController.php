@@ -17,10 +17,6 @@ class BookingController extends \yii\web\Controller
     {
         if ($id > 0) {
             $building = LcBuilding::findOne($id);
-            echo "<pre>";
-            print_r($building);
-            echo "<pre>";
-            exit();
             $floor = $building->floor;
             if ($building) {
 //                echo "<option value='333'>$building->floor</option>";

@@ -20,7 +20,7 @@ Yii::$app->getView()->registerCssFile($path . '/resources/css/jquery-ui.css');
 <div id="book-page">
     <div class="container">
         <div class="center">
-            <h1 class="title">Booking</h1>
+            <h1 class="title"><?=Yii::t("express/booking","Booking")?></h1>
             <?php
             if(Yii::$app->getSession()->hasFlash('reSuccess')) {
                 \yii\bootstrap\Alert::begin([
@@ -51,7 +51,7 @@ Yii::$app->getView()->registerCssFile($path . '/resources/css/jquery-ui.css');
                 ?>
                 <div class="table">
                     <div class="table-row">
-                        <label class="table-cell">Checkin date*</label>
+                        <label class="table-cell"><?=Yii::t("express/booking","Checkin date")?>*</label>
 
                         <div class="table-cell">
 <!--                            <input id="checkin" class="date-picker text-field" type="text" name="checkin" readonly/> -->
@@ -59,7 +59,7 @@ Yii::$app->getView()->registerCssFile($path . '/resources/css/jquery-ui.css');
                         </div>
                     </div>
                     <div class="table-row">
-                        <label class="table-cell">Checkout date *</label>
+                        <label class="table-cell"><?=Yii::t("express/booking","Checkout date")?>*</label>
 
                         <div class="table-cell">
 <!--                            <input id="checkout" class="date-picker text-field" type="text" name="checkout" readonly/> -->
@@ -68,7 +68,7 @@ Yii::$app->getView()->registerCssFile($path . '/resources/css/jquery-ui.css');
                         </div>
                     </div>
                     <div class="table-row">
-                        <label class="table-cell">Building *</label>
+                        <label class="table-cell"><?=Yii::t("express/booking","Building")?>*</label>
 
                         <div class="table-cell">
                             <?php
@@ -91,7 +91,7 @@ Yii::$app->getView()->registerCssFile($path . '/resources/css/jquery-ui.css');
                         </div>
                     </div>
                     <div class="table-row break">
-                        <div class="table-cell"><label>Apartment type *</label></div>
+                        <div class="table-cell"><label><?=Yii::t("express/booking","Apart Type")?>*</label></div>
                         <div class="table-cell">
                             <select class="custom-select atype" name="apart_type">
                                 <?php
@@ -104,7 +104,7 @@ Yii::$app->getView()->registerCssFile($path . '/resources/css/jquery-ui.css');
                             </select>
 
                             <div class="break-on-mobile"></div>
-                            <label>Floorplan *</label>
+                            <label><?=Yii::t("express/booking","Floorplan")?>*</label>
                             <select class="custom-select" name="floorplan" id="floor">
                                 <?php
                                 $floorNum = [];
@@ -124,43 +124,43 @@ Yii::$app->getView()->registerCssFile($path . '/resources/css/jquery-ui.css');
                         </div>
                     </div>
                     <div class="table-row">
-                        <label class="table-cell">Full name *</label>
+                        <label class="table-cell"><?=Yii::t("express/booking","Full name")?> *</label>
                         <div class="table-cell">
                             <?= $form->field($model, 'fullname')->textInput(['maxlength' => true, 'class' => 'text-field'])->label(false) ?>
                         </div>
                     </div>
                     <div class="table-row">
-                        <label class="table-cell">Phone number *</label>
+                        <label class="table-cell"><?=Yii::t("express/booking","Phone number")?>*</label>
                         <div class="table-cell">
                             <?= $form->field($model, 'phone')->textInput(['maxlength' => true, 'class' => 'text-field'])->label(false) ?>
                         </div>
                     </div>
                     <div class="table-row">
-                        <label class="table-cell">Email *</label>
+                        <label class="table-cell"><?=Yii::t("express/booking","Email")?>*</label>
                         <div class="table-cell">
                             <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'class' => 'text-field'])->label(false) ?>
                         </div>
                     </div>
                     <div class="table-row">
-                        <label class="table-cell">Address</label>
+                        <label class="table-cell"><?=Yii::t("express/booking","Address")?></label>
                         <div class="table-cell">
                             <?= $form->field($model, 'address')->textInput(['maxlength' => true, 'class' => 'text-field'])->label(false) ?>
                         </div>
                     </div>
                     <div class="table-row">
-                        <label class="table-cell">Passport No.</label>
+                        <label class="table-cell"><?=Yii::t("express/booking","Passport No.")?></label>
                         <div class="table-cell">
                             <?= $form->field($model, 'passport_no')->textInput(['maxlength' => true, 'class' => 'text-field'])->label(false) ?>
                         </div>
                     </div>
                     <div class="table-row">
-                        <label class="table-cell">Nationality</label>
+                        <label class="table-cell"><?=Yii::t("express/booking","Nationality")?></label>
                         <div class="table-cell">
                             <?= $form->field($model, 'nationality')->textInput(['maxlength' => true, 'class' => 'text-field'])->label(false) ?>
                         </div>
                     </div>
                     <div class="table-row">
-                        <label class="table-cell v-top">Infomation</label>
+                        <label class="table-cell v-top"><?=Yii::t("express/booking","Infomation")?></label>
                         <div class="table-cell">
                             <?= $form->field($model, 'info')->textarea(['maxlength' => true, 'class' => 'textarea-field', 'rows' => 4])->label(false) ?>
                         </div>
@@ -168,7 +168,7 @@ Yii::$app->getView()->registerCssFile($path . '/resources/css/jquery-ui.css');
                     <div class="table-row">
                         <div class="table-cell"></div>
                         <div class="table-cell center">
-                            <?= Html::submitButton(Yii::t('booking', 'Submit'), ['class' => 'submit']) ?>
+                            <?= Html::submitButton(Yii::t('express/booking', 'Submit'), ['class' => 'submit']) ?>
                         </div>
                     </div>
                 </div>
