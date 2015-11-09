@@ -188,11 +188,12 @@ for($i = 1998; $i <= 2020; $i++) {
 								<div class="form-group">
 									<label class="control-label" for="buildingproject-bpvideo">Ảnh</label>
 									<?= FileUploadUI::widget([
-											'options' => ['data-callback' => 'buildingProject.makeMapArea', 'class' => 'map-area'],
+											'options' => ['data-callback' => 'buildingProject.makeMapArea', 'class' => 'map-area', 'data-images-detail' => $bpa->imagesDetail[0], 'images-coordinate' => $bpa->imagesCoordinate[0]],
 											'name' => 'BuildingProject[' . $name . '][floorPlan][' . $k . '][images]',
 											'id' => $name . $k,
 											'url' => Url::to('/express/upload/image'),
-											'fieldOptions' => ['values' => $bpa->images]
+											'fieldOptions' => ['values' => $bpa->images],
+											'clientOptions' => ['maxNumberOfFiles' => 1]
 										]) ?>
 									<div class="help-block"></div>
 								</div>
