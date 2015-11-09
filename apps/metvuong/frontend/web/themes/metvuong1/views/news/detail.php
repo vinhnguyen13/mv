@@ -164,8 +164,8 @@ Yii::$app->view->registerMetaTag([
             var currentID = parseInt($('#current_id').val());
             var catID = parseInt($('#cat_id').val());
 
-            var divHeight = $(".toHeight").position().top;
-            var h = $(document).height() - $(window).height();
+//            var divHeight = $(".toHeight").position().top;
+//            var h = $(document).height() - $(window).height();
 
             var hArticle = $('.wrap-detail-article').outerHeight() + $('header').outerHeight();
 
@@ -173,66 +173,8 @@ Yii::$app->view->registerMetaTag([
                 var scroll = $(this).scrollTop();
                 $(".loading").show();
                 if(hArticle - scroll <= 500){
-                    $.ajax({
-                        url: '<?php echo Yii::$app->getUrlManager()->createUrl(["news/getone?current_id="]); ?>' + currentID + '&cat_id=' + catID,
-                        type: 'POST',
-                        success: function (data) {
-                            if (data) {
-                                $(".loading").hide();
-                                $('#current_id').val(data.id);
-                                $('#current_slug').val(data.slug);
-                                $('#current_title').val(data.title);
-                                document.title = data.title;
-                                var time = timeConverter(data.created_at);
-                                var cat_id = data.catalog_id;
-                                window.history.pushState(data.slug, data.title, data.id+"-"+data.slug);
-                                $('.wrap-detail-article').append(
-                                    '<article>' +
-                                    '<div class="time-post">'+
-                                        '<a href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + data.catalog_id + '-' + data.cat_slug + '"  class="color-title-link">' + data.catalog_name + '</a>'+
-                                        '<span>&nbsp;&nbsp;'+time+'</span>'+
-                                    '</div>'+
-                                    '<h1 class="big-title">'+data.title+'</h1>'+
-                                    '<div class="row">'+
-                                        '<div class="col-xs-3 tg-post pdR-5">'+
-                                            '<div>Tác giả</div>'+
-                                            '<div class="mgT-10"><a href="" class="color-title-link">'+data.author_name+'</a></div>'+
-                                            '<div class="mgT-10">'+
-                                                '<img src="/store/avatar/'+data.avatar+'" title="" style="max-width:100%;">'+
-                                            '</div>'+
-                                            '<div class="fItalic mgT-10">'+data.bio+'</div>'+
-                                            '<div class="mgT-10"><a class="btn btn-primary btn-normal" href="">Yêu thích</a></div>'+
-                                        '</div>'+
-                                        '<div class="col-xs-9 detail-content pdL-5">'+
-                                            '<div class="box-content">'+
-                                                '<div>'+data.content+'</div>'+
-                                                '<div id="social'+data.id+'" class="share-social mgT-10 wrap-img">'+
-                                                    '<div class="fb-like" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/'+data.catalog_id+'-'+data.cat_slug+'/' + data.id + '-'+data.slug+'" data-layout="button_count" style="margin-right: 10px;"></div>' +
-                                                    '<div class="fb-send" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/'+data.catalog_id+'-'+data.cat_slug+'/' + data.id + '-'+data.slug+'" data-show-faces="false" style="margin-right: 10px;"></div>' +
-                                                    '<div class="fb-share-button" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/'+data.catalog_id+'-'+data.cat_slug+'/' + data.id + '-'+data.slug+'" data-layout="button_count"></div><br>' +
-                                                    '<div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/'+data.catalog_id+'-'+data.cat_slug+'/' + data.id + '-'+data.slug+'" data-width="600" data-numposts="3" ></div>' +
-                                                '</div>'+
-                                            '</div>'+
-                                        '</div>'+
-                                    '</div>' +
-                                    '</article>');
-                                // console.log(data);
-                            }
-                            FB.XFBML.parse();
-                        },
-                        error: function() {
-                            $('#current_id').val(0);
-                            $(".loading").hide();
-                        }
-                    });
-                }
-            });
-            /*if ($(window).scrollTop() > h - divHeight ) {
-                $(".loading").show();
-                if(currentID > 0) {
                     if ( timer ) clearTimeout(timer);
-                    timer = setTimeout(function(){
-                        
+                    timer = setTimeout(function() {
                         $.ajax({
                             url: '<?php echo Yii::$app->getUrlManager()->createUrl(["news/getone?current_id="]); ?>' + currentID + '&cat_id=' + catID,
                             type: 'POST',
@@ -245,51 +187,50 @@ Yii::$app->view->registerMetaTag([
                                     document.title = data.title;
                                     var time = timeConverter(data.created_at);
                                     var cat_id = data.catalog_id;
-                                    window.history.pushState(data.slug, data.title, data.id+"-"+data.slug);
+                                    window.history.pushState(data.slug, data.title, data.id + "-" + data.slug);
                                     $('.wrap-detail-article').append(
                                         '<article>' +
-                                        '<div class="time-post">'+
-                                            '<a href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + data.catalog_id + '-' + data.cat_slug + '"  class="color-title-link">' + data.catalog_name + '</a>'+
-                                            '<span>&nbsp;&nbsp;'+time+'</span>'+
-                                        '</div>'+
-                                        '<h1 class="big-title">'+data.title+'</h1>'+
-                                        '<div class="row">'+
-                                            '<div class="col-xs-3 tg-post pdR-5">'+
-                                                '<div>Tác giả</div>'+
-                                                '<div class="mgT-10"><a href="" class="color-title-link">'+data.author_name+'</a></div>'+
-                                                '<div class="mgT-10">'+
-                                                    '<img src="/store/avatar/'+data.avatar+'" title="" style="max-width:100%;">'+
-                                                '</div>'+
-                                                '<div class="fItalic mgT-10">'+data.bio+'</div>'+
-                                                '<div class="mgT-10"><a class="btn btn-primary btn-normal" href="">Yêu thích</a></div>'+
-                                            '</div>'+
-                                            '<div class="col-xs-9 detail-content pdL-5">'+
-                                                '<div class="box-content">'+
-                                                    '<div>'+data.content+'</div>'+
-                                                    '<div id="social'+data.id+'" class="share-social mgT-10 wrap-img">'+
-                                                        '<div class="fb-like" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/'+data.catalog_id+'-'+data.cat_slug+'/' + data.id + '-'+data.slug+'" data-layout="button_count" style="margin-right: 10px;"></div>' +
-                                                        '<div class="fb-send" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/'+data.catalog_id+'-'+data.cat_slug+'/' + data.id + '-'+data.slug+'" data-show-faces="false" style="margin-right: 10px;"></div>' +
-                                                        '<div class="fb-share-button" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/'+data.catalog_id+'-'+data.cat_slug+'/' + data.id + '-'+data.slug+'" data-layout="button_count"></div><br>' +
-                                                        '<div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/'+data.catalog_id+'-'+data.cat_slug+'/' + data.id + '-'+data.slug+'" data-width="600" data-numposts="3" ></div>' +
-                                                    '</div>'+
-                                                '</div>'+
-                                            '</div>'+
+                                        '<div class="time-post">' +
+                                        '<a href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + data.catalog_id + '-' + data.cat_slug + '"  class="color-title-link">' + data.catalog_name + '</a>' +
+                                        '<span>&nbsp;&nbsp;' + time + '</span>' +
+                                        '</div>' +
+                                        '<h1 class="big-title">' + data.title + '</h1>' +
+                                        '<div class="row">' +
+                                        '<div class="col-xs-3 tg-post pdR-5">' +
+                                        '<div>Tác giả</div>' +
+                                        '<div class="mgT-10"><a href="" class="color-title-link">' + data.author_name + '</a></div>' +
+                                        '<div class="mgT-10">' +
+                                        '<img src="/store/avatar/' + data.avatar + '" title="" style="max-width:100%;">' +
+                                        '</div>' +
+                                        '<div class="fItalic mgT-10">' + data.bio + '</div>' +
+                                        '<div class="mgT-10"><a class="btn btn-primary btn-normal" href="">Yêu thích</a></div>' +
+                                        '</div>' +
+                                        '<div class="col-xs-9 detail-content pdL-5">' +
+                                        '<div class="box-content">' +
+                                        '<div>' + data.content + '</div>' +
+                                        '<div id="social' + data.id + '" class="share-social mgT-10 wrap-img">' +
+                                        '<div class="fb-like" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + data.catalog_id + '-' + data.cat_slug + '/' + data.id + '-' + data.slug + '" data-layout="button_count" style="margin-right: 10px;"></div>' +
+                                        '<div class="fb-send" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + data.catalog_id + '-' + data.cat_slug + '/' + data.id + '-' + data.slug + '" data-show-faces="false" style="margin-right: 10px;"></div>' +
+                                        '<div class="fb-share-button" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + data.catalog_id + '-' + data.cat_slug + '/' + data.id + '-' + data.slug + '" data-layout="button_count"></div><br>' +
+                                        '<div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + data.catalog_id + '-' + data.cat_slug + '/' + data.id + '-' + data.slug + '" data-width="600" data-numposts="3" ></div>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>' +
                                         '</div>' +
                                         '</article>');
                                     // console.log(data);
                                 }
                                 FB.XFBML.parse();
                             },
-                            error: function() {
+                            error: function () {
                                 $('#current_id').val(0);
                                 $(".loading").hide();
                             }
-                        });
-
-                    }, 500);
+                        }); // end ajax
+                    }, 800);
                 }
+            });
 
-            }*/
         });
     });
 
