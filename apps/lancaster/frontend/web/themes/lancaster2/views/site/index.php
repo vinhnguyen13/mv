@@ -58,7 +58,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                     <div class="swiper-container">
                         <div class="swiper-wrapper">
                         	<?php foreach ($sectionTab as $v): ?>
-                            <div class="swiper-slide" style="background-image: url(<?= $building::imageLink($st[$v[0]]['image']) ?>"></div>
+                            <div class="swiper-slide" style="background-image: url(<?= $building::imageLink($st[$v[0]]['image']) ?>)"></div>
                         	<?php endforeach; ?>
                         </div>
                         <div class="swiper-button swiper-button-prev"></div>
