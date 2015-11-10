@@ -90,6 +90,7 @@ return [
                 '#^site/language#' => '#^site/language#',
                 '#^express/upload/image#' => '#^express/upload/image#',
                 '#^tool/index#' => '#^tool/index#',
+                '#^tool/save-step#' => '#^tool/save-step#',
             ],
 //            'ruleConfig' => ['class' => frontend\components\LanguageUrlRule::className()]
         ],       
