@@ -39,6 +39,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     return '';
                 },
             ],
+            [
+                'label' => 'Building',
+                'attribute' => 'building_id',
+                'value' => function ($model) {
+                    return $model->building->building_name;
+                },
+            ],
             'monthly_rates:decimal',
             'daily_rates:decimal',
             'description',

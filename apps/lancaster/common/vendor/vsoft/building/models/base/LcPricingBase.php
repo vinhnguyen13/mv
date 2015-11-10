@@ -4,6 +4,7 @@ namespace vsoft\building\models\base;
 
 use vsoft\building\models\LcApartmentType;
 use Yii;
+use vsoft\building\models\LcBuilding;
 
 /**
  * This is the model class for table "lc_pricing".
@@ -37,7 +38,7 @@ class LcPricingBase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['apart_type_id', 'created_by', 'updated_by'], 'integer'],
+            [['apart_type_id', 'building_id', 'created_by', 'updated_by'], 'integer'],
 //            [['area', 'monthly_rates', 'daily_rates'], 'number'],
             [['created_at', 'updated_at'], 'safe'],
             [['description'], 'string', 'max' => 255]
@@ -69,5 +70,13 @@ class LcPricingBase extends \yii\db\ActiveRecord
     public function getApartType()
     {
         return $this->hasOne(LcApartmentType::className(), ['id' => 'apart_type_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBuilding()
+    {
+        return $this->hasOne(LcBuilding::className(), ['id' => 'building_id']);
     }
 }

@@ -9,6 +9,10 @@ use yii\widgets\ActiveForm;
 /* @var $model vsoft\building\models\LcPricing */
 /* @var $form yii\widgets\ActiveForm */
 date_default_timezone_set('Asia/Ho_Chi_Minh');
+
+
+$buildings = \vsoft\building\models\LCBuilding::find()->all();
+$listBuildings = ArrayHelper::map($buildings, 'id', 'building_name');
 ?>
 
 <div class="lc-pricing-form">
@@ -30,6 +34,10 @@ date_default_timezone_set('Asia/Ho_Chi_Minh');
     <?= $form->field($model, 'apart_type_id')->dropDownList($listData,[
         'options' => [$model->apart_type_id => ['selected ' => true]],
     ])->label('Apartment Type') ?>
+    
+    <?= $form->field($model, 'building_id')->dropDownList($listBuildings,[
+        'options' => [$model->building_id => ['selected ' => true]],
+    ])->label('Building') ?>
 
     <?= $form->field($model, 'monthly_rates')->widget(\yii\widgets\MaskedInput::className(),[
         'name' => 'monthly_rates',

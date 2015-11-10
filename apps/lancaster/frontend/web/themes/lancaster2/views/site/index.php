@@ -40,7 +40,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
             </ul>
         </div>
         <div id="paralax-page">
-            <div class="section section-building">
+            <div class="section section-building" style="background-image: url(<?= '/store/building-project-images/' . $building->main_background ?>)">
                 <div class="container">
                     <div class="flyout">
                         <h2 class="noti"><?= $building->introduction_title ?><span class="hr"></span></h2>
@@ -48,126 +48,40 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                     </div>
                 </div>
             </div>
+            <?php
+            	$sectionArray = $building::sectionArray();
+            	foreach ($sectionArray as $sectionName => $sectionTab) :
+            		$st = $building->getSectionTab($sectionName, $sectionTab);
+            ?>
             <div class="section section-swiper">
                 <div class="swiper-group">
                     <div class="swiper-container">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/living-room.jpg)"></div>
-                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/kitchen.jpg)"></div>
-                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/bathroom.jpg)"></div>
-                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/bedroom.jpg)"></div>
+                        	<?php foreach ($sectionTab as $v): ?>
+                            <div class="swiper-slide" style="background-image: url(<?= $building::imageLink($st[$v[0]]['image']) ?>"></div>
+                        	<?php endforeach; ?>
                         </div>
                         <div class="swiper-button swiper-button-prev"></div>
                         <div class="swiper-button swiper-button-next"></div>
                     </div>
                     <div class="swiper-map">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide"><div class="arrow-down"></div><div class="arrow-up"></div><div class="slide-button">LIVING ROOM</div></div>
-                            <div class="swiper-slide"><div class="arrow-down"></div><div class="arrow-up"></div><div class="slide-button">KITCHEN</div></div>
-                            <div class="swiper-slide"><div class="arrow-down"></div><div class="arrow-up"></div><div class="slide-button">BATHROOM</div></div>
-                            <div class="swiper-slide"><div class="arrow-down"></div><div class="arrow-up"></div><div class="slide-button">BEDROOM</div></div>
+                        	<?php foreach ($sectionTab as $v): ?>
+                            <div class="swiper-slide"><div class="arrow-down"></div><div class="arrow-up"></div><div class="slide-button"><?= strtoupper($v[1]) ?></div></div>
+                        	<?php endforeach; ?>
                         </div>
                     </div>
                     <div class="slide-contents">
+                        <?php foreach ($sectionTab as $v): ?>
                         <div class="slide-content">
-                            <p class="bold">Living Room</p>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                            <p class="bold"><?= $v[1] ?></p>
+                            <p><?= $st[$v[0]]['content'] ?></p>
                         </div>
-                        <div class="slide-content">
-                            <p class="bold">Kitchen</p>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                        </div>
-                        <div class="slide-content">
-                            <p class="bold">Bathroom</p>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                        </div>
-                        <div class="slide-content">
-                            <p class="bold">Bedroom</p>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
-            <div class="section section-swiper">
-                <div class="swiper-group">
-                    <div class="swiper-container">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/swiming-pool.jpg)"></div>
-                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/fitness-center.jpg)"></div>
-                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/healthy-care.jpg)"></div>
-                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/skybar.jpg)"></div>
-                        </div>
-                        <div class="swiper-button swiper-button-prev"></div>
-                        <div class="swiper-button swiper-button-next"></div>
-                    </div>
-                    <div class="swiper-map">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide"><div class="arrow-down"></div><div class="arrow-up"></div><div class="slide-button">SWIMMING POOL</div></div>
-                            <div class="swiper-slide"><div class="arrow-down"></div><div class="arrow-up"></div><div class="slide-button">FITNESS CENTER</div></div>
-                            <div class="swiper-slide"><div class="arrow-down"></div><div class="arrow-up"></div><div class="slide-button">HEALTHY CARE</div></div>
-                            <div class="swiper-slide"><div class="arrow-down"></div><div class="arrow-up"></div><div class="slide-button">SKYBAR</div></div>
-                        </div>
-                    </div>
-                    <div class="slide-contents">
-                        <div class="slide-content">
-                            <p class="bold">Swimmin Pool</p>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                        </div>
-                        <div class="slide-content">
-                            <p class="bold">Fitness Center</p>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                        </div>
-                        <div class="slide-content">
-                            <p class="bold">Healthy Care</p>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                        </div>
-                        <div class="slide-content">
-                            <p class="bold">Skybar</p>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="section section-swiper">
-                <div class="swiper-group">
-                    <div class="swiper-container">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/north.jpg)"></div>
-                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/east.jpg)"></div>
-                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/south.jpg)"></div>
-                            <div class="swiper-slide" style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/west.jpg)"></div>
-                        </div>
-                        <div class="swiper-button swiper-button-prev"></div>
-                        <div class="swiper-button swiper-button-next"></div>
-                    </div>
-                    <div class="swiper-map">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide"><div class="arrow-down"></div><div class="arrow-up"></div><div class="slide-button">NORTH</div></div>
-                            <div class="swiper-slide"><div class="arrow-down"></div><div class="arrow-up"></div><div class="slide-button">EAST</div></div>
-                            <div class="swiper-slide"><div class="arrow-down"></div><div class="arrow-up"></div><div class="slide-button">SOUTH</div></div>
-                            <div class="swiper-slide"><div class="arrow-down"></div><div class="arrow-up"></div><div class="slide-button">WEST</div></div>
-                        </div>
-                    </div>
-                    <div class="slide-contents">
-                        <div class="slide-content">
-                            <p class="bold">North</p>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                        </div>
-                        <div class="slide-content">
-                            <p class="bold">East</p>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                        </div>
-                        <div class="slide-content">
-                            <p class="bold">South</p>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                        </div>
-                        <div class="slide-content">
-                            <p class="bold">West</p>
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php endforeach; ?>
             <div class="section section-neighborhood">
 				<div class="neighborhood-wrap">
 					<div class="map-wrap"><div id="neighborhood-map"></div></div>
@@ -247,45 +161,20 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                         <tr class="bgtitle">
                             <th>AREA (SQM)</th>
                             <th>KIND OF APATMENT</th>
-                            <th>MONTHLY RATES (VN?)</th>
-                            <th>DAILY RATES (VN?)</th>
+                            <th>MONTHLY RATES (VND)</th>
+                            <th>DAILY RATES (VND)</th>
                         </tr>
+	                	<?php
+	                		$pricings = $building->pricing;
+	                		foreach ($pricings as $pricing) :
+						?>
                         <tr>
-                            <td>150</td>
-                            <td>1-Bedroom</td>
-                            <td>80,660,000</td>
-                            <td>3,270,000</td>
+                            <td><?= number_format($pricing->area) ?></td>
+                            <td><?= $pricing->apartType->name ?></td>
+                            <td><?= number_format($pricing->monthly_rates) ?></td>
+                            <td><?= number_format($pricing->daily_rates) ?></td>
                         </tr>
-                        <tr>
-                            <td>86</td>
-                            <td>2-Bedroom</td>
-                            <td>61,040,000</td>
-                            <td>2,616,000</td>
-                        </tr>
-                        <tr>
-                            <td>71</td>
-                            <td>3-Bedroom</td>
-                            <td>54,500,000</td>
-                            <td>2,398,000</td>
-                        </tr>
-                        <tr>
-                            <td>55</td>
-                            <td>Penhouse</td>
-                            <td>50,140,000</td>
-                            <td>2,140,000</td>
-                        </tr>
-                        <tr>
-                            <td>38</td>
-                            <td>Studio</td>
-                            <td>43,600,000</td>
-                            <td>1,600,000</td>
-                        </tr>
-                        <tr>
-                            <td>38</td>
-                            <td>Studio</td>
-                            <td>40,330,000</td>
-                            <td>1,330,000</td>
-                        </tr>
+						<?php endforeach; ?>
                         </tbody>
                     </table>
                     <div><a href="#" class="book-now">BOOK NOW</a></div>

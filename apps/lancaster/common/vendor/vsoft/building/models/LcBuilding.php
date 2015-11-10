@@ -30,6 +30,33 @@ class LcBuilding extends LcBuildingBase
     /**
      * TODO: Write function for building
      */
+	
+	public static function imageLink($imageName) {
+    	return '/store/building-project-images/' . $imageName;
+    }
+    
+    public static function sectionArray() {
+    	return [
+			'apartments' => [
+				['livingRoom', 'Living Room'],
+				['kitchen', 'Kitchen'],
+				['bedroom', 'Bedroom'],
+				['bathroom', 'Bathroom'],
+			],
+			'amenities' => [
+				['swimmingPool', 'Swimming Pool'],
+				['fitnessCenter', 'Fitness Center'],
+				['healthyCare', 'Healthy Care'],
+				['skybar', 'Skybar']
+			],
+			'views' => [
+				['north', 'North'],
+				['east', 'East'],
+				['south', 'South'],
+				['west', 'West'],
+			]
+		];
+    }
 
     // Modify Label
     public function attributeLabels()
@@ -53,5 +80,22 @@ class LcBuilding extends LcBuildingBase
         $this->views = json_encode($this->views);
         
         return parent::beforeSave($insert);
+    }
+    
+    public function getSectionTab($section, $sectionTab) {
+    	if($this->$section) {
+    		$return = json_decode($this->$section, TRUE);
+    	} else {
+    		$return = [];
+    		foreach ($sectionTab as $s) {
+    			$return[$s[0]] = ['content' => '', 'image' => ''];
+    		}
+    	}
+    	return $return;
+    }
+
+    public function getPricing()
+    {
+    	return $this->hasMany(LcPricing::className(), ['building_id' => 'id']);
     }
 }

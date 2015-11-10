@@ -16,26 +16,7 @@ $this->registerJsFile(Yii::getAlias('@web') . '/js/building.js', ['depends' => [
 
 $languages = Language::getLanguageNames(true);
 
-$loop = [
-	'apartments' => [
-		['livingRoom', 'Living Room'],
-		['kitchen', 'Kitchen'],
-		['bedroom', 'Bedroom'],
-		['bathroom', 'Bathroom'],
-	],
-	'amenities' => [
-		['swimmingPool', 'Swimming Pool'],
-		['fitnessCenter', 'Fitness Center'],
-		['healthyCare', 'Healthy Care'],
-		['skybar', 'Skybar']
-	],
-	'views' => [
-		['north', 'North'],
-		['east', 'East'],
-		['south', 'South'],
-		['west', 'West'],
-	]
-];
+$loop = $model::sectionArray();
 ?>
 
 <div class="lc-building-form">

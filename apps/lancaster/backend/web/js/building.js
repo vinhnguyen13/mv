@@ -15,4 +15,8 @@ $(document).ready(function(){
 	$('#language-switch-view').change(function(){
 		location.href = $(this).val();
 	});
+	
+	$('.nav-tabs a').on('shown.bs.tab', function (e) {
+		CKEDITOR.instances['content-' + $(e.target).attr('href').replace('#', '')].updateElement();
+	});
 });
