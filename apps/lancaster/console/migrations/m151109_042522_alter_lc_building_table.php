@@ -7,7 +7,7 @@ class m151109_042522_alter_lc_building_table extends Migration
 {
     public function up()
     {
-		$this->execute("ALTER TABLE `lancaster`.`lc_building`   
+		$this->execute("ALTER TABLE `lc_building`   
   			ADD COLUMN `main_background` VARCHAR(255) NULL AFTER `floor`;");
     }
 
