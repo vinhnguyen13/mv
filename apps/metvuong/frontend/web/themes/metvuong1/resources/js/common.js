@@ -45,14 +45,113 @@ $(document).ready(function() {
 
     	$('.search-select').removeClass('active');
     	$textSearch.attr('placeholder', txtPlaceholder);
-    	$dropdown.removeClass('dropdown-menu')
-    	$(getId).addClass('dropdown-menu');
     	_this.parent().addClass('active');
-    	_this.hasClass('type-text') ? ($('#search-kind>.dropdown').hide(), $('.box-search-header').addClass('resize-width')) : ($('#search-kind>.dropdown').show(),$('.box-search-header').removeClass('resize-width'));
-
-		return false;
+    	
+        return false;
     });
 
+    var $wrapListSuggest = $('.type-search ul'),
+        countStep = 1,
+        countCurrent = 0;
+    var objEvent = {
+        open: function(countStep, flagOpen) {//1. edit, 0. open normal
+            $('.search-wrap').addClass('hidden-effect');
+
+            flagOpen ? $('#step-'+countStep).addClass('edit-suggest') : $('#step-'+countStep).removeClass('edit-suggest');
+
+            $('#step-'+countStep).removeClass('hidden-effect');
+            setTimeout(function() {
+                $('#step-'+countStep).addClass('active');
+            }, 30);
+        },
+        close: function() {
+            $('.btn-close-search').on('click',function(e) {
+                e.preventDefault();
+                $('#step-'+countStep).removeClass('active');
+                setTimeout(function() {
+                    $('#step-'+countStep).addClass('hidden-effect');
+                }, 300);
+
+                if( $('.type-search ul li').length < countStep ) {
+                    countStep = countStep - 1;
+                }
+                
+                return false;
+            });
+        },
+        selectItem: function() {
+            $('.search-item ul a').on('click', function(e) {
+                e.preventDefault();
+                var _this = $(this),
+                    txt = _this.text(),
+                    $itemSuggest = $('<li data-step="'+countStep+'"><i>x</i><span></span></li>');
+
+                if( !_this.closest('.search-wrap').hasClass('edit-suggest') ) {
+                    $itemSuggest.find('span').text(txt);
+                    $wrapListSuggest.append($itemSuggest);
+                    objEvent.reOpenBySuggest();
+                }else {
+                    $('.type-search li[data-step="'+countStep+'"] span').text(txt);
+                }
+
+                $('#step-'+countStep).removeClass('active');
+                setTimeout(function() {
+                    $('#step-'+countStep).addClass('hidden-effect');
+                }, 300);
+                
+                objEvent.removeSuggest(countStep);
+
+                $wrapListSuggest.show();
+
+                objEvent.resizeWidthInput();
+
+                //$('#step-'+countStep+' .btn-close-search').trigger('click');
+
+                //objEvent.checkCounter();
+
+                return false;
+            });
+        },
+        removeSuggest: function(countStep) {
+            $('.type-search li[data-step="'+countStep+'"] i').on('click',function(e) {
+                e.preventDefault();
+                var _this = $(this);
+                _this.parent().remove();
+                objEvent.resizeWidthInput();
+            });
+        },
+        resizeWidthInput: function() {
+            var wInput = $('.type-search').outerWidth() - $wrapListSuggest.outerWidth();
+            $('.type-search input').css('width',wInput+'px');
+        },
+        reOpenBySuggest: function() {
+            $('.type-search li span').on('click',function(e) {
+                e.preventDefault();
+                var _this = $(this),
+                    boxId = _this.parent().data('step');
+                
+                objEvent.open(boxId, 1);
+            });
+        },
+        checkCounter: function() {
+            if( $('.type-search ul').children().length <= 0 || countStep > $('.search-wrap').length ) {
+                countStep = 1;
+            }else {
+                countStep += 1;
+            }
+        }
+    };
+    $('.type-search input').on('click', function(e) {
+        e.preventDefault();
+        var _this = $(this);
+        objEvent.checkCounter();
+        if( countStep <= $('.search-wrap').length ) {
+            objEvent.open(countStep);
+        }
+    });
+
+    objEvent.close();
+    objEvent.selectItem();
 
     $('#search-kind ul a').on('click', function(){
     	var _this = $(this),
