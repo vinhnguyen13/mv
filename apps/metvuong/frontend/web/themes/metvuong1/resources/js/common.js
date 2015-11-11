@@ -52,7 +52,10 @@ $(document).ready(function() {
 
     var $wrapListSuggest = $('.type-search ul'),
         countStep = 1,
-        countCurrent = 0;
+        countCurrent = 0,
+        lenghtStep = $('.search-wrap').length,
+        lenghtSuggest = 0;
+
     var objEvent = {
         open: function(countStep, flagOpen) {//1. edit, 0. open normal
             $('.search-wrap').addClass('hidden-effect');
@@ -64,18 +67,14 @@ $(document).ready(function() {
                 $('#step-'+countStep).addClass('active');
             }, 30);
         },
-        close: function() {
+        btnclose: function() {
             $('.btn-close-search').on('click',function(e) {
                 e.preventDefault();
-                $('#step-'+countStep).removeClass('active');
+                $(this).closest('.search-wrap').removeClass('active');
                 setTimeout(function() {
-                    $('#step-'+countStep).addClass('hidden-effect');
+                    $('.search-wrap').addClass('hidden-effect');
                 }, 300);
-
-                if( $('.type-search ul li').length < countStep ) {
-                    countStep = countStep - 1;
-                }
-                
+                $('.search-wrap').removeClass('edit-suggest');
                 return false;
             });
         },
@@ -89,43 +88,50 @@ $(document).ready(function() {
                 if( !_this.closest('.search-wrap').hasClass('edit-suggest') ) {
                     $itemSuggest.find('span').text(txt);
                     $wrapListSuggest.append($itemSuggest);
-                    objEvent.reOpenBySuggest();
                 }else {
+                    countStep = parseInt($('.edit-suggest').attr('id').split('-')[1]);
                     $('.type-search li[data-step="'+countStep+'"] span').text(txt);
                 }
-
+                
+                $('.search-wrap').removeClass('edit-suggest');
                 $('#step-'+countStep).removeClass('active');
                 setTimeout(function() {
                     $('#step-'+countStep).addClass('hidden-effect');
                 }, 300);
                 
-                objEvent.removeSuggest(countStep);
-
                 $wrapListSuggest.show();
 
                 objEvent.resizeWidthInput();
 
-                //$('#step-'+countStep+' .btn-close-search').trigger('click');
-
-                //objEvent.checkCounter();
+                objEvent.checkCounter();
 
                 return false;
             });
         },
-        removeSuggest: function(countStep) {
-            $('.type-search li[data-step="'+countStep+'"] i').on('click',function(e) {
+        removeSuggest: function() {
+            $(document).on('click', '.type-search li i',function(e) {
                 e.preventDefault();
-                var _this = $(this);
-                _this.parent().remove();
+                var _this = $(this),
+                    $parentList = _this.parent(),
+                    getStep = $parentList.data('step'),
+                    count = 0;
+                for( var i = lenghtSuggest; i >= 0 ; i-- ) {
+                    if( i >= getStep ) {
+                        $('.type-search li').eq(i-1).remove();
+                    }
+                }
+                countStep = getStep - 1;
                 objEvent.resizeWidthInput();
+                objEvent.checkCounter();
             });
+            
         },
         resizeWidthInput: function() {
             var wInput = $('.type-search').outerWidth() - $wrapListSuggest.outerWidth();
             $('.type-search input').css('width',wInput+'px');
         },
         reOpenBySuggest: function() {
-            $('.type-search li span').on('click',function(e) {
+            $(document).on('click', '.type-search li span',function(e) {
                 e.preventDefault();
                 var _this = $(this),
                     boxId = _this.parent().data('step');
@@ -134,24 +140,33 @@ $(document).ready(function() {
             });
         },
         checkCounter: function() {
-            if( $('.type-search ul').children().length <= 0 || countStep > $('.search-wrap').length ) {
-                countStep = 1;
-            }else {
+            lenghtSuggest = $('.type-search ul li').length;
+
+            if( lenghtStep === lenghtSuggest ) {
+                return;
+            }else if( countStep <= lenghtStep ){
                 countStep += 1;
+            }else {
+                return;
             }
         }
     };
     $('.type-search input').on('click', function(e) {
         e.preventDefault();
         var _this = $(this);
-        objEvent.checkCounter();
-        if( countStep <= $('.search-wrap').length ) {
+        if( countStep <= $('.search-wrap').length && lenghtSuggest != lenghtStep ) {
             objEvent.open(countStep);
         }
     });
 
-    objEvent.close();
+    objEvent.btnclose();
     objEvent.selectItem();
+    objEvent.removeSuggest();
+    objEvent.reOpenBySuggest();
+
+
+
+
 
     $('#search-kind ul a').on('click', function(){
     	var _this = $(this),
