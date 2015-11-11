@@ -25,8 +25,8 @@ class BuildingProjectController extends Controller
 	}
 	
 	function actionView($slug) {
-		$model = BuildingProject::find('`slug` => :slug', [':slug' => $slug])->one();
-		 
+		$model = BuildingProject::find()->where('`slug` = :slug', [':slug' => $slug])->one();
+		
 		if($model) {
 			return $this->render('view', ['model' => $model,]);
 		} else {
