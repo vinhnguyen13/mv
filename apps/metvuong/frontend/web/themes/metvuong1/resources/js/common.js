@@ -34,10 +34,13 @@ $(document).ready(function() {
     	flagReset = false,
     	$textSearch = $('#search-kind .form-group input');
 
+    if( $('.search-select.active a').hasClass('no-suggest') ) {
+        $textSearch.addClass('no-suggest');
+    }
+
     $('.search-select a').on('click', function() {
     	var _this = $(this),
-    		txtPlaceholder = _this.data('placeholder'),
-    		getId = _this.attr('rel');
+    		txtPlaceholder = _this.data('placeholder');
 
         objEvent.reset();
 
