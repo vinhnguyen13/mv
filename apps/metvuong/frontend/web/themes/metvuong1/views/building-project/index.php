@@ -1,6 +1,7 @@
 <?php
 use yii\web\View;
 use yii\helpers\Url;
+use yii\widgets\LinkPager;
 
 	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/jquery.bxslider.js', [ 
 			'depends' => [ 
@@ -63,148 +64,34 @@ use yii\helpers\Url;
 			</div>
 		</div>
 		<div class="row">
+			<?php
+				foreach ($models as $model):
+					$image = '';
+					if($gallery = explode(',', $model->bpGallery)) {
+						$image = $gallery[0];
+					}
+			?>
 			<div class="col-md-4 item-list col-sm-6 col-xs-6">
 				<div>
-					<a href="<?= Url::to(['/building-project/view']) ?>" class="wrap-img-duan"> <span class="wrap-img bgcover"
-						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/img283x190-1.jpg);"></span> <span
-						class="name-duan">Sunrise Riverside</span> <span>Khu căn hộ -
-							H.Nhà Bè, TP. HCM</span>
-					</a> <a href="<?= Url::to(['/building-project/view']) ?>" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
-							Hữu Thọ, Xã Phước Kiển, Huyện Nhà Bè, TP.HCM</span> <strong>DIỆN
-							TÍCH KHU ĐẤT</strong> <span>39.305m²</span> <strong>SỐ LƯỢNG CĂN
-							HỘ</strong> <span>Khoảng 2200 căn</span> <strong>SỐ TẦNG</strong>
-						<span>20-25 tầng</span>
+					<a href="<?= Url::to(['/building-project/view', 'slug' => $model->slug]) ?>" class="wrap-img-duan">
+						<span class="wrap-img bgcover" style="background-image: url(<?= Url::to('/store/building-project-images/' . $image) ?>);"></span>
+						<span class="name-duan"><?= $model->title ?></span>
+						<span><?= $model->bpLocation ?></span>
+					</a>
+					<a href="<?= Url::to(['/building-project/view', 'slug' => $model->slug]) ?>" class="mask">
+						<strong>VỊ TRÍ DỰ ÁN</strong>
+						<span><?= $model->bpLocation ?></span>
+						<strong>DIỆN TÍCH KHU ĐẤT</strong>
+						<span><?= $model->bpAcreage ?></span>
+						<strong>SỐ LƯỢNG CĂN HỘ</strong>
+						<span><?= $model->bpApartmentNo ?></span>
+						<strong>SỐ TẦNG</strong>
+						<span><?= $model->bpFloorNo ?></span>
 					</a>
 				</div>
 			</div>
-			<div class="col-md-4 item-list col-sm-6 col-xs-6">
-				<div>
-					<a href="<?= Url::to(['/building-project/view']) ?>" class="wrap-img-duan"> <span class="wrap-img bgcover"
-						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg);"></span>
-						<span class="name-duan">Sunrise Riverside</span> <span>Khu căn hộ
-							- H.Nhà Bè, TP. HCM</span>
-					</a> <a href="<?= Url::to(['/building-project/view']) ?>" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
-							Hữu Thọ, Xã Phước Kiển, Huyện Nhà Bè, TP.HCM</span> <strong>DIỆN
-							TÍCH KHU ĐẤT</strong> <span>39.305m²</span> <strong>SỐ LƯỢNG CĂN
-							HỘ</strong> <span>Khoảng 2200 căn</span> <strong>SỐ TẦNG</strong>
-						<span>20-25 tầng</span>
-					</a>
-				</div>
-			</div>
-			<div class="item-list col-md-4 col-sm-6 col-xs-6">
-				<div>
-					<a href="<?= Url::to(['/building-project/view']) ?>" class="wrap-img-duan"> <span class="wrap-img bgcover"
-						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/22311_Khai-truong-Pearl-Plaza-10.jpg);"></span>
-						<span class="name-duan">Sunrise Riverside</span> <span>Khu căn hộ
-							- H.Nhà Bè, TP. HCM</span>
-					</a> <a href="<?= Url::to(['/building-project/view']) ?>" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
-							Hữu Thọ, Xã Phước Kiển, Huyện Nhà Bè, TP.HCM</span> <strong>DIỆN
-							TÍCH KHU ĐẤT</strong> <span>39.305m²</span> <strong>SỐ LƯỢNG CĂN
-							HỘ</strong> <span>Khoảng 2200 căn</span> <strong>SỐ TẦNG</strong>
-						<span>20-25 tầng</span>
-					</a>
-				</div>
-			</div>
-			<div class="item-list col-md-4 col-sm-6 col-xs-6">
-				<div>
-					<a href="<?= Url::to(['/building-project/view']) ?>" class="wrap-img-duan"> <span class="wrap-img bgcover"
-						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-4.jpg);"></span>
-						<span class="name-duan">Sunrise Riverside</span> <span>Khu căn hộ
-							- H.Nhà Bè, TP. HCM</span>
-					</a> <a href="<?= Url::to(['/building-project/view']) ?>" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
-							Hữu Thọ, Xã Phước Kiển, Huyện Nhà Bè, TP.HCM</span> <strong>DIỆN
-							TÍCH KHU ĐẤT</strong> <span>39.305m²</span> <strong>SỐ LƯỢNG CĂN
-							HỘ</strong> <span>Khoảng 2200 căn</span> <strong>SỐ TẦNG</strong>
-						<span>20-25 tầng</span>
-					</a>
-				</div>
-			</div>
-			<div class="item-list col-md-4 col-sm-6 col-xs-6">
-				<div>
-					<a href="<?= Url::to(['/building-project/view']) ?>" class="wrap-img-duan"> <span class="wrap-img bgcover"
-						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/img283x190-1.jpg);"></span> <span
-						class="name-duan">Sunrise Riverside</span> <span>Khu căn hộ -
-							H.Nhà Bè, TP. HCM</span>
-					</a> <a href="<?= Url::to(['/building-project/view']) ?>" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
-							Hữu Thọ, Xã Phước Kiển, Huyện Nhà Bè, TP.HCM</span> <strong>DIỆN
-							TÍCH KHU ĐẤT</strong> <span>39.305m²</span> <strong>SỐ LƯỢNG CĂN
-							HỘ</strong> <span>Khoảng 2200 căn</span> <strong>SỐ TẦNG</strong>
-						<span>20-25 tầng</span>
-					</a>
-				</div>
-			</div>
-			<div class="item-list col-md-4 col-sm-6 col-xs-6">
-				<div>
-					<a href="<?= Url::to(['/building-project/view']) ?>" class="wrap-img-duan"> <span class="wrap-img bgcover"
-						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/23311_Khai-truong-Pearl-Plaza-11.jpg);"></span>
-						<span class="name-duan">Sunrise Riverside</span> <span>Khu căn hộ
-							- H.Nhà Bè, TP. HCM</span>
-					</a> <a href="<?= Url::to(['/building-project/view']) ?>" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
-							Hữu Thọ, Xã Phước Kiển, Huyện Nhà Bè, TP.HCM</span> <strong>DIỆN
-							TÍCH KHU ĐẤT</strong> <span>39.305m²</span> <strong>SỐ LƯỢNG CĂN
-							HỘ</strong> <span>Khoảng 2200 căn</span> <strong>SỐ TẦNG</strong>
-						<span>20-25 tầng</span>
-					</a>
-				</div>
-			</div>
-			<div class="item-list col-md-4 col-sm-6 col-xs-6">
-				<div>
-					<a href="<?= Url::to(['/building-project/view']) ?>" class="wrap-img-duan"> <span class="wrap-img bgcover"
-						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-2.jpg);"></span>
-						<span class="name-duan">Sunrise Riverside</span> <span>Khu căn hộ
-							- H.Nhà Bè, TP. HCM</span>
-					</a> <a href="<?= Url::to(['/building-project/view']) ?>" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
-							Hữu Thọ, Xã Phước Kiển, Huyện Nhà Bè, TP.HCM</span> <strong>DIỆN
-							TÍCH KHU ĐẤT</strong> <span>39.305m²</span> <strong>SỐ LƯỢNG CĂN
-							HỘ</strong> <span>Khoảng 2200 căn</span> <strong>SỐ TẦNG</strong>
-						<span>20-25 tầng</span>
-					</a>
-				</div>
-			</div>
-			<div class="item-list col-md-4 col-sm-6 col-xs-6">
-				<div>
-					<a href="<?= Url::to(['/building-project/view']) ?>" class="wrap-img-duan"> <span class="wrap-img bgcover"
-						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/img283x190-1.jpg);"></span> <span
-						class="name-duan">Sunrise Riverside</span> <span>Khu căn hộ -
-							H.Nhà Bè, TP. HCM</span>
-					</a> <a href="<?= Url::to(['/building-project/view']) ?>" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
-							Hữu Thọ, Xã Phước Kiển, Huyện Nhà Bè, TP.HCM</span> <strong>DIỆN
-							TÍCH KHU ĐẤT</strong> <span>39.305m²</span> <strong>SỐ LƯỢNG CĂN
-							HỘ</strong> <span>Khoảng 2200 căn</span> <strong>SỐ TẦNG</strong>
-						<span>20-25 tầng</span>
-					</a>
-				</div>
-			</div>
-			<div class="item-list col-md-4 col-sm-6 col-xs-6">
-				<div>
-					<a href="<?= Url::to(['/building-project/view']) ?>" class="wrap-img-duan"> <span class="wrap-img bgcover"
-						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/2013080515PDR.jpg);"></span> <span
-						class="name-duan">Sunrise Riverside</span> <span>Khu căn hộ -
-							H.Nhà Bè, TP. HCM</span>
-					</a> <a href="<?= Url::to(['/building-project/view']) ?>" class="mask"> <strong>VỊ TRÍ DỰ ÁN</strong> <span>Nguyễn
-							Hữu Thọ, Xã Phước Kiển, Huyện Nhà Bè, TP.HCM</span> <strong>DIỆN
-							TÍCH KHU ĐẤT</strong> <span>39.305m²</span> <strong>SỐ LƯỢNG CĂN
-							HỘ</strong> <span>Khoảng 2200 căn</span> <strong>SỐ TẦNG</strong>
-						<span>20-25 tầng</span>
-					</a>
-				</div>
-			</div>
-			<div class="text-center">
-				<ul class="pagination">
-					<li><a href="#"><em class="fa fa-chevron-left"></em></a></li>
-					<li class="active"><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-					<li><a href="#">6</a></li>
-					<li><a href="#">7</a></li>
-					<li><a href="#">8</a></li>
-					<li><a href="#">9</a></li>
-					<li><a href="#">10</a></li>
-					<li><a href="#"><em class="fa fa-chevron-right"></em></a></li>
-				</ul>
-			</div>
+			<?php endforeach; ?>
+			<?= LinkPager::widget(['pagination' => $pages, 'nextPageLabel' => '<em class="fa fa-chevron-right"></em>', 'prevPageLabel' => '<em class="fa fa-chevron-left"></em>']) ?>
 		</div>
 	</div>
 	<div class="col-sm-4 col-lg-3 col-left-home">

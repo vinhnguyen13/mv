@@ -1,5 +1,7 @@
 <?php
 	use yii\web\View;
+use yii\helpers\Url;
+use vsoft\buildingProject\models\BuildingProject;
 
 	$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/owl.carousel.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/video.js', ['depends' => ['yii\web\YiiAsset']]);
@@ -105,24 +107,20 @@ $script = <<<EOD
         });
 EOD;
 	$this->registerJs($script, View::POS_HEAD, 'bxslider' );
+
+	$areaTypes = BuildingProject::getAreaTypes();
 ?>
 <div class="row">
 	<div class="col-xs-6 pdR-0">
 		<div class="wrap-detail-duan">
 			<div id="item-tqda" class="item-detail item-tqda">
 				<div id="sync1" class="owl-carousel custom-slide">
-					<div class="item bgcover img-big-duan"
-						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-1.jpg)"></div>
-					<div class="item bgcover img-big-duan"
-						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/87bbds2.jpg)"></div>
-					<div class="item bgcover img-big-duan"
-						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg)"></div>
-					<div class="item bgcover img-big-duan"
-						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/22311_Khai-truong-Pearl-Plaza-10.jpg)"></div>
-					<div class="item bgcover img-big-duan"
-						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-1.jpg)"></div>
-					<div class="item bgcover img-big-duan"
-						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-1.jpg)"></div>
+					<?php 
+						$gallery = explode(',', $model->bpGallery);
+						foreach($gallery as $gal):
+					?>
+					<div class="item bgcover img-big-duan" style="background-image: url(<?= Url::to('/store/building-project-images/' . $gal) ?>)"></div>
+					<?php endforeach; ?>
 				</div>
 				<div id="sync2" class="owl-carousel thumnail-list">
 					<div class="item bgcover"
@@ -139,369 +137,99 @@ EOD;
 						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-1.jpg)"></div>
 				</div>
 			</div>
+			<?php if($model->bpMapLocation): ?>
 			<div id="item-bdvt" class="item-detail item-bdvt">
 				<div class="wrap-img">
-					<img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/Galaxy_Ban do_800x500px.jpg" alt="">
+					<img src="<?= Url::to('/store/building-project-images/' . $model->bpMapLocation) ?>" alt="">
 				</div>
-				<p>Galaxy 9 tọa lạc tại mặt tiền đường Nguyễn Khoái, Quận 4, sở hữu
-					vị trí giao thông liên vùng thuận lợi.</p>
-				<ul>
-					<li>Cách Quận 1 chỉ 5 phút qua cầu Calmette.<span></span></li>
-					<li>Cách Quận 5 chỉ 3 phút qua cầu Nguyễn Văn Cừ.<span></span></li>
-				</ul>
+				<?= $model->bpMapLocationDes ?>
 			</div>
+			<?php endif; ?>
+			<?php if($model->bpFacilitiesDetail): ?>
 			<div id="item-ti" class="item-detail item-ti">
 				<div class="wrap-img">
-					<img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/Galaxy Siteplan.jpg" alt="">
+					<img src="<?= Url::to('/store/building-project-images/' . $model->bpFacilitiesDetail) ?>" alt="">
 				</div>
+				<?= $model->bpFacilitiesDetailDes ?>
 			</div>
+			<?php endif; ?>
 			<div id="item-tdxd" class="item-detail item-tdxd"></div>
-			<div id="item-kch" class="item-detail item-tdxd">
+			<?php
+				$bpfApartmentArea = json_decode($model->bpfApartmentArea, true);
+				
+				$checkBpfApartmentArea = array_filter($bpfApartmentArea);
+				if($checkBpfApartmentArea): ?>
+				<div id="item-kch" class="item-detail item-tdxd">
 				<div id="gbtt" class="item-tab">
-					<p style="text-align: center;">
-						<span style="line-height: 1.4; text-align: left; font-size: 16px;"><span
-							style="font-size: 16px;"><strong></strong><span
-								style="border: 0px; margin: 0px; padding: 0px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; font-family: Tahoma, sans-serif; font-size: 16px; color: #3a3a3a;"><strong
-									style="border: 0px; margin: 0px; padding: 0px; font-size: 12px;"><strong
-										style="border: 0px; margin: 0px; padding: 0px; font-size: 16px; color: #000000; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22.3999996185303px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff;"></strong></strong></span><span
-								style="font-size: 16px;"><strong>CHƯƠNG TRÌNH BÁN HÀNG DỰ ÁN <span
-										style="color: #ff0000;">GALAXY 9</span><br> “QUÝ III/2015”
-								</strong></span><br> <span
-								style="font-family: 'Times New Roman';"> (Thời hạn áp dụng từ
-									ngày 01/07/2015 đến khi có thông báo mới)</span><span
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; font-family: 'Times New Roman'; color: #3a3a3a;"></span><span
-								style="font-size: 12px;"></span></span><span
-							style="line-height: 1.4;"><strong
-								style="font-size: 16px; text-align: -webkit-center; line-height: 1.4;"></strong></span></span>
-					</p>
-					<p style="text-align: center;">
-						<span
-							style="line-height: 1.4; text-align: left; font-family: 'Times New Roman'; font-size: 16px;"><br>
-						</span>
-					</p>
-					<strong>1.Lịch thanh toán tiêu chuẩn (PA1):<br>
-					</strong><br> <img alt=""
-						src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/Galaxy9_CTBH_Thanhtoan_chuan.jpg">
-					<div>
-						<br> <strong>2.Thanh toán rút ngắn:<br>
-						</strong><span
-							style="font-size: 0px; line-height: 0px; color: #ff0000;"><br>
-							Thanh toán rút ngắn:<img alt=""
-							src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/_Galaxy9_CTBH_Thanhtoan_Rutngan.jpg"><br> </span>
-					</div>
-					<div>
-						<span style="font-size: 0px; line-height: 0px;"><span
-							style="color: #ff0000;">Lịch thanh toán tiêu chuẩn (PA1):Lịch
-								thanh toán tiêu chuẩn (PA1):</span><br> </span> <span
-							style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; font-family: Tahoma, sans-serif; color: #3a3a3a;">
-							<div
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; color: #3a3a3a; font-family: Tahoma, sans-serif; line-height: 16.8016796112061px; text-align: -webkit-center; background-color: #ffffff;">
-								<span size="3"
-									style="font-weight: normal; border: 0px; margin: 0px; padding: 0px; font-size: 12px; line-height: 22.3999996185303px;"><strong
-									style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; color: #3a3a3a; font-family: Tahoma, sans-serif; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;"><span
-										style="border: 0px; margin: 0px; padding: 0px; font-size: 14px;"><strong
-											style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; line-height: 1.4;">
-												--------------------------------------------------------------------------------------------------</strong></span></strong></span>
-							</div> <span size="3"
-							style="font-weight: normal; border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-align: -webkit-center; line-height: 22.3999996185303px; font-family: Tahoma, sans-serif; color: #3a3a3a; background-color: #ffffff;"><strong
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; color: #3a3a3a; font-family: Tahoma, sans-serif; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;"><span
-									style="border: 0px; margin: 0px; padding: 0px; font-size: 14px;"><strong
-										style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; color: #3a3a3a; font-family: Tahoma, sans-serif; line-height: 16.8016796112061px; text-align: left; background-color: #ffffff;">
-											<div
-												style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; text-align: center;">
-												<strong
-													style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold;"><span
-													style="border: 0px; margin: 0px; padding: 0px; font-size: 14px;">Quý
-														khách vui lòng liên hệ Phòng Kinh Doanh để được tư vấn
-														thêm</span></strong>
-											</div>
-									</strong></span></strong></span>
-						</span>
-						<p>
-							<strong
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; color: #000000; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; font-family: Tahoma, sans-serif; line-height: 16.8016796112061px; text-align: left; background-color: #ffffff;"><span
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 14px;"><strong
-									style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; font-family: Tahoma, sans-serif; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;"><span
-										style="border: 0px; margin: 0px; padding: 0px; font-size: 14px;"><br>
-									</span></strong></span></strong>
-						</p>
-						<div style="text-align: center;">
-							<strong
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; color: #000000; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; font-family: Tahoma, sans-serif; line-height: 16.8016796112061px; text-align: left; background-color: #ffffff;"><strong
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; font-family: Tahoma, sans-serif; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;"><strong
-									style="font-size: 12px;"><span style="font-size: 14px;"><strong
-											style="font-size: 12px;"><span style="font-size: 14px;"><span
-													style="font-size: 14px; color: #000000;">DT :</span><span
-													style="font-size: 14px; color: #ff0000;">&nbsp;&nbsp;(08)
-														3825 55 66</span></span></strong></span></strong></strong></strong>
-						</div>
-						<strong
-							style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; color: #000000; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; font-family: Tahoma, sans-serif; line-height: 16.8016796112061px; text-align: left; background-color: #ffffff;"><strong
-							style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; font-family: Tahoma, sans-serif; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
-								<span
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 14px; color: #000000;">
-									<div style="text-align: center;">
-										<strong style="font-size: 12px;"><span
-											style="font-size: 14px;"><strong style="font-size: 12px;"><span
-													style="font-size: 14px;"><span
-														style="font-size: 14px; color: #000000;">Hotline :</span><span
-														style="font-size: 14px; color: #ff0000;">&nbsp;0943 79 79
-															79</span></span></strong></span></strong>
-									</div>
-							</span>
-						</strong></strong>
-						<p class="no-margin">&nbsp;</p>
-						<br>
-					</div>
+					<?= $bpfApartmentArea['payment'] ?>
 				</div>
 				<div id="ctbh" class="item-tab">
-					<div style="text-align: center;">
-						<span style="line-height: 1.4; text-align: left; font-size: 16px;"><strong></strong><span
-							style="border: 0px; margin: 0px; padding: 0px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; font-family: Tahoma, sans-serif; font-size: 16px; color: #3a3a3a;"><strong
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 12px;"><strong
-									style="border: 0px; margin: 0px; padding: 0px; font-size: 16px; color: #000000; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22.3999996185303px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff;"></strong></strong></span><span
-							style="font-size: 16px;"><strong>CHƯƠNG TRÌNH BÁN HÀNG DỰ ÁN <span
-									style="color: #ff0000;">GALAXY 9</span><br> “QUÝ III/2015"
-							</strong></span><br> <span
-							style="font-family: 'Times New Roman';"> (Thời hạn áp dụng từ
-								ngày 01/07/2015 đến khi có thông báo mới)<br>
-						</span></span>
-					</div>
-					<span
-						style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; font-family: Tahoma, sans-serif; color: #3a3a3a;">
-						<div
-							style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; color: #3a3a3a; font-family: Tahoma, sans-serif; line-height: 16.8016796112061px; text-align: -webkit-center; background-color: #ffffff;">
-							<div style="text-align: justify;">
-								<br> <br>
-							</div>
-							<span size="3"
-								style="font-weight: normal; border: 0px; margin: 0px; padding: 0px; font-size: 12px; line-height: 22.3999996185303px;"><strong
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; color: #3a3a3a; font-family: Tahoma, sans-serif; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;"><span
-									style="border: 0px; margin: 0px; padding: 0px; font-size: 14px;"><strong
-										style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; line-height: 1.4;">
-											--------------------------------------------------------------------------------------------------</strong></span></strong></span>
-						</div> <span size="3"
-						style="font-weight: normal; border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-align: -webkit-center; line-height: 22.3999996185303px; font-family: Tahoma, sans-serif; color: #3a3a3a; background-color: #ffffff;"><strong
-							style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; color: #3a3a3a; font-family: Tahoma, sans-serif; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;"><span
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 14px;"><strong
-									style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; color: #3a3a3a; font-family: Tahoma, sans-serif; line-height: 16.8016796112061px; text-align: left; background-color: #ffffff;">
-										<div
-											style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; text-align: center;">
-											<strong
-												style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold;"><span
-												style="border: 0px; margin: 0px; padding: 0px; font-size: 14px;">Quý
-													khách vui lòng liên hệ Phòng Kinh Doanh để được tư vấn thêm</span></strong>
-										</div>
-								</strong></span></strong></span>
-					</span>
-					<p>
-						<strong
-							style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; color: #000000; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; font-family: Tahoma, sans-serif; line-height: 16.8016796112061px; text-align: left; background-color: #ffffff;"><span
-							style="border: 0px; margin: 0px; padding: 0px; font-size: 14px;"><strong
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; font-family: Tahoma, sans-serif; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;"><span
-									style="border: 0px; margin: 0px; padding: 0px; font-size: 14px;"><br>
-								</span></strong></span></strong>
-					</p>
-					<div style="text-align: center;">
-						<strong
-							style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; color: #000000; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; font-family: Tahoma, sans-serif; line-height: 16.8016796112061px; text-align: left; background-color: #ffffff;"><strong
-							style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; font-family: Tahoma, sans-serif; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;"><strong
-								style="font-size: 12px;"><span style="font-size: 14px;"><strong
-										style="font-size: 12px;"><span style="font-size: 14px;"><span
-												style="font-size: 14px; color: #000000;">DT :</span><span
-												style="font-size: 14px; color: #ff0000;">&nbsp;&nbsp;(08)
-													3825 55 66</span></span></strong></span></strong></strong></strong>
-					</div>
-					<strong
-						style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; color: #000000; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; font-family: Tahoma, sans-serif; line-height: 16.8016796112061px; text-align: left; background-color: #ffffff;"><strong
-						style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; font-family: Tahoma, sans-serif; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
-							<span
-							style="border: 0px; margin: 0px; padding: 0px; font-size: 14px; color: #000000;">
-								<div style="text-align: center;">
-									<strong style="font-size: 12px;"><span style="font-size: 14px;"><strong
-											style="font-size: 12px;"><span style="font-size: 14px;"><span
-													style="font-size: 14px; color: #000000;">Hotline :</span><span
-													style="font-size: 14px; color: #ff0000;">&nbsp;0943 79 79
-														79</span></span></strong></span></strong>
-								</div>
-						</span>
-					</strong></strong>
-					<p class="no-margin">&nbsp;</p>
+					<?= $bpfApartmentArea['promotion'] ?>
 				</div>
+				<?php if($bpfApartmentArea['document']): ?>
+				<div id="tlbh" class="item-tab">
+					<img alt="" src="<?= Url::to('/store/building-project-images/' . $bpfApartmentArea['document']) ?>" />
+				</div>
+				<?php endif; ?>
 			</div>
+			<?php endif; ?>
+			<?php
+				$bpfCommercialArea = json_decode($model->bpfCommercialArea, true);
+				
+				$checkBpfCommercialArea = array_filter($bpfCommercialArea);
+				if($checkBpfCommercialArea): ?>
 			<div id="item-ktm" class="item-detail item-tdxd">
 				<div id="gbtt" class="item-tab">
-					<p style="text-align: center;">
-						<span style="line-height: 1.4; text-align: left; font-size: 16px;"><span
-							style="font-size: 16px;"><strong></strong><span
-								style="border: 0px; margin: 0px; padding: 0px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; font-family: Tahoma, sans-serif; font-size: 16px; color: #3a3a3a;"><strong
-									style="border: 0px; margin: 0px; padding: 0px; font-size: 12px;"><strong
-										style="border: 0px; margin: 0px; padding: 0px; font-size: 16px; color: #000000; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22.3999996185303px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff;"></strong></strong></span><span
-								style="font-size: 16px;"><strong>CHƯƠNG TRÌNH BÁN HÀNG DỰ ÁN <span
-										style="color: #ff0000;">GALAXY 9</span><br> “QUÝ III/2015”
-								</strong></span><br> <span
-								style="font-family: 'Times New Roman';"> (Thời hạn áp dụng từ
-									ngày 01/07/2015 đến khi có thông báo mới)</span><span
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; font-family: 'Times New Roman'; color: #3a3a3a;"></span><span
-								style="font-size: 12px;"></span></span><span
-							style="line-height: 1.4;"><strong
-								style="font-size: 16px; text-align: -webkit-center; line-height: 1.4;"></strong></span></span>
-					</p>
-					<p style="text-align: center;">
-						<span
-							style="line-height: 1.4; text-align: left; font-family: 'Times New Roman'; font-size: 16px;"><br>
-						</span>
-					</p>
-					<strong>1.Lịch thanh toán tiêu chuẩn (PA1):<br>
-					</strong><br> <img alt=""
-						src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/Galaxy9_CTBH_Thanhtoan_chuan.jpg">
-					<div>
-						<br> <strong>2.Thanh toán rút ngắn:<br>
-						</strong><span
-							style="font-size: 0px; line-height: 0px; color: #ff0000;"><br>
-							Thanh toán rút ngắn:<img alt=""
-							src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/_Galaxy9_CTBH_Thanhtoan_Rutngan.jpg"><br> </span>
-					</div>
-					<div>
-						<span style="font-size: 0px; line-height: 0px;"><span
-							style="color: #ff0000;">Lịch thanh toán tiêu chuẩn (PA1):Lịch
-								thanh toán tiêu chuẩn (PA1):</span><br> </span> <span
-							style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; font-family: Tahoma, sans-serif; color: #3a3a3a;">
-							<div
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; color: #3a3a3a; font-family: Tahoma, sans-serif; line-height: 16.8016796112061px; text-align: -webkit-center; background-color: #ffffff;">
-								<span size="3"
-									style="font-weight: normal; border: 0px; margin: 0px; padding: 0px; font-size: 12px; line-height: 22.3999996185303px;"><strong
-									style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; color: #3a3a3a; font-family: Tahoma, sans-serif; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;"><span
-										style="border: 0px; margin: 0px; padding: 0px; font-size: 14px;"><strong
-											style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; line-height: 1.4;">
-												--------------------------------------------------------------------------------------------------</strong></span></strong></span>
-							</div> <span size="3"
-							style="font-weight: normal; border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-align: -webkit-center; line-height: 22.3999996185303px; font-family: Tahoma, sans-serif; color: #3a3a3a; background-color: #ffffff;"><strong
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; color: #3a3a3a; font-family: Tahoma, sans-serif; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;"><span
-									style="border: 0px; margin: 0px; padding: 0px; font-size: 14px;"><strong
-										style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; color: #3a3a3a; font-family: Tahoma, sans-serif; line-height: 16.8016796112061px; text-align: left; background-color: #ffffff;">
-											<div
-												style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; text-align: center;">
-												<strong
-													style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold;"><span
-													style="border: 0px; margin: 0px; padding: 0px; font-size: 14px;">Quý
-														khách vui lòng liên hệ Phòng Kinh Doanh để được tư vấn
-														thêm</span></strong>
-											</div>
-									</strong></span></strong></span>
-						</span>
-						<p>
-							<strong
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; color: #000000; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; font-family: Tahoma, sans-serif; line-height: 16.8016796112061px; text-align: left; background-color: #ffffff;"><span
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 14px;"><strong
-									style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; font-family: Tahoma, sans-serif; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;"><span
-										style="border: 0px; margin: 0px; padding: 0px; font-size: 14px;"><br>
-									</span></strong></span></strong>
-						</p>
-						<div style="text-align: center;">
-							<strong
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; color: #000000; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; font-family: Tahoma, sans-serif; line-height: 16.8016796112061px; text-align: left; background-color: #ffffff;"><strong
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; font-family: Tahoma, sans-serif; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;"><strong
-									style="font-size: 12px;"><span style="font-size: 14px;"><strong
-											style="font-size: 12px;"><span style="font-size: 14px;"><span
-													style="font-size: 14px; color: #000000;">DT :</span><span
-													style="font-size: 14px; color: #ff0000;">&nbsp;&nbsp;(08)
-														3825 55 66</span></span></strong></span></strong></strong></strong>
-						</div>
-						<strong
-							style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; color: #000000; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; font-family: Tahoma, sans-serif; line-height: 16.8016796112061px; text-align: left; background-color: #ffffff;"><strong
-							style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; font-family: Tahoma, sans-serif; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
-								<span
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 14px; color: #000000;">
-									<div style="text-align: center;">
-										<strong style="font-size: 12px;"><span
-											style="font-size: 14px;"><strong style="font-size: 12px;"><span
-													style="font-size: 14px;"><span
-														style="font-size: 14px; color: #000000;">Hotline :</span><span
-														style="font-size: 14px; color: #ff0000;">&nbsp;0943 79 79
-															79</span></span></strong></span></strong>
-									</div>
-							</span>
-						</strong></strong>
-						<p class="no-margin">&nbsp;</p>
-						<br>
-					</div>
+					<?= $bpfCommercialArea['payment'] ?>
 				</div>
 				<div id="ctbh" class="item-tab">
-					<div style="text-align: center;">
-						<span style="line-height: 1.4; text-align: left; font-size: 16px;"><strong></strong><span
-							style="border: 0px; margin: 0px; padding: 0px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; font-family: Tahoma, sans-serif; font-size: 16px; color: #3a3a3a;"><strong
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 12px;"><strong
-									style="border: 0px; margin: 0px; padding: 0px; font-size: 16px; color: #000000; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 22.3999996185303px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff;"></strong></strong></span><span
-							style="font-size: 16px;"><strong>CHƯƠNG TRÌNH BÁN HÀNG DỰ ÁN <span
-									style="color: #ff0000;">GALAXY 9</span><br> “QUÝ III/2015"
-							</strong></span><br> <span
-							style="font-family: 'Times New Roman';"> (Thời hạn áp dụng từ
-								ngày 01/07/2015 đến khi có thông báo mới)<br>
-						</span></span>
-					</div>
-					<span
-						style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: -webkit-center; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; font-family: Tahoma, sans-serif; color: #3a3a3a;">
-						<div
-							style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; color: #3a3a3a; font-family: Tahoma, sans-serif; line-height: 16.8016796112061px; text-align: -webkit-center; background-color: #ffffff;">
-							<div style="text-align: justify;">
-								<br> <br>
-							</div>
-							<span size="3"
-								style="font-weight: normal; border: 0px; margin: 0px; padding: 0px; font-size: 12px; line-height: 22.3999996185303px;"><strong
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; color: #3a3a3a; font-family: Tahoma, sans-serif; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;"><span
-									style="border: 0px; margin: 0px; padding: 0px; font-size: 14px;"><strong
-										style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; line-height: 1.4;">
-											--------------------------------------------------------------------------------------------------</strong></span></strong></span>
-						</div> <span size="3"
-						style="font-weight: normal; border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-align: -webkit-center; line-height: 22.3999996185303px; font-family: Tahoma, sans-serif; color: #3a3a3a; background-color: #ffffff;"><strong
-							style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; color: #3a3a3a; font-family: Tahoma, sans-serif; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;"><span
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 14px;"><strong
-									style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; color: #3a3a3a; font-family: Tahoma, sans-serif; line-height: 16.8016796112061px; text-align: left; background-color: #ffffff;">
-										<div
-											style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; text-align: center;">
-											<strong
-												style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold;"><span
-												style="border: 0px; margin: 0px; padding: 0px; font-size: 14px;">Quý
-													khách vui lòng liên hệ Phòng Kinh Doanh để được tư vấn thêm</span></strong>
-										</div>
-								</strong></span></strong></span>
-					</span>
-					<p>
-						<strong
-							style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; color: #000000; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; font-family: Tahoma, sans-serif; line-height: 16.8016796112061px; text-align: left; background-color: #ffffff;"><span
-							style="border: 0px; margin: 0px; padding: 0px; font-size: 14px;"><strong
-								style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; font-family: Tahoma, sans-serif; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;"><span
-									style="border: 0px; margin: 0px; padding: 0px; font-size: 14px;"><br>
-								</span></strong></span></strong>
-					</p>
-					<div style="text-align: center;">
-						<strong
-							style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; color: #000000; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; font-family: Tahoma, sans-serif; line-height: 16.8016796112061px; text-align: left; background-color: #ffffff;"><strong
-							style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; font-family: Tahoma, sans-serif; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;"><strong
-								style="font-size: 12px;"><span style="font-size: 14px;"><strong
-										style="font-size: 12px;"><span style="font-size: 14px;"><span
-												style="font-size: 14px; color: #000000;">DT :</span><span
-												style="font-size: 14px; color: #ff0000;">&nbsp;&nbsp;(08)
-													3825 55 66</span></span></strong></span></strong></strong></strong>
-					</div>
-					<strong
-						style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; color: #000000; font-style: normal; font-variant: normal; letter-spacing: normal; orphans: auto; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; font-family: Tahoma, sans-serif; line-height: 16.8016796112061px; text-align: left; background-color: #ffffff;"><strong
-						style="border: 0px; margin: 0px; padding: 0px; font-size: 12px; font-weight: bold; font-family: Tahoma, sans-serif; font-style: normal; font-variant: normal; letter-spacing: normal; line-height: 16.8016796112061px; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px;">
-							<span
-							style="border: 0px; margin: 0px; padding: 0px; font-size: 14px; color: #000000;">
-								<div style="text-align: center;">
-									<strong style="font-size: 12px;"><span style="font-size: 14px;"><strong
-											style="font-size: 12px;"><span style="font-size: 14px;"><span
-													style="font-size: 14px; color: #000000;">Hotline :</span><span
-													style="font-size: 14px; color: #ff0000;">&nbsp;0943 79 79
-														79</span></span></strong></span></strong>
-								</div>
-						</span>
-					</strong></strong>
-					<p class="no-margin">&nbsp;</p>
+					<?= $bpfCommercialArea['promotion'] ?>
 				</div>
+				<?php if($bpfCommercialArea['document']): ?>
+				<div id="tlbh" class="item-tab">
+					<img alt="" src="<?= Url::to('/store/building-project-images/' . $bpfCommercialArea['document']) ?>" />
+				</div>
+				<?php endif; ?>
 			</div>
+			<?php endif; ?>
+			<?php
+				$bpfTownhouseArea = json_decode($model->bpfTownhouseArea, true);
+				
+				$checkBpfTownhouseArea = array_filter($bpfTownhouseArea);
+				if($checkBpfTownhouseArea): ?>
+			<div id="item-knp" class="item-detail item-tdxd">
+				<div id="gbtt" class="item-tab">
+					<?= $bpfTownhouseArea['payment'] ?>
+				</div>
+				<div id="ctbh" class="item-tab">
+					<?= $bpfTownhouseArea['promotion'] ?>
+				</div>
+				<?php if($bpfTownhouseArea['document']): ?>
+				<div id="tlbh" class="item-tab">
+					<img alt="" src="<?= Url::to('/store/building-project-images/' . $bpfTownhouseArea['document']) ?>" />
+				</div>
+				<?php endif; ?>
+			</div>
+			<?php endif; ?>
+			<?php
+				$bpfOffice = json_decode($model->bpfOffice, true);
+				
+				$checkBpfOffice = array_filter($bpfOffice);
+				if($checkBpfOffice): ?>
+			<div id="item-ko" class="item-detail item-tdxd">
+				<div id="gbtt" class="item-tab">
+					<?= $bpfOffice['payment'] ?>
+				</div>
+				<div id="ctbh" class="item-tab">
+					<?= $bpfOffice['promotion'] ?>
+				</div>
+				<?php if($bpfOffice['document']): ?>
+				<div id="tlbh" class="item-tab">
+					<img alt="" src="<?= Url::to('/store/building-project-images/' . $bpfOffice['document']) ?>" />
+				</div>
+				<?php endif; ?>
+			</div>
+			<?php endif; ?>
 			<div id="item-phim3dduan" class="item-detail item-phim3dduan">
 				<div class='Module Module-385'>
 					<div class="wrap2"></div>
@@ -525,51 +253,73 @@ EOD;
 					class="fa fa-chevron-right pull-right"></em></a>
 				<div class="show-infor in fadeInLeft">
 					<table>
+						<?php if($model->bpLocation): ?>
 						<tr>
 							<th>VỊ TRÍ DỰ ÁN</th>
-							<td>250 Nguyễn Văn Trỗi, Phường 8, Quận Phú Nhuận, Tp HCM</td>
+							<td><?= $model->bpLocation ?></td>
 						</tr>
+						<?php endif; ?>
+						<?php if($model->bpType): ?>
 						<tr>
 							<th>LOẠI HÌNH ĐẦU TƯ</th>
-							<td>Khu căn hộ - Thương mại</td>
+							<td><?= $model->bpType ?></td>
 						</tr>
+						<?php endif; ?>
+						<?php if($model->bpAcreage): ?>
 						<tr>
 							<th>DIỆN TÍCH KHU ĐẤT</th>
-							<td>Khoảng 4585m²</td>
+							<td><?= $model->bpAcreage ?></td>
 						</tr>
+						<?php endif; ?>
+						<?php if($model->bpFloorNo): ?>
 						<tr>
 							<th>SỐ TẦNG</th>
-							<td>22 tầng / 02 tầng hầm</td>
+							<td><?= $model->bpFloorNo ?></td>
 						</tr>
+						<?php endif; ?>
+						<?php if($model->bpApartmentNo): ?>
 						<tr>
 							<th>SỐ LƯỢNG SẢN PHẨM</th>
-							<td>285 căn hộ + Office + Retail</td>
+							<td><?= $model->bpApartmentNo ?></td>
 						</tr>
+						<?php endif; ?>
+						<?php if($model->bpStartTime): ?>
 						<tr>
 							<th>THỜI GIAN XÂY DỰNG</th>
-							<td>Quý 2/2015</td>
+							<td><?= $model->bpStartTime ?></td>
 						</tr>
+						<?php endif; ?>
+						<?php if($model->bpEstimateFinished): ?>
 						<tr>
 							<th>DỰ KIẾN HOÀN THÀNH</th>
-							<td>Quý 4/2017</td>
+							<td><?= $model->bpEstimateFinished ?></td>
 						</tr>
+						<?php endif; ?>
+						<?php if($model->bpOwnerType): ?>
 						<tr>
 							<th>HÌNH THỨC SỞ HỮU</th>
-							<td>Căn hộ ổn định lâu dài ( Sổ hồng )</td>
+							<td><?= $model->bpOwnerType ?></td>
 						</tr>
+						<?php endif; ?>
+						<?php if($model->bpFacilities): ?>
 						<tr>
 							<th>TIỆN ÍCH</th>
-							<td>Hồ bơi, phòng tập gym, siêu thị,..</td>
+							<td><?= $model->bpFacilities ?></td>
 						</tr>
+						<?php endif; ?>
 					</table>
 				</div>
 			</div>
+			<?php if($model->bpMapLocation): ?>
 			<div class="item-infor">
 				<a href="#item-bdvt" class="clearfix">BẢN ĐỒ VỊ TRÍ</a>
 			</div>
+			<?php endif; ?>
+			<?php if($model->bpFacilitiesDetail): ?>
 			<div class="item-infor">
 				<a href="#item-ti" class="clearfix">TIỆN ÍCH</a>
 			</div>
+			<?php endif; ?>
 			<div class="item-infor">
 				<a href="#item-phim3dduan" class="clearfix">PHIM 3D DỰ ÁN<em
 					class="fa fa-chevron-right pull-right"></em></a>
@@ -607,160 +357,183 @@ EOD;
 					</div>
 				</div>
 			</div>
+			<?php
+				if($model->bpProgress):
+					$bpProgress = json_decode($model->bpProgress, true);
+					$groupByYears = [];
+					
+					foreach ($bpProgress as $bpp) {
+						$groupByYears[$bpp['year']][] = $bpp;
+					}
+			?>
 			<div class="item-infor tab-tdxd">
 				<a href="#item-tdxd" class="clearfix">TIẾN ĐỘ XÂY DỰNG<em
 					class="fa fa-chevron-right pull-right"></em></a>
 				<div class="show-infor">
+					<?php foreach ($groupByYears as $year => $groupByYear) : ?>
 					<h4>
-						<em class="fa fa-angle-right mgR-5"></em>2014
+						<em class="fa fa-angle-right mgR-5"></em><?= $year ?>
 					</h4>
 					<div class="row list-pics-tdxd">
+						<?php
+							foreach ($groupByYear as $progessGal):
+								$images = explode(',', $progessGal['images']);
+								array_walk($images, function(&$item) {
+									$item = '"' . Url::to('/store/building-project-images/' . $item) . '"';
+								});
+						?>
 						<div class="col-md-3 item-pics">
 							<div class="wrap-img">
 								<div>
 									<a class="group1" href="#" title=""
-										data-imgsrc='["<?=Yii::$app->view->theme->baseUrl?>/resources/images/tdgalaxy9754.jpg","<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-2.jpg","<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-1.jpg","<?=Yii::$app->view->theme->baseUrl?>/resources/images/22311_Khai-truong-Pearl-Plaza-7.jpg","<?=Yii::$app->view->theme->baseUrl?>/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg","<?=Yii::$app->view->theme->baseUrl?>/resources/images/22311_Khai-truong-Pearl-Plaza-9.jpg","<?=Yii::$app->view->theme->baseUrl?>/resources/images/tdgalaxy9754.jpg"]'><img
-										src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/tdgalaxy9754.jpg"></a>
+										data-imgsrc='[<?= implode(',', $images) ?>]'><img
+										src=<?= $images[0] ?>></a>
 								</div>
 							</div>
-							<span><em class="icon-calendar"></em>THÁNG 09/2015</span>
+							<span><em class="icon-calendar"></em>THÁNG <?= $progessGal['month'] ?>/<?= $progessGal['year'] ?></span>
 						</div>
-						<div class="col-md-3 item-pics">
-							<div class="wrap-img">
-								<div>
-									<a class="group2" href="#" title=""
-										data-imgsrc='["<?=Yii::$app->view->theme->baseUrl?>/resources/images/galaxy9_250515-4.jpg","<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-2.jpg","<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-1.jpg"]'><img
-										src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/công-tác-sơn-nước.jpg"></a>
-								</div>
-							</div>
-							<span><em class="icon-calendar"></em>THÁNG 09/2015</span>
-						</div>
-						<div class="col-md-3 item-pics">
-							<div class="wrap-img">
-								<div>
-									<img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/tdxd-galaxy965.jpg">
-								</div>
-							</div>
-							<span><em class="icon-calendar"></em>THÁNG 09/2015</span>
-						</div>
-						<div class="col-md-3 item-pics">
-							<div class="wrap-img">
-								<div>
-									<img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/1công-tác-xây-gạch.jpg">
-								</div>
-							</div>
-							<span><em class="icon-calendar"></em>THÁNG 09/2015</span>
-						</div>
+						<?php endforeach; ?>
 					</div>
-					<h4>
-						<em class="fa fa-angle-right mgR-5"></em>2015
-					</h4>
-					<div class="row list-pics-tdxd">
-						<div class="col-md-3 item-pics">
-							<div class="wrap-img">
-								<div>
-									<img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/galaxy9_250515-4.jpg">
-								</div>
-							</div>
-							<span><em class="icon-calendar"></em>THÁNG 09/2015</span>
-						</div>
-						<div class="col-md-3 item-pics">
-							<div class="wrap-img">
-								<div>
-									<img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/tdgalaxy9754.jpg">
-								</div>
-							</div>
-							<span><em class="icon-calendar"></em>THÁNG 09/2015</span>
-						</div>
-						<div class="col-md-3 item-pics">
-							<div class="wrap-img">
-								<div>
-									<img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/tdgalaxy9754.jpg">
-								</div>
-							</div>
-							<span><em class="icon-calendar"></em>THÁNG 09/2015</span>
-						</div>
-						<div class="col-md-3 item-pics">
-							<div class="wrap-img">
-								<div>
-									<img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/tdgalaxy9754.jpg">
-								</div>
-							</div>
-							<span><em class="icon-calendar"></em>THÁNG 09/2015</span>
-						</div>
-					</div>
+					<?php endforeach; ?>
 				</div>
 			</div>
-			<div class="item-infor group-menu tab-kch">
-				<a href="#item-kch" class="clearfix"
-					data-srcmb="<?=Yii::$app->view->theme->baseUrl?>/resources/images/Mat bang tang-02.jpg">KHU CĂN HỘ<em
-					class="fa fa-chevron-right pull-right"></em></a>
-				<div class="show-infor fadeInLeft">
-					<div class="item-infor">
-						<a href="#item-kch" class="clearfix"
-							data-srcmb="<?=Yii::$app->view->theme->baseUrl?>/resources/images/Mat bang tang-02.jpg">MẶT BẰNG</a>
-						<div class="show-infor">
-							<div class="item-infor">
-								<a href="#item-kch" class="clearfix"
-									data-srcmb="<?=Yii::$app->view->theme->baseUrl?>/resources/images/Mat bang tang-02.jpg">Mặt bằng:Tầng 7-14</a>
-							</div>
-							<div class="item-infor">
-								<a href="#item-kch" class="clearfix"
-									data-srcmb="<?=Yii::$app->view->theme->baseUrl?>/resources/images/MB-Tang-dien-hinh-01.jpg">Mặt bằng:Tầng
-									15-18</a>
-							</div>
-							<div class="item-infor">
-								<a href="#item-kch" class="clearfix"
-									data-srcmb="<?=Yii::$app->view->theme->baseUrl?>/resources/images/MB-Tang-dien-hinh-03.jpg">Mặt bằng:Tầng
-									19-22</a>
+			<?php endif; ?>
+			<?php if($checkBpfApartmentArea): ?>
+				<div class="item-infor group-menu tab-kch">
+					<a href="#item-kch" class="clearfix">KHU CĂN HỘ<em
+						class="fa fa-chevron-right pull-right"></em></a>
+					<div class="show-infor fadeInLeft">
+						<div class="item-infor">
+							<a href="#item-kch" class="clearfix">MẶT BẰNG</a>
+							<div class="show-infor">
+								<?php foreach($bpfApartmentArea['floorPlan'] as $floorPlan): ?>
+								<div class="item-infor">
+									<a href="#item-kch" class="clearfix"
+										data-srcmb="<?= Url::to('/store/building-project-images/' . $floorPlan['images']) ?>"><?= $floorPlan['title'] ?></a>
+								</div>
+								<?php endforeach; ?>
 							</div>
 						</div>
-					</div>
-					<div class="item-infor">
-						<a href="#item-kch" class="clearfix" data-tabsub="#gbtt">GIÁ BÁN &
-							THANH TOÁN</a>
-					</div>
-					<div class="item-infor">
-						<a href="#item-kch" class="clearfix" data-tabsub="#ctbh">CHƯƠNG
-							TRÌNH BÁN HÀNG</a>
+						<?php if($bpfApartmentArea['payment']): ?>
+						<div class="item-infor">
+							<a href="#item-kch" class="clearfix" data-tabsub="#gbtt">GIÁ BÁN & THANH TOÁN</a>
+						</div>
+						<?php endif; ?>
+						<?php if($bpfApartmentArea['promotion']): ?>
+						<div class="item-infor">
+							<a href="#item-kch" class="clearfix" data-tabsub="#ctbh">CHƯƠNG TRÌNH BÁN HÀNG</a>
+						</div>
+						<?php endif; ?>
+						<?php if($bpfApartmentArea['document']): ?>
+						<div class="item-infor">
+							<a href="#item-kch" class="clearfix" data-tabsub="#tlbh">TÀI LIỆU BÁN HÀNG</a>
+						</div>
+						<?php endif; ?>
 					</div>
 				</div>
-			</div>
-			<div class="item-infor group-menu tab-ktm">
-				<a href="#item-ktm" class="clearfix"
-					data-srcmb="<?=Yii::$app->view->theme->baseUrl?>/resources/images/Mat bang tang-02.jpg">KHU THƯƠNG MẠI<em
-					class="fa fa-chevron-right pull-right"></em></a>
-				<div class="show-infor">
-					<div class="item-infor">
-						<a href="#item-ktm" class="clearfix"
-							data-srcmb="<?=Yii::$app->view->theme->baseUrl?>/resources/images/Mat bang tang-02.jpg">MẶT BẰNG</a>
-						<div class="show-infor" id="">
-							<div class="item-infor">
-								<a href="#item-ktm" class="clearfix"
-									data-srcmb="<?=Yii::$app->view->theme->baseUrl?>/resources/images/Mat bang tang-02.jpg">Mặt bằng:Tầng 7-14</a>
-							</div>
-							<div class="item-infor">
-								<a href="#item-ktm" class="clearfix"
-									data-srcmb="<?=Yii::$app->view->theme->baseUrl?>/resources/images/MB-Tang-dien-hinh-01.jpg">Mặt bằng:Tầng
-									15-18</a>
-							</div>
-							<div class="item-infor">
-								<a href="#item-ktm" class="clearfix"
-									data-srcmb="<?=Yii::$app->view->theme->baseUrl?>/resources/images/MB-Tang-dien-hinh-03.jpg">Mặt bằng:Tầng
-									19-22</a>
+			<?php endif; ?>
+			<?php if($checkBpfCommercialArea): ?>
+				<div class="item-infor group-menu tab-ktm">
+					<a href="#item-ktm" class="clearfix">KHU THƯƠNG MẠI<em
+						class="fa fa-chevron-right pull-right"></em></a>
+					<div class="show-infor fadeInLeft">
+						<div class="item-infor">
+							<a href="#item-ktm" class="clearfix">MẶT BẰNG</a>
+							<div class="show-infor">
+								<?php foreach($bpfCommercialArea['floorPlan'] as $floorPlan): ?>
+								<div class="item-infor">
+									<a href="#item-ktm" class="clearfix"
+										data-srcmb="<?= Url::to('/store/building-project-images/' . $floorPlan['images']) ?>"><?= $floorPlan['title'] ?></a>
+								</div>
+								<?php endforeach; ?>
 							</div>
 						</div>
-					</div>
-					<div class="item-infor">
-						<a href="#item-ktm" class="clearfix" data-tabsub="#gbtt">GIÁ BÁN &
-							THANH TOÁN</a>
-					</div>
-					<div class="item-infor">
-						<a href="#item-ktm" class="clearfix" data-tabsub="#ctbh">CHƯƠNG
-							TRÌNH BÁN HÀNG</a>
+						<?php if($bpfCommercialArea['payment']): ?>
+						<div class="item-infor">
+							<a href="#item-ktm" class="clearfix" data-tabsub="#gbtt">GIÁ BÁN & THANH TOÁN</a>
+						</div>
+						<?php endif; ?>
+						<?php if($bpfCommercialArea['promotion']): ?>
+						<div class="item-infor">
+							<a href="#item-ktm" class="clearfix" data-tabsub="#ctbh">CHƯƠNG TRÌNH BÁN HÀNG</a>
+						</div>
+						<?php endif; ?>
+						<?php if($bpfCommercialArea['document']): ?>
+						<div class="item-infor">
+							<a href="#item-ktm" class="clearfix" data-tabsub="#tlbh">TÀI LIỆU BÁN HÀNG</a>
+						</div>
+						<?php endif; ?>
 					</div>
 				</div>
-			</div>
+			<?php endif; ?>
+			<?php if($checkBpfTownhouseArea): ?>
+				<div class="item-infor group-menu tab-knp">
+					<a href="#item-knp" class="clearfix">KHU NHÀ PHỐ<em
+						class="fa fa-chevron-right pull-right"></em></a>
+					<div class="show-infor fadeInLeft">
+						<div class="item-infor">
+							<a href="#item-knp" class="clearfix">MẶT BẰNG</a>
+							<div class="show-infor">
+								<?php foreach($bpfTownhouseArea['floorPlan'] as $floorPlan): ?>
+								<div class="item-infor">
+									<a href="#item-knp" class="clearfix"
+										data-srcmb="<?= Url::to('/store/building-project-images/' . $floorPlan['images']) ?>"><?= $floorPlan['title'] ?></a>
+								</div>
+								<?php endforeach; ?>
+							</div>
+						</div>
+						<?php if($bpfTownhouseArea['payment']): ?>
+						<div class="item-infor">
+							<a href="#item-knp" class="clearfix" data-tabsub="#gbtt">GIÁ BÁN & THANH TOÁN</a>
+						</div>
+						<?php endif; ?>
+						<?php if($bpfTownhouseArea['promotion']): ?>
+						<div class="item-infor">
+							<a href="#item-knp" class="clearfix" data-tabsub="#ctbh">CHƯƠNG TRÌNH BÁN HÀNG</a>
+						</div>
+						<?php endif; ?>
+						<?php if($bpfTownhouseArea['document']): ?>
+						<div class="item-infor">
+							<a href="#item-knp" class="clearfix" data-tabsub="#tlbh">TÀI LIỆU BÁN HÀNG</a>
+						</div>
+						<?php endif; ?>
+					</div>
+				</div>
+			<?php endif; ?>
+			<?php if($checkBpfOffice): ?>
+				<div class="item-infor group-menu tab-ko">
+					<a href="#item-ko" class="clearfix" data-srcmb="<?=Yii::$app->view->theme->baseUrl?>/resources/images/Mat bang tang-02.jpg">KHU OFFICE - OFFICETEL<em
+						class="fa fa-chevron-right pull-right"></em></a>
+					<div class="show-infor fadeInLeft">
+						<div class="item-infor">
+							<a href="#item-ko" class="clearfix">MẶT BẰNG</a>
+							<div class="show-infor">
+								<?php foreach($bpfOffice['floorPlan'] as $floorPlan): ?>
+								<div class="item-infor">
+									<a href="#item-knp" class="clearfix"
+										data-srcmb="<?= Url::to('/store/building-project-images/' . $floorPlan['images']) ?>"><?= $floorPlan['title'] ?></a>
+								</div>
+								<?php endforeach; ?>
+							</div>
+						</div>
+						<?php if($bpfOffice['payment']): ?>
+						<div class="item-infor">
+							<a href="#item-ko" class="clearfix" data-tabsub="#gbtt">GIÁ BÁN & THANH TOÁN</a>
+						</div>
+						<?php endif; ?>
+						<?php if($bpfOffice['promotion']): ?>
+						<div class="item-infor">
+							<a href="#item-ko" class="clearfix" data-tabsub="#ctbh">CHƯƠNG TRÌNH BÁN HÀNG</a>
+						</div>
+						<?php endif; ?>
+						<?php if($bpfOffice['document']): ?>
+						<div class="item-infor">
+							<a href="#item-ko" class="clearfix" data-tabsub="#tlbh">TÀI LIỆU BÁN HÀNG</a>
+						</div>
+						<?php endif; ?>
+					</div>
+				</div>
+			<?php endif; ?>
 		</div>
 	</div>
 </div>

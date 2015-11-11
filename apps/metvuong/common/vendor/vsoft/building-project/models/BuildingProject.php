@@ -4,6 +4,10 @@ namespace vsoft\buildingProject\models;
 use funson86\cms\models\CmsShow;
 use yii\base\Model;
 use funson86\cms\Module;
+use yii\behaviors\TimestampBehavior;
+use yii\behaviors\AttributeBehavior;
+use yii\db\ActiveRecord;
+use yii\db\Expression;
 /**
  * This is the model class for table "cms_show".
  *
@@ -147,6 +151,24 @@ class BuildingProject extends CmsShow {
 	    		// If intl extension is enabled, see http://userguide.icu-project.org/transforms/general.
 	    		'transliterateOptions' => 'Russian-Latin/BGN; Any-Latin; Latin-ASCII; NFD; [:Nonspacing Mark:] Remove; NFC;'
 			],
+            [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => 'updated_at',
+                ],
+                'value' => new Expression('UNIX_TIMESTAMP()'),
+            ],
+            [
+                'class' => AttributeBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_by', 'updated_by'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => 'updated_by',
+                ],
+                'value' => function ($event) {
+                    return \Yii::$app->user->id;
+                },
+            ],
     	];
     }
     
