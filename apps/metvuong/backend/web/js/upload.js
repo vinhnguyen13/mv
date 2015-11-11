@@ -55,8 +55,15 @@ var customFileUpload = {
 			eval($(ins).data('callback') + '("destroyed", event, data, ins)');
 		}
 	},
-	attachUploadWidget: function(el) {
-		el.fileupload({"autoUpload":true,"uploadTemplateId":null,"downloadTemplateId":null,"previewCrop":true,"previewMinWidth":120,"previewMinHeight":120,"previewMaxWidth":120,"previewMaxHeight":120,"disableExifThumbnail":true,"formData":[],"url":"/express/upload/image"});
+	attachUploadWidget: function(el, single) {
+		
+		var options = {"autoUpload":true,"uploadTemplateId":null,"downloadTemplateId":null,"previewCrop":true,"previewMinWidth":120,"previewMinHeight":120,"previewMaxWidth":120,"previewMaxHeight":120,"disableExifThumbnail":true,"formData":[],"url":"/express/upload/image"};
+		
+		if(single) {
+			options.maxNumberOfFiles = 1;
+		}
+		
+		el.fileupload(options);
 		el.on('fileuploadadd', function(e, data) {return customFileUpload.fileuploadadd(e, data, this);});
 		el.on('fileuploaddone', function(e, data) {customFileUpload.fileuploaddone(e, data, this);});
 		el.on('fileuploaddestroy', function(e, data) {customFileUpload.fileuploaddestroy(e, data, this);});
