@@ -32,17 +32,17 @@ $(document).ready(function() {
     //start header
     var txtResetDropdown = 'Loại...',
     	flagReset = false,
-    	$textSearch = $('#search-kind .form-group input'),
-    	$dropdown = $('#search-kind .dropdown ul'),
-    	$txtDropdownSelected = $('#search-kind .txt-selected');
+    	$textSearch = $('#search-kind .form-group input');
 
     $('.search-select a').on('click', function() {
     	var _this = $(this),
     		txtPlaceholder = _this.data('placeholder'),
     		getId = _this.attr('rel');
-    	
-    	$txtDropdownSelected.html(txtResetDropdown);
 
+        objEvent.reset();
+
+        _this.hasClass('no-suggest') ? $textSearch.addClass('no-suggest') : $textSearch.removeClass('no-suggest');
+    	
     	$('.search-select').removeClass('active');
     	$textSearch.attr('placeholder', txtPlaceholder);
     	_this.parent().addClass('active');
@@ -99,7 +99,6 @@ $(document).ready(function() {
                     $('.type-search li[data-step="'+countStep+'"] span').text(txt);
                 }
                 
-                
                 $('#step-'+countStep).removeClass('active');
                 objEvent.close();
                 
@@ -154,9 +153,15 @@ $(document).ready(function() {
             }else {
                 return;
             }
+        },
+        reset: function() {
+            countStep = 1;
+            lenghtSuggest = 0;
+            $('.type-search ul').hide().find('li').remove();
+            objEvent.resizeWidthInput();
         }
     };
-    $('.type-search input').on('click', function(e) {
+    $(document).on('click','.type-search input:not(".no-suggest")', function(e) {
         e.preventDefault();
         var _this = $(this);
         if( countStep <= $('.search-wrap').length && lenghtSuggest != lenghtStep ) {
@@ -169,15 +174,6 @@ $(document).ready(function() {
     objEvent.removeSuggest();
     objEvent.reOpenBySuggest();
 
-    $('#search-kind ul a').on('click', function(){
-    	var _this = $(this),
-    		valueID = _this.data('valueId'),
-    		txt = _this.data('valueText');
-    	$txtDropdownSelected.html(txt);
-        $('#search-kind .dropdown').removeClass('open');
-        $('#search-kind').attr('action', _this.attr('href'));
-        return false;
-    });
     //end header
 
     //start page du-an
