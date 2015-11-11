@@ -98,11 +98,11 @@ $(document).ready(function() {
                     $itemSuggest.find('span').text(txt);
                     $wrapListSuggest.append($itemSuggest);
                 }else {
-                    countStep = parseInt($('.edit-suggest').attr('id').split('-')[1]);
-                    $('.type-search li[data-step="'+countStep+'"] span').text(txt);
+                    countStepUpadte = parseInt($('.edit-suggest').attr('id').split('-')[1]);
+                    $('.type-search li[data-step="'+countStepUpadte+'"] span').text(txt);
                 }
                 
-                $('#step-'+countStep).removeClass('active');
+                //$('#step-'+countStep).removeClass('active');
                 objEvent.close();
                 
                 $wrapListSuggest.show();
@@ -144,6 +144,7 @@ $(document).ready(function() {
                     boxId = _this.parent().data('step');
                 
                 objEvent.open(boxId, 1);
+                objEvent.checkCounter();
             });
         },
         checkCounter: function() {
@@ -151,7 +152,7 @@ $(document).ready(function() {
 
             if( lenghtStep === lenghtSuggest ) {
                 return;
-            }else if( countStep <= lenghtStep ){
+            }else if( countStep < lenghtStep ){
                 countStep += 1;
             }else {
                 return;
