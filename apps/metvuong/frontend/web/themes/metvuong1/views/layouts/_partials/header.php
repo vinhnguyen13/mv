@@ -3,7 +3,7 @@ use yii\helpers\Url;
 ?>
 <header class="clearfix cd-secondary-nav">
     <div class="container">
-        <a href="#" class="logo-header pull-left bgcover" style="background-image:url('<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png');"></a>
+        <a href="<?=Url::home();?>" class="logo-header pull-left bgcover" style="background-image:url('<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png');"></a>
         <div class="pull-right user-setting">
             <div class="dropdown select-lang">
                 <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
