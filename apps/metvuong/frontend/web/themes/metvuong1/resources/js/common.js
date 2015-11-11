@@ -165,14 +165,27 @@ $(document).ready(function() {
             objEvent.resizeWidthInput();
         }
     };
-    $(document).on('click','.type-search input:not(".no-suggest")', function(e) {
+    $(document).on('keyup focus','.type-search input:not(".no-suggest")', function(e) {
         e.preventDefault();
         var _this = $(this);
         if( countStep <= $('.search-wrap').length && lenghtSuggest != lenghtStep ) {
             objEvent.open(countStep);
         }
+
+        if( _this.val() != '' ) {
+            setTimeout(function() {
+                $('.search-wrap.active').find('.suggest-search-text').slideDown('fast');
+                setTimeout(function() {
+                    $('.search-wrap.active .suggest-search-text .loading-suggest').hide();
+                    $('.search-wrap.active .suggest-search-text ul').show();
+                },500);
+            },35);
+        }else {
+            $('.suggest-search-text').slideUp('fast');
+        }
     });
 
+    
     objEvent.btnclose();
     objEvent.selectItem();
     objEvent.removeSuggest();
@@ -211,34 +224,34 @@ $(document).ready(function() {
     });
 
     $('.item-infor > a').on('click',function() {
-        player.pause();
-        var _this = $(this);
-
-        if( _this.parents('.show-infor').length > 0 ) {
-            _this.parents('.show-infor').find('.item-infor').removeClass('active');
-            _this.parent().addClass('active');
-            if( _this.parent().find('.show-infor').length > 0 ) {
-                l(1);
-            }
-
-        }else {
-            $('.item-infor').removeClass('active');
-            _this.parent().addClass('active');
-            $('.item-infor .show-infor').slideUp('fast');
-            if( _this.parent().find('.show-infor').length > 0 ) {
-                _this.parent().find('.show-infor').slideDown('fast');
-            }
-        }
+        var _this = $(this),
+            idShowBox = _this.attr('href'),
+            $parentLink = _this.parent();
         
-        if( _this.parent().hasClass('group-menu') ) {
-            _this.parent().find('.item-infor').eq(0).addClass('active');
-            if( _this.parent().find('.item-infor').eq(0).find('.show-infor').length > 0 ) {
-                _this.parent().find('.item-infor').eq(0).find('.show-infor').find('.item-infor').eq(0).addClass('active');
+        $('.item-infor').removeClass('active');
+        $parentLink.addClass('active');
+
+        if( $parentLink.hasClass('has-sub') ) {
+            $('.has-sub .show-infor').slideUp('fast');
+            $parentLink.find('>.show-infor').slideDown('fast');
+            
+            if( $(idShowBox).find('.phim3d').length ) {
+                var srcVideo = $parentLink.find('.active').attr('rel');
+                $(idShowBox).find('.phim3d').attr('src', srcVideo);
+                $parentLink.find('.video-item a').on('click',function() {
+                    var srcVideo = $(this).attr('rel');
+                    $parentLink.find('.video-item a').removeClass('active');
+                    $(this).addClass('active');
+                    $(idShowBox).find('.phim3d').attr('src', srcVideo);
+                    return false;
+                });
             }
+
+
         }
 
         //event show khu dan cu & khu thuong mai
-        if( _this.data('srcmb')) {
+        /*if( _this.data('srcmb')) {
             $('#item-kch .img-alone, #item-ktm .img-alone').remove();
             $('.item-tab').hide();
             var srcImg = _this.data('srcmb'),
@@ -254,22 +267,18 @@ $(document).ready(function() {
             $('.item-tab').hide();
             hrefLink === '#item-kch' ? $('#item-kch '+srcImg).show() : $('#item-kch '+srcImg).hide();
             hrefLink === '#item-ktm' ? $('#item-ktm '+srcImg).show() : $('#item-ktm '+srcImg).hide();
-        }
+        }*/
         //End event show khu dan cu & khu thuong mai
 
-        //show box left detail
-        var idShowBox = _this.attr('href');
-        if( idShowBox === '#item-tdxd' ) {
-            $('.list-pics-tdxd .item-pics a').eq(0).trigger('click');
-        }
+
+
         $('.item-detail').hide();
         $(idShowBox).css({
             display: 'block',
             visibility: 'hidden'
         });
         $(idShowBox).css('visibility','visible').hide().fadeIn();
-        //End show box left detail
-
+        
         return false;
     });
     //end page du-an
