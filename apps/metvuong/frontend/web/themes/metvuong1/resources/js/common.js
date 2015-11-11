@@ -67,14 +67,20 @@ $(document).ready(function() {
                 $('#step-'+countStep).addClass('active');
             }, 30);
         },
+        close: function() {
+            $('.search-wrap').removeClass('edit-suggest');
+            $('.search-wrap').removeClass('active');
+            setTimeout(function() {
+                $('.search-wrap').addClass('hidden-effect');
+            }, 300);
+        },
         btnclose: function() {
             $('.btn-close-search').on('click',function(e) {
                 e.preventDefault();
+
                 $(this).closest('.search-wrap').removeClass('active');
-                setTimeout(function() {
-                    $('.search-wrap').addClass('hidden-effect');
-                }, 300);
-                $('.search-wrap').removeClass('edit-suggest');
+                objEvent.close();
+
                 return false;
             });
         },
@@ -93,11 +99,9 @@ $(document).ready(function() {
                     $('.type-search li[data-step="'+countStep+'"] span').text(txt);
                 }
                 
-                $('.search-wrap').removeClass('edit-suggest');
+                
                 $('#step-'+countStep).removeClass('active');
-                setTimeout(function() {
-                    $('#step-'+countStep).addClass('hidden-effect');
-                }, 300);
+                objEvent.close();
                 
                 $wrapListSuggest.show();
 
@@ -120,6 +124,7 @@ $(document).ready(function() {
                         $('.type-search li').eq(i-1).remove();
                     }
                 }
+                objEvent.close();
                 countStep = getStep - 1;
                 objEvent.resizeWidthInput();
                 objEvent.checkCounter();
@@ -163,10 +168,6 @@ $(document).ready(function() {
     objEvent.selectItem();
     objEvent.removeSuggest();
     objEvent.reOpenBySuggest();
-
-
-
-
 
     $('#search-kind ul a').on('click', function(){
     	var _this = $(this),

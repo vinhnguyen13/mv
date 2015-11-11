@@ -1959,6 +1959,7 @@ footer {
 .animate-children .logo-header {
     width: 125px;
     height: 48px;
+    margin-top: -2px;
 }
 .animate-children .box-search-header {
     margin-top: 0;
@@ -1966,9 +1967,23 @@ footer {
 .animate-children .box-search-header > div {
     margin-top: -6px;
 }
-.animate-children #search-kind .form-group input {
+.animate-children #search-kind .form-group input,
+.animate-children #search-kind .form-group .type-search {
     height: 27px;
     font-size: 1em;
+}
+.animate-children #search-kind .form-group input {
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 100%;
+}
+.animate-children #search-kind .search-wrap {
+    top: 25px;
+}
+.animate-children #search-kind .type-search ul {
+    height: 100%;
+    padding-top: 0;
+    top: -2px;
 }
 button.btn.btn-default,
 .search-select a,
