@@ -74,7 +74,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                     <div class="slide-contents">
                         <?php foreach ($sectionTab as $v): ?>
                         <div class="slide-content">
-                            <p class="bold"><?= $v[1] ?></p>
+                            <p class="bold"><?= Yii::t('home', $v[1]) ?></p>
                             <p><?= isset($st[$v[0]]['content'][Yii::$app->language]) ? $st[$v[0]]['content'][Yii::$app->language] : '' ?></p>
                         </div>
                         <?php endforeach; ?>
