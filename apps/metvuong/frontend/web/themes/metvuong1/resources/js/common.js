@@ -307,7 +307,7 @@ $(document).ready(function() {
 
     //start scroll fixed header
     var secondaryNav = $('.cd-secondary-nav'),
-        secondaryNavTopPosition = secondaryNav.offset().top,
+        secondaryNavTopPosition = secondaryNav.length > 0 ? secondaryNav.offset().top : 0,
         contentSections = $('.cd-section'),
         hFirstNav = secondaryNav.outerHeight(),
         valShow;
