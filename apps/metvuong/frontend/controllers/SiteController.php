@@ -75,8 +75,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $this->layout = '@app/views/layouts/main';
         Yii::$app->meta->add(Yii::$app->request->absoluteUrl);
-        $this->redirect('/news');
+//        $this->redirect('/news');
         return $this->render('index');
     }
 
