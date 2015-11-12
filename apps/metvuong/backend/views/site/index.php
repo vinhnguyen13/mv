@@ -41,19 +41,6 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
 			      </div>
 			    </div>
             </div>
-			<?php if(false){?>
-            <div class="col-lg-3 item">
-            	<div class="panel panel-primary">
-			      <div class="panel-heading">Development</div>
-			      <div class="panel-body">
-			      	<ol class="list-unstyled">
-	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['gii', 'id' => 0])?>">Gii</a></li>
-	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['setting'])?>">Setting</a></li>
-	                </ol>
-			      </div>
-			    </div>
-            </div>
-			<?php }?>
             <div class="col-lg-3 item">
             	<div class="panel panel-primary">
 			      <div class="panel-heading">News</div>
@@ -78,6 +65,35 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
 			      </div>
 			    </div>
             </div>
+			<div class="col-lg-3 item">
+				<div class="panel panel-primary">
+					<div class="panel-heading">Languages</div>
+					<div class="panel-body">
+						<ol class="list-unstyled">
+							<li><a href="<?=Yii::$app->urlManager->createUrl(['translatemanager'])?>">Manager</a></li>
+							<li><a href="<?=Yii::$app->urlManager->createUrl(['translatemanager/language/scan'])?>">Scan</a></li>
+							<li><a href="<?=Yii::$app->urlManager->createUrl(['translatemanager/language/optimizer'])?>">Optimizer</a></li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<?php
+			if (Yii::$app->user->can('accessSystems')) {
+				?>
+				<div class="col-lg-3 item">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Systems</div>
+						<div class="panel-body">
+							<ol class="list-unstyled">
+								<li><a href="<?= Yii::$app->urlManager->createUrl(['gii']) ?>">Gii</a></li>
+								<li><a href="<?= Yii::$app->urlManager->createUrl(['setting']) ?>">Setting</a></li>
+							</ol>
+						</div>
+					</div>
+				</div>
+				<?php
+			}
+			?>
         </div>
     </div>
 </div>
