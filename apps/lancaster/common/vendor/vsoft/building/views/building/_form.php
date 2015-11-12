@@ -47,7 +47,7 @@ $loop = $model::sectionArray();
     <?= $form->field($model, 'main_background')->widget(FileUploadUI::className(), ['url' => Url::to('/express/upload/image'), 'clientOptions' => ['maxNumberOfFiles' => 1]]) ?>
 
     <?php foreach($loop as $section => $value): ?>
-    	<?php $sectionValue = json_decode($model->$section); ?>
+    	<?php $sectionValue = json_decode($model->$section, true); ?>
     	<div class="panel panel-default">
 			<div class="panel-heading"><?= $model->getAttributeLabel($section) ?></div>
 			<div class="panel-body">
@@ -62,29 +62,41 @@ $loop = $model::sectionArray();
 						$field = $v[0];
 						
 						if($sectionValue) {
-							$tabValue = $sectionValue->$field;
-							$tabValueContent = $tabValue->content;
-							$tabValueImage = $tabValue->image;
+							$tabValue = $sectionValue[$field];
+							
+							if(is_array($tabValue['content']))
+								$tabValueContent = $tabValue['content'];
+							else
+								$tabValueContent = [];
+							$tabValueImage = $tabValue['image'];
 						} else {
-							$tabValueContent = '';
+							$tabValueContent = [];
 							$tabValueImage = '';
 						}
 					?>
 					<div id="<?= $section . $v[0] ?>" class="tab-pane fade in <?= $k == 0 ? 'active' : '' ?>">
 						<div class="form-group">
 							<label class="control-label" for="<?= 'content-' . $section . $v[0] ?>">Nội dung</label>
+							<?php
+								 foreach ($languages as $languageCode => $languageName):
+								 	if(!isset($tabValueContent[$languageCode]))
+								 		$tabValueContent[$languageCode] = '';
+							?>
 							<?= CKEditor::widget([
-								'id' => 'content-' . $section . $v[0],
-					    		'value' => $tabValueContent,
-								'name' => 'LcBuilding[' . $section . '][' . $v[0] . '][content]',
+								'id' => 'content-' . $section . $v[0] . '-' . $languageCode,
+					    		'value' => $tabValueContent[$languageCode],
+								'name' => 'LcBuilding[' . $section . '][' . $v[0] . '][content][' . $languageCode . ']',
+								'options' => ['class' => 'ckeditor-textarea'],
 								'editorOptions' => [
 									'preset' => 'basic',
 									'inline' => false,
 									'height' => 150,
 									'resize_enabled' => true,
 									'removePlugins' => '',
-								]
+								],
+								'containerOptions' => ['class' => 'language-fields ' . $languageCode]
 							]); ?>
+							<?php endforeach; ?>
 							<div class="help-block"></div>
 						</div>
 						<div class="form-group">

@@ -1,15 +1,13 @@
 $(document).ready(function(){
+	toggleLanguageFields($('#language-switch').val());
+	
 	$('#language-switch').change(function(){
 		var languageCode = $(this).val();
+		toggleLanguageFields(languageCode);
 		
-		$('.language-fields').each(function(){
-			var self = $(this);
-			if(self.hasClass(languageCode)) {
-				self.show();
-			} else {
-				self.hide();
-			}
-		});
+		for(index in CKEDITOR.instances) {
+			CKEDITOR.instances[index].updateElement();
+		}
 	});
 	
 	$('#language-switch-view').change(function(){
@@ -17,6 +15,19 @@ $(document).ready(function(){
 	});
 	
 	$('.nav-tabs a').on('shown.bs.tab', function (e) {
-		CKEDITOR.instances['content-' + $(e.target).attr('href').replace('#', '')].updateElement();
+		$($(e.target).attr('href')).find('.ckeditor-textarea').each(function(){
+			CKEDITOR.instances[$(this).attr('id')].updateElement();
+		});
 	});
 });
+
+function toggleLanguageFields($lang) {
+	$('.language-fields').each(function(){
+		var self = $(this);
+		if(self.hasClass($lang)) {
+			self.show();
+		} else {
+			self.hide();
+		}
+	});
+}
