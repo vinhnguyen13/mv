@@ -88,7 +88,7 @@ $(document).ready(function() {
             });
         },
         selectItem: function() {
-            $('.search-item ul a').on('click', function(e) {
+            $('.search-item > ul a').on('click', function(e) {
                 e.preventDefault();
                 var _this = $(this),
                     txt = _this.text(),
@@ -102,7 +102,6 @@ $(document).ready(function() {
                     $('.type-search li[data-step="'+countStepUpadte+'"] span').text(txt);
                 }
                 
-                //$('#step-'+countStep).removeClass('active');
                 objEvent.close();
                 
                 $wrapListSuggest.show();
@@ -173,15 +172,21 @@ $(document).ready(function() {
         }
 
         if( _this.val() != '' ) {
-            setTimeout(function() {
-                $('.search-wrap.active').find('.suggest-search-text').slideDown('fast');
-                setTimeout(function() {
-                    $('.search-wrap.active .suggest-search-text .loading-suggest').hide();
-                    $('.search-wrap.active .suggest-search-text ul').show();
+            setTimeout(function() {//timeout so voi thoi gian effect show suggest
+                $('.active').find('.suggest-search-text').slideDown('fast');
+                setTimeout(function() {//timeout demo loading bang ajax
+                    $('.active .suggest-search-text .loading-suggest').hide();
+                    $('.active .suggest-search-text ul').show();
                 },500);
             },35);
         }else {
-            $('.suggest-search-text').slideUp('fast');
+            if( $('#step-'+countStep+' .search-item > ul').length <= 0) {
+                $('#step-'+countStep).addClass('hidden-effect');
+                setTimeout(function() {
+                    $('#step-'+countStep).removeClass('active');
+                }, 30);
+            }
+            $('.suggest-search-text').hide();
         }
     });
 
