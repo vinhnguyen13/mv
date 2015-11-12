@@ -34,6 +34,12 @@ $(document).ready(function() {
     	flagReset = false,
     	$textSearch = $('#search-kind .form-group input');
 
+    var $wrapListSuggest = $('.type-search ul'),
+        countStep = 1,
+        countCurrent = 0,
+        lenghtStep = $('.search-wrap').length,
+        lenghtSuggest = 0;
+
     if( $('.search-select.active a').hasClass('no-suggest') ) {
         $textSearch.addClass('no-suggest');
     }
@@ -44,7 +50,11 @@ $(document).ready(function() {
 
         objEvent.reset();
 
-        _this.hasClass('no-suggest') ? $textSearch.addClass('no-suggest') : $textSearch.removeClass('no-suggest');
+        if( _this.data('stepFix') ) {
+            countStep = parseInt(_this.data('stepFix').split('-')[1]);
+        }else {
+            countStep = 1;
+        }
     	
     	$('.search-select').removeClass('active');
     	$textSearch.attr('placeholder', txtPlaceholder);
@@ -52,12 +62,6 @@ $(document).ready(function() {
     	
         return false;
     });
-
-    var $wrapListSuggest = $('.type-search ul'),
-        countStep = 1,
-        countCurrent = 0,
-        lenghtStep = $('.search-wrap').length,
-        lenghtSuggest = 0;
 
     var objEvent = {
         open: function(countStep, flagOpen) {//1. edit, 0. open normal
@@ -95,6 +99,9 @@ $(document).ready(function() {
                     $itemSuggest = $('<li data-step="'+countStep+'"><i>x</i><span></span></li>');
 
                 if( !_this.closest('.search-wrap').hasClass('edit-suggest') ) {
+                    if( _this.closest('.search-wrap').data('stepBox') == 'fixed' ) {
+                        $wrapListSuggest.html('');
+                    }
                     $itemSuggest.find('span').text(txt);
                     $wrapListSuggest.append($itemSuggest);
                 }else {
@@ -142,13 +149,19 @@ $(document).ready(function() {
                 var _this = $(this),
                     boxId = _this.parent().data('step');
                 
-                objEvent.open(boxId, 1);
-                objEvent.checkCounter();
+                countStep = boxId;
+                for( var i = lenghtSuggest; i >= 0 ; i-- ) {
+                    if( i > boxId ) {
+                        $('.type-search li').eq(i-1).remove();
+                    }
+                }
+                objEvent.resizeWidthInput();
+                objEvent.open(countStep, 1);
+                //objEvent.checkCounter();
             });
         },
         checkCounter: function() {
             lenghtSuggest = $('.type-search ul li').length;
-
             if( lenghtStep === lenghtSuggest ) {
                 return;
             }else if( countStep < lenghtStep ){
@@ -164,9 +177,13 @@ $(document).ready(function() {
             objEvent.resizeWidthInput();
         }
     };
+
     $(document).on('keyup focus','.type-search input:not(".no-suggest")', function(e) {
         e.preventDefault();
         var _this = $(this);
+        if( countCurrent > 0 ) {
+            countStep = countCurrent;
+        }
         if( countStep <= $('.search-wrap').length && lenghtSuggest != lenghtStep ) {
             objEvent.open(countStep);
         }
