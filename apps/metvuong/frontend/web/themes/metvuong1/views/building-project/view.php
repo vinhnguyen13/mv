@@ -244,8 +244,8 @@ EOD;
 	</div>
 	<div class="col-xs-6 pdL-10">
 		<div class="header-duan clearfix">
-			<a href="#" class="logo-duan"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo-duan.jpg" alt=""></a>
-			<h2>KINGSTON RESIDENCE</h2>
+			<a href="#" class="logo-duan"><img src="<?= Url::to('/store/building-project-images/' . $model->bpLogo) ?>" alt=""></a>
+			<h2><?= $model->title ?></h2>
 		</div>
 		<div class="wrap-infor-duan">
 			<div class="item-infor active">
