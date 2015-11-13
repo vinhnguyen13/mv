@@ -18,8 +18,6 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
     <header class="clearfix home-page">
         <ul class="pull-right">
             <li><a href="#"><em class="icon-plus"></em>Đăng tin</a></li>
-            <li><a href="<?=\yii\helpers\Url::to(['building-project/index'])?>"><em class="fa fa-building-o"></em>Dự án</a></li>
-            <li><a href="<?=\yii\helpers\Url::to(['news/index'])?>"><em class="fa fa-newspaper-o"></em>Tin tức</a></li>
             <li><a href="#"><em class="icon-user"></em>Đăng ký</a></li>
             <li><a href="#"><em class="icon-key"></em>Đăng nhập</a></li>
             <li class="lang-icon icon-en"><a href="#"></a></li>
