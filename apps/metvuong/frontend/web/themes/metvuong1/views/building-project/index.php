@@ -83,8 +83,10 @@ use yii\widgets\LinkPager;
 						<span><?= $model->bpLocation ?></span>
 						<strong>DIỆN TÍCH KHU ĐẤT</strong>
 						<span><?= $model->bpAcreage ?></span>
+						<?php if($model->bpApartmentNo): ?>
 						<strong>SỐ LƯỢNG CĂN HỘ</strong>
 						<span><?= $model->bpApartmentNo ?></span>
+						<?php endif; ?>
 						<strong>SỐ TẦNG</strong>
 						<span><?= $model->bpFloorNo ?></span>
 					</a>
