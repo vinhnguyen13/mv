@@ -2559,7 +2559,29 @@ button.btn.btn-default,
     -ms-text-shadow: 1px 1px 1px #fff;
 }
 body .wrap-page-home > .container {
-    padding: 110px 0 0 0;
+    padding: 0;
+    height: 100%;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+.wrap-search-home {
+    height: 100%;
+    width: 80%;
+    margin: 0 auto 0;
+}
+.helper-center {
+    display: inline-block;
+    /* width: 0%; */
+    height: 100%;
+    visibility: hidden;
+    vertical-align: middle;
+}
+.insearch-box {
+    display: inline-block;
+    width: 99%;
+    vertical-align: middle;
 }
 .logo-home {
     height: 92px;
@@ -2737,19 +2759,62 @@ body .wrap-page-home > .container {
     float: left;
     width: 100%;
     margin: 0 0 10px 0;
+    position: relative;
 }
 .wrap-page-home .slideUpDown li a {
-    color: #333;
-    font-size: 1.2em;
+    color: #055699;
+    font-size: 1em;
     overflow: hidden;
-    line-height: 19px;
+    line-height: 16px;
     max-height: 48px;
+    font-weight: bold;
 }
 .wrap-page-home .slideUpDown li .avatar {
     padding-right: 8px;
     float: left;
 }
 .wrap-page-home .slideUpDown li .wg_title {
-    width: 75%;
+    width: 85%;
     display: block;
+    margin-top: -3px;
+    float: left;
+}
+.p-bottom-left {
+
+padding-top: 5px;
+}
+.p-bottom-left > div {
+    font-family: 'arial';
+    padding: 0px 0;
+    display: inline-block;
+    margin-right: 15px;
+}
+.p-bottom-left > div .left {
+    font-family: 'arial';
+    font-weight: bold;
+}
+.wrap-page-home .wg_title .p-bottom-left a {
+    font-weight: normal;
+    font-size: 1em;
+    font-family: 'arial';
+    line-height: 100%;
+}
+.p-bottom-right {
+    float: right;
+    font-size: .9em;
+    position: absolute;
+    bottom: 0;
+    left: 65px;
+    color: #000000;
+}
+.wg_title .user-post {
+    
+}
+.wrap-page-home .wg_title .user-post a {
+    font-family: 'arial';
+    padding: 0 10px 0 0;
+    color: #333;
+}
+.wg_title .user-post em {
+    margin-right:5px;
 }
