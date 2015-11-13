@@ -2503,7 +2503,7 @@ button.btn.btn-default,
     color: #757575;
     font-family: arial,sans-serif;
     font-size: 13px;
-    padding: 0 7px 0 20px;
+    padding: 0 10px 0 20px;
     font-weight: bold;
     position: relative;
     display: block;
@@ -2550,9 +2550,16 @@ button.btn.btn-default,
     left: 0;
     width: 100%;
     margin: 0;
+    border-top: 1px solid #D8D8D8;
+    background: #E8E8E8;
+    padding: 3px 20px;
+    text-shadow: 1px 1px 1px #fff;
+    -webkit-text-shadow: 1px 1px 1px #fff;
+    -moz-text-shadow: 1px 1px 1px #fff;
+    -ms-text-shadow: 1px 1px 1px #fff;
 }
 body .wrap-page-home > .container {
-    padding: 155px 0 0 0;
+    padding: 110px 0 0 0;
 }
 .logo-home {
     height: 92px;
@@ -2607,21 +2614,24 @@ body .wrap-page-home > .container {
 }
 .wrap-search-home .search-select a {
     font-size: 4.2em;
+    display: block;
+    text-align: center
 }
 .wrap-search-home .search-select a .fa-file-text, 
 .wrap-search-home .search-select a .fa-usd, 
 .wrap-search-home .search-select a .fa-search {
-    top: 22px;
-    right: 11px;
+    top: 19px;
+    right: 9px;
     font-size: .45em;
 }
 .wrap-search-home .search-select a .fa-usd {
-    right: 8px;
-    top: 25px;
+    right: 17px;
+    top: 19px;
+    left: inherit;
 }
 .wrap-search-home .search-select a .fa-file-text {
-    top: 25px;
-    right:14px;
+    top: 19px;
+    right: 12px;
 }
 .wrap-search-home .search-wrap {
     top: 49px;
@@ -2646,4 +2656,100 @@ body .wrap-page-home > .container {
 }
 .wrap-search-home .type-search li span {
     font-size: .5em;
+}
+.wrap-search-home .search-select a span {
+    display: block;
+    font-size: .25em;
+    text-transform: uppercase;
+}
+.wrap-page-home .copyright p {
+    line-height: 35px;
+}
+.wrap-page-home .polli li {
+    float: left;
+    /* line-height: 40px; */
+    color: #333;
+    font-size: 1.1em;
+    vertical-align: middle;
+}
+.wrap-page-home .polli a {
+    display: inline-block;
+    font-size: 1em;
+    color: #333;
+    padding: 0 15px;
+    line-height: 35px;
+}
+.wrap-page-home .polli .logo-social {
+    width: 35px;
+    height: 35px;
+    margin-left: 10px;
+    float: left;
+    line-height: 35px;
+    display: block;
+    padding: 0;
+    transition: all .2s ease-out;
+    -webkit-transition: all .2s ease-out;
+    -moz-transition: all .2s ease-out;
+    -ms-transition: all .2s ease-out;
+    position: relative;
+    top: 0;
+}
+.wrap-page-home .polli li:last-child {
+}
+.wrap-page-home .polli li:last-child span {
+    display: block;
+    line-height: 35px;
+    float: left;
+    font-size: 1em;
+}
+.wrap-page-home .polli .fb-icon {
+    background: #E8E8E8 url(../images/face-icon.png) no-repeat top left;
+}
+.wrap-page-home .polli .twe-icon {
+    background: #E8E8E8 url(../images/twe-icon.png) no-repeat top left;
+}
+.wrap-page-home .polli .g-icon {
+    background: #E8E8E8 url(../images/go-icon.png) no-repeat top left;
+}
+.wrap-page-home .polli .ytu-icon {
+    background: #E8E8E8 url(../images/yutu-icon.png) no-repeat top left;
+}
+.wrap-page-home .polli .logo-social:hover {
+    top: -3px;
+}
+.slideUpDown {
+    width: 60%;
+    margin: 0 auto 0;
+    border: 1px solid #D0D0D0;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    padding: 10px 0 0;
+    height: 300px;
+    overflow: hidden;
+}
+.wrap-page-home .box-search-header {
+    margin-bottom: 20px;
+}
+.wrap-page-home .slideUpDown li {
+    padding: 0px 10px;
+    float: left;
+    width: 100%;
+    margin: 0 0 10px 0;
+}
+.wrap-page-home .slideUpDown li a {
+    color: #333;
+    font-size: 1.2em;
+    overflow: hidden;
+    line-height: 19px;
+    max-height: 48px;
+}
+.wrap-page-home .slideUpDown li .avatar {
+    padding-right: 8px;
+    float: left;
+}
+.wrap-page-home .slideUpDown li .wg_title {
+    width: 75%;
+    display: block;
 }

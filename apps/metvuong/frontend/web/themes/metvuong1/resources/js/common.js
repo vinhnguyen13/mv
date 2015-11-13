@@ -327,6 +327,28 @@ $(document).ready(function() {
         }
     });
     //end scroll fixed header
+
+    
 });
 
 function l(x){console.log(x);}
+
+//start run slide home page
+function runSlideUpDown() {
+    $('.slideshow').find('li:last').xfInsert('insertBefore', $('.slideshow li:first'));
+    $( ".slideshow li" ).each(function( index ) {
+        if(index < 5){
+            $( this ).show();
+        }else{
+            $( this ).hide();
+        }
+
+        $('#widget-11').css('min-height',  $('#widget-11').height());
+        try{
+            topic_top =   $('#widget-17').parent().offset().top;
+        }catch(e){
+
+        }  
+    });
+}
+//end run slide home page

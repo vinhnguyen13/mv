@@ -17,8 +17,16 @@
         <script src="js/respond.min.js"></script>
     <![endif]-->
     <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.xenforo.rollup.js"></script>  
+    <script src="js/xenforo.js"></script>
     <script src="js/common.js"></script>
+    <script>
+        $(document).ready(function() {
+            setInterval("runSlideUpDown()", 5000);
+        });
+    </script>
 </head>
 
 <body>
@@ -207,22 +215,80 @@
                                 <button type="submit" class="btn btn-default">SEARCH</button>
                             </form>
                             <div class="pull-left text-right mgT-10 mgL-15">
-                                <div class="search-select active"><a href="#" data-placeholder="Tìm Kiếm..." rel="#dd-search"><em class="fa fa-home"></em><em class="fa fa-search"></em></a></div>
-                                <div class="search-select"><a href="#" data-placeholder="Đăng Ký..." rel="#dd-dky"><em class="fa fa-home"></em><em class="fa fa-usd"></em></a></div>
-                                <div class="search-select"><a href="#" class="" data-step-fix="step-5" data-placeholder="Tin Tức..." rel="#dd-news"><em class="fa fa-home"></em><em class="fa fa-file-text"></em></a></div>
+                                <div class="search-select active"><a href="#" data-placeholder="Tìm Kiếm..." rel="#dd-search"><em class="fa fa-home"></em><em class="fa fa-search"></em><span>Mua Bán</span></a></div>
+                                <div class="search-select"><a href="#" data-placeholder="Đăng Ký..." rel="#dd-dky"><em class="fa fa-home"></em><em class="fa fa-usd"></em><span>Cho Thuê</span></a></div>
+                                <div class="search-select"><a href="#" class="" data-step-fix="step-5" data-placeholder="Tin Tức..." rel="#dd-news"><em class="fa fa-home"></em><em class="fa fa-file-text"></em><span>Tin Tức</span></a></div>
                             </div>
                         </div>
+                    </div>
+                    <div class="slideUpDown">
+                        <ul class="slideshow clearfix">
+                            <li class="thread-2198267 thread-node-6">
+                                <a href="#" class="avatar"><img src="images/Galaxy Siteplan.jpg" width="48" height="48" alt="" /></a>
+                                <a title="" class="wg_title">Chung cư Mulberry lane 118p 3phong ngủ bán gấp giá chỉ 3,6 ty full nội thất</a>
+                            </li>
+                            <li class="thread-2198267 thread-node-6">
+                                <a href="#" class="avatar"><img src="images/img283x190-2.jpg" width="48" height="48" alt="" /></a>
+                                <a title="" class="wg_title">Mở bán đợt cuối tòa CT1A, CT1B Khu đô thị Nghĩa Đô</a>
+                            </li>
+                            <li class="thread-2198267 thread-node-6">
+                                <a href="#" class="avatar"><img src="images/img82x55.jpg" width="48" height="48" alt="" /></a>
+                                <a title="" class="wg_title">Dòng vốn nội, ngoại đang chảy mạnh vào thị trường địa ốc</a>
+                            </li>
+                            <li class="thread-2198267 thread-node-6">
+                                <a href="#" class="avatar"><img src="images/Galaxy Siteplan.jpg" width="48" height="48" alt="" /></a>
+                                <a title="" class="wg_title">Giá trị cuộc sống có đi đôi với giá tiền tại các dự án cao cấp?</a>
+                            </li>
+                            <li class="thread-2198267 thread-node-6">
+                                <a href="#" class="avatar"><img src="images/21311_Khai-truong-Pearl-Plaza-2.jpg" width="48" height="48" alt="" /></a>
+                                <a title="" class="wg_title">Nhiều thách thức mới cho thị trường địa ốc Sài Thành</a>
+                            </li>
+                            <li class="thread-2198267 thread-node-6">
+                                <a href="#" class="avatar"><img src="images/Galaxy Siteplan.jpg" width="48" height="48" alt="" /></a>
+                                <a title="" class="wg_title">Căn hộ nhỏ, giá thấp tại Tp. HCM lại khan hàng</a>
+                            </li>
+                            <li class="thread-2198267 thread-node-6">
+                                <a href="#" class="avatar"><img src="images/621042015085736.jpg" width="48" height="48" alt="" /></a>
+                                <a title="" class="wg_title">Mở bán đợt cuối tòa CT1A, CT1B Khu đô thị Nghĩa Đô</a>
+                            </li>
+                            <li class="thread-2198267 thread-node-6">
+                                <a href="#" class="avatar"><img src="images/Galaxy Siteplan.jpg" width="48" height="48" alt="" /></a>
+                                <a title="" class="wg_title">Bán gấp căn Penthouse Sunrise City 175m2, view sông đẹp lung linh giá 6.5 tỷ</a>
+                            </li>
+                            <li class="thread-2198267 thread-node-6">
+                                <a href="#" class="avatar"><img src="images/22311_Khai-truong-Pearl-Plaza-8.jpg" width="48" height="48" alt="" /></a>
+                                <a title="" class="wg_title">Bán nhà riêng 3 tầng, Đại Mỗ, Hà Đông, hoàn thiện đẹp, giá 1,52 tỷ</a>
+                            </li>
+                            <li class="thread-2198267 thread-node-6">
+                                <a href="#" class="avatar"><img src="images/23311_Khai-truong-Pearl-Plaza-11.jpg" width="48" height="48" alt="" /></a>
+                                <a title="" class="wg_title">BĐS dọc vành đai 3 "tăng nhiệt" dịp cuối năm</a>
+                            </li>
+                            <li class="thread-2198267 thread-node-6">
+                                <a href="#" class="avatar"><img src="images/Galaxy Siteplan.jpg" width="48" height="48" alt="" /></a>
+                                <a title="" class="wg_title">Chính chủ cho thuê căn hộ 188m2 chung cư Hoàng Thành Tower</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
         <footer class="clearfix">
-            <!-- <div class="pull-left copyright">
+            <div class="pull-left copyright">
                 <p><span>&copy;</span>2015. Bản quyền thuộc về Công ty Metvuong</p>
             </div>
             <div class="pull-right polli">
-                
-            </div> -->
+                <ul>
+                    <li><a href="#">Giới thiệu</a></li>
+                    <li><a href="#">Điều khoản</a></li>
+                    <li>
+                        <span>Kết nối:</span>
+                        <a title="facebook metvuong.com" class="logo-social fb-icon" href="#"></a>
+                        <a title="twitter metvuong.com" class="logo-social twe-icon" href="#"></a>
+                        <a title="google plus metvuong.com" class="logo-social g-icon" href="#"></a>
+                        <a title="youtube metvuong.com" class="logo-social ytu-icon" href="#"></a>
+                    </li>
+                </ul>
+            </div>
         </footer>
         <div id="iePopup">
             <div id="jr_overlay"></div>
