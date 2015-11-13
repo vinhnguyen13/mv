@@ -7,6 +7,7 @@ use vsoft\news\models\CmsCatalog;
 use vsoft\news\models\CmsShow;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Url;
 use yii\web\Response;
 
 class NewsController extends \yii\web\Controller
@@ -24,6 +25,12 @@ class NewsController extends \yii\web\Controller
 
     public function actionIndex()
     {
+        if($arrCats = array_values(Yii::$app->params["news"]["widget-category"])){
+            $detail = CmsShow::find()->where('catalog_id IN ('.implode($arrCats, ',').')')
+                ->orderBy('id DESC')->one();
+            $url = Url::to(['news/view', 'id' => $detail->id, 'slug' => $detail->slug, 'cat_id' => $detail->catalog->id, 'cat_slug' => $detail->catalog->slug]);
+            $this->redirect($url);
+        }
         // Pass url of request
         Yii::$app->meta->add(Yii::$app->request->absoluteUrl);
         return $this->render('index');

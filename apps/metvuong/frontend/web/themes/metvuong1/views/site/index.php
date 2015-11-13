@@ -9,8 +9,6 @@ $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/style-cus
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.min.js', ['position'=>View::POS_HEAD]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/bootstrap.min.js', ['position'=>View::POS_HEAD]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/menu.min.js', ['position'=>View::POS_HEAD]);
-Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.xenforo.rollup.js', ['position'=>View::POS_HEAD]);
-Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/xenforo.js', ['position'=>View::POS_HEAD]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/common.js', ['position'=>View::POS_HEAD]);
 /* @var $this yii\web\View */
 
