@@ -2559,6 +2559,7 @@ button.btn.btn-default,
     -webkit-text-shadow: 1px 1px 1px #fff;
     -moz-text-shadow: 1px 1px 1px #fff;
     -ms-text-shadow: 1px 1px 1px #fff;
+    z-index: 2;
 }
 body .wrap-page-home > .container {
     padding: 0;
