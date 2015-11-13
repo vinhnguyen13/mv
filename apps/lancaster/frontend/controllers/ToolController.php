@@ -151,10 +151,7 @@ class ToolController extends Controller
 
             }
             else if($step == 'scenario_2' || $step == 'calculation_2'){
-                echo "<pre>";
-                print_r('abcdef');
-                echo "<pre>";
-                exit();
+
                 $post  = $app->request->post();
 
                 if(file_exists($pathData.$data_file)) {
