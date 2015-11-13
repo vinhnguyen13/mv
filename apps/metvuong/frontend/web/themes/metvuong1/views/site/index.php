@@ -199,22 +199,159 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                             <button type="submit" class="btn btn-default">SEARCH</button>
                         </form>
                         <div class="pull-left text-right mgT-10 mgL-15">
-                            <div class="search-select active"><a href="#" data-placeholder="Tìm Kiếm..." rel="#dd-search"><em class="fa fa-home"></em><em class="fa fa-search"></em></a></div>
-                            <div class="search-select"><a href="#" data-placeholder="Đăng Ký..." rel="#dd-dky"><em class="fa fa-home"></em><em class="fa fa-usd"></em></a></div>
-                            <div class="search-select"><a href="#" class="" data-step-fix="step-5" data-placeholder="Tin Tức..." rel="#dd-news"><em class="fa fa-home"></em><em class="fa fa-file-text"></em></a></div>
+                            <div class="search-select active"><a href="#" data-placeholder="Tìm Kiếm..." rel="#dd-search"><em class="fa fa-home"></em><em class="fa fa-search"></em><span>Mua Bán</span></a></div>
+                            <div class="search-select"><a href="#" data-placeholder="Đăng Ký..." rel="#dd-dky"><em class="fa fa-home"></em><em class="fa fa-usd"></em><span>Cho Thuê</span></a></div>
+                            <div class="search-select"><a href="#" class="" data-step-fix="step-5" data-placeholder="Tin Tức..." rel="#dd-news"><em class="fa fa-home"></em><em class="fa fa-file-text"></em><span>Tin Tức</span></a></div>
                         </div>
                     </div>
+                </div>
+                <div class="slideUpDown">
+                    <ul class="slideshow clearfix">
+                        <li class="thread-2198267 thread-node-6">
+                            <a href="#" class="avatar"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/Galaxy Siteplan.jpg" width="48" height="48" alt="" /></a>
+                            <div class="wg_title">
+                                <a title="" href="#">Chung cư Mulberry lane 118p 3phong ngủ bán gấp giá chỉ 3,6 ty full nội thất</a>
+                                <div class="p-bottom-left">
+                                    <div><div class="left">Giá</div>:&nbsp;6.5 tỷ</div>
+                                    <div><div class="left">Diện tích</div>:&nbsp;175 m²</div>
+                                    <div>
+                                        <div class="left">Quận/huyện</div>:&nbsp;
+                                        <span><a class="link_blue" href="#" title="">Quận 7</a>, <a class="link_blue" href="#" title="">Hồ Chí Minh</a></span>
+                                        <div class="p-bottom-right">12/11/2015</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="thread-2198267 thread-node-6">
+                            <a href="#" class="avatar"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/img283x190-2.jpg" width="48" height="48" alt="" /></a>
+                            <div class="wg_title">
+                                <a title="" href="#">Mở bán đợt cuối tòa CT1A, CT1B Khu đô thị Nghĩa Đô</a>
+                                <div class="p-bottom-left">
+                                    <p class="user-post"><em class="icon-note"></em><a href="#">admin</a><em class="icon-folder-alt"></em><a href="#">Tin tức</a><em class="icon-calendar"></em>12/11/2015</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="thread-2198267 thread-node-6">
+                            <a href="#" class="avatar"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/img82x55.jpg" width="48" height="48" alt="" /></a>
+                            <div class="wg_title">
+                                <a title="" href="#">Dòng vốn nội, ngoại đang chảy mạnh vào thị trường địa ốc</a>
+                                <div class="p-bottom-left">
+                                    <p class="user-post"><em class="icon-note"></em><a href="#">admin</a><em class="icon-folder-alt"></em><a href="#">Tin tức</a><em class="icon-calendar"></em>12/11/2015</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="thread-2198267 thread-node-6">
+                            <a href="#" class="avatar"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/Galaxy Siteplan.jpg" width="48" height="48" alt="" /></a>
+                            <div class="wg_title">
+                                <a title="" href="#">Giá trị cuộc sống có đi đôi với giá tiền tại các dự án cao cấp?</a>
+                                <div class="p-bottom-left">
+                                    <p class="user-post"><em class="icon-note"></em><a href="#">admin</a><em class="icon-folder-alt"></em><a href="#">Tin tức</a><em class="icon-calendar"></em>12/11/2015</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="thread-2198267 thread-node-6">
+                            <a href="#" class="avatar"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-2.jpg" width="48" height="48" alt="" /></a>
+                            <div class="wg_title">
+                                <a title="" href="#">Nhiều thách thức mới cho thị trường địa ốc Sài Thành</a>
+                                <div class="p-bottom-left">
+                                    <p class="user-post"><em class="icon-note"></em><a href="#">admin</a><em class="icon-folder-alt"></em><a href="#">Tin tức</a><em class="icon-calendar"></em>12/11/2015</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="thread-2198267 thread-node-6">
+                            <a href="#" class="avatar"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/Galaxy Siteplan.jpg" width="48" height="48" alt="" /></a>
+                            <div class="wg_title">
+                                <a title="" href="#">Căn hộ nhỏ, giá thấp tại Tp. HCM lại khan hàng</a>
+                                <div class="p-bottom-left">
+                                    <p class="user-post"><em class="icon-note"></em><a href="#">admin</a><em class="icon-folder-alt"></em><a href="#">Tin tức</a><em class="icon-calendar"></em>12/11/2015</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="thread-2198267 thread-node-6">
+                            <a href="#" class="avatar"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/621042015085736.jpg" width="48" height="48" alt="" /></a>
+                            <div class="wg_title">
+                                <a title="" href="#">Mở bán đợt cuối tòa CT1A, CT1B Khu đô thị Nghĩa Đô</a>
+                                <div class="p-bottom-left">
+                                    <p class="user-post"><em class="icon-note"></em><a href="#">admin</a><em class="icon-folder-alt"></em><a href="#">Tin tức</a><em class="icon-calendar"></em>12/11/2015</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="thread-2198267 thread-node-6">
+                            <a href="#" class="avatar"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/Galaxy Siteplan.jpg" width="48" height="48" alt="" /></a>
+                            <div class="wg_title">
+                                <a title="" href="#">Bán gấp căn Penthouse Sunrise City 175m2, view sông đẹp lung linh giá 6.5 tỷ</a>
+                                <div class="p-bottom-left">
+                                    <div><div class="left">Giá</div>:&nbsp;6.5 tỷ</div>
+                                    <div><div class="left">Diện tích</div>:&nbsp;175 m²</div>
+                                    <div>
+                                        <div class="left">Quận/huyện</div>:&nbsp;
+                                        <span><a class="link_blue" href="#" title="">Quận 7</a>, <a class="link_blue" href="#" title="">Hồ Chí Minh</a></span>
+                                        <div class="p-bottom-right">12/11/2015</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="thread-2198267 thread-node-6">
+                            <a href="#" class="avatar"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg" width="48" height="48" alt="" /></a>
+                            <div class="wg_title">
+                                <a title="" href="#">Bán nhà riêng 3 tầng, Đại Mỗ, Hà Đông, hoàn thiện đẹp, giá 1,52 tỷ</a>
+                                <div class="p-bottom-left">
+                                    <div><div class="left">Giá</div>:&nbsp;6.5 tỷ</div>
+                                    <div><div class="left">Diện tích</div>:&nbsp;175 m²</div>
+                                    <div>
+                                        <div class="left">Quận/huyện</div>:&nbsp;
+                                        <span><a class="link_blue" href="#" title="">Quận 7</a>, <a class="link_blue" href="#" title="">Hồ Chí Minh</a></span>
+                                        <div class="p-bottom-right">12/11/2015</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="thread-2198267 thread-node-6">
+                            <a href="#" class="avatar"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/23311_Khai-truong-Pearl-Plaza-11.jpg" width="48" height="48" alt="" /></a>
+                            <div class="wg_title">
+                                <a title="" href="#">BĐS dọc vành đai 3 "tăng nhiệt" dịp cuối năm</a>
+                                <div class="p-bottom-left">
+                                    <p class="user-post"><em class="icon-note"></em><a href="#">admin</a><em class="icon-folder-alt"></em><a href="#">Tin tức</a><em class="icon-calendar"></em>12/11/2015</p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="thread-2198267 thread-node-6">
+                            <a href="#" class="avatar"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/Galaxy Siteplan.jpg" width="48" height="48" alt="" /></a>
+                            <div class="wg_title">
+                                <a title="" href="#">Chính chủ cho thuê căn hộ 188m2 chung cư Hoàng Thành Tower</a>
+                                <div class="p-bottom-left">
+                                    <div><div class="left">Giá</div>:&nbsp;6.5 tỷ</div>
+                                    <div><div class="left">Diện tích</div>:&nbsp;175 m²</div>
+                                    <div>
+                                        <div class="left">Quận/huyện</div>:&nbsp;
+                                        <span><a class="link_blue" href="#" title="">Quận 7</a>, <a class="link_blue" href="#" title="">Hồ Chí Minh</a></span>
+                                        <div class="p-bottom-right">12/11/2015</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
     <footer class="clearfix">
-        <!-- <div class="pull-left copyright">
+        <div class="pull-left copyright">
             <p><span>&copy;</span>2015. Bản quyền thuộc về Công ty Metvuong</p>
         </div>
         <div class="pull-right polli">
-
-        </div> -->
+            <ul>
+                <li><a href="#">Giới thiệu</a></li>
+                <li><a href="#">Điều khoản</a></li>
+                <li>
+                    <span>Kết nối:</span>
+                    <a title="facebook metvuong.com" class="logo-social fb-icon" href="#"></a>
+                    <a title="twitter metvuong.com" class="logo-social twe-icon" href="#"></a>
+                    <a title="google plus metvuong.com" class="logo-social g-icon" href="#"></a>
+                    <a title="youtube metvuong.com" class="logo-social ytu-icon" href="#"></a>
+                </li>
+            </ul>
+        </div>
     </footer>
     <div id="iePopup">
         <div id="jr_overlay"></div>
