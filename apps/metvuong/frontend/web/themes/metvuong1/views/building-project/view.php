@@ -123,18 +123,12 @@ EOD;
 					<?php endforeach; ?>
 				</div>
 				<div id="sync2" class="owl-carousel thumnail-list">
-					<div class="item bgcover"
-						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-1.jpg)"></div>
-					<div class="item bgcover"
-						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/87bbds2.jpg)"></div>
-					<div class="item bgcover"
-						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg)"></div>
-					<div class="item bgcover"
-						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/22311_Khai-truong-Pearl-Plaza-10.jpg)"></div>
-					<div class="item bgcover"
-						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-1.jpg)"></div>
-					<div class="item bgcover"
-						style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-1.jpg)"></div>
+					<?php 
+						$gallery = explode(',', $model->bpGallery);
+						foreach($gallery as $gal):
+					?>
+					<div class="item bgcover" style="background-image: url(<?= Url::to('/store/building-project-images/' . $gal) ?>)"></div>
+					<?php endforeach; ?>
 				</div>
 			</div>
 			<?php if($model->bpMapLocation): ?>
