@@ -2769,7 +2769,7 @@ body .wrap-page-home > .container {
     font-size: 1em;
     overflow: hidden;
     line-height: 16px;
-    max-height: 48px;
+    /* max-height: 48px; */
     font-weight: bold;
 }
 .wrap-page-home .slideUpDown li .avatar {
@@ -2785,6 +2785,8 @@ body .wrap-page-home > .container {
 .p-bottom-left {
 
 padding-top: 5px;
+
+padding-bottom: 5px;
 }
 .p-bottom-left > div {
     font-family: 'arial';
@@ -2803,15 +2805,15 @@ padding-top: 5px;
     line-height: 100%;
 }
 .p-bottom-right {
-    float: right;
+    /* float: right; */
     font-size: .9em;
-    position: absolute;
-    bottom: 0;
-    left: 65px;
+    /* position: absolute; */
+    /* bottom: 0; */
+    /* left: 65px; */
     color: #000000;
 }
-.wg_title .user-post {
-    
+.p-bottom-right em {
+    margin-right: 4px;
 }
 .wrap-page-home .wg_title .user-post a {
     font-family: 'arial';
@@ -2820,4 +2822,9 @@ padding-top: 5px;
 }
 .wg_title .user-post em {
     margin-right:5px;
+}
+.wrap-page-home .slideUpDown a  i{
+    font-size: .8em;
+    padding-left: 4px;
+    color: #333;
 }

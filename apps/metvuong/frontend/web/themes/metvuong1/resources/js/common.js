@@ -335,20 +335,23 @@ function l(x){console.log(x);}
 
 //start run slide home page
 function runSlideUpDown() {
-    $('.slideshow').find('li:last').xfInsert('insertBefore', $('.slideshow li:first'));
+    insertBeforeAnimate($('.slideshow li:last'), $('.slideshow li:first'));
     $( ".slideshow li" ).each(function( index ) {
         if(index < 5){
             $( this ).show();
         }else{
             $( this ).hide();
         }
-
-        $('#widget-11').css('min-height',  $('#widget-11').height());
-        try{
-            topic_top =   $('#widget-17').parent().offset().top;
-        }catch(e){
-
-        }  
     });
+}
+function insertBeforeAnimate($itemLast, $itemFirst) {
+    $itemLast.css({
+        opacity: 0,
+        display: 'none'
+    });
+    $itemLast.insertBefore($itemFirst);
+    $itemLast.slideDown('fast').animate({
+        opacity: 1
+    },500);
 }
 //end run slide home page
