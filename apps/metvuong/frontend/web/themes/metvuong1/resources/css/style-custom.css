@@ -2495,6 +2495,8 @@ button.btn.btn-default,
 .home-page {
     padding-top: 15px;
     padding-right: 15px;
+    position: relative;
+    z-index: 2;
 }
 .home-page li {
     float: left;
@@ -2565,6 +2567,7 @@ body .wrap-page-home > .container {
     width: 100%;
     top: 0;
     left: 0;
+    z-index: 1;
 }
 .wrap-search-home {
     height: 100%;
