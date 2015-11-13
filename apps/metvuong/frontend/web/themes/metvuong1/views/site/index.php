@@ -16,7 +16,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
 ?>
 <script>
     $(document).ready(function() {
-        setInterval("runSlideUpDown()", 5000);
+        setInterval("runSlideUpDown()", 2000);
     });
 </script>
 <div class="o-wrapper clearfix wrap-page-home">
