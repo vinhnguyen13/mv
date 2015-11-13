@@ -9,11 +9,18 @@ $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/style-cus
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.min.js', ['position'=>View::POS_HEAD]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/bootstrap.min.js', ['position'=>View::POS_HEAD]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/menu.min.js', ['position'=>View::POS_HEAD]);
+Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.xenforo.rollup.js', ['position'=>View::POS_HEAD]);
+Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/xenforo.js', ['position'=>View::POS_HEAD]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/common.js', ['position'=>View::POS_HEAD]);
 /* @var $this yii\web\View */
 
 $this->title = Yii::t('express','We offer exeptional amenities and renowned white - glove services');
 ?>
+<script>
+    $(document).ready(function() {
+        setInterval("runSlideUpDown()", 5000);
+    });
+</script>
 <div class="o-wrapper clearfix wrap-page-home">
     <header class="clearfix home-page">
         <ul class="pull-right">
