@@ -222,9 +222,10 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     <div>
                                         <div class="left">Quận/huyện</div>:&nbsp;
                                         <span><a class="link_blue" href="#" title="">Quận 7</a>, <a class="link_blue" href="#" title="">Hồ Chí Minh</a></span>
-                                        <div class="p-bottom-right">12/11/2015</div>
+
                                     </div>
                                 </div>
+                                <div class="p-bottom-right"><em class="icon-calendar"></em>12/11/2015</div>
                             </div>
                         </li>
                         <li class="thread-2198267 thread-node-6">
@@ -291,9 +292,9 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     <div>
                                         <div class="left">Quận/huyện</div>:&nbsp;
                                         <span><a class="link_blue" href="#" title="">Quận 7</a>, <a class="link_blue" href="#" title="">Hồ Chí Minh</a></span>
-                                        <div class="p-bottom-right">12/11/2015</div>
                                     </div>
                                 </div>
+                                <div class="p-bottom-right"><em class="icon-calendar"></em>12/11/2015</div>
                             </div>
                         </li>
                         <li class="thread-2198267 thread-node-6">
@@ -306,9 +307,9 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     <div>
                                         <div class="left">Quận/huyện</div>:&nbsp;
                                         <span><a class="link_blue" href="#" title="">Quận 7</a>, <a class="link_blue" href="#" title="">Hồ Chí Minh</a></span>
-                                        <div class="p-bottom-right">12/11/2015</div>
                                     </div>
                                 </div>
+                                <div class="p-bottom-right"><em class="icon-calendar"></em>12/11/2015</div>
                             </div>
                         </li>
                         <li class="thread-2198267 thread-node-6">
@@ -330,9 +331,9 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     <div>
                                         <div class="left">Quận/huyện</div>:&nbsp;
                                         <span><a class="link_blue" href="#" title="">Quận 7</a>, <a class="link_blue" href="#" title="">Hồ Chí Minh</a></span>
-                                        <div class="p-bottom-right">12/11/2015</div>
                                     </div>
                                 </div>
+                                <div class="p-bottom-right"><em class="icon-calendar"></em>12/11/2015</div>
                             </div>
                         </li>
                     </ul>
