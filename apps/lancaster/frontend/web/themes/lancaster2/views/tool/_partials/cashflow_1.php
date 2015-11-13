@@ -16,7 +16,6 @@ use yii\helpers\Html;
     .payment_schedule { margin: 0px 0px 20px 0px; }
     .payment_schedule .row{
         padding: 5px 0 0 15px !important;
-        display: none;
     }
 </style>
 <h1>Scenario 1</h1>
@@ -83,9 +82,9 @@ use yii\helpers\Html;
     <legend>T1</legend>
     <div class="col-lg-3 input-percent">
         <?=Html::label('Sales (%)');?>
-        <?=Html::input('text','sales_T1',null,['class'=>'form-control form-group sales']);?>
+        <?=Html::input('text','T1_sales',null,['class'=>'form-control form-group sales']);?>
         <?=Html::label('Outgoing Cashflow (%)');?>
-        <?=Html::input('text','cashflow_T1',null,['class'=>'form-control form-group cashflow']);?>
+        <?=Html::input('text','T1_cashflow',null,['class'=>'form-control form-group cashflow']);?>
     </div>
     <div class="col-lg-4 check-payment">
         <?php
@@ -96,17 +95,18 @@ use yii\helpers\Html;
             'pay_10' => '14 months after Foundation', 'pay_11' => '16 months after Foundation', 'pay_12' => '18 months after Foundation',
             'pay_13' => '20 months after Foundation', 'pay_14' => 'Building Handover Procedure', 'pay_15' => 'Apartment Ownership Handover',
         ];
-        echo Html::checkboxList('payment_T1', null, $list);
+        echo Html::checkboxList('T1_payment', null, $list);
         ?>
     </div>
-    <?=Html::hiddenInput('field_name', 'T1',['class'=>'form-control form-group field_name']);?>
 </fieldset>
+
+<?=Html::hiddenInput('counter', 1,['class'=>'form-control form-group counter']);?>
 
 <div class="form-group command">
     <div class="col-lg-3">
         <?= Html::button('Add', ['class' => 'btn btn-primary add']) ?>
-    </div><div class="col-lg-3">
-        <?= Html::button('Calculate', ['class' => 'btn btn-primary calculate']) ?>
+    </div><div class="col-lg-4">
+        <?= Html::button('Calculate', ['class' => 'btn btn-primary calculation']) ?>
     </div>
     <div class="col-lg-4">
         <?= Html::submitButton('Next', ['class' => 'btn btn-primary next']) ?>
@@ -128,9 +128,10 @@ use yii\helpers\Html;
         }
     });
 
-    $(".payment_schedule").click(function(){
-        $(".payment_schedule .row").toggle();
-    });
+    $(".cash_result #w0").hide();
+//    $(".payment_schedule").click(function(){
+//        $(".payment_schedule .row").toggle();
+//    });
 
     $(document).on("click",'#scenario_1 .next',function() {
         chart.next('/tool/save-step?step=scenario_1', 'p_scenario_1', 'scenario_1/afterNext');
@@ -183,34 +184,32 @@ use yii\helpers\Html;
 //        fieldset.find('input.hid_net_accumulative_cashflow').autoNumeric('init', {aPad: false});
 //    });
 
-
-
     var counter = 1;
+//    var flash='';
     $("#scenario_1 .add").click(function(){
         var fieldset = $('form[id^="p_scenario_1"] fieldset:last');
-        $.ajax({
-            type: "post",
-            dataType: 'json',
-            url: '/tool/save-step?step=add',
-            data: ($('#p_scenario_1').serializeArray()),
-            success: function(data) {
-//                $("#"+formId).trigger(event, [{data: data}, 'something'] );
-            }
-        });
         counter += 1;
         var f = fieldset.clone().attr("id", counter);
         f.find("legend").text("T"+counter);
-//        console.log(f.find("input"));
-
-        f.find('.hid_outgoing_cashflow').attr("value", 0);
-        f.find('.hid_accum_incoming_cashflow').attr("value", 0);
-
-//        f.find("input.incoming_cashflow").attr("name", "incoming_cashflow_T"+counter);
-        f.find("input.cashflow").attr("name", "cashflow_T"+counter);
-        f.find("input.sales").attr("name", "sales_T"+counter);
-        f.find("input.field_name").val("T"+counter);
-        f.find("input[type=checkbox]").attr("name", "payment_T"+counter+"[]");
-
+        f.find("input.cashflow").attr("name", "T"+counter+"_cashflow");
+        f.find("input.sales").attr("name", "T"+counter+"_sales");
+        f.find("input[type=checkbox]").attr("name", "T"+counter+"_payment[]");
         f.insertAfter(fieldset);
+
+        $("input.counter").val(counter);
     });
+
+    $("#scenario_1 .calculation").click(function() {
+        $.ajax({
+            type: "post",
+            dataType: 'json',
+            url: '/tool/save-step?step=calculation_1',
+            data: ($('#p_scenario_1').serializeArray()),
+            success: function(data) {
+//                $(".cash_result #w0").show();
+                console.log(data.file);
+            },
+        });
+    });
+
 </script>

@@ -19,6 +19,39 @@ $months = array_keys($categories);
 ?>
 <div class="row main_content">
     <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <div class="container">
+        <h2 class="text-center">Cash Flow Data </h2>
+        <p></p>
+        <div class="table-responsive"">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <?php
+                    foreach($data as $k => $d){
+                        if($data[$k])
+                            echo "<th>".strtoupper($k)."</th>";
+                    }
+                    ?>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                $i=0;
+                foreach($months as $m){
+                ?>
+                <tr>
+                    <th><?=$m ?></th>
+                    <td align="right"><?= number_format($data_1[$i] , 2 , "." , "," ) ?></td>
+                    <td align="right"><?= number_format($data_2[$i] , 2 , "." , "," ) ?></td>
+                </tr>
+                <?php
+                $i++;
+                } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -54,6 +87,9 @@ $months = array_keys($categories);
                 align: 'right',
                 verticalAlign: 'middle',
                 borderWidth: 0
+            },
+            scrollbar: {
+                enabled: true
             },
             series: [{
                 name: 'Scenario 1',
