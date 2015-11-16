@@ -29,24 +29,22 @@ $months = array_keys($categories);
                     <th>#</th>
                     <?php
                     foreach($data as $k => $d){
-                        if($data[$k])
-                            echo "<th>".strtoupper($k)."</th>";
+                        echo "<th>".strtoupper($k)."</th>";
                     }
                     ?>
                 </tr>
                 </thead>
                 <tbody>
                 <?php
-                $i=0;
-                foreach($months as $m){
+
+                for($i = 0; $i < count($months); $i++){
                 ?>
                 <tr>
-                    <th><?=$m ?></th>
-                    <td align="right"><?= number_format($data_1[$i] , 2 , "." , "," ) ?></td>
-                    <td align="right"><?= number_format($data_2[$i] , 2 , "." , "," ) ?></td>
+                    <th><?=$months[$i] ?></th>
+                    <td><?=empty($data_1[$i]) == false ? number_format($data_1[$i] , 2 , "." , "," ) : 0 ?></td>
+                    <td><?=empty($data_2[$i]) == false ? number_format($data_2[$i] , 2 , "." , "," ) : 0 ?></td>
                 </tr>
                 <?php
-                $i++;
                 } ?>
                 </tbody>
             </table>

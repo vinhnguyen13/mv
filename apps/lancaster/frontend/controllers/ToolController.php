@@ -56,7 +56,6 @@ class ToolController extends Controller
 
     public function actionChart()
     {
-
         $filePath = Yii::$app->view->theme->basePath . '/resources/chart/data.json';
         $fileContent = $this->readFile($filePath);
         return $this->render('chart', [
@@ -69,7 +68,7 @@ class ToolController extends Controller
         if(Yii::$app->request->isAjax){
             $filePath = Yii::$app->view->theme->basePath . '/resources/chart/data.json';
             $fileContent = $this->readFile($filePath);
-            $fileContent = Json::decode($fileContent);
+            $fileContent = Json::decode($fileContent, true);
             return $this->renderAjax('_partials/chart_view', [
                 'data'=>$fileContent
             ]);
