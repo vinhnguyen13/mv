@@ -232,7 +232,8 @@ $(document).ready(function() {
             $wrapSlide = $('<div id="slideTDXD" class="owl-carousel"></div>'),
             $thumSlide = $('<div id="slideTDXD-thum" class="owl-carousel thumnail-list"></div>');
 
-        _this.closest('.wrap-img').addClass('active');
+        $('.list-pics-tdxd .item-pics a').removeClass('active');
+        _this.addClass('active');
         for(var i = 0; i < arrPic.length; i++) {
             var $itemWrap = $('<div class="item bgcover img-big-duan" style="background-image:url('+arrPic[i]+')"></div>'),
                 $itemThum = $('<div class="item bgcover img-big-duan" style="background-image:url('+arrPic[i]+')"></div>');
@@ -274,6 +275,8 @@ $(document).ready(function() {
     $('.video-img').on('click',function(e) {
         e.preventDefault();
         var srcVideo = $(this).attr('rel');
+        $('.video-img').removeClass('active');
+        $(this).addClass('active');
         $('.phim3d').attr('src',srcVideo);
         return false;
     });
