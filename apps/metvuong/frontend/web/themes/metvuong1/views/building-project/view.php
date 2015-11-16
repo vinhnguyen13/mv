@@ -78,162 +78,68 @@ $script = <<<EOD
                 }
             }
         }
-        var player;
+        
         $(document).ready(function() {
             runSlideDuAn('#sync1','#sync2');
-
-            var videos = new Array();
-            $('.video-item').each(function(index, el) {
-                var vhref = $(this).find('.video-setup').attr('href');
-                var vposter = "/Data/Sites/1/media/Video/video_preload.png";
-                var vtitle = $(this).find('.video-setup').attr('title');
-                videos.push({src : [vhref],poster:vposter,title:vtitle})
-            });
-
-
-            player = videojs('video');
-            player.playList(videos, {
-                getVideoSource: function(vid, cb) {
-                    cb(vid.src, vid.poster);
-                }
-            });
-
-            $('.video-item a').click(function(){
-                var crrvideo = $(this).parent().prevAll(".video-item").length;
-                player.playid(crrvideo);
-                player.play();
-                return false;
-            });
         });
 EOD;
 	$this->registerJs($script, View::POS_HEAD, 'bxslider' );
 
-	$areaTypes = BuildingProject::getAreaTypes();
+$areaTypes = BuildingProject::getAreaTypes ();
 ?>
 <div class="row">
 	<div class="col-xs-6 pdR-0">
 		<div class="wrap-detail-duan">
-			<div id="item-tqda" class="item-detail item-tqda">
+			<div id="tab-show-1" class="item-detail item-tqda">
 				<div id="sync1" class="owl-carousel custom-slide">
-					<?php 
-						$gallery = explode(',', $model->bpGallery);
-						foreach($gallery as $gal):
-					?>
+					<?php $gallery = explode(',', $model->bpGallery);
+						foreach($gallery as $gal): ?>
 					<div class="item bgcover img-big-duan" style="background-image: url(<?= Url::to('/store/building-project-images/' . $gal) ?>)"></div>
 					<?php endforeach; ?>
 				</div>
 				<div id="sync2" class="owl-carousel thumnail-list">
-					<?php 
-						$gallery = explode(',', $model->bpGallery);
-						foreach($gallery as $gal):
-					?>
+					<?php foreach($gallery as $gal): ?>
 					<div class="item bgcover" style="background-image: url(<?= Url::to('/store/building-project-images/' . $gal) ?>)"></div>
 					<?php endforeach; ?>
 				</div>
 			</div>
-			<?php if($model->bpMapLocation): ?>
-			<div id="item-bdvt" class="item-detail item-bdvt">
+			<div id="tab-show-2" class="item-detail item-bdvt">
 				<div class="wrap-img">
 					<img src="<?= Url::to('/store/building-project-images/' . $model->bpMapLocation) ?>" alt="">
 				</div>
 				<?= $model->bpMapLocationDes ?>
 			</div>
-			<?php endif; ?>
-			<?php if($model->bpFacilitiesDetail): ?>
-			<div id="item-ti" class="item-detail item-ti">
+			<div id="tab-show-3" class="item-detail item-ti">
 				<div class="wrap-img">
 					<img src="<?= Url::to('/store/building-project-images/' . $model->bpFacilitiesDetail) ?>" alt="">
 				</div>
 				<?= $model->bpFacilitiesDetailDes ?>
 			</div>
-			<?php endif; ?>
-			<div id="item-tdxd" class="item-detail item-tdxd"></div>
+			<div id="tab-show-4" class="item-detail item-phim3dduan">
+				<iframe class="phim3d" frameborder="0" name="1447229561444" allowfullscreen="" src=""></iframe>
+			</div>
+			<div id="tab-show-5" class="item-detail item-tdxd"></div>
 			<?php
-				$bpfApartmentArea = json_decode($model->bpfApartmentArea, true);
-				
-				$checkBpfApartmentArea = array_filter($bpfApartmentArea);
-				if($checkBpfApartmentArea): ?>
-				<div id="item-kch" class="item-detail item-tdxd">
-				<div id="gbtt" class="item-tab">
-					<?= $bpfApartmentArea['payment'] ?>
-				</div>
-				<div id="ctbh" class="item-tab">
-					<?= $bpfApartmentArea['promotion'] ?>
-				</div>
-				<?php if($bpfApartmentArea['document']): ?>
-				<div id="tlbh" class="item-tab">
-					<img alt="" src="<?= Url::to('/store/building-project-images/' . $bpfApartmentArea['document']) ?>" />
-				</div>
+		    	$areaTypes = BuildingProject::getAreaTypes();
+		    	$counter = 5;
+		    	foreach ($areaTypes as $name => $label) :
+		    		$counter++;
+		    		$areaType = json_decode($model->$name, true);
+		    		if(array_filter($areaType)) :
+		    ?>
+		    <div id="tab-show-<?= $counter ?>" class="item-detail">
+				<div id="tab-show-<?= $counter ?>1" class="item-tab"></div>
+				<?php if($areaType['payment']): ?>
+				<div id="tab-show-<?= $counter ?>2" class="item-tab"><?= $areaType['payment'] ?></div>
+				<?php endif; ?>
+				<?php if($areaType['promotion']): ?>
+				<div id="tab-show-<?= $counter ?>3" class="item-tab"><?= $areaType['promotion'] ?></div>
+				<?php endif; ?>
+				<?php if($areaType['document']): ?>
+				<div id="tab-show-<?= $counter ?>4" class="item-tab"><img src="<?= Url::to('/store/building-project-images/' . $areaType['document']) ?>" alt=""></div>
 				<?php endif; ?>
 			</div>
-			<?php endif; ?>
-			<?php
-				$bpfCommercialArea = json_decode($model->bpfCommercialArea, true);
-				
-				$checkBpfCommercialArea = array_filter($bpfCommercialArea);
-				if($checkBpfCommercialArea): ?>
-			<div id="item-ktm" class="item-detail item-tdxd">
-				<div id="gbtt" class="item-tab">
-					<?= $bpfCommercialArea['payment'] ?>
-				</div>
-				<div id="ctbh" class="item-tab">
-					<?= $bpfCommercialArea['promotion'] ?>
-				</div>
-				<?php if($bpfCommercialArea['document']): ?>
-				<div id="tlbh" class="item-tab">
-					<img alt="" src="<?= Url::to('/store/building-project-images/' . $bpfCommercialArea['document']) ?>" />
-				</div>
-				<?php endif; ?>
-			</div>
-			<?php endif; ?>
-			<?php
-				$bpfTownhouseArea = json_decode($model->bpfTownhouseArea, true);
-				
-				$checkBpfTownhouseArea = array_filter($bpfTownhouseArea);
-				if($checkBpfTownhouseArea): ?>
-			<div id="item-knp" class="item-detail item-tdxd">
-				<div id="gbtt" class="item-tab">
-					<?= $bpfTownhouseArea['payment'] ?>
-				</div>
-				<div id="ctbh" class="item-tab">
-					<?= $bpfTownhouseArea['promotion'] ?>
-				</div>
-				<?php if($bpfTownhouseArea['document']): ?>
-				<div id="tlbh" class="item-tab">
-					<img alt="" src="<?= Url::to('/store/building-project-images/' . $bpfTownhouseArea['document']) ?>" />
-				</div>
-				<?php endif; ?>
-			</div>
-			<?php endif; ?>
-			<?php
-				$bpfOffice = json_decode($model->bpfOffice, true);
-				
-				$checkBpfOffice = array_filter($bpfOffice);
-				if($checkBpfOffice): ?>
-			<div id="item-ko" class="item-detail item-tdxd">
-				<div id="gbtt" class="item-tab">
-					<?= $bpfOffice['payment'] ?>
-				</div>
-				<div id="ctbh" class="item-tab">
-					<?= $bpfOffice['promotion'] ?>
-				</div>
-				<?php if($bpfOffice['document']): ?>
-				<div id="tlbh" class="item-tab">
-					<img alt="" src="<?= Url::to('/store/building-project-images/' . $bpfOffice['document']) ?>" />
-				</div>
-				<?php endif; ?>
-			</div>
-			<?php endif; ?>
-			<div id="item-phim3dduan" class="item-detail item-phim3dduan">
-				<div class='Module Module-385'>
-					<div class="wrap2"></div>
-					<div class="video-wrap">
-						<video id="video" preload="metadata"
-							class="video-js vjs-default-skin" data-setup="" width="100%"
-							height="460" poster="<?=Yii::$app->view->theme->baseUrl?>/resources/images/video_preload.png"></video>
-					</div>
-				</div>
-			</div>
+		    <?php endif; endforeach; ?>
 		</div>
 	</div>
 	<div class="col-xs-6 pdL-10">
@@ -242,9 +148,10 @@ EOD;
 			<h2><?= $model->title ?></h2>
 		</div>
 		<div class="wrap-infor-duan">
-			<div class="item-infor active">
-				<a href="#item-tqda" class="clearfix" href="#">TỔNG QUAN DỰ ÁN<em
-					class="fa fa-chevron-right pull-right"></em></a>
+			<div class="item-infor has-sub tab-type-1">
+				<a href="#tab-show-1" class="clearfix active" href="#">TỔNG QUAN DỰ
+					ÁN<em class="fa fa-chevron-right pull-right"></em>
+				</a>
 				<div class="show-infor in fadeInLeft">
 					<table>
 						<?php if($model->bpLocation): ?>
@@ -304,50 +211,31 @@ EOD;
 					</table>
 				</div>
 			</div>
-			<?php if($model->bpMapLocation): ?>
-			<div class="item-infor">
-				<a href="#item-bdvt" class="clearfix">BẢN ĐỒ VỊ TRÍ</a>
+			<div class="item-infor tab-type-2">
+				<a href="#tab-show-2" class="clearfix">BẢN ĐỒ VỊ TRÍ</a>
 			</div>
-			<?php endif; ?>
-			<?php if($model->bpFacilitiesDetail): ?>
-			<div class="item-infor">
-				<a href="#item-ti" class="clearfix">TIỆN ÍCH</a>
+			<div class="item-infor tab-type-2">
+				<a href="#tab-show-3" class="clearfix">TIỆN ÍCH</a>
 			</div>
-			<?php endif; ?>
-			<div class="item-infor">
-				<a href="#item-phim3dduan" class="clearfix">PHIM 3D DỰ ÁN<em
+			<div class="item-infor has-sub tab-type-3">
+				<a href="#tab-show-4" class="clearfix">PHIM 3D DỰ ÁN<em
 					class="fa fa-chevron-right pull-right"></em></a>
 				<div class="show-infor clearfix">
 					<div class="video-thumb">
+						<?php
+							$bpVideos = array_filter(explode(PHP_EOL, $model->bpVideo));
+							foreach ($bpVideos as $k => $bpVideo):
+								parse_str(parse_url($bpVideo, PHP_URL_QUERY), $videoParams);
+								$videoId = $videoParams['v'];
+						?>
 						<div class="video-item">
-							<a class="video-img"
-								href="<?=Yii::$app->view->theme->baseUrl?>/resources/video/Văn phòng SmartOffice tiện lợi cho doanh nghiệp vừa và nhỏ - Novaland.mp4"
-								title="" rel="<?=Yii::$app->view->theme->baseUrl?>/resources/images/Smart Office.jpg">
-								<div class="bgcover"
-									style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/video_preload.png);"></div>
-								<span></span>
-							</a> <a class="video-title" title=""
-								href="<?=Yii::$app->view->theme->baseUrl?>/resources/video/Văn phòng SmartOffice tiện lợi cho doanh nghiệp vừa và nhỏ - Novaland.mp4"
-								rel="<?=Yii::$app->view->theme->baseUrl?>/resources/images/Smart Office.jpg"> <span>Văn phòng SmartOffice tiện
-									lợi cho doanh nghiệp vừa và nhỏ</span>
-							</a> <a class="video-setup hidden"
-								href="<?=Yii::$app->view->theme->baseUrl?>/resources/video/Văn phòng SmartOffice tiện lợi cho doanh nghiệp vừa và nhỏ - Novaland.mp4"
-								title="" rel="<?=Yii::$app->view->theme->baseUrl?>/resources/images/Smart Office.jpg"> </a>
+							<a <?= $k == 0 ? 'data-active-first="true" ' : '' ?>class="video-img" href="#" title="" rel="https://www.youtube.com/embed/<?= $videoId ?>">
+								<div class="bgcover" style="background-image: url(http://img.youtube.com/vi/<?= $videoId ?>/1.jpg);">
+									<span class="icon-play"></span>
+								</div>
+							</a>
 						</div>
-						<div class="video-item">
-							<a class="video-img"
-								href="<?=Yii::$app->view->theme->baseUrl?>/resources/video/SẢN XUẤT PHIM 3D KIẾN TRÚC DỰ ÁN THE EVERRICH 2.mp4"
-								title="" rel="<?=Yii::$app->view->theme->baseUrl?>/resources/images/Smart Office.jpg">
-								<div class="bgcover"
-									style="background-image: url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/0.jpg);"></div> <span></span>
-							</a> <a class="video-title" title=""
-								href="<?=Yii::$app->view->theme->baseUrl?>/resources/video/SẢN XUẤT PHIM 3D KIẾN TRÚC DỰ ÁN THE EVERRICH 2.mp4"
-								rel="<?=Yii::$app->view->theme->baseUrl?>/resources/images/Smart Office.jpg"> <span>Văn phòng SmartOffice tiện
-									lợi cho doanh nghiệp vừa và nhỏ</span>
-							</a> <a class="video-setup hidden"
-								href="<?=Yii::$app->view->theme->baseUrl?>/resources/video/SẢN XUẤT PHIM 3D KIẾN TRÚC DỰ ÁN THE EVERRICH 2.mp4"
-								title="" rel="<?=Yii::$app->view->theme->baseUrl?>/resources/images/Smart Office.jpg"> </a>
-						</div>
+						<?php endforeach; ?>
 					</div>
 				</div>
 			</div>
@@ -355,19 +243,18 @@ EOD;
 				if($model->bpProgress):
 					$bpProgress = json_decode($model->bpProgress, true);
 					$groupByYears = [];
+					$firstActive = true;
 					
 					foreach ($bpProgress as $bpp) {
 						$groupByYears[$bpp['year']][] = $bpp;
 					}
 			?>
-			<div class="item-infor tab-tdxd">
-				<a href="#item-tdxd" class="clearfix">TIẾN ĐỘ XÂY DỰNG<em
+			<div class="item-infor tab-tdxd has-sub tab-type-3">
+				<a href="#tab-show-5" class="clearfix">TIẾN ĐỘ XÂY DỰNG<em
 					class="fa fa-chevron-right pull-right"></em></a>
 				<div class="show-infor">
 					<?php foreach ($groupByYears as $year => $groupByYear) : ?>
-					<h4>
-						<em class="fa fa-angle-right mgR-5"></em><?= $year ?>
-					</h4>
+					<h4><em class="fa fa-angle-right mgR-5"></em><?= $year ?></h4>
 					<div class="row list-pics-tdxd">
 						<?php
 							foreach ($groupByYear as $progessGal):
@@ -378,156 +265,59 @@ EOD;
 						?>
 						<div class="col-md-3 item-pics">
 							<div class="wrap-img">
-								<div>
-									<a class="group1" href="#" title=""
-										data-imgsrc='[<?= implode(',', $images) ?>]'><img
-										src=<?= $images[0] ?>></a>
-								</div>
+								<a <?= $firstActive ? 'data-active-first="true" ' : '' ?>href="#" title=""
+									data-imgsrc='[<?= implode(',', $images) ?>]'><img
+									src=<?= $images[0] ?>></a>
 							</div>
 							<span><em class="icon-calendar"></em>THÁNG <?= $progessGal['month'] ?>/<?= $progessGal['year'] ?></span>
 						</div>
-						<?php endforeach; ?>
+						<?php
+							$firstActive = false;
+							endforeach;
+						?>
 					</div>
 					<?php endforeach; ?>
 				</div>
 			</div>
 			<?php endif; ?>
-			<?php if($checkBpfApartmentArea): ?>
-				<div class="item-infor group-menu tab-kch">
-					<a href="#item-kch" class="clearfix">KHU CĂN HỘ<em
-						class="fa fa-chevron-right pull-right"></em></a>
-					<div class="show-infor fadeInLeft">
-						<div class="item-infor">
-							<a href="#item-kch" class="clearfix">MẶT BẰNG</a>
-							<div class="show-infor">
-								<?php foreach($bpfApartmentArea['floorPlan'] as $floorPlan): ?>
+			<?php
+		    	$counter = 5;
+		    	foreach ($areaTypes as $name => $label) :
+		    		$counter++;
+		    		$areaType = json_decode($model->$name, true);
+		    		if(array_filter($areaType)) :
+		    ?>
+		    <div class="item-infor has-sub tab-kch tab-type-4">
+				<a href="#tab-show-<?= $counter ?>" class="clearfix" data-active-first="true"><?= mb_strtoupper($label, 'utf-8') ?><em class="fa fa-chevron-right pull-right"></em></a>
+				<div class="show-infor fadeInLeft">
+					<div class="item-infor">
+						<a href="#" class="clearfix" data-active-first="true">MẶT BẰNG</a>
+						<div class="show-infor">
+							<?php foreach($areaType['floorPlan'] as $k => $floorPlan): ?>
 								<div class="item-infor">
-									<a href="#item-kch" class="clearfix"
-										data-srcmb="<?= Url::to('/store/building-project-images/' . $floorPlan['images']) ?>"><?= $floorPlan['title'] ?></a>
+									<a href="#tab-show-<?= $counter ?>1" class="clearfix" <?= $k==0 ? 'data-active-first="true" ' : '' ?>data-srcmb="<?= Url::to('/store/building-project-images/' . $floorPlan['images']) ?>"><?= $floorPlan['title'] ?></a>
 								</div>
-								<?php endforeach; ?>
-							</div>
+							<?php endforeach; ?>
 						</div>
-						<?php if($bpfApartmentArea['payment']): ?>
-						<div class="item-infor">
-							<a href="#item-kch" class="clearfix" data-tabsub="#gbtt">GIÁ BÁN & THANH TOÁN</a>
-						</div>
-						<?php endif; ?>
-						<?php if($bpfApartmentArea['promotion']): ?>
-						<div class="item-infor">
-							<a href="#item-kch" class="clearfix" data-tabsub="#ctbh">CHƯƠNG TRÌNH BÁN HÀNG</a>
-						</div>
-						<?php endif; ?>
-						<?php if($bpfApartmentArea['document']): ?>
-						<div class="item-infor">
-							<a href="#item-kch" class="clearfix" data-tabsub="#tlbh">TÀI LIỆU BÁN HÀNG</a>
-						</div>
-						<?php endif; ?>
 					</div>
-				</div>
-			<?php endif; ?>
-			<?php if($checkBpfCommercialArea): ?>
-				<div class="item-infor group-menu tab-ktm">
-					<a href="#item-ktm" class="clearfix">KHU THƯƠNG MẠI<em
-						class="fa fa-chevron-right pull-right"></em></a>
-					<div class="show-infor fadeInLeft">
-						<div class="item-infor">
-							<a href="#item-ktm" class="clearfix">MẶT BẰNG</a>
-							<div class="show-infor">
-								<?php foreach($bpfCommercialArea['floorPlan'] as $floorPlan): ?>
-								<div class="item-infor">
-									<a href="#item-ktm" class="clearfix"
-										data-srcmb="<?= Url::to('/store/building-project-images/' . $floorPlan['images']) ?>"><?= $floorPlan['title'] ?></a>
-								</div>
-								<?php endforeach; ?>
-							</div>
-						</div>
-						<?php if($bpfCommercialArea['payment']): ?>
-						<div class="item-infor">
-							<a href="#item-ktm" class="clearfix" data-tabsub="#gbtt">GIÁ BÁN & THANH TOÁN</a>
-						</div>
-						<?php endif; ?>
-						<?php if($bpfCommercialArea['promotion']): ?>
-						<div class="item-infor">
-							<a href="#item-ktm" class="clearfix" data-tabsub="#ctbh">CHƯƠNG TRÌNH BÁN HÀNG</a>
-						</div>
-						<?php endif; ?>
-						<?php if($bpfCommercialArea['document']): ?>
-						<div class="item-infor">
-							<a href="#item-ktm" class="clearfix" data-tabsub="#tlbh">TÀI LIỆU BÁN HÀNG</a>
-						</div>
-						<?php endif; ?>
+					<?php if($areaType['payment']): ?>
+					<div class="item-infor">
+						<a href="#tab-show-<?= $counter ?>2" class="clearfix tab-sub-link">GIÁ BÁN & THANH TOÁN</a>
 					</div>
-				</div>
-			<?php endif; ?>
-			<?php if($checkBpfTownhouseArea): ?>
-				<div class="item-infor group-menu tab-knp">
-					<a href="#item-knp" class="clearfix">KHU NHÀ PHỐ<em
-						class="fa fa-chevron-right pull-right"></em></a>
-					<div class="show-infor fadeInLeft">
-						<div class="item-infor">
-							<a href="#item-knp" class="clearfix">MẶT BẰNG</a>
-							<div class="show-infor">
-								<?php foreach($bpfTownhouseArea['floorPlan'] as $floorPlan): ?>
-								<div class="item-infor">
-									<a href="#item-knp" class="clearfix"
-										data-srcmb="<?= Url::to('/store/building-project-images/' . $floorPlan['images']) ?>"><?= $floorPlan['title'] ?></a>
-								</div>
-								<?php endforeach; ?>
-							</div>
-						</div>
-						<?php if($bpfTownhouseArea['payment']): ?>
-						<div class="item-infor">
-							<a href="#item-knp" class="clearfix" data-tabsub="#gbtt">GIÁ BÁN & THANH TOÁN</a>
-						</div>
-						<?php endif; ?>
-						<?php if($bpfTownhouseArea['promotion']): ?>
-						<div class="item-infor">
-							<a href="#item-knp" class="clearfix" data-tabsub="#ctbh">CHƯƠNG TRÌNH BÁN HÀNG</a>
-						</div>
-						<?php endif; ?>
-						<?php if($bpfTownhouseArea['document']): ?>
-						<div class="item-infor">
-							<a href="#item-knp" class="clearfix" data-tabsub="#tlbh">TÀI LIỆU BÁN HÀNG</a>
-						</div>
-						<?php endif; ?>
+					<?php endif; ?>
+					<?php if($areaType['promotion']): ?>
+					<div class="item-infor">
+						<a href="#tab-show-<?= $counter ?>3" class="clearfix tab-sub-link">CHƯƠNG TRÌNH BÁN HÀNG</a>
 					</div>
-				</div>
-			<?php endif; ?>
-			<?php if($checkBpfOffice): ?>
-				<div class="item-infor group-menu tab-ko">
-					<a href="#item-ko" class="clearfix" data-srcmb="<?=Yii::$app->view->theme->baseUrl?>/resources/images/Mat bang tang-02.jpg">KHU OFFICE - OFFICETEL<em
-						class="fa fa-chevron-right pull-right"></em></a>
-					<div class="show-infor fadeInLeft">
-						<div class="item-infor">
-							<a href="#item-ko" class="clearfix">MẶT BẰNG</a>
-							<div class="show-infor">
-								<?php foreach($bpfOffice['floorPlan'] as $floorPlan): ?>
-								<div class="item-infor">
-									<a href="#item-knp" class="clearfix"
-										data-srcmb="<?= Url::to('/store/building-project-images/' . $floorPlan['images']) ?>"><?= $floorPlan['title'] ?></a>
-								</div>
-								<?php endforeach; ?>
-							</div>
-						</div>
-						<?php if($bpfOffice['payment']): ?>
-						<div class="item-infor">
-							<a href="#item-ko" class="clearfix" data-tabsub="#gbtt">GIÁ BÁN & THANH TOÁN</a>
-						</div>
-						<?php endif; ?>
-						<?php if($bpfOffice['promotion']): ?>
-						<div class="item-infor">
-							<a href="#item-ko" class="clearfix" data-tabsub="#ctbh">CHƯƠNG TRÌNH BÁN HÀNG</a>
-						</div>
-						<?php endif; ?>
-						<?php if($bpfOffice['document']): ?>
-						<div class="item-infor">
-							<a href="#item-ko" class="clearfix" data-tabsub="#tlbh">TÀI LIỆU BÁN HÀNG</a>
-						</div>
-						<?php endif; ?>
+					<?php endif; ?>
+					<?php if($areaType['document']): ?>
+					<div class="item-infor">
+						<a href="#tab-show-<?= $counter ?>4" class="clearfix tab-sub-link">TÀI LIỆU BÁN HÀNG</a>
 					</div>
+					<?php endif; ?>
 				</div>
-			<?php endif; ?>
+			</div>
+		    <?php endif; endforeach; ?>
 		</div>
 	</div>
 </div>
