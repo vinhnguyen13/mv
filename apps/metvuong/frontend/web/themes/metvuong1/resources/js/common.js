@@ -218,14 +218,14 @@ $(document).ready(function() {
     //start page du-an
     $('.item-infor a').each(function() {
         var _this = $(this);
-        if(_this.parent().hasClass('active')) {
+        if(_this.hasClass('active')) {
             var idShowBox = _this.attr('href');
             $(idShowBox).fadeIn();
         }
     });
 
     $('.list-pics-tdxd .item-pics a').on('click',function() {
-        $('#item-tdxd').html('');
+        $('.item-tdxd').html('');
         $('.list-pics-tdxd .item-pics .wrap-img').removeClass('active');
         var _this = $(this),
             arrPic = _this.data('imgsrc'),
@@ -239,7 +239,7 @@ $(document).ready(function() {
             $wrapSlide.append($itemWrap);
             $thumSlide.append($itemThum);
         }
-        $('#item-tdxd').append($wrapSlide).append($thumSlide);
+        $('.item-tdxd').append($wrapSlide).append($thumSlide);
         runSlideDuAn('#slideTDXD','#slideTDXD-thum');
 
         return false;
@@ -248,18 +248,23 @@ $(document).ready(function() {
     $('.item-infor > a').on('click',function() {
         var _this = $(this),
             idShowBox = _this.attr('href'),
-            $parentLink = _this.parent();
+            $parentLink = _this.parent(),
+            tempItem;
         
-        $('.item-infor').removeClass('active');
-        $parentLink.addClass('active');
+        $('.item-infor > a').removeClass('active');
+        $('a[data-active-first]').removeClass('active');
+        $parentLink.find('>a').addClass('active');
 
         if( $parentLink.hasClass('has-sub') ) {
+            tempItem = $parentLink;
             $('.has-sub .show-infor').slideUp('fast');
             $parentLink.find('>.show-infor').slideDown('fast');
             
+            //tab phim 3D
             if( $(idShowBox).find('.phim3d').length ) {
-                var srcVideo = $parentLink.find('.active').attr('rel');
+                var srcVideo = $parentLink.find('a[data-active-first]').attr('rel');
                 $(idShowBox).find('.phim3d').attr('src', srcVideo);
+
                 $parentLink.find('.video-item a').on('click',function() {
                     var srcVideo = $(this).attr('rel');
                     $parentLink.find('.video-item a').removeClass('active');
@@ -268,33 +273,15 @@ $(document).ready(function() {
                     return false;
                 });
             }
+            //end tab phim 3D
 
-
+            $parentLink.find('a[data-active-first]:last-child').trigger('click');
+            $parentLink.find('a[data-active-first]').addClass('active');
         }
 
-        //event show khu dan cu & khu thuong mai
-        /*if( _this.data('srcmb')) {
-            $('#item-kch .img-alone, #item-ktm .img-alone').remove();
-            $('.item-tab').hide();
-            var srcImg = _this.data('srcmb'),
-                $imgAdd = $('<img class="img-alone" src="'+srcImg+'" alt="" />'),
-                hrefLink = _this.attr('href');
-            hrefLink === '#item-kch' ? $('#item-kch').append($imgAdd) : $('#item-kch .img-alone').remove();
-            hrefLink === '#item-ktm' ? $('#item-ktm').append($imgAdd) : $('#item-ktm .img-alone').remove();
+        if( !$(idShowBox).hasClass('item-tab') ) {
+            $('.item-detail').hide();
         }
-        if( _this.data('tabsub')) {
-            $('#item-kch .img-alone, #item-ktm .img-alone').remove();
-            var srcImg = _this.data('tabsub'),
-                hrefLink = _this.attr('href');
-            $('.item-tab').hide();
-            hrefLink === '#item-kch' ? $('#item-kch '+srcImg).show() : $('#item-kch '+srcImg).hide();
-            hrefLink === '#item-ktm' ? $('#item-ktm '+srcImg).show() : $('#item-ktm '+srcImg).hide();
-        }*/
-        //End event show khu dan cu & khu thuong mai
-
-
-
-        $('.item-detail').hide();
         $(idShowBox).css({
             display: 'block',
             visibility: 'hidden'
@@ -303,6 +290,20 @@ $(document).ready(function() {
         
         return false;
     });
+
+    /*$('.item-infor a[data-srcmb]').on('click', function() {
+        var _this = $(this);
+        if( _this.data('srcmb')) {
+            $('.img-alone').remove();
+            $('.item-tab').hide();
+            var srcImg = _this.data('srcmb'),
+                $imgAdd = $('<img class="img-alone" src="'+srcImg+'" alt="" />'),
+                idBox = _this.attr('href');
+            $(idBox).append($imgAdd).fadeIn();
+        }
+
+        return false;
+    });*/
     //end page du-an
 
     //start scroll fixed header
@@ -327,14 +328,12 @@ $(document).ready(function() {
         }
     });
     //end scroll fixed header
-
-    
 });
 
 function l(x){console.log(x);}
 
 //start run slide home page
-function runSlideUpDown() {
+/*function runSlideUpDown() {
     insertBeforeAnimate($('.slideshow li:last'), $('.slideshow li:first'));
     $( ".slideshow li" ).each(function( index ) {
         if(index < 5){
@@ -353,5 +352,5 @@ function insertBeforeAnimate($itemLast, $itemFirst) {
     $itemLast.slideDown('fast').animate({
         opacity: 1
     },500);
-}
+}*/
 //end run slide home page

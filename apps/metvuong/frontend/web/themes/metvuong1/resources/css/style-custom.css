@@ -1783,27 +1783,15 @@ footer {
     -moz-box-shadow: 1px 1px 2px #e6e6e6;
     box-shadow: 1px 1px 2px #e6e6e6;
 }
-.item-pics div.wrap-img.active {
+.item-pics div.wrap-img a:hover,
+.item-pics div.wrap-img a.active {
     border: 1px solid #49B12F;
-}
-.item-pics div.wrap-img img {
-    -webkit-transition: all 0.2s linear;
-    -moz-transition: all 0.2s linear;
-    -o-transition: all 0.2s linear;
-    -ms-transition: all 0.2s linear;
-    transition: all 0.2s linear;
-}
-.item-pics div.wrap-img:hover img {
-    -webkit-transform: scale(1.1,1.1);
-    -moz-transform: scale(1.1,1.1);
-    -o-transform: scale(1.1,1.1);
-    -ms-transform: scale(1.1,1.1);
-    transform: scale(1.1,1.1);
 }
 .item-pics span {
     font-weight: bold;
     display: block;
     color: #888;
+    font-size: .9em;
 }
 .item-pics span em {
     margin-right: 5px;
@@ -2054,7 +2042,7 @@ button.btn.btn-default,
 }
 .header-duan h2 {
     color: #F79521;
-    font-size: 2.8em;
+    font-size: 2.5em;
     font-weight: bold;
     line-height: 70px;
     font-family: 'Calibri';
@@ -2071,7 +2059,7 @@ button.btn.btn-default,
     -ms-transition: all .2s ease-out;
     -moz-transition: all .2s ease-out;
 }
-.item-infor.active > a {
+.item-infor > .active {
     font-weight: bold;
     color: #5BB249;
 }
@@ -2154,7 +2142,8 @@ button.btn.btn-default,
 .thumnail-list {
     position: absolute;
     bottom: 0;
-    left: 10px;
+    left: 0;
+    width: 100%;
 }
 .owl-controls .owl-buttons div {
     position: absolute;
@@ -2181,6 +2170,7 @@ button.btn.btn-default,
 .thumnail-list .owl-wrapper {
     text-align: center;
     margin: 0 auto 0;
+    width: 100% !important;
 }
 .thumnail-list .owl-wrapper .owl-item {
     float: none;
@@ -2228,6 +2218,8 @@ button.btn.btn-default,
 }
 .wrap-detail-duan .item-detail {
     display: none;
+    position: relative;
+    width: 100%;
 }
 .wrap-detail-duan {
     height: 620px;
