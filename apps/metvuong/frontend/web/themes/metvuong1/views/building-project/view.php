@@ -293,9 +293,14 @@ $areaTypes = BuildingProject::getAreaTypes ();
 					<div class="item-infor">
 						<a href="#" class="clearfix" data-active-first="true">MẶT BẰNG</a>
 						<div class="show-infor">
-							<?php foreach($areaType['floorPlan'] as $k => $floorPlan): ?>
+							<?php foreach($areaType['floorPlan'] as $k => $floorPlan):
+								$imagesDetail = explode(',', $floorPlan['imagesDetail'][0]);
+								array_walk($imagesDetail, function(&$item) {
+									$item = Url::to('/store/building-project-images/' . $item);
+								});
+							?>
 								<div class="item-infor">
-									<a href="#tab-show-<?= $counter ?>1" class="clearfix" <?= $k==0 ? 'data-active-first="true" ' : '' ?>data-srcmb="<?= Url::to('/store/building-project-images/' . $floorPlan['images']) ?>"><?= $floorPlan['title'] ?></a>
+									<a data-coord="<?= implode(',', $floorPlan['imagesCoordinate']) ?>" data-images="<?= htmlentities(json_encode($imagesDetail)) ?>" href="#tab-show-<?= $counter ?>1" class="clearfix" <?= $k==0 ? 'data-active-first="true" ' : '' ?>data-srcmb="<?= Url::to('/store/building-project-images/' . $floorPlan['images']) ?>"><?= $floorPlan['title'] ?></a>
 								</div>
 							<?php endforeach; ?>
 						</div>
