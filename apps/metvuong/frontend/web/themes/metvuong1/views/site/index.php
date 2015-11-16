@@ -14,6 +14,25 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 
 $this->title = Yii::t('express','We offer exeptional amenities and renowned white - glove services');
 ?>
+<script>
+    $(document).ready(function(){
+        var urls = {0: false, 1: false, 2: {0: '<?=\yii\helpers\Url::to(['/news/index'])?>', 1: '<?=\yii\helpers\Url::to(['/building-project/index'])?>'}};
+        $(document).on('click', '.btn.btn-default', function(){
+            var idx = $('.search-select.active').index();
+            if(urls[idx]){
+                var classActive = $('.type-search ul li:first span').html();
+                if(classActive == 'Dự án'){
+                    location.href = urls[idx][1];
+                }else if(classActive == 'Tin tức'){
+                    location.href = urls[idx][0];
+                }
+            }else{
+                alert('Coming Soon !');
+            }
+            return false;
+        });
+    });
+</script>
 <div class="o-wrapper clearfix wrap-page-home">
     <header class="clearfix home-page">
         <ul class="pull-right">
