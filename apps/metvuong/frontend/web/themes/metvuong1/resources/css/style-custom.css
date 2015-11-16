@@ -2550,7 +2550,7 @@ button.btn.btn-default,
     margin: 0;
     border-top: 1px solid #D8D8D8;
     background: #E8E8E8;
-    padding: 3px 20px;
+    padding: 7px 20px 5px;
     text-shadow: 1px 1px 1px #fff;
     -webkit-text-shadow: 1px 1px 1px #fff;
     -moz-text-shadow: 1px 1px 1px #fff;
@@ -2597,36 +2597,6 @@ body .wrap-page-home > .container {
 .wrap-search-home #search-kind input {
     height: 47px;
     font-size: 1.5em;
-}
-.wrap-search-home #search-kind button {
-    border-radius: 0;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    -ms-border-radius: 0;
-    top: 1px;
-    right: 1px;
-    background: #5cb249;
-    color: #fff;
-    height:48px;
-    border-radius: 0 3px 3px 0;
-    -webkit-border-radius: 0 3px 3px 0;
-    -moz-border-radius: 0 3px 3px 0;
-    -ms-border-radius: 0 3px 3px 0;
-    padding: 0 35px;/* fallback */
-    background-color: #499C36;
-    background-repeat: repeat-x;/* Safari 4-5, Chrome 1-9 */
-    background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#5cb249), to(#458836));/* Safari 5.1, Chrome 10+ */
-    background: -webkit-linear-gradient(top, #5cb249, #458836);/* Firefox 3.6+ */
-    background: -moz-linear-gradient(top, #5cb249, #458836);/* IE 10 */
-    background: -ms-linear-gradient(top, #5cb249, #458836);/* Opera 11.10+ */
-    background: -o-linear-gradient(top, #5cb249, #458836);
-    text-shadow: 1px 1px 1px #000;
-}
-.wrap-search-home #search-kind button:hover {
-    box-shadow: 0 25px 50px -25px rgba(0, 0, 0, .5) inset;
-    -webkit-box-shadow: 0 25px 50px -25px rgba(0, 0, 0, .5) inset;
-    -moz-box-shadow: 0 25px 50px -25px rgba(0, 0, 0, .5) inset;
-    -o-box-shadow: 0 25px 50px -25px rgba(0, 0, 0, .5) inset;
 }
 .wrap-search-home .search-select:before {
     border-color: rgba(194,225,245,0);
@@ -2820,8 +2790,16 @@ padding-bottom: 5px;
 .wg_title .user-post em {
     margin-right:5px;
 }
-.wrap-page-home .slideUpDown a  i{
+.wrap-page-home .slideUpDown a  i {
     font-size: .8em;
     padding-left: 4px;
     color: #333;
+}
+.insearch-box button.btn.btn-default {
+    top: 10px;
+    right: 15px;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -ms-border-radius: 0;
+    -moz-border-radius: 0;
 }

@@ -245,65 +245,94 @@ $(document).ready(function() {
         return false;
     });
 
-    $('.item-infor > a').on('click',function() {
+    $('.tab-type-1 > a, .tab-type-2 > a').on('click',function(e) {
+        e.preventDefault();
         var _this = $(this),
-            idShowBox = _this.attr('href'),
-            $parentLink = _this.parent(),
-            tempItem;
-        
+            idShowBox = _this.attr('href');
         $('.item-infor > a').removeClass('active');
-        $('a[data-active-first]').removeClass('active');
-        $parentLink.find('>a').addClass('active');
-
-        if( $parentLink.hasClass('has-sub') ) {
-            tempItem = $parentLink;
-            $('.has-sub .show-infor').slideUp('fast');
-            $parentLink.find('>.show-infor').slideDown('fast');
-            
-            //tab phim 3D
-            if( $(idShowBox).find('.phim3d').length ) {
-                var srcVideo = $parentLink.find('a[data-active-first]').attr('rel');
-                $(idShowBox).find('.phim3d').attr('src', srcVideo);
-
-                $parentLink.find('.video-item a').on('click',function() {
-                    var srcVideo = $(this).attr('rel');
-                    $parentLink.find('.video-item a').removeClass('active');
-                    $(this).addClass('active');
-                    $(idShowBox).find('.phim3d').attr('src', srcVideo);
-                    return false;
-                });
-            }
-            //end tab phim 3D
-
-            $parentLink.find('a[data-active-first]:last-child').trigger('click');
-            $parentLink.find('a[data-active-first]').addClass('active');
+        _this.addClass('active');
+        $('.show-infor').slideUp('fast');
+        _this.parent().find('.show-infor').slideDown('fast');
+        showBoxTab(idShowBox);
+        return false;
+    });
+    $('.tab-type-3 > a').on('click',function(e) {
+        e.preventDefault();
+        var _this = $(this),
+            idShowBox = _this.attr('href');
+        $('.item-infor > a').removeClass('active');
+        _this.addClass('active');
+        $('.show-infor').slideUp('fast');
+        _this.parent().find('.show-infor').slideDown('fast');
+        if( _this.parent().find('a[data-active-first]').length > 0 ) {
+            _this.parent().find('a[data-active-first]').addClass('active');
+            _this.parent().find('a[data-active-first]').trigger('click');
         }
-
-        if( !$(idShowBox).hasClass('item-tab') ) {
-            $('.item-detail').hide();
+        showBoxTab(idShowBox);
+        return false;
+    });
+    $('.video-img').on('click',function(e) {
+        e.preventDefault();
+        var srcVideo = $(this).attr('rel');
+        $('.phim3d').attr('src',srcVideo);
+        return false;
+    });
+    $('.tab-type-4 > a').on('click',function(e) {
+        e.preventDefault();
+        var _this = $(this),
+            idShowBox = _this.attr('href');
+        $('.item-infor > a').removeClass('active');
+        _this.addClass('active');
+        $('.show-infor').slideUp('fast');
+        _this.parent().find('.show-infor').slideDown('fast');
+        _this.parent().find('a[data-active-first]').addClass('active');
+        if( _this.parent().find('a[data-active-first]:last-child').data('srcmb') != '') {
+            var idBoxSub = _this.parent().find('a[data-active-first]:last-child').attr('href'),
+                srcImg = _this.parent().find('a[data-active-first]:last-child').data('srcmb'),
+                $imgAdd = $('<img class="img-alone" src="'+srcImg+'" alt="" />');
+            $('.img-alone').remove();
+            $('.item-tab').hide();
+            $(idBoxSub).append($imgAdd);
+            showBoxTab(idBoxSub);
+            $(idBoxSub).closest('.item-detail').show();
+        }else {
+            showBoxTab(idShowBox);    
         }
+        
+        return false;
+    });
+    $('.tab-type-4 a[data-srcmb]').on('click',function() {
+        var srcImg = $(this).data('srcmb'),
+            idBoxSub = $(this).attr('href'),
+            $imgAdd = $('<img class="img-alone" src="'+srcImg+'" alt="" />');
+        $('.img-alone').remove();
+        $('.item-tab').hide();
+        $('.tab-type-4 a[data-srcmb]').removeClass('active');
+        $(this).parent().parent().parent().find('>a').addClass('active');
+        $('.tab-sub-link').removeClass('active');
+        $(this).addClass('active');
+        $(idBoxSub).append($imgAdd);
+        showBoxTab(idBoxSub);   
+        $(idBoxSub).closest('.item-detail').show(); 
+        return false;
+    });
+    $('.tab-sub-link').on('click',function() {
+        var idShowBox = $(this).attr('href');
+        $('.item-tab').hide();
+        showBoxTab(idShowBox);   
+        $(idShowBox).closest('.item-detail').show(); 
+        $(this).closest('.show-infor').find('.active').removeClass('active');
+        $(this).addClass('active');
+        return false; 
+    });
+    function showBoxTab(idShowBox) {
+        $('.item-detail').hide();
         $(idShowBox).css({
             display: 'block',
             visibility: 'hidden'
         });
         $(idShowBox).css('visibility','visible').hide().fadeIn();
-        
-        return false;
-    });
-
-    /*$('.item-infor a[data-srcmb]').on('click', function() {
-        var _this = $(this);
-        if( _this.data('srcmb')) {
-            $('.img-alone').remove();
-            $('.item-tab').hide();
-            var srcImg = _this.data('srcmb'),
-                $imgAdd = $('<img class="img-alone" src="'+srcImg+'" alt="" />'),
-                idBox = _this.attr('href');
-            $(idBox).append($imgAdd).fadeIn();
-        }
-
-        return false;
-    });*/
+    }
     //end page du-an
 
     //start scroll fixed header
@@ -328,29 +357,10 @@ $(document).ready(function() {
         }
     });
     //end scroll fixed header
+
+    $('#btn-search').on('click', function() {
+        alert(1);
+    });
 });
 
 function l(x){console.log(x);}
-
-//start run slide home page
-/*function runSlideUpDown() {
-    insertBeforeAnimate($('.slideshow li:last'), $('.slideshow li:first'));
-    $( ".slideshow li" ).each(function( index ) {
-        if(index < 5){
-            $( this ).show();
-        }else{
-            $( this ).hide();
-        }
-    });
-}
-function insertBeforeAnimate($itemLast, $itemFirst) {
-    $itemLast.css({
-        opacity: 0,
-        display: 'none'
-    });
-    $itemLast.insertBefore($itemFirst);
-    $itemLast.slideDown('fast').animate({
-        opacity: 1
-    },500);
-}*/
-//end run slide home page
