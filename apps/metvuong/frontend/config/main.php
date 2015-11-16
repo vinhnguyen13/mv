@@ -59,6 +59,22 @@ return [
             ],
         ],
         'urlManager' => [
+            'class' => 'yii\web\UrlManager',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'enableStrictParsing' => false,
+            'rules' => [
+                'site/login' => 'user/security/login',
+                'site/signup' => 'user/registration/register',
+                '<cat_id:\d+>-<cat_slug>/<id:\d+>-<slug>' => 'news/view',
+                '<cat_id:\d+>-<slug>' => 'news/list',
+//                '<controller:\w+>/<id:\d+>' => '<controller>/view',
+//                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+//                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+
+            ]
+        ],
+        /*'urlManager' => [
 //            'class' => 'yii\web\UrlManager',
             'class' => 'frontend\components\UrlManager',
             'enablePrettyUrl' => true,
@@ -84,7 +100,7 @@ return [
                 '#^store/news/show#' => '#^store/news/show#',
             ],
 //            'ruleConfig' => ['class' => frontend\components\LanguageUrlRule::className()]
-        ],
+        ],*/
         'i18n' => [
             'translations' => [
                 'user' => [
