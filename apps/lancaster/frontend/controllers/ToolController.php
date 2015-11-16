@@ -94,6 +94,7 @@ class ToolController extends Controller
 
             if($step == 'scenario_1' || $step == "calculation_1"){
                 $post = $app->request->post();
+
                 $net_cashflow = [];
                 $total_project_cost = array_key_exists("total_project_cost", $post) !== false ? $post["total_project_cost"] : 0;
                 $sales_price_w_vat = array_key_exists("sales_price_w_vat", $post) !== false ? $post["sales_price_w_vat"] : 0;
@@ -101,8 +102,10 @@ class ToolController extends Controller
 
                 $outgoing_cashflow = 0;
                 $cumulative_revenue = 0;
+                $revenue = 0;
                 $incoming_cashflow = 0;
-//                    $accumulative_incoming_cashflow = 0;
+                $accumulative_incoming_cashflow = 0;
+                $inc = [];
 
                 for($i = 1; $i <= $post["counter"]; $i++)
                 {
@@ -117,22 +120,24 @@ class ToolController extends Controller
                         $sales_percent = $post["T".$i."_sales"];
 
                     $out_cashflow = (-1 * $cashflow_percent * $total_project_cost)/100;
-                    $revenue = $sales_percent/100 * $sales_price_w_vat * $net_sellable_area;
+                    $outgoing_cashflow = $outgoing_cashflow + round($out_cashflow, 0, PHP_ROUND_HALF_UP);
 
-                    $outgoing_cashflow = $outgoing_cashflow + $out_cashflow;
+                    $revenue = $sales_percent/100 * $sales_price_w_vat * $net_sellable_area;
                     $cumulative_revenue = $cumulative_revenue + $revenue;
 
                     $is_payment = array_key_exists("T".$i."_payment", $post);
+                    $pay = 0;
                     if($is_payment) {
                         foreach ($post["T" . $i . "_payment"] as $v) {
-                            $pay = array_key_exists($v, $post) !== false ? $post[$v] : 0;
-                            $incoming_cashflow = $incoming_cashflow + $pay / 100 * $revenue;
+                            if(array_key_exists($v, $post) !== false )
+                                $pay = $pay + $post[$v];
                         }
-                    }
-//                            $accumulative_incoming_cashflow = $accumulative_incoming_cashflow + $incoming_cashflow;
-                    $total = $outgoing_cashflow + $incoming_cashflow;
-                    $net_cashflow["T".$i] = $total;
 
+                        $incoming_cashflow = $pay / 100 * $cumulative_revenue - $accumulative_incoming_cashflow;
+                    }
+                    $accumulative_incoming_cashflow = $accumulative_incoming_cashflow + $incoming_cashflow;
+                    $total = $outgoing_cashflow + $accumulative_incoming_cashflow;
+                    $net_cashflow["T".$i] = [0 => round($total, 0, PHP_ROUND_HALF_UP), 1 => $outgoing_cashflow, 2 => $incoming_cashflow, 3 => $revenue, 4 => $pay > 0 ? $post["T" . $i . "_payment"] : []];
                 }
 
                 $scenario_1 = ['scenario_1' => $net_cashflow];
@@ -140,7 +145,7 @@ class ToolController extends Controller
 
                 if ($this->writeFile($pathData . $data_file, $data_1)) {
                     if($step == "calculation_1"){
-                        return ['status' => 'Calculation 1 OK', 'file' => $data_1];
+                        return ['status' => 'Calculation 1 OK', 'file' => $data_file, 'scenario' => $net_cashflow];
                     }
                     else
                         return ['status' => 'Scenario 1 OK', 'file' => $data_file];
@@ -165,8 +170,10 @@ class ToolController extends Controller
 
                     $outgoing_cashflow = 0;
                     $cumulative_revenue = 0;
+                    $revenue = 0;
                     $incoming_cashflow = 0;
-//                    $accumulative_incoming_cashflow = 0;
+                    $accumulative_incoming_cashflow = 0;
+                    $inc = [];
 
                     for($i = 1; $i <= $post["counter_2"]; $i++)
                     {
@@ -193,7 +200,9 @@ class ToolController extends Controller
                                 $incoming_cashflow = $incoming_cashflow + $pay / 100 * $revenue;
                             }
                         }
-//                            $accumulative_incoming_cashflow = $accumulative_incoming_cashflow + $incoming_cashflow;
+
+//                        $accumulative_incoming_cashflow = $accumulative_incoming_cashflow + $incoming_cashflow;
+
                         $total = $outgoing_cashflow + $incoming_cashflow;
                         $net_cashflow_2["T".$i] = $total;
 

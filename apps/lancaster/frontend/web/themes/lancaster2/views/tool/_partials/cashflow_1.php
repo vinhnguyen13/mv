@@ -17,6 +17,7 @@ use yii\helpers\Html;
     .payment_schedule .row{
         padding: 5px 0 0 15px !important;
     }
+
 </style>
 <h1>Scenario 1</h1>
 <?php $form = ActiveForm::begin([
@@ -75,32 +76,76 @@ use yii\helpers\Html;
 </div>
 
 <?=Html::hiddenInput('total_project_cost', 2246792608858,['class'=>'form-control form-group total_project_cost']);?>
-<?=Html::hiddenInput('sales_price_w_vat', 36438367,['class'=>'form-control form-group sales_price_w_vat']);?>
+<?=Html::hiddenInput('sales_price_w_vat',  36438367.31032530,['class'=>'form-control form-group sales_price_w_vat']);?>
 <?=Html::hiddenInput('net_sellable_area', 78000,['class'=>'form-control form-group net_sellable_area']);?>
 
 <fieldset id="1">
     <legend>T1</legend>
     <div class="col-lg-3 input-percent">
-        <?=Html::label('Sales (%)');?>
-        <?=Html::input('text','T1_sales',null,['class'=>'form-control form-group sales']);?>
-        <?=Html::label('Outgoing Cashflow (%)');?>
-        <?=Html::input('text','T1_cashflow',null,['class'=>'form-control form-group cashflow']);?>
-    </div>
+        <label>Sales (%)</label>        <input type="text" class="form-control form-group sales" name="T1_sales" value="0">        <label>Outgoing Cashflow (%)</label>        <input type="text" value="12.02" class="form-control form-group cashflow" name="T1_cashflow">    </div>
     <div class="col-lg-4 check-payment">
-        <?php
-        $list = [
-            'pay_1' => 'Reservation Fee', 'pay_2' => '1st Payment (within 1 month)', 'pay_3' => 'Upon Finish Foundation',
-            'pay_4' => '2 months after Foundation', 'pay_5' => '4 months after Foundation', 'pay_6' => '6 months after Foundation',
-            'pay_7' => '8 months after Foundation', 'pay_8' => '10 months after Foundation', 'pay_9' => '12 months after Foundation',
-            'pay_10' => '14 months after Foundation', 'pay_11' => '16 months after Foundation', 'pay_12' => '18 months after Foundation',
-            'pay_13' => '20 months after Foundation', 'pay_14' => 'Building Handover Procedure', 'pay_15' => 'Apartment Ownership Handover',
-        ];
-        echo Html::checkboxList('T1_payment', null, $list);
-        ?>
-    </div>
+        <div><label><input type="checkbox" name="T1_payment[]" value="pay_1" checked="checked"> Reservation Fee</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_2" checked="checked"> 1st Payment (within 1 month)</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_3"> Upon Finish Foundation</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_4"> 2 months after Foundation</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_5"> 4 months after Foundation</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_6"> 6 months after Foundation</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_7"> 8 months after Foundation</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_8"> 10 months after Foundation</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_9"> 12 months after Foundation</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_10"> 14 months after Foundation</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_11"> 16 months after Foundation</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_12"> 18 months after Foundation</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_13"> 20 months after Foundation</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_14"> Building Handover Procedure</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_15"> Apartment Ownership Handover</label></div>    </div>
+</fieldset>
+<fieldset id="2">
+    <legend>T2</legend>
+    <div class="col-lg-3 input-percent">
+        <label>Sales (%)</label>        <input type="text" class="form-control form-group sales" name="T2_sales" value="0">        <label>Outgoing Cashflow (%)</label>        <input type="text" class="form-control form-group cashflow" name="T2_cashflow" value="3.23">    </div>
+    <div class="col-lg-4 check-payment">
+        <div><label><input type="checkbox" name="T2_payment[]" value="pay_1" checked="checked"> Reservation Fee</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_2" checked="checked"> 1st Payment (within 1 month)</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_3" > Upon Finish Foundation</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_4"> 2 months after Foundation</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_5"> 4 months after Foundation</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_6"> 6 months after Foundation</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_7"> 8 months after Foundation</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_8"> 10 months after Foundation</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_9"> 12 months after Foundation</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_10"> 14 months after Foundation</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_11"> 16 months after Foundation</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_12"> 18 months after Foundation</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_13"> 20 months after Foundation</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_14"> Building Handover Procedure</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_15"> Apartment Ownership Handover</label></div>    </div>
+</fieldset>
+<fieldset id="3">
+    <legend>T3</legend>
+    <div class="col-lg-3 input-percent">
+        <label>Sales (%)</label>        <input type="text" class="form-control form-group sales" name="T3_sales" value="0">        <label>Outgoing Cashflow (%)</label>        <input type="text" class="form-control form-group cashflow" name="T3_cashflow" value="1.38">    </div>
+    <div class="col-lg-4 check-payment">
+        <div><label><input type="checkbox" name="T3_payment[]" value="pay_1" checked="checked"> Reservation Fee</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_2" checked="checked"> 1st Payment (within 1 month)</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_3"> Upon Finish Foundation</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_4"> 2 months after Foundation</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_5"> 4 months after Foundation</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_6"> 6 months after Foundation</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_7"> 8 months after Foundation</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_8"> 10 months after Foundation</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_9"> 12 months after Foundation</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_10"> 14 months after Foundation</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_11"> 16 months after Foundation</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_12"> 18 months after Foundation</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_13"> 20 months after Foundation</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_14"> Building Handover Procedure</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_15"> Apartment Ownership Handover</label></div>    </div>
 </fieldset>
 
-<?=Html::hiddenInput('counter', 1,['class'=>'form-control form-group counter']);?>
+<input type="hidden" class="form-control form-group counter" name="counter" value="3">
+
+
 
 <div class="form-group command">
     <div class="col-lg-3">
@@ -115,9 +160,7 @@ use yii\helpers\Html;
 <?php ActiveForm::end(); ?>
 
 <div class="cash_result" style="clear: both; padding-top: 20px;">
-    <div id="w0">
-        <?=$this->render('cashflow_result');?>
-    </div>
+    <?=$this->render('cashflow_result');?>
 </div>
 
 <script>
@@ -128,7 +171,8 @@ use yii\helpers\Html;
         }
     });
 
-    $(".cash_result #w0").hide();
+//    $(".cash_result #scenario1").hide();
+
 //    $(".payment_schedule").click(function(){
 //        $(".payment_schedule .row").toggle();
 //    });
@@ -143,48 +187,7 @@ use yii\helpers\Html;
         $(".mainConfigSetParams").find(".nav-tabs a[href='#scenario_2']").trigger("click");
     });
 
-//    var total_project_cost = $(".total_project_cost").val();
-//    var sales_price_w_vat = $(".sales_price_w_vat").val();
-//    var net_sellable_area = $(".net_sellable_area").val();
-
-//    var outgoing_cashflow = 0,
-//        cumulative_revenue = 0,
-//        accumulative_incoming_cashflow = 0;
-//    $(document).on("change",'#scenario_1 .cashflow',function() {
-//        var fieldset = $(this).closest('fieldset');
-//        console.log($('.total_project_cost').val());
-//
-//        var out_cashflow = (-1 * parseFloat(fieldset.find('.cashflow').val()) * total_project_cost)/100;
-//        var revenue = parseFloat(fieldset.find('.sales').val()/100) * sales_price_w_vat * net_sellable_area;
-//
-//        var total = 0;
-//        var hid_cumulative_revenue = parseFloat(fieldset.find('.hid_cumulative_revenue').val());
-//        var hid_outgoing_cashflow = parseFloat(fieldset.find('.hid_outgoing_cashflow').val());
-//
-//        fieldset.find('.hid_cumulative_revenue').val(cumulative_revenue);
-//        fieldset.find('.hid_outgoing_cashflow').val(outgoing_cashflow);
-//
-//        outgoing_cashflow = outgoing_cashflow + out_cashflow;
-//        cumulative_revenue = cumulative_revenue + revenue;
-//
-//        var incoming_cashflow = 0;
-//        fieldset.find('input[type=checkbox]').each(function() {
-//            if ($(this).is(":checked")) {
-//                var name = 'input[name=pay_'+ $(this).attr('value')+']';
-//                var value = revenue * parseFloat($(name).val()/100);
-//                incoming_cashflow = incoming_cashflow + value;
-//            }
-//        });
-//
-//        accumulative_incoming_cashflow = accumulative_incoming_cashflow + incoming_cashflow;
-//        total = outgoing_cashflow + accumulative_incoming_cashflow;
-//
-//        total = Math.round(total);
-//        fieldset.find('input.hid_net_accumulative_cashflow').val(total);
-//        fieldset.find('input.hid_net_accumulative_cashflow').autoNumeric('init', {aPad: false});
-//    });
-
-    var counter = 1;
+    var counter = 3;
 //    var flash='';
     $("#scenario_1 .add").click(function(){
         var fieldset = $('form[id^="p_scenario_1"] fieldset:last');
@@ -197,6 +200,13 @@ use yii\helpers\Html;
         f.insertAfter(fieldset);
 
         $("input.counter").val(counter);
+//        if($(".counter").val() > 1){
+//            f.find(".delete").show();
+//        }
+//        else{
+//            f.find(".delete").hide();
+//        }
+
     });
 
     $("#scenario_1 .calculation").click(function() {
@@ -208,8 +218,12 @@ use yii\helpers\Html;
             success: function(data) {
 //                $(".cash_result #w0").show();
                 console.log(data.file);
-            },
+                $.pjax.reload({container:"#scenario1"});  //Reload GridView
+                $(".cash_result #scenario1").show();
+            }
         });
     });
+
+
 
 </script>

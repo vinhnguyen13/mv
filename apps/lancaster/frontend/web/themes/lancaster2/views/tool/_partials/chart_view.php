@@ -3,7 +3,7 @@ $scenario_1 = empty($data["scenario_1"]) == false ? $data["scenario_1"] : [];
 $data_1 = [];
 if(!empty($scenario_1)){
     foreach($scenario_1 as $key => $value){
-        $data_1[] = $value;
+        $data_1[] = $value[0];
     }
 }
 
@@ -11,7 +11,7 @@ $scenario_2 = empty($data["scenario_2"]) == false ? $data["scenario_2"] : [];
 $data_2 = [];
 if(!empty($scenario_2)) {
     foreach ($scenario_2 as $key => $value) {
-        $data_2[] = $value;
+        $data_2[] = $value[0];
     }
 }
 $categories = array_merge($scenario_1, $scenario_2);
@@ -20,7 +20,7 @@ $months = array_keys($categories);
 <div class="row main_content">
     <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     <div class="container">
-        <h2 class="text-center">Cash Flow Data </h2>
+        <h2 class="text-center"><?=strtoupper('Cash flow data')?> </h2>
         <p></p>
         <div class="table-responsive"">
             <table class="table table-bordered">
@@ -29,7 +29,9 @@ $months = array_keys($categories);
                     <th>#</th>
                     <?php
                     foreach($data as $k => $d){
-                        echo "<th>".strtoupper($k)."</th>";
+                        if(!empty($k)) {
+                            echo "<th>" . strtoupper($k) . "</th>";
+                        }
                     }
                     ?>
                 </tr>
@@ -41,8 +43,25 @@ $months = array_keys($categories);
                 ?>
                 <tr>
                     <th><?=$months[$i] ?></th>
-                    <td><?=empty($data_1[$i]) == false ? number_format($data_1[$i] , 2 , "." , "," ) : 0 ?></td>
-                    <td><?=empty($data_2[$i]) == false ? number_format($data_2[$i] , 2 , "." , "," ) : 0 ?></td>
+                    <?php
+                    if(count($scenario_1) > 0) {
+                        if (empty($data_1[$i]) == false) {
+                            ?>
+                            <td><?= number_format($data_1[$i], 0, ".", ",") ?></td>
+                        <?php } else { ?>
+                            <td></td>
+                        <?php }
+                    }?>
+
+                    <?php
+                    if(count($scenario_2) > 0) {
+                        if (empty($data_2[$i]) == false) {
+                            ?>
+                            <td><?= number_format($data_2[$i], 0, ".", ",") ?></td>
+                        <?php } else { ?>
+                            <td></td>
+                        <?php }
+                    }?>
                 </tr>
                 <?php
                 } ?>

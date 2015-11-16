@@ -7,6 +7,7 @@
  */
 use yii\helpers\Html;
 use yii\helpers\Json;
+use yii\widgets\Pjax;
 
 $filePath = Yii::$app->view->theme->basePath . '/resources/chart/data.json';
 $handle = fopen($filePath, 'r') or die('Cannot open file:  '.$filePath);
@@ -21,7 +22,7 @@ foreach($scenario_1 as $key => $value) {
     $arr_data[$key] = [
         'title' => $key,
 //        'net_cashflow' => $value * 10 / 100,
-        'net_accumulative_cashflow' => number_format($value, 2 , "." , "," ),
+        'net_accumulative_cashflow' => number_format($value[0], 0 , "." , "," ),
         'ls_vay' => '10%',
     ];
 }
@@ -62,8 +63,10 @@ $provider = new \yii\data\ArrayDataProvider([
         'pageSize' => 10,
     ],
 ]);
+?>
 
-echo \yii\grid\GridView::widget([
+<?php Pjax::begin(['id' => 'scenario1']) ?>
+<?=\yii\grid\GridView::widget([
     'dataProvider' => $provider,
     'columns' => [
         ['class' => 'yii\grid\SerialColumn'],
@@ -72,5 +75,5 @@ echo \yii\grid\GridView::widget([
         'net_accumulative_cashflow',
         'ls_vay',
     ],
-]);
-?>
+]);?>
+<?php Pjax::end() ?>

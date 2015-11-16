@@ -68,29 +68,75 @@ use yii\widgets\ActiveForm;
 <?=Html::hiddenInput('sales_price_w_vat', 36438367,['class'=>'form-control form-group sales_price_w_vat']);?>
 <?=Html::hiddenInput('net_sellable_area', 78000,['class'=>'form-control form-group net_sellable_area']);?>
 
+
+
 <fieldset id="1">
     <legend>T1</legend>
     <div class="col-lg-3 input-percent">
-        <?=Html::label('Sales (%)');?>
-        <?=Html::input('text','T1_sales',null,['class'=>'form-control form-group sales']);?>
-        <?=Html::label('Outgoing Cashflow (%)');?>
-        <?=Html::input('text','T1_cashflow',null,['class'=>'form-control form-group cashflow']);?>
-    </div>
+        <label>Sales (%)</label>        <input type="text" class="form-control form-group sales" name="T1_sales" value="0">        <label>Outgoing Cashflow (%)</label>        <input type="text" value="12.02" class="form-control form-group cashflow" name="T1_cashflow">    </div>
     <div class="col-lg-4 check-payment">
-        <?php
-        $list = [
-            'pay_1' => 'Reservation Fee', 'pay_2' => '1st Payment (within 1 month)', 'pay_3' => 'Upon Finish Foundation',
-            'pay_4' => '2 months after Foundation', 'pay_5' => '4 months after Foundation', 'pay_6' => '6 months after Foundation',
-            'pay_7' => '8 months after Foundation', 'pay_8' => '10 months after Foundation', 'pay_9' => '12 months after Foundation',
-            'pay_10' => '14 months after Foundation', 'pay_11' => '16 months after Foundation', 'pay_12' => '18 months after Foundation',
-            'pay_13' => '20 months after Foundation', 'pay_14' => 'Building Handover Procedure', 'pay_15' => 'Apartment Ownership Handover',
-        ];
-        echo Html::checkboxList('T1_payment', null, $list);
-        ?>
-    </div>
+        <div><label><input type="checkbox" name="T1_payment[]" value="pay_1" checked="checked"> Reservation Fee</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_2" checked="checked"> 1st Payment (within 1 month)</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_3"> Upon Finish Foundation</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_4"> 2 months after Foundation</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_5"> 4 months after Foundation</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_6"> 6 months after Foundation</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_7"> 8 months after Foundation</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_8"> 10 months after Foundation</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_9"> 12 months after Foundation</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_10"> 14 months after Foundation</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_11"> 16 months after Foundation</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_12"> 18 months after Foundation</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_13"> 20 months after Foundation</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_14"> Building Handover Procedure</label>
+            <label><input type="checkbox" name="T1_payment[]" value="pay_15"> Apartment Ownership Handover</label></div>    </div>
+</fieldset>
+<fieldset id="2">
+    <legend>T2</legend>
+    <div class="col-lg-3 input-percent">
+        <label>Sales (%)</label>        <input type="text" class="form-control form-group sales" name="T2_sales" value="0">        <label>Outgoing Cashflow (%)</label>        <input type="text" class="form-control form-group cashflow" name="T2_cashflow" value="3.23">    </div>
+    <div class="col-lg-4 check-payment">
+        <div><label><input type="checkbox" name="T2_payment[]" value="pay_1" checked="checked"> Reservation Fee</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_2" checked="checked"> 1st Payment (within 1 month)</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_3" > Upon Finish Foundation</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_4"> 2 months after Foundation</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_5"> 4 months after Foundation</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_6"> 6 months after Foundation</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_7"> 8 months after Foundation</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_8"> 10 months after Foundation</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_9"> 12 months after Foundation</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_10"> 14 months after Foundation</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_11"> 16 months after Foundation</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_12"> 18 months after Foundation</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_13"> 20 months after Foundation</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_14"> Building Handover Procedure</label>
+            <label><input type="checkbox" name="T2_payment[]" value="pay_15"> Apartment Ownership Handover</label></div>    </div>
+</fieldset>
+<fieldset id="3">
+    <legend>T3</legend>
+    <div class="col-lg-3 input-percent">
+        <label>Sales (%)</label>        <input type="text" class="form-control form-group sales" name="T3_sales" value="0">        <label>Outgoing Cashflow (%)</label>        <input type="text" class="form-control form-group cashflow" name="T3_cashflow" value="1.38">    </div>
+    <div class="col-lg-4 check-payment">
+        <div><label><input type="checkbox" name="T3_payment[]" value="pay_1" checked="checked"> Reservation Fee</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_2" checked="checked"> 1st Payment (within 1 month)</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_3"> Upon Finish Foundation</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_4"> 2 months after Foundation</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_5"> 4 months after Foundation</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_6"> 6 months after Foundation</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_7"> 8 months after Foundation</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_8"> 10 months after Foundation</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_9"> 12 months after Foundation</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_10"> 14 months after Foundation</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_11"> 16 months after Foundation</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_12"> 18 months after Foundation</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_13"> 20 months after Foundation</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_14"> Building Handover Procedure</label>
+            <label><input type="checkbox" name="T3_payment[]" value="pay_15"> Apartment Ownership Handover</label></div>    </div>
 </fieldset>
 
-<?=Html::hiddenInput('counter_2', 1,['class'=>'form-control form-group counter_2']);?>
+<input type="hidden" class="form-control form-group counter" name="counter" value="3">
+
+
 
 <div class="form-group command">
     <div class="col-lg-3">
