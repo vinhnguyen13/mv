@@ -6,6 +6,7 @@ use lajax\translatemanager\models\Language;
 use common\widgets\FileUploadUI;
 use yii\helpers\Url;
 use common\widgets\CKEditor;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $model vsoft\building\models\LcBuilding */
@@ -13,6 +14,7 @@ use common\widgets\CKEditor;
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 
 $this->registerJsFile(Yii::getAlias('@web') . '/js/building.js', ['depends' => ['yii\web\YiiAsset']]);
+$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=initMap', ['depends' => ['yii\web\YiiAsset'], 'defer'=>'', 'async'=>'']);
 
 $languages = Language::getLanguageNames(true);
 
@@ -116,6 +118,26 @@ $loop = $model::sectionArray();
 			</div>
 		</div>
     <?php endforeach; ?>
+    
+    <div class="panel panel-default">
+    	<div class="panel-heading">Neighborhood</div>
+    	<div class="panel-body">
+    		<ul class="nav nav-tabs">
+				<li class="active"><a data-toggle="tab" href="#Neighborhood-Restaurants">Restaurants</a></li>
+				<li><a data-toggle="tab" href="#Neighborhood-Markets">Markets</a></li>
+				<li><a data-toggle="tab" href="#Neighborhood-Shopping">Shopping</a></li>
+				<li><a data-toggle="tab" href="#Neighborhood-Entertaiment">Entertaiment</a></li>
+				<li><a data-toggle="tab" href="#Neighborhood-Parks">Parks</a></li>
+			</ul>
+			<div class="tab-content">
+				<div id="Neighborhood-Restaurants" class="tab-pane fade in active">Restaurants</div>
+				<div id="Neighborhood-Markets" class="tab-pane fade in">Neighborhood-Markets</div>
+				<div id="Neighborhood-Shopping" class="tab-pane fade in">Neighborhood-Shopping</div>
+				<div id="Neighborhood-Entertaiment" class="tab-pane fade in">Neighborhood-Entertaiment</div>
+				<div id="Neighborhood-Parks" class="tab-pane fade in">Neighborhood-Parks</div>
+			</div>
+    	</div>
+    </div>
     
     <?= $form->field($model, 'floor')->textInput(['maxlength' => 3]) ?>
 

@@ -31,3 +31,7 @@ function toggleLanguageFields($lang) {
 		}
 	});
 }
+
+function initMap() {
+	
+}
