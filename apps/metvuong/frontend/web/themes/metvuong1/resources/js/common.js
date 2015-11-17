@@ -292,36 +292,73 @@ $(document).ready(function() {
         if( _this.parent().find('a[data-active-first]:last-child').data('srcmb') != '') {
             var idBoxSub = _this.parent().find('a[data-active-first]:last-child').attr('href'),
                 srcImg = _this.parent().find('a[data-active-first]:last-child').data('srcmb'),
-                $imgAdd = $('<img class="img-alone" src="'+srcImg+'" alt="" />');
+                $imgAdd = $('<img class="img-alone" src="'+srcImg+'" alt="" usemap="#map" />'),
+                arrCoord = _this.parent().find('a[data-active-first]:last-child').data('coord'),
+                arrImg = _this.parent().find('a[data-active-first]:last-child').data('images'),
+                mapRender = $('<map name="map" class="map" id="map"></map>');
+
+            $(idBoxSub).html('');
             $('.img-alone').remove();
-            $('.item-tab').hide();
+            $('.item-tab').hide().html('');
             $(idBoxSub).append($imgAdd);
+            for( var i = 0; i < arrCoord.length; i++ ) {
+                var typeArea = '';
+                if( arrCoord[i].length <= 4 ) {
+                    typeArea = 'rect';
+                }else {
+                    typeArea = 'poly';
+                }
+                var areaItem = $('<area shape="'+typeArea+'" id="area'+(i+1)+'" class="group1 area" coords="'+arrCoord[i].toString()+'" href="'+arrImg[i]+'" alt="" title="">')
+                mapRender.append(areaItem);
+            }
+            $(idBoxSub).append(mapRender);
             showBoxTab(idBoxSub);
             $(idBoxSub).closest('.item-detail').show();
         }else {
             showBoxTab(idShowBox);    
         }
-        
+        $('.img-alone').maphilight();
+        $(".group1").colorbox({className:'boxShowMatBang'});
         return false;
     });
     $('.tab-type-4 a[data-srcmb]').on('click',function() {
         var srcImg = $(this).data('srcmb'),
             idBoxSub = $(this).attr('href'),
-            $imgAdd = $('<img class="img-alone" src="'+srcImg+'" alt="" />');
+            $imgAdd = $('<img class="img-alone" src="'+srcImg+'" alt="" usemap="#map" />'),
+            arrCoord = $(this).data('coord'),
+            arrImg = $(this).data('images'),
+            mapRender = $('<map name="map" class="map" id="map"></map>');
+
+        $(idBoxSub).html('');
         $('.img-alone').remove();
-        $('.item-tab').hide();
+        $('.item-tab').hide().html('');
         $('.tab-type-4 a[data-srcmb]').removeClass('active');
         $(this).parent().parent().parent().find('>a').addClass('active');
         $('.tab-sub-link').removeClass('active');
         $(this).addClass('active');
         $(idBoxSub).append($imgAdd);
-        showBoxTab(idBoxSub);   
+
+        for( var i = 0; i < arrCoord.length; i++ ) {
+            var typeArea = '';
+            if( arrCoord[i].length <= 4 ) {
+                typeArea = 'rect';
+            }else {
+                typeArea = 'poly';
+            }
+            var areaItem = $('<area shape="'+typeArea+'" id="area'+(i+1)+'" class="group1 area" coords="'+arrCoord[i].toString()+'" href="'+arrImg[i]+'" alt="" title="">')
+            mapRender.append(areaItem);
+        }
+        $(idBoxSub).append(mapRender);
+
+        showBoxTab(idBoxSub);
         $(idBoxSub).closest('.item-detail').show(); 
+        $('.img-alone').maphilight();
+        $(".group1").colorbox({className:'boxShowMatBang'});
         return false;
     });
     $('.tab-sub-link').on('click',function() {
         var idShowBox = $(this).attr('href');
-        $('.item-tab').hide();
+        $('.item-tab').hide().html('');
         showBoxTab(idShowBox);   
         $(idShowBox).closest('.item-detail').show(); 
         $(this).closest('.show-infor').find('.active').removeClass('active');

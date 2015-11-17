@@ -2,7 +2,7 @@ var objMap = [],
 	objItem = {
 		id_area : '',
 		coordinates : 0,
-		urlImage : '',
+		//urlImage : '',
 		nameImage : ''
 	}, 
 	arrCoordinates = [],
@@ -256,13 +256,49 @@ var buildingProject = {
 					href: popup,
 					title: false,
 					onOpen: function() {
+						var imgReGet = popup.find('.fileupload-buttonbar input[type=hidden]').val().split(',');
 						arrCoordinates = [];
 						var idMap = popup.find('.mapContainer').data('mapId');
-						countItemMap = idMap;
-						//$('#mapContainer-'+countItemMap+')find('h3')
+						countItemMap = idMap,
+						strArray = popup.find('#valCoordinate-'+idMap).val();
+						
+						if( strArray != '' ) {
+							var arrInput = JSON.parse(strArray),
+								typeArea = '';
+							popup.find('.map').html('');
+							for( var i = 0; i < arrInput.length; i++ ) {
+								if( arrInput[i].length <= 4 ) {
+									typeArea = 'rect';
+								}else {
+									typeArea = 'poly';
+								}
+								var areaItem = $('<area shape="'+typeArea+'" id="area'+idMap+''+(i+1)+'" class="area" coords="'+arrInput[i].toString()+'" href="#" alt="" title="">')
+								popup.find('.map').append(areaItem);
+								objItem = {
+									coordinates: arrInput[i].toString(),
+									id_area: 'area'+idMap+''+(i+1)+'',
+									nameImage: imgReGet[i]
+								};
+								objMap.push(objItem);
+							}
+							hightlight(idMap);
+							counter = arrInput.length;
+						}
+					},
+					onComplete: function() {
+						var idMap = popup.find('.mapContainer').data('mapId');
+						var wImgCanvas = $('#imgmapMainImage-'+idMap).outerWidth(),
+							hImgCanvas = $('#imgmapMainImage-'+idMap).outerHeight();
+						popup.find('.main-map canvas').css({
+							width: wImgCanvas+'px',
+							height: hImgCanvas+'px'
+						});
+
 					},
 					onClosed: function() {
 						objItem = {};
+						objMap = [];
+						counter = 0;
 						countItemMap = $('.mapContainer').length;
 					}
 				});
@@ -285,7 +321,8 @@ var buildingProject = {
 
 			$('#clearStyleButtons-'+countItemMap+' .clearCurrentButton').click(function() {
 				$('#coordsText-'+countItemMap).val('');
-				
+				counter = $('#mapContainer-'+countItemMap).find('map area').length - 1;
+
 				var idArea = $('#mapContainer-'+countItemMap).find('area:last').attr('id');
 				for( var i = 0; i < objMap.length; i++ ) {
 					if( idArea === objMap[i].id_area ) {
@@ -341,14 +378,14 @@ var buildingProject = {
 			//console.log('upload');
 			var flag = true;
 			for( var i = 0; i < objMap.length; i++ ) {
-				if( objMap[i].id_area === 'area'+counter ) {
+				if( objMap[i].id_area === 'area'+countItemMap+''+counter ) {
 					flag = false;
 				}
 			}
 			if( flag && objItem.coordinates != 0 ) {
 				var fileResponse = data.getFilesFromResponse(data)[0];
-				objItem.id_area = 'area'+counter;
-				objItem.urlImage = fileResponse.url;
+				objItem.id_area = 'area'+countItemMap+''+counter;
+				//objItem.urlImage = fileResponse.url;
 				objItem.nameImage = fileResponse.name;
 				objMap.push(objItem);
 				var arrCoordinatesItem = objItem.coordinates.split(',');
@@ -412,7 +449,7 @@ function hightlight(countItemMap) {
 	});
 }
 
-var counter = 1;
+var counter = 0;
 var coordsLength = 0;
 var textarea = '';
 var getValueCoord = 0;
@@ -441,13 +478,13 @@ function setCoordinates(e, status, countItemMap) {
 	if( status )
 		$('#coordsText-'+countItemMap).val(value);
 	
-	if( $('#area'+counter).length != 0 ) {
-		$('.area#area'+counter).remove();
+	if( $('#area'+countItemMap+''+counter).length != 0 ) {
+		$('.area#area'+countItemMap+''+counter).remove();
 	}
 	var countKomma = value.split(',').length;
 	var shape = (countKomma <= 4) ? 'rect' : 'poly';
 	if(countKomma >= 4) {
-		var html = '<area shape="'+shape+'" id="area'+counter+'" class="area" coords="'+value+'" href="#" alt="" title="">';
+		var html = '<area shape="'+shape+'" id="area'+countItemMap+''+counter+'" class="area" coords="'+value+'" href="#" alt="" title="">';
 		$('#map-'+countItemMap).append(html);
 	}
 	

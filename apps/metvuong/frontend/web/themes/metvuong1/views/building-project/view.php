@@ -4,7 +4,8 @@ use yii\helpers\Url;
 use vsoft\buildingProject\models\BuildingProject;
 
 	$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/owl.carousel.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
-	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/video.js', ['depends' => ['yii\web\YiiAsset']]);
+	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/jquery.maphilight.js', ['depends' => ['yii\web\YiiAsset']]);
+	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/jquery.colorbox-min.js', ['depends' => ['yii\web\YiiAsset']]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/owl.carousel.js', ['depends' => ['yii\web\YiiAsset']]);
 	
 $script = <<<EOD
@@ -88,7 +89,7 @@ EOD;
 $areaTypes = BuildingProject::getAreaTypes ();
 ?>
 <div class="row">
-	<div class="col-xs-6 pdR-0">
+	<div class="col-xs-7 pdR-0">
 		<div class="wrap-detail-duan">
 			<div id="tab-show-1" class="item-detail item-tqda">
 				<div id="sync1" class="owl-carousel custom-slide">
@@ -142,7 +143,7 @@ $areaTypes = BuildingProject::getAreaTypes ();
 		    <?php endif; endforeach; ?>
 		</div>
 	</div>
-	<div class="col-xs-6 pdL-10">
+	<div class="col-xs-5 pdL-10">
 		<div class="header-duan clearfix">
 			<a href="#" class="logo-duan"><img src="<?= Url::to('/store/building-project-images/' . $model->bpLogo) ?>" alt=""></a>
 			<h2><?= $model->title ?></h2>
