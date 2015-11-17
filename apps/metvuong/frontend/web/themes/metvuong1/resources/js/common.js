@@ -416,13 +416,7 @@ function animateSearch() {
         leftLogo = $('.logo-home').position().left,
         leftInputSearch = $('.box-search-header').position().left;
 
-    setTimeout(function() {
-        $('.wrap-search-home .logo-home').addClass('ani-logo');
-        $('.box-search-header').addClass('ani-search');
-        setTimeout(function() {
-            $('header').addClass('border-shadow');
-        },250);
-    },2000);
+
 }
 
 function l(x){console.log(x);}

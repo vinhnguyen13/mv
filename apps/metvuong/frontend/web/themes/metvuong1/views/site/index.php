@@ -21,11 +21,19 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
             var idx = $('.search-select.active').index();
             if(urls[idx]){
                 var classActive = $('.type-search ul li:first span').html();
-                if(classActive == 'Dự án'){
-                    location.href = urls[idx][1];
-                }else if(classActive == 'Tin tức'){
-                    location.href = urls[idx][0];
-                }
+                setTimeout(function() {
+                    $('.wrap-search-home .logo-home').addClass('ani-logo');
+                    $('.box-search-header').addClass('ani-search');
+                    setTimeout(function() {
+                        $('header').addClass('border-shadow');
+                        if(classActive == 'Dự án'){
+                            location.href = urls[idx][1];
+                        }else if(classActive == 'Tin tức'){
+                            location.href = urls[idx][0];
+                        }
+                    },500);
+                },500);
+
             }else{
                 alert('Coming Soon !');
             }
@@ -34,19 +42,16 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
     });
 </script>
 <div class="o-wrapper clearfix wrap-page-home">
-    <header class="clearfix home-page">
-        <ul class="pull-right">
-            <li><a href="#"><em class="icon-plus"></em>Đăng tin</a></li>
-            <li><a href="#"><em class="icon-user"></em>Đăng ký</a></li>
-            <li><a href="#"><em class="icon-key"></em>Đăng nhập</a></li>
-            <li class="lang-icon icon-en"><a href="#"></a></li>
-            <li class="lang-icon icon-vi"><a href="#"></a></li>
-        </ul>
-    </header>
-    <div class="container">
-        <div class="wrap-search-home">
-            <span class="helper-center"></span>
-            <div class="insearch-box">
+    <header class="home-page cd-secondary-nav">
+        <div class="container clearfix">
+            <ul class="pull-right menu-home">
+                <li><a href="#"><em class="icon-plus"></em>Đăng tin</a></li>
+                <li><a href="#"><em class="icon-user"></em>Đăng ký</a></li>
+                <li><a href="#"><em class="icon-key"></em>Đăng nhập</a></li>
+                <li class="lang-icon icon-en"><a href="#"></a></li>
+                <li class="lang-icon icon-vi"><a href="#"></a></li>
+            </ul>
+            <div class="wrap-search-home">
                 <div class="bgcover logo-home" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png);"><a href="#"></a></div>
                 <div class="box-search-header clearfix">
                     <div class="pull-left">
@@ -213,7 +218,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-default">SEARCH</button>
+                            <button id="btn-search" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                         </form>
                         <div class="pull-left text-right mgT-10 mgL-15">
                             <div class="search-select active"><a href="#" data-placeholder="Tìm Kiếm..." rel="#dd-search"><em class="fa fa-home"></em><em class="fa fa-search"></em><span>Mua Bán</span></a></div>
@@ -224,6 +229,9 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                 </div>
             </div>
         </div>
+    </header>
+    <div class="container">
+
     </div>
     <footer class="clearfix">
         <div class="pull-left copyright">
