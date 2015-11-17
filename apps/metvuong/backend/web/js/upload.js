@@ -29,7 +29,7 @@ var customFileUpload = {
 	},
 	fileuploaddestroy: function(event, data, ins) {
 		if(data.context.data('delete-later')) {
-			var name = data.context.find('.name').text().trim();
+			var name = data.context.find('> .name').text().trim();
 			
 			if($('#delete-later').val()) {
 				$('#delete-later').val($('#delete-later').val() + ',' + name);
@@ -44,7 +44,7 @@ var customFileUpload = {
 		
 		if(images.length > 0) {
 			images.each(function(){
-				value.push($(this).find('.name').text().trim());
+				value.push($(this).find('> .name').text().trim());
 			});
 		}
 
