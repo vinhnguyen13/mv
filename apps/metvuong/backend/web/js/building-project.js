@@ -190,7 +190,7 @@ var buildingProject = {
 				buildingProject.customColorbox($(event.target).find('>.files >li >.preview >a:not(.cboxElement)'), true);
 			}, 210);
 		} else {
-			
+			$(ins).data('images-detail', '').removeAttr('images-coordinate');
 		}
 	},
 	customColorbox: function(els, open) {
