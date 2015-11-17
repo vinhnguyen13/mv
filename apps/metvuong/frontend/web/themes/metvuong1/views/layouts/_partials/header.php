@@ -1,3 +1,4 @@
+<div class="wrap-page-home">
 <header class="home-page cd-secondary-nav border-shadow">
     <div class="container clearfix">
         <ul class="pull-right menu-home">
@@ -8,8 +9,8 @@
             <li class="lang-icon icon-vi"><a href="#"></a></li>
         </ul>
         <div class="wrap-search-home">
-            <div class="bgcover logo-home ani-logo" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png);"><a href="#"></a></div>
-            <div class="box-search-header ani-search clearfix">
+            <div class="bgcover logo-home ani-logo" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png);"><a href="<?=\yii\helpers\Url::home()?>"></a></div>
+            <div class="box-search-header clearfix ani-search">
                 <div class="pull-left">
                     <form class="form-inline pull-left" action="" id="search-kind">
                         <div class="form-group">
@@ -186,3 +187,4 @@
         </div>
     </div>
 </header>
+</div>
