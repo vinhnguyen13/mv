@@ -16,15 +16,20 @@ if(filesize($filePath) > 0) {
     $fileContent = fread($handle, filesize($filePath));
     $data = Json::decode($fileContent, true);
 }
+
+//exit();
 $arr_data = [];
-$scenario_1 = $data["scenario_1"];
-foreach($scenario_1 as $key => $value) {
-    $arr_data[$key] = [
-        'title' => $key,
+$checkData = array_key_exists("scenario_".$scenario, $data);
+if($checkData) {
+    $scenario_data = $data["scenario_" . $scenario];
+    foreach ($scenario_data as $key => $value) {
+        $arr_data[$key] = [
+            'title' => $key,
 //        'net_cashflow' => $value * 10 / 100,
-        'net_accumulative_cashflow' => number_format($value[0], 0 , "." , "," ),
-        'ls_vay' => '10%',
-    ];
+            'net_accumulative_cashflow' => number_format($value[0], 0, ".", ","),
+            'ls_vay' => '10%',
+        ];
+    }
 }
 //$yourArray = [
 //    0 => [
@@ -57,15 +62,15 @@ foreach($scenario_1 as $key => $value) {
 $provider = new \yii\data\ArrayDataProvider([
     'allModels' => $arr_data,
     'sort' => [
-        'attributes' => ['id', 'username', 'email'],
+        'attributes' => ['title','net_accumulative_cashflow'],
     ],
     'pagination' => [
-        'pageSize' => 10,
+        'pageSize' => 15,
     ],
 ]);
 ?>
 
-<?php Pjax::begin(['id' => 'scenario1']) ?>
+<?php Pjax::begin(['id' => 'scenario'.$scenario]) ?>
 <?=\yii\grid\GridView::widget([
     'dataProvider' => $provider,
     'columns' => [

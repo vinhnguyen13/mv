@@ -13,13 +13,13 @@ $items[] = [
 	'options' => ['id' => 'developmentCostPlan'],
 	'content'=>$this->render('_partials/development_cost_plan')
 ];
-$items = null;
+//$items = null;
 $items[] = [
 	'label'=>'Profit Margin Calculation',
 	'options' => ['id' => 'profitMarginCalculation'],
 	'content'=>$this->render('_partials/profit_margin_calculation')
 ];
-$items = null;
+//$items = null;
 $items[] = [
 	'label'=>'Cashflow (Scenario 1)',
 	'options' => ['id' => 'scenario_1'],

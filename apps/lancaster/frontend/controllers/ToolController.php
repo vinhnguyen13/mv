@@ -91,8 +91,10 @@ class ToolController extends Controller
             $pathData = Yii::$app->view->theme->basePath.'\\resources\\chart\\';
 
             $data_file = 'data.json';
+            if($step == 'profitMarginCalculation'){
 
-            if($step == 'scenario_1' || $step == "calculation_1"){
+            }
+            else if($step == 'scenario_1' || $step == "calculation_1"){
                 $post = $app->request->post();
 
                 $net_cashflow = [];
@@ -102,10 +104,9 @@ class ToolController extends Controller
 
                 $outgoing_cashflow = 0;
                 $cumulative_revenue = 0;
-                $revenue = 0;
+
                 $incoming_cashflow = 0;
                 $accumulative_incoming_cashflow = 0;
-                $inc = [];
 
                 for($i = 1; $i <= $post["counter"]; $i++)
                 {
@@ -137,7 +138,7 @@ class ToolController extends Controller
                     }
                     $accumulative_incoming_cashflow = $accumulative_incoming_cashflow + $incoming_cashflow;
                     $total = $outgoing_cashflow + $accumulative_incoming_cashflow;
-                    $net_cashflow["T".$i] = [0 => round($total, 0, PHP_ROUND_HALF_UP), 1 => $outgoing_cashflow, 2 => $incoming_cashflow, 3 => $revenue, 4 => $pay > 0 ? $post["T" . $i . "_payment"] : []];
+                    $net_cashflow["T".$i] = [0 => round($total, 0, PHP_ROUND_HALF_UP), 1 => $sales_percent, 2 => $cashflow_percent, 3 => $pay > 0 ? $post["T" . $i . "_payment"] : []];
                 }
 
                 $scenario_1 = ['scenario_1' => $net_cashflow];
@@ -170,10 +171,9 @@ class ToolController extends Controller
 
                     $outgoing_cashflow = 0;
                     $cumulative_revenue = 0;
-                    $revenue = 0;
+
                     $incoming_cashflow = 0;
                     $accumulative_incoming_cashflow = 0;
-                    $inc = [];
 
                     for($i = 1; $i <= $post["counter_2"]; $i++)
                     {
@@ -188,23 +188,26 @@ class ToolController extends Controller
                             $sales_percent = $post["T".$i."_sales"];
 
                         $out_cashflow = (-1 * $cashflow_percent * $total_project_cost)/100;
-                        $revenue = $sales_percent/100 * $sales_price_w_vat * $net_sellable_area;
+                        $outgoing_cashflow = $outgoing_cashflow + round($out_cashflow, 0, PHP_ROUND_HALF_UP);
 
-                        $outgoing_cashflow = $outgoing_cashflow + $out_cashflow;
+                        $revenue = $sales_percent/100 * $sales_price_w_vat * $net_sellable_area;
                         $cumulative_revenue = $cumulative_revenue + $revenue;
 
+                        $pay = 0;
                         $is_payment = array_key_exists("T".$i."_payment", $post);
                         if($is_payment) {
                             foreach ($post["T" . $i . "_payment"] as $v) {
-                                $pay = array_key_exists($v, $post) !== false ? $post[$v] : 0;
-                                $incoming_cashflow = $incoming_cashflow + $pay / 100 * $revenue;
+                                if(array_key_exists($v, $post) !== false )
+                                    $pay = $pay + $post[$v];
                             }
+
+                            $incoming_cashflow = $pay / 100 * $cumulative_revenue - $accumulative_incoming_cashflow;
                         }
 
-//                        $accumulative_incoming_cashflow = $accumulative_incoming_cashflow + $incoming_cashflow;
+                        $accumulative_incoming_cashflow = $accumulative_incoming_cashflow + $incoming_cashflow;
 
-                        $total = $outgoing_cashflow + $incoming_cashflow;
-                        $net_cashflow_2["T".$i] = $total;
+                        $total = $outgoing_cashflow + $accumulative_incoming_cashflow;
+                        $net_cashflow_2["T".$i] = [0 => round($total, 0, PHP_ROUND_HALF_UP), 1 => $sales_percent, 2 => $cashflow_percent, 3 => $pay > 0 ? $post["T" . $i . "_payment"] : []];
 
                     }
 
@@ -212,7 +215,7 @@ class ToolController extends Controller
                     $data_2 = Json::encode($arr_file, JSON_NUMERIC_CHECK);
                     $this->writeFile($pathData . $data_file, $data_2);
                     if($step == "calculation_2"){
-                        return ['status' => 'Calculation 2 OK', 'file' => $data_2];
+                        return ['status' => 'Calculation 2 OK', 'file' => $data_2, 'scenario' => $net_cashflow_2];
                     }
                     else
                         return ['status' => 'Scenario 2 OK', 'file' => $data_file];
@@ -225,43 +228,43 @@ class ToolController extends Controller
         }
     }
 
-    private function getData(){
-        $values_1 = [
-            ['X'=>'T1', 'Y'=>'270'],
-            ['X'=>'T2', 'Y'=>'342'],
-            ['X'=>'T3', 'Y'=>'373'],
-            ['X'=>'T4', 'Y'=>'389'],
-            ['X'=>'T5', 'Y'=>'534'],
-            ['X'=>'T6', 'Y'=>'547'],
-            ['X'=>'T7', 'Y'=>'560'],
-            ['X'=>'T8', 'Y'=>'580'],
-            ['X'=>'T9', 'Y'=>'651'],
-        ];
-        $values_2 = [
-            ['X'=>'T1', 'Y'=>'270'],
-            ['X'=>'T2', 'Y'=>'342'],
-            ['X'=>'T3', 'Y'=>'373'],
-            ['X'=>'T4', 'Y'=>'318'],
-            ['X'=>'T5', 'Y'=>'456'],
-            ['X'=>'T6', 'Y'=>'462'],
-            ['X'=>'T7', 'Y'=>'468'],
-            ['X'=>'T8', 'Y'=>'480'],
-            ['X'=>'T9', 'Y'=>'544'],
-        ];
-        $data = [
-            'scenario_1' => [
-                'linecolor' => '#5698D3',
-                'title' => 'Scenario 1',
-                'values' => $values_1,
-            ],
-            'scenario_2' => [
-                'linecolor' => '#EE863F',
-                'title' => 'Scenario 2',
-                'values' => $values_2,
-            ],
-        ];
-        return $data;
-    }
+//    private function getData(){
+//        $values_1 = [
+//            ['X'=>'T1', 'Y'=>'270'],
+//            ['X'=>'T2', 'Y'=>'342'],
+//            ['X'=>'T3', 'Y'=>'373'],
+//            ['X'=>'T4', 'Y'=>'389'],
+//            ['X'=>'T5', 'Y'=>'534'],
+//            ['X'=>'T6', 'Y'=>'547'],
+//            ['X'=>'T7', 'Y'=>'560'],
+//            ['X'=>'T8', 'Y'=>'580'],
+//            ['X'=>'T9', 'Y'=>'651'],
+//        ];
+//        $values_2 = [
+//            ['X'=>'T1', 'Y'=>'270'],
+//            ['X'=>'T2', 'Y'=>'342'],
+//            ['X'=>'T3', 'Y'=>'373'],
+//            ['X'=>'T4', 'Y'=>'318'],
+//            ['X'=>'T5', 'Y'=>'456'],
+//            ['X'=>'T6', 'Y'=>'462'],
+//            ['X'=>'T7', 'Y'=>'468'],
+//            ['X'=>'T8', 'Y'=>'480'],
+//            ['X'=>'T9', 'Y'=>'544'],
+//        ];
+//        $data = [
+//            'scenario_1' => [
+//                'linecolor' => '#5698D3',
+//                'title' => 'Scenario 1',
+//                'values' => $values_1,
+//            ],
+//            'scenario_2' => [
+//                'linecolor' => '#EE863F',
+//                'title' => 'Scenario 2',
+//                'values' => $values_2,
+//            ],
+//        ];
+//        return $data;
+//    }
 
     private function writeFile($filePath, $data){
         $handle = fopen($filePath, 'w') or die('Cannot open file:  '.$filePath);

@@ -160,7 +160,7 @@ use yii\helpers\Html;
 <?php ActiveForm::end(); ?>
 
 <div class="cash_result" style="clear: both; padding-top: 20px;">
-    <?=$this->render('cashflow_result');?>
+    <?=$this->render('cashflow_result',['scenario'=>1]);?>
 </div>
 
 <script>
@@ -171,14 +171,9 @@ use yii\helpers\Html;
         }
     });
 
-//    $(".cash_result #scenario1").hide();
-
-//    $(".payment_schedule").click(function(){
-//        $(".payment_schedule .row").toggle();
-//    });
-
     $(document).on("click",'#scenario_1 .next',function() {
         chart.next('/tool/save-step?step=scenario_1', 'p_scenario_1', 'scenario_1/afterNext');
+        $.pjax.reload({container:"#scenario1"});  //Reload GridView
         return false;
     });
 
@@ -188,7 +183,6 @@ use yii\helpers\Html;
     });
 
     var counter = 3;
-//    var flash='';
     $("#scenario_1 .add").click(function(){
         var fieldset = $('form[id^="p_scenario_1"] fieldset:last');
         counter += 1;
@@ -200,13 +194,6 @@ use yii\helpers\Html;
         f.insertAfter(fieldset);
 
         $("input.counter").val(counter);
-//        if($(".counter").val() > 1){
-//            f.find(".delete").show();
-//        }
-//        else{
-//            f.find(".delete").hide();
-//        }
-
     });
 
     $("#scenario_1 .calculation").click(function() {
@@ -216,14 +203,9 @@ use yii\helpers\Html;
             url: '/tool/save-step?step=calculation_1',
             data: ($('#p_scenario_1').serializeArray()),
             success: function(data) {
-//                $(".cash_result #w0").show();
-                console.log(data.file);
                 $.pjax.reload({container:"#scenario1"});  //Reload GridView
-                $(".cash_result #scenario1").show();
             }
         });
     });
-
-
 
 </script>

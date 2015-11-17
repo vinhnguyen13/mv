@@ -65,10 +65,8 @@ use yii\widgets\ActiveForm;
 </div>
 
 <?=Html::hiddenInput('total_project_cost', 2246792608858,['class'=>'form-control form-group total_project_cost']);?>
-<?=Html::hiddenInput('sales_price_w_vat', 36438367,['class'=>'form-control form-group sales_price_w_vat']);?>
+<?=Html::hiddenInput('sales_price_w_vat', 36438367.31032530,['class'=>'form-control form-group sales_price_w_vat']);?>
 <?=Html::hiddenInput('net_sellable_area', 78000,['class'=>'form-control form-group net_sellable_area']);?>
-
-
 
 <fieldset id="1">
     <legend>T1</legend>
@@ -134,8 +132,7 @@ use yii\widgets\ActiveForm;
             <label><input type="checkbox" name="T3_payment[]" value="pay_15"> Apartment Ownership Handover</label></div>    </div>
 </fieldset>
 
-<input type="hidden" class="form-control form-group counter" name="counter" value="3">
-
+<input type="hidden" class="form-control form-group counter_2" name="counter_2" value="3">
 
 
 <div class="form-group command">
@@ -151,41 +148,24 @@ use yii\widgets\ActiveForm;
 <?php ActiveForm::end(); ?>
 
 <div class="cash_result" style="clear: both; padding-top: 20px;">
-    <div id="w0">
-        <?= $this->render('cashflow_result'); ?>
-    </div>
+    <?=$this->render('cashflow_result',['scenario'=> 2]);?>
 </div>
 <script>
     $(document).on("click",'#scenario_2 .next',function() {
         chart.next('/tool/save-step?step=scenario_2', 'p_scenario_2', 'scenario_2/afterNext');
+        $.pjax.reload({container:"#scenario2"});
         return false;
     });
 
     $(document).bind( 'scenario_2/afterNext', function(event, json, string){
         /**
-         * save data of form to json (file)
+         * after save data to continue
          */
         console.log(json.data);
     });
 
-//    var outgoing_cashflow_accumulative_2 = 0;
-//    $(document).on("blur",'#scenario_2 .cashflow',function() {
-//        var fieldset = $(this).closest('fieldset');
-//        console.log($('.total_project_cost').val());
-//
-//        var total_project_cost = $('.total_project_cost').val();
-//        outgoing_cashflow_accumulative_2 = outgoing_cashflow_accumulative_2 + (total_project_cost * fieldset.find('.cashflow').val())/100;
-//
-//        var incoming_cashflow = 0;
-//        var accumulative_incoming_cashflow = 0;
-//
-//        var total = outgoing_cashflow_accumulative_2 + accumulative_incoming_cashflow;
-//        total = Math.round(total);
-//        fieldset.find('label.net_cashflow').html(total).autoNumeric('init', {aPad: false});
-//        fieldset.find('input.net_cashflow').val(total);
-//    });
 
-    var counter_2 = 1;
+    var counter_2 = 3;
     $("#scenario_2 .add").click(function(){
         var fieldset = $('form[id^="p_scenario_2"] fieldset:last');
         counter_2 += 1;
@@ -199,16 +179,15 @@ use yii\widgets\ActiveForm;
         $("input.counter_2").val(counter_2);
     });
 
-    $("#scenario_2 .calculation_2").click(function() {
+    $("#scenario_2 .calculate_2").click(function() {
         $.ajax({
             type: "post",
             dataType: 'json',
             url: '/tool/save-step?step=calculation_2',
             data: ($('#p_scenario_2').serializeArray()),
             success: function(data) {
-//                $(".cash_result #w0").show();
-                console.log(data.file);
-            },
+                $.pjax.reload({container:"#scenario2"});  //Reload GridView
+            }
         });
     });
 </script>
