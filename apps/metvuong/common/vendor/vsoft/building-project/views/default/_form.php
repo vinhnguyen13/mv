@@ -176,6 +176,8 @@ for($i = 1998; $i <= 2020; $i++) {
 			    		<?php
 			    			$count = count($area->floorPlan);
 			    			foreach($area->floorPlan as $k => $bpa):
+			    				$imagesDetail = isset($bpa->imagesDetail[0]) ? $bpa->imagesDetail[0] : '';
+			    				$imagesCoordinate = isset($bpa->imagesCoordinate[0]) ? $bpa->imagesCoordinate[0] : '';
 			    		?>
 				    	<div class="panel panel-default">
 				    		<div class="panel-body">
@@ -188,7 +190,7 @@ for($i = 1998; $i <= 2020; $i++) {
 								<div class="form-group">
 									<label class="control-label" for="buildingproject-bpvideo">Ảnh</label>
 									<?= FileUploadUI::widget([
-											'options' => ['data-callback' => 'buildingProject.makeMapArea', 'class' => 'map-area', 'data-images-detail' => $bpa->imagesDetail[0], 'images-coordinate' => $bpa->imagesCoordinate[0]],
+											'options' => ['data-callback' => 'buildingProject.makeMapArea', 'class' => 'map-area', 'data-images-detail' => $imagesDetail, 'images-coordinate' => $imagesCoordinate],
 											'name' => 'BuildingProject[' . $name . '][floorPlan][' . $k . '][images]',
 											'id' => $name . $k,
 											'url' => Url::to('/express/upload/image'),

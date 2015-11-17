@@ -2,6 +2,7 @@
 	use yii\web\View;
 use yii\helpers\Url;
 use vsoft\buildingProject\models\BuildingProject;
+use vsoft\express\components\UploadHelper;
 
 	$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/owl.carousel.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/jquery.maphilight.js', ['depends' => ['yii\web\YiiAsset']]);
@@ -112,7 +113,12 @@ $areaTypes = BuildingProject::getAreaTypes ();
 			</div>
 			<div id="tab-show-3" class="item-detail item-ti">
 				<div class="wrap-img">
-					<img src="<?= Url::to('/store/building-project-images/' . $model->bpFacilitiesDetail) ?>" alt="">
+					<?php
+						$bpFacilities = explode(',', $model->bpFacilitiesDetail);
+						foreach ($bpFacilities as $bpFacilitie):
+					?>
+					<img src="<?= Url::to('/store/building-project-images/' . $bpFacilitie) ?>" alt="">
+					<?php endforeach; ?>
 				</div>
 				<?= $model->bpFacilitiesDetailDes ?>
 			</div>
@@ -295,13 +301,19 @@ $areaTypes = BuildingProject::getAreaTypes ();
 						<a href="#" class="clearfix" data-active-first="true">MẶT BẰNG</a>
 						<div class="show-infor">
 							<?php foreach($areaType['floorPlan'] as $k => $floorPlan):
-								$imagesDetail = explode(',', $floorPlan['imagesDetail'][0]);
-								array_walk($imagesDetail, function(&$item) {
-									$item = Url::to('/store/building-project-images/' . $item);
-								});
+								if(isset($floorPlan['imagesDetail'][0])) {
+									$imagesDetail = explode(',', $floorPlan['imagesDetail'][0]);
+									array_walk($imagesDetail, function(&$item) {
+										$item = Url::to('/store/building-project-images/' . $item);
+									});
+								} else {
+									$imagesDetail = [];
+									$floorPlan['imagesCoordinate'] = [];
+								}
+								
 							?>
 								<div class="item-infor">
-									<a data-coord="<?= implode(',', $floorPlan['imagesCoordinate']) ?>" data-images="<?= htmlentities(json_encode($imagesDetail)) ?>" href="#tab-show-<?= $counter ?>1" class="clearfix" <?= $k==0 ? 'data-active-first="true" ' : '' ?>data-srcmb="<?= Url::to('/store/building-project-images/' . $floorPlan['images']) ?>"><?= $floorPlan['title'] ?></a>
+									<a data-coord="<?= implode(',', $floorPlan['imagesCoordinate']) ?>" data-images="<?= htmlentities(json_encode($imagesDetail)) ?>" href="#tab-show-<?= $counter ?>1" class="clearfix" <?= $k==0 ? 'data-active-first="true" ' : '' ?>data-srcmb="<?= $floorPlan['images'] ? Url::to('/store/building-project-images/' . $floorPlan['images']) : '' ?>"><?= $floorPlan['title'] ?></a>
 								</div>
 							<?php endforeach; ?>
 						</div>
