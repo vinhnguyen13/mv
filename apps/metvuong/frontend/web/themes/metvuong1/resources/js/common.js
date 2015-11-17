@@ -281,6 +281,7 @@ $(document).ready(function() {
         return false;
     });
     $('.tab-type-4 > a').on('click',function(e) {
+        $('.map').remove();
         e.preventDefault();
         var _this = $(this),
             idShowBox = _this.attr('href');
@@ -299,7 +300,7 @@ $(document).ready(function() {
 
             $(idBoxSub).html('');
             $('.img-alone').remove();
-            $('.item-tab').hide().html('');
+            $('.item-tab').hide();
             $(idBoxSub).append($imgAdd);
             for( var i = 0; i < arrCoord.length; i++ ) {
                 var typeArea = '';
@@ -322,6 +323,7 @@ $(document).ready(function() {
         return false;
     });
     $('.tab-type-4 a[data-srcmb]').on('click',function() {
+        $('.map').remove();
         var srcImg = $(this).data('srcmb'),
             idBoxSub = $(this).attr('href'),
             $imgAdd = $('<img class="img-alone" src="'+srcImg+'" alt="" usemap="#map" />'),
@@ -331,7 +333,7 @@ $(document).ready(function() {
 
         $(idBoxSub).html('');
         $('.img-alone').remove();
-        $('.item-tab').hide().html('');
+        $('.item-tab').hide();
         $('.tab-type-4 a[data-srcmb]').removeClass('active');
         $(this).parent().parent().parent().find('>a').addClass('active');
         $('.tab-sub-link').removeClass('active');
@@ -358,7 +360,7 @@ $(document).ready(function() {
     });
     $('.tab-sub-link').on('click',function() {
         var idShowBox = $(this).attr('href');
-        $('.item-tab').hide().html('');
+        $('.item-tab').hide();
         showBoxTab(idShowBox);   
         $(idShowBox).closest('.item-detail').show(); 
         $(this).closest('.show-infor').find('.active').removeClass('active');
