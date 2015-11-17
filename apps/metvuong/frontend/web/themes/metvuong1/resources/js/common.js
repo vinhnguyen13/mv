@@ -257,6 +257,7 @@ $(document).ready(function() {
         showBoxTab(idShowBox);
         return false;
     });
+
     $('.tab-type-3 > a').on('click',function(e) {
         e.preventDefault();
         var _this = $(this),
@@ -272,6 +273,7 @@ $(document).ready(function() {
         showBoxTab(idShowBox);
         return false;
     });
+
     $('.video-img').on('click',function(e) {
         e.preventDefault();
         var srcVideo = $(this).attr('rel');
@@ -280,6 +282,7 @@ $(document).ready(function() {
         $('.phim3d').attr('src',srcVideo);
         return false;
     });
+
     $('.tab-type-4 > a').on('click',function(e) {
         $('.map').remove();
         e.preventDefault();
@@ -322,6 +325,7 @@ $(document).ready(function() {
         $(".group1").colorbox({className:'boxShowMatBang'});
         return false;
     });
+
     $('.tab-type-4 a[data-srcmb]').on('click',function() {
         $('.map').remove();
         var srcImg = $(this).data('srcmb'),
@@ -358,6 +362,7 @@ $(document).ready(function() {
         $(".group1").colorbox({className:'boxShowMatBang'});
         return false;
     });
+
     $('.tab-sub-link').on('click',function() {
         var idShowBox = $(this).attr('href');
         $('.item-tab').hide();
@@ -367,6 +372,7 @@ $(document).ready(function() {
         $(this).addClass('active');
         return false; 
     });
+
     function showBoxTab(idShowBox) {
         $('.item-detail').hide();
         $(idShowBox).css({
@@ -400,9 +406,23 @@ $(document).ready(function() {
     });
     //end scroll fixed header
 
-    $('#btn-search').on('click', function() {
-        alert(1);
-    });
+    //start home page search
+    animateSearch();    
+    //end home page search
 });
+
+function animateSearch() {
+    var hWindown = $(window).outerHeight(),
+        leftLogo = $('.logo-home').position().left,
+        leftInputSearch = $('.box-search-header').position().left;
+
+    setTimeout(function() {
+        $('.wrap-search-home .logo-home').addClass('ani-logo');
+        $('.box-search-header').addClass('ani-search');
+        setTimeout(function() {
+            $('header').addClass('border-shadow');
+        },250);
+    },2000);
+}
 
 function l(x){console.log(x);}
