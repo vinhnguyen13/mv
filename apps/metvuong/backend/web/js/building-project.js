@@ -6,7 +6,8 @@ var objMap = [],
 		nameImage : ''
 	}, 
 	arrCoordinates = [],
-	countItemMap = 0;
+	countItemMap = 0,
+	imgReGet;
 $.fn.tabSwitch = function(tabContent) {
 	var tabs = this;
 	
@@ -256,10 +257,10 @@ var buildingProject = {
 					href: popup,
 					title: false,
 					onOpen: function() {
-						var imgReGet = popup.find('.fileupload-buttonbar input[type=hidden]').val().split(',');
+						imgReGet = popup.find('.fileupload-buttonbar input[type=hidden]').val().split(',');
 						arrCoordinates = [];
 						var idMap = popup.find('.mapContainer').data('mapId');
-						//countItemMap = idMap;
+						countItemMap = idMap;
 						var strArray = popup.find('#valCoordinate-'+idMap).val();
 						
 						if( strArray != '' ) {
@@ -322,11 +323,19 @@ var buildingProject = {
 			$('#clearStyleButtons-'+countItemMap+' .clearCurrentButton').click(function() {
 				$('#coordsText-'+countItemMap).val('');
 				counter = $('#mapContainer-'+countItemMap).find('map area').length - 1;
+				imgReGet = popup.find('.fileupload-buttonbar input[type=hidden]').val().split(',');
 
 				var idArea = $('#mapContainer-'+countItemMap).find('area:last').attr('id');
 				for( var i = 0; i < objMap.length; i++ ) {
 					if( idArea === objMap[i].id_area ) {
 						var nameCurrent = objMap[i].nameImage;
+
+						for( var j = 0; j < imgReGet.length; j++ ) {
+							if( imgReGet[j] === objMap[i].nameImage ) {
+								imgReGet.splice(j,1);
+								popup.find('.fileupload-buttonbar input[type=hidden]').val(imgReGet.toString());
+							}
+						}
 
 						removeArrCoordinates(i);
 
@@ -368,6 +377,7 @@ var buildingProject = {
 				arrCoordinates = [];
 				$('#valCoordinate-'+countItemMap).val(arrayAreaChange(arrCoordinates));
 				hightlight(countItemMap);
+				popup.find('.fileupload-buttonbar input[type=hidden]').val('');
 				l('insert #valCoordinate-'+ countItemMap +' '+ $('#valCoordinate-'+countItemMap).val() +'');
 			});
 		});
@@ -400,9 +410,17 @@ var buildingProject = {
 		} else {
 			//console.log('xóa');
 			var urlDelete = data.url;
+			imgReGet = $(ins).find('.fileupload-buttonbar input[type=hidden]').val().split(',');
 			for( var i = 0; i < objMap.length; i++ ) {
 				if( urlDelete.search(objMap[i].nameImage) >= 0 ) {
 					
+					for( var j = 0; j < imgReGet.length; j++ ) {
+						if( imgReGet[j] === objMap[i].nameImage ) {
+							imgReGet.splice(j,1);
+							$(ins).find('.fileupload-buttonbar input[type=hidden]').val(imgReGet.toString());
+						}
+					}
+
 					removeArrCoordinates(i);
 
 					hightlight(countItemMap);
