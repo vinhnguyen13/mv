@@ -259,8 +259,8 @@ var buildingProject = {
 						var imgReGet = popup.find('.fileupload-buttonbar input[type=hidden]').val().split(',');
 						arrCoordinates = [];
 						var idMap = popup.find('.mapContainer').data('mapId');
-						countItemMap = idMap,
-						strArray = popup.find('#valCoordinate-'+idMap).val();
+						//countItemMap = idMap;
+						var strArray = popup.find('#valCoordinate-'+idMap).val();
 						
 						if( strArray != '' ) {
 							var arrInput = JSON.parse(strArray),
@@ -299,7 +299,7 @@ var buildingProject = {
 						objItem = {};
 						objMap = [];
 						counter = 0;
-						countItemMap = $('.mapContainer').length;
+						//countItemMap = $('.mapContainer').length;
 					}
 				});
 			});
