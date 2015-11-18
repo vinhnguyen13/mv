@@ -997,7 +997,7 @@ footer {
 }
 #topcontrol {
     position: fixed;
-    bottom: 5px;
+    bottom: 55px;
     right: 5px;
     opacity: 0;
     cursor: pointer;
@@ -1969,8 +1969,16 @@ footer {
 }
 .animate-children #search-kind .type-search ul {
     height: 100%;
+    padding-top: 1px;
+    padding-bottom: 0;
+    line-height: 100%;
+}
+.animate-children #search-kind .type-search li {
+    font-size: 1.6em;
     padding-top: 0;
-    top: -2px;
+}
+.animate-children #search-kind .type-search i {
+    top: -2px;
 }
 .wrap-search-home .ani-search button.btn.btn-default,
 button.btn.btn-default,
@@ -2307,6 +2315,9 @@ button.btn.btn-default,
     right: 5px;
 }
 #search-kind .form-group .btn-close-search em {
+
+}
+#search-kind .form-group .btn-close-search em {
     position: static;
     font-weight: normal;
     color: #297D1E;
@@ -2364,14 +2375,14 @@ button.btn.btn-default,
     display: inline-block;
     margin-right: 5px;
     background: #dbdbdb;
-    padding: 4px 5px 2px 5px;
+    padding: 0 8px 2px 8px;
     font-size: .9em;
     font-weight: bold;
     border-radius: 3px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
-    vertical-align: middle;
+    float: left;
 }
 .type-search li i {
     display: inline-block;
@@ -2388,6 +2399,8 @@ button.btn.btn-default,
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: pointer;
+    position: relative;
+    top: -1px;
 }
 .type-search li span:hover {
     color: #A0A0A0;
@@ -2599,9 +2612,12 @@ footer {
 .wrap-search-home .search-select em {
     position: static;
 }
+.border-shadow .wrap-search-home .search-wrap {
+    width: 93%;
+}
 .wrap-search-home .search-wrap {
     top: 49px;
-    width: 93%;
+    width: 100%;
 }
 .wrap-search-home .wrap-effect {
     border: 1px solid #458836;
@@ -2616,6 +2632,9 @@ footer {
     height: 47px;
     line-height: 46px;
     padding: 9px 0 0 5px;
+}
+.border-shadow .wrap-search-home .type-search ul {
+    padding-top: 3px;
 }
 .wrap-search-home .type-search li {
     font-size: 2em;
