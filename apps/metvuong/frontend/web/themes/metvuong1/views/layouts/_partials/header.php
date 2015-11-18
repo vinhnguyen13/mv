@@ -184,5 +184,11 @@
                 </div>
             </div>
         </div>
+        <ul class="list-menu-header">
+            <li><a href="#">Bán - Thuê</a></li>
+            <li><a href="#">Cần mua - Cần thuê</a></li>
+            <li><a href="#">Dự án</a></li>
+            <li><a href="#">Tin tức</a></li>
+        </ul>
     </div>
 </header>
