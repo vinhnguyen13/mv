@@ -31,7 +31,7 @@ body .container {
     position: relative;
 }
 body .o-wrapper > .container {
-    padding-top: 130px;
+    padding-top: 30px;
 }
 #slide-menu-right {
   display: none;
@@ -1931,6 +1931,7 @@ footer {
     height: 70px;
     width: 100%;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    z-index: 10;
 }
 @-webkit-keyframes animate-margin-top {
     0% {
@@ -1969,7 +1970,7 @@ footer {
     position: relative;
     z-index: 3;
 }
-.animate-children .logo-header {
+.animate-children .logo-home {
     width: 125px;
     height: 48px;
     margin-top: -2px;
@@ -1978,7 +1979,7 @@ footer {
     margin-top: 0;
 }
 .animate-children .box-search-header > div {
-    margin-top: -6px;
+    margin-top: -2px;
 }
 .animate-children #search-kind .form-group input,
 .animate-children #search-kind .form-group .type-search {
@@ -2030,27 +2031,32 @@ button.btn.btn-default,
     font-size: .7em;
     color: #DADE22;
 }
-.animate-children .search-select a .fa-search {
-    top: 1px;
-    left: -5px;
+.animate-children .wrap-search-home .search-select a .fa-search {
+    top: 8px;
+    left: 6px;
+    font-size: .5em;
+    color: #DADE22;
 }
-.animate-children .search-select a .fa-usd {
-    top: 2px;
-    left: -3px;
+.animate-children .wrap-search-home .search-select a .fa-usd {
+    top: 8px;
+    left: 8px;
+    color: #DADE22;
+    font-size: .5em;
 }
-.animate-children .search-select a .fa-file-text {
-    top: 1px;
-    left: -6px;
+.animate-children .wrap-search-home .search-select a .fa-file-text {
+    top: 8px;
+    left: 6px;
+    font-size: .5em;
 }
 .detail-content img {
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
 }
-.animate-children button.btn.btn-default {
+.is-fixed.animate-children button.btn.btn-default {
     font-size: 1.4em;
     top: 4px;
-    right: 5%
+    right: 2%;
 }
 .img-big-duan {
     height: 620px;
@@ -2513,7 +2519,7 @@ button.btn.btn-default,
 }
 .home-page {
     position: relative;
-    z-index: 2;
+    z-index: 5;
     transition: height .5s ease;
     padding: 0;
     margin: 0;
@@ -2575,7 +2581,7 @@ button.btn.btn-default,
 .wrap-page-home {
     position: relative;
 }
-.wrap-page-home footer {
+footer {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -2589,15 +2595,6 @@ button.btn.btn-default,
     -moz-text-shadow: 1px 1px 1px #fff;
     -ms-text-shadow: 1px 1px 1px #fff;
     z-index: 3;
-}
-body .wrap-page-home > .container {
-    padding: 0;
-    height: 100%;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1;
 }
 .wrap-search-home {
     width: 100%;
@@ -2697,24 +2694,24 @@ body .wrap-page-home > .container {
     font-size: .25em;
     text-transform: uppercase;
 }
-.wrap-page-home .copyright p {
+.copyright p {
     line-height: 35px;
 }
-.wrap-page-home .polli li {
+.polli li {
     float: left;
     /* line-height: 40px; */
     color: #333;
     font-size: 1.1em;
     vertical-align: middle;
 }
-.wrap-page-home .polli a {
+.polli a {
     display: inline-block;
     font-size: 1em;
     color: #333;
     padding: 0 15px;
     line-height: 35px;
 }
-.wrap-page-home .polli .logo-social {
+.polli .logo-social {
     width: 35px;
     height: 35px;
     margin-left: 10px;
@@ -2729,27 +2726,27 @@ body .wrap-page-home > .container {
     position: relative;
     top: 0;
 }
-.wrap-page-home .polli li:last-child {
+.polli li:last-child {
 }
-.wrap-page-home .polli li:last-child span {
+.polli li:last-child span {
     display: block;
     line-height: 35px;
     float: left;
     font-size: 1em;
 }
-.wrap-page-home .polli .fb-icon {
+.polli .fb-icon {
     background: #E8E8E8 url(../images/face-icon.png) no-repeat top left;
 }
-.wrap-page-home .polli .twe-icon {
+.polli .twe-icon {
     background: #E8E8E8 url(../images/twe-icon.png) no-repeat top left;
 }
-.wrap-page-home .polli .g-icon {
+.polli .g-icon {
     background: #E8E8E8 url(../images/go-icon.png) no-repeat top left;
 }
-.wrap-page-home .polli .ytu-icon {
+.polli .ytu-icon {
     background: #E8E8E8 url(../images/yutu-icon.png) no-repeat top left;
 }
-.wrap-page-home .polli .logo-social:hover {
+.polli .logo-social:hover {
     top: -3px;
 }
 .slideUpDown {
@@ -2906,4 +2903,19 @@ padding-bottom: 5px;
 }
 .header-fixed > .container {
     height: 100%;
+}
+.is-fixed.animate-children .search-select a span {
+    display: none;
+}
+.animate-children .wrap-search-home .search-select a{
+    font-size: 2em;
+    margin-top: -5px;
+}
+.wrap-page-home .container {
+    height: 100%;
+}
+.list-menu-header {
+    position: absolute;
+    right: 0;
+    bottom: 6px;
 }

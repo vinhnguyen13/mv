@@ -1,5 +1,4 @@
-<div class="wrap-page-home">
-<header class="home-page cd-secondary-nav border-shadow">
+<header class="home-page cd-secondary-nav border-shadow wrap-page-home">
     <div class="container clearfix">
         <ul class="pull-right menu-home">
             <li><a href="#"><em class="icon-plus"></em>Đăng tin</a></li>
@@ -187,4 +186,3 @@
         </div>
     </div>
 </header>
-</div>
