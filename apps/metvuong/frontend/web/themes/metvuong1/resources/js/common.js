@@ -1,3 +1,8 @@
+var arrJSONReturn = {
+    objTT: [],
+    objLoai: [],
+    objTTuc: []
+};
 $(document).ready(function() {
 	
     //start click scroll to top
@@ -30,9 +35,9 @@ $(document).ready(function() {
     //end click scroll to top
 
     //start header
-    var arrJSONReturn = '';
+    
     $.getJSON("https://dl.dropboxusercontent.com/u/43486987/metvuongtest/tinh-thanh.json", function(result){
-        arrJSONReturn = result;
+        arrJSONReturn.objTT = result;
         for( var i = 0; i < result.length; i++ ) {
             var $itemTinhThanh = $('<li data-id-tt='+result[i].id+' data-active='+result[i].status_active+'><a href="#">'+result[i].tinh_thanh+'</a></li>');
             $('.list-tinh-thanh').append($itemTinhThanh);
@@ -40,15 +45,17 @@ $(document).ready(function() {
     });
 
     $.getJSON("https://dl.dropboxusercontent.com/u/43486987/metvuongtest/loai-bds.json", function(result){
+        arrJSONReturn.objLoai = result;
         for( var i = 0; i < result.length; i++ ) {
-            var $item = $('<li data-active='+result[i].status_active+'><a href="#">'+result[i].ten_loai+'</a></li>');
+            var $item = $('<li data-id-loai='+result[i].id+' data-active='+result[i].status_active+'><a href="#">'+result[i].ten_loai+'</a></li>');
             $('.list-loai-bds').append($item);   
         }
     });
 
     $.getJSON("https://dl.dropboxusercontent.com/u/43486987/metvuongtest/loai-tintuc.json", function(result){
+        arrJSONReturn.objTTuc = result;
         for( var i = 0; i < result.length; i++ ) {
-            var $item = $('<li data-active='+result[i].status_active+'><a href="#">'+result[i].ten_tt+'</a></li>');
+            var $item = $('<li data-id-ttuc='+result[i].id+' data-active='+result[i].status_active+'><a href="#">'+result[i].ten_tt+'</a></li>');
             $('.list-loai-tt').append($item);   
         }
     });
@@ -159,18 +166,54 @@ $(document).ready(function() {
 
                 objEvent.resizeWidthInput();
 
-                if( _this.parent().data('idTt') != '' ) {
-                    for( var i = 0; i < arrJSONReturn.length; i++ ) {
-                        if( arrJSONReturn[i].id == _this.parent().data('idTt') ) {
-                            arrJSONReturn[i].status_active = true;
+
+                if( _this.parent().data('idTt') != undefined ) {
+                    $('#valTT').val(_this.parent().data('idTt'));
+                    for( var i = 0; i < arrJSONReturn.objTT.length; i++ ) {
+                        if( arrJSONReturn.objTT[i].id == _this.parent().data('idTt') ) {
                             $('.list-quan-huyen').html('');
-                            for( var j = 0; j < arrJSONReturn[i].quan_huyen.length; j++ ) {
-                                var $item = $('<li data-active='+arrJSONReturn[i].quan_huyen[j].status_active+'><a href="#">'+arrJSONReturn[i].quan_huyen[j].ten_quan_huyen+'</a></li>');
+                            for( var j = 0; j < arrJSONReturn.objTT[i].quan_huyen.length; j++ ) {
+                                var $item = $('<li data-id-qh='+arrJSONReturn.objTT[i].quan_huyen[j].id+'><a href="#">'+arrJSONReturn.objTT[i].quan_huyen[j].ten_quan_huyen+'</a></li>');
                                 $('.list-quan-huyen').append($item);
                             }
                         }
                     }
                 }
+
+                if( _this.parent().data('idQh') != undefined ) {
+                    $('#valQh').val(_this.parent().data('idQh'));
+                }else if( _this.parent().data('idLoai') != undefined ) {
+                    $('#valLoai').val(_this.parent().data('idLoai'));
+                }else if( _this.parent().data('idTtuc') != undefined ) {
+                    $('#valTTuc').val(_this.parent().data('idTtuc'));
+                }
+
+                /*
+                if( _this.parent().data('idQh') != undefined ) {
+                    for( var i = 0; i < arrJSONReturn.objTT.length; i++ ) {
+                        for( var j = 0; j < arrJSONReturn.objTT[i].quan_huyen.length; j++ ) {
+                            if( arrJSONReturn.objTT[i].quan_huyen[j].id == _this.parent().data('idQh') ) {
+                                arrJSONReturn.objTT[i].quan_huyen[j].status_active = true;
+                            }
+                        }
+                    }
+                }
+
+                if( _this.parent().data('idLoai') != undefined ) {
+                    for( var i = 0; i < arrJSONReturn.objLoai.length; i++ ) {
+                        if( arrJSONReturn.objLoai[i].id == _this.parent().data('idLoai') ) {
+                            arrJSONReturn.objLoai[i].status_active = true;
+                        }
+                    }
+                }
+
+                if( _this.parent().data('idTtuc') != undefined ) {
+                    for( var i = 0; i < arrJSONReturn.objTTuc.length; i++ ) {
+                        if( arrJSONReturn.objTTuc[i].id == _this.parent().data('idTtuc') ) {
+                            arrJSONReturn.objTTuc[i].status_active = true;
+                        }
+                    }
+                }*/
 
                 return false;
             });
@@ -246,6 +289,7 @@ $(document).ready(function() {
             $('.type-search ul').hide().find('li').remove();
             objEvent.resizeWidthInput();
             flagEnd = false;
+            $('.getValSuggest').val('');
         }
     };
 
