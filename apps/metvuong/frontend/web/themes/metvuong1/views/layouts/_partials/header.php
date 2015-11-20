@@ -78,6 +78,10 @@
                                     </div>
                                 </div>
                                 <button id="btn-search" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                <input class="getValSuggest" type="hidden" id="valTT" value="">
+                                <input class="getValSuggest" type="hidden" id="valQh" value="">
+                                <input class="getValSuggest" type="hidden" id="valLoai" value="">
+                                <input class="getValSuggest" type="hidden" id="valTTuc" value="">
                             </form>
                             <div class="pull-left text-right mgT-10 mgL-15">
                                 <div class="search-select active">
