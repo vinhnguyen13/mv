@@ -7,7 +7,7 @@ class m151120_065452_alter_ads_table extends Migration
 {
     public function up()
     {
-		$this->execute("CREATE TABLE `area_type`(  
+		$this->execute("CREATE TABLE `ad_area_type`(  
 		  `id` INT NOT NULL AUTO_INCREMENT,
 		  `building_project_id` INT NOT NULL,
 		  `type` TINYINT(1) NOT NULL COMMENT '1: Khu căn hộ, 2: Khu nhà phố, 3: khu thương mại, 4: khu officetel',
@@ -29,7 +29,7 @@ class m151120_065452_alter_ads_table extends Migration
 
     public function down()
     {
-        $this->dropTable("`area_type`");
+        $this->dropTable("`ad_area_type`");
         $this->execute("ALTER TABLE `metvuong`.`ad_building_project`   
 		  ADD COLUMN `apartment_area` TEXT NULL AFTER `progress`,
 		  ADD COLUMN `commercial_area` TEXT NULL AFTER `apartment_area`,
