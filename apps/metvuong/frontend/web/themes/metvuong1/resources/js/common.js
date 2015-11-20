@@ -39,7 +39,7 @@ $(document).ready(function() {
     $.getJSON("https://dl.dropboxusercontent.com/u/43486987/metvuongtest/tinh-thanh.json", function(result){
         arrJSONReturn.objTT = result;
         for( var i = 0; i < result.length; i++ ) {
-            var $itemTinhThanh = $('<li data-id-tt='+result[i].id+' data-active='+result[i].status_active+'><a href="#">'+result[i].tinh_thanh+'</a></li>');
+            var $itemTinhThanh = $('<li data-id-tt='+result[i].id+' data-active='+result[i].status_active+'><a href="#valTT">'+result[i].tinh_thanh+'</a></li>');
             $('.list-tinh-thanh').append($itemTinhThanh);
         }
     });
@@ -47,7 +47,7 @@ $(document).ready(function() {
     $.getJSON("https://dl.dropboxusercontent.com/u/43486987/metvuongtest/loai-bds.json", function(result){
         arrJSONReturn.objLoai = result;
         for( var i = 0; i < result.length; i++ ) {
-            var $item = $('<li data-id-loai='+result[i].id+' data-active='+result[i].status_active+'><a href="#">'+result[i].ten_loai+'</a></li>');
+            var $item = $('<li data-id-loai='+result[i].id+' data-active='+result[i].status_active+'><a href="#valLoai">'+result[i].ten_loai+'</a></li>');
             $('.list-loai-bds').append($item);   
         }
     });
@@ -55,7 +55,7 @@ $(document).ready(function() {
     $.getJSON("https://dl.dropboxusercontent.com/u/43486987/metvuongtest/loai-tintuc.json", function(result){
         arrJSONReturn.objTTuc = result;
         for( var i = 0; i < result.length; i++ ) {
-            var $item = $('<li data-id-ttuc='+result[i].id+' data-active='+result[i].status_active+'><a href="#">'+result[i].ten_tt+'</a></li>');
+            var $item = $('<li data-id-ttuc='+result[i].id+' data-active='+result[i].status_active+'><a href="#valTTuc">'+result[i].ten_tt+'</a></li>');
             $('.list-loai-tt').append($item);   
         }
     });
@@ -140,7 +140,35 @@ $(document).ready(function() {
                 e.preventDefault();
                 var _this = $(this),
                     txt = _this.text(),
-                    $itemSuggest = $('<li data-step="'+countStep+'"><i>x</i><span></span></li>');
+                    $itemSuggest = $('<li data-step="'+countStep+'" data-step-show='+_this.attr('href')+'><i>x</i><span></span></li>'),
+                    itemId = '';
+
+                if( _this.parent().data('idTt') != undefined ) {
+                    $('#valTT').val(_this.parent().data('idTt'));
+                    itemId = _this.parent().data('idTt');
+                    for( var i = 0; i < arrJSONReturn.objTT.length; i++ ) {
+                        if( arrJSONReturn.objTT[i].id == _this.parent().data('idTt') ) {
+                            $('.list-quan-huyen').html('');
+                            for( var j = 0; j < arrJSONReturn.objTT[i].quan_huyen.length; j++ ) {
+                                var $item = $('<li data-id-qh='+arrJSONReturn.objTT[i].quan_huyen[j].id+'><a href="#valQh">'+arrJSONReturn.objTT[i].quan_huyen[j].ten_quan_huyen+'</a></li>');
+                                $('.list-quan-huyen').append($item);
+                            }
+                        }
+                    }
+                }
+
+                if( _this.parent().data('idQh') != undefined ) {
+                    $('#valQh').val(_this.parent().data('idQh'));
+                    itemId = _this.parent().data('idQh');
+                }else if( _this.parent().data('idLoai') != undefined ) {
+                    $('#valLoai').val(_this.parent().data('idLoai'));
+                    itemId = _this.parent().data('idLoai');
+                }else if( _this.parent().data('idTtuc') != undefined ) {
+                    $('#valTTuc').val(_this.parent().data('idTtuc'));
+                    itemId = _this.parent().data('idTtuc');
+                }
+
+                $itemSuggest.attr('data-item-id',itemId);
 
                 if( !_this.closest('.search-wrap').hasClass('edit-suggest') && !flagOpenSugget ) {
                     if( _this.closest('.search-wrap').data('stepBox') == 'fixed' ) {
@@ -166,55 +194,6 @@ $(document).ready(function() {
 
                 objEvent.resizeWidthInput();
 
-
-                if( _this.parent().data('idTt') != undefined ) {
-                    $('#valTT').val(_this.parent().data('idTt'));
-                    for( var i = 0; i < arrJSONReturn.objTT.length; i++ ) {
-                        if( arrJSONReturn.objTT[i].id == _this.parent().data('idTt') ) {
-                            $('.list-quan-huyen').html('');
-                            for( var j = 0; j < arrJSONReturn.objTT[i].quan_huyen.length; j++ ) {
-                                var $item = $('<li data-id-qh='+arrJSONReturn.objTT[i].quan_huyen[j].id+'><a href="#">'+arrJSONReturn.objTT[i].quan_huyen[j].ten_quan_huyen+'</a></li>');
-                                $('.list-quan-huyen').append($item);
-                            }
-                        }
-                    }
-                }
-
-                if( _this.parent().data('idQh') != undefined ) {
-                    $('#valQh').val(_this.parent().data('idQh'));
-                }else if( _this.parent().data('idLoai') != undefined ) {
-                    $('#valLoai').val(_this.parent().data('idLoai'));
-                }else if( _this.parent().data('idTtuc') != undefined ) {
-                    $('#valTTuc').val(_this.parent().data('idTtuc'));
-                }
-
-                /*
-                if( _this.parent().data('idQh') != undefined ) {
-                    for( var i = 0; i < arrJSONReturn.objTT.length; i++ ) {
-                        for( var j = 0; j < arrJSONReturn.objTT[i].quan_huyen.length; j++ ) {
-                            if( arrJSONReturn.objTT[i].quan_huyen[j].id == _this.parent().data('idQh') ) {
-                                arrJSONReturn.objTT[i].quan_huyen[j].status_active = true;
-                            }
-                        }
-                    }
-                }
-
-                if( _this.parent().data('idLoai') != undefined ) {
-                    for( var i = 0; i < arrJSONReturn.objLoai.length; i++ ) {
-                        if( arrJSONReturn.objLoai[i].id == _this.parent().data('idLoai') ) {
-                            arrJSONReturn.objLoai[i].status_active = true;
-                        }
-                    }
-                }
-
-                if( _this.parent().data('idTtuc') != undefined ) {
-                    for( var i = 0; i < arrJSONReturn.objTTuc.length; i++ ) {
-                        if( arrJSONReturn.objTTuc[i].id == _this.parent().data('idTtuc') ) {
-                            arrJSONReturn.objTTuc[i].status_active = true;
-                        }
-                    }
-                }*/
-
                 return false;
             });
         },
@@ -227,6 +206,7 @@ $(document).ready(function() {
                     count = 0;
 
                 for( var i = lenghtSuggest-1; i >= getStep ; i-- ) {
+                    $($('.type-search li').eq(i).data('stepShow')).val('');
                     $('.type-search li').eq(i).remove();
                 }
 
