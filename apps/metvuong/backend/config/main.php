@@ -57,6 +57,9 @@ return [
         'building-project' => [
             'class' => 'vsoft\buildingProject\Module',
         ],
+        'ad' => [
+            'class' => 'vsoft\ad\Module',
+        ],
         'express' => [
             'class' => 'vsoft\express\Module',
         ],
