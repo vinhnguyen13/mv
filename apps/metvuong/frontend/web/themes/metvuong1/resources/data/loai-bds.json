@@ -1,0 +1,50 @@
+[
+	{
+		"id": 1,
+		"ten_loai": "Loại 1"
+	},
+	{
+		"id": 2,
+		"ten_loai": "Loại 2"
+	},
+	{
+		"id": 3,
+		"ten_loai": "Loại 3"
+	},
+	{
+		"id": 4,
+		"ten_loai": "Loại 4"
+	},
+	{
+		"id": 5,
+		"ten_loai": "Loại 5"
+	},
+	{
+		"id": 6,
+		"ten_loai": "Loại 6"
+	},
+	{
+		"id": 7,
+		"ten_loai": "Loại 7"
+	},
+	{
+		"id": 8,
+		"ten_loai": "Loại 8"
+	},
+	{
+		"id": 9,
+		"ten_loai": "Loại 10"
+	},
+	{
+		"id": 10,
+		"ten_loai": "Loại 11"
+	},
+	{
+		"id": 11,
+		"ten_loai": "Loại 12"
+	},
+	{
+		"id": 12,
+		"ten_loai": "Loại 13"
+	}
+]

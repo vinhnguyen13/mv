@@ -36,7 +36,7 @@ $(document).ready(function() {
 
     //start header
     
-    $.getJSON("https://dl.dropboxusercontent.com/u/43486987/metvuongtest/tinh-thanh.json", function(result){
+    $.getJSON(url_tt, function(result){
         arrJSONReturn.objTT = result;
         for( var i = 0; i < result.length; i++ ) {
             var $itemTinhThanh = $('<li data-id-tt='+result[i].id+' data-active='+result[i].status_active+'><a href="#valTT">'+result[i].tinh_thanh+'</a></li>');
@@ -44,7 +44,7 @@ $(document).ready(function() {
         }
     });
 
-    $.getJSON("https://dl.dropboxusercontent.com/u/43486987/metvuongtest/loai-bds.json", function(result){
+    $.getJSON(url_loaibds, function(result){
         arrJSONReturn.objLoai = result;
         for( var i = 0; i < result.length; i++ ) {
             var $item = $('<li data-id-loai='+result[i].id+' data-active='+result[i].status_active+'><a href="#valLoai">'+result[i].ten_loai+'</a></li>');
@@ -52,7 +52,7 @@ $(document).ready(function() {
         }
     });
 
-    $.getJSON("https://dl.dropboxusercontent.com/u/43486987/metvuongtest/loai-tintuc.json", function(result){
+    $.getJSON(url_ttuc, function(result){
         arrJSONReturn.objTTuc = result;
         for( var i = 0; i < result.length; i++ ) {
             var $item = $('<li data-id-ttuc='+result[i].id+' data-active='+result[i].status_active+'><a href="#valTTuc">'+result[i].ten_tt+'</a></li>');
