@@ -9,111 +9,111 @@
         </ul>
         <div class="wrap-search-home">
             <div class="bgcover logo-home ani-logo" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png);"><a href="<?=\yii\helpers\Url::home()?>"></a></div>
-            <div class="box-search-header clearfix">
-                        <div class="pull-left">
-                            <form class="form-inline pull-left" action="" id="search-kind">
-                                <div class="form-group">
-                                    <div class="type-search">
-                                        <ul class="outsideevent"></ul>
-                                        <input type="text" class="form-control outsideevent" placeholder="">
+            <div class="box-search-header clearfix ani-search">
+                <div class="pull-left">
+                    <form class="form-inline pull-left" action="" id="search-kind">
+                        <div class="form-group">
+                            <div class="type-search">
+                                <ul class="outsideevent"></ul>
+                                <input type="text" class="form-control outsideevent" placeholder="">
+                            </div>
+                            <div id="step-1" class="outsideevent search-wrap hidden-effect" data-txt-step="--Chọn Tỉnh/Thành--">
+                                <div class="wrap-effect">
+                                    <div class="search-item">
+                                        <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                        <h3>--Chọn Tỉnh/Thành phố--</h3>
+                                        <ul class="clearfix list-tinh-thanh">
+                                            
+                                        </ul>
                                     </div>
-                                    <div id="step-1" class="outsideevent search-wrap hidden-effect" data-txt-step="--Chọn Tỉnh/Thành--">
-                                        <div class="wrap-effect">
-                                            <div class="search-item">
-                                                <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <h3>--Chọn Tỉnh/Thành phố--</h3>
-                                                <ul class="clearfix list-tinh-thanh">
-                                                    
-                                                </ul>
-                                            </div>
-                                        </div>
+                                </div>
+                            </div>
+                            <div id="step-2" class="outsideevent search-wrap hidden-effect" data-txt-step="--Chọn Quận/Huyện--">
+                                <div class="wrap-effect">
+                                    <div class="search-item clearfix">
+                                        <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                        <h3>--Chọn Quận/Huyện--</h3>
+                                        <ul class="list-quan-huyen">
+                                            
+                                        </ul>
                                     </div>
-                                    <div id="step-2" class="outsideevent search-wrap hidden-effect" data-txt-step="--Chọn Quận/Huyện--">
-                                        <div class="wrap-effect">
-                                            <div class="search-item clearfix">
-                                                <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <h3>--Chọn Quận/Huyện--</h3>
-                                                <ul class="list-quan-huyen">
-                                                    
-                                                </ul>
-                                            </div>
-                                        </div>
+                                </div>
+                            </div>
+                            <div id="step-3" class="outsideevent search-wrap hidden-effect" data-txt-step="--Chọn Loại--">
+                                <div class="wrap-effect">
+                                    <div class="search-item clearfix">
+                                        <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                        <h3>--Chọn loại nhà đất--</h3>
+                                        <ul class="list-loai-bds">
+                                        </ul>
                                     </div>
-                                    <div id="step-3" class="outsideevent search-wrap hidden-effect" data-txt-step="--Chọn Loại--">
-                                        <div class="wrap-effect">
-                                            <div class="search-item clearfix">
-                                                <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <h3>--Chọn loại nhà đất--</h3>
-                                                <ul class="list-loai-bds">
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="step-4" class="outsideevent search-wrap hidden-effect" data-txt-step="Tìm kiếm...">
-                                        <div class="wrap-effect">
-                                            <div class="search-item clearfix">
-                                                <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <div class="suggest-search-text">
-                                                    <h3>--Gợi ý--</h3>
-                                                    <div class="loading-suggest"></div>
-                                                    <ul class="clearfix" style="display:none;">
-                                                        <li><a href="#">Bè, Hồ Chí Minh Huyện <strong>Nhà</strong> Bè, Hồ Chí Minh<span>(1935 tin)</span></a></li>
-                                                        <li><a href="#">Trang, Khánh Hòa Thành phố <strong>Nha</strong> Trang, Khánh Hòa<span>(1935 tin)</span></a></li>
-                                                        <li><a href="#">Quận Thanh Xuân, Hà Nội Phường Nhân Chính, Quận Thanh Xuân, Hà Nội<span>(1935 tin)</span></a></li>
-                                                        <li><a href="#">Thành phố <strong>Nha</strong> Trang, Khánh Hòa<span>(1935 tin)</span></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="step-5" data-step-box="fixed" class="outsideevent search-wrap hidden-effect" data-txt-step="--Chọn Loại Tin Tức--">
-                                        <div class="wrap-effect">
-                                            <div class="search-item clearfix">
-                                                <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <h3>--Chọn loại tin tức--</h3>
-                                                <ul class="list-loai-tt">
-                                                </ul>
-                                            </div>
+                                </div>
+                            </div>
+                            <div id="step-4" class="outsideevent search-wrap hidden-effect" data-txt-step="Tìm kiếm...">
+                                <div class="wrap-effect">
+                                    <div class="search-item clearfix">
+                                        <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                        <div class="suggest-search-text">
+                                            <h3>--Gợi ý--</h3>
+                                            <div class="loading-suggest"></div>
+                                            <ul class="clearfix" style="display:none;">
+                                                <li><a href="#">Bè, Hồ Chí Minh Huyện <strong>Nhà</strong> Bè, Hồ Chí Minh<span>(1935 tin)</span></a></li>
+                                                <li><a href="#">Trang, Khánh Hòa Thành phố <strong>Nha</strong> Trang, Khánh Hòa<span>(1935 tin)</span></a></li>
+                                                <li><a href="#">Quận Thanh Xuân, Hà Nội Phường Nhân Chính, Quận Thanh Xuân, Hà Nội<span>(1935 tin)</span></a></li>
+                                                <li><a href="#">Thành phố <strong>Nha</strong> Trang, Khánh Hòa<span>(1935 tin)</span></a></li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
-                                <button id="btn-search" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                                <input class="getValSuggest" type="hidden" id="valTT" value="">
-                                <input class="getValSuggest" type="hidden" id="valQh" value="">
-                                <input class="getValSuggest" type="hidden" id="valLoai" value="">
-                                <input class="getValSuggest" type="hidden" id="valTTuc" value="">
-                            </form>
-                            <div class="pull-left text-right mgT-10 mgL-15">
-                                <div class="search-select active">
-                                    <a href="#" data-placeholder="--Chọn Tỉnh/Thành--" rel="#dd-search">
-                                        <span>
-                                            <em class="fa fa-home"></em>
-                                            <em class="fa fa-search"></em>
-                                        </span>
-                                        <i>Mua Bán</i>
-                                    </a>
-                                </div>
-                                <div class="search-select">
-                                    <a href="#" data-placeholder="--Chọn Tỉnh/Thành--" rel="#dd-dky">
-                                        <span>
-                                            <em class="fa fa-home"></em>
-                                            <em class="fa fa-usd"></em>
-                                        </span>
-                                        <i>Cho Thuê</i>
-                                    </a>
-                                </div>
-                                <div class="search-select">
-                                    <a href="#" class="" data-step-fix="step-5" data-placeholder="--Chọn Loại Tin Tức--" rel="#dd-news">
-                                        <span>
-                                            <em class="fa fa-home"></em>
-                                            <em class="fa fa-file-text"></em>
-                                        </span>
-                                        <i>Tin Tức</i>
-                                    </a>
+                            </div>
+                            <div id="step-5" data-step-box="fixed" class="outsideevent search-wrap hidden-effect" data-txt-step="--Chọn Loại Tin Tức--">
+                                <div class="wrap-effect">
+                                    <div class="search-item clearfix">
+                                        <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                        <h3>--Chọn loại tin tức--</h3>
+                                        <ul class="list-loai-tt">
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <button id="btn-search" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                        <input class="getValSuggest" type="hidden" id="valTT" value="">
+                        <input class="getValSuggest" type="hidden" id="valQh" value="">
+                        <input class="getValSuggest" type="hidden" id="valLoai" value="">
+                        <input class="getValSuggest" type="hidden" id="valTTuc" value="">
+                    </form>
+                    <div class="pull-left text-right mgT-10 mgL-15">
+                        <div class="search-select active">
+                            <a href="#" data-placeholder="--Chọn Tỉnh/Thành--" rel="#dd-search">
+                                <span>
+                                    <em class="fa fa-home"></em>
+                                    <em class="fa fa-search"></em>
+                                </span>
+                                <i>Mua Bán</i>
+                            </a>
+                        </div>
+                        <div class="search-select">
+                            <a href="#" data-placeholder="--Chọn Tỉnh/Thành--" rel="#dd-dky">
+                                <span>
+                                    <em class="fa fa-home"></em>
+                                    <em class="fa fa-usd"></em>
+                                </span>
+                                <i>Cho Thuê</i>
+                            </a>
+                        </div>
+                        <div class="search-select">
+                            <a href="#" class="" data-step-fix="step-5" data-placeholder="--Chọn Loại Tin Tức--" rel="#dd-news">
+                                <span>
+                                    <em class="fa fa-home"></em>
+                                    <em class="fa fa-file-text"></em>
+                                </span>
+                                <i>Tin Tức</i>
+                            </a>
+                        </div>
                     </div>
+                </div>
+            </div>
         </div>
         <ul class="list-menu-header">
             <li><a href="#">Bán - Thuê</a></li>
