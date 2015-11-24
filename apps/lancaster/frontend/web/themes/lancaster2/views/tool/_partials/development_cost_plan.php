@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vinhnguyen
- * Date: 10/29/2015
- * Time: 1:55 PM
- */
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\widgets\MaskedInput;
 
 ?>
 <style>
@@ -33,6 +26,10 @@ use yii\widgets\MaskedInput;
         width: auto;
     }
 
+    .table tr:hover {
+        background-color: beige;
+    }
+
     .table th {
         padding: 0px 10px 0px 8px !important;
         background-color: gainsboro;
@@ -52,10 +49,32 @@ use yii\widgets\MaskedInput;
         color: #700;
         cursor: pointer;
         margin: 0 auto;
-        display: table;
+        display: none;
     }
 
     .table-remove :hover {
+        color: #f0f0f0;
+    }
+
+    .marketing_table .table-remove {
+        color: #700;
+        cursor: pointer;
+        margin: 0 auto;
+        display: table;
+    }
+
+    .marketing_table .table-remove :hover {
+        color: #f0f0f0;
+    }
+
+    .table-editable .table-remove {
+        color: #700;
+        cursor: pointer;
+        margin: 0 auto;
+        display: table;
+    }
+
+    .table-editable .table-remove :hover {
         color: #f0f0f0;
     }
 
@@ -83,6 +102,12 @@ use yii\widgets\MaskedInput;
     }
     .sub input, .vat input {
         border-color: #a47e3c !important;
+        background-color: #FFFFC5;
+    }
+
+    .total input {
+        border-color: #a47e3c !important;
+        background-color: #c3d9ff;
     }
 
     .exchange_rate {
@@ -115,19 +140,11 @@ use yii\widgets\MaskedInput;
     <div id="table" class="table-editable">
         <div class="exchange_rate pull-right">
             <span class="col-md-11">Exchange rate:</span>
-            <?php echo MaskedInput::widget([
-                'name' => 'exchange_rate',
-                'value' => 22350,
-                'clientOptions' => [
-                    'alias' => 'decimal',
-                    'groupSeparator' => ',',
-                    'autoGroup' => true
-                ],
-            ]); ?>
+            <input type="text" class="form-control text-right" name="exchange_rate" value="22350">
         </div>
         <div class="row">
             <label class="col-md-11">Project Information</label>
-            <span class="project_info_add table-add glyphicon glyphicon-plus col-md-1 text-right pull-right"></span>
+            <span class="project_info_add table-add glyphicon glyphicon-plus col-md-1 text-right pull-right hide"></span>
         </div>
         <table class="table project_info_table">
             <tr>
@@ -140,15 +157,8 @@ use yii\widgets\MaskedInput;
             <tr>
                 <td>Total CFA (Total Construction Floor Area)</td>
                 <td></td>
-                <td><?php echo MaskedInput::widget([
-                        'name' => 'total_cfa',
-                        'value' => 150000,
-                        'clientOptions' => [
-                            'alias' => 'decimal',
-                            'groupSeparator' => ',',
-                            'autoGroup' => true
-                        ],
-                    ]); ?>
+                <td>
+                    <input type="text" class="form-control text-right" name="total_cfa" value="150000">
                 </td>
                 <td>
                     <span class="table-remove glyphicon glyphicon-remove"></span>
@@ -161,15 +171,8 @@ use yii\widgets\MaskedInput;
             <tr>
                 <td>Basement CFA</td>
                 <td></td>
-                <td><?php echo MaskedInput::widget([
-                        'name' => 'basement_cfa',
-                        'value' => 26000,
-                        'clientOptions' => [
-                            'alias' => 'decimal',
-                            'groupSeparator' => ',',
-                            'autoGroup' => true
-                        ],
-                    ]); ?>
+                <td>
+                    <input type="text" class="form-control text-right" name="basement_cfa" value="26000">
                 </td>
                 <td>
                     <span class="table-remove glyphicon glyphicon-remove"></span>
@@ -182,15 +185,9 @@ use yii\widgets\MaskedInput;
             <tr>
                 <td>Residential + Podium CFA</td>
                 <td></td>
-                <td><?php echo MaskedInput::widget([
-                        'name' => 'res_pod_cfa',
-                        'value' => 124000,
-                        'clientOptions' => [
-                            'alias' => 'decimal',
-                            'groupSeparator' => ',',
-                            'autoGroup' => true
-                        ],
-                    ]); ?></td>
+                <td>
+                    <input type="text" class="form-control text-right" name="res_pod_cfa" value="124000">
+                </td>
                 <td>
                     <span class="table-remove glyphicon glyphicon-remove"></span>
                 </td>
@@ -202,15 +199,9 @@ use yii\widgets\MaskedInput;
             <tr>
                 <td>Retail Podium</td>
                 <td></td>
-                <td><?php echo MaskedInput::widget([
-                        'name' => 'retail_podium',
-                        'value' => 16500,
-                        'clientOptions' => [
-                            'alias' => 'decimal',
-                            'groupSeparator' => ',',
-                            'autoGroup' => true
-                        ],
-                    ]); ?></td>
+                <td>
+                    <input type="text" class="form-control text-right" name="retail_podium" value="16500">
+                </td>
                 <td>
                     <span class="table-remove glyphicon glyphicon-remove"></span>
                 </td>
@@ -222,15 +213,9 @@ use yii\widgets\MaskedInput;
             <tr>
                 <td>Residential CFA</td>
                 <td></td>
-                <td><?php echo MaskedInput::widget([
-                        'name' => 'residential_cfa',
-                        'value' => 107500,
-                        'clientOptions' => [
-                            'alias' => 'decimal',
-                            'groupSeparator' => ',',
-                            'autoGroup' => true
-                        ],
-                    ]); ?></td>
+                <td>
+                    <input type="text" class="form-control text-right" name="residential_cfa" value="107500">
+                </td>
                 <td>
                     <span class="table-remove glyphicon glyphicon-remove"></span>
                 </td>
@@ -242,15 +227,9 @@ use yii\widgets\MaskedInput;
             <tr>
                 <td>Net Sellable Area</td>
                 <td></td>
-                <td><?php echo MaskedInput::widget([
-                        'name' => 'net_sellable',
-                        'value' => 78000,
-                        'clientOptions' => [
-                            'alias' => 'decimal',
-                            'groupSeparator' => ',',
-                            'autoGroup' => true
-                        ],
-                    ]); ?></td>
+                <td>
+                    <input type="text" class="form-control text-right" name="net_sellable" value="80000">
+                </td>
                 <td>
                     <span class="table-remove glyphicon glyphicon-remove"></span>
                 </td>
@@ -262,15 +241,9 @@ use yii\widgets\MaskedInput;
             <tr>
                 <td>Total Unit Per Tower</td>
                 <td></td>
-                <td><?php echo MaskedInput::widget([
-                        'name' => 'total_unit',
-                        'value' => 150000,
-                        'clientOptions' => [
-                            'alias' => 'decimal',
-                            'groupSeparator' => ',',
-                            'autoGroup' => true
-                        ],
-                    ]); ?></td>
+                <td>
+                    <input type="text" class="form-control text-right" name="total_unit" value="500">
+                </td>
                 <td>
                     <span class="table-remove glyphicon glyphicon-remove"></span>
                 </td>
@@ -283,15 +256,9 @@ use yii\widgets\MaskedInput;
             <tr class="hide">
                 <td contenteditable="true">Untitled</td>
                 <td></td>
-                <td><?php echo MaskedInput::widget([
-                        'name' => 'pi',
-                        'value' => 0,
-                        'clientOptions' => [
-                            'alias' => 'decimal',
-                            'groupSeparator' => ',',
-                            'autoGroup' => true
-                        ],
-                    ]); ?></td>
+                <td>
+                    <input type="text" class="form-control text-right" name="pi" value="0">
+                </td>
                 <td>
                     <span class="table-remove glyphicon glyphicon-remove"></span>
                 </td>
@@ -304,7 +271,7 @@ use yii\widgets\MaskedInput;
 
         <div class="row">
             <label class="col-md-11">A. Construction Cost</label>
-            <span class="construction_cost_add table-add glyphicon glyphicon-plus col-md-1 text-right pull-right "></span>
+            <span class="construction_cost_add table-add glyphicon glyphicon-plus col-md-1 text-right pull-right hide"></span>
         </div>
         <table class="table construction_cost_table">
             <tr>
@@ -320,15 +287,7 @@ use yii\widgets\MaskedInput;
                     <input type="text" class="form-control text-right" name="pw_usd" >
                 </td>
                 <td>
-                        <?php echo MaskedInput::widget([
-                            'name' => 'pw_vnd',
-                            'class' => 'text-left',
-                            'clientOptions' => [
-                                'alias' => 'decimal',
-                                'groupSeparator' => ',',
-                                'autoGroup' => true
-                            ],
-                        ]); ?>
+                    <input type="text" class="form-control text-right" name="pw_vnd" >
                 </td>
 
                 <td>
@@ -346,15 +305,7 @@ use yii\widgets\MaskedInput;
                     <input type="text" class="form-control text-right" name="bs_usd" >
                 </td>
                 <td>
-                    <?php echo MaskedInput::widget([
-                        'name' => 'bs_vnd',
-                        'class' => 'text-left',
-                        'clientOptions' => [
-                            'alias' => 'decimal',
-                            'groupSeparator' => ',',
-                            'autoGroup' => true
-                        ],
-                    ]); ?>
+                    <input type="text" class="form-control text-right" name="bs_vnd" >
                 </td>
                 <td>
                     <?=Html::hiddenInput('bs_amount', 0, ['class'=>'bs_amount']);?>
@@ -371,15 +322,7 @@ use yii\widgets\MaskedInput;
                     <input type="text" class="form-control text-right" name="rp_usd" >
                 </td>
                 <td>
-                    <?php echo MaskedInput::widget([
-                        'name' => 'rp_vnd',
-                        'class' => 'text-left',
-                        'clientOptions' => [
-                            'alias' => 'decimal',
-                            'groupSeparator' => ',',
-                            'autoGroup' => true
-                        ],
-                    ]); ?>
+                    <input type="text" class="form-control text-right" name="rp_vnd" >
                 </td>
                 <td>
                     <?=Html::hiddenInput('rp_amount', 0, ['class'=>'rp_amount']);?>
@@ -396,15 +339,7 @@ use yii\widgets\MaskedInput;
                     <input type="text" class="form-control text-right" name="rt_usd" >
                 </td>
                 <td>
-                    <?php echo MaskedInput::widget([
-                        'name' => 'rt_vnd',
-                        'class' => 'text-left',
-                        'clientOptions' => [
-                            'alias' => 'decimal',
-                            'groupSeparator' => ',',
-                            'autoGroup' => true
-                        ],
-                    ]); ?>
+                    <input type="text" class="form-control text-right" name="rt_vnd" >
                 </td>
                 <td>
                     <?=Html::hiddenInput('rt_amount', 0, ['class'=>'rt_amount']);?>
@@ -421,15 +356,7 @@ use yii\widgets\MaskedInput;
                     <input type="text" class="form-control text-right" name="ew_usd" >
                 </td>
                 <td>
-                    <?php echo MaskedInput::widget([
-                        'name' => 'ew_vnd',
-                        'class' => 'text-left',
-                        'clientOptions' => [
-                            'alias' => 'decimal',
-                            'groupSeparator' => ',',
-                            'autoGroup' => true
-                        ],
-                    ]); ?>
+                    <input type="text" class="form-control text-right" name="ew_vnd" >
                 </td>
                 <td>
                     <?=Html::hiddenInput('ew_amount', 0, ['class'=>'ew_amount']);?>
@@ -446,15 +373,7 @@ use yii\widgets\MaskedInput;
                     <input type="text" class="form-control text-right" name="mep_usd" >
                 </td>
                 <td>
-                    <?php echo MaskedInput::widget([
-                        'name' => 'mep_vnd',
-                        'class' => 'text-left',
-                        'clientOptions' => [
-                            'alias' => 'decimal',
-                            'groupSeparator' => ',',
-                            'autoGroup' => true
-                        ],
-                    ]); ?>
+                    <input type="text" class="form-control text-right" name="mep_vnd" >
                 </td>
                 <td>
                     <?=Html::hiddenInput('mep_amount', 0, ['class'=>'mep_amount']);?>
@@ -490,36 +409,20 @@ use yii\widgets\MaskedInput;
                 <b>Subtotal Construction Cost</b>
             </div>
             <div class="col-lg-3">
-                <?php echo MaskedInput::widget([
-                    'name' => 'subtotal_A',
-                    'value' => 0,
-                    'clientOptions' => [
-                        'alias' => 'decimal',
-                        'groupSeparator' => ',',
-                        'autoGroup' => true
-                    ],
-                ]); ?>
+                <input type="text" class="form-control text-right" name="subtotal_A" >
             </div>
             <div class="col-lg-6">
                 <b>VAT</b>
             </div>
             <div class="col-lg-3">
-                <?php echo MaskedInput::widget([
-                    'name' => 'vat',
-                    'value' => 0,
-                    'clientOptions' => [
-                        'alias' => 'decimal',
-                        'groupSeparator' => ',',
-                        'autoGroup' => true
-                    ],
-                ]); ?>
+                <input type="text" class="form-control text-right" name="vat" >
             </div>
             <div class="col-lg-3"></div>
         </div>
 
         <div class="row">
             <label class="col-md-11">B. Design & Consultants Cost</label>
-            <span class="construction_cost_add table-add glyphicon glyphicon-plus col-md-1 text-right pull-right"></span>
+            <span class="construction_cost_add table-add glyphicon glyphicon-plus col-md-1 text-right pull-right hide"></span>
 
         </div>
         <table class="table design_consultant_table">
@@ -648,7 +551,7 @@ use yii\widgets\MaskedInput;
                 <td>Sunk Cost</td>
                 <td></td>
                 <td>
-                    <input type="text" class="form-control text-right" name="sunk_cost_amount" >
+                    <input type="text" class="form-control text-right" name="sunk_cost_amount" value="18000000000">
                 </td>
                 <td>
                     <span class="table-remove glyphicon glyphicon-remove"></span>
@@ -681,15 +584,7 @@ use yii\widgets\MaskedInput;
                 <b>Subtotal Design & Consultants Cost</b>
             </div>
             <div class="col-lg-3">
-                <?php echo MaskedInput::widget([
-                    'name' => 'subtotal_B',
-                    'value' => 0,
-                    'clientOptions' => [
-                        'alias' => 'decimal',
-                        'groupSeparator' => ',',
-                        'autoGroup' => true
-                    ],
-                ]); ?>
+                <input type="text" class="form-control text-right" name="subtotal_B" >
             </div>
         </div>
 
@@ -698,7 +593,7 @@ use yii\widgets\MaskedInput;
         <div class="row">
             <label class="col-md-11">C. Land & Associated Fees Cost</label>
             <span
-                class="land_associated_add table-add glyphicon glyphicon-plus col-md-1 text-right pull-right"></span>
+                class="land_associated_add table-add glyphicon glyphicon-plus col-md-1 text-right pull-right "></span>
         </div>
         <table class="table land_associated_table">
             <tr>
@@ -712,7 +607,7 @@ use yii\widgets\MaskedInput;
                 <td>Land Cost</td>
                 <td></td>
                 <td>
-                    <input type="text" class="form-control text-right" name="land_cost_amount" >
+                    <input type="text" class="form-control text-right" name="land_cost_amount" value="250000000000">
                 </td>
                 <td>
                     <span class="table-remove glyphicon glyphicon-remove"></span>
@@ -726,7 +621,8 @@ use yii\widgets\MaskedInput;
             <tr class="hide">
                 <td contenteditable="true">Untitled</td>
                 <td></td>
-                <td><input type="text" class="form-control text-right" name="lc_amount" >
+                <td>
+                    <input type="text" class="form-control text-right" name="lc_amount" >
                 </td>
                 <td>
                     <span class="table-remove glyphicon glyphicon-remove"></span>
@@ -743,34 +639,18 @@ use yii\widgets\MaskedInput;
                 <b>Subtotal Land & Associated Fees Cost</b>
             </div>
             <div class="col-lg-3">
-                <?php echo MaskedInput::widget([
-                    'name' => 'subtotal_C',
-                    'value' => 0,
-                    'clientOptions' => [
-                        'alias' => 'decimal',
-                        'groupSeparator' => ',',
-                        'autoGroup' => true
-                    ],
-                ]); ?>
+                <input type="text" class="form-control text-right" name="subtotal_C" >
             </div>
         </div>
         <br>
         <div style="margin-top: 20px;">
             <div class="col-lg-3">
-                <?= Html::button('Subtotal', ['class' => 'btn btn-primary center-block subtotal ']) ?>
+                <?= Html::button('Subtotal', ['class' => 'btn btn-primary subtotal']) ?>
             </div><div class="col-lg-6">
-                <?php echo MaskedInput::widget([
-                    'name' => 'subtotal',
-                    'value' => 0,
-                    'clientOptions' => [
-                        'alias' => 'decimal',
-                        'groupSeparator' => ',',
-                        'autoGroup' => true
-                    ],
-                ]); ?>
+                <input type="text" class="form-control text-right" name="subtotal" >
             </div>
             <div class="col-lg-3">
-                <?= Html::submitButton('Next', ['class' => 'btn btn-primary pull-right']) ?>
+                <?= Html::submitButton('Next', ['class' => 'btn btn-primary pull-right next']) ?>
             </div>
         </div>
 
@@ -782,116 +662,119 @@ use yii\widgets\MaskedInput;
 <script>
 
     $(document).ready(function(){
-        $("input[name=sunk_cost_amount]").autoNumeric('init', {aPad: false});
-
-        $('.table').find('input[name$=_amount]').each(function () {
+        $('#table').find('input').each(function () {
+            $(this).autoNumeric('init', {vMax: 999999999999999.99, aPad: false});
+        });
+        $('.design_consultant_table').find('input[name$=_amount]').each(function () {
             $(this).attr('tabindex', '-1');
 
         });
-        $('.table').find('input[name$=_vnd]').each(function () {
+        $('.construction_cost_table').find('input[name$=_vnd]').each(function () {
             $(this).attr('tabindex', '-1');
         });
-
-        $('.table').find('input').each(function () {
-            $(this).autoNumeric('init', {aPad: false});
-        });
-
-
+        $("input[name=sunk_cost_amount]").removeAttr('tabindex');
     });
 
-
-    //    var $TABLE = $('#table');
-    var $BTN = $('#export-btn');
-    var $EXPORT = $('#export');
-
-    var pi_counter = 1;
-    $('.project_info_add').click(function () {
-        var $clone = $(".project_info_table").find('tr.hide').clone(true).removeClass('hide table-line');
-        $clone.find('input[name=pi]').attr('name', 'pi' + pi_counter);
-        $(".project_info_table").append($clone);
+    $(document).on("click",'#developmentCostPlan .next',function() {
+        chart.next('/tool/save-step?step=developmentCostPlan', 'p_developmentCostPlan', 'developmentCostPlan/afterNext');
+        return false;
+    });
+    /**
+     * trigger event after success ajax
+     */
+    $(document).bind( 'developmentCostPlan/afterNext', function(event, json, string){
+        $(".mainConfigSetParams").find(".nav-tabs a[href='#profitMarginCalculation']").trigger("click");
+//        console.log(json.data);
+        if(json.data.subtotal){
+            $(".mainConfigSetParams").find('#profitMarginCalculation .lc_cost').autoNumeric('init', {vMax: 999999999999999.99, aPad : false});
+            $(".mainConfigSetParams").find('#profitMarginCalculation .lc_cost').autoNumeric('set', json.data.subtotal);
+            $(".mainConfigSetParams").find('#profitMarginCalculation .lc_cost').attr('value', json.data.subtotal);
+            $(".mainConfigSetParams").find('#profitMarginCalculation .net_sellable').autoNumeric('init', {vMax: 999999999999999.99, aPad : false});
+            $(".mainConfigSetParams").find('#profitMarginCalculation .net_sellable').autoNumeric('set', json.data.net_sellable);
+            $(".mainConfigSetParams").find('#profitMarginCalculation .net_sellable').attr('value', json.data.net_sellable);
+        }
     });
 
-    var cc_counter = 1;
-    $('.construction_cost_add').click(function () {
-        var $clone = $(".construction_cost_table").find('tr.hide').clone(true).removeClass('hide table-line');
-        $clone.find('input[name=cc_vnd]').attr('name', 'cc' + cc_counter + '_vnd');
-        $clone.find('input[name=cc]').attr('name', 'cc' + cc_counter);
-        $(".construction_cost_table").append($clone);
-        cc_counter += 1;
+    var lc_counter = 1;
+    $('.land_associated_add').on('click', function () {
+        var $clone = $(".land_associated_table").find('tr.hide').clone(true).removeClass('hide table-line');
+        $clone.find('input[name=lc_amount]').val(0).attr('name', 'lc' + lc_counter + '_amount').addClass('lc' + lc_counter + '_amount');
+        $(".land_associated_table").append($clone);
+        $(".land_associated_table").find('input:last').focus();
+        lc_counter += 1;
     });
 
     $(".construction_cost_table input[name$=_usd]").change(function() {
-        var total_cfa = parseFloat($("input[name=total_cfa]").attr('value'));
-        var basement_cfa = parseFloat($("input[name=basement_cfa]").attr('value'));
-        var exchange_rate = parseFloat($("input[name=exchange_rate]").attr('value'));
-        var here = $(this).autoNumeric('init', {aPad: false});
+        var here = $(this).autoNumeric('init', {vMax: 999999999999999.99, aPad: false});
+
+        var total_cfa = $("input[name=total_cfa]").autoNumeric('init', {vMax: 999999999999999.99, aPad: false});
+        total_cfa = $("input[name=total_cfa]").autoNumeric('get');
+
+        var basement_cfa = $("input[name=basement_cfa]").autoNumeric('init',{vMax: 999999999999999.99, aPad:false});
+        basement_cfa = $("input[name=basement_cfa]").autoNumeric('get');
+
+        var exchange_rate = $("input[name=exchange_rate]").autoNumeric('init', {vMax: 999999999999999.99, aPad: false});
+        exchange_rate = $("input[name=exchange_rate]").autoNumeric('get');
 
         if($(this).attr('name') === 'pw_usd'){
             var vnd = exchange_rate * here.autoNumeric('get');
             var pw = total_cfa * vnd;
-            $("input[name=pw_vnd").val(vnd);
+            $("input[name=pw_vnd").autoNumeric('set', vnd);
             $(".pw_amount").val(pw);
         }
         else if($(this).attr('name') === 'bs_usd'){
             var vnd = exchange_rate * here.autoNumeric('get');
             var bs = basement_cfa * vnd;
-            $("input[name=bs_vnd").val(vnd);
+            $("input[name=bs_vnd").autoNumeric('set', vnd);
             $(".bs_amount").val(bs);
         }
         else if($(this).attr('name') === 'rp_usd'){
-            var retail_podium = parseFloat($("input[name=retail_podium]").attr('value'));
+            var retail_podium = $("input[name=retail_podium]").autoNumeric('get');
             var vnd = exchange_rate * here.autoNumeric('get');
             var rp = retail_podium * vnd;
-            $("input[name=rp_vnd").val(vnd);
+            $("input[name=rp_vnd").autoNumeric('set', vnd);
             $(".rp_amount").val(rp);
         }
         else if($(this).attr('name') === 'rt_usd'){
-            var residential_cfa = parseFloat($("input[name=residential_cfa]").attr('value'));
+            var residential_cfa = $("input[name=residential_cfa]").autoNumeric('get');
             var vnd = exchange_rate * here.autoNumeric('get');
             var rt = residential_cfa * vnd;
-            $("input[name=rt_vnd").val(vnd);
+            $("input[name=rt_vnd").autoNumeric('set', vnd);
             $(".rt_amount").val(rt);
         }
         else if($(this).attr('name') === 'ew_usd'){
-            var res_pod_cfa = parseFloat($("input[name=res_pod_cfa]").attr('value'));
+            var res_pod_cfa = $("input[name=res_pod_cfa]").autoNumeric('get');
             var vnd = exchange_rate * here.autoNumeric('get');
             var ew = res_pod_cfa * vnd;
-            $("input[name=ew_vnd").val(vnd);
+            $("input[name=ew_vnd").autoNumeric('set', vnd);
             $(".ew_amount").val(ew);
         }
         else if($(this).attr('name') === 'mep_usd'){
             var mep = total_cfa - (basement_cfa/2);
             var vnd = exchange_rate * here.autoNumeric('get');
             var mep_value = mep * vnd;
-            $("input[name=mep_vnd").val(vnd);
+            $("input[name=mep_vnd").autoNumeric('set', vnd);
             $(".mep_amount").val(mep_value);
         }
-
-        var subtotal_A = getSubtotalA();
-        $("input[name=subtotal_A]").val(subtotal_A);
-
-        var vat = subtotal_A * 0.1;
-        $("input[name=vat]").val(vat);
 
     });
 
     $(".design_consultant_table input[name$=_percent]").change(function() {
         var subtotal_A = getSubtotalA();
         var name = $(this).attr('name').replace('_percent','_amount');
-        var value = $(this).autoNumeric('init',{aPad:false});
+        var value = $(this).autoNumeric('init',{vMax: 999999999999999.99, aPad:false});
         value = value.autoNumeric('get') / 100 * subtotal_A;
-        $("input[name="+name+"]").autoNumeric('init',{aPad:false});;
+        $("input[name="+name+"]").autoNumeric('init',{vMax: 999999999999999.99, aPad:false});
         $("input[name="+name+"]").autoNumeric('set', value);
     });
 
-    $(".design_consultant_table input[name^=design_dev_usd]").change(function() {
+    $(".design_consultant_table input[name=design_dev_usd]").change(function() {
         var total_cfa = parseFloat($("input[name=total_cfa]").attr('value'));
         var exchange_rate = parseFloat($("input[name=exchange_rate]").attr('value'));
-
+        var value = $(this).autoNumeric('init',{vMax: 999999999999999.99, aPad : false});
         var name = $(this).attr('name').replace('_usd','_amount');
-        var value = $(this).autoNumeric('init',{aPad:false});
         value = total_cfa * value.autoNumeric('get') * exchange_rate;
-        $("input[name="+name+"]").autoNumeric('init',{aPad:false});
+        $("input[name="+name+"]").autoNumeric('init',{vMax: 999999999999999.99, aPad:false});
         $("input[name="+name+"]").autoNumeric('set', value);
     });
 
@@ -912,22 +795,25 @@ use yii\widgets\MaskedInput;
 
     $(".subtotal").click(function(){
         var subtotal_A = getSubtotalA();
-        $("input[name=subtotal_A]").val(subtotal_A);
-        $("input[name=subtotal_A]").attr('value',subtotal_A);
+        $("input[name=subtotal_A]").autoNumeric('init', {vMax: 999999999999999.99, aPad:false});
+        $("input[name=subtotal_A]").autoNumeric('set', subtotal_A);
         var vat = subtotal_A * 0.1;
-        $("input[name=vat]").val(vat);
-        $("input[name=vat]").attr('value',vat);
+        $("input[name=vat]").autoNumeric('init', {vMax: 999999999999999.99, aPad:false});
+        $("input[name=vat]").autoNumeric('set',vat);
 
         var subtotal_B = getSubtotalB();
 
         var subtotal_C = getSubtotalC();
 
         var subtotalAll = subtotal_A + vat + subtotal_B + subtotal_C;
-        $("input[name=subtotal]").val(subtotalAll);
-        $("input[name=subtotal]").attr('value',subtotalAll);
 
-        $(".sub").show();
+        $("input[name=subtotal]").autoNumeric('init', {vMax: 999999999999999.99, aPad:false});
+        $("input[name=subtotal]").autoNumeric('set', subtotalAll);
+        $("input[name=subtotal]").attr('value', subtotalAll);
+
+        $("#developmentCostPlan .sub").show();
         $(".vat").show();
+        $("input[name=subtotal]").parent('div').addClass('total');
 
         $("input[name=subtotal]").focus();
     });
@@ -935,45 +821,65 @@ use yii\widgets\MaskedInput;
     function getSubtotalA(){
         var subtotal_A = 0;
         $(".construction_cost_table input[name$=_amount]").each(function(){
-            if($.isNumeric($(this).attr('value'))) {
-                subtotal_A = subtotal_A + parseFloat($(this).val());
+            $(this).autoNumeric('init', {vMax: 999999999999999.99, aPad:false});
+            var tempValue =  parseFloat($(this).autoNumeric('get'));
+            if(tempValue > 0) {
+                subtotal_A = subtotal_A + tempValue;
             }
         });
-//        return subtotal_A;
-        return 1710132600000;
+        return subtotal_A;
+//        return 1710132600000;
     }
 
     function getSubtotalB(){
-        var subtotal = 0;
+        var subtotal_B = 0;
+
         $(".design_consultant_table input[name$=_amount]").each(function(){
-            if($(this).autoNumeric('get') > 0) {
-                subtotal = subtotal + $(this).autoNumeric('get');
+            $(this).autoNumeric('init', {vMax: 999999999999999.99, aPad:false});
+            var tempValue =  parseFloat($(this).autoNumeric('get'));
+            if(tempValue > 0) {
+                subtotal_B = subtotal_B + tempValue;
             }
         });
-        $("input[name=subtotal_B]").autoNumeric('set', subtotal);
-        $("input[name=subtotal_B]").attr('value',subtotal);
-        return subtotal;
+        $("input[name=subtotal_B]").autoNumeric('init', {vMax: 999999999999999.99, aPad:false});
+        $("input[name=subtotal_B]").autoNumeric('set', subtotal_B);
+        return subtotal_B;
     }
 
     function getSubtotalC(){
         var subtotal_C = 0;
         $(".land_associated_table input[name$=_amount]").each(function(){
-            if($.isNumeric($(this).attr('value'))) {
-                subtotal_C = subtotal_C + parseFloat($(this).attr('value'));
+            $(this).autoNumeric('init', {vMax: 999999999999999.99, aPad:false});
+            var tempValue =  parseFloat($(this).autoNumeric('get'));
+            if(tempValue > 0) {
+                subtotal_C = subtotal_C + tempValue;
             }
         });
+        $("input[name=subtotal_C]").autoNumeric('init', {vMax: 999999999999999.99, aPad:false});
         $("input[name=subtotal_C]").autoNumeric('set', subtotal_C);
-        $("input[name=subtotal_C]").attr('value',subtotal_C);
         return subtotal_C;
     }
 
-    $("input[name=sunk_cost_amount]").change(function(){
-        var val = $(this).autoNumeric('init', {aPad: false});
-        $(this).autoNumeric('set', val);
-    });
-
     $(".land_associated_table input").change(function(){
         getSubtotalC();
+    });
+
+    $("input[name=exchange_rate]").change(function() {
+        $(".construction_cost_table input").each(function(){
+            $(this).val(0);
+            $(this).attr('value');
+        });
+        $(".design_consultant_table input").each(function(){
+            $(this).val(0);
+            $(this).attr('value',0);
+        });
+        $(".land_associated_table input").each(function(){
+            $(this).val(0);
+            $(this).attr('value',0);
+        });
+
+        $("input[name^=subtotal]").val(0);
+        $("input[name^=subtotal]").attr('value',0);
     });
 
     $(".project_info_table input").change(function(){
@@ -994,22 +900,11 @@ use yii\widgets\MaskedInput;
         $("input[name^=subtotal]").attr('value',0);
     });
 
-    $("input[name=exchange_rate]").change(function() {
-        $(".construction_cost_table input").each(function(){
-            $(this).val(0);
-            $(this).attr('value');
-        });
-        $(".design_consultant_table input").each(function(){
+    $(".construction_cost_table input").change(function() {
+        $(".design_consultant_table input[name$=amount]").each(function(){
             $(this).val(0);
             $(this).attr('value',0);
         });
-        $(".land_associated_table input").each(function(){
-            $(this).val(0);
-            $(this).attr('value',0);
-        });
-
-        $("input[name^=subtotal]").val(0);
-        $("input[name^=subtotal]").attr('value',0);
     });
 
 </script>

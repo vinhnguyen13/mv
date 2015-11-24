@@ -91,8 +91,18 @@ class ToolController extends Controller
             $pathData = Yii::$app->view->theme->basePath.'\\resources\\chart\\';
 
             $data_file = 'data.json';
-            if($step == 'profitMarginCalculation'){
-
+            if($step == 'developmentCostPlan'){
+                return [
+                    'net_sellable' => filter_var($app->request->post('net_sellable'), FILTER_SANITIZE_NUMBER_INT),
+                    'subtotal' => filter_var($app->request->post('subtotal'), FILTER_SANITIZE_NUMBER_INT)
+                ];
+            }
+            else if($step == 'profitMarginCalculation'){
+                return [
+                    'total_project_cost '=> filter_var($app->request->post('total_project_cost'), FILTER_SANITIZE_NUMBER_INT),
+                    'net_sellable'=> filter_var($app->request->post('net_sellable'), FILTER_SANITIZE_NUMBER_INT),
+                    'sale_price'=> filter_var($app->request->post('sale_price'), FILTER_SANITIZE_NUMBER_INT),
+                ];
             }
             else if($step == 'scenario_1' || $step == "calculation_1"){
                 $post = $app->request->post();
