@@ -4,13 +4,14 @@ namespace frontend\controllers;
 use yii\web\Controller;
 use vsoft\buildingProject\models\BuildingProject;
 use yii\data\Pagination;
+use common\vendor\vsoft\ad\models\AdBuildingProject;
 
 class BuildingProjectController extends Controller
 {
 	public $layout = '@app/views/layouts/news';
 	
 	function actionIndex() {
-		$query = BuildingProject::find()->where('`catalog_id` = ' . \Yii::$app->params['buildingCatID']);
+		$query = AdBuildingProject::find()->where('`status` = ' . AdBuildingProject::STATUS_ENABLED);
 		$countQuery = clone $query;
 		$query = $query->orderBy('created_at DESC');
 		
@@ -25,7 +26,7 @@ class BuildingProjectController extends Controller
 	}
 	
 	function actionView($slug) {
-		$model = BuildingProject::find()->where('`slug` = :slug', [':slug' => $slug])->one();
+		$model = AdBuildingProject::find()->where('`slug` = :slug', [':slug' => $slug])->one();
 		
 		if($model) {
 			return $this->render('view', ['model' => $model,]);

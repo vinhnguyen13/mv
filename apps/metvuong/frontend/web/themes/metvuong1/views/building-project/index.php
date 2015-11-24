@@ -67,7 +67,7 @@ use yii\widgets\LinkPager;
 			<?php
 				foreach ($models as $model):
 					$image = '';
-					if($gallery = explode(',', $model->bpGallery)) {
+					if($gallery = explode(',', $model->gallery)) {
 						$image = $gallery[0];
 					}
 			?>
@@ -75,20 +75,22 @@ use yii\widgets\LinkPager;
 				<div>
 					<a href="<?= Url::to(['/building-project/view', 'slug' => $model->slug]) ?>" class="wrap-img-duan">
 						<span class="wrap-img bgcover" style="background-image: url(<?= Url::to('/store/building-project-images/' . $image) ?>);"></span>
-						<span class="name-duan"><?= $model->title ?></span>
-						<span><?= $model->bpLocation ?></span>
+						<span class="name-duan"><?= $model->name ?></span>
+						<span><?= $model->location ?></span>
 					</a>
 					<a href="<?= Url::to(['/building-project/view', 'slug' => $model->slug]) ?>" class="mask">
 						<strong>VỊ TRÍ DỰ ÁN</strong>
-						<span><?= $model->bpLocation ?></span>
+						<span><?= $model->location ?></span>
 						<strong>DIỆN TÍCH KHU ĐẤT</strong>
-						<span><?= $model->bpAcreage ?></span>
-						<?php if($model->bpApartmentNo): ?>
+						<span><?= $model->land_area ?></span>
+						<?php if($model->apartment_no): ?>
 						<strong>SỐ LƯỢNG CĂN HỘ</strong>
-						<span><?= $model->bpApartmentNo ?></span>
+						<span><?= $model->apartment_no ?></span>
 						<?php endif; ?>
+						<?php if($model->floor_no): ?>
 						<strong>SỐ TẦNG</strong>
-						<span><?= $model->bpFloorNo ?></span>
+						<span><?= $model->floor_no ?></span>
+						<?php endif; ?>
 					</a>
 				</div>
 			</div>

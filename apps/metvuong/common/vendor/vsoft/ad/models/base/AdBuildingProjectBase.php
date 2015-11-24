@@ -9,12 +9,21 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
+ * @property string $logo
  * @property string $location
  * @property string $investment_type
  * @property string $land_area
  * @property string $commercial_leasing_area
  * @property string $apartment_no
  * @property string $floor_no
+ * @property string $location_detail
+ * @property string $facilities_detail
+ * @property string $seo_title
+ * @property string $seo_keywords
+ * @property string $seo_description
+ * @property string $start_time
+ * @property string $estimate_finished
+ * @property string $owner_type
  * @property string $facilities
  * @property string $hotline
  * @property string $website
@@ -23,6 +32,7 @@ use Yii;
  * @property string $gallery
  * @property string $video
  * @property string $progress
+ * @property string $slug
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $status
@@ -47,12 +57,12 @@ class AdBuildingProjectBase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'created_at'], 'required'],
+            [['name', 'slug', 'created_at'], 'required'],
+            [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video', 'progress'], 'string'],
             [['lng', 'lat'], 'number'],
-            [['gallery', 'video', 'progress'], 'string'],
             [['created_at', 'updated_at', 'status'], 'integer'],
-            [['name', 'land_area', 'commercial_leasing_area', 'apartment_no', 'floor_no', 'hotline'], 'string', 'max' => 32],
-            [['location', 'investment_type', 'facilities', 'website'], 'string', 'max' => 255]
+            [['name', 'logo', 'land_area', 'apartment_no', 'floor_no', 'start_time', 'estimate_finished', 'hotline', 'slug'], 'string', 'max' => 32],
+            [['location', 'investment_type', 'commercial_leasing_area', 'owner_type', 'facilities', 'website'], 'string', 'max' => 255]
         ];
     }
 
@@ -64,12 +74,21 @@ class AdBuildingProjectBase extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'logo' => 'Logo',
             'location' => 'Location',
             'investment_type' => 'Investment Type',
             'land_area' => 'Land Area',
             'commercial_leasing_area' => 'Commercial Leasing Area',
             'apartment_no' => 'Apartment No',
             'floor_no' => 'Floor No',
+            'location_detail' => 'Location Detail',
+            'facilities_detail' => 'Facilities Detail',
+            'seo_title' => 'Seo Title',
+            'seo_keywords' => 'Seo Keywords',
+            'seo_description' => 'Seo Description',
+            'start_time' => 'Start Time',
+            'estimate_finished' => 'Estimate Finished',
+            'owner_type' => 'Owner Type',
             'facilities' => 'Facilities',
             'hotline' => 'Hotline',
             'website' => 'Website',
@@ -78,6 +97,7 @@ class AdBuildingProjectBase extends \yii\db\ActiveRecord
             'gallery' => 'Gallery',
             'video' => 'Video',
             'progress' => 'Progress',
+            'slug' => 'Slug',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'status' => 'Status',

@@ -3,6 +3,8 @@
 use yii\helpers\Url;
 use vsoft\buildingProject\models\BuildingProject;
 use vsoft\express\components\UploadHelper;
+use common\vendor\vsoft\ad\models\AdBuildingProject;
+use common\vendor\vsoft\ad\models\AdAreaType;
 
 	$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/owl.carousel.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/jquery.maphilight.js', ['depends' => ['yii\web\YiiAsset']]);
@@ -94,7 +96,7 @@ $areaTypes = BuildingProject::getAreaTypes ();
 		<div class="wrap-detail-duan">
 			<div id="tab-show-1" class="item-detail item-tqda">
 				<div id="sync1" class="owl-carousel custom-slide">
-					<?php $gallery = explode(',', $model->bpGallery);
+					<?php $gallery = explode(',', $model->gallery);
 						foreach($gallery as $gal): ?>
 					<div class="item bgcover img-big-duan" style="background-image: url(<?= Url::to('/store/building-project-images/' . $gal) ?>)"></div>
 					<?php endforeach; ?>
@@ -106,33 +108,28 @@ $areaTypes = BuildingProject::getAreaTypes ();
 				</div>
 			</div>
 			<div id="tab-show-2" class="item-detail item-bdvt">
-				<div class="wrap-img">
-					<img src="<?= Url::to('/store/building-project-images/' . $model->bpMapLocation) ?>" alt="">
-				</div>
-				<?= $model->bpMapLocationDes ?>
+				<?= $model->location_detail ?>
 			</div>
 			<div id="tab-show-3" class="item-detail item-ti">
 				<div class="wrap-img">
+					<?php if($model->facilities_detail): ?>
 					<?php
-						$bpFacilities = explode(',', $model->bpFacilitiesDetail);
+						$bpFacilities = explode(',', $model->facilities_detail);
 						foreach ($bpFacilities as $bpFacilitie):
 					?>
 					<img src="<?= Url::to('/store/building-project-images/' . $bpFacilitie) ?>" alt="">
 					<?php endforeach; ?>
+					<?php endif; ?>
 				</div>
-				<?= $model->bpFacilitiesDetailDes ?>
 			</div>
 			<div id="tab-show-4" class="item-detail item-phim3dduan">
 				<iframe class="phim3d" frameborder="0" name="1447229561444" allowfullscreen="" src=""></iframe>
 			</div>
 			<div id="tab-show-5" class="item-detail item-tdxd"></div>
 			<?php
-		    	$areaTypes = BuildingProject::getAreaTypes();
 		    	$counter = 5;
-		    	foreach ($areaTypes as $name => $label) :
+		    	foreach ($model->adAreaTypes as $areaType) :
 		    		$counter++;
-		    		$areaType = json_decode($model->$name, true);
-		    		if(array_filter($areaType)) :
 		    ?>
 		    <div id="tab-show-<?= $counter ?>" class="item-detail">
 				<div id="tab-show-<?= $counter ?>1" class="item-tab"></div>
@@ -146,13 +143,13 @@ $areaTypes = BuildingProject::getAreaTypes ();
 				<div id="tab-show-<?= $counter ?>4" class="item-tab"><img src="<?= Url::to('/store/building-project-images/' . $areaType['document']) ?>" alt=""></div>
 				<?php endif; ?>
 			</div>
-		    <?php endif; endforeach; ?>
+		    <?php endforeach; ?>
 		</div>
 	</div>
 	<div class="col-xs-5 pdL-10">
 		<div class="header-duan clearfix">
-			<a href="#" class="logo-duan"><img src="<?= Url::to('/store/building-project-images/' . $model->bpLogo) ?>" alt=""></a>
-			<h2><?= $model->title ?></h2>
+			<a href="#" class="logo-duan"><img src="<?= Url::to('/store/building-project-images/' . $model->logo) ?>" alt=""></a>
+			<h2><?= $model->name ?></h2>
 		</div>
 		<div class="wrap-infor-duan">
 			<div class="item-infor has-sub tab-type-1">
@@ -161,78 +158,83 @@ $areaTypes = BuildingProject::getAreaTypes ();
 				</a>
 				<div class="show-infor in fadeInLeft">
 					<table>
-						<?php if($model->bpLocation): ?>
+						<?php if($model->location): ?>
 						<tr>
 							<th>VỊ TRÍ DỰ ÁN</th>
-							<td><?= $model->bpLocation ?></td>
+							<td><?= $model->location ?></td>
 						</tr>
 						<?php endif; ?>
-						<?php if($model->bpType): ?>
+						<?php if($model->investment_type): ?>
 						<tr>
 							<th>LOẠI HÌNH ĐẦU TƯ</th>
-							<td><?= $model->bpType ?></td>
+							<td><?= $model->investment_type ?></td>
 						</tr>
 						<?php endif; ?>
-						<?php if($model->bpAcreage): ?>
+						<?php if($model->land_area): ?>
 						<tr>
 							<th>DIỆN TÍCH KHU ĐẤT</th>
-							<td><?= $model->bpAcreage ?></td>
+							<td><?= $model->land_area ?></td>
 						</tr>
 						<?php endif; ?>
-						<?php if($model->bpFloorNo): ?>
+						<?php if($model->floor_no): ?>
 						<tr>
 							<th>SỐ TẦNG</th>
-							<td><?= $model->bpFloorNo ?></td>
+							<td><?= $model->floor_no ?></td>
 						</tr>
 						<?php endif; ?>
-						<?php if($model->bpApartmentNo): ?>
+						<?php if($model->apartment_no): ?>
 						<tr>
 							<th>SỐ LƯỢNG SẢN PHẨM</th>
-							<td><?= $model->bpApartmentNo ?></td>
+							<td><?= $model->apartment_no ?></td>
 						</tr>
 						<?php endif; ?>
-						<?php if($model->bpStartTime): ?>
+						<?php if($model->start_time): ?>
 						<tr>
 							<th>THỜI GIAN XÂY DỰNG</th>
-							<td><?= $model->bpStartTime ?></td>
+							<td><?= $model->start_time ?></td>
 						</tr>
 						<?php endif; ?>
-						<?php if($model->bpEstimateFinished): ?>
+						<?php if($model->estimate_finished): ?>
 						<tr>
 							<th>DỰ KIẾN HOÀN THÀNH</th>
-							<td><?= $model->bpEstimateFinished ?></td>
+							<td><?= $model->estimate_finished ?></td>
 						</tr>
 						<?php endif; ?>
-						<?php if($model->bpOwnerType): ?>
+						<?php if($model->owner_type): ?>
 						<tr>
 							<th>HÌNH THỨC SỞ HỮU</th>
-							<td><?= $model->bpOwnerType ?></td>
+							<td><?= $model->owner_type ?></td>
 						</tr>
 						<?php endif; ?>
-						<?php if($model->bpFacilities): ?>
+						<?php if($model->facilities): ?>
 						<tr>
 							<th>TIỆN ÍCH</th>
-							<td><?= $model->bpFacilities ?></td>
+							<td><?= $model->facilities ?></td>
 						</tr>
 						<?php endif; ?>
 					</table>
 				</div>
 			</div>
+			<?php if($model->location_detail): ?>
 			<div class="item-infor tab-type-2">
 				<a href="#tab-show-2" class="clearfix">BẢN ĐỒ VỊ TRÍ</a>
 			</div>
+			<?php endif; ?>
+			<?php if($model->facilities_detail): ?>
 			<div class="item-infor tab-type-2">
 				<a href="#tab-show-3" class="clearfix">TIỆN ÍCH</a>
 			</div>
+			<?php endif; ?>
+			<?php if($model->video): ?>
 			<div class="item-infor has-sub tab-type-3">
 				<a href="#tab-show-4" class="clearfix">PHIM 3D DỰ ÁN<em
 					class="fa fa-chevron-right pull-right"></em></a>
 				<div class="show-infor clearfix">
 					<div class="video-thumb">
 						<?php
-							$bpVideos = array_filter(explode(PHP_EOL, $model->bpVideo));
-							foreach ($bpVideos as $k => $bpVideo):
-								parse_str(parse_url($bpVideo, PHP_URL_QUERY), $videoParams);
+							$videos = array_filter(explode(PHP_EOL, $model->video));
+							foreach ($videos as $k => $video):
+								parse_str(parse_url($video, PHP_URL_QUERY), $videoParams);
 								$videoId = $videoParams['v'];
 						?>
 						<div class="video-item">
@@ -246,13 +248,14 @@ $areaTypes = BuildingProject::getAreaTypes ();
 					</div>
 				</div>
 			</div>
+			<?php endif; ?>
 			<?php
-				if($model->bpProgress):
-					$bpProgress = json_decode($model->bpProgress, true);
+				if($model->progress):
+					$progress = json_decode($model->progress, true);
 					$groupByYears = [];
 					$firstActive = true;
 					
-					foreach ($bpProgress as $bpp) {
+					foreach ($progress as $bpp) {
 						$groupByYears[$bpp['year']][] = $bpp;
 					}
 			?>
@@ -288,36 +291,37 @@ $areaTypes = BuildingProject::getAreaTypes ();
 			</div>
 			<?php endif; ?>
 			<?php
+				$mapLabels = AdAreaType::mapLabels();
 		    	$counter = 5;
-		    	foreach ($areaTypes as $name => $label) :
+		    	foreach ($model->adAreaTypes as $areaType) :
 		    		$counter++;
-		    		$areaType = json_decode($model->$name, true);
-		    		if(array_filter($areaType)) :
 		    ?>
 		    <div class="item-infor has-sub tab-kch tab-type-4">
-				<a href="#tab-show-<?= $counter ?>" class="clearfix" data-active-first="true"><?= mb_strtoupper($label, 'utf-8') ?><em class="fa fa-chevron-right pull-right"></em></a>
+				<a href="#tab-show-<?= $counter ?>" class="clearfix" data-active-first="true"><?= mb_strtoupper($mapLabels[$areaType->type], 'utf-8') ?><em class="fa fa-chevron-right pull-right"></em></a>
 				<div class="show-infor fadeInLeft">
+					<?php if($areaType->floor_plan): $areaType->floor_plan = json_decode($areaType->floor_plan, true); ?>
 					<div class="item-infor">
 						<a href="#" class="clearfix" data-active-first="true">MẶT BẰNG</a>
 						<div class="show-infor">
-							<?php foreach($areaType['floorPlan'] as $k => $floorPlan):
-								if(isset($floorPlan['imagesDetail'][0])) {
-									$imagesDetail = explode(',', $floorPlan['imagesDetail'][0]);
+							<?php foreach($areaType->floor_plan as $k => $floor_plan):
+								if(isset($floor_plan['imagesDetail'][0])) {
+									$imagesDetail = explode(',', $floor_plan['imagesDetail'][0]);
 									array_walk($imagesDetail, function(&$item) {
 										$item = Url::to('/store/building-project-images/' . $item);
 									});
 								} else {
 									$imagesDetail = [];
-									$floorPlan['imagesCoordinate'] = [];
+									$floor_plan['imagesCoordinate'] = [];
 								}
 								
 							?>
 								<div class="item-infor">
-									<a data-coord="<?= implode(',', $floorPlan['imagesCoordinate']) ?>" data-images="<?= htmlentities(json_encode($imagesDetail)) ?>" href="#tab-show-<?= $counter ?>1" class="clearfix" <?= $k==0 ? 'data-active-first="true" ' : '' ?>data-srcmb="<?= $floorPlan['images'] ? Url::to('/store/building-project-images/' . $floorPlan['images']) : '' ?>"><?= $floorPlan['title'] ?></a>
+									<a data-coord="<?= implode(',', $floor_plan['imagesCoordinate']) ?>" data-images="<?= htmlentities(json_encode($imagesDetail)) ?>" href="#tab-show-<?= $counter ?>1" class="clearfix" <?= $k==0 ? 'data-active-first="true" ' : '' ?>data-srcmb="<?= $floor_plan['images'] ? Url::to('/store/building-project-images/' . $floor_plan['images']) : '' ?>"><?= $floor_plan['title'] ?></a>
 								</div>
 							<?php endforeach; ?>
 						</div>
 					</div>
+					<?php endif; ?>
 					<?php if($areaType['payment']): ?>
 					<div class="item-infor">
 						<a href="#tab-show-<?= $counter ?>2" class="clearfix tab-sub-link">GIÁ BÁN & THANH TOÁN</a>
@@ -335,7 +339,7 @@ $areaTypes = BuildingProject::getAreaTypes ();
 					<?php endif; ?>
 				</div>
 			</div>
-		    <?php endif; endforeach; ?>
+		    <?php endforeach; ?>
 		</div>
 	</div>
 </div>

@@ -1,10 +1,14 @@
 var map;
 var marker;
 var initialCenter;
+var latField, lngField;
 
 function initMap() {
 	$(document).ready(function(){
-		initialCenter = {lat: Number($('#buildingproject-bplat').val()), lng: Number($('#buildingproject-bplng').val())};
+		latField = $('#buildingproject-lat');
+		lngField = $('#buildingproject-lng');
+		
+		initialCenter = {lat: Number(latField.val()), lng: Number(lngField.val())};
 		
 		map = new google.maps.Map(document.getElementById('map'), {
 			center: initialCenter,
@@ -18,7 +22,7 @@ function initMap() {
 
 function initMapView() {
 	$(document).ready(function(){
-		initialCenter = {lat: Number($('#buildingproject-bplat').val()), lng: Number($('#buildingproject-bplng').val())};
+		initialCenter = {lat: Number($('#buildingproject-lat').val()), lng: Number($('#buildingproject-lng').val())};
 		
 		map = new google.maps.Map(document.getElementById('map'), {
 			center: initialCenter,
@@ -66,12 +70,12 @@ function buildGeoCodeButton() {
 	geoCodeButton.appendChild(document.createTextNode('Định vị theo địa chỉ đã nhập'));
 	
 	geoCodeButton.onclick = function() {
-		var address = $('#buildingproject-bplocation').val();
+		var address = $('#buildingproject-location').val();
 		
 		if(address != '') {
 			var geocoder = new google.maps.Geocoder;
 			geocoder.geocode({
-				address: $('#buildingproject-bplocation').val(),
+				address: address,
 			}, function (response) {
 				var latLng = initialCenter;
 				
@@ -91,6 +95,6 @@ function buildGeoCodeButton() {
 }
 
 function setField(latLng) {
-	$('#buildingproject-bplat').val(latLng.lat);
-	$('#buildingproject-bplng').val(latLng.lng);
+	latField.val(latLng.lat);
+	lngField.val(latLng.lng);
 }

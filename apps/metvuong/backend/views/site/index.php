@@ -35,8 +35,8 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
 			      <div class="panel-heading">Dự án xây dựng</div>
 			      <div class="panel-body">
 			      	<ol class="list-unstyled">
-	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['building-project/'])?>">Quản lý dự án</a></li>
-	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['building-project/default/create'])?>">Thêm dự án</a></li>
+	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['ad/building-project/'])?>">Quản lý dự án</a></li>
+	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['ad/building-project/create'])?>">Thêm dự án</a></li>
 	                </ol>
 			      </div>
 			    </div>
