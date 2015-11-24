@@ -28,6 +28,9 @@ class m151120_083737_alter_ads_table extends Migration
 		$this->execute("ALTER TABLE `metvuong`.`ad_building_project`   
   CHANGE `lng` `lng` FLOAT(10,6) NULL,
   CHANGE `lat` `lat` FLOAT(10,6) NULL;");
+		
+		$this->execute("ALTER TABLE `metvuong`.`ad_investor`   
+  ADD COLUMN `status` TINYINT(1) DEFAULT 1  NOT NULL AFTER `email`;");
     }
 
     public function down()
@@ -54,6 +57,9 @@ class m151120_083737_alter_ads_table extends Migration
 		$this->execute("ALTER TABLE `metvuong`.`ad_building_project`   
   CHANGE `lng` `lng` FLOAT NULL,
   CHANGE `lat` `lat` FLOAT NULL;");
+		
+		$this->execute("ALTER TABLE `metvuong`.`ad_investor`   
+  DROP COLUMN `status`;");
     }
 
     /*
