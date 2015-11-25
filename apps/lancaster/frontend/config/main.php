@@ -53,7 +53,7 @@ return [
                 'site/login' => 'user/security/login',
                 'site/signup' => 'user/registration/register',
 //                'news/<action:\w+>' => 'news/<action>',
-                '<cat_id:\d+>-<cat_slug>/<id:\d+>-<slug>' => 'site/news-detail',
+                '<cat>/<id:\d+>-<slug>' => 'site/news-detail',
                 'news' => 'site/news',
                 'contact' => 'contact/index',
                 'booking' => 'booking/index',
