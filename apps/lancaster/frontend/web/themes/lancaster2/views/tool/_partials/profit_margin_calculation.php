@@ -41,7 +41,7 @@ use yii\widgets\ActiveForm;
     <label class="col-md-11">Marketing and Selling Expenses Breakdown</label>
     <span class="marketing_add table-add glyphicon glyphicon-plus col-md-1 text-right pull-right "></span>
 </div>
-<table class="table marketing_table">
+<table class="table marketing_table table-editable">
     <tr>
         <th width="35%">Name</th>
         <th class="text-center">Percent</th>
@@ -94,7 +94,6 @@ use yii\widgets\ActiveForm;
             <span class="table-down glyphicon glyphicon-arrow-down"></span>
         </td>
     </tr>
-    <!-- This is our clonable table line -->
     <tr class="hide">
         <td contenteditable="true">Untitled</td>
         <td>
@@ -111,7 +110,6 @@ use yii\widgets\ActiveForm;
             <span class="table-down glyphicon glyphicon-arrow-down"></span>
         </td>
     </tr>
-
 </table>
 <div class="row sub">
     <div class="col-lg-3">
@@ -129,7 +127,11 @@ use yii\widgets\ActiveForm;
     <div class="col-lg-9">
         <input type="text" class="form-control text-right total_project_cost" name="total_project_cost" value="0">
     </div>
-    <div class="col-lg-12">
+    <div class="col-lg-12 total_project_detail">
+        <div class="row">
+            <label>Total project cost detail</label>
+            <span class="total_project_add table-add glyphicon glyphicon-plus col-md-1 text-right pull-right hide"></span>
+        </div>
         <table class="table total_project_table">
             <tr>
                 <th width="35%">Name</th>
@@ -139,7 +141,7 @@ use yii\widgets\ActiveForm;
                 <th></th>
             </tr>
             <tr>
-                <td>Đơn giá 1 m2 xây dựng tính trên phần diện tích hữu dụng (NSA)</td>
+                <td contenteditable="true">Đơn giá 1 m2 xây dựng tính trên phần diện tích hữu dụng (NSA)</td>
                 <td></td>
                 <td>
                     <input type="text" class="form-control text-right nsa_amount" name="nsa_amount" value="0">
@@ -153,7 +155,7 @@ use yii\widgets\ActiveForm;
                 </td>
             </tr>
             <tr>
-                <td>Selling Commission</td>
+                <td contenteditable="true">Selling Commission</td>
                 <td>
                     <input type="text" class="form-control text-right selling_commission_percent" name="selling_percent" value="0">
                 </td>
@@ -169,7 +171,7 @@ use yii\widgets\ActiveForm;
                 </td>
             </tr>
             <tr>
-                <td>Target Profit % per Sellable Square Meter</td>
+                <td contenteditable="true">Target Profit % per Sellable Square Meter</td>
                 <td>
                     <input type="text" class="form-control text-right target_percent" name="target_percent" value="0">
                 </td>
@@ -184,7 +186,6 @@ use yii\widgets\ActiveForm;
                     <span class="table-down glyphicon glyphicon-arrow-down"></span>
                 </td>
             </tr>
-            <!-- This is our clonable table line -->
             <tr class="hide">
                 <td contenteditable="true">Untitled</td>
                 <td>
@@ -203,19 +204,18 @@ use yii\widgets\ActiveForm;
             </tr>
         </table>
         <div class="row">
-            <div class="col-lg-3">
-                <b>Sale Price</b>
+            <div class="col-lg-3 text-right">
+                <b>Sale Price</b> <i style="color: #a47e3c;">(Offer price * 1.1)</i>
             </div>
             <div class="col-lg-9">
                 <input type="text" class="form-control text-right sales_price_w_vat" name="sales_price_w_vat" >
             </div>
         </div>
+        <div>
+            <?= Html::submitButton('Next', ['class' => 'btn btn-primary col-lg-1 pull-right next']) ?>
+        </div>
     </div>
 </div>
-<div>
-    <?= Html::submitButton('Next', ['class' => 'btn btn-primary col-lg-1 pull-right next']) ?>
-</div>
-
 <?php ActiveForm::end(); ?>
 
 <script>
@@ -228,6 +228,7 @@ use yii\widgets\ActiveForm;
 
         });
         $(".percentage").autoNumeric('init',{aSign: '%', pSign: 's'});
+        $(".total_project_detail").hide();
     });
 
     $(document).on("click",'#profitMarginCalculation .next',function() {
@@ -258,22 +259,27 @@ use yii\widgets\ActiveForm;
     }
 
     $(".percentage").blur(function(){
-        getFinanceCost();
+//        getFinanceCost();
+        getTotalProjectCost();
     });
 
     $(".lc_cost").change(function(){
-        getFinanceCost();
+//        getFinanceCost();
+        getTotalProjectCost();
     });
 
     $(".calc_total_project").click(function(){
         getTotalProjectCost();
+//        $("#profitMarginCalculation .total_project_detail").hide();
+//        $("#profitMarginCalculation .sub").hide();
+        $("#profitMarginCalculation .total_project_detail").show("slow");
+        $("#profitMarginCalculation .sub").show("slow");
     });
 
     function getTotalProjectCost(){
         var lc_cost = parseFloat($(".lc_cost").autoNumeric('get'));
         var finance_cost = getFinanceCost();
         var market_sale_cost = getMarketSaleCost();
-        $("#profitMarginCalculation .sub").show();
         var total_project_cost = lc_cost + finance_cost + market_sale_cost;
         $("#profitMarginCalculation .total_project_cost").autoNumeric('init', {vMax: 999999999999999.99, aPad : false});
         $("#profitMarginCalculation .total_project_cost").autoNumeric('set', total_project_cost);
@@ -286,21 +292,35 @@ use yii\widgets\ActiveForm;
         $("#profitMarginCalculation .lc_cost").parent('div').addClass('vat');
         $("#profitMarginCalculation .finance_cost").parent('div').addClass('vat');
         $("#profitMarginCalculation .total_project_cost").parent('div').addClass('total');
+        getSalePrice();
+        $("#profitMarginCalculation .sales_price_w_vat").parent('div').addClass('total');
+        $("#profitMarginCalculation .selling_percent").focus();
 
     }
 
     var mark_counter = 1;
     $('.marketing_add').click(function () {
         var $clone = $(".marketing_table").find('tr.hide').clone(true).removeClass('hide table-line');
-        $clone.find('input[name=mark_amount]').attr('name', 'mark' + lc_counter + '_amount').addClass('mark' + mark_counter + '_amount');
-        $clone.find('input[name=mark_percent]').attr('name', 'mark' + lc_counter + '_percent').addClass('mark' + mark_counter + '_percent');
+        $clone.find('input[name=mark_amount]').attr('name', 'mark' + mark_counter + '_amount').addClass('mark' + mark_counter + '_amount');
+        $clone.find('input[name=mark_percent]').attr('name', 'mark' + mark_counter + '_percent').addClass('mark' + mark_counter + '_percent');
         $(".marketing_table").append($clone);
         $(".marketing_table input[name$=_percent]:last").focus();
         mark_counter += 1;
     });
 
+    var total_counter = 1;
+    $('.total_project_add').click(function (e) {
+        var $clone = $(".total_project_table").find('tr.hide').clone(true).removeClass('hide table-line');
+        $clone.find('input[name=total_amount]').attr('name', 'total' + total_counter + '_amount').addClass('total' + total_counter + '_amount');
+        $clone.find('input[name=total_percent]').attr('name', 'total' + total_counter + '_percent').addClass('total' + total_counter + '_percent');
+        $(".total_project_table").append($clone);
+        $(".total_project_table input[name$=_percent]:last").focus();
+        total_counter += 1;
+    });
+
     $(".table-remove").click(function () {
         $(this).parents('tr').detach();
+        getTotalProjectCost();
     });
 
     $(".table-up").click(function () {
@@ -322,7 +342,8 @@ use yii\widgets\ActiveForm;
         $("input[name="+name+"]").autoNumeric('init',{vMax: 999999999999999.99, aPad:false});
         $("input[name="+name+"]").autoNumeric('set', value);
 
-        getMarketSaleCost();
+//        getMarketSaleCost();
+        getTotalProjectCost();
     });
 
     function getMarketSaleCost(){
@@ -341,9 +362,9 @@ use yii\widgets\ActiveForm;
     $(".total_project_table input[name$=_percent]").change(function() {
         var nsa_amount = parseFloat($(".nsa_amount").autoNumeric('get'));
         var name = $(this).attr('name').replace('_percent','_amount');
-        var value = $(this).autoNumeric('init',{vMax: 999999999999999.99, aPad:false});
+        var value = $(this).autoNumeric('init',{vMax: 999999999999999.99999, aPad:false});
         value = value.autoNumeric('get') / 100 * nsa_amount;
-        $("input[name="+name+"]").autoNumeric('init',{vMax: 999999999999999.99, aPad:false});
+        $("input[name="+name+"]").autoNumeric('init',{vMax: 999999999999999.99999, aPad:false});
         $("input[name="+name+"]").autoNumeric('set', value);
         getSalePrice();
     });
@@ -355,14 +376,15 @@ use yii\widgets\ActiveForm;
     function getSalePrice(){
         var offer_price = 0;
         $(".total_project_table input[name$=_amount]").each(function(){
-            $(this).autoNumeric('init', {vMax: 999999999999999.99, aPad : false});
+            $(this).attr('style','border-color: #a47e3c;');
+            $(this).autoNumeric('init', {vMax: 999999999999999.99999, aPad : false});
             var tempValue = parseFloat($(this).autoNumeric('get'));
             if(tempValue > 0) {
                 offer_price = offer_price + tempValue;
             }
         });
         var sale_price = offer_price * 1.1;
-        $("#profitMarginCalculation .sales_price_w_vat").autoNumeric('init', {vMax: 999999999999999.99, aPad : false});
+        $("#profitMarginCalculation .sales_price_w_vat").autoNumeric('init', {vMax: 999999999999999.99999, aPad : false});
         $("#profitMarginCalculation .sales_price_w_vat").autoNumeric('set', sale_price);
         return sale_price;
     }

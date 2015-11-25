@@ -19,55 +19,56 @@ $months = array_keys($categories);
 ?>
 <div class="row main_content">
     <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-    <div class="container">
-        <h2 class="text-center"><?=strtoupper('Cash flow data')?> </h2>
-        <p></p>
-        <div class="table-responsive"">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <?php
-                    foreach($data as $k => $d){
-                        if(!empty($k)) {
-                            echo "<th>" . strtoupper($k) . "</th>";
-                        }
-                    }
-                    ?>
-                </tr>
-                </thead>
-                <tbody>
-                <?php
+</div>
 
-                for($i = 0; $i < count($months); $i++){
-                ?>
-                <tr>
-                    <th><?=$months[$i] ?></th>
-                    <?php
-                    if(count($scenario_1) > 0) {
-                        if (empty($data_1[$i]) == false) {
-                            ?>
-                            <td><?= number_format($data_1[$i], 0, ".", ",") ?></td>
-                        <?php } else { ?>
-                            <td></td>
-                        <?php }
-                    }?>
+<div class="row cash-flow-data">
+    <h2 class="text-center"><?=strtoupper('Cash flow data')?> </h2>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>#</th>
+            <?php
+            foreach($data as $k => $d){
+                if(!empty($k)) {
+                    echo "<th>" . strtoupper($k) . "</th>";
+                }
+            }
+            ?>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
 
-                    <?php
-                    if(count($scenario_2) > 0) {
-                        if (empty($data_2[$i]) == false) {
-                            ?>
-                            <td><?= number_format($data_2[$i], 0, ".", ",") ?></td>
-                        <?php } else { ?>
-                            <td></td>
-                        <?php }
-                    }?>
-                </tr>
+        for($i = 0; $i < count($months); $i++){
+            ?>
+            <tr>
+                <th><?=$months[$i] ?></th>
                 <?php
-                } ?>
-                </tbody>
-            </table>
-        </div>
+                if(count($scenario_1) > 0) {
+                    if (empty($data_1[$i]) == false) {
+                        ?>
+                        <td><?= number_format($data_1[$i], 0, ".", ",") ?></td>
+                    <?php } else { ?>
+                        <td></td>
+                    <?php }
+                }?>
+
+                <?php
+                if(count($scenario_2) > 0) {
+                    if (empty($data_2[$i]) == false) {
+                        ?>
+                        <td><?= number_format($data_2[$i], 0, ".", ",") ?></td>
+                    <?php } else { ?>
+                        <td></td>
+                    <?php }
+                }?>
+            </tr>
+            <?php
+        } ?>
+        </tbody>
+    </table>
+        <button class="btn btn-primary" onclick="goBack()">Go Back</button>
     </div>
 </div>
 
@@ -118,9 +119,10 @@ $months = array_keys($categories);
                 data: <?=json_encode($data_2, JSON_NUMERIC_CHECK )?>
             }]
         });
-
-
-
     });
+
+    function goBack() {
+        window.history.back();
+    }
 
 </script>

@@ -33,15 +33,16 @@ $items[] = [
 
 ?>
 <div class="mainConfigSetParams">
-<?php
-echo \yii\bootstrap\Tabs::widget([
-	'items' => $items,
-	'options' => ['tag' => 'div'],
-	'itemOptions' => ['tag' => 'div'],
-	'headerOptions' => ['class' => 'my-class'],
-	'clientOptions' => ['collapsible' => false],
-]);
-?>
+	<a href="http://local.lancaster.com/en-US/tool/chart" class="btn btn-primary pull-right">View Chart</a>
+	<?php
+	echo \yii\bootstrap\Tabs::widget([
+		'items' => $items,
+		'options' => ['tag' => 'div'],
+		'itemOptions' => ['tag' => 'div'],
+		'headerOptions' => ['class' => 'my-class'],
+		'clientOptions' => ['collapsible' => false],
+	]);
+	?>
 </div>
 
 <script>

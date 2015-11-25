@@ -56,17 +56,6 @@ use yii\widgets\ActiveForm;
         color: #f0f0f0;
     }
 
-    .marketing_table .table-remove {
-        color: #700;
-        cursor: pointer;
-        margin: 0 auto;
-        display: table;
-    }
-
-    .marketing_table .table-remove :hover {
-        color: #f0f0f0;
-    }
-
     .table-editable .table-remove {
         color: #700;
         cursor: pointer;
@@ -118,8 +107,6 @@ use yii\widgets\ActiveForm;
         margin-bottom: 0px;
     }
 
-
-
 </style>
 <div class="container">
     <h1>Development Cost Plan</h1>
@@ -137,7 +124,7 @@ use yii\widgets\ActiveForm;
     ]); ?>
 
 
-    <div id="table" class="table-editable">
+    <div id="table">
         <div class="exchange_rate pull-right">
             <span class="col-md-11">Exchange rate:</span>
             <input type="text" class="form-control text-right" name="exchange_rate" value="22350">
@@ -423,7 +410,6 @@ use yii\widgets\ActiveForm;
         <div class="row">
             <label class="col-md-11">B. Design & Consultants Cost</label>
             <span class="construction_cost_add table-add glyphicon glyphicon-plus col-md-1 text-right pull-right hide"></span>
-
         </div>
         <table class="table design_consultant_table">
             <tr>
@@ -588,14 +574,11 @@ use yii\widgets\ActiveForm;
             </div>
         </div>
 
-        <br>
-
         <div class="row">
             <label class="col-md-11">C. Land & Associated Fees Cost</label>
-            <span
-                class="land_associated_add table-add glyphicon glyphicon-plus col-md-1 text-right pull-right "></span>
+            <span class="land_associated_add table-add glyphicon glyphicon-plus col-md-1 text-right pull-right "></span>
         </div>
-        <table class="table land_associated_table">
+        <table class="table land_associated_table table-editable">
             <tr>
                 <th width="35%">Name</th>
                 <th width="15%"class="text-center"></th>
@@ -617,7 +600,6 @@ use yii\widgets\ActiveForm;
                     <span class="table-down glyphicon glyphicon-arrow-down"></span>
                 </td>
             </tr>
-            <!-- This is our clonable table line -->
             <tr class="hide">
                 <td contenteditable="true">Untitled</td>
                 <td></td>
@@ -642,7 +624,6 @@ use yii\widgets\ActiveForm;
                 <input type="text" class="form-control text-right" name="subtotal_C" >
             </div>
         </div>
-        <br>
         <div style="margin-top: 20px;">
             <div class="col-lg-3">
                 <?= Html::button('Subtotal', ['class' => 'btn btn-primary subtotal']) ?>
@@ -660,7 +641,6 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 </div>
 <script>
-
     $(document).ready(function(){
         $('#table').find('input').each(function () {
             $(this).autoNumeric('init', {vMax: 999999999999999.99, aPad: false});
@@ -693,11 +673,12 @@ use yii\widgets\ActiveForm;
         $(".mainConfigSetParams").find('#profitMarginCalculation .net_sellable_area').attr('value', net_sellable_area);
     });
 
+    var $table = $("#table");
     var lc_counter = 1;
     $('.land_associated_add').on('click', function () {
-        var $clone = $(".land_associated_table").find('tr.hide').clone(true).removeClass('hide table-line');
+        var $clone = $table.find('.land_associated_table tr.hide').clone(true).removeClass('hide table-line');
         $clone.find('input[name=lc_amount]').val(0).attr('name', 'lc' + lc_counter + '_amount').addClass('lc' + lc_counter + '_amount');
-        $(".land_associated_table").append($clone);
+        $table.find('.land_associated_table').append($clone);
         $(".land_associated_table").find('input:last').focus();
         lc_counter += 1;
     });
