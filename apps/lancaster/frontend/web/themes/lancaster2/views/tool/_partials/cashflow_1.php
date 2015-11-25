@@ -24,6 +24,9 @@ use yii\helpers\Html;
     'options' => ['enctype' => 'multipart/form-data', 'id'=>'p_scenario_1'],
     'action' => \yii\helpers\Url::toRoute(['tool/save-step', 'step'=>'scenario_1'])
 ]); ?>
+<input type="hidden" class="total_project_cost" name="total_project_cost" value="0" >
+<input type="hidden" class="sales_price_w_vat" name="sales_price_w_vat" value="0" >
+<input type="hidden" class="net_sellable_area" name="net_sellable_area" value="0" >
 
 <div class="payment_schedule">
     <h4><b>Payment Schedule (%)</b></h4>
@@ -74,10 +77,6 @@ use yii\helpers\Html;
         <div class="col-md-3"><input type="text" name="pay_15" value="5" class="form-control"/></div>
     </div>
 </div>
-
-<?=Html::hiddenInput('total_project_cost', 2246792608858,['class'=>'form-control form-group total_project_cost']);?>
-<?=Html::hiddenInput('sales_price_w_vat',  36438367.31032530,['class'=>'form-control form-group sales_price_w_vat']);?>
-<?=Html::hiddenInput('net_sellable_area', 78000,['class'=>'form-control form-group net_sellable_area']);?>
 
 <fieldset id="1">
     <legend>T1</legend>
@@ -144,8 +143,6 @@ use yii\helpers\Html;
 </fieldset>
 
 <input type="hidden" class="form-control form-group counter" name="counter" value="3">
-
-
 
 <div class="form-group command">
     <div class="col-lg-3">

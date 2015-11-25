@@ -228,7 +228,7 @@ use yii\widgets\ActiveForm;
                 <td>Net Sellable Area</td>
                 <td></td>
                 <td>
-                    <input type="text" class="form-control text-right" name="net_sellable" value="80000">
+                    <input type="text" class="form-control text-right" name="net_sellable_area" value="78000">
                 </td>
                 <td>
                     <span class="table-remove glyphicon glyphicon-remove"></span>
@@ -685,14 +685,12 @@ use yii\widgets\ActiveForm;
     $(document).bind( 'developmentCostPlan/afterNext', function(event, json, string){
         $(".mainConfigSetParams").find(".nav-tabs a[href='#profitMarginCalculation']").trigger("click");
 //        console.log(json.data);
-        if(json.data.subtotal){
-            $(".mainConfigSetParams").find('#profitMarginCalculation .lc_cost').autoNumeric('init', {vMax: 999999999999999.99, aPad : false});
-            $(".mainConfigSetParams").find('#profitMarginCalculation .lc_cost').autoNumeric('set', json.data.subtotal);
-            $(".mainConfigSetParams").find('#profitMarginCalculation .lc_cost').attr('value', json.data.subtotal);
-            $(".mainConfigSetParams").find('#profitMarginCalculation .net_sellable').autoNumeric('init', {vMax: 999999999999999.99, aPad : false});
-            $(".mainConfigSetParams").find('#profitMarginCalculation .net_sellable').autoNumeric('set', json.data.net_sellable);
-            $(".mainConfigSetParams").find('#profitMarginCalculation .net_sellable').attr('value', json.data.net_sellable);
-        }
+        var subtotal = $("#developmentCostPlan input[name=subtotal]").autoNumeric('get');
+        var net_sellable_area = $("#developmentCostPlan input[name=net_sellable_area]").autoNumeric('get');
+
+        $(".mainConfigSetParams").find('#profitMarginCalculation .lc_cost').autoNumeric('set', subtotal);
+        $(".mainConfigSetParams").find('#profitMarginCalculation .lc_cost').attr('value', subtotal);
+        $(".mainConfigSetParams").find('#profitMarginCalculation .net_sellable_area').attr('value', net_sellable_area);
     });
 
     var lc_counter = 1;

@@ -19,8 +19,8 @@ use yii\widgets\ActiveForm;
         <label>Land + Construction Cost</label>
     </div>
     <div class="col-lg-9">
-        <input type="text" class="form-control text-right lc_cost" name="lc_cost" value="2213588777200" >
-        <input type="hidden" class="form-control text-right net_sellable" name="net_sellable" value="78000" >
+        <input type="text" class="form-control text-right lc_cost" name="lc_cost" value="0" >
+        <input type="hidden" class="form-control text-right net_sellable_area" name="net_sellable_area" value="0" >
     </div>
 </div>
 <div class="row">
@@ -207,7 +207,7 @@ use yii\widgets\ActiveForm;
                 <b>Sale Price</b>
             </div>
             <div class="col-lg-9">
-                <input type="text" class="form-control text-right sale_price" name="sale_price" >
+                <input type="text" class="form-control text-right sales_price_w_vat" name="sales_price_w_vat" >
             </div>
         </div>
     </div>
@@ -239,19 +239,14 @@ use yii\widgets\ActiveForm;
      */
     $(document).bind( 'profitMarginCalculation/afterNext', function(event, json, string){
         $(".mainConfigSetParams").find(".nav-tabs a[href='#scenario_1']").trigger("click");
-        if(json.data.total_project_cost){
-            $(".mainConfigSetParams").find('#scenario_1 .total_project_cost').autoNumeric('init',{vMax: 999999999999999.99, aPad : false});
-            $(".mainConfigSetParams").find('#scenario_1 .total_project_cost').autoNumeric('set', json.data.total_project_cost);
-            $(".mainConfigSetParams").find('#scenario_1 .total_project_cost').attr('value', json.data.total_project_cost);
 
-            $(".mainConfigSetParams").find('#scenario_1 .net_sellable_area').autoNumeric('init',{vMax: 999999999999999.99, aPad : false});
-            $(".mainConfigSetParams").find('#scenario_1 .net_sellable_area').autoNumeric('set', json.data.net_sellable);
-            $(".mainConfigSetParams").find('#scenario_1 .net_sellable_area').attr('value', json.data.net_sellable);
+        $(".mainConfigSetParams").find('#scenario_1 .total_project_cost').attr('value', $("#profitMarginCalculation .total_project_cost").autoNumeric('get'));
+        $(".mainConfigSetParams").find('#scenario_1 .net_sellable_area').attr('value', $("#profitMarginCalculation .net_sellable_area").autoNumeric('get'));
+        $(".mainConfigSetParams").find('#scenario_1 .sales_price_w_vat').attr('value', $("#profitMarginCalculation .sales_price_w_vat").autoNumeric('get'));
 
-            $(".mainConfigSetParams").find('#scenario_1 .sales_price_w_vat').autoNumeric('init',{vMax: 999999999999999.99, aPad : false});
-            $(".mainConfigSetParams").find('#scenario_1 .sales_price_w_vat').autoNumeric('set', json.data.sale_price);
-            $(".mainConfigSetParams").find('#scenario_1 .sales_price_w_vat').attr('value', json.data.sale_price);
-        }
+        $(".mainConfigSetParams").find('#scenario_2 .total_project_cost').attr('value', $("#profitMarginCalculation .total_project_cost").autoNumeric('get'));
+        $(".mainConfigSetParams").find('#scenario_2 .net_sellable_area').attr('value', $("#profitMarginCalculation .net_sellable_area").autoNumeric('get'));
+        $(".mainConfigSetParams").find('#scenario_2 .sales_price_w_vat').attr('value', $("#profitMarginCalculation .sales_price_w_vat").autoNumeric('get'));
     });
 
     function getFinanceCost(){
@@ -280,16 +275,17 @@ use yii\widgets\ActiveForm;
         var market_sale_cost = getMarketSaleCost();
         $("#profitMarginCalculation .sub").show();
         var total_project_cost = lc_cost + finance_cost + market_sale_cost;
-        $(".total_project_cost").autoNumeric('init', {vMax: 999999999999999.99, aPad : false});
-        $(".total_project_cost").autoNumeric('set', total_project_cost);
+        $("#profitMarginCalculation .total_project_cost").autoNumeric('init', {vMax: 999999999999999.99, aPad : false});
+        $("#profitMarginCalculation .total_project_cost").autoNumeric('set', total_project_cost);
+        $("#profitMarginCalculation .total_project_cost").attr('value', total_project_cost);
 
-        var net_sellable = parseFloat($(".net_sellable").autoNumeric('get'));
-        var nsa_amount = total_project_cost / net_sellable;
+        var net_sellable_area = parseFloat($(".net_sellable_area").autoNumeric('get'));
+        var nsa_amount = total_project_cost / net_sellable_area;
         $(".nsa_amount").autoNumeric('set', nsa_amount);
 
-        $(".lc_cost").parent('div').addClass('vat');
-        $(".finance_cost").parent('div').addClass('vat');
-        $(".total_project_cost").parent('div').addClass('total');
+        $("#profitMarginCalculation .lc_cost").parent('div').addClass('vat');
+        $("#profitMarginCalculation .finance_cost").parent('div').addClass('vat');
+        $("#profitMarginCalculation .total_project_cost").parent('div').addClass('total');
 
     }
 
@@ -349,12 +345,14 @@ use yii\widgets\ActiveForm;
         value = value.autoNumeric('get') / 100 * nsa_amount;
         $("input[name="+name+"]").autoNumeric('init',{vMax: 999999999999999.99, aPad:false});
         $("input[name="+name+"]").autoNumeric('set', value);
-
-        var offer_price = getOfferPrice();
-        $(".sale_price").autoNumeric('set', offer_price * 1.1);
+        getSalePrice();
     });
 
-    function getOfferPrice(){
+    $(".total_project_table input[name$=_amount]").change(function() {
+        getSalePrice();
+    });
+
+    function getSalePrice(){
         var offer_price = 0;
         $(".total_project_table input[name$=_amount]").each(function(){
             $(this).autoNumeric('init', {vMax: 999999999999999.99, aPad : false});
@@ -363,7 +361,10 @@ use yii\widgets\ActiveForm;
                 offer_price = offer_price + tempValue;
             }
         });
-        return offer_price;
+        var sale_price = offer_price * 1.1;
+        $("#profitMarginCalculation .sales_price_w_vat").autoNumeric('init', {vMax: 999999999999999.99, aPad : false});
+        $("#profitMarginCalculation .sales_price_w_vat").autoNumeric('set', sale_price);
+        return sale_price;
     }
 
 </script>
