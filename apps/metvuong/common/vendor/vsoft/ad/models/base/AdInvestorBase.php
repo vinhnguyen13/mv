@@ -39,8 +39,8 @@ class AdInvestorBase extends \yii\db\ActiveRecord
         return [
             [['name', 'created_at'], 'required'],
             [['created_at', 'updated_at', 'status'], 'integer'],
-            [['name', 'logo', 'phone', 'fax'], 'string', 'max' => 32],
-            [['address', 'website', 'email'], 'string', 'max' => 255]
+            [['name', 'address', 'website', 'email'], 'string', 'max' => 255],
+            [['logo', 'phone', 'fax'], 'string', 'max' => 32]
         ];
     }
 

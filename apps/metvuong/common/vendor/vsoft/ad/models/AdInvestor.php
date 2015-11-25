@@ -37,14 +37,6 @@ class AdInvestor extends AdInvestorBase
 			return $data;
 		}
 	}
-	
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'ad_investor';
-    }
 
     /**
      * @inheritdoc
@@ -54,33 +46,9 @@ class AdInvestor extends AdInvestorBase
         return [
             [['name'], 'required'],
             [['created_at', 'updated_at', 'status'], 'integer'],
-            [['name', 'logo', 'phone', 'fax'], 'string', 'max' => 32],
-            [['address', 'website', 'email'], 'string', 'max' => 255]
+            [['name', 'address', 'website', 'email'], 'string', 'max' => 255],
+            [['logo', 'phone', 'fax'], 'string', 'max' => 32]
         ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'address' => 'Address',
-            'phone' => 'Phone',
-            'fax' => 'Fax',
-            'website' => 'Website',
-            'email' => 'Email',
-        ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAdInvestorBuildingProjects()
-    {
-        return $this->hasMany(AdInvestorBuildingProject::className(), ['investor_id' => 'id']);
     }
     
     public function search($params)

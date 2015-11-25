@@ -8,6 +8,7 @@ use common\vendor\vsoft\ad\models\AdAreaType;
 use yii\helpers\Url;
 use common\vendor\vsoft\ad\models\AdBuildingProjectSearch;
 use common\vendor\vsoft\ad\models\AdInvestor;
+use yii\helpers\ArrayHelper;
 
 class BuildingProjectController extends Controller
 {
@@ -47,7 +48,18 @@ class BuildingProjectController extends Controller
 			if($model->validate()) {
     			$model->save(false);
     			
-    			$model->link('investors', $investors);
+    			$postInvestorIds = $post['BuildingProject']['investors'] ? $post['BuildingProject']['investors'] : [];
+    			$investorIds = ArrayHelper::getColumn($model->investors, 'id');
+    			$link = array_diff($postInvestorIds, $investorIds);
+    			$unlink = array_diff($investorIds, $postInvestorIds);
+    			
+    			foreach ($investors as $investor) {
+    				if(in_array($investor->id, $link)) {
+    					$model->link('investors', $investor);
+    				} else if(in_array($investor->id, $unlink)) {
+    					$model->unlink('investors', $investor);
+    				}
+    			}
     			
     			$mapFormName = AdAreaType::mapFormName();
     			foreach ($mapFormName as $type => $formName) {
@@ -107,6 +119,19 @@ class BuildingProjectController extends Controller
     			 
     			if($model->validate()) {
     				$model->save(false);
+    				
+    				$postInvestorIds = $post['BuildingProject']['investors'] ? $post['BuildingProject']['investors'] : [];
+    				$investorIds = ArrayHelper::getColumn($model->investors, 'id');
+    				$link = array_diff($postInvestorIds, $investorIds);
+    				$unlink = array_diff($investorIds, $postInvestorIds);
+    				 
+    				foreach ($investors as $investor) {
+    					if(in_array($investor->id, $link)) {
+    						$model->link('investors', $investor);
+    					} else if(in_array($investor->id, $unlink)) {
+    						$model->unlink('investors', $investor, true);
+    					}
+    				}
     				
 	    			$mapFormName = AdAreaType::mapFormName();
 	    			foreach ($mapFormName as $type => $formName) {
