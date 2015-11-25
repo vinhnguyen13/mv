@@ -42,7 +42,7 @@ class AdAreaType extends AdAreaTypeBase
 	}
 	
 	public function beforeSave($insert) {
-		var_dump( json_decode(json_encode(['Mặt bằng'], JSON_UNESCAPED_UNICODE)));
+		$this->floor_plan = $this->floor_plan ? json_encode($this->floor_plan) : null;
 	
 		return parent::beforeSave($insert);
 	}
