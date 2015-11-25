@@ -179,6 +179,9 @@ class BuildingProjectController extends Controller
 
     public function actionDelete($id)
     {
+    	Yii::$app->db->createCommand()->delete('ad_investor_building_project', 'building_project_id = :building_project_id', [':building_project_id' => $id])->execute();
+    	Yii::$app->db->createCommand()->delete('ad_area_type', 'building_project_id = :building_project_id', [':building_project_id' => $id])->execute();
+    	
     	AdBuildingProject::findOne($id)->delete();
     
     	return $this->redirect(['index']);
