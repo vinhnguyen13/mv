@@ -36,6 +36,8 @@ class InvestorController extends Controller
 
     public function actionDelete($id)
     {
+    	Yii::$app->db->createCommand()->delete('ad_investor_building_project', 'investor_id = :investor_id', [':investor_id' => $id])->execute();
+    	
     	AdInvestor::findOne($id)->delete();
     
     	return $this->redirect(['index']);
