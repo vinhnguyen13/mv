@@ -55,6 +55,7 @@ return [
 //                'news/<action:\w+>' => 'news/<action>',
                 '<cat>/<id:\d+>-<slug>' => 'site/news-detail',
                 'news' => 'site/news',
+                'about' => 'site/about-us',
                 'contact' => 'contact/index',
                 'booking' => 'booking/index',
                 'building/<lancaster>' => 'site/index',
