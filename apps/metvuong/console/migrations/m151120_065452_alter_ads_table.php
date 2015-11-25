@@ -23,19 +23,19 @@ class m151120_065452_alter_ads_table extends Migration
 		  DROP COLUMN `commercial_area`, 
 		  DROP COLUMN `townhouse_area`, 
 		  DROP COLUMN `office_area`;");
-		$this->execute("ALTER TABLE `metvuong`.`ad_product`   
+		$this->execute("ALTER TABLE `ad_product`   
 			CHANGE `priority` `score` INT(11) DEFAULT 0  NOT NULL  COMMENT 'Thang điểm dùng để xếp hạng bài post. Bài post có điểm càng cao sẽ được ưu tiên hiển thị lên top của kết quả search';");
     }
 
     public function down()
     {
         $this->dropTable("`ad_area_type`");
-        $this->execute("ALTER TABLE `metvuong`.`ad_building_project`   
+        $this->execute("ALTER TABLE `ad_building_project`   
 		  ADD COLUMN `apartment_area` TEXT NULL AFTER `progress`,
 		  ADD COLUMN `commercial_area` TEXT NULL AFTER `apartment_area`,
 		  ADD COLUMN `townhouse_area` TEXT NULL AFTER `commercial_area`,
 		  ADD COLUMN `office_area` TEXT NULL AFTER `townhouse_area`;");
-		$this->execute("ALTER TABLE `metvuong`.`ad_product`   
+		$this->execute("ALTER TABLE `ad_product`   
 			CHANGE `score` `priority` TINYINT(1) DEFAULT 10 NOT NULL;");
     }
 

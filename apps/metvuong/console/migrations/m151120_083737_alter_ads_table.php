@@ -7,7 +7,7 @@ class m151120_083737_alter_ads_table extends Migration
 {
     public function up()
     {
-		$this->execute("ALTER TABLE `metvuong`.`ad_building_project`   
+		$this->execute("ALTER TABLE `ad_building_project`   
 		  ADD COLUMN `logo` VARCHAR(32) NULL AFTER `name`,
 		  ADD COLUMN `location_detail` TEXT NULL AFTER `floor_no`,
 		  ADD COLUMN `facilities_detail` TEXT NULL AFTER `location_detail`,
@@ -19,20 +19,20 @@ class m151120_083737_alter_ads_table extends Migration
 		  ADD COLUMN `owner_type` VARCHAR(255) NULL AFTER `estimate_finished`,
 		  ADD COLUMN `slug` VARCHAR(32) NOT NULL AFTER `progress`;");
 		
-		$this->execute("ALTER TABLE `metvuong`.`ad_building_project`   
+		$this->execute("ALTER TABLE `ad_building_project`   
 			CHANGE `commercial_leasing_area` `commercial_leasing_area` VARCHAR(255) CHARSET utf8 COLLATE utf8_general_ci NULL;");
 		
-		$this->execute("ALTER TABLE `metvuong`.`ad_building_project`   
+		$this->execute("ALTER TABLE `ad_building_project`   
   			CHANGE `status` `status` TINYINT(1) DEFAULT 1  NULL;");
 		
-		$this->execute("ALTER TABLE `metvuong`.`ad_building_project`   
+		$this->execute("ALTER TABLE `ad_building_project`   
   CHANGE `lng` `lng` FLOAT(10,6) NULL,
   CHANGE `lat` `lat` FLOAT(10,6) NULL;");
     }
 
     public function down()
     {
-        $this->execute("ALTER TABLE `metvuong`.`ad_building_project`   
+        $this->execute("ALTER TABLE `ad_building_project`   
 		  DROP COLUMN `logo`, 
 		  DROP COLUMN `location_detail`,
 		  DROP COLUMN `facilities_detail`,
@@ -44,14 +44,14 @@ class m151120_083737_alter_ads_table extends Migration
 		  DROP COLUMN `owner_type`,
           DROP COLUMN `slug`;");
         
-		$this->execute("ALTER TABLE `metvuong`.`ad_building_project`   
+		$this->execute("ALTER TABLE `ad_building_project`   
 			CHANGE `commercial_leasing_area` `commercial_leasing_area` VARCHAR(32) CHARSET utf8 COLLATE utf8_general_ci NULL;");
 		
-		$this->execute("ALTER TABLE `metvuong`.`ad_building_project`   
+		$this->execute("ALTER TABLE `ad_building_project`   
 			CHANGE `status` `status` TINYINT(1) NULL;");
 		
 
-		$this->execute("ALTER TABLE `metvuong`.`ad_building_project`   
+		$this->execute("ALTER TABLE `ad_building_project`   
   CHANGE `lng` `lng` FLOAT NULL,
   CHANGE `lat` `lat` FLOAT NULL;");
     }
