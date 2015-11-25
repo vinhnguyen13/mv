@@ -9,11 +9,15 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
+ * @property string $logo
  * @property string $address
  * @property string $phone
  * @property string $fax
  * @property string $website
  * @property string $email
+ * @property integer $created_at
+ * @property integer $updated_at
+ * @property integer $status
  *
  * @property AdInvestorBuildingProject[] $adInvestorBuildingProjects
  */
@@ -33,8 +37,9 @@ class AdInvestorBase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
-            [['name', 'phone', 'fax'], 'string', 'max' => 32],
+            [['name', 'created_at'], 'required'],
+            [['created_at', 'updated_at', 'status'], 'integer'],
+            [['name', 'logo', 'phone', 'fax'], 'string', 'max' => 32],
             [['address', 'website', 'email'], 'string', 'max' => 255]
         ];
     }
@@ -47,11 +52,15 @@ class AdInvestorBase extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'logo' => 'Logo',
             'address' => 'Address',
             'phone' => 'Phone',
             'fax' => 'Fax',
             'website' => 'Website',
             'email' => 'Email',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+            'status' => 'Status',
         ];
     }
 

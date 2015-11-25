@@ -7,8 +7,10 @@ use yii\helpers\Url;
 use common\widgets\CKEditor;
 use yii\web\View;
 use common\vendor\vsoft\ad\models\AdBuildingProject;
+use yii\helpers\ArrayHelper;
 
 $this->registerJsFile(Yii::getAlias('@web') . '/js/jquery.maphilight.js', ['depends' => ['yii\web\YiiAsset']]);
+$this->registerJsFile(Yii::getAlias('@web') . '/js/select2.min.js', ['depends' => ['yii\web\YiiAsset']]);
 $this->registerJsFile(Yii::getAlias('@web') . '/js/building-project.js', ['depends' => ['yii\web\YiiAsset']]);
 
 $this->registerJsFile(Yii::getAlias('@web') . '/js/gmap.js', ['depends' => ['yii\web\YiiAsset']]);
@@ -20,6 +22,7 @@ $this->registerJs('buildingProject.initForm();', View::POS_READY, 'initform');
 
 $this->registerJsFile(Yii::getAlias('@web') . '/js/jquery.colorbox-min.js', ['depends' => ['yii\web\YiiAsset']]);
 $this->registerCssFile(Yii::getAlias('@web') . '/css/colorbox.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
+$this->registerCssFile(Yii::getAlias('@web') . '/css/select2.min.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
 ?>
 <div id="project-building-form" class="cms-show-form">
 	<?php
@@ -63,6 +66,7 @@ $this->registerCssFile(Yii::getAlias('@web') . '/css/colorbox.css', ['depends' =
 	    	<ul class="bp-fields">
 	    		<li class="active">
 	    			<?= $form->field($model, 'name') ?>
+	  				<?= $form->field($model, 'investors')->dropDownList(ArrayHelper::map($investors, 'id', 'name'), ['multiple' => true]) ?>
 			    	<?= $form->field($model, 'logo')->widget(FileUploadUI::className(), [
 						'url' => Url::to('/express/upload/image'),
 						'clientOptions' => ['maxNumberOfFiles' => 1] ]) ?>

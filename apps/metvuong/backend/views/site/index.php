@@ -32,11 +32,11 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
         	<div class="col-lg-3 sizer"></div>
             <div class="col-lg-3 item">
             	<div class="panel panel-primary">
-			      <div class="panel-heading">Dự án xây dựng</div>
+			      <div class="panel-heading">Dự án / Chủ đầu tư</div>
 			      <div class="panel-body">
 			      	<ol class="list-unstyled">
 	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['ad/building-project/'])?>">Dự án</a></li>
-	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['ad/investor/create'])?>">Nhà đầu tư</a></li>
+	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['ad/investor/'])?>">Chủ đầu tư</a></li>
 	                </ol>
 			      </div>
 			    </div>

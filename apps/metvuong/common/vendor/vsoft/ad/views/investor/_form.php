@@ -6,6 +6,9 @@ use vsoft\user\Module;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use common\vendor\vsoft\ad\models\AdInvestor;
+use common\widgets\FileUploadUI;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model funson86\cms\models\CmsShow */
@@ -22,10 +25,24 @@ use yii\widgets\ActiveForm;
             'labelOptions' => ['class' => 'col-lg-1 control-label'],
         ],
     ]); ?>
+    
+	<?= $form->field($model, 'logo')->widget(FileUploadUI::className(), [
+		'url' => Url::to('/express/upload/image'),
+		'clientOptions' => ['maxNumberOfFiles' => 1] ]) ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'status')->dropDownList(\vsoft\news\models\Status::labels()) ?>
+    
+    <?= $form->field($model, 'address')->textarea(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'fax')->textInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'website')->textInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'status')->dropDownList(AdInvestor::labels()) ?>
 
     <div class="form-group">
         <label class="col-lg-1 control-label"></label>

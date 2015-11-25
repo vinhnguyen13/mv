@@ -7,6 +7,7 @@ use common\vendor\vsoft\ad\models\AdBuildingProject;
 use common\vendor\vsoft\ad\models\AdAreaType;
 use yii\helpers\Url;
 use common\vendor\vsoft\ad\models\AdBuildingProjectSearch;
+use common\vendor\vsoft\ad\models\AdInvestor;
 
 class BuildingProjectController extends Controller
 {
@@ -32,6 +33,8 @@ class BuildingProjectController extends Controller
 			$areaTypes[$type] = $model->getAdAreaType($type)->loadDefaultValues();
 		}
 		
+		$investors = AdInvestor::find()->all();
+		
 		if(Yii::$app->request->isPost) {
 			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 			
@@ -43,6 +46,8 @@ class BuildingProjectController extends Controller
 			
 			if($model->validate()) {
     			$model->save(false);
+    			
+    			$model->link('investors', $investors);
     			
     			$mapFormName = AdAreaType::mapFormName();
     			foreach ($mapFormName as $type => $formName) {
@@ -63,7 +68,7 @@ class BuildingProjectController extends Controller
     		return $response;
 		}
 		
-		return $this->render('create', ['model' => $model, 'areaTypeMapLabels' => $areaTypeMapLabels, 'areaTypes' => $areaTypes]);
+		return $this->render('create', ['model' => $model, 'areaTypeMapLabels' => $areaTypeMapLabels, 'areaTypes' => $areaTypes, 'investors' => $investors]);
 	}
     public function actionView($id)
     {
@@ -88,6 +93,8 @@ class BuildingProjectController extends Controller
     	foreach($areaTypeMapLabels as $type => $areaTypeLabel) {
     		$areaTypes[$type] = $model->getAdAreaType($type);
     	}
+
+    	$investors = AdInvestor::find()->all();
     	
     	if($model) {
     		if(Yii::$app->request->isPost) {
@@ -138,9 +145,17 @@ class BuildingProjectController extends Controller
     			return $response;
     		}
     		 
-    		return $this->render('update', ['model' => $model, 'areaTypeMapLabels' => AdAreaType::mapLabels(), 'areaTypes' => $areaTypes]);
+    		return $this->render('update', ['model' => $model, 'areaTypeMapLabels' => AdAreaType::mapLabels(), 'areaTypes' => $areaTypes, 'investors' => $investors]);
     	} else {
     		throw new NotFoundHttpException('The requested page does not exist.');
     	}
+    }
+    
+
+    public function actionDelete($id)
+    {
+    	AdBuildingProject::findOne($id)->delete();
+    
+    	return $this->redirect(['index']);
     }
 }

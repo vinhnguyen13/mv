@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model funson86\cms\models\CmsShow */
 
-$this->title = Yii::t('app', 'Create Cms Show');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Cms Shows'), 'url' => ['index']];
+$this->title = Yii::t('app', 'Add Investor');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Investor'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cms-show-create">

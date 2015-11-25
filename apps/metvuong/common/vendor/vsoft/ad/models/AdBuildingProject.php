@@ -124,4 +124,8 @@ class AdBuildingProject extends AdBuildingProjectBase
 		 
 		return $string;
 	}
+	
+	public function getInvestors() {
+		return $this->hasMany(AdInvestor::className(), ['id' => 'investor_id'])->viaTable('ad_investor_building_project', ['building_project_id' => 'id']);
+	}
 }

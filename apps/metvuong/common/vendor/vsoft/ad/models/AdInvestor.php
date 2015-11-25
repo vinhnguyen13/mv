@@ -4,6 +4,7 @@ namespace common\vendor\vsoft\ad\models;
 
 use Yii;
 use common\vendor\vsoft\ad\models\base\AdInvestorBase;
+use yii\data\ActiveDataProvider;
 
 /**
  * This is the model class for table "ad_investor".
@@ -20,6 +21,23 @@ use common\vendor\vsoft\ad\models\base\AdInvestorBase;
  */
 class AdInvestor extends AdInvestorBase
 {
+	const STATUS_ENABLED = 1;
+	const STATUS_DISABLED = 0;
+	
+	public static function labels($id = null)
+	{
+		$data = [
+			self::STATUS_ENABLED => Yii::t('cms', 'Enable'),
+			self::STATUS_DISABLED => Yii::t('cms', 'Disable'),
+		];
+	
+		if ($id !== null && isset($data[$id])) {
+			return $data[$id];
+		} else {
+			return $data;
+		}
+	}
+	
     /**
      * @inheritdoc
      */
@@ -35,7 +53,8 @@ class AdInvestor extends AdInvestorBase
     {
         return [
             [['name'], 'required'],
-            [['name', 'phone', 'fax'], 'string', 'max' => 32],
+            [['created_at', 'updated_at', 'status'], 'integer'],
+            [['name', 'logo', 'phone', 'fax'], 'string', 'max' => 32],
             [['address', 'website', 'email'], 'string', 'max' => 255]
         ];
     }
@@ -62,5 +81,28 @@ class AdInvestor extends AdInvestorBase
     public function getAdInvestorBuildingProjects()
     {
         return $this->hasMany(AdInvestorBuildingProject::className(), ['investor_id' => 'id']);
+    }
+    
+    public function search($params)
+    {
+    	$query = self::find();
+    
+    	$query->orderBy(['created_at' => SORT_DESC]);
+    
+    	$dataProvider = new ActiveDataProvider([
+    			'query' => $query,
+    			]);
+    
+    	if ($this->load($params) && !$this->validate()) {
+    		return $dataProvider;
+    	}
+    
+    	$query->andFilterWhere([
+    			'id' => $this->id
+    			]);
+    
+    	$query->andFilterWhere(['like', 'name', $this->name]);
+    
+    	return $dataProvider;
     }
 }
