@@ -44,26 +44,27 @@ return [
         'request' => [
             'baseUrl' => $baseUrl,
         ],
-        /* 'urlManager' => [
+         'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-                'contact' => 'express/contact/index',
-                'booking' => 'express/booking/index',
-                'booking/booking-hotel' => 'express/booking/booking-hotel',
-                'about' => 'site/about-us',
-                'news' => 'site/news',
-                '<cat>/view/<id:\d+>-<slug>' => 'site/news-detail',
-                'pages/<view>' => 'site/page',
+                'site/login' => 'user/security/login',
+                'site/signup' => 'user/registration/register',
+//                'news/<action:\w+>' => 'news/<action>',
+                '<cat_id:\d+>-<cat_slug>/<id:\d+>-<slug>' => 'news/view',
+                '<cat_id:\d+>-<slug>' => 'news/list',
+                'contact' => 'contact',
+                'booking' => 'booking',
+				'<lancaster>' => 'site/index',
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',
 //                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
 //                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
 
             ]
-        ], */
-        'urlManager' => [
+        ],
+        /*'urlManager' => [
 //            'class' => 'yii\web\UrlManager',
             'class' => 'frontend\components\UrlManager',
             'enablePrettyUrl' => true,
@@ -94,7 +95,7 @@ return [
                 '#^tool/save-step#' => '#^tool/save-step#',
             ],
 //            'ruleConfig' => ['class' => frontend\components\LanguageUrlRule::className()]
-        ],       
+        ],*/
         
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
