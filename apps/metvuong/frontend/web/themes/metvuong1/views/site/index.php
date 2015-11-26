@@ -37,7 +37,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                 <li class="lang-icon icon-vi"><a href="#"></a></li>
             </ul>
             <div class="wrap-search-home">
-                <div class="bgcover logo-home" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png);"><a href="#"></a></div>
+                <div class="bgcover logo-home" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png);"><a href="<?=Url::home()?>"></a></div>
                 <div class="box-search-header clearfix">
                         <div class="pull-left">
                             <?php $form = ActiveForm::begin([

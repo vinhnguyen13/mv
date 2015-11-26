@@ -12,7 +12,7 @@ use yii\helpers\Url;
             <li class="lang-icon icon-vi"><a href="#"></a></li>
         </ul>
         <div class="wrap-search-home">
-            <div class="bgcover logo-home ani-logo" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png);"><a href="<?=\yii\helpers\Url::home()?>"></a></div>
+            <div class="bgcover logo-home ani-logo" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png);"><a href="<?=Url::home()?>"></a></div>
             <div class="box-search-header clearfix ani-search">
                 <div class="pull-left">
                     <?php $form = ActiveForm::begin([
