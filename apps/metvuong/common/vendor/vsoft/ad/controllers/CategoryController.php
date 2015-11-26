@@ -56,8 +56,14 @@ class CategoryController extends Controller
 	}
 	
 	public function actionSort() {
-		$models = AdCategory::find()->all();
+		$models = AdCategory::find()->orderBy('order')->all();
 		$sort = new Sort($models);
+		
+		if(Yii::$app->request->isPost) {
+			$sort->save(Yii::$app->request->post());
+			
+			return $this->redirect('index');
+		}
 		
 		return $this->render('sort', ['sort' => $sort]);
 	}

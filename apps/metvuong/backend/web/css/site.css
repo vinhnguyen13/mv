@@ -89,3 +89,20 @@ a.desc:after {
     padding: 10px 20px;
     margin: 0 0 15px 0;
 }
+
+.ui-sortable {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	width: 60%;
+}
+.ui-sortable li span {
+    position: absolute;
+    margin-left: -1.3em;
+}
+.ui-sortable li {
+	margin: 0 3px 3px 3px;
+    padding: 4px;
+    padding-left: 1.5em;
+    font-size: 16px;
+}

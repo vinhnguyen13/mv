@@ -22,7 +22,7 @@ class AdCategory extends AdCategoryBase
 	{
 		$query = self::find();
 	
-		$query->orderBy(['order' => SORT_DESC]);
+		$query->orderBy(['order' => SORT_ASC]);
 	
 		$dataProvider = new ActiveDataProvider([
 				'query' => $query,
