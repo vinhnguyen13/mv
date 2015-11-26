@@ -22,6 +22,9 @@ a,a:focus,a:active{text-decoration: none;}
         width: 1245px;
     }
 }
+body,html {
+    height: 100%;
+}
 body {
     font-family: 'Roboto';
     background: #fff;
@@ -32,6 +35,13 @@ body .container {
 }
 body .o-wrapper > .container {
     padding-top: 30px;
+}
+body .search-result-page > .container {
+    width: 100%;
+    padding: 0;
+    position: static;
+    height: 100%;
+    padding-bottom: 158px;
 }
 #slide-menu-right {
   display: none;
@@ -3103,4 +3113,126 @@ padding-bottom: 5px;
 #frmForgot .list-social-login {
     border-left: 1px solid #D0D0D0;
     padding-left: 15px;
+}
+.search-result-page {
+    padding-bottom: 0;
+    height: 100%;
+    overflow: hidden;
+}
+.list-filters-result {
+    padding: 17px 15px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.32);
+    -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.32);
+    -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.32);
+    -ms-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.32);
+    z-index: 2;
+    position: relative;
+}
+.list-filters-result li {
+    float: left;
+    margin-right: 20px;
+}
+.list-filters-result li a {
+    font-size: 1.23em;
+    padding-right: 20px;
+    background: url(../images/arrow-search.png) no-repeat center right;
+    color: #333;
+}
+.container-map iframe {
+    width: 100%;
+    height: 100%;
+}
+.result-items,
+.wrap-map-result {
+    padding: 0;
+    height: 100%;
+    padding-bottom: 48px;
+}
+.wrap-col-fixed-result,
+.container-map {
+    height: 100%;
+}
+.wrap-col-fixed-result {
+    overflow-y: scroll;
+    background: #fff;
+    box-shadow: -5px 0px 5px -3px rgba(0, 0, 0, 0.32);
+    padding: 15px 12px 0 12px;
+}
+.wrap-col-fixed-result .nav-tabs {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #4a933a;
+    margin-top: 30px;
+}
+.wrap-col-fixed-result .nav-tabs a {
+    font-size: 1.2em;
+    color: #333;
+    padding-top: 5px;
+}
+.nav-tabs>li>a:hover,
+.wrap-col-fixed-result .nav-tabs>li.active>a, 
+.wrap-col-fixed-result .nav-tabs>li.active>a:focus, 
+.wrap-col-fixed-result .nav-tabs>li.active>a:hover {
+    border: 1px solid #4a933a;
+    border-bottom-color: transparent;
+    color: #4a933a;
+    background: #fff;
+    font-weight: bold;
+}
+.list-results li {
+    float: left;
+    width: 100%;
+    padding: 10px 0;
+    border-bottom: 1px solid #4a933a;
+    cursor: pointer;
+    transition: all .3s ease-out;
+    -webkit-transition: all .3s ease-out;
+    -moz-transition: all .3s ease-out;
+    -ms-transition: all .3s ease-out;
+}
+.list-results li:last-child {
+    border-bottom: none;
+}
+.list-results .infor-result {
+    min-height: 114px;
+    padding-left: 160px;
+}
+.list-results .infor-result p {
+    margin-bottom: 7px;
+}
+.infor-result .item-title {
+    font-weight: bold;
+    color: #3c763d;
+    font-size: 1.2em;
+}
+.infor-result .type-result {
+    font-weight: bold;
+}
+.infor-result .type-result em {
+    margin-right: 5px;
+}
+.for-rent {
+    color: #93f;
+}
+.for-sale {
+    color: #EF0303;
+}
+.infor-result .rice-result {
+    font-size: 2em;
+}
+.infor-result .beds-baths-sqft {
+    font-size: 1.15em;
+}
+.infor-result .beds-baths-sqft sup {
+    font-size: .8em;
+}
+.infor-result .date-post-rent {
+    font-size: 1.35em;
+}
+.infor-result .date-post-rent span {
+    font-size: 1em;
+    font-weight: bold;
+    color: #9A9A9A;
+}
+.list-results li:hover {
+    background: #E4E4E4;
 }
