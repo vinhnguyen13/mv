@@ -1,3 +1,7 @@
+<?php
+use yii\widgets\ActiveForm;
+use yii\helpers\Url;
+?>
 <header class="home-page cd-secondary-nav border-shadow wrap-page-home">
     <div class="container clearfix">
         <ul class="pull-right menu-home">
@@ -11,11 +15,16 @@
             <div class="bgcover logo-home ani-logo" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png);"><a href="<?=\yii\helpers\Url::home()?>"></a></div>
             <div class="box-search-header clearfix ani-search">
                 <div class="pull-left">
-                    <form class="form-inline pull-left" action="" id="search-kind">
+                    <?php $form = ActiveForm::begin([
+                        'options'=>['class' => 'form-inline pull-left', 'method'=>'POST'],
+                        'id'=>'search-kind',
+                        'action'=>Url::to(['/search/find']),
+                        'fieldConfig' => [],
+                    ]); ?>
                         <div class="form-group">
                             <div class="type-search">
                                 <ul class="outsideevent"></ul>
-                                <input type="text" class="form-control outsideevent" placeholder="">
+                                <input name="search" type="text" class="form-control outsideevent" placeholder="">
                             </div>
                             <div id="step-1" class="outsideevent search-wrap hidden-effect" data-txt-step="--Chọn Tỉnh/Thành--">
                                 <div class="wrap-effect">
@@ -78,11 +87,11 @@
                             </div>
                         </div>
                         <button id="btn-search" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                        <input class="getValSuggest" type="hidden" id="valTT" value="">
-                        <input class="getValSuggest" type="hidden" id="valQh" value="">
-                        <input class="getValSuggest" type="hidden" id="valLoai" value="">
-                        <input class="getValSuggest" type="hidden" id="valTTuc" value="">
-                    </form>
+                        <input class="getValSuggest" type="hidden" id="valTT" name="city" value="">
+                        <input class="getValSuggest" type="hidden" id="valQh" name="district" value="">
+                        <input class="getValSuggest" type="hidden" id="valLoai" name="category" value="">
+                        <input class="getValSuggest" type="hidden" id="valTTuc" name="news" value="">
+                    <?php ActiveForm::end(); ?>
                     <div class="pull-left text-right mgT-10 mgL-15">
                         <div class="search-select active">
                             <a href="#" data-placeholder="--Chọn Tỉnh/Thành--" rel="#dd-search">
