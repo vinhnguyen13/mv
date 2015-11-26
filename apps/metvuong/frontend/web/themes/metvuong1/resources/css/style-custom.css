@@ -2947,6 +2947,7 @@ padding-bottom: 5px;
 #frmRegister .modal-dialog {
     /* width: 600px; */
     margin-top: 70px;
+    z-index: 1041;
 }
 .modal-header {
     position: relative;
