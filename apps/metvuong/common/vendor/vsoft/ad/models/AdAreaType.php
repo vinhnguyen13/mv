@@ -42,7 +42,7 @@ class AdAreaType extends AdAreaTypeBase
 	}
 	
 	public function beforeSave($insert) {
-		$this->floor_plan = $this->floor_plan ? json_encode($this->floor_plan) : null;
+		$this->floor_plan = $this->floor_plan ? json_encode($this->floor_plan, JSON_UNESCAPED_UNICODE) : null;
 	
 		return parent::beforeSave($insert);
 	}
