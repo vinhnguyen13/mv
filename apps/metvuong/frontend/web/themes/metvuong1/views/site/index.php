@@ -31,8 +31,8 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
         <div class="container clearfix">
             <ul class="pull-right menu-home">
                 <li><a href="#"><em class="icon-plus"></em>Đăng tin</a></li>
-                <li><a href="#"><em class="icon-user"></em>Đăng ký</a></li>
-                <li><a href="#"><em class="icon-key"></em>Đăng nhập</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#frmRegister"><em class="icon-user"></em>Đăng ký</a></li>
+                <li><a href="#" data-toggle="modal" data-target="#frmLogin"><em class="icon-key"></em>Đăng nhập</a></li>
                 <li class="lang-icon icon-en"><a href="#"></a></li>
                 <li class="lang-icon icon-vi"><a href="#"></a></li>
             </ul>
@@ -190,3 +190,4 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
         </div>
     </div>
 </div>
+<?php $this->beginContent('@app/views/layouts/_partials/popup.php'); ?><?php $this->endContent();?>
