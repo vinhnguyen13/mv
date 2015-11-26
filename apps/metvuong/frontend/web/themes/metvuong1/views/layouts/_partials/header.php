@@ -99,7 +99,7 @@ use yii\helpers\Url;
                                     <em class="fa fa-home"></em>
                                     <em class="fa fa-search"></em>
                                 </span>
-                                <i>Mua Bán</i>
+                                <i>Mua - Thuê</i>
                             </a>
                         </div>
                         <div class="search-select">
@@ -108,7 +108,7 @@ use yii\helpers\Url;
                                     <em class="fa fa-home"></em>
                                     <em class="fa fa-usd"></em>
                                 </span>
-                                <i>Cho Thuê</i>
+                                <i>Bán - Cho Thuê</i>
                             </a>
                         </div>
                         <div class="search-select">
