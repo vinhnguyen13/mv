@@ -4,6 +4,24 @@ var arrJSONReturn = {
     objTTuc: []
 };
 $(document).ready(function() {
+
+    var $modal = $('.modal');
+    $modal.on('show.bs.modal', function(e) {
+        var curModal;
+        curModal = this;
+        $modal.each(function(i) {
+          if (this !== curModal) {
+            $(this).modal("hide");
+          }
+        });
+    });
+
+    $modal.on('shown.bs.modal', function(e) {
+        var _this = $(this);
+        if( !$('body').hasClass('modal-open') ) {
+            $('body').addClass('modal-open').css('padding-right', '17px');
+        }
+    });
 	
     //start click scroll to top
 	var btnScrollTop = $('<div id="topcontrol" title="Lên đầu trang"></div>')

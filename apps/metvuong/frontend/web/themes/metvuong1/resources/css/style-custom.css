@@ -2696,6 +2696,7 @@ footer {
     padding: 0 15px;
     line-height: 35px;
 }
+.list-social-login .logo-social,
 .polli .logo-social {
     width: 35px;
     height: 35px;
@@ -2719,12 +2720,15 @@ footer {
     float: left;
     font-size: 1em;
 }
+.list-social-login .fb-icon,
 .polli .fb-icon {
     background: #E8E8E8 url(../images/face-icon.png) no-repeat top left;
 }
+.list-social-login .twe-icon,
 .polli .twe-icon {
     background: #E8E8E8 url(../images/twe-icon.png) no-repeat top left;
 }
+.list-social-login .g-icon,
 .polli .g-icon {
     background: #E8E8E8 url(../images/go-icon.png) no-repeat top left;
 }
@@ -2759,6 +2763,7 @@ footer {
 }
 .wrap-page-home .ani-search {
     transform: translate3d( 540px, 0, 0);
+    /* display: none; */
 }
 .wrap-page-home .slideUpDown li {
     padding: 0px 10px;
@@ -2922,4 +2927,180 @@ padding-bottom: 5px;
 .type-search li.active {
     background: #888;
     color: #fff;
+}
+@media (min-width: 768px) {
+    .modal-dialog {
+        margin: 30px auto;
+    }
+}
+#frmLogin .modal-dialog,
+#frmRegister .modal-dialog {
+    /* width: 600px; */
+    margin-top: 70px;
+}
+.modal-header {
+    position: relative;
+    min-height: inherit;
+    border: none;
+    padding: 0;
+}
+.modal-header .close {
+    position: absolute;
+    top: -11px;
+    right: -15px;
+    opacity: .8;
+    z-index: 99;
+}
+.modal-header .close span {
+    display: block;
+    text-indent: -9999px;
+    width: 30px;
+    height: 30px;
+    background: url(../images/fancy_close.png) no-repeat top left;
+}
+.modal-header .close:hover {
+    opacity: 1;
+}
+.modal-content {
+    border: none;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    background: none;
+}
+.modal-body h3 {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #269A29;
+    color: #3c763d;
+}
+.list-social-login .logo-social {
+    background-color: #fff;
+    margin-left: 0;
+    margin-right: 15px;
+}
+.list-social-login {
+    float: right;
+    width: 37%;
+}
+.list-social-login li {
+    float: left;
+    width: 100%;
+    margin-bottom: 15px;
+}
+.list-social-login li:last-child {
+    margin-bottom: 0;
+}
+.list-social-login li:first-child {
+    width: 100%;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.modal-body {
+    padding: 5px;
+    background: #3c763d;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+}
+.wrap-modal {
+    background: #fff;
+    padding: 20px;
+}
+.frmIcon .form-group {
+    position: relative;
+}
+.frmIcon .form-group em {
+    position: absolute;
+    top: 7px;
+    left: 10px;
+    font-size: 1.4em;
+    color: #4a933a;
+}
+.frmIcon .form-group .form-control {
+    padding-left: 40px;
+    border: 1px solid #E0E0E0;
+}
+#frmForgot form,
+#frmLogin form,
+#frmRegister form {
+    float: left;
+    width: 60%;
+    padding-right: 15px;
+    border-right: 1px solid #D0D0D0;
+}
+.wrap-modal .txt-title {
+    font-size: 1.5em;
+    margin-bottom: 25px;
+}
+.wrap-modal .txt-title a {
+    font-weight: bold;
+    color: #5BB54B;
+    font-size: 1em;
+}
+.list-social-login li a {
+    display: block;
+    position: relative;
+}
+.list-social-login a i {
+    position: absolute;
+    top: 9px;
+    left: 15px;
+}
+.list-social-login li a.facebook {
+    background: #3b5999;
+    color: #fff;
+}
+.list-social-login li a.twitter {
+    background: #00aced;
+    color: #fff;
+}
+.list-social-login li a.google {
+    background: #dd4b39;
+    color: #fff;
+}
+.btn-common {
+    background: #3c763d;
+    border: none;
+    padding-left: 30px;
+    padding-right: 30px;
+    transition: all .3s ease-out;
+    -webkit-transition: all .3s ease-out;
+    -moz-transition: all .3s ease-out;
+    -ms-transition: all .3s ease-out;
+}
+.btn-common:hover {
+    background: #315F32;
+    height: auto;
+}
+#frmForgot .checkbox,
+#frmLogin .checkbox,
+#frmRegister .checkbox {
+    margin-top: -10px;
+}
+#frmForgot .checkbox label,
+#frmLogin .checkbox label,
+#frmRegister .checkbox label {
+    line-height: 20px;
+}
+.footer-modal a {
+    display: block;
+    text-align: right;
+    font-size: 1.1em;
+    color: #333;
+    line-height: 20px;
+}
+#frmForgot form {
+    border: none;
+    padding-right: 0;
+}
+#frmForgot .list-social-login {
+    border-left: 1px solid #D0D0D0;
+    padding-left: 15px;
 }
