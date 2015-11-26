@@ -127,6 +127,13 @@ return [
         'meta' =>[
             'class' => 'frontend\components\MetaExt',
         ],
+        'assetManager' => [
+            'bundles' => [
+                'yii\bootstrap\BootstrapAsset' => [
+                    'css' => [],
+                ],
+            ],
+        ],
     ],
     'params' => $params,
 ];
