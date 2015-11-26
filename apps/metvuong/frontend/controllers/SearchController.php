@@ -8,7 +8,7 @@ use common\vendor\vsoft\ad\models\AdBuildingProject;
 
 class SearchController extends \yii\web\Controller
 {
-    public $layout = '@app/views/layouts/news';
+    public $layout = '@app/views/layouts/search';
     public function actionIndex()
     {
         return $this->render('index');
