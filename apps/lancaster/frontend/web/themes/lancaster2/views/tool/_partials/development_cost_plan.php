@@ -642,16 +642,41 @@ use yii\widgets\ActiveForm;
 </div>
 <script>
     $(document).ready(function(){
-        $('#table').find('input').each(function () {
+
+        $("input[name=exchange_rate]").autoNumeric('init', {vMax: 999999999999999.99, aPad: false});
+
+        $('.project_info_table').find('input').each(function () {
             $(this).autoNumeric('init', {vMax: 999999999999999.99, aPad: false});
         });
-        $('.design_consultant_table').find('input[name$=_amount]').each(function () {
-            $(this).attr('tabindex', '-1');
 
+        $('.construction_cost_table input').each(function () {
+            $(this).autoNumeric('init', {vMax: 999999999999999.99, aPad: false});
+            var name = $(this).attr('name');
+            if(name.lastIndexOf('_vnd') > 0){
+                $(this).attr('tabindex', '-1');
+            }
         });
-        $('.construction_cost_table').find('input[name$=_vnd]').each(function () {
-            $(this).attr('tabindex', '-1');
+
+        $('.design_consultant_table input').each(function () {
+            $(this).autoNumeric('init', {vMax: 999999999999999.99, aPad: false});
+            var name = $(this).attr('name');
+            if(name.lastIndexOf('_amount') > 0){
+                $(this).attr('tabindex', '-1');
+            }
         });
+
+        $('.land_associated_table').find('input').each(function () {
+            $(this).autoNumeric('init', {vMax: 999999999999999.99, aPad: false});
+        });
+
+//        $('.design_consultant_table').find('input[name$=_amount]').each(function () {
+//            $(this).attr('tabindex', '-1');
+//
+//        });
+//        $('.construction_cost_table').find('input[name$=_vnd]').each(function () {
+//            $(this).attr('tabindex', '-1');
+//        });
+
         $("input[name=sunk_cost_amount]").removeAttr('tabindex');
     });
 
@@ -673,13 +698,13 @@ use yii\widgets\ActiveForm;
         $(".mainConfigSetParams").find('#profitMarginCalculation .net_sellable_area').attr('value', net_sellable_area);
     });
 
-    var $table = $("#table");
+//    var $table = $("#table");
     var lc_counter = 1;
     $('.land_associated_add').on('click', function () {
-        var $clone = $table.find('.land_associated_table tr.hide').clone(true).removeClass('hide table-line');
-        $clone.find('input[name=lc_amount]').val(0).attr('name', 'lc' + lc_counter + '_amount').addClass('lc' + lc_counter + '_amount');
-        $table.find('.land_associated_table').append($clone);
-        $(".land_associated_table").find('input:last').focus();
+        var $clone = $('.land_associated_table tr.hide').clone().removeClass('hide table-line');
+        $clone.find('input[name=lc_amount]').val(0).attr('name', 'lc' + lc_counter + '_amount').attr('id','lc' + lc_counter + '_amount');
+        $('table.land_associated_table').append($clone);
+        $('.land_associated_table').find('input:last').focus();
         lc_counter += 1;
     });
 
@@ -758,6 +783,10 @@ use yii\widgets\ActiveForm;
     });
 
     $('.table-remove').click(function () {
+        $(this).parents('tr').detach();
+    });
+
+    $(".land_associated_table .table-remove").click(function () {
         $(this).parents('tr').detach();
     });
 

@@ -128,8 +128,8 @@ use yii\widgets\ActiveForm;
         <input type="text" class="form-control text-right total_project_cost" name="total_project_cost" value="0">
     </div>
     <div class="col-lg-12 total_project_detail">
-        <div class="row">
-            <label>Total project cost detail</label>
+        <div>
+            <label>Offer price</label>
             <span class="total_project_add table-add glyphicon glyphicon-plus col-md-1 text-right pull-right hide"></span>
         </div>
         <table class="table total_project_table">
