@@ -132,6 +132,9 @@ return [
                 'yii\bootstrap\BootstrapAsset' => [
                     'css' => [],
                 ],
+                'yii\web\JqueryAsset' => [
+                    'js'=>[]
+                ],
             ],
         ],
     ],
