@@ -21,6 +21,16 @@ use yii\helpers\Url;
         }
     ];
     getActiveSuggert(jsonActive);
+    $(document).bind( 'real-estate/post', function(event, json, string){
+        setTimeout(function() {
+            $('.wrap-search-home .logo-home').addClass('ani-logo');
+            $('.box-search-header').addClass('ani-search');
+            setTimeout(function() {
+                $('header').addClass('border-shadow');
+                location.href = '<?=Url::to(['/ads/post'])?>';
+            },500);
+        },500);
+    });
 </script>
 <header class="home-page cd-secondary-nav border-shadow wrap-page-home">
     <div class="container clearfix">
