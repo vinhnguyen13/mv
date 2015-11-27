@@ -2,7 +2,7 @@ var arrJSONReturn = {
     objTT: [],
     objLoai: [],
     objTTuc: []
-};
+},objEvent;
 $(document).ready(function() {
 
     var $modal = $('.modal');
@@ -111,6 +111,7 @@ $(document).ready(function() {
                 break;
             case '#dd-news':
                 //something
+                //_this.trigger( 'real-estate/news', [{data: '1'}, 'something'] );
                 flagTrigger = '#dd-news';
                 break;
         }
@@ -131,7 +132,7 @@ $(document).ready(function() {
         return false;
     });
 
-    var objEvent = {
+    objEvent = {
         open: function(countStep, flagOpen) {//1. edit, 0. open normal
             $('.search-wrap').addClass('hidden-effect');
 
@@ -214,6 +215,13 @@ $(document).ready(function() {
                         _this.trigger( 'real-estate/post', [{data: '1'}, 'something'] );
                     }
 
+                    setTimeout(function() {
+                        if( flagTrigger == '#dd-news' ) {
+                            alert(1);
+                            _this.trigger( 'real-estate/news', [{data: '1'}, 'something'] );
+                        }
+                    },200);
+                    
                     objEvent.checkCounter();
                     var txtStep = countStep == 5 ? 'Tìm kiếm...' : $('#step-'+countStep).data('txtStep');
 
@@ -307,6 +315,10 @@ $(document).ready(function() {
             objEvent.resizeWidthInput();
             flagEnd = false;
             $('.getValSuggest').val('');
+        },
+        updateSuggert: function(countStep, lenghtSuggest) {
+            countStep = countStep;
+            lenghtSuggest = lenghtSuggest;
         }
     };
 
@@ -579,5 +591,14 @@ function animateSearch() {
 function l(x){console.log(x);}
 
 function getActiveSuggert(objJson) {
-
+    var $wrapListSuggest = $('.type-search ul');
+    if( objJson.length > 0 ) {
+        $wrapListSuggest.show();    
+        for( var i = 0; i < objJson.length; i++ ) {
+            var $itemSuggest = $('<li data-step="'+objJson[i].idItem+'" data-step-id="'+objJson[i].stepId+'" data-step-show='+objJson[i].stepShow+'><i>x</i><span>'+objJson[i].name_item+'</span></li>');
+            $wrapListSuggest.append($itemSuggest);
+        }
+        objEvent.resizeWidthInput();
+        objEvent.updateSuggert( 3, $wrapListSuggest.find('li').length );
+    }
 }
