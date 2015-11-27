@@ -18,7 +18,7 @@ Yii::$app->getView()->registerJs(strtr($script, ['_url_tt'=>Yii::$app->view->the
                                                 '_url_loaibds'=>Yii::$app->view->theme->baseUrl.'/resources/data/loai-bds.json',
                                                 '_url_ttuc'=>Yii::$app->view->theme->baseUrl.'/resources/data/loai-tintuc.json'
                                         ]), View::POS_HEAD);
-Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/common.js', ['position'=>View::POS_HEAD]);
+Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/common.js', ['position'=>View::POS_END]);
 
 Yii::$app->view->registerLinkTag([
     'rel'=>'shortcut icon',

@@ -20,7 +20,10 @@ use yii\helpers\Url;
             "name_item": "Loại 3"
         }
     ];
-    getActiveSuggert(jsonActive);
+//    getActiveSuggert(jsonActive);
+    $(document).bind( 'real-estate/news', function(event, json, string){
+        setTimeout(function() {$('#search-kind').submit();},100);
+    });
     $(document).bind( 'real-estate/post', function(event, json, string){
         setTimeout(function() {
             $('.wrap-search-home .logo-home').addClass('ani-logo');
