@@ -80,33 +80,33 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                         <ul class="outsideevent"></ul>
                                         <input name="search" type="text" class="form-control outsideevent" placeholder="">
                                     </div>
-                                    <div id="step-1" class="outsideevent search-wrap hidden-effect" data-txt-step="--Chọn Tỉnh/Thành--">
+                                    <div id="step-1" class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn ở Thành phố nào ?">
                                         <div class="wrap-effect">
                                             <div class="search-item">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <h3>--Chọn Tỉnh/Thành phố--</h3>
+                                                <h3>Bạn ở Thành phố nào ?</h3>
                                                 <ul class="clearfix list-tinh-thanh">
                                                     
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="step-2" class="outsideevent search-wrap hidden-effect" data-txt-step="--Chọn Quận/Huyện--">
+                                    <div id="step-2" class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn ở Quận nào ?">
                                         <div class="wrap-effect">
                                             <div class="search-item clearfix">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <h3>--Chọn Quận/Huyện--</h3>
+                                                <h3>Bạn ở Quận nào ?</h3>
                                                 <ul class="list-quan-huyen">
                                                     
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="step-3" class="outsideevent search-wrap hidden-effect" data-txt-step="--Chọn Loại--">
+                                    <div id="step-3" class="outsideevent search-wrap hidden-effect" data-txt-step="Loại BDS bạn quan tâm ?">
                                         <div class="wrap-effect">
                                             <div class="search-item clearfix">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <h3>--Chọn loại nhà đất--</h3>
+                                                <h3>Loại BDS bạn quan tâm ?</h3>
                                                 <ul class="list-loai-bds">
                                                 </ul>
                                             </div>
@@ -148,7 +148,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                             <?php ActiveForm::end(); ?>
                             <div class="pull-left text-right mgT-10 mgL-15">
                                 <div class="search-select active">
-                                    <a href="#" data-placeholder="--Chọn Tỉnh/Thành--" rel="#dd-search">
+                                    <a href="#" data-placeholder="Bạn ở Thành phố nào ?" rel="#dd-search">
                                         <span>
                                             <em class="fa fa-home"></em>
                                             <em class="fa fa-search"></em>
@@ -157,7 +157,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     </a>
                                 </div>
                                 <div class="search-select">
-                                    <a href="#" data-placeholder="--Chọn Tỉnh/Thành--" rel="#dd-dky">
+                                    <a href="#" data-placeholder="Bạn ở Thành phố nào ?" rel="#dd-dky">
                                         <span>
                                             <em class="fa fa-home"></em>
                                             <em class="fa fa-usd"></em>
@@ -166,7 +166,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     </a>
                                 </div>
                                 <div class="search-select">
-                                    <a href="#" class="" data-step-fix="step-5" data-placeholder="--Chọn Loại Tin Tức--" rel="#dd-news">
+                                    <a href="#" class="" data-step-fix="step-5" data-placeholder="Bạn nên chọn Loại Tin Tức ?" rel="#dd-news">
                                         <span>
                                             <em class="fa fa-home"></em>
                                             <em class="fa fa-file-text"></em>
