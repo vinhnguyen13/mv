@@ -3297,3 +3297,15 @@ form .inline-group {
     font-size: 1.5em;
     text-transform: uppercase;
 }
+#frm-post-tin ::-webkit-input-placeholder {
+   color: #333;
+}
+#frm-post-tin :-moz-placeholder { /* Firefox 18- */
+   color: #333;  
+}
+#frm-post-tin ::-moz-placeholder {  /* Firefox 19+ */
+   color: #333;  
+}
+#frm-post-tin :-ms-input-placeholder {  
+   color: #333;  
+}
