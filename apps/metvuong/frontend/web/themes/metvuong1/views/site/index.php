@@ -43,7 +43,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                             <?php $form = ActiveForm::begin([
                                 'options'=>['class' => 'form-inline pull-left', 'method'=>'POST'],
                                 'id'=>'search-kind',
-                                'action'=>Url::to(['/search/find']),
+                                'action'=>Url::to(['/ads/search']),
                                 'fieldConfig' => [],
                             ]); ?>
                                 <div class="form-group">
