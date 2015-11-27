@@ -217,7 +217,6 @@ $(document).ready(function() {
 
                     setTimeout(function() {
                         if( flagTrigger == '#dd-news' ) {
-                            alert(1);
                             _this.trigger( 'real-estate/news', [{data: '1'}, 'something'] );
                         }
                     },200);
