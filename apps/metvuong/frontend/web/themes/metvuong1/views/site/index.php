@@ -30,7 +30,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
     <header class="home-page cd-secondary-nav">
         <div class="container clearfix">
             <ul class="pull-right menu-home">
-                <li><a href="#"><em class="icon-plus"></em>Đăng tin</a></li>
+                <li><a href="<?=Url::to(['/ads/post'])?>"><em class="icon-plus"></em>Đăng tin</a></li>
                 <li><a class="showPopup" href="#" data-toggle="modal" data-target="#frmRegister"><em class="icon-user"></em>Đăng ký</a></li>
                 <li><a class="showPopup" href="#" data-toggle="modal" data-target="#frmLogin"><em class="icon-key"></em>Đăng nhập</a></li>
                 <li class="lang-icon icon-en"><a href="#"></a></li>

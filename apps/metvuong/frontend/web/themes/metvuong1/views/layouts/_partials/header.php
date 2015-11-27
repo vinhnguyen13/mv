@@ -5,7 +5,7 @@ use yii\helpers\Url;
 <header class="home-page cd-secondary-nav border-shadow wrap-page-home">
     <div class="container clearfix">
         <ul class="pull-right menu-home">
-            <li><a href="#"><em class="icon-plus"></em>Đăng tin</a></li>
+            <li><a href="<?=Url::to(['/ads/post'])?>"><em class="icon-plus"></em>Đăng tin</a></li>
             <li><a href="#" data-toggle="modal" data-target="#frmRegister"><em class="icon-user"></em>Đăng ký</a></li>
             <li><a href="#" data-toggle="modal" data-target="#frmLogin"><em class="icon-key"></em>Đăng nhập</a></li>
             <li class="lang-icon icon-en"><a href="#"></a></li>
@@ -18,7 +18,7 @@ use yii\helpers\Url;
                     <?php $form = ActiveForm::begin([
                         'options'=>['class' => 'form-inline pull-left', 'method'=>'POST'],
                         'id'=>'search-kind',
-                        'action'=>Url::to(['/search/find']),
+                        'action'=>Url::to(['/ads/search']),
                         'fieldConfig' => [],
                     ]); ?>
                         <div class="form-group">
@@ -99,7 +99,7 @@ use yii\helpers\Url;
                                     <em class="fa fa-home"></em>
                                     <em class="fa fa-search"></em>
                                 </span>
-                                <i>Mua - Thuê</i>
+                                <i>Muốn Mua/Thuê</i>
                             </a>
                         </div>
                         <div class="search-select">
@@ -108,7 +108,7 @@ use yii\helpers\Url;
                                     <em class="fa fa-home"></em>
                                     <em class="fa fa-usd"></em>
                                 </span>
-                                <i>Bán - Cho Thuê</i>
+                                <i>Đăng ký Bán/Thuê</i>
                             </a>
                         </div>
                         <div class="search-select">
