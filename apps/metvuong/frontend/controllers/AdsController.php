@@ -9,12 +9,19 @@ use common\vendor\vsoft\ad\models\AdBuildingProject;
 class AdsController extends \yii\web\Controller
 {
     public $layout = '@app/views/layouts/layout';
+
+    /**
+     * @return string
+     */
     public function actionIndex()
     {
         $this->layout = '@app/views/layouts/search';
         return $this->render('index');
     }
 
+    /**
+     * @return \yii\web\Response
+     */
     public function actionSearch()
     {
         $url = '/';
@@ -41,6 +48,9 @@ class AdsController extends \yii\web\Controller
         $this->redirect($url);
     }
 
+    /**
+     * @return string
+     */
     public function actionPost()
     {
         return $this->render('post');
