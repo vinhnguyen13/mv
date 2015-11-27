@@ -5,25 +5,26 @@ namespace common\vendor\vsoft\ad\models\base;
 use Yii;
 
 /**
- * This is the model class for table "ad_city".
+ * This is the model class for table "ad_ward".
  *
  * @property integer $id
- * @property string $code
+ * @property integer $district_id
  * @property string $name
+ * @property string $pre
  * @property integer $order
  * @property integer $status
  *
- * @property AdDistrict[] $adDistricts
  * @property AdProduct[] $adProducts
+ * @property AdDistrict $district
  */
-class AdCityBase extends \yii\db\ActiveRecord
+class AdWardBase extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'ad_city';
+        return 'ad_ward';
     }
 
     /**
@@ -32,10 +33,9 @@ class AdCityBase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['code', 'name'], 'required'],
-            [['order', 'status'], 'integer'],
-            [['code'], 'string', 'max' => 4],
-            [['name'], 'string', 'max' => 32]
+            [['district_id', 'name'], 'required'],
+            [['district_id', 'order', 'status'], 'integer'],
+            [['name', 'pre'], 'string', 'max' => 32]
         ];
     }
 
@@ -46,8 +46,9 @@ class AdCityBase extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'code' => 'Code',
+            'district_id' => 'District ID',
             'name' => 'Name',
+            'pre' => 'Pre',
             'order' => 'Order',
             'status' => 'Status',
         ];
@@ -56,16 +57,16 @@ class AdCityBase extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAdDistricts()
+    public function getAdProducts()
     {
-        return $this->hasMany(AdDistrict::className(), ['city_id' => 'id']);
+        return $this->hasMany(AdProduct::className(), ['ward_id' => 'id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAdProducts()
+    public function getDistrict()
     {
-        return $this->hasMany(AdProduct::className(), ['city_id' => 'id']);
+        return $this->hasOne(AdDistrict::className(), ['id' => 'district_id']);
     }
 }
