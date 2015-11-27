@@ -2943,6 +2943,7 @@ padding-bottom: 5px;
         margin: 30px auto;
     }
 }
+#frmForgot .modal-dialog,
 #frmLogin .modal-dialog,
 #frmRegister .modal-dialog {
     /* width: 600px; */
@@ -3086,6 +3087,8 @@ padding-bottom: 5px;
     -moz-transition: all .3s ease-out;
     -ms-transition: all .3s ease-out;
 }
+.btn-common:active,
+.btn-common:focus,
 .btn-common:hover {
     background: #315F32;
     height: auto;
@@ -3247,4 +3250,50 @@ padding-bottom: 5px;
 .num-results {
     display: inline-block;
     font-size: 1.3em;
+}
+.form-group label {
+    margin-bottom: 5px;
+}
+.wrap-dangtin {
+    width: 75%;
+    margin: 0 auto 0;
+}
+.title-sub-frm,
+.title-frm {
+    border-bottom: 1px solid #3c763d;
+    padding: 10px 10px 10px 0;
+    color: #3c763d;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-bottom: 25px;
+}
+form .inline-group {
+    display: inline-block;
+    padding-left: 0;
+    padding-right: 15px;
+}
+#frm-post-tin .form-group label{
+    font-size: 1.2em;
+    color: #5F5F5F;
+}
+.title-sub-frm {
+    font-size: 1em;
+    margin-bottom: 15px;
+}
+#frm-post-tin .form-group p {
+    font-size: 1.2em;
+    line-height: 20px;
+    margin-bottom: 15px;
+}
+#frm-post-tin .form-group p em {
+    margin: 0 10px;
+    font-size: 1.5em;
+}
+#frm-post-tin .form-group iframe {
+    width: 100%;
+}
+#frm-post-tin button {
+    font-size: 1.5em;
+    text-transform: uppercase;
 }

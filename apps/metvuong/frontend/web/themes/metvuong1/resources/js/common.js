@@ -520,7 +520,7 @@ $(document).ready(function() {
 
     $(window).on('scroll', function(){
         valShow = $(window).scrollTop() - hFirstNav/2
-        if( valShow > 0 ) {
+        /*if( valShow > 0 ) {
             secondaryNav.addClass('is-fixed');
             setTimeout(function() {
                 secondaryNav.addClass('animate-children');
@@ -530,7 +530,7 @@ $(document).ready(function() {
             setTimeout(function() {
                 secondaryNav.removeClass('animate-children');
             }, 50);
-        }
+        }*/
     });
     //end scroll fixed header
 
