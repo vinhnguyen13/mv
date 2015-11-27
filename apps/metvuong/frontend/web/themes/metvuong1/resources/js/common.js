@@ -85,7 +85,8 @@ $(document).ready(function() {
         countCurrent = 0,
         lenghtStep = $('.search-wrap').length,
         lenghtSuggest = 0,
-        flagOpenSugget = false;
+        flagOpenSugget = false,
+        flagTrigger = '';
 
     if( $('.search-select.active a').hasClass('no-suggest') ) {
         $textSearch.addClass('no-suggest');
@@ -96,7 +97,23 @@ $(document).ready(function() {
 
     $('.search-select a').on('click', function() {
     	var _this = $(this),
-            txtPlaceholder = _this.data('placeholder');
+            txtPlaceholder = _this.data('placeholder'),
+            itemSearch = _this.attr('rel');
+
+        switch(itemSearch) {
+            case '#dd-search':
+                //something
+                flagTrigger = '#dd-search';
+                break;
+            case '#dd-dky':
+                //_this.trigger( 'real-estate/post', [{data: '1'}, 'something'] );
+                flagTrigger = '#dd-dky';
+                break;
+            case '#dd-news':
+                //something
+                flagTrigger = '#dd-news';
+                break;
+        }
 
         objEvent.reset();
         $textSearch.val('');
@@ -192,6 +209,10 @@ $(document).ready(function() {
                     }
                     $itemSuggest.find('span').text(txt);
                     $wrapListSuggest.append($itemSuggest);
+
+                    if( flagTrigger == '#dd-dky' && countStep === 3 ) {
+                        _this.trigger( 'real-estate/post', [{data: '1'}, 'something'] );
+                    }
 
                     objEvent.checkCounter();
                     var txtStep = countStep == 5 ? 'Tìm kiếm...' : $('#step-'+countStep).data('txtStep');
@@ -520,7 +541,7 @@ $(document).ready(function() {
 
     $(window).on('scroll', function(){
         valShow = $(window).scrollTop() - hFirstNav/2
-        /*if( valShow > 0 ) {
+        if( valShow > 0 ) {
             secondaryNav.addClass('is-fixed');
             setTimeout(function() {
                 secondaryNav.addClass('animate-children');
@@ -530,7 +551,7 @@ $(document).ready(function() {
             setTimeout(function() {
                 secondaryNav.removeClass('animate-children');
             }, 50);
-        }*/
+        }
     });
     //end scroll fixed header
 
@@ -556,3 +577,7 @@ function animateSearch() {
 }
 
 function l(x){console.log(x);}
+
+function getActiveSuggert(objJson) {
+
+}

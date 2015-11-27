@@ -2,6 +2,26 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 ?>
+<script type="text/javascript">
+    var jsonActive = [
+        {
+            "idItem": 1,
+            "stepId": 1,
+            "name_item": "Hồ chí minh"
+        },
+        {
+            "idItem": 1,
+            "stepId": 1,
+            "name_item": "Loại 2"
+        },
+        {
+            "idItem": 1,
+            "stepId": 1,
+            "name_item": "Loại 3"
+        }
+    ];
+    getActiveSuggert(jsonActive);
+</script>
 <header class="home-page cd-secondary-nav border-shadow wrap-page-home">
     <div class="container clearfix">
         <ul class="pull-right menu-home">
