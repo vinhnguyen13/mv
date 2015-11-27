@@ -124,7 +124,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                             <em class="fa fa-home"></em>
                                             <em class="fa fa-search"></em>
                                         </span>
-                                        <i>Mua Bán</i>
+                                        <i>Muốn Mua/Thuê</i>
                                     </a>
                                 </div>
                                 <div class="search-select">
@@ -133,7 +133,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                             <em class="fa fa-home"></em>
                                             <em class="fa fa-usd"></em>
                                         </span>
-                                        <i>Cho Thuê</i>
+                                        <i>Đăng ký Bán/Thuê</i>
                                     </a>
                                 </div>
                                 <div class="search-select">
