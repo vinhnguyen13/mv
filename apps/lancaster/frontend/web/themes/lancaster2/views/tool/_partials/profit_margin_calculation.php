@@ -39,7 +39,7 @@ use yii\widgets\ActiveForm;
 
 <div class="row">
     <label class="col-md-11">Marketing and Selling Expenses Breakdown</label>
-    <span class="marketing_add table-add glyphicon glyphicon-plus col-md-1 text-right pull-right "></span>
+    <span class="marketing_add table-add glyphicon glyphicon-plus col-md-1 text-right pull-right hide"></span>
 </div>
 <table class="table marketing_table table-editable">
     <tr>

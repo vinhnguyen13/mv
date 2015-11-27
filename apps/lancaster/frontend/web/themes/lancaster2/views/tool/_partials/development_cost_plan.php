@@ -576,7 +576,7 @@ use yii\widgets\ActiveForm;
 
         <div class="row">
             <label class="col-md-11">C. Land & Associated Fees Cost</label>
-            <span class="land_associated_add table-add glyphicon glyphicon-plus col-md-1 text-right pull-right "></span>
+            <span class="land_associated_add table-add glyphicon glyphicon-plus col-md-1 text-right pull-right hide"></span>
         </div>
         <table class="table land_associated_table table-editable">
             <tr>
