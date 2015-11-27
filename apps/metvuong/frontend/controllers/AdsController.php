@@ -8,7 +8,7 @@ use common\vendor\vsoft\ad\models\AdBuildingProject;
 
 class AdsController extends \yii\web\Controller
 {
-    public $layout = '@app/views/layouts/layout';
+    public $layout = '@app/views/layouts/search';
     public function actionIndex()
     {
         return $this->render('index');
@@ -42,6 +42,7 @@ class AdsController extends \yii\web\Controller
 
     public function actionPost()
     {
+        $this->layout = '@app/views/layouts/layout';
         return $this->render('post');
     }
 
