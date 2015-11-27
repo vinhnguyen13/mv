@@ -129,11 +129,11 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="step-5" data-step-box="fixed" class="outsideevent search-wrap hidden-effect" data-txt-step="--Chọn Loại Tin Tức--">
+                                    <div id="step-5" data-step-box="fixed" class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn nên chọn Loại Tin Tức ?">
                                         <div class="wrap-effect">
                                             <div class="search-item clearfix">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <h3>--Chọn loại tin tức--</h3>
+                                                <h3>Bạn nên chọn Loại Tin Tức ?</h3>
                                                 <ul class="list-loai-tt">
                                                 </ul>
                                             </div>
