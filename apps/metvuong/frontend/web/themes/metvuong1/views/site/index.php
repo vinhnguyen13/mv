@@ -21,16 +21,14 @@ Yii::$app->getView()->registerJs(strtr($script, ['_url_tt'=>Yii::$app->view->the
                                                 '_url_loaibds'=>Yii::$app->view->theme->baseUrl.'/resources/data/loai-bds.json',
                                                 '_url_ttuc'=>Yii::$app->view->theme->baseUrl.'/resources/data/loai-tintuc.json'
                                         ]), View::POS_HEAD);
-Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/common.js', ['position'=>View::POS_HEAD]);
+Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/common.js', ['position'=>View::POS_END]);
 /* @var $this yii\web\View */
 
 $this->title = Yii::t('express','We offer exeptional amenities and renowned white - glove services');
 ?>
 <script>
     $(document).ready(function(){
-        var urls = {0: false, 1: false, 2: {0: '<?=\yii\helpers\Url::to(['/news/index'])?>', 1: '<?=\yii\helpers\Url::to(['/building-project/index'])?>'}};
         $(document).on('click', '.btn.btn-default', function(){
-            var classActive = $('.type-search ul li:first span').html();
             setTimeout(function() {
                 $('.wrap-search-home .logo-home').addClass('ani-logo');
                 $('.box-search-header').addClass('ani-search');
@@ -41,13 +39,27 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
             },500);
             return false;
         });
+
+
+        $(document).bind( 'real-estate/post', function(event, json, string){
+            setTimeout(function() {
+                $('.wrap-search-home .logo-home').addClass('ani-logo');
+                $('.box-search-header').addClass('ani-search');
+                setTimeout(function() {
+                    $('header').addClass('border-shadow');
+                    location.href = '<?=Url::to(['/ads/post'])?>';
+                },500);
+            },500);
+        });
+
+
     });
 </script>
 <div class="o-wrapper clearfix wrap-page-home">
     <header class="home-page cd-secondary-nav">
         <div class="container clearfix">
             <ul class="pull-right menu-home">
-                <li><a href="<?=Url::to(['/ads/post'])?>"><em class="icon-plus"></em>Đăng tin</a></li>
+<!--                <li><a href="--><?//=Url::to(['/ads/post'])?><!--"><em class="icon-plus"></em>Đăng tin</a></li>-->
                 <li><a class="showPopup" href="#" data-toggle="modal" data-target="#frmRegister"><em class="icon-user"></em>Đăng ký</a></li>
                 <li><a class="showPopup" href="#" data-toggle="modal" data-target="#frmLogin"><em class="icon-key"></em>Đăng nhập</a></li>
                 <li class="lang-icon icon-en"><a href="#"></a></li>
