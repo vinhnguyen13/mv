@@ -36,8 +36,8 @@
                         <div class="checkbox"> <label> <input type="checkbox"> Chấp nhận <a href="#">điều khoản</a> sử dụng của <a href="#">metvuong.com</a></label> </div>
                         <div class="footer-modal clearfix">
                             <div class="pull-right">
-                                <a href="#" data-toggle="modal" data-target="#frmLogin">Đăng nhập</a>
-                                <a href="#" data-toggle="modal" data-target="#frmForgot">Quên mật khẩu ?</a>
+                                <a class="showPopup" href="#" data-toggle="modal" data-target="#frmLogin">Đăng nhập</a>
+                                <a class="showPopup" href="#" data-toggle="modal" data-target="#frmForgot">Quên mật khẩu ?</a>
                             </div>
                             <button type="button" class="btn btn-primary btn-common">Đăng ký</button>
                         </div>
@@ -78,8 +78,8 @@
                         <div class="checkbox"> <label> <input type="checkbox"> Ghi nhớ đăng nhập</label> </div>
                         <div class="footer-modal clearfix">
                             <div class="pull-right">
-                                <a href="#" data-toggle="modal" data-target="#frmRegister">Đăng ký</a>
-                                <a href="#" data-toggle="modal" data-target="#frmForgot">Quên mật khẩu ?</a>
+                                <a class="showPopup" href="#" data-toggle="modal" data-target="#frmRegister">Đăng ký</a>
+                                <a class="showPopup" href="#" data-toggle="modal" data-target="#frmForgot">Quên mật khẩu ?</a>
                             </div>
                             <button type="button" class="btn btn-primary btn-common">Đăng nhập</button>
                         </div>
@@ -115,8 +115,8 @@
                         </div>
                         <div class="footer-modal clearfix">
                             <div class="pull-right">
-                                <a href="#" data-toggle="modal" data-target="#frmRegister">Đăng ký</a>
-                                <a href="#" data-toggle="modal" data-target="#frmLogin">Đăng nhập</a>
+                                <a class="showPopup" href="#" data-toggle="modal" data-target="#frmRegister">Đăng ký</a>
+                                <a class="showPopup" href="#" data-toggle="modal" data-target="#frmLogin">Đăng nhập</a>
                             </div>
                             <button type="button" class="btn btn-primary btn-common">Reset Pasword</button>
                         </div>

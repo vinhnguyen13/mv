@@ -14,9 +14,7 @@ $(document).ready(function() {
             $(this).modal("hide");
           }
         });
-    });
 
-    $modal.on('shown.bs.modal', function(e) {
         var _this = $(this);
         if( !$('body').hasClass('modal-open') ) {
             $('body').addClass('modal-open').css('padding-right', '17px');
