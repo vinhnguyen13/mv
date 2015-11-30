@@ -14,6 +14,12 @@ use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\Cookie;
+use common\vendor\vsoft\ad\models\AdCity;
+use common\vendor\vsoft\ad\models\AdDistrict;
+use common\vendor\vsoft\ad\models\AdWard;
+use common\vendor\vsoft\ad\models\AdStreet;
+use yii\helpers\ArrayHelper;
+use common\vendor\vsoft\ad\models\AdBuildingProject;
 
 /**
  * Site controller
@@ -237,5 +243,61 @@ class SiteController extends Controller
         print_r(phpinfo());
         echo "</pre>";
         exit;
+    }
+    
+    public function actionServiceLocationList() {
+		$cities = AdCity::find()->indexBy('id')->select('id, name')->asArray(true)->all();
+    	$districts = AdDistrict::find()->indexBy('id')->select('id, name, city_id')->asArray(true)->all();
+    	$wards = AdWard::find()->indexBy('id')->select('id, name, district_id, pre')->asArray(true)->all();
+    	$streets = AdStreet::find()->indexBy('id')->select('id, name, district_id, pre')->asArray(true)->all();
+    	$projects = AdBuildingProject::find()->indexBy('id')->with('categories')->select('id, name, district_id')->asArray(true)->all();
+    	
+    	foreach ($cities as &$city) {
+    		unset($city['id']);
+    		$city['districts'] = [];
+    	}
+    	
+    	foreach ($districts as &$district) {
+    		$district['wards'] = [];
+    		$district['streets'] = [];
+    		$district['projects'] = [];
+    	}
+    	
+    	foreach ($wards as $k => $ward) {
+    		$districtId = $ward['district_id'];
+    		unset($ward['district_id']);
+    		unset($ward['id']);
+    		$districts[$districtId]['wards'][$k] = $ward;
+    	}
+    	$wards = null;
+    	
+    	foreach ($streets as $k => $street) {
+    		$districtId = $street['district_id'];
+    		unset($street['district_id']);
+    		unset($street['id']);
+    		$districts[$districtId]['streets'][$k] = $street;
+    	}
+    	$streets = null;
+    	
+    	foreach ($projects as $k => $project) {
+    		$districtId = $project['district_id'];
+    		unset($project['district_id']);
+    		unset($project['id']);
+    		$project['categories'] = ArrayHelper::getColumn($project['categories'], 'id');
+    		$districts[$districtId]['projects'][$k] = $project;
+    	}
+    	$projects = null;
+    	
+    	foreach ($districts as $k => &$district) {
+    		$cityId = $district['city_id'];
+    		unset($district['city_id']);
+    		unset($district['id']);
+    		$cities[$cityId]['districts'][$k] = $district;
+    	}
+    	
+		$content = 'var data = ' . json_encode($cities, JSON_UNESCAPED_UNICODE);
+    	$file = fopen(Yii::$app->view->theme->basePath . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . "data.js", "w");
+    	fwrite($file, $content);
+		fclose($file);
     }
 }
