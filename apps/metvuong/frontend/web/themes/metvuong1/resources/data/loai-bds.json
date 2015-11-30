@@ -1,22 +1,27 @@
 [
 	{
 		"id": 1,
-		"ten_loai": "Chung cư"
+		"ten_loai": "Chung cư",
+		"template": "suggest-list"
 	},
 	{
 		"id": 2,
-		"ten_loai": "Nhà riêng"
+		"ten_loai": "Nhà riêng",
+		"template": "cost-min-max"
 	},
 	{
 		"id": 3,
-		"ten_loai": "Nhà biệt thự"
+		"ten_loai": "Nhà biệt thự",
+		"template": "cost-min-max"
 	},
 	{
 		"id": 4,
-		"ten_loai": "Nhà phố"
+		"ten_loai": "Nhà phố",
+		"template": "cost-min-max"
 	},
 	{
 		"id": 5,
-		"ten_loai": "Đất nền dự án"
+		"ten_loai": "Đất nền dự án",
+		"template": "cost-min-max"
 	}
 ]
