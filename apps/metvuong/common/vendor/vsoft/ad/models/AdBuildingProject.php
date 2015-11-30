@@ -21,13 +21,49 @@ class AdBuildingProject extends AdBuildingProjectBase
     public function rules()
     {
         return [
+            [['district_id', 'created_at', 'updated_at', 'status'], 'integer'],
             [['name'], 'required'],
-            [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video'], 'string'],
+            [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video', 'progress'], 'string'],
             [['lng', 'lat'], 'number'],
-            [['created_at', 'updated_at', 'status'], 'integer'],
             [['name', 'logo', 'land_area', 'apartment_no', 'floor_no', 'start_time', 'estimate_finished', 'hotline', 'slug'], 'string', 'max' => 32],
             [['location', 'investment_type', 'commercial_leasing_area', 'owner_type', 'facilities', 'website'], 'string', 'max' => 255]
         ];
+    }
+    
+    public function attributeLabels()
+    {
+    	return [
+    	'id' => 'ID',
+    	'district_id' => 'Quận / Huyện',
+    	'name' => 'Tên dự án',
+    	'logo' => 'Logo / Ảnh đại diện',
+    	'location' => 'Vị trí',
+    	'investment_type' => 'Loại hình đầu tư',
+    	'land_area' => 'Diện tích khu đất',
+    	'commercial_leasing_area' => 'Diện tích trung tâm văn phòng dịch vụ',
+    	'apartment_no' => 'Số lượng sản phẩm',
+    	'floor_no' => 'Số tầng',
+    	'location_detail' => 'Location Detail',
+    	'facilities_detail' => 'Facilities Detail',
+    	'seo_title' => 'Tiêu đề sử dụng cho SEO',
+    	'seo_keywords' => 'Keywords sử dụng cho SEO',
+    	'seo_description' => 'Description sử dụng cho SEO',
+    	'start_time' => 'Thời gian xây dựng',
+    	'estimate_finished' => 'Dự kiến hoàn thành',
+    	'owner_type' => 'Hình thức sở hữu',
+    	'facilities' => 'Tiện ích',
+    	'hotline' => 'Hotline',
+    	'website' => 'Website',
+    	'lng' => 'Lng',
+    	'lat' => 'Lat',
+    	'gallery' => 'Thư viện ảnh',
+    	'video' => 'Video',
+    	'progress' => 'Tiến độ xây dựng',
+    	'slug' => 'Slug',
+    	'created_at' => 'Created At',
+    	'updated_at' => 'Updated At',
+    	'status' => 'Status'
+    	];
     }
     
     public function behaviors()

@@ -31,6 +31,20 @@ class AdAreaType extends AdAreaTypeBase
 		];
 	}
 	
+
+	public function attributeLabels()
+	{
+		return [
+		'id' => 'ID',
+		'building_project_id' => 'Building Project ID',
+		'type' => 'Type',
+		'floor_plan' => 'Mặt bằng',
+		'payment' => 'Giá bán & thanh toán',
+		'promotion' => 'Chương trình bán hàng',
+		'document' => 'Tài liệu bán hàng',
+		];
+	}
+	
 	public function formName() {
 		$mapFormName = self::mapFormName();
 		
