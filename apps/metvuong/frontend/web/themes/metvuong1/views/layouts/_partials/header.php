@@ -21,6 +21,7 @@ use yii\helpers\Url;
         }
     ];
 //    getActiveSuggert(jsonActive);
+
     $(document).bind( 'real-estate/news', function(event, json, string){
         setTimeout(function() {$('#search-kind').submit();},100);
     });
