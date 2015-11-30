@@ -33,7 +33,7 @@ $items[] = [
 
 ?>
 <div class="mainConfigSetParams">
-	<a href="http://local.lancaster.com/tool/chart" class="btn btn-primary pull-right">View Chart</a>
+	<a href="<?= \yii\helpers\Url::to(['tool/chart'])?>" class="btn btn-primary pull-right">View Chart</a>
 	<?php
 	echo \yii\bootstrap\Tabs::widget([
 		'items' => $items,
