@@ -13,8 +13,9 @@ class InvestorController extends Controller
 		$model->loadDefaultValues();
 		
         if ($model->load(Yii::$app->request->post())) {
-            $model->save();
-            return $this->redirect('index');
+        	if($model->save()) {
+				return $this->redirect('index');
+			}
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -29,11 +30,11 @@ class InvestorController extends Controller
 		if($model) {
 			if(Yii::$app->request->isPost) {
 				if ($model->load(Yii::$app->request->post())) {
-					$model->save();
-					return $this->redirect('index');
+					if($model->save()) {
+						return $this->redirect('index');
+					}
 				}
 			}
-			
 			return $this->render('update', ['model' => $model,]);
 		} else {
 			throw new NotFoundHttpException('The requested page does not exist.');
