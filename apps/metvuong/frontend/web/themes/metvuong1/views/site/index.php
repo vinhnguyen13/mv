@@ -41,7 +41,14 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
         });
 
         $(document).bind( 'real-estate/news', function(event, json, string){
-            setTimeout(function() {$('#search-kind').submit();},100);
+            setTimeout(function() {
+                $('.wrap-search-home .logo-home').addClass('ani-logo');
+                $('.box-search-header').addClass('ani-search');
+                setTimeout(function() {
+                    $('header').addClass('border-shadow');
+                    setTimeout(function() {$('#search-kind').submit();},100);
+                },500);
+            },500);
         });
         
         $(document).bind( 'real-estate/post', function(event, json, string){
