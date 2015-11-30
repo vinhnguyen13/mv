@@ -7,20 +7,26 @@ use yii\helpers\Url;
         {
             "idItem": 1,
             "stepId": 1,
+            "stepShow": "#valTT",
             "name_item": "Hồ chí minh"
         },
         {
-            "idItem": 1,
-            "stepId": 1,
-            "name_item": "Loại 2"
+            "idItem": 2,
+            "stepId": 2,
+            "stepShow": "#valQh",
+            "name_item": "Quận 1"
         },
         {
-            "idItem": 1,
-            "stepId": 1,
-            "name_item": "Loại 3"
+            "idItem": 3,
+            "stepId": 3,
+            "stepShow": "#valLoai",
+            "name_item": "Nhà mặt phố"
         }
     ];
-//    getActiveSuggert(jsonActive);
+
+    $(document).ready(function() {
+        getActiveSuggert(jsonActive);
+    });
 
     $(document).bind( 'real-estate/news', function(event, json, string){
         setTimeout(function() {$('#search-kind').submit();},100);
@@ -58,7 +64,7 @@ use yii\helpers\Url;
                         <div class="form-group">
                             <div class="type-search">
                                 <ul class="outsideevent"></ul>
-                                <input name="search" type="text" class="form-control outsideevent" placeholder="">
+                                <input id="searchInput" name="search" type="text" class="form-control outsideevent" placeholder="" disabled>
                             </div>
                             <div id="step-1" class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn ở Thành phố nào ?">
                                 <div class="wrap-effect">

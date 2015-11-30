@@ -22,6 +22,7 @@ Yii::$app->getView()->registerJs(strtr($script, ['_url_tt'=>Yii::$app->view->the
                                                 '_url_ttuc'=>Yii::$app->view->theme->baseUrl.'/resources/data/loai-tintuc.json'
                                         ]), View::POS_HEAD);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/common.js', ['position'=>View::POS_END]);
+Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/search.js', ['position'=>View::POS_END]);
 /* @var $this yii\web\View */
 
 $this->title = Yii::t('express','We offer exeptional amenities and renowned white - glove services');
@@ -88,16 +89,14 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                 <div class="form-group">
                                     <div class="type-search">
                                         <ul class="outsideevent"></ul>
-                                        <input name="search" type="text" class="form-control outsideevent" placeholder="">
+                                        <input id="searchInput" name="search" type="text" class="form-control outsideevent" placeholder="" readonly="readonly">
                                     </div>
                                     <div id="step-1" class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn ở Thành phố nào ?">
                                         <div class="wrap-effect">
                                             <div class="search-item">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
                                                 <h3>Bạn ở Thành phố nào ?</h3>
-                                                <ul class="clearfix list-tinh-thanh">
-                                                    
-                                                </ul>
+                                                <ul class="clearfix list-tinh-thanh"></ul>
                                             </div>
                                         </div>
                                     </div>
@@ -106,9 +105,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                             <div class="search-item clearfix">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
                                                 <h3>Bạn ở Quận nào ?</h3>
-                                                <ul class="list-quan-huyen">
-                                                    
-                                                </ul>
+                                                <ul class="list-quan-huyen"></ul>
                                             </div>
                                         </div>
                                     </div>
@@ -117,12 +114,60 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                             <div class="search-item clearfix">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
                                                 <h3>Loại BDS bạn quan tâm ?</h3>
-                                                <ul class="list-loai-bds">
+                                                <ul class="list-loai-bds"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="outsideevent search-wrap hidden-effect" data-txt-step="" data-template="suggest-list" data-end="true">
+                                        <div class="wrap-effect">
+                                            <div class="search-item clearfix">
+                                                <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                                <h3>Chọn dự án</h3>
+                                                <ul class="list-duan-suggest">
+                                                    <li><a href="#">RICHSTAR</a></li>
+                                                    <li><a href="#">SUNRISE RIVERSIDE</a></li>
+                                                    <li><a href="#">ORCHARD PARKVIEW</a></li>
+                                                    <li><a href="#">GOLDEN MANSION</a></li>
+                                                    <li><a href="#">KINGSTON RESIDENCE</a></li>
+                                                    <li><a href="#">THE BOTANICA</a></li>
+                                                    <li><a href="#">THE SUN AVENUE</a></li>
+                                                    <li><a href="#">ORCHARD GARDEN</a></li>
+                                                    <li><a href="#">SUNRISE CITYVIEW</a></li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="step-4" class="outsideevent search-wrap hidden-effect" data-txt-step="Tìm kiếm...">
+
+                                    <div class="outsideevent search-wrap hidden-effect" data-txt-step="" data-template="cost-min-max" data-end="true">
+                                        <div class="wrap-effect">
+                                            <div class="search-item clearfix">
+                                                <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                                <h3>Nhập khoảng giá ?</h3>
+                                                <div class="frm-cost-min-max clearfix">
+                                                    <div class="form-group inline-group col-xs-4">
+                                                        <label>Từ:</label>
+                                                        <input type="text" class="form-control" placeholder="min">
+                                                        <select name="" id="">
+                                                            <option value="">VNĐ</option>
+                                                            <option value="">$</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="line-center form-group inline-group col-xs-4"><span>-</span></div>
+                                                    <div class="form-group inline-group col-xs-4">
+                                                        <label>Đến:</label>
+                                                        <input type="text" class="form-control" placeholder="max">
+                                                        <select name="" id="">
+                                                            <option value="">VNĐ</option>
+                                                            <option value="">$</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div id="step-4" class="outsideevent search-wrap hidden-effect" data-txt-step="Tìm kiếm...">
                                         <div class="wrap-effect">
                                             <div class="search-item clearfix">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
@@ -139,16 +184,17 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                             </div>
                                         </div>
                                     </div>
+                                    
                                     <div id="step-5" data-step-box="fixed" class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn nên chọn Loại Tin Tức ?">
                                         <div class="wrap-effect">
                                             <div class="search-item clearfix">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
                                                 <h3>Bạn nên chọn Loại Tin Tức ?</h3>
-                                                <ul class="list-loai-tt">
-                                                </ul>
+                                                <ul class="list-loai-tt"></ul>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
+
                                 </div>
                                 <button id="btn-search" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
                                 <input class="getValSuggest" type="hidden" id="valTT" name="city" value="">

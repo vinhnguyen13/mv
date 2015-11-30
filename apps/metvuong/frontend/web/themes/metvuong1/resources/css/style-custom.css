@@ -2641,6 +2641,7 @@ footer {
 }
 .wrap-search-home .search-item ul a {
     font-size: 1.1em;
+    text-transform: capitalize;
 }
 .wrap-search-home .type-search ul {
     height: 47px;
@@ -2656,6 +2657,7 @@ footer {
 }
 .wrap-search-home .type-search li span {
     font-size: .5em;
+    text-transform: capitalize;
 }
 .wrap-search-home .search-select a i {
     display: block;
@@ -3308,4 +3310,58 @@ form .inline-group {
 }
 #frm-post-tin :-ms-input-placeholder {  
    color: #333;  
+}
+#searchInput {
+    cursor: pointer;
+    background: #fff;
+}
+.wrap-search-home .list-duan-suggest li {
+    width: 50%;
+}
+.wrap-search-home .list-duan-suggest li a {
+    text-transform: uppercase;
+    font-size: 1.2em;
+    padding: 3px 0 3px 20px;
+}
+#search-kind .frm-cost-min-max {
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+}
+#search-kind .form-group.inline-group {
+    width: inherit;
+    position: relative;
+}
+#search-kind .form-group.inline-group.line-center {
+    position: relative;
+}
+#search-kind .form-group.inline-group.line-center  span {
+    position: absolute;
+    top: 20px;
+    left: -3px;
+    font-size: 2em;
+}
+#search-kind .form-group.inline-group label {
+    font-size: 1.2em;
+    color: #333;
+    font-weight: normal;
+}
+#search-kind .form-group.inline-group input {
+    border: 1px solid #989898;
+    height: 30px;
+    font-size: 1.3em;
+    padding-right: 15px;
+}
+#search-kind .form-group.inline-group select {
+    position: absolute;
+    bottom: 0;
+    right: 15px;
+    height: 30px;
+    text-align: center;
+}
+.frm-cost-min-max .btn {
+    height: 30px;
+    line-height: 30px;
+    padding: 0 15px;
+    margin-top: 19px;
 }
