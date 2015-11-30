@@ -8,6 +8,7 @@ use common\vendor\vsoft\ad\models\base\AdAreaTypeBase;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 
 class AdBuildingProject extends AdBuildingProjectBase
@@ -23,7 +24,7 @@ class AdBuildingProject extends AdBuildingProjectBase
         return [
             [['district_id', 'created_at', 'updated_at', 'status'], 'integer'],
             [['name'], 'required'],
-            [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video', 'progress'], 'string'],
+            [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video'], 'string'],
             [['lng', 'lat'], 'number'],
             [['name', 'logo', 'land_area', 'apartment_no', 'floor_no', 'start_time', 'estimate_finished', 'hotline', 'slug'], 'string', 'max' => 32],
             [['location', 'investment_type', 'commercial_leasing_area', 'owner_type', 'facilities', 'website'], 'string', 'max' => 255]
@@ -43,8 +44,8 @@ class AdBuildingProject extends AdBuildingProjectBase
     	'commercial_leasing_area' => 'Diện tích trung tâm văn phòng dịch vụ',
     	'apartment_no' => 'Số lượng sản phẩm',
     	'floor_no' => 'Số tầng',
-    	'location_detail' => 'Location Detail',
-    	'facilities_detail' => 'Facilities Detail',
+    	'location_detail' => 'Bản đồ vị trí',
+    	'facilities_detail' => 'Tiện ích',
     	'seo_title' => 'Tiêu đề sử dụng cho SEO',
     	'seo_keywords' => 'Keywords sử dụng cho SEO',
     	'seo_description' => 'Description sử dụng cho SEO',
@@ -57,12 +58,14 @@ class AdBuildingProject extends AdBuildingProjectBase
     	'lng' => 'Lng',
     	'lat' => 'Lat',
     	'gallery' => 'Thư viện ảnh',
-    	'video' => 'Video',
+    	'video' => 'Phim 3D dự án',
     	'progress' => 'Tiến độ xây dựng',
     	'slug' => 'Slug',
     	'created_at' => 'Created At',
     	'updated_at' => 'Updated At',
-    	'status' => 'Status'
+    	'status' => 'Status',
+    	'investors' => 'Chủ đầu tư',
+    	'categories' => 'Phân loại',
     	];
     }
     
@@ -163,5 +166,24 @@ class AdBuildingProject extends AdBuildingProjectBase
 	
 	public function getInvestors() {
 		return $this->hasMany(AdInvestor::className(), ['id' => 'investor_id'])->viaTable('ad_investor_building_project', ['building_project_id' => 'id']);
+	}
+	
+	public function getCategories() {
+		return $this->hasMany(AdCategory::className(), ['id' => 'category_id'])->viaTable('ad_building_project_category', ['building_project_id' => 'id']);
+	}
+	
+	public function saveMultiple($data, $relationModels, $field) {
+		$postIds = $data[$field] ? $data[$field] : [];
+		$ids = ArrayHelper::getColumn($this->$field, 'id');
+		$link = array_diff($postIds, $ids);
+		$unlink = array_diff($ids, $postIds);
+		
+		foreach ($relationModels as $relationModel) {
+			if(in_array($relationModel->id, $link)) {
+				$this->link($field, $relationModel);
+			} else if(in_array($relationModel->id, $unlink)) {
+				$this->unlink($field, $relationModel, true);
+			}
+		}
 	}
 }

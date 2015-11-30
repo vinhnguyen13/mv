@@ -9,6 +9,7 @@ use yii\helpers\Url;
 use common\vendor\vsoft\ad\models\AdBuildingProjectSearch;
 use common\vendor\vsoft\ad\models\AdInvestor;
 use yii\helpers\ArrayHelper;
+use common\vendor\vsoft\ad\models\AdCategory;
 
 class BuildingProjectController extends Controller
 {
@@ -35,6 +36,7 @@ class BuildingProjectController extends Controller
 		}
 		
 		$investors = AdInvestor::find()->all();
+		$categories = AdCategory::find()->all();
 		
 		if(Yii::$app->request->isPost) {
 			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
@@ -47,19 +49,8 @@ class BuildingProjectController extends Controller
 			
 			if($model->validate()) {
     			$model->save(false);
-    			
-    			$postInvestorIds = $post['BuildingProject']['investors'] ? $post['BuildingProject']['investors'] : [];
-    			$investorIds = ArrayHelper::getColumn($model->investors, 'id');
-    			$link = array_diff($postInvestorIds, $investorIds);
-    			$unlink = array_diff($investorIds, $postInvestorIds);
-    			
-    			foreach ($investors as $investor) {
-    				if(in_array($investor->id, $link)) {
-    					$model->link('investors', $investor);
-    				} else if(in_array($investor->id, $unlink)) {
-    					$model->unlink('investors', $investor);
-    				}
-    			}
+    			$model->saveMultiple($post['BuildingProject'], $investors, 'investors');
+    			$model->saveMultiple($post['BuildingProject'], $categories, 'categories');
     			
     			$mapFormName = AdAreaType::mapFormName();
     			foreach ($mapFormName as $type => $formName) {
@@ -80,7 +71,7 @@ class BuildingProjectController extends Controller
     		return $response;
 		}
 		
-		return $this->render('create', ['model' => $model, 'areaTypeMapLabels' => $areaTypeMapLabels, 'areaTypes' => $areaTypes, 'investors' => $investors]);
+		return $this->render('create', ['model' => $model, 'areaTypeMapLabels' => $areaTypeMapLabels, 'areaTypes' => $areaTypes, 'investors' => $investors, 'categories' => $categories]);
 	}
     public function actionView($id)
     {
@@ -107,6 +98,7 @@ class BuildingProjectController extends Controller
     	}
 
     	$investors = AdInvestor::find()->all();
+    	$categories = AdCategory::find()->all();
     	
     	if($model) {
     		if(Yii::$app->request->isPost) {
@@ -119,19 +111,8 @@ class BuildingProjectController extends Controller
     			 
     			if($model->validate()) {
     				$model->save(false);
-    				
-    				$postInvestorIds = $post['BuildingProject']['investors'] ? $post['BuildingProject']['investors'] : [];
-    				$investorIds = ArrayHelper::getColumn($model->investors, 'id');
-    				$link = array_diff($postInvestorIds, $investorIds);
-    				$unlink = array_diff($investorIds, $postInvestorIds);
-    				 
-    				foreach ($investors as $investor) {
-    					if(in_array($investor->id, $link)) {
-    						$model->link('investors', $investor);
-    					} else if(in_array($investor->id, $unlink)) {
-    						$model->unlink('investors', $investor, true);
-    					}
-    				}
+    				$model->saveMultiple($post['BuildingProject'], $investors, 'investors');
+    				$model->saveMultiple($post['BuildingProject'], $categories, 'categories');
     				
 	    			$mapFormName = AdAreaType::mapFormName();
 	    			foreach ($mapFormName as $type => $formName) {
@@ -170,7 +151,7 @@ class BuildingProjectController extends Controller
     			return $response;
     		}
     		 
-    		return $this->render('update', ['model' => $model, 'areaTypeMapLabels' => AdAreaType::mapLabels(), 'areaTypes' => $areaTypes, 'investors' => $investors]);
+    		return $this->render('update', ['model' => $model, 'areaTypeMapLabels' => AdAreaType::mapLabels(), 'areaTypes' => $areaTypes, 'investors' => $investors, 'categories' => $categories]);
     	} else {
     		throw new NotFoundHttpException('The requested page does not exist.');
     	}

@@ -140,7 +140,11 @@ $this->registerJs('buildingProject.initView()', View::POS_READY, 'initform');
 		    </tr>
 		    <tr>
 		    	<td>Tài liệu bán hàng</td>
-		    	<td><?= UploadHelper::getThumbs($areaType['document'], true, ['class' => 'gal']) ?></td>
+		    	<td>
+		    		<?php if($areaType['promotion']) : ?>
+		    		<a href="#" data-content="<?= htmlentities($areaType['document']) ?>" class="content-popup">Xem</a>
+		    		<?php endif; ?>
+		    	</td>
 		    </tr>
 		    <?php endforeach; ?>
 		</tbody>

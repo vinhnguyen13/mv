@@ -93,7 +93,7 @@ var buildingProject = {
 	initForm: function() {
 		this.formSubmit();
 		
-		$("#buildingproject-investors").select2();
+		$(".select-2").select2();
 		
 		$('.show-content').tabSwitch($('.bp-fields > li'));
 		$('.bp-subcontents > a').groupDropdown(true);

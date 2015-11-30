@@ -8,6 +8,7 @@ use common\widgets\CKEditor;
 use yii\web\View;
 use common\vendor\vsoft\ad\models\AdBuildingProject;
 use yii\helpers\ArrayHelper;
+use common\vendor\vsoft\ad\models\AdDistrict;
 
 $this->registerJsFile(Yii::getAlias('@web') . '/js/jquery.maphilight.js', ['depends' => ['yii\web\YiiAsset']]);
 $this->registerJsFile(Yii::getAlias('@web') . '/js/select2.min.js', ['depends' => ['yii\web\YiiAsset']]);
@@ -66,13 +67,15 @@ $this->registerCssFile(Yii::getAlias('@web') . '/css/select2.min.css', ['depends
 	    	<ul class="bp-fields">
 	    		<li class="active">
 	    			<?= $form->field($model, 'name') ?>
-	  				<?= $form->field($model, 'investors')->dropDownList(ArrayHelper::map($investors, 'id', 'name'), ['multiple' => true]) ?>
+	    			<?= $form->field($model, 'district_id')->dropDownList(ArrayHelper::map(AdDistrict::find()->all(), 'id', 'name'), ['prompt' => '---', 'class' => 'select-2 form-control']) ?>
+	  				<?= $form->field($model, 'categories')->dropDownList(ArrayHelper::map($categories, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
+	  				<?= $form->field($model, 'investors')->dropDownList(ArrayHelper::map($investors, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
 			    	<?= $form->field($model, 'logo')->widget(FileUploadUI::className(), [
 						'url' => Url::to('/express/upload/image'),
 						'clientOptions' => ['maxNumberOfFiles' => 1] ]) ?>
 					<?= $form->field($model, 'gallery')->widget(FileUploadUI::className(), ['url' => Url::to('/express/upload/image')]) ?>
 					<?= $form->field($model, 'location') ?>
-					<div id="map" style="height: 320px; width: 100%; margin-bottom: 15px;"></div>
+					<div id="map" style="height: 320px; width: 100%; margin-bottom: 15px; margin-top: -10px; border-radius: 4px;"></div>
 					<?= Html::activeHiddenInput($model, 'lat') ?>
 					<?= Html::activeHiddenInput($model, 'lng') ?>
 					<?= $form->field($model, 'investment_type') ?>

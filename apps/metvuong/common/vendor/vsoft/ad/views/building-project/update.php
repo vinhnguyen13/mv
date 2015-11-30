@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     	'areaTypeMapLabels' => $areaTypeMapLabels,
     	'areaTypes' => $areaTypes,
     	'investors' => $investors,
+    	'categories' => $categories,
     ]) ?>
 
 </div>
