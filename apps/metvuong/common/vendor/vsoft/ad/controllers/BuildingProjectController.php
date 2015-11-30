@@ -162,6 +162,7 @@ class BuildingProjectController extends Controller
     {
     	Yii::$app->db->createCommand()->delete('ad_investor_building_project', 'building_project_id = :building_project_id', [':building_project_id' => $id])->execute();
     	Yii::$app->db->createCommand()->delete('ad_area_type', 'building_project_id = :building_project_id', [':building_project_id' => $id])->execute();
+    	Yii::$app->db->createCommand()->delete('ad_building_project_category', 'building_project_id = :building_project_id', [':building_project_id' => $id])->execute();
     	
     	AdBuildingProject::findOne($id)->delete();
     

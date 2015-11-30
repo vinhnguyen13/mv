@@ -22,6 +22,24 @@ class InvestorController extends Controller
         }
 	}
 	
+	public function actionUpdate($id)
+	{
+		$model = AdInvestor::findOne($id);
+		
+		if($model) {
+			if(Yii::$app->request->isPost) {
+				if ($model->load(Yii::$app->request->post())) {
+					$model->save();
+					return $this->redirect('index');
+				}
+			}
+			
+			return $this->render('update', ['model' => $model,]);
+		} else {
+			throw new NotFoundHttpException('The requested page does not exist.');
+		}
+	}
+	
 	public function actionIndex()
 	{
 		$searchModel = new AdInvestor();
@@ -41,5 +59,16 @@ class InvestorController extends Controller
     	AdInvestor::findOne($id)->delete();
     
     	return $this->redirect(['index']);
+    }
+    
+    public function actionView($id)
+    {
+    	$model = AdInvestor::findOne($id);
+    	 
+    	if($model) {
+    		return $this->render('view', ['model' => $model,]);
+    	} else {
+    		throw new NotFoundHttpException('The requested page does not exist.');
+    	}
     }
 }
