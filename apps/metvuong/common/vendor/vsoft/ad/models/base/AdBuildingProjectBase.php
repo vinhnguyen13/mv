@@ -3,6 +3,8 @@
 namespace common\vendor\vsoft\ad\models\base;
 
 use Yii;
+use common\vendor\vsoft\ad\models\AdBuildingProject;
+use common\vendor\vsoft\ad\models\AdBuildingProjectCategory;
 
 /**
  * This is the model class for table "ad_building_project".
