@@ -21,6 +21,8 @@ use Yii;
  * @property integer $area
  * @property integer $price
  * @property integer $price_type
+ * @property double $lng
+ * @property double $lat
  * @property integer $start_date
  * @property integer $end_date
  * @property integer $score
@@ -39,7 +41,6 @@ use Yii;
  * @property AdStreet $street
  * @property AdWard $ward
  * @property AdProductAdditionInfo $adProductAdditionInfo
- * @property AdProductGeocoding $adProductGeocoding
  */
 class AdProductBase extends \yii\db\ActiveRecord
 {
@@ -59,6 +60,7 @@ class AdProductBase extends \yii\db\ActiveRecord
         return [
             [['category_id', 'city_id', 'district_id', 'type', 'title', 'content', 'start_date', 'end_date', 'created_at'], 'required'],
             [['category_id', 'project_building_id', 'user_id', 'city_id', 'district_id', 'ward_id', 'street_id', 'type', 'area', 'price', 'price_type', 'start_date', 'end_date', 'score', 'view', 'verified', 'created_at', 'updated_at', 'status'], 'integer'],
+            [['lng', 'lat'], 'number'],
             [['title'], 'string', 'max' => 255],
             [['content'], 'string', 'max' => 3200]
         ];
@@ -84,6 +86,8 @@ class AdProductBase extends \yii\db\ActiveRecord
             'area' => 'Area',
             'price' => 'Price',
             'price_type' => 'Price Type',
+            'lng' => 'Lng',
+            'lat' => 'Lat',
             'start_date' => 'Start Date',
             'end_date' => 'End Date',
             'score' => 'Score',
@@ -165,13 +169,5 @@ class AdProductBase extends \yii\db\ActiveRecord
     public function getAdProductAdditionInfo()
     {
         return $this->hasOne(AdProductAdditionInfo::className(), ['product_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAdProductGeocoding()
-    {
-        return $this->hasOne(AdProductGeocoding::className(), ['product_id' => 'id']);
     }
 }
