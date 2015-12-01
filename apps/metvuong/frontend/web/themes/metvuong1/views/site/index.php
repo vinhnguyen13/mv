@@ -85,7 +85,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                         <ul class="outsideevent"></ul>
                                         <input id="searchInput" name="search" type="text" class="form-control outsideevent" placeholder="" readonly="readonly">
                                     </div>
-                                    <div id="step-1" class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn ở Thành phố nào ?">
+                                    <div id="step-1" class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn ở Tỉnh/Thành nào ?">
                                         <div class="wrap-effect">
                                             <div class="search-item">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
@@ -94,7 +94,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="step-2" class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn ở Quận nào ?">
+                                    <div id="step-2" class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn ở Quận/Huyện nào ?">
                                         <div class="wrap-effect">
                                             <div class="search-item clearfix">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
@@ -141,45 +141,29 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                                 <div class="frm-cost-min-max clearfix">
                                                     <div class="form-group inline-group col-xs-4">
                                                         <label>Từ:</label>
-                                                        <input type="text" class="form-control" placeholder="min">
-                                                        <select name="" id="">
-                                                            <option value="">VNĐ</option>
-                                                            <option value="">$</option>
-                                                        </select>
+                                                        <input id="minCost" type="text" class="form-control" placeholder="min" readonly="readonly">
+                                                        <!-- <div class="cost-min">
+                                                            <ul>
+                                                                <li><span>0</span></li>
+                                                                <li><span>1</span></li>
+                                                                <li><span></span></li>
+                                                                <li><span></span></li>
+                                                                <li><span></span></li>
+                                                            </ul>
+                                                        </div> -->
                                                     </div>
                                                     <div class="line-center form-group inline-group col-xs-4"><span>-</span></div>
                                                     <div class="form-group inline-group col-xs-4">
                                                         <label>Đến:</label>
-                                                        <input type="text" class="form-control" placeholder="max">
-                                                        <select name="" id="">
-                                                            <option value="">VNĐ</option>
-                                                            <option value="">$</option>
-                                                        </select>
+                                                        <input id="maxCost" type="text" class="form-control" placeholder="max" readonly="readonly">
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <!-- <div id="step-4" class="outsideevent search-wrap hidden-effect" data-txt-step="Tìm kiếm...">
-                                        <div class="wrap-effect">
-                                            <div class="search-item clearfix">
-                                                <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <div class="suggest-search-text">
-                                                    <h3>--Gợi ý--</h3>
-                                                    <div class="loading-suggest"></div>
-                                                    <ul class="clearfix" style="display:none;">
-                                                        <li><a href="#">Bè, Hồ Chí Minh Huyện <strong>Nhà</strong> Bè, Hồ Chí Minh<span>(1935 tin)</span></a></li>
-                                                        <li><a href="#">Trang, Khánh Hòa Thành phố <strong>Nha</strong> Trang, Khánh Hòa<span>(1935 tin)</span></a></li>
-                                                        <li><a href="#">Quận Thanh Xuân, Hà Nội Phường Nhân Chính, Quận Thanh Xuân, Hà Nội<span>(1935 tin)</span></a></li>
-                                                        <li><a href="#">Thành phố <strong>Nha</strong> Trang, Khánh Hòa<span>(1935 tin)</span></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div id="step-5" data-step-box="fixed" class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn nên chọn Loại Tin Tức ?">
+                                    <div class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn nên chọn Loại Tin Tức ?" data-template="news" data-end="true">
                                         <div class="wrap-effect">
                                             <div class="search-item clearfix">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
@@ -187,10 +171,10 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                                 <ul class="list-loai-tt"></ul>
                                             </div>
                                         </div>
-                                    </div> -->
+                                    </div>
 
                                 </div>
-                                <button id="btn-search" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                                <button id="btn-search" type="submit" class="btn btn-default"><span><em class="fa fa-search"></em></span></button>
                                 <input class="getValSuggest" type="hidden" id="valTT" name="city" value="">
                                 <input class="getValSuggest" type="hidden" id="valQh" name="district" value="">
                                 <input class="getValSuggest" type="hidden" id="valLoai" name="category" value="">
@@ -210,7 +194,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     <a href="#" data-placeholder="Bạn ở Thành phố nào ?" rel="#dd-dky">
                                         <span>
                                             <em class="fa fa-home"></em>
-                                            <em class="fa fa-usd"></em>
+                                            <em class="fa fa-pencil-square-o"></em>
                                         </span>
                                         <i>Đăng ký Bán/Thuê</i>
                                     </a>

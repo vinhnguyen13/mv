@@ -4,7 +4,7 @@
 	$.getJSON(url_tt, function(result){
         arrJSONReturn.objTT = result;
         for( var i = 0; i < result.length; i++ ) {
-            var $itemTinhThanh = $('<li data-id-tt='+result[i].id+' data-active='+result[i].status_active+'><a href="#valTT">'+result[i].tinh_thanh+'</a></li>');
+            var $itemTinhThanh = $('<li data-id-tt='+result[i].id+'><a href="#valTT">'+result[i].tinh_thanh+'</a></li>');
             $('.list-tinh-thanh').append($itemTinhThanh);
         }
     });
@@ -12,7 +12,7 @@
     $.getJSON(url_loaibds, function(result){
         arrJSONReturn.objLoai = result;
         for( var i = 0; i < result.length; i++ ) {
-            var $item = $('<li data-id-loai='+result[i].id+' data-active='+result[i].status_active+'><a data-template-show="'+result[i].template+'" href="#valLoai">'+result[i].ten_loai+'</a></li>');
+            var $item = $('<li data-id-loai='+result[i].id+'><a data-template-show="'+result[i].template+'" href="#valLoai">'+result[i].ten_loai+'</a></li>');
             $('.list-loai-bds').append($item);   
         }
     });
@@ -20,7 +20,7 @@
     $.getJSON(url_ttuc, function(result){
         arrJSONReturn.objTTuc = result;
         for( var i = 0; i < result.length; i++ ) {
-            var $item = $('<li data-id-ttuc='+result[i].id+' data-active='+result[i].status_active+'><a href="#valTTuc">'+result[i].ten_tt+'</a></li>');
+            var $item = $('<li data-id-ttuc='+result[i].id+'><a data-template-show="'+result[i].template+'" href="#valTTuc">'+result[i].ten_tt+'</a></li>');
             $('.list-loai-tt').append($item);   
         }
     });
@@ -36,15 +36,18 @@
 	        lenghtSuggest : 0,
 	        flagOpenSugget : false,
 	        flagTrigger : '',
-	        template: {},
+	        current: 0,
+	        next: 0,
 	        timeoutClose: '',
 	        editItem: '',
+	        icon: $('#search-kind button span'),
 	        init: function() {
 	        	objEvent.searchEvent();
 	        	objEvent.tabSearchEvent();
 	        	objEvent.selectItem();
 	        	objEvent.btnclose();
 	        	objEvent.reOpenBySuggest();
+	        	objEvent.removeSuggest();
 	        },
 	        searchEvent: function() {
 	        	objEvent.tabsSearch.each(function() {
@@ -52,6 +55,7 @@
 	        		if( $(this).parent().hasClass('active') ) {
 	        			objEvent.itemInput.attr('placeholder', txtPlaceholder);	
 	        			objEvent.flagTrigger = $(this).attr('rel');
+	        			itemTabs(objEvent.flagTrigger);
 	        		}
 	        	});
 	        	objEvent.tabsSearch.on('click', function(e) {
@@ -60,23 +64,9 @@
 			            txtPlaceholder = _this.data('placeholder'),
 			            itemSearch = _this.attr('rel');
 
-			        switch(itemSearch) {
-			            case '#dd-search':
-			                //something
-			                objEvent.flagTrigger = '#dd-search';
-			                break;
-			            case '#dd-dky':
-			                //_this.trigger( 'real-estate/post', [{data: '1'}, 'something'] );
-			                objEvent.flagTrigger = '#dd-dky';
-			                break;
-			            case '#dd-news':
-			                //something
-			                //_this.trigger( 'real-estate/news', [{data: '1'}, 'something'] );
-			                objEvent.flagTrigger = '#dd-news';
-			                break;
-			        }
-
 			        objEvent.reset();
+
+			        itemTabs(itemSearch);
 			        
 			        objEvent.tabsSearch.parent().removeClass('active');
 			        objEvent.itemInput.attr('placeholder', txtPlaceholder);
@@ -84,12 +74,34 @@
 			    	
 			        return false;
 	        	});
+
+				function itemTabs(itemTab) {
+			        switch(itemTab) {
+			            case '#dd-search':
+			                //something
+			                objEvent.flagTrigger = '#dd-search';
+			                objEvent.icon.html('<em class="fa fa-search"></em>');
+			                break;
+			            case '#dd-dky':
+			                //_this.trigger( 'real-estate/post', [{data: '1'}, 'something'] );
+			                objEvent.icon.html('<em class="fa fa-pencil-square-o"></em>');
+			                objEvent.flagTrigger = '#dd-dky';
+			                break;
+			            case '#dd-news':
+			                //something
+			                //_this.trigger( 'real-estate/news', [{data: '1'}, 'something'] );
+			                objEvent.icon.html('<em class="fa fa-file-text"></em>');
+			                objEvent.flagTrigger = '#dd-news';
+			                objEvent.countStep = "news";
+			                break;
+			        }
+			    }
 	        },
 	        tabSearchEvent: function() {
 	        	objEvent.itemInput.on('click', function (e) {
 	        		e.preventDefault();
 	        		var _this = $(this);
-
+	        		objEvent.editItem = '';
 			        if( !objEvent.flagEnd )
 			        	objEvent.open(objEvent.countStep);
 				});
@@ -97,8 +109,6 @@
 	        open: function(countStep) {//1. edit, 0. open normal
 	        	objEvent.countStep = countStep;
 	            objEvent.wrapStep.addClass('hidden-effect');
-
-	            //flagOpen ? $('#step-'+objEvent.countStep).addClass('edit-suggest') : $('#step-'+objEvent.countStep).removeClass('edit-suggest');
 
 	            isNaN(objEvent.countStep) ? $(".search-wrap[data-template="+objEvent.countStep+"]").removeClass('hidden-effect') : $('#step-'+objEvent.countStep).removeClass('hidden-effect');
 
@@ -120,9 +130,7 @@
 
 	            $('.type-search li').removeClass('active');
 
-	            if( objEvent.countStep < objEvent.wrapStep.lenghtStep ) {
-	                objEvent.flagOpenSugget = false;
-	            }
+	            objEvent.editItem = '';
 	        },
 	        btnclose: function() {
 	            $('.btn-close-search').on('click',function(e) {
@@ -180,6 +188,7 @@
 
 	                    if( objEvent.flagTrigger == '#dd-dky' && objEvent.countStep === 3 ) {
 	                        _this.trigger( 'real-estate/post', [{data: '1'}, 'something'] );
+	                        objEvent.flagEnd = true;
 	                    }
 
 	                    setTimeout(function() {
@@ -197,15 +206,12 @@
 	                    var txtStep;
 	                    txtStep = isNaN(objEvent.countStep) ? $(".search-wrap[data-template="+objEvent.countStep+"]").data('txtStep') : $('#step-'+objEvent.countStep).data('txtStep');
 
-	                    objEvent.itemInput.attr('placeholder', txtStep);
+	                    objEvent.changeTextHolder(txtStep);
 
 	                }else {
 	                    objEvent.wrapListSuggest.find('li[data-step='+objEvent.editItem+'] span').text(txt);
-	                    if( !isNaN(objEvent.editItem) ) {
-	                    	//objEvent.countStep = objEvent.editItem + 1;
-	                    	objEvent.flagEnd = false;
-	                    }else {
-
+	                    if( templateSuggest !== undefined ) {
+	                    	objEvent.countStep = templateSuggest;
 	                    }
 	                    objEvent.editItem = '';
 	                }
@@ -235,23 +241,25 @@
 	                    getStep = $parentList.index(),
 	                    count = 0;
 
-	                for( var i = objEvent.lenghtSuggest-1; i >= getStep ; i-- ) {
-	                    $($('.type-search li').eq(i).data('stepShow')).val('');
-	                    $('.type-search li').eq(i).remove();
+	                for( var i = objEvent.wrapListSuggest.find('li').length; i > getStep ; i-- ) {
+	                	objEvent.wrapListSuggest.find('li').eq(i-1).remove();
 	                }
-
-	                objEvent.close();
-	                objEvent.countStep = objEvent.countStep === 5 ? 5 : getStep;
+	                
 	                objEvent.resizeWidthInput();
-	                objEvent.checkCounter();
-	                $textSearch.val('');
-	                if( !objEvent.flagOpenSugget ) {
-	                    var txtStep = $('#step-'+objEvent.countStep).data('txtStep');
-	                    $('.type-search input').attr('placeholder', txtStep);
+	                
+	                objEvent.countStep = $parentList.data('step');
+	                objEvent.flagEnd = false;
+
+	                if( !isNaN(objEvent.countStep) ) {
+	                	objEvent.changeTextHolder($('#step-'+objEvent.countStep).data('txtStep'));
+	                }else {
+	                	objEvent.changeTextHolder($('.search-wrap[data-template='+objEvent.countStep+']').data('txtStep'));
 	                }
-	                if( objEvent.flagEnd && objEvent.countStep == 5 ) objEvent.flagEnd = false;
-	            });
-	            
+	                
+				});
+	        },
+	        changeTextHolder: function(txtStep) {
+	        	objEvent.itemInput.attr('placeholder', txtStep);
 	        },
 	        resizeWidthInput: function() {
 	        	objEvent.itemInput.hide();
@@ -279,17 +287,21 @@
 	                objEvent.resizeWidthInput();
 
 	                objEvent.open(boxId);
-	                objEvent.countStep = boxId;
-	                objEvent.checkCounter();
+	                setTimeout(function() {
+	                	objEvent.flagEnd = false;
+	                	objEvent.checkCounter();
+	                },35);
 	            });
 	        },
 	        checkCounter: function() {
+	        	l('countStep: '+objEvent.countStep);
 	            objEvent.lenghtSuggest = objEvent.wrapListSuggest.find('li').length;
-	            if( objEvent.wrapStep.length === objEvent.lenghtSuggest ) {
-	            	objEvent.flagEnd = true;
-	            }else if( objEvent.countStep < objEvent.wrapStep.length ){
-	                objEvent.countStep += 1;
+	            if( !isNaN(objEvent.countStep) ) { // is a number
+	            	objEvent.countStep += 1;
+	            }else { // is a string
+	            	return;
 	            }
+	            
 	        },
 	        reset: function() {
 	            objEvent.countStep = 1;

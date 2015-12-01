@@ -144,7 +144,7 @@ button.btn.btn-default:hover {
     color: #1FA71E;
 }
 #search-kind button span {
-    font-size: 1.2em;
+    font-size: 1.5em;
 }
 #search-kind button .caret {
 }
@@ -1034,7 +1034,7 @@ footer {
     /* transition-delay: .2s; */
 }
 .search-select a:hover .fa-file-text,
-.search-select a:hover .fa-usd,
+.search-select a:hover .fa-pencil-square-o,
 .search-select a:hover .fa-search {
     color: #DCDCDC;
 }
@@ -2680,13 +2680,17 @@ footer {
     left: 0;
 }
 .search-select span .fa-search,
-.search-select span .fa-usd,
+.search-select span .fa-pencil-square-o,
 .search-select span .fa-file-text {
     color: #FFF;
     font-size: .5em;
     text-shadow: 1px 1px 1px #333;
     position: relative;
     top: -3px;
+}
+.search-select span .fa-pencil-square-o {
+    top: -3px;
+    left: 2px;
 }
 .wrap-search-home .search-select em {
     padding: 0;
@@ -2849,7 +2853,7 @@ padding-bottom: 5px;
     color: #333;
 }
 .wrap-search-home button.btn.btn-default {
-    top: 10px;
+    top: 8px;
     right: 15px;
     border-radius: 0;
     -webkit-border-radius: 0;
@@ -3364,4 +3368,10 @@ form .inline-group {
     line-height: 30px;
     padding: 0 15px;
     margin-top: 19px;
+}
+#btn-search .fa-pencil-square-o {
+    margin-top: 3px;
+}
+#btn-search .fa-file-text {
+    margin-top: 2px;
 }

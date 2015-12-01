@@ -1,10 +1,12 @@
 [
 	{
 		"id": 1,
-		"ten_tt": "Tin tức"
+		"ten_tt": "Tin tức",
+		"template": "news"
 	},
 	{
 		"id": 2,
-		"ten_tt": "Dự án"
+		"ten_tt": "Dự án",
+		"template": "news"
 	}
 ]
