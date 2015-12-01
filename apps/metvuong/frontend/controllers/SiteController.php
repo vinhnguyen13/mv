@@ -1,7 +1,7 @@
 <?php
 namespace frontend\controllers;
 
-use common\models\LoginForm;
+use dektrium\user\models\LoginForm;
 use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
@@ -20,6 +20,8 @@ use common\vendor\vsoft\ad\models\AdWard;
 use common\vendor\vsoft\ad\models\AdStreet;
 use yii\helpers\ArrayHelper;
 use common\vendor\vsoft\ad\models\AdBuildingProject;
+use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 /**
  * Site controller
@@ -94,18 +96,19 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!\Yii::$app->user->isGuest) {
+        if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
+        if(Yii::$app->request->isAjax){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $model = Yii::createObject(LoginForm::className());
+            if ($model->load(Yii::$app->getRequest()->post()) && $model->login()) {
+                return ['statusCode'=>200, 'parameters'=>['username'=>Yii::$app->user->identity->username]];
+            } else {
+                return ['statusCode'=>404, 'parameters'=>$model->errors];
+            }
         }
+        throw new NotFoundHttpException('Not Found');
     }
 
     /**
