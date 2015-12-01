@@ -48,6 +48,7 @@
 	        	objEvent.btnclose();
 	        	objEvent.reOpenBySuggest();
 	        	objEvent.removeSuggest();
+	        	loadCost.init();
 	        },
 	        searchEvent: function() {
 	        	objEvent.tabsSearch.each(function() {
@@ -301,7 +302,6 @@
 	            }else { // is a string
 	            	return;
 	            }
-	            
 	        },
 	        reset: function() {
 	            objEvent.countStep = 1;
@@ -317,11 +317,55 @@
 	        }
 	    };
 
+	var loadCost = {
+			inputMin: $('#minCost'),
+			inputMax: $('#maxCost'),
+			inputSubmitMin: $('#valCosMin'),
+			inputSubmitMax: $('#valCosMax'),
+			wrapList: $('.wrap-cost-bds'),
+			choiceEvent: $('.wrap-cost-bds li span'),
+			inputEvent: $('#search-kind .form-group.inline-group input'),
+			init: function () {
+				loadCost.show();
+			},
+			show: function (item) {
+				loadCost.inputEvent.on('click', function (e) {
+					e.preventDefault();
+					var _this = $(this);
+
+					loadCost.hide();
+					_this.parent().find('.wrap-cost-bds').show();
+					loadCost.clickChoice();
+				});
+			},
+			hide: function () {
+				$('.wrap-cost-bds').hide();
+			},
+			checkCost: function () {
+
+			},
+			clickChoice: function() {
+				loadCost.choiceEvent.on('click', function() {
+					var _this = $(this),
+						textChoice = _this.html(),
+						costValueChoice = _this.parent().data('cost'),
+						costRate = _this.parent().data('unit');
+
+					loadCost.inputMin.val(textChoice);
+					loadCost.inputSubmitMin.val(costValueChoice);
+				});
+			}
+		};
+
     //start click outside
     $(document).on('click', function(e) {
         var container = $(".outsideevent");
         if (!container.is(e.target) && container.has(e.target).length === 0){
-            $('.btn-close-search').trigger('click');
+        	if( $(".wrap-cost-bds").is(':visible') ) {
+        		$(".wrap-cost-bds").hide();
+        	}else {
+        		$('.btn-close-search').trigger('click');
+        	}
         }
     });
     //end click outside

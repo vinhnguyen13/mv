@@ -3315,6 +3315,8 @@ form .inline-group {
 #frm-post-tin :-ms-input-placeholder {  
    color: #333;  
 }
+#maxCost,
+#minCost,
 #searchInput {
     cursor: pointer;
     background: #fff;
@@ -3355,13 +3357,21 @@ form .inline-group {
     height: 30px;
     font-size: 1.3em;
     padding-right: 15px;
+    background: none;
+    position: relative;
+    z-index: 2;
 }
-#search-kind .form-group.inline-group select {
+#search-kind .form-group.inline-group em {
     position: absolute;
-    bottom: 0;
-    right: 15px;
-    height: 30px;
+    top: 27px;
+    right: 25px;
     text-align: center;
+    left: inherit;
+    background: none;
+    color: #A2A2A2;
+    z-index: 1;
+    bottom: inherit;
+    font-size: 1.2em;
 }
 .frm-cost-min-max .btn {
     height: 30px;
@@ -3374,4 +3384,30 @@ form .inline-group {
 }
 #btn-search .fa-file-text {
     margin-top: 2px;
+}
+.wrap-cost-bds {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 93.9%;
+    height: 150px;
+    overflow-y: scroll;
+    background: #fff;
+    border: 1px solid #B3B3B3;
+    padding: 5px 0;
+    display: none;
+}
+.wrap-cost-bds ul li {
+    float: left;
+    width: 100%;
+    padding-right: 0;
+}
+.wrap-cost-bds li span {
+    padding: 5px 10px;
+    display: block;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+.wrap-cost-bds li span:hover {
+    background: #D0D0D0;
 }
