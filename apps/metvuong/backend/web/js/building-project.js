@@ -90,10 +90,42 @@ $.fn.checkbox = function() {
 }
 
 var buildingProject = {
+	districtOptions: null,
+	filterDistrict: function(cityId) {
+		if(cityId) {
+			 $('#buildingproject-district_id').prop('disabled', false);
+			 $('#buildingproject-district_id').children().remove();
+			 $('#buildingproject-district_id').append('<option value="">---</option>');
+			 buildingProject.districtOptions.each(function(){
+				 var self = $(this);
+				 if(self.data('city-id') == cityId) {
+					 $('#buildingproject-district_id').append(self);
+				 }
+			 });
+			 $('#buildingproject-district_id').select2('val', '');
+		} else {
+			 $('#buildingproject-district_id').prop('disabled', true);
+		}
+	},
+	removeDistrict: function(cityId) {
+		$('#buildingproject-district_id').children().each(function(){
+			 var self = $(this);
+			 if(self.data('city-id') != cityId && self.attr('value')) {
+				 self.remove();
+			 }
+		});
+	},
 	initForm: function() {
 		this.formSubmit();
+
+		this.districtOptions = $('#buildingproject-district_id').children().clone();
+		this.removeDistrict($('#buildingproject-city_id').val());
 		
 		$(".select-2").select2();
+		
+		$('#buildingproject-city_id').change(function(){
+			buildingProject.filterDistrict($(this).val());
+		});
 		
 		$('.show-content').tabSwitch($('.bp-fields > li'));
 		$('.bp-subcontents > a').groupDropdown(true);

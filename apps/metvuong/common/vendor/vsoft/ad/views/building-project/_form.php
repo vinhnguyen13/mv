@@ -9,6 +9,7 @@ use yii\web\View;
 use common\vendor\vsoft\ad\models\AdBuildingProject;
 use yii\helpers\ArrayHelper;
 use common\vendor\vsoft\ad\models\AdDistrict;
+use common\vendor\vsoft\ad\models\AdCity;
 
 $this->registerJsFile(Yii::getAlias('@web') . '/js/jquery.maphilight.js', ['depends' => ['yii\web\YiiAsset']]);
 $this->registerJsFile(Yii::getAlias('@web') . '/js/select2.min.js', ['depends' => ['yii\web\YiiAsset']]);
@@ -24,6 +25,14 @@ $this->registerJs('buildingProject.initForm();', View::POS_READY, 'initform');
 $this->registerJsFile(Yii::getAlias('@web') . '/js/jquery.colorbox-min.js', ['depends' => ['yii\web\YiiAsset']]);
 $this->registerCssFile(Yii::getAlias('@web') . '/css/colorbox.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
 $this->registerCssFile(Yii::getAlias('@web') . '/css/select2.min.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
+
+$districts = AdDistrict::find()->all();
+$districtOptions = [];
+$districtData = [];
+foreach ($districts as $district) {
+	$districtOptions[$district->id] = ['data-city-id' => $district->city_id];
+	$districtData[$district->id] = $district->pre . ' ' . $district->name;
+}
 ?>
 <div id="project-building-form" class="cms-show-form">
 	<?php
@@ -67,7 +76,9 @@ $this->registerCssFile(Yii::getAlias('@web') . '/css/select2.min.css', ['depends
 	    	<ul class="bp-fields">
 	    		<li class="active">
 	    			<?= $form->field($model, 'name') ?>
-	    			<?= $form->field($model, 'district_id')->dropDownList(ArrayHelper::map(AdDistrict::find()->all(), 'id', 'name'), ['prompt' => '---', 'class' => 'select-2 form-control']) ?>
+	    			<?= $form->field($model, 'city_id')->dropDownList(ArrayHelper::map(AdCity::find()->all(), 'id', 'name'), ['prompt' => '---', 'class' => 'select-2 form-control']) ?>
+	    			<input type="hidden" name="BuildingProject[district_id]" value="" />
+	    			<?= $form->field($model, 'district_id')->dropDownList($districtData, ['options' => $districtOptions, 'prompt' => '---', 'class' => 'select-2 form-control', 'disabled' => ($model->city_id) ? false : true]) ?>
 	  				<?= $form->field($model, 'categories')->dropDownList(ArrayHelper::map($categories, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
 	  				<?= $form->field($model, 'investors')->dropDownList(ArrayHelper::map($investors, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
 			    	<?= $form->field($model, 'logo')->widget(FileUploadUI::className(), [

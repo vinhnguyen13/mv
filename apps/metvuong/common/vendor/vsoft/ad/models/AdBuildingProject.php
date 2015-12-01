@@ -22,12 +22,12 @@ class AdBuildingProject extends AdBuildingProjectBase
     public function rules()
     {
         return [
-            [['district_id', 'created_at', 'updated_at', 'status'], 'integer'],
-            [['name'], 'required'],
-            [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video'], 'string'],
-            [['lng', 'lat'], 'number'],
-            [['name', 'logo', 'land_area', 'apartment_no', 'floor_no', 'start_time', 'estimate_finished', 'hotline', 'slug'], 'string', 'max' => 32],
-            [['location', 'investment_type', 'commercial_leasing_area', 'owner_type', 'facilities', 'website'], 'string', 'max' => 255]
+	        [['city_id', 'district_id', 'created_at', 'updated_at', 'status'], 'integer'],
+	        [['name'], 'required'],
+	        [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video', 'progress'], 'string'],
+	        [['lng', 'lat'], 'number'],
+	        [['name', 'logo', 'land_area', 'apartment_no', 'floor_no', 'start_time', 'estimate_finished', 'hotline', 'slug'], 'string', 'max' => 32],
+	        [['location', 'investment_type', 'commercial_leasing_area', 'owner_type', 'facilities', 'website'], 'string', 'max' => 255]
         ];
     }
     
@@ -35,6 +35,7 @@ class AdBuildingProject extends AdBuildingProjectBase
     {
     	return [
     	'id' => 'ID',
+    	'city_id' => 'Tỉnh / Thành Phố',
     	'district_id' => 'Quận / Huyện',
     	'name' => 'Tên dự án',
     	'logo' => 'Logo / Ảnh đại diện',
