@@ -11,6 +11,9 @@ class m151201_025011_alter_ads_table extends Migration
 		$this->execute("ALTER TABLE `metvuong`.`ad_product`   
 			ADD COLUMN `lng` FLOAT(10,6) NULL AFTER `price_type`,
 			ADD COLUMN `lat` FLOAT(10,6) NULL AFTER `lng`;");
+		$this->execute("ALTER TABLE `metvuong`.`ad_building_project`   
+			ADD COLUMN `city_id` INT NULL AFTER `id`,
+			ADD CONSTRAINT `city_id&city:id` FOREIGN KEY (`city_id`) REFERENCES `metvuong`.`ad_city`(`id`);");
     }
 
     public function down()
@@ -25,6 +28,10 @@ class m151201_025011_alter_ads_table extends Migration
     	$this->execute("ALTER TABLE `metvuong`.`ad_product`   
 			DROP COLUMN `lng`, 
 			DROP COLUMN `lat`;");
+    	$this->execute("ALTER TABLE `metvuong`.`ad_building_project`   
+			DROP COLUMN `city_id`, 
+			DROP INDEX `city_id&city:id`,
+			DROP FOREIGN KEY `city_id&city:id`;");
     }
 
     /*

@@ -3,13 +3,12 @@
 namespace common\vendor\vsoft\ad\models\base;
 
 use Yii;
-use common\vendor\vsoft\ad\models\AdBuildingProject;
-use common\vendor\vsoft\ad\models\AdBuildingProjectCategory;
 
 /**
  * This is the model class for table "ad_building_project".
  *
  * @property integer $id
+ * @property integer $city_id
  * @property integer $district_id
  * @property string $name
  * @property string $logo
@@ -41,6 +40,7 @@ use common\vendor\vsoft\ad\models\AdBuildingProjectCategory;
  * @property integer $status
  *
  * @property AdAreaType[] $adAreaTypes
+ * @property AdCity $city
  * @property AdDistrict $district
  * @property AdBuildingProjectCategory[] $adBuildingProjectCategories
  * @property AdInvestorBuildingProject[] $adInvestorBuildingProjects
@@ -62,7 +62,7 @@ class AdBuildingProjectBase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['district_id', 'created_at', 'updated_at', 'status'], 'integer'],
+            [['city_id', 'district_id', 'created_at', 'updated_at', 'status'], 'integer'],
             [['name', 'slug', 'created_at'], 'required'],
             [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video', 'progress'], 'string'],
             [['lng', 'lat'], 'number'],
@@ -78,6 +78,7 @@ class AdBuildingProjectBase extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'city_id' => 'City ID',
             'district_id' => 'District ID',
             'name' => 'Name',
             'logo' => 'Logo',
@@ -116,6 +117,14 @@ class AdBuildingProjectBase extends \yii\db\ActiveRecord
     public function getAdAreaTypes()
     {
         return $this->hasMany(AdAreaType::className(), ['building_project_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCity()
+    {
+        return $this->hasOne(AdCity::className(), ['id' => 'city_id']);
     }
 
     /**
