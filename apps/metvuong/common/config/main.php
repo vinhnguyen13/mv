@@ -15,29 +15,7 @@ return [
         '@funson86/setting' => dirname(__DIR__) . '/vendor/funson86/yii2-setting',
     ),
     'modules' => [
-        'user' => [
-            'class' => 'dektrium\user\Module',
-            'enableConfirmation' => true,
-            'confirmWithin' => 21600,
-            'cost' => 12,
-            'admins' => ['superadmin'],
-            'modelMap' => [
-                'User' => 'dektrium\user\models\User',
-                'Profile' => 'dektrium\user\models\Profile',
-                'Account' => 'dektrium\user\models\Account',
-            ],
-            'controllerMap' => [
-                'admin' => 'vsoft\user\controllers\AdminController',
-            ],
-        ],
-        'express' => [
-            'class' => 'vsoft\express\Module',
-        ],
-        'translatemanager' => [
-            'class' => 'lajax\translatemanager\Module',
-            'tmpDir' => '@frontend/runtime',
-            'roles' => ['@']
-        ],
+
     ],
     'components' => [
         'cache' => [

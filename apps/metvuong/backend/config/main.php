@@ -67,6 +67,11 @@ return [
             'class' => 'funson86\cms\Module',
             'controllerNamespace' => 'funson86\cms\controllers\backend'
         ],
+        'translatemanager' => [
+            'class' => 'lajax\translatemanager\Module',
+            'tmpDir' => '@frontend/runtime',
+            'roles' => ['@']
+        ],
     ],
     'components' => [
         'request' => [
