@@ -140,7 +140,7 @@ $areaTypes = BuildingProject::getAreaTypes ();
 				<div id="tab-show-<?= $counter ?>3" class="item-tab"><?= $areaType['promotion'] ?></div>
 				<?php endif; ?>
 				<?php if($areaType['document']): ?>
-				<div id="tab-show-<?= $counter ?>4" class="item-tab"><img src="<?= Url::to('/store/building-project-images/' . $areaType['document']) ?>" alt=""></div>
+				<div id="tab-show-<?= $counter ?>4" class="item-tab"><?= $areaType['document'] ?></div>
 				<?php endif; ?>
 			</div>
 		    <?php endforeach; ?>
