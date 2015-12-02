@@ -18,6 +18,7 @@ $model = Yii::createObject(LoginForm::className());
                     <!-- <p class="txt-title">Hãy bắt đầu với một tài khoản miễn phí</p> -->
                     <?= \vsoft\user\widgets\Connect::widget([
                         'baseAuthUrl' => ['/user/security/auth'],
+                        'groupTitle' => Yii::t('user', 'Login by social')
                     ]) ?>
                     <?php $form = ActiveForm::begin([
                         'id' => 'login-form',

@@ -10,12 +10,10 @@
                 <div class="wrap-modal clearfix">
                     <h3>Đăng ký</h3>
                     <!-- <p class="txt-title">Hãy bắt đầu với một tài khoản miễn phí</p> -->
-                    <ul class="list-social-login clearfix">
-                        <li>Đăng nhập bằng tài khoản</li>
-                        <li><a href="#" class="btn btn-default facebook"> <i class="fa fa-facebook modal-icons"></i> Sign In with Facebook </a></li>
-                        <li><a href="#" class="btn btn-default twitter"> <i class="fa fa-twitter modal-icons"></i> Sign In with Twitter </a></li>
-                        <li><a href="#" class="btn btn-default google"> <i class="fa fa-google-plus modal-icons"></i> Sign In with Google </a></li>
-                    </ul>
+                    <?= \vsoft\user\widgets\Connect::widget([
+                        'baseAuthUrl' => ['/user/security/auth'],
+                        'groupTitle' => Yii::t('user', 'Login by social')
+                    ]) ?>
                     <form class="frmIcon" action="">
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Tài khoản">
