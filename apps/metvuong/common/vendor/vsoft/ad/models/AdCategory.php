@@ -18,6 +18,18 @@ use yii\data\ActiveDataProvider;
  */
 class AdCategory extends AdCategoryBase
 {
+
+	public function attributeLabels()
+	{
+		return [
+			'id' => 'ID',
+			'name' => 'Loại tin',
+			'apply_to_type' => 'Apply To Type',
+			'order' => 'Order',
+			'status' => 'Status',
+		];
+	}
+	
 	public function search($params)
 	{
 		$query = self::find();

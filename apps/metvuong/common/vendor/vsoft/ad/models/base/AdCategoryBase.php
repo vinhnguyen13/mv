@@ -9,9 +9,11 @@ use Yii;
  *
  * @property integer $id
  * @property string $name
+ * @property integer $apply_to_type
  * @property integer $order
  * @property integer $status
  *
+ * @property AdBuildingProjectCategory[] $adBuildingProjectCategories
  * @property AdProduct[] $adProducts
  */
 class AdCategoryBase extends \yii\db\ActiveRecord
@@ -30,8 +32,8 @@ class AdCategoryBase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
-            [['order', 'status'], 'integer'],
+            [['name', 'apply_to_type'], 'required'],
+            [['apply_to_type', 'order', 'status'], 'integer'],
             [['name'], 'string', 'max' => 32]
         ];
     }
@@ -44,9 +46,18 @@ class AdCategoryBase extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'apply_to_type' => 'Apply To Type',
             'order' => 'Order',
             'status' => 'Status',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAdBuildingProjectCategories()
+    {
+        return $this->hasMany(AdBuildingProjectCategory::className(), ['category_id' => 'id']);
     }
 
     /**
