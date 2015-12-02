@@ -32,16 +32,16 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
         $(document).on('click', '#btn-search', function(){
             setTimeout(function() {
                 $('.wrap-search-home .logo-home').addClass('ani-logo').css({
-                    'transform': 'translate3d( 0, 0, 0)',
-                    '-webkit-transform': 'translate3d( 0, 0, 0)',
-                    '-moz-transform': 'translate3d( 0, 0, 0)',
-                    '-ms-transform': 'translate3d( 0, 0, 0)'
+                    'transform': 'translate3d( 0, 8px, 0)',
+                    '-webkit-transform': 'translate3d( 0, 8px, 0)',
+                    '-moz-transform': 'translate3d( 0, 8px, 0)',
+                    '-ms-transform': 'translate3d( 0, 8px, 0)'
                 });
                 $('.box-search-header').addClass('ani-search').css({
-                    'transform': 'translate3d( 0, 0, 0)',
-                    '-webkit-transform': 'translate3d( 0, 0, 0)',
-                    '-moz-transform': 'translate3d( 0, 0, 0)',
-                    '-ms-transform': 'translate3d( 0, 0, 0)'
+                    'transform': 'translate3d(180px, 8px, 0px)',
+                    '-webkit-transform': 'translate3d(180px, 8px, 0px)',
+                    '-moz-transform': 'translate3d(180px, 8px, 0px)',
+                    '-ms-transform': 'translate3d(180px, 8px, 0px)'
                 });
                 setTimeout(function() {
                     $('header').addClass('border-shadow');
