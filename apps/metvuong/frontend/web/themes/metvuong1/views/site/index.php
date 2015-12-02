@@ -29,7 +29,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
 ?>
 <script>
     $(document).ready(function(){
-        $(document).on('click', '.btn.btn-default', function(){
+        $(document).on('click', '#btn-search', function(){
             setTimeout(function() {
                 $('.wrap-search-home .logo-home').addClass('ani-logo').css({
                     'transform': 'translate3d( 0, 0, 0)',
