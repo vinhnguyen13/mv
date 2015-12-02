@@ -18,10 +18,14 @@ $model = Yii::createObject(LoginForm::className());
                     <!-- <p class="txt-title">Hãy bắt đầu với một tài khoản miễn phí</p> -->
                     <ul class="list-social-login clearfix">
                         <li>Đăng nhập bằng tài khoản</li>
-                        <li><a href="#" class="btn btn-default facebook"> <i class="fa fa-facebook modal-icons"></i> Sign In with Facebook </a></li>
-                        <li><a href="#" class="btn btn-default twitter"> <i class="fa fa-twitter modal-icons"></i> Sign In with Twitter </a></li>
-                        <li><a href="#" class="btn btn-default google"> <i class="fa fa-google-plus modal-icons"></i> Sign In with Google </a></li>
+                        <li><a href="<?=Url::to(['/security/auth', 'authclient'=>'facebook'])?>" class="btn btn-default facebook"> <i class="fa fa-facebook modal-icons"></i> Sign In with Facebook </a></li>
+                        <li><a href="<?=Url::to(['/security/auth', 'authclient'=>'twitter'])?>" class="btn btn-default twitter"> <i class="fa fa-twitter modal-icons"></i> Sign In with Twitter </a></li>
+                        <li><a href="<?=Url::to(['/security/auth', 'authclient'=>'google'])?>" class="btn btn-default google"> <i class="fa fa-google-plus modal-icons"></i> Sign In with Google </a></li>
                     </ul>
+                    <?= \dektrium\user\widgets\Connect::widget([
+                        'baseAuthUrl' => ['/user/security/auth'],
+//                        'baseAuthUrl' => ['/authsocial/auth'],
+                    ]) ?>
                     <?php $form = ActiveForm::begin([
                         'id' => 'login-form',
                         'action' => Url::to(['/site/login']),
@@ -72,6 +76,13 @@ $model = Yii::createObject(LoginForm::className());
                     }
                 });
             }, 500);
+            return false;
+        });
+
+        $(document).on('click', '.list-social-login a', function(){
+            console.log(4);
+            var iframe = '';
+            $('.modal-body').html();
             return false;
         });
     });

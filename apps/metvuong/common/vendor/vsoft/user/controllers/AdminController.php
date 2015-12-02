@@ -79,10 +79,10 @@ class AdminController extends Controller
                     ],
                 ],
             ],
-            'as access' => [
-                'class' => 'mdm\admin\components\AccessControl',
-                'allowActions' => ['site/login', 'site/error']
-            ],
+//            'as access' => [
+//                'class' => 'mdm\admin\components\AccessControl',
+//                'allowActions' => ['site/login', 'site/error']
+//            ],
         ];
     }
 

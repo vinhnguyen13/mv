@@ -45,6 +45,7 @@ return [
                 'baseUrl' => '/frontend/web/themes/metvuong1',
                 'pathMap' => [
                     '@app/views' => '@webroot/themes/metvuong1/views',
+                    '@dektrium/user/views' => '@webroot/themes/metvuong1/views',
                 ],
             ],
         ],

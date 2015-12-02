@@ -277,7 +277,7 @@ function getActiveSuggert(objJson) {
             var $itemSuggest = $('<li data-step="'+objJson[i].idItem+'" data-step-id="'+objJson[i].stepId+'" data-step-show='+objJson[i].stepShow+'><i>x</i><span>'+objJson[i].name_item+'</span></li>');
             $wrapListSuggest.append($itemSuggest);
         }
-        objEvent.resizeWidthInput();
-        objEvent.updateSuggert( 3, $wrapListSuggest.find('li').length );
+        //objEvent.resizeWidthInput();
+        //objEvent.updateSuggert( 3, $wrapListSuggest.find('li').length );
     }
 }
