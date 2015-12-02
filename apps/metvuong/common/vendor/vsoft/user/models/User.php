@@ -122,14 +122,6 @@ class User extends \dektrium\user\models\User
     }
 
     /**
-     * @param Profile $profile
-     */
-    public function setProfile(Profile $profile)
-    {
-        $this->_profile = $profile;
-    }
-
-    /**
      * @return Account[] Connected accounts ($provider => $account)
      */
     public function getAccounts()
