@@ -22,6 +22,22 @@ return [
     'controllerNamespace' => 'frontend\controllers',
 //    'defaultRoute' => 'news/index',
     'modules' => [
+        'user' => [
+            'class' => 'dektrium\user\Module',
+            'enableConfirmation' => true,
+            'confirmWithin' => 21600,
+            'cost' => 12,
+            'admins' => ['superadmin'],
+            'modelMap' => [
+                'User' => 'dektrium\user\models\User',
+                'Account' => 'dektrium\user\models\Account',
+            ],
+            'controllerMap' => [
+                'admin' => 'vsoft\user\controllers\AdminController',
+                'security' => 'vsoft\user\controllers\SecurityController',
+                'registration' => 'vsoft\user\controllers\RegistrationController',
+            ],
+        ],
     ],
     'components' => [
         'request' => [
