@@ -49,6 +49,7 @@
 	        	objEvent.reOpenBySuggest();
 	        	objEvent.removeSuggest();
 	        	loadCost.init();
+	        	objEvent.centerBox();
 	        },
 	        searchEvent: function() {
 	        	objEvent.tabsSearch.each(function() {
@@ -295,7 +296,7 @@
 	            });
 	        },
 	        checkCounter: function() {
-	        	l('countStep: '+objEvent.countStep);
+	        	//l('countStep: '+objEvent.countStep);
 	            objEvent.lenghtSuggest = objEvent.wrapListSuggest.find('li').length;
 	            if( !isNaN(objEvent.countStep) ) { // is a number
 	            	objEvent.countStep += 1;
@@ -314,45 +315,115 @@
 	        updateSuggert: function(countStep, lenghtSuggest) {
 	            objEvent.countStep = countStep;
 	            objEvent.lenghtSuggest = lenghtSuggest;
+	        },
+	        centerBox: function() {
+	        	var logo = $('div.wrap-page-home .logo-home'),
+	        		searchBox = $('div.wrap-page-home .box-search-header'),
+	        		wLogo = logo.outerWidth(),
+	        		hLogo = logo.outerHeight(),
+	        		wSearchBox = searchBox.outerWidth(),
+	        		hSearchBox = searchBox.outerHeight(),
+	        		wWin = $('div.wrap-page-home .wrap-search-home').outerWidth(),
+	        		hWin = $(window).outerHeight(),
+	        		topCenterLogo = Math.floor(hWin/2 - hLogo/2 - hLogo - 30),
+	        		leftCenterLogo = Math.floor(wWin/2 - wLogo/2),
+	        		topCenterSearch = Math.floor(hWin/2 - hSearchBox/2),
+	        		leftCenterSearch = Math.floor(wWin/2 - wSearchBox/2);
+
+	        	logo.css({
+	        		'transform' : 'translate3d( '+leftCenterLogo+'px, '+topCenterLogo+'px, 0)',
+	        		'-moz-transform' : 'translate3d( '+leftCenterLogo+'px, '+topCenterLogo+'px, 0)',
+	        		'-webkit-transform' : 'translate3d( '+leftCenterLogo+'px, '+topCenterLogo+'px, 0)',
+	        		'-ms-transform' : 'translate3d( '+leftCenterLogo+'px, '+topCenterLogo+'px, 0)'
+
+	        	});
+	        	searchBox.css({
+	        		'transform' : 'translate3d( '+leftCenterSearch+'px, '+topCenterSearch+'px, 0)',
+	        		'-webkit-transform' : 'translate3d( '+leftCenterSearch+'px, '+topCenterSearch+'px, 0)',
+	        		'-moz-transform' : 'translate3d( '+leftCenterSearch+'px, '+topCenterSearch+'px, 0)',
+	        		'-ms-transform' : 'translate3d( '+leftCenterSearch+'px, '+topCenterSearch+'px, 0)'
+	        	});
+
+	        	setTimeout(function() {
+	        		logo.show().css({
+	        			visibility: 'visible'
+	        		});
+	        		logo.addClass('aniTopDown');
+	        		searchBox.show().css({
+	        			visibility: 'visible'
+	        		});
+	        		searchBox.addClass('aniTopDown');
+	        	},100);
 	        }
 	    };
 
 	var loadCost = {
-			inputMin: $('#minCost'),
-			inputMax: $('#maxCost'),
-			inputSubmitMin: $('#valCosMin'),
-			inputSubmitMax: $('#valCosMax'),
+			inputSubmitVal: $('.val-cost'),
 			wrapList: $('.wrap-cost-bds'),
 			choiceEvent: $('.wrap-cost-bds li span'),
-			inputEvent: $('#search-kind .form-group.inline-group input'),
+			inputEvent: $('.cost-value'),
+			flag: '',
 			init: function () {
 				loadCost.show();
+				loadCost.clickChoice();
 			},
-			show: function (item) {
+			show: function () {
 				loadCost.inputEvent.on('click', function (e) {
 					e.preventDefault();
-					var _this = $(this);
+					var _this = $(this),
+						tabShow = _this.closest('.box-cost').data('tab');
 
+					loadCost.flag = loadCost.toggleCost(tabShow);
 					loadCost.hide();
-					_this.parent().find('.wrap-cost-bds').show();
-					loadCost.clickChoice();
+					loadCost.open(tabShow);
 				});
 			},
-			hide: function () {
-				$('.wrap-cost-bds').hide();
+			open: function (item) {
+				loadCost.wrapList.addClass('hidden-cost');
+				$('.box-cost[data-tab='+item+'] .wrap-cost-bds').removeClass('hidden-cost');
+				setTimeout(function() {
+	                $('.box-cost[data-tab='+item+'] .wrap-cost-bds').addClass('active');
+	            }, 30);
 			},
-			checkCost: function () {
-
+			hide: function () {
+				loadCost.wrapList.removeClass('active');
+				loadCost.wrapList.addClass('hidden-cost');
+			},
+			toggleCost: function (item) {
+				var itemGet = item == 'min' ? 'max' : 'min';
+				return itemGet;
 			},
 			clickChoice: function() {
 				loadCost.choiceEvent.on('click', function() {
 					var _this = $(this),
 						textChoice = _this.html(),
 						costValueChoice = _this.parent().data('cost'),
-						costRate = _this.parent().data('unit');
+						costRate = _this.parent().data('unit'),
+						tabIndex = _this.closest('.box-cost').data('tab');
 
-					loadCost.inputMin.val(textChoice);
-					loadCost.inputSubmitMin.val(costValueChoice);
+					
+					$('.box-cost[data-tab='+tabIndex+'] .cost-value').val(textChoice);
+					$('.val-cost[data-val-cost='+tabIndex+']').val(costValueChoice);
+
+					loadCost.hide();
+
+					if( loadCost.flag == 'max' ) {
+						$('.box-cost[data-tab='+loadCost.flag+'] .cost-value').val('');
+						$('.box-cost[data-tab='+loadCost.flag+'] ul li').each(function(i) {
+							var _this = $(this),
+								valCostList = _this.data('cost');
+
+							if( costValueChoice > valCostList ) {
+								_this.hide();
+							}else {
+								_this.show();
+							}
+						});
+
+						loadCost.open(loadCost.flag);
+						
+						loadCost.flag = 'min';
+					}
 				});
 			}
 		};
@@ -361,8 +432,8 @@
     $(document).on('click', function(e) {
         var container = $(".outsideevent");
         if (!container.is(e.target) && container.has(e.target).length === 0){
-        	if( $(".wrap-cost-bds").is(':visible') ) {
-        		$(".wrap-cost-bds").hide();
+        	if( $(".wrap-cost-bds").hasClass('active') ) {
+        		loadCost.hide();
         	}else {
         		$('.btn-close-search').trigger('click');
         	}
@@ -371,6 +442,10 @@
     //end click outside
 
     objEvent.init();
+
+    $(window).resize(function() {
+    	objEvent.centerBox();
+    });
 
 
 })(jQuery);

@@ -31,8 +31,18 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
     $(document).ready(function(){
         $(document).on('click', '.btn.btn-default', function(){
             setTimeout(function() {
-                $('.wrap-search-home .logo-home').addClass('ani-logo');
-                $('.box-search-header').addClass('ani-search');
+                $('.wrap-search-home .logo-home').addClass('ani-logo').css({
+                    'transform': 'translate3d( 0, 0, 0)',
+                    '-webkit-transform': 'translate3d( 0, 0, 0)',
+                    '-moz-transform': 'translate3d( 0, 0, 0)',
+                    '-ms-transform': 'translate3d( 0, 0, 0)'
+                });
+                $('.box-search-header').addClass('ani-search').css({
+                    'transform': 'translate3d( 0, 0, 0)',
+                    '-webkit-transform': 'translate3d( 0, 0, 0)',
+                    '-moz-transform': 'translate3d( 0, 0, 0)',
+                    '-ms-transform': 'translate3d( 0, 0, 0)'
+                });
                 setTimeout(function() {
                     $('header').addClass('border-shadow');
                     setTimeout(function() {$('#search-kind').submit();},500);
@@ -43,8 +53,18 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
 
         $(document).bind( 'real-estate/news', function(event, json, string){
             setTimeout(function() {
-                $('.wrap-search-home .logo-home').addClass('ani-logo');
-                $('.box-search-header').addClass('ani-search');
+                $('.wrap-search-home .logo-home').addClass('ani-logo').css({
+                    'transform': 'translate3d( 0, 8px, 0)',
+                    '-webkit-transform': 'translate3d( 0, 8px, 0)',
+                    '-moz-transform': 'translate3d( 0, 8px, 0)',
+                    '-ms-transform': 'translate3d( 0, 8px, 0)'
+                });
+                $('.box-search-header').addClass('ani-search').css({
+                    'transform': 'translate3d(180px, 8px, 0px)',
+                    '-webkit-transform': 'translate3d(180px, 8px, 0px)',
+                    '-moz-transform': 'translate3d(180px, 8px, 0px)',
+                    '-ms-transform': 'translate3d(180px, 8px, 0px)'
+                });
                 setTimeout(function() {
                     $('header').addClass('border-shadow');
                     setTimeout(function() {$('#search-kind').submit();},100);
@@ -139,42 +159,42 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
                                                 <h3>Nhập khoảng giá ?</h3>
                                                 <div class="frm-cost-min-max clearfix">
-                                                    <div class="form-group inline-group col-xs-4">
-                                                        <label>Từ:</label>
-                                                        <input id="minCost" type="text" class="form-control" placeholder="min" readonly="readonly">
-                                                        <em class="fa fa-caret-down"></em>
-                                                        <div class="outsideevent cost-min wrap-cost-bds">
-                                                            <ul>
-                                                                <li data-cost="0" data-unit=""><span>0</span></li>
-                                                                <li data-cost="1" data-unit="triệu"><span>1 triệu</span></li>
-                                                                <li data-cost="2" data-unit="triệu"><span>2 triệu</span></li>
-                                                                <li data-cost="3" data-unit="triệu"><span>3 triệu</span></li>
-                                                                <li data-cost="4" data-unit="triệu"><span>4 triệu</span></li>
-                                                                <li data-cost="5" data-unit="triệu"><span>5 triệu</span></li>
-                                                                <li data-cost="6" data-unit="tỷ"><span>6 triệu</span></li>
-                                                            </ul>
+                                                    <div class="form-group inline-group box-cost col-xs-5" data-tab="min">
+                                                        <input id="minCost" type="text" class="form-control cost-value" placeholder="min" readonly="readonly">
+                                                        <div class="outsideevent wrap-cost-bds hidden-cost">
+                                                            <div class="wrap-effect-cost">
+                                                                <ul>
+                                                                    <li data-cost="0" data-unit=""><span>0</span></li>
+                                                                    <li data-cost="1" data-unit="triệu"><span>1 triệu</span></li>
+                                                                    <li data-cost="2" data-unit="triệu"><span>2 triệu</span></li>
+                                                                    <li data-cost="3" data-unit="triệu"><span>3 triệu</span></li>
+                                                                    <li data-cost="4" data-unit="triệu"><span>4 triệu</span></li>
+                                                                    <li data-cost="5" data-unit="triệu"><span>5 triệu</span></li>
+                                                                    <li data-cost="6" data-unit="tỷ"><span>6 triệu</span></li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="line-center form-group inline-group col-xs-4"><span>-</span></div>
-                                                    <div class="form-group inline-group col-xs-4">
-                                                        <label>Đến:</label>
-                                                        <input id="maxCost" type="text" class="form-control" placeholder="max" readonly="readonly">
-                                                        <em class="fa fa-caret-down"></em>
-                                                        <div class="outsideevent cost-max wrap-cost-bds">
-                                                            <ul>
-                                                                <li data-cost="0" data-unit=""><span>0</span></li>
-                                                                <li data-cost="1" data-unit="triệu"><span>1 triệu</span></li>
-                                                                <li data-cost="2" data-unit="triệu"><span>2 triệu</span></li>
-                                                                <li data-cost="3" data-unit="triệu"><span>3 triệu</span></li>
-                                                                <li data-cost="4" data-unit="triệu"><span>4 triệu</span></li>
-                                                                <li data-cost="5" data-unit="triệu"><span>5 triệu</span></li>
-                                                                <li data-cost="6" data-unit="tỷ"><span>6 triệu</span></li>
-                                                            </ul>
+                                                    <div class="line-center form-group inline-group box-cost col-xs-2"><span></span></div>
+                                                    <div class="form-group inline-group box-cost col-xs-5" data-tab="max">
+                                                        <input id="maxCost" type="text" class="form-control cost-value" placeholder="max" readonly="readonly">
+                                                        <div class="outsideevent wrap-cost-bds hidden-cost">
+                                                            <div class="wrap-effect-cost">
+                                                                <ul>
+                                                                    <li data-cost="0" data-unit=""><span>0</span></li>
+                                                                    <li data-cost="1" data-unit="triệu"><span>1 triệu</span></li>
+                                                                    <li data-cost="2" data-unit="triệu"><span>2 triệu</span></li>
+                                                                    <li data-cost="3" data-unit="triệu"><span>3 triệu</span></li>
+                                                                    <li data-cost="4" data-unit="triệu"><span>4 triệu</span></li>
+                                                                    <li data-cost="5" data-unit="triệu"><span>5 triệu</span></li>
+                                                                    <li data-cost="6" data-unit="tỷ"><span>6 triệu</span></li>
+                                                                </ul>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <input id="valCosMin" type="hidden" value="">
-                                                <input id="valCosMax" type="hidden" value="">
+                                                <input id="valCosMin" type="hidden" value="" data-val-cost="min" class="val-cost">
+                                                <input id="valCosMax" type="hidden" value="" data-val-cost="max" class="val-cost">
                                             </div>
                                         </div>
                                     </div>
@@ -207,7 +227,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     </a>
                                 </div>
                                 <div class="search-select">
-                                    <a href="#" data-placeholder="Bạn ở Quận/Huyện nào ?" rel="#dd-dky">
+                                    <a href="#" data-placeholder="Bạn ở Tỉnh/Thành nào ?" rel="#dd-dky">
                                         <span>
                                             <em class="fa fa-home"></em>
                                             <em class="fa fa-pencil-square-o"></em>
@@ -226,7 +246,8 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                 </div>
                             </div>
                         </div>
-                    </div>
+                </div>
+                
             </div>
         </div>
     </header>
