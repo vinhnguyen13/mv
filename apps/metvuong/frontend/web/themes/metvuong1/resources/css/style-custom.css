@@ -2514,7 +2514,7 @@ button.btn.btn-default,
     color: #757575;
     font-family: arial,sans-serif;
     font-size: 13px;
-    padding: 0 10px 0 20px;
+    padding: 0 0px 0 20px;
     font-weight: bold;
     position: relative;
     display: block;
@@ -2821,7 +2821,7 @@ header.wrap-page-home .ani-search {
     position: relative;
     top: 0;
     left: 0;
-    width: 65%;
+    width: 60%;
 }
 .wrap-page-home .slideUpDown li {
     padding: 0px 10px;

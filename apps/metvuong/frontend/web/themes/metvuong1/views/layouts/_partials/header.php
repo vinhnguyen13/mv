@@ -140,7 +140,7 @@ use yii\helpers\Url;
                             <a href="#" data-placeholder="Bạn ở Thành phố nào ?" rel="#dd-dky">
                                 <span>
                                     <em class="fa fa-home"></em>
-                                    <em class="fa fa-usd"></em>
+                                    <em class="fa fa-pencil-square-o"></em>
                                 </span>
                                 <i>Đăng ký Bán/Thuê</i>
                             </a>
