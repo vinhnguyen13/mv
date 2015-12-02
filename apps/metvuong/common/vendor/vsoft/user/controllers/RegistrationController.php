@@ -132,13 +132,15 @@ class RegistrationController extends Controller
         ]);
         $user->username = $user->generateUsername();
         $user->validate();
-        if (!$user->hasErrors() && $user->create()) {
-            $account->connect($user);
+        if (!$user->hasErrors()) {
+            $user->create();
         }else{
             $user = User::findOne(['email'=>$account->email]);
-            $account->connect($user);
         }
-        Yii::$app->user->login($user, $this->module->rememberFor);
+        if(!empty($user)){
+            $account->connect($user);
+            Yii::$app->user->login($user, $this->module->rememberFor);
+        }
         return $this->goBack();
 
         return $this->render('connect', [
