@@ -57,7 +57,7 @@ return [
             'sessionTable' => 'session',
         ],
         'user' => [
-            'identityClass' => 'dektrium\user\models\User',
+            'identityClass' => 'vsoft\user\models\User',
             'enableAutoLogin' => true,
         ],
         'authManager' => [

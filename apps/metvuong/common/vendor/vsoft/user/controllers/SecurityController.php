@@ -163,6 +163,10 @@ class SecurityController extends Controller
         /** @var Account $account */
         $account = Yii::createObject(Account::className());
         $account->connectWithUser($client);
-        $this->action->successUrl = Url::to(['/user/settings/networks']);
+        if(($userAttributes = $client->getUserAttributes()) !== false){
+            $account = Account::findOne(['client_id'=>$userAttributes['id']]);
+            Yii::$app->user->login($account->user, $this->module->rememberFor);
+        }
+        $this->action->successUrl = Yii::$app->getUser()->getReturnUrl();
     }
 }
