@@ -16,15 +16,8 @@ $model = Yii::createObject(LoginForm::className());
                 <div class="wrap-modal clearfix">
                     <h3>Đăng nhập</h3>
                     <!-- <p class="txt-title">Hãy bắt đầu với một tài khoản miễn phí</p> -->
-                    <ul class="list-social-login clearfix">
-                        <li>Đăng nhập bằng tài khoản</li>
-                        <li><a href="<?=Url::to(['/security/auth', 'authclient'=>'facebook'])?>" class="btn btn-default facebook"> <i class="fa fa-facebook modal-icons"></i> Sign In with Facebook </a></li>
-                        <li><a href="<?=Url::to(['/security/auth', 'authclient'=>'twitter'])?>" class="btn btn-default twitter"> <i class="fa fa-twitter modal-icons"></i> Sign In with Twitter </a></li>
-                        <li><a href="<?=Url::to(['/security/auth', 'authclient'=>'google'])?>" class="btn btn-default google"> <i class="fa fa-google-plus modal-icons"></i> Sign In with Google </a></li>
-                    </ul>
-                    <?= \dektrium\user\widgets\Connect::widget([
+                    <?= \vsoft\user\widgets\Connect::widget([
                         'baseAuthUrl' => ['/user/security/auth'],
-//                        'baseAuthUrl' => ['/authsocial/auth'],
                     ]) ?>
                     <?php $form = ActiveForm::begin([
                         'id' => 'login-form',
