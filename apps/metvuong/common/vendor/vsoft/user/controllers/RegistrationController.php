@@ -121,6 +121,11 @@ class RegistrationController extends Controller
                     }
                     break;
                 case 'facebook':
+                    if(($data = json_decode($account->data)) !== false){
+                        if(!empty($data->email)){
+                            $account->email = $data->email;
+                        }
+                    }
                     break;
             }
         }
