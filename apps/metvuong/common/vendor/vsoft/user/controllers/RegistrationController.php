@@ -124,6 +124,7 @@ class RegistrationController extends Controller
                     break;
             }
         }
+
         $user = Yii::createObject([
             'class'    => User::className(),
             'scenario' => 'connect',
@@ -133,9 +134,12 @@ class RegistrationController extends Controller
         $user->validate();
         if (!$user->hasErrors() && $user->create()) {
             $account->connect($user);
-            Yii::$app->user->login($user, $this->module->rememberFor);
-            return $this->goBack();
+        }else{
+            $user = User::findOne(['email'=>$account->email]);
+            $account->connect($user);
         }
+        Yii::$app->user->login($user, $this->module->rememberFor);
+        return $this->goBack();
 
         return $this->render('connect', [
             'model'   => $user,
