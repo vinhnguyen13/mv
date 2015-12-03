@@ -53,7 +53,15 @@ class AdsController extends \yii\web\Controller
      */
     public function actionPost()
     {
-        return $this->render('post');
+    	$cityId = \Yii::$app->request->post('cityId', 1);
+    	$districtId = \Yii::$app->request->post('districtId', 1);
+    	$categoryId = \Yii::$app->request->post('categoryId', 1);
+    	
+        return $this->render('post', [
+			'cityId' => $cityId,
+        	'districtId' => $districtId,
+        	'categoryId' => $categoryId
+        ]);
     }
 
 }
