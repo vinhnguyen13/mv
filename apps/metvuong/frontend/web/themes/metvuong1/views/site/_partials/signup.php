@@ -73,5 +73,11 @@ $model = Yii::createObject(RegistrationForm::className());
             }, 500);
             return false;
         });
+
+        $('#signup-form input').keypress(function (e) {
+            if (e.which == 13) {
+                $('#signup-form .btn-register').click();
+            }
+        });
     });
 </script>

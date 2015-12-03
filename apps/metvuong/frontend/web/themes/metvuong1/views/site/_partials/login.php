@@ -73,5 +73,11 @@ $model = Yii::createObject(LoginForm::className());
             }, 500);
             return false;
         });
+
+        $('#login-form input').keypress(function (e) {
+            if (e.which == 13) {
+                $('#login-form .btn-login').click();
+            }
+        });
     });
 </script>
