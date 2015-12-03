@@ -26,6 +26,7 @@ $model = Yii::createObject(RegistrationForm::className());
                         'options'=>['class' => 'frmIcon']
                     ]); ?>
                         <div class="form-group">
+                            <input type="password" style="display:none">
                             <?= $form->field($model, 'email')->textInput(['class'=>'form-control', 'placeholder'=>Yii::t('user', 'Email')])->label(false) ?>
                             <em class="icon-envelope-open"></em>
                         </div>
