@@ -22,7 +22,7 @@ $model = Yii::createObject(LoginForm::className());
                     ]) ?>
                     <?php $form = ActiveForm::begin([
                         'id' => 'login-form',
-                        'action' => Url::to(['/site/login']),
+                        'action' => Url::to(['/member/login']),
                         'options'=>['class' => 'frmIcon']
                     ]); ?>
                         <div class="form-group">

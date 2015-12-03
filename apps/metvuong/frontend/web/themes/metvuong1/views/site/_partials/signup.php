@@ -22,7 +22,7 @@ $model = Yii::createObject(RegistrationForm::className());
                     ]) ?>
                     <?php $form = ActiveForm::begin([
                         'id' => 'signup-form',
-                        'action' => Url::to(['/site/signup']),
+                        'action' => Url::to(['/member/signup']),
                         'options'=>['class' => 'frmIcon']
                     ]); ?>
                         <div class="form-group">
@@ -65,7 +65,7 @@ $model = Yii::createObject(RegistrationForm::className());
                             $('a[data-target="#frmRegister"]').parent().remove();
                             $('a[data-target="#frmLogin"]').parent().remove();
                             $('ul.menu-home').prepend('<li><a data-method="post" href="<?=Url::to(['/site/logout'])?>"><em class="icon-user"></em>' + data.parameters.username + '</a></li>');
-                            $('#frmLogin').modal('toggle');
+                            $('#frmRegister').modal('toggle');
                         }
                         console.log(data.parameters);
                     }
