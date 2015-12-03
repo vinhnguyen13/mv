@@ -24,13 +24,16 @@ return [
     'modules' => [
         'user' => [
             'class' => 'dektrium\user\Module',
-            'enableConfirmation' => true,
+            'enableConfirmation' => false,
+            'enableGeneratingPassword' => true,
             'confirmWithin' => 21600,
             'cost' => 12,
             'admins' => ['superadmin'],
             'modelMap' => [
                 'User' => 'dektrium\user\models\User',
                 'Account' => 'dektrium\user\models\Account',
+                'RegistrationForm' => 'dektrium\user\models\RegistrationForm',
+                'LoginForm' => 'dektrium\user\models\LoginForm',
             ],
             'controllerMap' => [
                 'admin' => 'vsoft\user\controllers\AdminController',

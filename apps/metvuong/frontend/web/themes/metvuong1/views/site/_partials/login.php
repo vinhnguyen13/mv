@@ -1,5 +1,5 @@
 <?php
-use dektrium\user\models\LoginForm;
+use vsoft\user\models\LoginForm;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 $model = Yii::createObject(LoginForm::className());
@@ -70,13 +70,6 @@ $model = Yii::createObject(LoginForm::className());
                     }
                 });
             }, 500);
-            return false;
-        });
-
-        $(document).on('click', '.list-social-login a', function(){
-            console.log(4);
-            var iframe = '';
-            $('.modal-body').html();
             return false;
         });
     });
