@@ -22,7 +22,7 @@ $model = Yii::createObject(LoginForm::className());
                     ]) ?>
                     <?php $form = ActiveForm::begin([
                         'id' => 'login-form',
-                        'action' => Url::to(['/site/login-by-ajax']),
+                        'action' => Url::to(['/site/login']),
                         'options'=>['class' => 'frmIcon']
                     ]); ?>
                         <div class="form-group">
@@ -39,7 +39,7 @@ $model = Yii::createObject(LoginForm::className());
                                 <a class="showPopup" href="#" data-toggle="modal" data-target="#frmRegister">Đăng ký</a>
                                 <a class="showPopup" href="#" data-toggle="modal" data-target="#frmForgot">Quên mật khẩu ?</a>
                             </div>
-                            <button type="button" class="btn btn-primary btn-common">Đăng nhập</button>
+                            <button type="button" class="btn btn-primary btn-common btn-login">Đăng nhập</button>
                         </div>
                     <?php ActiveForm::end(); ?>
                 </div>
@@ -51,7 +51,7 @@ $model = Yii::createObject(LoginForm::className());
 <script>
     $(document).ready(function(){
         var timer = 0;
-        $(document).on('click', '.btn-common', function(){
+        $(document).on('click', '.btn-login', function(){
             clearTimeout(timer);
             timer = setTimeout(function() {
                 $.ajax({
