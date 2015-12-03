@@ -15,12 +15,7 @@ use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\Cookie;
-use common\vendor\vsoft\ad\models\AdCity;
-use common\vendor\vsoft\ad\models\AdDistrict;
-use common\vendor\vsoft\ad\models\AdWard;
-use common\vendor\vsoft\ad\models\AdStreet;
 use yii\helpers\ArrayHelper;
-use common\vendor\vsoft\ad\models\AdBuildingProject;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 

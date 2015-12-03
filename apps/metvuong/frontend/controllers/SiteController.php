@@ -1,8 +1,6 @@
 <?php
 namespace frontend\controllers;
 
-use vsoft\user\models\LoginForm;
-use vsoft\user\models\RegistrationForm;
 use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
