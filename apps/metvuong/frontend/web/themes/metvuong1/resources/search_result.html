@@ -23,6 +23,9 @@
             url_loaibds = "https://dl.dropboxusercontent.com/u/43486987/metvuongtest/loai-bds.json",
             url_ttuc = "https://dl.dropboxusercontent.com/u/43486987/metvuongtest/loai-tintuc.json";
     </script>
+    <script src="js/imagesloaded.3.0.4.js"></script>
+    <script src="js/jquery.bxslider.js"></script>
+    <script src="js/jquery.colorbox-min.js"></script>
     <script src="js/common.js"></script>
 </head>
 
@@ -727,6 +730,30 @@
     <script>
         $(document).ready(function() {
             $('#detail-listing').modal();
+            $('.bxslider').imagesLoaded()
+            .always( function( instance ) {
+                // all loaded (broken + success)
+                console.log('all images loaded');
+            })
+            .done( function( instance ) {
+                // all loaded, all success, no broken
+                $('.bxslider').bxSlider({
+                    moveSlides: 1,
+                    minSlides: 2,
+                    maxSlides: 2,
+                    slideWidth: 444
+                });
+            })
+            .fail( function() {
+                console.log('all images loaded, at least one is broken');
+            })
+            .progress( function( instance, image ) {
+                var result = image.isLoaded ? 'loaded' : 'broken';
+                console.log( 'image is ' + result + ' for ' + image.img.src );
+            });
+
+            $(".bxslider .group").colorbox({rel:'group'});
+            
         });
     </script>
     <div class="modal fade" id="detail-listing" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -740,7 +767,74 @@
                 <div class="modal-body">
                     <div class="wrap-modal clearfix">
                         <div class="gallery-detail clearfix">
-                            
+                            <div class="bxslider">
+                                <div class="wrap-img-detail">
+                                    <ul class="clearfix">
+                                        <li class="img-big">
+                                            <div class="bgcover" style="background-image:url(http://photos1.zillowstatic.com/p_h/ISdc652nxhtvxs0000000000.jpg);"></div>
+                                            <a class="group mask" href="http://photos1.zillowstatic.com/p_h/ISdc652nxhtvxs0000000000.jpg"><em class="fa fa-search"></em></a>
+                                            <img src="http://photos1.zillowstatic.com/p_h/ISdc652nxhtvxs0000000000.jpg" alt="" style="display:none;">
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="wrap-img-detail">
+                                    <ul class="clearfix">
+                                        <li>
+                                            <div class="bgcover" style="background-image:url(http://photos2.zillowstatic.com/p_c/ISptnvzc0h2vl21000000000.jpg);"></div>
+                                            <a class="group mask" href="http://photos2.zillowstatic.com/p_c/ISptnvzc0h2vl21000000000.jpg"><em class="fa fa-search"></em></a>
+                                            <img src="http://photos2.zillowstatic.com/p_c/ISptnvzc0h2vl21000000000.jpg" alt="" style="display:none;">
+                                        </li>
+                                        <li>
+                                            <div class="bgcover" style="background-image:url(http://photos2.zillowstatic.com/p_c/ISplloe7f3cvu21000000000.jpg);"></div>
+                                            <a class="group mask" href="http://photos2.zillowstatic.com/p_c/ISplloe7f3cvu21000000000.jpg"><em class="fa fa-search"></em></a>
+                                            <img src="http://photos2.zillowstatic.com/p_c/ISplloe7f3cvu21000000000.jpg" alt="" style="display:none;">
+                                        </li>
+                                        <li>
+                                            <div class="bgcover" style="background-image:url(http://photos2.zillowstatic.com/p_c/ISd8nrbh00lw041000000000.jpg);"></div>
+                                            <a class="group mask" href="http://photos2.zillowstatic.com/p_c/ISd8nrbh00lw041000000000.jpg"><em class="fa fa-search"></em></a>
+                                            <img src="http://photos2.zillowstatic.com/p_c/ISd8nrbh00lw041000000000.jpg" alt="" style="display:none;">
+                                        </li>
+                                        <li>
+                                            <div class="bgcover" style="background-image:url(http://photos1.zillowstatic.com/p_c/IS9doo0n73xzj41000000000.jpg);"></div>
+                                            <a class="group mask" href="http://photos1.zillowstatic.com/p_c/IS9doo0n73xzj41000000000.jpg"><em class="fa fa-search"></em></a>
+                                            <img src="http://photos1.zillowstatic.com/p_c/IS9doo0n73xzj41000000000.jpg" alt="" style="display:none;">
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="wrap-img-detail">
+                                    <ul class="clearfix">
+                                        <li>
+                                            <div class="bgcover" style="background-image:url(http://photos3.zillowstatic.com/p_c/ISh7lgi7qlt58s1000000000.jpg);"></div>
+                                            <a class="group mask" href="http://photos3.zillowstatic.com/p_c/ISh7lgi7qlt58s1000000000.jpg"><em class="fa fa-search"></em></a>
+                                            <img src="http://photos3.zillowstatic.com/p_c/ISh7lgi7qlt58s1000000000.jpg" alt="" style="display:none;">
+                                        </li>
+                                        <li>
+                                            <div class="bgcover" style="background-image:url(http://photos1.zillowstatic.com/p_c/IS91z4ftnmff1w1000000000.jpg);"></div>
+                                            <a class="group mask" href="http://photos1.zillowstatic.com/p_c/IS91z4ftnmff1w1000000000.jpg"><em class="fa fa-search"></em></a>
+                                            <img src="http://photos1.zillowstatic.com/p_c/IS91z4ftnmff1w1000000000.jpg" alt="" style="display:none;">
+                                        </li>
+                                        <li>
+                                            <div class="bgcover" style="background-image:url(http://photos3.zillowstatic.com/p_c/IS5avcsirawn6w1000000000.jpg);"></div>
+                                            <a class="group mask" href="http://photos3.zillowstatic.com/p_c/IS5avcsirawn6w1000000000.jpg"><em class="fa fa-search"></em></a>
+                                            <img src="http://photos3.zillowstatic.com/p_c/IS5avcsirawn6w1000000000.jpg" alt="" style="display:none;">
+                                        </li>
+                                        <li>
+                                            <div class="bgcover" style="background-image:url(http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg);"></div>
+                                            <a class="group mask" href="http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg"><em class="fa fa-search"></em></a>
+                                            <img src="http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg" alt="" style="display:none;">
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="wrap-img-detail">
+                                    <ul class="clearfix">
+                                        <li>
+                                            <div class="bgcover" style="background-image:url(http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg);"></div>
+                                            <a class="group mask" href="http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg"><em class="fa fa-search"></em></a>
+                                            <img src="http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg" alt="" style="display:none;">
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                         <div class="row detail-post">
                             <div class="col-sm-8 dt-left-col">
