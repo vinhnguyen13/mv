@@ -103,7 +103,7 @@ class SiteController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             $model = Yii::createObject(LoginForm::className());
             if ($model->load(Yii::$app->getRequest()->post()) && $model->login()) {
-                return ['statusCode'=>200, 'parameters'=>['username'=>Yii::$app->user->identity->username]];
+                return ['statusCode'=>200, 'parameters'=>['username'=>!empty(Yii::$app->user->identity->profile->name) ? Yii::$app->user->identity->profile->name : Yii::$app->user->identity->email]];
             } else {
                 return ['statusCode'=>404, 'parameters'=>$model->errors];
             }
