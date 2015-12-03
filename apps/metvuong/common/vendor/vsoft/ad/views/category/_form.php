@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 use common\vendor\vsoft\ad\models\AdInvestor;
 use common\widgets\FileUploadUI;
 use yii\helpers\Url;
-use common\vendor\vsoft\ad\models\AdBuildingProject;
+use common\vendor\vsoft\ad\models\AdProduct;
 
 /* @var $this yii\web\View */
 /* @var $model funson86\cms\models\CmsShow */
@@ -32,9 +32,9 @@ use common\vendor\vsoft\ad\models\AdBuildingProject;
     <div class="form-group">
         <label class="col-lg-1 control-label"></label>
         <div class="col-lg-11">
-        	<?= Html::checkbox('for_sell', $model->apply_to_type & AdBuildingProject::TYPE_FOR_SELL, ['label' => 'Áp dụng cho nhà đất bán', 'value' => AdBuildingProject::TYPE_FOR_SELL]) ?>
+        	<?= Html::checkbox('for_sell', $model->apply_to_type & AdProduct::TYPE_FOR_SELL, ['label' => 'Áp dụng cho nhà đất bán', 'value' => AdProduct::TYPE_FOR_SELL]) ?>
         	<div></div>
-			<?= Html::checkbox('for_rent', $model->apply_to_type & AdBuildingProject::TYPE_FOR_RENT, ['label' => 'Áp dụng cho nhà đất cho thuê', 'value' => AdBuildingProject::TYPE_FOR_RENT]) ?>    
+			<?= Html::checkbox('for_rent', $model->apply_to_type & AdProduct::TYPE_FOR_RENT, ['label' => 'Áp dụng cho nhà đất cho thuê', 'value' => AdProduct::TYPE_FOR_RENT]) ?>    
         </div>
         <label class="col-lg-1 control-label"></label>
         <div class="col-lg-11"><div class="help-block"><?= $model->getErrors('apply_to_type') ? current($model->getErrors('apply_to_type')) : '' ?></div></div>

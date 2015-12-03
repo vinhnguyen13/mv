@@ -3,6 +3,8 @@ use yii\web\View;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 $this->title = Yii::t('express','We offer exeptional amenities and renowned white - glove services');
+
+Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/dang-tin.js', ['position'=>View::POS_END]);
 ?>
  <div class="wrap-dangtin">
                 <div class="title-frm" clearfix>Đăng tin</div>

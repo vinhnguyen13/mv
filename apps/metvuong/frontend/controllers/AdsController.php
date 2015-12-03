@@ -5,6 +5,7 @@ use Yii;
 use yii\helpers\Url;
 use vsoft\news\models\CmsShow;
 use common\vendor\vsoft\ad\models\AdBuildingProject;
+use common\vendor\vsoft\ad\models\AdProduct;
 
 class AdsController extends \yii\web\Controller
 {
@@ -53,15 +54,12 @@ class AdsController extends \yii\web\Controller
      */
     public function actionPost()
     {
-    	$cityId = \Yii::$app->request->post('cityId', 1);
-    	$districtId = \Yii::$app->request->post('districtId', 1);
-    	$categoryId = \Yii::$app->request->post('categoryId', 1);
+    	$model = new AdProduct();
+    	$model->city_id = \Yii::$app->request->post('cityId', 1);
+    	$model->district_id = \Yii::$app->request->post('cityId', 1);
+    	$model->category_id = \Yii::$app->request->post('categoryId', 1);
     	
-        return $this->render('post', [
-			'cityId' => $cityId,
-        	'districtId' => $districtId,
-        	'categoryId' => $categoryId
-        ]);
+        return $this->render('post', ['model' => $model]);
     }
 
 }
