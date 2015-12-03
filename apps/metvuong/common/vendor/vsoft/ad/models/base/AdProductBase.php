@@ -10,6 +10,7 @@ use Yii;
  * @property integer $id
  * @property integer $category_id
  * @property integer $project_building_id
+ * @property string $home_no
  * @property integer $user_id
  * @property integer $city_id
  * @property integer $district_id
@@ -58,9 +59,10 @@ class AdProductBase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['category_id', 'city_id', 'district_id', 'type', 'title', 'content', 'start_date', 'end_date', 'created_at'], 'required'],
+            [['category_id', 'home_no', 'city_id', 'district_id', 'type', 'title', 'content', 'start_date', 'end_date', 'created_at'], 'required'],
             [['category_id', 'project_building_id', 'user_id', 'city_id', 'district_id', 'ward_id', 'street_id', 'type', 'area', 'price', 'price_type', 'start_date', 'end_date', 'score', 'view', 'verified', 'created_at', 'updated_at', 'status'], 'integer'],
             [['lng', 'lat'], 'number'],
+            [['home_no'], 'string', 'max' => 32],
             [['title'], 'string', 'max' => 255],
             [['content'], 'string', 'max' => 3200]
         ];
@@ -75,6 +77,7 @@ class AdProductBase extends \yii\db\ActiveRecord
             'id' => 'ID',
             'category_id' => 'Category ID',
             'project_building_id' => 'Project Building ID',
+            'home_no' => 'Home No',
             'user_id' => 'User ID',
             'city_id' => 'City ID',
             'district_id' => 'District ID',

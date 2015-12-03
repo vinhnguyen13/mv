@@ -11,6 +11,39 @@ class AdProduct extends AdProductBase
 	const TYPE_FOR_SELL = 1;
 	const TYPE_FOR_RENT = 2;
 	
+	const PRICE_DEAL = 1;
+	const SELL_PRICE_MILLION = 2;
+	const SELL_PRICE_BILLION = 3;
+	const SELL_PRICE_HUNDRED_THOUSAND_SQUARE = 4;
+	const SELL_PRICE_MILLION_SQUARE = 5;
+	const RENT_PRICE_HUNDRED_THOUSAND = 6;
+	const RENT_PRICE_MILLION = 7;
+	const RENT_PRICE_HUNDRED_THOUSAND_SQUARE = 8;
+	const RENT_PRICE_MILLION_SQUARE = 9;
+	const RENT_PRICE_THOUSAND_SQUARE = 10;
+	
+	
+	public static function priceTypeForSell() {
+		return [
+			self::PRICE_DEAL => 'Thương lượng',
+			self::SELL_PRICE_MILLION => 'Triệu',
+			self::SELL_PRICE_BILLION => 'Tỷ',
+			self::SELL_PRICE_HUNDRED_THOUSAND_SQUARE => 'Trăm nghìn/m²',
+			self::SELL_PRICE_MILLION_SQUARE => 'Triệu/m²'
+		];
+	}
+	
+	public static function priceTypeForRent() {
+		return [
+			self::PRICE_DEAL => 'Thương lượng',
+			self::RENT_PRICE_HUNDRED_THOUSAND => 'Trăm nghìn/tháng',
+			self::RENT_PRICE_MILLION => 'Triệu/tháng',
+			self::RENT_PRICE_HUNDRED_THOUSAND_SQUARE => 'Trăm nghìn/m²/tháng',
+			self::RENT_PRICE_MILLION_SQUARE => 'Triệu/m²/tháng',
+			self::RENT_PRICE_THOUSAND_SQUARE => 'Nghìn/m²/tháng'
+		];
+	}
+	
 	/**
 	 * @inheritdoc
 	 */
@@ -20,6 +53,7 @@ class AdProduct extends AdProductBase
 			'id' => 'ID',
 			'category_id' => 'Category ID',
 			'project_building_id' => 'Project Building ID',
+            'home_no' => 'Số nhà',
 			'user_id' => 'User ID',
 			'city_id' => 'City ID',
 			'district_id' => 'District ID',
@@ -28,7 +62,7 @@ class AdProduct extends AdProductBase
 			'type' => 'Hình thức',
 			'title' => 'Title',
 			'content' => 'Content',
-			'area' => 'Area',
+			'area' => 'Diện tích',
 			'price' => 'Price',
 			'price_type' => 'Price Type',
 			'lng' => 'Lng',

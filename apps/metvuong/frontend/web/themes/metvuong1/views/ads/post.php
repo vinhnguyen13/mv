@@ -3,8 +3,12 @@ use yii\web\View;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use common\vendor\vsoft\ad\models\AdProduct;
+use yii\helpers\Html;
 $this->title = Yii::t ( 'express', 'We offer exeptional amenities and renowned white - glove services' );
 
+$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/select2.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
+
+Yii::$app->getView ()->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/select2.min.js', ['position' => View::POS_END]);
 Yii::$app->getView ()->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/dang-tin.js', ['position' => View::POS_END]);
 
 $type = [ 
@@ -42,6 +46,9 @@ $type = [
 				</li>
 			</ul>
 			<div class="fieldset clearfix" style="display: block;">
+				<?= Html::activeHiddenInput($model, 'city_id') ?>
+				<?= Html::activeHiddenInput($model, 'district_id') ?>
+				<?= Html::activeHiddenInput($model, 'category_id') ?>
 				<?= $form->field($model, 'type', [
 						'labelOptions' => ['class' => 'col-sm-2 control-label'],
 						'inputOptions' => ['class' => 'col-xs-6 form-control'],
@@ -50,25 +57,18 @@ $type = [
 				<div class="form-group">
 					<label for="" class="col-sm-2 control-label">Địa chỉ:</label>
 					<div class="col-sm-10 group-item-frm">
-						<input type="email" class="form-control" id=""
-							placeholder="Số nhà"> <select class="form-control">
-							<option selected>--Tên đường--</option>
-							<option>Nguyễn Chung Ngạn</option>
-							<option>Nguyễn Thị Minh Khai</option>
-							<option>Lê Thánh Tôn</option>
-						</select> <select class="form-control mgB-0">
-							<option selected>--Phường/Xã--</option>
-							<option>Phường 1</option>
-							<option>Phường 2</option>
-							<option>Phường 3</option>
-						</select>
+						<div class="inline-group col-xs-6">
+							<?= Html::activeTextInput($model, 'home_no', ['class' => 'form-control', 'placeholder' => $model->getAttributeLabel('home_no')]) ?>
+						</div>
+						<?= Html::activeDropDownList($model, 'street_id', [], ['class' => 'form-control', 'prompt' => 'Đường'])?>
+						<?= Html::activeDropDownList($model, 'ward_id', [], ['class' => 'form-control mgB-0', 'prompt' => 'Phường/Xã'])?>
 					</div>
 				</div>
 				<div class="form-group text-inline">
 					<label for="" class="col-sm-2 control-label">Diện tích:</label>
 					<div class="col-sm-10">
 						<div class="inline-group col-xs-6">
-							<input type="email" class="form-control" id="">
+							<?= Html::activeTextInput($model, 'home_no', ['class' => 'form-control']) ?>
 						</div>
 						<div class="inline-group col-xs-6 pdR-0">
 							<span>m<sup>2</sup></span>
@@ -79,15 +79,12 @@ $type = [
 					<label for="" class="col-sm-2 control-label">Giá:</label>
 					<div class="col-sm-10 group-item-frm">
 						<div class="inline-group col-xs-6">
-							<input type="email" class="form-control" id="">
+							<?= Html::activeTextInput($model, 'price', ['class' => 'form-control']) ?>
 						</div>
 						<div class="inline-group col-xs-6 pdR-0">
-							<select class="form-control">
-								<option selected>--Đơn vị--</option>
-								<option>Thỏa thuận</option>
-								<option>Trăm nghìn/tháng</option>
-								<option>Triệu/tháng</option>
-							</select>
+							<?= Html::dropDownList('priceTypeForSell', null, AdProduct::priceTypeForSell(), ['id' => 'price-type-1', 'style' => 'display: none;']) ?>
+							<?= Html::dropDownList('priceTypeForRent', null, AdProduct::priceTypeForRent(), ['id' => 'price-type-2', 'style' => 'display: none;']) ?>
+							<?= Html::activeDropDownList($model, 'price_type', [], ['class' => 'form-control', 'prompt' => 'Đơn vị'])?>
 						</div>
 					</div>
 				</div>
