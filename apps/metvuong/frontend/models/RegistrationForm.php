@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace vsoft\user\models;
+namespace frontend\models;
 
 use dektrium\user\Module;
 use Yii;

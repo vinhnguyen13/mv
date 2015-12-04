@@ -7,7 +7,7 @@ use yii\helpers\Url;
 class LanguageSelector implements BootstrapInterface
 {
     public $supportedLanguages = [];
-    public $cookieName = '_language';
+    public $cookieName = 'language';
     public $expireDays = 30;
     public $cookieDomain = '';
     public $callback;
@@ -55,9 +55,9 @@ class LanguageSelector implements BootstrapInterface
         $parseRequest = Yii::$app->getUrlManager()->parseRequest(Yii::$app->request);
         $params = ['/'];
         if(!empty($parseRequest[1]) && is_array($parseRequest[1])){
-            $params = array_merge(['/'.$parseRequest[0]], $parseRequest[1], ['language' => $language]);
+            $params = array_merge(['/'.$parseRequest[0]], $parseRequest[1]/*, ['language' => $language]*/);
         }elseif(!empty($parseRequest[0]) && empty($parseRequest[1])){
-            $params = array_merge(['/'.$parseRequest[0]], ['language' => $language]);
+            $params = array_merge(['/'.$parseRequest[0]]/*, ['language' => $language]*/);
         }
         $url = Url::to($params);
         return Yii::$app->response->redirect($url);

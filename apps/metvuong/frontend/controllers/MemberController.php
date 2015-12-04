@@ -1,12 +1,9 @@
 <?php
 namespace frontend\controllers;
 
-use vsoft\user\models\LoginForm;
-use vsoft\user\models\RegistrationForm;
-use frontend\models\ContactForm;
-use frontend\models\PasswordResetRequestForm;
+use frontend\models\LoginForm;
+use frontend\models\RegistrationForm;
 use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\filters\AccessControl;
@@ -18,6 +15,7 @@ use yii\web\Cookie;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
+use frontend\models\RecoveryForm;
 
 /**
  * Site controller
@@ -25,6 +23,7 @@ use yii\web\Response;
 class MemberController extends Controller
 {
     public $layout = '@app/views/layouts/layout';
+    public $_module;
 
     /**
      * @inheritdoc
@@ -74,7 +73,7 @@ class MemberController extends Controller
     }
 
     public function init(){
-        $this->module = Yii::$app->getModule('user');
+        $this->_module = Yii::$app->getModule('user');
         parent::init();
     }
 
@@ -130,7 +129,7 @@ class MemberController extends Controller
             $model->validate();
             if (!$model->hasErrors()) {
                 $user = $model->register();
-                if (!empty($user) && Yii::$app->getUser()->login($user, 1209600)) {
+                if (!empty($user) && Yii::$app->getUser()->login($user, $this->_module->rememberFor)) {
                     return ['statusCode'=>200, 'parameters'=>['username'=>!empty(Yii::$app->user->identity->profile->name) ? Yii::$app->user->identity->profile->name : Yii::$app->user->identity->email]];
                 }
             } else {
@@ -146,9 +145,9 @@ class MemberController extends Controller
      *
      * @return mixed
      */
-    public function actionRequestPasswordReset()
+    public function actionForgot()
     {
-        if (!$this->module->enablePasswordRecovery) {
+        if (!$this->_module->enablePasswordRecovery) {
             throw new NotFoundHttpException();
         }
 
@@ -157,17 +156,19 @@ class MemberController extends Controller
             'class'    => RecoveryForm::className(),
             'scenario' => 'request',
         ]);
-
-        $this->performAjaxValidation($model);
-
-        if ($model->load(Yii::$app->request->post()) && $model->sendRecoveryMessage()) {
-            return $this->render('/message', [
-                'title'  => Yii::t('user', 'Recovery message sent'),
-                'module' => $this->module,
-            ]);
+        if(Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $model->load(Yii::$app->request->post());
+            $model->validate();
+            if (!$model->hasErrors()) {
+                $msg = $model->sendRecoveryMessage();
+                return ['statusCode'=>200, 'parameters'=>['msg'=>$msg]];
+            } else {
+                return ['statusCode'=>404, 'parameters'=>$model->errors];
+            }
         }
 
-        return $this->render('request', [
+        return $this->render('forgot', [
             'model' => $model,
         ]);
     }

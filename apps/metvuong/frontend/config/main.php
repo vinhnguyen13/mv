@@ -9,8 +9,8 @@ $baseUrl = str_replace('/frontend/web', '', (new \yii\web\Request())->getBaseUrl
 return [
     'id' => 'app-frontend',
     'name'=>'MetVuong',
-//    'language'=>'vi-VN',
-    'language'=>'en-US',
+    'language'=>'vi-VN',
+//    'language'=>'en-US',
     'basePath' => dirname(__DIR__),
     'bootstrap' => [
         'log',
@@ -29,19 +29,20 @@ return [
             'cost' => 12,
             'admins' => ['superadmin'],
             'modelMap' => [
-                'User' => 'dektrium\user\models\User',
-                'Account' => 'dektrium\user\models\Account',
-                'RegistrationForm' => 'dektrium\user\models\RegistrationForm',
-                'LoginForm' => 'dektrium\user\models\LoginForm',
+                'User' => 'frontend\models\User',
+                'Account' => 'frontend\models\Account',
             ],
             'controllerMap' => [
-                'admin' => 'vsoft\user\controllers\AdminController',
-                'security' => 'vsoft\user\controllers\SecurityController',
-                'registration' => 'vsoft\user\controllers\RegistrationController',
+                'security' => 'frontend\controllers\SecurityController',
+                'registration' => 'frontend\controllers\RegistrationController',
             ],
         ],
     ],
     'components' => [
+        'user' => [
+            'identityClass' => 'frontend\models\User',
+            'enableAutoLogin' => true,
+        ],
         'request' => [
             'baseUrl' => $baseUrl,
         ],

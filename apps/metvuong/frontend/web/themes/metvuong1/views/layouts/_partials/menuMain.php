@@ -1,3 +1,6 @@
+<?php
+
+?>
 <ul class="pull-right menu-home">
     <?php if(Yii::$app->user->isGuest){?>
         <li><a href="#" data-toggle="modal" data-target="#frmRegister"><em class="icon-user"></em>Đăng ký</a></li>
@@ -8,6 +11,6 @@
                 <?=!empty(Yii::$app->user->identity->profile->name) ? Yii::$app->user->identity->profile->name : Yii::$app->user->identity->email;?>
         </a></li>
     <?php }?>
-    <li class="lang-icon icon-en"><a href="#"></a></li>
-    <li class="lang-icon icon-vi"><a href="#"></a></li>
+    <li class="lang-icon icon-en"><a href="<?=\yii\helpers\Url::current(['language-change'=>'en-US'])?>"></a></li>
+    <li class="lang-icon icon-vi"><a href="<?=\yii\helpers\Url::current(['language-change'=>'vi-VN'])?>"></a></li>
 </ul>

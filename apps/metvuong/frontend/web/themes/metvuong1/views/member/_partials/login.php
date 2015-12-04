@@ -1,5 +1,5 @@
 <?php
-use vsoft\user\models\LoginForm;
+use frontend\models\LoginForm;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 $model = Yii::createObject(LoginForm::className());

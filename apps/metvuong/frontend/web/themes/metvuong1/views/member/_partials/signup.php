@@ -1,5 +1,5 @@
 <?php
-use vsoft\user\models\RegistrationForm;
+use frontend\models\RegistrationForm;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 $model = Yii::createObject(RegistrationForm::className());

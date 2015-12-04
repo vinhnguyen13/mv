@@ -1,5 +1,5 @@
 <?php
-use vsoft\user\models\LoginForm;
+use frontend\models\LoginForm;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 $model = Yii::createObject(LoginForm::className());
@@ -50,6 +50,7 @@ $model = Yii::createObject(LoginForm::className());
     $(document).ready(function(){
         var timer = 0;
         $(document).on('click', '.frmManualLogin .btn-login', function(){
+            var _this = $(this);
             clearTimeout(timer);
             timer = setTimeout(function() {
                 $.ajax({
@@ -63,6 +64,15 @@ $model = Yii::createObject(LoginForm::className());
                             $('a[data-target="#frmLogin"]').parent().remove();
                             $('ul.menu-home').prepend('<li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><em class="icon-user"></em>' + data.parameters.username + '</a></li>');
                             location.href = '<?=Yii::$app->getUser()->getReturnUrl();?>';
+                        }else if(data.statusCode == 404){
+                            var arr = [];
+                            $.each(data.parameters, function(idx, val){
+                                var element = 'login-form-'+idx;
+                                arr[element] = val;
+                            })
+                            $('#login-form').yiiActiveForm('updateMessages', arr, true);
+                        }else{
+                            _this.html('Try again !');
                         }
                     }
                 });
