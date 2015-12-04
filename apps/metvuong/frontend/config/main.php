@@ -25,7 +25,6 @@ return [
         'user' => [
             'class' => 'dektrium\user\Module',
             'enableConfirmation' => false,
-            'enableGeneratingPassword' => true,
             'confirmWithin' => 21600,
             'cost' => 12,
             'admins' => ['superadmin'],

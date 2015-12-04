@@ -64,10 +64,18 @@ $model = Yii::createObject(RegistrationForm::className());
                         if(data.statusCode == 200){
                             $('a[data-target="#frmRegister"]').parent().remove();
                             $('a[data-target="#frmLogin"]').parent().remove();
-                            $('ul.menu-home').prepend('<li><a data-method="post" href="<?=Url::to(['/site/logout'])?>"><em class="icon-user"></em>' + data.parameters.username + '</a></li>');
+                            $('ul.menu-home').prepend('<li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><em class="icon-user"></em>' + data.parameters.username + '</a></li>');
                             $('#frmRegister').modal('toggle');
+                        }else if(data.statusCode == 404){
+                            var arr = [];
+                            $.each(data.parameters, function(idx, val){
+                                var element = 'register-form-'+idx;
+                                arr[element] = val;
+                            })
+                            $('#signup-form').yiiActiveForm('updateMessages', arr, true);
+                        }else{
+                            _this.html('Try again !');
                         }
-                        console.log(data.parameters);
                     }
                 });
             }, 500);

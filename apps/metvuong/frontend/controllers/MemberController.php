@@ -126,7 +126,9 @@ class MemberController extends Controller
         if(Yii::$app->request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             $model = Yii::createObject(RegistrationForm::className());
-            if ($model->load(Yii::$app->request->post())) {
+            $model->load(Yii::$app->request->post());
+            $model->validate();
+            if (!$model->hasErrors()) {
                 $user = $model->register();
                 if (!empty($user) && Yii::$app->getUser()->login($user, 1209600)) {
                     return ['statusCode'=>200, 'parameters'=>['username'=>!empty(Yii::$app->user->identity->profile->name) ? Yii::$app->user->identity->profile->name : Yii::$app->user->identity->email]];

@@ -53,6 +53,7 @@ $model = Yii::createObject(LoginForm::className());
     $(document).ready(function(){
         var timer = 0;
         $(document).on('click', '.frmPopupLogin .btn-login', function(){
+            var _this = $(this);
             clearTimeout(timer);
             timer = setTimeout(function() {
                 $.ajax({
@@ -66,8 +67,16 @@ $model = Yii::createObject(LoginForm::className());
                             $('a[data-target="#frmLogin"]').parent().remove();
                             $('ul.menu-home').prepend('<li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><em class="icon-user"></em>' + data.parameters.username + '</a></li>');
                             $('#frmLogin').modal('toggle');
+                        }else if(data.statusCode == 404){
+                            var arr = [];
+                            $.each(data.parameters, function(idx, val){
+                                var element = 'login-form-'+idx;
+                                arr[element] = val;
+                            })
+                            $('#login-form').yiiActiveForm('updateMessages', arr, true);
+                        }else{
+                            _this.html('Try again !');
                         }
-                        console.log(data.parameters);
                     }
                 });
             }, 500);

@@ -370,37 +370,19 @@
         },
         {
             "name": "bower-asset/blueimp-tmpl",
-            "version": "2.5.5",
+            "version": "2.5.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/blueimp/JavaScript-Templates.git",
-                "reference": "8e38f6913c547af5b7b7927df43b941e0ef63d64"
+                "reference": "91d3f6f859521d43d424ad44b191536db0b7168b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/blueimp/JavaScript-Templates/zipball/8e38f6913c547af5b7b7927df43b941e0ef63d64",
-                "reference": "8e38f6913c547af5b7b7927df43b941e0ef63d64",
+                "url": "https://api.github.com/repos/blueimp/JavaScript-Templates/zipball/91d3f6f859521d43d424ad44b191536db0b7168b",
+                "reference": "91d3f6f859521d43d424ad44b191536db0b7168b",
                 "shasum": ""
             },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": "js/tmpl.js",
-                "bower-asset-ignore": [
-                    "/*.*",
-                    "css",
-                    "js/demo.js",
-                    "test"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "< 1KB lightweight, fast & powerful JavaScript templating engine with zero dependencies. Compatible with server-side environments like node.js, module loaders like RequireJS and all web browsers.",
-            "keywords": [
-                "javascript",
-                "templates",
-                "templating"
-            ]
+            "type": "bower-asset-library"
         },
         {
             "name": "bower-asset/bootstrap",
@@ -602,16 +584,16 @@
         },
         {
             "name": "bower-asset/yii2-pjax",
-            "version": "v2.0.4",
+            "version": "v2.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/jquery-pjax.git",
-                "reference": "3f20897307cca046fca5323b318475ae9dac0ca0"
+                "reference": "6818718408086db6bdcf33649cecb86b6b4f9b67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/jquery-pjax/zipball/3f20897307cca046fca5323b318475ae9dac0ca0",
-                "reference": "3f20897307cca046fca5323b318475ae9dac0ca0",
+                "url": "https://api.github.com/repos/yiisoft/jquery-pjax/zipball/6818718408086db6bdcf33649cecb86b6b4f9b67",
+                "reference": "6818718408086db6bdcf33649cecb86b6b4f9b67",
                 "shasum": ""
             },
             "require": {
@@ -802,16 +784,16 @@
         },
         {
             "name": "kartik-v/bootstrap-fileinput",
-            "version": "v4.2.7",
+            "version": "v4.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/bootstrap-fileinput.git",
-                "reference": "0468bbba9c28c1250aca83eba9b33e32ec135f78"
+                "reference": "6ba4295298ee3abe26171b4e2078c27a2f3b35b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/0468bbba9c28c1250aca83eba9b33e32ec135f78",
-                "reference": "0468bbba9c28c1250aca83eba9b33e32ec135f78",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/6ba4295298ee3abe26171b4e2078c27a2f3b35b0",
+                "reference": "6ba4295298ee3abe26171b4e2078c27a2f3b35b0",
                 "shasum": ""
             },
             "type": "library",
@@ -846,7 +828,7 @@
                 "progress",
                 "upload"
             ],
-            "time": "2015-09-13 17:39:44"
+            "time": "2015-11-18 17:56:04"
         },
         {
             "name": "kartik-v/yii2-helpers",
@@ -896,16 +878,16 @@
         },
         {
             "name": "kartik-v/yii2-krajee-base",
-            "version": "v1.7.7",
+            "version": "v1.7.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-krajee-base.git",
-                "reference": "c0adff9d9762f4fd3bf0e7cd0000fcab0bf00f19"
+                "reference": "6f10fd0a0bfccd729764c65fa65eb4ccf2cbade9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/c0adff9d9762f4fd3bf0e7cd0000fcab0bf00f19",
-                "reference": "c0adff9d9762f4fd3bf0e7cd0000fcab0bf00f19",
+                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/6f10fd0a0bfccd729764c65fa65eb4ccf2cbade9",
+                "reference": "6f10fd0a0bfccd729764c65fa65eb4ccf2cbade9",
                 "shasum": ""
             },
             "require": {
@@ -938,7 +920,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-06-16 05:19:57"
+            "time": "2015-11-25 07:03:35"
         },
         {
             "name": "kartik-v/yii2-widget-fileinput",
