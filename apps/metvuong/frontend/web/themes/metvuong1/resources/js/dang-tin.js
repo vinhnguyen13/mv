@@ -103,6 +103,19 @@ function validateStep1() {
 	return $return;
 }
 
+function initMap() {
+	var city = dataCities[$('#adproduct-city_id').val()];
+	var district = city['districts'][$('#adproduct-district_id').val()];
+	var districtName = district['pre'] + ' ' + district['name'];
+	var cityName = city['name'];
+	var address = $('#adproduct-home_no').val() + ' ' + $( "#adproduct-street_id option:selected" ).text()
+					+ ' ' + $( "#adproduct-ward_id option:selected" ).text() + ' ' + districtName + ' ' + cityName;
+	console.log(address);
+	asynInitial(document.getElementById('map'), {lat: 10.803164, lng: 106.631439}, function(gmap){
+		
+	});
+}
+
 function stepPost () {
     //jQuery time
     var current_fs, next_fs, previous_fs; //fieldsets
@@ -145,6 +158,8 @@ function stepPost () {
                 current_fs.hide();
                 animating = false;
                 $('body').removeClass('overHidden');
+            	
+            	initMap();
             }, 
             //this comes from the custom easing plugin
             easing: 'easeInOutBack'

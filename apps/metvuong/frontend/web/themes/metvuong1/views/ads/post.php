@@ -13,6 +13,8 @@ $this->title = Yii::t ( 'express', 'We offer exeptional amenities and renowned w
 $this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/select2.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
 
 Yii::$app->getView ()->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/select2.min.js', ['position' => View::POS_END]);
+Yii::$app->getView ()->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/gmap.js', ['position' => View::POS_END]);
+$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=apiLoaded', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
 Yii::$app->getView ()->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/dang-tin.js', ['position' => View::POS_END]);
 
 $type = [ 
@@ -55,11 +57,11 @@ $type = [
 				<?= Html::activeHiddenInput($model, 'category_id') ?>
 				<?= $form->field($model, 'type', [
 						'labelOptions' => ['class' => 'col-sm-2 control-label'],
-						'inputOptions' => ['class' => 'col-xs-6 form-control'],
+						'inputOptions' => ['class' => 'col-xs-6 form-control mgB-0'],
 						'template' => '{label}<div class="col-sm-10 group-item-frm"><div class="inline-group pdR-0">{input}</div></div>{hint}{error}']
 					)->dropDownList($type) ?>
 				<div class="form-group">
-					<label for="" class="col-sm-2 control-label">Địa chỉ:</label>
+					<label for="" class="col-sm-2 control-label">Địa chỉ *</label>
 					<div class="col-sm-10 group-item-frm">
 						<div class="inline-group col-xs-6">
 							<?= Html::activeTextInput($model, 'home_no', ['class' => 'form-control', 'placeholder' => $model->getAttributeLabel('home_no')]) ?>
@@ -71,8 +73,14 @@ $type = [
 						<div class="help-block" style="display: none;"></div>
 					</div>
 				</div>
+				<div class="form-group">
+					<label for="" class="col-sm-2 control-label">Thuộc dự án</label>
+					<div class="col-sm-10 group-item-frm">
+						<?= Html::activeDropDownList($model, 'project_building_id', [], ['class' => 'form-control mgB-0', 'prompt' => 'Dự án'])?>
+					</div>
+				</div>
 				<div class="form-group text-inline">
-					<label for="" class="col-sm-2 control-label">Diện tích:</label>
+					<label for="" class="col-sm-2 control-label">Diện tích *</label>
 					<div class="col-sm-10">
 						<div class="inline-group col-xs-6">
 							<?= Html::activeTextInput($model, 'area', ['class' => 'form-control']) ?>
@@ -84,7 +92,7 @@ $type = [
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="" class="col-sm-2 control-label">Giá:</label>
+					<label for="" class="col-sm-2 control-label">Giá *</label>
 					<div class="col-sm-10 group-item-frm">
 						<div class="inline-group col-xs-6">
 							<?= Html::activeTextInput($model, 'price', ['class' => 'form-control']) ?>
@@ -113,9 +121,6 @@ $type = [
 					'url' => Url::to(['upload']),
 					'fieldOptions' => ['values' => implode(',', ArrayHelper::getColumn($model->adImages, 'file_name'))]
 				]) ?>
-				<div class="form-group">
-					<?= Html::activeDropDownList($model, 'project_building_id', [], ['class' => 'form-control', 'prompt' => 'Thuộc dự án'])?>
-				</div>
 				<div class="form-group">
 					<div class="title-sub-frm">Thông tin mở rộng</div>
 				</div>
@@ -165,7 +170,7 @@ $type = [
 							<?= Html::activeTextInput($adContactInfo, 'phone', ['class' => 'form-control', 'placeholder' => 'Điện thoại']) ?>
 						</div>
 						<div class="col-xs-3">
-							<?= Html::activeTextInput($adContactInfo, 'mobile', ['class' => 'form-control', 'placeholder' => 'Di động']) ?>
+							<?= Html::activeTextInput($adContactInfo, 'mobile', ['class' => 'form-control', 'placeholder' => 'Di động *']) ?>
 						</div>
 						<div class="col-xs-3">
 							<?= Html::activeTextInput($adContactInfo, 'email', ['class' => 'form-control', 'placeholder' => 'Email']) ?>
@@ -185,9 +190,7 @@ $type = [
 						sửa vị trí tin rao của bạn trên bản đồ bằng cách kéo icon<em
 							class="fa fa-map-marker"></em>tới đúng vị trí của tin rao.
 					</p>
-					<iframe width="600" height="450" frameborder="0" style="border: 0"
-						src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJ0T2NLikpdTERKxE8d61aX_E&amp;key=AIzaSyDgukAnWQNq0fitebULUbottG5gvK64OCQ"
-						allowfullscreen=""></iframe>
+					<div id="map" style="height: 450px;"></div>
 				</div>
 				<button type="button"
 					class="btn btn-primary btn-common mgT-15 next action-button pull-right">

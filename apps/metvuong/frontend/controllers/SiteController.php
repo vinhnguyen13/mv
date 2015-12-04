@@ -145,7 +145,7 @@ class SiteController extends Controller
     
     public function actionServiceLocationList() {
 		$cities = AdCity::find()->indexBy('id')->select('id, name')->asArray(true)->all();
-    	$districts = AdDistrict::find()->indexBy('id')->select('id, name, city_id')->asArray(true)->all();
+    	$districts = AdDistrict::find()->indexBy('id')->select('id, name, pre, city_id')->asArray(true)->all();
     	$wards = AdWard::find()->indexBy('id')->select('id, name, district_id, pre')->asArray(true)->all();
     	$streets = AdStreet::find()->indexBy('id')->select('id, name, district_id, pre')->asArray(true)->all();
     	$projects = AdBuildingProject::find()->indexBy('id')->with('categories')->select('id, name, district_id')->asArray(true)->all();
