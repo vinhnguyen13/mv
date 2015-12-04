@@ -69,8 +69,8 @@ class AdsController extends \yii\web\Controller
     		$image = new AdImages();
     		$image->file_name = $response['files'][0]['name'];
     		$image->uploaded_at = time();
+    		$image->user_id = Yii::$app->user->id;
     		$image->save(false);
-    		
     		$response['files'][0]['name'] = $image->id;
     		
     		return $response;
