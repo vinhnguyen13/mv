@@ -3,7 +3,7 @@
         <li><a href="#" data-toggle="modal" data-target="#frmRegister"><em class="icon-user"></em>Đăng ký</a></li>
         <li><a href="#" data-toggle="modal" data-target="#frmLogin"><em class="icon-key"></em>Đăng nhập</a></li>
     <?php }else{?>
-        <li><a data-method="post" href="<?=\yii\helpers\Url::to(['/site/logout'])?>">
+        <li><a data-method="post" href="<?=\yii\helpers\Url::to(['/member/logout'])?>">
                 <em class="icon-user"></em>
                 <?=!empty(Yii::$app->user->identity->profile->name) ? Yii::$app->user->identity->profile->name : Yii::$app->user->identity->email;?>
         </a></li>

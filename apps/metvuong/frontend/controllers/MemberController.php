@@ -73,6 +73,11 @@ class MemberController extends Controller
         ];
     }
 
+    public function init(){
+        $this->module = Yii::$app->getModule('user');
+        parent::init();
+    }
+
     /**
      * Logs in a user.
      *
@@ -139,18 +144,26 @@ class MemberController extends Controller
      */
     public function actionRequestPasswordReset()
     {
-        $model = new PasswordResetRequestForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
-
-                return $this->goHome();
-            } else {
-                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for email provided.');
-            }
+        if (!$this->module->enablePasswordRecovery) {
+            throw new NotFoundHttpException();
         }
 
-        return $this->render('requestPasswordResetToken', [
+        /** @var RecoveryForm $model */
+        $model = Yii::createObject([
+            'class'    => RecoveryForm::className(),
+            'scenario' => 'request',
+        ]);
+
+        $this->performAjaxValidation($model);
+
+        if ($model->load(Yii::$app->request->post()) && $model->sendRecoveryMessage()) {
+            return $this->render('/message', [
+                'title'  => Yii::t('user', 'Recovery message sent'),
+                'module' => $this->module,
+            ]);
+        }
+
+        return $this->render('request', [
             'model' => $model,
         ]);
     }
