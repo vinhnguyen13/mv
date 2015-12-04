@@ -4,18 +4,15 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 $model = Yii::createObject(RegistrationForm::className());
 ?>
-<div class="modal fade frmPopupRegister" id="frmRegister" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="frmManualRegister" id="frmRegister">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
             <div class="modal-body">
                 <div class="wrap-modal clearfix">
                     <h3>Đăng ký</h3>
-                    <!-- <p class="txt-title">Hãy bắt đầu với một tài khoản miễn phí</p> -->
+<!--                     <p class="txt-title">Hãy bắt đầu với một tài khoản miễn phí</p>-->
                     <?= \vsoft\user\widgets\Connect::widget([
                         'baseAuthUrl' => ['/user/security/auth'],
                         'groupTitle' => Yii::t('user', 'Login by social')
@@ -52,7 +49,7 @@ $model = Yii::createObject(RegistrationForm::className());
 <script>
     $(document).ready(function(){
         var timer = 0;
-        $(document).on('click', '.frmPopupRegister .btn-register', function(){
+        $(document).on('click', '.frmManualRegister .btn-register', function(){
             clearTimeout(timer);
             timer = setTimeout(function() {
                 $.ajax({
@@ -65,7 +62,7 @@ $model = Yii::createObject(RegistrationForm::className());
                             $('a[data-target="#frmRegister"]').parent().remove();
                             $('a[data-target="#frmLogin"]').parent().remove();
                             $('ul.menu-home').prepend('<li><a data-method="post" href="<?=Url::to(['/site/logout'])?>"><em class="icon-user"></em>' + data.parameters.username + '</a></li>');
-                            $('#frmRegister').modal('toggle');
+                            location.href = '<?=Yii::$app->getUser()->getReturnUrl();?>';
                         }
                         console.log(data.parameters);
                     }
@@ -74,9 +71,9 @@ $model = Yii::createObject(RegistrationForm::className());
             return false;
         });
 
-        $('.frmPopupRegister #signup-form input').keypress(function (e) {
+        $('.frmManualRegister #signup-form input').keypress(function (e) {
             if (e.which == 13) {
-                $('.frmPopupRegister #signup-form .btn-register').click();
+                $('.frmManualRegister #signup-form .btn-register').click();
             }
         });
     });

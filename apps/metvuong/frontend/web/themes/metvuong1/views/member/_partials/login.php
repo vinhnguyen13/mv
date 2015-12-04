@@ -4,7 +4,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 $model = Yii::createObject(LoginForm::className());
 ?>
-<div class="modal fade" id="frmLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade frmPopupLogin" id="frmLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -52,7 +52,7 @@ $model = Yii::createObject(LoginForm::className());
 <script>
     $(document).ready(function(){
         var timer = 0;
-        $(document).on('click', '.btn-login', function(){
+        $(document).on('click', '.frmPopupLogin .btn-login', function(){
             clearTimeout(timer);
             timer = setTimeout(function() {
                 $.ajax({
@@ -74,9 +74,9 @@ $model = Yii::createObject(LoginForm::className());
             return false;
         });
 
-        $('#login-form input').keypress(function (e) {
+        $('.frmPopupLogin #login-form input').keypress(function (e) {
             if (e.which == 13) {
-                $('#login-form .btn-login').click();
+                $('.frmPopupLogin #login-form .btn-login').click();
             }
         });
     });

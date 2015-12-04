@@ -24,7 +24,7 @@ use yii\web\Response;
  */
 class MemberController extends Controller
 {
-    public $layout = '@app/views/layouts/news';
+    public $layout = '@app/views/layouts/layout';
 
     /**
      * @inheritdoc
@@ -97,6 +97,7 @@ class MemberController extends Controller
                 return ['statusCode'=>404, 'parameters'=>$model->errors];
             }
         }
+        return $this->render('login');
         throw new NotFoundHttpException('Not Found');
     }
 
@@ -134,6 +135,7 @@ class MemberController extends Controller
                 return ['statusCode'=>404, 'parameters'=>$model->errors];
             }
         }
+        return $this->render('signup');
         throw new NotFoundHttpException('Not Found');
     }
 
