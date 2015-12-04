@@ -40,8 +40,8 @@ $(document).ready(function(){
             e.preventDefault();
         }
 	}).keyup(function(){
-		var val = $(this).val().replace(/\./g, '').split( /(?=(?:...)*$)/ ).join('.');
-		$(this).val(val);
+//		var val = $(this).val().replace(/\./g, '').split( /(?=(?:...)*$)/ ).join('.');
+//		$(this).val(val);
 	});
 	
 	$('#adproduct-price_type').change(function(){

@@ -58,15 +58,29 @@ class AdsController extends \yii\web\Controller
     public function actionPost()
     {
     	$model = new AdProduct();
+    	$model->loadDefaultValues();
     	$model->city_id = \Yii::$app->request->post('cityId', 1);
     	$model->district_id = \Yii::$app->request->post('districtId', 22);
     	$model->category_id = \Yii::$app->request->post('categoryId', 1);
 
-    	$adProductAdditionInfo = $model->adProductAdditionInfo ? $model->adProductAdditionInfo : new AdProductAdditionInfo();
-    	$adContactInfo = $model->adContactInfo ? $model->adContactInfo : new AdContactInfo();
+    	$adProductAdditionInfo = $model->adProductAdditionInfo ? $model->adProductAdditionInfo : (new AdProductAdditionInfo())->loadDefaultValues();
+    	$adContactInfo = $model->adContactInfo ? $model->adContactInfo : (new AdContactInfo())->loadDefaultValues();
     	
-    	$adContactInfo->name = Yii::$app->user->identity->profile->name;
-    	$adContactInfo->email = Yii::$app->user->identity->profile->public_email;
+    	if(Yii::$app->request->isPost) {
+    		$post = Yii::$app->request->post();
+    		$model->load($post);
+    		$adProductAdditionInfo->load($post);
+    		$adContactInfo->load($post);
+    		
+    		if($model->validate() && $adProductAdditionInfo->validate() && $adContactInfo->validate()) {
+    			echo 'OK';
+    		} else {
+    			var_dump($model->getErrors());
+    			var_dump($adProductAdditionInfo->getErrors());
+    			var_dump($adContactInfo->getErrors());
+    		}
+    		exit();
+    	}
     	
     	return $this->render('post', ['model' => $model, 'adProductAdditionInfo' => $adProductAdditionInfo, 'adContactInfo' => $adContactInfo]);
     }

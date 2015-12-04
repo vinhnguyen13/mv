@@ -19,5 +19,10 @@ use common\vendor\vsoft\ad\models\base\AdContactInfoBase;
  */
 class AdContactInfo extends AdContactInfoBase
 {
-	
+	public function loadDefaultValues($skipIfSet = true) {
+		$this->name = Yii::$app->user->identity->profile->name;
+		$this->email = Yii::$app->user->identity->profile->public_email;
+		
+		return parent::loadDefaultValues($skipIfSet);
+	}
 }
