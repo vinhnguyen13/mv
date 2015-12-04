@@ -7,6 +7,8 @@ use vsoft\news\models\CmsShow;
 use common\vendor\vsoft\ad\models\AdBuildingProject;
 use common\vendor\vsoft\ad\models\AdProduct;
 use common\vendor\vsoft\ad\models\AdImages;
+use common\vendor\vsoft\ad\models\AdProductAdditionInfo;
+use common\vendor\vsoft\ad\models\AdContactInfo;
 
 class AdsController extends \yii\web\Controller
 {
@@ -59,8 +61,14 @@ class AdsController extends \yii\web\Controller
     	$model->city_id = \Yii::$app->request->post('cityId', 1);
     	$model->district_id = \Yii::$app->request->post('cityId', 1);
     	$model->category_id = \Yii::$app->request->post('categoryId', 1);
+
+    	$adProductAdditionInfo = $model->adProductAdditionInfo ? $model->adProductAdditionInfo : new AdProductAdditionInfo();
+    	$adContactInfo = $model->adContactInfo ? $model->adContactInfo : new AdContactInfo();
     	
-        return $this->render('post', ['model' => $model]);
+    	$adContactInfo->name = Yii::$app->user->identity->profile->name;
+    	$adContactInfo->email = Yii::$app->user->identity->profile->public_email;
+    	
+    	return $this->render('post', ['model' => $model, 'adProductAdditionInfo' => $adProductAdditionInfo, 'adContactInfo' => $adContactInfo]);
     }
 
     public function actionUpload() {
@@ -71,7 +79,23 @@ class AdsController extends \yii\web\Controller
     		$image->uploaded_at = time();
     		$image->user_id = Yii::$app->user->id;
     		$image->save(false);
+    		
+    		$response['files'][0]['deleteUrl'] = Url::to(['delete-image', 'id' => $image->id]);
     		$response['files'][0]['name'] = $image->id;
+    		
+    		return $response;
+    	}
+    }
+    
+    public function actionDeleteImage($id) {
+    	$image = AdImages::findOne($id);
+    	if($image) {
+    		$pathInfo = pathinfo($image->file_name);
+    		$thumb = $pathInfo['filename'] .  '.thumb.' . $pathInfo['extension'];
+    		
+    		$response = Yii::$app->runAction('express/upload/delete-image', ['orginal' => $image->file_name, 'thumbnail' => $thumb, 'folder' => 'ads']);
+    		
+    		$image->delete();
     		
     		return $response;
     	}

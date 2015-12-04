@@ -6,6 +6,8 @@ use common\vendor\vsoft\ad\models\AdProduct;
 use yii\helpers\Html;
 use common\widgets\FileUploadUI;
 use yii\helpers\ArrayHelper;
+use common\vendor\vsoft\ad\models\AdProductAdditionInfo;
+use common\vendor\vsoft\ad\models\AdContactInfo;
 $this->title = Yii::t ( 'express', 'We offer exeptional amenities and renowned white - glove services' );
 
 $this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/select2.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
@@ -103,7 +105,7 @@ $type = [
 			</div>
 			<div class="fieldset clearfix" style="display: none;">
 				<div class="form-group">
-					<textarea class="form-control" rows="3" placeholder="Nội dung tin đăng..."></textarea>
+					<?= Html::activeTextarea($model, 'content', ['class' => 'form-control', 'placeholder' => $model->getAttributeLabel('content')]) ?>
 				</div>
 				<?= FileUploadUI::widget([
 					'name' => 'images',
@@ -112,31 +114,43 @@ $type = [
 					'fieldOptions' => ['values' => implode(',', ArrayHelper::getColumn($model->adImages, 'file_name'))]
 				]) ?>
 				<div class="form-group">
+					<?= Html::activeDropDownList($model, 'project_building_id', [], ['class' => 'form-control', 'prompt' => 'Thuộc dự án'])?>
+				</div>
+				<div class="form-group">
 					<div class="title-sub-frm">Thông tin mở rộng</div>
 				</div>
 				<div class="form-group">
 					<div class="row row-group-inline">
 						<div class="col-xs-3">
-							<select class="form-control">
-								<option>Quận/Huyện(*)</option>
-							</select>
+							<?= Html::activeTextInput($adProductAdditionInfo, 'facade_width', ['class' => 'form-control', 'placeholder' => 'Mặt tiền (m)']) ?>
 						</div>
 						<div class="col-xs-3">
-							<select class="form-control">
-								<option>Phường/Xã(*)</option>
-							</select>
+							<?= Html::activeTextInput($adProductAdditionInfo, 'land_width', ['class' => 'form-control', 'placeholder' => 'Đường vào (m)']) ?>
 						</div>
 						<div class="col-xs-3">
-							<select class="form-control">
-								<option>Đường/Phố(*)</option>
-							</select>
+							<?= Html::activeDropDownList($adProductAdditionInfo, 'home_direction', [], ['class' => 'form-control', 'prompt' => 'Hướng nhà'])?>
 						</div>
 						<div class="col-xs-3">
-							<select class="form-control">
-								<option>Dự án</option>
-							</select>
+							
+							<?= Html::activeDropDownList($adProductAdditionInfo, 'facade_direction', [], ['class' => 'form-control', 'prompt' => 'Hướng ban công'])?>
 						</div>
 					</div>
+				</div>
+				<div class="form-group">
+					<div class="row row-group-inline">
+						<div class="col-xs-3">
+							<?= Html::activeTextInput($adProductAdditionInfo, 'floor_no', ['class' => 'form-control', 'placeholder' => 'Số tầng']) ?>
+						</div>
+						<div class="col-xs-3">
+							<?= Html::activeTextInput($adProductAdditionInfo, 'room_no', ['class' => 'form-control', 'placeholder' => 'Số phòng ngủ']) ?>
+						</div>
+						<div class="col-xs-3">
+							<?= Html::activeTextInput($adProductAdditionInfo, 'toilet_no', ['class' => 'form-control', 'placeholder' => 'Số tolet']) ?>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<?= Html::activeTextarea($adProductAdditionInfo, 'interior', ['class' => 'form-control', 'placeholder' => 'Nội thất']) ?>
 				</div>
 				<div class="clearfix"></div>
 				<div class="form-group">
@@ -145,22 +159,22 @@ $type = [
 				<div class="form-group">
 					<div class="row row-group-inline">
 						<div class="col-xs-3">
-							<input type="text" class="form-control" placeholder="Tên liên hệ">
+							<?= Html::activeTextInput($adContactInfo, 'name', ['class' => 'form-control', 'placeholder' => 'Tên liên hệ']) ?>
 						</div>
 						<div class="col-xs-3">
-							<input type="text" class="form-control" placeholder="Điện thoại">
+							<?= Html::activeTextInput($adContactInfo, 'phone', ['class' => 'form-control', 'placeholder' => 'Điện thoại']) ?>
 						</div>
 						<div class="col-xs-3">
-							<input type="text" class="form-control" placeholder="Di động(*)">
+							<?= Html::activeTextInput($adContactInfo, 'mobile', ['class' => 'form-control', 'placeholder' => 'Di động']) ?>
 						</div>
 						<div class="col-xs-3">
-							<input type="text" class="form-control" placeholder="Email">
+							<?= Html::activeTextInput($adContactInfo, 'email', ['class' => 'form-control', 'placeholder' => 'Email']) ?>
 						</div>
 					</div>
 				</div>
 				<div class="clearfix"></div>
 				<div class="form-group">
-					<input type="text" class="form-control" placeholder="Địa chỉ">
+					<?= Html::activeTextInput($adContactInfo, 'address', ['class' => 'form-control', 'placeholder' => 'Địa chỉ']) ?>
 				</div>
 				<div class="form-group">
 					<div class="title-sub-frm">Bản đồ</div>

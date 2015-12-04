@@ -4,6 +4,8 @@ namespace common\vendor\vsoft\ad\models\base;
 
 use Yii;
 use common\vendor\vsoft\ad\models\AdImages;
+use common\vendor\vsoft\ad\models\AdProductAdditionInfo;
+use common\vendor\vsoft\ad\models\AdContactInfo;
 
 /**
  * This is the model class for table "ad_product".

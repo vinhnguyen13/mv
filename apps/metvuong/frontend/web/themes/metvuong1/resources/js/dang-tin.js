@@ -1,7 +1,8 @@
 $(document).ready(function(){
 	var streets = dataCities[$('#adproduct-city_id').val()]['districts'][$('#adproduct-district_id').val()]['streets'];
 	var wards = dataCities[$('#adproduct-city_id').val()]['districts'][$('#adproduct-district_id').val()]['wards'];
-	
+	var projects = dataCities[$('#adproduct-city_id').val()]['districts'][$('#adproduct-district_id').val()]['projects'];
+
 	for(index in streets) {
 		var street = streets[index];
 		$('#adproduct-street_id').append('<option value="' + index + '">' + street.pre + ' ' + street.name + '</option>');
@@ -10,6 +11,11 @@ $(document).ready(function(){
 	for(index in wards) {
 		var ward = wards[index];
 		$('#adproduct-ward_id').append('<option value="' + index + '">' + ward.pre + ' ' + ward.name + '</option>');
+	}
+	
+	for(index in projects) {
+		var project = projects[index];
+		$('#adproduct-project_building_id').append('<option value="' + index + '">' + project.name + '</option>');
 	}
 	
 	function dropDownListPriceType(id) {
