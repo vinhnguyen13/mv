@@ -1,9 +1,12 @@
 <?php
 namespace frontend\controllers;
 
+use frontend\components\Finder;
+use dektrium\user\helpers\Password;
 use frontend\models\LoginForm;
 use frontend\models\RegistrationForm;
 use frontend\models\ResetPasswordForm;
+use frontend\models\Token;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\filters\AccessControl;
@@ -24,7 +27,6 @@ class MemberController extends Controller
 {
     public $layout = '@app/views/layouts/layout';
     public $_module;
-
     /**
      * @inheritdoc
      */
@@ -161,8 +163,9 @@ class MemberController extends Controller
             $model->load(Yii::$app->request->post());
             $model->validate();
             if (!$model->hasErrors()) {
-                $msg = $model->sendRecoveryMessage();
-                return ['statusCode'=>200, 'parameters'=>['msg'=>$msg]];
+                if(($msg =$model->sendRecoveryMessage()) !== false){
+                    return ['statusCode'=>200, 'parameters'=>['msg'=>$msg]];
+                }
             } else {
                 return ['statusCode'=>404, 'parameters'=>$model->errors];
             }
@@ -180,21 +183,42 @@ class MemberController extends Controller
      * @return mixed
      * @throws BadRequestHttpException
      */
-    public function actionResetPassword($token)
+    public function actionResetPassword($id, $code)
     {
-        try {
-            $model = new ResetPasswordForm($token);
-        } catch (InvalidParamException $e) {
-            throw new BadRequestHttpException($e->getMessage());
+        if (!$this->_module->enablePasswordRecovery) {
+            throw new NotFoundHttpException();
         }
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'New password was saved.');
+        /** @var Token $token */
+        $token = Token::find()->where(['MD5(CONCAT(user_id, code))' => md5($id.$code), 'code' => $code, 'type' => Token::TYPE_RECOVERY])->one();
+        if ($token === null || $token->isExpired || $token->user === null) {
+            Yii::$app->session->setFlash('danger', Yii::t('user', 'Recovery link is invalid or expired. Please try requesting a new one.'));
 
-            return $this->goHome();
+            return $this->render('/message', [
+                'title'  => Yii::t('user', 'Invalid or expired link'),
+                'module' => $this->module,
+            ]);
         }
 
-        return $this->render('resetPassword', [
+        /** @var RecoveryForm $model */
+        $model = Yii::createObject([
+            'class'    => RecoveryForm::className(),
+            'scenario' => 'reset',
+        ]);
+
+        if(Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $model->load(Yii::$app->request->post());
+            $model->validate();
+            if (!$model->hasErrors()) {
+                if(($msg = $model->resetPassword($token)) !== false){
+                    return ['statusCode'=>200, 'parameters'=>['msg'=>$msg]];
+                }
+            } else {
+                return ['statusCode'=>404, 'parameters'=>$model->errors];
+            }
+        }
+        return $this->render('reset', [
             'model' => $model,
         ]);
     }

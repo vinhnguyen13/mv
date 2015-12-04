@@ -140,8 +140,10 @@ class RecoveryForm extends Model
         if ($token->user->resetPassword($this->password)) {
             Yii::$app->session->setFlash('success', Yii::t('user', 'Your password has been changed successfully.'));
             $token->delete();
+            return Yii::t('user', 'Your password has been changed successfully.');
         } else {
             Yii::$app->session->setFlash('danger', Yii::t('user', 'An error occurred and your password has not been changed. Please try again later.'));
+            return Yii::t('user', 'An error occurred and your password has not been changed. Please try again later.');
         }
 
         return true;

@@ -72,7 +72,7 @@ class Token extends ActiveRecord
                 throw new \RuntimeException();
         }
 
-        return Url::to([$route, 'id' => $this->user_id, 'code' => $this->code], true);
+        return Url::to([$route, 'id' => md5($this->user_id.$this->code), 'code' => $this->code], true);
     }
 
     /**
