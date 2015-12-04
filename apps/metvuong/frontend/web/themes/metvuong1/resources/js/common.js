@@ -250,8 +250,6 @@ $(document).ready(function() {
     //animateSearch();
     //end home page search
 
-    
-
 });
 
 function animateSearch() {
@@ -283,3 +281,36 @@ function getActiveSuggert(objJson) {
     }
 }
 
+function scrollFixed() {
+    var $colRight = $('.contact-wrapper'),
+        hColRight = $colRight.outerHeight(),
+        wColRight = $colRight.outerWidth(),
+        $colLeft = $('.dt-left-col'),
+        hColLeft = $colLeft.outerHeight(),
+        $header = $('.gallery-detail'),
+        hItemTop = parseInt($('#detail-listing .modal-dialog').css('margin-top')) + $('.gallery-detail').outerHeight() + 20,
+        hItemBottom = parseInt($('#detail-listing .modal-dialog').css('margin-top')) + $('#detail-listing .wrap-modal').outerHeight() - Math.max(hColRight, hColLeft),
+        posiTopColRight = $colRight.offset().top;
+
+    $('#detail-listing').scroll(function (e) {
+        e.preventDefault();
+        var valScroll = $(this).scrollTop(),
+            valPosiItem;
+        if( valScroll >= posiTopColRight ) {
+            valPosiItem = valScroll - posiTopColRight;
+            $colRight.addClass('fixed-scroll');
+            $colRight.css({
+                position: 'absolute',
+                width: wColRight+'px',
+                'margin-top': valPosiItem+'px'
+            });
+        }else {
+            $colRight.removeClass('fixed-scroll');
+            $colRight.css({
+                position: 'static',
+                width: 'auto',
+                'margin-top': 0
+            });
+        }
+    });
+}

@@ -16,17 +16,7 @@
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
     <![endif]-->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script>
-        var url_tt = "https://dl.dropboxusercontent.com/u/43486987/metvuongtest/tinh-thanh.json",
-            url_loaibds = "https://dl.dropboxusercontent.com/u/43486987/metvuongtest/loai-bds.json",
-            url_ttuc = "https://dl.dropboxusercontent.com/u/43486987/metvuongtest/loai-tintuc.json";
-    </script>
-    <script src="js/imagesloaded.3.0.4.js"></script>
-    <script src="js/jquery.bxslider.js"></script>
-    <script src="js/jquery.colorbox-min.js"></script>
-    <script src="js/common.js"></script>
+    
 </head>
 
 <body>
@@ -727,35 +717,7 @@
         </div>
     </div>
 
-    <script>
-        $(document).ready(function() {
-            $('#detail-listing').modal();
-            $('.bxslider').imagesLoaded()
-            .always( function( instance ) {
-                // all loaded (broken + success)
-                console.log('all images loaded');
-            })
-            .done( function( instance ) {
-                // all loaded, all success, no broken
-                $('.bxslider').bxSlider({
-                    moveSlides: 1,
-                    minSlides: 2,
-                    maxSlides: 2,
-                    slideWidth: 444
-                });
-            })
-            .fail( function() {
-                console.log('all images loaded, at least one is broken');
-            })
-            .progress( function( instance, image ) {
-                var result = image.isLoaded ? 'loaded' : 'broken';
-                console.log( 'image is ' + result + ' for ' + image.img.src );
-            });
-
-            $(".bxslider .group").colorbox({rel:'group'});
-            
-        });
-    </script>
+    
     <div class="modal fade" id="detail-listing" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -772,8 +734,8 @@
                                     <ul class="clearfix">
                                         <li class="img-big">
                                             <div class="bgcover" style="background-image:url(http://photos1.zillowstatic.com/p_h/ISdc652nxhtvxs0000000000.jpg);"></div>
-                                            <a class="group mask" href="http://photos1.zillowstatic.com/p_h/ISdc652nxhtvxs0000000000.jpg"><em class="fa fa-search"></em></a>
-                                            <img src="http://photos1.zillowstatic.com/p_h/ISdc652nxhtvxs0000000000.jpg" alt="" style="display:none;">
+                                            <a data-lightbox="detail-post" class="group mask" href="http://photos1.zillowstatic.com/p_h/ISdc652nxhtvxs0000000000.jpg"><em class="fa fa-search"></em><img src="http://photos1.zillowstatic.com/p_h/ISdc652nxhtvxs0000000000.jpg" alt="" style="display:none;"></a>
+                                            
                                         </li>
                                     </ul>
                                 </div>
@@ -781,23 +743,23 @@
                                     <ul class="clearfix">
                                         <li>
                                             <div class="bgcover" style="background-image:url(http://photos2.zillowstatic.com/p_c/ISptnvzc0h2vl21000000000.jpg);"></div>
-                                            <a class="group mask" href="http://photos2.zillowstatic.com/p_c/ISptnvzc0h2vl21000000000.jpg"><em class="fa fa-search"></em></a>
-                                            <img src="http://photos2.zillowstatic.com/p_c/ISptnvzc0h2vl21000000000.jpg" alt="" style="display:none;">
+                                            <a data-lightbox="detail-post" class="group mask" href="http://photos1.zillowstatic.com/p_f/ISdc652nxhtvxs0000000000.jpg"><em class="fa fa-search"></em><img src="http://photos2.zillowstatic.com/p_c/ISptnvzc0h2vl21000000000.jpg" alt="" style="display:none;"></a>
+                                            
                                         </li>
                                         <li>
                                             <div class="bgcover" style="background-image:url(http://photos2.zillowstatic.com/p_c/ISplloe7f3cvu21000000000.jpg);"></div>
-                                            <a class="group mask" href="http://photos2.zillowstatic.com/p_c/ISplloe7f3cvu21000000000.jpg"><em class="fa fa-search"></em></a>
-                                            <img src="http://photos2.zillowstatic.com/p_c/ISplloe7f3cvu21000000000.jpg" alt="" style="display:none;">
+                                            <a data-lightbox="detail-post" class="group mask" href="http://photos2.zillowstatic.com/p_f/ISptnvzc0h2vl21000000000.jpg"><em class="fa fa-search"></em><img src="http://photos2.zillowstatic.com/p_c/ISplloe7f3cvu21000000000.jpg" alt="" style="display:none;"></a>
+                                            
                                         </li>
                                         <li>
                                             <div class="bgcover" style="background-image:url(http://photos2.zillowstatic.com/p_c/ISd8nrbh00lw041000000000.jpg);"></div>
-                                            <a class="group mask" href="http://photos2.zillowstatic.com/p_c/ISd8nrbh00lw041000000000.jpg"><em class="fa fa-search"></em></a>
-                                            <img src="http://photos2.zillowstatic.com/p_c/ISd8nrbh00lw041000000000.jpg" alt="" style="display:none;">
+                                            <a data-lightbox="detail-post" class="group mask" href="http://photos2.zillowstatic.com/p_c/ISd8nrbh00lw041000000000.jpg"><em class="fa fa-search"></em><img src="http://photos2.zillowstatic.com/p_c/ISd8nrbh00lw041000000000.jpg" alt="" style="display:none;"></a>
+                                            
                                         </li>
                                         <li>
                                             <div class="bgcover" style="background-image:url(http://photos1.zillowstatic.com/p_c/IS9doo0n73xzj41000000000.jpg);"></div>
-                                            <a class="group mask" href="http://photos1.zillowstatic.com/p_c/IS9doo0n73xzj41000000000.jpg"><em class="fa fa-search"></em></a>
-                                            <img src="http://photos1.zillowstatic.com/p_c/IS9doo0n73xzj41000000000.jpg" alt="" style="display:none;">
+                                            <a data-lightbox="detail-post" class="group mask" href="http://photos1.zillowstatic.com/p_c/IS9doo0n73xzj41000000000.jpg"><em class="fa fa-search"></em><img src="http://photos1.zillowstatic.com/p_c/IS9doo0n73xzj41000000000.jpg" alt="" style="display:none;"></a>
+                                            
                                         </li>
                                     </ul>
                                 </div>
@@ -805,23 +767,23 @@
                                     <ul class="clearfix">
                                         <li>
                                             <div class="bgcover" style="background-image:url(http://photos3.zillowstatic.com/p_c/ISh7lgi7qlt58s1000000000.jpg);"></div>
-                                            <a class="group mask" href="http://photos3.zillowstatic.com/p_c/ISh7lgi7qlt58s1000000000.jpg"><em class="fa fa-search"></em></a>
-                                            <img src="http://photos3.zillowstatic.com/p_c/ISh7lgi7qlt58s1000000000.jpg" alt="" style="display:none;">
+                                            <a data-lightbox="detail-post" class="group mask" href="http://photos3.zillowstatic.com/p_c/ISh7lgi7qlt58s1000000000.jpg"><em class="fa fa-search"></em><img src="http://photos3.zillowstatic.com/p_c/ISh7lgi7qlt58s1000000000.jpg" alt="" style="display:none;"></a>
+                                            
                                         </li>
                                         <li>
                                             <div class="bgcover" style="background-image:url(http://photos1.zillowstatic.com/p_c/IS91z4ftnmff1w1000000000.jpg);"></div>
-                                            <a class="group mask" href="http://photos1.zillowstatic.com/p_c/IS91z4ftnmff1w1000000000.jpg"><em class="fa fa-search"></em></a>
-                                            <img src="http://photos1.zillowstatic.com/p_c/IS91z4ftnmff1w1000000000.jpg" alt="" style="display:none;">
+                                            <a data-lightbox="detail-post" class="group mask" href="http://photos1.zillowstatic.com/p_c/IS91z4ftnmff1w1000000000.jpg"><em class="fa fa-search"></em><img src="http://photos1.zillowstatic.com/p_c/IS91z4ftnmff1w1000000000.jpg" alt="" style="display:none;"></a>
+                                            
                                         </li>
                                         <li>
                                             <div class="bgcover" style="background-image:url(http://photos3.zillowstatic.com/p_c/IS5avcsirawn6w1000000000.jpg);"></div>
-                                            <a class="group mask" href="http://photos3.zillowstatic.com/p_c/IS5avcsirawn6w1000000000.jpg"><em class="fa fa-search"></em></a>
-                                            <img src="http://photos3.zillowstatic.com/p_c/IS5avcsirawn6w1000000000.jpg" alt="" style="display:none;">
+                                            <a data-lightbox="detail-post" class="group mask" href="http://photos3.zillowstatic.com/p_c/IS5avcsirawn6w1000000000.jpg"><em class="fa fa-search"></em><img src="http://photos3.zillowstatic.com/p_c/IS5avcsirawn6w1000000000.jpg" alt="" style="display:none;"></a>
+                                            
                                         </li>
                                         <li>
                                             <div class="bgcover" style="background-image:url(http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg);"></div>
-                                            <a class="group mask" href="http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg"><em class="fa fa-search"></em></a>
-                                            <img src="http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg" alt="" style="display:none;">
+                                            <a data-lightbox="detail-post" class="group mask" href="http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg"><em class="fa fa-search"></em><img src="http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg" alt="" style="display:none;"></a>
+                                            
                                         </li>
                                     </ul>
                                 </div>
@@ -829,8 +791,8 @@
                                     <ul class="clearfix">
                                         <li>
                                             <div class="bgcover" style="background-image:url(http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg);"></div>
-                                            <a class="group mask" href="http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg"><em class="fa fa-search"></em></a>
-                                            <img src="http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg" alt="" style="display:none;">
+                                            <a data-lightbox="detail-post" class="group mask" href="http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg"><em class="fa fa-search"></em><img src="http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg" alt="" style="display:none;"></a>
+                                            
                                         </li>
                                     </ul>
                                 </div>
@@ -875,8 +837,8 @@
                                         <div class="panel panel-default">
                                             <div class="panel-heading" role="tab" id="headingOne">
                                                 <h4 class="panel-title">
-                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                    Tiện ích xung quanh 1
+                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                                    <em class="fa fa-chevron-right pull-right"></em>Tiện ích xung quanh 1
                                                 </a>
                                                 </h4>
                                             </div>
@@ -889,8 +851,8 @@
                                         <div class="panel panel-default">
                                             <div class="panel-heading" role="tab" id="headingOne">
                                                 <h4 class="panel-title">
-                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                                    Tiện ích xung quanh 2
+                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                    <em class="fa fa-chevron-right pull-right"></em>Tiện ích xung quanh 2
                                                 </a>
                                                 </h4>
                                             </div>
@@ -903,8 +865,8 @@
                                         <div class="panel panel-default">
                                             <div class="panel-heading" role="tab" id="headingOne">
                                                 <h4 class="panel-title">
-                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                                                    Tiện ích xung quanh 3
+                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                    <em class="fa fa-chevron-right pull-right"></em>Tiện ích xung quanh 3
                                                 </a>
                                                 </h4>
                                             </div>
@@ -963,5 +925,38 @@
             </div>
         </div>
     </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        var url_tt = "https://dl.dropboxusercontent.com/u/43486987/metvuongtest/tinh-thanh.json",
+            url_loaibds = "https://dl.dropboxusercontent.com/u/43486987/metvuongtest/loai-bds.json",
+            url_ttuc = "https://dl.dropboxusercontent.com/u/43486987/metvuongtest/loai-tintuc.json";
+    </script>
+    <script src="js/lightbox.min.js"></script>
+    <script src="js/jquery.bxslider.js"></script>
+    <script src="js/common.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#detail-listing').modal();
+            $('.bxslider').bxSlider({
+                moveSlides: 1,
+                startSlide: 0,
+                minSlides: 1,
+                maxSlides: 2,
+                slideWidth: 444,
+                startSlide: 0,
+                onSliderLoad: function() {
+                    this.infiniteLoop = false;
+                    this.hideControlOnEnd = true;
+                    scrollFixed();
+                }
+            });
+
+            lightbox.option({
+                'resizeDuration': 300,
+                'fadeDuration': 400
+            });
+        });
+    </script>
 </body>
 </html>
