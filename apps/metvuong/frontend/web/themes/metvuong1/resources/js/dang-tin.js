@@ -21,10 +21,81 @@ $(document).ready(function(){
 	dropDownListPriceType($('#adproduct-type').val());
 	$('#adproduct-type').change(function(){
 		dropDownListPriceType($(this).val());
+		$('#adproduct-price').prop('disabled', false);
+	});
+	
+	$('#adproduct-area, #adproduct-price').keydown(function(e){
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+            (e.ctrlKey === true) ||
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+                 return;
+        }
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+	}).keyup(function(){
+		var val = $(this).val().replace(/\./g, '').split( /(?=(?:...)*$)/ ).join('.');
+		$(this).val(val);
+	});
+	
+	$('#adproduct-price_type').change(function(){
+		if($(this).val() == '1') {
+			$('#adproduct-price').prop('disabled', true).val('');
+		} else {
+			$('#adproduct-price').prop('disabled', false);
+		}
 	});
 
 	stepPost();
 });
+
+function validateStep1() {
+	$return = true;
+	
+	if(!$('#adproduct-home_no').val()) {
+		$return = false;
+		$('#adproduct-home_no').next().show().html('Vui lòng nhập số nhà.');
+	} else {
+		$('#adproduct-home_no').next().hide();
+	}
+	
+	if(!$('#adproduct-street_id').val()) {
+		$return = false;
+		$('#adproduct-street_id').next().show().html('Vui lòng chọn tên Đường.');
+	} else {
+		$('#adproduct-street_id').next().hide();
+	}
+	
+	if(!$('#adproduct-ward_id').val()) {
+		$return = false;
+		$('#adproduct-ward_id').next().show().html('Vui lòng chọn Phường/Xã.');
+	} else {
+		$('#adproduct-ward_id').next().hide();
+	}
+	
+	if(!$('#adproduct-area').val()) {
+		$return = false;
+		$('#adproduct-area').next().show().html('Vui lòng nhập diện tích.');
+	} else {
+		$('#adproduct-area').next().hide();
+	}
+	
+	if(!$('#adproduct-price_type').val()) {
+		$return = false;
+		$('#adproduct-price_type').next().show().html('Vui lòng chọn đơn vị cho giá.');
+	} else {
+		$('#adproduct-price_type').next().hide();
+		
+		if(!$('#adproduct-price').prop('disabled') && $('#adproduct-price').val() == '') {
+			$return = false;
+			$('#adproduct-price').next().show().html('Vui lòng nhập giá.');
+		} else {
+			$('#adproduct-price').next().hide();
+		}
+	}
+	
+	return $return;
+}
 
 function stepPost () {
     //jQuery time
@@ -33,6 +104,11 @@ function stepPost () {
     var animating; //flag to prevent quick multi-click glitches
 
     $(".next").click(function(){
+//    	if(!validateStep1()) {
+//        	return;
+//        }
+    	
+    	
         if(animating) return false;
         animating = true;
         

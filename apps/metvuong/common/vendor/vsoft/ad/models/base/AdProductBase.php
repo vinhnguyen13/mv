@@ -3,6 +3,7 @@
 namespace common\vendor\vsoft\ad\models\base;
 
 use Yii;
+use common\vendor\vsoft\ad\models\AdImages;
 
 /**
  * This is the model class for table "ad_product".

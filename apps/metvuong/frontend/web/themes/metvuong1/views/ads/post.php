@@ -4,6 +4,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use common\vendor\vsoft\ad\models\AdProduct;
 use yii\helpers\Html;
+use common\widgets\FileUploadUI;
 $this->title = Yii::t ( 'express', 'We offer exeptional amenities and renowned white - glove services' );
 
 $this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/select2.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
@@ -59,16 +60,20 @@ $type = [
 					<div class="col-sm-10 group-item-frm">
 						<div class="inline-group col-xs-6">
 							<?= Html::activeTextInput($model, 'home_no', ['class' => 'form-control', 'placeholder' => $model->getAttributeLabel('home_no')]) ?>
+							<div class="help-block" style="display: none;"></div>
 						</div>
 						<?= Html::activeDropDownList($model, 'street_id', [], ['class' => 'form-control', 'prompt' => 'Đường'])?>
+						<div class="help-block" style="display: none;"></div>
 						<?= Html::activeDropDownList($model, 'ward_id', [], ['class' => 'form-control mgB-0', 'prompt' => 'Phường/Xã'])?>
+						<div class="help-block" style="display: none;"></div>
 					</div>
 				</div>
 				<div class="form-group text-inline">
 					<label for="" class="col-sm-2 control-label">Diện tích:</label>
 					<div class="col-sm-10">
 						<div class="inline-group col-xs-6">
-							<?= Html::activeTextInput($model, 'home_no', ['class' => 'form-control']) ?>
+							<?= Html::activeTextInput($model, 'area', ['class' => 'form-control']) ?>
+						<div class="help-block" style="display: none;"></div>
 						</div>
 						<div class="inline-group col-xs-6 pdR-0">
 							<span>m<sup>2</sup></span>
@@ -80,11 +85,13 @@ $type = [
 					<div class="col-sm-10 group-item-frm">
 						<div class="inline-group col-xs-6">
 							<?= Html::activeTextInput($model, 'price', ['class' => 'form-control']) ?>
+							<div class="help-block" style="display: none;"></div>
 						</div>
 						<div class="inline-group col-xs-6 pdR-0">
 							<?= Html::dropDownList('priceTypeForSell', null, AdProduct::priceTypeForSell(), ['id' => 'price-type-1', 'style' => 'display: none;']) ?>
 							<?= Html::dropDownList('priceTypeForRent', null, AdProduct::priceTypeForRent(), ['id' => 'price-type-2', 'style' => 'display: none;']) ?>
 							<?= Html::activeDropDownList($model, 'price_type', [], ['class' => 'form-control', 'prompt' => 'Đơn vị'])?>
+						<div class="help-block" style="display: none;"></div>
 						</div>
 					</div>
 				</div>
@@ -94,6 +101,15 @@ $type = [
 				</button>
 			</div>
 			<div class="fieldset clearfix" style="display: none;">
+				<div class="form-group">
+					<textarea class="form-control" rows="3" placeholder="Nội dung tin đăng..."></textarea>
+				</div>
+				<?= FileUploadUI::widget([
+					'name' => 'images',
+					'id' => 'images',
+					'url' => Url::to('/express/upload/image'),
+					'fieldOptions' => ['values' => '']
+				]) ?>
 				<div class="form-group">
 					<div class="title-sub-frm">Thông tin mở rộng</div>
 				</div>
@@ -120,9 +136,6 @@ $type = [
 							</select>
 						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					<textarea class="form-control" rows="3" placeholder="Nội thất..."></textarea>
 				</div>
 				<div class="clearfix"></div>
 				<div class="form-group">

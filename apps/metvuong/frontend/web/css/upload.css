@@ -1,0 +1,57 @@
+.files {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+}
+.preview img {
+	width: 120px;
+	height: 120px;
+}
+.files .name, .files .size {
+	display: none;
+}
+.fileupload-buttonbar .start, .fileupload-buttonbar .cancel, .fileupload-buttonbar .delete, .fileupload-buttonbar .toggle, .fileupload-progress {
+	display: none;
+}
+.files:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+.files li {
+	position: relative;
+    float: left;
+    margin-right: 6px;
+    margin-top: 6px;
+}
+.files li .preview {
+	display: block;
+	font-size: 0px;
+}
+.files li .progress {
+	position: absolute;
+	width: 90%;
+	margin: 0px 5% 0px 5%;
+	bottom: 8px;
+	height: 8px;
+}
+.files li .button-wrap {
+	position: absolute;
+	top: 0px;
+}
+.files .delete {
+	position: absolute;
+    top: 6px;
+    right: 6px;
+    font-size: 12px;
+    border: none;
+    padding: 4px;
+}
+.files .delete span {
+	display: none;
+}
+.files .delete .glyphicon {
+	display: block;
+    height: 14px;
+    width: 14px;
+}
