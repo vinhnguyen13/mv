@@ -191,6 +191,8 @@ $type = [
 							class="fa fa-map-marker"></em>tới đúng vị trí của tin rao.
 					</p>
 					<div id="map" style="height: 450px;"></div>
+					<?= Html::activeHiddenInput($model, 'lat') ?>
+					<?= Html::activeHiddenInput($model, 'lng') ?>
 				</div>
 				<button type="button"
 					class="btn btn-primary btn-common mgT-15 next action-button pull-right">

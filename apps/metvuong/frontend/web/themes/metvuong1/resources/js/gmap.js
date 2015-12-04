@@ -2,20 +2,19 @@ var apiIsLoaded = false;
 var queueAsynInitials = [];
 
 function apiLoaded() {
+	Gmap.prototype.geocoder = new google.maps.Geocoder;
+	
 	apiIsLoaded = true;
-	console.log(queueAsynInitials);
+	
 	for(i = 0; i < queueAsynInitials.length; i++) {
-		console.log('call from queue');
 		var asynInitial = queueAsynInitials[i];
-		asynInitial.callback(new gmap(asynInitial.el, asynInitial.initialCenter));
+		asynInitial.callback(new Gmap(asynInitial.el, asynInitial.initialCenter));
 	}
 }
 
 function asynInitial(el, initialCenter, callback) {
 	if(apiIsLoaded) {
-		console.log('call direct');
-		var gmapInstance = new gmap(el, initialCenter);
-		callback(gmapInstance);
+		callback(new Gmap(el, initialCenter));
 	} else {
 		var queueAsynInitial = {};
 		queueAsynInitial.el = el;
@@ -25,11 +24,53 @@ function asynInitial(el, initialCenter, callback) {
 	}
 }
 
-function gmap(el, initialCenter) {
-	this.map = new google.maps.Map(el, {
-		center: initialCenter,
-	    zoom: 16
-	});
+function Gmap(el, options) {
+	var self = this;
+	
+	self.map = new google.maps.Map(el, options);
+	
+	self.addMarker = function(marker, setCenter) {
+		var marker = marker._marker;
+		marker.setMap(self.map);
+		
+		if(setCenter) {
+			self.map.setCenter(marker.getPosition());
+		}
+	};
+	
+	self.geocode = function(address, callback) {
+		self._geocode({address: address}, function(response){
+			if(response.length > 0) {
+				callback({lat: response[0].geometry.location.lat(), lng: response[0].geometry.location.lng()});
+			} else {
+				callback(false);
+			}
+		});
+	};
+	
+	self._geocode = function(options, callback) {
+		self.geocoder.geocode(options, function(response){
+			callback(response);
+		});
+	};
+	
+	return self;
+}
+
+function InfoWindow() {
+	
+}
+
+function Marker(options) {
+	var self = this;
+	
+	self._marker = new google.maps.Marker(options);
+	
+	self.dragend = function(callback) {
+		self._marker.addListener('dragend', function(evt) {
+			callback({lat: evt.latLng.lat(), lng: evt.latLng.lng()});
+		});
+	};
 	
 	return this;
 }

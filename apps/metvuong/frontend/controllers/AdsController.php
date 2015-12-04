@@ -59,7 +59,7 @@ class AdsController extends \yii\web\Controller
     {
     	$model = new AdProduct();
     	$model->city_id = \Yii::$app->request->post('cityId', 1);
-    	$model->district_id = \Yii::$app->request->post('cityId', 1);
+    	$model->district_id = \Yii::$app->request->post('districtId', 22);
     	$model->category_id = \Yii::$app->request->post('categoryId', 1);
 
     	$adProductAdditionInfo = $model->adProductAdditionInfo ? $model->adProductAdditionInfo : new AdProductAdditionInfo();

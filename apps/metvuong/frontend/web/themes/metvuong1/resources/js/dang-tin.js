@@ -110,10 +110,45 @@ function initMap() {
 	var cityName = city['name'];
 	var address = $('#adproduct-home_no').val() + ' ' + $( "#adproduct-street_id option:selected" ).text()
 					+ ' ' + $( "#adproduct-ward_id option:selected" ).text() + ' ' + districtName + ' ' + cityName;
-	console.log(address);
-	asynInitial(document.getElementById('map'), {lat: 10.803164, lng: 106.631439}, function(gmap){
+
+	var mapOptions = {
+		center: {lat: 10.803164, lng: 106.631439},
+	    zoom: 16
+	};
+	asynInitial(document.getElementById('map'), mapOptions, function(gmap){
+		gmap.geocode(address, function(latLng) {
+			if(latLng) {
+				setCenter(latLng);
+			} else {
+				gmap.geocode(districtName + ' ' + cityName, function(latLng) {
+					if(latLng) {
+						setCenter(latLng);
+					}
+				});
+			}
+		});
 		
+		function setCenter(latLng) {
+			setLngLatField(latLng);
+			
+			var marker = new Marker({
+				draggable: true,
+			    animation: google.maps.Animation.DROP,
+			    position: latLng
+			});
+			
+			marker.dragend(function(latLng){
+				setLngLatField(latLng);
+			});
+			
+			gmap.addMarker(marker, true);
+		}
 	});
+}
+
+function setLngLatField(latLng) {
+	$('#adproduct-lng').val(latLng.lng);
+	$('#adproduct-lat').val(latLng.lat);
 }
 
 function stepPost () {
