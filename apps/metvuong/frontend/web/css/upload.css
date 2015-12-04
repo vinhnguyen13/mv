@@ -55,3 +55,13 @@
     height: 14px;
     width: 14px;
 }
+#images-fileupload {
+	margin-left: -15px;
+	margin-bottom: 15px;
+}
+#images-fileupload button {
+	padding: 4px !important;
+}
+#images-fileupload .preview img {
+	vertical-align: middle;
+}

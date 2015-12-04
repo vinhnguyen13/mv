@@ -6,6 +6,7 @@ use yii\helpers\Url;
 use vsoft\news\models\CmsShow;
 use common\vendor\vsoft\ad\models\AdBuildingProject;
 use common\vendor\vsoft\ad\models\AdProduct;
+use common\vendor\vsoft\ad\models\AdImages;
 
 class AdsController extends \yii\web\Controller
 {
@@ -62,4 +63,17 @@ class AdsController extends \yii\web\Controller
         return $this->render('post', ['model' => $model]);
     }
 
+    public function actionUpload() {
+    	$response = Yii::$app->runAction('express/upload/image', ['folder' => 'ads']);
+    	if($response) {
+    		$image = new AdImages();
+    		$image->file_name = $response['files'][0]['name'];
+    		$image->uploaded_at = time();
+    		$image->save(false);
+    		
+    		$response['files'][0]['name'] = $image->id;
+    		
+    		return $response;
+    	}
+    }
 }

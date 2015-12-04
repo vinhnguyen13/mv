@@ -5,6 +5,7 @@ use yii\helpers\Url;
 use common\vendor\vsoft\ad\models\AdProduct;
 use yii\helpers\Html;
 use common\widgets\FileUploadUI;
+use yii\helpers\ArrayHelper;
 $this->title = Yii::t ( 'express', 'We offer exeptional amenities and renowned white - glove services' );
 
 $this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/select2.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
@@ -107,8 +108,8 @@ $type = [
 				<?= FileUploadUI::widget([
 					'name' => 'images',
 					'id' => 'images',
-					'url' => Url::to('/express/upload/image'),
-					'fieldOptions' => ['values' => '']
+					'url' => Url::to(['upload']),
+					'fieldOptions' => ['values' => implode(',', ArrayHelper::getColumn($model->adImages, 'file_name'))]
 				]) ?>
 				<div class="form-group">
 					<div class="title-sub-frm">Thông tin mở rộng</div>
