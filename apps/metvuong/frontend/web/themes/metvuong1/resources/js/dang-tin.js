@@ -177,8 +177,18 @@ function stepPost () {
         if(index == 2) {
         	var form = $('#frm-post-tin');
         	
-        	$.post(form.attr('action'), $('#frm-post-tin').serialize(), function(){
-        		
+        	$.post(form.attr('action'), $('#frm-post-tin').serialize(), function(response){
+        		if(response.success) {
+        			
+        		} else {
+        			for(index in response.errors) {
+        				var errors = response.errors[index];
+        				for(j in errors) {
+        					var error = errors[j];
+        					$('#' + index + '-' + j).next().show().html(error);
+        				}
+        			}
+        		}
         	});
         }
         

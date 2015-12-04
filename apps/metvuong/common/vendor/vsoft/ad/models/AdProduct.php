@@ -60,7 +60,6 @@ class AdProduct extends AdProductBase
 			'ward_id' => 'Ward ID',
 			'street_id' => 'Street ID',
 			'type' => 'Hình thức',
-			'title' => 'Title',
 			'content' => 'Nội dung tin đăng',
 			'area' => 'Diện tích',
 			'price' => 'Price',

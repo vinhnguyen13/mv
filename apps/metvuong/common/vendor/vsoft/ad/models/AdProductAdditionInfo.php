@@ -22,6 +22,15 @@ use common\vendor\vsoft\ad\models\base\AdProductAdditionInfoBase;
  */
 class AdProductAdditionInfo extends AdProductAdditionInfoBase
 {
+	public function rules()
+	{
+		return [
+		[['product_id', 'facade_width', 'land_width', 'home_direction', 'facade_direction', 'floor_no', 'room_no', 'toilet_no'], 'integer'],
+		[['interior'], 'string', 'max' => 3200],
+		[['product_id'], 'unique']
+		];
+	}
+	
     public function attributeLabels()
     {
         return [

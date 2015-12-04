@@ -67,6 +67,8 @@ class AdsController extends \yii\web\Controller
     	$adContactInfo = $model->adContactInfo ? $model->adContactInfo : (new AdContactInfo())->loadDefaultValues();
     	
     	if(Yii::$app->request->isPost) {
+    		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    		
     		$post = Yii::$app->request->post();
     		$model->load($post);
     		$model->start_date = time();
@@ -77,13 +79,11 @@ class AdsController extends \yii\web\Controller
     		$adContactInfo->load($post);
     		
     		if($model->validate() && $adProductAdditionInfo->validate() && $adContactInfo->validate()) {
-    			echo 'OK';
+    			$result = ['success' => true];
     		} else {
-    			var_dump($model->getErrors());
-    			var_dump($adProductAdditionInfo->getErrors());
-    			var_dump($adContactInfo->getErrors());
+    			$result = ['success' => false, 'errors' => ['adproduct' => $model->getErrors(), 'adproductadditioninfo' => $adProductAdditionInfo->getErrors(), 'adcontactinfo' => $adContactInfo->getErrors()]];
     		}
-    		exit();
+    		return $result;
     	}
     	
     	return $this->render('post', ['model' => $model, 'adProductAdditionInfo' => $adProductAdditionInfo, 'adContactInfo' => $adContactInfo]);

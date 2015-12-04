@@ -3,8 +3,8 @@
 namespace common\vendor\vsoft\ad\models\base;
 
 use Yii;
-use common\vendor\vsoft\ad\models\AdImages;
 use common\vendor\vsoft\ad\models\AdProductAdditionInfo;
+use common\vendor\vsoft\ad\models\AdImages;
 use common\vendor\vsoft\ad\models\AdContactInfo;
 
 /**
@@ -20,9 +20,8 @@ use common\vendor\vsoft\ad\models\AdContactInfo;
  * @property integer $ward_id
  * @property integer $street_id
  * @property integer $type
- * @property string $title
  * @property string $content
- * @property integer $area
+ * @property double $area
  * @property integer $price
  * @property integer $price_type
  * @property double $lng
@@ -62,11 +61,10 @@ class AdProductBase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['category_id', 'home_no', 'city_id', 'district_id', 'type', 'title', 'content', 'start_date', 'end_date', 'created_at'], 'required'],
-            [['category_id', 'project_building_id', 'user_id', 'city_id', 'district_id', 'ward_id', 'street_id', 'type', 'area', 'price', 'price_type', 'start_date', 'end_date', 'score', 'view', 'verified', 'created_at', 'updated_at', 'status'], 'integer'],
-            [['lng', 'lat'], 'number'],
+            [['category_id', 'home_no', 'city_id', 'district_id', 'type', 'content', 'start_date', 'end_date', 'created_at'], 'required'],
+            [['category_id', 'project_building_id', 'user_id', 'city_id', 'district_id', 'ward_id', 'street_id', 'type', 'price', 'price_type', 'start_date', 'end_date', 'score', 'view', 'verified', 'created_at', 'updated_at', 'status'], 'integer'],
+            [['area', 'lng', 'lat'], 'number'],
             [['home_no'], 'string', 'max' => 32],
-            [['title'], 'string', 'max' => 255],
             [['content'], 'string', 'max' => 3200]
         ];
     }
@@ -87,7 +85,6 @@ class AdProductBase extends \yii\db\ActiveRecord
             'ward_id' => 'Ward ID',
             'street_id' => 'Street ID',
             'type' => 'Type',
-            'title' => 'Title',
             'content' => 'Content',
             'area' => 'Area',
             'price' => 'Price',

@@ -19,6 +19,18 @@ use common\vendor\vsoft\ad\models\base\AdContactInfoBase;
  */
 class AdContactInfo extends AdContactInfoBase
 {
+
+	public function rules()
+	{
+		return [
+		[['mobile'], 'required'],
+		[['product_id'], 'integer'],
+		[['name', 'phone', 'mobile'], 'string', 'max' => 32],
+		[['address', 'email'], 'string', 'max' => 255],
+		[['product_id'], 'unique']
+		];
+	}
+	
 	public function loadDefaultValues($skipIfSet = true) {
 		$this->name = Yii::$app->user->identity->profile->name;
 		$this->email = Yii::$app->user->identity->profile->public_email;
