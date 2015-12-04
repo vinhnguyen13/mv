@@ -8,11 +8,13 @@ class m151204_024254_alter_ads_table extends Migration
     public function up()
     {
 		$this->execute("ALTER TABLE `ad_images` ADD COLUMN `user_id` INT NOT NULL AFTER `id`;");
+		$this->execute("ALTER TABLE `ad_product` DROP COLUMN `title`;");
     }
 
     public function down()
     {
         $this->dropColumn('ad_images', 'user_id');
+        $this->execute("ALTER TABLE `metvuong`.`ad_product` ADD COLUMN `title` VARCHAR(255) NOT NULL AFTER `street_id`;");
     }
 
     /*

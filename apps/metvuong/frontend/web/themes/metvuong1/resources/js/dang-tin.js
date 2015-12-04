@@ -170,7 +170,17 @@ function stepPost () {
         next_fs = $(this).parent().next();
         
         //activate next step on progressbar using the index of next_fs
-        $("#progressbar li").eq($(".fieldset").index(next_fs)).addClass("active");
+        var index = $(".fieldset").index(next_fs);
+        $("#progressbar li").eq(index).addClass("active");
+        
+        
+        if(index == 2) {
+        	var form = $('#frm-post-tin');
+        	
+        	$.post(form.attr('action'), $('#frm-post-tin').serialize(), function(){
+        		
+        	});
+        }
         
         //show the next fieldset
         next_fs.show(); 

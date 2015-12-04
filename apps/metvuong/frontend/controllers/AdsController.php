@@ -69,6 +69,10 @@ class AdsController extends \yii\web\Controller
     	if(Yii::$app->request->isPost) {
     		$post = Yii::$app->request->post();
     		$model->load($post);
+    		$model->start_date = time();
+    		$model->end_date = $model->start_date + (24 * 60 * 60);
+    		$model->created_at = $model->start_date;
+    		
     		$adProductAdditionInfo->load($post);
     		$adContactInfo->load($post);
     		
