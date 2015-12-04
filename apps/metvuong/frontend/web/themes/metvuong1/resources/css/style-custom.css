@@ -4429,9 +4429,9 @@ header.wrap-page-home .wrap-search-home {
     bottom: 7px;
     right: 15px;
     z-index: 3;
-    width: 16px;
-    height: 16px;
-    background: url(../images/view-more-results.png) no-repeat top left;
+    color: #3c763d;
+    font-size: 2em;
+    font-weight: bold;
 }
 #more-option-results:hover {
     opacity: .6
