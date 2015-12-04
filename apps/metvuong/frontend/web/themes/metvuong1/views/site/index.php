@@ -30,57 +30,25 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
 <script>
     $(document).ready(function(){
         $(document).on('click', '#btn-search', function(){
+            animateSearch();
             setTimeout(function() {
-                $('.wrap-search-home .logo-home').addClass('ani-logo').css({
-                    'transform': 'translate3d( 0, 8px, 0)',
-                    '-webkit-transform': 'translate3d( 0, 8px, 0)',
-                    '-moz-transform': 'translate3d( 0, 8px, 0)',
-                    '-ms-transform': 'translate3d( 0, 8px, 0)'
-                });
-                $('.box-search-header').addClass('ani-search').css({
-                    'transform': 'translate3d(180px, 8px, 0px)',
-                    '-webkit-transform': 'translate3d(180px, 8px, 0px)',
-                    '-moz-transform': 'translate3d(180px, 8px, 0px)',
-                    '-ms-transform': 'translate3d(180px, 8px, 0px)'
-                });
-                setTimeout(function() {
-                    $('header').addClass('border-shadow');
-                    setTimeout(function() {$('#search-kind').submit();},500);
-                },500);
-            },500);
+                setTimeout(function() {$('#search-kind').submit();},500);
+            },1000);
             return false;
         });
 
         $(document).bind( 'real-estate/news', function(event, json, string){
+            animateSearch();
             setTimeout(function() {
-                $('.wrap-search-home .logo-home').addClass('ani-logo').css({
-                    'transform': 'translate3d( 0, 8px, 0)',
-                    '-webkit-transform': 'translate3d( 0, 8px, 0)',
-                    '-moz-transform': 'translate3d( 0, 8px, 0)',
-                    '-ms-transform': 'translate3d( 0, 8px, 0)'
-                });
-                $('.box-search-header').addClass('ani-search').css({
-                    'transform': 'translate3d(180px, 8px, 0px)',
-                    '-webkit-transform': 'translate3d(180px, 8px, 0px)',
-                    '-moz-transform': 'translate3d(180px, 8px, 0px)',
-                    '-ms-transform': 'translate3d(180px, 8px, 0px)'
-                });
-                setTimeout(function() {
-                    $('header').addClass('border-shadow');
-                    setTimeout(function() {$('#search-kind').submit();},100);
-                },500);
-            },500);
+                setTimeout(function() {$('#search-kind').submit();},100);
+            },1000);
         });
         
         $(document).bind( 'real-estate/post', function(event, json, string){
+            animateSearch();
             setTimeout(function() {
-                $('.wrap-search-home .logo-home').addClass('ani-logo');
-                $('.box-search-header').addClass('ani-search');
-                setTimeout(function() {
-                    $('header').addClass('border-shadow');
-                    location.href = '<?=Url::to(['/ads/post'])?>';
-                },500);
-            },500);
+                location.href = '<?=Url::to(['/ads/post'])?>';
+            },1000);
         });
 
 

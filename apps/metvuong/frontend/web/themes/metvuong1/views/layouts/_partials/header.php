@@ -46,7 +46,7 @@ use yii\helpers\Url;
     <div class="container clearfix">
         <?php $this->beginContent('@app/views/layouts/_partials/menuMain.php'); ?><?php $this->endContent();?>
         <div class="wrap-search-home">
-            <div class="bgcover logo-home ani-logo" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png);"><a href="<?=Url::home()?>"></a></div>
+            <div class="wrap-logo"><div class="bgcover logo-home ani-logo" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png);"><a href="<?=Url::home()?>"></a></div></div>
             <div class="box-search-header clearfix ani-search">
                 <div class="pull-left">
                     <?php $form = ActiveForm::begin([
@@ -126,7 +126,8 @@ use yii\helpers\Url;
                         <input class="getValSuggest" type="hidden" id="valLoai" name="category" value="">
                         <input class="getValSuggest" type="hidden" id="valTTuc" name="news" value="">
                     <?php ActiveForm::end(); ?>
-                    <div class="pull-left text-right mgT-10 mgL-15">
+                    <div class="pull-left text-right mgT-10 mgL-15 options-search">
+                        <em class="fa fa-sort-desc"></em>
                         <div class="search-select active">
                             <a href="#" data-placeholder="Bạn ở Thành phố nào ?" rel="#dd-search">
                                 <span>

@@ -224,15 +224,35 @@ $(document).ready(function() {
     //end page du-an
 
     //start scroll fixed header
-    var secondaryNav = $('.cd-secondary-nav'),
-        secondaryNavTopPosition = secondaryNav.length > 0 ? secondaryNav.offset().top : 0,
-        contentSections = $('.cd-section'),
-        hFirstNav = secondaryNav.outerHeight(),
-        valShow;
+    var $header = $('.cd-secondary-nav'),
+        $container = $('.cd-main-content'),
+        hHeader = $header.outerHeight(),
+        valShow = 0,
+        flagShow = false;
 
     $(window).on('scroll', function(){
-        valShow = $(window).scrollTop() - hFirstNav/2
-        if( valShow > 0 ) {
+        valShow = $(window).scrollTop();
+
+        if( valShow >= hHeader ) {
+            if( flagShow ) {
+                return;
+            }
+            $header.hide();
+            $header.addClass('is-fixed animate-children');
+            $container.addClass('pdTContainer');
+            setTimeout(function() {
+                $header.show();
+                setTimeout(function () {
+                    $header.addClass('show-fixed');
+                },50);
+            }, 150);
+            flagShow = true;
+        }else {
+            $header.removeClass('is-fixed animate-children show-fixed');
+            flagShow = false;
+        }
+
+        /*if( valShow > 0 ) {
             secondaryNav.addClass('is-fixed');
             setTimeout(function() {
                 secondaryNav.addClass('animate-children');
@@ -242,7 +262,7 @@ $(document).ready(function() {
             setTimeout(function() {
                 secondaryNav.removeClass('animate-children');
             }, 50);
-        }
+        }*/
     });
     //end scroll fixed header
 
@@ -253,17 +273,25 @@ $(document).ready(function() {
 });
 
 function animateSearch() {
-    var hWindown = $(window).outerHeight(),
-        leftLogo = $('.logo-home').position().left,
-        leftInputSearch = $('.box-search-header').position().left;
-
     setTimeout(function() {
+        $('.wrap-search-home .logo-home').addClass('ani-logo').css({
+            'transform': 'translate3d( 0, 8px, 0)',
+            '-webkit-transform': 'translate3d( 0, 8px, 0)',
+            '-moz-transform': 'translate3d( 0, 8px, 0)',
+            '-ms-transform': 'translate3d( 0, 8px, 0)'
+        });
+        $('.box-search-header').addClass('ani-search').css({
+            'transform': 'translate3d(180px, 8px, 0px)',
+            '-webkit-transform': 'translate3d(180px, 8px, 0px)',
+            '-moz-transform': 'translate3d(180px, 8px, 0px)',
+            '-ms-transform': 'translate3d(180px, 8px, 0px)'
+        });
         $('.wrap-search-home .logo-home').addClass('ani-logo');
         $('.box-search-header').addClass('ani-search');
         setTimeout(function() {
             $('header').addClass('border-shadow');
-        },250);
-    },2000);
+        },500);
+    },500);
 }
 
 function l(x){console.log(x);}

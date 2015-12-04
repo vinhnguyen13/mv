@@ -30,6 +30,8 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
 </div>
 <div class="col-md-4 result-items">
     <div class="wrap-col-fixed-result clearfix">
+        <h1 id="search-title" class="zsg-content_collapsed">Rental Listings</h1>
+        <span class="num-results">10 results.</span>
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#moi-nhat" aria-controls="moi-nhat" role="tab" data-toggle="tab">Mới nhất</a></li>
             <li role="presentation"><a href="#re-nhat" aria-controls="re-nhat" role="tab" data-toggle="tab">Rẻ nhất</a></li>
@@ -40,23 +42,19 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
             <div role="tabpanel" class="tab-pane fade in active" id="moi-nhat">
                 <ul class="list-results clearfix">
                     <li>
-                        <a href="#" class="wrap-img pull-left"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>
-                        <div class="infor-result">
-                            <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
-                            <p class="type-result"><em class="fa fa-circle for-rent"></em>APARTMENT FOR RENT</p>
-                            <p class="rice-result">$750/mo</p>
-                            <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
-                            <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#" class="wrap-img pull-left"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/ISxzl4dulivj820000000000.jpg" alt=""></a>
-                        <div class="infor-result">
-                            <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
-                            <p class="type-result"><em class="fa fa-circle for-sale"></em>APARTMENT FOR RENT</p>
-                            <p class="rice-result">$750/mo</p>
-                            <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
-                            <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                        <div class="loading_new_feed">          
+                            <div class="_2iwr"></div>            
+                            <div class="_2iws"></div>            
+                            <div class="_2iwt"></div>            
+                            <div class="_2iwu"></div>            
+                            <div class="_2iwv"></div>            
+                            <div class="_2iww"></div>            
+                            <div class="_2iwx"></div>            
+                            <div class="_2iwy"></div>            
+                            <div class="_2iwz"></div>            
+                            <div class="_2iw-"></div>            
+                            <div class="_2iw_"></div>            
+                            <div class="_2ix0"></div>        
                         </div>
                     </li>
                     <li>
@@ -109,76 +107,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                             <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
                         </div>
                     </li>
-                    <li>
-                        <a href="#" class="wrap-img pull-left"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/ISxzl4dulivj820000000000.jpg" alt=""></a>
-                        <div class="infor-result">
-                            <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
-                            <p class="type-result"><em class="fa fa-circle for-sale"></em>APARTMENT FOR RENT</p>
-                            <p class="rice-result">$750/mo</p>
-                            <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
-                            <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#" class="wrap-img pull-left"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>
-                        <div class="infor-result">
-                            <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
-                            <p class="type-result"><em class="fa fa-circle for-rent"></em>APARTMENT FOR RENT</p>
-                            <p class="rice-result">$750/mo</p>
-                            <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
-                            <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#" class="wrap-img pull-left"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/ISxzl4dulivj820000000000.jpg" alt=""></a>
-                        <div class="infor-result">
-                            <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
-                            <p class="type-result"><em class="fa fa-circle for-sale"></em>APARTMENT FOR RENT</p>
-                            <p class="rice-result">$750/mo</p>
-                            <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
-                            <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#" class="wrap-img pull-left"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>
-                        <div class="infor-result">
-                            <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
-                            <p class="type-result"><em class="fa fa-circle for-rent"></em>APARTMENT FOR RENT</p>
-                            <p class="rice-result">$750/mo</p>
-                            <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
-                            <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#" class="wrap-img pull-left"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/ISxzl4dulivj820000000000.jpg" alt=""></a>
-                        <div class="infor-result">
-                            <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
-                            <p class="type-result"><em class="fa fa-circle for-sale"></em>APARTMENT FOR RENT</p>
-                            <p class="rice-result">$750/mo</p>
-                            <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
-                            <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#" class="wrap-img pull-left"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>
-                        <div class="infor-result">
-                            <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
-                            <p class="type-result"><em class="fa fa-circle for-rent"></em>APARTMENT FOR RENT</p>
-                            <p class="rice-result">$750/mo</p>
-                            <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
-                            <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#" class="wrap-img pull-left"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/ISxzl4dulivj820000000000.jpg" alt=""></a>
-                        <div class="infor-result">
-                            <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
-                            <p class="type-result"><em class="fa fa-circle for-sale"></em>APARTMENT FOR RENT</p>
-                            <p class="rice-result">$750/mo</p>
-                            <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
-                            <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
-                        </div>
-                    </li>
+
                 </ul>
             </div>
             <div role="tabpanel" class="tab-pane fade" id="re-nhat">
