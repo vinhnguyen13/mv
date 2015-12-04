@@ -4424,3 +4424,15 @@ header.wrap-page-home .wrap-search-home {
     -moz-transform: rotate(0deg);
     -ms-transform: rotate(0deg);
 }
+#more-option-results {
+    position: absolute;
+    bottom: 7px;
+    right: 15px;
+    z-index: 3;
+    width: 16px;
+    height: 16px;
+    background: url(../images/view-more-results.png) no-repeat top left;
+}
+#more-option-results:hover {
+    opacity: .6
+}
