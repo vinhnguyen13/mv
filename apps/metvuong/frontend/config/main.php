@@ -68,16 +68,6 @@ return [
                 ],
             ],
         ],
-        'assetManager' => [
-            'bundles' => [
-                'yii\web\JqueryAsset' => [
-                    'jsOptions' => ['position'=>\yii\web\View::POS_HEAD]
-                ],
-                'yii\web\YiiAsset' => [
-                    'jsOptions' => ['position'=>\yii\web\View::POS_HEAD]
-                ],
-            ],
-        ],
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
@@ -154,8 +144,12 @@ return [
                 'yii\bootstrap\BootstrapAsset' => [
                     'css' => [],
                 ],
+                'yii\bootstrap\BootstrapPluginAsset' => [
+                    'js' => [],
+                ],
                 'yii\web\JqueryAsset' => [
-                    'js'=>[]
+                    'js'=>[],
+                    'jsOptions' => ['position'=>\yii\web\View::POS_HEAD]
                 ],
             ],
         ],
