@@ -31,7 +31,6 @@ function Gmap(el, options) {
 	var map = new google.maps.Map(el, options);
 	
 	self.addMarker = function(marker, setCenter) {
-		var marker = marker._marker;
 		marker.setMap(map);
 		
 		if(setCenter) {
@@ -77,17 +76,20 @@ function InfoWindow() {
 
 function Marker(options) {
 	var self = this;
-	
-	self._marker = new google.maps.Marker(options);
+	var marker = new google.maps.Marker(options);
 	
 	self.dragend = function(callback) {
-		self._marker.addListener('dragend', function(evt) {
+		marker.addListener('dragend', function(evt) {
 			callback({lat: evt.latLng.lat(), lng: evt.latLng.lng()});
 		});
 	};
 	
 	self.getPosition = function() {
-		return self._marker.getPosition();
+		return marker.getPosition();
+	}
+	
+	self.setMap = function(map) {
+		marker.setMap(map);
 	}
 	
 	return this;

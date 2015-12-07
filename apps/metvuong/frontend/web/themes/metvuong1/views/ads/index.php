@@ -2,10 +2,12 @@
 use yii\web\View;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
+use common\vendor\vsoft\ad\models\AdCategory;
 $this->title = Yii::t('express','We offer exeptional amenities and renowned white - glove services');
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/gmap.js', ['position' => View::POS_END]);
 $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=apiLoaded', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/search-map.js', ['position' => View::POS_END]);
+$this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy('id')->asArray(true)->all()) . ';', View::POS_BEGIN);
 ?>
 <div class="list-filters-result">
     <ul class="container clearfix">

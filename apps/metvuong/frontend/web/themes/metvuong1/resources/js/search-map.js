@@ -42,12 +42,15 @@ function start() {
 			});
 			
 			var markerId = gmap.addMarker(marker, true);
+			var type = (product.type == 1) ? 'BÁN' : 'CHO THUÊ';
+			var category = categories[product.category_id]['name'].toUpperCase();
+			var price = (product.type == 1) ? product.price : product.price + '/tháng';
 			
 			var li = '<li data-id="' + markerId + '">' +
                         '<a href="#" class="wrap-img pull-left"><img src="/frontend/web/themes/metvuong1/resources/images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>' +
                         '<div class="infor-result">' +
                             '<p class="item-title">' + address + '</p>' +
-                            '<p class="type-result"><em class="fa fa-circle for-rent"></em>APARTMENT FOR RENT</p>' +
+                            '<p class="type-result"><em class="fa fa-circle for-rent"></em>' + category + ' ' + type + '</p>' +
                             '<p class="rice-result">$750/mo</p>' +
                             '<p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>' +
                             '<p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>' +
