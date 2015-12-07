@@ -115,7 +115,7 @@ class AdsController extends Controller
     			$adContactInfo->product_id = $model->id;
     			$adContactInfo->save();
     			
-    			if(isset($post['images'])) {
+    			if(isset($post['images']) && $post['images']) {
     				$images = explode(',', $post['images']);
     				foreach($images as $k => $image) {
     					if(!ctype_digit($image)) {
