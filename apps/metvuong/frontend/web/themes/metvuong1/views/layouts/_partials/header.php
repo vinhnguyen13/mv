@@ -1,27 +1,36 @@
 <?php
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
+$value = \Yii::$app->getRequest()->getCookies()->getValue('searchParams');
+$searchParams = json_decode($value, true);
+
 ?>
 <script type="text/javascript">
     var jsonActive = [
+        <?php if(!empty($searchParams['sug1'])):?>
         {
-            "idItem": 1,
+            "idItem": <?=array_keys($searchParams['sug1'])[0]?>,
             "stepId": 1,
             "stepShow": "#valTT",
-            "name_item": "Hồ chí minh"
+            "name_item": "<?=array_values($searchParams['sug1'])[0]?>"
         },
+        <?php endif;?>
+        <?php if(!empty($searchParams['sug2'])):?>
         {
-            "idItem": 2,
+            "idItem": <?=array_keys($searchParams['sug2'])[0]?>,
             "stepId": 2,
             "stepShow": "#valQh",
-            "name_item": "Quận 1"
+            "name_item": "<?=array_values($searchParams['sug2'])[0]?>"
         },
+        <?php endif;?>
+        <?php if(!empty($searchParams['sug3'])):?>
         {
-            "idItem": 3,
+            "idItem": <?=array_keys($searchParams['sug3'])[0]?>,
             "stepId": 3,
             "stepShow": "#valLoai",
-            "name_item": "Nhà mặt phố"
+            "name_item": "<?=array_values($searchParams['sug3'])[0]?>"
         }
+        <?php endif;?>
     ];
 
     $(document).ready(function() {
@@ -41,6 +50,8 @@ use yii\helpers\Url;
             },500);
         },500);
     });
+
+
 </script>
 <header class="home-page cd-secondary-nav border-shadow wrap-page-home">
     <div class="container clearfix">
