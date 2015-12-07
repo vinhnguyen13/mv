@@ -180,7 +180,9 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     </div>
 
                                 </div>
-                                <button id="btn-search" type="submit" class="btn btn-default"><span><em class="fa fa-search"></em></span></button>
+                                <button id="btn-search" type="submit" class="btn btn-default">
+                                    <span><em class="fa fa-search"></em></span>
+                                </button>
                                 <input class="getValSuggest" type="hidden" id="valTT" name="city" value="">
                                 <input class="getValSuggest" type="hidden" id="valQh" name="district" value="">
                                 <input class="getValSuggest" type="hidden" id="valLoai" name="category" value="">

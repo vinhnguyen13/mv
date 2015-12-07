@@ -25,6 +25,8 @@
         }
     });
 
+
+
 	var objEvent = {
 			itemInput: $('#searchInput'),
 			tabsSearch: $('.search-select a'),
@@ -41,6 +43,7 @@
 	        timeoutClose: '',
 	        editItem: '',
 	        icon: $('#search-kind button span'),
+	        iconScrollSearch : $('.icon-selected'),
 	        init: function() {
 	        	objEvent.searchEvent();
 	        	objEvent.tabSearchEvent();
@@ -73,6 +76,10 @@
 			        objEvent.tabsSearch.parent().removeClass('active');
 			        objEvent.itemInput.attr('placeholder', txtPlaceholder);
 			    	_this.parent().addClass('active');
+
+			    	if( _this.closest('.search-dropdown').length > 0 ) {
+	                    _this.closest('.search-dropdown').removeClass('search-dropdown');
+	                }
 			    	
 			        return false;
 	        	});
@@ -83,16 +90,19 @@
 			                //something
 			                objEvent.flagTrigger = '#dd-search';
 			                objEvent.icon.html('<em class="fa fa-search"></em>');
+			                objEvent.iconScrollSearch.find('span').html('<em class="fa fa-home"></em><em class="fa fa-search"></em>');
 			                break;
 			            case '#dd-dky':
 			                //_this.trigger( 'real-estate/post', [{data: '1'}, 'something'] );
 			                objEvent.icon.html('<em class="fa fa-pencil-square-o"></em>');
+			                objEvent.iconScrollSearch.find('span').html('<em class="fa fa-home"></em><em class="fa fa-pencil-square-o"></em>');
 			                objEvent.flagTrigger = '#dd-dky';
 			                break;
 			            case '#dd-news':
 			                //something
 			                //_this.trigger( 'real-estate/news', [{data: '1'}, 'something'] );
 			                objEvent.icon.html('<em class="fa fa-file-text"></em>');
+			                objEvent.iconScrollSearch.find('span').html('<em class="fa fa-home"></em><em class="fa fa-file-text"></em>');
 			                objEvent.flagTrigger = '#dd-news';
 			                objEvent.countStep = "news";
 			                break;

@@ -30,6 +30,7 @@ Yii::$app->getView()->registerJs(strtr($script, ['_url_tt'=>Yii::$app->view->the
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.easing.min.js', ['position'=>View::POS_BEGIN]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/data/data.js', ['position'=>View::POS_BEGIN]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/common.js', ['position'=>View::POS_BEGIN]);
+Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/search.js', ['position'=>View::POS_END]);
 
 Yii::$app->view->registerLinkTag([
     'rel'=>'shortcut icon',

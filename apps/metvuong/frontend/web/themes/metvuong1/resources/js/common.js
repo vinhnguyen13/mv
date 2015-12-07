@@ -246,6 +246,16 @@ $(document).ready(function() {
                     $header.addClass('show-fixed');
                 },50);
             }, 150);
+
+            $('.icon-selected a').on('click', function() {
+                var _this = $(this),
+                    $rootParent = _this.closest('.options-search');
+
+                $rootParent.addClass('search-dropdown');
+
+                return false;
+            });
+
             flagShow = true;
         }else {
             $header.removeClass('is-fixed animate-children show-fixed');

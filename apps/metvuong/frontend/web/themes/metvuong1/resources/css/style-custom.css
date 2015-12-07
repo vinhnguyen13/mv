@@ -54,6 +54,8 @@ body .search-result-page > .container {
 .box-search-header {
     width: 60%;
     margin: 0px auto 0;
+}
+div.wrap-page-home .box-search-header {
     -webkit-transition: all 0.2s ease-out;
     -moz-transition: all 0.2s ease-out;
     transition: all 0.2s ease-out;
@@ -62,6 +64,8 @@ body .search-result-page > .container {
     /* border: 1px solid #4a933a; */
     padding: 0 0 0 0;
     width: 100%;
+}
+div.wrap-page-home .box-search-header > div {
     -webkit-transition: all 0.2s ease-out;
     -moz-transition: all 0.2s ease-out;
     transition: all 0.2s ease-out;
@@ -218,13 +222,19 @@ div.wrap-page-home .ani-search #search-kind button span,
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
     -o-border-radius: 3px;
+    border: 1px solid #78B112;
+    position: relative;
+    padding: 1px;
+}
+div.wrap-page-home .ani-search #search-kind .type-search, 
+div.wrap-page-home #search-kind .type-search {
     -webkit-transition: all 0.2s ease-out;
     -moz-transition: all 0.2s ease-out;
     transition: all 0.2s ease-out;
     transition-delay: .2s;
-    border: 1px solid #78B112;
-    position: relative;
-    padding: 1px;
+    -webkit-transition-delay: .2s;
+    -ms-transition-delay: .2s;
+    -moz-transition-delay: .2s;
 }
 .ani-search #search-kind .form-group input,
 #search-kind .form-group input {
@@ -233,12 +243,18 @@ div.wrap-page-home .ani-search #search-kind button span,
     height: 34px;
     color: #294000;
     border: none;
+    float: right;
+    font-size: 1.3em;
+}
+div.wrap-page-home .ani-search #search-kind .form-group input, 
+div.wrap-page-home  #search-kind .form-group input {
     -webkit-transition: all 0.2s ease-out;
     -moz-transition: all 0.2s ease-out;
     transition: all 0.2s ease-out;
     transition-delay: .2s;
-    float: right;
-    font-size: 1.3em;
+    -webkit-transition-delay: .2s;
+    -moz-transition-delay: .2s;
+    -ms-transition-delay: .2s;
 }
 .resize-width #search-kind .form-group input {
     border-radius: 3px;
@@ -1989,15 +2005,13 @@ footer {
     padding-top: 0;
 }
 .animate-children #search-kind .type-search i {
-    
-top: -3px;
-    
-font-size: .6em;
+    top: -3px;
+    font-size: .6em;
 }
-.wrap-search-home .ani-search button.btn.btn-default,
-button.btn.btn-default,
-.search-select a,
-#search-kind .dropdown button {
+div.wrap-page-home .wrap-search-home .ani-search button.btn.btn-default, 
+div.wrap-page-home button.btn.btn-default, 
+div.wrap-page-home .search-select a, 
+div.wrap-page-home #search-kind .dropdown button {
     -webkit-transition: all 0.2s ease-out;
     -moz-transition: all 0.2s ease-out;
     transition: all 0.2s ease-out;
@@ -2502,10 +2516,10 @@ button.btn.btn-default,
 .home-page {
     /* position: relative; */
     z-index: 5;
-    transition: top, background .2s ease-in-out;
-    -webkit-transition: top, background .2s ease-in-out;
-    -moz-transition: top, background .2s ease-in-out;
-    -ms-transition: top, background .2s ease-in-out;
+    transition: all .2s ease-in-out;
+    -webkit-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    -ms-transition: all .2s ease-in-out;
     padding: 0;
     margin: 0;
     height: 110px;
@@ -2605,6 +2619,8 @@ footer {
     margin: 0;
     background-position: 100%;
     position: absolute;
+}
+div.wrap-page-home .ani-logo {
     transition: all .3s ease-in-out;
     -webkit-transition: all .3s ease-in-out;
     -moz-transition: all .3s ease-in-out;
@@ -2631,13 +2647,15 @@ footer {
     width: 220px;
 }
 .wrap-page-home .ani-logo {
+    position: relative;
+    top: 2px;
+    left: 0;
+}
+div.wrap-page-home .ani-logo {
     transform: translate3d( 0, 0, 0);
     -webkit-transform: translate3d( 0, 0, 0);
     -moz-transform: translate3d( 0, 0, 0);
     -ms-transform: translate3d( 0, 0, 0);
-    position: relative;
-    top: 2px;
-    left: 0;
 }
 .wrap-search-home #search-kind .type-search {
     width: 100%;
@@ -2683,6 +2701,8 @@ footer {
     height: 47px;
     line-height: 46px;
     padding: 9px 0 0 5px;
+}
+div.wrap-page-home .type-search ul {
     transition: all .3s ease-out;
     -webkit-transition: all .3s ease-out;
     -moz-transition: all .3s ease-out;
@@ -2710,6 +2730,7 @@ footer {
     -ms-text-shadow: 1px 1px 1px #fff;
     font-weight: bold;
 }
+.icon-selected a span,
 .wrap-search-home .search-select a span {
     position: relative;
     font-size: 1em;
@@ -2718,12 +2739,20 @@ footer {
     display: block;
     vertical-align: middle;
 }
+.animate-children .search-select a span {
+    margin-left: -9px;
+}
+.icon-selected span .fa-home,
 .search-select span .fa-home {
     position: absolute;
     width: 100%;
     top: 0;
     left: 0;
 }
+
+.icon-selected span .fa-search,
+.icon-selected span .fa-pencil-square-o,
+.icon-selected span .fa-file-text,
 .search-select span .fa-search,
 .search-select span .fa-pencil-square-o,
 .search-select span .fa-file-text {
@@ -2817,6 +2846,8 @@ footer {
     top: 0;
     left: 0;
     width: 60%;
+}
+div.wrap-page-home .box-search-header {
     transition: all .3s ease-in-out;
     -webkit-transition: all .3s ease-in-out;
     -moz-transition: all .3s ease-in-out;
@@ -2962,12 +2993,16 @@ padding-bottom: 5px;
 .is-fixed.animate-children .search-select i {
     display: none;
 }
-.animate-children .wrap-search-home .search-select a{
-    font-size: 3em;
+.animate-children .wrap-search-home .icon-selected a{
     height: 100%;
-    line-height: 40px;
     padding-top: 2px;
     overflow: hidden;
+    color: #82c013;
+    position: relative;
+    display: block;
+}
+.icon-selected a span {
+    font-size: 3em;
 }
 .wrap-page-home .container {
     height: 100%;
@@ -4570,27 +4605,35 @@ div._2ix0 {
 }
 .animate-children .box-search-header .options-search {
     position: absolute;
-    top: 1px;
-    left: 1px;
+    top: 0px;
+    left: 0;
     margin: 0 !important;
-    border-right: 1px solid #78B112;
+    border: 1px solid #78B112;
     width: 59px;
-    height: 38px;
+    height: 40px;
     text-align: center;
+    border-radius: 3px 0 3px 3px;
+    overflow: hidden;
+    transition: all .3s ease-out;
+    padding-top: 38px;
+}
+.animate-children .box-search-header .search-dropdown {
+    height: 155px;
+    background: #fff;
 }
 .animate-children .options-search .search-select {
     margin: 0;
     float: none;
     width: 100%;
-    display: none;
+    /* display: none; */
 }
-.animate-children .options-search .search-select.active {
+.animate-children .options-search .icon-selected {
     display: block;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
 }
 .animate-children .options-search .search-select:after,
 .animate-children .options-search .search-select:before {
@@ -4602,10 +4645,10 @@ div._2ix0 {
 .animate-children .type-search ul {
     left: 60px;
 }
-.animate-children .search-select a span {
+.animate-children .icon-selected a span {
     margin-left: -10px;
 }
-.options-search .fa-sort-desc {
+.options-search .icon-selected {
     display: none;
 }
 .animate-children .options-search .fa-sort-desc {

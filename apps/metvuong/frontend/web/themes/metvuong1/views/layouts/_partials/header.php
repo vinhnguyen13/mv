@@ -120,14 +120,23 @@ use yii\helpers\Url;
                                 </div>
                             </div>
                         </div>
-                        <button id="btn-search" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                        <button id="btn-search" type="submit" class="btn btn-default">
+                            <span><em class="fa fa-search"></em></span>
+                        </button>
                         <input class="getValSuggest" type="hidden" id="valTT" name="city" value="">
                         <input class="getValSuggest" type="hidden" id="valQh" name="district" value="">
                         <input class="getValSuggest" type="hidden" id="valLoai" name="category" value="">
                         <input class="getValSuggest" type="hidden" id="valTTuc" name="news" value="">
                     <?php ActiveForm::end(); ?>
                     <div class="pull-left text-right mgT-10 mgL-15 options-search">
-                        <em class="fa fa-sort-desc"></em>
+                        <div class="icon-selected">
+                            <a href="#">
+                                <span>
+                                    <em class="fa fa-home"></em>
+                                </span>
+                            </a>
+                            <em class="fa fa-sort-desc"></em>
+                        </div>
                         <div class="search-select active">
                             <a href="#" data-placeholder="Bạn ở Thành phố nào ?" rel="#dd-search">
                                 <span>
