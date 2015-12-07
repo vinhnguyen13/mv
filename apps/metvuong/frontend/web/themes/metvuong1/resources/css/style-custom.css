@@ -14,7 +14,7 @@
 a,a:focus,a:active{text-decoration: none;}
 @media (min-width: 1200px) {
     body .container {
-        width: 1100px;
+        width: 1230px;
     }
 }
 @media (min-width: 1350px) {
@@ -148,6 +148,7 @@ button.btn.btn-default {
 button.btn.btn-default:hover {
     color: #1FA71E;
 }
+div.wrap-page-home .ani-search #search-kind button span,
 #search-kind button span {
     font-size: 1.5em;
 }
@@ -2501,7 +2502,10 @@ button.btn.btn-default,
 .home-page {
     /* position: relative; */
     z-index: 5;
-    transition: top .2s ease-in-out;
+    transition: top, background .2s ease-in-out;
+    -webkit-transition: top, background .2s ease-in-out;
+    -moz-transition: top, background .2s ease-in-out;
+    -ms-transition: top, background .2s ease-in-out;
     padding: 0;
     margin: 0;
     height: 110px;
@@ -2626,7 +2630,7 @@ footer {
     float: left;
     width: 220px;
 }
-header.wrap-page-home .ani-logo {
+.wrap-page-home .ani-logo {
     transform: translate3d( 0, 0, 0);
     -webkit-transform: translate3d( 0, 0, 0);
     -moz-transform: translate3d( 0, 0, 0);
@@ -2812,31 +2816,17 @@ header.wrap-page-home .ani-logo {
     position: absolute;
     top: 0;
     left: 0;
-    width: 650px;
+    width: 60%;
     transition: all .3s ease-in-out;
     -webkit-transition: all .3s ease-in-out;
     -moz-transition: all .3s ease-in-out;
     -ms-transition: all .3s ease-in-out;
-    transform: translate3d( 290px, 320px, 0);
-    -webkit-transform: translate3d( 290px, 320px, 0);
-    -moz-transform: translate3d( 290px, 320px, 0);
-    -ms-transform: translate3d( 290px, 320px, 0);
     transition-delay: 0.1s;
     -webkit-transition-delay: 0.1s;
     -moz-transition-delay: 0.1s;
     -ms-transition-delay: 0.1s;
     -webkit-backface-visibility: hidden;
     -webkit-perspective: 1000;
-}
-header.wrap-page-home .ani-search {
-    /*transform: translate3d( 540px, 0, 0);
-     display: none; */
-    transform: translate3d( 0, 0, 0);
-    -webkit-transform: translate3d( 0, 0, 0);
-    -moz-transform: translate3d( 0, 0, 0);
-    -ms-transform: translate3d( 0, 0, 0);
-    position: relative;
-    top: 0;
 }
 .wrap-page-home .slideUpDown li {
     padding: 0px 10px;
@@ -3636,7 +3626,7 @@ div.wrap-page-home .logo-home {
     -ms-transform: translateY(0);
     transform: translateY(0); 
 }
-header.wrap-page-home .wrap-search-home {
+.wrap-page-home .wrap-search-home {
     height: auto;
     padding-top: 10px;
     z-index: 1;
@@ -3739,6 +3729,7 @@ header.wrap-page-home .wrap-search-home {
 }
 @media (min-width: 992px) and (max-width: 1199px) {
     header.wrap-page-home .ani-search {
+        width: 50%;
     }
     .wrap-page-home.animate-children .ani-search {
         width: 56%;
@@ -4644,4 +4635,20 @@ header.wrap-page-home.animate-children .ani-logo {
 }
 .cd-secondary-nav.show-fixed {
     top: 0;
+}
+.wrap-page-home header {
+    background: none;
+}
+.wrap-page-home header.border-shadow {
+    background: #F1F1F1;
+}
+div.wrap-page-home #search-kind button span {
+    font-size: 2em;
+    transition: font-size .2s ease-out;
+}
+header.wrap-page-home .wrap-search-home .ani-search {
+    position: relative;
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+
 }

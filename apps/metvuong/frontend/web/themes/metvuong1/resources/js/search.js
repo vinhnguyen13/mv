@@ -327,7 +327,7 @@
 	        		hWin = $(window).outerHeight(),
 	        		topCenterLogo = Math.floor(hWin/2 - hLogo/2 - hLogo - 30),
 	        		leftCenterLogo = Math.floor(wWin/2 - wLogo/2),
-	        		topCenterSearch = Math.floor(hWin/2 - hSearchBox/2),
+	        		topCenterSearch = Math.floor(hWin/2 - hSearchBox/2) + 30,
 	        		leftCenterSearch = Math.floor(wWin/2 - wSearchBox/2);
 
 	        	logo.css({
@@ -449,3 +449,32 @@
 
 
 })(jQuery);
+
+
+function animateSearch() {
+    var $boxSearch = $('.box-search-header'),
+        wBox = $boxSearch.outerWidth(),
+        wWin = $('.wrap-search-home').outerWidth(),
+        cBox = Math.floor(wWin/2 - wBox/2);
+    setTimeout(function() {
+        $('.wrap-search-home .logo-home').addClass('ani-logo').css({
+            'transform': 'translate3d( 0, 0, 0)',
+            '-webkit-transform': 'translate3d( 0, 0, 0)',
+            '-moz-transform': 'translate3d( 0, 0, 0)',
+            '-ms-transform': 'translate3d( 0, 0, 0)'
+        });
+
+        $('.box-search-header').addClass('ani-search').css({
+            'transform': 'translate3d('+cBox+'px, 10px, 0px)',
+            '-webkit-transform': 'translate3d('+cBox+'px, 10px, 0px)',
+            '-moz-transform': 'translate3d('+cBox+'px, 10px, 0px)',
+            '-ms-transform': 'translate3d('+cBox+'px, 10px, 0px)'
+        });
+        $('.wrap-search-home .logo-home').addClass('ani-logo');
+        $('.box-search-header').addClass('ani-search');
+        setTimeout(function() {
+            $('header').addClass('border-shadow');
+            l(1);
+        },500);
+    },500);
+}

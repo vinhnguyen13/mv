@@ -59,7 +59,9 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
         <div class="container clearfix">
             <?php $this->beginContent('@app/views/layouts/_partials/menuMain.php'); ?><?php $this->endContent();?>
             <div class="wrap-search-home">
-                <div class="bgcover logo-home" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png);"><a href="<?=Url::home()?>"></a></div>
+                <div class="wrap-logo">
+                    <div class="bgcover logo-home" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png);"><a href="<?=Url::home()?>"></a></div>
+                </div>
                 <div class="box-search-header clearfix">
                         <div class="pull-left">
                             <?php $form = ActiveForm::begin([

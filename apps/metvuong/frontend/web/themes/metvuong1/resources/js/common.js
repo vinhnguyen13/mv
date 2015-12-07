@@ -18,7 +18,7 @@ $(document).ready(function() {
 
         var _this = $(this);
         if( !$('body').hasClass('modal-open') ) {
-            $('body').addClass('modal-open').css('padding-right', '17px');
+            //$('body').addClass('modal-open').css('padding-right', '17px');
         }
     });
 	
@@ -272,27 +272,6 @@ $(document).ready(function() {
 
 });
 
-function animateSearch() {
-    setTimeout(function() {
-        $('.wrap-search-home .logo-home').addClass('ani-logo').css({
-            'transform': 'translate3d( 0, 8px, 0)',
-            '-webkit-transform': 'translate3d( 0, 8px, 0)',
-            '-moz-transform': 'translate3d( 0, 8px, 0)',
-            '-ms-transform': 'translate3d( 0, 8px, 0)'
-        });
-        $('.box-search-header').addClass('ani-search').css({
-            'transform': 'translate3d(180px, 8px, 0px)',
-            '-webkit-transform': 'translate3d(180px, 8px, 0px)',
-            '-moz-transform': 'translate3d(180px, 8px, 0px)',
-            '-ms-transform': 'translate3d(180px, 8px, 0px)'
-        });
-        $('.wrap-search-home .logo-home').addClass('ani-logo');
-        $('.box-search-header').addClass('ani-search');
-        setTimeout(function() {
-            $('header').addClass('border-shadow');
-        },500);
-    },500);
-}
 
 function l(x){console.log(x);}
 
