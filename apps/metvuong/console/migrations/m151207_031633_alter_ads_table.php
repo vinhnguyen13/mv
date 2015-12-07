@@ -7,7 +7,7 @@ class m151207_031633_alter_ads_table extends Migration
 {
     public function up()
     {
-		$this->execute("ALTER TABLE `metvuong`.`ad_product` ADD COLUMN `price_input` FLOAT NULL AFTER `price`;");
+		$this->execute("ALTER TABLE `ad_product` ADD COLUMN `price_input` FLOAT NULL AFTER `price`;");
     }
 
     public function down()
