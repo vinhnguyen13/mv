@@ -22,6 +22,7 @@ use common\vendor\vsoft\ad\models\AdBuildingProject;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use common\vendor\vsoft\ad\models\AdCategory;
+use vsoft\news\models\CmsCatalog;
 
 /**
  * Site controller
@@ -200,7 +201,16 @@ class SiteController extends Controller
     		unset($category['id']);
     	}
     	
-		$content = 'var dataCities = ' . json_encode($cities, JSON_UNESCAPED_UNICODE) . '; var dataCategories = ' . json_encode($categories, JSON_UNESCAPED_UNICODE);
+
+    	$catalogs = CmsCatalog::find()->indexBy('id')->select('id, title')->asArray(true)->all();
+    	 
+    	foreach ($catalogs as $k => &$catalog) {
+    		unset($catalog['id']);
+    	}
+    	
+		$content = 'var dataCities = ' . json_encode($cities, JSON_UNESCAPED_UNICODE) . ';' .
+					'var dataCategories = ' . json_encode($categories, JSON_UNESCAPED_UNICODE) . ';' .
+					'var newsCatalogs = ' . json_encode($catalogs, JSON_UNESCAPED_UNICODE) . ';';
     	$file = fopen(Yii::$app->view->theme->basePath . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . "data.js", "w");
     	fwrite($file, $content);
 		fclose($file);
