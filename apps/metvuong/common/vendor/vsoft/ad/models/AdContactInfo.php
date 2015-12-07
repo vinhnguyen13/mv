@@ -23,11 +23,12 @@ class AdContactInfo extends AdContactInfoBase
 	public function rules()
 	{
 		return [
-		[['mobile'], 'required'],
-		[['product_id'], 'integer'],
-		[['name', 'phone', 'mobile'], 'string', 'max' => 32],
-		[['address', 'email'], 'string', 'max' => 255],
-		[['product_id'], 'unique']
+			[['mobile'], 'required'],
+			[['product_id'], 'integer'],
+			[['name', 'phone', 'mobile'], 'string', 'max' => 32],
+			[['address', 'email'], 'string', 'max' => 255],
+			['email', 'email'],
+			[['product_id'], 'unique']
 		];
 	}
 	

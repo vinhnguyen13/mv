@@ -95,7 +95,7 @@ $type = [
 					<label for="" class="col-sm-2 control-label">Giá *</label>
 					<div class="col-sm-10 group-item-frm">
 						<div class="inline-group col-xs-6">
-							<?= Html::activeTextInput($model, 'price', ['class' => 'form-control']) ?>
+							<?= Html::activeTextInput($model, 'price_input', ['class' => 'form-control']) ?>
 							<div class="help-block" style="display: none;"></div>
 						</div>
 						<div class="inline-group col-xs-6 pdR-0">
@@ -114,6 +114,7 @@ $type = [
 			<div class="fieldset clearfix" style="display: none;">
 				<div class="form-group">
 					<?= Html::activeTextarea($model, 'content', ['class' => 'form-control', 'placeholder' => $model->getAttributeLabel('content')]) ?>
+					<div class="help-block" style="display: none;"></div>
 				</div>
 				<?= FileUploadUI::widget([
 					'name' => 'images',
@@ -133,11 +134,11 @@ $type = [
 							<?= Html::activeTextInput($adProductAdditionInfo, 'land_width', ['class' => 'form-control', 'placeholder' => 'Đường vào (m)']) ?>
 						</div>
 						<div class="col-xs-3">
-							<?= Html::activeDropDownList($adProductAdditionInfo, 'home_direction', [], ['class' => 'form-control', 'prompt' => 'Hướng nhà'])?>
+							<?= Html::activeDropDownList($adProductAdditionInfo, 'home_direction', AdProductAdditionInfo::directionList(), ['class' => 'form-control', 'prompt' => 'Hướng nhà'])?>
 						</div>
 						<div class="col-xs-3">
 							
-							<?= Html::activeDropDownList($adProductAdditionInfo, 'facade_direction', [], ['class' => 'form-control', 'prompt' => 'Hướng ban công'])?>
+							<?= Html::activeDropDownList($adProductAdditionInfo, 'facade_direction', AdProductAdditionInfo::directionList(), ['class' => 'form-control', 'prompt' => 'Hướng ban công'])?>
 						</div>
 					</div>
 				</div>
@@ -171,6 +172,7 @@ $type = [
 						</div>
 						<div class="col-xs-3">
 							<?= Html::activeTextInput($adContactInfo, 'mobile', ['class' => 'form-control', 'placeholder' => 'Di động *']) ?>
+							<div class="help-block" style="display: none;"></div>
 						</div>
 						<div class="col-xs-3">
 							<?= Html::activeTextInput($adContactInfo, 'email', ['class' => 'form-control', 'placeholder' => 'Email']) ?>

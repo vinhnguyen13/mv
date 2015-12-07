@@ -26,10 +26,10 @@ class AdProduct extends AdProductBase
 	public static function priceTypeForSell() {
 		return [
 			self::PRICE_DEAL => 'Thương lượng',
-			self::SELL_PRICE_MILLION => 'Triệu',
-			self::SELL_PRICE_BILLION => 'Tỷ',
-			self::SELL_PRICE_HUNDRED_THOUSAND_SQUARE => 'Trăm nghìn/m²',
-			self::SELL_PRICE_MILLION_SQUARE => 'Triệu/m²'
+				self::SELL_PRICE_MILLION => 'Triệu',
+				self::SELL_PRICE_BILLION => 'Tỷ',
+				self::SELL_PRICE_HUNDRED_THOUSAND_SQUARE => 'Trăm nghìn/m²',
+				self::SELL_PRICE_MILLION_SQUARE => 'Triệu/m²'
 		];
 	}
 	
@@ -37,10 +37,10 @@ class AdProduct extends AdProductBase
 		return [
 			self::PRICE_DEAL => 'Thương lượng',
 			self::RENT_PRICE_HUNDRED_THOUSAND => 'Trăm nghìn/tháng',
-			self::RENT_PRICE_MILLION => 'Triệu/tháng',
-			self::RENT_PRICE_HUNDRED_THOUSAND_SQUARE => 'Trăm nghìn/m²/tháng',
-			self::RENT_PRICE_MILLION_SQUARE => 'Triệu/m²/tháng',
-			self::RENT_PRICE_THOUSAND_SQUARE => 'Nghìn/m²/tháng'
+				self::RENT_PRICE_MILLION => 'Triệu/tháng',
+				self::RENT_PRICE_HUNDRED_THOUSAND_SQUARE => 'Trăm nghìn/m²/tháng',
+				self::RENT_PRICE_MILLION_SQUARE => 'Triệu/m²/tháng',
+				self::RENT_PRICE_THOUSAND_SQUARE => 'Nghìn/m²/tháng'
 		];
 	}
 	
@@ -75,5 +75,45 @@ class AdProduct extends AdProductBase
 			'updated_at' => 'Updated At',
 			'status' => 'Status',
 		];
+	}
+	
+	public function beforeSave($insert) {
+		$this->price = $this->calculatePrice($this->price_input);
+		
+		return parent::beforeSave($insert);
+	}
+	
+	public function calculatePrice($priceInput) {
+		$price = null;
+		
+		if($this->price_type != self::PRICE_DEAL) {
+			switch ($this->price_type) {
+				case self::SELL_PRICE_MILLION:
+				case self::RENT_PRICE_MILLION;
+					$price = $priceInput * 1000000;
+					break;
+				case self::SELL_PRICE_MILLION_SQUARE:
+				case self::RENT_PRICE_MILLION_SQUARE:
+					$price = $priceInput * 1000000 * $this->area;
+					break;
+				case self::SELL_PRICE_BILLION:
+					$price = $priceInput * 1000000000;
+					break;
+				case self::SELL_PRICE_HUNDRED_THOUSAND_SQUARE:
+				case self::RENT_PRICE_HUNDRED_THOUSAND_SQUARE;
+					$price = $priceInput * 100000 * $this->area;
+					break;
+				case self::RENT_PRICE_THOUSAND_SQUARE:
+					$price = $priceInput * 1000 * $this->area;
+					break;
+				case self::RENT_PRICE_HUNDRED_THOUSAND:
+					$price = $priceInput * 100000;
+					break;
+			}
+			
+			$price = round($price);
+		}
+		
+		return $price;
 	}
 }

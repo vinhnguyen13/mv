@@ -75,6 +75,7 @@ class AdsController extends Controller
     		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     		
     		$post = Yii::$app->request->post();
+    		
     		$model->load($post);
     		$model->start_date = time();
     		$model->end_date = $model->start_date + (24 * 60 * 60);
@@ -84,6 +85,26 @@ class AdsController extends Controller
     		$adContactInfo->load($post);
     		
     		if($model->validate() && $adProductAdditionInfo->validate() && $adContactInfo->validate()) {
+    			$model->user_id = Yii::$app->user->id;
+    			$model->save(false);
+    			
+    			$adProductAdditionInfo->product_id = $model->id;
+    			$adProductAdditionInfo->save(false);
+    			
+    			$adContactInfo->product_id = $model->id;
+    			$adContactInfo->save();
+    			
+    			if(isset($post['images'])) {
+    				$images = explode(',', $post['images']);
+    				foreach($images as $k => $image) {
+    					if(!ctype_digit($image)) {
+    						unset($images[$k]);
+    					}
+    				}
+    				
+    				Yii::$app->db->createCommand()->update('ad_images', ["product_id" => $model->id], "`id` IN (" . implode(',', $images) . ") AND user_id = " . Yii::$app->user->id)->execute();
+    			}
+    			
     			$result = ['success' => true];
     		} else {
     			$result = ['success' => false, 'errors' => ['adproduct' => $model->getErrors(), 'adproductadditioninfo' => $adProductAdditionInfo->getErrors(), 'adcontactinfo' => $adContactInfo->getErrors()]];

@@ -45,4 +45,18 @@ class AdProductAdditionInfo extends AdProductAdditionInfoBase
             'interior' => 'Nội thất',
         ];
     }
+    
+    public static function directionList() {
+    	return [
+			0 => 'KXĐ',
+			1 => 'Đông',
+			2 => 'Tây',
+			3 => 'Nam',
+			4 => 'Bắc',
+			5 => 'Đông-Bắc',
+			6 => 'Tây-Bắc',
+			7 => 'Đông-Nam',
+			8 => 'Tây-Nam'
+    	];
+    }
 }

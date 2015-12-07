@@ -27,10 +27,10 @@ $(document).ready(function(){
 	dropDownListPriceType($('#adproduct-type').val());
 	$('#adproduct-type').change(function(){
 		dropDownListPriceType($(this).val());
-		$('#adproduct-price').prop('disabled', false);
+		$('#adproduct-price_input').prop('disabled', false);
 	});
 	
-	$('#adproduct-area, #adproduct-price').keydown(function(e){
+	$('#adproduct-area, #adproduct-price_input').keydown(function(e){
         if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
             (e.ctrlKey === true) ||
             (e.keyCode >= 35 && e.keyCode <= 39)) {
@@ -46,9 +46,9 @@ $(document).ready(function(){
 	
 	$('#adproduct-price_type').change(function(){
 		if($(this).val() == '1') {
-			$('#adproduct-price').prop('disabled', true).val('');
+			$('#adproduct-price_input').prop('disabled', true).val('');
 		} else {
-			$('#adproduct-price').prop('disabled', false);
+			$('#adproduct-price_input').prop('disabled', false);
 		}
 	});
 
@@ -98,6 +98,26 @@ function validateStep1() {
 		} else {
 			$('#adproduct-price').next().hide();
 		}
+	}
+	
+	return $return;
+}
+
+function validateStep2() {
+	$return = true;
+	
+	if(!$('#adproduct-content').val()) {
+		$return = false;
+		$('#adproduct-content').next().show().html('Vui lòng nhập nội dung tin đăng.');
+	} else {
+		$('#adproduct-content').next().hide();
+	}
+	
+	if(!$('#adcontactinfo-mobile').val()) {
+		$return = false;
+		$('#adcontactinfo-mobile').next().show().html('Vui lòng nhập số di động.');
+	} else {
+		$('#adcontactinfo-mobile').next().hide();
 	}
 	
 	return $return;
@@ -158,10 +178,13 @@ function stepPost () {
     var animating; //flag to prevent quick multi-click glitches
 
     $(".next").click(function(){
+    	
 //    	if(!validateStep1()) {
 //        	return;
 //        }
-    	
+//    	if(!validateStep2()) {
+//        	return;
+//        }
     	
         if(animating) return false;
         animating = true;
@@ -172,7 +195,6 @@ function stepPost () {
         //activate next step on progressbar using the index of next_fs
         var index = $(".fieldset").index(next_fs);
         $("#progressbar li").eq(index).addClass("active");
-        
         
         if(index == 2) {
         	var form = $('#frm-post-tin');
