@@ -1,13 +1,10 @@
 (function() {
 	"use strict";
 
-	$.getJSON(url_tt, function(result){
-        arrJSONReturn.objTT = result;
-        for( var i = 0; i < result.length; i++ ) {
-            var $itemTinhThanh = $('<li data-id-tt='+result[i].id+'><a href="#valTT">'+result[i].tinh_thanh+'</a></li>');
-            $('.list-tinh-thanh').append($itemTinhThanh);
-        }
-    });
+	for( var i in dataCities ) {
+        var $itemTinhThanh = $('<li data-id-tt='+i+'><a href="#valTT">'+dataCities[i].name+'</a></li>');
+        $('.list-tinh-thanh').append($itemTinhThanh);
+    }
 
     $.getJSON(url_loaibds, function(result){
         arrJSONReturn.objLoai = result;
@@ -168,15 +165,17 @@
 	                if( _this.parent().data('idTt') != undefined ) {
 	                    $('#valTT').val(_this.parent().data('idTt'));
 	                    itemId = _this.parent().data('idTt');
-	                    for( var i = 0; i < arrJSONReturn.objTT.length; i++ ) {
-	                        if( arrJSONReturn.objTT[i].id == _this.parent().data('idTt') ) {
+
+	                    for( var i in dataCities ) {
+	                        if( i == _this.parent().data('idTt') ) {
 	                            $('.list-quan-huyen').html('');
-	                            for( var j = 0; j < arrJSONReturn.objTT[i].quan_huyen.length; j++ ) {
-	                                var $item = $('<li data-id-qh='+arrJSONReturn.objTT[i].quan_huyen[j].id+'><a href="#valQh">'+arrJSONReturn.objTT[i].quan_huyen[j].ten_quan_huyen+'</a></li>');
+	                            for( var j in dataCities[i].districts ) {
+	                                var $item = $('<li data-id-qh='+j+'><a href="#valQh">'+dataCities[i].districts[j].name+'</a></li>');
 	                                $('.list-quan-huyen').append($item);
 	                            }
 	                        }
 	                    }
+
 	                }
 
 	                if( _this.parent().data('idQh') != undefined ) {
