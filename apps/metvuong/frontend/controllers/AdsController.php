@@ -57,6 +57,10 @@ class AdsController extends \yii\web\Controller
      */
     public function actionPost()
     {
+    	if(Yii::$app->user->isGuest) {
+    		return $this->render('/_systems/require_login.php');
+    	}
+    	
     	$model = new AdProduct();
     	$model->loadDefaultValues();
     	$model->city_id = \Yii::$app->request->post('cityId', 1);
