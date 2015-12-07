@@ -26,16 +26,30 @@ function asynInitial(el, initialCenter, callback) {
 
 function Gmap(el, options) {
 	var self = this;
-	
-	self.map = new google.maps.Map(el, options);
+	var markerCounter = 1;
+	var markers = {};
+	var map = new google.maps.Map(el, options);
 	
 	self.addMarker = function(marker, setCenter) {
 		var marker = marker._marker;
-		marker.setMap(self.map);
+		marker.setMap(map);
 		
 		if(setCenter) {
-			self.map.setCenter(marker.getPosition());
+			map.setCenter(marker.getPosition());
 		}
+
+		markerCounter++;
+		markers[markerCounter] = marker;
+		
+		return markerCounter;
+	};
+	
+	self.getMarker = function(markerId) {
+		return markers[markerId];
+	};
+	
+	self.setCenter = function(latLng) {
+		map.setCenter(latLng);
 	};
 	
 	self.geocode = function(address, callback) {
@@ -71,6 +85,10 @@ function Marker(options) {
 			callback({lat: evt.latLng.lat(), lng: evt.latLng.lng()});
 		});
 	};
+	
+	self.getPosition = function() {
+		return self._marker.getPosition();
+	}
 	
 	return this;
 }

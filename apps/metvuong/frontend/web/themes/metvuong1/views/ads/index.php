@@ -3,6 +3,9 @@ use yii\web\View;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 $this->title = Yii::t('express','We offer exeptional amenities and renowned white - glove services');
+$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/gmap.js', ['position' => View::POS_END]);
+$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=apiLoaded', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
+$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/search-map.js', ['position' => View::POS_END]);
 ?>
 <div class="list-filters-result">
     <ul class="container clearfix">
@@ -25,13 +28,13 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
 </div>
 <div class="col-md-8 wrap-map-result">
     <div class="container-map">
-        <iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJ0T2NLikpdTERKxE8d61aX_E&key=AIzaSyDgukAnWQNq0fitebULUbottG5gvK64OCQ" allowfullscreen></iframe>
+    	<div id="map" style="height: 100%;"></div>
     </div>
 </div>
 <div class="col-md-4 result-items">
     <div class="wrap-col-fixed-result clearfix">
-        <h1 id="search-title" class="zsg-content_collapsed">Rental Listings</h1>
-        <span class="num-results">10 results.</span>
+        <h1 id="search-title" class="zsg-content_collapsed">Listings</h1>
+        <span class="num-results"><span id="count-listing">0</span> results.</span>
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#moi-nhat" aria-controls="moi-nhat" role="tab" data-toggle="tab">Mới nhất</a></li>
             <li role="presentation"><a href="#re-nhat" aria-controls="re-nhat" role="tab" data-toggle="tab">Rẻ nhất</a></li>
@@ -57,57 +60,6 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                             <div class="_2ix0"></div>        
                         </div>
                     </li>
-                    <li>
-                        <a href="#" class="wrap-img pull-left"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>
-                        <div class="infor-result">
-                            <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
-                            <p class="type-result"><em class="fa fa-circle for-rent"></em>APARTMENT FOR RENT</p>
-                            <p class="rice-result">$750/mo</p>
-                            <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
-                            <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#" class="wrap-img pull-left"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/ISxzl4dulivj820000000000.jpg" alt=""></a>
-                        <div class="infor-result">
-                            <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
-                            <p class="type-result"><em class="fa fa-circle for-sale"></em>APARTMENT FOR RENT</p>
-                            <p class="rice-result">$750/mo</p>
-                            <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
-                            <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#" class="wrap-img pull-left"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>
-                        <div class="infor-result">
-                            <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
-                            <p class="type-result"><em class="fa fa-circle for-rent"></em>APARTMENT FOR RENT</p>
-                            <p class="rice-result">$750/mo</p>
-                            <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
-                            <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#" class="wrap-img pull-left"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/ISxzl4dulivj820000000000.jpg" alt=""></a>
-                        <div class="infor-result">
-                            <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
-                            <p class="type-result"><em class="fa fa-circle for-sale"></em>APARTMENT FOR RENT</p>
-                            <p class="rice-result">$750/mo</p>
-                            <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
-                            <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#" class="wrap-img pull-left"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>
-                        <div class="infor-result">
-                            <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
-                            <p class="type-result"><em class="fa fa-circle for-rent"></em>APARTMENT FOR RENT</p>
-                            <p class="rice-result">$750/mo</p>
-                            <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
-                            <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
-                        </div>
-                    </li>
-
                 </ul>
             </div>
             <div role="tabpanel" class="tab-pane fade" id="re-nhat">

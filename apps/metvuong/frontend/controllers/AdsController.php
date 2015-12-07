@@ -18,9 +18,18 @@ class AdsController extends Controller
     /**
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($result = false)
     {
         $this->layout = '@app/views/layouts/search';
+        
+        if($result) {
+        	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        	
+        	$products = AdProduct::find()->asArray(true)->all();
+        	
+        	return $products;
+        }
+        
         return $this->render('index');
     }
 
