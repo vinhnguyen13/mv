@@ -1,6 +1,7 @@
 <?php
 
 namespace frontend\controllers;
+use frontend\components\Controller;
 use Yii;
 use yii\helpers\Url;
 use vsoft\news\models\CmsShow;
@@ -10,7 +11,7 @@ use common\vendor\vsoft\ad\models\AdImages;
 use common\vendor\vsoft\ad\models\AdProductAdditionInfo;
 use common\vendor\vsoft\ad\models\AdContactInfo;
 
-class AdsController extends \yii\web\Controller
+class AdsController extends Controller
 {
     public $layout = '@app/views/layouts/layout';
 

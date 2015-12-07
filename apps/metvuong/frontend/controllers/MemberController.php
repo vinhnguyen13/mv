@@ -13,7 +13,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
-use yii\web\Controller;
+use frontend\components\Controller;
 use yii\web\Cookie;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
