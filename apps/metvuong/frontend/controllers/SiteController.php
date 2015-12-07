@@ -21,6 +21,7 @@ use yii\helpers\ArrayHelper;
 use common\vendor\vsoft\ad\models\AdBuildingProject;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
+use common\vendor\vsoft\ad\models\AdCategory;
 
 /**
  * Site controller
@@ -193,7 +194,13 @@ class SiteController extends Controller
     		$cities[$cityId]['districts'][$k] = $district;
     	}
     	
-		$content = 'var dataCities = ' . json_encode($cities, JSON_UNESCAPED_UNICODE) . ';';
+    	$categories = AdCategory::find()->indexBy('id')->select('id, name, apply_to_type')->asArray(true)->all();
+    	
+    	foreach ($categories as $k => &$category) {
+    		unset($category['id']);
+    	}
+    	
+		$content = 'var dataCities = ' . json_encode($cities, JSON_UNESCAPED_UNICODE) . '; var dataCategories = ' . json_encode($categories, JSON_UNESCAPED_UNICODE);
     	$file = fopen(Yii::$app->view->theme->basePath . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . "data.js", "w");
     	fwrite($file, $content);
 		fclose($file);
