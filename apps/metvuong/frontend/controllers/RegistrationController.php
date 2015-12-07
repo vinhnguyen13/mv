@@ -14,7 +14,7 @@ namespace frontend\controllers;
 use dektrium\user\Finder;
 use dektrium\user\models\RegistrationForm;
 use dektrium\user\models\ResendForm;
-use vsoft\user\models\User;
+use frontend\models\User;
 use dektrium\user\traits\AjaxValidationTrait;
 use Yii;
 use yii\filters\AccessControl;

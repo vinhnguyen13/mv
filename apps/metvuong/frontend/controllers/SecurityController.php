@@ -12,9 +12,9 @@
 namespace frontend\controllers;
 
 use dektrium\user\Finder;
-use dektrium\user\models\Account;
+use frontend\models\Account;
 use dektrium\user\models\LoginForm;
-use dektrium\user\models\User;
+use frontend\models\User;
 use dektrium\user\Module;
 use dektrium\user\traits\AjaxValidationTrait;
 use Yii;
