@@ -69,27 +69,23 @@ $searchParams = json_decode($value, true);
                         <div class="form-group">
                             <div class="type-search">
                                 <ul class="outsideevent"></ul>
-                                <input id="searchInput" name="search" type="text" class="form-control outsideevent" placeholder="" disabled>
+                                <input id="searchInput" name="search" type="text" class="form-control outsideevent" placeholder="" readonly="readonly">
                             </div>
-                            <div id="step-1" class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn ở Thành phố nào ?">
+                            <div id="step-1" class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn ở Tỉnh/Thành nào ?">
                                 <div class="wrap-effect">
                                     <div class="search-item">
                                         <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                        <h3>--Chọn Tỉnh/Thành phố--</h3>
-                                        <ul class="clearfix list-tinh-thanh">
-                                            
-                                        </ul>
+                                        <h3>Bạn ở Thành phố nào ?</h3>
+                                        <ul class="clearfix list-tinh-thanh"></ul>
                                     </div>
                                 </div>
                             </div>
-                            <div id="step-2" class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn ở Quận nào ?">
+                            <div id="step-2" class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn ở Quận/Huyện nào ?">
                                 <div class="wrap-effect">
                                     <div class="search-item clearfix">
                                         <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
                                         <h3>Bạn ở Quận nào ?</h3>
-                                        <ul class="list-quan-huyen">
-                                            
-                                        </ul>
+                                        <ul class="list-quan-huyen"></ul>
                                     </div>
                                 </div>
                             </div>
@@ -98,38 +94,87 @@ $searchParams = json_decode($value, true);
                                     <div class="search-item clearfix">
                                         <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
                                         <h3>Loại BDS bạn quan tâm ?</h3>
-                                        <ul class="list-loai-bds">
+                                        <ul class="list-loai-bds"></ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="outsideevent search-wrap hidden-effect" data-txt-step="" data-template="suggest-list" data-end="true">
+                                <div class="wrap-effect">
+                                    <div class="search-item clearfix">
+                                        <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                        <h3>Chọn dự án</h3>
+                                        <ul class="list-duan-suggest">
+                                            <li><a href="#">RICHSTAR</a></li>
+                                            <li><a href="#">SUNRISE RIVERSIDE</a></li>
+                                            <li><a href="#">ORCHARD PARKVIEW</a></li>
+                                            <li><a href="#">GOLDEN MANSION</a></li>
+                                            <li><a href="#">KINGSTON RESIDENCE</a></li>
+                                            <li><a href="#">THE BOTANICA</a></li>
+                                            <li><a href="#">THE SUN AVENUE</a></li>
+                                            <li><a href="#">ORCHARD GARDEN</a></li>
+                                            <li><a href="#">SUNRISE CITYVIEW</a></li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            <div id="step-4" class="outsideevent search-wrap hidden-effect" data-txt-step="Tìm kiếm...">
+
+                            <div class="outsideevent search-wrap hidden-effect" data-txt-step="" data-template="cost-min-max" data-end="true">
                                 <div class="wrap-effect">
                                     <div class="search-item clearfix">
                                         <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                        <div class="suggest-search-text">
-                                            <h3>--Gợi ý--</h3>
-                                            <div class="loading-suggest"></div>
-                                            <ul class="clearfix" style="display:none;">
-                                                <li><a href="#">Bè, Hồ Chí Minh Huyện <strong>Nhà</strong> Bè, Hồ Chí Minh<span>(1935 tin)</span></a></li>
-                                                <li><a href="#">Trang, Khánh Hòa Thành phố <strong>Nha</strong> Trang, Khánh Hòa<span>(1935 tin)</span></a></li>
-                                                <li><a href="#">Quận Thanh Xuân, Hà Nội Phường Nhân Chính, Quận Thanh Xuân, Hà Nội<span>(1935 tin)</span></a></li>
-                                                <li><a href="#">Thành phố <strong>Nha</strong> Trang, Khánh Hòa<span>(1935 tin)</span></a></li>
-                                            </ul>
+                                        <h3>Nhập khoảng giá ?</h3>
+                                        <div class="frm-cost-min-max clearfix">
+                                            <div class="form-group inline-group box-cost col-xs-5" data-tab="min">
+                                                <input id="minCost" type="text" class="form-control cost-value" placeholder="min" readonly="readonly">
+                                                <div class="outsideevent wrap-cost-bds hidden-cost">
+                                                    <div class="wrap-effect-cost">
+                                                        <ul>
+                                                            <li data-cost="0" data-unit=""><span>0</span></li>
+                                                            <li data-cost="1" data-unit="triệu"><span>1 triệu</span></li>
+                                                            <li data-cost="2" data-unit="triệu"><span>2 triệu</span></li>
+                                                            <li data-cost="3" data-unit="triệu"><span>3 triệu</span></li>
+                                                            <li data-cost="4" data-unit="triệu"><span>4 triệu</span></li>
+                                                            <li data-cost="5" data-unit="triệu"><span>5 triệu</span></li>
+                                                            <li data-cost="6" data-unit="tỷ"><span>6 triệu</span></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="line-center form-group inline-group box-cost col-xs-2"><span></span></div>
+                                            <div class="form-group inline-group box-cost col-xs-5" data-tab="max">
+                                                <input id="maxCost" type="text" class="form-control cost-value" placeholder="max" readonly="readonly">
+                                                <div class="outsideevent wrap-cost-bds hidden-cost">
+                                                    <div class="wrap-effect-cost">
+                                                        <ul>
+                                                            <li data-cost="0" data-unit=""><span>0</span></li>
+                                                            <li data-cost="1" data-unit="triệu"><span>1 triệu</span></li>
+                                                            <li data-cost="2" data-unit="triệu"><span>2 triệu</span></li>
+                                                            <li data-cost="3" data-unit="triệu"><span>3 triệu</span></li>
+                                                            <li data-cost="4" data-unit="triệu"><span>4 triệu</span></li>
+                                                            <li data-cost="5" data-unit="triệu"><span>5 triệu</span></li>
+                                                            <li data-cost="6" data-unit="tỷ"><span>6 triệu</span></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
+                                        <input id="valCosMin" type="hidden" value="" data-val-cost="min" class="val-cost">
+                                        <input id="valCosMax" type="hidden" value="" data-val-cost="max" class="val-cost">
                                     </div>
                                 </div>
                             </div>
-                            <div id="step-5" data-step-box="fixed" class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn nên chọn Loại Tin Tức ?">
+
+                            <div class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn nên chọn Loại Tin Tức ?" data-template="news" data-end="true">
                                 <div class="wrap-effect">
                                     <div class="search-item clearfix">
                                         <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
                                         <h3>Bạn nên chọn Loại Tin Tức ?</h3>
-                                        <ul class="list-loai-tt">
-                                        </ul>
+                                        <ul class="list-loai-tt"></ul>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                         <button id="btn-search" type="submit" class="btn btn-default">
                             <span><em class="fa fa-search"></em></span>
@@ -149,7 +194,7 @@ $searchParams = json_decode($value, true);
                             <em class="fa fa-sort-desc"></em>
                         </div>
                         <div class="search-select active">
-                            <a href="#" data-placeholder="Bạn ở Thành phố nào ?" rel="#dd-search">
+                            <a href="#" data-placeholder="Bạn ở Tỉnh/Thành nào ?" rel="#dd-search">
                                 <span>
                                     <em class="fa fa-home"></em>
                                     <em class="fa fa-search"></em>
@@ -158,7 +203,7 @@ $searchParams = json_decode($value, true);
                             </a>
                         </div>
                         <div class="search-select">
-                            <a href="#" data-placeholder="Bạn ở Thành phố nào ?" rel="#dd-dky">
+                            <a href="#" data-placeholder="Bạn ở Tỉnh/Thành nào ?" rel="#dd-dky">
                                 <span>
                                     <em class="fa fa-home"></em>
                                     <em class="fa fa-pencil-square-o"></em>
@@ -167,7 +212,7 @@ $searchParams = json_decode($value, true);
                             </a>
                         </div>
                         <div class="search-select">
-                            <a href="#" class="" data-step-fix="step-5" data-placeholder="--Chọn Loại Tin Tức--" rel="#dd-news">
+                            <a href="#" class="" data-step-fix="step-5" data-placeholder="Bạn nên chọn Loại Tin Tức ?" rel="#dd-news">
                                 <span>
                                     <em class="fa fa-home"></em>
                                     <em class="fa fa-file-text"></em>

@@ -225,7 +225,7 @@ $(document).ready(function() {
 
     //start scroll fixed header
     var $header = $('.cd-secondary-nav'),
-        $container = $('.cd-main-content'),
+        $container = $('.o-wrapper'),
         hHeader = $header.outerHeight(),
         valShow = 0,
         flagShow = false;
@@ -238,8 +238,8 @@ $(document).ready(function() {
                 return;
             }
             $header.hide();
-            $header.addClass('is-fixed animate-children');
             $container.addClass('pdTContainer');
+            $header.addClass('is-fixed animate-children');
             setTimeout(function() {
                 $header.show();
                 setTimeout(function () {
@@ -250,7 +250,6 @@ $(document).ready(function() {
             $('.icon-selected a').on('click', function() {
                 var _this = $(this),
                     $rootParent = _this.closest('.options-search');
-
                 $rootParent.addClass('search-dropdown');
 
                 return false;
@@ -260,6 +259,7 @@ $(document).ready(function() {
         }else {
             $header.removeClass('is-fixed animate-children show-fixed');
             flagShow = false;
+            $container.removeClass('pdTContainer');
         }
 
         /*if( valShow > 0 ) {

@@ -56,32 +56,36 @@ $type = [
 				<?= Html::activeHiddenInput($model, 'district_id') ?>
 				<?= Html::activeHiddenInput($model, 'category_id') ?>
 				<?= $form->field($model, 'type', [
-						'labelOptions' => ['class' => 'col-sm-2 control-label'],
+						'labelOptions' => ['class' => 'col-sm-3 control-label'],
 						'inputOptions' => ['class' => 'col-xs-6 form-control mgB-0'],
-						'template' => '{label}<div class="col-sm-10 group-item-frm"><div class="inline-group pdR-0">{input}</div></div>{hint}{error}']
+						'template' => '{label}<div class="col-sm-9 group-item-frm"><div class="inline-group pdR-0">{input}</div></div>{hint}{error}']
 					)->dropDownList($type) ?>
 				<div class="form-group">
-					<label for="" class="col-sm-2 control-label">Địa chỉ *</label>
-					<div class="col-sm-10 group-item-frm">
-						<div class="inline-group col-xs-6">
+					<label for="" class="col-sm-3 control-label">Địa chỉ *</label>
+					<div class="col-sm-9 group-item-frm">
+						<div class="col-xs-6 form-group">
 							<?= Html::activeTextInput($model, 'home_no', ['class' => 'form-control', 'placeholder' => $model->getAttributeLabel('home_no')]) ?>
 							<div class="help-block" style="display: none;"></div>
 						</div>
-						<?= Html::activeDropDownList($model, 'street_id', [], ['class' => 'form-control', 'prompt' => 'Đường'])?>
-						<div class="help-block" style="display: none;"></div>
-						<?= Html::activeDropDownList($model, 'ward_id', [], ['class' => 'form-control mgB-0', 'prompt' => 'Phường/Xã'])?>
-						<div class="help-block" style="display: none;"></div>
+						<div class="form-group">
+							<?= Html::activeDropDownList($model, 'street_id', [], ['class' => 'form-control', 'prompt' => 'Đường'])?>
+							<div class="help-block" style="display: none;"></div>
+						</div>
+						<div class="form-group">
+							<?= Html::activeDropDownList($model, 'ward_id', [], ['class' => 'form-control mgB-0', 'prompt' => 'Phường/Xã'])?>
+							<div class="help-block" style="display: none;"></div>
+						</div>
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="" class="col-sm-2 control-label">Thuộc dự án</label>
-					<div class="col-sm-10 group-item-frm">
+					<label for="" class="col-sm-3 control-label">Thuộc dự án</label>
+					<div class="col-sm-9 group-item-frm">
 						<?= Html::activeDropDownList($model, 'project_building_id', [], ['class' => 'form-control mgB-0', 'prompt' => 'Dự án'])?>
 					</div>
 				</div>
 				<div class="form-group text-inline">
-					<label for="" class="col-sm-2 control-label">Diện tích *</label>
-					<div class="col-sm-10">
+					<label for="" class="col-sm-3 control-label">Diện tích *</label>
+					<div class="col-sm-9">
 						<div class="inline-group col-xs-6">
 							<?= Html::activeTextInput($model, 'area', ['class' => 'form-control']) ?>
 						<div class="help-block" style="display: none;"></div>
@@ -92,8 +96,8 @@ $type = [
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="" class="col-sm-2 control-label">Giá *</label>
-					<div class="col-sm-10 group-item-frm">
+					<label for="" class="col-sm-3 control-label">Giá *</label>
+					<div class="col-sm-9 group-item-frm">
 						<div class="inline-group col-xs-6">
 							<?= Html::activeTextInput($model, 'price_input', ['class' => 'form-control']) ?>
 							<div class="help-block" style="display: none;"></div>
@@ -197,7 +201,7 @@ $type = [
 					<?= Html::activeHiddenInput($model, 'lng') ?>
 				</div>
 				<button type="button"
-					class="btn btn-primary btn-common mgT-15 next action-button pull-right">
+					class="btn btn-primary btn-common mgT-15 next action-button pull-right" data-ajax-post="true">
 					Tiếp theo<em class="fa fa-chevron-right"></em>
 				</button>
 				<button type="button"

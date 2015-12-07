@@ -60,42 +60,54 @@ function validateStep1() {
 	
 	if(!$('#adproduct-home_no').val()) {
 		$return = false;
+		$('#adproduct-home_no').parent().addClass('error-frm');
 		$('#adproduct-home_no').next().show().html('Vui lòng nhập số nhà.');
 	} else {
+		$('#adproduct-home_no').parent().removeClass('error-frm');
 		$('#adproduct-home_no').next().hide();
 	}
 	
 	if(!$('#adproduct-street_id').val()) {
 		$return = false;
+		$('#adproduct-street_id').parent().addClass('error-frm');
 		$('#adproduct-street_id').next().show().html('Vui lòng chọn tên Đường.');
 	} else {
+		$('#adproduct-street_id').parent().removeClass('error-frm');
 		$('#adproduct-street_id').next().hide();
 	}
 	
 	if(!$('#adproduct-ward_id').val()) {
 		$return = false;
+		$('#adproduct-ward_id').parent().addClass('error-frm');
 		$('#adproduct-ward_id').next().show().html('Vui lòng chọn Phường/Xã.');
 	} else {
+		$('#adproduct-ward_id').parent().removeClass('error-frm');
 		$('#adproduct-ward_id').next().hide();
 	}
 	
 	if(!$('#adproduct-area').val()) {
 		$return = false;
+		$('#adproduct-area').parent().addClass('error-frm');
 		$('#adproduct-area').next().show().html('Vui lòng nhập diện tích.');
 	} else {
+		$('#adproduct-area').parent().removeClass('error-frm');
 		$('#adproduct-area').next().hide();
 	}
 	
 	if(!$('#adproduct-price_type').val()) {
 		$return = false;
+		$('#adproduct-price_type').parent().addClass('error-frm');
 		$('#adproduct-price_type').next().show().html('Vui lòng chọn đơn vị cho giá.');
 	} else {
+		$('#adproduct-price_type').parent().removeClass('error-frm');
 		$('#adproduct-price_type').next().hide();
 		
 		if(!$('#adproduct-price').prop('disabled') && $('#adproduct-price').val() == '') {
 			$return = false;
+			$('#adproduct-price').parent().addClass('error-frm');
 			$('#adproduct-price').next().show().html('Vui lòng nhập giá.');
 		} else {
+			$('#adproduct-price').parent().removeClass('error-frm');
 			$('#adproduct-price').next().hide();
 		}
 	}
@@ -108,15 +120,19 @@ function validateStep2() {
 	
 	if(!$('#adproduct-content').val()) {
 		$return = false;
+		$('#adproduct-content').parent().addClass('error-frm');
 		$('#adproduct-content').next().show().html('Vui lòng nhập nội dung tin đăng.');
 	} else {
+		$('#adproduct-content').parent().removeClass('error-frm');
 		$('#adproduct-content').next().hide();
 	}
 	
 	if(!$('#adcontactinfo-mobile').val()) {
 		$return = false;
+		$('#adcontactinfo-mobile').parent().addClass('error-frm');
 		$('#adcontactinfo-mobile').next().show().html('Vui lòng nhập số di động.');
 	} else {
+		$('#adcontactinfo-mobile').parent().removeClass('error-frm');
 		$('#adcontactinfo-mobile').next().hide();
 	}
 	
@@ -172,115 +188,126 @@ function setLngLatField(latLng) {
 }
 
 function stepPost () {
-    //jQuery time
-    var current_fs, next_fs, previous_fs; //fieldsets
-    var left, opacity, scale; //fieldset properties which we will animate
-    var animating; //flag to prevent quick multi-click glitches
 
-    $(".next").click(function(){
-    	
-//    	if(!validateStep1()) {
-//        	return;
-//        }
-//    	if(!validateStep2()) {
-//        	return;
-//        }
-    	
-        if(animating) return false;
-        animating = true;
-        
-        current_fs = $(this).parent();
-        next_fs = $(this).parent().next();
-        
-        //activate next step on progressbar using the index of next_fs
-        var index = $(".fieldset").index(next_fs);
-        $("#progressbar li").eq(index).addClass("active");
-        
-        if(index == 2) {
-        	var form = $('#frm-post-tin');
-        	
-        	$.post(form.attr('action'), $('#frm-post-tin').serialize(), function(response){
-        		if(response.success) {
-        			
-        		} else {
-        			for(index in response.errors) {
-        				var errors = response.errors[index];
-        				for(j in errors) {
-        					var error = errors[j];
-        					$('#' + index + '-' + j).next().show().html(error);
-        				}
-        			}
-        		}
-        	});
-        }
-        
-        //show the next fieldset
-        next_fs.show(); 
-        //hide the current fieldset with style
-        current_fs.animate({opacity: 0}, {
-            step: function(now, mx) {
-                //as the opacity of current_fs reduces to 0 - stored in "now"
-                //1. scale current_fs down to 80%
-                scale = 1 - (1 - now) * 0.2;
-                //2. bring next_fs from the right(50%)
-                left = (now * 50)+"%";
-                //3. increase opacity of next_fs to 1 as it moves in
-                opacity = 1 - now;
-                current_fs.css({'transform': 'scale('+scale+')'});
-                next_fs.css({'left': left, 'opacity': opacity});
-                $('body').addClass('overHidden');
-            }, 
-            duration: 800, 
-            complete: function(){
-                current_fs.hide();
-                animating = false;
-                $('body').removeClass('overHidden');
-            	
-            	initMap();
-            }, 
-            //this comes from the custom easing plugin
-            easing: 'easeInOutBack'
-        });
-    });
+	var objSP = {
+		current_fs: 0,
+		next_fs: 0,
+		previous_fs: 0,
+		left: 0,
+		opacity: 0,
+		scale: 0,
+		animating: false,
+		lengStep: $(".fieldset").length,
+		flagAjax: false,
+		valiStepFrm: false,
+		init: function () {
+			objSP.eventButton();
+		},
+		eventButton: function () {
+			$('.action-button').on('click', function () {
+				var _this = $(this);
 
-    $(".previous").click(function(){
-        if(animating) return false;
-        animating = true;
-        
-        current_fs = $(this).parent();
-        previous_fs = $(this).parent().prev();
-        
-        //de-activate current step on progressbar
-        $("#progressbar li").eq($(".fieldset").index(current_fs)).removeClass("active");
-        
-        //show the previous fieldset
-        previous_fs.show(); 
-        //hide the current fieldset with style
-        current_fs.animate({opacity: 0}, {
-            step: function(now, mx) {
-                //as the opacity of current_fs reduces to 0 - stored in "now"
-                //1. scale previous_fs from 80% to 100%
-                scale = 0.8 + (1 - now) * 0.2;
-                //2. take current_fs to the right(50%) - from 0%
-                left = ((1-now) * 50)+"%";
-                //3. increase opacity of previous_fs to 1 as it moves in
-                opacity = 1 - now;
-                current_fs.css({'left': left});
-                previous_fs.css({'transform': 'scale('+scale+')', 'opacity': opacity});
-                $('body').addClass('overHidden');
-            }, 
-            duration: 800, 
-            complete: function(){
-                current_fs.hide();
-                animating = false;
-                $('body').removeClass('overHidden');
-            }, 
-            //this comes from the custom easing plugin
-            easing: 'easeInOutBack'
-        });
-    });
+				objSP.flagAjax = _this.data('ajaxPost') ? true : false;
 
-    $(".submit").click(function(){
-        return false;
-    });
+				if ( objSP.flagAjax ) {
+					var form = $('#frm-post-tin');
+	        	
+		        	$.post(form.attr('action'), $('#frm-post-tin').serialize(), function(response){
+		        		if(response.success) {
+		        			l('success!!!');
+		        			objSP.nextStep(_this);
+		        		} else {
+		        			for(index in response.errors) {
+		        				var errors = response.errors[index];
+		        				for(j in errors) {
+		        					var error = errors[j];
+		        					$('#' + index + '-' + j).next().show().html(error);
+		        				}
+		        			}
+		        		}
+		        	});
+					return;
+				}
+				
+				if ( _this.hasClass('next') ) {
+					objSP.nextStep(_this);
+				}else if( _this.hasClass('previous') ) {
+					objSP.previouStep(_this);
+				}
+			});
+		},
+		nextStep: function (btnStep) {
+			if(objSP.animating) 
+	        	return false;
+
+	        objSP.current_fs = btnStep.parent();
+	        objSP.next_fs = btnStep.parent().next();
+	        
+	        var index = $(".fieldset").index(objSP.next_fs);
+
+	        if ( index == 1 && !validateStep1() ) {
+	        	return;
+	        }
+	        if ( index == 2 && !validateStep2() ) {
+	        	return;
+	        }
+
+	        objSP.animating = true;
+
+	        $("#progressbar li").eq(index).addClass("active");
+
+	        objSP.next_fs.show(); 
+		        
+	        objSP.current_fs.animate({opacity: 0}, {
+	            step: function(now, mx) {
+	                objSP.scale = 1 - (1 - now) * 0.2;
+	                objSP.left = (now * 50)+"%";
+	                objSP.opacity = 1 - now;
+	                objSP.current_fs.css({'transform': 'scale('+objSP.scale+')'});
+	                objSP.next_fs.css({'left': objSP.left, 'opacity': objSP.opacity});
+	                $('body').addClass('overHidden');
+	            }, 
+	            duration: 800, 
+	            complete: function(){
+	                objSP.current_fs.hide();
+	                objSP.animating = false;
+	                $('body').removeClass('overHidden');
+	            	
+	            	initMap();
+	            }, 
+	            easing: 'easeInOutBack'
+	        });
+		},
+		previouStep: function (btnStep) {
+			if(objSP.animating) 
+				return false;
+	        objSP.animating = true;
+	        
+	        objSP.current_fs = btnStep.parent();
+	        objSP.previous_fs = btnStep.parent().prev();
+	        
+	        $("#progressbar li").eq($(".fieldset").index(objSP.current_fs)).removeClass("active");
+	        
+	        objSP.previous_fs.show(); 
+	        objSP.current_fs.animate({opacity: 0}, {
+	            step: function(now, mx) {
+	                objSP.scale = 0.8 + (1 - now) * 0.2;
+	                objSP.left = ((1-now) * 50)+"%";
+	                objSP.opacity = 1 - now;
+	                objSP.current_fs.css({'left': objSP.left});
+	                objSP.previous_fs.css({'transform': 'scale('+objSP.scale+')', 'opacity': objSP.opacity});
+	                $('body').addClass('overHidden');
+	            }, 
+	            duration: 800, 
+	            complete: function(){
+	                objSP.current_fs.hide();
+	                objSP.animating = false;
+	                $('body').removeClass('overHidden');
+	            }, 
+	            easing: 'easeInOutBack'
+	        });
+		}
+	};
+
+	objSP.init();
 }
