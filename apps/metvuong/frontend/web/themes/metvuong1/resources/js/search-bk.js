@@ -2,18 +2,13 @@
 	"use strict";
 
 	for( var i in dataCities ) {
-        var $itemTinhThanh = $('<li data-id-tt='+i+'><a title="'+dataCities[i].name+'" href="#valTT">'+dataCities[i].name+'</a></li>');
+        var $itemTinhThanh = $('<li data-id-tt='+i+'><a href="#valTT">'+dataCities[i].name+'</a></li>');
         $('.list-tinh-thanh').append($itemTinhThanh);
     }
 
     for( var i in dataCategories ) {
-        var $item = $('<li data-id-loai='+i+'><a title="'+dataCategories[i].name+'" data-template-show="'+dataCategories[i].template+'" href="#valLoai">'+dataCategories[i].name+'</a></li>');
+        var $item = $('<li data-id-loai='+i+'><a data-template-show="" href="#valLoai">'+dataCategories[i].name+'</a></li>');
         $('.list-loai-bds').append($item);   
-    }
-
-    for( var i in newsCatalogs ) {
-        var $item = $('<li data-id-news="'+i+'"><a title="'+newsCatalogs[i].title+'" href="#">'+newsCatalogs[i].title+'</a></li>');
-        $('.list-tintuc-suggest').append($item);   
     }
 
     $.getJSON(url_ttuc, function(result){
@@ -30,9 +25,8 @@
 			itemInput: $('#searchInput'),
 			tabsSearch: $('.search-select a'),
 	        flagEnd : false,
-	        flagSetTemplate: '',
 	        countStep : 1,
-	        currentStep : 0,
+	        countCurrent : 0,
 	        wrapListSuggest: $('.type-search ul'),
 	        wrapStep: $('.search-wrap'),
 	        lenghtSuggest : 0,
@@ -44,7 +38,6 @@
 	        editItem: '',
 	        icon: $('#search-kind button span'),
 	        iconScrollSearch : $('.icon-selected'),
-
 	        init: function() {
 	        	objEvent.searchEvent();
 	        	objEvent.tabSearchEvent();
@@ -88,6 +81,7 @@
 				function itemTabs(itemTab) {
 			        switch(itemTab) {
 			            case '#dd-search':
+			                //something
 			                objEvent.flagTrigger = '#dd-search';
 			                objEvent.icon.html('<em class="fa fa-search"></em>');
 			                objEvent.iconScrollSearch.find('span').html('<em class="fa fa-home"></em><em class="fa fa-search"></em>');
@@ -99,6 +93,7 @@
 			                objEvent.flagTrigger = '#dd-dky';
 			                break;
 			            case '#dd-news':
+			                //something
 			                //_this.trigger( 'real-estate/news', [{data: '1'}, 'something'] );
 			                objEvent.icon.html('<em class="fa fa-file-text"></em>');
 			                objEvent.iconScrollSearch.find('span').html('<em class="fa fa-home"></em><em class="fa fa-file-text"></em>');
@@ -117,7 +112,7 @@
 			        	objEvent.open(objEvent.countStep);
 				});
 	        },
-	        open: function(countStep) {
+	        open: function(countStep) {//1. edit, 0. open normal
 	        	objEvent.countStep = countStep;
 	            objEvent.wrapStep.addClass('hidden-effect');
 
@@ -173,12 +168,7 @@
 	                        if( i == _this.parent().data('idTt') ) {
 	                            $('.list-quan-huyen').html('');
 	                            for( var j in dataCities[i].districts ) {
-	                                var $item = $('<li data-id-qh='+j+'><a title="'+dataCities[i].districts[j].name+'" href="#valQh">'+dataCities[i].districts[j].name+'</a></li>');
-	                                
-	                                if ( objEvent.flagSetTemplate == 'quan-huyen' ) {
-	                                	$('.search-wrap[data-template='+objEvent.flagSetTemplate+'] li a').attr('data-template-show', 'suggest-duan-news');
-	                                }
-
+	                                var $item = $('<li data-id-qh='+j+'><a href="#valQh">'+dataCities[i].districts[j].name+'</a></li>');
 	                                $('.list-quan-huyen').append($item);
 	                            }
 	                        }
@@ -201,20 +191,6 @@
 					$itemSuggest.attr('data-item-id',itemId);
 					//end
 
-					//render dự án theo Loại Bất Động Sản
-					var idTThanh =  $('#valTT').val(),
-                    	idQh = $('#valQh').val(),
-                    	idLoaiBDS = $('#valLoai').val();
-
-	                if( idTThanh != '' && idQh != '' && idLoaiBDS != '' && _this.parent().data('idLoai') != undefined ) {
-	                    $('.list-duan-suggest').html('');
-	                    for( var i in dataCities[idTThanh].districts[idQh].projects ) {
-	                        var $item = $('<li><a title="'+dataCities[idTThanh].districts[idQh].projects[i].name+'" href="#">'+dataCities[idTThanh].districts[idQh].projects[i].name+'</a></li>');
-                            $('.list-duan-suggest').append($item);
-	                    }
-	                }
-	                //end
-
 					if( !objEvent.editItem ) { // insert item mới
 	                    
 	                    $itemSuggest.find('span').text(txt);
@@ -231,16 +207,12 @@
 	                            _this.trigger( 'real-estate/news', [{data: '1'}, 'something'] );
 	                        }
 	                    },200);
+	                    
+	                    if( templateSuggest !== undefined ) {
+	                		objEvent.countStep = templateSuggest;
+	                	}
 
 	                    objEvent.checkCounter();
-	                    
-	                    if( templateSuggest !== undefined && templateSuggest != '' ) {
-	                    	objEvent.countStep = templateSuggest;
-	                    	if ( templateSuggest == 'tinh-thanh' ) {
-	                    		objEvent.countStep = 1;
-	                    		objEvent.flagSetTemplate = 'quan-huyen';
-	                    	}
-	                    }
 
 	                    var txtStep;
 	                    txtStep = isNaN(objEvent.countStep) ? $(".search-wrap[data-template="+objEvent.countStep+"]").data('txtStep') : $('#step-'+objEvent.countStep).data('txtStep');
@@ -348,7 +320,6 @@
 	            objEvent.resizeWidthInput();
 	            objEvent.flagEnd = false;
 	            $('.getValSuggest').val('');
-	            objEvent.flagSetTemplate = '';
 	        },
 	        updateSuggert: function(countStep, lenghtSuggest) {
 	            objEvent.countStep = countStep;
@@ -392,7 +363,6 @@
 	        		});
 	        		searchBox.addClass('aniTopDown');
 	        	},100);
-
 	        }
 	    };
 
@@ -484,7 +454,6 @@
 
     $(window).resize(function() {
     	objEvent.centerBox();
-    	objEvent.resizeWidthInput();
     });
 
 

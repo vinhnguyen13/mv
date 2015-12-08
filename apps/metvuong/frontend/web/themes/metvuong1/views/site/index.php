@@ -31,7 +31,9 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
         });
 
         /*console.log(url_tt);
-        console.log(dataCities);*/
+        console.log(dataCategories);
+        console.log(dataCities);
+        console.log(newsCatalogs);*/
 
     });
 </script>
@@ -48,7 +50,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                             <?php $form = ActiveForm::begin([
                                 'options'=>['class' => 'form-inline pull-left', 'method'=>'POST'],
                                 'id'=>'search-kind',
-                                'action'=>Url::to(['/ads/redirect']),
+                                'action'=>Url::to(['/ads/search']),
                                 'fieldConfig' => [],
                             ]); ?>
                                 <div class="form-group">
@@ -56,25 +58,28 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                         <ul class="outsideevent"></ul>
                                         <input id="searchInput" name="search" type="text" class="form-control outsideevent" placeholder="" readonly="readonly">
                                     </div>
-                                    <div id="step-1" class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn ở Tỉnh/Thành nào ?">
+
+                                    <div id="step-1" class="outsideevent search-wrap hidden-effect" data-template="tinh-thanh" data-txt-step="Chọn Tỉnh/Thành ?">
                                         <div class="wrap-effect">
                                             <div class="search-item">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <h3>Bạn ở Thành phố nào ?</h3>
+                                                <h3>Chọn Tỉnh/Thành ?</h3>
                                                 <ul class="clearfix list-tinh-thanh"></ul>
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="step-2" class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn ở Quận/Huyện nào ?">
+
+                                    <div id="step-2" class="outsideevent search-wrap hidden-effect" data-template="quan-huyen" data-txt-step="Chọn Quận/Huyện ?">
                                         <div class="wrap-effect">
                                             <div class="search-item clearfix">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <h3>Bạn ở Quận nào ?</h3>
+                                                <h3>Chọn Quận/Huyện ?</h3>
                                                 <ul class="list-quan-huyen"></ul>
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="step-3" class="outsideevent search-wrap hidden-effect" data-txt-step="Loại BDS bạn quan tâm ?">
+
+                                    <div id="step-3" class="outsideevent search-wrap hidden-effect" data-template="loai-bds" data-txt-step="Loại BDS bạn quan tâm ?">
                                         <div class="wrap-effect">
                                             <div class="search-item clearfix">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
@@ -88,17 +93,33 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                         <div class="wrap-effect">
                                             <div class="search-item clearfix">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <h3>Chọn dự án</h3>
-                                                <ul class="list-duan-suggest">
+                                                <h3>Chọn dự án ?</h3>
+                                                <ul class="list-duan-suggest"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="outsideevent search-wrap hidden-effect" data-txt-step="" data-template="suggest-list-news" data-end="true">
+                                        <div class="wrap-effect">
+                                            <div class="search-item clearfix">
+                                                <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                                <h3>Chọn loại tin tức ?</h3>
+                                                <ul class="list-tintuc-suggest"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="outsideevent search-wrap hidden-effect" data-txt-step="" data-template="suggest-duan-news" data-end="true">
+                                        <div class="wrap-effect">
+                                            <div class="search-item clearfix">
+                                                <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                                <h3>Chọn dự án ?</h3>
+                                                <ul class="list-duan-news">
                                                     <li><a href="#">RICHSTAR</a></li>
                                                     <li><a href="#">SUNRISE RIVERSIDE</a></li>
                                                     <li><a href="#">ORCHARD PARKVIEW</a></li>
                                                     <li><a href="#">GOLDEN MANSION</a></li>
                                                     <li><a href="#">KINGSTON RESIDENCE</a></li>
-                                                    <li><a href="#">THE BOTANICA</a></li>
-                                                    <li><a href="#">THE SUN AVENUE</a></li>
-                                                    <li><a href="#">ORCHARD GARDEN</a></li>
-                                                    <li><a href="#">SUNRISE CITYVIEW</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -150,7 +171,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                         </div>
                                     </div>
 
-                                    <div class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn nên chọn Loại Tin Tức ?" data-template="news" data-end="true">
+                                    <div class="outsideevent search-wrap hidden-effect" data-txt-step="Chọn loại tin tức ?" data-template="news">
                                         <div class="wrap-effect">
                                             <div class="search-item clearfix">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
@@ -164,14 +185,19 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                 <button id="btn-search" type="submit" class="btn btn-default">
                                     <span><em class="fa fa-search"></em></span>
                                 </button>
+
+                                <!--
+                                    {valTThanh:1, valQH:1, valLBDS:1, valMin: 200, valMax: 300,}
+                                    <input class="valTotal" type="hidden" id="valAll" name="valSearch" value="">-->
                                 <input class="getValSuggest" type="hidden" id="valTT" name="city" value="">
                                 <input class="getValSuggest" type="hidden" id="valQh" name="district" value="">
                                 <input class="getValSuggest" type="hidden" id="valLoai" name="category" value="">
                                 <input class="getValSuggest" type="hidden" id="valTTuc" name="news" value="">
+                                
                             <?php ActiveForm::end(); ?>
                             <div class="pull-left text-right mgT-10 mgL-15">
                                 <div class="search-select active">
-                                    <a href="#" data-placeholder="Bạn ở Tỉnh/Thành nào ?" rel="#dd-search">
+                                    <a href="#" data-placeholder="Chọn Tỉnh/Thành ?" rel="#dd-search">
                                         <span>
                                             <em class="fa fa-home"></em>
                                             <em class="fa fa-search"></em>
@@ -180,7 +206,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     </a>
                                 </div>
                                 <div class="search-select">
-                                    <a href="#" data-placeholder="Bạn ở Tỉnh/Thành nào ?" rel="#dd-dky">
+                                    <a href="#" data-placeholder="Chọn Tỉnh/Thành ?" rel="#dd-dky">
                                         <span>
                                             <em class="fa fa-home"></em>
                                             <em class="fa fa-pencil-square-o"></em>
@@ -189,7 +215,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     </a>
                                 </div>
                                 <div class="search-select">
-                                    <a href="#" class="" data-step-fix="step-5" data-placeholder="Bạn nên chọn Loại Tin Tức ?" rel="#dd-news">
+                                    <a href="#" class="" data-step-fix="step-5" data-placeholder="Chọn Loại Tin Tức ?" rel="#dd-news">
                                         <span>
                                             <em class="fa fa-home"></em>
                                             <em class="fa fa-file-text"></em>
