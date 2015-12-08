@@ -93,4 +93,71 @@ class Homefinder extends Component
         exit;
 
     }
+
+    public function getListingDetail($url)
+    {
+        $arr_detail = array();
+        $htmlDetail = SimpleHTMLDom::file_get_html($url);
+
+
+        $title = $htmlDetail->find('title', 0);
+        $title = trim($title->plaintext);
+        $project_name = substr($title, 0, strpos($title, '-')-1);
+
+        // tien ich m2, phong ngu , toilet
+        $util = $htmlDetail->find('.left .line1', 0);
+        if(!empty($util)) {
+            $arr_util = explode(',', $util->plaintext);
+            $dientich = trim($arr_util[0]);
+            $tienich = null;
+            for($i=1; $i < count($arr_util); $i++){
+                $tienich = $tienich . ' ' . trim($arr_util[$i]);
+            }
+            $arr_detail[$project_name]["dientich"] = $dientich;
+            $arr_detail[$project_name]["tienich"] = $tienich;
+        }
+
+        // thong tin mo ta
+        $description = $htmlDetail->find('.description-list .desc_content', 0);
+        if(!empty($description)){
+            $arr_detail[$project_name]["mota"] = $description->innertext;
+        }
+
+        $arr_hidden = array();
+        // lat, lon, loai_tai_san, loai_giao_dich(ban/thue)
+        $detail = $htmlDetail->find('.detail input');
+        if(!empty($detail)){
+            foreach($detail as $input){
+                $arr_hidden[$input->name] = $input->value;
+            }
+//            print_r($arr_hidden);
+            $arr_detail[$project_name]["lat"] = $arr_hidden["lat"];
+            $arr_detail[$project_name]["lng"] = $arr_hidden["lon"];
+            $arr_detail[$project_name]["loai_tai_san"] = $arr_hidden["loai_tai_san"];
+            $arr_detail[$project_name]["loai_giao_dich"] = $arr_hidden["loai_giao_dich"];
+        }
+
+
+        $str_date = $htmlDetail->find('.desc_broker', 0);
+        if(!empty($str_date)){
+            $num_date = trim($str_date->innertext);
+            $start_pos = strpos($num_date, '-') + 1;
+            $end_pos = strlen($num_date) - 1;
+            $start_date = trim(substr($num_date, $start_pos, $end_pos));
+
+            $arr_detail[$project_name]["start_date"] = $start_date;
+        }
+
+        $broker = $htmlDetail->find('.broker-info .name', 0)->plaintext;
+        if(!empty($broker)) {
+            $broker = trim($broker);
+            $broker = str_replace('</i>', '', $broker);
+            $arr_detail[$project_name]["broker"] = $broker;
+        }
+        $phone = $htmlDetail->find('.broker-info .phone', 0)->plaintext;
+        if(!empty($phone))
+            $arr_detail[$project_name]["phone"] = trim($phone);
+
+        return $arr_detail;
+    }
 }
