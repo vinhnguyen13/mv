@@ -20,16 +20,17 @@ use common\vendor\vsoft\ad\models\base\AdProductAdditionInfoBase;
  *
  * @property AdProduct $product
  */
-class AdProductAdditionInfo extends AdProductAdditionInfoBase
+class AdProductAdditionInfo extends \vsoft\ad\models\base\AdProductAdditionInfoBase
 {
 	public function rules()
-	{
-		return [
-		[['product_id', 'facade_width', 'land_width', 'home_direction', 'facade_direction', 'floor_no', 'room_no', 'toilet_no'], 'integer'],
-		[['interior'], 'string', 'max' => 3200],
-		[['product_id'], 'unique']
-		];
-	}
+    {
+        return [
+            [['product_id', 'home_direction', 'facade_direction', 'floor_no', 'room_no', 'toilet_no'], 'integer'],
+            [['facade_width', 'land_width'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/'],
+            [['interior'], 'string', 'max' => 3200],
+            [['product_id'], 'unique']
+        ];
+    }
 	
     public function attributeLabels()
     {
@@ -59,4 +60,16 @@ class AdProductAdditionInfo extends AdProductAdditionInfoBase
 			8 => 'Tây-Nam'
     	];
     }
+    
+	public function beforeSave($insert) {
+		if($this->facade_width) {
+			$this->facade_width = str_replace(',', '.', $this->facade_width);
+		}
+		
+		if($this->land_width) {
+			$this->land_width = str_replace(',', '.', $this->land_width);
+		}
+		
+		return parent::beforeSave($insert);
+	}
 }

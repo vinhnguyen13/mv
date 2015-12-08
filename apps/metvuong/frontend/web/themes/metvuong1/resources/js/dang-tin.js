@@ -20,10 +20,10 @@ $(document).ready(function(){
 	
 	$('.select2').select2();
 	
-	$('#adproduct-area, #adproduct-price').keydown(function(e){
+	$('.number-only').keydown(function(e){
 		var allow = [46, 8, 9, 27, 13, 110, 116];
 		
-		if($(this).attr('id') == 'adproduct-area' && $(this).val().indexOf(',') === -1 && $(this).val() !== '') {
+		if($(this).data('float') && $(this).val().indexOf(',') === -1 && $(this).val() !== '') {
 			allow.push(188);
 		}
 		

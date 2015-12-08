@@ -12,6 +12,7 @@ use common\vendor\vsoft\ad\models\AdBuildingProject;
 use common\vendor\vsoft\ad\models\AdStreet;
 use common\vendor\vsoft\ad\models\AdProductAdditionInfo;
 use common\vendor\vsoft\ad\models\AdWard;
+use vsoft\ad\models\base\AdProductAdditionInfoBase;
 
 /**
  * This is the model class for table "ad_product".

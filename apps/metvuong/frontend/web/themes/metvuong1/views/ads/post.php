@@ -87,7 +87,7 @@ $type = [
 					<label for="" class="col-sm-3 control-label">Diện tích *</label>
 					<div class="col-sm-9">
 						<div class="inline-group col-xs-6">
-							<?= Html::activeTextInput($model, 'area', ['class' => 'form-control']) ?>
+							<?= Html::activeTextInput($model, 'area', ['class' => 'form-control number-only', 'data-float' => '1']) ?>
 						<div class="help-block" style="display: none;"></div>
 						</div>
 						<div class="inline-group col-xs-6 pdR-0">
@@ -102,7 +102,7 @@ $type = [
 					<label for="" class="col-sm-3 control-label">Giá *</label>
 					<div class="col-sm-9 group-item-frm">
 						<div class="inline-group col-xs-6">
-							<?= Html::activeTextInput($model, 'price', ['class' => 'form-control']) ?>
+							<?= Html::activeTextInput($model, 'price', ['class' => 'form-control number-only']) ?>
 							<div class="help-block" style="display: none;"></div>
 						</div>
 						<div class="inline-group col-xs-6">
@@ -132,10 +132,10 @@ $type = [
 				<div class="form-group">
 					<div class="row row-group-inline">
 						<div class="col-xs-3">
-							<?= Html::activeTextInput($adProductAdditionInfo, 'facade_width', ['class' => 'form-control', 'placeholder' => 'Mặt tiền (m)']) ?>
+							<?= Html::activeTextInput($adProductAdditionInfo, 'facade_width', ['class' => 'form-control number-only', 'data-float' => '1', 'placeholder' => 'Mặt tiền (m)']) ?>
 						</div>
 						<div class="col-xs-3">
-							<?= Html::activeTextInput($adProductAdditionInfo, 'land_width', ['class' => 'form-control', 'placeholder' => 'Đường vào (m)']) ?>
+							<?= Html::activeTextInput($adProductAdditionInfo, 'land_width', ['class' => 'form-control number-only', 'data-float' => '1', 'placeholder' => 'Đường vào (m)']) ?>
 						</div>
 						<div class="col-xs-3">
 							<?= Html::activeDropDownList($adProductAdditionInfo, 'home_direction', AdProductAdditionInfo::directionList(), ['class' => 'form-control', 'prompt' => 'Hướng nhà'])?>
@@ -149,13 +149,13 @@ $type = [
 				<div class="form-group">
 					<div class="row row-group-inline">
 						<div class="col-xs-3">
-							<?= Html::activeTextInput($adProductAdditionInfo, 'floor_no', ['class' => 'form-control', 'placeholder' => 'Số tầng']) ?>
+							<?= Html::activeTextInput($adProductAdditionInfo, 'floor_no', ['class' => 'form-control number-only', 'placeholder' => 'Số tầng']) ?>
 						</div>
 						<div class="col-xs-3">
-							<?= Html::activeTextInput($adProductAdditionInfo, 'room_no', ['class' => 'form-control', 'placeholder' => 'Số phòng ngủ']) ?>
+							<?= Html::activeTextInput($adProductAdditionInfo, 'room_no', ['class' => 'form-control number-only', 'placeholder' => 'Số phòng ngủ']) ?>
 						</div>
 						<div class="col-xs-3">
-							<?= Html::activeTextInput($adProductAdditionInfo, 'toilet_no', ['class' => 'form-control', 'placeholder' => 'Số tolet']) ?>
+							<?= Html::activeTextInput($adProductAdditionInfo, 'toilet_no', ['class' => 'form-control number-only', 'placeholder' => 'Số toilet']) ?>
 						</div>
 					</div>
 				</div>
@@ -180,6 +180,7 @@ $type = [
 						</div>
 						<div class="col-xs-3">
 							<?= Html::activeTextInput($adContactInfo, 'email', ['class' => 'form-control', 'placeholder' => 'Email']) ?>
+							<div class="help-block" style="display: none;"></div>
 						</div>
 					</div>
 				</div>
