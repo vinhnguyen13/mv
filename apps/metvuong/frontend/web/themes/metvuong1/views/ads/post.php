@@ -68,11 +68,11 @@ $type = [
 							<div class="help-block" style="display: none;"></div>
 						</div>
 						<div class="form-group">
-							<?= Html::activeDropDownList($model, 'street_id', [], ['class' => 'form-control', 'prompt' => 'Đường'])?>
+							<?= Html::activeDropDownList($model, 'street_id', [], ['class' => 'form-control select2', 'prompt' => 'Đường'])?>
 							<div class="help-block" style="display: none;"></div>
 						</div>
 						<div class="form-group">
-							<?= Html::activeDropDownList($model, 'ward_id', [], ['class' => 'form-control mgB-0', 'prompt' => 'Phường/Xã'])?>
+							<?= Html::activeDropDownList($model, 'ward_id', [], ['class' => 'form-control mgB-0 select2', 'prompt' => 'Phường/Xã'])?>
 							<div class="help-block" style="display: none;"></div>
 						</div>
 					</div>
@@ -190,7 +190,7 @@ $type = [
 				<div class="form-group">
 					<div class="title-sub-frm">Bản đồ</div>
 				</div>
-				<div class="form-group" style="display: none;">
+				<div class="form-group" style="display: n">
 					<p>
 						Để tăng độ tin cậy và tin rao được nhiều người quan tâm hơn, hãy
 						sửa vị trí tin rao của bạn trên bản đồ bằng cách kéo icon<em
