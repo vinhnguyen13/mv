@@ -27,7 +27,21 @@ class AdsController extends Controller
         if($result) {
         	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         	
-        	$products = AdProduct::find()->asArray(true)->all();
+        	$cityId = Yii::$app->request->get('cityId');
+        	$districtId = Yii::$app->request->get('districtId');
+        	$categoryId = Yii::$app->request->get('categoryId');
+        	
+        	$query = AdProduct::find();
+        	
+        	if($cityId) {
+        		$query->where('city_id = :city_id', [':city_id' => $cityId]);
+        	}
+        	
+        	if($districtId) {
+        		$query->andWhere('district_id = :district_id', [':district_id' => $districtId]);
+        	}
+        	
+        	$products = $query->asArray(true)->all();
         	
         	return $products;
         }

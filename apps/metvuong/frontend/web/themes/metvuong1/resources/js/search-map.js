@@ -10,7 +10,9 @@ $(document).ready(function(){
 		start();
 	});
 	
-	$.get('/real-estate/result', {result: 1}, function(r){
+	var searchForm = $('#map-search-form');
+	
+	$.get(searchForm.attr('action'), searchForm.serialize(), function(r){
 		response = r;
 		start();
 	});
@@ -19,11 +21,30 @@ $(document).ready(function(){
 function start() {
 	if(response && gmap) {
 		var listResult = $('.list-results');
-		
+        
 		listResult.on('click', '> li', function(){
 			var marker = gmap.getMarker($(this).data('id'));
 			var position = marker.getPosition();
 			gmap.setCenter({lat: position.lat(), lng: position.lng()});
+			$('#detail-listing').modal();
+			$('#detail-listing .bxslider').bxSlider({
+                moveSlides: 1,
+                startSlide: 0,
+                minSlides: 1,
+                maxSlides: 2,
+                slideWidth: 444,
+                startSlide: 0,
+                onSliderLoad: function() {
+                    this.infiniteLoop = false;
+                    this.hideControlOnEnd = true;
+                    scrollFixed();
+                }
+            });
+			
+			lightbox.option({
+	            'resizeDuration': 300,
+	            'fadeDuration': 400
+	        });
 		});
 		
 		var list = '';
