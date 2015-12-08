@@ -88,7 +88,7 @@ class Homefinder extends Component
         //get http://example.com/
         $response = $curl->get($url);
         echo "<pre>";
-        print_r($response);
+        print_r(json_decode($response));
         echo "</pre>";
         exit;
 
