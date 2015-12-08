@@ -29,12 +29,10 @@ class Homefinder extends Component
             $start = time();
             foreach ($list as $item) {
                 $hrefProject = $item->href;
-                $content = SimpleHTMLDom::file_get_html(self::DOMAIN.$hrefProject);
-                $list = $content->find('.body-cont .img-devs a');
                 echo "<pre>";
                 print_r($hrefProject);
                 echo "</pre>";
-                echo "\n";
+                exit;
 
             }
             $end = time();
@@ -42,8 +40,22 @@ class Homefinder extends Component
         echo "cron service runnning: " . ($end - $start);
     }
 
-    public function getListProject()
+    public function getListProject($hrefProject)
     {
+        $content = SimpleHTMLDom::file_get_html(self::DOMAIN.$hrefProject);
+        $list = $content->find('.body-cont .img-devs a');
+        if (!empty($list)) {
+            $start = time();
+            foreach ($list as $item) {
+                $hrefProject = $item->href;
 
+
+            }
+            $end = time();
+        }
+        echo "<pre>";
+        print_r($hrefProject);
+        echo "</pre>";
+        echo "\n";
     }
 }

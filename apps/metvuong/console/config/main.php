@@ -12,7 +12,10 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'console\controllers',
     'aliases' => array(
-
+        '@dektrium/user' => dirname(dirname(dirname(dirname(__DIR__)))) . '/vendor/dektrium/yii2-user',
+        '@vendor' => dirname(dirname(dirname(dirname(__DIR__)))) . '/vendor',
+        '@common' => dirname(dirname(__DIR__)) . '/common',
+        '@keltstr/simplehtmldom' => dirname(dirname(__DIR__)) . '/common/vendor/keltstr/simplehtmldom',
     ),
     'controllerMap' => [
         'crawler' => [
