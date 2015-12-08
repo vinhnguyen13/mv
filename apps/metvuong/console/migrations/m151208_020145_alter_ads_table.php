@@ -7,7 +7,7 @@ class m151208_020145_alter_ads_table extends Migration
 {
     public function up()
     {
-		$this->execute("ALTER TABLE `metvuong`.`ad_category` ADD COLUMN `template` TINYINT(1) DEFAULT 1  NOT NULL AFTER `status`;");
+		$this->execute("ALTER TABLE `ad_category` ADD COLUMN `template` TINYINT(1) DEFAULT 1  NOT NULL AFTER `status`;");
     }
 
     public function down()
