@@ -80,7 +80,7 @@ return [
                 '<cat_id:\d+>-<slug>' => 'news/list',
                 'building/<slug>' => 'building-project/view',
                 'real-estate/result' => 'ads/index',
-                'real-estate/search' => 'ads/search',
+                'real-estate/redirect' => 'ads/redirect',
                 'real-estate/post' => 'ads/post',
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',
 //                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
