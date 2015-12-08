@@ -21,6 +21,11 @@ class Homefinder extends Component
         return Yii::createObject(Homefinder::className());
     }
 
+    public function parse()
+    {
+        $this->getListDevelopers();
+    }
+
     public function getListDevelopers()
     {
         $content = SimpleHTMLDom::file_get_html(self::DOMAIN.'/developer/');
@@ -28,11 +33,7 @@ class Homefinder extends Component
         if (!empty($list)) {
             $start = time();
             foreach ($list as $item) {
-                $hrefProject = $item->href;
-                echo "<pre>";
-                print_r($hrefProject);
-                echo "</pre>";
-                exit;
+                $this->getListProject($item->href);
 
             }
             $end = time();
@@ -43,19 +44,19 @@ class Homefinder extends Component
     public function getListProject($hrefProject)
     {
         $content = SimpleHTMLDom::file_get_html(self::DOMAIN.$hrefProject);
-        $list = $content->find('.body-cont .img-devs a');
+        $list = $content->find('.menu ul.list_project li');
         if (!empty($list)) {
             $start = time();
             foreach ($list as $item) {
-                $hrefProject = $item->href;
-
-
+                $this->getListProject($item->href);
             }
             $end = time();
         }
-        echo "<pre>";
-        print_r($hrefProject);
-        echo "</pre>";
-        echo "\n";
+        echo "cron service runnning: " . ($end - $start);
+    }
+
+    public function getProjectDetail($hrefProject)
+    {
+
     }
 }
