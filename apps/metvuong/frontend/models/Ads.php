@@ -8,6 +8,7 @@
 
 namespace frontend\models;
 use Yii;
+use yii\base\Component;
 use yii\helpers\Url;
 use vsoft\news\models\CmsShow;
 use common\vendor\vsoft\ad\models\AdBuildingProject;
