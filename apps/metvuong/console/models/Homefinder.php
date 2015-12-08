@@ -12,6 +12,7 @@ use yii\base\Component;
 
 class Homefinder extends Component
 {
+    const DOMAIN = 'http://homefinder.vn';
     /**
      * @return mixed
      */
@@ -20,15 +21,16 @@ class Homefinder extends Component
         return Yii::createObject(Homefinder::className());
     }
 
-    public function getListProject()
+    public function getListDevelopers()
     {
-        $content = SimpleHTMLDom::file_get_html('http://homefinder.vn/developer/');
+        $content = SimpleHTMLDom::file_get_html(self::DOMAIN.'/developer/');
         $list = $content->find('.body-cont .img-devs a');
         if (!empty($list)) {
             $start = time();
             foreach ($list as $item) {
-                $link = $item->find('a');
                 $hrefProject = $item->href;
+                $content = SimpleHTMLDom::file_get_html(self::DOMAIN.$hrefProject);
+                $list = $content->find('.body-cont .img-devs a');
                 echo "<pre>";
                 print_r($hrefProject);
                 echo "</pre>";
@@ -38,5 +40,10 @@ class Homefinder extends Component
             $end = time();
         }
         echo "cron service runnning: " . ($end - $start);
+    }
+
+    public function getListProject()
+    {
+
     }
 }

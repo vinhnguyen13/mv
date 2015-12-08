@@ -25,7 +25,7 @@ class CrawlerController extends Controller
 
     public function actionHomefinder()
     {
-        Homefinder::find()->getListProject();
+        Homefinder::find()->getListDevelopers();
     }
 
     public function actionBatdongsan()
