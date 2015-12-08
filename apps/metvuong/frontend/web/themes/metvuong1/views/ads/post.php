@@ -191,7 +191,7 @@ $type = [
 				<div class="form-group">
 					<div class="title-sub-frm">Bản đồ</div>
 				</div>
-				<div class="form-group" style="display: n">
+				<div class="form-group" style="display: none;">
 					<p>
 						Để tăng độ tin cậy và tin rao được nhiều người quan tâm hơn, hãy
 						sửa vị trí tin rao của bạn trên bản đồ bằng cách kéo icon<em
