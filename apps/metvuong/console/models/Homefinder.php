@@ -95,7 +95,7 @@ class Homefinder extends Component
         if(($response = json_decode($response)) && !empty($response->data)){
             $totalItem = count($response->data);
             foreach($response->data as $item){
-                $content = $this->getListingDetail(self::DOMAIN.'/'.$item->_id);
+                $content = $this->getListingDetail(self::DOMAIN.'/'.$item->_id, $item->_id);
             }
             if(!empty($response->recordsTotal) && ($response->recordsTotal > ($totalItem*$page_current))){
                 $page_current++;
@@ -104,11 +104,10 @@ class Homefinder extends Component
         }
     }
 
-    public function getListingDetail($url)
+    public function getListingDetail($url, $id)
     {
         $arr_detail = array();
         $htmlDetail = SimpleHTMLDom::file_get_html($url);
-
 
         $title = $htmlDetail->find('title', 0);
         $title = trim($title->plaintext);
@@ -168,6 +167,23 @@ class Homefinder extends Component
         if(!empty($phone))
             $arr_detail[$project_name]["phone"] = trim($phone);
 
+
+        $filename = $id.'.json';
+        $path = Yii::getAlias('@console').'/data/'.$filename;
+
+        $data = json_encode($arr_detail);
+
+
+        $this->writeFileJson($path, $data);
+
         return $arr_detail;
     }
+
+    public function writeFileJson($filePath, $data){
+        $handle = fopen($filePath, 'w') or die('Cannot open file:  '.$filePath);
+        $int = fwrite($handle, $data);
+        fclose($handle);
+        return $int;
+    }
+
 }
