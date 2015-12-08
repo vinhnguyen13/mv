@@ -16,6 +16,7 @@ return [
         '@vendor' => dirname(dirname(dirname(dirname(__DIR__)))) . '/vendor',
         '@common' => dirname(dirname(__DIR__)) . '/common',
         '@keltstr/simplehtmldom' => dirname(dirname(__DIR__)) . '/common/vendor/keltstr/simplehtmldom',
+        '@linslin/yii2/curl' => dirname(dirname(__DIR__)) . '/common/vendor/linslin/yii2-curl',
     ),
     'controllerMap' => [
         'crawler' => [

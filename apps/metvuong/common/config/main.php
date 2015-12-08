@@ -13,6 +13,7 @@ return [
         '@funson86' => dirname(__DIR__) . '/vendor/funson86',
         '@funson86/cms' => dirname(__DIR__) . '/vendor/funson86/yii2-cms',
         '@funson86/setting' => dirname(__DIR__) . '/vendor/funson86/yii2-setting',
+        '@linslin/yii2/curl' => dirname(__DIR__) . '/vendor/linslin/yii2-curl',
     ),
     'modules' => [
         'express' => [
