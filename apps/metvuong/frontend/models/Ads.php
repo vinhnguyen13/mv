@@ -9,6 +9,7 @@
 namespace frontend\models;
 use Yii;
 use yii\base\Component;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use vsoft\news\models\CmsShow;
 use common\vendor\vsoft\ad\models\AdBuildingProject;
@@ -49,8 +50,9 @@ class Ads extends Component
                         break;
                 }
             }elseif(!empty($post['city'])){
-                $url = Url::to(['/ads/index']);
-                $searchParams = ['sug1'=>$post['city'], 'sug2'=>$post['district'], 'sug3'=>$post['category']];
+                $searchParams = ['city'=>$post['city'], 'district'=>$post['district'], 'category'=>$post['category']];
+                $route = ArrayHelper::merge(['/ads/index'], $searchParams);
+                $url = Url::to($route);
             }
             $cookie = new Cookie([
                 'name' => 'searchParams',
@@ -60,6 +62,7 @@ class Ads extends Component
             ]);
             Yii::$app->getResponse()->getCookies()->add($cookie);
         }
+        Yii::$app->getResponse()->redirect($url);
         return $url;
     }
 }

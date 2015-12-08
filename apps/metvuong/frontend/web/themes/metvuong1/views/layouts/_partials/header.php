@@ -7,28 +7,28 @@ $searchParams = json_decode($value, true);
 ?>
 <script type="text/javascript">
     var jsonActive = [
-        <?php if(!empty($searchParams['sug1'])):?>
+        <?php if(!empty($searchParams['city'])):?>
         {
-            "idItem": <?=$searchParams['sug1']?>,
+            "idItem": <?=$searchParams['city']?>,
             "stepId": 1,
             "stepShow": "#valTT",
-            "name_item": dataCities[<?=$searchParams['sug1'];?>].name
+            "name_item": dataCities[<?=$searchParams['city'];?>].name
         },
         <?php endif;?>
-        <?php if(!empty($searchParams['sug2'])):?>
+        <?php if(!empty($searchParams['district'])):?>
         {
-            "idItem": <?=$searchParams['sug2']?>,
+            "idItem": <?=$searchParams['district']?>,
             "stepId": 2,
             "stepShow": "#valQh",
-            "name_item": dataCities[<?=$searchParams['sug1'];?>].districts[<?=$searchParams['sug2']?>].name
+            "name_item": dataCities[<?=$searchParams['city'];?>].districts[<?=$searchParams['district']?>].name
         },
         <?php endif;?>
-        <?php if(!empty($searchParams['sug3'])):?>
+        <?php if(!empty($searchParams['category'])):?>
         {
-            "idItem": <?=$searchParams['sug3']?>,
+            "idItem": <?=$searchParams['category']?>,
             "stepId": 3,
             "stepShow": "#valLoai",
-            "name_item": dataCategories[<?=$searchParams['sug3']?>].name
+            "name_item": dataCategories[<?=$searchParams['category']?>].name
         }
         <?php endif;?>
     ];
