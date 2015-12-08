@@ -50,7 +50,7 @@ class Ads extends Component
                 }
             }elseif(!empty($post['city'])){
                 $url = Url::to(['/ads/index']);
-                $searchParams = ['sug1'=>[$post['city']=>'Hồ Chí Minh'], 'sug2'=>[$post['district']=>'Quận 1'], 'sug3'=>[$post['category']=>'Nhà Phố']];
+                $searchParams = ['sug1'=>$post['city'], 'sug2'=>$post['district'], 'sug3'=>$post['category']];
             }
             $cookie = new Cookie([
                 'name' => 'searchParams',

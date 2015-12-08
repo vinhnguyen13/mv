@@ -9,26 +9,26 @@ $searchParams = json_decode($value, true);
     var jsonActive = [
         <?php if(!empty($searchParams['sug1'])):?>
         {
-            "idItem": <?=array_keys($searchParams['sug1'])[0]?>,
+            "idItem": <?=$searchParams['sug1']?>,
             "stepId": 1,
             "stepShow": "#valTT",
-            "name_item": "<?=array_values($searchParams['sug1'])[0]?>"
+            "name_item": dataCities[<?=$searchParams['sug1'];?>].name
         },
         <?php endif;?>
         <?php if(!empty($searchParams['sug2'])):?>
         {
-            "idItem": <?=array_keys($searchParams['sug2'])[0]?>,
+            "idItem": <?=$searchParams['sug2']?>,
             "stepId": 2,
             "stepShow": "#valQh",
-            "name_item": "<?=array_values($searchParams['sug2'])[0]?>"
+            "name_item": dataCities[<?=$searchParams['sug1'];?>].districts[<?=$searchParams['sug2']?>].name
         },
         <?php endif;?>
         <?php if(!empty($searchParams['sug3'])):?>
         {
-            "idItem": <?=array_keys($searchParams['sug3'])[0]?>,
+            "idItem": <?=$searchParams['sug3']?>,
             "stepId": 3,
             "stepShow": "#valLoai",
-            "name_item": "<?=array_values($searchParams['sug3'])[0]?>"
+            "name_item": dataCategories[<?=$searchParams['sug3']?>].name
         }
         <?php endif;?>
     ];

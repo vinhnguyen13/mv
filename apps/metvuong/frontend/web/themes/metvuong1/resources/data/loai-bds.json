@@ -5,22 +5,22 @@
 		"template": "suggest-list"
 	},
 	{
-		"id": 2,
+		"id": 6,
 		"ten_loai": "Nhà riêng",
 		"template": "cost-min-max"
 	},
 	{
-		"id": 3,
+		"id": 7,
 		"ten_loai": "Nhà biệt thự",
 		"template": "cost-min-max"
 	},
 	{
-		"id": 4,
+		"id": 8,
 		"ten_loai": "Nhà phố",
 		"template": "cost-min-max"
 	},
 	{
-		"id": 5,
+		"id": 9,
 		"ten_loai": "Đất nền dự án",
 		"template": "cost-min-max"
 	}
