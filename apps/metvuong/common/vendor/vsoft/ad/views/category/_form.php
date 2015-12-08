@@ -10,6 +10,7 @@ use common\vendor\vsoft\ad\models\AdInvestor;
 use common\widgets\FileUploadUI;
 use yii\helpers\Url;
 use common\vendor\vsoft\ad\models\AdProduct;
+use common\vendor\vsoft\ad\models\AdCategory;
 
 /* @var $this yii\web\View */
 /* @var $model funson86\cms\models\CmsShow */
@@ -39,6 +40,7 @@ use common\vendor\vsoft\ad\models\AdProduct;
         <label class="col-lg-1 control-label"></label>
         <div class="col-lg-11"><div class="help-block"><?= $model->getErrors('apply_to_type') ? current($model->getErrors('apply_to_type')) : '' ?></div></div>
     </div>
+    <?= $form->field($model, 'template')->dropDownList(AdCategory::templateLabelMap()) ?>
     <div class="form-group">
         <label class="col-lg-1 control-label"></label>
         <div class="col-lg-11">
