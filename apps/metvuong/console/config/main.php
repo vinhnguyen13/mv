@@ -11,6 +11,14 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'console\controllers',
+    'aliases' => array(
+
+    ),
+    'controllerMap' => [
+        'crawler' => [
+            'class' => 'console\controllers\CrawlerController'
+        ],
+    ],
     'components' => [
         'log' => [
             'targets' => [
