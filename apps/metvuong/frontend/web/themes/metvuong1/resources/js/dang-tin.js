@@ -216,6 +216,12 @@ function stepPost () {
 
 				objSP.flagAjax = _this.data('ajaxPost') ? true : false;
 
+				if ( _this.hasClass('next') ) {
+					objSP.nextStep(_this);
+				}else if( _this.hasClass('previous') ) {
+					objSP.previouStep(_this);
+				}
+
 				if ( objSP.flagAjax ) {
 					var form = $('#frm-post-tin');
 	        	
@@ -236,11 +242,7 @@ function stepPost () {
 					return;
 				}
 				
-				if ( _this.hasClass('next') ) {
-					objSP.nextStep(_this);
-				}else if( _this.hasClass('previous') ) {
-					objSP.previouStep(_this);
-				}
+				
 			});
 		},
 		nextStep: function (btnStep) {
@@ -253,9 +255,11 @@ function stepPost () {
 	        var index = $(".fieldset").index(objSP.next_fs);
 
 	        if ( index == 1 && !validateStep1() ) {
+	        	objSP.flagAjax = false;
 	        	return;
 	        }
 	        if ( index == 2 && !validateStep2() ) {
+	        	objSP.flagAjax = false;
 	        	return;
 	        }
 
