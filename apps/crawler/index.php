@@ -6,7 +6,4 @@
  * Time: 9:21 AM
  */
 
-echo "<pre>";
-print_r('abcdef');
-echo "<pre>";
-exit();
+echo "<pre>Welcome here !! Merry X-Mas</pre>";
