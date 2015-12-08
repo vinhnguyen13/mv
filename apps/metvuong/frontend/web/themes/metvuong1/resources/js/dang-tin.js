@@ -18,20 +18,14 @@ $(document).ready(function(){
 		$('#adproduct-project_building_id').append('<option value="' + index + '">' + project.name + '</option>');
 	}
 	
-	function dropDownListPriceType(id) {
-		$('#adproduct-price_type option:gt(0)').remove();
-		$('#adproduct-price_type').append($('#price-type-' + id).html());
-	}
-	
-
-	dropDownListPriceType($('#adproduct-type').val());
-	$('#adproduct-type').change(function(){
-		dropDownListPriceType($(this).val());
-		$('#adproduct-price_input').prop('disabled', false);
-	});
-	
-	$('#adproduct-area, #adproduct-price_input').keydown(function(e){
-        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+	$('#adproduct-area, #adproduct-price').keydown(function(e){
+		var allow = [46, 8, 9, 27, 13, 110, 116];
+		
+		if($(this).attr('id') == 'adproduct-area' && $(this).val().indexOf(',') === -1 && $(this).val() !== '') {
+			allow.push(188);
+		}
+		
+        if ($.inArray(e.keyCode, allow) !== -1 ||
             (e.ctrlKey === true) ||
             (e.keyCode >= 35 && e.keyCode <= 39)) {
                  return;
@@ -39,18 +33,38 @@ $(document).ready(function(){
         if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
             e.preventDefault();
         }
-	}).keyup(function(){
-//		var val = $(this).val().replace(/\./g, '').split( /(?=(?:...)*$)/ ).join('.');
-//		$(this).val(val);
 	});
 	
-	$('#adproduct-price_type').change(function(){
-		if($(this).val() == '1') {
-			$('#adproduct-price_input').prop('disabled', true).val('');
-		} else {
-			$('#adproduct-price_input').prop('disabled', false);
-		}
+	$('#adproduct-area').keyup(function(){
+		$('#area-format').text(formatNumber($(this).val()));
 	});
+	
+	$('#adproduct-price').keyup(function(){
+		var val = $(this).val();
+		var text = val.split( /(?=(?:\d{3})+(?:\.|$))/g ).join(".");
+		
+		if(val.length > 9) {
+			text = (val / 1000000000) + '';
+			text = formatNumber(text.replace('.', ',')) + ' tỷ';
+		} else if(val.length > 6) {
+			text = (val / 1000000) + '';
+			text = text.replace('.', ',') + ' triệu';
+		}
+		
+		$('#price-format').text(text);
+	});
+	
+	function formatNumber(val) {
+		val = val.split(',');
+		var text = val[0];
+		text = text.split( /(?=(?:\d{3})+(?:\.|$))/g ).join(".");
+		
+		if(val.length > 1) {
+			text = text + ',' + val[1];
+		}
+		
+		return text;
+	}
 
 	stepPost();
 });
@@ -94,22 +108,13 @@ function validateStep1() {
 		$('#adproduct-area').next().hide();
 	}
 	
-	if(!$('#adproduct-price_type').val()) {
+	if(!$('#adproduct-price').prop('disabled') && $('#adproduct-price').val() == '') {
 		$return = false;
-		$('#adproduct-price_type').parent().addClass('error-frm');
-		$('#adproduct-price_type').next().show().html('Vui lòng chọn đơn vị cho giá.');
+		$('#adproduct-price').parent().addClass('error-frm');
+		$('#adproduct-price').next().show().html('Vui lòng nhập giá.');
 	} else {
-		$('#adproduct-price_type').parent().removeClass('error-frm');
-		$('#adproduct-price_type').next().hide();
-		
-		if(!$('#adproduct-price').prop('disabled') && $('#adproduct-price').val() == '') {
-			$return = false;
-			$('#adproduct-price').parent().addClass('error-frm');
-			$('#adproduct-price').next().show().html('Vui lòng nhập giá.');
-		} else {
-			$('#adproduct-price').parent().removeClass('error-frm');
-			$('#adproduct-price').next().hide();
-		}
+		$('#adproduct-price').parent().removeClass('error-frm');
+		$('#adproduct-price').next().hide();
 	}
 	
 	return $return;

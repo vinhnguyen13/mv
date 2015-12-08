@@ -91,7 +91,10 @@ $type = [
 						<div class="help-block" style="display: none;"></div>
 						</div>
 						<div class="inline-group col-xs-6 pdR-0">
-							<span>m<sup>2</sup></span>
+							<span>
+								<span style="display: inline;" id="area-format"></span>
+								m<sup>2</sup>
+							</span>
 						</div>
 					</div>
 				</div>
@@ -99,14 +102,11 @@ $type = [
 					<label for="" class="col-sm-3 control-label">Giá *</label>
 					<div class="col-sm-9 group-item-frm">
 						<div class="inline-group col-xs-6">
-							<?= Html::activeTextInput($model, 'price_input', ['class' => 'form-control']) ?>
+							<?= Html::activeTextInput($model, 'price', ['class' => 'form-control']) ?>
 							<div class="help-block" style="display: none;"></div>
 						</div>
-						<div class="inline-group col-xs-6 pdR-0">
-							<?= Html::dropDownList('priceTypeForSell', null, AdProduct::priceTypeForSell(), ['id' => 'price-type-1', 'style' => 'display: none;']) ?>
-							<?= Html::dropDownList('priceTypeForRent', null, AdProduct::priceTypeForRent(), ['id' => 'price-type-2', 'style' => 'display: none;']) ?>
-							<?= Html::activeDropDownList($model, 'price_type', [], ['class' => 'form-control', 'prompt' => 'Đơn vị'])?>
-						<div class="help-block" style="display: none;"></div>
+						<div class="inline-group col-xs-6">
+							<span style="display: inline;" id="price-format"></span>
 						</div>
 					</div>
 				</div>
@@ -190,7 +190,7 @@ $type = [
 				<div class="form-group">
 					<div class="title-sub-frm">Bản đồ</div>
 				</div>
-				<div class="form-group">
+				<div class="form-group" style="display: none;">
 					<p>
 						Để tăng độ tin cậy và tin rao được nhiều người quan tâm hơn, hãy
 						sửa vị trí tin rao của bạn trên bản đồ bằng cách kéo icon<em
