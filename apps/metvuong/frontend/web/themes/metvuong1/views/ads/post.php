@@ -71,7 +71,7 @@ $type = [
 							<?= Html::activeDropDownList($model, 'street_id', [], ['class' => 'col-xs-6 select2', 'prompt' => 'Đường'])?>
 							<div class="help-block" style="display: none;"></div>
 						</div>
-						<div class="col-xs-6 form-group mgB-0">
+						<div class="col-xs-6 inline-group mgB-0">
 							<?= Html::activeTextInput($model, 'home_no', ['class' => 'form-control', 'placeholder' => $model->getAttributeLabel('home_no')]) ?>
 							<div class="help-block" style="display: none;"></div>
 						</div>
