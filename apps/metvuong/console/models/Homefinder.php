@@ -27,6 +27,7 @@ class Homefinder extends Component
 
     public function parse()
     {
+        ob_start();
         $this->time_start = time();
         $this->getListDevelopers();
     }
@@ -34,11 +35,14 @@ class Homefinder extends Component
     public function getListDevelopers()
     {
         $content = SimpleHTMLDom::file_get_html(self::DOMAIN.'/developer/');
-        $list = $content->find('.body-cont .img-devs a');
+        $list = $content->find('.body-cont .img-project-inside a');
         if (!empty($list)) {
             $start = time();
-            foreach ($list as $item) {
-                $this->getListProject($item->href);
+            foreach ($list as $idx => $item) {
+                if($item->href && $idx > 0){
+                    $this->getListProject($item->href);
+                    echo $item->title;
+                }
             }
             $end = time();
         }
@@ -51,7 +55,6 @@ class Homefinder extends Component
         $list = $content->find('.menu ul.list_project li');
         if (!empty($list)) {
             $start = time();
-            ob_start();
             foreach ($list as $item) {
                 $a = $item->find('a');
                 $this->getProjectDetail($a[0]->href);
