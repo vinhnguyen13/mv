@@ -25,7 +25,8 @@ class CrawlerController extends Controller
 
     public function actionHomefinder()
     {
-        Homefinder::find()->parse();
+//        Homefinder::find()->parse();
+        Homefinder::find()->importData();
     }
 
     public function actionBatdongsan()
