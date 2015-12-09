@@ -17,3 +17,4 @@
     </div>
 </footer>
 <?php $this->beginContent('@app/views/layouts/_partials/popup.php'); ?><?php $this->endContent();?>
+<?php $this->beginContent('@app/views/layouts/_partials/tracking.php'); ?><?php $this->endContent();?>
