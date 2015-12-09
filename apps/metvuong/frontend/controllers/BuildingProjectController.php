@@ -1,10 +1,11 @@
 <?php
 namespace frontend\controllers;
 
-use yii\web\Controller;
+use frontend\components\Controller;
 use vsoft\buildingProject\models\BuildingProject;
 use yii\data\Pagination;
-use common\vendor\vsoft\ad\models\AdBuildingProject;
+use vsoft\ad\models\AdBuildingProject;
+use yii\web\NotFoundHttpException;
 
 class BuildingProjectController extends Controller
 {

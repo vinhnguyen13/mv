@@ -8,6 +8,7 @@ use \Yii;
 use yii\web\UploadedFile;
 use vsoft\express\components\UploadHelper;
 use yii\image\drivers\Image;
+use vsoft\express\components\ImageHelper;
 
 class UploadController extends Controller
 {
@@ -38,7 +39,7 @@ class UploadController extends Controller
     	}
     }
     
-    public function actionImage($folder = 'building-project-images') {
+    public function actionImage($folder = 'building-project-images', $resizeForAds = false) {
     	if($_FILES) {
     		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
@@ -57,9 +58,9 @@ class UploadController extends Controller
     		
     		$image->saveAs($orginalPath);
     		
-    		$orginalRes = \Yii::$app->image->load($orginalPath);
-    		$resizingConstraints = ($orginalRes->width > $orginalRes->height) ? Image::HEIGHT : Image::WIDTH;
-    		$orginalRes->resize(120, 120, $resizingConstraints)->crop(120, 120)->save($thumbnailPath);
+    		$options = ($resizeForAds) ? [] : ['thumbWidth' => 120, 'thumbHeight' => 120];
+    		$imageHelper = new ImageHelper($orginalPath, $options);
+    		$imageHelper->makeThumb(false, $thumbnailPath);
 	    	
     		$response['files'][] = [
 	    		'url'           => Url::to("/store/$folder/". $orginal),
@@ -74,14 +75,21 @@ class UploadController extends Controller
     		return $response;
     	}
     }
-    public function actionDeleteImage($orginal, $thumbnail, $deleteLater = false, $folder = 'building-project-images') {
+    public function actionDeleteImage($orginal, $thumbnail, $deleteLater = false, $folder = 'building-project-images', $resizeForAds = false) {
     	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     	
     	if(! $deleteLater) {
-    		$dir = \Yii::getAlias('@store') . '/' . $folder;
+    		$dir = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $folder;
     		 
-    		unlink($dir . '/' . $orginal);
-    		unlink($dir . '/' . $thumbnail);
+    		unlink($dir . DIRECTORY_SEPARATOR . $orginal);
+    		unlink($dir . DIRECTORY_SEPARATOR . $thumbnail);
+    		
+    		if($resizeForAds) {
+    			$pathinfo = pathinfo($orginal);
+    			
+    			unlink($dir . DIRECTORY_SEPARATOR . $pathinfo['filename'] . '.medium.' . $pathinfo['extension']);
+    			unlink($dir . DIRECTORY_SEPARATOR . $pathinfo['filename'] . '.large.' . $pathinfo['extension']);
+    		}
     	}
     	
     	return ['files' => []];

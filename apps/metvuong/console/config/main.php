@@ -11,6 +11,18 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'console\controllers',
+    'aliases' => array(
+        '@dektrium/user' => dirname(dirname(dirname(dirname(__DIR__)))) . '/vendor/dektrium/yii2-user',
+        '@vendor' => dirname(dirname(dirname(dirname(__DIR__)))) . '/vendor',
+        '@common' => dirname(dirname(__DIR__)) . '/common',
+        '@keltstr/simplehtmldom' => dirname(dirname(__DIR__)) . '/common/vendor/keltstr/simplehtmldom',
+        '@linslin/yii2/curl' => dirname(dirname(__DIR__)) . '/common/vendor/linslin/yii2-curl',
+    ),
+    'controllerMap' => [
+        'crawler' => [
+            'class' => 'console\controllers\CrawlerController'
+        ],
+    ],
     'components' => [
         'log' => [
             'targets' => [

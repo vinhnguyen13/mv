@@ -13,23 +13,9 @@ return [
         '@funson86' => dirname(__DIR__) . '/vendor/funson86',
         '@funson86/cms' => dirname(__DIR__) . '/vendor/funson86/yii2-cms',
         '@funson86/setting' => dirname(__DIR__) . '/vendor/funson86/yii2-setting',
+        '@linslin/yii2/curl' => dirname(__DIR__) . '/vendor/linslin/yii2-curl',
     ),
     'modules' => [
-        'user' => [
-            'class' => 'dektrium\user\Module',
-            'enableConfirmation' => true,
-            'confirmWithin' => 21600,
-            'cost' => 12,
-            'admins' => ['superadmin'],
-            'modelMap' => [
-                'User' => 'dektrium\user\models\User',
-                'Profile' => 'dektrium\user\models\Profile',
-                'Account' => 'dektrium\user\models\Account',
-            ],
-            'controllerMap' => [
-                'admin' => 'vsoft\user\controllers\AdminController',
-            ],
-        ],
         'express' => [
             'class' => 'vsoft\express\Module',
         ],
@@ -62,20 +48,6 @@ return [
         ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
-        ],
-        'urlManager' => [
-            'class' => 'yii\web\UrlManager',
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'enableStrictParsing' => false,
-            'rules' => [
-//                'site/login' => 'user/security/login',
-//                'site/signup' => 'user/registration/register',
-//                '<controller:\w+>/<id:\d+>' => '<controller>/view',
-//                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
-//                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
-
-            ]
         ],
         'setting' => [
             'class' => 'funson86\setting\Setting',

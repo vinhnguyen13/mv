@@ -18,7 +18,7 @@ $(document).ready(function() {
 
         var _this = $(this);
         if( !$('body').hasClass('modal-open') ) {
-            $('body').addClass('modal-open').css('padding-right', '17px');
+            //$('body').addClass('modal-open').css('padding-right', '17px');
         }
     });
 	
@@ -224,15 +224,45 @@ $(document).ready(function() {
     //end page du-an
 
     //start scroll fixed header
-    var secondaryNav = $('.cd-secondary-nav'),
-        secondaryNavTopPosition = secondaryNav.length > 0 ? secondaryNav.offset().top : 0,
-        contentSections = $('.cd-section'),
-        hFirstNav = secondaryNav.outerHeight(),
-        valShow;
+    var $header = $('.cd-secondary-nav'),
+        $container = $('.o-wrapper'),
+        hHeader = $header.outerHeight(),
+        valShow = 0,
+        flagShow = false;
 
     $(window).on('scroll', function(){
-        valShow = $(window).scrollTop() - hFirstNav/2
-        if( valShow > 0 ) {
+        valShow = $(window).scrollTop();
+
+        if( valShow >= hHeader ) {
+            if( flagShow ) {
+                return;
+            }
+            $header.hide();
+            $container.addClass('pdTContainer');
+            $header.addClass('is-fixed animate-children');
+            setTimeout(function() {
+                $header.show();
+                setTimeout(function () {
+                    $header.addClass('show-fixed');
+                },50);
+            }, 150);
+
+            $('.icon-selected a').on('click', function() {
+                var _this = $(this),
+                    $rootParent = _this.closest('.options-search');
+                $rootParent.addClass('search-dropdown');
+
+                return false;
+            });
+
+            flagShow = true;
+        }else {
+            $header.removeClass('is-fixed animate-children show-fixed');
+            flagShow = false;
+            $container.removeClass('pdTContainer');
+        }
+
+        /*if( valShow > 0 ) {
             secondaryNav.addClass('is-fixed');
             setTimeout(function() {
                 secondaryNav.addClass('animate-children');
@@ -242,7 +272,7 @@ $(document).ready(function() {
             setTimeout(function() {
                 secondaryNav.removeClass('animate-children');
             }, 50);
-        }
+        }*/
     });
     //end scroll fixed header
 
@@ -250,23 +280,8 @@ $(document).ready(function() {
     //animateSearch();
     //end home page search
 
-    stepPost();
-
 });
 
-function animateSearch() {
-    var hWindown = $(window).outerHeight(),
-        leftLogo = $('.logo-home').position().left,
-        leftInputSearch = $('.box-search-header').position().left;
-
-    setTimeout(function() {
-        $('.wrap-search-home .logo-home').addClass('ani-logo');
-        $('.box-search-header').addClass('ani-search');
-        setTimeout(function() {
-            $('header').addClass('border-shadow');
-        },250);
-    },2000);
-}
 
 function l(x){console.log(x);}
 
@@ -283,87 +298,36 @@ function getActiveSuggert(objJson) {
     }
 }
 
-function stepPost () {
-    //jQuery time
-    var current_fs, next_fs, previous_fs; //fieldsets
-    var left, opacity, scale; //fieldset properties which we will animate
-    var animating; //flag to prevent quick multi-click glitches
+function scrollFixed() {
+    var $colRight = $('.contact-wrapper'),
+        hColRight = $colRight.outerHeight(),
+        wColRight = $colRight.outerWidth(),
+        $colLeft = $('.dt-left-col'),
+        hColLeft = $colLeft.outerHeight(),
+        $header = $('.gallery-detail'),
+        hItemTop = parseInt($('#detail-listing .modal-dialog').css('margin-top')) + $('.gallery-detail').outerHeight() + 20,
+        hItemBottom = parseInt($('#detail-listing .modal-dialog').css('margin-top')) + $('#detail-listing .wrap-modal').outerHeight() - Math.max(hColRight, hColLeft),
+        posiTopColRight = $colRight.offset().top;
 
-    $(".next").click(function(){
-        if(animating) return false;
-        animating = true;
-        
-        current_fs = $(this).parent();
-        next_fs = $(this).parent().next();
-        
-        //activate next step on progressbar using the index of next_fs
-        $("#progressbar li").eq($(".fieldset").index(next_fs)).addClass("active");
-        
-        //show the next fieldset
-        next_fs.show(); 
-        //hide the current fieldset with style
-        current_fs.animate({opacity: 0}, {
-            step: function(now, mx) {
-                //as the opacity of current_fs reduces to 0 - stored in "now"
-                //1. scale current_fs down to 80%
-                scale = 1 - (1 - now) * 0.2;
-                //2. bring next_fs from the right(50%)
-                left = (now * 50)+"%";
-                //3. increase opacity of next_fs to 1 as it moves in
-                opacity = 1 - now;
-                current_fs.css({'transform': 'scale('+scale+')'});
-                next_fs.css({'left': left, 'opacity': opacity});
-                $('body').addClass('overHidden');
-            }, 
-            duration: 800, 
-            complete: function(){
-                current_fs.hide();
-                animating = false;
-                $('body').removeClass('overHidden');
-            }, 
-            //this comes from the custom easing plugin
-            easing: 'easeInOutBack'
-        });
-    });
-
-    $(".previous").click(function(){
-        if(animating) return false;
-        animating = true;
-        
-        current_fs = $(this).parent();
-        previous_fs = $(this).parent().prev();
-        
-        //de-activate current step on progressbar
-        $("#progressbar li").eq($(".fieldset").index(current_fs)).removeClass("active");
-        
-        //show the previous fieldset
-        previous_fs.show(); 
-        //hide the current fieldset with style
-        current_fs.animate({opacity: 0}, {
-            step: function(now, mx) {
-                //as the opacity of current_fs reduces to 0 - stored in "now"
-                //1. scale previous_fs from 80% to 100%
-                scale = 0.8 + (1 - now) * 0.2;
-                //2. take current_fs to the right(50%) - from 0%
-                left = ((1-now) * 50)+"%";
-                //3. increase opacity of previous_fs to 1 as it moves in
-                opacity = 1 - now;
-                current_fs.css({'left': left});
-                previous_fs.css({'transform': 'scale('+scale+')', 'opacity': opacity});
-                $('body').addClass('overHidden');
-            }, 
-            duration: 800, 
-            complete: function(){
-                current_fs.hide();
-                animating = false;
-                $('body').removeClass('overHidden');
-            }, 
-            //this comes from the custom easing plugin
-            easing: 'easeInOutBack'
-        });
-    });
-
-    $(".submit").click(function(){
-        return false;
+    $('#detail-listing').scroll(function (e) {
+        e.preventDefault();
+        var valScroll = $(this).scrollTop(),
+            valPosiItem;
+        if( valScroll >= posiTopColRight ) {
+            valPosiItem = valScroll - posiTopColRight;
+            $colRight.addClass('fixed-scroll');
+            $colRight.css({
+                position: 'absolute',
+                width: wColRight+'px',
+                'margin-top': valPosiItem+'px'
+            });
+        }else {
+            $colRight.removeClass('fixed-scroll');
+            $colRight.css({
+                position: 'static',
+                width: 'auto',
+                'margin-top': 0
+            });
+        }
     });
 }

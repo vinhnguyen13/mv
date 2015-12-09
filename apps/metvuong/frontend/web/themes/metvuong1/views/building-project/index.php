@@ -107,7 +107,7 @@ use yii\widgets\LinkPager;
 	</div>
 </div>
 
-<div class="social-share">
+<!-- <div class="social-share">
 	<ul>
 		<li><a href="#"><em class="fa fa-facebook"></em></a></li>
 		<li><a href="#"><em class="fa fa-twitter"></em></a></li>
@@ -117,4 +117,4 @@ use yii\widgets\LinkPager;
 		<li><a href="#"><em class="fa fa-pinterest"></em></a></li>
 		<li><a href="#"><em class="fa fa-linkedin"></em></a></li>
 	</ul>
-</div>
+</div> -->

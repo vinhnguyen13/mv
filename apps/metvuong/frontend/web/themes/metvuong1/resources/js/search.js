@@ -1,46 +1,25 @@
 (function() {
 	"use strict";
 
-	$.getJSON(url_tt, function(result){
-        arrJSONReturn.objTT = result;
-        for( var i = 0; i < result.length; i++ ) {
-            var $itemTinhThanh = $('<li data-id-tt='+result[i].id+'><a href="#valTT">'+result[i].tinh_thanh+'</a></li>');
-            $('.list-tinh-thanh').append($itemTinhThanh);
-        }
-    });
-
-    $.getJSON(url_loaibds, function(result){
-        arrJSONReturn.objLoai = result;
-        for( var i = 0; i < result.length; i++ ) {
-            var $item = $('<li data-id-loai='+result[i].id+'><a data-template-show="'+result[i].template+'" href="#valLoai">'+result[i].ten_loai+'</a></li>');
-            $('.list-loai-bds').append($item);   
-        }
-    });
-
-    $.getJSON(url_ttuc, function(result){
-        arrJSONReturn.objTTuc = result;
-        for( var i = 0; i < result.length; i++ ) {
-            var $item = $('<li data-id-ttuc='+result[i].id+'><a data-template-show="'+result[i].template+'" href="#valTTuc">'+result[i].ten_tt+'</a></li>');
-            $('.list-loai-tt').append($item);   
-        }
-    });
-
 	var objEvent = {
 			itemInput: $('#searchInput'),
 			tabsSearch: $('.search-select a'),
 	        flagEnd : false,
+	        flagSetTemplate: [],
 	        countStep : 1,
-	        countCurrent : 0,
+	        currentStep : 0,
 	        wrapListSuggest: $('.type-search ul'),
 	        wrapStep: $('.search-wrap'),
 	        lenghtSuggest : 0,
 	        flagOpenSugget : false,
 	        flagTrigger : '',
 	        current: 0,
-	        next: 0,
+	        next: '',
 	        timeoutClose: '',
 	        editItem: '',
 	        icon: $('#search-kind button span'),
+	        iconScrollSearch : $('.icon-selected'),
+
 	        init: function() {
 	        	objEvent.searchEvent();
 	        	objEvent.tabSearchEvent();
@@ -51,15 +30,20 @@
 	        	loadCost.init();
 	        	objEvent.centerBox();
 	        },
+	        getDataTinhThanhQuanHuyen: function () {
+	        	$('.list-tinh-thanh').html('');
+	        	$('.list-loai-bds').html('');
+	        	for( var i in dataCities ) {
+			        var $itemTinhThanh = $('<li data-id-tt='+i+'><a title="'+dataCities[i].name+'" href="#valTT">'+dataCities[i].name+'</a></li>');
+			        $('.list-tinh-thanh').append($itemTinhThanh);
+			    }
+
+			    for( var i in dataCategories ) {
+			        var $item = $('<li data-id-loai='+i+'><a title="'+dataCategories[i].name+'" data-template-show="'+dataCategories[i].template+'" href="#valLoai">'+dataCategories[i].name+'</a></li>');
+			        $('.list-loai-bds').append($item);   
+			    }
+	        },
 	        searchEvent: function() {
-	        	objEvent.tabsSearch.each(function() {
-	        		var txtPlaceholder = $(this).data('placeholder');
-	        		if( $(this).parent().hasClass('active') ) {
-	        			objEvent.itemInput.attr('placeholder', txtPlaceholder);	
-	        			objEvent.flagTrigger = $(this).attr('rel');
-	        			itemTabs(objEvent.flagTrigger);
-	        		}
-	        	});
 	        	objEvent.tabsSearch.on('click', function(e) {
 	        		e.preventDefault();
 	        		var _this = $(this),
@@ -73,26 +57,63 @@
 			        objEvent.tabsSearch.parent().removeClass('active');
 			        objEvent.itemInput.attr('placeholder', txtPlaceholder);
 			    	_this.parent().addClass('active');
+
+			    	if( _this.closest('.search-dropdown').length > 0 ) {
+	                    _this.closest('.search-dropdown').removeClass('search-dropdown');
+	                }
+
+	                $('#valActive').val(_this.data('active'));
 			    	
 			        return false;
+	        	});
+
+	        	objEvent.tabsSearch.each(function() {
+	        		var txtPlaceholder = $(this).data('placeholder');
+	        		if( $(this).parent().hasClass('active') ) {
+	        			$('#valActive').val($(this).data('active'));
+	        			objEvent.itemInput.attr('placeholder', txtPlaceholder);	
+	        			objEvent.flagTrigger = $(this).attr('rel');
+	        			itemTabs(objEvent.flagTrigger);
+	        		}
 	        	});
 
 				function itemTabs(itemTab) {
 			        switch(itemTab) {
 			            case '#dd-search':
-			                //something
+			            	objEvent.getDataTinhThanhQuanHuyen();
 			                objEvent.flagTrigger = '#dd-search';
 			                objEvent.icon.html('<em class="fa fa-search"></em>');
+			                objEvent.iconScrollSearch.find('span').html('<em class="fa fa-home"></em><em class="fa fa-search"></em>');
 			                break;
 			            case '#dd-dky':
-			                //_this.trigger( 'real-estate/post', [{data: '1'}, 'something'] );
+			            	//_this.trigger( 'real-estate/post', [{data: '1'}, 'something'] );
+			            	objEvent.getDataTinhThanhQuanHuyen();
+			            	$('.list-loai-bds li a').attr('data-end-submit',true);
 			                objEvent.icon.html('<em class="fa fa-pencil-square-o"></em>');
+			                objEvent.iconScrollSearch.find('span').html('<em class="fa fa-home"></em><em class="fa fa-pencil-square-o"></em>');
 			                objEvent.flagTrigger = '#dd-dky';
 			                break;
 			            case '#dd-news':
-			                //something
 			                //_this.trigger( 'real-estate/news', [{data: '1'}, 'something'] );
+			                $('.list-loai-tt').html('');
+			                $('.list-tintuc-suggest').html('');
+			                for( var i in newsCatalogs ) {
+						        var $item = $('<li data-id-loaittuc="'+i+'"><a title="'+newsCatalogs[i].title+'" href="#">'+newsCatalogs[i].title+'</a></li>');
+						        $('.list-tintuc-suggest').append($item);   
+						    }
+			                $.getJSON(url_ttuc, function(result){
+						        arrJSONReturn.objTTuc = result;
+						        for( var i = 0; i < result.length; i++ ) {
+						            var $item = $('<li data-id-ttuc='+result[i].id+'><a data-template-show="'+result[i].template+'" href="#valTTuc">'+result[i].ten_tt+'</a></li>');
+						            $('.list-loai-tt').append($item);   
+						        }
+						    });
+
+						    $('.list-duan-news li a').attr('data-end-submit',true);
+						    $('.list-tintuc-suggest li a').attr('data-end-submit',true);
+
 			                objEvent.icon.html('<em class="fa fa-file-text"></em>');
+			                objEvent.iconScrollSearch.find('span').html('<em class="fa fa-home"></em><em class="fa fa-file-text"></em>');
 			                objEvent.flagTrigger = '#dd-news';
 			                objEvent.countStep = "news";
 			                break;
@@ -103,12 +124,19 @@
 	        	objEvent.itemInput.on('click', function (e) {
 	        		e.preventDefault();
 	        		var _this = $(this);
+
 	        		objEvent.editItem = '';
-			        if( !objEvent.flagEnd )
+
+	        		if ( objEvent.next != '' ) {
+	        			objEvent.countStep = objEvent.next;
+	        			objEvent.next = '';
+	        		}
+
+	        		if( !objEvent.flagEnd )
 			        	objEvent.open(objEvent.countStep);
 				});
 	        },
-	        open: function(countStep) {//1. edit, 0. open normal
+	        open: function(countStep) {
 	        	objEvent.countStep = countStep;
 	            objEvent.wrapStep.addClass('hidden-effect');
 
@@ -151,70 +179,118 @@
 	                e.preventDefault();
 	                var _this = $(this),
 	                    txt = _this.text(),
-	                    $itemSuggest = $('<li data-step="'+objEvent.countStep+'" data-step-show='+_this.attr('href')+'><i>x</i><span></span></li>'),
+	                    $itemSuggest = $('<li data-step="'+objEvent.countStep+'"><i>x</i><span></span></li>'),
 	                    itemId = '',
+	                    nameAttr = '',
+	                    relAttr = '',
 	                    templateSuggest = _this.data('templateShow');
 
+	                // render quận/huyện theo tỉnh/thành phố
 	                if( _this.parent().data('idTt') != undefined ) {
 	                    $('#valTT').val(_this.parent().data('idTt'));
 	                    itemId = _this.parent().data('idTt');
-	                    for( var i = 0; i < arrJSONReturn.objTT.length; i++ ) {
-	                        if( arrJSONReturn.objTT[i].id == _this.parent().data('idTt') ) {
+	                    nameAttr = 'data-id-tt';
+	                    relAttr = 'idTt';
+
+	                    for( var i in dataCities ) {
+	                        if( i == _this.parent().data('idTt') ) {
 	                            $('.list-quan-huyen').html('');
-	                            for( var j = 0; j < arrJSONReturn.objTT[i].quan_huyen.length; j++ ) {
-	                                var $item = $('<li data-id-qh='+arrJSONReturn.objTT[i].quan_huyen[j].id+'><a href="#valQh">'+arrJSONReturn.objTT[i].quan_huyen[j].ten_quan_huyen+'</a></li>');
+	                            for( var j in dataCities[i].districts ) {
+	                                var $item = $('<li data-id-qh='+j+'><a title="'+dataCities[i].districts[j].name+'" href="#valQh">'+dataCities[i].districts[j].name+'</a></li>');
+	                                
 	                                $('.list-quan-huyen').append($item);
 	                            }
 	                        }
 	                    }
-	                }
 
+	                }
+	                //end
+
+	                // lấy value id khi chọn dropdown
 	                if( _this.parent().data('idQh') != undefined ) {
 	                    $('#valQh').val(_this.parent().data('idQh'));
 	                    itemId = _this.parent().data('idQh');
+	                    nameAttr = 'data-id-qh';
+	                    relAttr = 'idQh';
 	                }else if( _this.parent().data('idLoai') != undefined ) {
-	                    $('#valLoai').val(_this.parent().data('idLoai'));
+	                    $('#valLoaibds').val(_this.parent().data('idLoai'));
 	                    itemId = _this.parent().data('idLoai');
+	                    nameAttr = 'data-id-loai';
+	                    relAttr = 'idLoai';
+	                }else if( _this.parent().data('idDuans') != undefined ) {
+	                    $('#valDuaan').val(_this.parent().data('idDuans'));
+	                    itemId = _this.parent().data('idDuans');
+	                    nameAttr = 'data-id-duans';
+	                    relAttr = 'idDuans';
 	                }else if( _this.parent().data('idTtuc') != undefined ) {
 	                    $('#valTTuc').val(_this.parent().data('idTtuc'));
 	                    itemId = _this.parent().data('idTtuc');
+	                    nameAttr = 'data-id-ttuc';
+	                    relAttr = 'idTtuc';
+	                }else if( _this.parent().data('idDuannews') != undefined ) {
+	                    $('#valDuaannews').val(_this.parent().data('idDuannews'));
+	                    itemId = _this.parent().data('idDuannews');
+	                    nameAttr = 'data-id-duannews';
+	                    relAttr = 'idDuannews';
+	                }else if( _this.parent().data('idLoaittuc') != undefined ) {
+	                    $('#valLoaiTTuc').val(_this.parent().data('idLoaittuc'));
+	                    itemId = _this.parent().data('idLoaittuc');
+	                    nameAttr = 'data-id-loaittuc';
+	                    relAttr = 'idLoaittuc';
 	                }
+	                //end
 
-	                $itemSuggest.attr('data-item-id',itemId);
+					//render dự án theo Loại Bất Động Sản
+					var idTThanh =  $('#valTT').val(),
+                    	idQh = $('#valQh').val(),
+                    	idLoaiBDS = $('#valLoai').val();
 
-	                if( !objEvent.editItem ) {
+	                if( idTThanh != '' && idQh != '' && idLoaiBDS != '' && _this.parent().data('idLoai') != undefined ) {
+	                    $('.list-duan-suggest').html('');
+	                    for( var i in dataCities[idTThanh].districts[idQh].projects ) {
+	                        var $item = $('<li data-id-duans='+i+'><a title="'+dataCities[idTThanh].districts[idQh].projects[i].name+'" href="#">'+dataCities[idTThanh].districts[idQh].projects[i].name+'</a></li>');
+                            $('.list-duan-suggest').append($item);
+	                    }
+	                }
+	                //end
+
+	                if( templateSuggest !== undefined && templateSuggest != '' ) {
+                    	objEvent.flagSetTemplate = templateSuggest.replace(/ /g,'').split(',');
+                    	objEvent.countStep = objEvent.flagSetTemplate[0];
+                    	$itemSuggest.attr('data-next',objEvent.countStep);
+                		objEvent.flagSetTemplate.splice(0,1);
+                		$(".search-wrap[data-template="+objEvent.countStep+"] li a").attr('data-template-show',objEvent.flagSetTemplate);
+                    }
+
+                    if( objEvent.flagTrigger == '#dd-dky' && _this.data('endSubmit') ) {
+                        _this.trigger( 'real-estate/post', [{data: '1'}, 'something'] );
+                        objEvent.flagEnd = true;
+                    }
+
+                    if( objEvent.flagTrigger == '#dd-news' && _this.data('endSubmit') ) {
+                        _this.trigger( 'real-estate/news', [{data: '1'}, 'something'] );
+                    }
+
+					if( !objEvent.editItem ) { // insert item mới
 	                    
 	                    $itemSuggest.find('span').text(txt);
-	                    
+	                    $itemSuggest.find('span').attr('title',txt);
+	                    $itemSuggest.attr(nameAttr,itemId);
+	                    $itemSuggest.attr('rel',relAttr);
 	                    objEvent.wrapListSuggest.append($itemSuggest);
 
-	                    if( objEvent.flagTrigger == '#dd-dky' && objEvent.countStep === 3 ) {
-	                        _this.trigger( 'real-estate/post', [{data: '1'}, 'something'] );
-	                        objEvent.flagEnd = true;
-	                    }
-
-	                    setTimeout(function() {
-	                        if( objEvent.flagTrigger == '#dd-news' ) {
-	                            _this.trigger( 'real-estate/news', [{data: '1'}, 'something'] );
-	                        }
-	                    },200);
-	                    
-	                    if( templateSuggest !== undefined ) {
-	                		objEvent.countStep = templateSuggest;
-	                	}
-
 	                    objEvent.checkCounter();
-
+	                    
 	                    var txtStep;
 	                    txtStep = isNaN(objEvent.countStep) ? $(".search-wrap[data-template="+objEvent.countStep+"]").data('txtStep') : $('#step-'+objEvent.countStep).data('txtStep');
 
 	                    objEvent.changeTextHolder(txtStep);
 
-	                }else {
+	                }else {// edit item đã được chọn
 	                    objEvent.wrapListSuggest.find('li[data-step='+objEvent.editItem+'] span').text(txt);
-	                    if( templateSuggest !== undefined ) {
-	                    	objEvent.countStep = templateSuggest;
-	                    }
+	                    objEvent.wrapListSuggest.find('li[data-step='+objEvent.editItem+']').attr('data-next', objEvent.countStep);
+	                    objEvent.wrapListSuggest.find('li[data-step='+objEvent.editItem+']').attr(nameAttr,itemId);
+	                    $itemSuggest.attr('rel',relAttr);
 	                    objEvent.editItem = '';
 	                }
 	                
@@ -244,12 +320,16 @@
 	                    count = 0;
 
 	                for( var i = objEvent.wrapListSuggest.find('li').length; i > getStep ; i-- ) {
+	                	var idInputHiddenRemove = objEvent.wrapListSuggest.find('li').eq(i-1).attr('rel');
+						$('.getValSuggest[rel='+idInputHiddenRemove+']').val('');
+
 	                	objEvent.wrapListSuggest.find('li').eq(i-1).remove();
-	                }
+					}
 	                
 	                objEvent.resizeWidthInput();
 	                
-	                objEvent.countStep = $parentList.data('step');
+	                objEvent.next = objEvent.countStep = $parentList.data('step');
+
 	                objEvent.flagEnd = false;
 
 	                if( !isNaN(objEvent.countStep) ) {
@@ -273,19 +353,25 @@
 	                e.preventDefault();
 	                
 	                var _this = $(this),
-	                    boxId = _this.parent().data('step');
+	                    boxId = _this.parent().data('step'),
+	                    nextId = _this.parent().data('next');
 
 	                objEvent.editItem = boxId;
+
+	                objEvent.next = nextId;
 
 	                $('.type-search li').removeClass('active');
 	                _this.parent().addClass('active');
 	                
-	                for( var i = objEvent.lenghtSuggest; i >= 0 ; i-- ) {
-	                    if( i > boxId ) {
-	                        $('.type-search li').eq(i-1).remove();
-	                    }
-	                }
+	                var index = $('.type-search li[data-step='+boxId+']').index();
+                	for ( var i = index; i <= objEvent.lenghtSuggest; i++ ) {
+                		var itemIndex = index + 1,
+                			idInputHiddenRemove = $('.type-search li').eq(itemIndex).attr('rel');
 
+                		$('.getValSuggest[rel='+idInputHiddenRemove+']').val('');
+
+                		$('.type-search li').eq(itemIndex).remove();
+                	}
 	                objEvent.resizeWidthInput();
 
 	                objEvent.open(boxId);
@@ -306,11 +392,13 @@
 	        },
 	        reset: function() {
 	            objEvent.countStep = 1;
+	            objEvent.next = '';
 	            objEvent.lenghtSuggest = 0;
 	            objEvent.wrapListSuggest.hide().find('li').remove();
-	            objEvent.itemInput.removeAttr('style');
 	            objEvent.flagEnd = false;
 	            $('.getValSuggest').val('');
+	            objEvent.wrapStep.find('li a').removeAttr('data-template-show');
+	            objEvent.resizeWidthInput();
 	        },
 	        updateSuggert: function(countStep, lenghtSuggest) {
 	            objEvent.countStep = countStep;
@@ -327,7 +415,7 @@
 	        		hWin = $(window).outerHeight(),
 	        		topCenterLogo = Math.floor(hWin/2 - hLogo/2 - hLogo - 30),
 	        		leftCenterLogo = Math.floor(wWin/2 - wLogo/2),
-	        		topCenterSearch = Math.floor(hWin/2 - hSearchBox/2),
+	        		topCenterSearch = Math.floor(hWin/2 - hSearchBox/2) + 30,
 	        		leftCenterSearch = Math.floor(wWin/2 - wSearchBox/2);
 
 	        	logo.css({
@@ -354,6 +442,7 @@
 	        		});
 	        		searchBox.addClass('aniTopDown');
 	        	},100);
+
 	        }
 	    };
 
@@ -445,7 +534,37 @@
 
     $(window).resize(function() {
     	objEvent.centerBox();
+    	objEvent.resizeWidthInput();
     });
 
 
 })(jQuery);
+
+
+function animateSearch() {
+    var $boxSearch = $('.box-search-header'),
+        wBox = $boxSearch.outerWidth(),
+        wWin = $('.wrap-search-home').outerWidth(),
+        cBox = 220;//Math.floor(wWin/2 - wBox/2);
+    setTimeout(function() {
+        $('.wrap-search-home .logo-home').addClass('ani-logo').css({
+            'transform': 'translate3d( 0, 0, 0)',
+            '-webkit-transform': 'translate3d( 0, 0, 0)',
+            '-moz-transform': 'translate3d( 0, 0, 0)',
+            '-ms-transform': 'translate3d( 0, 0, 0)'
+        });
+
+        $('.box-search-header').addClass('ani-search').css({
+            'transform': 'translate3d('+cBox+'px, 10px, 0px)',
+            '-webkit-transform': 'translate3d('+cBox+'px, 10px, 0px)',
+            '-moz-transform': 'translate3d('+cBox+'px, 10px, 0px)',
+            '-ms-transform': 'translate3d('+cBox+'px, 10px, 0px)'
+        });
+        $('.wrap-search-home .logo-home').addClass('ani-logo');
+        $('.box-search-header').addClass('ani-search');
+        setTimeout(function() {
+            $('header').addClass('border-shadow');
+            l(1);
+        },500);
+    },500);
+}

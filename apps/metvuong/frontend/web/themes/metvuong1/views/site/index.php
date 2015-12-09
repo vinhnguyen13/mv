@@ -3,86 +3,37 @@ use yii\web\View;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 
-$this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/bootstrap.min.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'bootstrap');
-$this->registerCssFile("https://fonts.googleapis.com/css?family=Roboto:400,300,700", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'font-roboto');
-$this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/font-awesome.min.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'font-awesome');
-$this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/simple-line-icons.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'simple-line-icons');
-$this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/style-custom.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'style-custom');
-
-Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.min.js', ['position'=>View::POS_HEAD]);
-Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/bootstrap.min.js', ['position'=>View::POS_HEAD]);
-Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/menu.min.js', ['position'=>View::POS_HEAD]);
-$script = <<< JS
-var url_tt = "_url_tt",
-            url_loaibds = "_url_loaibds",
-            url_ttuc = "_url_ttuc";
-JS;
-Yii::$app->getView()->registerJs(strtr($script, ['_url_tt'=>Yii::$app->view->theme->baseUrl.'/resources/data/tinh-thanh.json',
-                                                '_url_loaibds'=>Yii::$app->view->theme->baseUrl.'/resources/data/loai-bds.json',
-                                                '_url_ttuc'=>Yii::$app->view->theme->baseUrl.'/resources/data/loai-tintuc.json'
-                                        ]), View::POS_HEAD);
-Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/common.js', ['position'=>View::POS_END]);
-Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/search.js', ['position'=>View::POS_END]);
-/* @var $this yii\web\View */
-
 $this->title = Yii::t('express','We offer exeptional amenities and renowned white - glove services');
 ?>
+<?php $this->beginContent('@app/views/layouts/_partials/js/jsContainer.php', ['options'=>[]]); ?><?php $this->endContent();?>
 <script>
     $(document).ready(function(){
         $(document).on('click', '#btn-search', function(){
+            animateSearch();
             setTimeout(function() {
-                $('.wrap-search-home .logo-home').addClass('ani-logo').css({
-                    'transform': 'translate3d( 0, 8px, 0)',
-                    '-webkit-transform': 'translate3d( 0, 8px, 0)',
-                    '-moz-transform': 'translate3d( 0, 8px, 0)',
-                    '-ms-transform': 'translate3d( 0, 8px, 0)'
-                });
-                $('.box-search-header').addClass('ani-search').css({
-                    'transform': 'translate3d(180px, 8px, 0px)',
-                    '-webkit-transform': 'translate3d(180px, 8px, 0px)',
-                    '-moz-transform': 'translate3d(180px, 8px, 0px)',
-                    '-ms-transform': 'translate3d(180px, 8px, 0px)'
-                });
-                setTimeout(function() {
-                    $('header').addClass('border-shadow');
-                    setTimeout(function() {$('#search-kind').submit();},500);
-                },500);
-            },500);
+                setTimeout(function() {$('#search-kind').submit();},500);
+            },1000);
             return false;
         });
 
         $(document).bind( 'real-estate/news', function(event, json, string){
+            animateSearch();
             setTimeout(function() {
-                $('.wrap-search-home .logo-home').addClass('ani-logo').css({
-                    'transform': 'translate3d( 0, 8px, 0)',
-                    '-webkit-transform': 'translate3d( 0, 8px, 0)',
-                    '-moz-transform': 'translate3d( 0, 8px, 0)',
-                    '-ms-transform': 'translate3d( 0, 8px, 0)'
-                });
-                $('.box-search-header').addClass('ani-search').css({
-                    'transform': 'translate3d(180px, 8px, 0px)',
-                    '-webkit-transform': 'translate3d(180px, 8px, 0px)',
-                    '-moz-transform': 'translate3d(180px, 8px, 0px)',
-                    '-ms-transform': 'translate3d(180px, 8px, 0px)'
-                });
-                setTimeout(function() {
-                    $('header').addClass('border-shadow');
-                    setTimeout(function() {$('#search-kind').submit();},100);
-                },500);
-            },500);
+                setTimeout(function() {$('#search-kind').submit();},100);
+            },1000);
         });
         
         $(document).bind( 'real-estate/post', function(event, json, string){
+            animateSearch();
             setTimeout(function() {
-                $('.wrap-search-home .logo-home').addClass('ani-logo');
-                $('.box-search-header').addClass('ani-search');
-                setTimeout(function() {
-                    $('header').addClass('border-shadow');
-                    location.href = '<?=Url::to(['/ads/post'])?>';
-                },500);
-            },500);
+                setTimeout(function() {$('#search-kind').submit();},100);
+            },1000);
         });
 
+        /*console.log(url_tt);
+        console.log(dataCategories);
+        console.log(dataCities);
+        console.log(newsCatalogs);*/
 
     });
 </script>
@@ -91,13 +42,15 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
         <div class="container clearfix">
             <?php $this->beginContent('@app/views/layouts/_partials/menuMain.php'); ?><?php $this->endContent();?>
             <div class="wrap-search-home">
-                <div class="bgcover logo-home" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png);"><a href="<?=Url::home()?>"></a></div>
+                <div class="wrap-logo">
+                    <div class="bgcover logo-home" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png);"><a href="<?=Url::home()?>"></a></div>
+                </div>
                 <div class="box-search-header clearfix">
                         <div class="pull-left">
                             <?php $form = ActiveForm::begin([
                                 'options'=>['class' => 'form-inline pull-left', 'method'=>'POST'],
                                 'id'=>'search-kind',
-                                'action'=>Url::to(['/ads/search']),
+                                'action'=>Url::to(['/ads/redirect']),
                                 'fieldConfig' => [],
                             ]); ?>
                                 <div class="form-group">
@@ -105,25 +58,28 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                         <ul class="outsideevent"></ul>
                                         <input id="searchInput" name="search" type="text" class="form-control outsideevent" placeholder="" readonly="readonly">
                                     </div>
-                                    <div id="step-1" class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn ở Tỉnh/Thành nào ?">
+
+                                    <div id="step-1" class="outsideevent search-wrap hidden-effect" data-template="tinh-thanh" data-txt-step="Chọn Tỉnh/Thành ?">
                                         <div class="wrap-effect">
                                             <div class="search-item">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <h3>Bạn ở Thành phố nào ?</h3>
+                                                <h3>Chọn Tỉnh/Thành ?</h3>
                                                 <ul class="clearfix list-tinh-thanh"></ul>
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="step-2" class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn ở Quận/Huyện nào ?">
+
+                                    <div id="step-2" class="outsideevent search-wrap hidden-effect" data-template="quan-huyen" data-txt-step="Chọn Quận/Huyện ?">
                                         <div class="wrap-effect">
                                             <div class="search-item clearfix">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <h3>Bạn ở Quận nào ?</h3>
+                                                <h3>Chọn Quận/Huyện ?</h3>
                                                 <ul class="list-quan-huyen"></ul>
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="step-3" class="outsideevent search-wrap hidden-effect" data-txt-step="Loại BDS bạn quan tâm ?">
+
+                                    <div id="step-3" class="outsideevent search-wrap hidden-effect" data-template="loai-bds" data-txt-step="Loại BDS bạn quan tâm ?">
                                         <div class="wrap-effect">
                                             <div class="search-item clearfix">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
@@ -137,17 +93,33 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                         <div class="wrap-effect">
                                             <div class="search-item clearfix">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <h3>Chọn dự án</h3>
-                                                <ul class="list-duan-suggest">
-                                                    <li><a href="#">RICHSTAR</a></li>
-                                                    <li><a href="#">SUNRISE RIVERSIDE</a></li>
-                                                    <li><a href="#">ORCHARD PARKVIEW</a></li>
-                                                    <li><a href="#">GOLDEN MANSION</a></li>
-                                                    <li><a href="#">KINGSTON RESIDENCE</a></li>
-                                                    <li><a href="#">THE BOTANICA</a></li>
-                                                    <li><a href="#">THE SUN AVENUE</a></li>
-                                                    <li><a href="#">ORCHARD GARDEN</a></li>
-                                                    <li><a href="#">SUNRISE CITYVIEW</a></li>
+                                                <h3>Chọn dự án ?</h3>
+                                                <ul class="list-duan-suggest"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="outsideevent search-wrap hidden-effect" data-txt-step="" data-template="suggest-list-news" data-end="true">
+                                        <div class="wrap-effect">
+                                            <div class="search-item clearfix">
+                                                <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                                <h3>Chọn loại tin tức ?</h3>
+                                                <ul class="list-tintuc-suggest"></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="outsideevent search-wrap hidden-effect" data-txt-step="" data-template="suggest-duan-news" data-end="true">
+                                        <div class="wrap-effect">
+                                            <div class="search-item clearfix">
+                                                <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                                <h3>Chọn dự án ?</h3>
+                                                <ul class="list-duan-news">
+                                                    <li data-id-duannews="1"><a href="#">RICHSTAR</a></li>
+                                                    <li data-id-duannews="2"><a href="#">SUNRISE RIVERSIDE</a></li>
+                                                    <li data-id-duannews="3"><a href="#">ORCHARD PARKVIEW</a></li>
+                                                    <li data-id-duannews="4"><a href="#">GOLDEN MANSION</a></li>
+                                                    <li data-id-duannews="5"><a href="#">KINGSTON RESIDENCE</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -160,7 +132,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                                 <h3>Nhập khoảng giá ?</h3>
                                                 <div class="frm-cost-min-max clearfix">
                                                     <div class="form-group inline-group box-cost col-xs-5" data-tab="min">
-                                                        <input id="minCost" type="text" class="form-control cost-value" placeholder="min" readonly="readonly">
+                                                        <input name="costMin" id="minCost" type="text" class="form-control cost-value" placeholder="min" readonly="readonly">
                                                         <div class="outsideevent wrap-cost-bds hidden-cost">
                                                             <div class="wrap-effect-cost">
                                                                 <ul>
@@ -177,7 +149,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                                     </div>
                                                     <div class="line-center form-group inline-group box-cost col-xs-2"><span></span></div>
                                                     <div class="form-group inline-group box-cost col-xs-5" data-tab="max">
-                                                        <input id="maxCost" type="text" class="form-control cost-value" placeholder="max" readonly="readonly">
+                                                        <input name="costMax" id="maxCost" type="text" class="form-control cost-value" placeholder="max" readonly="readonly">
                                                         <div class="outsideevent wrap-cost-bds hidden-cost">
                                                             <div class="wrap-effect-cost">
                                                                 <ul>
@@ -199,7 +171,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                         </div>
                                     </div>
 
-                                    <div class="outsideevent search-wrap hidden-effect" data-txt-step="Bạn nên chọn Loại Tin Tức ?" data-template="news" data-end="true">
+                                    <div class="outsideevent search-wrap hidden-effect" data-txt-step="Chọn loại tin tức ?" data-template="news">
                                         <div class="wrap-effect">
                                             <div class="search-item clearfix">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
@@ -210,15 +182,25 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     </div>
 
                                 </div>
-                                <button id="btn-search" type="submit" class="btn btn-default"><span><em class="fa fa-search"></em></span></button>
-                                <input class="getValSuggest" type="hidden" id="valTT" name="city" value="">
-                                <input class="getValSuggest" type="hidden" id="valQh" name="district" value="">
-                                <input class="getValSuggest" type="hidden" id="valLoai" name="category" value="">
-                                <input class="getValSuggest" type="hidden" id="valTTuc" name="news" value="">
+                                <button id="btn-search" type="submit" class="btn btn-default">
+                                    <span><em class="fa fa-search"></em></span>
+                                </button>
+
+                                
+                                <input class="getValSuggest" type="hidden" rel="idActive" id="valActive" name="activeSearch" value="">
+                                <input class="getValSuggest" type="hidden" rel="idTt" id="valTT" name="city" value="">
+                                <input class="getValSuggest" type="hidden" rel="idQh" id="valQh" name="district" value="">
+                                <input class="getValSuggest" type="hidden" rel="idLoai" id="valLoaibds" name="category" value="">
+                                <input class="getValSuggest" type="hidden" rel="idTtuc" id="valTTuc" name="news" value="">
+                                <input class="getValSuggest" type="hidden" rel="idLoaittuc" id="valLoaiTTuc" name="typenews" value="">
+                                <input class="getValSuggest" type="hidden" rel="idDuans" id="valDuaan" name="duan" value="">
+                                <input class="getValSuggest" type="hidden" rel="idDuannews" id="valDuaannews" name="duannews" value="">
+
+                                
                             <?php ActiveForm::end(); ?>
                             <div class="pull-left text-right mgT-10 mgL-15">
                                 <div class="search-select active">
-                                    <a href="#" data-placeholder="Bạn ở Tỉnh/Thành nào ?" rel="#dd-search">
+                                    <a href="#" data-placeholder="Chọn Tỉnh/Thành ?" rel="#dd-search" title="Muốn Mua/Thuê" data-active="1">
                                         <span>
                                             <em class="fa fa-home"></em>
                                             <em class="fa fa-search"></em>
@@ -227,7 +209,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     </a>
                                 </div>
                                 <div class="search-select">
-                                    <a href="#" data-placeholder="Bạn ở Tỉnh/Thành nào ?" rel="#dd-dky">
+                                    <a href="#" data-placeholder="Chọn Tỉnh/Thành ?" rel="#dd-dky" title="Đăng ký Bán/Thuê" data-active="2">
                                         <span>
                                             <em class="fa fa-home"></em>
                                             <em class="fa fa-pencil-square-o"></em>
@@ -236,7 +218,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     </a>
                                 </div>
                                 <div class="search-select">
-                                    <a href="#" class="" data-step-fix="step-5" data-placeholder="Bạn nên chọn Loại Tin Tức ?" rel="#dd-news">
+                                    <a href="#" class="" data-step-fix="step-5" data-placeholder="Chọn Loại Tin Tức ?" rel="#dd-news" title="Tin Tức" data-active="3">
                                         <span>
                                             <em class="fa fa-home"></em>
                                             <em class="fa fa-file-text"></em>

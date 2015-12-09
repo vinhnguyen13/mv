@@ -2,11 +2,11 @@
 	{
 		"id": 1,
 		"ten_tt": "Tin tức",
-		"template": "news"
+		"template": "suggest-list-news"
 	},
 	{
 		"id": 2,
 		"ten_tt": "Dự án",
-		"template": "news"
+		"template": "tinh-thanh, quan-huyen, suggest-duan-news"
 	}
 ]

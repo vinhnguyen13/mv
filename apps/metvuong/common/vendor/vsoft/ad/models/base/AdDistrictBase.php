@@ -1,9 +1,9 @@
 <?php
 
-namespace common\vendor\vsoft\ad\models\base;
+namespace vsoft\ad\models\base;
 
 use Yii;
-use common\vendor\vsoft\ad\models\AdStreet;
+use vsoft\ad\models\AdStreet;
 
 /**
  * This is the model class for table "ad_district".

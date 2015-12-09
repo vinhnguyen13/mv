@@ -1,6 +1,6 @@
 <?php
 
-namespace common\vendor\vsoft\ad\models\base;
+namespace vsoft\ad\models\base;
 
 use Yii;
 
@@ -8,6 +8,7 @@ use Yii;
  * This is the model class for table "ad_images".
  *
  * @property integer $id
+ * @property integer $user_id
  * @property integer $product_id
  * @property string $file_name
  * @property integer $uploaded_at
@@ -30,8 +31,8 @@ class AdImagesBase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['product_id', 'uploaded_at'], 'integer'],
-            [['file_name', 'uploaded_at'], 'required'],
+            [['user_id', 'file_name', 'uploaded_at'], 'required'],
+            [['user_id', 'product_id', 'uploaded_at'], 'integer'],
             [['file_name'], 'string', 'max' => 255]
         ];
     }
@@ -43,6 +44,7 @@ class AdImagesBase extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'user_id' => 'User ID',
             'product_id' => 'Product ID',
             'file_name' => 'File Name',
             'uploaded_at' => 'Uploaded At',

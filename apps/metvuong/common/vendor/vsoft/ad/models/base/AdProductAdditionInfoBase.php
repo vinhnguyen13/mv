@@ -1,6 +1,6 @@
 <?php
 
-namespace common\vendor\vsoft\ad\models\base;
+namespace vsoft\ad\models\base;
 
 use Yii;
 
@@ -8,8 +8,8 @@ use Yii;
  * This is the model class for table "ad_product_addition_info".
  *
  * @property integer $product_id
- * @property integer $facade_width
- * @property integer $land_width
+ * @property double $facade_width
+ * @property double $land_width
  * @property integer $home_direction
  * @property integer $facade_direction
  * @property integer $floor_no
@@ -36,7 +36,8 @@ class AdProductAdditionInfoBase extends \yii\db\ActiveRecord
     {
         return [
             [['product_id'], 'required'],
-            [['product_id', 'facade_width', 'land_width', 'home_direction', 'facade_direction', 'floor_no', 'room_no', 'toilet_no'], 'integer'],
+            [['product_id', 'home_direction', 'facade_direction', 'floor_no', 'room_no', 'toilet_no'], 'integer'],
+            [['facade_width', 'land_width'], 'number'],
             [['interior'], 'string', 'max' => 3200],
             [['product_id'], 'unique']
         ];

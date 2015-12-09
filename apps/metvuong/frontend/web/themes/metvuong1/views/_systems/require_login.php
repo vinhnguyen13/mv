@@ -1,0 +1,1 @@
+Bạn cần phải <a href="#" data-toggle="modal" data-target="#frmLogin">Đăng nhập</a> để đăng tin

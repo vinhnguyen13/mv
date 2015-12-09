@@ -1,9 +1,9 @@
 <?php
 
-namespace common\vendor\vsoft\ad\models;
+namespace vsoft\ad\models;
 
 use Yii;
-use common\vendor\vsoft\ad\models\base\AdAreaTypeBase;
+use vsoft\ad\models\base\AdAreaTypeBase;
 
 
 class AdAreaType extends AdAreaTypeBase

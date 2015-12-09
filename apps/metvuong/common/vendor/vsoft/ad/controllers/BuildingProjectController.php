@@ -3,13 +3,13 @@ namespace vsoft\ad\controllers;
 
 use Yii;
 use yii\web\Controller;
-use common\vendor\vsoft\ad\models\AdBuildingProject;
-use common\vendor\vsoft\ad\models\AdAreaType;
+use vsoft\ad\models\AdBuildingProject;
+use vsoft\ad\models\AdAreaType;
 use yii\helpers\Url;
-use common\vendor\vsoft\ad\models\AdBuildingProjectSearch;
-use common\vendor\vsoft\ad\models\AdInvestor;
+use vsoft\ad\models\AdBuildingProjectSearch;
+use vsoft\ad\models\AdInvestor;
 use yii\helpers\ArrayHelper;
-use common\vendor\vsoft\ad\models\AdCategory;
+use vsoft\ad\models\AdCategory;
 
 class BuildingProjectController extends Controller
 {

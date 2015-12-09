@@ -9,8 +9,8 @@ $baseUrl = str_replace('/frontend/web', '', (new \yii\web\Request())->getBaseUrl
 return [
     'id' => 'app-frontend',
     'name'=>'MetVuong',
-//    'language'=>'vi-VN',
-    'language'=>'en-US',
+    'language'=>'vi-VN',
+//    'language'=>'en-US',
     'basePath' => dirname(__DIR__),
     'bootstrap' => [
         'log',
@@ -24,22 +24,25 @@ return [
     'modules' => [
         'user' => [
             'class' => 'dektrium\user\Module',
-            'enableConfirmation' => true,
+            'enableConfirmation' => false,
             'confirmWithin' => 21600,
             'cost' => 12,
             'admins' => ['superadmin'],
             'modelMap' => [
-                'User' => 'dektrium\user\models\User',
-                'Account' => 'dektrium\user\models\Account',
+                'User' => 'frontend\models\User',
+                'Account' => 'frontend\models\Account',
             ],
             'controllerMap' => [
-                'admin' => 'vsoft\user\controllers\AdminController',
-                'security' => 'vsoft\user\controllers\SecurityController',
-                'registration' => 'vsoft\user\controllers\RegistrationController',
+                'security' => 'frontend\controllers\SecurityController',
+                'registration' => 'frontend\controllers\RegistrationController',
             ],
         ],
     ],
     'components' => [
+        'user' => [
+            'identityClass' => 'frontend\models\User',
+            'enableAutoLogin' => true,
+        ],
         'request' => [
             'baseUrl' => $baseUrl,
         ],
@@ -65,16 +68,6 @@ return [
                 ],
             ],
         ],
-        'assetManager' => [
-            'bundles' => [
-                'yii\web\JqueryAsset' => [
-                    'jsOptions' => ['position'=>\yii\web\View::POS_HEAD]
-                ],
-                'yii\web\YiiAsset' => [
-                    'jsOptions' => ['position'=>\yii\web\View::POS_HEAD]
-                ],
-            ],
-        ],
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
@@ -87,7 +80,7 @@ return [
                 '<cat_id:\d+>-<slug>' => 'news/list',
                 'building/<slug>' => 'building-project/view',
                 'real-estate/result' => 'ads/index',
-                'real-estate/search' => 'ads/search',
+                'real-estate/redirect' => 'ads/redirect',
                 'real-estate/post' => 'ads/post',
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',
 //                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
@@ -151,8 +144,12 @@ return [
                 'yii\bootstrap\BootstrapAsset' => [
                     'css' => [],
                 ],
+                'yii\bootstrap\BootstrapPluginAsset' => [
+                    'js' => [],
+                ],
                 'yii\web\JqueryAsset' => [
-                    'js'=>[]
+                    'js'=>[],
+                    'jsOptions' => ['position'=>\yii\web\View::POS_HEAD]
                 ],
             ],
         ],

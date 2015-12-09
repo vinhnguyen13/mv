@@ -1,7 +1,6 @@
 <?php
 namespace frontend\controllers;
 
-use dektrium\user\models\LoginForm;
 use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
@@ -14,14 +13,16 @@ use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\web\Cookie;
-use common\vendor\vsoft\ad\models\AdCity;
-use common\vendor\vsoft\ad\models\AdDistrict;
-use common\vendor\vsoft\ad\models\AdWard;
-use common\vendor\vsoft\ad\models\AdStreet;
+use vsoft\ad\models\AdCity;
+use vsoft\ad\models\AdDistrict;
+use vsoft\ad\models\AdWard;
+use vsoft\ad\models\AdStreet;
 use yii\helpers\ArrayHelper;
-use common\vendor\vsoft\ad\models\AdBuildingProject;
+use vsoft\ad\models\AdBuildingProject;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
+use vsoft\ad\models\AdCategory;
+use vsoft\news\models\CmsCatalog;
 
 /**
  * Site controller
@@ -90,40 +91,6 @@ class SiteController extends Controller
     }
 
     /**
-     * Logs in a user.
-     *
-     * @return mixed
-     */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-        if(Yii::$app->request->isAjax){
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            $model = Yii::createObject(LoginForm::className());
-            if ($model->load(Yii::$app->getRequest()->post()) && $model->login()) {
-                return ['statusCode'=>200, 'parameters'=>['username'=>Yii::$app->user->identity->username]];
-            } else {
-                return ['statusCode'=>404, 'parameters'=>$model->errors];
-            }
-        }
-        throw new NotFoundHttpException('Not Found');
-    }
-
-    /**
-     * Logs out the current user.
-     *
-     * @return mixed
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
-    }
-
-    /**
      * Displays contact page.
      *
      * @return mixed
@@ -156,76 +123,6 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
-    /**
-     * Signs user up.
-     *
-     * @return mixed
-     */
-    public function actionSignup()
-    {
-        $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post())) {
-            if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
-            }
-        }
-
-        return $this->render('signup', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Requests password reset.
-     *
-     * @return mixed
-     */
-    public function actionRequestPasswordReset()
-    {
-        $model = new PasswordResetRequestForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
-
-                return $this->goHome();
-            } else {
-                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for email provided.');
-            }
-        }
-
-        return $this->render('requestPasswordResetToken', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Resets password.
-     *
-     * @param string $token
-     * @return mixed
-     * @throws BadRequestHttpException
-     */
-    public function actionResetPassword($token)
-    {
-        try {
-            $model = new ResetPasswordForm($token);
-        } catch (InvalidParamException $e) {
-            throw new BadRequestHttpException($e->getMessage());
-        }
-
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'New password was saved.');
-
-            return $this->goHome();
-        }
-
-        return $this->render('resetPassword', [
-            'model' => $model,
-        ]);
-    }
-
     public function actionLanguage()
     {
         $language = Yii::$app->request->get('language');
@@ -250,7 +147,7 @@ class SiteController extends Controller
     
     public function actionServiceLocationList() {
 		$cities = AdCity::find()->indexBy('id')->select('id, name')->asArray(true)->all();
-    	$districts = AdDistrict::find()->indexBy('id')->select('id, name, city_id')->asArray(true)->all();
+    	$districts = AdDistrict::find()->indexBy('id')->select('id, name, pre, city_id')->asArray(true)->all();
     	$wards = AdWard::find()->indexBy('id')->select('id, name, district_id, pre')->asArray(true)->all();
     	$streets = AdStreet::find()->indexBy('id')->select('id, name, district_id, pre')->asArray(true)->all();
     	$projects = AdBuildingProject::find()->indexBy('id')->with('categories')->select('id, name, district_id')->asArray(true)->all();
@@ -298,7 +195,24 @@ class SiteController extends Controller
     		$cities[$cityId]['districts'][$k] = $district;
     	}
     	
-		$content = 'var dataCities = ' . json_encode($cities, JSON_UNESCAPED_UNICODE) . ';';
+    	$categories = AdCategory::find()->indexBy('id')->select('id, name, apply_to_type, template')->asArray(true)->all();
+    	$templateMap = AdCategory::templateMap();
+    	
+    	foreach ($categories as $k => &$category) {
+    		unset($category['id']);
+    		$category['template'] = $templateMap[$category['template']];
+    	}
+    	
+
+    	$catalogs = CmsCatalog::find()->indexBy('id')->select('id, title')->asArray(true)->all();
+    	 
+    	foreach ($catalogs as $k => &$catalog) {
+    		unset($catalog['id']);
+    	}
+    	
+		$content = 'var dataCities = ' . json_encode($cities, JSON_UNESCAPED_UNICODE) . ';' .
+					'var dataCategories = ' . json_encode($categories, JSON_UNESCAPED_UNICODE) . ';' .
+					'var newsCatalogs = ' . json_encode($catalogs, JSON_UNESCAPED_UNICODE) . ';';
     	$file = fopen(Yii::$app->view->theme->basePath . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . "data.js", "w");
     	fwrite($file, $content);
 		fclose($file);

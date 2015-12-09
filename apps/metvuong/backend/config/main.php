@@ -54,9 +54,6 @@ return [
         'news' => [
             'class' => 'vsoft\news\Module',
         ],
-        'building-project' => [
-            'class' => 'vsoft\buildingProject\Module',
-        ],
         'ad' => [
             'class' => 'vsoft\ad\Module',
         ],
@@ -76,6 +73,20 @@ return [
     'components' => [
         'request' => [
             'baseUrl' => $baseUrl,
+        ],
+        'urlManager' => [
+            'class' => 'yii\web\UrlManager',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'enableStrictParsing' => false,
+            'rules' => [
+                'site/login' => 'user/security/login',
+                'site/signup' => 'user/registration/register',
+//                '<controller:\w+>/<id:\d+>' => '<controller>/view',
+//                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+//                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+
+            ]
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

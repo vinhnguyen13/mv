@@ -3,7 +3,7 @@ namespace vsoft\ad\controllers;
 
 use Yii;
 use yii\web\Controller;
-use common\vendor\vsoft\ad\models\AdCategory;
+use vsoft\ad\models\AdCategory;
 use backend\components\Sort;
 
 class CategoryController extends Controller

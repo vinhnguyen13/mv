@@ -1,50 +1,81 @@
 <?php
 
 namespace frontend\controllers;
+use frontend\components\Controller;
+use frontend\models\Ads;
 use Yii;
 use yii\helpers\Url;
 use vsoft\news\models\CmsShow;
-use common\vendor\vsoft\ad\models\AdBuildingProject;
+use vsoft\ad\models\AdBuildingProject;
+use vsoft\ad\models\AdProduct;
+use vsoft\ad\models\AdImages;
+use vsoft\ad\models\AdProductAdditionInfo;
+use vsoft\ad\models\AdContactInfo;
+use yii\web\Cookie;
+use vsoft\express\components\ImageHelper;
+use vsoft\express\components\StringHelper;
 
-class AdsController extends \yii\web\Controller
+class AdsController extends Controller
 {
     public $layout = '@app/views/layouts/layout';
 
     /**
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($result = false)
     {
         $this->layout = '@app/views/layouts/search';
+        
+        if($result) {
+        	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        	
+        	$cityId = Yii::$app->request->get('cityId');
+        	$districtId = Yii::$app->request->get('districtId');
+        	$categoryId = Yii::$app->request->get('categoryId');
+        	
+        	$query = AdProduct::find()->orderBy('created_at DESC');
+        	
+        	if($cityId) {
+        		$query->where('city_id = :city_id', [':city_id' => $cityId]);
+        	}
+        	
+        	if($districtId) {
+        		$query->andWhere('district_id = :district_id', [':district_id' => $districtId]);
+        	}
+        	
+        	$products = $query->all();
+        	
+        	$productResponse = [];
+        	foreach ($products as $k => $product) {
+        		$productResponse[$k] = $product->attributes;
+        		$productResponse[$k]['previous_time'] = StringHelper::previousTime($product->created_at);
+
+        		if($product->adImages) {
+        			$images = $product->adImages;
+        			$image = $images[0];
+        			$productResponse[$k]['image_url'] = $image->imageThumb;
+        		} else {
+        			$productResponse[$k]['image_url'] = Yii::$app->view->theme->baseUrl . '/resources/images/default-ads.jpg';;
+        		}
+        	}
+        	
+        	return $productResponse;
+        }
+        
         return $this->render('index');
+    }
+    
+    public function actionDetail($id) {
+    	$product = AdProduct::findOne($id);
+    	return $this->renderPartial('detail', ['product' => $product]); 
     }
 
     /**
      * @return \yii\web\Response
      */
-    public function actionSearch()
+    public function actionRedirect()
     {
-        $url = '/';
-        if(Yii::$app->request->isPost){
-            $post = Yii::$app->request->post();
-            if(!empty($post['news'])){
-                switch($post['news']){
-                    case 1:
-                        if($arrCats = array_values(Yii::$app->params["news"]["widget-category"])){
-                            $detail = CmsShow::find()->where('catalog_id IN ('.implode($arrCats, ',').')')
-                                ->orderBy('id DESC')->one();
-                            $url = Url::to(['news/view', 'id' => $detail->id, 'slug' => $detail->slug, 'cat_id' => $detail->catalog->id, 'cat_slug' => $detail->catalog->slug]);
-                        }
-                        break;
-                    case 2:
-                        $model = AdBuildingProject::find()->where([])->one();
-                        $url = Url::to(['/building-project/view', 'slug' => $model->slug]);
-                        break;
-                }
-            }elseif(!empty($post['city'])){
-                return $this->redirect(Url::to(['/ads/index']));
-            }
-        }
+		$url = Ads::find()->redirect();
         $this->redirect($url);
     }
 
@@ -53,15 +84,97 @@ class AdsController extends \yii\web\Controller
      */
     public function actionPost()
     {
-    	$cityId = \Yii::$app->request->post('cityId', 1);
-    	$districtId = \Yii::$app->request->post('districtId', 1);
-    	$categoryId = \Yii::$app->request->post('categoryId', 1);
+    	if(Yii::$app->user->isGuest) {
+    		return $this->render('/_systems/require_login.php');
+    	}
     	
-        return $this->render('post', [
-			'cityId' => $cityId,
-        	'districtId' => $districtId,
-        	'categoryId' => $categoryId
-        ]);
+    	$model = new AdProduct();
+    	$model->loadDefaultValues();
+    	$model->city_id = \Yii::$app->request->get('cityId', 1);
+    	$model->district_id = \Yii::$app->request->get('districtId', 22);
+    	$model->category_id = \Yii::$app->request->get('categoryId', 6);
+
+    	$adProductAdditionInfo = $model->adProductAdditionInfo ? $model->adProductAdditionInfo : (new AdProductAdditionInfo())->loadDefaultValues();
+    	$adContactInfo = $model->adContactInfo ? $model->adContactInfo : (new AdContactInfo())->loadDefaultValues();
+    	
+    	if(Yii::$app->request->isPost) {
+    		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    		
+    		$post = Yii::$app->request->post();
+    		
+    		$model->load($post);
+    		$model->start_date = time();
+    		$model->end_date = $model->start_date + (24 * 60 * 60);
+    		$model->created_at = $model->start_date;
+    		
+    		$adProductAdditionInfo->load($post);
+    		$adContactInfo->load($post);
+    		
+    		if($model->validate() && $adProductAdditionInfo->validate() && $adContactInfo->validate()) {
+    			$model->user_id = Yii::$app->user->id;
+    			$model->save(false);
+    			
+    			$adProductAdditionInfo->product_id = $model->id;
+    			$adProductAdditionInfo->save(false);
+    			
+    			$adContactInfo->product_id = $model->id;
+    			$adContactInfo->save();
+    			
+    			if(isset($post['images']) && $post['images']) {
+    				$images = explode(',', $post['images']);
+    				foreach($images as $k => $image) {
+    					if(!ctype_digit($image)) {
+    						unset($images[$k]);
+    					}
+    				}
+    				
+    				Yii::$app->db->createCommand()->update('ad_images', ["product_id" => $model->id], "`id` IN (" . implode(',', $images) . ") AND user_id = " . Yii::$app->user->id)->execute();
+    			}
+    			
+    			$result = ['success' => true];
+    		} else {
+    			$result = ['success' => false, 'errors' => ['adproduct' => $model->getErrors(), 'adproductadditioninfo' => $adProductAdditionInfo->getErrors(), 'adcontactinfo' => $adContactInfo->getErrors()]];
+    		}
+    		return $result;
+    	}
+    	
+    	return $this->render('post', ['model' => $model, 'adProductAdditionInfo' => $adProductAdditionInfo, 'adContactInfo' => $adContactInfo]);
     }
 
+    public function actionUpload() {
+    	$folder = 'ads';
+    	$response = Yii::$app->runAction('express/upload/image', ['folder' => $folder, 'resizeForAds' => true]);
+    	
+    	if($response) {
+    		$path = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . $response['files'][0]['name'];
+    		$imageHelper = new ImageHelper($path);
+    		$imageHelper->makeMedium();
+    		$imageHelper->makeLarge(true);
+    		
+    		$image = new AdImages();
+    		$image->file_name = $response['files'][0]['name'];
+    		$image->uploaded_at = time();
+    		$image->user_id = Yii::$app->user->id;
+    		$image->save(false);
+    		
+    		$response['files'][0]['deleteUrl'] = Url::to(['delete-image', 'id' => $image->id]);
+    		$response['files'][0]['name'] = $image->id;
+    		
+    		return $response;
+    	}
+    }
+    
+    public function actionDeleteImage($id) {
+    	$image = AdImages::findOne($id);
+    	if($image) {
+    		$pathInfo = pathinfo($image->file_name);
+    		$thumb = $pathInfo['filename'] .  '.thumb.' . $pathInfo['extension'];
+    		
+    		$response = Yii::$app->runAction('express/upload/delete-image', ['orginal' => $image->file_name, 'thumbnail' => $thumb, 'folder' => 'ads', 'resizeForAds' => true]);
+    		
+    		$image->delete();
+    		
+    		return $response;
+    	}
+    }
 }

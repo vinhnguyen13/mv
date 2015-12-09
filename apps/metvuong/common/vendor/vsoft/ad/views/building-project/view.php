@@ -5,8 +5,7 @@ use yii\widgets\DetailView;
 use funson86\cms\Module;
 use yii\web\View;
 use vsoft\express\components\UploadHelper;
-use vsoft\buildingProject\models\BuildingProject;
-use common\vendor\vsoft\ad\models\AdAreaType;
+use vsoft\ad\models\AdAreaType;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\CmsShow */

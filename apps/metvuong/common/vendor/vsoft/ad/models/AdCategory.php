@@ -1,9 +1,9 @@
 <?php
 
-namespace common\vendor\vsoft\ad\models;
+namespace vsoft\ad\models;
 
 use Yii;
-use common\vendor\vsoft\ad\models\base\AdCategoryBase;
+use vsoft\ad\models\base\AdCategoryBase;
 use yii\data\ActiveDataProvider;
 
 /**
@@ -18,6 +18,22 @@ use yii\data\ActiveDataProvider;
  */
 class AdCategory extends AdCategoryBase
 {
+	const TEMPLATE_SUGGEST_LIST = 1;
+	const TEMPLATE_COST_MIN_MAX = 2;
+	
+	public static function templateMap() {
+		return [
+			self::TEMPLATE_SUGGEST_LIST => 'suggest-list',
+			self::TEMPLATE_COST_MIN_MAX => 'cost-min-max',
+		];
+	}
+	
+	public static function templateLabelMap() {
+		return [
+			self::TEMPLATE_SUGGEST_LIST => 'Suggest projects list',
+			self::TEMPLATE_COST_MIN_MAX => 'Cost min max',
+		];
+	}
 
 	public function attributeLabels()
 	{

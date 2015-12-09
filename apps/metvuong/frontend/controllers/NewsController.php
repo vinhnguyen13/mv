@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use dektrium\user\models\Profile;
+use frontend\components\Controller;
 use vsoft\news\models\CmsCatalog;
 use vsoft\news\models\CmsShow;
 use Yii;
@@ -10,7 +11,7 @@ use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
 use yii\web\Response;
 
-class NewsController extends \yii\web\Controller
+class NewsController extends Controller
 {
     public $layout = 'news';
 

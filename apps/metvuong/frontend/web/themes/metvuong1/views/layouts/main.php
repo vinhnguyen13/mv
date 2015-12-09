@@ -23,6 +23,7 @@ AppAsset::register($this);
     <?php $this->head() ?>
 </head>
 <body>
+    <?php $this->beginContent('@app/views/layouts/_partials/analyticstracking.php'); ?><?php $this->endContent();?>
     <?php $this->beginBody() ?>
         <?= $content ?>
     <?php $this->endBody() ?>

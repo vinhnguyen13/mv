@@ -1,10 +1,9 @@
 <?php
 	use yii\web\View;
-use yii\helpers\Url;
-use vsoft\buildingProject\models\BuildingProject;
-use vsoft\express\components\UploadHelper;
-use common\vendor\vsoft\ad\models\AdBuildingProject;
-use common\vendor\vsoft\ad\models\AdAreaType;
+	use yii\helpers\Url;
+	use vsoft\express\components\UploadHelper;
+	use vsoft\ad\models\AdBuildingProject;
+	use vsoft\ad\models\AdAreaType;
 
 	$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/owl.carousel.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/jquery.maphilight.js', ['depends' => ['yii\web\YiiAsset']]);
@@ -89,7 +88,7 @@ $script = <<<EOD
 EOD;
 	$this->registerJs($script, View::POS_HEAD, 'bxslider' );
 
-$areaTypes = BuildingProject::getAreaTypes ();
+$areaTypes = AdBuildingProject::getAreaTypes ();
 ?>
 <div class="row">
 	<div class="col-xs-7 pdR-0">
@@ -343,7 +342,7 @@ $areaTypes = BuildingProject::getAreaTypes ();
 		</div>
 	</div>
 </div>
-<div class="social-share">
+<!-- <div class="social-share">
 	<ul>
 		<li><a href="#"><em class="fa fa-facebook"></em></a></li>
 		<li><a href="#"><em class="fa fa-twitter"></em></a></li>
@@ -353,4 +352,4 @@ $areaTypes = BuildingProject::getAreaTypes ();
 		<li><a href="#"><em class="fa fa-pinterest"></em></a></li>
 		<li><a href="#"><em class="fa fa-linkedin"></em></a></li>
 	</ul>
-</div>
+</div> -->
