@@ -1,3 +1,15 @@
+<?php 
+	use common\vendor\vsoft\ad\models\AdStreet;
+	use common\vendor\vsoft\ad\models\AdWard;
+	use common\vendor\vsoft\ad\models\AdDistrict;
+	use common\vendor\vsoft\ad\models\AdCity;
+	
+	$images = $product->adImages;
+	$street = AdStreet::findOne($product->street_id);
+	$ward = AdWard::findOne($product->ward_id);
+	$district = AdDistrict::findOne($product->district_id);
+	$city = AdCity::findOne($product->city_id);
+?>
 <div class="modal fade" id="detail-listing" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -8,76 +20,37 @@
                 </div>
                 <div class="modal-body">
                     <div class="wrap-modal clearfix">
+                    	<?php
+                    		if(!empty($images)) :
+								$firstImage = array_shift($images);
+								$images = array_chunk($images, 4);
+						?>
                         <div class="gallery-detail clearfix">
                             <div class="bxslider">
                                 <div class="wrap-img-detail">
                                     <ul class="clearfix">
                                         <li class="img-big">
-                                            <div class="bgcover" style="background-image:url(http://photos1.zillowstatic.com/p_h/ISdc652nxhtvxs0000000000.jpg);"></div>
-                                            <a data-lightbox="detail-post" class="group mask" href="http://photos1.zillowstatic.com/p_h/ISdc652nxhtvxs0000000000.jpg"><em class="fa fa-search"></em><img src="http://photos1.zillowstatic.com/p_h/ISdc652nxhtvxs0000000000.jpg" alt="" style="display:none;"></a>
-                                            
+                                            <div class="bgcover" style="background-image:url(<?= $firstImage->imageMedium ?>);"></div>
+                                            <a data-lightbox="detail-post" class="group mask" href="<?= $firstImage->imageLarge ?>"><em class="fa fa-search"></em><img src="<?= $firstImage->imageLarge ?>" alt="" style="display:none;"></a>
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="wrap-img-detail">
-                                    <ul class="clearfix">
-                                        <li>
-                                            <div class="bgcover" style="background-image:url(http://photos2.zillowstatic.com/p_c/ISptnvzc0h2vl21000000000.jpg);"></div>
-                                            <a data-lightbox="detail-post" class="group mask" href="http://photos1.zillowstatic.com/p_f/ISdc652nxhtvxs0000000000.jpg"><em class="fa fa-search"></em><img src="http://photos2.zillowstatic.com/p_c/ISptnvzc0h2vl21000000000.jpg" alt="" style="display:none;"></a>
-                                            
-                                        </li>
-                                        <li>
-                                            <div class="bgcover" style="background-image:url(http://photos2.zillowstatic.com/p_c/ISplloe7f3cvu21000000000.jpg);"></div>
-                                            <a data-lightbox="detail-post" class="group mask" href="http://photos2.zillowstatic.com/p_f/ISptnvzc0h2vl21000000000.jpg"><em class="fa fa-search"></em><img src="http://photos2.zillowstatic.com/p_c/ISplloe7f3cvu21000000000.jpg" alt="" style="display:none;"></a>
-                                            
-                                        </li>
-                                        <li>
-                                            <div class="bgcover" style="background-image:url(http://photos2.zillowstatic.com/p_c/ISd8nrbh00lw041000000000.jpg);"></div>
-                                            <a data-lightbox="detail-post" class="group mask" href="http://photos2.zillowstatic.com/p_c/ISd8nrbh00lw041000000000.jpg"><em class="fa fa-search"></em><img src="http://photos2.zillowstatic.com/p_c/ISd8nrbh00lw041000000000.jpg" alt="" style="display:none;"></a>
-                                            
-                                        </li>
-                                        <li>
-                                            <div class="bgcover" style="background-image:url(http://photos1.zillowstatic.com/p_c/IS9doo0n73xzj41000000000.jpg);"></div>
-                                            <a data-lightbox="detail-post" class="group mask" href="http://photos1.zillowstatic.com/p_c/IS9doo0n73xzj41000000000.jpg"><em class="fa fa-search"></em><img src="http://photos1.zillowstatic.com/p_c/IS9doo0n73xzj41000000000.jpg" alt="" style="display:none;"></a>
-                                            
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="wrap-img-detail">
-                                    <ul class="clearfix">
-                                        <li>
-                                            <div class="bgcover" style="background-image:url(http://photos3.zillowstatic.com/p_c/ISh7lgi7qlt58s1000000000.jpg);"></div>
-                                            <a data-lightbox="detail-post" class="group mask" href="http://photos3.zillowstatic.com/p_c/ISh7lgi7qlt58s1000000000.jpg"><em class="fa fa-search"></em><img src="http://photos3.zillowstatic.com/p_c/ISh7lgi7qlt58s1000000000.jpg" alt="" style="display:none;"></a>
-                                            
-                                        </li>
-                                        <li>
-                                            <div class="bgcover" style="background-image:url(http://photos1.zillowstatic.com/p_c/IS91z4ftnmff1w1000000000.jpg);"></div>
-                                            <a data-lightbox="detail-post" class="group mask" href="http://photos1.zillowstatic.com/p_c/IS91z4ftnmff1w1000000000.jpg"><em class="fa fa-search"></em><img src="http://photos1.zillowstatic.com/p_c/IS91z4ftnmff1w1000000000.jpg" alt="" style="display:none;"></a>
-                                            
-                                        </li>
-                                        <li>
-                                            <div class="bgcover" style="background-image:url(http://photos3.zillowstatic.com/p_c/IS5avcsirawn6w1000000000.jpg);"></div>
-                                            <a data-lightbox="detail-post" class="group mask" href="http://photos3.zillowstatic.com/p_c/IS5avcsirawn6w1000000000.jpg"><em class="fa fa-search"></em><img src="http://photos3.zillowstatic.com/p_c/IS5avcsirawn6w1000000000.jpg" alt="" style="display:none;"></a>
-                                            
-                                        </li>
-                                        <li>
-                                            <div class="bgcover" style="background-image:url(http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg);"></div>
-                                            <a data-lightbox="detail-post" class="group mask" href="http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg"><em class="fa fa-search"></em><img src="http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg" alt="" style="display:none;"></a>
-                                            
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="wrap-img-detail">
-                                    <ul class="clearfix">
-                                        <li>
-                                            <div class="bgcover" style="background-image:url(http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg);"></div>
-                                            <a data-lightbox="detail-post" class="group mask" href="http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg"><em class="fa fa-search"></em><img src="http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg" alt="" style="display:none;"></a>
-                                            
-                                        </li>
-                                    </ul>
-                                </div>
+                                <?php foreach($images as $imagesGroup): ?>
+                                	<div class="wrap-img-detail">
+                                    	<ul class="clearfix">
+		                                <?php foreach($imagesGroup as $image): ?>
+		             						<li>
+	                                            <div class="bgcover" style="background-image:url(<?= $image->imageThumb ?>);"></div>
+	                                            <a data-lightbox="detail-post" class="group mask" href="<?= $image->imageLarge ?>"><em class="fa fa-search"></em><img src="<?= $image->imageLarge ?>" alt="" style="display:none;"></a>
+	                                            
+	                                        </li>
+		                                <?php endforeach; ?>
+		                                </ul>
+	                                </div>
+                                <?php endforeach; ?>
                             </div>
                         </div>
+                        <?php endif; ?>
                         <div class="row detail-post">
                             <div class="col-sm-8 dt-left-col">
                                 <div class="rating pull-right">
@@ -89,11 +62,11 @@
                                         <li><a href="#"><em class="fa fa-star-o"></em></a></li>
                                     </ul>
                                 </div>
-                                <h1 class="title-dt">Mở bán tháp T5 căn hộ Maseti</h1>
+                                <h1 class="title-dt"><?= "{$product->home_no}, {$street->pre} {$street->name}, {$ward->pre} {$ward->name}, {$district->pre} {$district->name} {$city->name}" ?></h1>
                                 <table>
                                     <tr>
                                         <th>Giá:</th>
-                                        <td>1 tỷ 200 triệu</td>
+                                        <td><?= $product->priceFormated ?></td>
                                     </tr>
                                     <tr>
                                         <th>Tiện ích:</th>
@@ -102,10 +75,6 @@
                                     <tr>
                                         <th>Diện tích:</th>
                                         <td>77m<sup>2</sup></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Địa chỉ:</th>
-                                        <td>123 Trần Não, Quận 2, Hồ Chí Minh</td>
                                     </tr>
                                 </table>
                                 <p class="ttmt">Thông tin mô tả</p>

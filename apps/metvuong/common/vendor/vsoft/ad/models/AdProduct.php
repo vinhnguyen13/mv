@@ -67,4 +67,10 @@ class AdProduct extends AdProductBase
 		
 		return parent::beforeSave($insert);
 	}
+	
+	public function getPriceFormated() {
+		$price = $this->price;
+		
+		return $price;
+	}
 }
