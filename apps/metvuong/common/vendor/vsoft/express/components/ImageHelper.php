@@ -11,8 +11,8 @@ class ImageHelper {
 		'mediumWidth'	=>	480,
 		'mediumHeight'	=>	320,
 		'largeSuffix'	=>	'large',
-		'largeWidth'	=> 	1200,
-		'largeHeight'	=>	800,
+		'largeWidth'	=> 	960,
+		'largeHeight'	=>	640,
 	];
 	
 	private $resource;

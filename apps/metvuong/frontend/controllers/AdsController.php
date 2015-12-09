@@ -12,6 +12,7 @@ use common\vendor\vsoft\ad\models\AdImages;
 use common\vendor\vsoft\ad\models\AdProductAdditionInfo;
 use common\vendor\vsoft\ad\models\AdContactInfo;
 use yii\web\Cookie;
+use vsoft\express\components\ImageHelper;
 
 class AdsController extends Controller
 {
@@ -126,8 +127,15 @@ class AdsController extends Controller
     }
 
     public function actionUpload() {
-    	$response = Yii::$app->runAction('express/upload/image', ['folder' => 'ads']);
+    	$folder = 'ads';
+    	$response = Yii::$app->runAction('express/upload/image', ['folder' => $folder, 'resizeForAds' => true]);
+    	
     	if($response) {
+    		$path = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . $response['files'][0]['name'];
+    		$imageHelper = new ImageHelper($path);
+    		$imageHelper->makeMedium();
+    		$imageHelper->makeLarge(true);
+    		
     		$image = new AdImages();
     		$image->file_name = $response['files'][0]['name'];
     		$image->uploaded_at = time();
