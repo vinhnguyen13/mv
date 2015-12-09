@@ -6,7 +6,8 @@
 	use vsoft\ad\models\AdCategory;
 	use vsoft\ad\models\AdProduct;
 	use vsoft\ad\models\AdBuildingProject;
-use yii\helpers\Url;
+	use yii\helpers\Url;
+use vsoft\ad\models\AdProductAdditionInfo;
 	
 	$images = $product->adImages;
 	$street = AdStreet::findOne($product->street_id);
@@ -15,6 +16,7 @@ use yii\helpers\Url;
 	$city = AdCity::findOne($product->city_id);
 	$categoryName = AdCategory::findOne($product->category_id)->name;
 	$typeName = ($product->type == AdProduct::TYPE_FOR_SELL) ? 'bán' : 'cho thuê';
+	$direction = AdProductAdditionInfo::directionList();
 	
 	$owner = \dektrium\user\models\User::findOne($product->user_id);
 	if($owner->profile->avatar) {
@@ -76,7 +78,7 @@ use yii\helpers\Url;
                                     </ul>
                                 </div>
                                 <h1 class="title-dt"><?= "{$product->home_no}, {$street->pre} {$street->name}, {$ward->pre} {$ward->name}, {$district->pre} {$district->name} {$city->name}" ?></h1>
-                                <p class="type-result"><em class="fa fa-circle for-rent"></em><?= "$categoryName $typeName" ?></p>
+                                <p class="type-result"><em class="fa fa-circle for-rent"></em><?= mb_strtoupper("$categoryName $typeName", 'UTF-8') ?></p>
                                 <table>
                                     <?php if($product->project_building_id): ?>
                                     <tr>
@@ -104,25 +106,25 @@ use yii\helpers\Url;
                                     <?php if($additionInfo->facade_width): ?>
                                     <tr>
                                         <th>Mặt tiền</th>
-                                        <td><?= $additionInfo->facade_width ?></td>
+                                        <td><?= $additionInfo->facade_width ?> m</td>
                                     </tr>
                                     <?php endif; ?>
                                     <?php if($additionInfo->land_width): ?>
                                     <tr>
                                         <th>Đường vào</th>
-                                        <td><?= $additionInfo->land_width ?></td>
+                                        <td><?= $additionInfo->land_width ?> m</td>
                                     </tr>
                                     <?php endif; ?>
                                     <?php if($additionInfo->home_direction): ?>
                                     <tr>
                                         <th>Hướng nhà</th>
-                                        <td><?= $additionInfo->home_direction ?></td>
+                                        <td><?= $direction[$additionInfo->home_direction] ?></td>
                                     </tr>
                                     <?php endif; ?>
                                     <?php if($additionInfo->facade_direction): ?>
                                     <tr>
                                         <th>Hướng ban công</th>
-                                        <td><?= $additionInfo->facade_direction ?></td>
+                                        <td><?= $direction[$additionInfo->facade_direction] ?></td>
                                     </tr>
                                     <?php endif; ?>
                                     <?php if($additionInfo->floor_no): ?>

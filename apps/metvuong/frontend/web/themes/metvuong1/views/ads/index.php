@@ -48,8 +48,6 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#moi-nhat" aria-controls="moi-nhat" role="tab" data-toggle="tab">Mới nhất</a></li>
             <li role="presentation"><a href="#re-nhat" aria-controls="re-nhat" role="tab" data-toggle="tab">Rẻ nhất</a></li>
-            <li role="presentation"><a href="#phong-ngu" aria-controls="phong-ngu" role="tab" data-toggle="tab">Phòng ngủ</a></li>
-            <li role="presentation"><a href="#khac" aria-controls="khac" role="tab" data-toggle="tab">Khác</a></li>
         </ul>
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane fade in active" id="moi-nhat">
