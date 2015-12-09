@@ -198,10 +198,16 @@ $searchParams = json_decode($value, true);
                         <button id="btn-search" type="submit" class="btn btn-default">
                             <span><em class="fa fa-search"></em></span>
                         </button>
-                        <input class="getValSuggest" type="hidden" id="valTT" name="city" value="">
-                        <input class="getValSuggest" type="hidden" id="valQh" name="district" value="">
-                        <input class="getValSuggest" type="hidden" id="valLoai" name="category" value="">
-                        <input class="getValSuggest" type="hidden" id="valTTuc" name="news" value="">
+
+                        <input class="getValSuggest" type="hidden" rel="idActive" id="valActive" name="activeSearch" value="">
+                        <input class="getValSuggest" type="hidden" rel="idTt" id="valTT" name="city" value="">
+                        <input class="getValSuggest" type="hidden" rel="idQh" id="valQh" name="district" value="">
+                        <input class="getValSuggest" type="hidden" rel="idLoai" id="valLoaibds" name="category" value="">
+                        <input class="getValSuggest" type="hidden" rel="idTtuc" id="valTTuc" name="news" value="">
+                        <input class="getValSuggest" type="hidden" rel="idLoaittuc" id="valLoaiTTuc" name="typenews" value="">
+                        <input class="getValSuggest" type="hidden" rel="idDuans" id="valDuaan" name="duan" value="">
+                        <input class="getValSuggest" type="hidden" rel="idDuannews" id="valDuaannews" name="duannews" value="">
+                        
                     <?php ActiveForm::end(); ?>
                     <div class="pull-left text-right mgT-10 mgL-15 options-search">
                         <div class="icon-selected">
@@ -213,7 +219,7 @@ $searchParams = json_decode($value, true);
                             <em class="fa fa-sort-desc"></em>
                         </div>
                         <div class="search-select active">
-                            <a href="#" data-placeholder="Bạn ở Tỉnh/Thành nào ?" rel="#dd-search">
+                            <a href="#" data-placeholder="Bạn ở Tỉnh/Thành nào ?" rel="#dd-search" title="Muốn Mua/Thuê">
                                 <span>
                                     <em class="fa fa-home"></em>
                                     <em class="fa fa-search"></em>
@@ -222,7 +228,7 @@ $searchParams = json_decode($value, true);
                             </a>
                         </div>
                         <div class="search-select">
-                            <a href="#" data-placeholder="Bạn ở Tỉnh/Thành nào ?" rel="#dd-dky">
+                            <a href="#" data-placeholder="Bạn ở Tỉnh/Thành nào ?" rel="#dd-dky" title="Đăng ký Bán/Thuê">
                                 <span>
                                     <em class="fa fa-home"></em>
                                     <em class="fa fa-pencil-square-o"></em>
@@ -231,7 +237,7 @@ $searchParams = json_decode($value, true);
                             </a>
                         </div>
                         <div class="search-select">
-                            <a href="#" class="" data-step-fix="step-5" data-placeholder="Bạn nên chọn Loại Tin Tức ?" rel="#dd-news">
+                            <a href="#" class="" data-step-fix="step-5" data-placeholder="Bạn nên chọn Loại Tin Tức ?" rel="#dd-news" title="Tin Tức">
                                 <span>
                                     <em class="fa fa-home"></em>
                                     <em class="fa fa-file-text"></em>

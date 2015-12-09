@@ -53,7 +53,7 @@ body .search-result-page > .container {
 }
 .box-search-header {
     width: 60%;
-    margin: 0px auto 0;
+    /* margin: 0px auto 0; */
 }
 div.wrap-page-home .box-search-header {
     -webkit-transition: all 0.2s ease-out;
@@ -817,7 +817,7 @@ footer {
 }
 @media (min-width: 992px) and (max-width: 1199px) {
     body .container {
-        width: 90%;
+        width: 100%;
     }
     .navbar-nav>li>a {
         padding-left: 13px;
@@ -4769,8 +4769,68 @@ div.wrap-page-home .wrap-menu-option ul {
     color: #3c763d;
 }
 header.wrap-page-home .box-search-header.ani-search > div {
-    margin-left: -38px;
+    
 }
 .wrap-page-home .box-search-header.ani-search {
-    width: 51%
+    width: 600px;
+    float: left;
+    margin-left: 40px;
+}
+.animate-children.wrap-page-home .box-search-header.ani-search > div {
+    margin-left: 0;
+}
+.animate-children.wrap-page-home .box-search-header.ani-search {
+    width: 55%;
+}
+#frm-post-tin .select2 {
+    width: 100%;
+}
+#frm-post-tin .select2-container a {
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 34px;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+.select2-container .select2-choice .select2-arrow {
+    background: none;
+    border: none;
+}
+.select2-container .select2-choice > .select2-chosen {
+    line-height: 19px;
+    font-family: "Roboto";
+    font-size: 1em;
+}
+#price-format {
+    font-size: 1.2em;
+    padding-left: 15px;
+    letter-spacing: 2px;
+}
+#frm-post-tin #images-fileupload {
+    margin-left: 0;
+}
+#frm-post-tin #images-fileupload span {
+    font-family: 'Roboto';
+    font-size: 1.1em;
+}
+@media (min-width: 1024px) and (max-width: 1280px) {
+    .wrap-page-home .box-search-header.ani-search {
+        width: 520px;
+    }
+}
+@media (max-width: 1024px) {
+    .wrap-page-home .box-search-header.ani-search {
+        width: 40%;
+    }
 }

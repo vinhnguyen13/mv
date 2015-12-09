@@ -11,7 +11,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
         $(document).on('click', '#btn-search', function(){
             animateSearch();
             setTimeout(function() {
-                setTimeout(function() {$('#search-kind').submit();},500);
+                //setTimeout(function() {$('#search-kind').submit();},500);
             },1000);
             return false;
         });
@@ -19,14 +19,14 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
         $(document).bind( 'real-estate/news', function(event, json, string){
             animateSearch();
             setTimeout(function() {
-                setTimeout(function() {$('#search-kind').submit();},100);
+                //setTimeout(function() {$('#search-kind').submit();},100);
             },1000);
         });
         
         $(document).bind( 'real-estate/post', function(event, json, string){
             animateSearch();
             setTimeout(function() {
-                location.href = '<?=Url::to(['/ads/post'])?>';
+                //location.href = '<?=Url::to(['/ads/post'])?>';
             },1000);
         });
 
@@ -115,11 +115,11 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
                                                 <h3>Chọn dự án ?</h3>
                                                 <ul class="list-duan-news">
-                                                    <li><a href="#">RICHSTAR</a></li>
-                                                    <li><a href="#">SUNRISE RIVERSIDE</a></li>
-                                                    <li><a href="#">ORCHARD PARKVIEW</a></li>
-                                                    <li><a href="#">GOLDEN MANSION</a></li>
-                                                    <li><a href="#">KINGSTON RESIDENCE</a></li>
+                                                    <li data-id-duannews="1"><a href="#">RICHSTAR</a></li>
+                                                    <li data-id-duannews="2"><a href="#">SUNRISE RIVERSIDE</a></li>
+                                                    <li data-id-duannews="3"><a href="#">ORCHARD PARKVIEW</a></li>
+                                                    <li data-id-duannews="4"><a href="#">GOLDEN MANSION</a></li>
+                                                    <li data-id-duannews="5"><a href="#">KINGSTON RESIDENCE</a></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -132,7 +132,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                                 <h3>Nhập khoảng giá ?</h3>
                                                 <div class="frm-cost-min-max clearfix">
                                                     <div class="form-group inline-group box-cost col-xs-5" data-tab="min">
-                                                        <input id="minCost" type="text" class="form-control cost-value" placeholder="min" readonly="readonly">
+                                                        <input name="costMin" id="minCost" type="text" class="form-control cost-value" placeholder="min" readonly="readonly">
                                                         <div class="outsideevent wrap-cost-bds hidden-cost">
                                                             <div class="wrap-effect-cost">
                                                                 <ul>
@@ -149,7 +149,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                                     </div>
                                                     <div class="line-center form-group inline-group box-cost col-xs-2"><span></span></div>
                                                     <div class="form-group inline-group box-cost col-xs-5" data-tab="max">
-                                                        <input id="maxCost" type="text" class="form-control cost-value" placeholder="max" readonly="readonly">
+                                                        <input name="costMax" id="maxCost" type="text" class="form-control cost-value" placeholder="max" readonly="readonly">
                                                         <div class="outsideevent wrap-cost-bds hidden-cost">
                                                             <div class="wrap-effect-cost">
                                                                 <ul>
@@ -186,18 +186,21 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     <span><em class="fa fa-search"></em></span>
                                 </button>
 
-                                <!--
-                                    {valTThanh:1, valQH:1, valLBDS:1, valMin: 200, valMax: 300,}
-                                    <input class="valTotal" type="hidden" id="valAll" name="valSearch" value="">-->
-                                <input class="getValSuggest" type="hidden" id="valTT" name="city" value="">
-                                <input class="getValSuggest" type="hidden" id="valQh" name="district" value="">
-                                <input class="getValSuggest" type="hidden" id="valLoai" name="category" value="">
-                                <input class="getValSuggest" type="hidden" id="valTTuc" name="news" value="">
+                                
+                                <input class="getValSuggest" type="hidden" rel="idActive" id="valActive" name="activeSearch" value="">
+                                <input class="getValSuggest" type="hidden" rel="idTt" id="valTT" name="city" value="">
+                                <input class="getValSuggest" type="hidden" rel="idQh" id="valQh" name="district" value="">
+                                <input class="getValSuggest" type="hidden" rel="idLoai" id="valLoaibds" name="category" value="">
+                                <input class="getValSuggest" type="hidden" rel="idTtuc" id="valTTuc" name="news" value="">
+                                <input class="getValSuggest" type="hidden" rel="idLoaittuc" id="valLoaiTTuc" name="typenews" value="">
+                                <input class="getValSuggest" type="hidden" rel="idDuans" id="valDuaan" name="duan" value="">
+                                <input class="getValSuggest" type="hidden" rel="idDuannews" id="valDuaannews" name="duannews" value="">
+
                                 
                             <?php ActiveForm::end(); ?>
                             <div class="pull-left text-right mgT-10 mgL-15">
                                 <div class="search-select active">
-                                    <a href="#" data-placeholder="Chọn Tỉnh/Thành ?" rel="#dd-search">
+                                    <a href="#" data-placeholder="Chọn Tỉnh/Thành ?" rel="#dd-search" title="Muốn Mua/Thuê" data-active="1">
                                         <span>
                                             <em class="fa fa-home"></em>
                                             <em class="fa fa-search"></em>
@@ -206,7 +209,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     </a>
                                 </div>
                                 <div class="search-select">
-                                    <a href="#" data-placeholder="Chọn Tỉnh/Thành ?" rel="#dd-dky">
+                                    <a href="#" data-placeholder="Chọn Tỉnh/Thành ?" rel="#dd-dky" title="Đăng ký Bán/Thuê" data-active="2">
                                         <span>
                                             <em class="fa fa-home"></em>
                                             <em class="fa fa-pencil-square-o"></em>
@@ -215,7 +218,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     </a>
                                 </div>
                                 <div class="search-select">
-                                    <a href="#" class="" data-step-fix="step-5" data-placeholder="Chọn Loại Tin Tức ?" rel="#dd-news">
+                                    <a href="#" class="" data-step-fix="step-5" data-placeholder="Chọn Loại Tin Tức ?" rel="#dd-news" title="Tin Tức" data-active="3">
                                         <span>
                                             <em class="fa fa-home"></em>
                                             <em class="fa fa-file-text"></em>

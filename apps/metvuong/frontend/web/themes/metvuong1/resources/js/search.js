@@ -29,7 +29,6 @@
 	        	objEvent.removeSuggest();
 	        	loadCost.init();
 	        	objEvent.centerBox();
-	        	objEvent.getDataTinhThanhQuanHuyen();
 	        },
 	        getDataTinhThanhQuanHuyen: function () {
 	        	$('.list-tinh-thanh').html('');
@@ -45,14 +44,6 @@
 			    }
 	        },
 	        searchEvent: function() {
-	        	objEvent.tabsSearch.each(function() {
-	        		var txtPlaceholder = $(this).data('placeholder');
-	        		if( $(this).parent().hasClass('active') ) {
-	        			objEvent.itemInput.attr('placeholder', txtPlaceholder);	
-	        			objEvent.flagTrigger = $(this).attr('rel');
-	        			itemTabs(objEvent.flagTrigger);
-	        		}
-	        	});
 	        	objEvent.tabsSearch.on('click', function(e) {
 	        		e.preventDefault();
 	        		var _this = $(this),
@@ -70,8 +61,20 @@
 			    	if( _this.closest('.search-dropdown').length > 0 ) {
 	                    _this.closest('.search-dropdown').removeClass('search-dropdown');
 	                }
+
+	                $('#valActive').val(_this.data('active'));
 			    	
 			        return false;
+	        	});
+
+	        	objEvent.tabsSearch.each(function() {
+	        		var txtPlaceholder = $(this).data('placeholder');
+	        		if( $(this).parent().hasClass('active') ) {
+	        			$('#valActive').val($(this).data('active'));
+	        			objEvent.itemInput.attr('placeholder', txtPlaceholder);	
+	        			objEvent.flagTrigger = $(this).attr('rel');
+	        			itemTabs(objEvent.flagTrigger);
+	        		}
 	        	});
 
 				function itemTabs(itemTab) {
@@ -95,7 +98,7 @@
 			                $('.list-loai-tt').html('');
 			                $('.list-tintuc-suggest').html('');
 			                for( var i in newsCatalogs ) {
-						        var $item = $('<li data-id-news="'+i+'"><a title="'+newsCatalogs[i].title+'" href="#">'+newsCatalogs[i].title+'</a></li>');
+						        var $item = $('<li data-id-loaittuc="'+i+'"><a title="'+newsCatalogs[i].title+'" href="#">'+newsCatalogs[i].title+'</a></li>');
 						        $('.list-tintuc-suggest').append($item);   
 						    }
 			                $.getJSON(url_ttuc, function(result){
@@ -178,12 +181,16 @@
 	                    txt = _this.text(),
 	                    $itemSuggest = $('<li data-step="'+objEvent.countStep+'"><i>x</i><span></span></li>'),
 	                    itemId = '',
+	                    nameAttr = '',
+	                    relAttr = '',
 	                    templateSuggest = _this.data('templateShow');
 
 	                // render quận/huyện theo tỉnh/thành phố
 	                if( _this.parent().data('idTt') != undefined ) {
 	                    $('#valTT').val(_this.parent().data('idTt'));
 	                    itemId = _this.parent().data('idTt');
+	                    nameAttr = 'data-id-tt';
+	                    relAttr = 'idTt';
 
 	                    for( var i in dataCities ) {
 	                        if( i == _this.parent().data('idTt') ) {
@@ -203,15 +210,35 @@
 	                if( _this.parent().data('idQh') != undefined ) {
 	                    $('#valQh').val(_this.parent().data('idQh'));
 	                    itemId = _this.parent().data('idQh');
+	                    nameAttr = 'data-id-qh';
+	                    relAttr = 'idQh';
 	                }else if( _this.parent().data('idLoai') != undefined ) {
-	                    $('#valLoai').val(_this.parent().data('idLoai'));
+	                    $('#valLoaibds').val(_this.parent().data('idLoai'));
 	                    itemId = _this.parent().data('idLoai');
+	                    nameAttr = 'data-id-loai';
+	                    relAttr = 'idLoai';
+	                }else if( _this.parent().data('idDuans') != undefined ) {
+	                    $('#valDuaan').val(_this.parent().data('idDuans'));
+	                    itemId = _this.parent().data('idDuans');
+	                    nameAttr = 'data-id-duans';
+	                    relAttr = 'idDuans';
 	                }else if( _this.parent().data('idTtuc') != undefined ) {
 	                    $('#valTTuc').val(_this.parent().data('idTtuc'));
 	                    itemId = _this.parent().data('idTtuc');
+	                    nameAttr = 'data-id-ttuc';
+	                    relAttr = 'idTtuc';
+	                }else if( _this.parent().data('idDuannews') != undefined ) {
+	                    $('#valDuaannews').val(_this.parent().data('idDuannews'));
+	                    itemId = _this.parent().data('idDuannews');
+	                    nameAttr = 'data-id-duannews';
+	                    relAttr = 'idDuannews';
+	                }else if( _this.parent().data('idLoaittuc') != undefined ) {
+	                    $('#valLoaiTTuc').val(_this.parent().data('idLoaittuc'));
+	                    itemId = _this.parent().data('idLoaittuc');
+	                    nameAttr = 'data-id-loaittuc';
+	                    relAttr = 'idLoaittuc';
 	                }
-	                $itemSuggest.attr('data-item-id',itemId);
-					//end
+	                //end
 
 					//render dự án theo Loại Bất Động Sản
 					var idTThanh =  $('#valTT').val(),
@@ -221,7 +248,7 @@
 	                if( idTThanh != '' && idQh != '' && idLoaiBDS != '' && _this.parent().data('idLoai') != undefined ) {
 	                    $('.list-duan-suggest').html('');
 	                    for( var i in dataCities[idTThanh].districts[idQh].projects ) {
-	                        var $item = $('<li><a title="'+dataCities[idTThanh].districts[idQh].projects[i].name+'" href="#">'+dataCities[idTThanh].districts[idQh].projects[i].name+'</a></li>');
+	                        var $item = $('<li data-id-duans='+i+'><a title="'+dataCities[idTThanh].districts[idQh].projects[i].name+'" href="#">'+dataCities[idTThanh].districts[idQh].projects[i].name+'</a></li>');
                             $('.list-duan-suggest').append($item);
 	                    }
 	                }
@@ -247,7 +274,9 @@
 					if( !objEvent.editItem ) { // insert item mới
 	                    
 	                    $itemSuggest.find('span').text(txt);
-	                    
+	                    $itemSuggest.find('span').attr('title',txt);
+	                    $itemSuggest.attr(nameAttr,itemId);
+	                    $itemSuggest.attr('rel',relAttr);
 	                    objEvent.wrapListSuggest.append($itemSuggest);
 
 	                    objEvent.checkCounter();
@@ -260,6 +289,8 @@
 	                }else {// edit item đã được chọn
 	                    objEvent.wrapListSuggest.find('li[data-step='+objEvent.editItem+'] span').text(txt);
 	                    objEvent.wrapListSuggest.find('li[data-step='+objEvent.editItem+']').attr('data-next', objEvent.countStep);
+	                    objEvent.wrapListSuggest.find('li[data-step='+objEvent.editItem+']').attr(nameAttr,itemId);
+	                    $itemSuggest.attr('rel',relAttr);
 	                    objEvent.editItem = '';
 	                }
 	                
@@ -289,8 +320,11 @@
 	                    count = 0;
 
 	                for( var i = objEvent.wrapListSuggest.find('li').length; i > getStep ; i-- ) {
+	                	var idInputHiddenRemove = objEvent.wrapListSuggest.find('li').eq(i-1).attr('rel');
+						$('.getValSuggest[rel='+idInputHiddenRemove+']').val('');
+
 	                	objEvent.wrapListSuggest.find('li').eq(i-1).remove();
-	                }
+					}
 	                
 	                objEvent.resizeWidthInput();
 	                
@@ -331,8 +365,11 @@
 	                
 	                var index = $('.type-search li[data-step='+boxId+']').index();
                 	for ( var i = index; i <= objEvent.lenghtSuggest; i++ ) {
-                		var itemIndex = index + 1;
-                		
+                		var itemIndex = index + 1,
+                			idInputHiddenRemove = $('.type-search li').eq(itemIndex).attr('rel');
+
+                		$('.getValSuggest[rel='+idInputHiddenRemove+']').val('');
+
                 		$('.type-search li').eq(itemIndex).remove();
                 	}
 	                objEvent.resizeWidthInput();
@@ -358,10 +395,10 @@
 	            objEvent.next = '';
 	            objEvent.lenghtSuggest = 0;
 	            objEvent.wrapListSuggest.hide().find('li').remove();
-	            objEvent.resizeWidthInput();
 	            objEvent.flagEnd = false;
 	            $('.getValSuggest').val('');
 	            objEvent.wrapStep.find('li a').removeAttr('data-template-show');
+	            objEvent.resizeWidthInput();
 	        },
 	        updateSuggert: function(countStep, lenghtSuggest) {
 	            objEvent.countStep = countStep;
@@ -508,7 +545,7 @@ function animateSearch() {
     var $boxSearch = $('.box-search-header'),
         wBox = $boxSearch.outerWidth(),
         wWin = $('.wrap-search-home').outerWidth(),
-        cBox = Math.floor(wWin/2 - wBox/2);
+        cBox = 220;//Math.floor(wWin/2 - wBox/2);
     setTimeout(function() {
         $('.wrap-search-home .logo-home').addClass('ani-logo').css({
             'transform': 'translate3d( 0, 0, 0)',

@@ -64,14 +64,14 @@ $type = [
 					<label for="" class="col-sm-3 control-label">Địa chỉ *</label>
 					<div class="col-sm-9 group-item-frm">
 						<div class="form-group">
-							<?= Html::activeDropDownList($model, 'ward_id', [], ['class' => 'col-xs-6 select2', 'prompt' => 'Phường/Xã'])?>
+							<?= Html::activeDropDownList($model, 'ward_id', [], ['class' => 'select2', 'prompt' => 'Phường/Xã'])?>
 							<div class="help-block" style="display: none;"></div>
 						</div>
 						<div class="form-group">
-							<?= Html::activeDropDownList($model, 'street_id', [], ['class' => 'col-xs-6 select2', 'prompt' => 'Đường'])?>
+							<?= Html::activeDropDownList($model, 'street_id', [], ['class' => 'select2', 'prompt' => 'Đường'])?>
 							<div class="help-block" style="display: none;"></div>
 						</div>
-						<div class="col-xs-6 inline-group mgB-0">
+						<div class="mgB-0">
 							<?= Html::activeTextInput($model, 'home_no', ['class' => 'form-control', 'placeholder' => $model->getAttributeLabel('home_no')]) ?>
 							<div class="help-block" style="display: none;"></div>
 						</div>
@@ -86,11 +86,11 @@ $type = [
 				<div class="form-group text-inline">
 					<label for="" class="col-sm-3 control-label">Diện tích *</label>
 					<div class="col-sm-9">
-						<div class="inline-group col-xs-6">
+						<div class="inline-group col-xs-10">
 							<?= Html::activeTextInput($model, 'area', ['class' => 'form-control number-only', 'data-float' => '1']) ?>
 						<div class="help-block" style="display: none;"></div>
 						</div>
-						<div class="inline-group col-xs-6 pdR-0">
+						<div class="inline-group col-xs-2 pdR-0">
 							<span>
 								<span style="display: inline;" id="area-format"></span>
 								m<sup>2</sup>
@@ -101,11 +101,11 @@ $type = [
 				<div class="form-group">
 					<label for="" class="col-sm-3 control-label">Giá *</label>
 					<div class="col-sm-9 group-item-frm">
-						<div class="inline-group col-xs-6">
+						<div class="inline-group col-xs-12 mgB-10">
 							<?= Html::activeTextInput($model, 'price', ['class' => 'form-control number-only']) ?>
 							<div class="help-block" style="display: none;"></div>
 						</div>
-						<div class="inline-group col-xs-6">
+						<div class="inline-group col-xs-12">
 							<span style="display: inline;" id="price-format"></span>
 						</div>
 					</div>
