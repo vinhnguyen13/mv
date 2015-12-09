@@ -18,7 +18,7 @@ $(document).ready(function(){
 		$('#adproduct-project_building_id').append('<option value="' + index + '">' + project.name + '</option>');
 	}
 	
-	$('.select2').select2();
+	$('.select2').select2({width: 'resolve'});
 	
 	$('.number-only').keydown(function(e){
 		var allow = [46, 8, 9, 27, 13, 110, 116];
