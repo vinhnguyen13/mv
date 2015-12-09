@@ -1,6 +1,6 @@
 <?php
 
-namespace common\vendor\vsoft\ad\models;
+namespace vsoft\ad\models;
 
 use yii\data\ActiveDataProvider;
 use yii\base\Model;

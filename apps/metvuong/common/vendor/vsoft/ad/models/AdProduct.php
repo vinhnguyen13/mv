@@ -1,9 +1,9 @@
 <?php
 
-namespace common\vendor\vsoft\ad\models;
+namespace vsoft\ad\models;
 
 use Yii;
-use common\vendor\vsoft\ad\models\base\AdProductBase;
+use vsoft\ad\models\base\AdProductBase;
 
 
 class AdProduct extends AdProductBase

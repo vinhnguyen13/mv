@@ -12,7 +12,7 @@ use yii\base\Component;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use vsoft\news\models\CmsShow;
-use common\vendor\vsoft\ad\models\AdBuildingProject;
+use vsoft\ad\models\AdBuildingProject;
 use yii\web\Cookie;
 
 class Ads extends Component

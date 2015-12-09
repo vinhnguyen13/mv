@@ -2,12 +2,12 @@
 use yii\web\View;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
-use common\vendor\vsoft\ad\models\AdProduct;
+use vsoft\ad\models\AdProduct;
 use yii\helpers\Html;
 use common\widgets\FileUploadUI;
 use yii\helpers\ArrayHelper;
-use common\vendor\vsoft\ad\models\AdProductAdditionInfo;
-use common\vendor\vsoft\ad\models\AdContactInfo;
+use vsoft\ad\models\AdProductAdditionInfo;
+use vsoft\ad\models\AdContactInfo;
 $this->title = Yii::t ( 'express', 'We offer exeptional amenities and renowned white - glove services' );
 
 $this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/select2.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);

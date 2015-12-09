@@ -6,7 +6,7 @@ use vsoft\user\Module;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use common\vendor\vsoft\ad\models\AdInvestor;
+use vsoft\ad\models\AdInvestor;
 use common\widgets\FileUploadUI;
 use yii\helpers\Url;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace common\vendor\vsoft\ad\models\base;
+namespace vsoft\ad\models\base;
 
 use Yii;
 

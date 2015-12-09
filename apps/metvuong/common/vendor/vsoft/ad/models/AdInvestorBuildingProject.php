@@ -1,9 +1,9 @@
 <?php
 
-namespace common\vendor\vsoft\ad\models;
+namespace vsoft\ad\models;
 
 use Yii;
-use common\vendor\vsoft\ad\models\base\AdInvestorBuildingProjectBase;
+use vsoft\ad\models\base\AdInvestorBuildingProjectBase;
 
 /**
  * This is the model class for table "ad_investor_building_project".

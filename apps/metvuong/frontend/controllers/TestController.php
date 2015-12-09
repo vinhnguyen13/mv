@@ -6,7 +6,7 @@ use vsoft\user\models\User;
 use Yii;
 use yii\helpers\Url;
 use vsoft\news\models\CmsShow;
-use common\vendor\vsoft\ad\models\AdBuildingProject;
+use vsoft\ad\models\AdBuildingProject;
 
 class TestController extends \yii\web\Controller
 {

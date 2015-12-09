@@ -3,7 +3,7 @@ namespace vsoft\ad\controllers;
 
 use Yii;
 use yii\web\Controller;
-use common\vendor\vsoft\ad\models\AdInvestor;
+use vsoft\ad\models\AdInvestor;
 
 class InvestorController extends Controller
 {

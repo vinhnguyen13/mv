@@ -54,9 +54,6 @@ return [
         'news' => [
             'class' => 'vsoft\news\Module',
         ],
-        'building-project' => [
-            'class' => 'vsoft\buildingProject\Module',
-        ],
         'ad' => [
             'class' => 'vsoft\ad\Module',
         ],

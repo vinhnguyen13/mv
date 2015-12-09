@@ -6,11 +6,11 @@ use frontend\models\Ads;
 use Yii;
 use yii\helpers\Url;
 use vsoft\news\models\CmsShow;
-use common\vendor\vsoft\ad\models\AdBuildingProject;
-use common\vendor\vsoft\ad\models\AdProduct;
-use common\vendor\vsoft\ad\models\AdImages;
-use common\vendor\vsoft\ad\models\AdProductAdditionInfo;
-use common\vendor\vsoft\ad\models\AdContactInfo;
+use vsoft\ad\models\AdBuildingProject;
+use vsoft\ad\models\AdProduct;
+use vsoft\ad\models\AdImages;
+use vsoft\ad\models\AdProductAdditionInfo;
+use vsoft\ad\models\AdContactInfo;
 use yii\web\Cookie;
 use vsoft\express\components\ImageHelper;
 

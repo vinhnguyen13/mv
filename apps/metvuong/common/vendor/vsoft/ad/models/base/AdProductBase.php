@@ -1,17 +1,17 @@
 <?php
 
-namespace common\vendor\vsoft\ad\models\base;
+namespace vsoft\ad\models\base;
 
 use Yii;
-use common\vendor\vsoft\ad\models\AdContactInfo;
-use common\vendor\vsoft\ad\models\AdImages;
-use common\vendor\vsoft\ad\models\AdCategory;
-use common\vendor\vsoft\ad\models\AdCity;
-use common\vendor\vsoft\ad\models\AdDistrict;
-use common\vendor\vsoft\ad\models\AdBuildingProject;
-use common\vendor\vsoft\ad\models\AdStreet;
-use common\vendor\vsoft\ad\models\AdProductAdditionInfo;
-use common\vendor\vsoft\ad\models\AdWard;
+use vsoft\ad\models\AdContactInfo;
+use vsoft\ad\models\AdImages;
+use vsoft\ad\models\AdCategory;
+use vsoft\ad\models\AdCity;
+use vsoft\ad\models\AdDistrict;
+use vsoft\ad\models\AdBuildingProject;
+use vsoft\ad\models\AdStreet;
+use vsoft\ad\models\AdProductAdditionInfo;
+use vsoft\ad\models\AdWard;
 use vsoft\ad\models\base\AdProductAdditionInfoBase;
 
 /**

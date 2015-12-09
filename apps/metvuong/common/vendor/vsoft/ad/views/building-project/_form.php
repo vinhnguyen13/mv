@@ -6,10 +6,10 @@ use common\widgets\FileUploadUI;
 use yii\helpers\Url;
 use common\widgets\CKEditor;
 use yii\web\View;
-use common\vendor\vsoft\ad\models\AdBuildingProject;
+use vsoft\ad\models\AdBuildingProject;
 use yii\helpers\ArrayHelper;
-use common\vendor\vsoft\ad\models\AdDistrict;
-use common\vendor\vsoft\ad\models\AdCity;
+use vsoft\ad\models\AdDistrict;
+use vsoft\ad\models\AdCity;
 
 $this->registerJsFile(Yii::getAlias('@web') . '/js/jquery.maphilight.js', ['depends' => ['yii\web\YiiAsset']]);
 $this->registerJsFile(Yii::getAlias('@web') . '/js/select2.min.js', ['depends' => ['yii\web\YiiAsset']]);

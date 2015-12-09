@@ -1,10 +1,10 @@
 <?php
 
-namespace common\vendor\vsoft\ad\models;
+namespace vsoft\ad\models;
 
 use Yii;
-use common\vendor\vsoft\ad\models\base\AdBuildingProjectBase;
-use common\vendor\vsoft\ad\models\base\AdAreaTypeBase;
+use vsoft\ad\models\base\AdBuildingProjectBase;
+use vsoft\ad\models\base\AdAreaTypeBase;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 use yii\db\ActiveRecord;
@@ -13,6 +13,8 @@ use yii\helpers\ArrayHelper;
 
 class AdBuildingProject extends AdBuildingProjectBase
 {
+	private static $areaTypes = [];
+	
 	const STATUS_ENABLED = 1;
 	const STATUS_DISABLED = 0;
 
@@ -29,6 +31,18 @@ class AdBuildingProject extends AdBuildingProjectBase
 	        [['name', 'logo', 'land_area', 'apartment_no', 'floor_no', 'start_time', 'estimate_finished', 'hotline', 'slug'], 'string', 'max' => 32],
 	        [['location', 'investment_type', 'commercial_leasing_area', 'owner_type', 'facilities', 'website'], 'string', 'max' => 255]
         ];
+    }
+    
+    public static function getAreaTypes() {
+    	if(!self::$areaTypes) {
+    		self::$areaTypes = [
+	    		'bpfApartmentArea' => Yii::t('ads', 'Khu căn hộ'),
+	    		'bpfCommercialArea' => Yii::t('ads', 'Khu thương mại'),
+	    		'bpfTownhouseArea' => Yii::t('ads', 'Khu nhà phố'),
+	    		'bpfOffice' => Yii::t('ads', 'Khu Office - Officetel')
+    		];
+    	}
+    	return self::$areaTypes;
     }
     
     public function attributeLabels()

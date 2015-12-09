@@ -1,9 +1,9 @@
 <?php
 
-namespace common\vendor\vsoft\ad\models;
+namespace vsoft\ad\models;
 
 use Yii;
-use common\vendor\vsoft\ad\models\base\AdContactInfoBase;
+use vsoft\ad\models\base\AdContactInfoBase;
 
 /**
  * This is the model class for table "ad_contact_info".

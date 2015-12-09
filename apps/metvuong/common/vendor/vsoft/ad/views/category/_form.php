@@ -6,11 +6,11 @@ use vsoft\user\Module;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use common\vendor\vsoft\ad\models\AdInvestor;
+use vsoft\ad\models\AdInvestor;
 use common\widgets\FileUploadUI;
 use yii\helpers\Url;
-use common\vendor\vsoft\ad\models\AdProduct;
-use common\vendor\vsoft\ad\models\AdCategory;
+use vsoft\ad\models\AdProduct;
+use vsoft\ad\models\AdCategory;
 
 /* @var $this yii\web\View */
 /* @var $model funson86\cms\models\CmsShow */
