@@ -29,23 +29,41 @@ function start() {
 			
 			$.get('/ads/detail', {id: $(this).data('detail')}, function(response){
 				$('#detail-listing').html($(response).html()).modal();
-				$('#detail-listing .bxslider').bxSlider({
-	                moveSlides: 1,
-	                startSlide: 0,
-	                minSlides: 1,
-	                maxSlides: 2,
-	                slideWidth: 444,
-	                startSlide: 0,
-	                onSliderLoad: function() {
-	                    this.infiniteLoop = false;
-	                    this.hideControlOnEnd = true;
-	                    scrollFixed();
-	                }
-	            });
-				lightbox.option({
-		            'resizeDuration': 300,
-		            'fadeDuration': 400
-		        });
+				$('.gallery-detail').imagesLoaded()
+				 	.always( function( instance ) {
+					    // all loaded (broken + success)
+				 		console.log('all images loaded');
+				 	})
+				 	.done( function( instance ) {
+				 		setTimeout(function() {
+				 			$('#detail-listing .bxslider').bxSlider({
+				                moveSlides: 1,
+				                startSlide: 0,
+				                minSlides: 1,
+				                maxSlides: 2,
+				                slideWidth: 444,
+				                startSlide: 0,
+				                onSliderLoad: function() {
+				                    this.infiniteLoop = false;
+				                    this.hideControlOnEnd = true;
+				                    scrollFixed();
+				                }
+				            });
+							lightbox.option({
+					            'resizeDuration': 300,
+					            'fadeDuration': 400
+					        });
+				 		},500);
+					    
+				 	})
+				 	.fail( function() {
+				 		console.log('all images loaded, at least one is broken');
+				 	})
+				 	.progress( function( instance, image ) {
+				 		var result = image.isLoaded ? 'loaded' : 'broken';
+				 		console.log( 'image is ' + result + ' for ' + image.img.src );
+				 	});
+				
 			});
 		});
 		

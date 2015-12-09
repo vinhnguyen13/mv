@@ -106,7 +106,7 @@ $type = [
 							<?= Html::activeTextInput($model, 'price', ['class' => 'form-control number-only']) ?>
 							<div class="help-block" style="display: none;"></div>
 						</div>
-						<div class="inline-group col-xs-12">
+						<div class="inline-group col-xs-6 pdR-0">
 							<span style="display: inline;" id="price-format"></span>
 						</div>
 					</div>
