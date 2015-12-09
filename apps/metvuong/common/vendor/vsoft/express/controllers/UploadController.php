@@ -75,14 +75,21 @@ class UploadController extends Controller
     		return $response;
     	}
     }
-    public function actionDeleteImage($orginal, $thumbnail, $deleteLater = false, $folder = 'building-project-images') {
+    public function actionDeleteImage($orginal, $thumbnail, $deleteLater = false, $folder = 'building-project-images', $resizeForAds = false) {
     	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     	
     	if(! $deleteLater) {
-    		$dir = \Yii::getAlias('@store') . '/' . $folder;
+    		$dir = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $folder;
     		 
-    		unlink($dir . '/' . $orginal);
-    		unlink($dir . '/' . $thumbnail);
+    		unlink($dir . DIRECTORY_SEPARATOR . $orginal);
+    		unlink($dir . DIRECTORY_SEPARATOR . $thumbnail);
+    		
+    		if($resizeForAds) {
+    			$pathinfo = pathinfo($orginal);
+    			
+    			unlink($dir . DIRECTORY_SEPARATOR . $pathinfo['filename'] . '.medium.' . $pathinfo['extension']);
+    			unlink($dir . DIRECTORY_SEPARATOR . $pathinfo['filename'] . '.large.' . $pathinfo['extension']);
+    		}
     	}
     	
     	return ['files' => []];

@@ -155,7 +155,7 @@ class AdsController extends Controller
     		$pathInfo = pathinfo($image->file_name);
     		$thumb = $pathInfo['filename'] .  '.thumb.' . $pathInfo['extension'];
     		
-    		$response = Yii::$app->runAction('express/upload/delete-image', ['orginal' => $image->file_name, 'thumbnail' => $thumb, 'folder' => 'ads']);
+    		$response = Yii::$app->runAction('express/upload/delete-image', ['orginal' => $image->file_name, 'thumbnail' => $thumb, 'folder' => 'ads', 'resizeForAds' => true]);
     		
     		$image->delete();
     		
