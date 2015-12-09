@@ -68,11 +68,11 @@ $type = [
 							<div class="help-block" style="display: none;"></div>
 						</div>
 						<div class="form-group">
-							<?= Html::activeDropDownList($model, 'street_id', [], ['class' => 'select2', 'prompt' => 'Đường'])?>
+							<?= Html::activeDropDownList($model, 'street_id', [], ['class' => 'col-xs-6 select2', 'prompt' => 'Đường'])?>
 							<div class="help-block" style="display: none;"></div>
 						</div>
 						<div class="form-group">
-							<?= Html::activeDropDownList($model, 'ward_id', [], ['class' => 'mgB-0 select2', 'prompt' => 'Phường/Xã'])?>
+							<?= Html::activeDropDownList($model, 'ward_id', [], ['class' => 'col-xs-6 mgB-0 select2', 'prompt' => 'Phường/Xã'])?>
 							<div class="help-block" style="display: none;"></div>
 						</div>
 					</div>
