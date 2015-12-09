@@ -17,9 +17,9 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
         });
 
         $(document).bind( 'real-estate/news', function(event, json, string){
-            //animateSearch();
+            animateSearch();
             setTimeout(function() {
-                //setTimeout(function() {$('#search-kind').submit();},100);
+                setTimeout(function() {$('#search-kind').submit();},100);
             },1000);
         });
         

@@ -2310,9 +2310,9 @@ div.wrap-page-home #search-kind .dropdown button {
     z-index: 999;
     -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
-    -webkit-transform: translateY(6px);
-    -ms-transform: translateY(6px);
-    transform: translateY(6px);
+    -webkit-transform: translateY(12px);
+    -ms-transform: translateY(12px);
+    transform: translateY(12px);
     -webkit-transform 0.25s;
     transition: transform 0.25s;
     -webkit-backface-visibility: hidden;
@@ -2403,10 +2403,9 @@ div.wrap-page-home #search-kind .dropdown button {
     padding-top: 3px;
 }
 .type-search ul li {
-    display: inline-block;
     margin-right: 5px;
     background: #dbdbdb;
-    padding: 0 8px 2px 8px;
+    padding: 0 8px 2px 17px;
     font-size: .9em;
     font-weight: bold;
     border-radius: 3px;
@@ -2414,24 +2413,25 @@ div.wrap-page-home #search-kind .dropdown button {
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
     float: left;
+    position: relative;
 }
 .type-search li i {
-    display: inline-block;
-    margin-right: 4px;
-    position: relative;
-    top: -3px;
     cursor: pointer;
     font-style: normal;
+    position: absolute;
+    top: 30%;
+    left: 6px;
 }
 .type-search li span {
-    display: inline-block;
+    display: block;
     max-width: 100px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: pointer;
     position: relative;
-    top: -1px;
+    /* top: -1px; */
+    padding: 12px 0 9px;
 }
 .type-search li span:hover {
     color: #A0A0A0;
@@ -2517,7 +2517,7 @@ div.wrap-page-home #search-kind .dropdown button {
     background: url(../images/loading-suggest.gif) no-repeat center;
 }
 .home-page {
-    /* position: relative; */
+    position: relative;
     z-index: 5;
     transition: all .2s ease-in-out;
     -webkit-transition: all .2s ease-in-out;
@@ -2702,22 +2702,34 @@ div.wrap-page-home .ani-logo {
 
 }
 .wrap-search-home .type-search ul {
-    height: 47px;
-    line-height: 46px;
-    padding: 9px 0 0 5px;
+    /* height: 47px; */
+    /* line-height: 46px; */
+    padding: 5px 0 0 5px;
 }
-div.wrap-page-home .type-search ul {
+.wrap-page-home .type-search ul,
+.wrap-page-home .type-search ul li,
+.wrap-page-home .type-search li i,
+.wrap-page-home .type-search li span {
     transition: all .3s ease-out;
     -webkit-transition: all .3s ease-out;
     -moz-transition: all .3s ease-out;
     -ms-transition: all .3s ease-out;
 }
 .border-shadow .wrap-search-home .type-search ul {
-    padding-top: 4px;
+    /* padding-top: 4px; */
 }
 .wrap-search-home .type-search li {
-    font-size: 2em;
+    font-size: 2.3em;
     padding-top: 0;
+}
+.wrap-search-home .ani-search .type-search li {
+    font-size: 2em;
+}
+.wrap-search-home .ani-search .type-search li span {
+    padding: 6px 0 4px;
+}
+.wrap-search-home .ani-search .type-search i {
+    top: 5px;
 }
 .wrap-search-home .type-search li span {
     font-size: .5em;
@@ -2849,7 +2861,7 @@ div.wrap-page-home .type-search ul {
     position: absolute;
     top: 0;
     left: 0;
-    width: 58%;
+    width: 60%;
 }
 div.wrap-page-home .box-search-header {
     transition: all .3s ease-in-out;
@@ -4608,7 +4620,7 @@ div._2ix0 {
     top: 98px;
 }
 .wrap-menu-option {
-    width: 230px;
+    /* width: 230px; */
 }
 .animate-children .box-search-header > div {
     position: relative;
@@ -4728,7 +4740,7 @@ header.wrap-page-home .wrap-search-home .ani-search {
 }
 .wrap-search-home .search-item ul a,
 .home-page li:first-child a {
-    max-width: 150px;
+    /* max-width: 150px; */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -4740,18 +4752,25 @@ header.wrap-page-home .wrap-search-home .ani-search {
     overflow-x: initial;
 }
 div.wrap-page-home .wrap-menu-option {
-    width: 100%;
+    /* width: 100%; */
 }
 div.wrap-page-home .wrap-menu-option ul {
     float: right;
 }
-div.wrap-page-home .wrap-menu-option li {
+.wrap-page-home .wrap-menu-option li {
     float: left;
     margin-left: 10px;
+    max-width: 170px;
 }
-div.wrap-page-home .wrap-menu-option li:last-child {
+.wrap-page-home .wrap-menu-option li:last-child {
     margin-left: 0;
 }
 .wrap-search-home .search-select.active a {
     color: #3c763d;
+}
+header.wrap-page-home .box-search-header.ani-search > div {
+    margin-left: -38px;
+}
+.wrap-page-home .box-search-header.ani-search {
+    width: 51%
 }

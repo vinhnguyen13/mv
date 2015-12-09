@@ -1,36 +1,11 @@
 (function() {
 	"use strict";
 
-	for( var i in dataCities ) {
-        var $itemTinhThanh = $('<li data-id-tt='+i+'><a title="'+dataCities[i].name+'" href="#valTT">'+dataCities[i].name+'</a></li>');
-        $('.list-tinh-thanh').append($itemTinhThanh);
-    }
-
-    for( var i in dataCategories ) {
-        var $item = $('<li data-id-loai='+i+'><a title="'+dataCategories[i].name+'" data-template-show="'+dataCategories[i].template+'" href="#valLoai">'+dataCategories[i].name+'</a></li>');
-        $('.list-loai-bds').append($item);   
-    }
-
-    for( var i in newsCatalogs ) {
-        var $item = $('<li data-id-news="'+i+'"><a title="'+newsCatalogs[i].title+'" href="#">'+newsCatalogs[i].title+'</a></li>');
-        $('.list-tintuc-suggest').append($item);   
-    }
-
-    $.getJSON(url_ttuc, function(result){
-        arrJSONReturn.objTTuc = result;
-        for( var i = 0; i < result.length; i++ ) {
-            var $item = $('<li data-id-ttuc='+result[i].id+'><a data-template-show="'+result[i].template+'" href="#valTTuc">'+result[i].ten_tt+'</a></li>');
-            $('.list-loai-tt').append($item);   
-        }
-    });
-
-
-
 	var objEvent = {
 			itemInput: $('#searchInput'),
 			tabsSearch: $('.search-select a'),
 	        flagEnd : false,
-	        flagSetTemplate: '',
+	        flagSetTemplate: [],
 	        countStep : 1,
 	        currentStep : 0,
 	        wrapListSuggest: $('.type-search ul'),
@@ -39,7 +14,7 @@
 	        flagOpenSugget : false,
 	        flagTrigger : '',
 	        current: 0,
-	        next: 0,
+	        next: '',
 	        timeoutClose: '',
 	        editItem: '',
 	        icon: $('#search-kind button span'),
@@ -54,6 +29,20 @@
 	        	objEvent.removeSuggest();
 	        	loadCost.init();
 	        	objEvent.centerBox();
+	        	objEvent.getDataTinhThanhQuanHuyen();
+	        },
+	        getDataTinhThanhQuanHuyen: function () {
+	        	$('.list-tinh-thanh').html('');
+	        	$('.list-loai-bds').html('');
+	        	for( var i in dataCities ) {
+			        var $itemTinhThanh = $('<li data-id-tt='+i+'><a title="'+dataCities[i].name+'" href="#valTT">'+dataCities[i].name+'</a></li>');
+			        $('.list-tinh-thanh').append($itemTinhThanh);
+			    }
+
+			    for( var i in dataCategories ) {
+			        var $item = $('<li data-id-loai='+i+'><a title="'+dataCategories[i].name+'" data-template-show="'+dataCategories[i].template+'" href="#valLoai">'+dataCategories[i].name+'</a></li>');
+			        $('.list-loai-bds').append($item);   
+			    }
 	        },
 	        searchEvent: function() {
 	        	objEvent.tabsSearch.each(function() {
@@ -88,18 +77,38 @@
 				function itemTabs(itemTab) {
 			        switch(itemTab) {
 			            case '#dd-search':
+			            	objEvent.getDataTinhThanhQuanHuyen();
 			                objEvent.flagTrigger = '#dd-search';
 			                objEvent.icon.html('<em class="fa fa-search"></em>');
 			                objEvent.iconScrollSearch.find('span').html('<em class="fa fa-home"></em><em class="fa fa-search"></em>');
 			                break;
 			            case '#dd-dky':
-			                //_this.trigger( 'real-estate/post', [{data: '1'}, 'something'] );
+			            	//_this.trigger( 'real-estate/post', [{data: '1'}, 'something'] );
+			            	objEvent.getDataTinhThanhQuanHuyen();
+			            	$('.list-loai-bds li a').attr('data-end-submit',true);
 			                objEvent.icon.html('<em class="fa fa-pencil-square-o"></em>');
 			                objEvent.iconScrollSearch.find('span').html('<em class="fa fa-home"></em><em class="fa fa-pencil-square-o"></em>');
 			                objEvent.flagTrigger = '#dd-dky';
 			                break;
 			            case '#dd-news':
 			                //_this.trigger( 'real-estate/news', [{data: '1'}, 'something'] );
+			                $('.list-loai-tt').html('');
+			                $('.list-tintuc-suggest').html('');
+			                for( var i in newsCatalogs ) {
+						        var $item = $('<li data-id-news="'+i+'"><a title="'+newsCatalogs[i].title+'" href="#">'+newsCatalogs[i].title+'</a></li>');
+						        $('.list-tintuc-suggest').append($item);   
+						    }
+			                $.getJSON(url_ttuc, function(result){
+						        arrJSONReturn.objTTuc = result;
+						        for( var i = 0; i < result.length; i++ ) {
+						            var $item = $('<li data-id-ttuc='+result[i].id+'><a data-template-show="'+result[i].template+'" href="#valTTuc">'+result[i].ten_tt+'</a></li>');
+						            $('.list-loai-tt').append($item);   
+						        }
+						    });
+
+						    $('.list-duan-news li a').attr('data-end-submit',true);
+						    $('.list-tintuc-suggest li a').attr('data-end-submit',true);
+
 			                objEvent.icon.html('<em class="fa fa-file-text"></em>');
 			                objEvent.iconScrollSearch.find('span').html('<em class="fa fa-home"></em><em class="fa fa-file-text"></em>');
 			                objEvent.flagTrigger = '#dd-news';
@@ -112,8 +121,15 @@
 	        	objEvent.itemInput.on('click', function (e) {
 	        		e.preventDefault();
 	        		var _this = $(this);
+
 	        		objEvent.editItem = '';
-			        if( !objEvent.flagEnd )
+
+	        		if ( objEvent.next != '' ) {
+	        			objEvent.countStep = objEvent.next;
+	        			objEvent.next = '';
+	        		}
+
+	        		if( !objEvent.flagEnd )
 			        	objEvent.open(objEvent.countStep);
 				});
 	        },
@@ -160,7 +176,7 @@
 	                e.preventDefault();
 	                var _this = $(this),
 	                    txt = _this.text(),
-	                    $itemSuggest = $('<li data-step="'+objEvent.countStep+'" data-step-show='+_this.attr('href')+'><i>x</i><span></span></li>'),
+	                    $itemSuggest = $('<li data-step="'+objEvent.countStep+'"><i>x</i><span></span></li>'),
 	                    itemId = '',
 	                    templateSuggest = _this.data('templateShow');
 
@@ -175,10 +191,6 @@
 	                            for( var j in dataCities[i].districts ) {
 	                                var $item = $('<li data-id-qh='+j+'><a title="'+dataCities[i].districts[j].name+'" href="#valQh">'+dataCities[i].districts[j].name+'</a></li>');
 	                                
-	                                if ( objEvent.flagSetTemplate == 'quan-huyen' ) {
-	                                	$('.search-wrap[data-template='+objEvent.flagSetTemplate+'] li a').attr('data-template-show', 'suggest-duan-news');
-	                                }
-
 	                                $('.list-quan-huyen').append($item);
 	                            }
 	                        }
@@ -198,7 +210,7 @@
 	                    $('#valTTuc').val(_this.parent().data('idTtuc'));
 	                    itemId = _this.parent().data('idTtuc');
 	                }
-					$itemSuggest.attr('data-item-id',itemId);
+	                $itemSuggest.attr('data-item-id',itemId);
 					//end
 
 					//render dự án theo Loại Bất Động Sản
@@ -215,33 +227,31 @@
 	                }
 	                //end
 
+	                if( templateSuggest !== undefined && templateSuggest != '' ) {
+                    	objEvent.flagSetTemplate = templateSuggest.replace(/ /g,'').split(',');
+                    	objEvent.countStep = objEvent.flagSetTemplate[0];
+                    	$itemSuggest.attr('data-next',objEvent.countStep);
+                		objEvent.flagSetTemplate.splice(0,1);
+                		$(".search-wrap[data-template="+objEvent.countStep+"] li a").attr('data-template-show',objEvent.flagSetTemplate);
+                    }
+
+                    if( objEvent.flagTrigger == '#dd-dky' && _this.data('endSubmit') ) {
+                        _this.trigger( 'real-estate/post', [{data: '1'}, 'something'] );
+                        objEvent.flagEnd = true;
+                    }
+
+                    if( objEvent.flagTrigger == '#dd-news' && _this.data('endSubmit') ) {
+                        _this.trigger( 'real-estate/news', [{data: '1'}, 'something'] );
+                    }
+
 					if( !objEvent.editItem ) { // insert item mới
 	                    
 	                    $itemSuggest.find('span').text(txt);
 	                    
 	                    objEvent.wrapListSuggest.append($itemSuggest);
 
-	                    if( objEvent.flagTrigger == '#dd-dky' && objEvent.countStep === 3 ) {
-	                        _this.trigger( 'real-estate/post', [{data: '1'}, 'something'] );
-	                        objEvent.flagEnd = true;
-	                    }
-
-	                    setTimeout(function() {
-	                        if( objEvent.flagTrigger == '#dd-news' ) {
-	                            _this.trigger( 'real-estate/news', [{data: '1'}, 'something'] );
-	                        }
-	                    },200);
-
 	                    objEvent.checkCounter();
 	                    
-	                    if( templateSuggest !== undefined && templateSuggest != '' ) {
-	                    	objEvent.countStep = templateSuggest;
-	                    	if ( templateSuggest == 'tinh-thanh' ) {
-	                    		objEvent.countStep = 1;
-	                    		objEvent.flagSetTemplate = 'quan-huyen';
-	                    	}
-	                    }
-
 	                    var txtStep;
 	                    txtStep = isNaN(objEvent.countStep) ? $(".search-wrap[data-template="+objEvent.countStep+"]").data('txtStep') : $('#step-'+objEvent.countStep).data('txtStep');
 
@@ -249,9 +259,7 @@
 
 	                }else {// edit item đã được chọn
 	                    objEvent.wrapListSuggest.find('li[data-step='+objEvent.editItem+'] span').text(txt);
-	                    if( templateSuggest !== undefined ) {
-	                    	objEvent.countStep = templateSuggest;
-	                    }
+	                    objEvent.wrapListSuggest.find('li[data-step='+objEvent.editItem+']').attr('data-next', objEvent.countStep);
 	                    objEvent.editItem = '';
 	                }
 	                
@@ -286,7 +294,8 @@
 	                
 	                objEvent.resizeWidthInput();
 	                
-	                objEvent.countStep = $parentList.data('step');
+	                objEvent.next = objEvent.countStep = $parentList.data('step');
+
 	                objEvent.flagEnd = false;
 
 	                if( !isNaN(objEvent.countStep) ) {
@@ -310,19 +319,22 @@
 	                e.preventDefault();
 	                
 	                var _this = $(this),
-	                    boxId = _this.parent().data('step');
+	                    boxId = _this.parent().data('step'),
+	                    nextId = _this.parent().data('next');
 
 	                objEvent.editItem = boxId;
+
+	                objEvent.next = nextId;
 
 	                $('.type-search li').removeClass('active');
 	                _this.parent().addClass('active');
 	                
-	                for( var i = objEvent.lenghtSuggest; i >= 0 ; i-- ) {
-	                    if( i > boxId ) {
-	                        $('.type-search li').eq(i-1).remove();
-	                    }
-	                }
-
+	                var index = $('.type-search li[data-step='+boxId+']').index();
+                	for ( var i = index; i <= objEvent.lenghtSuggest; i++ ) {
+                		var itemIndex = index + 1;
+                		
+                		$('.type-search li').eq(itemIndex).remove();
+                	}
 	                objEvent.resizeWidthInput();
 
 	                objEvent.open(boxId);
@@ -343,12 +355,13 @@
 	        },
 	        reset: function() {
 	            objEvent.countStep = 1;
+	            objEvent.next = '';
 	            objEvent.lenghtSuggest = 0;
 	            objEvent.wrapListSuggest.hide().find('li').remove();
 	            objEvent.resizeWidthInput();
 	            objEvent.flagEnd = false;
 	            $('.getValSuggest').val('');
-	            objEvent.flagSetTemplate = '';
+	            objEvent.wrapStep.find('li a').removeAttr('data-template-show');
 	        },
 	        updateSuggert: function(countStep, lenghtSuggest) {
 	            objEvent.countStep = countStep;
