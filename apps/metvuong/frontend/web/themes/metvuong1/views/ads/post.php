@@ -63,16 +63,16 @@ $type = [
 				<div class="form-group">
 					<label for="" class="col-sm-3 control-label">Địa chỉ *</label>
 					<div class="col-sm-9 group-item-frm">
-						<div class="col-xs-6 form-group">
-							<?= Html::activeTextInput($model, 'home_no', ['class' => 'form-control', 'placeholder' => $model->getAttributeLabel('home_no')]) ?>
+						<div class="form-group">
+							<?= Html::activeDropDownList($model, 'ward_id', [], ['class' => 'col-xs-6 select2', 'prompt' => 'Phường/Xã'])?>
 							<div class="help-block" style="display: none;"></div>
 						</div>
 						<div class="form-group">
 							<?= Html::activeDropDownList($model, 'street_id', [], ['class' => 'col-xs-6 select2', 'prompt' => 'Đường'])?>
 							<div class="help-block" style="display: none;"></div>
 						</div>
-						<div class="form-group">
-							<?= Html::activeDropDownList($model, 'ward_id', [], ['class' => 'col-xs-6 mgB-0 select2', 'prompt' => 'Phường/Xã'])?>
+						<div class="col-xs-6 form-group mgB-0">
+							<?= Html::activeTextInput($model, 'home_no', ['class' => 'form-control', 'placeholder' => $model->getAttributeLabel('home_no')]) ?>
 							<div class="help-block" style="display: none;"></div>
 						</div>
 					</div>
