@@ -86,11 +86,11 @@ $type = [
 				<div class="form-group text-inline">
 					<label for="" class="col-sm-3 control-label">Diện tích *</label>
 					<div class="col-sm-9">
-						<div class="inline-group col-xs-10">
+						<div class="inline-group col-xs-6">
 							<?= Html::activeTextInput($model, 'area', ['class' => 'form-control number-only', 'data-float' => '1']) ?>
 						<div class="help-block" style="display: none;"></div>
 						</div>
-						<div class="inline-group col-xs-2 pdR-0">
+						<div class="inline-group col-xs-6 pdR-0">
 							<span>
 								<span style="display: inline;" id="area-format"></span>
 								m<sup>2</sup>
@@ -101,7 +101,7 @@ $type = [
 				<div class="form-group">
 					<label for="" class="col-sm-3 control-label">Giá *</label>
 					<div class="col-sm-9 group-item-frm">
-						<div class="inline-group col-xs-12 mgB-10">
+						<div class="inline-group col-xs-6 mgB-10">
 							<?= Html::activeTextInput($model, 'price', ['class' => 'form-control number-only']) ?>
 							<div class="help-block" style="display: none;"></div>
 						</div>

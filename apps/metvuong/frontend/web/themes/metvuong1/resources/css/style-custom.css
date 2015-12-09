@@ -45,7 +45,7 @@ body .search-result-page > .container {
     padding: 0;
     position: static;
     height: 100%;
-    padding-bottom: 48px;
+    padding-bottom: 157px;
     padding-top: 0;
 }
 #slide-menu-right {
@@ -4833,4 +4833,8 @@ header.wrap-page-home .box-search-header.ani-search > div {
     .wrap-page-home .box-search-header.ani-search {
         width: 40%;
     }
+}
+.list-results li .wrap-img {
+    width: 150px;
+    padding-left: 10px;
 }
