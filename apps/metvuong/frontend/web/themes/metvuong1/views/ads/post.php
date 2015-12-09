@@ -8,6 +8,7 @@ use common\widgets\FileUploadUI;
 use yii\helpers\ArrayHelper;
 use vsoft\ad\models\AdProductAdditionInfo;
 use vsoft\ad\models\AdContactInfo;
+use common\widgets\CKEditor;
 $this->title = Yii::t ( 'express', 'We offer exeptional amenities and renowned white - glove services' );
 
 $this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/select2.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
@@ -116,10 +117,15 @@ $type = [
 				</button>
 			</div>
 			<div class="fieldset clearfix" style="display: none;">
-				<div class="form-group">
-					<?= Html::activeTextarea($model, 'content', ['class' => 'form-control', 'placeholder' => $model->getAttributeLabel('content')]) ?>
-					<div class="help-block" style="display: none;"></div>
-				</div>
+				<?= $form->field($model, 'content', ['errorOptions' => ['style' => 'display: none;', 'class' => 'help-block']])->widget(CKEditor::className(), [
+		    		'editorOptions' => [
+						'preset' => 'basic',
+						'inline' => false,
+						'height' => 150,
+						'resize_enabled' => true,
+						'removePlugins' => '',
+		    		]
+		    	]) ?>
 				<?= FileUploadUI::widget([
 					'name' => 'images',
 					'id' => 'images',
