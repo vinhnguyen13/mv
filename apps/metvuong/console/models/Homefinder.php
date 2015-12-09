@@ -39,7 +39,6 @@ class Homefinder extends Component
             $start = time();
             foreach ($list as $item) {
                 $this->getListProject($item->href);
-
             }
             $end = time();
         }
@@ -52,9 +51,14 @@ class Homefinder extends Component
         $list = $content->find('.menu ul.list_project li');
         if (!empty($list)) {
             $start = time();
+            ob_start();
             foreach ($list as $item) {
                 $a = $item->find('a');
                 $this->getProjectDetail($a[0]->href);
+                echo $a[0]->innertext();
+                echo "\n";
+                sleep(1);
+                ob_flush();
             }
             $end = time();
         }
@@ -74,10 +78,6 @@ class Homefinder extends Component
                     $room_id = $matches[1];
                     $room_id = str_replace('"', '', $room_id);
                     $this->pagingListing($room_id, $this->page_current);
-                    echo "<pre>";
-                    print_r('Done 1 project!');
-                    echo "</pre>";
-                    exit;
                 }
             }
             $end = time();
