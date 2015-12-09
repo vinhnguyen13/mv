@@ -70,7 +70,7 @@ function start() {
 			var price = (product.type == 1) ? product.price : product.price + '/tháng';
 			
 			var li = '<li data-detail="' + product.id +'" data-id="' + markerId + '">' +
-                        '<a href="#" class="wrap-img pull-left"><img src="' + product.image_url + '" alt=""></a>' +
+                        '<div class="bgcover wrap-img pull-left" style="background-image:url('+product.image_url+')"><a href="#" class=""></a></div>' +
                         '<div class="infor-result">' +
                             '<p class="item-title">' + address + '</p>' +
                             '<p class="type-result"><em class="fa fa-circle for-rent"></em>' + category + ' ' + type + '</p>' +

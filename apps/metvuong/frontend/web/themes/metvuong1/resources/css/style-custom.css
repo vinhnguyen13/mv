@@ -3302,7 +3302,7 @@ padding-bottom: 5px;
 .list-results li {
     float: left;
     width: 100%;
-    padding: 10px 0;
+    padding: 10px 0 10px 10px;
     border-bottom: 1px solid #4a933a;
     cursor: pointer;
     transition: all .3s ease-out;
@@ -3328,11 +3328,12 @@ padding-bottom: 5px;
 .infor-result .item-title {
     font-weight: bold;
     color: #3c763d;
-    font-size: 1.2em;
+    font-size: 1.05em;
     line-height: 18px;
 }
 .infor-result .type-result {
     font-weight: bold;
+    font-size: .85em;
 }
 .infor-result .type-result em {
     margin-right: 5px;
@@ -3344,17 +3345,17 @@ padding-bottom: 5px;
     color: #EF0303;
 }
 .infor-result .rice-result {
-    font-size: 2em;
+    font-size: 1.6em;
 }
 .infor-result .beds-baths-sqft {
-    font-size: 1.15em;
+    font-size: 1.1em;
     line-height: 18px;
 }
 .infor-result .beds-baths-sqft sup {
     font-size: .8em;
 }
 .list-results .infor-result .date-post-rent {
-    font-size: 1.35em;
+    font-size: 1.2em;
     margin-bottom: 0;
 }
 .infor-result .date-post-rent span {
@@ -4835,6 +4836,6 @@ header.wrap-page-home .box-search-header.ani-search > div {
     }
 }
 .list-results li .wrap-img {
-    width: 150px;
-    padding-left: 10px;
+    width: 170px;
+    height: 120px;
 }
