@@ -3,12 +3,25 @@
 	use common\vendor\vsoft\ad\models\AdWard;
 	use common\vendor\vsoft\ad\models\AdDistrict;
 	use common\vendor\vsoft\ad\models\AdCity;
+	use common\vendor\vsoft\ad\models\AdCategory;
+	use common\vendor\vsoft\ad\models\AdProduct;
+	use common\vendor\vsoft\ad\models\AdBuildingProject;
+use yii\helpers\Url;
 	
 	$images = $product->adImages;
 	$street = AdStreet::findOne($product->street_id);
 	$ward = AdWard::findOne($product->ward_id);
 	$district = AdDistrict::findOne($product->district_id);
 	$city = AdCity::findOne($product->city_id);
+	$categoryName = AdCategory::findOne($product->category_id)->name;
+	$typeName = ($product->type == AdProduct::TYPE_FOR_SELL) ? 'bán' : 'cho thuê';
+	
+	$owner = \dektrium\user\models\User::findOne($product->user_id);
+	if($owner->profile->avatar) {
+		$avatar = Url::to('/store/avatar/' . $owner->profile->avatar);
+	} else {
+		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
+	}
 ?>
 <div class="modal fade" id="detail-listing" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -63,28 +76,87 @@
                                     </ul>
                                 </div>
                                 <h1 class="title-dt"><?= "{$product->home_no}, {$street->pre} {$street->name}, {$ward->pre} {$ward->name}, {$district->pre} {$district->name} {$city->name}" ?></h1>
+                                <p class="type-result"><em class="fa fa-circle for-rent"></em><?= "$categoryName $typeName" ?></p>
                                 <table>
+                                    <?php if($product->project_building_id): ?>
+                                    <tr>
+                                        <th>Dự án</th>
+                                        <td><?= AdBuildingProject::findOne($product->project_building_id)->name ?></td>
+                                    </tr>
+                                    <?php endif; ?>
                                     <tr>
                                         <th>Giá:</th>
                                         <td><?= $product->priceFormated ?></td>
                                     </tr>
                                     <tr>
-                                        <th>Tiện ích:</th>
-                                        <td>10 phòng ngủ, 6 phòng tắm, 10 toilet</td>
-                                    </tr>
-                                    <tr>
                                         <th>Diện tích:</th>
-                                        <td>77m<sup>2</sup></td>
+                                        <td><?= $product->area ?>m<sup>2</sup></td>
                                     </tr>
                                 </table>
                                 <p class="ttmt">Thông tin mô tả</p>
                                 <?= $product->content ?>
+                                <?php
+                                	if($product->adProductAdditionInfo):
+                                		$additionInfo = $product->adProductAdditionInfo;
+                                ?>
+                                <p class="ttmt">Thông tin thêm</p>
+                                <table>
+                                    <?php if($additionInfo->facade_width): ?>
+                                    <tr>
+                                        <th>Mặt tiền</th>
+                                        <td><?= $additionInfo->facade_width ?></td>
+                                    </tr>
+                                    <?php endif; ?>
+                                    <?php if($additionInfo->land_width): ?>
+                                    <tr>
+                                        <th>Đường vào</th>
+                                        <td><?= $additionInfo->land_width ?></td>
+                                    </tr>
+                                    <?php endif; ?>
+                                    <?php if($additionInfo->home_direction): ?>
+                                    <tr>
+                                        <th>Hướng nhà</th>
+                                        <td><?= $additionInfo->home_direction ?></td>
+                                    </tr>
+                                    <?php endif; ?>
+                                    <?php if($additionInfo->facade_direction): ?>
+                                    <tr>
+                                        <th>Hướng ban công</th>
+                                        <td><?= $additionInfo->facade_direction ?></td>
+                                    </tr>
+                                    <?php endif; ?>
+                                    <?php if($additionInfo->floor_no): ?>
+                                    <tr>
+                                        <th>Số tầng</th>
+                                        <td><?= $additionInfo->floor_no ?></td>
+                                    </tr>
+                                    <?php endif; ?>
+                                    <?php if($additionInfo->room_no): ?>
+                                    <tr>
+                                        <th>Số phòng ngủ</th>
+                                        <td><?= $additionInfo->room_no ?></td>
+                                    </tr>
+                                    <?php endif; ?>
+                                    <?php if($additionInfo->toilet_no): ?>
+                                    <tr>
+                                        <th>Số toilet</th>
+                                        <td><?= $additionInfo->toilet_no ?></td>
+                                    </tr>
+                                    <?php endif; ?>
+                                    <?php if($additionInfo->interior): ?>
+                                    <tr>
+                                        <th>Nội thất</th>
+                                        <td><?= $additionInfo->interior ?></td>
+                                    </tr>
+                                    <?php endif; ?>
+                                </table>
+                                <?php endif; ?>
                             </div>
                             <div class="col-sm-4 dt-right-col">
                                 <div class="contact-wrapper">
                                     <p class="title-contact">Liên hệ</p>
                                     <div class="contact-person clearfix">
-                                        <a href="#" class="wrap-img pull-left"><img src="<?= Yii::$app->view->theme->baseUrl ?>/resources/images/11.jpg" alt=""></a>
+                                        <a href="#" class="wrap-img pull-left"><img src="<?= $avatar ?>" alt=""></a>
                                         <div class="clearfix">
                                             <div class="rating pull-right">
                                                 <ul class="clearfix">
@@ -95,12 +167,24 @@
                                                     <li><a href="#"><em class="fa fa-star-o"></em></a></li>
                                                 </ul>
                                             </div>
-                                            <p><strong>Tên:</strong>Nguyễn Văn A Tủn</p>
-                                            <p><strong>DĐ:</strong>0905269326</p>
-                                            <p><strong>ĐC:</strong>123 Trần Khánh Dư, Q1, HCM</p>
+                                            <?php if($product->adContactInfo->name): ?>
+                                            <p><strong>Tên:</strong><?= $product->adContactInfo->name ?></p>
+                                            <?php endif; ?>
+                                            <?php if($product->adContactInfo->phone): ?>
+                                            <p><strong>Điện thoại:</strong><?= $product->adContactInfo->phone ?></p>
+                                            <?php endif; ?>
+                                            <?php if($product->adContactInfo->mobile): ?>
+                                            <p><strong>Di động:</strong><?= $product->adContactInfo->mobile ?></p>
+                                            <?php endif; ?>
+                                            <?php if($product->adContactInfo->address): ?>
+                                            <p><strong>Địa chỉ:</strong><?= $product->adContactInfo->address ?></p>
+                                            <?php endif; ?>
+                                            <?php if($product->adContactInfo->email): ?>
+                                            <p><strong>Email:</strong><?= $product->adContactInfo->email ?></p>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
-                                    <form action="" id="frm-contact-person">
+                                    <form style="display: none;" action="" id="frm-contact-person">
                                         <div class="form-group">
                                             <input type="text" class="form-control" placeholder="Tên bạn">
                                         </div>
