@@ -70,7 +70,7 @@ function start() {
 			var price = (product.type == 1) ? product.price : product.price + '/tháng';
 			
 			var li = '<li data-detail="' + product.id +'" data-id="' + markerId + '">' +
-                        '<a href="#" class="wrap-img pull-left"><img src="/frontend/web/themes/metvuong1/resources/images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>' +
+                        '<a href="#" class="wrap-img pull-left"><img src="' + product.image_url + '" alt=""></a>' +
                         '<div class="infor-result">' +
                             '<p class="item-title">' + address + '</p>' +
                             '<p class="type-result"><em class="fa fa-circle for-rent"></em>' + category + ' ' + type + '</p>' +

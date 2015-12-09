@@ -49,6 +49,14 @@ class AdsController extends Controller
         	foreach ($products as $product) {
         		$productResponse[$product->id] = $product->attributes;
         		$productResponse[$product->id]['previous_time'] = StringHelper::previousTime($product->created_at);
+
+        		if($product->adImages) {
+        			$images = $product->adImages;
+        			$image = $images[0];
+        			$productResponse[$product->id]['image_url'] = $image->imageThumb;
+        		} else {
+        			$productResponse[$product->id]['image_url'] = Yii::$app->view->theme->baseUrl . '/resources/images/default-ads.jpg';;
+        		}
         	}
         	
         	return $productResponse;
