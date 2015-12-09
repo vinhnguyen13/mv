@@ -46,16 +46,16 @@ class AdsController extends Controller
         	$products = $query->all();
         	
         	$productResponse = [];
-        	foreach ($products as $product) {
-        		$productResponse[$product->id] = $product->attributes;
-        		$productResponse[$product->id]['previous_time'] = StringHelper::previousTime($product->created_at);
+        	foreach ($products as $k => $product) {
+        		$productResponse[$k] = $product->attributes;
+        		$productResponse[$k]['previous_time'] = StringHelper::previousTime($product->created_at);
 
         		if($product->adImages) {
         			$images = $product->adImages;
         			$image = $images[0];
-        			$productResponse[$product->id]['image_url'] = $image->imageThumb;
+        			$productResponse[$k]['image_url'] = $image->imageThumb;
         		} else {
-        			$productResponse[$product->id]['image_url'] = Yii::$app->view->theme->baseUrl . '/resources/images/default-ads.jpg';;
+        			$productResponse[$k]['image_url'] = Yii::$app->view->theme->baseUrl . '/resources/images/default-ads.jpg';;
         		}
         	}
         	
