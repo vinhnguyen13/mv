@@ -40,8 +40,8 @@ class Homefinder extends Component
             $start = time();
             foreach ($list as $idx => $item) {
                 if($item->href && $idx > 0){
-                    $this->getListProject($item->href);
                     echo $item->title;
+                    $this->getListProject($item->href);
                 }
             }
             $end = time();
