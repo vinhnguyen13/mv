@@ -3882,7 +3882,7 @@ div.wrap-page-home .logo-home {
     line-height: 18px;
 }
 .wrap-ttmt p {
-    font-size: 1.2em;
+    font-size: 1em;
     line-height: 18px;
     margin-bottom: 10px;
 }
@@ -4847,7 +4847,7 @@ header.wrap-page-home .box-search-header.ani-search > div {
 }
 .list-results li .wrap-img {
     width: 170px;
-    height: 140px;
+    height: 125px;
     background-position: 50% center;
 }
 .fieldset #cke_adproduct-content {
