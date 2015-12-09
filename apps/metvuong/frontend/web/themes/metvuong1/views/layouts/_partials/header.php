@@ -2,53 +2,15 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 $value = \Yii::$app->getRequest()->getCookies()->getValue('searchParams');
-$searchParams = json_decode($value, true);
-
+$searchParams = json_decode($value);
 ?>
 <script type="text/javascript">
-    var jsonActive = [
-        <?php if(!empty($searchParams['city'])):?>
-        {
-            "idItem": <?=$searchParams['city']?>,
-            "stepId": 1,
-            "stepShow": "#valTT",
-            "name_item": dataCities[<?=$searchParams['city'];?>].name
-        },
-        <?php endif;?>
-        <?php if(!empty($searchParams['district'])):?>
-        {
-            "idItem": <?=$searchParams['district']?>,
-            "stepId": 2,
-            "stepShow": "#valQh",
-            "name_item": dataCities[<?=$searchParams['city'];?>].districts[<?=$searchParams['district']?>].name
-        },
-        <?php endif;?>
-        <?php if(!empty($searchParams['category'])):?>
-        {
-            "idItem": <?=$searchParams['category']?>,
-            "stepId": 3,
-            "stepShow": "#valLoai",
-            "name_item": dataCategories[<?=$searchParams['category']?>].name
-        }
-        <?php endif;?>
-    ];
-
-    $(document).ready(function() {
-        getActiveSuggert(jsonActive);
-    });
 
     $(document).bind( 'real-estate/news', function(event, json, string){
         setTimeout(function() {$('#search-kind').submit();},100);
     });
     $(document).bind( 'real-estate/post', function(event, json, string){
-        setTimeout(function() {
-            $('.wrap-search-home .logo-home').addClass('ani-logo');
-            $('.box-search-header').addClass('ani-search');
-            setTimeout(function() {
-                $('header').addClass('border-shadow');
-                location.href = '<?=Url::to(['/ads/post'])?>';
-            },500);
-        },500);
+        setTimeout(function() {$('#search-kind').submit();},100);
     });
 
 
@@ -199,14 +161,14 @@ $searchParams = json_decode($value, true);
                             <span><em class="fa fa-search"></em></span>
                         </button>
 
-                        <input class="getValSuggest" type="hidden" rel="idActive" id="valActive" name="activeSearch" value="">
-                        <input class="getValSuggest" type="hidden" rel="idTt" id="valTT" name="city" value="">
-                        <input class="getValSuggest" type="hidden" rel="idQh" id="valQh" name="district" value="">
-                        <input class="getValSuggest" type="hidden" rel="idLoai" id="valLoaibds" name="category" value="">
-                        <input class="getValSuggest" type="hidden" rel="idTtuc" id="valTTuc" name="news" value="">
-                        <input class="getValSuggest" type="hidden" rel="idLoaittuc" id="valLoaiTTuc" name="typenews" value="">
-                        <input class="getValSuggest" type="hidden" rel="idDuans" id="valDuaan" name="duan" value="">
-                        <input class="getValSuggest" type="hidden" rel="idDuannews" id="valDuaannews" name="duannews" value="">
+                        <input class="getValSuggest" type="hidden" rel="idActive" id="valActive" name="activeSearch" value="<?=!empty($searchParams->activeSearch) ? $searchParams->activeSearch : ''?>">
+                        <input class="getValSuggest" type="hidden" rel="idTt" id="valTT" name="city" value="<?=!empty($searchParams->city) ? $searchParams->city : ''?>">
+                        <input class="getValSuggest" type="hidden" rel="idQh" id="valQh" name="district" value="<?=!empty($searchParams->district) ? $searchParams->district : ''?>">
+                        <input class="getValSuggest" type="hidden" rel="idLoai" id="valLoaibds" name="category" value="<?=!empty($searchParams->category) ? $searchParams->category : ''?>">
+                        <input class="getValSuggest" type="hidden" rel="idTtuc" id="valTTuc" name="news" value="<?=!empty($searchParams->news) ? $searchParams->news : ''?>">
+                        <input class="getValSuggest" type="hidden" rel="idLoaittuc" id="valLoaiTTuc" name="typenews" value="<?=!empty($searchParams->typenews) ? $searchParams->typenews : ''?>">
+                        <input class="getValSuggest" type="hidden" rel="idDuans" id="valDuaan" name="duan" value="<?=!empty($searchParams->duan) ? $searchParams->duan : ''?>">
+                        <input class="getValSuggest" type="hidden" rel="idDuannews" id="valDuaannews" name="duannews" value="<?=!empty($searchParams->duannews) ? $searchParams->duannews : ''?>">
                         
                     <?php ActiveForm::end(); ?>
                     <div class="pull-left text-right mgT-10 mgL-15 options-search">

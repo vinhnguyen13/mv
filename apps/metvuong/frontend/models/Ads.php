@@ -33,26 +33,27 @@ class Ads extends Component
         if(Yii::$app->request->isPost){
             $post = Yii::$app->request->post();
             $searchParams = $post;
-            if(!empty($post['news'])){
-                switch($post['news']){
+            unset($searchParams['_csrf']);
+            if(!empty($post['activeSearch'])){
+                switch($post['activeSearch']){
                     case 1:
-                        if($arrCats = array_values(Yii::$app->params["news"]["widget-category"])){
-                            $detail = CmsShow::find()->where('catalog_id IN ('.implode($arrCats, ',').')')
-                                ->orderBy('id DESC')->one();
-                            $url = Url::to(['news/view', 'id' => $detail->id, 'slug' => $detail->slug, 'cat_id' => $detail->catalog->id, 'cat_slug' => $detail->catalog->slug]);
-                        }
-                        $searchParams = ['sug1'=>[$post['news']=>'Tin Tức']];
+                        $url = Url::to(ArrayHelper::merge(['/ads/index'], $searchParams));
                         break;
                     case 2:
-                        $model = AdBuildingProject::find()->where([])->one();
-                        $url = Url::to(['/building-project/view', 'slug' => $model->slug]);
-                        $searchParams = ['sug1'=>[$post['news']=>'Dự Án']];
+                        $url = Url::to(ArrayHelper::merge(['/ads/post'], $searchParams));
+                        break;
+                    case 3:
+                        if(!empty($post['news']) && $post['news'] == 1){
+                            if($arrCats = array_values(Yii::$app->params["news"]["widget-category"])){
+                                $detail = CmsShow::find()->where('catalog_id IN ('.implode($arrCats, ',').')')->orderBy('id DESC')->one();
+                                $url = Url::to(['news/view', 'id' => $detail->id, 'slug' => $detail->slug, 'cat_id' => $detail->catalog->id, 'cat_slug' => $detail->catalog->slug]);
+                            }
+                        }else if(!empty($post['news']) && $post['news'] == 2){
+                            $model = AdBuildingProject::find()->where([])->one();
+                            $url = Url::to(['/building-project/view', 'slug' => $model->slug]);
+                        }
                         break;
                 }
-            }elseif(!empty($post['city'])){
-                $searchParams = ['city'=>$post['city'], 'district'=>$post['district'], 'category'=>$post['category']];
-                $route = ArrayHelper::merge(['/ads/index'], $searchParams);
-                $url = Url::to($route);
             }
             $cookie = new Cookie([
                 'name' => 'searchParams',
