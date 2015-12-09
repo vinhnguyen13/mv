@@ -13,6 +13,7 @@ use vsoft\ad\models\AdProductAdditionInfo;
 use vsoft\ad\models\AdContactInfo;
 use yii\web\Cookie;
 use vsoft\express\components\ImageHelper;
+use vsoft\express\components\StringHelper;
 
 class AdsController extends Controller
 {
@@ -32,7 +33,7 @@ class AdsController extends Controller
         	$districtId = Yii::$app->request->get('districtId');
         	$categoryId = Yii::$app->request->get('categoryId');
         	
-        	$query = AdProduct::find();
+        	$query = AdProduct::find()->orderBy('created_at DESC');
         	
         	if($cityId) {
         		$query->where('city_id = :city_id', [':city_id' => $cityId]);
@@ -42,9 +43,15 @@ class AdsController extends Controller
         		$query->andWhere('district_id = :district_id', [':district_id' => $districtId]);
         	}
         	
-        	$products = $query->asArray(true)->all();
+        	$products = $query->all();
         	
-        	return $products;
+        	$productResponse = [];
+        	foreach ($products as $product) {
+        		$productResponse[$product->id] = $product->attributes;
+        		$productResponse[$product->id]['previous_time'] = StringHelper::previousTime($product->created_at);
+        	}
+        	
+        	return $productResponse;
         }
         
         return $this->render('index');

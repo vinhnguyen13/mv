@@ -74,9 +74,9 @@ function start() {
                         '<div class="infor-result">' +
                             '<p class="item-title">' + address + '</p>' +
                             '<p class="type-result"><em class="fa fa-circle for-rent"></em>' + category + ' ' + type + '</p>' +
-                            '<p class="rice-result">$750/mo</p>' +
+                            '<p class="rice-result">' + price + '</p>' +
                             '<p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>' +
-                            '<p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>' +
+                            '<p class="date-post-rent">' + product.previous_time + '</p>' +
                         '</div>' +
                     '</li>';
 			list += li;
