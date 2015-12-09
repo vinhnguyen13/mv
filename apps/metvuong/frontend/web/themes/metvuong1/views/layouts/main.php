@@ -26,6 +26,7 @@ AppAsset::register($this);
     <?php $this->beginBody() ?>
         <?= $content ?>
     <?php $this->endBody() ?>
+    <?php $this->beginContent('@app/views/layouts/_partials/tracking.php'); ?><?php $this->endContent();?>
 </body>
 </html>
 <?php $this->endPage() ?>
