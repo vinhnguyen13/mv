@@ -48,6 +48,11 @@ class AdsController extends Controller
         
         return $this->render('index');
     }
+    
+    public function actionDetail($id) {
+    	$product = AdProduct::findOne($id);
+    	return $this->renderPartial('detail', ['product' => $product]); 
+    }
 
     /**
      * @return \yii\web\Response

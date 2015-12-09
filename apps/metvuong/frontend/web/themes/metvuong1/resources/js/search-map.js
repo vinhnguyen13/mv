@@ -26,25 +26,27 @@ function start() {
 			var marker = gmap.getMarker($(this).data('id'));
 			var position = marker.getPosition();
 			gmap.setCenter({lat: position.lat(), lng: position.lng()});
-			$('#detail-listing').modal();
-			$('#detail-listing .bxslider').bxSlider({
-                moveSlides: 1,
-                startSlide: 0,
-                minSlides: 1,
-                maxSlides: 2,
-                slideWidth: 444,
-                startSlide: 0,
-                onSliderLoad: function() {
-                    this.infiniteLoop = false;
-                    this.hideControlOnEnd = true;
-                    scrollFixed();
-                }
-            });
 			
-			lightbox.option({
-	            'resizeDuration': 300,
-	            'fadeDuration': 400
-	        });
+			$.get('/ads/detail', {id: $(this).data('detail')}, function(response){
+				$('#detail-listing').html($(response).html()).modal();
+				$('#detail-listing .bxslider').bxSlider({
+	                moveSlides: 1,
+	                startSlide: 0,
+	                minSlides: 1,
+	                maxSlides: 2,
+	                slideWidth: 444,
+	                startSlide: 0,
+	                onSliderLoad: function() {
+	                    this.infiniteLoop = false;
+	                    this.hideControlOnEnd = true;
+	                    scrollFixed();
+	                }
+	            });
+				lightbox.option({
+		            'resizeDuration': 300,
+		            'fadeDuration': 400
+		        });
+			});
 		});
 		
 		var list = '';
@@ -67,7 +69,7 @@ function start() {
 			var category = categories[product.category_id]['name'].toUpperCase();
 			var price = (product.type == 1) ? product.price : product.price + '/tháng';
 			
-			var li = '<li data-id="' + markerId + '">' +
+			var li = '<li data-detail="' + product.id +'" data-id="' + markerId + '">' +
                         '<a href="#" class="wrap-img pull-left"><img src="/frontend/web/themes/metvuong1/resources/images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>' +
                         '<div class="infor-result">' +
                             '<p class="item-title">' + address + '</p>' +
