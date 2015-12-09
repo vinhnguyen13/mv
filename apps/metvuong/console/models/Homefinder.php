@@ -87,7 +87,14 @@ class Homefinder extends Component
 
     public function pagingListing($pid, $page_current)
     {
-        $url = self::DOMAIN.'/ajax/projecttable/'.$pid.'/ban?draw='.$page_current.'&columns[0][data]=hinh_anh&columns[0][name]=&columns[0][searchable]=true&columns[0][orderable]=true&columns[0][search][value]=&columns[0][search][regex]=false&columns[1][data]=cost&columns[1][name]=&columns[1][searchable]=true&columns[1][orderable]=true&columns[1][search][value]=&columns[1][search][regex]=false&columns[2][data]=dien_tich_quy_hoach&columns[2][name]=&columns[2][searchable]=true&columns[2][orderable]=true&columns[2][search][value]=&columns[2][search][regex]=false&columns[3][data]=ngay_dang&columns[3][name]=&columns[3][searchable]=true&columns[3][orderable]=true&columns[3][search][value]=&columns[3][search][regex]=false&columns[4][data]=broker.name&columns[4][name]=&columns[4][searchable]=true&columns[4][orderable]=true&columns[4][search][value]=&columns[4][search][regex]=false&columns[5][data]=_id&columns[5][name]=&columns[5][searchable]=true&columns[5][orderable]=true&columns[5][search][value]=&columns[5][search][regex]=false&order[0][column]=3&order[0][dir]=desc&start=5&length=5&search[value]=&search[regex]=false&_=1449561346330';
+        $url = self::DOMAIN.'/ajax/projecttable/'.$pid.'/ban?draw=1&columns[0][data]=hinh_anh&columns[0][name]=' .
+            '&columns[0][searchable]=true&columns[0][orderable]=true&columns[0][search][value]=&columns[0][search][regex]=false' .
+            '&columns[1][data]=cost&columns[1][name]=&columns[1][searchable]=true&columns[1][orderable]=true&columns[1][search][value]=' .
+            '&columns[1][search][regex]=false&columns[2][data]=dien_tich_quy_hoach&columns[2][name]=&columns[2][searchable]=true&columns[2][orderable]=true' .
+            '&columns[2][search][value]=&columns[2][search][regex]=false&columns[3][data]=ngay_dang&columns[3][name]=&columns[3][searchable]=true&columns[3][orderable]=true' .
+            '&columns[3][search][value]=&columns[3][search][regex]=false&columns[4][data]=broker.name&columns[4][name]=&columns[4][searchable]=true&columns[4][orderable]=true' .
+            '&columns[4][search][value]=&columns[4][search][regex]=false&columns[5][data]=_id&columns[5][name]=&columns[5][searchable]=true&columns[5][orderable]=true' .
+            '&columns[5][search][value]=&columns[5][search][regex]=false&order[0][column]=3&order[0][dir]=desc&start='.($page_current*5).'&length=5&search[value]=&search[regex]=false&_='.time();
 //        $content = SimpleHTMLDom::file_get_html(self::DOMAIN.$url);
         $curl = new Curl();
         //get http://example.com/
@@ -95,6 +102,9 @@ class Homefinder extends Component
         if(($response = json_decode($response)) && !empty($response->data)){
             $totalItem = count($response->data);
             foreach($response->data as $item){
+                if($page_current==2){
+                    
+                }
                 $content = $this->getListingDetail(self::DOMAIN.'/'.$item->_id, $item->_id);
             }
             if(!empty($response->recordsTotal) && ($response->recordsTotal > ($totalItem*$page_current))){
