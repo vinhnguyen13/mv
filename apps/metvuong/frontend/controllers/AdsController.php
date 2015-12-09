@@ -90,9 +90,9 @@ class AdsController extends Controller
     	
     	$model = new AdProduct();
     	$model->loadDefaultValues();
-    	$model->city_id = \Yii::$app->request->get('cityId', 1);
-    	$model->district_id = \Yii::$app->request->get('districtId', 22);
-    	$model->category_id = \Yii::$app->request->get('categoryId', 6);
+    	$model->city_id = \Yii::$app->request->get('city');
+    	$model->district_id = \Yii::$app->request->get('district');
+    	$model->category_id = \Yii::$app->request->get('category');
 
     	$adProductAdditionInfo = $model->adProductAdditionInfo ? $model->adProductAdditionInfo : (new AdProductAdditionInfo())->loadDefaultValues();
     	$adContactInfo = $model->adContactInfo ? $model->adContactInfo : (new AdContactInfo())->loadDefaultValues();
