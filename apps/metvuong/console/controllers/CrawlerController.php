@@ -31,11 +31,12 @@ class CrawlerController extends Controller
     public function actionImporthomefinder()
     {
         $begin = time();
-        Homefinder::find()->importData();
+        $num = Homefinder::find()->importData();
         $end = time();
         print_r("\n"." Time: ");
         print_r($end-$begin);
         print_r("s");
+        print_r(" - Record: ". $num);
     }
 
     public function actionBatdongsan()

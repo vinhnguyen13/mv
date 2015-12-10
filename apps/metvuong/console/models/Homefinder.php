@@ -294,6 +294,7 @@ class Homefinder extends Component
                         $tableName, $columnNameArray, $bulkInsertArray
                     )
                     ->execute();
+                return $insertCount;
             }
         }
         else{
