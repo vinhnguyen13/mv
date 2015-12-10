@@ -34,7 +34,11 @@ $(function () {
 SCRIPT;
     // Register tooltip/popover initialization javascript
     $this->registerJs($js);
-
+    Yii::$app->view->registerLinkTag([
+        'rel'=>'shortcut icon',
+        'href'=>Yii::$app->homeUrl.'favicon/favicon.png',
+        'type'=>'image/jpeg',
+    ]);
     ?>
 </head>
 <body>
