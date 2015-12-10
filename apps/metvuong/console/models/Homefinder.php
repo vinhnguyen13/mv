@@ -249,7 +249,7 @@ class Homefinder extends Component
             $wardData = AdWard::find()->all();
             $streetData = AdStreet::find()->all();
             $tableName = AdProduct::tableName();
-            $columnNameArray = ['home_no', 'user_id',
+            $columnNameArray = ['category_id','home_no', 'user_id',
                 'city_id', 'district_id', 'ward_id', 'street_id',
                 'type', 'content', 'area', 'price', 'lat', 'lng',
                 'start_date', 'end_date', 'verified', 'created_at'];
@@ -264,7 +264,7 @@ class Homefinder extends Component
                     $ward_id = $this->getWardId($value["ward"], $wardData, $district_id);
                     $street_id = $this->getStreetId($value["street"], $streetData, $district_id);
                     $record = [
-//                        'category_id' => null,
+                        'category_id' => 6,
 //                        'project_building_id' => 1,
                         'home_no' => $value["home_no"],
                         'user_id' => 3,
