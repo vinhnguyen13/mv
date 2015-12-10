@@ -43,6 +43,10 @@ class AdsController extends Controller
         		$query->andWhere('district_id = :district_id', [':district_id' => $districtId]);
         	}
         	
+        	if($categoryId) {
+        		$query->andWhere('category_id = :category_id', [':category_id' => $categoryId]);
+        	}
+        	
         	$products = $query->all();
         	
         	$productResponse = [];
@@ -90,9 +94,9 @@ class AdsController extends Controller
     	
     	$model = new AdProduct();
     	$model->loadDefaultValues();
-    	$model->city_id = \Yii::$app->request->get('cityId', 1);
-    	$model->district_id = \Yii::$app->request->get('districtId', 22);
-    	$model->category_id = \Yii::$app->request->get('categoryId', 6);
+    	$model->city_id = \Yii::$app->request->get('city');
+    	$model->district_id = \Yii::$app->request->get('district');
+    	$model->category_id = \Yii::$app->request->get('category');
 
     	$adProductAdditionInfo = $model->adProductAdditionInfo ? $model->adProductAdditionInfo : (new AdProductAdditionInfo())->loadDefaultValues();
     	$adContactInfo = $model->adContactInfo ? $model->adContactInfo : (new AdContactInfo())->loadDefaultValues();
@@ -113,7 +117,7 @@ class AdsController extends Controller
     		if($model->validate() && $adProductAdditionInfo->validate() && $adContactInfo->validate()) {
     			$model->user_id = Yii::$app->user->id;
     			$model->save(false);
-    			
+    			var_dump($model);
     			$adProductAdditionInfo->product_id = $model->id;
     			$adProductAdditionInfo->save(false);
     			

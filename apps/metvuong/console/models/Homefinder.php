@@ -6,10 +6,19 @@
  * Time: 2:19 PM
  */
 namespace console\models;
+
+use DateInterval;
+use DateTime;
 use keltstr\simplehtmldom\SimpleHTMLDom;
 use linslin\yii2\curl\Curl;
+use vsoft\ad\models\AdCity;
+use vsoft\ad\models\AdDistrict;
+use vsoft\ad\models\AdProduct;
+use vsoft\ad\models\AdStreet;
+use vsoft\ad\models\AdWard;
 use Yii;
 use yii\base\Component;
+use yii\helpers\FileHelper;
 
 class Homefinder extends Component
 {
@@ -17,6 +26,7 @@ class Homefinder extends Component
     protected $time_start = 0;
     protected $time_end = 0;
     protected $page_current = 1;
+
     /**
      * @return mixed
      */
@@ -34,13 +44,13 @@ class Homefinder extends Component
 
     public function getListDevelopers()
     {
-        $content = SimpleHTMLDom::file_get_html(self::DOMAIN.'/developer/');
+        $content = SimpleHTMLDom::file_get_html(self::DOMAIN . '/developer/');
         $list = $content->find('.body-cont .img-project-inside a');
         if (!empty($list)) {
             $start = time();
             foreach ($list as $idx => $item) {
-                if($item->href && $idx > 0){
-                    echo $item->title;
+                if ($item->href && $idx > 0) {
+//                    echo $item->title;
                     $this->getListProject($item->href);
                 }
             }
@@ -51,7 +61,7 @@ class Homefinder extends Component
 
     public function getListProject($href)
     {
-        $content = SimpleHTMLDom::file_get_html(self::DOMAIN.$href);
+        $content = SimpleHTMLDom::file_get_html(self::DOMAIN . $href);
         $list = $content->find('.menu ul.list_project li');
         if (!empty($list)) {
             $start = time();
@@ -70,14 +80,14 @@ class Homefinder extends Component
 
     public function getProjectDetail($href)
     {
-        $content = SimpleHTMLDom::file_get_html(self::DOMAIN.$href);
+        $content = SimpleHTMLDom::file_get_html(self::DOMAIN . $href);
         $list = $content->find('script');
         if (!empty($list)) {
             $start = time();
             foreach ($list as $item) {
                 $varname = "pId";
-                preg_match('/'.$varname.'\s*?=\s*?(.*)\s*?(;|$)/msU',$item->innertext(),$matches);
-                if(!empty($matches[1]) ){
+                preg_match('/' . $varname . '\s*?=\s*?(.*)\s*?(;|$)/msU', $item->innertext(), $matches);
+                if (!empty($matches[1])) {
                     $room_id = $matches[1];
                     $room_id = str_replace('"', '', $room_id);
                     $this->pagingListing($room_id, $this->page_current);
@@ -90,113 +100,245 @@ class Homefinder extends Component
 
     public function pagingListing($pid, $page_current)
     {
-        $url = self::DOMAIN.'/ajax/projecttable/'.$pid.'/ban?draw=1&columns[0][data]=hinh_anh&columns[0][name]=' .
+        $url = self::DOMAIN . '/ajax/projecttable/' . $pid . '/ban?draw=1&columns[0][data]=hinh_anh&columns[0][name]=' .
             '&columns[0][searchable]=true&columns[0][orderable]=true&columns[0][search][value]=&columns[0][search][regex]=false' .
             '&columns[1][data]=cost&columns[1][name]=&columns[1][searchable]=true&columns[1][orderable]=true&columns[1][search][value]=' .
             '&columns[1][search][regex]=false&columns[2][data]=dien_tich_quy_hoach&columns[2][name]=&columns[2][searchable]=true&columns[2][orderable]=true' .
             '&columns[2][search][value]=&columns[2][search][regex]=false&columns[3][data]=ngay_dang&columns[3][name]=&columns[3][searchable]=true&columns[3][orderable]=true' .
             '&columns[3][search][value]=&columns[3][search][regex]=false&columns[4][data]=broker.name&columns[4][name]=&columns[4][searchable]=true&columns[4][orderable]=true' .
             '&columns[4][search][value]=&columns[4][search][regex]=false&columns[5][data]=_id&columns[5][name]=&columns[5][searchable]=true&columns[5][orderable]=true' .
-            '&columns[5][search][value]=&columns[5][search][regex]=false&order[0][column]=3&order[0][dir]=desc&start='.($page_current*5).'&length=5&search[value]=&search[regex]=false&_='.time();
+            '&columns[5][search][value]=&columns[5][search][regex]=false&order[0][column]=3&order[0][dir]=desc&start=' . ($page_current * 5) . '&length=5&search[value]=&search[regex]=false&_=' . time();
 //        $content = SimpleHTMLDom::file_get_html(self::DOMAIN.$url);
         $curl = new Curl();
-        //get http://example.com/
+        $url_broker = self::DOMAIN . '/ajax/projectdata/' . $pid . '/broker';
+        $response_broker = $curl->get($url_broker);
+        $response_broker = json_decode($response_broker);
+        $response_broker_table = $response_broker->table[0];
+
         $response = $curl->get($url);
-        if(($response = json_decode($response)) && !empty($response->data)){
+        if (($response = json_decode($response)) && !empty($response->data)) {
             $totalItem = count($response->data);
-            foreach($response->data as $item){
-                if($page_current==2){
-                    
+            if (!empty($response_broker_table)) {
+                $project_name = $response_broker_table->du_an;
+                $city = $response_broker_table->cname;
+                $district = $response_broker_table->dname;
+                $ward = $response_broker_table->wname;
+                $street = $response_broker_table->sname;
+                $description = $response_broker_table->mo_ta_chi_tiet;
+                $home_no = $response_broker_table->so_nha;
+                $lat = $response_broker_table->lat;
+                $lon = $response_broker_table->lon;
+                foreach ($response->data as $item) {
+                    $content = $this->getListingDetail(self::DOMAIN . '/' . $item->_id, $item, $project_name, $city, $district, $ward, $street, $description, $home_no, $lat, $lon);
                 }
-                $content = $this->getListingDetail(self::DOMAIN.'/'.$item->_id, $item->_id);
             }
-            if(!empty($response->recordsTotal) && ($response->recordsTotal > ($totalItem*$page_current))){
+            if (!empty($response->recordsTotal) && ($response->recordsTotal > ($totalItem * $page_current))) {
                 $page_current++;
                 $this->pagingListing($pid, $page_current);
             }
+
         }
     }
 
-    public function getListingDetail($url, $id)
+    public function getListingDetail($url, $item, $project_name, $city, $district, $ward, $street, $description, $home_no, $lat, $lon)
     {
         $arr_detail = array();
         $htmlDetail = SimpleHTMLDom::file_get_html($url);
 
-        $title = $htmlDetail->find('title', 0);
-        $title = trim($title->plaintext);
-        $project_name = substr($title, 0, strpos($title, '-')-1);
+//        $title = $htmlDetail->find('title', 0);
+//        $title = trim($title->plaintext);
+//        $project_name = substr($title, 0, strpos($title, '-')-1);
+        // dien tich
+        $arr_detail[$project_name]["dientich"] = trim($item->dien_tich_quy_hoach);
 
-        // tien ich m2, phong ngu , toilet
+        // tien ich phong ngu , toilet
         $util = $htmlDetail->find('.left .line1', 0);
-        if(!empty($util)) {
+        if (!empty($util)) {
             $arr_util = explode(',', $util->plaintext);
-            $dientich = trim($arr_util[0]);
-            $tienich = null;
-            for($i=1; $i < count($arr_util); $i++){
-                $tienich = $tienich . ' ' . trim($arr_util[$i]);
+            if (!empty($arr_util[1])) {
+                $room_no = str_replace('Bedroom', '', $arr_util[1]);
+                $arr_detail[$project_name]["room_no"] = trim($room_no);
             }
-            $arr_detail[$project_name]["dientich"] = $dientich;
-            $arr_detail[$project_name]["tienich"] = $tienich;
+            if (!empty($arr_util[2])) {
+                $toilet_no = str_replace('tolet', '', $arr_util[2]);
+                $arr_detail[$project_name]["toilet_no"] = trim($toilet_no);
+            }
         }
-
+        // lat, lon
+//        $lat = $htmlDetail->find('.detail input[name=lat]', 0);
+//        if(!empty($lat)){
+//            $arr_detail[$project_name]["lat"] = $lat->value;
+//        }
+//
+//        $long = $htmlDetail->find('.detail input[name=lat]', 0);
+//        if(!empty($long)){
+//            $arr_detail[$project_name]["lng"] = $long->value;
+//        }
+//
         // thong tin mo ta
-        $description = $htmlDetail->find('.description-list .desc_content', 0);
-        if(!empty($description)){
-            $arr_detail[$project_name]["mota"] = $description->innertext;
-        }
+//        $description = $htmlDetail->find('.description-list .desc_content', 0);
+//        if(!empty($description)){
+//            $arr_detail[$project_name]["mota"] = $description->innertext;
+//        }
+//        $str_date = $htmlDetail->find('.desc_broker', 0);
+//        if(!empty($str_date)){
+//            $num_date = trim($str_date->innertext);
+//            $start_pos = strpos($num_date, '-') + 1;
+//            $end_pos = strlen($num_date) - 1;
+//            $start_date = trim(substr($num_date, $start_pos, $end_pos));
+//
+//            $arr_detail[$project_name]["start_date"] = $start_date;
+//        }
+//        $broker = $htmlDetail->find('.broker-info .name', 0)->plaintext;
+//        if(!empty($broker)) {
+//            $broker = trim($broker);
+//            $broker = str_replace('</i>', '', $broker);
+//            $arr_detail[$project_name]["broker"] = $broker;
+//        }
+//        $phone = $htmlDetail->find('.broker-info .phone', 0)->plaintext;
+//        if(!empty($phone))
+//            $arr_detail[$project_name]["phone"] = trim($phone);
+        $arr_detail[$project_name]["lat"] = trim($lat);
+        $arr_detail[$project_name]["lng"] = trim($lon);
+        $arr_detail[$project_name]["city"] = trim($city);
+        $arr_detail[$project_name]["district"] = trim($district);
+        $arr_detail[$project_name]["ward"] = trim($ward);
+        $arr_detail[$project_name]["street"] = trim($street);
+        $arr_detail[$project_name]["description"] = trim($description);
+        $arr_detail[$project_name]["home_no"] = trim($home_no);
+        $arr_detail[$project_name]["city"] = trim($city);
+        $arr_detail[$project_name]["city"] = trim($city);
+        $arr_detail[$project_name]["city"] = trim($city);
+        $arr_detail[$project_name]["loai_tai_san"] = trim($item->loai_tai_san);
+        $arr_detail[$project_name]["loai_giao_dich"] = trim($item->loai_giao_dich);
+        $arr_detail[$project_name]["broker"] = trim($item->broker->name);
+        $arr_detail[$project_name]["phone"] = trim($item->broker->phone[0]);
+        $start_date = trim($item->ngay_dang);
+        $start_date = substr($start_date, 0, 10);
+        $arr_detail[$project_name]["start_date"] = strtotime($start_date);
+        $nDays = 30;
+        $end_date = new DateTime($start_date);
+        $end_date->add(new DateInterval('P' . $nDays . 'D'));
+        $arr_detail[$project_name]["end_date"] = $end_date->getTimestamp();
 
-        $arr_hidden = array();
-        // lat, lon, loai_tai_san, loai_giao_dich(ban/thue)
-        $detail = $htmlDetail->find('.detail input');
-        if(!empty($detail)){
-            foreach($detail as $input){
-                $arr_hidden[$input->name] = $input->value;
-            }
-//            print_r($arr_hidden);
-            $arr_detail[$project_name]["lat"] = $arr_hidden["lat"];
-            $arr_detail[$project_name]["lng"] = $arr_hidden["lon"];
-            $arr_detail[$project_name]["loai_tai_san"] = $arr_hidden["loai_tai_san"];
-            $arr_detail[$project_name]["loai_giao_dich"] = $arr_hidden["loai_giao_dich"];
-        }
-
-
-        $str_date = $htmlDetail->find('.desc_broker', 0);
-        if(!empty($str_date)){
-            $num_date = trim($str_date->innertext);
-            $start_pos = strpos($num_date, '-') + 1;
-            $end_pos = strlen($num_date) - 1;
-            $start_date = trim(substr($num_date, $start_pos, $end_pos));
-
-            $arr_detail[$project_name]["start_date"] = $start_date;
-        }
-
-        $broker = $htmlDetail->find('.broker-info .name', 0)->plaintext;
-        if(!empty($broker)) {
-            $broker = trim($broker);
-            $broker = str_replace('</i>', '', $broker);
-            $arr_detail[$project_name]["broker"] = $broker;
-        }
-        $phone = $htmlDetail->find('.broker-info .phone', 0)->plaintext;
-        if(!empty($phone))
-            $arr_detail[$project_name]["phone"] = trim($phone);
-
-
-        $filename = $id.'.json';
-        $path = Yii::getAlias('@console').'/data/'.$filename;
-
+        $filename = $item->_id . '.json';
+        $path = Yii::getAlias('@console') . '/data/' . $filename;
         $data = json_encode($arr_detail);
-
-
         $this->writeFileJson($path, $data);
 
         return $arr_detail;
     }
 
-    public function writeFileJson($filePath, $data){
-        $handle = fopen($filePath, 'w') or die('Cannot open file:  '.$filePath);
+    public function writeFileJson($filePath, $data)
+    {
+        $handle = fopen($filePath, 'w') or die('Cannot open file:  ' . $filePath);
         $int = fwrite($handle, $data);
         fclose($handle);
         return $int;
     }
+
+    function getCityId($cityFile, $cityDB)
+    {
+        foreach ($cityDB as $obj) {
+            if (strpos($obj["name"], $cityFile) !== false) {
+                return (int)$obj["id"];
+            }
+        }
+        return 0;
+    }
+
+    function getDistrictId($districtFile, $districtDB, $city_id)
+    {
+        foreach ($districtDB as $obj) {
+            if (strpos($obj["name"], $districtFile) !== false && $obj["city_id"] == $city_id) {
+                return (int)$obj["id"];
+            }
+        }
+        return 0;
+    }
+
+    function getWardId($_file, $_data, $_id)
+    {
+        foreach ($_data as $obj) {
+            if (strpos($obj["name"], $_file) !== false && $obj["district_id"] == $_id) {
+                return (int)$obj["id"];
+            }
+        }
+        return 0;
+    }
+
+    public function importData()
+    {
+        $path = Yii::getAlias('@console') . '/data';
+        $files = FileHelper::findFiles($path, ['only' => ['*.json']]);
+        if (isset($files[0])) {
+            $tableName = AdProduct::tableName();
+            $columnNameArray = ['home_no', 'user_id',
+                'city_id', 'district_id', 'ward_id', 'street_id',
+                'type', 'content', 'area', 'price', 'lat', 'lng',
+                'start_date', 'end_date', 'verified', 'created_at'];
+            foreach ($files as $file) {
+                $cityData = AdCity::find()->all();
+                $districtData = AdDistrict::find()->all();
+                $wardData = AdWard::find()->all();
+                $streetData = AdStreet::find()->all();
+
+                $data = file_get_contents($file);
+                $data = json_decode($data, true);
+                foreach ($data as $value) {
+                    $city_id = $this->getCityId($value["city"], $cityData);
+                    $district_id = $this->getDistrictId($value["district"], $districtData, $city_id);
+                    $ward_id = $this->getWardId($value["ward"], $wardData, $district_id);
+                    $street_id = $this->getWardId($value["street"], $streetData, $district_id);
+                    echo "<pre>";
+                    print_r($city_id);
+                    print_r("\n");
+                    print_r($district_id);
+                    print_r("\n");
+                    print_r($ward_id);
+                    print_r("\n");
+                    print_r($street_id);
+                    echo "<pre>";
+                    exit();
+                    $bulkInsertArray[] = [
+//                        'category_id' => 1,
+//                        'project_building_id' => 1,
+                        'home_no' => $value["home_no"],
+                        'user_id' => 3,
+                        'city_id' => $city_id,
+                        'district_id' => $district_id,
+                        'ward_id' => $ward_id,
+                        'street_id' => $street_id,
+                        'type' => ($value["loai_giao_dich"] == 'Thuê' ? 2 : 1),
+                        'content' => $value["description"],
+                        'area' => $value["dientich"],
+                        'price' => 1000,
+                        'lat' => $value["lat"],
+                        'lng' => $value["lon"],
+                        'start_date' => (int)$value["start_date"],
+                        'end_date' => (int)$value["end_date"],
+                        'verified' => 1,
+                        'created_at' => time(),
+                    ];
+                }
+                if (count($bulkInsertArray) > 0) {
+                    // below line insert all your record and return number of rows inserted
+                    $insertCount = Yii::$app->db->createCommand()
+                        ->batchInsert($tableName, $columnNameArray, $bulkInsertArray)
+                        ->execute();
+                }
+            }
+        }
+    }
+
+    public function readFileJson($filePath)
+    {
+        $handle = fopen($filePath, 'r') or die('Cannot open file:  ' . $filePath);
+        if (filesize($filePath) > 0) {
+            $data = fread($handle, filesize($filePath));
+            return $data;
+        } else return null;
+    }
+
 
 }

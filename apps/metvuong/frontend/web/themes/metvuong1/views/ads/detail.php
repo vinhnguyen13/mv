@@ -96,7 +96,7 @@ use vsoft\ad\models\AdProductAdditionInfo;
                                     </tr>
                                 </table>
                                 <p class="ttmt">Thông tin mô tả</p>
-                                <?= $product->content ?>
+                                <div class="wrap-ttmt"><?= $product->content ?></div>
                                 <?php
                                 	if($product->adProductAdditionInfo):
                                 		$additionInfo = $product->adProductAdditionInfo;

@@ -3857,6 +3857,7 @@ div.wrap-page-home .logo-home {
     font-weight: bold;
     font-size: 2em;
     margin-bottom: 10px;
+    line-height: 28px;
 }
 .dt-left-col table {
     margin-bottom: 15px;
@@ -3877,6 +3878,13 @@ div.wrap-page-home .logo-home {
 }
 .wrap-ttmt {
     margin-bottom: 20px;
+    font-size: 1.2em;
+    line-height: 18px;
+}
+.wrap-ttmt p {
+    font-size: 1em;
+    line-height: 18px;
+    margin-bottom: 10px;
 }
 .rating li {
     float: left;
@@ -4815,8 +4823,10 @@ header.wrap-page-home .box-search-header.ani-search > div {
 }
 #price-format {
     font-size: 1.2em;
-    padding-left: 15px;
     letter-spacing: 2px;
+    display: block !important;
+    height: 100%;
+    line-height: 34px;
 }
 #frm-post-tin #images-fileupload {
     margin-left: 0;
@@ -4837,5 +4847,19 @@ header.wrap-page-home .box-search-header.ani-search > div {
 }
 .list-results li .wrap-img {
     width: 170px;
-    height: 120px;
+    height: 125px;
+    background-position: 50% center;
+}
+.fieldset #cke_adproduct-content {
+    margin-top: 15px;
+}
+.dt-left-col .type-result {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+.dt-left-col .type-result em {
+    margin-right: 5px;
+}
+.dt-left-col p {
+
 }
