@@ -187,10 +187,10 @@ class SiteController extends Controller
     		$districts[$districtId]['projects'][$k] = $project;
     	}
     	$projects = null;
-    	
+
     	foreach ($districts as $k => &$district) {
-    		$cityId = $district['city_id'];
-    		unset($district['city_id']);
+            $cityId = $district['city_id'];
+            unset($district['city_id']);
     		unset($district['id']);
     		$cities[$cityId]['districts'][$k] = $district;
     	}
@@ -204,7 +204,7 @@ class SiteController extends Controller
     	}
     	
 
-    	$catalogs = CmsCatalog::find()->indexBy('id')->select('id, title')->asArray(true)->all();
+    	$catalogs = CmsCatalog::find()->indexBy('id')->select('id, title')->where(['parent_id'=>Yii::$app->params['newsCatID']])->asArray(true)->all();
     	 
     	foreach ($catalogs as $k => &$catalog) {
     		unset($catalog['id']);
