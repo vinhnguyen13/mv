@@ -18,6 +18,19 @@ $(document).ready(function(){
 		$('#adproduct-project_building_id').append('<option value="' + index + '">' + project.name + '</option>');
 	}
 	
+	$('#adproduct-type').change(function(){
+		var text = $('#price-format').text();
+		
+		if(text) {
+			if($(this).val() == 1) {
+				$('#price-format').text(text.replace('/tháng', ''));
+			} else {
+				text = text.replace('/tháng', '');
+				$('#price-format').text(text + '/tháng');
+			}
+		}
+	});
+	
 	$('.select2').select2({width: 'resolve'});
 	
 	$('.number-only').keydown(function(e){
@@ -43,14 +56,22 @@ $(document).ready(function(){
 	
 	$('#adproduct-price').keyup(function(){
 		var val = $(this).val();
-		var text = val.split( /(?=(?:\d{3})+(?:\.|$))/g ).join(".");
+		var text = '';
 		
-		if(val.length > 9) {
-			text = (val / 1000000000) + '';
-			text = formatNumber(text.replace('.', ',')) + ' tỷ';
-		} else if(val.length > 6) {
-			text = (val / 1000000) + '';
-			text = text.replace('.', ',') + ' triệu';
+		if(val) {
+			text = val.split( /(?=(?:\d{3})+(?:\.|$))/g ).join(".");
+			
+			if(val.length > 9) {
+				text = (val / 1000000000) + '';
+				text = formatNumber(text.replace('.', ',')) + ' tỷ';
+			} else if(val.length > 6) {
+				text = (val / 1000000) + '';
+				text = text.replace('.', ',') + ' triệu';
+			}
+			
+			if($('#adproduct-type').val() == 2) {
+				text += '/tháng';
+			}
 		}
 		
 		$('#price-format').text(text);

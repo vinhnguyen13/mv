@@ -53,6 +53,7 @@ class AdsController extends Controller
         	foreach ($products as $k => $product) {
         		$productResponse[$k] = $product->attributes;
         		$productResponse[$k]['previous_time'] = StringHelper::previousTime($product->created_at);
+        		$productResponse[$k]['price'] = StringHelper::formatCurrency($productResponse[$k]['price']);
 
         		if($product->adImages) {
         			$images = $product->adImages;
