@@ -25,8 +25,17 @@ class CrawlerController extends Controller
 
     public function actionHomefinder()
     {
-//        Homefinder::find()->parse();
+        Homefinder::find()->parse();
+    }
+
+    public function actionImporthomefinder()
+    {
+        $begin = time();
         Homefinder::find()->importData();
+        $end = time();
+        print_r("\n"." Time: ");
+        print_r($end-$begin);
+        print_r("s");
     }
 
     public function actionBatdongsan()
