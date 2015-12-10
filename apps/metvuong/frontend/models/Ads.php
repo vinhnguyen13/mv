@@ -26,7 +26,7 @@ class Ads extends Component
     }
 
     /**
-     *
+     * @return string
      */
     public function redirect(){
         $url = Url::home();
