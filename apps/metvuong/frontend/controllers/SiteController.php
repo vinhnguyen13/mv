@@ -213,7 +213,7 @@ class SiteController extends Controller
 		$content = 'var dataCities = ' . json_encode($cities, JSON_UNESCAPED_UNICODE) . ';' .
 					'var dataCategories = ' . json_encode($categories, JSON_UNESCAPED_UNICODE) . ';' .
 					'var newsCatalogs = ' . json_encode($catalogs, JSON_UNESCAPED_UNICODE) . ';';
-    	$file = fopen(Yii::$app->view->theme->basePath . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . "data.js", "w");
+    	$file = fopen(Yii::getAlias('@store') . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . "data.js", "w");
     	fwrite($file, $content);
 		fclose($file);
     }
