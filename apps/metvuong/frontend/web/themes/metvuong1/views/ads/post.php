@@ -117,15 +117,10 @@ $type = [
 				</button>
 			</div>
 			<div class="fieldset clearfix" style="display: none;">
-				<?= $form->field($model, 'content', ['errorOptions' => ['style' => 'display: none;', 'class' => 'help-block']])->widget(CKEditor::className(), [
-		    		'editorOptions' => [
-						'preset' => 'basic',
-						'inline' => false,
-						'height' => 150,
-						'resize_enabled' => true,
-						'removePlugins' => '',
-		    		]
-		    	]) ?>
+		    	<div class="form-group">
+		    		<?= Html::activeTextarea($model, 'content', ['class' => 'form-control']) ?>
+		    		<div class="help-block" style="display: none;"></div>
+		    	</div>
 				<?= FileUploadUI::widget([
 					'name' => 'images',
 					'id' => 'images',

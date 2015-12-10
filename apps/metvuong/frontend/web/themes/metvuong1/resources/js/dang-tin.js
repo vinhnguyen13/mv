@@ -149,10 +149,10 @@ function validateStep2() {
 	if(!$('#adproduct-content').val()) {
 		$return = false;
 		$('#adproduct-content').parent().addClass('error-frm');
-		$('#adproduct-content').next().next().show().html('Vui lòng nhập nội dung tin đăng.');
+		$('#adproduct-content').next().show().html('Vui lòng nhập nội dung tin đăng.');
 	} else {
 		$('#adproduct-content').parent().removeClass('error-frm');
-		$('#adproduct-content').next().next().hide();
+		$('#adproduct-content').next().hide();
 	}
 	
 	if(!$('#adcontactinfo-mobile').val()) {
