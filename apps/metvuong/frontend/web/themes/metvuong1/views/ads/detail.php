@@ -7,7 +7,8 @@
 	use vsoft\ad\models\AdProduct;
 	use vsoft\ad\models\AdBuildingProject;
 	use yii\helpers\Url;
-use vsoft\ad\models\AdProductAdditionInfo;
+	use vsoft\ad\models\AdProductAdditionInfo;
+	use vsoft\express\components\StringHelper;
 	
 	$images = $product->adImages;
 	$street = AdStreet::findOne($product->street_id);
@@ -88,31 +89,32 @@ use vsoft\ad\models\AdProductAdditionInfo;
                                     <?php endif; ?>
                                     <tr>
                                         <th>Giá:</th>
-                                        <td><?= $product->priceFormated ?></td>
+                                        <td><?= StringHelper::formatCurrency($product->price) ?><?= $product->type == AdProduct::TYPE_FOR_RENT ? '/tháng' : '' ?></td>
                                     </tr>
                                     <tr>
                                         <th>Diện tích:</th>
-                                        <td><?= $product->area ?>m<sup>2</sup></td>
+                                        <td><?= StringHelper::formatNumber($product->area) ?>m<sup>2</sup></td>
                                     </tr>
                                 </table>
                                 <p class="ttmt">Thông tin mô tả</p>
                                 <div class="wrap-ttmt"><?= $product->content ?></div>
                                 <?php
-                                	if($product->adProductAdditionInfo):
-                                		$additionInfo = $product->adProductAdditionInfo;
+                                	$additionInfo = $product->adProductAdditionInfo;
+                                	unset($additionInfo['product_id']);
+                                	if(array_filter($additionInfo->attributes)):
                                 ?>
                                 <p class="ttmt">Thông tin thêm</p>
                                 <table>
                                     <?php if($additionInfo->facade_width): ?>
                                     <tr>
                                         <th>Mặt tiền</th>
-                                        <td><?= $additionInfo->facade_width ?> m</td>
+                                        <td><?= StringHelper::formatNumber($additionInfo->facade_width) ?> m</td>
                                     </tr>
                                     <?php endif; ?>
                                     <?php if($additionInfo->land_width): ?>
                                     <tr>
                                         <th>Đường vào</th>
-                                        <td><?= $additionInfo->land_width ?> m</td>
+                                        <td><?= StringHelper::formatNumber($additionInfo->land_width) ?> m</td>
                                     </tr>
                                     <?php endif; ?>
                                     <?php if($additionInfo->home_direction): ?>

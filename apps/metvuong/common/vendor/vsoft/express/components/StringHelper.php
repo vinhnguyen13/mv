@@ -40,4 +40,32 @@ class StringHelper {
 		}
 		return $String;
 	}
+	
+	public static function formatNumber($number) {
+		$split = explode('.', $number);
+		
+		$integer = $split[0];
+		
+		$integer = number_format($integer, 0, ',', '.');
+		
+		if(isset($split[1])) {
+			$integer = $integer . ',' . $split[1];
+		}
+		
+		return $integer;
+	}
+	
+	public static function formatCurrency($number) {
+		if($number > 999999999) {
+			$currency = $number / 1000000000;
+			$currency = self::formatNumber($currency) . ' tỷ';
+		} else if($number > 999999) {
+			$currency = $number / 1000000;
+			$currency = self::formatNumber($currency) . ' triệu';
+		} else {
+			$currency = self::formatNumber($number);
+		}
+		
+		return $currency;
+	}
 }

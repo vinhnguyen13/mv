@@ -34,6 +34,7 @@ class Ads extends Component
             $post = Yii::$app->request->post();
             $searchParams = $post;
             unset($searchParams['_csrf']);
+            $searchParams = array_filter($searchParams, 'strlen');
             if(!empty($post['activeSearch'])){
                 switch($post['activeSearch']){
                     case 1:
