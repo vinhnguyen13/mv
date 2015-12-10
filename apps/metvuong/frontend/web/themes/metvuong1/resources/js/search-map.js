@@ -86,6 +86,7 @@ function start() {
 		});
 		
 		$('#order-by-tab a').click(function(){
+			gmap.removeAllMarker();
 			$('#order-by').val($(this).data('order'));
 			search(function(r){
 				response = r;
