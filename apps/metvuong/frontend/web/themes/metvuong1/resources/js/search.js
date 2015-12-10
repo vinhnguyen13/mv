@@ -506,6 +506,7 @@ var objEvent = {
 						}
 						if ( $('#valLoaibds').val() != '' ) {
 							$('.list-loai-bds li[data-id-loai='+$('#valLoaibds').val()+'] a').trigger('click');
+							$('.btn-close-search').trigger('click');
 						}
 						if ( $('#valDuaannews').val() != '' ) {
 							$('.list-duan-news li[data-id-duannews='+$('#valDuaannews').val()+'] a').trigger('click');
