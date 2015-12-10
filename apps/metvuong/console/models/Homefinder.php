@@ -7,7 +7,6 @@
  */
 namespace console\models;
 
-use Collator;
 use DateInterval;
 use DateTime;
 use keltstr\simplehtmldom\SimpleHTMLDom;
@@ -148,6 +147,8 @@ class Homefinder extends Component
         $arr_detail = array();
         $htmlDetail = SimpleHTMLDom::file_get_html($url);
         $currency_value = 1000000; // 1 trieu
+        // item_id
+        $arr_detail[$project_name]["item_id"] = trim($item->_id);
         // dien tich
         $arr_detail[$project_name]["dientich"] = trim($item->dien_tich_quy_hoach);
 
@@ -190,6 +191,8 @@ class Homefinder extends Component
         $data = json_encode($arr_detail);
         $this->writeFileJson($path, $data);
 
+
+
         return $arr_detail;
     }
 
@@ -230,12 +233,22 @@ class Homefinder extends Component
     {
         foreach ($_data as $obj) {
             $a = preg_quote($obj->name, '/'); //  / -> \/
-            preg_match('/'.$a.'$/', $_file, $match);
+            $b = preg_quote($_file);
+            preg_match('/'.$a.'$/', $b, $match);
             if (!empty($match[0]) && $obj->district_id == $_id) {
                 return (int)$obj->id;
             }
         }
         return 0;
+    }
+
+    public function load_item_file(){
+        $file_name = Yii::getAlias('@console') . '/data/item.json';
+        $data = file_get_contents($file_name);
+        if(!empty($data)){
+            $data =
+            print_r($data);
+        }
     }
 
     public function importData()

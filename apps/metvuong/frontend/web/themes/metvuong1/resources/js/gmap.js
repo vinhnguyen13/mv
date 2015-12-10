@@ -34,7 +34,7 @@ function Gmap(el, options) {
 	
 	self.addMarker = function(marker, setCenter) {
 		if(marker.getMap()) {
-			self.removeMarker();
+			self.removeMarker(marker);
 		}
 		
 		marker.setMap(self);
@@ -49,6 +49,19 @@ function Gmap(el, options) {
 		
 		return markerId;
 	};
+	
+	self.removeAllMarker = function() {
+		for(markerId in markers) {
+			var marker = self.getMarker(markerId);
+			marker.setMap(null);
+		}
+		markers = {};
+	}
+	
+	self.removeMarker = function(marker) {
+		delete markers[marker.getId()];
+		marker.setMap(null);
+	}
 	
 	self.getMarker = function(markerId) {
 		return markers[markerId];
@@ -124,7 +137,12 @@ function Marker(options) {
 	
 	self.setMap = function(m) {
 		map = m;
-		marker.setMap(m.getOriginal());
+		
+		if(m) {
+			marker.setMap(m.getOriginal());
+		} else {
+			marker.setMap(null);
+		}
 	};
 	
 	self.addInfoWindow = function(infoWindow) {
