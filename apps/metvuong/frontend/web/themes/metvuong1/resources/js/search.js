@@ -184,7 +184,7 @@ var objEvent = {
 
 	                // render quận/huyện theo tỉnh/thành phố
 	                if( _this.parent().data('idTt') != undefined ) {
-	                    //$('#valTT').val(_this.parent().data('idTt'));
+	                    $('#valTT').val(_this.parent().data('idTt'));
 	                    itemId = _this.parent().data('idTt');
 	                    nameAttr = 'data-id-tt';
 	                    relAttr = 'id-tt';
@@ -205,32 +205,32 @@ var objEvent = {
 
 	                // lấy value id khi chọn dropdown
 	                if( _this.parent().data('idQh') != undefined ) {
-	                    //$('#valQh').val(_this.parent().data('idQh'));
+	                    $('#valQh').val(_this.parent().data('idQh'));
 	                    itemId = _this.parent().data('idQh');
 	                    nameAttr = 'data-id-qh';
 	                    relAttr = 'id-qh';
 	                }else if( _this.parent().data('idLoai') != undefined ) {
-	                    //$('#valLoaibds').val(_this.parent().data('idLoai'));
+	                    $('#valLoaibds').val(_this.parent().data('idLoai'));
 	                    itemId = _this.parent().data('idLoai');
 	                    nameAttr = 'data-id-loai';
 	                    relAttr = 'id-loai';
 	                }else if( _this.parent().data('idDuans') != undefined ) {
-	                    //$('#valDuaan').val(_this.parent().data('idDuans'));
+	                    $('#valDuaan').val(_this.parent().data('idDuans'));
 	                    itemId = _this.parent().data('idDuans');
 	                    nameAttr = 'data-id-duans';
 	                    relAttr = 'id-duans';
 	                }else if( _this.parent().data('idTtuc') != undefined ) {
-	                    //$('#valTTuc').val(_this.parent().data('idTtuc'));
+	                    $('#valTTuc').val(_this.parent().data('idTtuc'));
 	                    itemId = _this.parent().data('idTtuc');
 	                    nameAttr = 'data-id-ttuc';
 	                    relAttr = 'id-ttuc';
 	                }else if( _this.parent().data('idDuannews') != undefined ) {
-	                    //$('#valDuaannews').val(_this.parent().data('idDuannews'));
+	                    $('#valDuaannews').val(_this.parent().data('idDuannews'));
 	                    itemId = _this.parent().data('idDuannews');
 	                    nameAttr = 'data-id-duannews';
 	                    relAttr = 'id-duannews';
 	                }else if( _this.parent().data('idLoaittuc') != undefined ) {
-	                    //$('#valLoaiTTuc').val(_this.parent().data('idLoaittuc'));
+	                    $('#valLoaiTTuc').val(_this.parent().data('idLoaittuc'));
 	                    itemId = _this.parent().data('idLoaittuc');
 	                    nameAttr = 'data-id-loaittuc';
 	                    relAttr = 'id-loaittuc';
@@ -238,8 +238,8 @@ var objEvent = {
 	                //end
 
 					//render dự án theo Loại Bất Động Sản
-					var idTThanh =  objEvent.wrapListSuggest.find('li[data-id-tt]').data('idTt'),
-                    	idQh = objEvent.wrapListSuggest.find('li[data-id-qh]').data('idQh'),
+					var idTThanh =  $('#valTT').val(),
+                    	idQh = $('#valQh').val(),
                     	idLoaiBDS = _this.parent().data('idLoai');
 
 	                if( idTThanh != '' && idQh != '' && idLoaiBDS != '' && _this.parent().data('idLoai') != undefined ) {
