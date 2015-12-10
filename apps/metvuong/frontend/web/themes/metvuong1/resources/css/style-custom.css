@@ -2337,7 +2337,7 @@ div.wrap-page-home #search-kind .dropdown button {
     position: relative;
     padding: 15px 15px 10px 10px;
     max-height: 250px;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 .btn-close-search {
