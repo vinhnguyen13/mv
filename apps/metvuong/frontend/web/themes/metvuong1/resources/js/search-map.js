@@ -107,13 +107,23 @@ function loadListing() {
 		var category = categories[product.category_id]['name'].toUpperCase();
 		var price = (product.type == 1) ? product.price : product.price + '/tháng';
 		
+		var roomNo = '';
+		if(product['adProductAdditionInfo']['room_no']) {
+			roomNo = '• ' + product['adProductAdditionInfo']['room_no'] + ' phòng ngủ ';
+		}
+		
+		var floorNo = '';
+		if(product['adProductAdditionInfo']['floor_no']) {
+			floorNo = '• ' + product['adProductAdditionInfo']['floor_no'] + ' tầng ';
+		}
+		
 		var li = '<li data-detail="' + product.id +'" data-id="' + markerId + '">' +
                     '<div class="bgcover wrap-img pull-left" style="background-image:url('+product.image_url+')"><a href="#" class=""></a></div>' +
                     '<div class="infor-result">' +
                         '<p class="item-title">' + address + '</p>' +
                         '<p class="type-result"><em class="fa fa-circle for-rent"></em>' + category + ' ' + type + '</p>' +
                         '<p class="rice-result">' + price + '</p>' +
-                        '<p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>' +
+                        '<p class="beds-baths-sqft">' + product['area'] + 'm<sup>2</sup> ' + floorNo + roomNo + '</p>' +
                         '<p class="date-post-rent">' + product.previous_time + '</p>' +
                     '</div>' +
                 '</li>';
