@@ -118,7 +118,7 @@ $type = [
 			</div>
 			<div class="fieldset clearfix" style="display: none;">
 		    	<div class="form-group">
-		    		<?= Html::activeTextarea($model, 'content', ['class' => 'form-control']) ?>
+		    		<?= Html::activeTextarea($model, 'content', ['class' => 'form-control', 'placeholder' => 'Nội dung tin đăng', 'style' => 'height: 100px;']) ?>
 		    		<div class="help-block" style="display: none;"></div>
 		    	</div>
 				<?= FileUploadUI::widget([
