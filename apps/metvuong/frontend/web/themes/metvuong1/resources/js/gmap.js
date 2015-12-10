@@ -1,5 +1,7 @@
 var apiIsLoaded = false;
 var queueAsynInitials = [];
+var mapCounter = 1;
+var markerCounter = 1;
 
 function apiLoaded() {
 	Gmap.prototype.geocoder = new google.maps.Geocoder;
@@ -25,22 +27,27 @@ function asynInitial(el, initialCenter, callback) {
 }
 
 function Gmap(el, options) {
+	var id = mapCounter;
 	var self = this;
-	var markerCounter = 1;
 	var markers = {};
 	var map = new google.maps.Map(el, options);
 	
 	self.addMarker = function(marker, setCenter) {
-		marker.setMap(map);
+		if(marker.getMap()) {
+			self.removeMarker();
+		}
+		
+		marker.setMap(self);
 		
 		if(setCenter) {
 			map.setCenter(marker.getPosition());
 		}
-
-		markerCounter++;
-		markers[markerCounter] = marker;
 		
-		return markerCounter;
+		var markerId = marker.getId();
+		
+		markers[markerId] = marker;
+		
+		return markerId;
 	};
 	
 	self.getMarker = function(markerId) {
@@ -67,16 +74,37 @@ function Gmap(el, options) {
 		});
 	};
 	
+	self.getId = function() {
+		return id;
+	}
+	
+	self.getOriginal = function() {
+		return map;
+	};
+	
+	mapCounter++;
+	
 	return self;
 }
 
-function InfoWindow() {
+function InfoWindow(options) {
+	var self = this;
+	var infoWindow = new google.maps.InfoWindow(options);
 	
+	self.open = function(marker) {
+		infoWindow.open(marker.getMap(), marker.getOriginal());
+	}
+	
+	self.setContent = function(content) {
+		infoWindow.setContent(content);
+	}
 }
 
 function Marker(options) {
+	var id = markerCounter;
 	var self = this;
 	var marker = new google.maps.Marker(options);
+	var map;
 	
 	self.dragend = function(callback) {
 		marker.addListener('dragend', function(evt) {
@@ -84,13 +112,38 @@ function Marker(options) {
 		});
 	};
 	
-	self.getPosition = function() {
-		return marker.getPosition();
+	self.click = function(callback) {
+		marker.addListener('click', function(evt) {
+			callback({lat: evt.latLng.lat(), lng: evt.latLng.lng()});
+		});
 	}
 	
-	self.setMap = function(map) {
-		marker.setMap(map);
+	self.getPosition = function() {
+		return marker.getPosition();
+	};
+	
+	self.setMap = function(m) {
+		map = m;
+		marker.setMap(m.getOriginal());
+	};
+	
+	self.addInfoWindow = function(infoWindow) {
+		infoWindow.open(self);
+	};
+	
+	self.getMap = function() {
+		return marker.getMap();
+	};
+	
+	self.getOriginal = function() {
+		return marker;
+	};
+	
+	self.getId = function() {
+		return id;
 	}
+	
+	markerCounter++;
 	
 	return this;
 }

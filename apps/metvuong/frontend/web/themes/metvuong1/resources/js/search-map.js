@@ -1,4 +1,4 @@
-var gmap = null, response = null, listResult;
+var gmap = null, response = null, listResult, infoWindow;
 
 $(document).ready(function(){
 	listResult = $('.list-results');
@@ -29,12 +29,15 @@ function search(callback) {
 
 function start() {
 	if(response && gmap) {
+		infoWindow = new InfoWindow();
+		
 		listResult.on('click', '> li', function(){
-			var marker = gmap.getMarker($(this).data('id'));
-			var position = marker.getPosition();
-			gmap.setCenter({lat: position.lat(), lng: position.lng()});
+			var self = $(this);
+			
+			$('#map-loading').height($('.cd-main-content').height()).show();
 			
 			$.get('/ads/detail', {id: $(this).data('detail')}, function(response){
+				
 				$('#detail-listing').html($(response).html()).modal();
 				$('.gallery-detail').imagesLoaded()
 				 	.always( function( instance ) {
@@ -42,6 +45,8 @@ function start() {
 				 		console.log('all images loaded');
 				 	})
 				 	.done( function( instance ) {
+						$('#map-loading').hide();
+						
 				 		setTimeout(function() {
 				 			$('#detail-listing .bxslider').bxSlider({
 				                moveSlides: 1,
@@ -60,6 +65,12 @@ function start() {
 					            'resizeDuration': 300,
 					            'fadeDuration': 400
 					        });
+							
+							if(!self.data('clone')) {
+								var marker = gmap.getMarker(self.data('id'));
+								var position = marker.getPosition();
+								gmap.setCenter({lat: position.lat(), lng: position.lng()});
+							}
 				 		},500);
 					    
 				 	})
@@ -91,46 +102,67 @@ function loadListing() {
 	var count = 0;
 	for(index in response) {
 		var product = response[index];
-		var city = dataCities[product.city_id];
-		var district = city['districts'][product.district_id];
-		var ward = district['wards'][product.ward_id];
-		var street = district['streets'][product.street_id];
-		var address = product.home_no + ' ' + street.pre + ' ' + street.name + ', ' + ward.pre + ' ' + ward.name + ', ' + district.pre + ' ' + district.name + ', ' + city.name;
-
-		var marker = new Marker({
-			draggable: false,
-		    position: {lat: Number(product.lat), lng: Number(product.lng)}
-		});
-		
-		var markerId = gmap.addMarker(marker, true);
-		var type = (product.type == 1) ? 'BÁN' : 'CHO THUÊ';
-		var category = categories[product.category_id]['name'].toUpperCase();
-		var price = (product.type == 1) ? product.price : product.price + '/tháng';
-		
-		var roomNo = '';
-		if(product['adProductAdditionInfo']['room_no']) {
-			roomNo = '• ' + product['adProductAdditionInfo']['room_no'] + ' phòng ngủ ';
-		}
-		
-		var floorNo = '';
-		if(product['adProductAdditionInfo']['floor_no']) {
-			floorNo = '• ' + product['adProductAdditionInfo']['floor_no'] + ' tầng ';
-		}
-		
-		var li = '<li data-detail="' + product.id +'" data-id="' + markerId + '">' +
-                    '<div class="bgcover wrap-img pull-left" style="background-image:url('+product.image_url+')"><a href="#" class=""></a></div>' +
-                    '<div class="infor-result">' +
-                        '<p class="item-title">' + address + '</p>' +
-                        '<p class="type-result"><em class="fa fa-circle for-rent"></em>' + category + ' ' + type + '</p>' +
-                        '<p class="rice-result">' + price + '</p>' +
-                        '<p class="beds-baths-sqft">' + product['area'] + 'm<sup>2</sup> ' + floorNo + roomNo + '</p>' +
-                        '<p class="date-post-rent">' + product.previous_time + '</p>' +
-                    '</div>' +
-                '</li>';
-		list += li;
+		list += makeMarker(product);
 		count++;
 	}
 	
 	$('#count-listing').text(count);
 	listResult.empty().append(list);
+}
+
+function makeMarker(product) {
+	var city = dataCities[product.city_id];
+	var district = city['districts'][product.district_id];
+	var ward = district['wards'][product.ward_id];
+	var street = district['streets'][product.street_id];
+	var address = product.home_no + ' ' + street.pre + ' ' + street.name + ', ' + ward.pre + ' ' + ward.name + ', ' + district.pre + ' ' + district.name + ', ' + city.name;
+
+	var marker = new Marker({
+		draggable: false,
+	    position: {lat: Number(product.lat), lng: Number(product.lng)}
+	});
+	
+	marker.click(function(latLng){
+		var id = marker.getId();
+		var listEl = $('#moi-nhat').clone(true).removeAttr('id');
+		var list = listEl.find('li');
+		
+		list.each(function(){
+			if(id == $(this).data('id')) {
+				$(this).data('clone', true);
+				list.not($(this)).remove();
+				infoWindow.setContent(listEl.get(0));
+				return false;
+			}
+		});
+		
+		infoWindow.open(marker);
+	});
+	
+	var markerId = gmap.addMarker(marker, true);
+	var type = (product.type == 1) ? 'BÁN' : 'CHO THUÊ';
+	var category = categories[product.category_id]['name'].toUpperCase();
+	var price = (product.type == 1) ? product.price : product.price + '/tháng';
+	
+	var roomNo = '';
+	if(product['adProductAdditionInfo']['room_no']) {
+		roomNo = '• ' + product['adProductAdditionInfo']['room_no'] + ' phòng ngủ ';
+	}
+	
+	var floorNo = '';
+	if(product['adProductAdditionInfo']['floor_no']) {
+		floorNo = '• ' + product['adProductAdditionInfo']['floor_no'] + ' tầng ';
+	}
+	
+	var li = '<li data-detail="' + product.id +'" data-id="' + markerId + '">' +
+                '<div class="bgcover wrap-img pull-left" style="background-image:url('+product.image_url+')"><a href="#" class=""></a></div>' +
+                '<div class="infor-result">' +
+                    '<p class="item-title">' + address + '</p>' +
+                    '<p class="type-result"><em class="fa fa-circle for-rent"></em>' + category + ' ' + type + '</p>' +
+                    '<p class="rice-result">' + price + '</p>' +
+                    '<p class="beds-baths-sqft">' + product['area'] + 'm<sup>2</sup> ' + floorNo + roomNo + '</p>' +
+                    '<p class="date-post-rent">' + product.previous_time + '</p>' +
+                '</div>' +
+            '</li>';
+	return li;
 }

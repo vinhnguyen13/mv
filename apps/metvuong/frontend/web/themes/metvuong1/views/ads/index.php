@@ -12,6 +12,9 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/jquery.
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/search-map.js', ['position' => View::POS_END]);
 $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy('id')->asArray(true)->all()) . ';', View::POS_BEGIN);
 ?>
+<div id="map-loading" style="display:none;position: absolute;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.5);z-index: 3;">
+	<img style="    position: absolute;left: 50%;top: 50%;margin-left: -24px;margin-top: -24px;" src="<?= Yii::$app->view->theme->baseUrl ?>/resources/images/map-loading.gif" />
+</div>
 <div class="list-filters-result">
 	<form id="map-search-form" action="<?= Url::to('/real-estate/result') ?>" method="post">
 		<input type="hidden" name="result" value="1" />
