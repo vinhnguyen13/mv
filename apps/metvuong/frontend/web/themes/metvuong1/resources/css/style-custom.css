@@ -2005,7 +2005,7 @@ footer {
     padding-top: 0;
 }
 .animate-children #search-kind .type-search i {
-    top: -3px;
+    top: 3px;
     font-size: .6em;
 }
 div.wrap-page-home .wrap-search-home .ani-search button.btn.btn-default, 
