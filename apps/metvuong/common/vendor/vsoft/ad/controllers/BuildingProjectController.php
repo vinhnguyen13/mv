@@ -36,7 +36,7 @@ class BuildingProjectController extends Controller
 		}
 		
 		$investors = AdInvestor::find()->all();
-		$categories = AdCategory::find()->all();
+		$categories = AdCategory::find()->where(['status'=>1])->all();
 		
 		if(Yii::$app->request->isPost) {
 			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
@@ -98,7 +98,7 @@ class BuildingProjectController extends Controller
     	}
 
     	$investors = AdInvestor::find()->all();
-    	$categories = AdCategory::find()->all();
+    	$categories = AdCategory::find()->where(['status'=>1])->all();
     	
     	if($model) {
     		if(Yii::$app->request->isPost) {
