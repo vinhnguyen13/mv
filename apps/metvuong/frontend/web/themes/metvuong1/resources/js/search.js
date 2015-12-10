@@ -1,7 +1,4 @@
-(function() {
-	"use strict";
-
-	var objEvent = {
+var objEvent = {
 			itemInput: $('#searchInput'),
 			tabsSearch: $('.search-select a'),
 	        flagEnd : false,
@@ -19,6 +16,7 @@
 	        editItem: '',
 	        icon: $('#search-kind button span'),
 	        iconScrollSearch : $('.icon-selected'),
+	        objSave: [],
 
 	        init: function() {
 	        	objEvent.searchEvent();
@@ -29,6 +27,7 @@
 	        	objEvent.removeSuggest();
 	        	loadCost.init();
 	        	objEvent.centerBox();
+	        	objEvent.renderSuggest();
 	        },
 	        getDataTinhThanhQuanHuyen: function () {
 	        	$('.list-tinh-thanh').html('');
@@ -70,7 +69,6 @@
 	        	objEvent.tabsSearch.each(function() {
 	        		var txtPlaceholder = $(this).data('placeholder');
 	        		if( $(this).parent().hasClass('active') ) {
-	        			$('#valActive').val($(this).data('active'));
 	        			objEvent.itemInput.attr('placeholder', txtPlaceholder);	
 	        			objEvent.flagTrigger = $(this).attr('rel');
 	        			itemTabs(objEvent.flagTrigger);
@@ -97,10 +95,6 @@
 			                //_this.trigger( 'real-estate/news', [{data: '1'}, 'something'] );
 			                $('.list-loai-tt').html('');
 			                $('.list-tintuc-suggest').html('');
-			                for( var i in newsCatalogs ) {
-						        var $item = $('<li data-id-loaittuc="'+i+'"><a title="'+newsCatalogs[i].title+'" href="#">'+newsCatalogs[i].title+'</a></li>');
-						        $('.list-tintuc-suggest').append($item);   
-						    }
 			                $.getJSON(url_ttuc, function(result){
 						        arrJSONReturn.objTTuc = result;
 						        for( var i = 0; i < result.length; i++ ) {
@@ -108,8 +102,11 @@
 						            $('.list-loai-tt').append($item);   
 						        }
 						    });
-
-						    $('.list-duan-news li a').attr('data-end-submit',true);
+			                for( var i in newsCatalogs ) {
+						        var $item = $('<li data-id-loaittuc="'+i+'"><a title="'+newsCatalogs[i].title+'" href="#">'+newsCatalogs[i].title+'</a></li>');
+						        $('.list-tintuc-suggest').append($item);   
+						    }
+			                $('.list-duan-news li a').attr('data-end-submit',true);
 						    $('.list-tintuc-suggest li a').attr('data-end-submit',true);
 
 			                objEvent.icon.html('<em class="fa fa-file-text"></em>');
@@ -187,10 +184,10 @@
 
 	                // render quận/huyện theo tỉnh/thành phố
 	                if( _this.parent().data('idTt') != undefined ) {
-	                    $('#valTT').val(_this.parent().data('idTt'));
+	                    //$('#valTT').val(_this.parent().data('idTt'));
 	                    itemId = _this.parent().data('idTt');
 	                    nameAttr = 'data-id-tt';
-	                    relAttr = 'idTt';
+	                    relAttr = 'id-tt';
 
 	                    for( var i in dataCities ) {
 	                        if( i == _this.parent().data('idTt') ) {
@@ -208,42 +205,42 @@
 
 	                // lấy value id khi chọn dropdown
 	                if( _this.parent().data('idQh') != undefined ) {
-	                    $('#valQh').val(_this.parent().data('idQh'));
+	                    //$('#valQh').val(_this.parent().data('idQh'));
 	                    itemId = _this.parent().data('idQh');
 	                    nameAttr = 'data-id-qh';
-	                    relAttr = 'idQh';
+	                    relAttr = 'id-qh';
 	                }else if( _this.parent().data('idLoai') != undefined ) {
-	                    $('#valLoaibds').val(_this.parent().data('idLoai'));
+	                    //$('#valLoaibds').val(_this.parent().data('idLoai'));
 	                    itemId = _this.parent().data('idLoai');
 	                    nameAttr = 'data-id-loai';
-	                    relAttr = 'idLoai';
+	                    relAttr = 'id-loai';
 	                }else if( _this.parent().data('idDuans') != undefined ) {
-	                    $('#valDuaan').val(_this.parent().data('idDuans'));
+	                    //$('#valDuaan').val(_this.parent().data('idDuans'));
 	                    itemId = _this.parent().data('idDuans');
 	                    nameAttr = 'data-id-duans';
-	                    relAttr = 'idDuans';
+	                    relAttr = 'id-duans';
 	                }else if( _this.parent().data('idTtuc') != undefined ) {
-	                    $('#valTTuc').val(_this.parent().data('idTtuc'));
+	                    //$('#valTTuc').val(_this.parent().data('idTtuc'));
 	                    itemId = _this.parent().data('idTtuc');
 	                    nameAttr = 'data-id-ttuc';
-	                    relAttr = 'idTtuc';
+	                    relAttr = 'id-ttuc';
 	                }else if( _this.parent().data('idDuannews') != undefined ) {
-	                    $('#valDuaannews').val(_this.parent().data('idDuannews'));
+	                    //$('#valDuaannews').val(_this.parent().data('idDuannews'));
 	                    itemId = _this.parent().data('idDuannews');
 	                    nameAttr = 'data-id-duannews';
-	                    relAttr = 'idDuannews';
+	                    relAttr = 'id-duannews';
 	                }else if( _this.parent().data('idLoaittuc') != undefined ) {
-	                    $('#valLoaiTTuc').val(_this.parent().data('idLoaittuc'));
+	                    //$('#valLoaiTTuc').val(_this.parent().data('idLoaittuc'));
 	                    itemId = _this.parent().data('idLoaittuc');
 	                    nameAttr = 'data-id-loaittuc';
-	                    relAttr = 'idLoaittuc';
+	                    relAttr = 'id-loaittuc';
 	                }
 	                //end
 
 					//render dự án theo Loại Bất Động Sản
-					var idTThanh =  $('#valTT').val(),
-                    	idQh = $('#valQh').val(),
-                    	idLoaiBDS = $('#valLoai').val();
+					var idTThanh =  objEvent.wrapListSuggest.find('li[data-id-tt]').data('idTt'),
+                    	idQh = objEvent.wrapListSuggest.find('li[data-id-qh]').data('idQh'),
+                    	idLoaiBDS = _this.parent().data('idLoai');
 
 	                if( idTThanh != '' && idQh != '' && idLoaiBDS != '' && _this.parent().data('idLoai') != undefined ) {
 	                    $('.list-duan-suggest').html('');
@@ -262,16 +259,7 @@
                 		$(".search-wrap[data-template="+objEvent.countStep+"] li a").attr('data-template-show',objEvent.flagSetTemplate);
                     }
 
-                    if( objEvent.flagTrigger == '#dd-dky' && _this.data('endSubmit') ) {
-                        _this.trigger( 'real-estate/post', [{data: '1'}, 'something'] );
-                        objEvent.flagEnd = true;
-                    }
-
-                    if( objEvent.flagTrigger == '#dd-news' && _this.data('endSubmit') ) {
-                        _this.trigger( 'real-estate/news', [{data: '1'}, 'something'] );
-                    }
-
-					if( !objEvent.editItem ) { // insert item mới
+                    if( !objEvent.editItem ) { // insert item mới
 	                    
 	                    $itemSuggest.find('span').text(txt);
 	                    $itemSuggest.find('span').attr('title',txt);
@@ -293,12 +281,23 @@
 	                    $itemSuggest.attr('rel',relAttr);
 	                    objEvent.editItem = '';
 	                }
-	                
+
 	                objEvent.close();
 	                
 	                objEvent.wrapListSuggest.show();
 
 	                objEvent.resizeWidthInput();
+
+	                if( objEvent.flagTrigger == '#dd-dky' && _this.data('endSubmit') && $('#valLoaibds').val() == '' ) {
+	                	objEvent.updateSuggert();
+                        _this.trigger( 'real-estate/post', [{data: '1'}, 'something'] );
+                        objEvent.flagEnd = true;
+                    }
+
+                    if( objEvent.flagTrigger == '#dd-news' && _this.data('endSubmit') && $('#valLoaiTTuc').val() == '' && $('#valDuaannews').val() == '' ) {
+                    	objEvent.updateSuggert();
+                        _this.trigger( 'real-estate/news', [{data: '1'}, 'something'] );
+                    }
 
 	                if( _this.closest('.search-wrap').data('end') ) {
 	                	objEvent.flagEnd = true;
@@ -345,8 +344,10 @@
 	        },
 	        resizeWidthInput: function() {
 	        	objEvent.itemInput.hide();
-	            var wInput = $('.type-search').width() - objEvent.wrapListSuggest.outerWidth();
-	            objEvent.itemInput.css('width',wInput+'px').show();
+	            setTimeout(function () {
+	            	var wInput = $('.type-search').width() - objEvent.wrapListSuggest.outerWidth();
+	            	objEvent.itemInput.css('width',wInput+'px').show();
+	            },250);
 	        },
 	        reOpenBySuggest: function() {
 	            $(document).on('click', '.type-search li span',function(e) {
@@ -396,13 +397,55 @@
 	            objEvent.lenghtSuggest = 0;
 	            objEvent.wrapListSuggest.hide().find('li').remove();
 	            objEvent.flagEnd = false;
-	            $('.getValSuggest').val('');
 	            objEvent.wrapStep.find('li a').removeAttr('data-template-show');
 	            objEvent.resizeWidthInput();
 	        },
-	        updateSuggert: function(countStep, lenghtSuggest) {
-	            objEvent.countStep = countStep;
-	            objEvent.lenghtSuggest = lenghtSuggest;
+	        updateSuggert: function() {
+	            var arr = [],
+	            	strArrFirst = "[",
+					strArrLast = "]";
+
+				objEvent.wrapListSuggest.find('li').each(function (i) {
+					var _this = $(this),
+						dataStep = _this.data('step'),
+						rel = _this.attr('rel'),
+						dataId = _this.data(rel),
+						dataNext = _this.data('next');
+
+					if ( rel == 'id-tt' ) {
+						$('#valTT').val(dataId);
+						$('#stepTT').val(dataStep);
+						$('#valNextTT').val(dataNext);
+					}else if ( rel == 'id-qh' ) {
+						$('#valQh').val(dataId);
+						$('#stepQh').val(dataStep);
+						$('#valNextQh').val(dataNext);
+					}else if ( rel == 'id-loai' ) {
+						$('#valLoaibds').val(dataId);
+						$('#stepLbds').val(dataStep);
+						$('#valNextLbds').val(dataNext);
+					}else if ( rel == 'id-ttuc' ) {
+						$('#valTTuc').val(dataId);
+						$('#stepTtuc').val(dataStep);
+						$('#valNextTtuc').val(dataNext);
+					}else if ( rel == 'id-loaittuc' ) {
+						$('#valLoaiTTuc').val(dataId);
+						$('#stepLoaittuc').val(dataStep);
+						$('#valNextLoaittuc').val(dataNext);
+					}else if (rel == 'id-duans' ) {
+						$('#valDuaan').val(dataId);
+						$('#stepDuan').val(dataStep);
+						$('#valNextDuan').val(dataNext);
+					}else if ( rel == 'id-duannews' ) {
+						$('#valDuaannews').val(dataId);
+						$('#stepDuannews').val(dataStep);
+						$('#valNextDuannews').val(dataNext);
+					}else {
+						l('Not Value');
+					}
+				});
+
+				$('#arrVal').val(strArrFirst);
 	        },
 	        centerBox: function() {
 	        	var logo = $('div.wrap-page-home .logo-home'),
@@ -442,8 +485,37 @@
 	        		});
 	        		searchBox.addClass('aniTopDown');
 	        	},100);
-
-	        }
+			},
+			renderSuggest: function () {
+				objEvent.getDataTinhThanhQuanHuyen();
+				
+				if ( $('#valActive').val() != '' ) {
+					$('.search-select a[data-active='+$('#valActive').val()+']').trigger('click');
+					setTimeout(function() {
+						if ( $('#valTTuc').val() != '' ) {
+							$('.list-loai-tt li[data-id-ttuc="'+$('#valTTuc').val()+'"] a').trigger('click');
+						}
+						if ( $('#valLoaiTTuc').val() != '' ) {
+							$('.list-tintuc-suggest li[data-id-loaittuc="'+$('#valLoaiTTuc').val()+'"] a').trigger('click');
+						}
+						if ( $('#valTT').val() != '' ) {
+							$('.list-tinh-thanh li[data-id-tt='+$('#valTT').val()+'] a').trigger('click');
+						}
+						if ( $('#valQh').val() != '' ) {
+							$('.list-quan-huyen li[data-id-qh='+$('#valQh').val()+'] a').trigger('click');
+						}
+						if ( $('#valLoaibds').val() != '' ) {
+							$('.list-loai-bds li[data-id-loai='+$('#valLoaibds').val()+'] a').trigger('click');
+						}
+						if ( $('#valDuaannews').val() != '' ) {
+							$('.list-duan-news li[data-id-duannews='+$('#valDuaannews').val()+'] a').trigger('click');
+						}
+						if ( $('#valDuaan').val() != '' ) {
+							$('.list-duan-suggest li[data-id-duans="'+$('#valDuaan').val()+'"] a').trigger('click');
+						}
+					},1000);
+				}
+			}
 	    };
 
 	var loadCost = {
@@ -530,15 +602,14 @@
     });
     //end click outside
 
-    objEvent.init();
+    $(document).ready(function() {
+    	objEvent.init();
+    });
 
     $(window).resize(function() {
     	objEvent.centerBox();
     	objEvent.resizeWidthInput();
     });
-
-
-})(jQuery);
 
 
 function animateSearch() {
@@ -564,7 +635,26 @@ function animateSearch() {
         $('.box-search-header').addClass('ani-search');
         setTimeout(function() {
             $('header').addClass('border-shadow');
-            l(1);
         },500);
     },500);
+}
+
+function arrayAreaChange(arrCoordinates, flag) {
+	var itemFirst = '{',
+		itemLast = '},',
+		itemLast_1 = '}';
+	
+	itemFirst += '"dataStep":"'+arrCoordinates[0]+'",';
+	itemFirst += '"rel":"'+arrCoordinates[1].toString()+'",';
+	itemFirst += '"dataId":"'+arrCoordinates[2]+'",';
+	itemFirst += '"dataNext":"'+(arrCoordinates[3] == undefined ? "" : arrCoordinates[3])+'"';
+
+	if( flag ) {
+		itemFirst += itemLast_1;
+	}else {
+		itemFirst += itemLast;
+	}
+	
+	
+	return itemFirst;
 }

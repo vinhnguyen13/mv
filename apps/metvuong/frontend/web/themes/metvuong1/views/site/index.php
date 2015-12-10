@@ -11,7 +11,10 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
         $(document).on('click', '#btn-search', function(){
             animateSearch();
             setTimeout(function() {
-                setTimeout(function() {$('#search-kind').submit();},500);
+                setTimeout(function() {
+                    objEvent.updateSuggert();
+                    $('#search-kind').submit();
+                },500);
             },1000);
             return false;
         });
@@ -187,14 +190,35 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                 </button>
 
                                 
-                                <input class="getValSuggest" type="hidden" rel="idActive" id="valActive" name="activeSearch" value="">
-                                <input class="getValSuggest" type="hidden" rel="idTt" id="valTT" name="city" value="">
-                                <input class="getValSuggest" type="hidden" rel="idQh" id="valQh" name="district" value="">
-                                <input class="getValSuggest" type="hidden" rel="idLoai" id="valLoaibds" name="category" value="">
-                                <input class="getValSuggest" type="hidden" rel="idTtuc" id="valTTuc" name="news" value="">
-                                <input class="getValSuggest" type="hidden" rel="idLoaittuc" id="valLoaiTTuc" name="typenews" value="">
-                                <input class="getValSuggest" type="hidden" rel="idDuans" id="valDuaan" name="duan" value="">
-                                <input class="getValSuggest" type="hidden" rel="idDuannews" id="valDuaannews" name="duannews" value="">
+                                <input class="getValSuggest" type="hidden" rel="idActive" id="valActive" name="activeSearch" value="1">
+
+                                <input class="getValSuggest" type="hidden" rel="id-tt" id="valTT" name="city" value="">
+                                <input class="getValSuggest" type="hidden" id="stepTT" name="stepTT" value="">
+                                <input class="getValSuggest" type="hidden" id="valNextTT" name="valNextTT" value="">
+
+                                <input class="getValSuggest" type="hidden" rel="id-qh" id="valQh" name="district" value="">
+                                <input class="getValSuggest" type="hidden" id="stepQh" name="stepQh" value="">
+                                <input class="getValSuggest" type="hidden" id="valNextQh" name="valNextQh" value="">
+
+                                <input class="getValSuggest" type="hidden" rel="id-loai" id="valLoaibds" name="category" value="">
+                                <input class="getValSuggest" type="hidden" id="stepLbds" name="stepLbds" value="">
+                                <input class="getValSuggest" type="hidden" id="valNextLbds" name="valNextLbds" value="">
+
+                                <input class="getValSuggest" type="hidden" rel="id-ttuc" id="valTTuc" name="news" value="">
+                                <input class="getValSuggest" type="hidden" id="stepTtuc" name="stepTtuc" value="">
+                                <input class="getValSuggest" type="hidden" id="valNextTtuc" name="valNextTtuc" value="">
+
+                                <input class="getValSuggest" type="hidden" rel="id-loaittuc" id="valLoaiTTuc" name="typenews" value="">
+                                <input class="getValSuggest" type="hidden" id="stepLoaittuc" name="stepLoaittuc" value="">
+                                <input class="getValSuggest" type="hidden" id="valNextLoaittuc" name="valNextLoaittuc" value="">
+
+                                <input class="getValSuggest" type="hidden" rel="id-duans" id="valDuaan" name="duan" value="">
+                                <input class="getValSuggest" type="hidden" id="stepDuan" name="stepDuan" value="">
+                                <input class="getValSuggest" type="hidden" id="valNextDuan" name="valNextDuan" value="">
+
+                                <input class="getValSuggest" type="hidden" rel="id-duannews" id="valDuaannews" name="duannews" value="">
+                                <input class="getValSuggest" type="hidden" id="stepDuannews" name="stepDuannews" value="">
+                                <input class="getValSuggest" type="hidden" id="valNextDuannews" name="valNextDuannews" value="">
 
                                 
                             <?php ActiveForm::end(); ?>

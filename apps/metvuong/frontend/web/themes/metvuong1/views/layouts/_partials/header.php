@@ -90,11 +90,11 @@ $searchParams = json_decode($value);
                                         <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
                                         <h3>Chọn dự án ?</h3>
                                         <ul class="list-duan-news">
-                                            <li><a href="#">RICHSTAR</a></li>
-                                            <li><a href="#">SUNRISE RIVERSIDE</a></li>
-                                            <li><a href="#">ORCHARD PARKVIEW</a></li>
-                                            <li><a href="#">GOLDEN MANSION</a></li>
-                                            <li><a href="#">KINGSTON RESIDENCE</a></li>
+                                            <li data-id-duannews="1"><a href="#">RICHSTAR</a></li>
+                                            <li data-id-duannews="2"><a href="#">SUNRISE RIVERSIDE</a></li>
+                                            <li data-id-duannews="3"><a href="#">ORCHARD PARKVIEW</a></li>
+                                            <li data-id-duannews="4"><a href="#">GOLDEN MANSION</a></li>
+                                            <li data-id-duannews="5"><a href="#">KINGSTON RESIDENCE</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -162,13 +162,34 @@ $searchParams = json_decode($value);
                         </button>
 
                         <input class="getValSuggest" type="hidden" rel="idActive" id="valActive" name="activeSearch" value="<?=!empty($searchParams->activeSearch) ? $searchParams->activeSearch : ''?>">
-                        <input class="getValSuggest" type="hidden" rel="idTt" id="valTT" name="city" value="<?=!empty($searchParams->city) ? $searchParams->city : ''?>">
-                        <input class="getValSuggest" type="hidden" rel="idQh" id="valQh" name="district" value="<?=!empty($searchParams->district) ? $searchParams->district : ''?>">
-                        <input class="getValSuggest" type="hidden" rel="idLoai" id="valLoaibds" name="category" value="<?=!empty($searchParams->category) ? $searchParams->category : ''?>">
-                        <input class="getValSuggest" type="hidden" rel="idTtuc" id="valTTuc" name="news" value="<?=!empty($searchParams->news) ? $searchParams->news : ''?>">
-                        <input class="getValSuggest" type="hidden" rel="idLoaittuc" id="valLoaiTTuc" name="typenews" value="<?=!empty($searchParams->typenews) ? $searchParams->typenews : ''?>">
-                        <input class="getValSuggest" type="hidden" rel="idDuans" id="valDuaan" name="duan" value="<?=!empty($searchParams->duan) ? $searchParams->duan : ''?>">
-                        <input class="getValSuggest" type="hidden" rel="idDuannews" id="valDuaannews" name="duannews" value="<?=!empty($searchParams->duannews) ? $searchParams->duannews : ''?>">
+                        
+                        <input class="getValSuggest" type="hidden" rel="id-tt" id="valTT" name="city" value="<?=!empty($searchParams->city) ? $searchParams->city : ''?>">
+                        <input class="getValSuggest" type="hidden" id="stepTT" name="stepTT" value="<?=!empty($searchParams->stepTT) ? $searchParams->stepTT : ''?>">
+                        <input class="getValSuggest" type="hidden" id="valNextTT" name="valNextTT" value="<?=!empty($searchParams->valNextTT) ? $searchParams->valNextTT : ''?>">
+
+                        <input class="getValSuggest" type="hidden" rel="id-qh" id="valQh" name="district" value="<?=!empty($searchParams->district) ? $searchParams->district : ''?>">
+                        <input class="getValSuggest" type="hidden" id="stepQh" name="stepQh" value="<?=!empty($searchParams->stepQh) ? $searchParams->stepQh : ''?>">
+                        <input class="getValSuggest" type="hidden" id="valNextQh" name="valNextQh" value="<?=!empty($searchParams->valNextQh) ? $searchParams->valNextQh : ''?>">
+
+                        <input class="getValSuggest" type="hidden" rel="id-loai" id="valLoaibds" name="category" value="<?=!empty($searchParams->category) ? $searchParams->category : ''?>">
+                        <input class="getValSuggest" type="hidden" id="stepLbds" name="stepLbds" value="<?=!empty($searchParams->stepLbds) ? $searchParams->stepLbds : ''?>">
+                        <input class="getValSuggest" type="hidden" id="valNextLbds" name="valNextLbds" value="<?=!empty($searchParams->valNextLbds) ? $searchParams->valNextLbds : ''?>">
+                        
+                        <input class="getValSuggest" type="hidden" rel="id-ttuc" id="valTTuc" name="news" value="<?=!empty($searchParams->news) ? $searchParams->news : ''?>">
+                        <input class="getValSuggest" type="hidden" id="stepTtuc" name="stepTtuc" value="<?=!empty($searchParams->stepTtuc) ? $searchParams->stepTtuc : ''?>">
+                        <input class="getValSuggest" type="hidden" id="valNextTtuc" name="valNextTtuc" value="<?=!empty($searchParams->valNextTtuc) ? $searchParams->valNextTtuc : ''?>">
+                        
+                        <input class="getValSuggest" type="hidden" rel="id-loaittuc" id="valLoaiTTuc" name="typenews" value="<?=!empty($searchParams->typenews) ? $searchParams->typenews : ''?>">
+                        <input class="getValSuggest" type="hidden" id="stepLoaittuc" name="stepLoaittuc" value="<?=!empty($searchParams->stepLoaittuc) ? $searchParams->stepLoaittuc : ''?>">
+                        <input class="getValSuggest" type="hidden" id="valNextLoaittuc" name="valNextLoaittuc" value="<?=!empty($searchParams->valNextLoaittuc) ? $searchParams->valNextLoaittuc : ''?>">
+                        
+                        <input class="getValSuggest" type="hidden" rel="id-duans" id="valDuaan" name="duan" value="<?=!empty($searchParams->duan) ? $searchParams->duan : ''?>">
+                        <input class="getValSuggest" type="hidden" id="stepDuan" name="stepDuan" value="<?=!empty($searchParams->stepDuan) ? $searchParams->stepDuan : ''?>">
+                        <input class="getValSuggest" type="hidden" id="valNextDuan" name="valNextDuan" value="<?=!empty($searchParams->valNextDuan) ? $searchParams->valNextDuan : ''?>">
+                        
+                        <input class="getValSuggest" type="hidden" rel="id-duannews" id="valDuaannews" name="duannews" value="<?=!empty($searchParams->duannews) ? $searchParams->duannews : ''?>">
+                        <input class="getValSuggest" type="hidden" id="stepDuannews" name="stepDuannews" value="<?=!empty($searchParams->stepDuannews) ? $searchParams->stepDuannews : ''?>">
+                        <input class="getValSuggest" type="hidden" id="valNextDuannews" name="valNextDuannews" value="<?=!empty($searchParams->valNextDuannews) ? $searchParams->valNextDuannews : ''?>">
                         
                     <?php ActiveForm::end(); ?>
                     <div class="pull-left text-right mgT-10 mgL-15 options-search">
@@ -180,8 +201,8 @@ $searchParams = json_decode($value);
                             </a>
                             <em class="fa fa-sort-desc"></em>
                         </div>
-                        <div class="search-select active">
-                            <a href="#" data-placeholder="Bạn ở Tỉnh/Thành nào ?" rel="#dd-search" title="Muốn Mua/Thuê">
+                        <div class="search-select">
+                            <a href="#" data-placeholder="Bạn ở Tỉnh/Thành nào ?" rel="#dd-search" title="Muốn Mua/Thuê" data-active="1">
                                 <span>
                                     <em class="fa fa-home"></em>
                                     <em class="fa fa-search"></em>
@@ -190,7 +211,7 @@ $searchParams = json_decode($value);
                             </a>
                         </div>
                         <div class="search-select">
-                            <a href="#" data-placeholder="Bạn ở Tỉnh/Thành nào ?" rel="#dd-dky" title="Đăng ký Bán/Thuê">
+                            <a href="#" data-placeholder="Bạn ở Tỉnh/Thành nào ?" rel="#dd-dky" title="Đăng ký Bán/Thuê" data-active="2">
                                 <span>
                                     <em class="fa fa-home"></em>
                                     <em class="fa fa-pencil-square-o"></em>
@@ -199,7 +220,7 @@ $searchParams = json_decode($value);
                             </a>
                         </div>
                         <div class="search-select">
-                            <a href="#" class="" data-step-fix="step-5" data-placeholder="Bạn nên chọn Loại Tin Tức ?" rel="#dd-news" title="Tin Tức">
+                            <a href="#" class="" data-step-fix="step-5" data-placeholder="Bạn nên chọn Loại Tin Tức ?" rel="#dd-news" title="Tin Tức" data-active="3">
                                 <span>
                                     <em class="fa fa-home"></em>
                                     <em class="fa fa-file-text"></em>
