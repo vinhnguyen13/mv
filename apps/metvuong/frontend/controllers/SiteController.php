@@ -187,10 +187,10 @@ class SiteController extends Controller
     		$districts[$districtId]['projects'][$k] = $project;
     	}
     	$projects = null;
-    	
+
     	foreach ($districts as $k => &$district) {
-    		$cityId = $district['city_id'];
-    		unset($district['city_id']);
+            $cityId = $district['city_id'];
+            unset($district['city_id']);
     		unset($district['id']);
     		$cities[$cityId]['districts'][$k] = $district;
     	}
@@ -204,7 +204,7 @@ class SiteController extends Controller
     	}
     	
 
-    	$catalogs = CmsCatalog::find()->indexBy('id')->select('id, title')->asArray(true)->all();
+    	$catalogs = CmsCatalog::find()->indexBy('id')->select('id, title')->where(['parent_id'=>Yii::$app->params['newsCatID']])->asArray(true)->all();
     	 
     	foreach ($catalogs as $k => &$catalog) {
     		unset($catalog['id']);
@@ -213,7 +213,7 @@ class SiteController extends Controller
 		$content = 'var dataCities = ' . json_encode($cities, JSON_UNESCAPED_UNICODE) . ';' .
 					'var dataCategories = ' . json_encode($categories, JSON_UNESCAPED_UNICODE) . ';' .
 					'var newsCatalogs = ' . json_encode($catalogs, JSON_UNESCAPED_UNICODE) . ';';
-    	$file = fopen(Yii::$app->view->theme->basePath . DIRECTORY_SEPARATOR . 'resources' . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . "data.js", "w");
+    	$file = fopen(Yii::getAlias('@store') . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . "data.js", "w");
     	fwrite($file, $content);
 		fclose($file);
     }

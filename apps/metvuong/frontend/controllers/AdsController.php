@@ -32,8 +32,15 @@ class AdsController extends Controller
         	$cityId = Yii::$app->request->get('cityId');
         	$districtId = Yii::$app->request->get('districtId');
         	$categoryId = Yii::$app->request->get('categoryId');
+        	$orderBy = Yii::$app->request->get('orderBy', 'created_at');
         	
-        	$query = AdProduct::find()->orderBy('created_at DESC');
+        	$query = AdProduct::find();
+        	
+        	if($orderBy == 'created_at') {
+        		$query->orderBy("$orderBy DESC");
+        	} else {
+        		$query->orderBy("$orderBy ASC");
+        	}
         	
         	if($cityId) {
         		$query->where('city_id = :city_id', [':city_id' => $cityId]);

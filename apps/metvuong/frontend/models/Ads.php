@@ -45,6 +45,10 @@ class Ads extends Component
                         break;
                     case 3:
                         if(!empty($post['news']) && $post['news'] == 1){
+                            echo "<pre>";
+                            print_r($post);
+                            echo "</pre>";
+                            exit;
                             if($arrCats = array_values(Yii::$app->params["news"]["widget-category"])){
                                 $detail = CmsShow::find()->where('catalog_id IN ('.implode($arrCats, ',').')')->orderBy('id DESC')->one();
                                 $url = Url::to(['news/view', 'id' => $detail->id, 'slug' => $detail->slug, 'cat_id' => $detail->catalog->id, 'cat_slug' => $detail->catalog->slug]);

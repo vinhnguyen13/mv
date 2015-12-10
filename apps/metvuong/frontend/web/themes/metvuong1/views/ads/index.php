@@ -18,6 +18,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
 		<input type="hidden" name="cityId" id="city-id" value="<?= Yii::$app->request->get('city') ?>" />
 		<input type="hidden" name="districtId" id="district-id" value="<?= Yii::$app->request->get('district') ?>" />
 		<input type="hidden" name="categoryId" id="category-id" value="<?= Yii::$app->request->get('category') ?>" />
+		<input type="hidden" name="orderBy" id="order-by" value="created_at" />
 	    <ul class="container clearfix">
 	        <li>
 	            <a href="#">Giá</a>
@@ -46,9 +47,9 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
     <div class="wrap-col-fixed-result clearfix">
         <h1 id="search-title" class="zsg-content_collapsed">Listings</h1>
         <span class="num-results"><span id="count-listing">0</span> results.</span>
-        <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#moi-nhat" aria-controls="moi-nhat" role="tab" data-toggle="tab">Mới nhất</a></li>
-            <li role="presentation"><a href="#re-nhat" aria-controls="re-nhat" role="tab" data-toggle="tab">Rẻ nhất</a></li>
+        <ul id="order-by-tab" class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a data-order="created_at" href="#" aria-controls="moi-nhat" role="tab" data-toggle="tab">Mới nhất</a></li>
+            <li role="presentation"><a data-order="price" href="#" aria-controls="re-nhat" role="tab" data-toggle="tab">Rẻ nhất</a></li>
         </ul>
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane fade in active" id="moi-nhat">
