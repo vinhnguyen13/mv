@@ -194,7 +194,7 @@ $type = [
 				<div class="form-group">
 					<?= Html::activeTextInput($adContactInfo, 'address', ['class' => 'form-control', 'placeholder' => 'Địa chỉ']) ?>
 				</div>
-				<div class="form-group">
+				<div class="form-group" style="display: none;">
 					<div class="title-sub-frm">Bản đồ</div>
 				</div>
 				<div class="form-group" style="display: none;">
@@ -217,10 +217,9 @@ $type = [
 				</button>
 			</div>
 			<div class="fieldset clearfix finish-post" style="display: none;">
-				text
-				<button type="button"
-					class="btn btn-primary btn-common mgT-15 next action-button pull-right">Đăng
-					bài</button>
+				<div style="font-weight: bold; font-size: 20px; color: #514AB3; margin: -8px 0 22px 0;">Đăng tin thành công !</div>
+				<div style="font-size: 14px; margin-bottom: 32px;">Tin của bạn đang chờ xét duyệt và sẽ được hiển thị đến người mua sớm nhất.<br /><br />Cảm ơn đã sử dụng dịch vụ của MetVuong</div>
+				<a href="<?= Url::current() ?>" style="font-size: 16px; text-transform: uppercase;">Tiếp tục đăng tin</a>
 			</div>
 		<?php $form->end()?>
 	</div>

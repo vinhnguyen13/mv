@@ -43,6 +43,10 @@ class AdsController extends Controller
         		$query->andWhere('district_id = :district_id', [':district_id' => $districtId]);
         	}
         	
+        	if($categoryId) {
+        		$query->andWhere('category_id = :category_id', [':category_id' => $categoryId]);
+        	}
+        	
         	$products = $query->all();
         	
         	$productResponse = [];
