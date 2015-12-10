@@ -34,7 +34,7 @@ class AdsController extends Controller
         	$categoryId = Yii::$app->request->get('categoryId');
         	$orderBy = Yii::$app->request->get('orderBy', 'created_at');
         	
-        	$query = AdProduct::find();
+        	$query = AdProduct::find()->with('adProductAdditionInfo');
         	
         	if($orderBy == 'created_at') {
         		$query->orderBy("$orderBy DESC");
@@ -57,11 +57,14 @@ class AdsController extends Controller
         	$products = $query->all();
         	
         	$productResponse = [];
+        	
         	foreach ($products as $k => $product) {
         		$productResponse[$k] = $product->attributes;
         		$productResponse[$k]['previous_time'] = StringHelper::previousTime($product->created_at);
-        		$productResponse[$k]['price'] = StringHelper::formatCurrency($productResponse[$k]['price']);
-
+        		$productResponse[$k]['price'] = StringHelper::formatCurrency($product->price);
+        		$productResponse[$k]['area'] = StringHelper::formatCurrency($product->area);
+        		$productResponse[$k]['adProductAdditionInfo'] = $product->adProductAdditionInfo;
+        		
         		if($product->adImages) {
         			$images = $product->adImages;
         			$image = $images[0];

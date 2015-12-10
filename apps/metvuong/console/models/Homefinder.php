@@ -7,6 +7,7 @@
  */
 namespace console\models;
 
+use Collator;
 use DateInterval;
 use DateTime;
 use keltstr\simplehtmldom\SimpleHTMLDom;
@@ -128,8 +129,10 @@ class Homefinder extends Component
                 $home_no = $response_broker_table->so_nha;
                 $lat = $response_broker_table->lat;
                 $lon = $response_broker_table->lon;
+
                 foreach ($response->data as $item) {
-                    $content = $this->getListingDetail(self::DOMAIN . '/' . $item->_id, $item, $project_name, $city, $district, $ward, $street, $description, $home_no, $lat, $lon);
+                    $price = $item->gia;
+                    $content = $this->getListingDetail(self::DOMAIN . '/' . $item->_id, $item, $project_name, $city, $district, $ward, $street, $description, $home_no, $lat, $lon, $price);
                 }
             }
             if (!empty($response->recordsTotal) && ($response->recordsTotal > ($totalItem * $page_current))) {
@@ -140,14 +143,11 @@ class Homefinder extends Component
         }
     }
 
-    public function getListingDetail($url, $item, $project_name, $city, $district, $ward, $street, $description, $home_no, $lat, $lon)
+    public function getListingDetail($url, $item, $project_name, $city, $district, $ward, $street, $description, $home_no, $lat, $lon, $price)
     {
         $arr_detail = array();
         $htmlDetail = SimpleHTMLDom::file_get_html($url);
-
-//        $title = $htmlDetail->find('title', 0);
-//        $title = trim($title->plaintext);
-//        $project_name = substr($title, 0, strpos($title, '-')-1);
+        $currency_value = 1000000; // 1 trieu
         // dien tich
         $arr_detail[$project_name]["dientich"] = trim($item->dien_tich_quy_hoach);
 
@@ -164,40 +164,6 @@ class Homefinder extends Component
                 $arr_detail[$project_name]["toilet_no"] = trim($toilet_no);
             }
         }
-        // lat, lon
-//        $lat = $htmlDetail->find('.detail input[name=lat]', 0);
-//        if(!empty($lat)){
-//            $arr_detail[$project_name]["lat"] = $lat->value;
-//        }
-//
-//        $long = $htmlDetail->find('.detail input[name=lat]', 0);
-//        if(!empty($long)){
-//            $arr_detail[$project_name]["lng"] = $long->value;
-//        }
-//
-        // thong tin mo ta
-//        $description = $htmlDetail->find('.description-list .desc_content', 0);
-//        if(!empty($description)){
-//            $arr_detail[$project_name]["mota"] = $description->innertext;
-//        }
-//        $str_date = $htmlDetail->find('.desc_broker', 0);
-//        if(!empty($str_date)){
-//            $num_date = trim($str_date->innertext);
-//            $start_pos = strpos($num_date, '-') + 1;
-//            $end_pos = strlen($num_date) - 1;
-//            $start_date = trim(substr($num_date, $start_pos, $end_pos));
-//
-//            $arr_detail[$project_name]["start_date"] = $start_date;
-//        }
-//        $broker = $htmlDetail->find('.broker-info .name', 0)->plaintext;
-//        if(!empty($broker)) {
-//            $broker = trim($broker);
-//            $broker = str_replace('</i>', '', $broker);
-//            $arr_detail[$project_name]["broker"] = $broker;
-//        }
-//        $phone = $htmlDetail->find('.broker-info .phone', 0)->plaintext;
-//        if(!empty($phone))
-//            $arr_detail[$project_name]["phone"] = trim($phone);
         $arr_detail[$project_name]["lat"] = trim($lat);
         $arr_detail[$project_name]["lng"] = trim($lon);
         $arr_detail[$project_name]["city"] = trim($city);
@@ -206,9 +172,7 @@ class Homefinder extends Component
         $arr_detail[$project_name]["street"] = trim($street);
         $arr_detail[$project_name]["description"] = trim($description);
         $arr_detail[$project_name]["home_no"] = trim($home_no);
-        $arr_detail[$project_name]["city"] = trim($city);
-        $arr_detail[$project_name]["city"] = trim($city);
-        $arr_detail[$project_name]["city"] = trim($city);
+        $arr_detail[$project_name]["price"] = $price * $currency_value;
         $arr_detail[$project_name]["loai_tai_san"] = trim($item->loai_tai_san);
         $arr_detail[$project_name]["loai_giao_dich"] = trim($item->loai_giao_dich);
         $arr_detail[$project_name]["broker"] = trim($item->broker->name);
@@ -229,19 +193,12 @@ class Homefinder extends Component
         return $arr_detail;
     }
 
-    public function writeFileJson($filePath, $data)
-    {
-        $handle = fopen($filePath, 'w') or die('Cannot open file:  ' . $filePath);
-        $int = fwrite($handle, $data);
-        fclose($handle);
-        return $int;
-    }
-
     function getCityId($cityFile, $cityDB)
     {
         foreach ($cityDB as $obj) {
-            if (strpos($obj["name"], $cityFile) !== false) {
-                return (int)$obj["id"];
+            preg_match('/'.$obj->name.'$/', $cityFile, $match);
+            if (!empty($match[0])) {
+                return (int)$obj->id;
             }
         }
         return 0;
@@ -250,8 +207,9 @@ class Homefinder extends Component
     function getDistrictId($districtFile, $districtDB, $city_id)
     {
         foreach ($districtDB as $obj) {
-            if (strpos($obj["name"], $districtFile) !== false && $obj["city_id"] == $city_id) {
-                return (int)$obj["id"];
+            preg_match('/'.$obj->name.'$/', $districtFile, $match);
+            if (!empty($match[0]) && $obj->city_id == $city_id) {
+                return (int)$obj->id;
             }
         }
         return 0;
@@ -260,8 +218,21 @@ class Homefinder extends Component
     function getWardId($_file, $_data, $_id)
     {
         foreach ($_data as $obj) {
-            if (strpos($obj["name"], $_file) !== false && $obj["district_id"] == $_id) {
-                return (int)$obj["id"];
+            preg_match('/'.$obj->name.'$/', $_file, $match);
+            if (!empty($match[0]) && $obj->district_id == $_id) {
+                return (int)$obj->id;
+            }
+        }
+        return 0;
+    }
+
+    function getStreetId($_file, $_data, $_id)
+    {
+        foreach ($_data as $obj) {
+            $a = preg_quote($obj->name, '/'); //  / -> \/
+            preg_match('/'.$a.'$/', $_file, $match);
+            if (!empty($match[0]) && $obj->district_id == $_id) {
+                return (int)$obj->id;
             }
         }
         return 0;
@@ -272,36 +243,28 @@ class Homefinder extends Component
         $path = Yii::getAlias('@console') . '/data';
         $files = FileHelper::findFiles($path, ['only' => ['*.json']]);
         if (isset($files[0])) {
+            print_r('Prepare data...');
+            $cityData = AdCity::find()->all();
+            $districtData = AdDistrict::find()->all();
+            $wardData = AdWard::find()->all();
+            $streetData = AdStreet::find()->all();
             $tableName = AdProduct::tableName();
             $columnNameArray = ['home_no', 'user_id',
                 'city_id', 'district_id', 'ward_id', 'street_id',
                 'type', 'content', 'area', 'price', 'lat', 'lng',
                 'start_date', 'end_date', 'verified', 'created_at'];
+            $bulkInsertArray = array();
+            print_r('Insert data...');
             foreach ($files as $file) {
-                $cityData = AdCity::find()->all();
-                $districtData = AdDistrict::find()->all();
-                $wardData = AdWard::find()->all();
-                $streetData = AdStreet::find()->all();
-
                 $data = file_get_contents($file);
                 $data = json_decode($data, true);
                 foreach ($data as $value) {
                     $city_id = $this->getCityId($value["city"], $cityData);
                     $district_id = $this->getDistrictId($value["district"], $districtData, $city_id);
                     $ward_id = $this->getWardId($value["ward"], $wardData, $district_id);
-                    $street_id = $this->getWardId($value["street"], $streetData, $district_id);
-                    echo "<pre>";
-                    print_r($city_id);
-                    print_r("\n");
-                    print_r($district_id);
-                    print_r("\n");
-                    print_r($ward_id);
-                    print_r("\n");
-                    print_r($street_id);
-                    echo "<pre>";
-                    exit();
-                    $bulkInsertArray[] = [
-//                        'category_id' => 1,
+                    $street_id = $this->getStreetId($value["street"], $streetData, $district_id);
+                    $record = [
+//                        'category_id' => null,
 //                        'project_building_id' => 1,
                         'home_no' => $value["home_no"],
                         'user_id' => 3,
@@ -309,26 +272,42 @@ class Homefinder extends Component
                         'district_id' => $district_id,
                         'ward_id' => $ward_id,
                         'street_id' => $street_id,
-                        'type' => ($value["loai_giao_dich"] == 'Thuê' ? 2 : 1),
-                        'content' => $value["description"],
+                        'type' => $value["loai_giao_dich"] == 'Thuê' ? 2 : 1,
+                        'content' => ''.$value["description"],
                         'area' => $value["dientich"],
-                        'price' => 1000,
+                        'price' => $value["price"],
                         'lat' => $value["lat"],
-                        'lng' => $value["lon"],
-                        'start_date' => (int)$value["start_date"],
-                        'end_date' => (int)$value["end_date"],
+                        'lng' => $value["lng"],
+                        'start_date' => $value["start_date"],
+                        'end_date' => $value["end_date"],
                         'verified' => 1,
                         'created_at' => time(),
+
                     ];
-                }
-                if (count($bulkInsertArray) > 0) {
-                    // below line insert all your record and return number of rows inserted
-                    $insertCount = Yii::$app->db->createCommand()
-                        ->batchInsert($tableName, $columnNameArray, $bulkInsertArray)
-                        ->execute();
+                    $bulkInsertArray[] = $record;
                 }
             }
+            if(count($bulkInsertArray)>0){
+                // below line insert all your record and return number of rows inserted
+                $insertCount = Yii::$app->db->createCommand()
+                    ->batchInsert(
+                        $tableName, $columnNameArray, $bulkInsertArray
+                    )
+                    ->execute();
+                return $insertCount;
+            }
         }
+        else{
+            print_r("x_x File not found !");
+        }
+    }
+
+    public function writeFileJson($filePath, $data)
+    {
+        $handle = fopen($filePath, 'w') or die('Cannot open file:  ' . $filePath);
+        $int = fwrite($handle, $data);
+        fclose($handle);
+        return $int;
     }
 
     public function readFileJson($filePath)
