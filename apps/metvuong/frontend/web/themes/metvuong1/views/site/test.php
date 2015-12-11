@@ -78,10 +78,12 @@ span.edit-able {
 	overflow: visible;
 }
 .u2 {
-	padding-left: 70px;
+	padding-left: 0px;
 }
 .u2 th {
-	padding: 12px 8px 12px 8px;
+	    padding: 12px 8px 12px 8px;
+    padding-left: 0px;
+    padding-right: 12px;
 }
 .upload {
     font-size: 28px;
@@ -228,9 +230,6 @@ span.edit-able {
 						<div class="contact-wrapper">
 							<p class="title-contact">Liên hệ</p>
 							<div class="contact-person clearfix">
-								<a href="#" class="wrap-img pull-left"><img
-									src="/frontend/web/themes/metvuong1/resources/images/default-avatar.jpg"
-									alt=""></a>
 								<div class="u2">
 									<table>
 									<tr>
