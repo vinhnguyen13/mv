@@ -1043,7 +1043,6 @@ footer {
 .search-select {
     float: left;
     position: relative;
-    margin-right: 25px;
 }
 .animate-children .search-select {
     width: 25px;
@@ -2679,6 +2678,7 @@ div.wrap-page-home .ani-logo {
     font-size: 4.2em;
     display: block;
     text-align: center;
+    width: 150px;
 }
 .wrap-search-home .search-select em {
     position: static;
@@ -3501,7 +3501,6 @@ form .inline-group {
     height: 30px;
     line-height: 30px;
     padding: 0 15px;
-    margin-top: 19px;
 }
 #btn-search .fa-pencil-square-o {
     margin-top: 3px;
@@ -4742,7 +4741,7 @@ header.wrap-page-home .wrap-search-home .ani-search {
     padding: 0;
 }
 #search-kind .form-group.box-cost {
-    width: 45%;
+    width: 40%;
 }
 #search-kind .form-group.inline-group.line-center {
     width: 10%;
@@ -4862,4 +4861,96 @@ header.wrap-page-home .box-search-header.ani-search > div {
 }
 .dt-left-col p {
 
+}
+#search-kind .btn-cost {
+    float: right;
+    width: 10%;
+    text-align: right;
+    padding-left: 10px;
+}
+#search-kind .btn-cost button:hover {
+    
+}
+.tbl-list .pagination {
+    text-align: right;
+}
+.wrap-user-profile {
+    padding-top: 30px;
+}
+.infor-user-profile .inner-infor {
+    border: 1px solid #ddd;
+    border-top: 2px solid #4a933a;
+    box-shadow: 0 0 2px rgba(0,0,0,0.19999999999999996);
+    background-color: white;
+    padding: 5px 0 15px 0;
+}
+.title-box h2{
+    font-weight: bold;
+    font-size: 1.4em;
+    padding: 5px 10px 10px 0;
+    color: #A2A2A2;
+}
+.list-profile .title-box {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #3c763d;
+}
+.list-profile .item-box ul {
+    padding-top: 5px;
+}
+.list-profile .item-box a {
+    padding: 7px 0;
+    display: block;
+    color: #333;
+    font-size: 1.05em;
+    padding-left: 15px;
+    background: url(../images/dot5x5.png) no-repeat left center;
+    
+}
+.list-profile .item-box a:hover {
+    text-decoration: none;
+    background: rgba(210, 210, 210, 0.45) url(../images/dot5x5.png) no-repeat left center;
+}
+.title-box {
+    padding-left: 15px;
+}
+.list-profile {
+    padding: 0 15px 0 15px;
+}
+.list-profile  .title-box {
+    padding-left: 0;
+}
+.wrap-quanly-profile .title-frm {
+    padding-top: 0;
+}
+.frm-filter label {
+    color: #3c763d;
+    font-weight: normal;
+}
+.tbl-list {
+    margin-top: 20px;
+}
+.push-post em {
+    font-size: 1.6em;
+    color: #3c763d;
+}
+.row-hethan {
+    vertical-align: center;
+}
+.push-post:hover {
+    text-decoration: none;
+}
+.tbl-list a {
+    color: #333;
+}
+.tbl-list .fa-area-chart {
+    color: #3c763d;
+}
+.tbl-list .table>tbody>tr>td, 
+.tbl-list .table>tbody>tr>th, 
+.tbl-list .table>tfoot>tr>td, 
+.tbl-list .table>tfoot>tr>th, 
+.tbl-list .table>thead>tr>td, 
+.tbl-list .table>thead>tr>th {
+    padding: 10px;
 }
