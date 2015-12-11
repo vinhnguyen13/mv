@@ -18,20 +18,19 @@ Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporti
     $(function () {
         $('#chartAds').highcharts({
             title: {
-                text: 'Monthly Average Real Estate',
+                text: 'Tin đăng của bạn',
                 x: -20 //center
             },
             subtitle: {
-                text: 'MetVuong.com',
+                text: 'Nguồn: MetVuong.com',
                 x: -20
             },
             xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
             },
             yAxis: {
                 title: {
-                    text: 'Visitor'
+                    text: 'Người xem'
                 },
                 plotLines: [{
                     value: 0,
@@ -40,7 +39,7 @@ Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporti
                 }]
             },
             tooltip: {
-                valueSuffix: ' Users'
+                valueSuffix: ' người'
             },
             legend: {
                 layout: 'vertical',
