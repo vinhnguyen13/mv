@@ -90,7 +90,9 @@ class Homefinder extends Component
                 if (!empty($matches[1])) {
                     $room_id = $matches[1];
                     $room_id = str_replace('"', '', $room_id);
-                    $this->pagingListing($room_id, $this->page_current);
+                    $log = $this->loadFileLog();
+                    $sequence_id = empty($log["last_id"]) ? 0 : ($log["last_id"]+1);
+                    $this->pagingListing($room_id, $this->page_current, $log, $sequence_id);
                 }
             }
             $end = time();
@@ -98,7 +100,7 @@ class Homefinder extends Component
         }
     }
 
-    public function pagingListing($pid, $page_current)
+    public function pagingListing($pid, $page_current, $log, $sequence_id)
     {
         $url = self::DOMAIN . '/ajax/projecttable/' . $pid . '/ban?draw=1&columns[0][data]=hinh_anh&columns[0][name]=' .
             '&columns[0][searchable]=true&columns[0][orderable]=true&columns[0][search][value]=&columns[0][search][regex]=false' .
@@ -118,25 +120,39 @@ class Homefinder extends Component
         $response = $curl->get($url);
         if (($response = json_decode($response)) && !empty($response->data)) {
             $totalItem = count($response->data);
-            if (!empty($response_broker_table)) {
-                $project_name = $response_broker_table->du_an;
-                $city = $response_broker_table->cname;
-                $district = $response_broker_table->dname;
-                $ward = $response_broker_table->wname;
-                $street = $response_broker_table->sname;
-                $description = $response_broker_table->mo_ta_chi_tiet;
-                $home_no = $response_broker_table->so_nha;
-                $lat = $response_broker_table->lat;
-                $lon = $response_broker_table->lon;
 
-                foreach ($response->data as $item) {
+            $project_name = $response_broker_table->du_an;
+            $city = $response_broker_table->cname;
+            $district = $response_broker_table->dname;
+            $ward = $response_broker_table->wname;
+            $street = $response_broker_table->sname;
+            $description = $response_broker_table->mo_ta_chi_tiet;
+            $home_no = $response_broker_table->so_nha;
+            $lat = $response_broker_table->lat;
+            $lon = $response_broker_table->lon;
+
+            foreach ($response->data as $item) {
+                $checkExists = false;
+                if(!empty($log)) {
+                    $checkExists = in_array($item->_id, $log["files"]);
+                }
+                if ($checkExists == false) {
                     $price = $item->gia;
-                    $content = $this->getListingDetail(self::DOMAIN . '/' . $item->_id, $item, $project_name, $city, $district, $ward, $street, $description, $home_no, $lat, $lon, $price);
+//                    $content = $this->getListingDetail(self::DOMAIN . '/' . $item->_id, $item, $project_name, $city, $district, $ward, $street, $description, $home_no, $lat, $lon, $price);
+                    $res = $this->getListingDetail_2(self::DOMAIN . '/' . $item->_id, $item, $project_name, $city, $district, $ward, $street, $description, $home_no, $lat, $lon, $price, $sequence_id);
+
+                    if (!empty($res)) {
+                        $log["files"][$sequence_id] = $res;
+                        $log["last_id"] = $sequence_id;
+                        $this->writeFileLog($log);
+                        $sequence_id++;
+                    }
                 }
             }
+
             if (!empty($response->recordsTotal) && ($response->recordsTotal > ($totalItem * $page_current))) {
                 $page_current++;
-                $this->pagingListing($pid, $page_current);
+                $this->pagingListing($pid, $page_current, $log, $sequence_id);
             }
 
         }
@@ -192,8 +208,61 @@ class Homefinder extends Component
         $this->writeFileJson($path, $data);
 
 
-
         return $arr_detail;
+    }
+
+    public function getListingDetail_2($url, $item, $project_name, $city, $district, $ward, $street, $description, $home_no, $lat, $lon, $price, $sequence_id)
+    {
+        $arr_detail = array();
+        $htmlDetail = SimpleHTMLDom::file_get_html($url);
+        $currency_value = 1000000; // 1 trieu
+        // item_id
+        $arr_detail[$project_name]["item_id"] = trim($item->_id);
+        // dien tich
+        $arr_detail[$project_name]["dientich"] = trim($item->dien_tich_quy_hoach);
+
+        // tien ich phong ngu , toilet
+        $util = $htmlDetail->find('.left .line1', 0);
+        if (!empty($util)) {
+            $arr_util = explode(',', $util->plaintext);
+            if (!empty($arr_util[1])) {
+                $room_no = str_replace('Bedroom', '', $arr_util[1]);
+                $arr_detail[$project_name]["room_no"] = trim($room_no);
+            }
+            if (!empty($arr_util[2])) {
+                $toilet_no = str_replace('tolet', '', $arr_util[2]);
+                $arr_detail[$project_name]["toilet_no"] = trim($toilet_no);
+            }
+        }
+        $arr_detail[$project_name]["lat"] = trim($lat);
+        $arr_detail[$project_name]["lng"] = trim($lon);
+        $arr_detail[$project_name]["city"] = trim($city);
+        $arr_detail[$project_name]["district"] = trim($district);
+        $arr_detail[$project_name]["ward"] = trim($ward);
+        $arr_detail[$project_name]["street"] = trim($street);
+        $arr_detail[$project_name]["description"] = trim($description);
+        $arr_detail[$project_name]["home_no"] = trim($home_no);
+        $arr_detail[$project_name]["price"] = $price * $currency_value;
+        $arr_detail[$project_name]["loai_tai_san"] = trim($item->loai_tai_san);
+        $arr_detail[$project_name]["loai_giao_dich"] = trim($item->loai_giao_dich);
+        $arr_detail[$project_name]["broker"] = trim($item->broker->name);
+        $arr_detail[$project_name]["phone"] = trim($item->broker->phone[0]);
+        $start_date = trim($item->ngay_dang);
+        $start_date = substr($start_date, 0, 10);
+        $arr_detail[$project_name]["start_date"] = strtotime($start_date);
+        $nDays = 30;
+        $end_date = new DateTime($start_date);
+        $end_date->add(new DateInterval('P' . $nDays . 'D'));
+        $arr_detail[$project_name]["end_date"] = $end_date->getTimestamp();
+
+        $filename = $item->_id;
+        $path = Yii::getAlias('@console') . '/data/item/' . $filename;
+        $data = json_encode($arr_detail);
+        $res = $this->writeFileJson($path, $data);
+        if($res)
+            return $filename;
+        else
+            return null;
     }
 
     function getCityId($cityFile, $cityDB)
@@ -242,13 +311,29 @@ class Homefinder extends Component
         return 0;
     }
 
-    public function load_item_file(){
-        $file_name = Yii::getAlias('@console') . '/data/item.json';
-        $data = file_get_contents($file_name);
-        if(!empty($data)){
-            $data =
-            print_r($data);
+    function loadFileLog(){
+        $path = Yii::getAlias('@console') . "/data/file_log.json";
+        $data = null;
+        if(file_exists($path))
+            $data = file_get_contents($path);
+        else
+        {
+            $this->writeFileJson($path, null);
+            $data = file_get_contents($path);
         }
+        
+        if(!empty($data)){
+            $data = json_decode($data, true);
+            return $data;
+        }
+        else
+            return null;
+    }
+
+    function writeFileLog($log){
+        $file_name = Yii::getAlias('@console') . '/data/file_log.json';
+        $log_data = json_encode($log);
+        $this->writeFileJson($file_name, $log_data);
     }
 
     public function importData()
@@ -313,6 +398,88 @@ class Homefinder extends Component
         else{
             print_r("x_x File not found !");
         }
+    }
+
+    public function importData_2()
+    {
+        $start_time = time();
+        $insertCount = 0;
+        $log = $this->loadFileLog();
+        $start = empty($log["last_import"]) ? 0 : $log["last_import"];
+        $path = Yii::getAlias('@console') . '/data/item';
+//        $files = FileHelper::findFiles($path, ['only' => ['*.json']]);
+        $files = $log["files"];
+        $counter = count($files);
+        if ($counter > $start) {
+            print_r('Prepare data...');
+            $cityData = AdCity::find()->all();
+            $districtData = AdDistrict::find()->all();
+            $wardData = AdWard::find()->all();
+            $streetData = AdStreet::find()->all();
+            $tableName = AdProduct::tableName();
+            $columnNameArray = ['category_id','home_no', 'user_id',
+                'city_id', 'district_id', 'ward_id', 'street_id',
+                'type', 'content', 'area', 'price', 'lat', 'lng',
+                'start_date', 'end_date', 'verified', 'created_at'];
+            $bulkInsertArray = array();
+            print_r('Insert data...');
+            for($i = $start; $i < $counter; $i++) {
+                $log["last_import"] = $i+1;
+                $log["last_import_name"] = $files[$i];
+                $log["last_import_time"] = date("d/m/Y H:i:s a");
+                $this->writeFileLog($log);
+
+                $filename = $path.'/'.$files[$i];
+                $data = file_get_contents($filename);
+                $data = json_decode($data, true);
+                foreach ($data as $value) {
+                    $city_id = $this->getCityId($value["city"], $cityData);
+                    $district_id = $this->getDistrictId($value["district"], $districtData, $city_id);
+                    $ward_id = $this->getWardId($value["ward"], $wardData, $district_id);
+                    $street_id = $this->getStreetId($value["street"], $streetData, $district_id);
+                    $record = [
+                        'category_id' => 6,
+//                        'project_building_id' => 1,
+                        'home_no' => $value["home_no"],
+                        'user_id' => 3,
+                        'city_id' => $city_id,
+                        'district_id' => $district_id,
+                        'ward_id' => $ward_id,
+                        'street_id' => $street_id,
+                        'type' => $value["loai_giao_dich"] == 'Thuê' ? 2 : 1,
+                        'content' => ''.$value["description"],
+                        'area' => $value["dientich"],
+                        'price' => $value["price"],
+                        'lat' => $value["lat"],
+                        'lng' => $value["lng"],
+                        'start_date' => $value["start_date"],
+                        'end_date' => $value["end_date"],
+                        'verified' => 1,
+                        'created_at' => time(),
+
+                    ];
+                    $bulkInsertArray[] = $record;
+                }
+            }
+            if(count($bulkInsertArray)>0){
+                // below line insert all your record and return number of rows inserted
+                $insertCount = Yii::$app->db->createCommand()
+                    ->batchInsert(
+                        $tableName, $columnNameArray, $bulkInsertArray
+                    )
+                    ->execute();
+            }
+        }
+        else{
+            print_r("---------------\n");
+            print_r("File imported!\n");
+            print_r("---------------");
+        }
+        $end_time = time();
+        print_r("\n"." Time: ");
+        print_r($end_time-$start_time);
+        print_r("s");
+        print_r(" - Record: ". $insertCount);
     }
 
     public function writeFileJson($filePath, $data)
