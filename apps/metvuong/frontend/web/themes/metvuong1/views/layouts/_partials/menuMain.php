@@ -1,5 +1,5 @@
 <?php
-
+use yii\helpers\Url;
 ?>
 <div class="pull-right wrap-menu-option">
 <ul class="menu-home">
@@ -7,7 +7,7 @@
         <li><a href="#" data-toggle="modal" data-target="#frmRegister"><em class="icon-user"></em>Đăng ký</a></li>
         <li><a href="#" data-toggle="modal" data-target="#frmLogin"><em class="icon-key"></em>Đăng nhập</a></li>
     <?php }else{?>
-        <li><a href="javascript:alert('User management coming soon !');">
+        <li><a href="<?=Url::to(['user-management/index'])?>">
                 <em class="icon-user"></em>
                 <?=!empty(Yii::$app->user->identity->profile->name) ? Yii::$app->user->identity->profile->name : Yii::$app->user->identity->email;?>
             </a>
