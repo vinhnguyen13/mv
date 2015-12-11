@@ -321,7 +321,7 @@ class Homefinder extends Component
             $this->writeFileJson($path, null);
             $data = file_get_contents($path);
         }
-        
+
         if(!empty($data)){
             $data = json_decode($data, true);
             return $data;
@@ -407,7 +407,6 @@ class Homefinder extends Component
         $log = $this->loadFileLog();
         $start = empty($log["last_import"]) ? 0 : $log["last_import"];
         $path = Yii::getAlias('@console') . '/data/item';
-//        $files = FileHelper::findFiles($path, ['only' => ['*.json']]);
         $files = $log["files"];
         $counter = count($files);
         if ($counter > $start) {
