@@ -23,8 +23,8 @@ use yii\helpers\Url;
             <div class="item-box mgB-15">
                 <div class="title-box">Quản lý thông tin cá nhân</div>
                 <ul class="clearfix">
-                    <li><a href="#">Thay đổi thông tin cá nhân</a></li>
-                    <li><a href="#">Thay đổi mật khẩu</a></li>
+                    <li><a href="<?=Url::to(['user-management/profile'])?>">Thay đổi thông tin cá nhân</a></li>
+                    <li><a href="<?=Url::to(['user-management/profile'])?>">Thay đổi mật khẩu</a></li>
                 </ul>
             </div>
             <div class="item-box mgB-15">

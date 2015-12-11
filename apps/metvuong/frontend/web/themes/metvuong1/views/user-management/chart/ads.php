@@ -5,13 +5,10 @@ Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporti
 
 
 ?>
-<div class="wrap-user-profile row">
-    <?php $this->beginContent('@app/views/user-management/layouts/menu.php'); ?><?php $this->endContent();?>
-    <div class="col-xs-9 right-profile quanlytinraoban">
-        <div class="wrap-quanly-profile">
-            <div class="title-frm">Quản lý thống kê</div>
-            <div id="chartAds" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-        </div>
+<div class="col-xs-9 right-profile quanlytinraoban">
+    <div class="wrap-quanly-profile">
+        <div class="title-frm">Quản lý thống kê</div>
+        <div id="chartAds" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     </div>
 </div>
 <script>
