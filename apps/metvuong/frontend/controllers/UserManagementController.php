@@ -14,7 +14,16 @@ class UserManagementController extends \yii\web\Controller
     public $layout = '@app/views/layouts/layout';
     public function actionIndex()
     {
-        return $this->render('index', [
+        $this->redirect('ads');
+    }
+    public function actionAds()
+    {
+        return $this->render('ads/index', [
+        ]);
+    }
+    public function actionChart()
+    {
+        return $this->render('chart/ads', [
         ]);
     }
 }
