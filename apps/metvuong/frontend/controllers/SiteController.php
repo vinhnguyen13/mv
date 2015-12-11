@@ -217,4 +217,8 @@ class SiteController extends Controller
     	fwrite($file, $content);
 		fclose($file);
     }
+    
+    public function actionTest() {
+    	return $this->render('test');
+    }
 }
