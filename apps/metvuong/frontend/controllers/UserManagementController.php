@@ -67,4 +67,14 @@ class UserManagementController extends \yii\web\Controller
         return $this->render('user/profile', [
         ]);
     }
+
+    public function actionPassword()
+    {
+        if(Yii::$app->request->isAjax) {
+            return $this->renderPartial('user/password', [
+            ]);
+        }
+        return $this->render('user/password', [
+        ]);
+    }
 }
