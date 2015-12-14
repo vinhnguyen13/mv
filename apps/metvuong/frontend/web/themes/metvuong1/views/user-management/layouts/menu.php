@@ -28,10 +28,17 @@ use yii\helpers\Url;
                 </ul>
             </div>
             <div class="item-box mgB-15">
+                <div class="title-box">Tin của MetVuong</div>
+                <ul class="clearfix">
+                    <li><a href="<?=Url::to(['user-management/ads-most-search'])?>" class="partial">Nhiều người quan tâm <span class="badge badge-notify">132</span></a></li>
+                    <li><a href="<?=Url::to(['user-management/ads-suggest'])?>" class="partial">Phù hợp tìm kiếm của bạn <span class="badge badge-notify">38</span></a></li>
+                </ul>
+            </div>
+            <div class="item-box mgB-15">
                 <div class="title-box">Công cụ</div>
                 <ul class="clearfix">
-                    <li><a href="#">Phân tích - thống kê</a></li>
-                    <li><a href="#">Nạp tiền</a></li>
+                    <li><a href="<?=Url::to(['user-management/profile'])?>" class="partial">Phân tích - thống kê</a></li>
+                    <li><a href="<?=Url::to(['user-management/profile'])?>" class="partial">Nạp tiền</a></li>
                 </ul>
             </div>
         </div>
@@ -50,8 +57,11 @@ use yii\helpers\Url;
                     dataType: 'html',
                     url: _this.attr('href'),
                     success: function(data) {
-                        console.log(data);
-                        $('.right-profile').replaceWith(data);
+                        if(data){
+                            $('.user_management').html(data);
+                            $('.right-profile').hide();
+                            $('.right-profile').toggle( "slide" );
+                        }
                     }
                 });
             }, 500);

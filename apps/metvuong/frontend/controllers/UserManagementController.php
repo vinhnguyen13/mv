@@ -15,8 +15,9 @@ class UserManagementController extends \yii\web\Controller
     public $layout = '@app/views/user-management/layouts/main';
     public function actionIndex()
     {
-        $this->redirect('ads');
+        $this->redirect('/user-management/ads');
     }
+
     public function actionAds()
     {
         if(Yii::$app->request->isAjax){
@@ -26,6 +27,27 @@ class UserManagementController extends \yii\web\Controller
         return $this->render('ads/index', [
         ]);
     }
+
+    public function actionAdsMostSearch()
+    {
+        if(Yii::$app->request->isAjax){
+            return $this->renderPartial('ads/most-search', [
+            ]);
+        }
+        return $this->render('ads/most-search', [
+        ]);
+    }
+
+    public function actionAdsSuggest()
+    {
+        if(Yii::$app->request->isAjax){
+            return $this->renderPartial('ads/suggest', [
+            ]);
+        }
+        return $this->render('ads/suggest', [
+        ]);
+    }
+
     public function actionChart()
     {
         if(Yii::$app->request->isAjax) {
@@ -35,6 +57,7 @@ class UserManagementController extends \yii\web\Controller
         return $this->render('chart/ads', [
         ]);
     }
+
     public function actionProfile()
     {
         if(Yii::$app->request->isAjax) {
