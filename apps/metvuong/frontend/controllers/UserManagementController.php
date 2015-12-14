@@ -51,7 +51,7 @@ class UserManagementController extends \yii\web\Controller
     public function actionChart()
     {
         if(Yii::$app->request->isAjax) {
-            return $this->renderPartial('chart/ads', [
+            return $this->renderAjax('chart/ads', [
             ]);
         }
         return $this->render('chart/ads', [
