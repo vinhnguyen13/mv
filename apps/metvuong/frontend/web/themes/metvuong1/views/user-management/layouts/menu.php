@@ -9,13 +9,13 @@ use yii\helpers\Url;
         <div class="clearfix list-profile">
             <div class="item-box mgB-15">
                 <ul class="clearfix">
-                    <li><a href="<?=Url::to(['user-management/chart'])?>">Thống kê</a></li>
+                    <li><a href="<?=Url::to(['user-management/chart'])?>" class="partial">Thống kê</a></li>
                 </ul>
             </div>
             <div class="item-box mgB-15">
                 <div class="title-box">Bất động sản của bạn</div>
                 <ul class="clearfix">
-                    <li><a href="<?=Url::to(['user-management/index'])?>">Quản lý tin rao bán/cho thuê</a></li>
+                    <li><a href="<?=Url::to(['user-management/ads'])?>" class="partial">Quản lý tin rao bán/cho thuê</a></li>
                     <li><a href="#">Đăng tin rao bán/cho thuê</a></li>
                     <!--                        <li><a href="#">Quản lý tin nháp</a></li>-->
                 </ul>
@@ -23,8 +23,8 @@ use yii\helpers\Url;
             <div class="item-box mgB-15">
                 <div class="title-box">Quản lý thông tin cá nhân</div>
                 <ul class="clearfix">
-                    <li><a href="<?=Url::to(['user-management/profile'])?>">Thay đổi thông tin cá nhân</a></li>
-                    <li><a href="<?=Url::to(['user-management/profile'])?>">Thay đổi mật khẩu</a></li>
+                    <li><a href="<?=Url::to(['user-management/profile'])?>" class="partial">Thay đổi thông tin cá nhân</a></li>
+                    <li><a href="<?=Url::to(['user-management/profile'])?>" class="partial">Thay đổi mật khẩu</a></li>
                 </ul>
             </div>
             <div class="item-box mgB-15">
@@ -37,3 +37,25 @@ use yii\helpers\Url;
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function(){
+        var timer = 0;
+        $(document).on('click', '.list-profile li a.partial', function(){
+            var _this = $(this);
+            clearTimeout(timer);
+            timer = setTimeout(function() {
+                $.ajax({
+                    type: "get",
+                    dataType: 'html',
+                    url: _this.attr('href'),
+                    success: function(data) {
+                        console.log(data);
+                        $('.right-profile').replaceWith(data);
+                    }
+                });
+            }, 500);
+            return false;
+        });
+    });
+</script>

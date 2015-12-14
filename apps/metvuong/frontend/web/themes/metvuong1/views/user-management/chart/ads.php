@@ -1,10 +1,4 @@
-<?php
-use yii\web\View;
-Yii::$app->getView()->registerJsFile('http://code.highcharts.com/highcharts.js', ['position' => View::POS_BEGIN]);
-Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporting.js', ['position' => View::POS_BEGIN]);
 
-
-?>
 <div class="col-xs-9 right-profile quanlytinraoban">
     <div class="wrap-quanly-profile">
         <div class="title-frm">Quản lý thống kê</div>
