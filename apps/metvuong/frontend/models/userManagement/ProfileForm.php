@@ -47,7 +47,7 @@ class ProfileForm extends Model
     public function scenarios()
     {
         return [
-            'request' => ['email'],
+            'updateprofile' => ['name', 'public_email'],
             'password'   => ['old_password', 'new_password'],
         ];
     }
