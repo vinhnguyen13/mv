@@ -2,12 +2,11 @@
 
 namespace frontend\controllers;
 use dektrium\user\Mailer;
-use vsoft\user\models\User;
+use frontend\models\userManagement\ProfileForm;
 use Yii;
 use yii\db\mssql\PDO;
 use yii\helpers\Url;
 use vsoft\news\models\CmsShow;
-use vsoft\ad\models\AdBuildingProject;
 use yii\web\View;
 
 class UserManagementController extends \yii\web\Controller
@@ -70,11 +69,17 @@ class UserManagementController extends \yii\web\Controller
 
     public function actionPassword()
     {
+        $model = Yii::createObject([
+            'class'    => ProfileForm::className(),
+            'scenario' => 'password',
+        ]);
         if(Yii::$app->request->isAjax) {
             return $this->renderPartial('user/password', [
+                'model'=>$model
             ]);
         }
         return $this->render('user/password', [
+            'model'=>$model
         ]);
     }
 }
