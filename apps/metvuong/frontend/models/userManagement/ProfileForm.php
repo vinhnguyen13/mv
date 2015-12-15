@@ -38,8 +38,8 @@ class ProfileForm extends Model
     {
         return [
             'email'    => Yii::t('user', 'Email'),
-            'old_password' => Yii::t('user', 'Password'),
-            'new_password' => Yii::t('user', 'Password'),
+            'old_password' => Yii::t('user', 'Old Password'),
+            'new_password' => Yii::t('user', 'New Password'),
         ];
     }
 
