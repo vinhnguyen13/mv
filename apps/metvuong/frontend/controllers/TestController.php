@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 use dektrium\user\Mailer;
+use frontend\models\Elastic;
 use vsoft\user\models\User;
 use Yii;
 use yii\db\mssql\PDO;
@@ -42,4 +43,19 @@ class TestController extends \yii\web\Controller
         }
     }
 
+    public function actionElastic(){
+        $elastic = new Elastic();
+        $client = $elastic->connect();
+        $params = [
+            'index' => 'customers',
+        ];
+        // Document will be indexed to my_index/my_type/my_id
+        $response = $client->search($params);
+        $response = $client->cluster()->stats();
+        $response = $client->nodes()->stats();
+        echo "<pre>";
+        print_r($response);
+        echo "</pre>";
+        exit;
+    }
 }
