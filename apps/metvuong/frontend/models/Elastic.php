@@ -89,4 +89,18 @@ class Elastic
         return $results;
     }
 
+    public function findOne(){
+        /**
+         * must have 2 field
+         */
+        $params = [
+            'index' => 'tracking',
+            'type' => 'search',
+            'id' => '132',
+        ];
+        // Document will be indexed to my_index/my_type/my_id
+        $results = $this->client->get($params);
+        return $results;
+    }
+
 }
