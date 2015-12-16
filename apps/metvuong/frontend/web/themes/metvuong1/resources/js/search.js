@@ -138,9 +138,9 @@
 
 			if ( nextStepData == undefined || nextStepData == '' ) {
 				if ( mv.settings.tabActive == 'tin-tuc' ) {
-					//$(document).trigger( 'real-estate/news', [{data: '1'}, 'something'] );
+					$(document).trigger( 'real-estate/news', [{data: '1'}, 'something'] );
 				}else if ( mv.settings.tabActive == 'ban-thue' ) {
-					//$(document).trigger( 'real-estate/post', [{data: '1'}, 'something'] );
+					$(document).trigger( 'real-estate/post', [{data: '1'}, 'something'] );
 				}else if ( mv.settings.tabActive == 'mua-thue' ) {
 					l(1);
 				}
