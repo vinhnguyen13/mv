@@ -7,6 +7,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
 ?>
 <?php $this->beginContent('@app/views/layouts/_partials/js/jsContainer.php', ['options'=>[]]); ?><?php $this->endContent();?>
 <script>
+
     $(document).ready(function(){
         $(document).on('click', '#btn-search', function(){
             animateSearch();
@@ -21,14 +22,14 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
         $(document).bind( 'real-estate/news', function(event, json, string){
             animateSearch();
             setTimeout(function() {
-                setTimeout(function() {$('#search-kind').submit();},100);
+                //setTimeout(function() {$('#search-kind').submit();},100);
             },1000);
         });
         
         $(document).bind( 'real-estate/post', function(event, json, string){
             animateSearch();
             setTimeout(function() {
-                setTimeout(function() {$('#search-kind').submit();},100);
+                //setTimeout(function() {$('#search-kind').submit();},100);
             },1000);
         });
 
@@ -184,8 +185,16 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     <span><em class="fa fa-search"></em></span>
                                 </button>
 
-                                <input id="valSearch" type="hidden" value="">
-                                <input id="valTabActive" type="hidden" value="">
+                                <input class="valInputHidden" id="valSearch" type="hidden" value="">
+                                <input class="valInputHidden" id="valTabActive" type="hidden" value="">
+
+                                <input class="valInputHidden" id="valTinhThanh" type="hidden" value="">
+                                <input class="valInputHidden" id="valQuanHuyen" type="hidden" value="">
+                                <input class="valInputHidden" id="valLoaiBDS" type="hidden" value="">
+                                <input class="valInputHidden" id="valDuAn" type="hidden" value="">
+                                <input class="valInputHidden" id="valTinTuc" type="hidden" value="">
+                                <input class="valInputHidden" id="valLoaiTinTuc" type="hidden" value="">
+                                
                                 
                             <?php ActiveForm::end(); ?>
                             <div class="pull-left text-right mgT-10">

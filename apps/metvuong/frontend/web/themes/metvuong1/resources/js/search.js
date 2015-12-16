@@ -1,11 +1,37 @@
 ;(function($){
 
+	var demo = 
+	[
+		{
+			"idItem": 1,
+			"nextStep": "quan-huyen",
+			"text": "Hồ Chí Minh",
+			"dataItem": "tinh-thanh"
+		},
+		{
+			"idItem": 1,
+			"nextStep": "loai-bds",
+			"text": "Bình Chánh",
+			"dataItem": "quan-huyen"
+		},
+		{
+			"idItem": 1,
+			"nextStep": "loai-duan",
+			"text": "Chung cu",
+			"dataItem": "loai-bds"
+		},
+		{
+			"idItem": 2,
+			"nextStep": "",
+			"text": "RICHSTAR",
+			"dataItem": "chung-cu"
+		}
+	];
+
 	var plugin = {};
 
 	var defaults = {
 		input: $('#searchInput'),
-		inputSave: $('#valSearch'),
-		inputTabActive: $('#valTabActive'),
 		objSave: [],
 		wrapSuggest: $('.type-search ul'),
 		loading: $('<div class="loading_search"><span></span></div>'),
@@ -68,9 +94,8 @@
 				mv.settings.nextStep = '';
 				mv.settings.arrStepRender = {};
 				mv.settings.objSave = [];
-				mv.settings.inputSave.val('');
-				mv.settings.inputTabActive.val('');
-
+				$('.valInputHidden').val('');
+				
 				render($(this));
 			});
 
@@ -385,8 +410,31 @@
 				mv.settings.objSave.push(objItem);
 			});
 
-			mv.settings.inputSave.val(JSON.stringify(mv.settings.objSave, null, 2));
-			mv.settings.inputTabActive.val($('.search-select.active').data('active'));
+			var jsonStringify = mv.settings.objSave;
+			$('#valTinhThanh').val('');
+			$('#valQuanHuyen').val('');
+			$('#valLoaiBDS').val('');
+			$('#valTinTuc').val('');
+			$('#valLoaiTinTuc').val('');
+			$('#valDuAn').val('');
+			for ( var i = 0; i < jsonStringify.length; i++ ) {
+				if ( jsonStringify[i].dataItem == 'tinh-thanh' ) {
+					$('#valTinhThanh').val(jsonStringify[i].idItem);
+				}else if ( jsonStringify[i].dataItem == 'quan-huyen' ) {
+					$('#valQuanHuyen').val(jsonStringify[i].idItem);
+				}else if ( jsonStringify[i].dataItem == 'loai-bds' ) {
+					$('#valLoaiBDS').val(jsonStringify[i].idItem);
+				}else if ( jsonStringify[i].dataItem == 'news' ) {
+					$('#valTinTuc').val(jsonStringify[i].idItem);
+				}else if ( jsonStringify[i].dataItem == 'loai-tin-tuc' ) {
+					$('#valLoaiTinTuc').val(jsonStringify[i].idItem);
+				}else if ( jsonStringify[i].dataItem == 'chung-cu' ) {
+					$('#valDuAn').val(jsonStringify[i].idItem);
+				}
+			}
+
+			$('#valSearch').val(JSON.stringify(mv.settings.objSave, null, 2));
+			$('#valTabActive').val($('.search-select.active').data('active'));
 
 		};
 
@@ -473,14 +521,14 @@
 				open();
 
 			}
-		}
+		};
 
 		var inputResize = function() {
 			mv.settings.input.hide();
 			var wWrapSuggest = mv.settings.wrapSuggest.outerWidth(),
 				wWrap = $('.type-search').outerWidth();
 			mv.settings.input.css('width', wWrap - wWrapSuggest).show();
-		}
+		};
 
 		//position box search
 		var showBoxSearch = function () {
@@ -497,7 +545,7 @@
 		var getPlaceHolder = function (item) {
 			mv.settings.inputPlaceholder = $('#'+item).data('stepTitle');
 			mv.settings.input.attr('placeholder',mv.settings.inputPlaceholder);
-		}
+		};
 
 		var boxCenter = function () {
 			var logo = $('div.wrap-page-home .logo-home'),
@@ -537,7 +585,7 @@
 	    		});
 	    		searchBox.addClass('aniTopDown');
 	    	},100);
-		}
+		};
 
 		var ChangeToSlug = function (text) {
 			var slug;
@@ -596,7 +644,7 @@
 					$(this).remove();
 				});
 			}
-		}
+		};
 
 		$(window).resize(function () {
 			boxCenter();
@@ -612,6 +660,7 @@
 			init: function () {
 				loadCost.show();
 				loadCost.clickChoice();
+				loadCost.btnChoice();
 			},
 			show: function () {
 				loadCost.inputEvent.on('click', function (e) {
@@ -670,6 +719,33 @@
 						
 						loadCost.flag = 'min';
 					}
+				});
+			},
+			btnChoice: function () {
+				$('.btn-cost button').on('click',function () {
+					var cosMin = $('#minCost'),
+						cosMax = $('#maxCost');
+
+					if ( $('.type-search ul .cost-suggest').length > 0 ) {
+						if ( cosMin.val() != '' && cosMax.val() != '' ) {
+							$('.type-search ul .cost-suggest').find('span').html(cosMin.val()+' - '+cosMax.val());
+						}else if ( cosMin.val() != '' && cosMax.val() == '' ) {
+							$('.type-search ul .cost-suggest').find('span').html(cosMin.val());
+						}else if ( cosMin.val() == '' && cosMax.val() != '' ) {
+							$('.type-search ul .cost-suggest').find('span').html(cosMax.val());
+						}
+						
+					}else {
+						if ( cosMin.val() != '' && cosMax.val() != '' ) {
+							$('.type-search ul').append('<li class="cost-suggest"><i>x</i><span>'+cosMin.val()+' - '+cosMax.val()+'</span></li>');
+						}else if ( cosMin.val() != '' && cosMax.val() == '' ) {
+							$('.type-search ul').append('<li><i>x</i><span>'+cosMin.val()+'</span></li>');
+						}else if ( cosMin.val() == '' && cosMax.val() != '' ) {
+							$('.type-search ul').append('<li><i>x</i><span>'+cosMax.val()+'</span></li>');
+						}
+					}
+
+					
 				});
 			}
 		};

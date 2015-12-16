@@ -97,6 +97,8 @@ $stt = '{"step1":["thanhpho","tinhthanh",["loaibds","giaca"]],"step2":["thanhpho
 
 <script>
     var steps = <?=json_encode($arr);?>;
+	
+	console.log(steps);
 
     $(document).on('click', '.tab', function () {
         var _this = $(this);
