@@ -74,6 +74,7 @@ class TestController extends \yii\web\Controller
     }
 
     public function actionSelect(){
+        $this->layout = '@app/views/layouts/main';
         return $this->render('select');
     }
 }
