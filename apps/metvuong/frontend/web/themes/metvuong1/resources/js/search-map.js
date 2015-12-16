@@ -45,6 +45,7 @@ function start() {
 			$.get('/ads/detail', {id: $(this).data('detail')}, function(response){
 
 				var width = $('.wrap-map-result').width();
+				width = (width > 820) ? 820 : width;
 				
 				$('#detail-wrap').css({
 					width: width,
