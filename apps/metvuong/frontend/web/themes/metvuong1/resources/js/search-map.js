@@ -29,6 +29,13 @@ function search(callback) {
 
 function start() {
 	if(response && gmap) {
+		gmap.click(function(){
+			$('#detail-wrap').css({
+				left: '0px'
+			});
+			console.log('click');
+		});
+		
 		infoWindow = new InfoWindow();
 		
 		$('#detail-wrap').on('click', '.close', function(){

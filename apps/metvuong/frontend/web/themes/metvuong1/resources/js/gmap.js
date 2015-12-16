@@ -32,6 +32,12 @@ function Gmap(el, options) {
 	var markers = {};
 	var map = new google.maps.Map(el, options);
 	
+	self.click = function(callback) {
+		map.addListener('click', function() {
+			callback();
+		});
+	}
+	
 	self.addMarker = function(marker, setCenter) {
 		if(marker.getMap()) {
 			self.removeMarker(marker);
