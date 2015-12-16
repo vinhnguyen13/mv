@@ -18,7 +18,7 @@ use yii\bootstrap\ActiveForm;
         <div class="col-md-9">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div class="alert hide"></div>
+                    <div class="alert alert-success hide"></div>
                     <?php $form = ActiveForm::begin([
                         'id' => 'change-profile-form',
                         'action' => Url::to(['/user-management/profile']),
@@ -31,11 +31,11 @@ use yii\bootstrap\ActiveForm;
                             ],
                         ],
                     ]); ?>
-                    <?= $form->field($model, 'name')->textInput(['class' => 'form-control']) ?>
-                    <?= $form->field($model, 'public_email')->textInput(['class' => 'form-control']) ?>
-                    <?= $form->field($model, 'phone')->textInput(['class' => 'form-control']) ?>
-                    <?= $form->field($model, 'mobile')->textInput(['class' => 'form-control']) ?>
-                    <?= $form->field($model, 'address')->textInput(['class' => 'form-control']) ?>
+                    <?= $form->field($model, 'name')->textInput(['class' => 'form-control name']) ?>
+                    <?= $form->field($model, 'public_email')->textInput(['class' => 'form-control public_email']) ?>
+                    <?= $form->field($model, 'phone')->textInput(['class' => 'form-control phone']) ?>
+                    <?= $form->field($model, 'mobile')->textInput(['class' => 'form-control mobile']) ?>
+                    <?= $form->field($model, 'address')->textInput(['class' => 'form-control address']) ?>
                     <div class="form-group">
                         <div class="col-lg-offset-3 col-lg-9">
                             <?= Html::Button(Yii::t('user', 'Save'), ['class' => 'btn btn-block btn-success save']) ?>
@@ -63,8 +63,8 @@ use yii\bootstrap\ActiveForm;
                         console.log(data);
                         if (data.statusCode == true) {
                             $('.panel-body .alert').text("Update profile success");
-                            $('.panel-body .alert').addClass("alert-success");
                             $('.panel-body .alert').removeClass("hide");
+                            $('.panel-body .alert').show("slow");
                             console.log(data);
                         } else{
                             var strMessage = '';
@@ -73,8 +73,8 @@ use yii\bootstrap\ActiveForm;
                                 strMessage += val;
                             });
                             $('.panel-body .alert').text(strMessage);
-                            $('.panel-body .alert').addClass("alert-warning");
                             $('.panel-body .alert').removeClass("hide");
+                            $('.panel-body .alert').show("slow");
                             console.log(data)
                         }
                     }
@@ -89,8 +89,23 @@ use yii\bootstrap\ActiveForm;
             }
         });
 
-        $('.panel-body .alert').click(function () {
-            $('.panel-body .alert').addClass("hide");
+        $("#change-profile-form .phone").keypress(function (e) {
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                return false;
+            }
         });
+
+        $("#change-profile-form .mobile").keypress(function (e) {
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                return false;
+            }
+        });
+
+        $('.panel-body .alert').click(function () {
+            $(this).fadeOut(2000, function(){
+                $(this).addClass("hide");
+            });
+        });
+
     });
 </script>

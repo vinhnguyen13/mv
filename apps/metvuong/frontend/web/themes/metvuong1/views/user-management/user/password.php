@@ -16,7 +16,7 @@ use yii\helpers\Url;
         <div class="col-md-9">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div class="alert hide"></div>
+                    <div class="alert alert-success hide"></div>
                     <?php $form = ActiveForm::begin([
                         'id' => 'change-pass-form',
                         'action' => Url::to(['/user-management/password']),
@@ -59,8 +59,8 @@ use yii\helpers\Url;
                         console.log(data);
                         if (data.statusCode == true) {
                             $('.panel-body .alert').text("Reset password success");
-                            $('.panel-body .alert').addClass("alert-success");
                             $('.panel-body .alert').removeClass("hide");
+                            $('.panel-body .alert').show("slow");
                             console.log(data);
                         } else{
                             var strMessage = '';
@@ -69,8 +69,8 @@ use yii\helpers\Url;
                                 strMessage += "\n" + val;
                             });
                             $('.panel-body .alert').text(strMessage);
-                            $('.panel-body .alert').addClass("alert-warning");
                             $('.panel-body .alert').removeClass("hide");
+                            $('.panel-body .alert').show("slow");
                             console.log(data)
                         }
                     }
@@ -86,9 +86,9 @@ use yii\helpers\Url;
         });
 
         $('.panel-body .alert').click(function () {
-            $('.panel-body .alert').removeClass("alert-success");
-            $('.panel-body .alert').removeClass("alert-warning");
-            $('.panel-body .alert').addClass("hide");
+            $(this).fadeOut(2000, function(){
+                $(this).addClass("hide");
+            });
         });
     });
 </script>

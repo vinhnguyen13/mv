@@ -78,6 +78,9 @@ class ProfileForm extends Model
 //                }
 //            ],
 
+            'phoneValidate' => ['phone', 'integer'],
+            'mobileValidate' => ['mobile', 'integer'],
+
             'oldPasswordRequired' => ['old_password', 'required'],
             'oldPasswordLength' => ['old_password', 'string', 'min' => 6],
             'oldPasswordValidate' => [
