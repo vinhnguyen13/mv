@@ -6,6 +6,9 @@ namespace frontend\models\userManagement;
  * Date: 12/14/2015
  * Time: 6:11 PM
  */
+use dektrium\user\helpers\Password;
+use frontend\models\Profile;
+use frontend\models\User;
 use yii\base\Model;
 use Yii;
 
@@ -47,7 +50,7 @@ class ProfileForm extends Model
     public function scenarios()
     {
         return [
-            'updateprofile' => ['name', 'public_email'],
+            'updateprofile' => ['name', 'public_email', 'phone', 'mobile', 'address'],
             'password'   => ['old_password', 'new_password'],
         ];
     }
@@ -56,76 +59,48 @@ class ProfileForm extends Model
     public function rules()
     {
         return [
-            'emailTrim' => ['email', 'filter', 'filter' => 'trim'],
-            'emailRequired' => ['email', 'required'],
-            'emailPattern' => ['email', 'email'],
-            'emailExist' => [
-                'email',
-                'exist',
-                'targetClass' => Yii::$app->getModule('user')->modelMap['User'],
-                'message' => Yii::t('user', 'There is no user with this email address'),
-            ],
-            'emailUnconfirmed' => [
-                'email',
+            'emailTrim' => ['public_email', 'filter', 'filter' => 'trim'],
+            'emailRequired' => ['public_email', 'required'],
+            'emailPattern' => ['public_email', 'email'],
+//            'emailExist' => [
+//                'public_email',
+//                'exist',
+//                'targetClass' => Yii::$app->getModule('user')->modelMap['User'],
+//                'message' => Yii::t('user', 'There is no user with this email address'),
+//            ],
+//            'emailUnconfirmed' => [
+//                'public_email',
+//                function ($attribute) {
+//                    $this->user = $this->finder->findUserByEmail($this->public_email);
+//                    if ($this->user !== null && $this->module->enableConfirmation && !$this->user->getIsConfirmed()) {
+//                        $this->addError($attribute, Yii::t('user', 'You need to confirm your email address'));
+//                    }
+//                }
+//            ],
+
+            'oldPasswordRequired' => ['old_password', 'required'],
+            'oldPasswordLength' => ['old_password', 'string', 'min' => 6],
+            'oldPasswordValidate' => [
+                'old_password',
                 function ($attribute) {
-                    $this->user = $this->finder->findUserByEmail($this->email);
-                    if ($this->user !== null && $this->module->enableConfirmation && !$this->user->getIsConfirmed()) {
-                        $this->addError($attribute, Yii::t('user', 'You need to confirm your email address'));
+                    $user = User::findIdentity(Yii::$app->user->id);
+                    if(!Password::validate($this->old_password, $user->password_hash)) {
+                        $this->addError($attribute, Yii::t('user', 'Old password incorrect. '));
                     }
                 }
             ],
-            'oldPasswordRequired' => ['old_password', 'required'],
-            'oldPasswordLength' => ['old_password', 'string', 'min' => 6],
+
             'newPasswordRequired' => ['new_password', 'required'],
             'newPasswordLength' => ['new_password', 'string', 'min' => 6],
+            'newPasswordValidate' => [
+                'new_password',
+                function ($attribute) {
+                    if($this->old_password == $this->new_password) {
+                        $this->addError($attribute, Yii::t('user', 'New password is the same old password. '));
+                    }
+                }
+            ],
         ];
-    }
-
-    /**
-     * Sends recovery message.
-     *
-     * @return bool
-     */
-    public function updateProfile()
-    {
-        if ($this->validate()) {
-            /** @var Token $token */
-            $token = Yii::createObject([
-                'class'   => Token::className(),
-                'user_id' => $this->user->id,
-                'type'    => Token::TYPE_RECOVERY,
-            ]);
-            $token->save(false);
-            $this->mailer->sendRecoveryMessage($this->user, $token);
-            return Yii::t('user', 'An email has been sent with instructions for resetting your password');
-        }
-
-        return false;
-    }
-
-    /**
-     * Resets user's password.
-     *
-     * @param Token $token
-     *
-     * @return bool
-     */
-    public function resetPassword(Token $token)
-    {
-        if (!$this->validate() || $token->user === null) {
-            return false;
-        }
-
-        if ($token->user->resetPassword($this->password)) {
-            Yii::$app->session->setFlash('success', Yii::t('user', 'Your password has been changed successfully.'));
-            $token->delete();
-            return Yii::t('user', 'Your password has been changed successfully.');
-        } else {
-            Yii::$app->session->setFlash('danger', Yii::t('user', 'An error occurred and your password has not been changed. Please try again later.'));
-            return Yii::t('user', 'An error occurred and your password has not been changed. Please try again later.');
-        }
-
-        return true;
     }
 
     /**
@@ -135,4 +110,27 @@ class ProfileForm extends Model
     {
         return 'profile-form';
     }
+
+    public function resetPass(){
+        $user = User::findIdentity(Yii::$app->user->id);
+        if (!$this->hasErrors()) {
+            return $user->resetPassword($this->new_password);
+        }
+        return false;
+    }
+
+    public function updateProfile(){
+        $user = User::findIdentity(Yii::$app->user->id);
+        $profile = $user->profile;
+        if(!empty($profile)) {
+            $profile->name = $this->name;
+            $profile->public_email = $this->public_email;
+            $profile->phone = $this->phone;
+            $profile->mobile = $this->mobile;
+            $profile->address = $this->address;
+            return $profile->save();
+        }
+        return false;
+    }
+
 }

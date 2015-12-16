@@ -5,11 +5,12 @@
  * Date: 12/11/2015
  * Time: 2:34 PM
  */
-use yii\widgets\ActiveForm;
-use yii\helpers\Url;
-use frontend\models\LoginForm;
 
-$model = Yii::createObject(LoginForm::className());
+use frontend\models\User;
+use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\bootstrap\ActiveForm;
+
 ?>
 <div class="col-xs-9 right-profile quanlytinraoban">
     <div class="wrap-quanly-profile">
@@ -17,44 +18,79 @@ $model = Yii::createObject(LoginForm::className());
         <div class="col-md-9">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div class="alert alert-info">
-                        Credentials will be sent to the user by email.
-                        A password will be generated automatically if not provided.
+                    <div class="alert hide"></div>
+                    <?php $form = ActiveForm::begin([
+                        'id' => 'change-profile-form',
+                        'action' => Url::to(['/user-management/profile']),
+                        'enableAjaxValidation' => false,
+                        'enableClientValidation' => true,
+                        'layout' => 'horizontal',
+                        'fieldConfig' => [
+                            'horizontalCssClasses' => [
+                                'wrapper' => 'col-sm-9',
+                            ],
+                        ],
+                    ]); ?>
+                    <?= $form->field($model, 'name')->textInput(['class' => 'form-control']) ?>
+                    <?= $form->field($model, 'public_email')->textInput(['class' => 'form-control']) ?>
+                    <?= $form->field($model, 'phone')->textInput(['class' => 'form-control']) ?>
+                    <?= $form->field($model, 'mobile')->textInput(['class' => 'form-control']) ?>
+                    <?= $form->field($model, 'address')->textInput(['class' => 'form-control']) ?>
+                    <div class="form-group">
+                        <div class="col-lg-offset-3 col-lg-9">
+                            <?= Html::Button(Yii::t('user', 'Save'), ['class' => 'btn btn-block btn-success save']) ?>
+                        </div>
                     </div>
-                    <form id="w3" class="form-horizontal" action="/admin/user/admin/create" method="post" role="form">
-                        <input type="hidden" name="_csrf" value="eEQyMm9WaUUVPUt5IQ4BLhsVRXYgPTFyPCJ4XwhlMzIRHlNhVmcjHQ==">
-
-                        <div class="form-group field-user-email required has-error">
-                            <label class="control-label col-sm-3" for="user-email">Email</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="user-email" class="form-control" name="User[email]" maxlength="255">
-                                <div class="help-block help-block-error ">Email cannot be blank.</div>
-                            </div>
-
-                        </div><div class="form-group field-user-username required has-error">
-                            <label class="control-label col-sm-3" for="user-username">Username</label>
-                            <div class="col-sm-9">
-                                <input type="text" id="user-username" class="form-control" name="User[username]" maxlength="255">
-                                <div class="help-block help-block-error ">This username has already been taken</div>
-                            </div>
-
-                        </div><div class="form-group field-user-password has-success">
-                            <label class="control-label col-sm-3" for="user-password">Password</label>
-                            <div class="col-sm-9">
-                                <input type="password" id="user-password" class="form-control" name="User[password]">
-                                <div class="help-block help-block-error "></div>
-                            </div>
-
-                        </div>
-                        <div class="form-group">
-                            <div class="col-lg-offset-3 col-lg-9">
-                                <button type="submit" class="btn btn-block btn-success">Save</button>
-                            </div>
-                        </div>
-
-                    </form>
+                    <?php ActiveForm::end(); ?>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        var timer = 0;
+        $(document).on('click', '#change-profile-form .save', function () {
+            var _this = $(this);
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                $.ajax({
+                    type: "post",
+                    dataType: 'json',
+                    url: $('#change-profile-form').attr('action'),
+                    data: $('#change-profile-form').serializeArray(),
+                    success: function (data) {
+                        console.log(data);
+                        if (data.statusCode == true) {
+                            $('.panel-body .alert').text("Update profile success");
+                            $('.panel-body .alert').addClass("alert-success");
+                            $('.panel-body .alert').removeClass("hide");
+                            console.log(data);
+                        } else{
+                            var strMessage = '';
+                            $.each(data.parameters, function(idx, val){
+                                var element = 'change-pass-form-'+idx;
+                                strMessage += val;
+                            });
+                            $('.panel-body .alert').text(strMessage);
+                            $('.panel-body .alert').addClass("alert-warning");
+                            $('.panel-body .alert').removeClass("hide");
+                            console.log(data)
+                        }
+                    }
+                });
+            }, 500);
+            return false;
+        });
+
+        $('#change-profile-form input').keypress(function (e) {
+            if (e.which == 13) {
+                //$('#change-profile-form .reset').click();
+            }
+        });
+
+        $('.panel-body .alert').click(function () {
+            $('.panel-body .alert').addClass("hide");
+        });
+    });
+</script>
