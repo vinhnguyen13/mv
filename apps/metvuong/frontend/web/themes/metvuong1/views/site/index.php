@@ -12,7 +12,6 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
             animateSearch();
             setTimeout(function() {
                 setTimeout(function() {
-                    objEvent.updateSuggert();
                     $('#search-kind').submit();
                 },500);
             },1000);
