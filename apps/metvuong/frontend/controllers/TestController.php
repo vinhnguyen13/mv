@@ -12,7 +12,7 @@ use vsoft\ad\models\AdBuildingProject;
 
 class TestController extends \yii\web\Controller
 {
-    public $layout = '@app/views/layouts/search';
+    public $layout = '@app/views/layouts/layout';
     public function actionMail()
     {
         $user = User::findOne(5);
@@ -71,5 +71,9 @@ class TestController extends \yii\web\Controller
         print_r($response);
         echo "</pre>";
         exit;
+    }
+
+    public function actionSelect(){
+        return $this->render('select');
     }
 }
