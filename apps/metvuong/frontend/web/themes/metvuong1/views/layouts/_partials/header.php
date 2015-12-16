@@ -48,6 +48,7 @@ $searchParams = json_decode($value);
                         </button>
 
                         <input id="valSearch" type="hidden" value="">
+                        <input id="valTabActive" type="hidden" value="">
                         
                     <?php ActiveForm::end(); ?>
                     <div class="pull-left text-right mgT-10 mgL-15 options-search">

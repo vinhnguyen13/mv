@@ -185,10 +185,11 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                 </button>
 
                                 <input id="valSearch" type="hidden" value="">
+                                <input id="valTabActive" type="hidden" value="">
                                 
                             <?php ActiveForm::end(); ?>
                             <div class="pull-left text-right mgT-10">
-                                <div data-tab="mua-thue" class="search-select active" data-step='tinh-thanh|quan-huyen|{ "loai-bds": { "chung-cu": { "template": "loai-duan" }, "template_common": { "template": "min-max" } }}'>
+                                <div data-active="1" data-tab="mua-thue" class="search-select active" data-step='tinh-thanh|quan-huyen|{ "loai-bds": { "chung-cu": { "template": "loai-duan" }, "template_common": { "template": "min-max" } }}'>
                                     <a href="#" title="Muốn Mua/Thuê">
                                         <span>
                                             <em class="fa fa-home"></em>
@@ -197,7 +198,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                         <i>Muốn Mua/Thuê</i>
                                     </a>
                                 </div>
-                                <div data-tab="ban-thue" class="search-select" data-step='tinh-thanh|quan-huyen|loai-bds'>
+                                <div data-active="2" data-tab="ban-thue" class="search-select" data-step='tinh-thanh|quan-huyen|loai-bds'>
                                     <a href="#" title="Đăng ký Bán/Thuê">
                                         <span>
                                             <em class="fa fa-home"></em>
@@ -206,7 +207,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                         <i>Đăng ký Bán/Thuê</i>
                                     </a>
                                 </div>
-                                <div data-tab="tin-tuc"  class="search-select" data-step='{ "news": { "tin-tuc": { "template": "loai-tin-tuc" }, "du-an": { "template": "tinh-thanh|quan-huyen|loai-duan" } }}'>
+                                <div data-active="3" data-tab="tin-tuc"  class="search-select" data-step='{ "news": { "tin-tuc": { "template": "loai-tin-tuc" }, "du-an": { "template": "tinh-thanh|quan-huyen|loai-duan" } }}'>
                                     <a href="#" title="Tin Tức">
                                         <span>
                                             <em class="fa fa-home"></em>

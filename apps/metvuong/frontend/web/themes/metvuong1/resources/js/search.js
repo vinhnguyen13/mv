@@ -5,6 +5,7 @@
 	var defaults = {
 		input: $('#searchInput'),
 		inputSave: $('#valSearch'),
+		inputTabActive: $('#valTabActive'),
 		objSave: [],
 		wrapSuggest: $('.type-search ul'),
 		loading: $('<div class="loading_search"><span></span></div>'),
@@ -68,6 +69,7 @@
 				mv.settings.arrStepRender = {};
 				mv.settings.objSave = [];
 				mv.settings.inputSave.val('');
+				mv.settings.inputTabActive.val('');
 
 				render($(this));
 			});
@@ -384,6 +386,8 @@
 			});
 
 			mv.settings.inputSave.val(JSON.stringify(mv.settings.objSave, null, 2));
+			mv.settings.inputTabActive.val($('.search-select.active').data('active'));
+
 		};
 
 		var renderSuggest = function (el) {
