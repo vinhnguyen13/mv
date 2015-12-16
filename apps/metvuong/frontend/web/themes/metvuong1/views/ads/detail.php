@@ -69,15 +69,6 @@
                         <?php endif; ?>
                         <div class="row detail-post">
                             <div class="col-sm-8 dt-left-col">
-                                <div class="rating pull-right">
-                                    <ul class="clearfix">
-                                        <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                        <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                        <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                        <li><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                        <li><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                    </ul>
-                                </div>
                                 <h1 class="title-dt"><?= "{$product->home_no}, {$street->pre} {$street->name}, {$ward->pre} {$ward->name}, {$district->pre} {$district->name} {$city->name}" ?></h1>
                                 <p class="type-result"><em class="fa fa-circle for-rent"></em><?= mb_strtoupper("$categoryName $typeName", 'UTF-8') ?></p>
                                 <table>
@@ -180,11 +171,11 @@
                                             <?php if($product->adContactInfo->mobile): ?>
                                             <p><strong>Di động:</strong><?= $product->adContactInfo->mobile ?></p>
                                             <?php endif; ?>
-                                            <?php if($product->adContactInfo->address): ?>
-                                            <p><strong>Địa chỉ:</strong><?= $product->adContactInfo->address ?></p>
-                                            <?php endif; ?>
                                             <?php if($product->adContactInfo->email): ?>
                                             <p><strong>Email:</strong><?= $product->adContactInfo->email ?></p>
+                                            <?php endif; ?>
+                                            <?php if($product->adContactInfo->address): ?>
+                                            <p><strong>Địa chỉ:</strong><?= $product->adContactInfo->address ?></p>
                                             <?php endif; ?>
                                         </div>
                                     </div>
