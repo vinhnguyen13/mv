@@ -4,6 +4,7 @@ $(document).ready(function(){
 	var streets = district['streets'];
 	var wards = district['wards'];
 	var projects = district['projects'];
+	console.log(district);
 	var sliderInstance;
 	
 	for(index in streets) {

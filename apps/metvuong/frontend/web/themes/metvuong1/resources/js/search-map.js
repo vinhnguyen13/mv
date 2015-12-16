@@ -1,5 +1,5 @@
 var gmap = null, response = null, listResult, infoWindow;
-
+var zIndex = 100;
 $(document).ready(function(){
 	listResult = $('.list-results');
 	var mapOptions = {
@@ -35,6 +35,24 @@ function start() {
 			$('#detail-wrap').css({
 				left: '0px'
 			});
+		});
+		
+		listResult.on('mouseenter', '> li', function() {
+			var self = $(this);
+			if(self.hasClass('onmap'))
+				return;
+			var marker = gmap.getMarker(self.data('id'));
+			marker.setIcon('/images/marker-hover.png');
+			marker.setZIndex(zIndex++);
+			if(!gmap.getBounds().contains(marker.getPosition())) {
+				gmap.setCenter(marker.getPosition());
+			}
+		}).on('mouseleave', '> li', function() {
+			var self = $(this);
+			if(self.hasClass('onmap'))
+				return;
+			var marker = gmap.getMarker(self.data('id'));
+			marker.setIcon('/images/marker.png');
 		});
 		
 		listResult.on('click', '> li', function(){
@@ -134,7 +152,8 @@ function makeMarker(product) {
 
 	var marker = new Marker({
 		draggable: false,
-	    position: {lat: Number(product.lat), lng: Number(product.lng)}
+	    position: {lat: Number(product.lat), lng: Number(product.lng)},
+	    icon: '/images/marker.png',
 	});
 	
 	marker.click(function(latLng){
@@ -146,6 +165,7 @@ function makeMarker(product) {
 			if(id == $(this).data('id')) {
 				$(this).data('clone', true);
 				list.not($(this)).remove();
+				$(this).addClass('onmap');
 				infoWindow.setContent(listEl.get(0));
 				return false;
 			}

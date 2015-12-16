@@ -95,6 +95,10 @@ function Gmap(el, options) {
 		return map;
 	};
 	
+	self.getBounds = function() {
+		return map.getBounds();
+	}
+	
 	mapCounter++;
 	
 	return self;
@@ -159,6 +163,14 @@ function Marker(options) {
 	
 	self.getId = function() {
 		return id;
+	}
+	
+	self.setIcon = function(icon) {
+		marker.setIcon(icon);
+	}
+	
+	self.setZIndex = function(index) {
+		marker.setZIndex(index);
 	}
 	
 	markerCounter++;
