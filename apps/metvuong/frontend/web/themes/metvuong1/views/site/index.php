@@ -12,9 +12,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
         $(document).on('click', '#btn-search', function(){
             animateSearch();
             setTimeout(function() {
-                setTimeout(function() {
-                    $('#search-kind').submit();
-                },500);
+                setTimeout(function() {$('#search-kind').submit();},100);
             },1000);
             return false;
         });
@@ -22,14 +20,14 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
         $(document).bind( 'real-estate/news', function(event, json, string){
             animateSearch();
             setTimeout(function() {
-                //setTimeout(function() {$('#search-kind').submit();},100);
+                setTimeout(function() {$('#search-kind').submit();},100);
             },1000);
         });
         
         $(document).bind( 'real-estate/post', function(event, json, string){
             animateSearch();
             setTimeout(function() {
-                //setTimeout(function() {$('#search-kind').submit();},100);
+                setTimeout(function() {$('#search-kind').submit();},100);
             },1000);
         });
 
@@ -186,14 +184,14 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                 </button>
 
                                 <input class="valInputHidden" id="valSearch" type="hidden" value="">
-                                <input class="valInputHidden" id="valTabActive" type="hidden" value="">
+                                <input class="valInputHidden" id="valTabActive" name="activeSearch" type="hidden" value="">
 
-                                <input class="valInputHidden" id="valTinhThanh" type="hidden" value="">
-                                <input class="valInputHidden" id="valQuanHuyen" type="hidden" value="">
-                                <input class="valInputHidden" id="valLoaiBDS" type="hidden" value="">
-                                <input class="valInputHidden" id="valDuAn" type="hidden" value="">
-                                <input class="valInputHidden" id="valTinTuc" type="hidden" value="">
-                                <input class="valInputHidden" id="valLoaiTinTuc" type="hidden" value="">
+                                <input class="valInputHidden" id="valTinhThanh" name="city" type="hidden" value="">
+                                <input class="valInputHidden" id="valQuanHuyen" name="district" type="hidden" value="">
+                                <input class="valInputHidden" id="valLoaiBDS" name="category" type="hidden" value="">
+                                <input class="valInputHidden" id="valDuAn" name="project" type="hidden" value="">
+                                <input class="valInputHidden" id="valTinTuc" name="newsType" type="hidden" value="">
+                                <input class="valInputHidden" id="valLoaiTinTuc" name="newsCat" type="hidden" value="">
                                 
                                 
                             <?php ActiveForm::end(); ?>
