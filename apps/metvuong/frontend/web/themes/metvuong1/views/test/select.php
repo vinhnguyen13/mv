@@ -104,6 +104,7 @@ $stt = '{"step1":["thanhpho","tinhthanh",["loaibds","giaca"]],"step2":["thanhpho
 
     });
 
+
     $(document).on('click', '.lstSuggest a', function () {
         var forceStep = $(this).attr('data-force-step');
 
