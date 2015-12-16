@@ -2335,6 +2335,7 @@ div.wrap-page-home #search-kind .dropdown button {
 .search-item {
     position: relative;
     padding: 15px 15px 10px 10px;
+    min-height: 150px;
     max-height: 250px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -3456,7 +3457,7 @@ form .inline-group {
     padding: 3px 0 3px 20px;
 }
 #search-kind .frm-cost-min-max {
-    padding: 10px 20px 20px 20px;
+    padding: 30px 20px 20px 20px;
 }
 #search-kind .form-group.inline-group {
     width: inherit;
@@ -4953,4 +4954,61 @@ header.wrap-page-home .box-search-header.ani-search > div {
 .tbl-list .table>thead>tr>td, 
 .tbl-list .table>thead>tr>th {
     padding: 10px;
+}
+@-webkit-keyframes pace-spinner {
+  0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@-moz-keyframes pace-spinner {
+  0% { -moz-transform: rotate(0deg); transform: rotate(0deg); }
+  100% { -moz-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@-o-keyframes pace-spinner {
+  0% { -o-transform: rotate(0deg); transform: rotate(0deg); }
+  100% { -o-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@-ms-keyframes pace-spinner {
+  0% { -ms-transform: rotate(0deg); transform: rotate(0deg); }
+  100% { -ms-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@keyframes pace-spinner {
+  0% { transform: rotate(0deg); transform: rotate(0deg); }
+  100% { transform: rotate(360deg); transform: rotate(360deg); }
+}
+.loading_search {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+.loading_search span {
+    display: block;
+    position: absolute;
+    z-index: 2000;
+    top: 50%;
+    left: 50%;
+    margin-top: -8px;
+    margin-left: -8px;
+    width: 16px;
+    height: 16px;
+    border: solid 2px transparent;
+    border-top-color: #4a933a;
+    border-left-color: #4a933a;
+    border-radius: 20px;
+    -webkit-animation: pace-spinner 800ms linear infinite;
+    -moz-animation: pace-spinner 800ms linear infinite;
+    -ms-animation: pace-spinner 800ms linear infinite;
+    -o-animation: pace-spinner 800ms linear infinite;
+    animation: pace-spinner 800ms linear infinite;
+}
+#loai-duan .search-item ul li {
+    width: 33.3333%;
+}
+.search-item ul li.notfound {
+    padding-top: 5px;
+}
+#min-max .search-item {
+    overflow-y: visible;
+    overflow-x: visible;
 }

@@ -1,525 +1,605 @@
-var objEvent = {
-			itemInput: $('#searchInput'),
-			tabsSearch: $('.search-select a'),
-	        flagEnd : false,
-	        flagSetTemplate: [],
-	        countStep : 1,
-	        currentStep : 0,
-	        wrapListSuggest: $('.type-search ul'),
-	        wrapStep: $('.search-wrap'),
-	        lenghtSuggest : 0,
-	        flagOpenSugget : false,
-	        flagTrigger : '',
-	        current: 0,
-	        next: '',
-	        timeoutClose: '',
-	        editItem: '',
-	        icon: $('#search-kind button span'),
-	        iconScrollSearch : $('.icon-selected'),
-	        objSave: [],
+;(function($){
 
-	        init: function() {
-	        	objEvent.searchEvent();
-	        	objEvent.tabSearchEvent();
-	        	objEvent.selectItem();
-	        	objEvent.btnclose();
-	        	objEvent.reOpenBySuggest();
-	        	objEvent.removeSuggest();
-	        	loadCost.init();
-	        	objEvent.centerBox();
-	        	objEvent.renderSuggest();
-	        },
-	        getDataTinhThanhQuanHuyen: function () {
-	        	$('.list-tinh-thanh').html('');
-	        	$('.list-loai-bds').html('');
-	        	for( var i in dataCities ) {
-			        var $itemTinhThanh = $('<li data-id-tt='+i+'><a title="'+dataCities[i].name+'" href="#valTT">'+dataCities[i].name+'</a></li>');
-			        $('.list-tinh-thanh').append($itemTinhThanh);
-			    }
+	var plugin = {};
 
-			    for( var i in dataCategories ) {
-			        var $item = $('<li data-id-loai='+i+'><a title="'+dataCategories[i].name+'" data-template-show="'+dataCategories[i].template+'" href="#valLoai">'+dataCategories[i].name+'</a></li>');
-			        $('.list-loai-bds').append($item);   
-			    }
-	        },
-	        searchEvent: function() {
-	        	objEvent.tabsSearch.on('click', function(e) {
-	        		e.preventDefault();
-	        		var _this = $(this),
-			            txtPlaceholder = _this.data('placeholder'),
-			            itemSearch = _this.attr('rel');
+	var defaults = {
+		input: $('#searchInput'),
+		inputSave: $('#valSearch'),
+		objSave: [],
+		wrapSuggest: $('.type-search ul'),
+		loading: $('<div class="loading_search"><span></span></div>'),
+		ajaxLoad: false,
+		searchWrap: $('.search-wrap'),
+		currentStep: '',
+		current: '',
+		nextStep: '',
+		timeoutClose: '',
+		inputPlaceholder: '',
+		arrStep: [],
+		arrStepRender: {},
+		flagEdit: false,
+		itemEdit: '',
+		tabActive: '',
+		countSuggest: 0
+	};
 
-			        objEvent.reset();
+	$.fn.MVS = function (options) {
 
-			        itemTabs(itemSearch);
-			        
-			        objEvent.tabsSearch.parent().removeClass('active');
-			        objEvent.itemInput.attr('placeholder', txtPlaceholder);
-			    	_this.parent().addClass('active');
+		if ( this.length == 0 ) 
+			return this;
 
-			    	if( _this.closest('.search-dropdown').length > 0 ) {
-	                    _this.closest('.search-dropdown').removeClass('search-dropdown');
-	                }
+		var mv = {};
 
-	                $('#valActive').val(_this.data('active'));
-			    	
-			        return false;
-	        	});
+		var tabs = this;
 
-	        	objEvent.tabsSearch.each(function() {
-	        		var txtPlaceholder = $(this).data('placeholder');
-	        		if( $(this).parent().hasClass('active') ) {
-	        			objEvent.itemInput.attr('placeholder', txtPlaceholder);	
-	        			objEvent.flagTrigger = $(this).attr('rel');
-	        			itemTabs(objEvent.flagTrigger);
-	        		}
-	        	});
+		plugin.tabs = this;
 
-				function itemTabs(itemTab) {
-			        switch(itemTab) {
-			            case '#dd-search':
-			            	objEvent.getDataTinhThanhQuanHuyen();
-			                objEvent.flagTrigger = '#dd-search';
-			                objEvent.icon.html('<em class="fa fa-search"></em>');
-			                objEvent.iconScrollSearch.find('span').html('<em class="fa fa-home"></em><em class="fa fa-search"></em>');
-			                break;
-			            case '#dd-dky':
-			            	//_this.trigger( 'real-estate/post', [{data: '1'}, 'something'] );
-			            	objEvent.getDataTinhThanhQuanHuyen();
-			            	$('.list-loai-bds li a').attr('data-end-submit',true);
-			                objEvent.icon.html('<em class="fa fa-pencil-square-o"></em>');
-			                objEvent.iconScrollSearch.find('span').html('<em class="fa fa-home"></em><em class="fa fa-pencil-square-o"></em>');
-			                objEvent.flagTrigger = '#dd-dky';
-			                break;
-			            case '#dd-news':
-			                //_this.trigger( 'real-estate/news', [{data: '1'}, 'something'] );
-			                $('.list-loai-tt').html('');
-			                $('.list-tintuc-suggest').html('');
-			                $.getJSON(url_ttuc, function(result){
-						        arrJSONReturn.objTTuc = result;
-						        for( var i = 0; i < result.length; i++ ) {
-						            var $item = $('<li data-id-ttuc='+result[i].id+'><a data-template-show="'+result[i].template+'" href="#valTTuc">'+result[i].ten_tt+'</a></li>');
-						            $('.list-loai-tt').append($item);   
-						        }
-						    });
-			                for( var i in newsCatalogs ) {
-						        var $item = $('<li data-id-loaittuc="'+i+'"><a title="'+newsCatalogs[i].title+'" href="#">'+newsCatalogs[i].title+'</a></li>');
-						        $('.list-tintuc-suggest').append($item);   
-						    }
-			                $('.list-duan-news li a').attr('data-end-submit',true);
-						    $('.list-tintuc-suggest li a').attr('data-end-submit',true);
+		//get start
+		var init = function (tabs) {
+			mv.settings = $.extend({}, defaults, options);
+			showBoxSearch();
+		};
 
-			                objEvent.icon.html('<em class="fa fa-file-text"></em>');
-			                objEvent.iconScrollSearch.find('span').html('<em class="fa fa-home"></em><em class="fa fa-file-text"></em>');
-			                objEvent.flagTrigger = '#dd-news';
-			                objEvent.countStep = "news";
-			                break;
-			        }
-			    }
-	        },
-	        tabSearchEvent: function() {
-	        	objEvent.itemInput.on('click', function (e) {
-	        		e.preventDefault();
-	        		var _this = $(this);
+		//render step first and set step
+		var renderStep = function (tabs) {
+			
+			//load tab active and run step
+			tabs.each(function (i) {
+				var _this = $(this);
+				if ( _this.hasClass('active') ) {
+					mv.settings.tabActive = _this.data('tab');
+					render(_this);
+					return;
+				}
+			});
 
-	        		objEvent.editItem = '';
+			tabs.on('click', function (e) {
+				e.preventDefault();
+				tabs.removeClass('active');
+				$(this).addClass('active');
 
-	        		if ( objEvent.next != '' ) {
-	        			objEvent.countStep = objEvent.next;
-	        			objEvent.next = '';
-	        		}
-
-	        		if( !objEvent.flagEnd )
-			        	objEvent.open(objEvent.countStep);
-				});
-	        },
-	        open: function(countStep) {
-	        	objEvent.countStep = countStep;
-	            objEvent.wrapStep.addClass('hidden-effect');
-
-	            isNaN(objEvent.countStep) ? $(".search-wrap[data-template="+objEvent.countStep+"]").removeClass('hidden-effect') : $('#step-'+objEvent.countStep).removeClass('hidden-effect');
-
-	            setTimeout(function() {
-	                isNaN(objEvent.countStep) ? $(".search-wrap[data-template="+objEvent.countStep+"]").addClass('active') : $('#step-'+objEvent.countStep).addClass('active');
-	            	isNaN(objEvent.countStep) ? $(".search-wrap[data-template="+objEvent.countStep+"]").find('input').eq(0).focus() : '';
-	            }, 30);
-
-	            clearTimeout(objEvent.timeoutClose);
-	        },
-	        close: function() {
-	            $('.search-wrap').removeClass('edit-suggest');
-
-	            $('.search-wrap').removeClass('active');
-
-	            objEvent.timeoutClose = setTimeout(function() {
-	                $('.search-wrap').addClass('hidden-effect');
-	            }, 300);
-
-	            $('.type-search li').removeClass('active');
-
-	            objEvent.editItem = '';
-	        },
-	        btnclose: function() {
-	            $('.btn-close-search').on('click',function(e) {
-	                e.preventDefault();
-
-	                $('.type-search li').removeClass('active');
-
-	                $(this).closest('.search-wrap').removeClass('active');
-	                objEvent.close();
-
-	                return false;
-	            });
-	        },
-	        selectItem: function() {
-	        	$(document).on('click', '.search-item > ul a', function(e) {
-	                e.preventDefault();
-	                var _this = $(this),
-	                    txt = _this.text(),
-	                    $itemSuggest = $('<li data-step="'+objEvent.countStep+'"><i>x</i><span></span></li>'),
-	                    itemId = '',
-	                    nameAttr = '',
-	                    relAttr = '',
-	                    templateSuggest = _this.data('templateShow');
-
-	                // render quận/huyện theo tỉnh/thành phố
-	                if( _this.parent().data('idTt') != undefined ) {
-	                    //$('#valTT').val(_this.parent().data('idTt'));
-	                    itemId = _this.parent().data('idTt');
-	                    nameAttr = 'data-id-tt';
-	                    relAttr = 'id-tt';
-
-	                    for( var i in dataCities ) {
-	                        if( i == _this.parent().data('idTt') ) {
-	                            $('.list-quan-huyen').html('');
-	                            for( var j in dataCities[i].districts ) {
-	                                var $item = $('<li data-id-qh='+j+'><a title="'+dataCities[i].districts[j].name+'" href="#valQh">'+dataCities[i].districts[j].name+'</a></li>');
-	                                
-	                                $('.list-quan-huyen').append($item);
-	                            }
-	                        }
-	                    }
-
-	                }
-	                //end
-
-	                // lấy value id khi chọn dropdown
-	                if( _this.parent().data('idQh') != undefined ) {
-	                    //$('#valQh').val(_this.parent().data('idQh'));
-	                    itemId = _this.parent().data('idQh');
-	                    nameAttr = 'data-id-qh';
-	                    relAttr = 'id-qh';
-	                }else if( _this.parent().data('idLoai') != undefined ) {
-	                    //$('#valLoaibds').val(_this.parent().data('idLoai'));
-	                    itemId = _this.parent().data('idLoai');
-	                    nameAttr = 'data-id-loai';
-	                    relAttr = 'id-loai';
-	                }else if( _this.parent().data('idDuans') != undefined ) {
-	                    //$('#valDuaan').val(_this.parent().data('idDuans'));
-	                    itemId = _this.parent().data('idDuans');
-	                    nameAttr = 'data-id-duans';
-	                    relAttr = 'id-duans';
-	                }else if( _this.parent().data('idTtuc') != undefined ) {
-	                    //$('#valTTuc').val(_this.parent().data('idTtuc'));
-	                    itemId = _this.parent().data('idTtuc');
-	                    nameAttr = 'data-id-ttuc';
-	                    relAttr = 'id-ttuc';
-	                }else if( _this.parent().data('idDuannews') != undefined ) {
-	                    //$('#valDuaannews').val(_this.parent().data('idDuannews'));
-	                    itemId = _this.parent().data('idDuannews');
-	                    nameAttr = 'data-id-duannews';
-	                    relAttr = 'id-duannews';
-	                }else if( _this.parent().data('idLoaittuc') != undefined ) {
-	                    //$('#valLoaiTTuc').val(_this.parent().data('idLoaittuc'));
-	                    itemId = _this.parent().data('idLoaittuc');
-	                    nameAttr = 'data-id-loaittuc';
-	                    relAttr = 'id-loaittuc';
-	                }
-	                //end
-
-					//render dự án theo Loại Bất Động Sản
-					var idTThanh =  objEvent.wrapListSuggest.find('li[data-id-tt]').data('idTt'),
-                    	idQh = objEvent.wrapListSuggest.find('li[data-id-qh]').data('idQh'),
-                    	idLoaiBDS = _this.parent().data('idLoai');
-
-	                if( idTThanh != '' && idQh != '' && idLoaiBDS != '' && _this.parent().data('idLoai') != undefined ) {
-	                    $('.list-duan-suggest').html('');
-	                    for( var i in dataCities[idTThanh].districts[idQh].projects ) {
-	                        var $item = $('<li data-id-duans='+i+'><a title="'+dataCities[idTThanh].districts[idQh].projects[i].name+'" href="#">'+dataCities[idTThanh].districts[idQh].projects[i].name+'</a></li>');
-                            $('.list-duan-suggest').append($item);
-	                    }
-	                }
-	                //end
-
-	                if( templateSuggest !== undefined && templateSuggest != '' ) {
-                    	objEvent.flagSetTemplate = templateSuggest.replace(/ /g,'').split(',');
-                    	objEvent.countStep = objEvent.flagSetTemplate[0];
-                    	$itemSuggest.attr('data-next',objEvent.countStep);
-                		objEvent.flagSetTemplate.splice(0,1);
-                		$(".search-wrap[data-template="+objEvent.countStep+"] li a").attr('data-template-show',objEvent.flagSetTemplate);
-                    }
-
-                    if( !objEvent.editItem ) { // insert item mới
-	                    
-	                    $itemSuggest.find('span').text(txt);
-	                    $itemSuggest.find('span').attr('title',txt);
-	                    $itemSuggest.attr(nameAttr,itemId);
-	                    $itemSuggest.attr('rel',relAttr);
-	                    objEvent.wrapListSuggest.append($itemSuggest);
-
-	                    objEvent.checkCounter();
-	                    
-	                    var txtStep;
-	                    txtStep = isNaN(objEvent.countStep) ? $(".search-wrap[data-template="+objEvent.countStep+"]").data('txtStep') : $('#step-'+objEvent.countStep).data('txtStep');
-
-	                    objEvent.changeTextHolder(txtStep);
-
-	                }else {// edit item đã được chọn
-	                    objEvent.wrapListSuggest.find('li[data-step='+objEvent.editItem+'] span').text(txt);
-	                    objEvent.wrapListSuggest.find('li[data-step='+objEvent.editItem+']').attr('data-next', objEvent.countStep);
-	                    objEvent.wrapListSuggest.find('li[data-step='+objEvent.editItem+']').attr(nameAttr,itemId);
-	                    $itemSuggest.attr('rel',relAttr);
-	                    objEvent.editItem = '';
-	                }
-
-	                objEvent.close();
-	                
-	                objEvent.wrapListSuggest.show();
-
-	                objEvent.resizeWidthInput();
-
-	                if( objEvent.flagTrigger == '#dd-dky' && _this.data('endSubmit') && $('#valLoaibds').val() == '' ) {
-	                	objEvent.updateSuggert();
-                        _this.trigger( 'real-estate/post', [{data: '1'}, 'something'] );
-                        objEvent.flagEnd = true;
-                    }
-
-                    if( objEvent.flagTrigger == '#dd-news' && _this.data('endSubmit') && $('#valLoaiTTuc').val() == '' && $('#valDuaannews').val() == '' ) {
-                    	objEvent.updateSuggert();
-                        _this.trigger( 'real-estate/news', [{data: '1'}, 'something'] );
-                    }
-
-	                if( _this.closest('.search-wrap').data('end') ) {
-	                	objEvent.flagEnd = true;
-	                }
-
-	                if( !objEvent.flagEnd ) {
-	                	objEvent.open(objEvent.countStep);
-	                }
-
-	                return false;
-	            });
-	        },
-	        removeSuggest: function() {
-	            $(document).on('click', '.type-search li i',function(e) {
-	                e.preventDefault();
-	                var _this = $(this),
-	                    $parentList = _this.parent(),
-	                    getStep = $parentList.index(),
-	                    count = 0;
-
-	                for( var i = objEvent.wrapListSuggest.find('li').length; i > getStep ; i-- ) {
-	                	var idInputHiddenRemove = objEvent.wrapListSuggest.find('li').eq(i-1).attr('rel');
-						$('.getValSuggest[rel='+idInputHiddenRemove+']').val('');
-
-	                	objEvent.wrapListSuggest.find('li').eq(i-1).remove();
-					}
-	                
-	                objEvent.resizeWidthInput();
-	                
-	                objEvent.next = objEvent.countStep = $parentList.data('step');
-
-	                objEvent.flagEnd = false;
-
-	                if( !isNaN(objEvent.countStep) ) {
-	                	objEvent.changeTextHolder($('#step-'+objEvent.countStep).data('txtStep'));
-	                }else {
-	                	objEvent.changeTextHolder($('.search-wrap[data-template='+objEvent.countStep+']').data('txtStep'));
-	                }
-	                
-				});
-	        },
-	        changeTextHolder: function(txtStep) {
-	        	objEvent.itemInput.attr('placeholder', txtStep);
-	        },
-	        resizeWidthInput: function() {
-	        	objEvent.itemInput.hide();
-	            setTimeout(function () {
-	            	var wInput = $('.type-search').width() - objEvent.wrapListSuggest.outerWidth();
-	            	objEvent.itemInput.css('width',wInput+'px').show();
-	            },250);
-	        },
-	        reOpenBySuggest: function() {
-	            $(document).on('click', '.type-search li span',function(e) {
-	                e.preventDefault();
-	                
-	                var _this = $(this),
-	                    boxId = _this.parent().data('step'),
-	                    nextId = _this.parent().data('next');
-
-	                objEvent.editItem = boxId;
-
-	                objEvent.next = nextId;
-
-	                $('.type-search li').removeClass('active');
-	                _this.parent().addClass('active');
-	                
-	                var index = $('.type-search li[data-step='+boxId+']').index();
-                	for ( var i = index; i <= objEvent.lenghtSuggest; i++ ) {
-                		var itemIndex = index + 1,
-                			idInputHiddenRemove = $('.type-search li').eq(itemIndex).attr('rel');
-
-                		$('.getValSuggest[rel='+idInputHiddenRemove+']').val('');
-
-                		$('.type-search li').eq(itemIndex).remove();
-                	}
-	                objEvent.resizeWidthInput();
-
-	                objEvent.open(boxId);
-	                setTimeout(function() {
-	                	objEvent.flagEnd = false;
-	                	objEvent.checkCounter();
-	                },35);
-	            });
-	        },
-	        checkCounter: function() {
-	        	//l('countStep: '+objEvent.countStep);
-	            objEvent.lenghtSuggest = objEvent.wrapListSuggest.find('li').length;
-	            if( !isNaN(objEvent.countStep) ) { // is a number
-	            	objEvent.countStep += 1;
-	            }else { // is a string
-	            	return;
-	            }
-	        },
-	        reset: function() {
-	            objEvent.countStep = 1;
-	            objEvent.next = '';
-	            objEvent.lenghtSuggest = 0;
-	            objEvent.wrapListSuggest.hide().find('li').remove();
-	            objEvent.flagEnd = false;
-	            objEvent.wrapStep.find('li a').removeAttr('data-template-show');
-	            objEvent.resizeWidthInput();
-	        },
-	        updateSuggert: function() {
-	            var arr = [],
-	            	strArrFirst = "[",
-					strArrLast = "]";
-
-				objEvent.wrapListSuggest.find('li').each(function (i) {
-					var _this = $(this),
-						dataStep = _this.data('step'),
-						rel = _this.attr('rel'),
-						dataId = _this.data(rel),
-						dataNext = _this.data('next');
-
-					if ( rel == 'id-tt' ) {
-						$('#valTT').val(dataId);
-						$('#stepTT').val(dataStep);
-						$('#valNextTT').val(dataNext);
-					}else if ( rel == 'id-qh' ) {
-						$('#valQh').val(dataId);
-						$('#stepQh').val(dataStep);
-						$('#valNextQh').val(dataNext);
-					}else if ( rel == 'id-loai' ) {
-						$('#valLoaibds').val(dataId);
-						$('#stepLbds').val(dataStep);
-						$('#valNextLbds').val(dataNext);
-					}else if ( rel == 'id-ttuc' ) {
-						$('#valTTuc').val(dataId);
-						$('#stepTtuc').val(dataStep);
-						$('#valNextTtuc').val(dataNext);
-					}else if ( rel == 'id-loaittuc' ) {
-						$('#valLoaiTTuc').val(dataId);
-						$('#stepLoaittuc').val(dataStep);
-						$('#valNextLoaittuc').val(dataNext);
-					}else if (rel == 'id-duans' ) {
-						$('#valDuaan').val(dataId);
-						$('#stepDuan').val(dataStep);
-						$('#valNextDuan').val(dataNext);
-					}else if ( rel == 'id-duannews' ) {
-						$('#valDuaannews').val(dataId);
-						$('#stepDuannews').val(dataStep);
-						$('#valNextDuannews').val(dataNext);
-					}else {
-						l('Not Value');
-					}
-				});
-
-				$('#arrVal').val(strArrFirst);
-	        },
-	        centerBox: function() {
-	        	var logo = $('div.wrap-page-home .logo-home'),
-	        		searchBox = $('div.wrap-page-home .box-search-header'),
-	        		wLogo = logo.outerWidth(),
-	        		hLogo = logo.outerHeight(),
-	        		wSearchBox = searchBox.outerWidth(),
-	        		hSearchBox = searchBox.outerHeight(),
-	        		wWin = $('div.wrap-page-home .wrap-search-home').outerWidth(),
-	        		hWin = $(window).outerHeight(),
-	        		topCenterLogo = Math.floor(hWin/2 - hLogo/2 - hLogo - 30),
-	        		leftCenterLogo = Math.floor(wWin/2 - wLogo/2),
-	        		topCenterSearch = Math.floor(hWin/2 - hSearchBox/2) + 30,
-	        		leftCenterSearch = Math.floor(wWin/2 - wSearchBox/2);
-
-	        	logo.css({
-	        		'transform' : 'translate3d( '+leftCenterLogo+'px, '+topCenterLogo+'px, 0)',
-	        		'-moz-transform' : 'translate3d( '+leftCenterLogo+'px, '+topCenterLogo+'px, 0)',
-	        		'-webkit-transform' : 'translate3d( '+leftCenterLogo+'px, '+topCenterLogo+'px, 0)',
-	        		'-ms-transform' : 'translate3d( '+leftCenterLogo+'px, '+topCenterLogo+'px, 0)'
-
-	        	});
-	        	searchBox.css({
-	        		'transform' : 'translate3d( '+leftCenterSearch+'px, '+topCenterSearch+'px, 0)',
-	        		'-webkit-transform' : 'translate3d( '+leftCenterSearch+'px, '+topCenterSearch+'px, 0)',
-	        		'-moz-transform' : 'translate3d( '+leftCenterSearch+'px, '+topCenterSearch+'px, 0)',
-	        		'-ms-transform' : 'translate3d( '+leftCenterSearch+'px, '+topCenterSearch+'px, 0)'
-	        	});
-
-	        	setTimeout(function() {
-	        		logo.show().css({
-	        			visibility: 'visible'
-	        		});
-	        		logo.addClass('aniTopDown');
-	        		searchBox.show().css({
-	        			visibility: 'visible'
-	        		});
-	        		searchBox.addClass('aniTopDown');
-	        	},100);
-			},
-			renderSuggest: function () {
-				objEvent.getDataTinhThanhQuanHuyen();
+				mv.settings.tabActive = $(this).data('tab');
 				
-				if ( $('#valActive').val() != '' ) {
-					$('.search-select a[data-active='+$('#valActive').val()+']').trigger('click');
-					setTimeout(function() {
-						if ( $('#valTTuc').val() != '' ) {
-							$('.list-loai-tt li[data-id-ttuc="'+$('#valTTuc').val()+'"] a').trigger('click');
+				mv.settings.wrapSuggest.html('');
+				inputResize();
+
+				mv.settings.currentStep = '';
+				mv.settings.nextStep = '';
+				mv.settings.arrStepRender = {};
+				mv.settings.objSave = [];
+				mv.settings.inputSave.val('');
+
+				render($(this));
+			});
+
+			function render (item) {
+				mv.settings.arrStep = item.data('step');
+				
+				step(mv.settings.arrStep);
+			}
+
+			$(document).on('click', '.wrap-step li a', changeStep);
+
+		};
+
+		function stepLoad (itemRender) {
+			switch( itemRender ) {
+				case 'tinh-thanh':
+					$('#'+itemRender).find('ul').html('');
+					for ( var j in dataCities ) {
+						var item = $('<li data-id="'+j+'"><a href="#" data-next-step="'+mv.settings.nextStep+'" data-item="tinh-thanh" data-slug-name='+ChangeToSlug(dataCities[j].name)+'>'+dataCities[j].name+'</a></li>');
+						$('#'+itemRender).find('ul').append(item);
+					}
+					break;
+				case 'loai-bds':
+					$('#'+itemRender).find('ul').html('');
+					for ( var j in dataCategories ) {
+						var item = $('<li data-id="'+j+'"><a href="#" data-item="loai-bds" data-slug-name='+ChangeToSlug(dataCategories[j].name)+'>'+dataCategories[j].name+'</a></li>');
+						$('#'+itemRender).find('ul').append(item);
+					}
+					break;
+				case 'news':
+					$('#'+itemRender).find('ul').html('');
+					for ( var j in news ) {
+						var item = $('<li data-id="'+j+'"><a href="#" data-item="news" data-slug-name='+ChangeToSlug(news[j].title)+'>'+news[j].title+'</a></li>');
+						$('#'+itemRender).find('ul').append(item);
+					}
+					break;
+				case 'loai-tin-tuc':
+					$('#loai-tin-tuc').find('ul').html('');
+					for ( var j in newsCatalogs ) {
+						var item = $('<li data-id="'+j+'"><a href="#" data-item="loai-tin-tuc" data-slug-name='+ChangeToSlug(newsCatalogs[j].title)+'>'+newsCatalogs[j].title+'</a></li>');
+						$('#loai-tin-tuc').find('ul').append(item);
+					}
+					break;
+				default: 
+					
+			}
+		}
+
+		//chuyen doi giua cac step voi nhau
+		var changeStep = function (e) {
+			e.preventDefault();
+			var _this = $(this),
+				idItem = _this.parent().data('id'),
+				nextStepData = _this.data('nextStep');
+
+			if ( nextStepData != undefined && nextStepData.split('|').length > 1 ) {
+				mv.settings.arrStepRender.root = _this.data('slugName');
+				mv.settings.arrStepRender.step = nextStepData.split('|');
+				mv.settings.currentStep = mv.settings.arrStepRender.step[0];
+			}else {
+				mv.settings.currentStep = nextStepData;
+			}
+			
+			next();
+
+			renderSuggest(_this);
+
+			if ( nextStepData == undefined || nextStepData == '' ) {
+				if ( mv.settings.tabActive == 'tin-tuc' ) {
+					//$(document).trigger( 'real-estate/news', [{data: '1'}, 'something'] );
+				}else if ( mv.settings.tabActive == 'ban-thue' ) {
+					//$(document).trigger( 'real-estate/post', [{data: '1'}, 'something'] );
+				}else if ( mv.settings.tabActive == 'mua-thue' ) {
+					l(1);
+				}
+				
+			}
+
+			//render khi chon tinh thanh
+			if ( mv.settings.currentStep === 'quan-huyen' ) {
+				for ( var i in dataCities ) {
+					if ( i == idItem ) {
+						$('#quan-huyen').find('ul').html('');
+						for ( var j in dataCities[i].districts ) {
+							var item = $('<li data-id="'+j+'"><a  data-item="quan-huyen" data-next-step="'+mv.settings.nextStep+'" href="#" data-slug-name='+ChangeToSlug(dataCities[i].districts[j].name)+'>'+dataCities[i].districts[j].name+'</a></li>');
+							$('#quan-huyen').find('ul').append(item);
 						}
-						if ( $('#valLoaiTTuc').val() != '' ) {
-							$('.list-tintuc-suggest li[data-id-loaittuc="'+$('#valLoaiTTuc').val()+'"] a').trigger('click');
-						}
-						if ( $('#valTT').val() != '' ) {
-							$('.list-tinh-thanh li[data-id-tt='+$('#valTT').val()+'] a').trigger('click');
-						}
-						if ( $('#valQh').val() != '' ) {
-							$('.list-quan-huyen li[data-id-qh='+$('#valQh').val()+'] a').trigger('click');
-						}
-						if ( $('#valLoaibds').val() != '' ) {
-							$('.list-loai-bds li[data-id-loai='+$('#valLoaibds').val()+'] a').trigger('click');
-							$('.btn-close-search').trigger('click');
-						}
-						if ( $('#valDuaannews').val() != '' ) {
-							$('.list-duan-news li[data-id-duannews='+$('#valDuaannews').val()+'] a').trigger('click');
-						}
-						if ( $('#valDuaan').val() != '' ) {
-							$('.list-duan-suggest li[data-id-duans="'+$('#valDuaan').val()+'"] a').trigger('click');
-						}
-					},1000);
+						break;
+					}
 				}
 			}
-	    };
 
-	var loadCost = {
+			//render du-an theo quan-huyen
+			if ( mv.settings.currentStep === 'loai-duan' ) {
+				var idTinhThanh = mv.settings.wrapSuggest.find('li[data-item="tinh-thanh"]').data('id'),
+					idQuanHuyen = mv.settings.wrapSuggest.find('li[data-item="quan-huyen"]').data('id'),
+					idLoaiBDS = mv.settings.wrapSuggest.find('li[data-item="loai-bds"]').data('id');
+
+				mv.settings.nextStep = '';
+
+				for ( var i in dataCities ) {
+					if ( i == idTinhThanh ) {
+						for ( var j in dataCities[i].districts ) {
+							if ( j == idQuanHuyen ) {
+								$('#loai-duan').find('ul').html('');
+								if ( dataCities[i].districts[j].projects == '' ) {
+									$('#loai-duan').find('ul').append('<li class="notfound">Không có dự án nào !!!</li>');
+									break;
+								}
+								for ( var k in dataCities[i].districts[j].projects ) {
+									var item = $('<li data-id="'+k+'"><a  data-item="chung-cu" data-next-step="'+mv.settings.nextStep+'" href="#" data-slug-name='+ChangeToSlug(dataCities[i].districts[j].projects[k].name)+'>'+dataCities[i].districts[j].projects[k].name+'</a></li>');
+									$('#loai-duan').find('ul').append(item);
+								}
+							}
+						}
+					}
+				}
+			}
+			
+			open();
+			
+		}
+
+		var next = function () {
+			var arrTemp = [];
+			if ( typeof mv.settings.arrStep === 'object' ) {
+				mv.settings.arrStep = JSON.stringify(mv.settings.arrStep);
+				arrTemp.push(mv.settings.arrStep);
+			}else {
+				arrTemp = mv.settings.arrStep.split('|');
+			}
+			for ( var i = 0; i < arrTemp.length; i++ ) {
+				if ( jsonCheck(arrTemp[i]) ) { // is object
+					for ( var j in obj = JSON.parse(arrTemp[i]) ) {
+
+						for ( var k in obj[j] ) {
+							if ( k === mv.settings.arrStepRender.root ) {
+								var arr = obj[j][k].template.split('|');
+								for ( var t = 0; t < arr.length; t++ ) {
+									if ( arr[t] == mv.settings.currentStep ) {
+										mv.settings.nextStep = arr[t+1];
+										break;
+									}
+								}
+								break;
+							}
+						}
+						if ( j == mv.settings.currentStep ) {
+							$('#'+mv.settings.currentStep).find('li a').each(function () {
+								var _this = $(this),
+									slugName = _this.data('slugName'), tempStep;
+								
+								for ( var k in obj[j] ) {
+									if ( slugName === k ) {
+										_this.attr('data-next-step', obj[j][k].template);
+										break;
+									}else {
+										_this.attr('data-next-step', obj[j][k].template);
+									}
+								}
+								
+							});
+							
+							break;
+						}
+					}
+				}else { // is string
+					
+					if ( arrTemp[i] == mv.settings.currentStep && mv.settings.arrStepRender.root == undefined ) {
+						if ( jsonCheck(arrTemp[i+1]) ) { // next is object
+							for ( var j in obj = JSON.parse(arrTemp[i+1]) ) {
+								mv.settings.nextStep = j;
+								break;
+							}
+						}else { // next is string
+							mv.settings.nextStep = arrTemp[i+1];
+						}
+					}else if ( mv.settings.arrStepRender.root != undefined ) {
+						for ( var j = 0; j < mv.settings.arrStepRender.step.length; j++ ) {
+							if ( mv.settings.arrStepRender.step[j] == mv.settings.currentStep ) {
+								mv.settings.nextStep = mv.settings.arrStepRender.step[j+1];
+							}
+						}
+					}
+
+				}
+			}
+		};
+
+		var step = function (str) {
+			var arrTemp = [];
+			if ( typeof str === 'object' ) {
+				str = JSON.stringify(str);
+				arrTemp.push(str);
+			}else {
+				arrTemp = str.split('|');
+			}
+
+			for ( var i = 0; i < arrTemp.length; i++ ) {
+				if ( jsonCheck(arrTemp[i]) ) { // is object
+					var jsonObj = JSON.parse(arrTemp[i]);
+					
+					for ( var j in jsonObj ) {
+						if ( i == 0 && mv.settings.currentStep == '' ) {
+							mv.settings.currentStep = j;
+							getPlaceHolder(j);
+						}
+						stepLoad(j);
+						for ( var k in jsonObj[j]) {
+							var arrTemplate = jsonObj[j][k].template.split('|');
+							if ( arrTemplate.length > 1 ) {
+								for ( var t = 0; t < arrTemplate.length; t++ ) {
+									mv.settings.nextStep = arrTemplate[t+1];
+									stepLoad(arrTemplate[t]);
+								}
+							}else {
+								stepLoad(jsonObj[j][k].template);
+							}
+
+							if ( i == 0 && mv.settings.currentStep != '' ) {
+								$('#'+mv.settings.currentStep).find('li a').each(function () {
+									var _this = $(this),
+										slugName = _this.data('slugName'), tempStep;
+									if ( slugName === k ) {
+										tempStep = jsonObj[j][k].template;
+										/*if ( arrTemplate.length > 1 ) {
+											tempStep = arrTemplate[0];
+										}*/
+										_this.attr('data-next-step', tempStep);
+									}
+								});
+							}
+						}
+					}
+				}else { // is string
+					if ( i == 0 && mv.settings.currentStep == '' ) {
+						mv.settings.currentStep = arrTemp[i];
+						getPlaceHolder(arrTemp[i]);
+						if ( jsonCheck(arrTemp[i+1]) ) {
+							for ( var j in jsonCheck(arrTemp[i+1]) ) {
+								mv.settings.nextStep = j;
+								break;	
+							}
+						}else {
+							mv.settings.nextStep = arrTemp[i+1];
+						}
+					}
+					stepLoad(arrTemp[i]);
+				}
+			}
+		}
+
+		//open box list
+		var open = function (ajaxFlag) {
+			
+			mv.settings.searchWrap.addClass('hidden-effect');
+			mv.settings.searchWrap.removeClass('active');
+
+			getPlaceHolder(mv.settings.currentStep);
+
+			$('#'+mv.settings.currentStep).find('h3').html(mv.settings.inputPlaceholder);
+			
+			$('#'+mv.settings.currentStep).removeClass('hidden-effect');
+			
+			setTimeout(function() {
+                $('#'+mv.settings.currentStep).addClass('active');
+            }, 30);
+
+		};
+
+		//close box list
+		var close = function () {
+			$('.btn-close-search').on('click', function (e) {
+				e.preventDefault();
+				$(this).closest('.search-wrap').removeClass('active');
+				mv.settings.searchWrap.removeClass('active');
+
+	            mv.settings.timeoutClose = setTimeout(function() {
+	                mv.settings.searchWrap.addClass('hidden-effect');
+	            }, 300);
+
+	            return false;
+			});
+			$(document).on('click', clickOutsideevent);
+		};
+
+		//event click input type=text search
+		var clickInput = function () {
+			mv.settings.input.on('click', function(e) {
+				e.preventDefault();
+				
+				open();
+			});
+		};
+
+		//get step when redirect
+		var getSuggest = function () {
+			mv.settings.objSave = [];
+			mv.settings.wrapSuggest.find('li').each(function () {
+				var _this = $(this),
+					idEl = _this.data('id'),
+					nextStepBK = _this.data('nextStep'),
+					txt = _this.find('span').text(),
+					dataItem = _this.data('item'),
+					objItem = {};
+
+				objItem.idItem = idEl;
+				objItem.nextStep = nextStepBK;
+				objItem.text = txt;
+				objItem.dataItem = dataItem;
+
+				mv.settings.objSave.push(objItem);
+			});
+
+			mv.settings.inputSave.val(JSON.stringify(mv.settings.objSave, null, 2));
+		};
+
+		var renderSuggest = function (el) {
+			var item = $('<li><i>x</i><span></span></li>'),
+				idEl = el.parent().data('id'),
+				nextStepBK = el.data('nextStep'),
+				txt = el.text(),
+				dataItem = el.data('item'),
+				objItem = {};
+
+			//edit get item
+			if ( mv.settings.itemEdit.length > 0 ) {
+				mv.settings.itemEdit.attr('data-id',idEl);
+				mv.settings.itemEdit.attr('data-next-step',nextStepBK);
+				mv.settings.itemEdit.find('span').html(txt);
+				mv.settings.itemEdit.attr('data-item',dataItem);
+
+				mv.settings.itemEdit.data('id', idEl);
+				mv.settings.itemEdit.data('nextStep', nextStepBK);
+				mv.settings.itemEdit.find('span').html(txt);
+				mv.settings.itemEdit.data('item', dataItem);
+				mv.settings.itemEdit = '';
+			}else {
+				item.attr('data-id',idEl);
+				item.attr('data-next-step',nextStepBK);
+				item.find('span').html(txt);
+				item.attr('data-item',dataItem);
+				mv.settings.wrapSuggest.append(item).show();
+			}
+
+			getSuggest();
+			
+			inputResize();
+
+			//DELETE item suggest
+			item.find('i').on('click', function (e) {
+				e.preventDefault();
+				getItemEvent($(this).parent(), true);
+			});
+
+			//UPDATE item suggest
+			mv.settings.wrapSuggest.find('li').removeClass('active');
+			item.on('click', function (e) {
+				if ( !$(e.target).is('i') ) {// DETECT btn close
+					mv.settings.wrapSuggest.find('li').removeClass('active');
+					$(this).addClass('active');
+
+					getItemEvent($(this), false);
+
+					mv.settings.itemEdit = $(this);
+				}
+			});
+
+			function getItemEvent(item, eventFlag) {//event: true -> delete, event: false ->update
+				var index = item.index(),
+					attrId = item.data('id'),
+					attrNextStep = item.data('nextStep'),
+					attrItem = item.data('item'),
+					lengItem = mv.settings.wrapSuggest.find('li').length;
+
+				mv.settings.currentStep = attrItem;
+				mv.settings.nextStep = attrNextStep;
+
+				//timeout for click outsite hiden document click
+				setTimeout(function () {
+					for ( var i = (lengItem-1); i >= index; i-- ) {
+						if ( eventFlag ) { //delete
+							mv.settings.wrapSuggest.find('li').eq(i).remove();
+						}else { //update
+							var temp = i;
+							if ( i == index ) {
+								break;
+							}
+							mv.settings.wrapSuggest.find('li').eq(temp).remove();
+						}
+					}
+					getSuggest();
+					inputResize();
+				},35);
+				
+				getPlaceHolder(mv.settings.currentStep);
+
+				open();
+
+			}
+		}
+
+		var inputResize = function() {
+			mv.settings.input.hide();
+			var wWrapSuggest = mv.settings.wrapSuggest.outerWidth(),
+				wWrap = $('.type-search').outerWidth();
+			mv.settings.input.css('width', wWrap - wWrapSuggest).show();
+		}
+
+		//position box search
+		var showBoxSearch = function () {
+			setTimeout(function() {
+				boxCenter();
+			},150);
+			
+			clickInput();
+			close();
+			renderStep(tabs);
+			loadCost.init();
+		};
+
+		var getPlaceHolder = function (item) {
+			mv.settings.inputPlaceholder = $('#'+item).data('stepTitle');
+			mv.settings.input.attr('placeholder',mv.settings.inputPlaceholder);
+		}
+
+		var boxCenter = function () {
+			var logo = $('div.wrap-page-home .logo-home'),
+	    		searchBox = $('div.wrap-page-home .box-search-header'),
+	    		wLogo = logo.outerWidth(),
+	    		hLogo = logo.outerHeight(),
+	    		wSearchBox = searchBox.outerWidth(),
+	    		hSearchBox = searchBox.outerHeight(),
+	    		wWin = $('div.wrap-page-home .wrap-search-home').outerWidth(),
+	    		hWin = $(window).outerHeight(),
+	    		topCenterLogo = Math.floor(hWin/2 - hLogo/2 - hLogo - 30),
+	    		leftCenterLogo = Math.floor(wWin/2 - wLogo/2),
+	    		topCenterSearch = Math.floor(hWin/2 - hSearchBox/2) + 30,
+	    		leftCenterSearch = Math.floor(wWin/2 - wSearchBox/2);
+
+	    	logo.css({
+	    		'transform' : 'translate3d( '+leftCenterLogo+'px, '+topCenterLogo+'px, 0)',
+	    		'-moz-transform' : 'translate3d( '+leftCenterLogo+'px, '+topCenterLogo+'px, 0)',
+	    		'-webkit-transform' : 'translate3d( '+leftCenterLogo+'px, '+topCenterLogo+'px, 0)',
+	    		'-ms-transform' : 'translate3d( '+leftCenterLogo+'px, '+topCenterLogo+'px, 0)'
+
+	    	});
+	    	searchBox.css({
+	    		'transform' : 'translate3d( '+leftCenterSearch+'px, '+topCenterSearch+'px, 0)',
+	    		'-webkit-transform' : 'translate3d( '+leftCenterSearch+'px, '+topCenterSearch+'px, 0)',
+	    		'-moz-transform' : 'translate3d( '+leftCenterSearch+'px, '+topCenterSearch+'px, 0)',
+	    		'-ms-transform' : 'translate3d( '+leftCenterSearch+'px, '+topCenterSearch+'px, 0)'
+	    	});
+
+	    	setTimeout(function() {
+	    		logo.show().css({
+	    			visibility: 'visible'
+	    		});
+	    		logo.addClass('aniTopDown');
+	    		searchBox.show().css({
+	    			visibility: 'visible'
+	    		});
+	    		searchBox.addClass('aniTopDown');
+	    	},100);
+		}
+
+		var ChangeToSlug = function (text) {
+			var slug;
+		    //Đổi chữ hoa thành chữ thường
+		    slug = text.toLowerCase();
+		    //Đổi ký tự có dấu thành không dấu
+		    slug = slug.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, 'a');
+		    slug = slug.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, 'e');
+		    slug = slug.replace(/i|í|ì|ỉ|ĩ|ị/gi, 'i');
+		    slug = slug.replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, 'o');
+		    slug = slug.replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, 'u');
+		    slug = slug.replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, 'y');
+		    slug = slug.replace(/đ/gi, 'd');
+		    //Xóa các ký tự đặt biệt
+		    slug = slug.replace(/\`|\~|\!|\@|\#|\||\$|\%|\^|\&|\*|\(|\)|\+|\=|\,|\.|\/|\?|\>|\<|\'|\"|\:|\;|_/gi, '');
+		    //Đổi khoảng trắng thành ký tự gạch ngang
+		    slug = slug.replace(/ /gi, "-");
+		    //Đổi nhiều ký tự gạch ngang liên tiếp thành 1 ký tự gạch ngang
+		    //Phòng trường hợp người nhập vào quá nhiều ký tự trắng
+		    slug = slug.replace(/\-\-\-\-\-/gi, '-');
+		    slug = slug.replace(/\-\-\-\-/gi, '-');
+		    slug = slug.replace(/\-\-\-/gi, '-');
+		    slug = slug.replace(/\-\-/gi, '-');
+		    //Xóa các ký tự gạch ngang ở đầu và cuối
+		    slug = '@' + slug + '@';
+		    slug = slug.replace(/\@\-|\-\@|\@/gi, '');
+		    //In slug ra textbox có id “slug”
+		    return slug;
+		};
+
+		var jsonCheck = function (str) {
+		    try {
+		        JSON.parse(str);
+		    } catch (e) {
+		        return false;
+		    }
+		    return true;
+		};
+
+		var clickOutsideevent = function (e) {
+			var container = $(".outsideevent");
+	        if ( !container.is(e.target) && container.has(e.target).length === 0 ){
+	        	if( $(".wrap-cost-bds").hasClass('active') ) {
+	        		loadCost.hide();
+	        	}else {
+	        		$('.btn-close-search').trigger('click');
+	        	}
+	        }
+		};
+
+		var loading = function () {
+			if ( mv.settings.ajaxLoad ) {
+                $('#'+mv.settings.currentStep).find('.search-item').append(mv.settings.loading);
+			}else {
+				$('.loading_search').fadeOut('fast', function() {
+					$(this).remove();
+				});
+			}
+		}
+
+		$(window).resize(function () {
+			boxCenter();
+			inputResize();
+		});
+
+		var loadCost = {
 			inputSubmitVal: $('.val-cost'),
 			wrapList: $('.wrap-cost-bds'),
 			choiceEvent: $('.wrap-cost-bds li span'),
@@ -590,34 +670,24 @@ var objEvent = {
 			}
 		};
 
-    //start click outside
-    $(document).on('click', function(e) {
-        var container = $(".outsideevent");
-        if (!container.is(e.target) && container.has(e.target).length === 0){
-        	if( $(".wrap-cost-bds").hasClass('active') ) {
-        		loadCost.hide();
-        	}else {
-        		$('.btn-close-search').trigger('click');
-        	}
-        }
-    });
-    //end click outside
+		init(tabs);
 
-    $(document).ready(function() {
-    	objEvent.init();
-    });
+		return this;
 
-    $(window).resize(function() {
-    	objEvent.centerBox();
-    	objEvent.resizeWidthInput();
-    });
+	}
+
+
+})(jQuery);
+$(document).ready(function () {
+	$('.search-select').MVS();
+});
 
 
 function animateSearch() {
     var $boxSearch = $('.box-search-header'),
         wBox = $boxSearch.outerWidth(),
         wWin = $('.wrap-search-home').outerWidth(),
-        cBox = 220;//Math.floor(wWin/2 - wBox/2);
+        cBox = Math.floor(wWin/2 - wBox/2);
     setTimeout(function() {
         $('.wrap-search-home .logo-home').addClass('ani-logo').css({
             'transform': 'translate3d( 0, 0, 0)',
@@ -636,26 +706,7 @@ function animateSearch() {
         $('.box-search-header').addClass('ani-search');
         setTimeout(function() {
             $('header').addClass('border-shadow');
+            l(1);
         },500);
     },500);
-}
-
-function arrayAreaChange(arrCoordinates, flag) {
-	var itemFirst = '{',
-		itemLast = '},',
-		itemLast_1 = '}';
-	
-	itemFirst += '"dataStep":"'+arrCoordinates[0]+'",';
-	itemFirst += '"rel":"'+arrCoordinates[1].toString()+'",';
-	itemFirst += '"dataId":"'+arrCoordinates[2]+'",';
-	itemFirst += '"dataNext":"'+(arrCoordinates[3] == undefined ? "" : arrCoordinates[3])+'"';
-
-	if( flag ) {
-		itemFirst += itemLast_1;
-	}else {
-		itemFirst += itemLast;
-	}
-	
-	
-	return itemFirst;
 }
