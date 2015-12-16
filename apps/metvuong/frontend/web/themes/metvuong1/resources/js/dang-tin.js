@@ -75,7 +75,7 @@ $(document).ready(function(){
 				allow.push(188);
 			}
 		} else {
-			if(e.keyCode == 48 && $(this).val() == '') {
+			if(e.keyCode == 48 && $(this).val() == '' && !$(this).data('zero-first')) {
 				e.preventDefault();
 			}
 		}

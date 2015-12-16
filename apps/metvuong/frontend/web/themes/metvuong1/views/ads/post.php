@@ -188,11 +188,11 @@ if(Yii::$app->user->identity->profile->avatar) {
 							<?= Html::activeTextInput($adContactInfo, 'name', ['class' => 'form-control', 'placeholder' => 'Tên liên hệ']) ?>
 						</div>
 						<div class="col-xs-3">
-							<?= Html::activeTextInput($adContactInfo, 'phone', ['class' => 'form-control number-only', 'placeholder' => 'Điện thoại']) ?>
+							<?= Html::activeTextInput($adContactInfo, 'phone', ['class' => 'form-control number-only', 'placeholder' => 'Điện thoại', 'data-zero-first' => '1']) ?>
 						</div>
 						<div class="col-xs-3">
 							<div class="form-group mgB-0">
-								<?= Html::activeTextInput($adContactInfo, 'mobile', ['class' => 'form-control ad-input number-only', 'placeholder' => 'Di động *']) ?>
+								<?= Html::activeTextInput($adContactInfo, 'mobile', ['class' => 'form-control ad-input number-only', 'placeholder' => 'Di động *', 'data-zero-first' => '1']) ?>
 								<div class="help-block" style="display: none;"></div>
 							</div>
 						</div>
