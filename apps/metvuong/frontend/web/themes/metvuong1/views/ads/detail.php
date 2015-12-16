@@ -26,8 +26,8 @@
 		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
 	}
 ?>
-<div class="modal fade" id="detail-listing" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
+<div id="detail-listing">
+        <div>
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">

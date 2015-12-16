@@ -31,14 +31,27 @@ function start() {
 	if(response && gmap) {
 		infoWindow = new InfoWindow();
 		
+		$('#detail-wrap').on('click', '.close', function(){
+			$('#detail-wrap').css({
+				left: '0px'
+			});
+		});
+		
 		listResult.on('click', '> li', function(){
 			var self = $(this);
 			
 			$('#map-loading').height($('.cd-main-content').height()).show();
 			
 			$.get('/ads/detail', {id: $(this).data('detail')}, function(response){
+
+				var width = $('.wrap-map-result').width();
 				
-				$('#detail-listing').html($(response).html()).modal();
+				$('#detail-wrap').css({
+					width: width,
+					left: '-' + width + 'px',
+					height: $('.result-items').height()
+				});
+				$('#detail-listing').html($(response).html());
 				$('.gallery-detail').imagesLoaded()
 				 	.always( function( instance ) {
 					    // all loaded (broken + success)
