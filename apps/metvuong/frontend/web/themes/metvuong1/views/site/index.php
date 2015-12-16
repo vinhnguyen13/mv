@@ -183,7 +183,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     <span><em class="fa fa-search"></em></span>
                                 </button>
 
-                                <input class="valInputHidden" id="valSearch" type="hidden" value="">
+                                <input class="valInputHidden" id="valSearch" name="valSearch" type="hidden" value="">
                                 <input class="valInputHidden" id="valTabActive" name="activeSearch" type="hidden" value="">
 
                                 <input class="valInputHidden" id="valTinhThanh" name="city" type="hidden" value="">
