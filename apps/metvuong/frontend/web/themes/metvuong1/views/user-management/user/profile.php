@@ -45,6 +45,13 @@ use yii\bootstrap\ActiveForm;
                 </div>
             </div>
         </div>
+        <div class="col-md-3">
+            <div><img src="https://www.zillowstatic.com/static/images/nophoto_h_g.png"></div>
+            <br><br>
+            <div>Member since: 12/12/2015</div>
+            <br><br>
+            <div>Description: Premier Agent</div>
+        </div>
     </div>
 </div>
 <script>
