@@ -90,33 +90,33 @@ function start() {
 				 	})
 				 	.done( function( instance ) {
 						$('#map-loading').hide();
-						
-				 		setTimeout(function() {
-				 			$('#detail-listing .bxslider').bxSlider({
-				                moveSlides: 1,
-				                startSlide: 0,
-				                minSlides: 1,
-				                maxSlides: 2,
-				                slideWidth: 444,
-				                startSlide: 0,
-				                onSliderLoad: function() {
-				                    this.infiniteLoop = false;
-				                    this.hideControlOnEnd = true;
-				                    scrollFixed();
-				                }
-				            });
-							lightbox.option({
-					            'resizeDuration': 300,
-					            'fadeDuration': 400
-					        });
-							
-							if(!self.data('clone')) {
-								var marker = gmap.getMarker(self.data('id'));
-								var position = marker.getPosition();
-								gmap.setCenter({lat: position.lat(), lng: position.lng()});
-							}
-				 		},500);
-					    
+						if($('#detail-listing .bxslider').find('.wrap-img-detail').length > 0) {
+							setTimeout(function() {
+					 			$('#detail-listing .bxslider').bxSlider({
+					                moveSlides: 1,
+					                startSlide: 0,
+					                minSlides: 1,
+					                maxSlides: 2,
+					                slideWidth: 444,
+					                startSlide: 0,
+					                onSliderLoad: function() {
+					                    this.infiniteLoop = false;
+					                    this.hideControlOnEnd = true;
+					                    scrollFixed();
+					                }
+					            });
+								lightbox.option({
+						            'resizeDuration': 300,
+						            'fadeDuration': 400
+						        });
+								
+								if(!self.data('clone')) {
+									var marker = gmap.getMarker(self.data('id'));
+									var position = marker.getPosition();
+									gmap.setCenter({lat: position.lat(), lng: position.lng()});
+								}
+					 		},500);
+						}
 				 	})
 				 	.fail( function() {
 				 		console.log('all images loaded, at least one is broken');
