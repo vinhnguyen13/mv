@@ -22,21 +22,21 @@ $arr = [
 
     ]
 ];
-$stt = '{"step1":["thanhpho","tinhthanh",["loaibds","giaca"]],"step2":["thanhpho","tinhthanh","loaibds"],"step3":{"tintuc":["loaitintuc"],"duan":["thanhpho","tinhthanh","duans"]}}';
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/search-vsoft.js', ['position'=>View::POS_END]);
 ?>
 <?php $this->beginContent('@app/views/layouts/_partials/js/jsContainer.php', ['options'=>[]]); ?><?php $this->endContent();?>
-
 <div class="">
     <ul class="nav nav-tabs">
-        <li class="active" data-step="step1" data-step-current="thanhpho"><a class="tab">Muốn Mua/Thuê</a></li>
-        <li data-step="step2" data-step-current="thanhpho"><a class="tab">Đăng ký Bán/Thuê</a></li>
-        <li data-step="step3" data-step-current="dstin"><a class="tab">Tin Tức</a></li>
+        <li class="active" data-step-config="step1" data-step-current="thanhpho"><a class="tab">Muốn Mua/Thuê</a></li>
+        <li data-step-config="step2" data-step-current="thanhpho"><a class="tab">Đăng ký Bán/Thuê</a></li>
+        <li data-step-config="step3" data-step-current="dstin"><a class="tab">Tin Tức</a></li>
     </ul>
     <div class="wrapClickSearch">
         <div class="textSelected">
-            <span class="text">ABC</span>
-            <a class="remove">x</a>
+<!--             <span class="tag label label-info" data-value="1" data-step-selected="thanhpho">Ho Chi Minh <span class="remove">REMOVE</span></span>
+            <span class="tag label label-info" data-value="1" data-step-selected="tinhthanh">Quan 1 <span class="remove">REMOVE</span></span>
+            <span class="tag label label-info" data-value="1" data-step-selected="loaibds">Chung Cu <span class="remove">REMOVE</span></span>
+            <span class="tag label label-info" data-value="1" data-step-selected="lstduan">Lancaster <span class="remove">REMOVE</span></span> -->
         </div>
         <input class="searchInput">
     </div>
