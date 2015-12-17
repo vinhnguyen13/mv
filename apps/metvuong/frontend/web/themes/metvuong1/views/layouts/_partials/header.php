@@ -14,7 +14,7 @@ $searchParams = json_decode($value);
 
 
 </script>
-<header class="home-page cd-secondary-nav border-shadow wrap-page-home">
+<header class="home-page cd-secondary-nav border-shadow wrap-page-home is-fixed animate-children show-fixed">
     <div class="container clearfix">
         <?php $this->beginContent('@app/views/layouts/_partials/menuMain.php'); ?><?php $this->endContent();?>
         <div class="wrap-search-home">
@@ -53,9 +53,7 @@ $searchParams = json_decode($value);
                     <div class="pull-left text-right mgT-10 mgL-15 options-search">
                         <div class="icon-selected">
                             <a href="#">
-                                <span>
-                                    <em class="fa fa-home"></em>
-                                </span>
+                                <span><em class="fa fa-home"></em><em class="fa fa-file-text"></em></span>
                             </a>
                             <em class="fa fa-sort-desc"></em>
                         </div>
@@ -77,7 +75,7 @@ $searchParams = json_decode($value);
                                 <i>Đăng ký Bán/Thuê</i>
                             </a>
                         </div>
-                        <div class="search-select">
+                        <div class="search-select active">
                             <a href="#" class="" data-step-fix="step-5" data-placeholder="Bạn nên chọn Loại Tin Tức ?" rel="#dd-news" title="Tin Tức" data-active="3">
                                 <span>
                                     <em class="fa fa-home"></em>
