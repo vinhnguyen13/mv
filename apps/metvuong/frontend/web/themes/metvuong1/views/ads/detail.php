@@ -151,19 +151,19 @@
                             </div>
                             <div class="col-sm-4 dt-right-col">
                                 <div class="contact-wrapper">
+                                    <div class="rating pull-right">
+                                        <ul class="clearfix">
+                                            <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                            <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                            <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                            <li><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                            <li><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                        </ul>
+                                    </div>
                                     <p class="title-contact">Liên hệ</p>
                                     <div class="contact-person clearfix">
                                         <a href="#" class="wrap-img pull-left"><img src="<?= $avatar ?>" alt=""></a>
                                         <div class="clearfix">
-                                            <div class="rating pull-right">
-                                                <ul class="clearfix">
-                                                    <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                                    <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                                    <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                                    <li><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                                    <li><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                                </ul>
-                                            </div>
                                             <?php if($product->adContactInfo->name): ?>
                                             <p><strong>Tên:</strong><?= $product->adContactInfo->name ?></p>
                                             <?php endif; ?>
