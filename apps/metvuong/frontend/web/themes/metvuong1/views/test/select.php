@@ -27,9 +27,9 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 <?php $this->beginContent('@app/views/layouts/_partials/js/jsContainer.php', ['options'=>[]]); ?><?php $this->endContent();?>
 <div class="">
     <ul class="nav nav-tabs">
-        <li class="active" data-step-config="step1" data-step-current="thanhpho"><a class="tab">Muốn Mua/Thuê</a></li>
-        <li data-step-config="step2" data-step-current="thanhpho"><a class="tab">Đăng ký Bán/Thuê</a></li>
-        <li data-step-config="step3" data-step-current="dstin"><a class="tab">Tin Tức</a></li>
+        <li class="active" data-step-config="step1" data-step-current="thanhpho" data-step-default="thanhpho"><a class="tab">Muốn Mua/Thuê</a></li>
+        <li data-step-config="step2" data-step-current="thanhpho" data-step-default="thanhpho"><a class="tab">Đăng ký Bán/Thuê</a></li>
+        <li data-step-config="step3" data-step-current="dstin" data-step-default="dstin"><a class="tab">Tin Tức</a></li>
     </ul>
     <div class="wrapClickSearch">
         <div class="textSelected">
@@ -52,7 +52,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 
 
 <div style="display: none">
-    <ul class="loaitintuc lstSuggest">
+    <ul class="loaitintuc">
         <li>
             <a href="#">Tin BDS</a>
         </li>
@@ -61,16 +61,16 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
         </li>
     </ul>
 
-    <ul class="thanhpho lstSuggest">
+    <ul class="thanhpho">
         <li>
-            <a href="#">Ho Chi Minh</a>
+            <a href="#" data-child="tinhthanh" data-value="1">Ho Chi Minh</a>
         </li>
         <li>
-            <a href="#">Ha Noi</a>
+            <a href="#" data-child="tinhthanh" data-value="2">Ha Noi</a>
         </li>
     </ul>
 
-    <ul class="tinhthanh lstSuggest">
+    <ul data-thanhpho="1" class="tinhthanh">
         <li>
             <a href="#">Quan 1</a>
         </li>
@@ -79,7 +79,16 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
         </li>
     </ul>
 
-    <ul class="loaibds lstSuggest">
+    <ul data-thanhpho="2" class="tinhthanh">
+        <li>
+            <a href="#">Hoan Kiem</a>
+        </li>
+        <li>
+            <a href="#">Ba Dinh</a>
+        </li>
+    </ul>
+
+    <ul class="loaibds">
         <li>
             <a href="#" data-force-step="chung-cu">Chung Cu</a>
         </li>
@@ -88,7 +97,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
         </li>
     </ul>
 
-    <ul class="lstduan lstSuggest">
+    <ul class="lstduan">
         <li>
             <a href="#">Du An 1</a>
         </li>
@@ -97,7 +106,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
         </li>
     </ul>
 
-    <ul class="giaca lstSuggest">
+    <ul class="giaca">
         <li>
             <a href="#">1000</a>
         </li>
@@ -106,7 +115,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
         </li>
     </ul>
 
-    <ul class="dstin lstSuggest">
+    <ul class="dstin">
         <li>
             <a href="#" data-force-step="tin">Tin tuc</a>
         </li>

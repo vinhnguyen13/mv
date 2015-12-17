@@ -2,6 +2,7 @@
 	var stepCurrent = null;
 	var stepConfig = null;
 	var tabActive = null;
+	var condition = [];
 	
 	/**---ACTION---**/
 	$(document).on('click', '.wrapSuggestList .close', function () {
@@ -14,9 +15,12 @@
 	});
 
 	$(document).on('click', '.tab', function () {
+		$(this).trigger('real-estate/tabActive');
 		$('.tab').parent().removeClass('active');
 		$(this).parent().addClass('active');
-		$('.wrapSuggestList').hide();
+		$('.wrapSuggestList').hide();		
+		tabActive.attr('data-step-current', $(this).parent().attr('data-step-default'));
+		$('.textSelected').html('');
 	});
 
 	$(document).on('click', '.wrapClickSearch .searchInput', function () {
@@ -43,11 +47,15 @@
 
 	$(document).on('click', '.wrapSuggestList .suggestListData a', function () {
 		$(this).trigger('real-estate/tabActive');
-		var forceStep = $(this).attr('data-force-step');		
+		var forceStep = $(this).attr('data-force-step');				
 		if(steps[stepConfig][stepCurrent] && steps[stepConfig][stepCurrent][forceStep]){
 			var stepDisplay = steps[stepConfig][stepCurrent][forceStep];
 		}else{
 			var stepDisplay = steps[stepConfig][stepCurrent]['next'];
+		}		
+		var child = $(this).attr('data-child');		
+		if(child == stepDisplay){
+			condition[stepDisplay] = {'attributes': 'data-'+stepCurrent, 'value': $(this).attr('data-value')};
 		}
 		tabActive.trigger('real-estate/actionDisplayList', [{'this': tabActive, 'stepDisplay': stepDisplay}, '']);
 		tabActive.trigger('real-estate/tagSelected', [{step: stepCurrent, text: $(this).html()}]);
@@ -61,15 +69,20 @@
 		var stepDisplay = _this.attr('data-step-current');				
 		if(json.stepDisplay){
 			stepDisplay = json.stepDisplay;
-		}
+		}				
 		_this.trigger('real-estate/displayList', [{step: stepDisplay, status: 1}, '']);
 		_this.attr('data-step-current', stepDisplay);
 	});
 
-	$(document).bind('real-estate/displayList', function (event, json, string) {				
+	$(document).bind('real-estate/displayList', function (event, json, string) {			
 		if(json.status == 1){
-			if($('.' + json.step)){
-				$('.wrapSuggestList .suggestListData').html($('.' + json.step)[0].outerHTML);
+			if($('.' + json.step)){				
+				if(condition[json.step]){
+					$('.wrapSuggestList .suggestListData').html($('.' + json.step+'['+condition[json.step].attributes+'="'+condition[json.step].value+'"]')[0].outerHTML);
+				}else{
+					$('.wrapSuggestList .suggestListData').html($('.' + json.step)[0].outerHTML);
+				}				
+// 				$('.wrapSuggestList .suggestListData').html($('.' + json.step)[0].outerHTML);
 				$('.wrapSuggestList').show();
 			}
 		}else{
