@@ -3903,7 +3903,7 @@ div.wrap-page-home .logo-home {
 }
 .rating li a {
     display: block;
-    font-size: 2em;
+    font-size: 1.2em;
     color: #4a933a;
 }
 .rating li.active a .fa-star-o:before,
@@ -5231,4 +5231,7 @@ header.wrap-page-home .box-search-header.ani-search > div {
     padding: 20px;
     color: #C1C1C1;
     font-style: italic;
+}
+.contact-wrapper .rating {
+    margin: 9px 10px 0 0;
 }

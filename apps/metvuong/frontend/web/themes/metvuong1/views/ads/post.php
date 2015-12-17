@@ -318,19 +318,19 @@ if(Yii::$app->user->identity->profile->avatar) {
                             </div>
                             <div class="col-sm-4 dt-right-col">
                                 <div class="contact-wrapper">
+                                	<div class="rating pull-right">
+                                        <ul class="clearfix">
+                                            <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                            <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                            <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                            <li><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                            <li><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                        </ul>
+                                    </div>
                                     <p class="title-contact">Liên hệ</p>
                                     <div class="contact-person clearfix">
                                         <a href="#" class="wrap-img pull-left"><img src="<?= $avatar ?>" alt=""></a>
                                         <div class="clearfix">
-                                            <div class="rating pull-right">
-                                                <ul class="clearfix">
-                                                    <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                                    <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                                    <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                                    <li><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                                    <li><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                                </ul>
-                                            </div>
                                             <p class="not-required-wrap"><strong>Tên:</strong><span class="editable not-required" id="ref-adcontactinfo-name"></span></p>
                                             <p class="not-required-wrap"><strong>Điện thoại:</strong><span class="editable not-required" id="ref-adcontactinfo-phone"></span></p>
                                             <p><strong>Di động:</strong><span class="editable" id="ref-adcontactinfo-mobile"></span></p>
