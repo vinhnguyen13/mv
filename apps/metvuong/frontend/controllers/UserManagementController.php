@@ -163,32 +163,12 @@ class UserManagementController extends \yii\web\Controller
                 'name'          => $orginal,
                 'type'          => $image->type,
                 'size'          => $image->size,
-                'deleteUrl'     => Url::to(['user-management/delete-image', 'orginal' => $orginal, 'thumbnail' => $thumbnail, 'folder' => $folder]),
+                'deleteUrl'     => Url::to(['upload/delete-image', 'orginal' => $orginal, 'thumbnail' => $thumbnail, 'folder' => $folder]),
                 'deleteType'    => 'DELETE',
                 'deleteLater'	=> 0,
             ];
             $model->updateAvatar($orginal);
             return $response;
         }
-    }
-
-    public function actionDeleteImage($orginal, $thumbnail, $deleteLater = false, $folder = 'building-project-images', $resizeForAds = false) {
-        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-
-        if(! $deleteLater) {
-            $dir = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $folder;
-
-            unlink($dir . DIRECTORY_SEPARATOR . $orginal);
-            unlink($dir . DIRECTORY_SEPARATOR . $thumbnail);
-
-            if($resizeForAds) {
-                $pathinfo = pathinfo($orginal);
-
-                unlink($dir . DIRECTORY_SEPARATOR . $pathinfo['filename'] . '.medium.' . $pathinfo['extension']);
-                unlink($dir . DIRECTORY_SEPARATOR . $pathinfo['filename'] . '.large.' . $pathinfo['extension']);
-            }
-        }
-
-        return ['files' => []];
     }
 }
