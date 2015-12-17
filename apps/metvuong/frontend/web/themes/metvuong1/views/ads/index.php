@@ -10,6 +10,7 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/imagesl
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/lightbox.min.js', ['position' => View::POS_END]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/jquery.bxslider.js', ['position' => View::POS_END]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/search-map.js', ['position' => View::POS_END]);
+$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/search-results.js', ['position' => View::POS_END]);
 $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy('id')->asArray(true)->all()) . ';', View::POS_BEGIN);
 ?>
 <div id="map-loading" style="display:none;position: absolute;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.5);z-index: 3;">
@@ -25,7 +26,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
 	    <ul class="container clearfix">
 	        <li>
 	            <a href="#">Giá</a>
-                <div class="filter-pane filter-common">
+                <div class="filter-pane filter-common outsideevent">
                     <div id="minmax-entries" class="minmax-entries search-entry">
                         <div class="dualboxes">
                             <div class="box1">
@@ -38,7 +39,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
                         </div>
                     </div>
                     <div class="filter-minmax">
-                        <div id="min-price-options" class="minmax-options min-price-options">
+                        <div id="min-price-options" class="minmax-options min-price-options" data-toggle-filter="price-min">
                             <ul class="dropdown-options search-entry">
                                 <li data-value=""><a class="option" tabindex="0">0</a></li>
                                 <li data-value="50,000"><a class="option" tabindex="0">100 triệu</a></li>
@@ -52,7 +53,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
                                 <li data-value="500,000"><a class="option" tabindex="0">4 tỷ</a></li>
                             </ul>
                         </div>
-                        <div id="max-price-options" class="minmax-options max-price-options hide">
+                        <div id="max-price-options" class="minmax-options max-price-options hide" data-toggle-filter="price-max">
                             <ul class="dropdown-options search-entry">
                                 <li data-value="50,000"><a class="option" tabindex="0">100 triệu</a></li>
                                 <li data-value="75,000"><a class="option" tabindex="0">500 triệu</a></li>
@@ -71,7 +72,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
 	        </li>
 	        <li>
 	            <a href="#">Diện tích</a>
-                <div class="filter-common filter-pane">
+                <div class="filter-common filter-pane outsideevent">
                     <div id="minmax-entries" class="minmax-entries search-entry">
                         <div class="dualboxes">
                             <div class="box1">
@@ -84,7 +85,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
                         </div>
                     </div>
                     <div class="filter-minmax">
-                        <div id="min-dt-options" class="minmax-options min-dt-options">
+                        <div id="min-dt-options" class="minmax-options min-dt-options" data-toggle-filter="dt-min">
                             <ul class="dropdown-options search-entry">
                                 <li data-value=""><a class="option" tabindex="0">0</a></li>
                                 <li data-value="50,000"><a class="option" tabindex="0">10 m<sup>2</sup></a></li>
@@ -98,7 +99,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
                                 <li data-value="500,000"><a class="option" tabindex="0">250 m<sup>2</sup></a></li>
                             </ul>
                         </div>
-                        <div id="max-dt-options" class="minmax-options max-dt-options hide">
+                        <div id="max-dt-options" class="minmax-options max-dt-options hide" data-toggle-filter="dt-min">
                             <ul class="dropdown-options search-entry">
                                 <li data-value="50,000"><a class="option" tabindex="0">10 m<sup>2</sup></a></li>
                                 <li data-value="75,000"><a class="option" tabindex="0">20 m<sup>2</sup></a></li>
@@ -117,7 +118,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
 	        </li>
 	        <li>
 	            <a href="#">Phòng ngủ</a>
-                <div class="filter-common filter-pane filter-bed">
+                <div class="filter-common filter-pane filter-bed outsideevent">
                     <div class="filter-bed">
                         <ul class="dropdown-options search-entry">
                             <li data-value="50,000"><a class="option" tabindex="0">0</a></li>
@@ -134,7 +135,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
 	        </li>
 	        <li>
 	            <a href="#">Loại BDS</a>
-                <div class="filter-common filter-pane filter-loaibds">
+                <div class="filter-common filter-pane filter-loaibds outsideevent">
                     <ul class="combobox-options multicheck-dropdown-options hometype-options">
                         <li class="hometype">
                             <input id="hometype-input-1" name="hometype-input" type="checkbox" class="hometype-input checkbox">
@@ -171,7 +172,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
 	        </li>
 	        <li>
 	            <a href="#">Khác</a>
-                <div class="filter-common filter-pane filter-other">
+                <div class="filter-common filter-pane filter-other outsideevent">
                     <form class="form-horizontal">
                         <div class="form-group">
                             <label for="" class="col-sm-4 control-label">Phòng tắm</label>
