@@ -3366,6 +3366,7 @@ padding-bottom: 5px;
 .list-results .infor-result .date-post-rent {
     font-size: 1.2em;
     margin-bottom: 0;
+    line-height: 20px;
 }
 .infor-result .date-post-rent span {
     font-size: 1em;
@@ -3374,6 +3375,12 @@ padding-bottom: 5px;
 }
 .list-results li:hover {
     background: #DCDCDC;
+}
+.list-results li.onmap:hover {
+    background: none;
+}
+.list-results li.onmap {
+    padding: 0;
 }
 .zsg-content_collapsed {
     display: inline-block;

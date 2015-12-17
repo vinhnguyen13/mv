@@ -23,7 +23,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
 		<input type="hidden" name="districtId" id="district-id" value="<?= Yii::$app->request->get('district') ?>" />
 		<input type="hidden" name="categoryId" id="category-id" value="<?= Yii::$app->request->get('category') ?>" />
 		<input type="hidden" name="orderBy" id="order-by" value="created_at" />
-	    <ul class="container clearfix outsideevent">
+	    <ul class="container clearfix outsideevent list-filter">
 	        <li>
 	            <a href="#">Giá</a>
                 <div class="filter-pane filter-common">
@@ -41,29 +41,30 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
                     <div class="filter-minmax">
                         <div id="min-price-options" class="minmax-options min-price-options" data-toggle-filter="price-min">
                             <ul class="dropdown-options search-entry">
-                                <li data-value=""><a class="option" tabindex="0">0</a></li>
-                                <li data-value="50,000"><a class="option" tabindex="0">100 triệu</a></li>
-                                <li data-value="75,000"><a class="option" tabindex="0">500 triệu</a></li>
-                                <li data-value="100,000"><a class="option" tabindex="0">1 tỷ</a></li>
-                                <li data-value="150,000"><a class="option" tabindex="0">1,5 tỷ</a></li>
-                                <li data-value="200,000"><a class="option" tabindex="0">2 tỷ</a></li>
-                                <li data-value="250,000"><a class="option" tabindex="0">2,5 tỷ</a></li>
-                                <li data-value="300,000"><a class="option" tabindex="0">3 tỷ</a></li>
-                                <li data-value="400,000"><a class="option" tabindex="0">3,5 tỷ</a></li>
-                                <li data-value="500,000"><a class="option" tabindex="0">4 tỷ</a></li>
+                                <li data-number="0" data-unit=""><a class="option" tabindex="0">0</a></li>
+                                <li data-number="100" data-unit="triệu"><a class="option" tabindex="0">100 triệu</a></li>
+                                <li data-number="500" data-unit="triệu"><a class="option" tabindex="0">500 triệu</a></li>
+                                <li data-number="1" data-unit="tỷ"><a class="option" tabindex="0">1 tỷ</a></li>
+                                <li data-number="1,5" data-unit="tỷ"><a class="option" tabindex="0">1,5 tỷ</a></li>
+                                <li data-number="2" data-unit="tỷ"><a class="option" tabindex="0">2 tỷ</a></li>
+                                <li data-number="2,5" data-unit="tỷ"><a class="option" tabindex="0">2,5 tỷ</a></li>
+                                <li data-number="3" data-unit="tỷ"><a class="option" tabindex="0">3 tỷ</a></li>
+                                <li data-number="3,5" data-unit="tỷ"><a class="option" tabindex="0">3,5 tỷ</a></li>
+                                <li data-number="4" data-unit="tỷ"><a class="option" tabindex="0">4 tỷ</a></li>
                             </ul>
                         </div>
                         <div id="max-price-options" class="minmax-options max-price-options hide" data-toggle-filter="price-max">
                             <ul class="dropdown-options search-entry">
-                                <li data-value="50,000"><a class="option" tabindex="0">100 triệu</a></li>
-                                <li data-value="75,000"><a class="option" tabindex="0">500 triệu</a></li>
-                                <li data-value="100,000"><a class="option" tabindex="0">1 tỷ</a></li>
-                                <li data-value="150,000"><a class="option" tabindex="0">1,5 tỷ</a></li>
-                                <li data-value="200,000"><a class="option" tabindex="0">2 tỷ</a></li>
-                                <li data-value="250,000"><a class="option" tabindex="0">2,5 tỷ</a></li>
-                                <li data-value="300,000"><a class="option" tabindex="0">3 tỷ</a></li>
-                                <li data-value="400,000"><a class="option" tabindex="0">3,5 tỷ</a></li>
-                                <li data-value="500,000"><a class="option" tabindex="0">4 tỷ</a></li>
+                                <li data-number="0" data-unit=""><a class="option" tabindex="0">0</a></li>
+                                <li data-number="100" data-unit="triệu"><a class="option" tabindex="0">100 triệu</a></li>
+                                <li data-number="500" data-unit="triệu"><a class="option" tabindex="0">500 triệu</a></li>
+                                <li data-number="1" data-unit="tỷ"><a class="option" tabindex="0">1 tỷ</a></li>
+                                <li data-number="1,5" data-unit="tỷ"><a class="option" tabindex="0">1,5 tỷ</a></li>
+                                <li data-number="2" data-unit="tỷ"><a class="option" tabindex="0">2 tỷ</a></li>
+                                <li data-number="2,5" data-unit="tỷ"><a class="option" tabindex="0">2,5 tỷ</a></li>
+                                <li data-number="3" data-unit="tỷ"><a class="option" tabindex="0">3 tỷ</a></li>
+                                <li data-number="3,5" data-unit="tỷ"><a class="option" tabindex="0">3,5 tỷ</a></li>
+                                <li data-number="4" data-unit="tỷ"><a class="option" tabindex="0">4 tỷ</a></li>
                                 <li data-value=""><a class="option" tabindex="0">Bất kỳ</a></li>
                             </ul>
                         </div>
