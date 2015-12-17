@@ -36,6 +36,7 @@ use yii\helpers\Url;
                             <?= Html::submitButton(Yii::t('user', 'Reset'), ['class' => 'btn btn-block btn-success reset']) ?>
                         </div>
                     </div>
+                    <a class="showPopup" href="#" data-toggle="modal" data-target="#frmForgot">Quên mật khẩu ?</a>
                     <?php ActiveForm::end(); ?>
                 </div>
             </div>
