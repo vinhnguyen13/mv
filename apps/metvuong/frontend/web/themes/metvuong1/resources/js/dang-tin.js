@@ -245,6 +245,10 @@ $(document).ready(function(){
 				self.append($('#price-format').clone().removeAttr('id'));
 			}
 			
+			if(clone.is('select')) {
+				clone.val(ref.val());
+			}
+			
 			if(clone.hasClass('select2')) {
 				clone.show();
 				clone.select2({width: 'resolve'});
