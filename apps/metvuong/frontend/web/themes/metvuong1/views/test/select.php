@@ -34,6 +34,10 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
         <li data-step="step3" data-step-current="dstin"><a class="tab">Tin Tức</a></li>
     </ul>
     <div class="wrapClickSearch">
+        <div class="textSelected">
+            <span class="text">ABC</span>
+            <a class="remove">x</a>
+        </div>
         <input class="searchInput">
     </div>
     <div class="wrapSuggestList">

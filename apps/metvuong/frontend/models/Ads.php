@@ -34,6 +34,7 @@ class Ads extends Component
             $post = Yii::$app->request->post();
             $searchParams = $post;
             unset($searchParams['_csrf']);
+            unset($searchParams['valSearch']);
             $searchParams = array_filter($searchParams, 'strlen');
             if(!empty($post['activeSearch'])){
                 switch($post['activeSearch']){
@@ -58,7 +59,7 @@ class Ads extends Component
             }
             $cookie = new Cookie([
                 'name' => 'searchParams',
-                'value' => json_encode($searchParams),
+                'value' => json_encode($post),
                 'expire' => time() + 60 * 60 * 24 * 30, // 30 days
 //            'domain' => '.lancaster.vn' // <<<=== HERE
             ]);
