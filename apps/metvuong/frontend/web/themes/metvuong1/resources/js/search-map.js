@@ -1,5 +1,5 @@
 var gmap = null, response = null, listResult, infoWindow;
-
+var zIndex = 100;
 $(document).ready(function(){
 	listResult = $('.list-results');
 	var mapOptions = {
@@ -29,7 +29,43 @@ function search(callback) {
 
 function start() {
 	if(response && gmap) {
+		gmap.click(function(){
+			$('#detail-wrap').css({
+				left: '0px'
+			});
+		});
+		
 		infoWindow = new InfoWindow();
+		
+		$('#detail-wrap').on('click', '.close', function(){
+			$('#detail-wrap').css({
+				left: '0px'
+			});
+		});
+		
+		var hoverTimeout;
+		listResult.on('mouseenter', '> li', function() {
+			var self = $(this);
+			
+			hoverTimeout = setTimeout(function(){
+				if(self.hasClass('onmap'))
+					return;
+				var marker = gmap.getMarker(self.data('id'));
+				marker.setIcon('/images/marker-hover.png');
+				marker.setZIndex(zIndex++);
+				if(!gmap.getBounds().contains(marker.getPosition())) {
+					gmap.setCenter(marker.getPosition());
+				}
+			}, 200);
+		}).on('mouseleave', '> li', function() {
+			clearTimeout(hoverTimeout);
+			
+			var self = $(this);
+			if(self.hasClass('onmap'))
+				return;
+			var marker = gmap.getMarker(self.data('id'));
+			marker.setIcon('/images/marker.png');
+		});
 		
 		listResult.on('click', '> li', function(){
 			var self = $(this);
@@ -37,8 +73,16 @@ function start() {
 			$('#map-loading').height($('.cd-main-content').height()).show();
 			
 			$.get('/ads/detail', {id: $(this).data('detail')}, function(response){
+
+				var width = $('.wrap-map-result').width();
+				width = (width > 820) ? 820 : width;
 				
-				$('#detail-listing').html($(response).html()).modal();
+				$('#detail-wrap').css({
+					width: width,
+					left: '-' + width + 'px',
+					height: $('.result-items').height()
+				});
+				$('#detail-listing').html($(response).html());
 				$('.gallery-detail').imagesLoaded()
 				 	.always( function( instance ) {
 					    // all loaded (broken + success)
@@ -46,33 +90,33 @@ function start() {
 				 	})
 				 	.done( function( instance ) {
 						$('#map-loading').hide();
-						
-				 		setTimeout(function() {
-				 			$('#detail-listing .bxslider').bxSlider({
-				                moveSlides: 1,
-				                startSlide: 0,
-				                minSlides: 1,
-				                maxSlides: 2,
-				                slideWidth: 444,
-				                startSlide: 0,
-				                onSliderLoad: function() {
-				                    this.infiniteLoop = false;
-				                    this.hideControlOnEnd = true;
-				                    scrollFixed();
-				                }
-				            });
-							lightbox.option({
-					            'resizeDuration': 300,
-					            'fadeDuration': 400
-					        });
-							
-							if(!self.data('clone')) {
-								var marker = gmap.getMarker(self.data('id'));
-								var position = marker.getPosition();
-								gmap.setCenter({lat: position.lat(), lng: position.lng()});
-							}
-				 		},500);
-					    
+						if($('#detail-listing .bxslider').find('.wrap-img-detail').length > 0) {
+							setTimeout(function() {
+					 			$('#detail-listing .bxslider').bxSlider({
+					                moveSlides: 1,
+					                startSlide: 0,
+					                minSlides: 1,
+					                maxSlides: 2,
+					                slideWidth: 444,
+					                startSlide: 0,
+					                onSliderLoad: function() {
+					                    this.infiniteLoop = false;
+					                    this.hideControlOnEnd = true;
+					                    scrollFixed();
+					                }
+					            });
+								lightbox.option({
+						            'resizeDuration': 300,
+						            'fadeDuration': 400
+						        });
+								
+								if(!self.data('clone')) {
+									var marker = gmap.getMarker(self.data('id'));
+									var position = marker.getPosition();
+									gmap.setCenter({lat: position.lat(), lng: position.lng()});
+								}
+					 		},500);
+						}
 				 	})
 				 	.fail( function() {
 				 		console.log('all images loaded, at least one is broken');
@@ -120,7 +164,8 @@ function makeMarker(product) {
 
 	var marker = new Marker({
 		draggable: false,
-	    position: {lat: Number(product.lat), lng: Number(product.lng)}
+	    position: {lat: Number(product.lat), lng: Number(product.lng)},
+	    icon: '/images/marker.png'
 	});
 	
 	marker.click(function(latLng){
@@ -132,6 +177,7 @@ function makeMarker(product) {
 			if(id == $(this).data('id')) {
 				$(this).data('clone', true);
 				list.not($(this)).remove();
+				$(this).addClass('onmap');
 				infoWindow.setContent(listEl.get(0));
 				return false;
 			}

@@ -34,6 +34,7 @@ class Ads extends Component
             $post = Yii::$app->request->post();
             $searchParams = $post;
             unset($searchParams['_csrf']);
+            unset($searchParams['valSearch']);
             $searchParams = array_filter($searchParams, 'strlen');
             if(!empty($post['activeSearch'])){
                 switch($post['activeSearch']){
@@ -44,12 +45,12 @@ class Ads extends Component
                         $url = Url::to(ArrayHelper::merge(['/ads/post'], $searchParams));
                         break;
                     case 3:
-                        if(!empty($post['news']) && $post['news'] == 1){
+                        if(!empty($post['newsType']) && $post['newsType'] == 1){
                             if($arrCats = array_values(Yii::$app->params["news"]["widget-category"])){
                                 $detail = CmsShow::find()->where('catalog_id IN ('.implode($arrCats, ',').')')->orderBy('id DESC')->one();
                                 $url = Url::to(['news/view', 'id' => $detail->id, 'slug' => $detail->slug, 'cat_id' => $detail->catalog->id, 'cat_slug' => $detail->catalog->slug]);
                             }
-                        }else if(!empty($post['news']) && $post['news'] == 2){
+                        }else if(!empty($post['newsType']) && $post['newsType'] == 2){
                             $model = AdBuildingProject::find()->where([])->one();
                             $url = Url::to(['/building-project/view', 'slug' => $model->slug]);
                         }
@@ -58,7 +59,7 @@ class Ads extends Component
             }
             $cookie = new Cookie([
                 'name' => 'searchParams',
-                'value' => json_encode($searchParams),
+                'value' => json_encode($post),
                 'expire' => time() + 60 * 60 * 24 * 30, // 30 days
 //            'domain' => '.lancaster.vn' // <<<=== HERE
             ]);

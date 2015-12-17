@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 use dektrium\user\Mailer;
+use frontend\models\Elastic;
 use vsoft\user\models\User;
 use Yii;
 use yii\db\mssql\PDO;
@@ -11,7 +12,7 @@ use vsoft\ad\models\AdBuildingProject;
 
 class TestController extends \yii\web\Controller
 {
-    public $layout = '@app/views/layouts/search';
+    public $layout = '@app/views/layouts/layout';
     public function actionMail()
     {
         $user = User::findOne(5);
@@ -42,4 +43,38 @@ class TestController extends \yii\web\Controller
         }
     }
 
+    public function actionElastic(){
+        $elastic = new Elastic();
+        $client = $elastic->connect();
+        /*$params = [
+            'index' => 'tracking',
+            'type' => 'search',
+            'id' => '2222',
+            'body' => [ 'testField' => 'abc']
+        ];
+        // Document will be indexed to my_index/my_type/my_id
+        $response = $client->index($params);
+        echo "<pre>";
+        print_r($response);
+        echo "</pre>";
+        exit;*/
+        $params = [
+            'index' => 'tracking',
+            'type' => 'search',
+            'id' => '132',
+        ];
+        // Document will be indexed to my_index/my_type/my_id
+        $response = $client->get($params);
+//        $response = $client->cluster()->stats();
+//        $response = $client->nodes()->stats();
+        echo "<pre>";
+        print_r($response);
+        echo "</pre>";
+        exit;
+    }
+
+    public function actionSelect(){
+        $this->layout = '@app/views/layouts/main';
+        return $this->render('select');
+    }
 }

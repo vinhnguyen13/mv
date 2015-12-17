@@ -7,14 +7,12 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
 ?>
 <?php $this->beginContent('@app/views/layouts/_partials/js/jsContainer.php', ['options'=>[]]); ?><?php $this->endContent();?>
 <script>
+
     $(document).ready(function(){
         $(document).on('click', '#btn-search', function(){
             animateSearch();
             setTimeout(function() {
-                setTimeout(function() {
-                    objEvent.updateSuggert();
-                    $('#search-kind').submit();
-                },500);
+                setTimeout(function() {$('#search-kind').submit();},100);
             },1000);
             return false;
         });
@@ -32,11 +30,6 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                 setTimeout(function() {$('#search-kind').submit();},100);
             },1000);
         });
-
-        /*console.log(url_tt);
-        console.log(dataCategories);
-        console.log(dataCities);
-        console.log(newsCatalogs);*/
 
     });
 </script>
@@ -62,169 +55,149 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                         <input id="searchInput" name="search" type="text" class="form-control outsideevent" placeholder="" readonly="readonly">
                                     </div>
 
-                                    <div id="step-1" class="outsideevent search-wrap hidden-effect" data-template="tinh-thanh" data-txt-step="Chọn Tỉnh/Thành ?">
+
+                                    <div id="tinh-thanh" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn Tỉnh/Thành ?">
                                         <div class="wrap-effect">
                                             <div class="search-item">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <h3>Chọn Tỉnh/Thành ?</h3>
-                                                <ul class="clearfix list-tinh-thanh"></ul>
+                                                <div class="wrap-step">
+                                                    <h3></h3>
+                                                    <ul></ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div id="step-2" class="outsideevent search-wrap hidden-effect" data-template="quan-huyen" data-txt-step="Chọn Quận/Huyện ?">
+                                    <div id="quan-huyen" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn Quận/Huyện ?">
                                         <div class="wrap-effect">
-                                            <div class="search-item clearfix">
+                                            <div class="search-item">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <h3>Chọn Quận/Huyện ?</h3>
-                                                <ul class="list-quan-huyen"></ul>
+                                                <div class="wrap-step">
+                                                    <h3></h3>
+                                                    <ul></ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div id="step-3" class="outsideevent search-wrap hidden-effect" data-template="loai-bds" data-txt-step="Loại BDS bạn quan tâm ?">
+                                    <div id="loai-bds" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn loại bất động sản ?">
                                         <div class="wrap-effect">
-                                            <div class="search-item clearfix">
+                                            <div class="search-item">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <h3>Loại BDS bạn quan tâm ?</h3>
-                                                <ul class="list-loai-bds"></ul>
+                                                <div class="wrap-step">
+                                                    <h3></h3>
+                                                    <ul></ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="outsideevent search-wrap hidden-effect" data-txt-step="" data-template="suggest-list" data-end="true">
+                                    <div id="loai-tin-tuc" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn loại tin tức ?">
                                         <div class="wrap-effect">
-                                            <div class="search-item clearfix">
+                                            <div class="search-item">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <h3>Chọn dự án ?</h3>
-                                                <ul class="list-duan-suggest"></ul>
+                                                <div class="wrap-step">
+                                                    <h3></h3>
+                                                    <ul></ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="outsideevent search-wrap hidden-effect" data-txt-step="" data-template="suggest-list-news" data-end="true">
+                                    <div id="news" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn tin tức ?">
                                         <div class="wrap-effect">
-                                            <div class="search-item clearfix">
+                                            <div class="search-item">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <h3>Chọn loại tin tức ?</h3>
-                                                <ul class="list-tintuc-suggest"></ul>
+                                                <div class="wrap-step">
+                                                    <h3></h3>
+                                                    <ul></ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="outsideevent search-wrap hidden-effect" data-txt-step="" data-template="suggest-duan-news" data-end="true">
+                                    <div id="loai-duan" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn dự án ?">
                                         <div class="wrap-effect">
-                                            <div class="search-item clearfix">
+                                            <div class="search-item">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <h3>Chọn dự án ?</h3>
-                                                <ul class="list-duan-news">
-                                                    <li data-id-duannews="1"><a href="#">RICHSTAR</a></li>
-                                                    <li data-id-duannews="2"><a href="#">SUNRISE RIVERSIDE</a></li>
-                                                    <li data-id-duannews="3"><a href="#">ORCHARD PARKVIEW</a></li>
-                                                    <li data-id-duannews="4"><a href="#">GOLDEN MANSION</a></li>
-                                                    <li data-id-duannews="5"><a href="#">KINGSTON RESIDENCE</a></li>
-                                                </ul>
+                                                <div class="wrap-step">
+                                                    <h3></h3>
+                                                    <ul></ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="outsideevent search-wrap hidden-effect" data-txt-step="" data-template="cost-min-max" data-end="true">
+                                    <div id="min-max" class="outsideevent search-wrap hidden-effect" data-step-title="Nhập khoảng giá ?">
                                         <div class="wrap-effect">
                                             <div class="search-item clearfix">
                                                 <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <h3>Nhập khoảng giá ?</h3>
-                                                <div class="frm-cost-min-max clearfix">
-                                                    <div class="form-group inline-group box-cost col-xs-5" data-tab="min">
-                                                        <input name="costMin" id="minCost" type="text" class="form-control cost-value" placeholder="min" readonly="readonly">
-                                                        <div class="outsideevent wrap-cost-bds hidden-cost">
-                                                            <div class="wrap-effect-cost">
-                                                                <ul>
-                                                                    <li data-cost="0" data-unit=""><span>0</span></li>
-                                                                    <li data-cost="1" data-unit="triệu"><span>1 triệu</span></li>
-                                                                    <li data-cost="2" data-unit="triệu"><span>2 triệu</span></li>
-                                                                    <li data-cost="3" data-unit="triệu"><span>3 triệu</span></li>
-                                                                    <li data-cost="4" data-unit="triệu"><span>4 triệu</span></li>
-                                                                    <li data-cost="5" data-unit="triệu"><span>5 triệu</span></li>
-                                                                    <li data-cost="6" data-unit="tỷ"><span>6 triệu</span></li>
-                                                                </ul>
+                                                <div class="wrap-step">
+                                                    <h3></h3>
+                                                    <div class="frm-cost-min-max clearfix">
+                                                        <div class="form-group inline-group box-cost col-xs-5" data-tab="min">
+                                                            <input name="costMin" id="minCost" type="text" class="form-control cost-value" placeholder="min" readonly="readonly">
+                                                            <div class="outsideevent wrap-cost-bds hidden-cost">
+                                                                <div class="wrap-effect-cost">
+                                                                    <ul>
+                                                                        <li data-cost="0" data-unit=""><span>0</span></li>
+                                                                        <li data-cost="1" data-unit="triệu"><span>1 triệu</span></li>
+                                                                        <li data-cost="2" data-unit="triệu"><span>2 triệu</span></li>
+                                                                        <li data-cost="3" data-unit="triệu"><span>3 triệu</span></li>
+                                                                        <li data-cost="4" data-unit="triệu"><span>4 triệu</span></li>
+                                                                        <li data-cost="5" data-unit="triệu"><span>5 triệu</span></li>
+                                                                        <li data-cost="6" data-unit="tỷ"><span>6 triệu</span></li>
+                                                                    </ul>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="line-center form-group inline-group box-cost col-xs-2"><span></span></div>
-                                                    <div class="form-group inline-group box-cost col-xs-5" data-tab="max">
-                                                        <input name="costMax" id="maxCost" type="text" class="form-control cost-value" placeholder="max" readonly="readonly">
-                                                        <div class="outsideevent wrap-cost-bds hidden-cost">
-                                                            <div class="wrap-effect-cost">
-                                                                <ul>
-                                                                    <li data-cost="0" data-unit=""><span>0</span></li>
-                                                                    <li data-cost="1" data-unit="triệu"><span>1 triệu</span></li>
-                                                                    <li data-cost="2" data-unit="triệu"><span>2 triệu</span></li>
-                                                                    <li data-cost="3" data-unit="triệu"><span>3 triệu</span></li>
-                                                                    <li data-cost="4" data-unit="triệu"><span>4 triệu</span></li>
-                                                                    <li data-cost="5" data-unit="triệu"><span>5 triệu</span></li>
-                                                                    <li data-cost="6" data-unit="tỷ"><span>6 triệu</span></li>
-                                                                </ul>
+                                                        <div class="line-center form-group inline-group box-cost col-xs-2"><span></span></div>
+                                                        <div class="form-group inline-group box-cost col-xs-5" data-tab="max">
+                                                            <input name="costMax" id="maxCost" type="text" class="form-control cost-value" placeholder="max" readonly="readonly">
+                                                            <div class="outsideevent wrap-cost-bds hidden-cost">
+                                                                <div class="wrap-effect-cost">
+                                                                    <ul>
+                                                                        <li data-cost="0" data-unit=""><span>0</span></li>
+                                                                        <li data-cost="1" data-unit="triệu"><span>1 triệu</span></li>
+                                                                        <li data-cost="2" data-unit="triệu"><span>2 triệu</span></li>
+                                                                        <li data-cost="3" data-unit="triệu"><span>3 triệu</span></li>
+                                                                        <li data-cost="4" data-unit="triệu"><span>4 triệu</span></li>
+                                                                        <li data-cost="5" data-unit="triệu"><span>5 triệu</span></li>
+                                                                        <li data-cost="6" data-unit="tỷ"><span>6 triệu</span></li>
+                                                                    </ul>
+                                                                </div>
                                                             </div>
+                                                        </div>
+                                                        <div class="btn-cost">
+                                                            <button type="button" class="btn btn-primary btn-sm btn-common">OK</button>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <input id="valCosMin" type="hidden" value="" data-val-cost="min" class="val-cost">
-                                                <input id="valCosMax" type="hidden" value="" data-val-cost="max" class="val-cost">
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="outsideevent search-wrap hidden-effect" data-txt-step="Chọn loại tin tức ?" data-template="news">
-                                        <div class="wrap-effect">
-                                            <div class="search-item clearfix">
-                                                <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                                <h3>Bạn nên chọn Loại Tin Tức ?</h3>
-                                                <ul class="list-loai-tt"></ul>
-                                            </div>
-                                        </div>
-                                    </div>
 
                                 </div>
                                 <button id="btn-search" type="submit" class="btn btn-default">
                                     <span><em class="fa fa-search"></em></span>
                                 </button>
 
+                                <input class="valInputHidden" id="valSearch" name="valSearch" type="hidden" value="">
+                                <input class="valInputHidden" id="valTabActive" name="activeSearch" type="hidden" value="">
+
+                                <input class="valInputHidden" id="valTinhThanh" name="city" type="hidden" value="">
+                                <input class="valInputHidden" id="valQuanHuyen" name="district" type="hidden" value="">
+                                <input class="valInputHidden" id="valLoaiBDS" name="category" type="hidden" value="">
+                                <input class="valInputHidden" id="valDuAn" name="project" type="hidden" value="">
+                                <input class="valInputHidden" id="valTinTuc" name="newsType" type="hidden" value="">
+                                <input class="valInputHidden" id="valLoaiTinTuc" name="newsCat" type="hidden" value="">
                                 
-                                <input class="getValSuggest" type="hidden" rel="idActive" id="valActive" name="activeSearch" value="1">
-
-                                <input class="getValSuggest" type="hidden" rel="id-tt" id="valTT" name="city" value="">
-                                <input class="getValSuggest" type="hidden" id="stepTT" name="stepTT" value="">
-                                <input class="getValSuggest" type="hidden" id="valNextTT" name="valNextTT" value="">
-
-                                <input class="getValSuggest" type="hidden" rel="id-qh" id="valQh" name="district" value="">
-                                <input class="getValSuggest" type="hidden" id="stepQh" name="stepQh" value="">
-                                <input class="getValSuggest" type="hidden" id="valNextQh" name="valNextQh" value="">
-
-                                <input class="getValSuggest" type="hidden" rel="id-loai" id="valLoaibds" name="category" value="">
-                                <input class="getValSuggest" type="hidden" id="stepLbds" name="stepLbds" value="">
-                                <input class="getValSuggest" type="hidden" id="valNextLbds" name="valNextLbds" value="">
-
-                                <input class="getValSuggest" type="hidden" rel="id-ttuc" id="valTTuc" name="news" value="">
-                                <input class="getValSuggest" type="hidden" id="stepTtuc" name="stepTtuc" value="">
-                                <input class="getValSuggest" type="hidden" id="valNextTtuc" name="valNextTtuc" value="">
-
-                                <input class="getValSuggest" type="hidden" rel="id-loaittuc" id="valLoaiTTuc" name="typenews" value="">
-                                <input class="getValSuggest" type="hidden" id="stepLoaittuc" name="stepLoaittuc" value="">
-                                <input class="getValSuggest" type="hidden" id="valNextLoaittuc" name="valNextLoaittuc" value="">
-
-                                <input class="getValSuggest" type="hidden" rel="id-duans" id="valDuaan" name="duan" value="">
-                                <input class="getValSuggest" type="hidden" id="stepDuan" name="stepDuan" value="">
-                                <input class="getValSuggest" type="hidden" id="valNextDuan" name="valNextDuan" value="">
-
-                                <input class="getValSuggest" type="hidden" rel="id-duannews" id="valDuaannews" name="duannews" value="">
-                                <input class="getValSuggest" type="hidden" id="stepDuannews" name="stepDuannews" value="">
-                                <input class="getValSuggest" type="hidden" id="valNextDuannews" name="valNextDuannews" value="">
-
                                 
                             <?php ActiveForm::end(); ?>
-                            <div class="pull-left text-right mgT-10 mgL-15">
-                                <div class="search-select active">
-                                    <a href="#" data-placeholder="Chọn Tỉnh/Thành ?" rel="#dd-search" title="Muốn Mua/Thuê" data-active="1">
+                            <div class="pull-left text-right mgT-10">
+                                <div data-active="1" data-tab="mua-thue" class="search-select active" data-step='tinh-thanh|quan-huyen|{ "loai-bds": { "chung-cu": { "template": "loai-duan" }, "template_common": { "template": "min-max" } }}'>
+                                    <a href="#" title="Muốn Mua/Thuê">
                                         <span>
                                             <em class="fa fa-home"></em>
                                             <em class="fa fa-search"></em>
@@ -232,8 +205,8 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                         <i>Muốn Mua/Thuê</i>
                                     </a>
                                 </div>
-                                <div class="search-select">
-                                    <a href="#" data-placeholder="Chọn Tỉnh/Thành ?" rel="#dd-dky" title="Đăng ký Bán/Thuê" data-active="2">
+                                <div data-active="2" data-tab="ban-thue" class="search-select" data-step='tinh-thanh|quan-huyen|loai-bds'>
+                                    <a href="#" title="Đăng ký Bán/Thuê">
                                         <span>
                                             <em class="fa fa-home"></em>
                                             <em class="fa fa-pencil-square-o"></em>
@@ -241,8 +214,8 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                         <i>Đăng ký Bán/Thuê</i>
                                     </a>
                                 </div>
-                                <div class="search-select">
-                                    <a href="#" class="" data-step-fix="step-5" data-placeholder="Chọn Loại Tin Tức ?" rel="#dd-news" title="Tin Tức" data-active="3">
+                                <div data-active="3" data-tab="tin-tuc"  class="search-select" data-step='{ "news": { "tin-tuc": { "template": "loai-tin-tuc" }, "du-an": { "template": "tinh-thanh|quan-huyen|loai-duan" } }}'>
+                                    <a href="#" title="Tin Tức">
                                         <span>
                                             <em class="fa fa-home"></em>
                                             <em class="fa fa-file-text"></em>

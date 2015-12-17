@@ -209,12 +209,22 @@ class SiteController extends Controller
     	foreach ($catalogs as $k => &$catalog) {
     		unset($catalog['id']);
     	}
-    	
+
+        $news = [
+            1=>['title'=>Yii::t('cms', 'News')],
+            2=>['title'=>Yii::t('cms', 'Projects')],
+        ];
+
 		$content = 'var dataCities = ' . json_encode($cities, JSON_UNESCAPED_UNICODE) . ';' .
 					'var dataCategories = ' . json_encode($categories, JSON_UNESCAPED_UNICODE) . ';' .
-					'var newsCatalogs = ' . json_encode($catalogs, JSON_UNESCAPED_UNICODE) . ';';
+					'var newsCatalogs = ' . json_encode($catalogs, JSON_UNESCAPED_UNICODE) . ';'.
+					'var news = ' . json_encode($news, JSON_UNESCAPED_UNICODE) . ';';
     	$file = fopen(Yii::getAlias('@store') . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . "data.js", "w");
     	fwrite($file, $content);
 		fclose($file);
+    }
+    
+    public function actionTest() {
+    	return $this->render('test');
     }
 }

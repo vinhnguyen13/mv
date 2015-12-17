@@ -32,6 +32,12 @@ function Gmap(el, options) {
 	var markers = {};
 	var map = new google.maps.Map(el, options);
 	
+	self.click = function(callback) {
+		map.addListener('click', function() {
+			callback();
+		});
+	}
+	
 	self.addMarker = function(marker, setCenter) {
 		if(marker.getMap()) {
 			self.removeMarker(marker);
@@ -94,6 +100,10 @@ function Gmap(el, options) {
 	self.getOriginal = function() {
 		return map;
 	};
+	
+	self.getBounds = function() {
+		return map.getBounds();
+	}
 	
 	mapCounter++;
 	
@@ -159,6 +169,14 @@ function Marker(options) {
 	
 	self.getId = function() {
 		return id;
+	}
+	
+	self.setIcon = function(icon) {
+		marker.setIcon(icon);
+	}
+	
+	self.setZIndex = function(index) {
+		marker.setZIndex(index);
 	}
 	
 	markerCounter++;
