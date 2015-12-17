@@ -6,12 +6,22 @@
  * Time: 2:34 PM
  */
 
+use common\widgets\FileUploadUI;
 use frontend\models\User;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\bootstrap\ActiveForm;
 
 ?>
+<style>
+    .field-profile-form-avatar>div {
+        margin-left: 0 !important;
+    }
+    .fileupload-buttonbar {
+        position: absolute;
+        bottom: -30px;
+    }
+</style>
 <div class="col-xs-9 right-profile quanlytinraoban">
     <div class="wrap-quanly-profile">
         <div class="title-frm">Cập nhật thông tin của bạn</div>
@@ -46,11 +56,32 @@ use yii\bootstrap\ActiveForm;
             </div>
         </div>
         <div class="col-md-3">
-            <div><img src="https://www.zillowstatic.com/static/images/nophoto_h_g.png"></div>
+            <div class="avatar" style="margin-bottom: 50px;">
+                <?php $form = ActiveForm::begin([
+                    'id' => 'change-avatar-form',
+                    'enableAjaxValidation' => false,
+                    'enableClientValidation' => true,
+                    'layout' => 'horizontal',
+                    'fieldConfig' => [
+                        'horizontalCssClasses' => [
+                            'wrapper' => 'col-sm-9',
+                        ],
+                    ],
+                ]); ?>
+                <?=Html::hiddenInput('deleteLater', '', ['id' => 'delete-later']);?>
+                <?= $form->field($model, 'avatar')->widget(FileUploadUI::className(), [
+                    'url' => Url::to(['/user-management/avatar', 'folder'=>'avatar']),
+                    'clientOptions' => ['maxNumberOfFiles' => 1],
+                    'fieldOptions' => ['folder'=>'avatar'],
+                ])->label(false) ?>
+                <!-- <img src="https://www.zillowstatic.com/static/images/nophoto_h_g.png"> -->
+                <?php ActiveForm::end(); ?>
+            </div>
+            <div>Member since: <?= Yii::$app->formatter->asDatetime($model->created_at, "php:d/m/Y");?></div>
             <br><br>
-            <div>Member since: 12/12/2015</div>
-            <br><br>
-            <div>Description: Premier Agent</div>
+            <div>
+                <?= $model->bio ?>
+            </div>
         </div>
     </div>
 </div>
@@ -58,7 +89,6 @@ use yii\bootstrap\ActiveForm;
     $(document).ready(function () {
         var timer = 0;
         $(document).on('click', '#change-profile-form .save', function () {
-            var _this = $(this);
             clearTimeout(timer);
             timer = setTimeout(function () {
                 $.ajax({

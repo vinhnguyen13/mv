@@ -4,11 +4,13 @@ namespace frontend\controllers;
 use dektrium\user\Mailer;
 use frontend\models\User;
 use frontend\models\userManagement\ProfileForm;
+use vsoft\express\components\ImageHelper;
 use Yii;
 use yii\db\mssql\PDO;
 use yii\helpers\Url;
 use vsoft\news\models\CmsShow;
 use yii\web\Response;
+use yii\web\UploadedFile;
 use yii\web\View;
 
 class UserManagementController extends \yii\web\Controller
@@ -65,19 +67,12 @@ class UserManagementController extends \yii\web\Controller
             return $this->goHome();
         }
 
-        $user = User::findIdentity(Yii::$app->user->id);
-        $profile = $user->profile;
-
         $model = Yii::createObject([
             'class'    => ProfileForm::className(),
             'scenario' => 'updateprofile',
         ]);
 
-        $model->name = $profile->name;
-        $model->public_email = $profile->public_email;
-        $model->phone = $profile->phone;
-        $model->mobile = $profile->mobile;
-        $model->address = $profile->address;
+        $model = $model->loadProfile();
 
         if(Yii::$app->request->isAjax) {
             if(Yii::$app->request->isPost){
@@ -133,5 +128,67 @@ class UserManagementController extends \yii\web\Controller
         return $this->render('user/password', [
             'model'=>$model
         ]);
+    }
+
+
+    public function actionAvatar($folder = 'building-project-images', $resizeForAds = false) {
+        $model = Yii::createObject([
+            'class' => ProfileForm::className(),
+            'scenario' => 'updateavatar',
+        ]);
+
+        if($_FILES) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $image = UploadedFile::getInstanceByName('upload');
+            $dir = \Yii::getAlias('@store') . "/$folder";
+            $uniqid = uniqid();
+            $extension = pathinfo($image->name, PATHINFO_EXTENSION);
+
+            $orginal = $uniqid . '.' . $extension;
+            $thumbnail = $uniqid . '.thumb.' . $extension;
+
+            $orginalPath = $dir . '/' . $orginal;
+            $thumbnailPath = $dir . '/' . $thumbnail;
+
+            $image->saveAs($orginalPath);
+
+            $options = ($resizeForAds) ? [] : ['thumbWidth' => 120, 'thumbHeight' => 120];
+            $imageHelper = new ImageHelper($orginalPath, $options);
+            $imageHelper->makeThumb(false, $thumbnailPath);
+
+            $response['files'][] = [
+                'url'           => Url::to("/store/$folder/". $orginal),
+                'thumbnailUrl'  => Url::to("/store/$folder/" . $thumbnail),
+                'name'          => $orginal,
+                'type'          => $image->type,
+                'size'          => $image->size,
+                'deleteUrl'     => Url::to(['user-management/delete-image', 'orginal' => $orginal, 'thumbnail' => $thumbnail, 'folder' => $folder]),
+                'deleteType'    => 'DELETE',
+                'deleteLater'	=> 0,
+            ];
+            $model->updateAvatar($orginal);
+            return $response;
+        }
+    }
+
+    public function actionDeleteImage($orginal, $thumbnail, $deleteLater = false, $folder = 'building-project-images', $resizeForAds = false) {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        if(! $deleteLater) {
+            $dir = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $folder;
+
+            unlink($dir . DIRECTORY_SEPARATOR . $orginal);
+            unlink($dir . DIRECTORY_SEPARATOR . $thumbnail);
+
+            if($resizeForAds) {
+                $pathinfo = pathinfo($orginal);
+
+                unlink($dir . DIRECTORY_SEPARATOR . $pathinfo['filename'] . '.medium.' . $pathinfo['extension']);
+                unlink($dir . DIRECTORY_SEPARATOR . $pathinfo['filename'] . '.large.' . $pathinfo['extension']);
+            }
+        }
+
+        return ['files' => []];
     }
 }

@@ -20,6 +20,9 @@ class ProfileForm extends Model
     public $phone;
     public $mobile;
     public $address;
+    public $avatar;
+    public $created_at;
+    public $bio;
 
     /** @var string */
     public $old_password;
@@ -131,6 +134,37 @@ class ProfileForm extends Model
             $profile->phone = $this->phone;
             $profile->mobile = $this->mobile;
             $profile->address = $this->address;
+            return $profile->save();
+        }
+        return false;
+    }
+
+    public function loadProfile(){
+        $user = User::findIdentity(Yii::$app->user->id);
+        $profile = $user->profile;
+
+        $model = Yii::createObject([
+            'class'    => ProfileForm::className(),
+            'scenario' => 'updateprofile',
+        ]);
+
+        $model->name = $profile->name;
+        $model->public_email = $profile->public_email;
+        $model->phone = $profile->phone;
+        $model->mobile = $profile->mobile;
+        $model->address = $profile->address;
+        $model->avatar = $profile->avatar;
+        $model->bio = $profile->bio;
+        $model->created_at = $user->created_at;
+
+        return $model;
+    }
+
+    public function updateAvatar($filename){
+        $user = User::findIdentity(Yii::$app->user->id);
+        $profile = $user->profile;
+        if(!empty($profile)) {
+            $profile->avatar = $filename;
             return $profile->save();
         }
         return false;
