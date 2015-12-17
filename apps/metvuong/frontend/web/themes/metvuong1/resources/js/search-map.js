@@ -165,8 +165,7 @@ function makeMarker(product) {
 	var marker = new Marker({
 		draggable: false,
 	    position: {lat: Number(product.lat), lng: Number(product.lng)},
-	    icon: '/images/marker.png',
-	    optimized: false
+	    icon: '/images/marker.png'
 	});
 	
 	marker.click(function(latLng){
