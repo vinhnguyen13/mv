@@ -23,10 +23,10 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
 		<input type="hidden" name="districtId" id="district-id" value="<?= Yii::$app->request->get('district') ?>" />
 		<input type="hidden" name="categoryId" id="category-id" value="<?= Yii::$app->request->get('category') ?>" />
 		<input type="hidden" name="orderBy" id="order-by" value="created_at" />
-	    <ul class="container clearfix">
+	    <ul class="container clearfix outsideevent">
 	        <li>
 	            <a href="#">Giá</a>
-                <div class="filter-pane filter-common outsideevent">
+                <div class="filter-pane filter-common">
                     <div id="minmax-entries" class="minmax-entries search-entry">
                         <div class="dualboxes">
                             <div class="box1">
@@ -72,15 +72,15 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
 	        </li>
 	        <li>
 	            <a href="#">Diện tích</a>
-                <div class="filter-common filter-pane outsideevent">
+                <div class="filter-common filter-pane">
                     <div id="minmax-entries" class="minmax-entries search-entry">
                         <div class="dualboxes">
                             <div class="box1">
-                                <input class="text commaFormat" maxlength="11" size="10" name="price-min" id="price-min" type="text" placeholder="Min">
+                                <input class="text commaFormat" maxlength="11" size="10" name="dt-min" id="dt-min" type="text" placeholder="Min">
                             </div>
                             <div class="dash">&nbsp;</div>
                             <div class="box2">
-                                <input class="text commaFormat" maxlength="11" size="11" name="price-max" id="price-max" type="text" placeholder="Max">
+                                <input class="text commaFormat" maxlength="11" size="11" name="dt-max" id="dt-max" type="text" placeholder="Max">
                             </div>
                         </div>
                     </div>
@@ -99,7 +99,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
                                 <li data-value="500,000"><a class="option" tabindex="0">250 m<sup>2</sup></a></li>
                             </ul>
                         </div>
-                        <div id="max-dt-options" class="minmax-options max-dt-options hide" data-toggle-filter="dt-min">
+                        <div id="max-dt-options" class="minmax-options max-dt-options hide" data-toggle-filter="dt-max">
                             <ul class="dropdown-options search-entry">
                                 <li data-value="50,000"><a class="option" tabindex="0">10 m<sup>2</sup></a></li>
                                 <li data-value="75,000"><a class="option" tabindex="0">20 m<sup>2</sup></a></li>
@@ -118,7 +118,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
 	        </li>
 	        <li>
 	            <a href="#">Phòng ngủ</a>
-                <div class="filter-common filter-pane filter-bed outsideevent">
+                <div class="filter-common filter-pane filter-bed">
                     <div class="filter-bed">
                         <ul class="dropdown-options search-entry">
                             <li data-value="50,000"><a class="option" tabindex="0">0</a></li>
@@ -135,7 +135,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
 	        </li>
 	        <li>
 	            <a href="#">Loại BDS</a>
-                <div class="filter-common filter-pane filter-loaibds outsideevent">
+                <div class="filter-common filter-pane filter-loaibds">
                     <ul class="combobox-options multicheck-dropdown-options hometype-options">
                         <li class="hometype">
                             <input id="hometype-input-1" name="hometype-input" type="checkbox" class="hometype-input checkbox">
@@ -172,7 +172,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
 	        </li>
 	        <li>
 	            <a href="#">Khác</a>
-                <div class="filter-common filter-pane filter-other outsideevent">
+                <div class="filter-common filter-pane filter-other">
                     <form class="form-horizontal">
                         <div class="form-group">
                             <label for="" class="col-sm-4 control-label">Phòng tắm</label>
