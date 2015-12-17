@@ -67,7 +67,7 @@
                             </div>
                         </div>
                         <?php else: ?>
-                        <div class="gallery-detail clearfix no-image"><div class="bxslider"><?= Yii::t('ads', 'Không có hình ảnh đính kèm') ?></div></div>
+                        <div class="gallery-detail clearfix"><div class="bxslider no-image"><?= Yii::t('ads', 'Không có hình ảnh đính kèm') ?></div></div>
                         <?php endif; ?>
                         <div class="row detail-post">
                             <div class="col-sm-8 dt-left-col">

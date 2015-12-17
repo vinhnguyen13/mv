@@ -142,6 +142,8 @@ $(document).ready(function(){
 			var slider = $('.bxslider').empty();
 			
 			if(images.length > 0) {
+				slider.removeClass('no-image')
+				
 				var firstImage = images.shift();
 				
 				slider.append('<div class="wrap-img-detail"> <ul class="clearfix"> <li class="img-big"> <div class="bgcover" style="background-image:url(' + firstImage.replace('thumb', 'medium') + ');"></div> <a data-lightbox="detail-post" class="group mask" href="' + firstImage.replace('thumb', 'large') + '"><em class="fa fa-search"></em></a> </li> </ul> </div>');
@@ -184,7 +186,7 @@ $(document).ready(function(){
 				 	});
 				}
 			} else {
-				slider.text('Không có hình ảnh đính kèm');
+				slider.addClass('no-image').text('Không có hình ảnh đính kèm');
 			}
 		} else {
 			e.stopPropagation();
