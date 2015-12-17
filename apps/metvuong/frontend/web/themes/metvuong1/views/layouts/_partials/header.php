@@ -5,7 +5,6 @@ $value = \Yii::$app->getRequest()->getCookies()->getValue('searchParams');
 $searchParams = json_decode($value);
 ?>
 <script type="text/javascript">
-    var valSearch = <?=!empty($searchParams->valSearch) ? json_encode($searchParams->valSearch) : ''?>
     $(document).bind( 'real-estate/news', function(event, json, string){
         //setTimeout(function() {$('#search-kind').submit();},100);
     });
