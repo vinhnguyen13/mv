@@ -33,10 +33,6 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
     </ul>
     <div class="wrapClickSearch">
         <div class="textSelected">
-<!--             <span class="tag label label-info" data-value="1" data-step-selected="thanhpho">Ho Chi Minh <span class="remove">REMOVE</span></span>
-            <span class="tag label label-info" data-value="1" data-step-selected="tinhthanh">Quan 1 <span class="remove">REMOVE</span></span>
-            <span class="tag label label-info" data-value="1" data-step-selected="loaibds">Chung Cu <span class="remove">REMOVE</span></span>
-            <span class="tag label label-info" data-value="1" data-step-selected="lstduan">Lancaster <span class="remove">REMOVE</span></span> -->
         </div>
         <input class="searchInput">
     </div>

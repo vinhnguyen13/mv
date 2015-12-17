@@ -58,7 +58,11 @@
 			condition[stepDisplay] = {'attributes': 'data-'+stepCurrent, 'value': $(this).attr('data-value')};
 		}
 		tabActive.trigger('real-estate/actionDisplayList', [{'this': tabActive, 'stepDisplay': stepDisplay}, '']);
-		tabActive.trigger('real-estate/tagSelected', [{step: stepCurrent, text: $(this).html()}]);
+		var exist = $('.textSelected').find('span[data-step-selected="'+stepCurrent+'"]');			
+		if(exist.length == 0){
+			tabActive.trigger('real-estate/tagSelected', [{step: stepCurrent, text: $(this).html()}]);	
+		}		
+		return false;
 	});
 	/**---END ACTION---**/
 
@@ -98,9 +102,9 @@
 	});
 
 	$(document).bind('real-estate/tagSelected', function (event, json, string) {		
-		if(json.step){			
+		if(json.step){						
 			var txt = '<span class="tag label label-info" data-value="1" data-step-selected="'+json.step+'">'+json.text+' <span class="remove">REMOVE</span></span>';
-			$('.textSelected').append(txt);			
+			$('.textSelected').append(txt);										
 		}
 	});
 
