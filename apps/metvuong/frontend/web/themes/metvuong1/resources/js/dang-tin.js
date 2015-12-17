@@ -183,6 +183,8 @@ $(document).ready(function(){
 				 		}, 300);
 				 	});
 				}
+			} else {
+				slider.text('Không có hình ảnh đính kèm');
 			}
 		} else {
 			e.stopPropagation();
