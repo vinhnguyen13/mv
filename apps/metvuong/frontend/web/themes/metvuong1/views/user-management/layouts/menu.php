@@ -16,8 +16,6 @@ use yii\helpers\Url;
                 <div class="title-box">Bất động sản của bạn</div>
                 <ul class="clearfix">
                     <li><a href="<?=Url::to(['user-management/ads'])?>" class="partial">Quản lý tin rao bán/cho thuê</a></li>
-                    <li><a href="#">Đăng tin rao bán/cho thuê</a></li>
-                    <!--                        <li><a href="#">Quản lý tin nháp</a></li>-->
                 </ul>
             </div>
             <div class="item-box mgB-15">
@@ -25,20 +23,6 @@ use yii\helpers\Url;
                 <ul class="clearfix">
                     <li><a href="<?=Url::to(['user-management/profile'])?>" class="partial">Thay đổi thông tin cá nhân</a></li>
                     <li><a href="<?=Url::to(['user-management/password'])?>" class="partial">Thay đổi mật khẩu</a></li>
-                </ul>
-            </div>
-            <div class="item-box mgB-15">
-                <div class="title-box">Tin của MetVuong</div>
-                <ul class="clearfix">
-                    <li><a href="<?=Url::to(['user-management/ads-most-search'])?>" class="partial">Nhiều người quan tâm <span class="badge badge-notify">132</span></a></li>
-                    <li><a href="<?=Url::to(['user-management/ads-suggest'])?>" class="partial">Phù hợp tìm kiếm của bạn <span class="badge badge-notify">38</span></a></li>
-                </ul>
-            </div>
-            <div class="item-box mgB-15">
-                <div class="title-box">Công cụ</div>
-                <ul class="clearfix">
-                    <li><a href="#" class="partial">Định giá</a></li>
-                    <li><a href="#" class="partial">Nạp tiền</a></li>
                 </ul>
             </div>
         </div>
