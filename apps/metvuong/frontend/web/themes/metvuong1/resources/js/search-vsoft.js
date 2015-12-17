@@ -41,7 +41,7 @@
 		if(steps[stepConfig][tmpStep] && steps[stepConfig][tmpStep]['id']){
 			var stepDisplay = steps[stepConfig][tmpStep]['id'];
 			tabActive.trigger('real-estate/actionDisplayList', [{'this': tabActive, 'stepDisplay': stepDisplay}, '']);
-			$(this).trigger('real-estate/tagRemove', [{element: $(this).next()}]);
+			$(this).trigger('real-estate/tagRemove', [{element: $(this)}]);
 		}
 	});
 
