@@ -177,7 +177,6 @@ function makeMarker(product) {
 		draggable: false,
 	    position: {lat: Number(product.lat), lng: Number(product.lng)},
 	    icon: '/images/marker.png',
-	    optimized: false,
 	    zIndex: google.maps.Marker.MAX_ZINDEX++
 	});
 	
