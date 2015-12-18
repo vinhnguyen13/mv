@@ -117,13 +117,14 @@ return [
         ],*/
         'i18n' => [
             'translations' => [
-                'user' => [
-                    'class'          => 'yii\i18n\PhpMessageSource',
-                    'sourceLanguage' => 'ru',
-                    'basePath'       => '@vendor/dektrium/yii2-user/messages',
-                    'fileMap'        => [
-                        'modules/user/user' => 'user.php',
-                    ],
+                'user*' => [
+                    'class' => 'yii\i18n\DbMessageSource',
+                    'db' => 'db',
+                    'sourceLanguage' => 'en-US',
+                    'sourceMessageTable' => '{{%language_source}}',
+                    'messageTable' => '{{%language_translate}}',
+                    'cachingDuration' => 86400,
+                    'enableCaching' => false,
                 ],
                 '*' => [
                     'class' => 'yii\i18n\DbMessageSource',

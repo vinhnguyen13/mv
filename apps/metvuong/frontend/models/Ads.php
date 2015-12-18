@@ -35,6 +35,7 @@ class Ads extends Component
             $searchParams = $post;
             unset($searchParams['_csrf']);
             unset($searchParams['valSearch']);
+            unset($searchParams['activeSearch']);
             $searchParams = array_filter($searchParams, 'strlen');
             if(!empty($post['activeSearch'])){
                 switch($post['activeSearch']){
