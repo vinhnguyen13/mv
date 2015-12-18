@@ -1,6 +1,16 @@
 Options FollowSymLinks
 AddDefaultCharset utf-8
 
+
+#Order deny,allow
+#Deny from all
+#AuthName "Restricted Area - Authorization Required"
+#AuthUserFile D:\Projects\TTG\ttgweb\apps\metvuong\.htpasswd
+#AuthType Basic
+#Require valid-user
+#Satisfy Any
+
+
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
