@@ -50,10 +50,13 @@ function start() {
 				if(self.hasClass('onmap'))
 					return;
 				var marker = gmap.getMarker(self.data('id'));
-				marker.setIcon('/images/marker-hover.png');
-				marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
-				if(!gmap.getBounds().contains(marker.getPosition())) {
-					gmap.setCenter(marker.getPosition());
+
+				if(marker) {
+					marker.setIcon('/images/marker-hover.png');
+					marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
+					if(!gmap.getBounds().contains(marker.getPosition())) {
+						gmap.setCenter(marker.getPosition());
+					}
 				}
 			}, 200);
 		}).on('mouseleave', '> li', function() {
@@ -107,8 +110,10 @@ function start() {
 								
 								if(!self.data('clone')) {
 									var marker = gmap.getMarker(self.data('id'));
-									var position = marker.getPosition();
-									gmap.setCenter({lat: position.lat(), lng: position.lng()});
+									if(marker) {
+										var position = marker.getPosition();
+										gmap.setCenter({lat: position.lat(), lng: position.lng()});
+									}
 								}
 					 		},500);
 						}
