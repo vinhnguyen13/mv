@@ -11,7 +11,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
-use yii\web\Controller;
+use frontend\components\Controller;
 use yii\web\Cookie;
 use vsoft\ad\models\AdCity;
 use vsoft\ad\models\AdDistrict;

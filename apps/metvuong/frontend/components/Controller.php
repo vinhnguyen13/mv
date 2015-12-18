@@ -14,6 +14,9 @@ class Controller extends \yii\web\Controller
 {
     public function beforeAction($action)
     {
+        /*if(Yii::$app->user->isGuest && !in_array($action->id, ['login', 'register'])){
+            $this->redirect(['/member/login']);
+        }*/
         Yii::$app->getUser()->setReturnUrl(Url::current());
         return parent::beforeAction($action);
     }
