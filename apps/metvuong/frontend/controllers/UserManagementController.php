@@ -12,13 +12,23 @@ use vsoft\news\models\CmsShow;
 use yii\web\Response;
 use yii\web\UploadedFile;
 use yii\web\View;
+use frontend\components\Controller;
 
-class UserManagementController extends \yii\web\Controller
+class UserManagementController extends Controller
 {
     public $layout = '@app/views/user-management/layouts/main';
+
+    public function beforeAction($action)
+    {
+        if(Yii::$app->user->isGuest){
+            $this->redirect(['/member/login']);
+        }
+        return parent::beforeAction($action);
+    }
+
     public function actionIndex()
     {
-        $this->redirect('/user-management/ads');
+        $this->redirect('/user-management/chart');
     }
 
     public function actionAds()
