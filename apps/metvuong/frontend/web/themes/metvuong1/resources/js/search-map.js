@@ -139,6 +139,8 @@ function start() {
 				return false;
 			}
 			
+			gmap.removeAllMarker();
+			
 			$.get(self.attr('href'), {}, function(r){
 				response = r;
 				loadListing();
