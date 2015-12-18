@@ -83,6 +83,11 @@ class UserManagementController extends Controller
         ]);
 
         $model = $model->loadProfile();
+        if($model->avatar) {
+            $model->avatar  = Url::to('/store/avatar/' . $model->avatar);
+        } else {
+            $model->avatar  = Url::to('/store/avatar/default-avatar.jpg');
+        }
 
         if(Yii::$app->request->isAjax) {
             if(Yii::$app->request->isPost){
@@ -155,8 +160,8 @@ class UserManagementController extends Controller
             $uniqid = uniqid();
             $extension = pathinfo($image->name, PATHINFO_EXTENSION);
 
-            $orginal = $uniqid . '.' . $extension;
-            $thumbnail = $uniqid . '.thumb.' . $extension;
+            $orginal = 'u_'. Yii::$app->user->id. '_' .$uniqid . '.' . $extension;
+            $thumbnail = 'u_'. Yii::$app->user->id. '_' .$uniqid . '.thumb.' . $extension;
 
             $orginalPath = $dir . '/' . $orginal;
             $thumbnailPath = $dir . '/' . $thumbnail;
@@ -173,7 +178,7 @@ class UserManagementController extends Controller
                 'name'          => $orginal,
                 'type'          => $image->type,
                 'size'          => $image->size,
-                'deleteUrl'     => Url::to(['upload/delete-image', 'orginal' => $orginal, 'thumbnail' => $thumbnail, 'folder' => $folder]),
+                'deleteUrl'     => Url::to(['user-management/delete-image', 'orginal' => $orginal, 'thumbnail' => $thumbnail, 'folder' => $folder]),
                 'deleteType'    => 'DELETE',
                 'deleteLater'	=> 0,
             ];
@@ -181,4 +186,25 @@ class UserManagementController extends Controller
             return $response;
         }
     }
+
+    public function actionDeleteImage($orginal, $thumbnail, $deleteLater = false, $folder = 'building-project-images', $resizeForAds = false) {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if(! $deleteLater) {
+            $dir = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $folder;
+            unlink($dir . DIRECTORY_SEPARATOR . $orginal);
+            if(unlink($dir . DIRECTORY_SEPARATOR . $thumbnail) && $thumbnail != "default-avatar.thumb.jpg")
+            {
+                $model = Yii::createObject([
+                    'class' => ProfileForm::className(),
+                    'scenario' => 'updateavatar',
+                ]);
+
+                $model->updateAvatar(null);
+            }
+
+        }
+
+        return ['files' => []];
+    }
+
 }

@@ -54,7 +54,8 @@ class ProfileForm extends Model
     {
         return [
             'updateprofile' => ['name', 'public_email', 'phone', 'mobile', 'address'],
-            'password'   => ['old_password', 'new_password'],
+            'password' => ['old_password', 'new_password'],
+            'updateavatar' => ['avatar', 'created_at', 'bio'],
         ];
     }
 

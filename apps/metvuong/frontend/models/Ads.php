@@ -47,12 +47,23 @@ class Ads extends Component
                     case 3:
                         if(!empty($post['newsType']) && $post['newsType'] == 1){
                             if($arrCats = array_values(Yii::$app->params["news"]["widget-category"])){
-                                $detail = CmsShow::find()->where('catalog_id IN ('.implode($arrCats, ',').')')->orderBy('id DESC')->one();
-                                $url = Url::to(['news/view', 'id' => $detail->id, 'slug' => $detail->slug, 'cat_id' => $detail->catalog->id, 'cat_slug' => $detail->catalog->slug]);
+//                                $detail = CmsShow::find()->where('catalog_id IN ('.implode($arrCats, ',').')')->orderBy('id DESC')->one();
+                                $cat_id = empty($post["newsCat"]) == false ? $post["newsCat"] : 0; //implode($arrCats, ',');
+                                $detail = CmsShow::find()->where('catalog_id IN ('.$cat_id.')')->orderBy('id DESC')->one();
+                                if(!empty($detail))
+                                    $url = Url::to(['news/view', 'id' => $detail->id, 'slug' => $detail->slug, 'cat_id' => $detail->catalog->id, 'cat_slug' => $detail->catalog->slug]);
+                                else
+                                    $url = Url::to(['news/findnotfound']);
                             }
                         }else if(!empty($post['newsType']) && $post['newsType'] == 2){
-                            $model = AdBuildingProject::find()->where([])->one();
-                            $url = Url::to(['/building-project/view', 'slug' => $model->slug]);
+                            $bp_id = empty($post["project"]) == false ? $post["project"] : 0;
+                            $model = AdBuildingProject::find()->andWhere('id = :id',[':id' => $bp_id])->one();
+                            if(!empty($model)) {
+                                $url = Url::to(['/building-project/view', 'slug' => $model->slug]);
+                            }
+                            else {
+                                $url = Url::to(['news/findnotfound']);
+                            }
                         }
                         break;
                 }

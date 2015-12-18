@@ -12,8 +12,8 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'console\controllers',
     'aliases' => array(
-        '@dektrium/user' => dirname(dirname(dirname(dirname(__DIR__)))) . '/vendor/dektrium/yii2-user',
-        '@vendor' => dirname(dirname(dirname(dirname(__DIR__)))) . '/vendor',
+        '@dektrium/user' => dirname(dirname(dirname(dirname(__DIR__)))) . '/myvendor/dektrium/yii2-user',
+        '@vendor' => dirname(dirname(dirname(dirname(__DIR__)))) . '/myvendor',
         '@common' => dirname(dirname(__DIR__)) . '/common',
         '@keltstr/simplehtmldom' => dirname(dirname(__DIR__)) . '/common/myvendor/keltstr/simplehtmldom',
         '@linslin/yii2/curl' => dirname(dirname(__DIR__)) . '/common/myvendor/linslin/yii2-curl',

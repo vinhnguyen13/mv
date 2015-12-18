@@ -53,6 +53,11 @@ class NewsController extends Controller
         return $this->render('detail', ['news' => $detail, 'author' => $author, 'catalog' => $catalog]);
     }
 
+    public function actionFindnotfound()
+    {
+        return $this->render('404');
+    }
+
     public function actionList($cat_id)
     {
         $dataProvider = new ActiveDataProvider([

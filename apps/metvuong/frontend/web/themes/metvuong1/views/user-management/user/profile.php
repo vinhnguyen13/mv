@@ -70,15 +70,15 @@ use yii\bootstrap\ActiveForm;
                 ]); ?>
                 <?=Html::hiddenInput('deleteLater', '', ['id' => 'delete-later']);?>
                 <?= $form->field($model, 'avatar')->widget(FileUploadUI::className(), [
-                    'url' => Url::to(['/user-management/avatar', 'folder'=>'avatar']),
-                    'clientOptions' => ['maxNumberOfFiles' => 1],
-                    'fieldOptions' => ['folder'=>'avatar'],
-                ])->label(false) ?>
-                <!-- <img src="https://www.zillowstatic.com/static/images/nophoto_h_g.png"> -->
+                        'url' => Url::to(['/user-management/avatar', 'folder' => 'avatar']),
+                        'clientOptions' => ['maxNumberOfFiles' => 1],
+                        'fieldOptions' => ['folder' => 'avatar'],
+                    ])->label(false) ?>
                 <?php ActiveForm::end(); ?>
+<!--                <img src="https://www.zillowstatic.com/static/images/nophoto_h_g.png"> -->
             </div>
             <div>Member since: <?= Yii::$app->formatter->asDatetime($model->created_at, "php:d/m/Y");?></div>
-            <br><br>
+            <br>
             <div>
                 <?= $model->bio ?>
             </div>
