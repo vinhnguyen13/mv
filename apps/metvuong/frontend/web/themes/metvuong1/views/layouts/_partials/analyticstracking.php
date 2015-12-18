@@ -1,5 +1,6 @@
 <?php
-if(!empty(YII_ENV) && in_array(YII_ENV, ['prod', 'test'])){
+$env = YII_ENV;
+if(!empty($env) && in_array($env, [YII_ENV_PROD, YII_ENV_DEV])){
 ?>
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
