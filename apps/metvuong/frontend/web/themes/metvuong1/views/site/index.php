@@ -7,11 +7,11 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
 ?>
 <?php $this->beginContent('@app/views/layouts/_partials/js/jsContainer.php', ['options'=>[]]); ?><?php $this->endContent();?>
 <script>
-
     $(document).ready(function(){
         $(document).on('click', '#btn-search', function(){
             animateSearch();
             setTimeout(function() {
+                ga('send', {hitType: 'event',eventCategory: 'Listing',eventAction: 'click',eventLabel: 'SearchForm'});
                 setTimeout(function() {$('#search-kind').submit();},100);
             },1000);
             return false;
@@ -20,6 +20,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
         $(document).bind( 'real-estate/news', function(event, json, string){
             animateSearch();
             setTimeout(function() {
+                ga('send', {hitType: 'event',eventCategory: 'PostListing',eventAction: 'click',eventLabel: 'SearchForm'});
                 setTimeout(function() {$('#search-kind').submit();},100);
             },1000);
         });
@@ -27,6 +28,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
         $(document).bind( 'real-estate/post', function(event, json, string){
             animateSearch();
             setTimeout(function() {
+                ga('send', {hitType: 'event',eventCategory: 'News',eventAction: 'click',eventLabel: 'SearchForm'});
                 setTimeout(function() {$('#search-kind').submit();},100);
             },1000);
         });
