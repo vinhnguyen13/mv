@@ -1,5 +1,5 @@
 <?php
-if(!YII_DEBUG){
+if(!empty(YII_ENV) && in_array(YII_ENV, [YII_ENV_PROD, YII_ENV_TEST])){
 ?>
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

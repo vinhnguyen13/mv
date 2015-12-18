@@ -22,9 +22,12 @@ $arr = [
 
     ]
 ];
+$this->beginContent('@app/views/layouts/_partials/js/jsContainer.php', ['options'=>[]]); ?><?php $this->endContent();
+$this->registerCssFile('https://select2.github.io/dist/css/select2.min.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
+$this->registerJsFile ( 'https://select2.github.io/dist/js/select2.full.js', ['position' => View::POS_BEGIN]);
+
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/search-vsoft.js', ['position'=>View::POS_END]);
 ?>
-<?php $this->beginContent('@app/views/layouts/_partials/js/jsContainer.php', ['options'=>[]]); ?><?php $this->endContent();?>
 <div class="">
     <ul class="nav nav-tabs">
         <li class="active" data-step-config="step1" data-step-current="thanhpho" data-step-default="thanhpho"><a class="tab">Muốn Mua/Thuê</a></li>
@@ -43,6 +46,35 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
         </div>
     </div>
 </div>
+
+<select id="example" class="thanhpho form-control" multiple="multiple" style="width: 200px;"></select>
+<script>
+$(document).ready(function() {
+    var data = [{ id: 0, text: 'enhancement' }, 
+    { id: 1, text: 'bug' }, 
+    { id: 2, text: 'duplicate' }, 
+    { id: 3, text: 'invalid' }, 
+    { id: 4, text: 'wontfix' }];
+
+var select = $("#example").select2({
+        data: data,
+    });
+    select.data = data;
+//     $("#example").select2({
+//         data: data,
+//     });
+
+    $(document).on('click', '.searchInput', function () {
+        var data2 = [{ id: 0, text: 'xxxx' }];
+         $("#example").select2('val','');
+        $("#example").data('select2_values', data2);
+
+//         select.data = data2;
+		alert(4);
+	});
+
+});
+</script>
 
 
 
