@@ -84,11 +84,7 @@ function start() {
 				$('#detail-listing').html($(response).html());
 				$('.gallery-detail').imagesLoaded()
 				 	.always( function( instance ) {
-					    // all loaded (broken + success)
-				 		console.log('all images loaded');
-				 	})
-				 	.done( function( instance ) {
-						$('#map-loading').hide();
+				 		$('#map-loading').hide();
 						if($('#detail-listing .bxslider').find('.wrap-img-detail').length > 0) {
 							setTimeout(function() {
 					 			$('#detail-listing .bxslider').bxSlider({
@@ -116,15 +112,7 @@ function start() {
 								}
 					 		},500);
 						}
-				 	})
-				 	.fail( function() {
-				 		console.log('all images loaded, at least one is broken');
-				 	})
-				 	.progress( function( instance, image ) {
-				 		var result = image.isLoaded ? 'loaded' : 'broken';
-				 		console.log( 'image is ' + result + ' for ' + image.img.src );
 				 	});
-				
 			});
 		});
 		
