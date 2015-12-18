@@ -72,6 +72,7 @@
                         <div class="row detail-post">
                             <div class="col-sm-8 dt-left-col">
                                 <h1 class="title-dt"><?= "{$product->home_no}, {$street->pre} {$street->name}, {$ward->pre} {$ward->name}, {$district->pre} {$district->name} {$city->name}" ?></h1>
+                                <p class="infor-post-date"><em class="fa fa-calendar"></em>17/12/2015</p>
                                 <p class="type-result"><em class="fa fa-circle for-rent"></em><?= mb_strtoupper("$categoryName $typeName", 'UTF-8') ?></p>
                                 <table>
                                     <?php if($product->project_building_id): ?>

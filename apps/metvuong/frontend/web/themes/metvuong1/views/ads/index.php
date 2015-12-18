@@ -23,113 +23,118 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
 		<input type="hidden" name="districtId" id="district-id" value="<?= Yii::$app->request->get('district') ?>" />
 		<input type="hidden" name="categoryId" id="category-id" value="<?= Yii::$app->request->get('category') ?>" />
 		<input type="hidden" name="orderBy" id="order-by" value="created_at" />
-	    <ul class="container clearfix outsideevent list-filter">
+	    
+        <input id="price-min-filter" type="hidden" name="price-min-filter">
+        <input id="price-max-filter" type="hidden" name="price-max-filter">
+        <input id="dt-min-filter" type="hidden" name="dientich-min-filter">
+        <input id="dt-max-filter" type="hidden" name="dientich-max-filter">
+        <input id="bed-filter" type="hidden" name="bed-filter">
+
+        <ul class="container clearfix outsideevent list-filter">
 	        <li>
 	            <a href="#">Giá</a>
-                <div class="filter-pane filter-common">
+                <div class="filter-pane filter-common" data-filter="price-min-max">
                     <div id="minmax-entries" class="minmax-entries search-entry">
                         <div class="dualboxes">
                             <div class="box1">
-                                <input class="text commaFormat" maxlength="11" size="10" name="price-min" id="price-min" type="text" placeholder="Min">
+                                <input readonly="readonly" class="text commaFormat" maxlength="11" size="10" name="price-min" id="min-val" type="text" placeholder="Min">
                             </div>
                             <div class="dash">&nbsp;</div>
                             <div class="box2">
-                                <input class="text commaFormat" maxlength="11" size="11" name="price-max" id="price-max" type="text" placeholder="Max">
+                                <input readonly="readonly" class="text commaFormat" maxlength="11" size="11" name="price-max" id="max-val" type="text" placeholder="Max">
                             </div>
                         </div>
                     </div>
                     <div class="filter-minmax">
-                        <div id="min-price-options" class="minmax-options min-price-options" data-toggle-filter="price-min">
+                        <div id="min-price-options" class="minmax-options min-price-options minmax" data-toggle-filter="min-val">
                             <ul class="dropdown-options search-entry">
-                                <li data-number="0" data-unit=""><a class="option" tabindex="0">0</a></li>
-                                <li data-number="100" data-unit="triệu"><a class="option" tabindex="0">100 triệu</a></li>
-                                <li data-number="500" data-unit="triệu"><a class="option" tabindex="0">500 triệu</a></li>
-                                <li data-number="1" data-unit="tỷ"><a class="option" tabindex="0">1 tỷ</a></li>
-                                <li data-number="1,5" data-unit="tỷ"><a class="option" tabindex="0">1,5 tỷ</a></li>
-                                <li data-number="2" data-unit="tỷ"><a class="option" tabindex="0">2 tỷ</a></li>
-                                <li data-number="2,5" data-unit="tỷ"><a class="option" tabindex="0">2,5 tỷ</a></li>
-                                <li data-number="3" data-unit="tỷ"><a class="option" tabindex="0">3 tỷ</a></li>
-                                <li data-number="3,5" data-unit="tỷ"><a class="option" tabindex="0">3,5 tỷ</a></li>
-                                <li data-number="4" data-unit="tỷ"><a class="option" tabindex="0">4 tỷ</a></li>
+                                <li data-number="0" data-unit=""><a class="option">0</a></li>
+                                <li data-number="100000000" data-unit="triệu"><a class="option">100 triệu</a></li>
+                                <li data-number="500000000" data-unit="triệu"><a class="option">500 triệu</a></li>
+                                <li data-number="1000000000" data-unit="tỷ"><a class="option">1 tỷ</a></li>
+                                <li data-number="1500000000" data-unit="tỷ"><a class="option">1,5 tỷ</a></li>
+                                <li data-number="2000000000" data-unit="tỷ"><a class="option">2 tỷ</a></li>
+                                <li data-number="2500000000" data-unit="tỷ"><a class="option">2,5 tỷ</a></li>
+                                <li data-number="3000000000" data-unit="tỷ"><a class="option">3 tỷ</a></li>
+                                <li data-number="3500000000" data-unit="tỷ"><a class="option">3,5 tỷ</a></li>
+                                <li data-number="4000000000" data-unit="tỷ"><a class="option">4 tỷ</a></li>
                             </ul>
                         </div>
-                        <div id="max-price-options" class="minmax-options max-price-options hide" data-toggle-filter="price-max">
+                        <div id="max-price-options" class="minmax-options max-price-options hide minmax" data-toggle-filter="max-val">
                             <ul class="dropdown-options search-entry">
-                                <li data-number="0" data-unit=""><a class="option" tabindex="0">0</a></li>
-                                <li data-number="100" data-unit="triệu"><a class="option" tabindex="0">100 triệu</a></li>
-                                <li data-number="500" data-unit="triệu"><a class="option" tabindex="0">500 triệu</a></li>
-                                <li data-number="1" data-unit="tỷ"><a class="option" tabindex="0">1 tỷ</a></li>
-                                <li data-number="1,5" data-unit="tỷ"><a class="option" tabindex="0">1,5 tỷ</a></li>
-                                <li data-number="2" data-unit="tỷ"><a class="option" tabindex="0">2 tỷ</a></li>
-                                <li data-number="2,5" data-unit="tỷ"><a class="option" tabindex="0">2,5 tỷ</a></li>
-                                <li data-number="3" data-unit="tỷ"><a class="option" tabindex="0">3 tỷ</a></li>
-                                <li data-number="3,5" data-unit="tỷ"><a class="option" tabindex="0">3,5 tỷ</a></li>
-                                <li data-number="4" data-unit="tỷ"><a class="option" tabindex="0">4 tỷ</a></li>
-                                <li data-value=""><a class="option" tabindex="0">Bất kỳ</a></li>
+                                <li data-number="100000000" data-unit="triệu"><a class="option">100 triệu</a></li>
+                                <li data-number="500000000" data-unit="triệu"><a class="option">500 triệu</a></li>
+                                <li data-number="1000000000" data-unit="tỷ"><a class="option">1 tỷ</a></li>
+                                <li data-number="1500000000" data-unit="tỷ"><a class="option">1,5 tỷ</a></li>
+                                <li data-number="2000000000" data-unit="tỷ"><a class="option">2 tỷ</a></li>
+                                <li data-number="2500000000" data-unit="tỷ"><a class="option">2,5 tỷ</a></li>
+                                <li data-number="3000000000" data-unit="tỷ"><a class="option">3 tỷ</a></li>
+                                <li data-number="3500000000" data-unit="tỷ"><a class="option">3,5 tỷ</a></li>
+                                <li data-number="4000000000" data-unit="tỷ"><a class="option">4 tỷ</a></li>
+                                <li class="anyVal" data-number><a class="option">Bất kỳ</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
 	        </li>
 	        <li>
-	            <a href="#">Diện tích</a>
-                <div class="filter-common filter-pane">
+	            <a href="#" data-symbol-unit="m<sup>2</sup>">Diện tích</a>
+                <div class="filter-common filter-pane" data-filter="dt-min-max">
                     <div id="minmax-entries" class="minmax-entries search-entry">
                         <div class="dualboxes">
                             <div class="box1">
-                                <input class="text commaFormat" maxlength="11" size="10" name="dt-min" id="dt-min" type="text" placeholder="Min">
+                                <input readonly="readonly" class="text commaFormat" maxlength="11" size="10" name="dt-min" id="min-val" type="text" placeholder="Min">
                             </div>
                             <div class="dash">&nbsp;</div>
                             <div class="box2">
-                                <input class="text commaFormat" maxlength="11" size="11" name="dt-max" id="dt-max" type="text" placeholder="Max">
+                                <input readonly="readonly" class="text commaFormat" maxlength="11" size="11" name="dt-max" id="max-val" type="text" placeholder="Max">
                             </div>
                         </div>
                     </div>
                     <div class="filter-minmax">
-                        <div id="min-dt-options" class="minmax-options min-dt-options" data-toggle-filter="dt-min">
+                        <div id="min-dt-options" class="minmax-options min-dt-options minmax" data-toggle-filter="min-val">
                             <ul class="dropdown-options search-entry">
-                                <li data-value=""><a class="option" tabindex="0">0</a></li>
-                                <li data-value="50,000"><a class="option" tabindex="0">10 m<sup>2</sup></a></li>
-                                <li data-value="75,000"><a class="option" tabindex="0">20 m<sup>2</sup></a></li>
-                                <li data-value="100,000"><a class="option" tabindex="0">40 m<sup>2</sup></a></li>
-                                <li data-value="150,000"><a class="option" tabindex="0">60 m<sup>2</sup></a></li>
-                                <li data-value="200,000"><a class="option" tabindex="0">80 m<sup>2</sup></a></li>
-                                <li data-value="250,000"><a class="option" tabindex="0">100 m<sup>2</sup></a></li>
-                                <li data-value="300,000"><a class="option" tabindex="0">150 m<sup>2</sup></a></li>
-                                <li data-value="400,000"><a class="option" tabindex="0">200 m<sup>2</sup></a></li>
-                                <li data-value="500,000"><a class="option" tabindex="0">250 m<sup>2</sup></a></li>
+                                <li data-number="0"><a class="option">0</a></li>
+                                <li data-number="10"><a class="option">10 m<sup>2</sup></a></li>
+                                <li data-number="20"><a class="option">20 m<sup>2</sup></a></li>
+                                <li data-number="40"><a class="option">40 m<sup>2</sup></a></li>
+                                <li data-number="60"><a class="option">60 m<sup>2</sup></a></li>
+                                <li data-number="80"><a class="option">80 m<sup>2</sup></a></li>
+                                <li data-number="100"><a class="option">100 m<sup>2</sup></a></li>
+                                <li data-number="150"><a class="option">150 m<sup>2</sup></a></li>
+                                <li data-number="200"><a class="option">200 m<sup>2</sup></a></li>
+                                <li data-number="250"><a class="option">250 m<sup>2</sup></a></li>
                             </ul>
                         </div>
-                        <div id="max-dt-options" class="minmax-options max-dt-options hide" data-toggle-filter="dt-max">
+                        <div id="max-dt-options" class="minmax-options max-dt-options hide minmax" data-toggle-filter="max-val">
                             <ul class="dropdown-options search-entry">
-                                <li data-value="50,000"><a class="option" tabindex="0">10 m<sup>2</sup></a></li>
-                                <li data-value="75,000"><a class="option" tabindex="0">20 m<sup>2</sup></a></li>
-                                <li data-value="100,000"><a class="option" tabindex="0">40 m<sup>2</sup></a></li>
-                                <li data-value="150,000"><a class="option" tabindex="0">60 m<sup>2</sup></a></li>
-                                <li data-value="200,000"><a class="option" tabindex="0">80 m<sup>2</sup></a></li>
-                                <li data-value="250,000"><a class="option" tabindex="0">100 m<sup>2</sup></a></li>
-                                <li data-value="300,000"><a class="option" tabindex="0">150 m<sup>2</sup></a></li>
-                                <li data-value="400,000"><a class="option" tabindex="0">200 m<sup>2</sup></a></li>
-                                <li data-value="500,000"><a class="option" tabindex="0">250 m<sup>2</sup></a></li>
-                                <li data-value=""><a class="option" tabindex="0">Bất kỳ</a></li>
+                                <li data-number="10"><a class="option">10 m<sup>2</sup></a></li>
+                                <li data-number="20"><a class="option">20 m<sup>2</sup></a></li>
+                                <li data-number="40"><a class="option">40 m<sup>2</sup></a></li>
+                                <li data-number="60"><a class="option">60 m<sup>2</sup></a></li>
+                                <li data-number="80"><a class="option">80 m<sup>2</sup></a></li>
+                                <li data-number="100"><a class="option">100 m<sup>2</sup></a></li>
+                                <li data-number="150"><a class="option">150 m<sup>2</sup></a></li>
+                                <li data-number="200"><a class="option">200 m<sup>2</sup></a></li>
+                                <li data-number="250"><a class="option">250 m<sup>2</sup></a></li>
+                                <li class="anyVal" data-number><a class="option">Bất kỳ</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
 	        </li>
 	        <li>
-	            <a href="#">Phòng ngủ</a>
+	            <a href="#"><span></span>Phòng ngủ</a>
                 <div class="filter-common filter-pane filter-bed">
                     <div class="filter-bed">
                         <ul class="dropdown-options search-entry">
-                            <li data-value="50,000"><a class="option" tabindex="0">0</a></li>
-                            <li data-value="50,000"><a class="option" tabindex="0">1</a></li>
-                            <li data-value="50,000"><a class="option" tabindex="0">2</a></li>
-                            <li data-value="50,000"><a class="option" tabindex="0">3</a></li>
-                            <li data-value="50,000"><a class="option" tabindex="0">4</a></li>
-                            <li data-value="50,000"><a class="option" tabindex="0">5</a></li>
-                            <li data-value="50,000"><a class="option" tabindex="0">6</a></li>
-                            <li data-value=""><a class="option" tabindex="0">Bất kỳ</a></li>
+                            <li data-value="50,000"><a class="option">0</a></li>
+                            <li data-value="50,000"><a class="option">1</a></li>
+                            <li data-value="50,000"><a class="option">2</a></li>
+                            <li data-value="50,000"><a class="option">3</a></li>
+                            <li data-value="50,000"><a class="option">4</a></li>
+                            <li data-value="50,000"><a class="option">5</a></li>
+                            <li data-value="50,000"><a class="option">6</a></li>
                         </ul>
                     </div>
                 </div>
@@ -226,6 +231,9 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
                     </form>
                 </div>
 	        </li>
+            <li>
+                <button type="button" class="btn btn-primary btn-sm btn-common"><em class="fa fa-filter"></em>Chọn lọc</button>
+            </li>
 	    </ul>
     </form>
 </div>
