@@ -14,6 +14,7 @@ use vsoft\ad\models\AdContactInfo;
 use yii\web\Cookie;
 use vsoft\express\components\ImageHelper;
 use vsoft\express\components\StringHelper;
+use vsoft\ad\models\base\ActiveRecord;
 
 class AdsController extends Controller
 {
@@ -34,13 +35,11 @@ class AdsController extends Controller
         	$categoryId = Yii::$app->request->get('categoryId');
         	$orderBy = Yii::$app->request->get('orderBy', 'created_at');
         	
-        	$query = AdProduct::find()->with('adProductAdditionInfo');
-        	
-        	if($orderBy == 'created_at') {
-        		$query->orderBy("$orderBy DESC");
-        	} else {
-        		$query->orderBy("$orderBy ASC");
-        	}
+        	$query = (new \yii\db\Query())->groupBy('ad_product.id')
+        				->leftJoin('ad_product_addition_info', 'ad_product.id = ad_product_addition_info.product_id')
+        				->leftJoin('ad_images', 'ad_product.id = ad_images.product_id')
+        				->groupBy('ad_product.id')
+        				->select('ad_product.*, ad_images.file_name');
         	
         	if($cityId) {
         		$query->where('city_id = :city_id', [':city_id' => $cityId]);
@@ -53,22 +52,36 @@ class AdsController extends Controller
         	if($categoryId) {
         		$query->andWhere('category_id = :category_id', [':category_id' => $categoryId]);
         	}
+
+        	$queryCraw = clone $query;
         	
-        	$products = $query->all();
+        	$query = $query->from('ad_product')->addSelect(["(0) AS is_craw"]);
+        	$queryCraw = $queryCraw->from(\Yii::$app->params['schemaPrefix'] . 'ad_product')->addSelect(["(1) AS is_craw"]);
+        	
+        	$fullQuery = (new yii\db\Query())->from([$query->union($queryCraw)]);
+        	
+        	if($orderBy == 'created_at') {
+        		$fullQuery->orderBy("$orderBy DESC");
+        	} else {
+        		$fullQuery->orderBy("$orderBy ASC");
+        	}
+        	
+        	$page = Yii::$app->request->get('page', 1);
+        	$limit = \Yii::$app->params['listingLimit'];
+        	$offset = ($page - 1) * $limit;
+        	
+        	$products = $fullQuery->limit($limit)->offset($offset)->all();
         	
         	$productResponse = [];
         	
         	foreach ($products as $k => $product) {
-        		$productResponse[$k] = $product->attributes;
-        		$productResponse[$k]['previous_time'] = StringHelper::previousTime($product->created_at);
-        		$productResponse[$k]['price'] = StringHelper::formatCurrency($product->price);
-        		$productResponse[$k]['area'] = StringHelper::formatCurrency($product->area);
-        		$productResponse[$k]['adProductAdditionInfo'] = $product->adProductAdditionInfo;
+        		$productResponse[$k] = $product;
+        		$productResponse[$k]['previous_time'] = StringHelper::previousTime($product['created_at']);
+        		$productResponse[$k]['price'] = StringHelper::formatCurrency($product['price']);
+        		$productResponse[$k]['area'] = StringHelper::formatCurrency($product['area']);
         		
-        		if($product->adImages) {
-        			$images = $product->adImages;
-        			$image = $images[0];
-        			$productResponse[$k]['image_url'] = $image->imageThumb;
+        		if($product['file_name']) {
+        			$productResponse[$k]['image_url'] = AdImages::getImageUrl($product['file_name']);
         		} else {
         			$productResponse[$k]['image_url'] = Yii::$app->view->theme->baseUrl . '/resources/images/default-ads.jpg';;
         		}
@@ -80,7 +93,11 @@ class AdsController extends Controller
         return $this->render('index');
     }
     
-    public function actionDetail($id) {
+    public function actionDetail($id, $isCraw) {
+    	if($isCraw) {
+    		ActiveRecord::$schemaPrefix = \Yii::$app->params['schemaPrefix'];
+    	}
+    	
     	$product = AdProduct::findOne($id);
     	return $this->renderPartial('detail', ['product' => $product]); 
     }

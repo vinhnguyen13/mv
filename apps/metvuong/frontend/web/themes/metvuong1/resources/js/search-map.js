@@ -1,5 +1,4 @@
 var gmap = null, response = null, listResult, infoWindow;
-var zIndex = 100;
 $(document).ready(function(){
 	listResult = $('.list-results');
 	var mapOptions = {
@@ -52,7 +51,7 @@ function start() {
 					return;
 				var marker = gmap.getMarker(self.data('id'));
 				marker.setIcon('/images/marker-hover.png');
-				marker.setZIndex(zIndex++);
+				marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
 				if(!gmap.getBounds().contains(marker.getPosition())) {
 					gmap.setCenter(marker.getPosition());
 				}
@@ -72,7 +71,7 @@ function start() {
 			
 			$('#map-loading').height($('.cd-main-content').height()).show();
 			
-			$.get('/ads/detail', {id: $(this).data('detail')}, function(response){
+			$.get('/ads/detail', {id: $(this).data('detail'), isCraw: $(this).data('is-craw')}, function(response){
 
 				var width = $('.wrap-map-result').width();
 				width = (width > 820) ? 820 : width;
@@ -165,7 +164,9 @@ function makeMarker(product) {
 	var marker = new Marker({
 		draggable: false,
 	    position: {lat: Number(product.lat), lng: Number(product.lng)},
-	    icon: '/images/marker.png'
+	    icon: '/images/marker.png',
+	    optimized: false,
+	    zIndex: google.maps.Marker.MAX_ZINDEX++
 	});
 	
 	marker.click(function(latLng){
@@ -192,16 +193,16 @@ function makeMarker(product) {
 	var price = (product.type == 1) ? product.price : product.price + '/tháng';
 	
 	var roomNo = '';
-	if(product['adProductAdditionInfo']['room_no']) {
-		roomNo = '• ' + product['adProductAdditionInfo']['room_no'] + ' phòng ngủ ';
+	if(product['room_no']) {
+		roomNo = '• ' + product['room_no'] + ' phòng ngủ ';
 	}
 	
 	var floorNo = '';
-	if(product['adProductAdditionInfo']['floor_no']) {
-		floorNo = '• ' + product['adProductAdditionInfo']['floor_no'] + ' tầng ';
+	if(product['floor_no']) {
+		floorNo = '• ' + product['floor_no'] + ' tầng ';
 	}
 	
-	var li = '<li data-detail="' + product.id +'" data-id="' + markerId + '">' +
+	var li = '<li data-is-craw="' + product.is_craw +'" data-detail="' + product.id +'" data-id="' + markerId + '">' +
                 '<div class="bgcover wrap-img pull-left" style="background-image:url('+product.image_url+')"><a href="#" class=""></a></div>' +
                 '<div class="infor-result">' +
                     '<p class="item-title">' + address + '</p>' +

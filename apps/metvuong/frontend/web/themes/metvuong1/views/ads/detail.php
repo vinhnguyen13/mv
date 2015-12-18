@@ -20,7 +20,7 @@
 	$direction = AdProductAdditionInfo::directionList();
 	
 	$owner = \dektrium\user\models\User::findOne($product->user_id);
-	if($owner->profile->avatar) {
+	if($owner && $owner->profile->avatar) {
 		$avatar = Url::to('/store/avatar/' . $owner->profile->avatar);
 	} else {
 		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
@@ -94,7 +94,7 @@
                                 <?php
                                 	$additionInfo = $product->adProductAdditionInfo;
                                 	unset($additionInfo['product_id']);
-                                	if(array_filter($additionInfo->attributes)):
+                                	if($additionInfo && array_filter($additionInfo->attributes)):
                                 ?>
                                 <p class="ttmt">Thông tin thêm</p>
                                 <table>
@@ -149,6 +149,7 @@
                                 </table>
                                 <?php endif; ?>
                             </div>
+                            <?php if($product->adContactInfo): ?>
                             <div class="col-sm-4 dt-right-col">
                                 <div class="contact-wrapper">
                                     <div class="rating pull-right">
@@ -201,6 +202,7 @@
                                     </form>
                                 </div>
                             </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

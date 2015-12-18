@@ -19,14 +19,14 @@ use Yii;
  *
  * @property AdProduct $product
  */
-class AdProductAdditionInfoBase extends \yii\db\ActiveRecord
+class AdProductAdditionInfoBase extends ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'ad_product_addition_info';
+        return parent::$schemaPrefix . 'ad_product_addition_info';
     }
 
     /**

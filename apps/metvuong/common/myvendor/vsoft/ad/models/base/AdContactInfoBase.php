@@ -16,14 +16,14 @@ use Yii;
  *
  * @property AdProduct $product
  */
-class AdContactInfoBase extends \yii\db\ActiveRecord
+class AdContactInfoBase extends ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'ad_contact_info';
+        return parent::$schemaPrefix . 'ad_contact_info';
     }
 
     /**

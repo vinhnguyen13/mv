@@ -18,18 +18,21 @@ class AdImages extends AdImagesBase
         ];
     }
     
+    public static function getImageUrl($fileName, $size = 'thumb') {
+    	$pathinfo = pathinfo($fileName);
+    	
+    	return Url::to('/store/ads/' . $pathinfo['filename'] . '.' . $size . '.' . $pathinfo['extension']);
+    }
+    
     public function getImageThumb() {
-    	$pathinfo = pathinfo($this->file_name);
-    	return Url::to('/store/ads/' . $pathinfo['filename'] . '.thumb.' . $pathinfo['extension']);
+    	return self::getImageUrl($this->file_name);
     }
     
     public function getImageMedium() {
-    	$pathinfo = pathinfo($this->file_name);
-    	return Url::to('/store/ads/' . $pathinfo['filename'] . '.medium.' . $pathinfo['extension']);
+    	return self::getImageUrl($this->file_name, 'medium');
     }
     
     public function getImageLarge() {
-    	$pathinfo = pathinfo($this->file_name);
-    	return Url::to('/store/ads/' . $pathinfo['filename'] . '.large.' . $pathinfo['extension']);
+    	return self::getImageUrl($this->file_name, 'large');
     }
 }

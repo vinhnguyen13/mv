@@ -53,14 +53,14 @@ use vsoft\ad\models\base\AdProductAdditionInfoBase;
  * @property AdWard $ward
  * @property AdProductAdditionInfo $adProductAdditionInfo
  */
-class AdProductBase extends \yii\db\ActiveRecord
+class AdProductBase extends ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'ad_product';
+        return parent::$schemaPrefix . 'ad_product';
     }
 
     /**
