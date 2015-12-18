@@ -1,3 +1,7 @@
+<?php
+$env = YII_ENV;
+if(!empty($env) && in_array($env, [YII_ENV_PROD, YII_ENV_TEST])){
+?>
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -8,3 +12,6 @@
     ga('send', 'pageview');
 
 </script>
+<?php
+}
+?>
