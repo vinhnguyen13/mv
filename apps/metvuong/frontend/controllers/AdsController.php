@@ -15,6 +15,8 @@ use yii\web\Cookie;
 use vsoft\express\components\ImageHelper;
 use vsoft\express\components\StringHelper;
 use vsoft\ad\models\base\ActiveRecord;
+use yii\data\Pagination;
+use yii\widgets\LinkPager;
 
 class AdsController extends Controller
 {
@@ -66,11 +68,10 @@ class AdsController extends Controller
         		$fullQuery->orderBy("$orderBy ASC");
         	}
         	
-        	$page = Yii::$app->request->get('page', 1);
-        	$limit = \Yii::$app->params['listingLimit'];
-        	$offset = ($page - 1) * $limit;
+        	$pages = new Pagination(['totalCount' => $fullQuery->count()]);
+        	$pages->pageSize = \Yii::$app->params['listingLimit'];
         	
-        	$products = $fullQuery->limit($limit)->offset($offset)->all();
+        	$products = $fullQuery->limit($pages->limit)->offset($pages->offset)->all();
         	
         	$productResponse = [];
         	
@@ -87,7 +88,7 @@ class AdsController extends Controller
         		}
         	}
         	
-        	return $productResponse;
+        	return ['productResponse' => $productResponse, 'pages' => LinkPager::widget(['pagination' => $pages,])];
         }
         
         return $this->render('index');

@@ -130,6 +130,21 @@ function start() {
 			});
 		});
 		
+		$('#moi-nhat').on('click', '.pagination a', function(e){
+			e.preventDefault();
+			
+			var self = $(this);
+			
+			if($(this).parent().hasClass('active')) {
+				return false;
+			}
+			
+			$.get(self.attr('href'), {}, function(r){
+				response = r;
+				loadListing();
+			});
+		});
+		
 		loadListing();
 	}
 }
@@ -137,14 +152,18 @@ function start() {
 function loadListing() {
 	var list = '';
 	var count = 0;
-	for(index in response) {
-		var product = response[index];
+	
+	for(index in response.productResponse) {
+		var product = response.productResponse[index];
 		list += makeMarker(product);
 		count++;
 	}
 	
 	$('#count-listing').text(count);
 	listResult.empty().append(list);
+	
+	$('.pagination').remove();
+	$('#moi-nhat').append(response.pages);
 }
 
 function makeMarker(product) {
@@ -165,6 +184,7 @@ function makeMarker(product) {
 	marker.click(function(latLng){
 		var id = marker.getId();
 		var listEl = $('#moi-nhat').clone(true).removeAttr('id');
+		listEl.find('.pagination').remove();
 		var list = listEl.find('li');
 		
 		list.each(function(){
