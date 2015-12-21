@@ -246,7 +246,8 @@ div.wrap-page-home #search-kind .type-search {
     color: #294000;
     border: none;
     float: right;
-    font-size: 1.3em;
+    font-size: 1em;
+    /* overflow: hidden; */
 }
 div.wrap-page-home .ani-search #search-kind .form-group input, 
 div.wrap-page-home  #search-kind .form-group input {
@@ -2405,6 +2406,7 @@ div.wrap-page-home #search-kind .dropdown button {
     /* display: none; */
     padding-left: 5px;
     padding-top: 3px;
+    /* float: left; */
 }
 .type-search ul li {
     margin-right: 5px;
@@ -2423,7 +2425,7 @@ div.wrap-page-home #search-kind .dropdown button {
     cursor: pointer;
     font-style: normal;
     position: absolute;
-    top: 26%;
+    top: 20%;
     left: 6px;
     font-size: .6em;
 }
@@ -2672,7 +2674,7 @@ div.wrap-page-home .ani-logo {
 }
 .wrap-search-home #search-kind input {
     height: 47px;
-    font-size: 1.2em;
+    font-size: 1.05em;
 }
 .wrap-search-home .search-select:before {
     border-color: rgba(194,225,245,0);
@@ -2703,10 +2705,10 @@ header.wrap-page-home .wrap-search-home .search-select a {
     border: 1px solid #458836;
 }
 .wrap-search-home .search-item h3 {
-    font-size: 1.1em;
+    font-size: .9em;
 }
 .wrap-search-home .search-item ul a {
-    font-size: .9em;
+    font-size: .8em;
     text-transform: capitalize;
 }
 .wrap-search-home .type-search ul {
@@ -2727,17 +2729,17 @@ header.wrap-page-home .wrap-search-home .search-select a {
     /* padding-top: 4px; */
 }
 .wrap-search-home .type-search li {
-    font-size: 1.8em;
+    font-size: 1.6em;
     padding-top: 0;
 }
 .wrap-search-home .ani-search .type-search li {
-    font-size: 2em;
+    font-size: 1.5em;
 }
 .wrap-search-home .ani-search .type-search li span {
     padding: 6px 0 4px;
 }
 .wrap-search-home .ani-search .type-search i {
-    top: 5px;
+    top: 4px;
 }
 .wrap-search-home .type-search li span {
     font-size: .5em;
@@ -5049,6 +5051,7 @@ header.wrap-page-home .box-search-header.ani-search > div {
 }
 .search-item ul li.notfound {
     padding-top: 5px;
+    font-size: .8em;
 }
 #min-max .search-item {
     overflow-y: visible;

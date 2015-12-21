@@ -8,8 +8,9 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
 <?php $this->beginContent('@app/views/layouts/_partials/js/jsContainer.php', ['options'=>[]]); ?><?php $this->endContent();?>
 <script>
     $(document).ready(function(){
-        $(document).on('click', '#btn-search, .btn-cost button', function(){
+        $(document).bind( 'submit_search', function(event, json, string, callback){
             animateSearch();
+            setTimeout(function(){callback();},1000);
             setTimeout(function() {
                 if (typeof ga !== "undefined") {
                     ga('send', {hitType: 'event',eventCategory: 'Listing',eventAction: 'click',eventLabel: 'SearchForm'});
@@ -19,8 +20,9 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
             return false;
         });
 
-        $(document).bind( 'real-estate/news', function(event, json, string){
+        $(document).bind( 'real-estate/news', function(event, json, string, callback){
             animateSearch();
+            setTimeout(function(){callback();},1000);
             setTimeout(function() {
                 if (typeof ga !== "undefined") {
                     ga('send', {hitType: 'event',eventCategory: 'PostListing',eventAction: 'click',eventLabel: 'SearchForm'});
@@ -29,8 +31,9 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
             },1000);
         });
         
-        $(document).bind( 'real-estate/post', function(event, json, string){
+        $(document).bind( 'real-estate/post', function(event, json, string, callback){
             animateSearch();
+            setTimeout(function(){callback();},1000);
             setTimeout(function() {
                 if (typeof ga !== "undefined") {
                     ga('send', {hitType: 'event',eventCategory: 'News',eventAction: 'click',eventLabel: 'SearchForm'});
@@ -204,7 +207,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                 
                             <?php ActiveForm::end(); ?>
                             <div class="pull-left text-right mgT-10">
-                                <div data-active="1" data-tab="mua-thue" class="search-select active" data-step='tinh-thanh|quan-huyen|{ "loai-bds": { "chung-cu": { "template": "loai-duan" }, "template_common": { "template": "min-max" } }}'>
+                                <div data-active="1" data-tab="mua-thue" class="search-select active" data-step='step1'>
                                     <a href="#" title="Muốn Mua/Thuê">
                                         <span>
                                             <em class="fa fa-home"></em>
@@ -213,7 +216,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                         <i>Muốn Mua/Thuê</i>
                                     </a>
                                 </div>
-                                <div data-active="2" data-tab="ban-thue" class="search-select" data-step='tinh-thanh|quan-huyen|loai-bds'>
+                                <div data-active="2" data-tab="ban-thue" class="search-select" data-step='step2'>
                                     <a href="#" title="Đăng ký Bán/Thuê">
                                         <span>
                                             <em class="fa fa-home"></em>
@@ -222,7 +225,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                         <i>Đăng ký Bán/Thuê</i>
                                     </a>
                                 </div>
-                                <div data-active="3" data-tab="tin-tuc"  class="search-select" data-step='{ "news": { "tin-tuc": { "template": "loai-tin-tuc" }, "du-an": { "template": "tinh-thanh|quan-huyen|loai-duan" } }}'>
+                                <div data-active="3" data-tab="tin-tuc"  class="search-select" data-step='step3'>
                                     <a href="#" title="Tin Tức">
                                         <span>
                                             <em class="fa fa-home"></em>
