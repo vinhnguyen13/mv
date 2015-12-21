@@ -8,8 +8,9 @@
 <div class="row">
     <div class="col-sm-8 col-lg-9 col-right-home detail-news">
         <div class="wrap-detail-article">
-            <input id="404" type="hidden" value="page not found">
-            <img src="http://www.devbright.net/assets/images/404.png" alt="Page not found. Please, try again!" class="right">
+            <span>Page not found result!
+                <br><br>Return <a href="<?= \yii\helpers\Url::home() ?>">homepage</a>
+            </span>
         </div>
     </div>
 </div>

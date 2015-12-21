@@ -1,9 +1,9 @@
 <?php
 namespace console\controllers;
 
+use console\models\Batdongsan;
 use console\models\Homefinder;
 use yii\console\Controller;
-use keltstr\simplehtmldom\SimpleHTMLDom;
 
 /**
  * Created by PhpStorm.
@@ -11,6 +11,7 @@ use keltstr\simplehtmldom\SimpleHTMLDom;
  * Date: 12/8/2015
  * Time: 1:30 PM
  */
+
 class CrawlerController extends Controller
 {
     public function beforeAction($action)
@@ -35,6 +36,10 @@ class CrawlerController extends Controller
 
     public function actionBatdongsan()
     {
-
+        Batdongsan::find()->parse();
+    }
+    public function actionImportbatdongsan()
+    {
+        Batdongsan::find()->importData();
     }
 }
