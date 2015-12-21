@@ -8,6 +8,73 @@
         <div id="chartAds" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     </div>
 </div>
+
+
+<div class="modal fade" id="frmListVisit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="wrap-modal clearfix">
+                    <h3>Người theo dõi</h3>
+                    <p style="color: #4a933a;">
+                        Có <span class="total">5</span> người tìm nhà xung quanh khu vực Phường 3, Quận 1, TpHCM.
+                    </p>
+
+                    <?php
+                    $yourArray = [
+                        0 => [
+                            'title' => 'Nguyễn Quang Vinh',
+                            'phone' => '0909030605',
+                            'time' => date('H:i:s d-m-Y', strtotime('-1days')),
+                        ],
+                        1 => [
+                            'title' => 'Nguyễn Trung Ngạn',
+                            'phone' => '0909030605',
+                            'time' => date('H:i:s d-m-Y', strtotime('-2days')),
+                        ],
+                        2 => [
+                            'title' => 'Quách Tuấn Lệnh',
+                            'phone' => '0909030605',
+                            'time' => date('H:i:s d-m-Y', strtotime('-3days')),
+                        ],
+                        3 => [
+                            'title' => 'Quách Tuấn Du',
+                            'phone' => '0909030605',
+                            'time' => date('H:i:s d-m-Y', strtotime('-5days')),
+                        ],
+
+                    ];
+                    $provider = new \yii\data\ArrayDataProvider([
+                        'allModels' => $yourArray,
+                        'sort' => [
+                            'attributes' => ['title','net_accumulative_cashflow'],
+                        ],
+                        'pagination' => [
+                            'pageSize' => 15,
+                        ],
+                    ]);
+                    echo \yii\grid\GridView::widget([
+                        'dataProvider' => $provider,
+                        'summary'=>"",
+                        'columns' => [
+                            ['class' => 'yii\grid\SerialColumn'],
+                            'title',
+                            'phone',
+                            'time',
+                        ],
+                    ]);?>
+                    <p>Và 500 người nữa đang theo dõi tin của bạn. Bạn vui lòng nạp thêm tiền để có thể xem thêm</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(function () {
         $('#chartAds').highcharts({
@@ -32,10 +99,10 @@
                     color: '#808080'
                 }]
             },
-            /*tooltip: {
+            tooltip: {
                 valueSuffix: ' người',
                 useHTML:true,
-                formatter: function() {
+                /*formatter: function() {
                     var tooltip;
                     if (this.key == 'last') {
                         tooltip = '<b>Final result is </b> ' + this.y;
@@ -44,21 +111,34 @@
                         tooltip =  '<span style="color:' + this.series.color + '">' + this.series.name + '</span>: <b>' + this.y + '</b><br/>';
                     }
                     return tooltip;
-                }
-            },*/
-            tooltip: {
-                useHTML: true,
-                borderRadius: 8,
-                backgroundColor:'rgba(255, 255, 255, 0.9)',
-                headerFormat:'<div style="color:#36454d; font-size:16px">{series.name}</div><br>',
-                // pointFormat: '{point.x} {point.y:,.0f} <br>{series.name} produced <b></b><br/>warheads in {point.x}'
-                formatter: function() {
-                    return  '<div class="tooltipCover"><b  style="color:#36454d; font-size:16px">' + this.series.name +'</b><br/>' +
-                        Highcharts.dateFormat('%e - %b - %Y',
-                            new Date(this.x))
-                        +'<br>Всего постов: 20 000<br><div class="actionLine"><span class="likeCount">525 000</span><br><span class="shareCount">525 000</span><br><span class="commentsCount">525 000</span><br><a href="#" class="showComments">Show</a></div></div>';
+                }*/
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                },
+                series: {
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: function() {//alert ('Category: '+ this.category +', value: '+ this.y);
+//                                console.log(this);
+                                $('#frmListVisit').find('.total').html(this.y);
+                                $('#frmListVisit').modal();
+                            }
+                        }
+                    }
                 }
             },
+            /*chart: {
+                events: {
+                    click: function(event) {
+                        alert ('x: '+ event.xAxis[0].value +', y: '+
+                            event.yAxis[0].value);
+                    }
+                }
+            },*/
             legend: {
                 layout: 'vertical',
                 align: 'right',
@@ -67,16 +147,16 @@
             },
             series: [{
                 name: '21 Lê Thánh Tôn',
-                data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+                data: [7, 6, 9, 14, 18, 21, 25, 26, 23, 18, 13, 9]
             }, {
                 name: '57 Tôn Đản',
-                data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
+                data: [2, 8, 5, 11, 17, 22, 24, 24, 20, 14, 8, 2]
             }, {
                 name: '23 Pastuer',
-                data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
+                data: [1, 2, 4, 8, 13, 17, 18, 17, 14, 9, 3, 1]
             }, {
                 name: '11 Nguyễn Văn Trỗi',
-                data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+                data: [3, 4, 5, 8, 11, 15, 17, 16, 14, 10, 6, 4]
             }]
         });
     });
