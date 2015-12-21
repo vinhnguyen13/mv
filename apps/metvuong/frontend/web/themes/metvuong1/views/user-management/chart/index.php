@@ -111,6 +111,7 @@
                     }
                 });
             }, 500);
+            return false;
         });
     });
 </script>
