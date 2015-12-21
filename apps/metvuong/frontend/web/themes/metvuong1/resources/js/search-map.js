@@ -74,7 +74,7 @@ function start() {
 			
 			$('#map-loading').height($('.cd-main-content').height()).show();
 			
-			$.get('/ads/detail', {id: $(this).data('detail'), isCraw: $(this).data('is-craw')}, function(response){
+			$.get('/ad/detail', {id: $(this).data('detail'), isCraw: $(this).data('is-craw')}, function(response){
 
 				var width = $('.wrap-map-result').width();
 				width = (width > 820) ? 820 : width;
