@@ -3737,7 +3737,7 @@ div.wrap-page-home .logo-home {
 .text-inline span {
     display: block;
     line-height: 30px;
-    font-size: 1em;
+    font-size: .9em;
     color: #333;
 }
 #frm-post-tin input {
@@ -3781,7 +3781,7 @@ div.wrap-page-home .logo-home {
     color: #333;
 }
 #progressbar li > div div {
-    font-size: .8em;
+    font-size: .7em;
     padding-top: 5px;
 }
 #progressbar .line-process {
@@ -4217,6 +4217,7 @@ div.wrap-page-home .logo-home {
 .gallery-detail .bxslider {
     padding-left: 2px;
     overflow: hidden;
+    height: 100%;
 }
 .gallery-detail .bxslider li {
     float: left;
@@ -4860,7 +4861,7 @@ header.wrap-page-home .box-search-header.ani-search > div {
     font-size: 1em;
 }
 #price-format {
-    font-size: 1.2em;
+    font-size: 1em;
     letter-spacing: 2px;
     display: block !important;
     height: 100%;
@@ -4871,7 +4872,7 @@ header.wrap-page-home .box-search-header.ani-search > div {
 }
 #frm-post-tin #images-fileupload span {
     font-family: 'Roboto';
-    font-size: 1.1em;
+    font-size: 1em;
 }
 @media (min-width: 1024px) and (max-width: 1280px) {
     .wrap-page-home .box-search-header.ani-search {
@@ -5270,6 +5271,7 @@ header.wrap-page-home .box-search-header.ani-search > div {
 .dt-left-col h1 * {
     font-size: 1em;
 }
+.bxslider.no-image,
 .gallery-detail.no-image {
     background: url(../images/default-ads.jpg) no-repeat center;
     padding: 20px;
@@ -5304,4 +5306,7 @@ header.wrap-page-home .box-search-header.ani-search > div {
 }
 header.animate-children .wrap-search-home .search-select a {
     width: auto;
+}
+.select2-results .select2-result-label {
+    font-size: .8em;
 }
