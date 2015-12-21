@@ -117,11 +117,10 @@ $data = [
                     point: {
                         events: {
                             click: function() {
-                                console.log(this);
                                 $('#frmListVisit .wrap-modal').html('');
                                 var timer = 0;
-                                clearTimeout(timer);
                                 var _this = this;
+                                clearTimeout(timer);
                                 timer = setTimeout(function () {
                                     $.ajax({
                                         type: "get",
