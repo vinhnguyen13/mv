@@ -3301,7 +3301,7 @@ padding-bottom: 5px;
     margin-top: 20px;
 }
 .wrap-col-fixed-result .nav-tabs a {
-    font-size: 1.2em;
+    font-size: 1em;
     color: #333;
     padding-top: 5px;
 }
@@ -3394,14 +3394,14 @@ padding-bottom: 5px;
 }
 .zsg-content_collapsed {
     display: inline-block;
-    font-size: 2.5em;
+    font-size: 2em;
     margin-right: 15px;
     color: #525252;
     font-weight: 500;
 }
 .num-results {
     display: inline-block;
-    font-size: 1.3em;
+    font-size: 1em;
 }
 .form-group label {
     margin-bottom: 5px;

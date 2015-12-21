@@ -3,7 +3,7 @@
 	var minmax = {
 		wrap: $('.filter-pane'),
 		wrapVal: $('.filter-common'),
-		inputVal: $('.dualboxes input'),
+		inputVal: $('.dualboxes input[type=text]'),
 		tabs: $('.list-filter > li > a'),
 		itemVal: $('.minmax .dropdown-options li a'),
 		wrapMinMaxVal: $('.minmax-options'),
@@ -30,21 +30,23 @@
 		},
 		close: function (item) {
 			$(document).on('click', function (e) {
-				e.preventDefault();
+				//e.preventDefault();
 				var container = $(".list-filters-result .outsideevent");
 		        if ( !container.is(e.target) && container.has(e.target).length === 0 ){
 		        	minmax.wrapVal.hide();
 		        	minmax.tabs.removeClass('active');
 		        }
-		        return;
+		        //return;
 			});
 		},
 		clickTab: function () {
 			minmax.tabs.on('click', function (e) {
-				//e.preventDefault();
+				e.preventDefault();
 				var _this = $(this);
 
 				minmax.open(_this);
+
+				dropdownSelect.init(_this);
 
 				return;
 			});
@@ -151,16 +153,23 @@
 	};
 
 	var dropdownSelect = {
-		itemVal: $('.filter-bed li a'),
+		itemVal: $('.filter-dropdown li a'),
 		tabs: $('.list-filter > li > a'),
-		init: function () {
+		init: function (item) {
+			dropdownSelect.itemVal.unbind('click');
 			dropdownSelect.itemVal.on('click', function (e) {
 				e.preventDefault();
 				var _this = $(this),
 					txt = _this.html();
-				dropdownSelect.tabs.find('span').html(txt);
-				dropdownSelect.tabs.find('span').append('<em class="fa fa-long-arrow-up"></em>');
-				$('#bed-filter').val(txt);
+
+				item.find('span').html(txt);
+				item.find('span').append('<em class="fa fa-long-arrow-up"></em>');
+				if ( _this.closest('.filter-common').data('filter') == 'phong-ngu' ) {
+					$('#bed-filter').val(txt);
+				}else if ( _this.closest('.filter-common').data('filter') == 'phong-tam' ) {
+					$('#bath-filter').val(txt);
+				}
+				
 				minmax.close();
 				$(document).trigger('click');
 			});
@@ -168,5 +177,5 @@
 	}
 
 	minmax.init();
-	dropdownSelect.init();
+	
 })();

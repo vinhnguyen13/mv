@@ -29,6 +29,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
         <input id="dt-min-filter" type="hidden" name="dientich-min-filter">
         <input id="dt-max-filter" type="hidden" name="dientich-max-filter">
         <input id="bed-filter" type="hidden" name="bed-filter">
+        <input id="bath-filter" type="hidden" name="bath-filter">
 
         <ul class="container clearfix outsideevent list-filter">
 	        <li>
@@ -125,27 +126,43 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
 	        </li>
 	        <li>
 	            <a href="#"><span></span>Phòng ngủ</a>
-                <div class="filter-common filter-pane filter-bed">
+                <div class="filter-common filter-pane filter-bed filter-dropdown" data-filter="phong-ngu">
                     <div class="filter-bed">
                         <ul class="dropdown-options search-entry">
-                            <li data-value="50,000"><a class="option">0</a></li>
-                            <li data-value="50,000"><a class="option">1</a></li>
-                            <li data-value="50,000"><a class="option">2</a></li>
-                            <li data-value="50,000"><a class="option">3</a></li>
-                            <li data-value="50,000"><a class="option">4</a></li>
-                            <li data-value="50,000"><a class="option">5</a></li>
-                            <li data-value="50,000"><a class="option">6</a></li>
+                            <li data-value=""><a class="option">0</a></li>
+                            <li data-value=""><a class="option">1</a></li>
+                            <li data-value=""><a class="option">2</a></li>
+                            <li data-value=""><a class="option">3</a></li>
+                            <li data-value=""><a class="option">4</a></li>
+                            <li data-value=""><a class="option">5</a></li>
+                            <li data-value=""><a class="option">6</a></li>
                         </ul>
                     </div>
                 </div>
 	        </li>
+            <li>
+                <a href="#"><span></span>Phòng tắm</a>
+                <div class="filter-common filter-pane filter-bed filter-dropdown" data-filter="phong-tam">
+                    <div class="filter-bed">
+                        <ul class="dropdown-options search-entry">
+                            <li data-value=""><a class="option">0</a></li>
+                            <li data-value=""><a class="option">1</a></li>
+                            <li data-value=""><a class="option">2</a></li>
+                            <li data-value=""><a class="option">3</a></li>
+                            <li data-value=""><a class="option">4</a></li>
+                            <li data-value=""><a class="option">5</a></li>
+                            <li data-value=""><a class="option">6</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
 	        <li>
 	            <a href="#">Loại BDS</a>
                 <div class="filter-common filter-pane filter-loaibds">
-                    <ul class="combobox-options multicheck-dropdown-options hometype-options">
+                    <ul class="hometype-options">
                         <li class="hometype">
-                            <input id="hometype-input-1" name="hometype-input" type="checkbox" class="hometype-input checkbox">
-                            <label for="hometype-input-1">
+                            <input type="checkbox" class="">
+                            <label>
                                 <span id="hometype-top-filters-label" class="hometype-label option">Chung cư</span>
                             </label>
                         </li>
@@ -176,61 +193,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
                     </ul>
                 </div>
 	        </li>
-	        <li>
-	            <a href="#">Khác</a>
-                <div class="filter-common filter-pane filter-other">
-                    <form class="form-horizontal">
-                        <div class="form-group">
-                            <label for="" class="col-sm-4 control-label">Phòng tắm</label>
-                            <div class="col-sm-8">
-                                <select class="form-control">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group minmax-frm-inline">
-                            <label for="" class="col-sm-4 control-label">Năm</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control val-min" placeholder="Min">
-                                <input type="text" class="form-control val-max" placeholder="Max">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="" class="col-sm-4 control-label">Ngày đăng</label>
-                            <div class="col-sm-8">
-                                <select class="form-control">
-                                    <option>1 ngày</option>
-                                    <option>7 ngày</option>
-                                    <option>14 ngày</option>
-                                    <option>30 ngày</option>
-                                    <option>60 ngày</option>
-                                    <option>90 ngày</option>
-                                    <option>6 tháng</option>
-                                    <option>12 tháng</option>
-                                    <option>24 tháng</option>
-                                    <option>36 tháng</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="" class="col-sm-4 control-label">Từ khóa</label>
-                            <div class="col-sm-8">
-                                <textarea class="form-control" rows="3"></textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="" class="col-sm-4 control-label"></label>
-                            <div class="col-sm-8">
-                                <button type="button" class="btn btn-primary btn-sm btn-common">Apply</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-	        </li>
+	        
             <li>
                 <button type="button" class="btn btn-primary btn-sm btn-common"><em class="fa fa-filter"></em>Chọn lọc</button>
             </li>
