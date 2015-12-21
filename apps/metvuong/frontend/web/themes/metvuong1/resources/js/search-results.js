@@ -13,13 +13,22 @@
 		open: function (item) {
 			var $root = item.parent();
 
-			minmax.wrapVal.hide();
+			//minmax.wrapVal.hide();
+
+			minmax.wrapVal.addClass('hidden-effect');
+			minmax.wrapVal.removeClass('active');
 
 			if ( item.hasClass('active') ) {
         		minmax.tabs.removeClass('active');
         	}else {
         		minmax.tabs.removeClass('active');
-        		$root.find('.filter-common').show();
+
+        		$root.find('.filter-common').removeClass('hidden-effect');
+				setTimeout(function() {
+	                $root.find('.filter-common').addClass('active');
+	            }, 30);
+        	
+        		//$root.find('.filter-common').show();
         		item.addClass('active');
         	}
 
@@ -33,7 +42,12 @@
 				//e.preventDefault();
 				var container = $(".list-filters-result .outsideevent");
 		        if ( !container.is(e.target) && container.has(e.target).length === 0 ){
-		        	minmax.wrapVal.hide();
+		        	//minmax.wrapVal.hide();
+		        	minmax.wrapVal.removeClass('active');
+					setTimeout(function() {
+		                minmax.wrapVal.addClass('hidden-effect');
+		            }, 300);
+
 		        	minmax.tabs.removeClass('active');
 		        }
 		        //return;

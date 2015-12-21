@@ -34,163 +34,173 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
         <ul class="container clearfix outsideevent list-filter">
 	        <li>
 	            <a href="#">Giá</a>
-                <div class="filter-pane filter-common" data-filter="price-min-max">
-                    <div id="minmax-entries" class="minmax-entries search-entry">
-                        <div class="dualboxes">
-                            <div class="box1">
-                                <input readonly="readonly" class="text commaFormat" maxlength="11" size="10" name="price-min" id="min-val" type="text" placeholder="Min">
-                            </div>
-                            <div class="dash">&nbsp;</div>
-                            <div class="box2">
-                                <input readonly="readonly" class="text commaFormat" maxlength="11" size="11" name="price-max" id="max-val" type="text" placeholder="Max">
+                <div class="filter-pane filter-common hidden-effect" data-filter="price-min-max">
+                    <div class="wrap-effect clearfix">
+                        <div id="minmax-entries" class="minmax-entries search-entry">
+                            <div class="dualboxes">
+                                <div class="box1">
+                                    <input readonly="readonly" class="text commaFormat" maxlength="11" size="10" name="price-min" id="min-val" type="text" placeholder="Min">
+                                </div>
+                                <div class="dash">&nbsp;</div>
+                                <div class="box2">
+                                    <input readonly="readonly" class="text commaFormat" maxlength="11" size="11" name="price-max" id="max-val" type="text" placeholder="Max">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="filter-minmax">
-                        <div id="min-price-options" class="minmax-options min-price-options minmax" data-toggle-filter="min-val">
-                            <ul class="dropdown-options search-entry">
-                                <li data-number="0" data-unit=""><a class="option">0</a></li>
-                                <li data-number="100000000" data-unit="triệu"><a class="option">100 triệu</a></li>
-                                <li data-number="500000000" data-unit="triệu"><a class="option">500 triệu</a></li>
-                                <li data-number="1000000000" data-unit="tỷ"><a class="option">1 tỷ</a></li>
-                                <li data-number="1500000000" data-unit="tỷ"><a class="option">1,5 tỷ</a></li>
-                                <li data-number="2000000000" data-unit="tỷ"><a class="option">2 tỷ</a></li>
-                                <li data-number="2500000000" data-unit="tỷ"><a class="option">2,5 tỷ</a></li>
-                                <li data-number="3000000000" data-unit="tỷ"><a class="option">3 tỷ</a></li>
-                                <li data-number="3500000000" data-unit="tỷ"><a class="option">3,5 tỷ</a></li>
-                                <li data-number="4000000000" data-unit="tỷ"><a class="option">4 tỷ</a></li>
-                            </ul>
-                        </div>
-                        <div id="max-price-options" class="minmax-options max-price-options hide minmax" data-toggle-filter="max-val">
-                            <ul class="dropdown-options search-entry">
-                                <li data-number="100000000" data-unit="triệu"><a class="option">100 triệu</a></li>
-                                <li data-number="500000000" data-unit="triệu"><a class="option">500 triệu</a></li>
-                                <li data-number="1000000000" data-unit="tỷ"><a class="option">1 tỷ</a></li>
-                                <li data-number="1500000000" data-unit="tỷ"><a class="option">1,5 tỷ</a></li>
-                                <li data-number="2000000000" data-unit="tỷ"><a class="option">2 tỷ</a></li>
-                                <li data-number="2500000000" data-unit="tỷ"><a class="option">2,5 tỷ</a></li>
-                                <li data-number="3000000000" data-unit="tỷ"><a class="option">3 tỷ</a></li>
-                                <li data-number="3500000000" data-unit="tỷ"><a class="option">3,5 tỷ</a></li>
-                                <li data-number="4000000000" data-unit="tỷ"><a class="option">4 tỷ</a></li>
-                                <li class="anyVal" data-number><a class="option">Bất kỳ</a></li>
-                            </ul>
+                        <div class="filter-minmax">
+                            <div id="min-price-options" class="minmax-options min-price-options minmax" data-toggle-filter="min-val">
+                                <ul class="dropdown-options search-entry">
+                                    <li data-number="0" data-unit=""><a class="option">0</a></li>
+                                    <li data-number="100000000" data-unit="triệu"><a class="option">100 triệu</a></li>
+                                    <li data-number="500000000" data-unit="triệu"><a class="option">500 triệu</a></li>
+                                    <li data-number="1000000000" data-unit="tỷ"><a class="option">1 tỷ</a></li>
+                                    <li data-number="1500000000" data-unit="tỷ"><a class="option">1,5 tỷ</a></li>
+                                    <li data-number="2000000000" data-unit="tỷ"><a class="option">2 tỷ</a></li>
+                                    <li data-number="2500000000" data-unit="tỷ"><a class="option">2,5 tỷ</a></li>
+                                    <li data-number="3000000000" data-unit="tỷ"><a class="option">3 tỷ</a></li>
+                                    <li data-number="3500000000" data-unit="tỷ"><a class="option">3,5 tỷ</a></li>
+                                    <li data-number="4000000000" data-unit="tỷ"><a class="option">4 tỷ</a></li>
+                                </ul>
+                            </div>
+                            <div id="max-price-options" class="minmax-options max-price-options hide minmax" data-toggle-filter="max-val">
+                                <ul class="dropdown-options search-entry">
+                                    <li data-number="100000000" data-unit="triệu"><a class="option">100 triệu</a></li>
+                                    <li data-number="500000000" data-unit="triệu"><a class="option">500 triệu</a></li>
+                                    <li data-number="1000000000" data-unit="tỷ"><a class="option">1 tỷ</a></li>
+                                    <li data-number="1500000000" data-unit="tỷ"><a class="option">1,5 tỷ</a></li>
+                                    <li data-number="2000000000" data-unit="tỷ"><a class="option">2 tỷ</a></li>
+                                    <li data-number="2500000000" data-unit="tỷ"><a class="option">2,5 tỷ</a></li>
+                                    <li data-number="3000000000" data-unit="tỷ"><a class="option">3 tỷ</a></li>
+                                    <li data-number="3500000000" data-unit="tỷ"><a class="option">3,5 tỷ</a></li>
+                                    <li data-number="4000000000" data-unit="tỷ"><a class="option">4 tỷ</a></li>
+                                    <li class="anyVal" data-number><a class="option">Bất kỳ</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
 	        </li>
 	        <li>
 	            <a href="#" data-symbol-unit="m<sup>2</sup>">Diện tích</a>
-                <div class="filter-common filter-pane" data-filter="dt-min-max">
-                    <div id="minmax-entries" class="minmax-entries search-entry">
-                        <div class="dualboxes">
-                            <div class="box1">
-                                <input readonly="readonly" class="text commaFormat" maxlength="11" size="10" name="dt-min" id="min-val" type="text" placeholder="Min">
-                            </div>
-                            <div class="dash">&nbsp;</div>
-                            <div class="box2">
-                                <input readonly="readonly" class="text commaFormat" maxlength="11" size="11" name="dt-max" id="max-val" type="text" placeholder="Max">
+                <div class="filter-common filter-pane hidden-effect" data-filter="dt-min-max">
+                    <div class="wrap-effect clearfix">
+                        <div id="minmax-entries" class="minmax-entries search-entry">
+                            <div class="dualboxes">
+                                <div class="box1">
+                                    <input readonly="readonly" class="text commaFormat" maxlength="11" size="10" name="dt-min" id="min-val" type="text" placeholder="Min">
+                                </div>
+                                <div class="dash">&nbsp;</div>
+                                <div class="box2">
+                                    <input readonly="readonly" class="text commaFormat" maxlength="11" size="11" name="dt-max" id="max-val" type="text" placeholder="Max">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="filter-minmax">
-                        <div id="min-dt-options" class="minmax-options min-dt-options minmax" data-toggle-filter="min-val">
-                            <ul class="dropdown-options search-entry">
-                                <li data-number="0"><a class="option">0</a></li>
-                                <li data-number="10"><a class="option">10 m<sup>2</sup></a></li>
-                                <li data-number="20"><a class="option">20 m<sup>2</sup></a></li>
-                                <li data-number="40"><a class="option">40 m<sup>2</sup></a></li>
-                                <li data-number="60"><a class="option">60 m<sup>2</sup></a></li>
-                                <li data-number="80"><a class="option">80 m<sup>2</sup></a></li>
-                                <li data-number="100"><a class="option">100 m<sup>2</sup></a></li>
-                                <li data-number="150"><a class="option">150 m<sup>2</sup></a></li>
-                                <li data-number="200"><a class="option">200 m<sup>2</sup></a></li>
-                                <li data-number="250"><a class="option">250 m<sup>2</sup></a></li>
-                            </ul>
-                        </div>
-                        <div id="max-dt-options" class="minmax-options max-dt-options hide minmax" data-toggle-filter="max-val">
-                            <ul class="dropdown-options search-entry">
-                                <li data-number="10"><a class="option">10 m<sup>2</sup></a></li>
-                                <li data-number="20"><a class="option">20 m<sup>2</sup></a></li>
-                                <li data-number="40"><a class="option">40 m<sup>2</sup></a></li>
-                                <li data-number="60"><a class="option">60 m<sup>2</sup></a></li>
-                                <li data-number="80"><a class="option">80 m<sup>2</sup></a></li>
-                                <li data-number="100"><a class="option">100 m<sup>2</sup></a></li>
-                                <li data-number="150"><a class="option">150 m<sup>2</sup></a></li>
-                                <li data-number="200"><a class="option">200 m<sup>2</sup></a></li>
-                                <li data-number="250"><a class="option">250 m<sup>2</sup></a></li>
-                                <li class="anyVal" data-number><a class="option">Bất kỳ</a></li>
-                            </ul>
+                        <div class="filter-minmax">
+                            <div id="min-dt-options" class="minmax-options min-dt-options minmax" data-toggle-filter="min-val">
+                                <ul class="dropdown-options search-entry">
+                                    <li data-number="0"><a class="option">0</a></li>
+                                    <li data-number="10"><a class="option">10 m<sup>2</sup></a></li>
+                                    <li data-number="20"><a class="option">20 m<sup>2</sup></a></li>
+                                    <li data-number="40"><a class="option">40 m<sup>2</sup></a></li>
+                                    <li data-number="60"><a class="option">60 m<sup>2</sup></a></li>
+                                    <li data-number="80"><a class="option">80 m<sup>2</sup></a></li>
+                                    <li data-number="100"><a class="option">100 m<sup>2</sup></a></li>
+                                    <li data-number="150"><a class="option">150 m<sup>2</sup></a></li>
+                                    <li data-number="200"><a class="option">200 m<sup>2</sup></a></li>
+                                    <li data-number="250"><a class="option">250 m<sup>2</sup></a></li>
+                                </ul>
+                            </div>
+                            <div id="max-dt-options" class="minmax-options max-dt-options hide minmax" data-toggle-filter="max-val">
+                                <ul class="dropdown-options search-entry">
+                                    <li data-number="10"><a class="option">10 m<sup>2</sup></a></li>
+                                    <li data-number="20"><a class="option">20 m<sup>2</sup></a></li>
+                                    <li data-number="40"><a class="option">40 m<sup>2</sup></a></li>
+                                    <li data-number="60"><a class="option">60 m<sup>2</sup></a></li>
+                                    <li data-number="80"><a class="option">80 m<sup>2</sup></a></li>
+                                    <li data-number="100"><a class="option">100 m<sup>2</sup></a></li>
+                                    <li data-number="150"><a class="option">150 m<sup>2</sup></a></li>
+                                    <li data-number="200"><a class="option">200 m<sup>2</sup></a></li>
+                                    <li data-number="250"><a class="option">250 m<sup>2</sup></a></li>
+                                    <li class="anyVal" data-number><a class="option">Bất kỳ</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
 	        </li>
 	        <li>
 	            <a href="#"><span></span>Phòng ngủ</a>
-                <div class="filter-common filter-pane filter-bed filter-dropdown" data-filter="phong-ngu">
-                    <div class="filter-bed">
-                        <ul class="dropdown-options search-entry">
-                            <li data-value=""><a class="option">0</a></li>
-                            <li data-value=""><a class="option">1</a></li>
-                            <li data-value=""><a class="option">2</a></li>
-                            <li data-value=""><a class="option">3</a></li>
-                            <li data-value=""><a class="option">4</a></li>
-                            <li data-value=""><a class="option">5</a></li>
-                            <li data-value=""><a class="option">6</a></li>
-                        </ul>
+                <div class="filter-common filter-pane filter-bed filter-dropdown hidden-effect" data-filter="phong-ngu">
+                    <div class="wrap-effect clearfix">
+                        <div class="filter-bed">
+                            <ul class="dropdown-options search-entry">
+                                <li data-value=""><a class="option">0</a></li>
+                                <li data-value=""><a class="option">1</a></li>
+                                <li data-value=""><a class="option">2</a></li>
+                                <li data-value=""><a class="option">3</a></li>
+                                <li data-value=""><a class="option">4</a></li>
+                                <li data-value=""><a class="option">5</a></li>
+                                <li data-value=""><a class="option">6</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 	        </li>
             <li>
                 <a href="#"><span></span>Phòng tắm</a>
-                <div class="filter-common filter-pane filter-bed filter-dropdown" data-filter="phong-tam">
-                    <div class="filter-bed">
-                        <ul class="dropdown-options search-entry">
-                            <li data-value=""><a class="option">0</a></li>
-                            <li data-value=""><a class="option">1</a></li>
-                            <li data-value=""><a class="option">2</a></li>
-                            <li data-value=""><a class="option">3</a></li>
-                            <li data-value=""><a class="option">4</a></li>
-                            <li data-value=""><a class="option">5</a></li>
-                            <li data-value=""><a class="option">6</a></li>
-                        </ul>
+                <div class="filter-common filter-pane filter-bed filter-dropdown hidden-effect" data-filter="phong-tam">
+                    <div class="wrap-effect clearfix">
+                        <div class="filter-bed">
+                            <ul class="dropdown-options search-entry">
+                                <li data-value=""><a class="option">0</a></li>
+                                <li data-value=""><a class="option">1</a></li>
+                                <li data-value=""><a class="option">2</a></li>
+                                <li data-value=""><a class="option">3</a></li>
+                                <li data-value=""><a class="option">4</a></li>
+                                <li data-value=""><a class="option">5</a></li>
+                                <li data-value=""><a class="option">6</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </li>
 	        <li>
 	            <a href="#">Loại BDS</a>
-                <div class="filter-common filter-pane filter-loaibds">
-                    <ul class="hometype-options">
-                        <li class="hometype">
-                            <input type="checkbox" class="">
-                            <label>
-                                <span id="hometype-top-filters-label" class="hometype-label option">Chung cư</span>
-                            </label>
-                        </li>
-                        <li class="hometype">
-                            <input id="hometype-input-2" name="hometype-input" type="checkbox" class="hometype-input checkbox">
-                            <label for="hometype-input-2">
-                                <span id="hometype-top-filters-label" class="hometype-label option">Nhà riêng</span>
-                            </label>
-                        </li>
-                        <li class="hometype">
-                            <input id="hometype-input-3" name="hometype-input" type="checkbox" class="hometype-input checkbox">
-                            <label for="hometype-input-3">
-                                <span id="hometype-top-filters-label" class="hometype-label option">Nhà biệt thự, liền kề</span>
-                            </label>
-                        </li>
-                        <li class="hometype">
-                            <input id="hometype-input-4" name="hometype-input" type="checkbox" class="hometype-input checkbox">
-                            <label for="hometype-input-4">
-                                <span id="hometype-top-filters-label" class="hometype-label option">Nhà mặt phố</span>
-                            </label>
-                        </li>
-                        <li class="hometype">
-                            <input id="hometype-input-5" name="hometype-input" type="checkbox" class="hometype-input checkbox">
-                            <label for="hometype-input-5">
-                                <span id="hometype-top-filters-label" class="hometype-label option">Đất nền dự án</span>
-                            </label>
-                        </li>
-                    </ul>
+                <div class="filter-common filter-pane filter-loaibds hidden-effect">
+                    <div class="wrap-effect clearfix">
+                        <ul class="hometype-options">
+                            <li class="hometype">
+                                <input type="checkbox" class="">
+                                <label>
+                                    <span id="hometype-top-filters-label" class="hometype-label option">Chung cư</span>
+                                </label>
+                            </li>
+                            <li class="hometype">
+                                <input id="hometype-input-2" name="hometype-input" type="checkbox" class="hometype-input checkbox">
+                                <label for="hometype-input-2">
+                                    <span id="hometype-top-filters-label" class="hometype-label option">Nhà riêng</span>
+                                </label>
+                            </li>
+                            <li class="hometype">
+                                <input id="hometype-input-3" name="hometype-input" type="checkbox" class="hometype-input checkbox">
+                                <label for="hometype-input-3">
+                                    <span id="hometype-top-filters-label" class="hometype-label option">Nhà biệt thự, liền kề</span>
+                                </label>
+                            </li>
+                            <li class="hometype">
+                                <input id="hometype-input-4" name="hometype-input" type="checkbox" class="hometype-input checkbox">
+                                <label for="hometype-input-4">
+                                    <span id="hometype-top-filters-label" class="hometype-label option">Nhà mặt phố</span>
+                                </label>
+                            </li>
+                            <li class="hometype">
+                                <input id="hometype-input-5" name="hometype-input" type="checkbox" class="hometype-input checkbox">
+                                <label for="hometype-input-5">
+                                    <span id="hometype-top-filters-label" class="hometype-label option">Đất nền dự án</span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 	        </li>
 	        
