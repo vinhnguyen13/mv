@@ -15,7 +15,7 @@
             },
             yAxis: {
                 title: {
-                    text: 'Người xem'
+                    text: 'Người theo dõi'
                 },
                 plotLines: [{
                     value: 0,

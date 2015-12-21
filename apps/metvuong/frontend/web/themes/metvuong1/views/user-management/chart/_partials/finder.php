@@ -15,7 +15,7 @@
             },
             yAxis: {
                 title: {
-                    text: 'Người xem'
+                    text: 'Người tìm kiếm'
                 },
                 plotLines: [{
                     value: 0,
@@ -70,9 +70,6 @@
                 borderWidth: 0
             },
             series: [{
-                name: '21 Lê Thánh Tôn',
-                data: [7, 6, 9, 14, 18, 21, 25, 26, 23, 18, 13, 9]
-            }, {
                 name: '57 Tôn Đản',
                 data: [2, 8, 5, 11, 17, 22, 24, 24, 20, 14, 8, 2]
             }, {
@@ -81,6 +78,9 @@
             }, {
                 name: '11 Nguyễn Văn Trỗi',
                 data: [3, 4, 5, 8, 11, 15, 17, 16, 14, 10, 6, 4]
+            }, {
+                name: '21 Lê Thánh Tôn',
+                data: [7, 6, 9, 14, 18, 21, 25, 26, 23, 18, 13, 9]
             }]
         });
     });
