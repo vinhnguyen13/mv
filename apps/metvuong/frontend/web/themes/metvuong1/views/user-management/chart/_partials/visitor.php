@@ -128,6 +128,7 @@ $data = [
                                         url: _this.url,
                                         success: function (data) {
                                             $('#frmListVisit .wrap-modal').html($(data));
+                                            $('#frmListVisit').find('h3').html('Người theo dõi');
                                             $('#frmListVisit').find('.total').html(_this.y);
                                             $('#frmListVisit').find('.news').html(_this.series.name);
                                         }
