@@ -15,14 +15,14 @@ use vsoft\news\models\CmsShow;
 use vsoft\ad\models\AdBuildingProject;
 use yii\web\Cookie;
 
-class Ads extends Component
+class Ad extends Component
 {
     /**
      * @return mixed
      */
     public static function find()
     {
-        return Yii::createObject(Ads::className());
+        return Yii::createObject(Ad::className());
     }
 
     /**
@@ -40,10 +40,10 @@ class Ads extends Component
             if(!empty($post['activeSearch'])){
                 switch($post['activeSearch']){
                     case 1:
-                        $url = Url::to(ArrayHelper::merge(['/ads/index'], $searchParams));
+                        $url = Url::to(ArrayHelper::merge(['/ad/index'], $searchParams));
                         break;
                     case 2:
-                        $url = Url::to(ArrayHelper::merge(['/ads/post'], $searchParams));
+                        $url = Url::to(ArrayHelper::merge(['/ad/post'], $searchParams));
                         break;
                     case 3:
                         if(!empty($post['newsType']) && $post['newsType'] == 1){

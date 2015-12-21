@@ -2,7 +2,7 @@
 
 namespace frontend\controllers;
 use frontend\components\Controller;
-use frontend\models\Ads;
+use frontend\models\Ad;
 use Yii;
 use yii\helpers\Url;
 use vsoft\news\models\CmsShow;
@@ -108,7 +108,7 @@ class AdController extends Controller
      */
     public function actionRedirect()
     {
-		$url = Ads::find()->redirect();
+		$url = Ad::find()->redirect();
         $this->redirect($url);
     }
 

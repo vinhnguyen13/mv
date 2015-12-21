@@ -31,43 +31,43 @@ class UserManagementController extends Controller
         $this->redirect('/user-management/chart');
     }
 
-    public function actionAds()
+    public function actionAd()
     {
         if(Yii::$app->request->isAjax){
-            return $this->renderPartial('ads/index', [
+            return $this->renderPartial('ad/index', [
             ]);
         }
-        return $this->render('ads/index', [
+        return $this->render('ad/index', [
         ]);
     }
 
-    public function actionAdsMostSearch()
+    public function actionAdMostSearch()
     {
         if(Yii::$app->request->isAjax){
-            return $this->renderPartial('ads/most-search', [
+            return $this->renderPartial('ad/most-search', [
             ]);
         }
-        return $this->render('ads/most-search', [
+        return $this->render('ad/most-search', [
         ]);
     }
 
-    public function actionAdsSuggest()
+    public function actionAdSuggest()
     {
         if(Yii::$app->request->isAjax){
-            return $this->renderPartial('ads/suggest', [
+            return $this->renderPartial('ad/suggest', [
             ]);
         }
-        return $this->render('ads/suggest', [
+        return $this->render('ad/suggest', [
         ]);
     }
 
     public function actionChart()
     {
         if(Yii::$app->request->isAjax) {
-            return $this->renderAjax('chart/ads', [
+            return $this->renderAjax('chart/ad', [
             ]);
         }
-        return $this->render('chart/ads', [
+        return $this->render('chart/ad', [
         ]);
     }
 

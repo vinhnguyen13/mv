@@ -29,8 +29,32 @@
                     color: '#808080'
                 }]
             },
+            /*tooltip: {
+                valueSuffix: ' người',
+                useHTML:true,
+                formatter: function() {
+                    var tooltip;
+                    if (this.key == 'last') {
+                        tooltip = '<b>Final result is </b> ' + this.y;
+                    }
+                    else {
+                        tooltip =  '<span style="color:' + this.series.color + '">' + this.series.name + '</span>: <b>' + this.y + '</b><br/>';
+                    }
+                    return tooltip;
+                }
+            },*/
             tooltip: {
-                valueSuffix: ' người'
+                useHTML: true,
+                borderRadius: 8,
+                backgroundColor:'rgba(255, 255, 255, 0.9)',
+                headerFormat:'<div style="color:#36454d; font-size:16px">{series.name}</div><br>',
+                // pointFormat: '{point.x} {point.y:,.0f} <br>{series.name} produced <b></b><br/>warheads in {point.x}'
+                formatter: function() {
+                    return  '<div class="tooltipCover"><b  style="color:#36454d; font-size:16px">' + this.series.name +'</b><br/>' +
+                        Highcharts.dateFormat('%e - %b - %Y',
+                            new Date(this.x))
+                        +'<br>Всего постов: 20 000<br><div class="actionLine"><span class="likeCount">525 000</span><br><span class="shareCount">525 000</span><br><span class="commentsCount">525 000</span><br><a href="#" class="showComments">Show</a></div></div>';
+                }
             },
             legend: {
                 layout: 'vertical',
