@@ -221,7 +221,7 @@ if(Yii::$app->user->identity->profile->avatar) {
 					<?= Html::activeHiddenInput($model, 'lat') ?>
 					<?= Html::activeHiddenInput($model, 'lng') ?>
 				</div>
-				<button id="preview" type="button" class="btn btn-primary btn-common mgT-15 pull-left" data-toggle="modal" data-target="#detail-listing">
+				<button id="preview" type="button" class="btn btn-primary btn-common mgT-15 pull-left" data-toggle="modal" data-target="#detail-listing" style="display: none;">
 					Xem trước
 				</button>
 				<button type="button"
@@ -359,6 +359,7 @@ if(Yii::$app->user->identity->profile->avatar) {
                                 </div>
                             </div>
                         </div>
+                        <div style="text-align: center;"><input id="submit-form" type="button" value="ĐĂNG TIN" class="btn btn-primary" style="width: 200px;"></div>
                     </div>
                 </div>
             </div>

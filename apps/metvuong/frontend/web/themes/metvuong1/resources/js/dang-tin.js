@@ -507,22 +507,24 @@ function stepPost () {
 				}
 
 				if ( objSP.flagAjax ) {
-					var form = $('#frm-post-tin');
-	        	
-		        	$.post(form.attr('action'), $('#frm-post-tin').serialize(), function(response){
-		        		if(response.success) {
-		        			l('success!!!');
-		        			objSP.nextStep(_this);
-		        		} else {
-		        			for(index in response.errors) {
-		        				var errors = response.errors[index];
-		        				for(j in errors) {
-		        					var error = errors[j];
-		        					$('#' + index + '-' + j).next().show().html(error);
-		        				}
-		        			}
-		        		}
-		        	});
+					$('#preview').trigger('click');
+					
+//					var form = $('#frm-post-tin');
+//	        	
+//		        	$.post(form.attr('action'), $('#frm-post-tin').serialize(), function(response){
+//		        		if(response.success) {
+//		        			l('success!!!');
+//		        			objSP.nextStep(_this);
+//		        		} else {
+//		        			for(index in response.errors) {
+//		        				var errors = response.errors[index];
+//		        				for(j in errors) {
+//		        					var error = errors[j];
+//		        					$('#' + index + '-' + j).next().show().html(error);
+//		        				}
+//		        			}
+//		        		}
+//		        	});
 					return;
 				}
 				
