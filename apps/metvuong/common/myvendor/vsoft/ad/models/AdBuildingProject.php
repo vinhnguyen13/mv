@@ -36,10 +36,10 @@ class AdBuildingProject extends AdBuildingProjectBase
     public static function getAreaTypes() {
     	if(!self::$areaTypes) {
     		self::$areaTypes = [
-	    		'bpfApartmentArea' => Yii::t('ads', 'Khu căn hộ'),
-	    		'bpfCommercialArea' => Yii::t('ads', 'Khu thương mại'),
-	    		'bpfTownhouseArea' => Yii::t('ads', 'Khu nhà phố'),
-	    		'bpfOffice' => Yii::t('ads', 'Khu Office - Officetel')
+	    		'bpfApartmentArea' => Yii::t('ad', 'Khu căn hộ'),
+	    		'bpfCommercialArea' => Yii::t('ad', 'Khu thương mại'),
+	    		'bpfTownhouseArea' => Yii::t('ad', 'Khu nhà phố'),
+	    		'bpfOffice' => Yii::t('ad', 'Khu Office - Officetel')
     		];
     	}
     	return self::$areaTypes;

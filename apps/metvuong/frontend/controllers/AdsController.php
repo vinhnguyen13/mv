@@ -175,7 +175,7 @@ class AdsController extends Controller
     }
 
     public function actionUpload() {
-    	$folder = 'ads';
+    	$folder = 'ad';
     	$response = Yii::$app->runAction('express/upload/image', ['folder' => $folder, 'resizeForAds' => true]);
     	
     	if($response) {
@@ -203,7 +203,7 @@ class AdsController extends Controller
     		$pathInfo = pathinfo($image->file_name);
     		$thumb = $pathInfo['filename'] .  '.thumb.' . $pathInfo['extension'];
     		
-    		$response = Yii::$app->runAction('express/upload/delete-image', ['orginal' => $image->file_name, 'thumbnail' => $thumb, 'folder' => 'ads', 'resizeForAds' => true]);
+    		$response = Yii::$app->runAction('express/upload/delete-image', ['orginal' => $image->file_name, 'thumbnail' => $thumb, 'folder' => 'ad', 'resizeForAds' => true]);
     		
     		$image->delete();
     		
