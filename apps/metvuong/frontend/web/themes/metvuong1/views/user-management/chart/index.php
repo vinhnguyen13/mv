@@ -98,6 +98,8 @@
         $(document).on('click', '.tab', function () {
             var timer = 0;
             clearTimeout(timer);
+            $('.tab').parent().removeClass('active');
+            $(this).parent().addClass('active');
             var url = $(this).attr('data-url');
             timer = setTimeout(function () {
                 $.ajax({
