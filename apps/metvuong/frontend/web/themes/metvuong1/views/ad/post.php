@@ -23,8 +23,8 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/imagesl
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/lightbox.min.js', ['position' => View::POS_END]);
 
 $type = [ 
-	AdProduct::TYPE_FOR_SELL => Yii::t ( 'post', 'Nhà đất bán' ),
-	AdProduct::TYPE_FOR_RENT => Yii::t ( 'post', 'Nhà đất cho thuê' ) 
+	AdProduct::TYPE_FOR_SELL => Yii::t ( 'ad', 'Nhà đất bán' ),
+	AdProduct::TYPE_FOR_RENT => Yii::t ( 'ad', 'Nhà đất cho thuê' ) 
 ];
 
 if(Yii::$app->user->identity->profile->avatar) {

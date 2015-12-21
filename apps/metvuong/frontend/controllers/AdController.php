@@ -18,7 +18,7 @@ use vsoft\ad\models\base\ActiveRecord;
 use yii\data\Pagination;
 use yii\widgets\LinkPager;
 
-class AdsController extends Controller
+class AdController extends Controller
 {
     public $layout = '@app/views/layouts/layout';
 
