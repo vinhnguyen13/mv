@@ -68,7 +68,7 @@
                             'time',
                         ],
                     ]);?>
-                    <p>Và 500 người nữa đang theo dõi tin của bạn. Bạn vui lòng nạp thêm tiền để có thể xem thêm</p>
+                    <p>Và 500 người nữa đang theo dõi tin của bạn. Bạn vui lòng <a href="javascript:alert('Coming soon !');">nạp thêm tiền</a> để có thể xem thêm</p>
                 </div>
             </div>
         </div>
