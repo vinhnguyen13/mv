@@ -21,7 +21,7 @@ class AdImages extends AdImagesBase
     public static function getImageUrl($fileName, $size = 'thumb') {
     	$pathinfo = pathinfo($fileName);
     	
-    	return Url::to('/store/ads/' . $pathinfo['filename'] . '.' . $size . '.' . $pathinfo['extension']);
+    	return Url::to('/store/ad/' . $pathinfo['filename'] . '.' . $size . '.' . $pathinfo['extension']);
     }
     
     public function getImageThumb() {

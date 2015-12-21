@@ -171,9 +171,27 @@ function loadListing() {
 function makeMarker(product) {
 	var city = dataCities[product.city_id];
 	var district = city['districts'][product.district_id];
-	var ward = district['wards'][product.ward_id];
-	var street = district['streets'][product.street_id];
-	var address = product.home_no + ' ' + street.pre + ' ' + street.name + ', ' + ward.pre + ' ' + ward.name + ', ' + district.pre + ' ' + district.name + ', ' + city.name;
+	var address = '';
+	
+	if(product.home_no) {
+		address += product.home_no + ', ';
+	}
+	
+	if(product.street_id) {
+		var street = district['streets'][product.street_id];
+		address = address + street.pre + ' ' + street.name + ', ';
+	}
+	
+	if(product.ward_id) {
+		var ward = district['wards'][product.ward_id];
+		address = address + ward.pre + ' ' + ward.name + ', ';
+	}
+	
+	if(address == '') {
+		address = district.pre + ' ' + district.name + ', ' + city.name;
+	} else {
+		address = address + ', ' + district.pre + ' ' + district.name + ', ' + city.name;
+	}
 
 	var marker = new Marker({
 		draggable: false,
