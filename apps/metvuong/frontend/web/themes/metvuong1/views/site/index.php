@@ -8,7 +8,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
 <?php $this->beginContent('@app/views/layouts/_partials/js/jsContainer.php', ['options'=>[]]); ?><?php $this->endContent();?>
 <script>
     $(document).ready(function(){
-        $(document).on('click', '#btn-search', function(){
+        $(document).on('click', '#btn-search, .btn-cost button', function(){
             animateSearch();
             setTimeout(function() {
                 if (typeof ga !== "undefined") {
@@ -54,7 +54,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                             <?php $form = ActiveForm::begin([
                                 'options'=>['class' => 'form-inline pull-left', 'method'=>'POST'],
                                 'id'=>'search-kind',
-                                'action'=>Url::to(['/ads/redirect']),
+                                'action'=>Url::to(['/ad/redirect']),
                                 'fieldConfig' => [],
                             ]); ?>
                                 <div class="form-group">

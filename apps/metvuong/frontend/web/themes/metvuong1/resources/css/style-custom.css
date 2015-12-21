@@ -2407,7 +2407,7 @@ div.wrap-page-home #search-kind .dropdown button {
 .type-search ul li {
     margin-right: 5px;
     background: #dbdbdb;
-    padding: 0 8px 2px 17px;
+    padding: 0 8px 2px 20px;
     font-size: .9em;
     font-weight: bold;
     border-radius: 3px;
@@ -2421,7 +2421,7 @@ div.wrap-page-home #search-kind .dropdown button {
     cursor: pointer;
     font-style: normal;
     position: absolute;
-    top: 27%;
+    top: 26%;
     left: 6px;
     font-size: .6em;
 }
@@ -2434,7 +2434,7 @@ div.wrap-page-home #search-kind .dropdown button {
     cursor: pointer;
     position: relative;
     /* top: -1px; */
-    padding: 12px 0 9px;
+    padding: 11px 0 9px 0;
 }
 .type-search li span:hover {
     color: #A0A0A0;

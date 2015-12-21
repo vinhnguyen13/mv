@@ -24,7 +24,7 @@ $searchParams = json_decode($value);
                     <?php $form = ActiveForm::begin([
                         'options'=>['class' => 'form-inline pull-left', 'method'=>'POST'],
                         'id'=>'search-kind',
-                        'action'=>Url::to(['/ads/redirect']),
+                        'action'=>Url::to(['/ad/redirect']),
                         'fieldConfig' => [],
                     ]); ?>
                         <div class="form-group">
