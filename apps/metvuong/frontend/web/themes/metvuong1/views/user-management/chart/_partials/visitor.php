@@ -1,3 +1,73 @@
+<?php
+use yii\helpers\Url;
+$data = [
+    [
+        'name' => '21 Lê Thánh Tôn',
+        'data' => [
+            ['y' => 3,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 12,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 17,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 9,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 11,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 7,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 4,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 3,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 12,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 23,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 34,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 30,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+        ],
+    ],[
+        'name' => '57 Tôn Đản',
+        'data' => [
+            ['y' => 1,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 2,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 3,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 7,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 14,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 8,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 9,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 10,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 15,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 21,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 22,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 25,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+        ],
+    ],[
+        'name' => '23 Pastuer',
+        'data' => [
+            ['y' => 4,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 15,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 12,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 23,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 19,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 14,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 34,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 31,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 22,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 26,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 21,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 11,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+        ],
+    ],[
+        'name' => '11 Nguyễn Văn Trỗi',
+        'data' => [
+            ['y' => 5,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 18,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 31,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 21,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 22,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 26,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 29,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 22,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 32,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 12,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 28,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+            ['y' => 24,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact'])],
+        ],
+    ],
+];
+?>
 <div id="chartAds" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 <script>
     $(function () {
@@ -46,9 +116,24 @@
                     cursor: 'pointer',
                     point: {
                         events: {
-                            click: function() {//alert ('Category: '+ this.category +', value: '+ this.y);
-//                                console.log(this);
-                                $('#frmListVisit').find('.total').html(this.y);
+                            click: function() {
+                                console.log(this);
+                                $('#frmListVisit .wrap-modal').html('');
+                                var timer = 0;
+                                clearTimeout(timer);
+                                var _this = this;
+                                timer = setTimeout(function () {
+                                    $.ajax({
+                                        type: "get",
+                                        dataType: 'html',
+                                        url: _this.url,
+                                        success: function (data) {
+                                            $('#frmListVisit .wrap-modal').html($(data));
+                                            $('#frmListVisit').find('.total').html(_this.y);
+                                            $('#frmListVisit').find('.news').html(_this.series.name);
+                                        }
+                                    });
+                                }, 500);
                                 $('#frmListVisit').modal();
                             }
                         }
@@ -69,19 +154,7 @@
                 verticalAlign: 'middle',
                 borderWidth: 0
             },
-            series: [{
-                name: '21 Lê Thánh Tôn',
-                data: [7, 6, 9, 14, 18, 21, 25, 26, 23, 18, 13, 9]
-            }, {
-                name: '57 Tôn Đản',
-                data: [2, 8, 5, 11, 17, 22, 24, 24, 20, 14, 8, 2]
-            }, {
-                name: '23 Pastuer',
-                data: [1, 2, 4, 8, 13, 17, 18, 17, 14, 9, 3, 1]
-            }, {
-                name: '11 Nguyễn Văn Trỗi',
-                data: [3, 4, 5, 8, 11, 15, 17, 16, 14, 10, 6, 4]
-            }]
+            series: <?=json_encode($data);?>
         });
     });
 </script>

@@ -65,8 +65,22 @@ class UserManagementController extends Controller
     {
         if(Yii::$app->request->isAjax) {
             $view = Yii::$app->request->get('view', 'index');
-            return $this->renderAjax('chart/'.$view, [
-            ]);
+            $data = [];
+            switch($view){
+                case '_partials/visitor';
+
+                    break;
+                case '_partials/finder';
+
+                    break;
+                case '_partials/listContact';
+
+                    break;
+            }
+            if(!empty($view)){
+                return $this->renderAjax('chart/'.$view, $data);
+            }
+            return false;
         }
         return $this->render('chart/index', [
         ]);

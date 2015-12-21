@@ -26,16 +26,6 @@
             tooltip: {
                 valueSuffix: ' người',
                 useHTML:true,
-                /*formatter: function() {
-                 var tooltip;
-                 if (this.key == 'last') {
-                 tooltip = '<b>Final result is </b> ' + this.y;
-                 }
-                 else {
-                 tooltip =  '<span style="color:' + this.series.color + '">' + this.series.name + '</span>: <b>' + this.y + '</b><br/>';
-                 }
-                 return tooltip;
-                 }*/
             },
             plotOptions: {
                 column: {
@@ -55,14 +45,6 @@
                     }
                 }
             },
-            /*chart: {
-             events: {
-             click: function(event) {
-             alert ('x: '+ event.xAxis[0].value +', y: '+
-             event.yAxis[0].value);
-             }
-             }
-             },*/
             legend: {
                 layout: 'vertical',
                 align: 'right',
