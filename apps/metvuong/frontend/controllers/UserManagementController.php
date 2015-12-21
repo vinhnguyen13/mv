@@ -64,10 +64,11 @@ class UserManagementController extends Controller
     public function actionChart()
     {
         if(Yii::$app->request->isAjax) {
-            return $this->renderAjax('chart/ad', [
+            $view = Yii::$app->request->get('view', 'index');
+            return $this->renderAjax('chart/'.$view, [
             ]);
         }
-        return $this->render('chart/ad', [
+        return $this->render('chart/index', [
         ]);
     }
 

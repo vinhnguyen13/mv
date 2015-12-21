@@ -1,14 +1,17 @@
-<div class="col-xs-9 right-profile quanlytinraoban">
+<div class="col-xs-9 right-profile managechart">
     <div class="wrap-quanly-profile">
         <div class="title-frm">Quản lý thống kê</div>
         <ul class="nav nav-tabs">
-            <li class="active"><a class="tab">Người theo dõi</a></li>
-            <li><a class="tab">Người tìm kiếm</a></li>
+            <li class="active"><a class="tab" href="javascript:void(0);" data-url="<?=\yii\helpers\Url::to(['/user-management/chart', 'view'=>'_partials/visitor'])?>">Người theo dõi</a></li>
+            <li><a class="tab" href="javascript:void(0);" data-url="<?=\yii\helpers\Url::to(['/user-management/chart', 'view'=>'_partials/finder'])?>">Người tìm kiếm</a></li>
         </ul>
-        <div id="chartAds" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        <div class="wrapChart">
+            <?php if(!Yii::$app->request->isAjax){?>
+            <?=$this->render('/user-management/chart/_partials/visitor');?>
+            <?php }?>
+        </div>
     </div>
 </div>
-
 
 <div class="modal fade" id="frmListVisit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -77,87 +80,35 @@
 
 <script>
     $(function () {
-        $('#chartAds').highcharts({
-            title: {
-                text: 'Tin đăng của bạn',
-                x: -20 //center
-            },
-            subtitle: {
-                text: 'Nguồn: MetVuong.com',
-                x: -20
-            },
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-            },
-            yAxis: {
-                title: {
-                    text: 'Người xem'
-                },
-                plotLines: [{
-                    value: 0,
-                    width: 1,
-                    color: '#808080'
-                }]
-            },
-            tooltip: {
-                valueSuffix: ' người',
-                useHTML:true,
-                /*formatter: function() {
-                    var tooltip;
-                    if (this.key == 'last') {
-                        tooltip = '<b>Final result is </b> ' + this.y;
-                    }
-                    else {
-                        tooltip =  '<span style="color:' + this.series.color + '">' + this.series.name + '</span>: <b>' + this.y + '</b><br/>';
-                    }
-                    return tooltip;
-                }*/
-            },
-            plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
-                },
-                series: {
-                    cursor: 'pointer',
-                    point: {
-                        events: {
-                            click: function() {//alert ('Category: '+ this.category +', value: '+ this.y);
-//                                console.log(this);
-                                $('#frmListVisit').find('.total').html(this.y);
-                                $('#frmListVisit').modal();
-                            }
-                        }
-                    }
+        <?php if(Yii::$app->request->isAjax){?>
+        var timer = 0;
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+            var url = $('.nav-tabs .tab:first').attr('data-url');
+            $.ajax({
+                type: "get",
+                dataType: 'html',
+                url: url,
+                success: function (data) {
+                    $('.wrapChart').html(data);
                 }
-            },
-            /*chart: {
-                events: {
-                    click: function(event) {
-                        alert ('x: '+ event.xAxis[0].value +', y: '+
-                            event.yAxis[0].value);
+            });
+        }, 500);
+        <?php }?>
+        $(document).on('click', '.tab', function () {
+            var timer = 0;
+            clearTimeout(timer);
+            var url = $(this).attr('data-url');
+            timer = setTimeout(function () {
+                $.ajax({
+                    type: "get",
+                    dataType: 'html',
+                    url: url,
+                    success: function (data) {
+                        $('.wrapChart').html(data);
                     }
-                }
-            },*/
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle',
-                borderWidth: 0
-            },
-            series: [{
-                name: '21 Lê Thánh Tôn',
-                data: [7, 6, 9, 14, 18, 21, 25, 26, 23, 18, 13, 9]
-            }, {
-                name: '57 Tôn Đản',
-                data: [2, 8, 5, 11, 17, 22, 24, 24, 20, 14, 8, 2]
-            }, {
-                name: '23 Pastuer',
-                data: [1, 2, 4, 8, 13, 17, 18, 17, 14, 9, 3, 1]
-            }, {
-                name: '11 Nguyễn Văn Trỗi',
-                data: [3, 4, 5, 8, 11, 15, 17, 16, 14, 10, 6, 4]
-            }]
+                });
+            }, 500);
         });
     });
 </script>
