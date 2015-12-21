@@ -14,7 +14,7 @@ $searchParams = json_decode($value);
 
 
 </script>
-<header class="home-page cd-secondary-nav border-shadow wrap-page-home is-fixed animate-children show-fixed">
+<header class="home-page cd-secondary-nav border-shadow wrap-page-home show-fixed">
     <div class="container clearfix">
         <?php $this->beginContent('@app/views/layouts/_partials/menuMain.php'); ?><?php $this->endContent();?>
         <div class="wrap-search-home">
@@ -50,7 +50,7 @@ $searchParams = json_decode($value);
                         <input id="valTabActive" type="hidden" value="">
                         
                     <?php ActiveForm::end(); ?>
-                    <div class="pull-left text-right mgT-10 mgL-15 options-search">
+                    <div class="pull-left text-right mgT-10 options-search">
                         <div class="icon-selected">
                             <a href="#">
                                 <span><em class="fa fa-home"></em><em class="fa fa-file-text"></em></span>

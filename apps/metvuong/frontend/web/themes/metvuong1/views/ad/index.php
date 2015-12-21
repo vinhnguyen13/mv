@@ -203,6 +203,64 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
                     </div>
                 </div>
 	        </li>
+
+            <li>
+                <a href="#">Khác</a>
+                <div class="filter-common filter-pane filter-other hidden-effect">
+                    <div class="wrap-effect clearfix">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="" class="col-sm-4 control-label">Phòng tắm</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group minmax-frm-inline">
+                                <label for="" class="col-sm-4 control-label">Năm</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control val-min" placeholder="Min">
+                                    <input type="text" class="form-control val-max" placeholder="Max">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-sm-4 control-label">Ngày đăng</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control">
+                                        <option>1 ngày</option>
+                                        <option>7 ngày</option>
+                                        <option>14 ngày</option>
+                                        <option>30 ngày</option>
+                                        <option>60 ngày</option>
+                                        <option>90 ngày</option>
+                                        <option>6 tháng</option>
+                                        <option>12 tháng</option>
+                                        <option>24 tháng</option>
+                                        <option>36 tháng</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-sm-4 control-label">Từ khóa</label>
+                                <div class="col-sm-8">
+                                    <textarea class="form-control" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class="col-sm-4 control-label"></label>
+                                <div class="col-sm-8">
+                                    <button type="button" class="btn btn-primary btn-sm btn-common">Apply</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </li>
 	        
             <li>
                 <button type="button" class="btn btn-primary btn-sm btn-common"><em class="fa fa-filter"></em>Chọn lọc</button>
