@@ -1,7 +1,10 @@
-
 <div class="col-xs-9 right-profile quanlytinraoban">
     <div class="wrap-quanly-profile">
         <div class="title-frm">Quản lý thống kê</div>
+        <ul class="nav nav-tabs">
+            <li class="active"><a class="tab">Người theo dõi</a></li>
+            <li><a class="tab">Người tìm kiếm</a></li>
+        </ul>
         <div id="chartAds" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     </div>
 </div>
