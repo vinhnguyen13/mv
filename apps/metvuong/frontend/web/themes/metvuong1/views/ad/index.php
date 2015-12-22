@@ -164,7 +164,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
                     </div>
                 </div>
             </li>
-	        <li>
+	        <!-- <li>
 	            <a href="#">Loại BDS</a>
                 <div class="filter-common filter-pane filter-loaibds hidden-effect">
                     <div class="wrap-effect clearfix">
@@ -202,12 +202,21 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
                         </ul>
                     </div>
                 </div>
-	        </li>
+	        </li> -->
             <li>
                 <a href="#">Khác</a>
                 <div class="filter-common filter-pane filter-other hidden-effect">
                     <div class="wrap-effect clearfix">
-                        <form class="form-horizontal">
+                    		<div class="form-group">
+                                <label for="" class="col-sm-4 control-label">Người đăng</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control">
+                                        <option>Tất cả</option>
+                                        <option>Nhà môi giới</option>
+                                        <option>Chính chủ</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="" class="col-sm-4 control-label">Ngày đăng</label>
                                 <div class="col-sm-8">
@@ -225,13 +234,6 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="" class="col-sm-4 control-label"></label>
-                                <div class="col-sm-8">
-                                    <button type="button" class="btn btn-primary btn-sm btn-common">Apply</button>
-                                </div>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </li>
