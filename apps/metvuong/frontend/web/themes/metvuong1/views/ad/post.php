@@ -221,11 +221,11 @@ if(Yii::$app->user->identity->profile->avatar) {
 					<?= Html::activeHiddenInput($model, 'lat') ?>
 					<?= Html::activeHiddenInput($model, 'lng') ?>
 				</div>
-				<button id="preview" type="button" class="btn btn-primary btn-common mgT-15 pull-left" data-toggle="modal" data-target="#detail-listing" style="display: none;">
+				<!-- <button id="preview" type="button" class="btn btn-primary btn-common mgT-15 pull-left" data-toggle="modal" data-target="#detail-listing" style="display: none;">
 					Xem trước
-				</button>
-				<button type="button"
-					class="btn btn-primary btn-common mgT-15 next action-button pull-right" data-ajax-post="true">
+				</button> -->
+				<button id="preview" type="button"
+					class="btn btn-primary btn-common mgT-15 action-button pull-right" data-ajax-post="false" data-toggle="modal" data-target="#detail-listing">
 					Tiếp theo<em class="fa fa-chevron-right"></em>
 				</button>
 				<button type="button"
@@ -359,7 +359,7 @@ if(Yii::$app->user->identity->profile->avatar) {
                                 </div>
                             </div>
                         </div>
-                        <div style="text-align: center;"><input id="submit-form" type="button" value="ĐĂNG TIN" class="btn btn-primary" style="width: 200px;"></div>
+                        <div style="text-align: center;"><input data-ajax-post="true" id="submit-form" type="button" value="ĐĂNG TIN" class="btn btn-primary btn-common action-button" style="width: 200px;"></div>
                     </div>
                 </div>
             </div>

@@ -129,6 +129,7 @@ $(document).ready(function(){
 		if(validateStep2()) {
 			$('.editable').each(function(){
 				refText($(this));
+				$(this).append('<em class="icon-pencil"></em>');
 			});
 			
 			$('#ref-adproduct-district_id').text(district['pre'] + ' ' + district['name']);
@@ -507,24 +508,26 @@ function stepPost () {
 				}
 
 				if ( objSP.flagAjax ) {
-					$('#preview').trigger('click');
-					
-//					var form = $('#frm-post-tin');
-//	        	
-//		        	$.post(form.attr('action'), $('#frm-post-tin').serialize(), function(response){
-//		        		if(response.success) {
-//		        			l('success!!!');
-//		        			objSP.nextStep(_this);
-//		        		} else {
-//		        			for(index in response.errors) {
-//		        				var errors = response.errors[index];
-//		        				for(j in errors) {
-//		        					var error = errors[j];
-//		        					$('#' + index + '-' + j).next().show().html(error);
-//		        				}
-//		        			}
-//		        		}
-//		        	});
+					var form = $('#frm-post-tin');
+	        	
+		        	$.post(form.attr('action'), $('#frm-post-tin').serialize(), function(response){
+		        		if(response.success) {
+		        			$('#detail-listing').modal('hide');
+		        			setTimeout(function() {
+		        				_this = $('#preview').addClass('next');
+		        				objSP.nextStep(_this);
+		        			},300);
+		        		} else {
+		        			for(index in response.errors) {
+		        				var errors = response.errors[index];
+		        				for(j in errors) {
+		        					var error = errors[j];
+		        					$('#' + index + '-' + j).next().show().html(error);
+		        				}
+		        			}
+		        		}
+		        	});
+			
 					return;
 				}
 				

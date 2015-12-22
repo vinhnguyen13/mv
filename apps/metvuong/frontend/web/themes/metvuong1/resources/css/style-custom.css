@@ -3995,9 +3995,11 @@ div.wrap-page-home .logo-home {
     overflow: hidden;
 }
 .contact-person > div {
-    overflow: hidden;
+    /* overflow: hidden; */
     padding-left: 7px;
     font-size: .8em;
+    float: left;
+    width: 215px;
 }
 .contact-person .rating li {
     margin-left: 2px;
@@ -4771,6 +4773,7 @@ header.wrap-page-home .wrap-search-home .ani-search {
 }
 .error-frm .help-block {
     margin-bottom: 0;
+    font-size: .8em;
 }
 .help-block {
     color: #A93232;
@@ -4862,7 +4865,7 @@ header.wrap-page-home .box-search-header.ani-search > div {
 }
 #price-format {
     font-size: 1em;
-    letter-spacing: 2px;
+    /* letter-spacing: 2px; */
     display: block !important;
     height: 100%;
     line-height: 34px;
@@ -5309,4 +5312,26 @@ header.animate-children .wrap-search-home .search-select a {
 }
 .select2-results .select2-result-label {
     font-size: .8em;
+}
+.editable {
+    position: relative;
+}
+.editable em {
+    font-size: 12px;
+    position: absolute;
+    top: -8px;
+    right: -8px;
+}
+.editable.editing {
+    background: #fff;
+    font-size: 14px;
+    z-index: 2;
+}
+.editable.editing .select2 {
+    background: #fff;
+}
+.editable.editing .select2 .select2-chosen {
+    display: block;
+    height: 24px;
+    line-height: 24px;
 }
