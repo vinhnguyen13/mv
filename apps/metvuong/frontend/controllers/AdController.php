@@ -90,7 +90,11 @@ class AdController extends Controller
         		$productResponse[$k]['area'] = StringHelper::formatCurrency($product['area']);
         		
         		if($product['file_name']) {
-        			$productResponse[$k]['image_url'] = AdImages::getImageUrl($product['file_name']);
+        			if($product['is_craw']) {
+        				$productResponse[$k]['image_url'] = $product['file_name'];
+        			} else {
+        				$productResponse[$k]['image_url'] = AdImages::getImageUrl($product['file_name']);
+        			}
         		} else {
         			$productResponse[$k]['image_url'] = Yii::$app->view->theme->baseUrl . '/resources/images/default-ads.jpg';;
         		}

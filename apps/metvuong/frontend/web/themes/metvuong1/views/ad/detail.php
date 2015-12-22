@@ -58,34 +58,63 @@
                     <div class="wrap-modal clearfix">
                     	<?php
                     		if(!empty($images)) :
-								$firstImage = array_shift($images);
-								$images = array_chunk($images, 4);
+									$firstImage = array_shift($images);
+									$images = array_chunk($images, 4);
+
+									if(!Yii::$app->request->get('isCraw')):
 						?>
-                        <div class="gallery-detail clearfix">
-                            <div class="bxslider">
-                                <div class="wrap-img-detail">
-                                    <ul class="clearfix">
-                                        <li class="img-big">
-                                            <div class="bgcover" style="background-image:url(<?= $firstImage->imageMedium ?>);"></div>
-                                            <a data-lightbox="detail-post" class="group mask" href="<?= $firstImage->imageLarge ?>"><em class="fa fa-search"></em><img src="<?= $firstImage->imageLarge ?>" alt="" style="display:none;"></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <?php foreach($images as $imagesGroup): ?>
-                                	<div class="wrap-img-detail">
-                                    	<ul class="clearfix">
-		                                <?php foreach($imagesGroup as $image): ?>
-		             						<li>
-	                                            <div class="bgcover" style="background-image:url(<?= $image->imageThumb ?>);"></div>
-	                                            <a data-lightbox="detail-post" class="group mask" href="<?= $image->imageLarge ?>"><em class="fa fa-search"></em><img src="<?= $image->imageLarge ?>" alt="" style="display:none;"></a>
-	                                            
-	                                        </li>
-		                                <?php endforeach; ?>
-		                                </ul>
-	                                </div>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
+			                        <div class="gallery-detail clearfix">
+			                            <div class="bxslider">
+			                                <div class="wrap-img-detail">
+			                                    <ul class="clearfix">
+			                                        <li class="img-big">
+			                                            <div class="bgcover" style="background-image:url(<?= $firstImage->imageMedium ?>);"></div>
+			                                            <a data-lightbox="detail-post" class="group mask" href="<?= $firstImage->imageLarge ?>"><em class="fa fa-search"></em><img src="<?= $firstImage->imageLarge ?>" alt="" style="display:none;"></a>
+			                                        </li>
+			                                    </ul>
+			                                </div>
+			                                <?php foreach($images as $imagesGroup): ?>
+			                                	<div class="wrap-img-detail">
+			                                    	<ul class="clearfix">
+					                                <?php foreach($imagesGroup as $image): ?>
+					             						<li>
+				                                            <div class="bgcover" style="background-image:url(<?= $image->imageThumb ?>);"></div>
+				                                            <a data-lightbox="detail-post" class="group mask" href="<?= $image->imageLarge ?>"><em class="fa fa-search"></em><img src="<?= $image->imageLarge ?>" alt="" style="display:none;"></a>
+				                                            
+				                                        </li>
+					                                <?php endforeach; ?>
+					                                </ul>
+				                                </div>
+			                                <?php endforeach; ?>
+			                            </div>
+			                        </div>
+			            	<?php else: ?>
+			            			<div class="gallery-detail clearfix">
+			                            <div class="bxslider">
+			                                <div class="wrap-img-detail">
+			                                    <ul class="clearfix">
+			                                        <li class="img-big">
+			                                            <div class="bgcover" style="background-image:url(<?= $firstImage->file_name ?>);"></div>
+			                                            <a data-lightbox="detail-post" class="group mask" href="<?= $firstImage->file_name ?>"><em class="fa fa-search"></em><img src="<?= $firstImage->file_name ?>" alt="" style="display:none;"></a>
+			                                        </li>
+			                                    </ul>
+			                                </div>
+			                                <?php foreach($images as $imagesGroup): ?>
+			                                	<div class="wrap-img-detail">
+			                                    	<ul class="clearfix">
+					                                <?php foreach($imagesGroup as $image): ?>
+					             						<li>
+				                                            <div class="bgcover" style="background-image:url(<?= $image->file_name ?>);"></div>
+				                                            <a data-lightbox="detail-post" class="group mask" href="<?= $image->file_name ?>"><em class="fa fa-search"></em><img src="<?= $image->file_name ?>" alt="" style="display:none;"></a>
+				                                            
+				                                        </li>
+					                                <?php endforeach; ?>
+					                                </ul>
+				                                </div>
+			                                <?php endforeach; ?>
+			                            </div>
+			                        </div>
+			            	<?php endif; ?>
                         <?php else: ?>
                         <div class="gallery-detail clearfix"><div class="bxslider no-image"><?= Yii::t('ad', 'Không có hình ảnh đính kèm') ?></div></div>
                         <?php endif; ?>
