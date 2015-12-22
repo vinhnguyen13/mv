@@ -189,6 +189,7 @@ if(Yii::$app->user->identity->profile->avatar) {
 						</div>
 						<div class="col-xs-3">
 							<?= Html::activeTextInput($adContactInfo, 'phone', ['class' => 'form-control number-only', 'placeholder' => 'Điện thoại', 'data-zero-first' => '1']) ?>
+							<div class="help-block" style="display: none;"></div>
 						</div>
 						<div class="col-xs-3">
 							<div class="form-group mgB-0">
