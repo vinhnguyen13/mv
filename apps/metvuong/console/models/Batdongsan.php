@@ -8,8 +8,6 @@
 namespace console\models;
 
 use Collator;
-use DateInterval;
-use DateTime;
 use frontend\models\User;
 use keltstr\simplehtmldom\SimpleHTMLDom;
 use linslin\yii2\curl\Curl;
@@ -137,7 +135,10 @@ class Batdongsan extends Component
                 $price = 0;
                 if(strpos($gia, ' triệu')){
                     $gia = str_replace('Giá:', '', $gia);
-                    $gia = str_replace(' triệu&nbsp;', '', $gia);
+                    if(strpos($gia, ' triệu/m²'))
+                        $gia = str_replace(' triệu/m²&nbsp;', '', $gia);
+                    else
+                        $gia = str_replace(' triệu&nbsp;', '', $gia);
                     $gia = trim($gia);
                     $price = $gia * 1000000;
                 }
@@ -184,27 +185,29 @@ class Batdongsan extends Component
                     }
                 }
 
-                $address = mb_split(',', $arr_info["Địa chỉ"]);
-                $city = $address[count($address)-1];
-                $district = $address[count($address)-2];
-//                $ward = $address[count($address)-3];
-//                $street = $address[count($address)-4];
+                if(count($arr_info) > 0) {
+                    $address = mb_split(',', $arr_info["Địa chỉ"]);
+                    $city = null;
+                    $district = null;
+                    $count_address = count($address);
+                    if ($count_address > 0) {
+                        $city = $address[$count_address - 1];
+                        $district = $address[$count_address - 2];
+                    }
 
-                $startdate = trim($arr_info["Ngày đăng tin"]);
-                $startdate = strtotime($startdate);
-                $startdate = date('Y-m-d', $startdate);
+                    $startdate = trim($arr_info["Ngày đăng tin"]);
+                    $startdate = strtotime($startdate);
 
-                $endate = trim($arr_info["Ngày hết hạn"]);
-                $endate = strtotime($endate);
-                $endate = date('Y-m-d', $endate);
+                    $endate = trim($arr_info["Ngày hết hạn"]);
+                    $endate = strtotime($endate);
 
-                $loai_tin = trim($arr_info["Loại tin rao"]);
-                $loai_tai_san = 6;
-                if($loai_tin == "Bán căn hộ chung cư"){
+                    $loai_tin = trim($arr_info["Loại tin rao"]);
                     $loai_tai_san = 6;
-                }
-                else if($loai_tin == "Bán nhà riêng"){
-                    $loai_tai_san = 7;
+                    if ($loai_tin == "Bán căn hộ chung cư") {
+                        $loai_tai_san = 6;
+                    } else if ($loai_tin == "Bán nhà riêng") {
+                        $loai_tai_san = 7;
+                    }
                 }
 
                 $contact = $detail->find('.pm-content-detail #divCustomerInfo', 0);
@@ -349,10 +352,6 @@ class Batdongsan extends Component
         if ($counter > $start) {
             print_r("Prepare data...\n");
             $user = User::find()->one();
-            echo "<pre>";
-            print_r($user->id);
-            echo "<pre>";
-            exit();
             $cityData = AdCity::find()->all();
             $districtData = AdDistrict::find()->all();
 //            $wardData = AdWard::find()->all();
@@ -375,39 +374,48 @@ class Batdongsan extends Component
 
                 $filename = $files[$i];
                 $filePath = $path.'/'.$filename;
-                $data = file_get_contents($filePath);
-                $data = json_decode($data, true);
-                foreach ($data as $value) {
-                    $imageArray[$i] = $value[$filename]["thumbs"];
-                    $infoArray[$i] = $value[$filename]["info"];
-                    $contactArray[$i] = $value[$filename]["contact"];
+                if(file_exists($filePath)) {
+                    $data = file_get_contents($filePath);
+                    $data = json_decode($data, true);
+                    foreach ($data as $value) {
+                        $imageArray[$i] = $value[$filename]["thumbs"];
+                        $infoArray[$i] = $value[$filename]["info"];
+                        $contactArray[$i] = $value[$filename]["contact"];
 
-                    $city_id = $this->getCityId($value[$filename]["city"], $cityData);
-                    if(empty($city_id))
-                        continue;
-                    $district_id = $this->getDistrictId($value[$filename]["district"], $districtData, $city_id);
-                    if(empty($district_id))
-                        continue;
+                        $city_id = $this->getCityId($value[$filename]["city"], $cityData);
+                        if (empty($city_id))
+                            continue;
+                        $district_id = $this->getDistrictId($value[$filename]["district"], $districtData, $city_id);
+                        if (empty($district_id))
+                            continue;
 
-                    $record = [
-                        'category_id' => $value[$filename]["loai_tai_san"],
-//                        'home_no' => null,
-                        'user_id' => $user->id,
-                        'city_id' => $city_id,
-                        'district_id' => $district_id,
-                        'type' => $value[$filename]["loai_giao_dich"],
-                        'content' => ''.$value[$filename]["description"],
-                        'area' => $value[$filename]["dientich"],
-                        'price' => $value[$filename]["price"],
-                        'lat' => $value[$filename]["lat"],
-                        'lng' => $value[$filename]["lng"],
-                        'start_date' => $value[$filename]["start_date"],
-                        'end_date' => $value[$filename]["end_date"],
-                        'verified' => 1,
-                        'created_at' => $value[$filename]["start_date"],
+                        $area = $value[$filename]["dientich"];
+//                        if ($area == 0)
+//                            continue;
 
-                    ];
-                    $bulkInsertArray[] = $record;
+                        $price = $value[$filename]["price"];
+                        if ($price == 0)
+                            continue;
+
+                        $record = [
+                            'category_id' => $value[$filename]["loai_tai_san"],
+                            'user_id' => $user->id,
+                            'city_id' => $city_id,
+                            'district_id' => $district_id,
+                            'type' => $value[$filename]["loai_giao_dich"],
+                            'content' => '' . $value[$filename]["description"],
+                            'area' => $area,
+                            'price' => $price,
+                            'lat' => $value[$filename]["lat"],
+                            'lng' => $value[$filename]["lng"],
+                            'start_date' => $value[$filename]["start_date"],
+                            'end_date' => $value[$filename]["end_date"],
+                            'verified' => 1,
+                            'created_at' => $value[$filename]["start_date"],
+
+                        ];
+                        $bulkInsertArray[] = $record;
+                    }
                 }
             }
             if(count($bulkInsertArray)>0){
@@ -469,23 +477,27 @@ class Batdongsan extends Component
                 }
 
                 // execute image, info, contact
-                $imageCount = Yii::$app->db->createCommand()
-                    ->batchInsert(AdImages::tableName(), $ad_image_columns, $bulkImage)
-                    ->execute();
-                if($imageCount > 0)
-                    print_r("\nInser image done");
-
-                $infoCount = Yii::$app->db->createCommand()
-                    ->batchInsert(AdProductAdditionInfo::tableName(), $ad_info_columns, $bulkInfo)
-                    ->execute();
-                if($infoCount > 0)
-                    print_r("\nInser product addition info done");
-
-                $contactCount = Yii::$app->db->createCommand()
-                    ->batchInsert(AdContactInfo::tableName(), $ad_contact_columns, $bulkContact)
-                    ->execute();
-                if($contactCount > 0)
-                    print_r("\nInser contact info done");
+                if(count($bulkImage) > 0) {
+                    $imageCount = Yii::$app->db->createCommand()
+                        ->batchInsert(AdImages::tableName(), $ad_image_columns, $bulkImage)
+                        ->execute();
+                    if ($imageCount > 0)
+                        print_r("\nInser image done");
+                }
+                if(count($bulkInfo) > 0) {
+                    $infoCount = Yii::$app->db->createCommand()
+                        ->batchInsert(AdProductAdditionInfo::tableName(), $ad_info_columns, $bulkInfo)
+                        ->execute();
+                    if ($infoCount > 0)
+                        print_r("\nInser product addition info done");
+                }
+                if(count($bulkContact) > 0) {
+                    $contactCount = Yii::$app->db->createCommand()
+                        ->batchInsert(AdContactInfo::tableName(), $ad_contact_columns, $bulkContact)
+                        ->execute();
+                    if ($contactCount > 0)
+                        print_r("\nInser contact info done");
+                }
             }
         }
         else{
@@ -494,10 +506,10 @@ class Batdongsan extends Component
             print_r("---------------");
         }
         $end_time = time();
-        print_r("\n"." Time: ");
+        print_r("\n"."Time: ");
         print_r($end_time-$start_time);
         print_r("s");
-        print_r(" - Record: ". $insertCount);
+        print_r(" - Total Record: ". $insertCount);
     }
 
     public function writeFileJson($filePath, $data)
