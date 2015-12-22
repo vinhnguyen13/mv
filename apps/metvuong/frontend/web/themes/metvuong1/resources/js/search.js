@@ -80,6 +80,7 @@
             tabActiveGet = '',
             objSave = [],
             flagCookie = false,
+            lengReloadSuggest = 0,
             idTinhThanhReload;
 
         //get start
@@ -173,7 +174,7 @@
                     $('.search-select').removeClass('active');
                     $('.search-select[data-active="'+objItemGet[i]+'"]').addClass('active');
                 }else {
-                    renderSuggest(objItemGet[i]);
+                    renderSuggest(objItemGet[i], i, objItemGet.length);
                 }
             }
         };
@@ -225,7 +226,7 @@
                 
                 if ( _this.hasClass('active') ) {
                     tabActiveGet = _this.data('active');
-                    l(current);
+                    
                     if ( !flagCookie || current != '' ) {
                         stepFirst(step);
                     }
@@ -256,14 +257,12 @@
                             stepLoad(j);
                             stepGet(j);
                             if ( mv.settings.wrapSuggest.find('li').length > 0 && flagCookie ) { // first reload suggest
-                                var stepLast = mv.settings.wrapSuggest.find('li:last-child').data('item');
-                                getPlaceHolder(stepLast);
+                                getPlaceHolder(current);
                                 flagCookie = false;
                             }else {
                                 getPlaceHolder(j);    
+                                current = j;
                             }
-                            
-                            current = j;
                             break;
                         }
                     }
@@ -417,7 +416,7 @@
             }
         }
 
-        function renderSuggest (el) {
+        function renderSuggest (el, count, lenSuggest) {
             var flag = el.idItem >= 0 ? true : false,
                 item = $('<li><i>x</i><span></span></li>'),
                 idEl = flag ? el.idItem : el.parent().data('id'),
@@ -425,16 +424,6 @@
                 prev = flag ? el.prevData : el.data('prev'),
                 txt = flag ? el.txt : el.text(),
                 dataItem = flag ? el.itemData : el.data('item');
-
-            if ( flag ) {
-                if ( dataItem == 'tinh-thanh' ) {
-                    idTinhThanhReload = idEl;
-                }
-                stepLoad(dataItem, idTinhThanhReload);
-                current = next;
-                $('#'+dataItem).find('ul li a').attr('data-next', next);
-                $('#'+dataItem).find('ul li a').attr('data-prev', prev);
-            }
 
             //edit get item
             if ( itemEdit.length > 0 ) {
@@ -457,6 +446,21 @@
                 item.find('span').html(txt);
                 item.attr('data-item',dataItem);
                 mv.settings.wrapSuggest.append(item).show();
+            }
+
+            if ( flag ) {
+                if ( dataItem == 'tinh-thanh' ) {
+                    idTinhThanhReload = idEl;
+                }
+                stepLoad(dataItem, idTinhThanhReload);
+                
+                $('#'+dataItem).find('ul li a').attr('data-next', next);
+                $('#'+dataItem).find('ul li a').attr('data-prev', prev);
+
+                if ( (next != undefined || next != '') && count == (lenSuggest-1) ) {
+                    current = next;
+                    stepLoad(next, idTinhThanhReload);
+                }
             }
             
             inputResize();

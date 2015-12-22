@@ -5,14 +5,39 @@ $value = \Yii::$app->getRequest()->getCookies()->getValue('searchParams');
 $searchParams = json_decode($value);
 ?>
 <script type="text/javascript">
-    $(document).bind( 'real-estate/news', function(event, json, string){
-        //setTimeout(function() {$('#search-kind').submit();},100);
-    });
-    $(document).bind( 'real-estate/post', function(event, json, string){
-        //setTimeout(function() {$('#search-kind').submit();},100);
-    });
+    $(document).ready(function(){
+        $(document).bind( 'submit_search', function(event, json, string, callback){
+            setTimeout(function(){callback();},1000);
+            setTimeout(function() {
+                if (typeof ga !== "undefined") {
+                    ga('send', {hitType: 'event',eventCategory: 'Listing',eventAction: 'click',eventLabel: 'SearchForm'});
+                }
+                setTimeout(function() {$('#search-kind').submit();},100);
+            },1000);
+            return false;
+        });
 
+        $(document).bind( 'real-estate/news', function(event, json, string, callback){
+            setTimeout(function(){callback();},1000);
+            setTimeout(function() {
+                if (typeof ga !== "undefined") {
+                    ga('send', {hitType: 'event',eventCategory: 'PostListing',eventAction: 'click',eventLabel: 'SearchForm'});
+                }
+                setTimeout(function() {$('#search-kind').submit();},100);
+            },1000);
+        });
+        
+        $(document).bind( 'real-estate/post', function(event, json, string, callback){
+            setTimeout(function(){callback();},1000);
+            setTimeout(function() {
+                if (typeof ga !== "undefined") {
+                    ga('send', {hitType: 'event',eventCategory: 'News',eventAction: 'click',eventLabel: 'SearchForm'});
+                }
+                setTimeout(function() {$('#search-kind').submit();},100);
+            },1000);
+        });
 
+    });
 </script>
 <header class="home-page cd-secondary-nav border-shadow wrap-page-home show-fixed">
     <div class="container clearfix">
@@ -158,8 +183,15 @@ $searchParams = json_decode($value);
                             <span><em class="fa fa-search"></em></span>
                         </button>
 
-                        <input id="valSearch" type="hidden" value="">
-                        <input id="valTabActive" type="hidden" value="">
+                        <input class="valInputHidden" id="valSearch" name="valSearch" type="hidden" value="">
+                        <input class="valInputHidden" id="valTabActive" name="activeSearch" type="hidden" value="">
+
+                        <input class="valInputHidden" id="valTinhThanh" name="city" type="hidden" value="">
+                        <input class="valInputHidden" id="valQuanHuyen" name="district" type="hidden" value="">
+                        <input class="valInputHidden" id="valLoaiBDS" name="category" type="hidden" value="">
+                        <input class="valInputHidden" id="valDuAn" name="project" type="hidden" value="">
+                        <input class="valInputHidden" id="valTinTuc" name="newsType" type="hidden" value="">
+                        <input class="valInputHidden" id="valLoaiTinTuc" name="newsCat" type="hidden" value="">
                         
                     <?php ActiveForm::end(); ?>
                     <div class="pull-left text-right mgT-10 options-search">

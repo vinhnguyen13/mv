@@ -3995,9 +3995,14 @@ div.wrap-page-home .logo-home {
     overflow: hidden;
 }
 .contact-person > div {
-    /* overflow: hidden; */
+    overflow: hidden;
     padding-left: 7px;
     font-size: .8em;
+    /* float: left; */
+    /* width: 215px; */
+}
+.modal-content .contact-person > div {
+    overflow: inherit;
     float: left;
     width: 215px;
 }
