@@ -1,64 +1,126 @@
 (function($){
     $.fn.MVS = function (options) {
 
-        var steps = {
-            "step1": {
-                "tinh-thanh": {
-                    "next": "quan-huyen"
-                },
-                "quan-huyen": {
-                    "next": "loai-bds",
-                    "prev": "tinh-thanh"
-                },
-                "loai-bds": {
-                    "next": {
-                        "chung-cu": {
-                            "next": "loai-duan",
-                            "prev": "loai-bds"
-                        },
-                        "common": {
-                            "next": "min-max",
-                            "prev": "loai-bds"
-                        }
+        var getLang = getValCookie('language') == undefined ? 'vi-VN' : getValCookie('language');
+
+        if ( getLang.search('vi-VN') >= 0 ) {
+            var steps = {
+                "step1": {
+                    "tinh-thanh": {
+                        "next": "quan-huyen"
                     },
-                    "prev": "quan-huyen"
-                }
-            },
-            "step2": {
-                "tinh-thanh": {
-                    "next": "quan-huyen"
-                },
-                "quan-huyen": {
-                    "next": "loai-bds",
-                    "prev": "tinh-thanh"
-                },
-                "loai-bds": {
-                    "prev": "quan-huyen"
-                }
-            },
-            "step3": {
-                "news": {
-                    "next": {
-                        "tin-tuc": {
-                            "next": "loai-tin-tuc",
-                            "prev": "news"
+                    "quan-huyen": {
+                        "next": "loai-bds",
+                        "prev": "tinh-thanh"
+                    },
+                    "loai-bds": {
+                        "next": {
+                            "chung-cu": {
+                                "next": "loai-duan",
+                                "prev": "loai-bds"
+                            },
+                            "common": {
+                                "next": "min-max",
+                                "prev": "loai-bds"
+                            }
                         },
-                        "du-an": {
-                            "next": "tinh-thanh",
-                            "prev": "news"
-                        }
+                        "prev": "quan-huyen"
                     }
                 },
-                "tinh-thanh": {
-                    "next": "quan-huyen"
+                "step2": {
+                    "tinh-thanh": {
+                        "next": "quan-huyen"
+                    },
+                    "quan-huyen": {
+                        "next": "loai-bds",
+                        "prev": "tinh-thanh"
+                    },
+                    "loai-bds": {
+                        "prev": "quan-huyen"
+                    }
                 },
-                "quan-huyen": {
-                    "next": "loai-duan",
-                    "prev": "tinh-thanh"
+                "step3": {
+                    "news": {
+                        "next": {
+                            "tin-tuc": {
+                                "next": "loai-tin-tuc",
+                                "prev": "news"
+                            },
+                            "du-an": {
+                                "next": "tinh-thanh",
+                                "prev": "news"
+                            }
+                        }
+                    },
+                    "tinh-thanh": {
+                        "next": "quan-huyen"
+                    },
+                    "quan-huyen": {
+                        "next": "loai-duan",
+                        "prev": "tinh-thanh"
+                    }
                 }
-            }
-        };
-        
+            };
+        }else if ( getLang.search('en-US') >= 0 ) {
+            var steps = {
+                "step1": {
+                    "tinh-thanh": {
+                        "next": "quan-huyen"
+                    },
+                    "quan-huyen": {
+                        "next": "loai-bds",
+                        "prev": "tinh-thanh"
+                    },
+                    "loai-bds": {
+                        "next": {
+                            "apartment": {
+                                "next": "loai-duan",
+                                "prev": "loai-bds"
+                            },
+                            "common": {
+                                "next": "min-max",
+                                "prev": "loai-bds"
+                            }
+                        },
+                        "prev": "quan-huyen"
+                    }
+                },
+                "step2": {
+                    "tinh-thanh": {
+                        "next": "quan-huyen"
+                    },
+                    "quan-huyen": {
+                        "next": "loai-bds",
+                        "prev": "tinh-thanh"
+                    },
+                    "loai-bds": {
+                        "prev": "quan-huyen"
+                    }
+                },
+                "step3": {
+                    "news": {
+                        "next": {
+                            "news": {
+                                "next": "loai-tin-tuc",
+                                "prev": "news"
+                            },
+                            "projects": {
+                                "next": "tinh-thanh",
+                                "prev": "news"
+                            }
+                        }
+                    },
+                    "tinh-thanh": {
+                        "next": "quan-huyen"
+                    },
+                    "quan-huyen": {
+                        "next": "loai-duan",
+                        "prev": "tinh-thanh"
+                    }
+                }
+            };
+        }
+
         var defaults = {
             input: $('#searchInput'),
             wrapSuggest: $('.type-search ul'),
@@ -149,10 +211,19 @@
             document.cookie = "valSearch="+val+"; path=/";
         };
 
-        function getValCookie () {
+        function getValCookie (name) {
             var value = "; " + document.cookie,
-                parts = value.split("; valSearch="),
-                valCookie,
+                parts = value.split("; "+name+"="),
+                valCookie;
+
+            if (parts.length == 2) 
+                valCookie = parts.pop().split(";").shift();
+
+            return valCookie;
+        };
+
+        function cookieSearch() {
+            var valCookie = getValCookie('valSearch'),
                 objItemGet;
 
             if ( location.pathname == '/' ) {
@@ -160,10 +231,11 @@
                 return;
             }
 
-            if (parts.length == 2) 
-                valCookie = parts.pop().split(";").shift();
-
-            objItemGet = valCookie.length > 0 ? JSON.parse(valCookie) : [];
+            try {
+                objItemGet = JSON.parse(valCookie);
+            }catch (e) {
+                objItemGet = [];
+            }
 
             if ( objItemGet.length > 0 ) {
                 flagCookie = true;
@@ -530,7 +602,7 @@
         };
 
         function showBoxSearch () {
-            getValCookie();
+            cookieSearch();
             
             setTimeout(function() {
                 boxCenter();

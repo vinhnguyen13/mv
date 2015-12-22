@@ -918,8 +918,8 @@ footer {
     max-width: 100%;
 }
 .time-post a {
-    font-size: 1.1em;
     font-weight: bold;
+    font-size: 15px;
 }
 .time-post span {
     font-size: 1.2em;
@@ -927,6 +927,7 @@ footer {
 }
 .time-post {
     margin-bottom: 10px;
+    font-size: 12px;
 }
 .detail-news h1 {
     font-size: 2.4em;
@@ -3103,7 +3104,7 @@ padding-bottom: 5px;
     background: none;
 }
 .modal-body h3 {
-    font-size: 1.5em;
+    font-size: 16px;
     font-weight: bold;
     text-transform: uppercase;
     margin-bottom: 20px;
@@ -3131,7 +3132,7 @@ padding-bottom: 5px;
 .list-social-login li:first-child {
     width: 100%;
     margin-bottom: 20px;
-    font-size: 1.2em;
+    font-size: 14px;
     font-weight: bold;
 }
 .modal-body {
@@ -3151,9 +3152,9 @@ padding-bottom: 5px;
 }
 .frmIcon .form-group em {
     position: absolute;
-    top: 7px;
+    top: 9px;
     left: 10px;
-    font-size: 1.4em;
+    font-size: 15px;
     color: #4a933a;
 }
 .frmIcon .form-group .form-control {
@@ -3223,11 +3224,12 @@ padding-bottom: 5px;
 #frmLogin .checkbox label,
 #frmRegister .checkbox label {
     line-height: 20px;
+    font-size: 13px;
 }
 .footer-modal a {
     display: block;
     text-align: right;
-    font-size: 1.1em;
+    font-size: 13px;
     color: #333;
     line-height: 20px;
 }
@@ -3348,12 +3350,12 @@ padding-bottom: 5px;
     top: -3px;
 }
 .list-results .infor-result p {
-    margin-bottom: 8px;
+    margin-bottom: 5px;
 }
 .infor-result .item-title {
     font-weight: bold;
     color: #3c763d;
-    font-size: 1em;
+    font-size: 15px;
     line-height: 18px;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -3361,7 +3363,7 @@ padding-bottom: 5px;
 }
 .infor-result .type-result {
     font-weight: bold;
-    font-size: .7em;
+    font-size: 11px;
 }
 .infor-result .type-result em {
     margin-right: 5px;
@@ -3376,14 +3378,14 @@ padding-bottom: 5px;
     font-size: 1.5em;
 }
 .infor-result .beds-baths-sqft {
-    font-size: .9em;
+    font-size: 14px;
     line-height: 18px;
 }
 .infor-result .beds-baths-sqft sup {
     font-size: .8em;
 }
 .list-results .infor-result .date-post-rent {
-    font-size: 1em;
+    font-size: 14px;
     margin-bottom: 0;
     line-height: 20px;
 }
@@ -4276,7 +4278,7 @@ div.wrap-page-home .logo-home {
     position: absolute;
     top: 50%;
     left: 50%;
-    font-size: 2em;
+    font-size: 1.5em;
     color: #fff;
     margin-top: -11px;
     margin-left: -12px;
@@ -4610,8 +4612,8 @@ div.wrap-page-home .logo-home {
 }
 
 div._2iwr {
-    height: 40px;
-    left: 40px;
+    height: 115px;
+    left: 150px;
     right: auto;
     top: 0;
     width: 8px;
@@ -4619,60 +4621,67 @@ div._2iwr {
 
 div._2iws {
     height: 8px;
-    left: 48px;
+    left: 150px;
     top: 0;
 }
 
 div._2iwt {
-    left: 136px;
+    left: 400px;
     top: 8px;
 }
 
 div._2iwu {
-    height: 12px;
-    left: 48px;
+    height: 15px;
+    left: 150px;
     top: 14px;
 }
 
 div._2iwv {
-    left: 100px;
-    top: 26px;
+    left: 270px;
+    top: 23px;
 }
 
 div._2iww {
-    height: 10px;
-    left: 48px;
-    top: 32px;
+    height: 15px;
+    left: 150px;
+    top: 36px;
 }
 
 div._2iwx {
-    height: 20px;
-    top: 40px;
+    /* height: 40px; */
+    top: 46px;
+    left: 150px;
+    display: none;
 }
 
 div._2iwy {
-    left: 410px;
-    top: 60px;
+    left: 150px;
+    top: 53px;
+    display: none;
 }
 
 div._2iwz {
-    height: 13px;
-    top: 66px;
+    height: 15px;
+    top: 60px;
+    left: 150px;
 }
 
 div._2iw- {
-    left: 440px;
-    top: 79px;
+    left: 150px;
+    top: 62px;
+    height: 6px;
 }
 
 div._2iw_ {
-    height: 13px;
-    top: 85px;
+    height: 15px;
+    top: 82px;
+    left: 150px;
 }
 
 div._2ix0 {
-    left: 178px;
+    left: 260px;
     top: 98px;
+    display: none;
 }
 .wrap-menu-option {
     /* width: 230px; */
