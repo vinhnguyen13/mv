@@ -173,6 +173,8 @@
                 if ( i === 0 ) { // tab active
                     $('.search-select').removeClass('active');
                     $('.search-select[data-active="'+objItemGet[i]+'"]').addClass('active');
+                    var stepOld = $('.search-select[data-active="'+objItemGet[i]+'"]').data('step');
+                    getDataStep(stepOld);
                 }else {
                     renderSuggest(objItemGet[i], i, objItemGet.length);
                 }
@@ -266,6 +268,14 @@
                             break;
                         }
                     }
+                }
+            };
+        };
+
+        function getDataStep(step) {
+            for ( var i in steps ) {
+                if ( i == step ) {
+                    stepData = steps[i];
                 }
             }
         };
@@ -414,7 +424,7 @@
                     break;
                 }
             }
-        }
+        };
 
         function renderSuggest (el, count, lenSuggest) {
             var flag = el.idItem >= 0 ? true : false,
@@ -460,6 +470,8 @@
                 if ( (next != undefined || next != '') && count == (lenSuggest-1) ) {
                     current = next;
                     stepLoad(next, idTinhThanhReload);
+                    stepGet(current);
+                    l(1);
                 }
             }
             
@@ -518,15 +530,14 @@
         };
 
         function showBoxSearch () {
-            
             getValCookie();
-
+            
             setTimeout(function() {
                 boxCenter();
             },150);
 
             renderStep();
-            
+
             clickInput();
             
             $(document).on('click', '.wrap-step li a', changeStep);
