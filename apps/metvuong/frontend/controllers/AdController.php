@@ -163,6 +163,10 @@ class AdController extends Controller
      */
     public function actionPost()
     {
+    	if(Yii::$app->user->isGuest) {
+    		$this->redirect(['/member/login']);
+    	}
+    	
     	$cityId = Yii::$app->request->get('city');
     	$districtId = Yii::$app->request->get('district');
 		$categoryId = Yii::$app->request->get('category');
