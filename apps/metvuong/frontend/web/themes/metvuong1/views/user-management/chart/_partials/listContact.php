@@ -1,15 +1,10 @@
 <h3>Người theo dõi</h3>
-<p style="color: #4a933a;">
-    Có <span class="total" style="font-weight: bold"></span> người theo dõi tin <span class="news" style="font-weight: bold"></span>.
+<p style="color: #4a933a;" class="desTotal">
+
 </p>
 
 <?php
 $yourArray = [
-    0 => [
-        'title' => 'Nguyễn Quang Vinh',
-        'phone' => '0909030605',
-        'time' => date('H:i:s d-m-Y', strtotime('-1days')),
-    ],
     1 => [
         'title' => 'Nguyễn Trung Ngạn',
         'phone' => '0909030605',
@@ -46,4 +41,4 @@ echo \yii\grid\GridView::widget([
         'time',
     ],
 ]);?>
-<p>Và 500 người nữa đang theo dõi tin <span class="news" style="font-weight: bold"></span> của bạn. Bạn vui lòng <a href="javascript:alert('Coming soon !');">nạp thêm tiền</a> để có thể xem thêm</p>
+<p style="color: #4a933a;">Và <span class="totalNext" style="font-weight: bold"></span> người khác nữa. Bạn vui lòng <a href="javascript:alert('Coming soon !');">nạp thêm tiền</a> để có thể xem thêm</p>
