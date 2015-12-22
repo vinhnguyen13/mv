@@ -10,6 +10,7 @@ namespace console\models;
 use Collator;
 use DateInterval;
 use DateTime;
+use frontend\models\User;
 use keltstr\simplehtmldom\SimpleHTMLDom;
 use linslin\yii2\curl\Curl;
 use vsoft\ad\models\AdCity;
@@ -29,7 +30,6 @@ class Batdongsan extends Component
     const DOMAIN = 'http://batdongsan.com.vn';
     protected $time_start = 0;
     protected $time_end = 0;
-    protected $page_current = 1;
 
     /**
      * @return mixed
@@ -61,16 +61,19 @@ class Batdongsan extends Component
                 $last_page = str_replace("/nha-dat-ban/p", "", $pagination[$count_page-1]->href);
 //                $last_page = 3;
                 $log = $this->loadFileLog();
-                $sequence_id = empty($log["last_id"]) ? 0 : ($log["last_id"]+1);
-                for($i = 1; $i <= $last_page; $i++){
-                    $page_link = "/nha-dat-ban/p" . $i;
-                    $log = $this->getListProject($page_link, $sequence_id, $log);
-                    if(!empty($log)) {
-                        $this->writeFileLog($log);
+                $current_page = empty($log["current_page"]) ? 1 : ($log["current_page"]+1);
+                for($i = $current_page; $i <= $last_page; $i++){
+                    $log = $this->loadFileLog();
+                    $sequence_id = empty($log["last_id"]) ? 0 : ($log["last_id"]+1);
+                    $l = $this->getListProject($i, $sequence_id, $log);
+                    if(!empty($l)){
+                        $l["current_page"] = $i;
+                        $this->writeFileLog($l);
+                        print_r("Page ".$i." done!");
+                        print_r("\n");
                     }
-                    echo "Scraping done: ".self::DOMAIN.$page_link;
-                    echo "\n";
                     sleep(1);
+                    ob_flush();
                 }
             } else {
                 echo "Cannot find pagination of _".self::DOMAIN;
@@ -80,8 +83,9 @@ class Batdongsan extends Component
         }
     }
 
-    public function getListProject($href, $sequence_id, $log)
+    public function getListProject($current_page, $sequence_id, $log)
     {
+        $href = "/nha-dat-ban/p".$current_page;
         $page = $this->getUrlContent(self::DOMAIN . $href);
         if(!empty($page)) {
             $html = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
@@ -101,7 +105,7 @@ class Batdongsan extends Component
                         if (!empty($res)) {
                             $log["files"][$sequence_id] = $res;
                             $log["last_id"] = $sequence_id;
-                            $sequence_id++;
+                            $sequence_id = $sequence_id + 1;
                         }
                     }
                 }
@@ -269,7 +273,7 @@ class Batdongsan extends Component
                 return (int)$obj->id;
             }
         }
-        return 0;
+        return null;
     }
 
     function getDistrictId($districtFile, $districtDB, $city_id)
@@ -281,7 +285,7 @@ class Batdongsan extends Component
                 return (int)$obj->id;
             }
         }
-        return 0;
+        return null;
     }
 
     function getWardId($_file, $_data, $_id)
@@ -343,13 +347,18 @@ class Batdongsan extends Component
         $files = $log["files"];
         $counter = count($files);
         if ($counter > $start) {
-            print_r('Prepare data...');
+            print_r("Prepare data...\n");
+            $user = User::find()->one();
+            echo "<pre>";
+            print_r($user->id);
+            echo "<pre>";
+            exit();
             $cityData = AdCity::find()->all();
             $districtData = AdDistrict::find()->all();
 //            $wardData = AdWard::find()->all();
 //            $streetData = AdStreet::find()->all();
             $tableName = AdProduct::tableName();
-            $columnNameArray = ['category_id','home_no', 'user_id',
+            $columnNameArray = ['category_id', 'user_id',
                 'city_id', 'district_id',
                 'type', 'content', 'area', 'price', 'lat', 'lng',
                 'start_date', 'end_date', 'verified', 'created_at'];
@@ -357,7 +366,7 @@ class Batdongsan extends Component
             $imageArray = array();
             $infoArray = array();
             $contactArray = array();
-            print_r('Insert data...');
+            print_r("Insert data...\n");
             for($i = $start; $i < $counter; $i++) {
                 $log["last_import"] = $i+1;
                 $log["last_import_name"] = $files[$i];
@@ -374,17 +383,18 @@ class Batdongsan extends Component
                     $contactArray[$i] = $value[$filename]["contact"];
 
                     $city_id = $this->getCityId($value[$filename]["city"], $cityData);
+                    if(empty($city_id))
+                        continue;
                     $district_id = $this->getDistrictId($value[$filename]["district"], $districtData, $city_id);
-//                    $ward_id = $this->getWardId($value[$filename]["ward"], $wardData, $district_id);
-//                    $street_id = $this->getStreetId($value[$filename][$filename]["street"], $streetData, $district_id);
+                    if(empty($district_id))
+                        continue;
+
                     $record = [
                         'category_id' => $value[$filename]["loai_tai_san"],
-//                        'project_building_id' => 1,
-                        'home_no' => null,
-                        'user_id' => 3,
+//                        'home_no' => null,
+                        'user_id' => $user->id,
                         'city_id' => $city_id,
                         'district_id' => $district_id,
-
                         'type' => $value[$filename]["loai_giao_dich"],
                         'content' => ''.$value[$filename]["description"],
                         'area' => $value[$filename]["dientich"],
