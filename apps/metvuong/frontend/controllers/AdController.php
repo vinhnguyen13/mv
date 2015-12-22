@@ -152,7 +152,7 @@ class AdController extends Controller
 	    		if($model->validate() && $adProductAdditionInfo->validate() && $adContactInfo->validate()) {
 	    			$model->user_id = Yii::$app->user->id;
 	    			$model->save(false);
-	    			var_dump($model);
+	    			
 	    			$adProductAdditionInfo->product_id = $model->id;
 	    			$adProductAdditionInfo->save(false);
 	    			
