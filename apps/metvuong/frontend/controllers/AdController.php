@@ -66,6 +66,7 @@ class AdController extends Controller
         		 
         		$fullQuery = (new yii\db\Query())->from([$query->union($queryCraw)]);
         	} else {
+        		$query = $query->from('ad_product')->addSelect(["(0) AS is_craw"]);
         		$fullQuery = $query;
         	}
         	
