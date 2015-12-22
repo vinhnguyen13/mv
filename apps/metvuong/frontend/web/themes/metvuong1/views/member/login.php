@@ -62,7 +62,7 @@ $model = Yii::createObject(LoginForm::className());
                         if(data.statusCode == 200){
                             $('a[data-target="#frmRegister"]').parent().remove();
                             $('a[data-target="#frmLogin"]').parent().remove();
-                            $('ul.menu-home').prepend('<li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><em class="icon-user"></em>' + data.parameters.username + '</a></li>');
+                            $('ul.menu-home').prepend('<li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><em class="icon-user"></em>' + data.parameters.username + '</a></li><li><a data-method="post" href="<?=\yii\helpers\Url::to(['/member/logout'])?>"><em class="icon-logout"></em><?=Yii::t('user', 'Logout')?></a></li>');
                             location.href = '<?=Yii::$app->getUser()->getReturnUrl();?>';
                         }else if(data.statusCode == 404){
                             var arr = [];
