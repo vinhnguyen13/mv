@@ -75,7 +75,7 @@ function start() {
 			$('#map-loading').height($('.cd-main-content').height()).show();
 			
 			$.get('/ad/detail', {id: $(this).data('detail'), isCraw: $(this).data('is-craw')}, function(response){
-
+				$('#map-loading').hide();
 				var width = $('.wrap-map-result').width();
 				width = (width > 820) ? 820 : width;
 				
@@ -85,9 +85,18 @@ function start() {
 					height: $('.result-items').height()
 				});
 				$('#detail-listing').html($(response).html());
+				
+
+				if(!self.data('clone')) {
+					var marker = gmap.getMarker(self.data('id'));
+					if(marker) {
+						var position = marker.getPosition();
+						gmap.setCenter({lat: position.lat(), lng: position.lng()});
+					}
+				}
+				
 				$('.gallery-detail').imagesLoaded()
 				 	.always( function( instance ) {
-				 		$('#map-loading').hide();
 						if($('#detail-listing .bxslider').find('.wrap-img-detail').length > 0) {
 							setTimeout(function() {
 					 			$('#detail-listing .bxslider').bxSlider({
@@ -107,14 +116,6 @@ function start() {
 						            'resizeDuration': 300,
 						            'fadeDuration': 400
 						        });
-								
-								if(!self.data('clone')) {
-									var marker = gmap.getMarker(self.data('id'));
-									if(marker) {
-										var position = marker.getPosition();
-										gmap.setCenter({lat: position.lat(), lng: position.lng()});
-									}
-								}
 					 		},500);
 						}
 				 	});
