@@ -151,13 +151,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                                             <div class="outsideevent wrap-cost-bds hidden-cost">
                                                                 <div class="wrap-effect-cost">
                                                                     <ul>
-                                                                        <li data-cost="0" data-unit=""><span>0</span></li>
-                                                                        <li data-cost="1" data-unit="triệu"><span>1 triệu</span></li>
-                                                                        <li data-cost="2" data-unit="triệu"><span>2 triệu</span></li>
-                                                                        <li data-cost="3" data-unit="triệu"><span>3 triệu</span></li>
-                                                                        <li data-cost="4" data-unit="triệu"><span>4 triệu</span></li>
-                                                                        <li data-cost="5" data-unit="triệu"><span>5 triệu</span></li>
-                                                                        <li data-cost="6" data-unit="tỷ"><span>6 triệu</span></li>
+                                                                        <li data-cost="0"><span>0</span></li>
                                                                     </ul>
                                                                 </div>
                                                             </div>
@@ -168,13 +162,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                                             <div class="outsideevent wrap-cost-bds hidden-cost">
                                                                 <div class="wrap-effect-cost">
                                                                     <ul>
-                                                                        <li data-cost="0" data-unit=""><span>0</span></li>
-                                                                        <li data-cost="1" data-unit="triệu"><span>1 triệu</span></li>
-                                                                        <li data-cost="2" data-unit="triệu"><span>2 triệu</span></li>
-                                                                        <li data-cost="3" data-unit="triệu"><span>3 triệu</span></li>
-                                                                        <li data-cost="4" data-unit="triệu"><span>4 triệu</span></li>
-                                                                        <li data-cost="5" data-unit="triệu"><span>5 triệu</span></li>
-                                                                        <li data-cost="6" data-unit="tỷ"><span>6 triệu</span></li>
+                                                                        <li data-cost="0"><span>0</span></li>
                                                                     </ul>
                                                                 </div>
                                                             </div>

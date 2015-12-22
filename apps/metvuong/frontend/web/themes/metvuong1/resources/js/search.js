@@ -134,6 +134,7 @@
         var mv = {},
             tabs = this,
             itemEdit = '',
+            flagEdit = false,
             next = '',
             prev = '',
             current = '',
@@ -156,6 +157,7 @@
             mv.settings.input.on('click', function(e) {
                 e.preventDefault();
                 open();
+                close();
                 loadCost.init();
             });
         };
@@ -270,7 +272,6 @@
             
             setTimeout(function() {
                 $('#'+current).addClass('active');
-                close();
             }, 30);
         };
 
@@ -435,6 +436,7 @@
             renderSuggest(_this);
 
             if ( next == undefined || next == '' ) {
+                getPlaceHolder(null, true);
                 if ( tabActiveGet != 1 ) 
                     submitSearchVal();
                 if ( tabActiveGet == '2' ) {
@@ -534,16 +536,20 @@
                 if ( dataItem == 'tinh-thanh' ) {
                     idTinhThanhReload = idEl;
                 }
+
                 stepLoad(dataItem, idTinhThanhReload);
-                
+
                 $('#'+dataItem).find('ul li a').attr('data-next', next);
                 $('#'+dataItem).find('ul li a').attr('data-prev', prev);
 
+                if ( dataItem == 'loai-bds' ) {
+                    stepGet(dataItem);
+                }
+                
                 if ( (next != undefined || next != '') && count == (lenSuggest-1) ) {
                     current = next;
                     stepLoad(next, idTinhThanhReload);
                     stepGet(current);
-                    l(1);
                 }
             }
             
@@ -552,13 +558,14 @@
             //delete item suggest
             item.find('i').on('click', function (e) {
                 e.preventDefault();
+                itemEdit = '';
                 getItemEvent($(this).parent(), true);
             });
 
             //update item suggest
             mv.settings.wrapSuggest.find('li').removeClass('active');
             item.on('click', function (e) {
-                if ( !$(e.target).is('i') ) {// DETECT btn close
+                if ( !$(e.target).is('i') ) {// DETECT btn delete
                     mv.settings.wrapSuggest.find('li').removeClass('active');
                     $(this).addClass('active');
 
@@ -735,6 +742,9 @@
                         loadCost.flag = 'min';
                     }
                 });
+            },
+            renderPrice: function (minmax) {
+
             }
         };
 
@@ -745,13 +755,25 @@
                     loadCost.hide();
                 }else {
                     $('.btn-close-search').trigger('click');
+
+                    if ( itemEdit.length > 0 ) {
+                        mv.settings.wrapSuggest.find('li').removeClass('active');
+                        itemEdit = '';
+                        stepGet(current);
+                        current = next;
+                        setTimeout(function () {open();},310);
+                    }
                 }
             }
         };
 
-        function getPlaceHolder (item) {
-            inputPlaceholder = $('#'+item).data('stepTitle');
-            mv.settings.input.attr('placeholder',inputPlaceholder);
+        function getPlaceHolder (item, nullVal) {
+            if ( nullVal ) {
+                mv.settings.input.attr('placeholder','');
+            }else {
+                inputPlaceholder = $('#'+item).data('stepTitle');
+                mv.settings.input.attr('placeholder',inputPlaceholder);    
+            }
         };
 
         function inputResize () {
