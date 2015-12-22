@@ -79,6 +79,7 @@
             stepData = {},
             tabActiveGet = '',
             objSave = [],
+            flagCookie = false,
             idTinhThanhReload;
 
         //get start
@@ -161,7 +162,11 @@
             if (parts.length == 2) 
                 valCookie = parts.pop().split(";").shift();
 
-            objItemGet = valCookie != undefined ? JSON.parse(valCookie) : [];
+            objItemGet = valCookie.length > 0 ? JSON.parse(valCookie) : [];
+
+            if ( objItemGet.length > 0 ) {
+                flagCookie = true;
+            }
 
             for ( var i = 0; i < objItemGet.length; i++ ) {
                 if ( i === 0 ) { // tab active
@@ -220,7 +225,10 @@
                 
                 if ( _this.hasClass('active') ) {
                     tabActiveGet = _this.data('active');
-                    stepFirst(step);
+                    l(current);
+                    if ( !flagCookie || current != '' ) {
+                        stepFirst(step);
+                    }
                     return;
                 }
             });
@@ -247,9 +255,10 @@
                         for ( var j in stepData ) {
                             stepLoad(j);
                             stepGet(j);
-                            if ( mv.settings.wrapSuggest.find('li').length > 0 ) { // reload suggest
+                            if ( mv.settings.wrapSuggest.find('li').length > 0 && flagCookie ) { // first reload suggest
                                 var stepLast = mv.settings.wrapSuggest.find('li:last-child').data('item');
                                 getPlaceHolder(stepLast);
+                                flagCookie = false;
                             }else {
                                 getPlaceHolder(j);    
                             }
@@ -422,6 +431,7 @@
                     idTinhThanhReload = idEl;
                 }
                 stepLoad(dataItem, idTinhThanhReload);
+                current = next;
                 $('#'+dataItem).find('ul li a').attr('data-next', next);
                 $('#'+dataItem).find('ul li a').attr('data-prev', prev);
             }
@@ -519,6 +529,7 @@
 
             $(document).on('click', '#btn-search, .btn-cost button', function (e) {
                 e.preventDefault();
+                $('.btn-close-search').trigger('click');
                 $(document).trigger("submit_search", [{data: '1'}, 'something', inputResize]);
                 submitSearchVal();
             });
