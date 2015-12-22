@@ -14,10 +14,12 @@ class Controller extends \yii\web\Controller
 {
     public function beforeAction($action)
     {
-        /*if(Yii::$app->user->isGuest && !in_array($action->id, ['login', 'register'])){
-            $this->redirect(['/member/login']);
-        }*/
-        Yii::$app->getUser()->setReturnUrl(Url::current());
+        if(Yii::$app->user->isGuest && !in_array($action->id, ['login', 'register'])){
+//            Yii::$app->session->setFlash('', 4);
+            Yii::$app->getUser()->setReturnUrl(Url::current());
+//            $this->redirect(['/member/login']);
+        }
+
         return parent::beforeAction($action);
     }
 }
