@@ -59,10 +59,10 @@ class AdController extends Controller
         	if(isset(\Yii::$app->params['schemaPrefix'])) {
         		$queryCraw = clone $query;
         		 
-        		$query = $query->from('ad_product')->addSelect(["(0) AS is_craw"])
+        		$query = $query->from('ad_product')->addSelect(["'0' AS `is_craw`"])
         				->leftJoin('ad_product_addition_info', 'ad_product.id = ad_product_addition_info.product_id')
         				->leftJoin('ad_images', 'ad_product.id = ad_images.product_id');
-        		$queryCraw = $queryCraw->from(\Yii::$app->params['schemaPrefix'] . 'ad_product')->addSelect(["(1) AS is_craw"])
+        		$queryCraw = $queryCraw->from(\Yii::$app->params['schemaPrefix'] . 'ad_product')->addSelect(["'1' AS `is_craw`"])
         				->leftJoin(\Yii::$app->params['schemaPrefix'] . 'ad_product_addition_info', 'ad_product.id = ad_product_addition_info.product_id')
         				->leftJoin(\Yii::$app->params['schemaPrefix'] . 'ad_images', 'ad_product.id = ad_images.product_id');
         		 
