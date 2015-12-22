@@ -1,8 +1,5 @@
-<h3>Người theo dõi</h3>
-<p style="color: #4a933a;" class="desTotal">
-
-</p>
-
+<h3></h3>
+<p style="color: #4a933a;" class="desTotal"></p>
 <?php
 $yourArray = [
     1 => [
@@ -24,9 +21,9 @@ $yourArray = [
 ];
 $provider = new \yii\data\ArrayDataProvider([
     'allModels' => $yourArray,
-    'sort' => [
-        'attributes' => ['title','net_accumulative_cashflow'],
-    ],
+    /*'sort' => [
+        'attributes' => ['title'],
+    ],*/
     'pagination' => [
         'pageSize' => 15,
     ],
