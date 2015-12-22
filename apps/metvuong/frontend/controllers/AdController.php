@@ -77,7 +77,7 @@ class AdController extends Controller
         	}
         	
         	$pages = new Pagination(['totalCount' => $fullQuery->count()]);
-        	$pages->pageSize = \Yii::$app->params['listingLimit'];
+        	$pages->pageSize = isset(Yii::$app->params['listingLimit']) ? Yii::$app->params['listingLimit'] : 20;
         	
         	$products = $fullQuery->limit($pages->limit)->offset($pages->offset)->all();
         	
