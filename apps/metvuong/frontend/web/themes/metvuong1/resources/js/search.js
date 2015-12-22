@@ -156,9 +156,11 @@
         function clickInput () {
             mv.settings.input.on('click', function(e) {
                 e.preventDefault();
-                open();
-                close();
-                loadCost.init();
+                if ( !reopen() ) {
+                    open();
+                    close();
+                    loadCost.init();
+                }
             });
         };
 
@@ -608,6 +610,22 @@
             }
         };
 
+        // reopen khi edit và click outsite và click input
+        function reopen () {
+
+            if ( itemEdit.length > 0 ) {
+                mv.settings.wrapSuggest.find('li').removeClass('active');
+                itemEdit = '';
+                stepGet(current);
+                current = next;
+                setTimeout(function () {open();},310);
+
+                return true;
+            }
+
+            return false;
+        }
+
         function showBoxSearch () {
             cookieSearch();
             
@@ -756,13 +774,7 @@
                 }else {
                     $('.btn-close-search').trigger('click');
 
-                    if ( itemEdit.length > 0 ) {
-                        mv.settings.wrapSuggest.find('li').removeClass('active');
-                        itemEdit = '';
-                        stepGet(current);
-                        current = next;
-                        setTimeout(function () {open();},310);
-                    }
+                    reopen();
                 }
             }
         };
