@@ -58,8 +58,8 @@ class Batdongsan extends Component
             $pagination = $html->find('.container-default .background-pager-right-controls a');
             $count_page = count($pagination);
             if($count_page > 0) {
-//                $last_page = str_replace("/nha-dat-ban/p", "", $pagination[$count_page-1]->href);
-                $last_page = 3;
+                $last_page = str_replace("/nha-dat-ban/p", "", $pagination[$count_page-1]->href);
+//                $last_page = 3;
                 $log = $this->loadFileLog();
                 $sequence_id = empty($log["last_id"]) ? 0 : ($log["last_id"]+1);
                 for($i = 1; $i <= $last_page; $i++){
