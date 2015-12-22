@@ -125,7 +125,7 @@ class Batdongsan extends Component
         if(!empty($page)) {
             $detail = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
             if (!empty($detail)) {
-                $title = $detail->find('h1', 0)->innertext;
+//                $title = $detail->find('h1', 0)->innertext;
                 $lat = $detail->find('#hdLat', 0)->value;
                 $long = $detail->find('#hdLong', 0)->value;
                 $product_id = $detail->find('.pm-content', 0)->cid;
@@ -398,12 +398,15 @@ class Batdongsan extends Component
                             continue;
 
                         $area = $value[$filename]["dientich"];
-//                        if ($area == 0)
-//                            continue;
+                        //                        if ($area == 0)
+                        //                            continue;
 
                         $price = $value[$filename]["price"];
                         if ($price == 0)
                             continue;
+
+                        $desc = $value[$filename]["description"];
+                        $content = strip_tags($desc, '<p><br><ul><li>');
 
                         $record = [
                             'category_id' => $value[$filename]["loai_tai_san"],
@@ -411,7 +414,7 @@ class Batdongsan extends Component
                             'city_id' => $city_id,
                             'district_id' => $district_id,
                             'type' => $value[$filename]["loai_giao_dich"],
-                            'content' => '' . $value[$filename]["description"],
+                            'content' => '' . $content,
                             'area' => $area,
                             'price' => $price,
                             'lat' => $value[$filename]["lat"],
@@ -519,6 +522,8 @@ class Batdongsan extends Component
         print_r("s");
         print_r(" - Total Record: ". $insertCount);
     }
+
+
 
     public function writeFileJson($filePath, $data)
     {
