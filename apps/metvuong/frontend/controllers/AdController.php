@@ -58,12 +58,16 @@ class AdController extends Controller
         		$query->andWhere('category_id = :category_id', [':category_id' => $categoryId]);
         	}
 
-        	$queryCraw = clone $query;
-        	
-        	$query = $query->from('ad_product')->addSelect(["(0) AS is_craw"]);
-        	$queryCraw = $queryCraw->from(\Yii::$app->params['schemaPrefix'] . 'ad_product')->addSelect(["(1) AS is_craw"]);
-        	
-        	$fullQuery = (new yii\db\Query())->from([$query->union($queryCraw)]);
+        	if(isset(\Yii::$app->params['schemaPrefix'])) {
+        		$queryCraw = clone $query;
+        		 
+        		$query = $query->from('ad_product')->addSelect(["(0) AS is_craw"]);
+        		$queryCraw = $queryCraw->from(\Yii::$app->params['schemaPrefix'] . 'ad_product')->addSelect(["(1) AS is_craw"]);
+        		 
+        		$fullQuery = (new yii\db\Query())->from([$query->union($queryCraw)]);
+        	} else {
+        		$fullQuery = $query;
+        	}
         	
         	if($orderBy == 'created_at') {
         		$fullQuery->orderBy("$orderBy DESC");
