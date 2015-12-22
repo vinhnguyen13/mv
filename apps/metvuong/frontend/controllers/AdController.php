@@ -38,11 +38,17 @@ class AdController extends Controller
         	$cityId = Yii::$app->request->get('cityId');
         	$districtId = Yii::$app->request->get('districtId');
         	$categoryId = Yii::$app->request->get('categoryId');
+        	$costMin = Yii::$app->request->get('costMin');
+        	$costMax = Yii::$app->request->get('costMax');
+        	$areaMin = Yii::$app->request->get('areaMin');
+        	$areaMax = Yii::$app->request->get('areaMax');
+        	$roomNo = Yii::$app->request->get('roomNo');
+        	$toiletNo = Yii::$app->request->get('toiletNo');
         	$orderBy = Yii::$app->request->get('orderBy', 'created_at');
         	
         	$query = (new \yii\db\Query())->groupBy('ad_product.id')
         				->groupBy('ad_product.id')
-        				->select('ad_product.*, ad_images.file_name');
+        				->select('ad_product.*, ad_images.file_name, ad_product_addition_info.*');
         	
         	if($cityId) {
         		$query->where('city_id = :city_id', [':city_id' => $cityId]);
@@ -55,7 +61,31 @@ class AdController extends Controller
         	if($categoryId) {
         		$query->andWhere('category_id = :category_id', [':category_id' => $categoryId]);
         	}
-
+        	
+        	if($costMin) {
+        		$query->andWhere('price >= :cost_min', [':cost_min' => $costMin]);
+        	}
+        	
+        	if($costMax) {
+        		$query->andWhere('price <= :cost_max', [':cost_max' => $costMax]);
+        	}
+        	
+        	if($areaMin) {
+        		$query->andWhere('area >= :area_min', [':area_min' => $areaMin]);
+        	}
+        	 
+        	if($areaMax) {
+        		$query->andWhere('area <= :area_max', [':area_max' => $areaMax]);
+        	}
+        	
+        	if($roomNo) {
+        		$query->andWhere('room_no >= :room_no', [':room_no' => $roomNo]);
+        	}
+        	
+        	if($toiletNo) {
+        		$query->andWhere('toilet_no >= :toilet_no', [':toilet_no' => $toiletNo]);
+        	}
+        	
         	if(isset(\Yii::$app->params['schemaPrefix'])) {
         		$queryCraw = clone $query;
         		 

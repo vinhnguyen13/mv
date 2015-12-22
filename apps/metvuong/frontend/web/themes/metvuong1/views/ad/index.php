@@ -24,12 +24,12 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
 		<input type="hidden" name="categoryId" id="category-id" value="<?= Yii::$app->request->get('category') ?>" />
 		<input type="hidden" name="orderBy" id="order-by" value="created_at" />
 	    
-        <input id="price-min-filter" type="hidden" name="price-min-filter">
-        <input id="price-max-filter" type="hidden" name="price-max-filter">
-        <input id="dt-min-filter" type="hidden" name="dientich-min-filter">
-        <input id="dt-max-filter" type="hidden" name="dientich-max-filter">
-        <input id="bed-filter" type="hidden" name="bed-filter">
-        <input id="bath-filter" type="hidden" name="bath-filter">
+        <input id="price-min-filter" type="hidden" name="costMin" value="<?= Yii::$app->request->get('costMin') ?>" />
+        <input id="price-max-filter" type="hidden" name="costMax" value="<?= Yii::$app->request->get('costMax') ?>" />
+        <input id="dt-min-filter" type="hidden" name="areaMin" value="<?= Yii::$app->request->get('areaMin') ?>" />
+        <input id="dt-max-filter" type="hidden" name="areaMax" value="<?= Yii::$app->request->get('areaMax') ?>" />
+        <input id="bed-filter" type="hidden" name="roomNo" value="<?= Yii::$app->request->get('roomNo') ?>" />
+        <input id="bath-filter" type="hidden" name="toiletNo" value="<?= Yii::$app->request->get('toiletNo') ?>" />
 
         <ul class="container clearfix outsideevent list-filter">
 	        <li>
@@ -203,31 +203,11 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
                     </div>
                 </div>
 	        </li>
-
             <li>
                 <a href="#">Khác</a>
                 <div class="filter-common filter-pane filter-other hidden-effect">
                     <div class="wrap-effect clearfix">
                         <form class="form-horizontal">
-                            <div class="form-group">
-                                <label for="" class="col-sm-4 control-label">Phòng tắm</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group minmax-frm-inline">
-                                <label for="" class="col-sm-4 control-label">Năm</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control val-min" placeholder="Min">
-                                    <input type="text" class="form-control val-max" placeholder="Max">
-                                </div>
-                            </div>
                             <div class="form-group">
                                 <label for="" class="col-sm-4 control-label">Ngày đăng</label>
                                 <div class="col-sm-8">
@@ -246,12 +226,6 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="" class="col-sm-4 control-label">Từ khóa</label>
-                                <div class="col-sm-8">
-                                    <textarea class="form-control" rows="3"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label for="" class="col-sm-4 control-label"></label>
                                 <div class="col-sm-8">
                                     <button type="button" class="btn btn-primary btn-sm btn-common">Apply</button>
@@ -263,7 +237,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
             </li>
 	        
             <li>
-                <button type="button" class="btn btn-primary btn-sm btn-common"><em class="fa fa-filter"></em>Chọn lọc</button>
+                <button id="submit-filter" type="button" class="btn btn-primary btn-sm btn-common"><em class="fa fa-filter"></em>Chọn lọc</button>
             </li>
 	    </ul>
     </form>

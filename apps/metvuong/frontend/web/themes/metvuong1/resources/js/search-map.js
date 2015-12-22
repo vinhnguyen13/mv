@@ -14,6 +14,13 @@ $(document).ready(function(){
 		response = r;
 		start();
 	});
+	
+	$('#submit-filter').click(function(){
+		search(function(r){
+			response = r;
+			loadListing();
+		});
+	});
 });
 
 function search(callback) {
@@ -225,6 +232,11 @@ function makeMarker(product) {
 	var category = categories[product.category_id]['name'].toUpperCase();
 	var price = (product.type == 1) ? product.price : product.price + '/tháng';
 	
+	var toiletNo = '';
+	if(product['toilet_no']) {
+		toiletNo = '• ' + product['toilet_no'] + ' Phòng tắm ';
+	}
+	
 	var roomNo = '';
 	if(product['room_no']) {
 		roomNo = '• ' + product['room_no'] + ' phòng ngủ ';
@@ -235,13 +247,15 @@ function makeMarker(product) {
 		floorNo = '• ' + product['floor_no'] + ' tầng ';
 	}
 	
+	
+	
 	var li = '<li data-is-craw="' + product.is_craw +'" data-detail="' + product.id +'" data-id="' + markerId + '">' +
                 '<div class="bgcover wrap-img pull-left" style="background-image:url('+product.image_url+')"><a href="#" class=""></a></div>' +
                 '<div class="infor-result">' +
                     '<p class="item-title">' + address + '</p>' +
                     '<p class="type-result"><em class="fa fa-circle for-rent"></em>' + category + ' ' + type + '</p>' +
                     '<p class="rice-result">' + price + '</p>' +
-                    '<p class="beds-baths-sqft">' + product['area'] + 'm<sup>2</sup> ' + floorNo + roomNo + '</p>' +
+                    '<p class="beds-baths-sqft">' + product['area'] + 'm<sup>2</sup> ' + floorNo + roomNo + toiletNo + '</p>' +
                     '<p class="date-post-rent">' + product.previous_time + '</p>' +
                 '</div>' +
             '</li>';
