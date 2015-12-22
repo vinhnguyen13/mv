@@ -95,7 +95,7 @@ class Batdongsan extends Component
                     $productId = substr($item->href, $startIndex, strlen($item->href));
                     $productId = str_replace('-pr', '', $productId);
                     $checkExists = false;
-                    if(!empty($log)) {
+                    if(!empty($log["files"])) {
                         $checkExists = in_array($productId, $log["files"]);
                     }
                     if ($checkExists == false) {
@@ -125,7 +125,7 @@ class Batdongsan extends Component
         if(!empty($page)) {
             $detail = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
             if (!empty($detail)) {
-//                $title = $detail->find('h1', 0)->innertext;
+                $title = $detail->find('h1', 0)->innertext;
                 $lat = $detail->find('#hdLat', 0)->value;
                 $long = $detail->find('#hdLong', 0)->value;
                 $product_id = $detail->find('.pm-content', 0)->cid;
@@ -170,39 +170,45 @@ class Batdongsan extends Component
                 $left_detail = $detail->find('.pm-content-detail .left-detail', 0);
                 $div_info = $left_detail->find('div div');
                 $left = '';
+                $city = null;
+                $district = null;
+                $startdate = time();
+                $endate = time();
+                $loai_tai_san = 6;
                 $arr_info = [];
-                foreach ($div_info as $div) {
-                    $class = $div->class;
-                    if (!(empty($class))) {
-                        if ($class == 'left')
-                            $left = trim($div->innertext);
-                        else if ($class == 'right') {
-                            if(array_key_exists($left, $arr_info)){
-                                $right = $left.'_1';
+                if(count($div_info) > 0) {
+                    foreach ($div_info as $div) {
+                        $class = $div->class;
+                        if (!(empty($class))) {
+                            if ($class == 'left')
+                                $left = trim($div->innertext);
+                            else if ($class == 'right') {
+                                if (array_key_exists($left, $arr_info)) {
+                                    $right = $left . '_1';
+                                }
+                                $arr_info[$left] = trim($div->plaintext);
                             }
-                            $arr_info[$left] = trim($div->plaintext);
                         }
                     }
                 }
 
                 if(count($arr_info) > 0) {
-                    $address = mb_split(',', $arr_info["Địa chỉ"]);
-                    $city = null;
-                    $district = null;
-                    $count_address = count($address);
-                    if ($count_address > 0) {
-                        $city = $address[$count_address - 1];
-                        $district = $address[$count_address - 2];
+                    if(!empty($arr_info["Địa chỉ"])){
+                        $address = mb_split(',', $arr_info["Địa chỉ"]);
+                        $count_address = count($address);
+                        if ($count_address >= 3) {
+                            $city = !empty($address[$count_address - 1]) ? $address[$count_address - 1] : null;
+                            $district = !empty($address[$count_address - 2]) ? $address[$count_address - 2] : null;
+                        }
                     }
 
-                    $startdate = trim($arr_info["Ngày đăng tin"]);
+                    $startdate = empty($arr_info["Ngày đăng tin"]) ? time() : trim($arr_info["Ngày đăng tin"]);
                     $startdate = strtotime($startdate);
 
-                    $endate = trim($arr_info["Ngày hết hạn"]);
+                    $endate = empty($arr_info["Ngày hết hạn"]) ? time() : trim($arr_info["Ngày hết hạn"]);
                     $endate = strtotime($endate);
 
-                    $loai_tin = trim($arr_info["Loại tin rao"]);
-                    $loai_tai_san = 6;
+                    $loai_tin = empty($arr_info["Loại tin rao"]) ? "Bán căn hộ chung cư" : trim($arr_info["Loại tin rao"]);
                     if ($loai_tin == "Bán căn hộ chung cư") {
                         $loai_tai_san = 6;
                     } else if ($loai_tin == "Bán nhà riêng") {
@@ -214,19 +220,20 @@ class Batdongsan extends Component
                 $div_contact = $contact->find('div.right-content div');
                 $right = '';
                 $arr_contact = [];
-                foreach ($div_contact as $div) {
-                    $class = $div->class;
-                    if (!(empty($class))) {
-                        if (strpos($class,'left') == true) {
-                            $right = (string)$div->plaintext;
-                            $right = trim($right);
-                        }
-                        else if($class == 'right') {
-                            if(array_key_exists($right, $arr_contact)){
-                                $right = $right.'_1';
+                if(count($div_contact) > 0) {
+                    foreach ($div_contact as $div) {
+                        $class = $div->class;
+                        if (!(empty($class))) {
+                            if (strpos($class, 'left') == true) {
+                                $right = (string)$div->plaintext;
+                                $right = trim($right);
+                            } else if ($class == 'right') {
+                                if (array_key_exists($right, $arr_contact)) {
+                                    $right = $right . '_1';
+                                }
+                                $value = (string)$div->innertext;
+                                $arr_contact[$right] = trim($value);
                             }
-                            $value = (string)$div->innertext;
-                            $arr_contact[$right] = trim($value);
                         }
                     }
                 }
@@ -237,8 +244,8 @@ class Batdongsan extends Component
                     'thumbs' => $thumbs,
                     'info' => $arr_info,
                     'contact' => $arr_contact,
-                    'city' => trim($city),
-                    'district' => trim($district),
+                    'city' => $city,
+                    'district' => $district,
 //                    'ward' => null,
 //                    'street' => null,
                     'loai_tai_san' => $loai_tai_san,
@@ -246,7 +253,8 @@ class Batdongsan extends Component
                     'price' => $price,
                     'dientich' => $dt,
                     'start_date' => $startdate,
-                    'end_date' => $endate
+                    'end_date' => $endate,
+                    'link' => self::DOMAIN . $href
                 ];
 
                 $path = Yii::getAlias('@console') . '/data/bds/';
@@ -347,7 +355,7 @@ class Batdongsan extends Component
         $log = $this->loadFileLog();
         $start = empty($log["last_import"]) ? 0 : $log["last_import"];
         $path = Yii::getAlias('@console') . '/data/bds';
-        $files = $log["files"];
+        $files = empty($log["files"]) ? null : $log["files"];
         $counter = count($files);
         if ($counter > $start) {
             print_r("Prepare data...\n");
