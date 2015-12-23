@@ -214,6 +214,8 @@
                     $('#valTinTuc').val(idItem);
                 }else if ( itemData == 'loai-tin-tuc' ) {
                     $('#valLoaiTinTuc').val(idItem);
+                }else if ( itemData == 'mua-thue' || itemData == 'ban-thue' ) {
+                    $('#valType').val(idItem);
                 }else {
                     l("no data submit");
                 }

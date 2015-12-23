@@ -215,6 +215,7 @@ $searchParams = json_decode($value);
 
                         <input class="valInputHidden" id="valSearch" name="valSearch" type="hidden" value="">
                         <input class="valInputHidden" id="valTabActive" name="activeSearch" type="hidden" value="">
+                        <input class="valInputHidden" id="valType" name="type" type="hidden" value="">
 
                         <input class="valInputHidden" id="valTinhThanh" name="city" type="hidden" value="">
                         <input class="valInputHidden" id="valQuanHuyen" name="district" type="hidden" value="">
