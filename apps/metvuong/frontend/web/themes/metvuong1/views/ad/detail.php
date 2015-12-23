@@ -140,7 +140,7 @@
                                     </tr>
                                 </table>
                                 <p class="ttmt">Thông tin mô tả</p>
-                                <div class="wrap-ttmt"><?= $product->content ?></div>
+                                <div class="wrap-ttmt"><pre style="border: none;"><?= $product->content ?></pre></div>
                                 <?php
                                 	$additionInfo = $product->adProductAdditionInfo;
                                 	unset($additionInfo['product_id']);
