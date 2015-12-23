@@ -23,7 +23,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
 		<input type="hidden" name="districtId" id="district-id" value="<?= Yii::$app->request->get('district') ?>" />
 		<input type="hidden" name="categoryId" id="category-id" value="<?= Yii::$app->request->get('category') ?>" />
 		<input type="hidden" name="orderBy" id="order-by" value="created_at" />
-		<input type="hidden" name="type" id="type" value=<?= Yii::$app->request->get('type') ?> />
+		<input type="hidden" name="type" id="type" value="<?= Yii::$app->request->get('type') ?>" />
         <input id="price-min-filter" type="hidden" name="costMin" value="<?= Yii::$app->request->get('costMin') ?>" />
         <input id="price-max-filter" type="hidden" name="costMax" value="<?= Yii::$app->request->get('costMax') ?>" />
         <input id="dt-min-filter" type="hidden" name="areaMin" value="<?= Yii::$app->request->get('areaMin') ?>" />
