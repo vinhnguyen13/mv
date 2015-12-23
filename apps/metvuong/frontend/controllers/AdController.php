@@ -56,7 +56,7 @@ class AdController extends Controller
         	}
         	
         	if($cityId) {
-        		$query->where('city_id = :city_id', [':city_id' => $cityId]);
+        		$query->andWhere('city_id = :city_id', [':city_id' => $cityId]);
         	}
         	
         	if($districtId) {
