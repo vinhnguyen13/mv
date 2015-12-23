@@ -121,7 +121,7 @@
                         <div class="row detail-post">
                             <div class="col-sm-8 dt-left-col">
                                 <h1 class="title-dt"><?= $address ?></h1>
-                                <p class="infor-post-date"><em class="fa fa-calendar"></em>17/12/2015</p>
+                                <p class="infor-post-date"><em class="fa fa-calendar"></em><?= date('d/m/Y', $product->created_at) ?></p>
                                 <p class="type-result"><em class="fa fa-circle for-rent"></em><?= mb_strtoupper("$categoryName $typeName", 'UTF-8') ?></p>
                                 <table>
                                     <?php if($product->project_building_id): ?>

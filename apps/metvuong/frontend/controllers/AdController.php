@@ -45,10 +45,15 @@ class AdController extends Controller
         	$roomNo = Yii::$app->request->get('roomNo');
         	$toiletNo = Yii::$app->request->get('toiletNo');
         	$orderBy = Yii::$app->request->get('orderBy', 'created_at');
+        	$type = Yii::$app->request->get('orderBy', 'type');
         	
         	$query = (new \yii\db\Query())->groupBy('ad_product.id')
         				->groupBy('ad_product.id')
         				->select('ad_product.*, ad_images.file_name, ad_product_addition_info.*');
+        	
+        	if($type) {
+        		$query->where('type = :type', [':type' => $type]);
+        	}
         	
         	if($cityId) {
         		$query->where('city_id = :city_id', [':city_id' => $cityId]);
