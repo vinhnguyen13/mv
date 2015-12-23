@@ -6,6 +6,9 @@
         if ( getLang.search('vi-VN') >= 0 ) {
             var steps = {
                 "step1": {
+                    "mua-thue": {
+                        "next": "tinh-thanh"
+                    },
                     "tinh-thanh": {
                         "next": "quan-huyen"
                     },
@@ -28,6 +31,9 @@
                     }
                 },
                 "step2": {
+                    "ban-thue": {
+                        "next": "tinh-thanh"
+                    },
                     "tinh-thanh": {
                         "next": "quan-huyen"
                     },
@@ -64,6 +70,9 @@
         }else if ( getLang.search('en-US') >= 0 ) {
             var steps = {
                 "step1": {
+                    "mua-thue": {
+                        "next": "tinh-thanh"
+                    },
                     "tinh-thanh": {
                         "next": "quan-huyen"
                     },
@@ -86,6 +95,9 @@
                     }
                 },
                 "step2": {
+                    "ban-thue": {
+                        "next": "tinh-thanh"
+                    },
                     "tinh-thanh": {
                         "next": "quan-huyen"
                     },
@@ -324,6 +336,12 @@
                 $(this).addClass('active');
                 mv.settings.wrapSuggest.html('');
                 inputResize();
+
+                if ( _this.closest('.options-search').hasClass('search-dropdown') ) {
+                    _this.closest('.options-search').addClass('outsideevent');
+                }else {
+                    _this.closest('.options-search').removeClass('outsideevent');
+                }
             });
 
             function stepFirst(step) {
@@ -402,8 +420,10 @@
                 case 'loai-bds':
                     $('#'+itemRender).find('ul').html('');
                     for ( var j in dataCategories ) {
-                        var item = $('<li data-id="'+j+'"><a href="#" data-item="loai-bds" data-slug-name="'+ChangeToSlug(dataCategories[j].name)+'">'+dataCategories[j].name+'</a></li>');
-                        $('#'+itemRender).find('ul').append(item);
+                        if ( dataCategories[j].apply_to_type == idLoadBy || dataCategories[j].apply_to_type == 3 ) {
+                            var item = $('<li data-id="'+j+'"><a href="#" data-item="loai-bds" data-slug-name="'+ChangeToSlug(dataCategories[j].name)+'">'+dataCategories[j].name+'</a></li>');
+                            $('#'+itemRender).find('ul').append(item);
+                        }
                     }
                     break;
                 case 'news':
@@ -461,6 +481,20 @@
             if ( current === 'loai-duan' ) {
                 stepLoad('loai-duan');
             }
+
+            //render loai-bds hinh thuc mua-ban-thue
+            if ( current === 'loai-bds' ) {
+                var idHinhThuc = '';
+                mv.settings.wrapSuggest.find('li').each(function () {
+                    if ( $(this).data('item') == 'mua-thue' ) {
+                        idHinhThuc = $(this).data('id');
+                    }else if ( $(this).data('item') == 'ban-thue' ) {
+                        idHinhThuc = $(this).data('id');
+                    }
+                });
+                
+                stepLoad('loai-bds', idHinhThuc);
+            }            
 
             stepGet(next);
 

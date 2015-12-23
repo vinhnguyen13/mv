@@ -67,6 +67,36 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     </div>
 
 
+                                    <div id="mua-thue" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn Mua/Thuê ?">
+                                        <div class="wrap-effect">
+                                            <div class="search-item">
+                                                <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                                <div class="wrap-step">
+                                                    <h3></h3>
+                                                    <ul class="clearfix">
+                                                        <li data-id="1"><a href="#" data-item="mua-thue" data-slug-name data-next="tinh-thanh" data-prev>Cho Mua</a></li>
+                                                        <li data-id="2"><a href="#" data-item="mua-thue" data-slug-name data-next="tinh-thanh" data-prev>Cho Thuê</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="ban-thue" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn Bán/Thuê ?">
+                                        <div class="wrap-effect">
+                                            <div class="search-item">
+                                                <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                                <div class="wrap-step">
+                                                    <h3></h3>
+                                                    <ul class="clearfix">
+                                                        <li data-id="1"><a href="#" data-item="ban-thue" data-slug-name data-next="tinh-thanh" data-prev>Đăng Ký Bán</a></li>
+                                                        <li data-id="2"><a href="#" data-item="ban-thue" data-slug-name data-next="tinh-thanh" data-prev>Đăng Ký Cho Thuê</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div id="tinh-thanh" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn Tỉnh/Thành ?">
                                         <div class="wrap-effect">
                                             <div class="search-item">
