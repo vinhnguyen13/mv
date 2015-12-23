@@ -171,16 +171,14 @@ function start() {
 
 function loadListing() {
 	var list = '';
-	var count = 0;
 	
 	if(response.productResponse.length > 0) {
 		for(index in response.productResponse) {
 			var product = response.productResponse[index];
 			list += makeMarker(product);
-			count++;
 		}
 		
-		$('#count-listing').text(count);
+		$('#count-listing').text(response.total);
 		listResult.append(list);
 		
 		$('.pagination').remove();

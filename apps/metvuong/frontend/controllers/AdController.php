@@ -139,7 +139,7 @@ class AdController extends Controller
         		}
         	}
         	
-        	return ['productResponse' => $productResponse, 'pages' => LinkPager::widget(['pagination' => $pages,])];
+        	return ['productResponse' => $productResponse, 'pages' => LinkPager::widget(['pagination' => $pages,]), 'total' => $pages->totalCount];
         }
         
         return $this->render('index');
