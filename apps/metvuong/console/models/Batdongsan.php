@@ -56,17 +56,18 @@ class Batdongsan extends Component
             $pagination = $html->find('.container-default .background-pager-right-controls a');
             $count_page = count($pagination);
             if($count_page > 0) {
-                $last_page = str_replace("/nha-dat-ban/p", "", $pagination[$count_page-1]->href);
+//                $last_page = str_replace("/nha-dat-ban/p", "", $pagination[$count_page-1]->href);
 //                $last_page = 3;
                 $log = $this->loadFileLog();
                 $current_page = empty($log["current_page"]) ? 1 : ($log["current_page"]+1);
+                $last_page = $current_page + 5;
                 for($i = $current_page; $i <= $last_page; $i++){
                     $log = $this->loadFileLog();
                     $sequence_id = empty($log["last_id"]) ? 0 : ($log["last_id"]+1);
-                    $l = $this->getListProject($i, $sequence_id, $log);
-                    if(!empty($l)){
-                        $l["current_page"] = $i;
-                        $this->writeFileLog($l);
+                    $list_return = $this->getListProject($i, $sequence_id, $log);
+                    if(!empty($list_return) && $list_return["status"] == 1){
+                        $list_return["data"]["current_page"] = $i;
+                        $this->writeFileLog($list_return["data"]);
                         print_r("Page ".$i." done!");
                         print_r("\n");
                     }
@@ -90,6 +91,7 @@ class Batdongsan extends Component
             $list = $html->find('div.p-title a');
             if (!empty($list)) {
                 // about 20 listing
+                $status = 0;
                 foreach ($list as $item) {
                     $startIndex = strripos($item->href, '-pr');
                     $productId = substr($item->href, $startIndex, strlen($item->href));
@@ -104,10 +106,11 @@ class Batdongsan extends Component
                             $log["files"][$sequence_id] = $res;
                             $log["last_id"] = $sequence_id;
                             $sequence_id = $sequence_id + 1;
+                            $status = 1;
                         }
                     }
                 }
-                return $log;
+                return ['status' => $status, 'data' => $log];
             } else {
                 echo "Cannot find get title link of _".self::DOMAIN;
             }
