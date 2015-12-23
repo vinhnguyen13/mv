@@ -91,7 +91,7 @@ class Batdongsan extends Component
             $list = $html->find('div.p-title a');
             if (!empty($list)) {
                 // about 20 listing
-                $status = 0;
+                $status = 1; // ghi file
                 foreach ($list as $item) {
                     $startIndex = strripos($item->href, '-pr');
                     $productId = substr($item->href, $startIndex, strlen($item->href));
@@ -99,14 +99,16 @@ class Batdongsan extends Component
                     $checkExists = false;
                     if(!empty($log["files"])) {
                         $checkExists = in_array($productId, $log["files"]);
+                        var_dump($productId);
                     }
+
                     if ($checkExists == false) {
                         $res = $this->getProjectDetail($item->href);
                         if (!empty($res)) {
                             $log["files"][$sequence_id] = $res;
                             $log["last_id"] = $sequence_id;
                             $sequence_id = $sequence_id + 1;
-                            $status = 1;
+//                            $status = 1;
                         }
                     }
                 }
