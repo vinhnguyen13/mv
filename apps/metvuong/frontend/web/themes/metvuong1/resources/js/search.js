@@ -315,6 +315,8 @@
                 
                 if ( _this.hasClass('active') ) {
                     tabActiveGet = _this.data('active');
+
+                    iconChange (tabActiveGet);
                     
                     if ( !flagCookie || current != '' ) {
                         stepFirst(step);
@@ -329,6 +331,8 @@
                     step = _this.data('step');
 
                 tabActiveGet = _this.data('active');
+
+                iconChange (tabActiveGet);
 
                 stepFirst(step);
 
@@ -536,6 +540,7 @@
             }
         };
 
+        // render suggest khi chon va reload suggest khi search
         function renderSuggest (el, count, lenSuggest) {
             var flag = el.idItem >= 0 ? true : false,
                 item = $('<li><i>x</i><span></span></li>'),
@@ -660,6 +665,7 @@
             return false;
         }
 
+        // show box search khi load page
         function showBoxSearch () {
             cookieSearch();
             
@@ -681,6 +687,7 @@
             });
         };
 
+        // can chinh box search theo ty le man hinh + effect
         function boxCenter () {
             var logo = $('div.wrap-page-home .logo-home'),
                 searchBox = $('div.wrap-page-home .box-search-header'),
@@ -726,6 +733,7 @@
             inputResize();
         });
 
+        // price min-max khi chon search theo gia
         var loadCost = {
             inputSubmitVal: $('.val-cost'),
             wrapList: $('.wrap-cost-bds'),
@@ -800,6 +808,7 @@
             }
         };
 
+        // click outsite hide element
         function clickOutsideevent (e) {
             var container = $(".outsideevent");
             if ( !container.is(e.target) && container.has(e.target).length === 0 ){
@@ -813,6 +822,7 @@
             }
         };
 
+        // get placeholder tung step
         function getPlaceHolder (item, nullVal) {
             if ( nullVal ) {
                 mv.settings.input.attr('placeholder','');
@@ -822,6 +832,7 @@
             }
         };
 
+        // resize input khi insert suggest
         function inputResize () {
             mv.settings.input.hide();
             var wWrapSuggest = mv.settings.wrapSuggest.outerWidth(),
@@ -829,6 +840,7 @@
             mv.settings.input.css('width', wWrap - wWrapSuggest).show();
         };
 
+        // chuyen doi string toi slug key -> xac dinh step dac biet
         function ChangeToSlug (text) {
             var slug;
             //Đổi chữ hoa thành chữ thường
@@ -857,6 +869,17 @@
             //In slug ra textbox có id “slug”
             return slug;
         };
+
+        //change icon search
+        function iconChange (tabActive) {
+            if ( tabActive == 1 ) {
+                mv.settings.btnSubmit.find('em').attr('class','fa fa-search');
+            }else if ( tabActive == 2 ) {
+                mv.settings.btnSubmit.find('em').attr('class','fa fa-pencil-square-o');
+            }else if ( tabActive == 3 ) {
+                mv.settings.btnSubmit.find('em').attr('class','fa fa-file-text');
+            }
+        }
 
         init();
     }

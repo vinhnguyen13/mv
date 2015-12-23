@@ -209,7 +209,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
 
                                 </div>
                                 <button id="btn-search" type="submit" class="btn btn-default">
-                                    <span><em class="fa fa-search"></em></span>
+                                    <span><em class=""></em></span>
                                 </button>
 
                                 <input class="valInputHidden" id="valSearch" name="valSearch" type="hidden" value="">
