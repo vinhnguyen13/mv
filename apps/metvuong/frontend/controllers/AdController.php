@@ -45,7 +45,7 @@ class AdController extends Controller
         	$roomNo = Yii::$app->request->get('roomNo');
         	$toiletNo = Yii::$app->request->get('toiletNo');
         	$orderBy = Yii::$app->request->get('orderBy', 'created_at');
-        	$type = Yii::$app->request->get('orderBy', 'type');
+        	$type = Yii::$app->request->get('type');
         	
         	$query = (new \yii\db\Query())->groupBy('ad_product.id')
         				->groupBy('ad_product.id')
