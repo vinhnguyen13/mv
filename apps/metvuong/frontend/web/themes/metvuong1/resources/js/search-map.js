@@ -210,7 +210,7 @@ function makeMarker(product) {
 	if(address == '') {
 		address = district.pre + ' ' + district.name + ', ' + city.name;
 	} else {
-		address = address + ', ' + district.pre + ' ' + district.name + ', ' + city.name;
+		address = address + ' ' + district.pre + ' ' + district.name + ', ' + city.name;
 	}
 
 	var marker = new Marker({
