@@ -154,10 +154,13 @@ function start() {
 			}
 			
 			gmap.removeAllMarker();
+
+			listResult.empty();
+			$('#listing-loading').show();
 			
 			$.get(self.attr('href'), {}, function(r){
 				response = r;
-				listResult.empty();
+				$('#listing-loading').hide();
 				loadListing();
 			});
 		});
