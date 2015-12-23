@@ -263,9 +263,8 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
 
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane fade in active" id="moi-nhat">
-                <ul class="list-results clearfix">
-                    <li>
-                        <div class="loading_new_feed">          
+                <div id="listing-loading" style="padding: 10px;">
+                	<div class="loading_new_feed">          
                             <div class="_2iwr"></div>            
                             <div class="_2iws"></div>            
                             <div class="_2iwt"></div>            
@@ -279,8 +278,9 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
                             <div class="_2iw_"></div>            
                             <div class="_2ix0"></div>        
                         </div>
-                    </li>
-                </ul>
+                </div>
+                <ul class="list-results clearfix"></ul>
+                <div id="no-result" style="text-align: center; padding: 22px; display: none;">Chưa có tòa nhà nào được đăng như tìm kiếm của bạn.</div>
             </div>
             <div role="tabpanel" class="tab-pane fade" id="re-nhat">
 

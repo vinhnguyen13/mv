@@ -170,15 +170,17 @@ class AdController extends Controller
     	$cityId = Yii::$app->request->get('city');
     	$districtId = Yii::$app->request->get('district');
 		$categoryId = Yii::$app->request->get('category');
+		$type = Yii::$app->request->get('type');
     	
 		$district = AdDistrict::find()->indexBy('id')->where('city_id = :city_id', [':city_id' => $cityId])->all();
 
 		if($district && isset($district[$districtId]) && $categoryId) {
 			$model = new AdProduct();
 			$model->loadDefaultValues();
-	    	$model->city_id = \Yii::$app->request->get('city');
-	    	$model->district_id = \Yii::$app->request->get('district');
-	    	$model->category_id = \Yii::$app->request->get('category');
+	    	$model->city_id = $cityId;
+	    	$model->district_id = $districtId;
+	    	$model->category_id = $categoryId;
+	    	$model->type = $type;
 			
 	    	$adProductAdditionInfo = $model->adProductAdditionInfo ? $model->adProductAdditionInfo : (new AdProductAdditionInfo())->loadDefaultValues();
 	    	$adContactInfo = $model->adContactInfo ? $model->adContactInfo : (new AdContactInfo())->loadDefaultValues();

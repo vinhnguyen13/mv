@@ -7,6 +7,7 @@ use vsoft\ad\models\AdCity;
 use yii\helpers\ArrayHelper;
 use vsoft\ad\models\AdDistrict;
 use vsoft\ad\models\AdCategory;
+use vsoft\ad\models\AdProduct;
 
 	$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/select2.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
 	$this->registerCss('#s2id_category span {text-transform: capitalize;} .preview canvas {vertical-align: middle;} .price-editable{position: relative;} .price-editable .price-format {display: inline; position: absolute; top: 10px; left: 100%; white-space: nowrap; padding-left: 9px;} .preview img {width: 120px; height: 80px;} .select2-drop-active {border-color: #ccc;} .select2-drop {margin-top: -2px;} .editable select.select2 {padding: 0 20px;} .editable {cursor: pointer; max-width: 100%; min-width: 160px;} .editable:not(.editing):hover {background: rgba(0, 0, 0, 0.15);border-radius: 4px;padding: 3px;}');
@@ -19,6 +20,19 @@ use vsoft\ad\models\AdCategory;
 	} else {
 		$cities = ['' => ''];
 		$districts = ['' => ''];
+	}
+	
+	$type = Yii::$app->request->get('type', AdProduct::TYPE_FOR_SELL);
+	$categories = AdCategory::find()->all();
+	$categoryDropDown = [];
+	$categoryDataType = [];
+	foreach($categories as $category) {
+		$categoryDropDown[$category->id] = $category->name;
+		$categoryDataType[$category->id] = ['data-type' => $category->apply_to_type];
+		
+		if($category->apply_to_type != $type && $category->apply_to_type != 3) {
+			$categoryDataType[$category->id]['style'] = 'display: none;';
+		}
 	}
 ?>
 <div class="wrap-dangtin">
@@ -34,6 +48,12 @@ use vsoft\ad\models\AdCategory;
 				]]); ?>
 			<div class="fieldset clearfix" style="display: block;">
 				<div class="form-group">
+					<label for="" class="col-sm-3 control-label">Hình thức</label>
+					<div class="col-sm-9 group-item-frm">
+						<?= Html::dropDownList('type', $type, [AdProduct::TYPE_FOR_SELL => 'Bán', AdProduct::TYPE_FOR_RENT => 'Cho thuê'], ['class' => 'form-control', 'id' => 'type']) ?>
+					</div>
+				</div>
+				<div class="form-group">
 					<label for="" class="col-sm-3 control-label">Tỉnh/Thành Phố</label>
 					<div class="col-sm-9 group-item-frm">
 						<?= Html::dropDownList('city', Yii::$app->request->get('city'), $cities, ['class' => 'select2', 'id' => 'city', 'data-placeholder' => 'Tỉnh/Thành Phố']) ?>
@@ -48,7 +68,7 @@ use vsoft\ad\models\AdCategory;
 				<div class="form-group">
 					<label for="" class="col-sm-3 control-label">Loại BĐS</label>
 					<div class="col-sm-9 group-item-frm">
-						<?= Html::dropDownList('category', Yii::$app->request->get('category'), ['' => ''] + ArrayHelper::map(AdCategory::find()->all(), 'id', 'name'), ['class' => 'select2', 'id' => 'category', 'data-placeholder' => 'Loại BĐS']) ?>
+						<?= Html::dropDownList('category', Yii::$app->request->get('category'), $categoryDropDown, ['options' => $categoryDataType, 'class' => 'form-control', 'id' => 'category', 'data-placeholder' => 'Loại BĐS']) ?>
 					</div>
 				</div>
 				<button id="preview" type="submit" class="btn btn-primary btn-common mgT-15 pull-right" data-toggle="modal" data-target="#detail-listing">Tiếp theo</button>

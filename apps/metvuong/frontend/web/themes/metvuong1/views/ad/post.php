@@ -67,11 +67,7 @@ if(Yii::$app->user->identity->profile->avatar) {
 				<?= Html::activeHiddenInput($model, 'city_id') ?>
 				<?= Html::activeHiddenInput($model, 'district_id') ?>
 				<?= Html::activeHiddenInput($model, 'category_id') ?>
-				<?= $form->field($model, 'type', [
-						'labelOptions' => ['class' => 'col-sm-3 control-label'],
-						'inputOptions' => ['class' => 'col-xs-6 form-control mgB-0'],
-						'template' => '{label}<div class="col-sm-9 group-item-frm"><div class="inline-group pdR-0">{input}</div></div>{hint}{error}']
-					)->dropDownList($type) ?>
+				<?= Html::activeHiddenInput($model, 'type') ?>
 				<div class="form-group">
 					<label for="" class="col-sm-3 control-label">Địa chỉ *</label>
 					<div class="col-sm-9 group-item-frm">

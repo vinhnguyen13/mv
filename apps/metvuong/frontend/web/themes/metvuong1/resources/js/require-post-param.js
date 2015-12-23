@@ -5,6 +5,21 @@ $(document).ready(function(){
 		$('#city').append('<option value="' + index + '">' + city.name + '</option>');
 	}
 	
+	$('#type').change(function(){
+		var val = $(this).val();
+		
+		$('#category option').each(function(){
+			var self = $(this);
+			var type = self.data('type');
+			
+			if(type == val || type == 3) {
+				self.show();
+			} else {
+				self.hide().prop('selected', false);
+			}
+		});
+	});
+	
 	$('#city').change(function(){
 		var city = dataCities[$(this).val()];
 		var districtEl = $('#district');

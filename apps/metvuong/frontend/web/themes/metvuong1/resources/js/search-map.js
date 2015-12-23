@@ -26,7 +26,13 @@ $(document).ready(function(){
 function search(callback) {
 	var searchForm = $('#map-search-form');
 	
+	listResult.empty();
+	$('#listing-loading').show();
+	$('.pagination').remove();
+	$('#no-result').hide();
+	
 	$.get(searchForm.attr('action'), searchForm.serialize(), function(r) {
+		$('#listing-loading').hide();
 		if(callback) {
 			callback(r);
 		}
@@ -151,6 +157,7 @@ function start() {
 			
 			$.get(self.attr('href'), {}, function(r){
 				response = r;
+				listResult.empty();
 				loadListing();
 			});
 		});
@@ -163,17 +170,21 @@ function loadListing() {
 	var list = '';
 	var count = 0;
 	
-	for(index in response.productResponse) {
-		var product = response.productResponse[index];
-		list += makeMarker(product);
-		count++;
+	if(response.productResponse.length > 0) {
+		for(index in response.productResponse) {
+			var product = response.productResponse[index];
+			list += makeMarker(product);
+			count++;
+		}
+		
+		$('#count-listing').text(count);
+		listResult.append(list);
+		
+		$('.pagination').remove();
+		$('#moi-nhat').append(response.pages);
+	} else {
+		$('#no-result').show();
 	}
-	
-	$('#count-listing').text(count);
-	listResult.empty().append(list);
-	
-	$('.pagination').remove();
-	$('#moi-nhat').append(response.pages);
 }
 
 function makeMarker(product) {
