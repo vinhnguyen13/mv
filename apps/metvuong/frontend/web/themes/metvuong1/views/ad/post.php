@@ -276,7 +276,7 @@ if(Yii::$app->user->identity->profile->avatar) {
                                     </tr>
                                 </table>
                                 <p class="ttmt">Thông tin mô tả</p>
-                                <div class="wrap-ttmt" style="white-space: pre-line;"><div class="editable" id="ref-adproduct-content"></div></div>
+                                <div class="wrap-ttmt" style="white-space: pre-wrap;"><div class="editable" id="ref-adproduct-content"></div></div>
                                	<p class="ttmt">Thông tin thêm</p>
                                 <table>
                                     <tr class="not-required-wrap">
