@@ -58,22 +58,22 @@ $searchParams = json_decode($value);
                                 <input id="searchInput" name="search" type="text" class="form-control outsideevent" placeholder="" readonly="readonly">
                             </div>
 
-                            <div id="mua-thue" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn Mua/Thuê ?">
+                            <div id="mua-thue" class="outsideevent search-wrap hidden-effect" data-step-title="Muốn Mua/Thuê ?">
                                 <div class="wrap-effect">
                                     <div class="search-item">
                                         <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
                                         <div class="wrap-step">
                                             <h3></h3>
                                             <ul class="clearfix">
-                                                <li data-id="1"><a href="#" data-item="mua-thue" data-slug-name data-next="tinh-thanh" data-prev>Cho Mua</a></li>
-                                                <li data-id="2"><a href="#" data-item="mua-thue" data-slug-name data-next="tinh-thanh" data-prev>Cho Thuê</a></li>
+                                                <li data-id="1"><a href="#" data-item="mua-thue" data-slug-name data-next="tinh-thanh" data-prev>Muốn Mua</a></li>
+                                                <li data-id="2"><a href="#" data-item="mua-thue" data-slug-name data-next="tinh-thanh" data-prev>Muốn Thuê</a></li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div id="ban-thue" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn Bán/Thuê ?">
+                            <div id="ban-thue" class="outsideevent search-wrap hidden-effect" data-step-title="Đăng Ký Bán/Thuê ?">
                                 <div class="wrap-effect">
                                     <div class="search-item">
                                         <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
