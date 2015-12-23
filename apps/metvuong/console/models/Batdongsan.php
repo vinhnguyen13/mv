@@ -161,13 +161,15 @@ class Batdongsan extends Component
                     $dt = $dientich;
                 }
 
-                $imgs = $detail->find('#thumbs li img');
+                $imgs = $detail->find('.pm-middle-content .img-map #thumbs li img');
                 $thumbs = array();
                 if(count($imgs) > 0) {
                     foreach ($imgs as $img) {
                         $img_link = str_replace('80x60', '745x510', $img->src);
                         array_push($thumbs, $img_link);
                     }
+                } else {
+                    print_r("\n".self::DOMAIN . $href. " --> No images\n");
                 }
 
                 $left_detail = $detail->find('.pm-content-detail .left-detail', 0);
@@ -187,7 +189,7 @@ class Batdongsan extends Component
                                 $left = trim($div->innertext);
                             else if ($class == 'right') {
                                 if (array_key_exists($left, $arr_info)) {
-                                    $right = $left . '_1';
+                                    $left = $left . '_1';
                                 }
                                 $arr_info[$left] = trim($div->plaintext);
                             }
@@ -249,8 +251,6 @@ class Batdongsan extends Component
                     'contact' => $arr_contact,
                     'city' => $city,
                     'district' => $district,
-//                    'ward' => null,
-//                    'street' => null,
                     'loai_tai_san' => $loai_tai_san,
                     'loai_giao_dich' => 1,
                     'price' => $price,
@@ -273,8 +273,11 @@ class Batdongsan extends Component
                     return null;
             }
             else {
-                echo "Cannot find detail at " .self::DOMAIN.$href;
+                echo "Not found content of detail at " .self::DOMAIN.$href;
             }
+        }
+        else {
+            echo "Error go to detail at " .self::DOMAIN.$href;
         }
     }
 
@@ -282,6 +285,7 @@ class Batdongsan extends Component
     {
         foreach ($cityDB as $obj) {
             $c = new Collator('vi_VN');
+            $cityFile = trim($cityFile);
             $check = $c->compare($cityFile, $obj->name);
             if ($check == 0) {
                 return (int)$obj->id;
@@ -294,6 +298,7 @@ class Batdongsan extends Component
     {
         foreach ($districtDB as $obj) {
             $c = new Collator('vi_VN');
+            $districtFile = trim($districtFile);
             $check = $c->compare($districtFile, $obj->name);
             if ($check == 0 && $obj->city_id == $city_id) {
                 return (int)$obj->id;
@@ -306,6 +311,7 @@ class Batdongsan extends Component
     {
         foreach ($_data as $obj) {
             $c = new Collator('vi_VN');
+            $_file = trim($_file);
             $check = $c->compare($_file, $obj->name);
             if ($check == 0 && $obj->district_id == $_id) {
                 return (int)$obj->id;
@@ -318,6 +324,7 @@ class Batdongsan extends Component
     {
         foreach ($_data as $obj) {
             $c = new Collator('vi_VN');
+            $_file = trim($_file);
             $check = $c->compare($_file, $obj->name);
             if ($check == 0 && $obj->district_id == $_id) {
                 return (int)$obj->id;
@@ -360,6 +367,7 @@ class Batdongsan extends Component
         $path = Yii::getAlias('@console') . '/data/bds';
         $files = empty($log["files"]) ? null : $log["files"];
         $counter = count($files);
+
         if ($counter > $start) {
             print_r("Prepare data...\n");
             $user = User::find()->one();
@@ -378,16 +386,12 @@ class Batdongsan extends Component
             $contactArray = array();
             print_r("Insert data...\n");
             for($i = $start; $i < $counter; $i++) {
-                $log["last_import"] = $i+1;
-                $log["last_import_name"] = $files[$i];
-                $log["last_import_time"] = date("d/m/Y H:i:s a");
-                $this->writeFileLog($log);
-
                 $filename = $files[$i];
                 $filePath = $path.'/'.$filename;
                 if(file_exists($filePath)) {
                     $data = file_get_contents($filePath);
                     $data = json_decode($data, true);
+
                     foreach ($data as $value) {
                         $imageArray[$i] = $value[$filename]["thumbs"];
                         $infoArray[$i] = $value[$filename]["info"];
@@ -401,15 +405,19 @@ class Batdongsan extends Component
                             continue;
 
                         $area = $value[$filename]["dientich"];
-                        //                        if ($area == 0)
-                        //                            continue;
-
                         $price = $value[$filename]["price"];
                         if ($price == 0)
                             continue;
 
                         $desc = $value[$filename]["description"];
-                        $content = strip_tags($desc, '<p><br><ul><li>');
+                        $content = null;
+                        if(!empty($desc)) {
+                            $content = strip_tags($desc, '<p><br><ul><li>');
+                            $pos = strpos($content, 'Tìm kiếm theo từ khóa');
+                            $content = substr($content, 0, $pos);
+                            $content = str_replace('Tìm kiếm theo từ khóa','', $content);
+                            $content = trim($content);
+                        }
 
                         $record = [
                             'category_id' => $value[$filename]["loai_tai_san"],
@@ -428,8 +436,13 @@ class Batdongsan extends Component
                             'created_at' => $value[$filename]["start_date"],
 
                         ];
+
                         $bulkInsertArray[] = $record;
                     }
+                    $log["last_import"] = $i+1;
+                    $log["last_import_name"] = $files[$i];
+                    $log["last_import_time"] = date("d-m-Y H:i");
+                    $this->writeFileLog($log);
                 }
             }
             if(count($bulkInsertArray)>0){
@@ -438,79 +451,86 @@ class Batdongsan extends Component
                     ->batchInsert(
                         $tableName, $columnNameArray, $bulkInsertArray
                     )->execute();
+                print_r(" Done!");
 
-                $ad_image_columns = ['user_id', 'product_id', 'file_name', 'uploaded_at'];
-                $ad_info_columns = ['product_id', 'floor_no', 'room_no', 'toilet_no'];
-                $ad_contact_columns = ['product_id', 'name', 'phone', 'mobile', 'address'];
+                if($insertCount > 0) {
+                    $ad_image_columns = ['user_id', 'product_id', 'file_name', 'uploaded_at'];
+                    $ad_info_columns = ['product_id', 'floor_no', 'room_no', 'toilet_no'];
+                    $ad_contact_columns = ['product_id', 'name', 'phone', 'mobile', 'address'];
 
-                $bulkImage = array();
-                $bulkInfo = array();
-                $bulkContact = array();
+                    $bulkImage = array();
+                    $bulkInfo = array();
+                    $bulkContact = array();
 
-                $fromProductId = Yii::$app->db->getLastInsertID();
-                $toProductId = $fromProductId + $insertCount - 1;
+                    $fromProductId = Yii::$app->db->getLastInsertID();
+                    $toProductId = $fromProductId + $insertCount - 1;
 
-                $index = $start;
-                for($i = $fromProductId; $i <= $toProductId; $i++){
+                    $index = $start;
+                    for ($i = $fromProductId; $i <= $toProductId; $i++) {
 
-                    foreach($imageArray[$index] as $imageValue){
-                        $imageRecord = [
-                            'user_id' => 3,
+                        foreach ($imageArray[$index] as $imageValue) {
+                            if(!empty($imageValue)) {
+                                $imageRecord = [
+                                    'user_id' => 3,
+                                    'product_id' => $i,
+                                    'file_name' => $imageValue,
+                                    'upload_at' => time()
+                                ];
+                                $bulkImage[] = $imageRecord;
+                            }
+                        }
+
+                        $floor_no = empty($infoArray[$index]["Số tầng"]) == false ? trim(str_replace('(tầng)', '', $infoArray[$index]["Số tầng"])) : 0;
+                        $room_no = empty($infoArray[$index]["Số phòng ngủ"]) == false ? trim(str_replace('(phòng)', '', $infoArray[$index]["Số phòng ngủ"])) : 0;
+                        $toilet_no = empty($infoArray[$index]["Số toilet"]) == false ? trim($infoArray[$index]["Số toilet"]) : 0;
+                        $infoRecord = [
                             'product_id' => $i,
-                            'file_name' => $imageValue,
-                            'upload_at' => time()
+                            'floor_no' => $floor_no,
+                            'room_no' => $room_no,
+                            'toilet_no' => $toilet_no
                         ];
-                        $bulkImage[] = $imageRecord;
+                        $bulkInfo[] = $infoRecord;
+
+                        $name = empty($contactArray[$index]["Tên liên lạc"]) == false ? trim($contactArray[$index]["Tên liên lạc"]) : null;
+                        $phone = empty($contactArray[$index]["Điện thoại"]) == false ? trim($contactArray[$index]["Điện thoại"]) : null;
+                        $mobile = empty($contactArray[$index]["Mobile"]) == false ? trim($contactArray[$index]["Mobile"]) : null;
+                        $address = empty($contactArray[$index]["Địa chỉ"]) == false ? trim($contactArray[$index]["Địa chỉ"]) : null;
+                        $contactRecord = [
+                            'product_id' => $i,
+                            'name' => $name,
+                            'phone' => $phone,
+                            'mobile' => $mobile,
+                            'address' => $address
+                        ];
+                        $bulkContact[] = $contactRecord;
+
+                        $index = $index + 1;
                     }
 
-                    $floor_no = empty($infoArray[$index]["Số tầng"]) == false ? trim(str_replace('(tầng)','', $infoArray[$index]["Số tầng"])) : 0;
-                    $room_no = empty($infoArray[$index]["Số phòng ngủ"]) == false ? trim(str_replace('(phòng)','', $infoArray[$index]["Số phòng ngủ"])) : 0;
-                    $toilet_no = empty($infoArray[$index]["Số toilet"]) == false ? trim($infoArray[$index]["Số toilet"]) : 0 ;
-                    $infoRecord = [
-                        'product_id' => $i,
-                        'floor_no' => $floor_no,
-                        'room_no' => $room_no,
-                        'toilet_no' => $toilet_no
-                    ];
-                    $bulkInfo[] = $infoRecord;
-
-                    $name = empty($contactArray[$index]["Tên liên lạc"]) == false ? trim($contactArray[$index]["Tên liên lạc"]) : null;
-                    $phone = empty($contactArray[$index]["Điện thoại"]) == false ? trim($contactArray[$index]["Điện thoại"]) : null;
-                    $mobile = empty($contactArray[$index]["Mobile"]) == false ? trim($contactArray[$index]["Mobile"]) : null;
-                    $address = empty($contactArray[$index]["Địa chỉ"]) == false ? trim($contactArray[$index]["Địa chỉ"]) : null;
-                    $contactRecord = [
-                        'product_id' => $i,
-                        'name' => $name,
-                        'phone' => $phone,
-                        'mobile' => $mobile,
-                        'address' => $address
-                    ];
-                    $bulkContact[] = $contactRecord;
-
-                    $index = $index + 1;
-                }
-
-                // execute image, info, contact
-                if(count($bulkImage) > 0) {
-                    $imageCount = Yii::$app->db->createCommand()
-                        ->batchInsert(AdImages::tableName(), $ad_image_columns, $bulkImage)
-                        ->execute();
-                    if ($imageCount > 0)
-                        print_r("\nInser image done");
-                }
-                if(count($bulkInfo) > 0) {
-                    $infoCount = Yii::$app->db->createCommand()
-                        ->batchInsert(AdProductAdditionInfo::tableName(), $ad_info_columns, $bulkInfo)
-                        ->execute();
-                    if ($infoCount > 0)
-                        print_r("\nInser product addition info done");
-                }
-                if(count($bulkContact) > 0) {
-                    $contactCount = Yii::$app->db->createCommand()
-                        ->batchInsert(AdContactInfo::tableName(), $ad_contact_columns, $bulkContact)
-                        ->execute();
-                    if ($contactCount > 0)
-                        print_r("\nInser contact info done");
+                    // execute image, info, contact
+                    if (count($bulkImage) > 0) {
+                        $imageCount = Yii::$app->db->createCommand()
+                            ->batchInsert(AdImages::tableName(), $ad_image_columns, $bulkImage)
+                            ->execute();
+                        if ($imageCount > 0)
+                            print_r("\nInser image done");
+                    }
+                    if (count($bulkInfo) > 0) {
+                        $infoCount = Yii::$app->db->createCommand()
+                            ->batchInsert(AdProductAdditionInfo::tableName(), $ad_info_columns, $bulkInfo)
+                            ->execute();
+                        if ($infoCount > 0)
+                            print_r("\nInser product addition info done");
+                    }
+                    if (count($bulkContact) > 0) {
+                        $contactCount = Yii::$app->db->createCommand()
+                            ->batchInsert(AdContactInfo::tableName(), $ad_contact_columns, $bulkContact)
+                            ->execute();
+                        if ($contactCount > 0)
+                            print_r("\nInser contact info done");
+                    }
+                } else{
+                    print_r("\nCannot insert ad_product");
                 }
             }
         }
@@ -552,6 +572,7 @@ class Batdongsan extends Component
         curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.1.4322)');
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_REFERER, self::DOMAIN . '/nha-dat-ban/');
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
         curl_setopt($ch, CURLOPT_TIMEOUT, 100);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
