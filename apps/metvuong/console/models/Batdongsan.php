@@ -469,43 +469,46 @@ class Batdongsan extends Component
 
                     $index = $start;
                     for ($i = $fromProductId; $i <= $toProductId; $i++) {
-
-                        foreach ($imageArray[$index] as $imageValue) {
-                            if(!empty($imageValue)) {
-                                $imageRecord = [
-                                    'user_id' => 3,
-                                    'product_id' => $i,
-                                    'file_name' => $imageValue,
-                                    'upload_at' => time()
-                                ];
-                                $bulkImage[] = $imageRecord;
+                        if(count($imageArray) > 0) {
+                            foreach ($imageArray[$index] as $imageValue) {
+                                if (!empty($imageValue)) {
+                                    $imageRecord = [
+                                        'user_id' => 3,
+                                        'product_id' => $i,
+                                        'file_name' => $imageValue,
+                                        'upload_at' => time()
+                                    ];
+                                    $bulkImage[] = $imageRecord;
+                                }
                             }
                         }
 
-                        $floor_no = empty($infoArray[$index]["Số tầng"]) == false ? trim(str_replace('(tầng)', '', $infoArray[$index]["Số tầng"])) : 0;
-                        $room_no = empty($infoArray[$index]["Số phòng ngủ"]) == false ? trim(str_replace('(phòng)', '', $infoArray[$index]["Số phòng ngủ"])) : 0;
-                        $toilet_no = empty($infoArray[$index]["Số toilet"]) == false ? trim($infoArray[$index]["Số toilet"]) : 0;
-                        $infoRecord = [
-                            'product_id' => $i,
-                            'floor_no' => $floor_no,
-                            'room_no' => $room_no,
-                            'toilet_no' => $toilet_no
-                        ];
-                        $bulkInfo[] = $infoRecord;
-
-                        $name = empty($contactArray[$index]["Tên liên lạc"]) == false ? trim($contactArray[$index]["Tên liên lạc"]) : null;
-                        $phone = empty($contactArray[$index]["Điện thoại"]) == false ? trim($contactArray[$index]["Điện thoại"]) : null;
-                        $mobile = empty($contactArray[$index]["Mobile"]) == false ? trim($contactArray[$index]["Mobile"]) : null;
-                        $address = empty($contactArray[$index]["Địa chỉ"]) == false ? trim($contactArray[$index]["Địa chỉ"]) : null;
-                        $contactRecord = [
-                            'product_id' => $i,
-                            'name' => $name,
-                            'phone' => $phone,
-                            'mobile' => $mobile,
-                            'address' => $address
-                        ];
-                        $bulkContact[] = $contactRecord;
-
+                        if(count($infoArray) > 0) {
+                            $floor_no = empty($infoArray[$index]["Số tầng"]) == false ? trim(str_replace('(tầng)', '', $infoArray[$index]["Số tầng"])) : 0;
+                            $room_no = empty($infoArray[$index]["Số phòng ngủ"]) == false ? trim(str_replace('(phòng)', '', $infoArray[$index]["Số phòng ngủ"])) : 0;
+                            $toilet_no = empty($infoArray[$index]["Số toilet"]) == false ? trim($infoArray[$index]["Số toilet"]) : 0;
+                            $infoRecord = [
+                                'product_id' => $i,
+                                'floor_no' => $floor_no,
+                                'room_no' => $room_no,
+                                'toilet_no' => $toilet_no
+                            ];
+                            $bulkInfo[] = $infoRecord;
+                        }
+                        if(count($contactArray) > 0) {
+                            $name = empty($contactArray[$index]["Tên liên lạc"]) == false ? trim($contactArray[$index]["Tên liên lạc"]) : null;
+                            $phone = empty($contactArray[$index]["Điện thoại"]) == false ? trim($contactArray[$index]["Điện thoại"]) : null;
+                            $mobile = empty($contactArray[$index]["Mobile"]) == false ? trim($contactArray[$index]["Mobile"]) : null;
+                            $address = empty($contactArray[$index]["Địa chỉ"]) == false ? trim($contactArray[$index]["Địa chỉ"]) : null;
+                            $contactRecord = [
+                                'product_id' => $i,
+                                'name' => $name,
+                                'phone' => $phone,
+                                'mobile' => $mobile,
+                                'address' => $address
+                            ];
+                            $bulkContact[] = $contactRecord;
+                        }
                         $index = $index + 1;
                     }
 
