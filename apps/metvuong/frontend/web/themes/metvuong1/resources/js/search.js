@@ -338,13 +338,14 @@
 
                 iconChange (tabActiveGet);
 
-                stepFirst(step);
-
                 tabs.removeClass('active');
                 $(this).addClass('active');
                 mv.settings.wrapSuggest.html('');
                 inputResize();
 
+                stepFirst(step);
+
+                //
                 if ( _this.closest('.options-search').hasClass('search-dropdown') ) {
                     _this.closest('.options-search').addClass('outsideevent');
                 }else {

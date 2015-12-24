@@ -16,7 +16,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                     ga('send', {hitType: 'event',eventCategory: 'Listing',eventAction: 'click',eventLabel: 'SearchForm'});
                 }
                 setTimeout(function() {$('#search-kind').submit();},100);
-            },1000);
+            },500);
             return false;
         });
 
@@ -28,7 +28,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                     ga('send', {hitType: 'event',eventCategory: 'PostListing',eventAction: 'click',eventLabel: 'SearchForm'});
                 }
                 setTimeout(function() {$('#search-kind').submit();},100);
-            },1000);
+            },500);
         });
         
         $(document).bind( 'real-estate/post', function(event, json, string, callback){
@@ -39,7 +39,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                     ga('send', {hitType: 'event',eventCategory: 'News',eventAction: 'click',eventLabel: 'SearchForm'});
                 }
                 setTimeout(function() {$('#search-kind').submit();},100);
-            },1000);
+            },500);
         });
 
     });
