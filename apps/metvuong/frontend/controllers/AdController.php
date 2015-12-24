@@ -46,6 +46,7 @@ class AdController extends Controller
         	$toiletNo = Yii::$app->request->get('toiletNo');
         	$orderBy = Yii::$app->request->get('orderBy', 'created_at');
         	$type = Yii::$app->request->get('type');
+        	$time = Yii::$app->request->get('time');
         	
         	$query = (new \yii\db\Query())->groupBy('ad_product.id')
         				->groupBy('ad_product.id')
@@ -53,6 +54,10 @@ class AdController extends Controller
         	
         	if($type) {
         		$query->where('type = :type', [':type' => $type]);
+        	}
+        	
+        	if($time) {
+        		$query->andWhere('created_at >= :created_at', [':created_at' => strtotime($time)]);
         	}
         	
         	if($cityId) {

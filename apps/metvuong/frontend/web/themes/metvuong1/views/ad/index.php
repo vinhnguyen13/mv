@@ -220,17 +220,18 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
                             <div class="form-group">
                                 <label for="" class="col-sm-4 control-label">Ngày đăng</label>
                                 <div class="col-sm-8">
-                                    <select class="form-control">
-                                        <option>1 ngày</option>
-                                        <option>7 ngày</option>
-                                        <option>14 ngày</option>
-                                        <option>30 ngày</option>
-                                        <option>60 ngày</option>
-                                        <option>90 ngày</option>
-                                        <option>6 tháng</option>
-                                        <option>12 tháng</option>
-                                        <option>24 tháng</option>
-                                        <option>36 tháng</option>
+                                    <select name="time" class="form-control">
+                                        <option value="">Bất kỳ</option>
+                                        <option value="-1 day">1 ngày</option>
+                                        <option value="-7 day">7 ngày</option>
+                                        <option value="-14 day">14 ngày</option>
+                                        <option value="-30 day">30 ngày</option>
+                                        <option value="-60 day">60 ngày</option>
+                                        <option value="-90 day">90 ngày</option>
+                                        <option value="-6 month">6 tháng</option>
+                                        <option value="-12 month">12 tháng</option>
+                                        <option value="-24 month">24 tháng</option>
+                                        <option value="-36 month">36 tháng</option>
                                     </select>
                                 </div>
                             </div>
