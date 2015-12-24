@@ -63,8 +63,8 @@ $products = AdProduct::findAll(['status'=>1]);
                     <th scope="row"><?=$key+1;?></th>
                     <td><a href="#"><?=$product->getAddress();?></a></td>
                     <td>1.230</td>
-                    <td>11/12/2015</td>
-                    <td>01/01/2015</td>
+                    <td><?=Yii::$app->formatter->asDatetime($product->start_date, "php:d-m-Y H:i:s");?></td>
+                    <td><?=Yii::$app->formatter->asDatetime($product->end_date, "php:d-m-Y H:i:s");?></td>
                     <td>Còn hạn</td>
                     <td class="text-center"><a href="#"><em class="fa fa-area-chart"></em></a></td>
                 </tr>
