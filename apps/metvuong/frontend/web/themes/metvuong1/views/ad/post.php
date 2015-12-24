@@ -28,7 +28,8 @@ $type = [
 ];
 
 if(Yii::$app->user->identity->profile->avatar) {
-	$avatar = Url::to('/store/avatar/' . Yii::$app->user->identity->profile->avatar);
+	$pathinfo = pathinfo(Yii::$app->user->identity->profile->avatar);
+	$avatar = Url::to('/store/avatar/' . $pathinfo['filename'] . '.thumb.' . $pathinfo['extension']);
 } else {
 	$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
 }
