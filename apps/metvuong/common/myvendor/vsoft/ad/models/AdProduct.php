@@ -67,4 +67,27 @@ class AdProduct extends AdProductBase
 		
 		return parent::beforeSave($insert);
 	}
+
+	public function getAddress() {
+		$address = '';
+		$street = AdStreet::findOne($this->street_id);
+		$ward = AdWard::findOne($this->ward_id);
+		$district = AdDistrict::findOne($this->district_id);
+		$city = AdCity::findOne($this->city_id);
+		if($this->home_no) {
+			$address .= "{$this->home_no}, ";
+		}
+		if($street) {
+			$address .= "{$street->pre} {$street->name}, ";
+		}
+		if($ward) {
+			$address .= "{$ward->pre} {$ward->name}, ";
+		}
+		if($address) {
+			$address .= "{$district->pre} {$district->name}, {$city->name}";
+		} else {
+			$address = "{$district->pre} {$district->name}, {$city->name}";
+		}
+		return $address;
+	}
 }

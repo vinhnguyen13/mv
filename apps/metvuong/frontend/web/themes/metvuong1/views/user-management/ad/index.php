@@ -1,6 +1,6 @@
 <?php
 use vsoft\ad\models\AdProduct;
-$products = AdProduct::findAll([]);
+$products = AdProduct::findAll(['status'=>1]);
 ?>
 <div class="col-xs-9 right-profile quanlytinraoban">
     <div class="wrap-quanly-profile">
@@ -61,7 +61,7 @@ $products = AdProduct::findAll([]);
                 <?php foreach($products as $key=>$product){?>
                 <tr>
                     <th scope="row"><?=$key;?></th>
-                    <td><a href="#">Nhà bán gấp 6 tỷ hẻm 8m Lạc Long Quân, Q11. 4mx16,5m</a></td>
+                    <td><a href="#"><?=$product->getAddress();?></a></td>
                     <td>1.230</td>
                     <td>11/12/2015</td>
                     <td>01/01/2015</td>
