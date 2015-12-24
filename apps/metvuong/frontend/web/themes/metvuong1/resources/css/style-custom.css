@@ -2061,7 +2061,7 @@ div.wrap-page-home #search-kind .dropdown button {
 }
 .header-duan h2 {
     color: #F79521;
-    font-size: 2.5em;
+    font-size: 1.5em;
     font-weight: bold;
     line-height: 70px;
     font-family: 'Calibri';
@@ -2091,7 +2091,7 @@ div.wrap-page-home #search-kind .dropdown button {
 }
 .item-infor a {
     color: #333;
-    font-size: 1.2em;
+    font-size: .9em;
     padding: 6px 0 5px;
     border-bottom: 1px solid #C3C3C3;
 }
@@ -2121,12 +2121,14 @@ div.wrap-page-home #search-kind .dropdown button {
 .show-infor table td {
     padding: 8px 0 7px;
     color: #6B6B6B;
-    font-size: 1em;
+    font-size: .8em;
     border-bottom: 1px solid #C3C3C3;
+    line-height: 18px;
 }
 .show-infor table th {
     padding-right: 25px;
     font-weight: normal;
+    width: 165px;
 }
 .show-infor table {
     width: 100%;
@@ -5375,4 +5377,7 @@ header.animate-children .wrap-search-home .search-select a {
     right: 1px;
     bottom: inherit;
     left: inherit;
+}
+.files .delete .glyphicon {
+    font-size: 12px;
 }
