@@ -21,7 +21,9 @@
 	
 	$owner = \dektrium\user\models\User::findOne($product->user_id);
 	if($owner && $owner->profile->avatar) {
-		$avatar = Url::to('/store/avatar/' . $owner->profile->avatar);
+		$pathinfo = pathinfo($owner->profile->avatar);
+		
+		$avatar = Url::to('/store/avatar/' . $pathinfo['filename'] . '.thumb.' . $pathinfo['extension']);
 	} else {
 		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
 	}
