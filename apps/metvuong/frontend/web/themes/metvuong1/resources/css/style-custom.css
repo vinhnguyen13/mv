@@ -2412,7 +2412,7 @@ div.wrap-page-home #search-kind .dropdown button {
 .type-search ul li {
     margin-right: 5px;
     background: #dbdbdb;
-    padding: 0 8px 2px 20px;
+    padding: 0 10px 2px 20px;
     font-size: .9em;
     font-weight: bold;
     border-radius: 3px;
@@ -3521,6 +3521,7 @@ form .inline-group {
     background: none;
     position: relative;
     z-index: 2;
+    cursor:  pointer;
 }
 #search-kind .form-group.inline-group em {
     position: absolute;
@@ -3566,13 +3567,17 @@ form .inline-group {
     padding-right: 0;
 }
 .wrap-cost-bds li span {
-    padding: 5px 10px;
+    padding: 10px;
     display: block;
     font-size: 1em;
     cursor: pointer;
 }
 .wrap-cost-bds li span:hover {
     background: #D0D0D0;
+    text-shadow: 1px 1px 1px #fff;
+    -webkit-text-shadow: 1px 1px 1px #fff;
+    -moz-text-shadow: 1px 1px 1px #fff;
+    -ms-text-shadow: 1px 1px 1px #fff;
 }
 @keyframes fadeToDown{
 	0%{
@@ -3707,8 +3712,8 @@ div.wrap-page-home .logo-home {
     -ms-border-radius: 0 0 3px 3px;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 150px;
+    width: 95%;
+    height: 180px;
     overflow-y: scroll;
     border: 1px solid #B3B3B3;
     padding: 5px 0;
@@ -4798,10 +4803,16 @@ header.wrap-page-home .wrap-search-home .ani-search {
     padding: 0;
 }
 #search-kind .form-group.box-cost {
-    width: 40%;
+    width: 43%;
+}
+#search-kind .form-group.box-cost[data-tab=min] {
+    padding-right: 15px;
+}
+#search-kind .form-group.box-cost[data-tab=max] {
+    padding-left: 15px;
 }
 #search-kind .form-group.inline-group.line-center {
-    width: 10%;
+    width: 4%;
 }
 .wrap-search-home .search-item ul a,
 .home-page li:first-child a {
@@ -5348,4 +5359,20 @@ header.animate-children .wrap-search-home .search-select a {
     display: block;
     height: 24px;
     line-height: 24px;
+}
+#search-kind .btn-cost button {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+#search-kind .form-group.box-cost[data-tab=max] .wrap-effect-cost {
+    left: 15px;
+}
+.wrap-search-home #search-kind .type-search li em {
+    font-size: 16px;
+    background: none;
+    position: absolute;
+    top: 5px;
+    right: 1px;
+    bottom: inherit;
+    left: inherit;
 }
