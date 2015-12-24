@@ -75,13 +75,45 @@ class Elastic
 
     public function search(){
         $params = [
-            'index' => 'my_index',
-            'type' => 'my_type',
+            'index' => 'listing',
+            'type' => 'store',
             'body' => [
                 'query' => [
-                    'match' => [
-                        'testField' => 'abc'
-                    ]
+                    /*'match' => [
+                        'title' => 'long'
+                    ]*/
+                    /*'bool' => [
+                        'must' => [
+                            [ 'match' => [ 'title' => 'long' ] ],
+                        ]
+                    ]*/
+                    /*'filtered' => [
+                        'filter' => [
+                            'term' => [ 'title' => 'long' ]
+                        ],
+                        'query' => [
+                            'match' => [ 'title' => 'long' ]
+                        ]
+                    ]*/
+                    /*'filtered' => [
+                        'query' => [
+                            'query_string' => [
+                                'query' => 'long',
+                                "default_operator" => "OR",
+                                "fields" => ["title"]
+                            ]
+                        ]
+                    ],*/
+                    'filtered' => [
+                        'query' => [
+                            'query_string' => [
+                                'query' => 'Ứng dụng công nghệ', // words want to find
+                                "default_operator" => "OR", // OR/AND query words
+                                "fields" => ["title", "content"], // select fields
+//                                "default_field" => "_all", // all filed
+                            ]
+                        ]
+                    ],
                 ]
             ]
         ];

@@ -46,31 +46,26 @@ class TestController extends \yii\web\Controller
     public function actionElastic(){
         $elastic = new Elastic();
         $client = $elastic->connect();
-        /*$params = [
-            'index' => 'tracking',
-            'type' => 'search',
-            'id' => '2222',
-            'body' => [ 'testField' => 'abc']
-        ];
-        // Document will be indexed to my_index/my_type/my_id
-        $response = $client->index($params);
+        $results = $elastic->search();
         echo "<pre>";
-        print_r($response);
-        echo "</pre>";
-        exit;*/
-        $params = [
-            'index' => 'tracking',
-            'type' => 'search',
-            'id' => '132',
-        ];
-        // Document will be indexed to my_index/my_type/my_id
-        $response = $client->get($params);
-//        $response = $client->cluster()->stats();
-//        $response = $client->nodes()->stats();
-        echo "<pre>";
-        print_r($response);
+        print_r($results);
         echo "</pre>";
         exit;
+    }
+
+    private function index($client){
+        $cms = CmsShow::find()->all();
+        if(!empty($cms)){
+            foreach($cms as $item){
+                $params = [
+                    'index' => 'listing',
+                    'type' => 'store',
+                    'id' => $item->id,
+                    'body' => $item->attributes
+                ];
+                $response = $client->index($params);
+            }
+        }
     }
 
     public function actionSelect(){
