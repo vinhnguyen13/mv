@@ -200,6 +200,13 @@
                 objItem.itemData = itemData;
                 objItem.txt = txt;
 
+                if ( itemData == 'min-max' ) {
+                    var cloneItem = _this.clone();
+                    cloneItem.find('i').remove();
+                    cloneItem.find('span').remove();
+                    objItem.icon = cloneItem.html();
+                }
+
                 objSave.push(objItem);
 
                 if ( itemData == 'tinh-thanh' ) {
@@ -557,9 +564,16 @@
                 txt = flag ? el.txt : el.text(),
                 dataItem = flag ? el.itemData : el.data('item');
 
-            //add icon price
             if ( current == 'min-max' ) {
                 current = '';
+            }
+
+
+            if ( flag) {
+                //add icon price
+                if ( dataItem == 'min-max' ) {
+                    item.append(el.icon);
+                }
             }
 
             if ( loadCost.valGet.length == 1 ) {
