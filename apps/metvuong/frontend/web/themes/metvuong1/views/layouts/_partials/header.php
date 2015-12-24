@@ -13,7 +13,7 @@ $searchParams = json_decode($value);
                     ga('send', {hitType: 'event',eventCategory: 'Listing',eventAction: 'click',eventLabel: 'SearchForm'});
                 }
                 setTimeout(function() {$('#search-kind').submit();},100);
-            },1000);
+            },100);
             return false;
         });
 
@@ -24,7 +24,7 @@ $searchParams = json_decode($value);
                     ga('send', {hitType: 'event',eventCategory: 'PostListing',eventAction: 'click',eventLabel: 'SearchForm'});
                 }
                 setTimeout(function() {$('#search-kind').submit();},100);
-            },1000);
+            },100);
         });
         
         $(document).bind( 'real-estate/post', function(event, json, string, callback){
@@ -34,7 +34,7 @@ $searchParams = json_decode($value);
                     ga('send', {hitType: 'event',eventCategory: 'News',eventAction: 'click',eventLabel: 'SearchForm'});
                 }
                 setTimeout(function() {$('#search-kind').submit();},100);
-            },1000);
+            },100);
         });
 
     });
