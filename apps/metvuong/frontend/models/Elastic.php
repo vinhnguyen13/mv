@@ -59,12 +59,12 @@ class Elastic
 
     public function update(){
         $params = [
-            'index' => 'my_index',
-            'type' => 'my_type',
-            'id' => 'my_id',
+            'index' => 'listing',
+            'type' => 'store',
+            'id' => '28',
             'body' => [
                 'doc' => [
-                    'new_field' => 'abc'
+                    'title' => 'Ứng dụng công nghệ Holongram vào trình diễn dự án tại Việt Nam'
                 ]
             ]
         ];
@@ -103,8 +103,13 @@ class Elastic
                                 "fields" => ["title"]
                             ]
                         ]
+                    ],
+                    'regexp' => [
+                        'title' => [
+                            'value' => '.*long.*'
+                        ]
                     ],*/
-                    'filtered' => [
+                    /*'filtered' => [
                         'query' => [
                             'query_string' => [
                                 'query' => 'Ứng dụng công nghệ', // words want to find
@@ -113,7 +118,12 @@ class Elastic
 //                                "default_field" => "_all", // all filed
                             ]
                         ]
-                    ],
+                    ],*/
+                    'regexp' => [
+                        'title' => [
+                            'value' => '.*long.*'
+                        ]
+                    ]
                 ]
             ]
         ];
@@ -126,9 +136,9 @@ class Elastic
          * must have 2 field
          */
         $params = [
-            'index' => 'tracking',
-            'type' => 'search',
-            'id' => '132',
+            'index' => 'listing',
+            'type' => 'store',
+            'id' => '28',
         ];
         // Document will be indexed to my_index/my_type/my_id
         $results = $this->client->get($params);

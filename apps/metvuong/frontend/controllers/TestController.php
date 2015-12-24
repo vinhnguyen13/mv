@@ -44,11 +44,14 @@ class TestController extends \yii\web\Controller
     }
 
     public function actionElastic(){
+        $time = microtime();
         $elastic = new Elastic();
         $client = $elastic->connect();
         $results = $elastic->search();
         echo "<pre>";
         print_r($results);
+        print_r('<br>');
+        print_r(microtime()-$time);
         echo "</pre>";
         exit;
     }

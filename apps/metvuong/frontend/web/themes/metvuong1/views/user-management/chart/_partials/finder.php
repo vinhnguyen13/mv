@@ -137,7 +137,10 @@ $data = [
                 verticalAlign: 'middle',
                 borderWidth: 0
             },
-            series: <?=json_encode($data);?>
+            series: <?=json_encode($data);?>,
+            credits: {
+                enabled: false
+            }
         });
     });
 </script>
