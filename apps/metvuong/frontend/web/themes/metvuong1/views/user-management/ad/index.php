@@ -1,4 +1,7 @@
-
+<?php
+use vsoft\ad\models\AdProduct;
+$products = AdProduct::findAll([]);
+?>
 <div class="col-xs-9 right-profile quanlytinraoban">
     <div class="wrap-quanly-profile">
         <div class="title-frm">Quản lý tin rao bán/cho thuê</div>
@@ -38,8 +41,10 @@
                 </select>
             </div>
         </form>
-
         <div class="tbl-list">
+        <?php
+        if(!empty($products)){
+        ?>
             <table class="table">
                 <thead>
                 <tr>
@@ -53,8 +58,9 @@
                 </tr>
                 </thead>
                 <tbody>
+                <?php foreach($products as $key=>$product){?>
                 <tr>
-                    <th scope="row">1</th>
+                    <th scope="row"><?=$key;?></th>
                     <td><a href="#">Nhà bán gấp 6 tỷ hẻm 8m Lạc Long Quân, Q11. 4mx16,5m</a></td>
                     <td>1.230</td>
                     <td>11/12/2015</td>
@@ -62,51 +68,8 @@
                     <td>Còn hạn</td>
                     <td class="text-center"><a href="#"><em class="fa fa-area-chart"></em></a></td>
                 </tr>
-                <tr>
-                    <th scope="row">1</th>
-                    <td><a href="#">Nhà bán gấp 6 tỷ hẻm 8m Lạc Long Quân, Q11. 4mx16,5m</a></td>
-                    <td>1.230</td>
-                    <td>11/12/2015</td>
-                    <td>01/01/2015</td>
-                    <td>Còn hạn</td>
-                    <td class="text-center"><a href="#"><em class="fa fa-area-chart"></em></a></td>
-                </tr>
-                <tr>
-                    <th scope="row">1</th>
-                    <td><a href="#">Nhà bán gấp 6 tỷ hẻm 8m Lạc Long Quân, Q11. 4mx16,5m</a></td>
-                    <td>1.230</td>
-                    <td>11/12/2015</td>
-                    <td>01/01/2015</td>
-                    <td class="row-hethan">Hết hạn <a class="push-post" href="#" title="push"><em class="fa fa-arrow-circle-up"></em></a></td>
-                    <td class="text-center"><a href="#"><em class="fa fa-area-chart"></em></a></td>
-                </tr>
-                <tr>
-                    <th scope="row">1</th>
-                    <td><a href="#">Nhà bán gấp 6 tỷ hẻm 8m Lạc Long Quân, Q11. 4mx16,5m</a></td>
-                    <td>1.230</td>
-                    <td>11/12/2015</td>
-                    <td>01/01/2015</td>
-                    <td>Còn hạn</td>
-                    <td class="text-center"><a href="#"><em class="fa fa-area-chart"></em></a></td>
-                </tr>
-                <tr>
-                    <th scope="row">1</th>
-                    <td><a href="#">Nhà bán gấp 6 tỷ hẻm 8m Lạc Long Quân, Q11. 4mx16,5m</a></td>
-                    <td>1.230</td>
-                    <td>11/12/2015</td>
-                    <td>01/01/2015</td>
-                    <td>Còn hạn</td>
-                    <td class="text-center"><a href="#"><em class="fa fa-area-chart"></em></a></td>
-                </tr>
-                <tr>
-                    <th scope="row">1</th>
-                    <td><a href="#">Nhà bán gấp 6 tỷ hẻm 8m Lạc Long Quân, Q11. 4mx16,5m</a></td>
-                    <td>1.230</td>
-                    <td>11/12/2015</td>
-                    <td>01/01/2015</td>
-                    <td>Còn hạn</td>
-                    <td class="text-center"><a href="#"><em class="fa fa-area-chart"></em></a></td>
-                </tr>
+                <?php }?>
+
                 </tbody>
             </table>
             <ul class="pagination text-right">
@@ -126,6 +89,9 @@
                     </a>
                 </li>
             </ul>
+        <?php }else{?>
+            <p>Chưa có dữ liệu</p>
+        <?php }?>
         </div>
     </div>
 </div>
