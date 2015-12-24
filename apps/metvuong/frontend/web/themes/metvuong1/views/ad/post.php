@@ -23,8 +23,8 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/imagesl
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/lightbox.min.js', ['position' => View::POS_END]);
 
 $type = [ 
-	AdProduct::TYPE_FOR_SELL => Yii::t ( 'post', 'Nhà đất bán' ),
-	AdProduct::TYPE_FOR_RENT => Yii::t ( 'post', 'Nhà đất cho thuê' ) 
+	AdProduct::TYPE_FOR_SELL => Yii::t ( 'ad', 'Nhà đất bán' ),
+	AdProduct::TYPE_FOR_RENT => Yii::t ( 'ad', 'Nhà đất cho thuê' ) 
 ];
 
 if(Yii::$app->user->identity->profile->avatar) {
@@ -67,11 +67,7 @@ if(Yii::$app->user->identity->profile->avatar) {
 				<?= Html::activeHiddenInput($model, 'city_id') ?>
 				<?= Html::activeHiddenInput($model, 'district_id') ?>
 				<?= Html::activeHiddenInput($model, 'category_id') ?>
-				<?= $form->field($model, 'type', [
-						'labelOptions' => ['class' => 'col-sm-3 control-label'],
-						'inputOptions' => ['class' => 'col-xs-6 form-control mgB-0'],
-						'template' => '{label}<div class="col-sm-9 group-item-frm"><div class="inline-group pdR-0">{input}</div></div>{hint}{error}']
-					)->dropDownList($type) ?>
+				<?= Html::activeHiddenInput($model, 'type') ?>
 				<div class="form-group">
 					<label for="" class="col-sm-3 control-label">Địa chỉ *</label>
 					<div class="col-sm-9 group-item-frm">
@@ -189,6 +185,7 @@ if(Yii::$app->user->identity->profile->avatar) {
 						</div>
 						<div class="col-xs-3">
 							<?= Html::activeTextInput($adContactInfo, 'phone', ['class' => 'form-control number-only', 'placeholder' => 'Điện thoại', 'data-zero-first' => '1']) ?>
+							<div class="help-block" style="display: none;"></div>
 						</div>
 						<div class="col-xs-3">
 							<div class="form-group mgB-0">
@@ -221,11 +218,11 @@ if(Yii::$app->user->identity->profile->avatar) {
 					<?= Html::activeHiddenInput($model, 'lat') ?>
 					<?= Html::activeHiddenInput($model, 'lng') ?>
 				</div>
-				<button id="preview" type="button" class="btn btn-primary btn-common mgT-15 pull-left" data-toggle="modal" data-target="#detail-listing">
+				<!-- <button id="preview" type="button" class="btn btn-primary btn-common mgT-15 pull-left" data-toggle="modal" data-target="#detail-listing" style="display: none;">
 					Xem trước
-				</button>
-				<button type="button"
-					class="btn btn-primary btn-common mgT-15 next action-button pull-right" data-ajax-post="true">
+				</button> -->
+				<button id="preview" type="button"
+					class="btn btn-primary btn-common mgT-15 action-button pull-right" data-ajax-post="false" data-toggle="modal" data-target="#detail-listing">
 					Tiếp theo<em class="fa fa-chevron-right"></em>
 				</button>
 				<button type="button"
@@ -279,7 +276,7 @@ if(Yii::$app->user->identity->profile->avatar) {
                                     </tr>
                                 </table>
                                 <p class="ttmt">Thông tin mô tả</p>
-                                <div class="wrap-ttmt"><div class="editable" id="ref-adproduct-content"></div></div>
+                                <div class="wrap-ttmt" style="white-space: pre-wrap;"><div class="editable" id="ref-adproduct-content"></div></div>
                                	<p class="ttmt">Thông tin thêm</p>
                                 <table>
                                     <tr class="not-required-wrap">
@@ -359,6 +356,7 @@ if(Yii::$app->user->identity->profile->avatar) {
                                 </div>
                             </div>
                         </div>
+                        <div style="text-align: center;"><input data-ajax-post="true" id="submit-form" type="button" value="ĐĂNG TIN" class="btn btn-primary btn-common action-button" style="width: 200px;"></div>
                     </div>
                 </div>
             </div>

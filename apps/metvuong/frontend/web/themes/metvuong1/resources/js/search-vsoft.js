@@ -12,6 +12,7 @@
 			tabActive.attr('data-step-current', steps[stepConfig][stepCurrent]['prev']);
 			tabActive.trigger('real-estate/displayList', [{step: steps[stepConfig][stepCurrent]['prev'], status: 1}, '']);
 		}
+		return false;
 	});
 
 	$(document).on('click', '.tab', function () {
@@ -21,18 +22,19 @@
 		$('.wrapSuggestList').hide();		
 		tabActive.attr('data-step-current', $(this).parent().attr('data-step-default'));
 		$('.textSelected').html('');
+		return false;
 	});
 
 	$(document).on('click', '.wrapClickSearch .searchInput', function () {
 		$(this).trigger('real-estate/tabActive');
 		tabActive.trigger('real-estate/actionDisplayList', [{'this': tabActive}, '']);
-
+		return false;
 	});
 
 	$(document).on('click', '.wrapClickSearch .textSelected .remove', function () {
 		var element = $(this).parent();
 		$(this).trigger('real-estate/tagRemove', [{element: element}]);
-		
+		return false;
 	});
 
 	$(document).on('click', '.wrapClickSearch .textSelected .label-info', function () {
@@ -43,6 +45,7 @@
 			tabActive.trigger('real-estate/actionDisplayList', [{'this': tabActive, 'stepDisplay': stepDisplay}, '']);
 			$(this).trigger('real-estate/tagRemove', [{element: $(this)}]);
 		}
+		return false;
 	});
 
 	$(document).on('click', '.wrapSuggestList .suggestListData a', function () {

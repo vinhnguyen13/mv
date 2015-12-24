@@ -27,6 +27,7 @@ class AdContactInfo extends AdContactInfoBase
 			[['product_id'], 'integer'],
 			[['name', 'phone', 'mobile'], 'string', 'max' => 32],
 			[['address', 'email'], 'string', 'max' => 255],
+			[['mobile', 'phone'], 'string', 'length' => [7, 11]],
 			['email', 'email'],
 			[['product_id'], 'unique']
 		];

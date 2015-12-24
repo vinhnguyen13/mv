@@ -79,9 +79,9 @@ return [
                 '<cat_id:\d+>-<cat_slug>/<id:\d+>-<slug>' => 'news/view',
                 '<cat_id:\d+>-<slug>' => 'news/list',
                 'building/<slug>' => 'building-project/view',
-                'real-estate/result' => 'ads/index',
-                'real-estate/redirect' => 'ads/redirect',
-                'real-estate/post' => 'ads/post',
+                'real-estate/result' => 'ad/index',
+                'real-estate/redirect' => 'ad/redirect',
+                'real-estate/post' => 'ad/post',
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',
 //                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
 //                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
@@ -117,13 +117,14 @@ return [
         ],*/
         'i18n' => [
             'translations' => [
-                'user' => [
-                    'class'          => 'yii\i18n\PhpMessageSource',
-                    'sourceLanguage' => 'ru',
-                    'basePath'       => '@vendor/dektrium/yii2-user/messages',
-                    'fileMap'        => [
-                        'modules/user/user' => 'user.php',
-                    ],
+                'user*' => [
+                    'class' => 'yii\i18n\DbMessageSource',
+                    'db' => 'db',
+                    'sourceLanguage' => 'en-US',
+                    'sourceMessageTable' => '{{%language_source}}',
+                    'messageTable' => '{{%language_translate}}',
+                    'cachingDuration' => 86400,
+                    'enableCaching' => false,
                 ],
                 '*' => [
                     'class' => 'yii\i18n\DbMessageSource',

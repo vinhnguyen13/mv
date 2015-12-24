@@ -12,52 +12,77 @@ use vsoft\news\models\CmsShow;
 use yii\web\Response;
 use yii\web\UploadedFile;
 use yii\web\View;
+use frontend\components\Controller;
 
-class UserManagementController extends \yii\web\Controller
+class UserManagementController extends Controller
 {
     public $layout = '@app/views/user-management/layouts/main';
+
+    public function beforeAction($action)
+    {
+        if(Yii::$app->user->isGuest){
+            $this->redirect(['/member/login']);
+        }
+        return parent::beforeAction($action);
+    }
+
     public function actionIndex()
     {
-        $this->redirect('/user-management/ads');
+        $this->redirect('/user-management/chart');
     }
 
-    public function actionAds()
+    public function actionAd()
     {
         if(Yii::$app->request->isAjax){
-            return $this->renderPartial('ads/index', [
+            return $this->renderPartial('ad/index', [
             ]);
         }
-        return $this->render('ads/index', [
+        return $this->render('ad/index', [
         ]);
     }
 
-    public function actionAdsMostSearch()
+    public function actionAdMostSearch()
     {
         if(Yii::$app->request->isAjax){
-            return $this->renderPartial('ads/most-search', [
+            return $this->renderPartial('ad/most-search', [
             ]);
         }
-        return $this->render('ads/most-search', [
+        return $this->render('ad/most-search', [
         ]);
     }
 
-    public function actionAdsSuggest()
+    public function actionAdSuggest()
     {
         if(Yii::$app->request->isAjax){
-            return $this->renderPartial('ads/suggest', [
+            return $this->renderPartial('ad/suggest', [
             ]);
         }
-        return $this->render('ads/suggest', [
+        return $this->render('ad/suggest', [
         ]);
     }
 
     public function actionChart()
     {
         if(Yii::$app->request->isAjax) {
-            return $this->renderAjax('chart/ads', [
-            ]);
+            $view = Yii::$app->request->get('view', 'index');
+            $data = [];
+            switch($view){
+                case '_partials/visitor';
+
+                    break;
+                case '_partials/finder';
+
+                    break;
+                case '_partials/listContact';
+
+                    break;
+            }
+            if(!empty($view)){
+                return $this->renderAjax('chart/'.$view, $data);
+            }
+            return false;
         }
-        return $this->render('chart/ads', [
+        return $this->render('chart/index', [
         ]);
     }
 
@@ -73,6 +98,11 @@ class UserManagementController extends \yii\web\Controller
         ]);
 
         $model = $model->loadProfile();
+        if($model->avatar) {
+            $model->avatar  = Url::to('/store/avatar/' . $model->avatar);
+        } else {
+            $model->avatar  = Url::to('/store/avatar/default-avatar.jpg');
+        }
 
         if(Yii::$app->request->isAjax) {
             if(Yii::$app->request->isPost){
@@ -145,8 +175,8 @@ class UserManagementController extends \yii\web\Controller
             $uniqid = uniqid();
             $extension = pathinfo($image->name, PATHINFO_EXTENSION);
 
-            $orginal = $uniqid . '.' . $extension;
-            $thumbnail = $uniqid . '.thumb.' . $extension;
+            $orginal = 'u_'. Yii::$app->user->id. '_' .$uniqid . '.' . $extension;
+            $thumbnail = 'u_'. Yii::$app->user->id. '_' .$uniqid . '.thumb.' . $extension;
 
             $orginalPath = $dir . '/' . $orginal;
             $thumbnailPath = $dir . '/' . $thumbnail;
@@ -163,7 +193,7 @@ class UserManagementController extends \yii\web\Controller
                 'name'          => $orginal,
                 'type'          => $image->type,
                 'size'          => $image->size,
-                'deleteUrl'     => Url::to(['upload/delete-image', 'orginal' => $orginal, 'thumbnail' => $thumbnail, 'folder' => $folder]),
+                'deleteUrl'     => Url::to(['user-management/delete-image', 'orginal' => $orginal, 'thumbnail' => $thumbnail, 'folder' => $folder]),
                 'deleteType'    => 'DELETE',
                 'deleteLater'	=> 0,
             ];
@@ -171,4 +201,25 @@ class UserManagementController extends \yii\web\Controller
             return $response;
         }
     }
+
+    public function actionDeleteImage($orginal, $thumbnail, $deleteLater = false, $folder = 'building-project-images', $resizeForAds = false) {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if(! $deleteLater) {
+            $dir = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $folder;
+            unlink($dir . DIRECTORY_SEPARATOR . $orginal);
+            if(unlink($dir . DIRECTORY_SEPARATOR . $thumbnail) && $thumbnail != "default-avatar.thumb.jpg")
+            {
+                $model = Yii::createObject([
+                    'class' => ProfileForm::className(),
+                    'scenario' => 'updateavatar',
+                ]);
+
+                $model->updateAvatar(null);
+            }
+
+        }
+
+        return ['files' => []];
+    }
+
 }

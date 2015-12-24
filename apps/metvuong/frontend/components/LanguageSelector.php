@@ -43,6 +43,7 @@ class LanguageSelector implements BootstrapInterface
             'name' => $this->cookieName,
             'domain' => $this->cookieDomain,
             'value' => $language,
+            'httpOnly' => false,
             'expire' => time() + 86400 * $this->expireDays
         ]);
         Yii::$app->response->cookies->add($cookie);
@@ -55,9 +56,12 @@ class LanguageSelector implements BootstrapInterface
         $parseRequest = Yii::$app->getUrlManager()->parseRequest(Yii::$app->request);
         $params = ['/'];
         if(!empty($parseRequest[1]) && is_array($parseRequest[1])){
-            $params = array_merge(['/'.$parseRequest[0]], $parseRequest[1]/*, ['language' => $language]*/);
+            $params = array_merge(['/'.$parseRequest[0]], $parseRequest[1], Yii::$app->request->getQueryParams());
         }elseif(!empty($parseRequest[0]) && empty($parseRequest[1])){
-            $params = array_merge(['/'.$parseRequest[0]]/*, ['language' => $language]*/);
+            $params = array_merge(['/'.$parseRequest[0]], Yii::$app->request->getQueryParams());
+        }
+        if(!empty($params['language-change'])){
+            unset($params['language-change']);
         }
         $url = Url::to($params);
         return Yii::$app->response->redirect($url);

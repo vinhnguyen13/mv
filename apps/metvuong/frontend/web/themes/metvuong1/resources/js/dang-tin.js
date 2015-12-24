@@ -4,7 +4,6 @@ $(document).ready(function(){
 	var streets = district['streets'];
 	var wards = district['wards'];
 	var projects = district['projects'];
-	console.log(district);
 	var sliderInstance;
 	
 	for(index in streets) {
@@ -129,6 +128,7 @@ $(document).ready(function(){
 		if(validateStep2()) {
 			$('.editable').each(function(){
 				refText($(this));
+				$(this).append('<em class="icon-pencil"></em>');
 			});
 			
 			$('#ref-adproduct-district_id').text(district['pre'] + ' ' + district['name']);
@@ -408,6 +408,10 @@ function validateStep2() {
 		$return = false;
 		$('#adcontactinfo-mobile').parent().addClass('error-frm');
 		$('#adcontactinfo-mobile').next().show().html('Vui lòng nhập số di động.');
+	} else if($('#adcontactinfo-mobile').val().length < 7 || $('#adcontactinfo-mobile').val().length > 11) {
+		$return = false;
+		$('#adcontactinfo-mobile').parent().addClass('error-frm');
+		$('#adcontactinfo-mobile').next().show().html('Số di động không được ít hơn 7 hoặc nhiều hơn 11 số.');
 	} else {
 		$('#adcontactinfo-mobile').parent().removeClass('error-frm');
 		$('#adcontactinfo-mobile').next().hide();
@@ -420,6 +424,15 @@ function validateStep2() {
 	} else {
 		$('#adcontactinfo-email').parent().removeClass('error-frm');
 		$('#adcontactinfo-email').next().hide();
+	}
+	
+	if($('#adcontactinfo-phone').val() != '' && ($('#adcontactinfo-phone').val().length < 7 || $('#adcontactinfo-phone').val().length > 11)) {
+		$return = false;
+		$('#adcontactinfo-phone').parent().addClass('error-frm');
+		$('#adcontactinfo-phone').next().show().html('Số di động không được ít hơn 7 hoặc nhiều hơn 11 số.');
+	} else {
+		$('#adcontactinfo-phone').parent().removeClass('error-frm');
+		$('#adcontactinfo-phone').next().hide();
 	}
 	
 	return $return;
@@ -511,8 +524,11 @@ function stepPost () {
 	        	
 		        	$.post(form.attr('action'), $('#frm-post-tin').serialize(), function(response){
 		        		if(response.success) {
-		        			l('success!!!');
-		        			objSP.nextStep(_this);
+		        			$('#detail-listing').modal('hide');
+		        			setTimeout(function() {
+		        				_this = $('#preview').addClass('next');
+		        				objSP.nextStep(_this);
+		        			},300);
 		        		} else {
 		        			for(index in response.errors) {
 		        				var errors = response.errors[index];
@@ -523,6 +539,7 @@ function stepPost () {
 		        			}
 		        		}
 		        	});
+			
 					return;
 				}
 				

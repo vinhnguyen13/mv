@@ -11,6 +11,9 @@ if(!empty($env) && in_array($env, [YII_ENV_PROD, YII_ENV_TEST])){
     ga('create', 'UA-71233207-1', 'auto');
     ga('send', 'pageview');
 
+    ga('create', 'UA-71563942-1', 'auto', {'name':'metvuong'});
+    ga('metvuong.send', 'pageview');
+
 </script>
 <?php
 }

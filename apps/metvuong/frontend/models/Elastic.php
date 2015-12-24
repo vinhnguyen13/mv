@@ -59,12 +59,12 @@ class Elastic
 
     public function update(){
         $params = [
-            'index' => 'my_index',
-            'type' => 'my_type',
-            'id' => 'my_id',
+            'index' => 'listing',
+            'type' => 'store',
+            'id' => '28',
             'body' => [
                 'doc' => [
-                    'new_field' => 'abc'
+                    'title' => 'Ứng dụng công nghệ Holongram vào trình diễn dự án tại Việt Nam'
                 ]
             ]
         ];
@@ -75,12 +75,54 @@ class Elastic
 
     public function search(){
         $params = [
-            'index' => 'my_index',
-            'type' => 'my_type',
+            'index' => 'listing',
+            'type' => 'store',
             'body' => [
                 'query' => [
-                    'match' => [
-                        'testField' => 'abc'
+                    /*'match' => [
+                        'title' => 'long'
+                    ]*/
+                    /*'bool' => [
+                        'must' => [
+                            [ 'match' => [ 'title' => 'long' ] ],
+                        ]
+                    ]*/
+                    /*'filtered' => [
+                        'filter' => [
+                            'term' => [ 'title' => 'long' ]
+                        ],
+                        'query' => [
+                            'match' => [ 'title' => 'long' ]
+                        ]
+                    ]*/
+                    /*'filtered' => [
+                        'query' => [
+                            'query_string' => [
+                                'query' => 'long',
+                                "default_operator" => "OR",
+                                "fields" => ["title"]
+                            ]
+                        ]
+                    ],
+                    'regexp' => [
+                        'title' => [
+                            'value' => '.*long.*'
+                        ]
+                    ],*/
+                    /*'filtered' => [
+                        'query' => [
+                            'query_string' => [
+                                'query' => 'Ứng dụng công nghệ', // words want to find
+                                "default_operator" => "OR", // OR/AND query words
+                                "fields" => ["title", "content"], // select fields
+//                                "default_field" => "_all", // all filed
+                            ]
+                        ]
+                    ],*/
+                    'regexp' => [
+                        'title' => [
+                            'value' => '.*long.*'
+                        ]
                     ]
                 ]
             ]
@@ -94,9 +136,9 @@ class Elastic
          * must have 2 field
          */
         $params = [
-            'index' => 'tracking',
-            'type' => 'search',
-            'id' => '132',
+            'index' => 'listing',
+            'type' => 'store',
+            'id' => '28',
         ];
         // Document will be indexed to my_index/my_type/my_id
         $results = $this->client->get($params);

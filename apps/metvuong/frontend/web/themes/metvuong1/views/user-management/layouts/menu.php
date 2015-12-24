@@ -15,7 +15,7 @@ use yii\helpers\Url;
             <div class="item-box mgB-15">
                 <div class="title-box">Bất động sản của bạn</div>
                 <ul class="clearfix">
-                    <li><a href="<?=Url::to(['user-management/ads'])?>" class="partial">Quản lý tin rao bán/cho thuê</a></li>
+                    <li><a href="<?=Url::to(['user-management/ad'])?>" class="partial">Quản lý tin rao bán/cho thuê</a></li>
                 </ul>
             </div>
             <div class="item-box mgB-15">

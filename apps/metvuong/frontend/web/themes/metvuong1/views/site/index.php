@@ -7,26 +7,37 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
 ?>
 <?php $this->beginContent('@app/views/layouts/_partials/js/jsContainer.php', ['options'=>[]]); ?><?php $this->endContent();?>
 <script>
-
     $(document).ready(function(){
-        $(document).on('click', '#btn-search', function(){
+        $(document).bind( 'submit_search', function(event, json, string, callback){
             animateSearch();
+            setTimeout(function(){callback();},1000);
             setTimeout(function() {
+                if (typeof ga !== "undefined") {
+                    ga('send', {hitType: 'event',eventCategory: 'Listing',eventAction: 'click',eventLabel: 'SearchForm'});
+                }
                 setTimeout(function() {$('#search-kind').submit();},100);
             },1000);
             return false;
         });
 
-        $(document).bind( 'real-estate/news', function(event, json, string){
+        $(document).bind( 'real-estate/news', function(event, json, string, callback){
             animateSearch();
+            setTimeout(function(){callback();},1000);
             setTimeout(function() {
+                if (typeof ga !== "undefined") {
+                    ga('send', {hitType: 'event',eventCategory: 'PostListing',eventAction: 'click',eventLabel: 'SearchForm'});
+                }
                 setTimeout(function() {$('#search-kind').submit();},100);
             },1000);
         });
         
-        $(document).bind( 'real-estate/post', function(event, json, string){
+        $(document).bind( 'real-estate/post', function(event, json, string, callback){
             animateSearch();
+            setTimeout(function(){callback();},1000);
             setTimeout(function() {
+                if (typeof ga !== "undefined") {
+                    ga('send', {hitType: 'event',eventCategory: 'News',eventAction: 'click',eventLabel: 'SearchForm'});
+                }
                 setTimeout(function() {$('#search-kind').submit();},100);
             },1000);
         });
@@ -46,7 +57,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                             <?php $form = ActiveForm::begin([
                                 'options'=>['class' => 'form-inline pull-left', 'method'=>'POST'],
                                 'id'=>'search-kind',
-                                'action'=>Url::to(['/ads/redirect']),
+                                'action'=>Url::to(['/ad/redirect']),
                                 'fieldConfig' => [],
                             ]); ?>
                                 <div class="form-group">
@@ -55,6 +66,36 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                         <input id="searchInput" name="search" type="text" class="form-control outsideevent" placeholder="" readonly="readonly">
                                     </div>
 
+
+                                    <div id="mua-thue" class="outsideevent search-wrap hidden-effect" data-step-title="Muốn Mua/Thuê ?">
+                                        <div class="wrap-effect">
+                                            <div class="search-item">
+                                                <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                                <div class="wrap-step">
+                                                    <h3></h3>
+                                                    <ul class="clearfix">
+                                                        <li data-id="1"><a href="#" data-item="mua-thue" data-slug-name data-next="tinh-thanh" data-prev>Muốn Mua</a></li>
+                                                        <li data-id="2"><a href="#" data-item="mua-thue" data-slug-name data-next="tinh-thanh" data-prev>Muốn Thuê</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="ban-thue" class="outsideevent search-wrap hidden-effect" data-step-title="Đăng Ký Bán/Thuê ?">
+                                        <div class="wrap-effect">
+                                            <div class="search-item">
+                                                <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                                <div class="wrap-step">
+                                                    <h3></h3>
+                                                    <ul class="clearfix">
+                                                        <li data-id="1"><a href="#" data-item="ban-thue" data-slug-name data-next="tinh-thanh" data-prev>Đăng Ký Bán</a></li>
+                                                        <li data-id="2"><a href="#" data-item="ban-thue" data-slug-name data-next="tinh-thanh" data-prev>Đăng Ký Cho Thuê</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <div id="tinh-thanh" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn Tỉnh/Thành ?">
                                         <div class="wrap-effect">
@@ -140,13 +181,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                                             <div class="outsideevent wrap-cost-bds hidden-cost">
                                                                 <div class="wrap-effect-cost">
                                                                     <ul>
-                                                                        <li data-cost="0" data-unit=""><span>0</span></li>
-                                                                        <li data-cost="1" data-unit="triệu"><span>1 triệu</span></li>
-                                                                        <li data-cost="2" data-unit="triệu"><span>2 triệu</span></li>
-                                                                        <li data-cost="3" data-unit="triệu"><span>3 triệu</span></li>
-                                                                        <li data-cost="4" data-unit="triệu"><span>4 triệu</span></li>
-                                                                        <li data-cost="5" data-unit="triệu"><span>5 triệu</span></li>
-                                                                        <li data-cost="6" data-unit="tỷ"><span>6 triệu</span></li>
+                                                                        <li data-cost="0"><span>0</span></li>
                                                                     </ul>
                                                                 </div>
                                                             </div>
@@ -157,13 +192,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                                             <div class="outsideevent wrap-cost-bds hidden-cost">
                                                                 <div class="wrap-effect-cost">
                                                                     <ul>
-                                                                        <li data-cost="0" data-unit=""><span>0</span></li>
-                                                                        <li data-cost="1" data-unit="triệu"><span>1 triệu</span></li>
-                                                                        <li data-cost="2" data-unit="triệu"><span>2 triệu</span></li>
-                                                                        <li data-cost="3" data-unit="triệu"><span>3 triệu</span></li>
-                                                                        <li data-cost="4" data-unit="triệu"><span>4 triệu</span></li>
-                                                                        <li data-cost="5" data-unit="triệu"><span>5 triệu</span></li>
-                                                                        <li data-cost="6" data-unit="tỷ"><span>6 triệu</span></li>
+                                                                        <li data-cost="0"><span>0</span></li>
                                                                     </ul>
                                                                 </div>
                                                             </div>
@@ -180,11 +209,12 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
 
                                 </div>
                                 <button id="btn-search" type="submit" class="btn btn-default">
-                                    <span><em class="fa fa-search"></em></span>
+                                    <span><em class=""></em></span>
                                 </button>
 
                                 <input class="valInputHidden" id="valSearch" name="valSearch" type="hidden" value="">
                                 <input class="valInputHidden" id="valTabActive" name="activeSearch" type="hidden" value="">
+                                <input class="valInputHidden" id="valType" name="type" type="hidden" value="">
 
                                 <input class="valInputHidden" id="valTinhThanh" name="city" type="hidden" value="">
                                 <input class="valInputHidden" id="valQuanHuyen" name="district" type="hidden" value="">
@@ -196,7 +226,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                 
                             <?php ActiveForm::end(); ?>
                             <div class="pull-left text-right mgT-10">
-                                <div data-active="1" data-tab="mua-thue" class="search-select active" data-step='tinh-thanh|quan-huyen|{ "loai-bds": { "chung-cu": { "template": "loai-duan" }, "template_common": { "template": "min-max" } }}'>
+                                <div data-active="1" data-tab="mua-thue" class="search-select active" data-step='step1'>
                                     <a href="#" title="Muốn Mua/Thuê">
                                         <span>
                                             <em class="fa fa-home"></em>
@@ -205,7 +235,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                         <i>Muốn Mua/Thuê</i>
                                     </a>
                                 </div>
-                                <div data-active="2" data-tab="ban-thue" class="search-select" data-step='tinh-thanh|quan-huyen|loai-bds'>
+                                <div data-active="2" data-tab="ban-thue" class="search-select" data-step='step2'>
                                     <a href="#" title="Đăng ký Bán/Thuê">
                                         <span>
                                             <em class="fa fa-home"></em>
@@ -214,7 +244,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                         <i>Đăng ký Bán/Thuê</i>
                                     </a>
                                 </div>
-                                <div data-active="3" data-tab="tin-tuc"  class="search-select" data-step='{ "news": { "tin-tuc": { "template": "loai-tin-tuc" }, "du-an": { "template": "tinh-thanh|quan-huyen|loai-duan" } }}'>
+                                <div data-active="3" data-tab="tin-tuc"  class="search-select" data-step='step3'>
                                     <a href="#" title="Tin Tức">
                                         <span>
                                             <em class="fa fa-home"></em>

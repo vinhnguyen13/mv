@@ -20,10 +20,30 @@
 	$direction = AdProductAdditionInfo::directionList();
 	
 	$owner = \dektrium\user\models\User::findOne($product->user_id);
-	if($owner->profile->avatar) {
+	if($owner && $owner->profile->avatar) {
 		$avatar = Url::to('/store/avatar/' . $owner->profile->avatar);
 	} else {
 		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
+	}
+	
+	$address = '';
+	
+	if($product->home_no) {
+		$address .= "{$product->home_no}, ";
+	}
+	
+	if($street) {
+		$address .= "{$street->pre} {$street->name}, ";
+	}
+	
+	if($ward) {
+		$address .= "{$ward->pre} {$ward->name}, ";
+	}
+	
+	if($address) {
+		$address .= "{$district->pre} {$district->name}, {$city->name}";
+	} else {
+		$address = "{$district->pre} {$district->name}, {$city->name}";
 	}
 ?>
 <div id="detail-listing">
@@ -38,40 +58,70 @@
                     <div class="wrap-modal clearfix">
                     	<?php
                     		if(!empty($images)) :
-								$firstImage = array_shift($images);
-								$images = array_chunk($images, 4);
+									$firstImage = array_shift($images);
+									$images = array_chunk($images, 4);
+
+									if(!Yii::$app->request->get('isCraw')):
 						?>
-                        <div class="gallery-detail clearfix">
-                            <div class="bxslider">
-                                <div class="wrap-img-detail">
-                                    <ul class="clearfix">
-                                        <li class="img-big">
-                                            <div class="bgcover" style="background-image:url(<?= $firstImage->imageMedium ?>);"></div>
-                                            <a data-lightbox="detail-post" class="group mask" href="<?= $firstImage->imageLarge ?>"><em class="fa fa-search"></em><img src="<?= $firstImage->imageLarge ?>" alt="" style="display:none;"></a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <?php foreach($images as $imagesGroup): ?>
-                                	<div class="wrap-img-detail">
-                                    	<ul class="clearfix">
-		                                <?php foreach($imagesGroup as $image): ?>
-		             						<li>
-	                                            <div class="bgcover" style="background-image:url(<?= $image->imageThumb ?>);"></div>
-	                                            <a data-lightbox="detail-post" class="group mask" href="<?= $image->imageLarge ?>"><em class="fa fa-search"></em><img src="<?= $image->imageLarge ?>" alt="" style="display:none;"></a>
-	                                            
-	                                        </li>
-		                                <?php endforeach; ?>
-		                                </ul>
-	                                </div>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
+			                        <div class="gallery-detail clearfix">
+			                            <div class="bxslider">
+			                                <div class="wrap-img-detail">
+			                                    <ul class="clearfix">
+			                                        <li class="img-big">
+			                                            <div class="bgcover" style="background-image:url(<?= $firstImage->imageMedium ?>);"></div>
+			                                            <a data-lightbox="detail-post" class="group mask" href="<?= $firstImage->imageLarge ?>"><em class="fa fa-search"></em><img src="<?= $firstImage->imageLarge ?>" alt="" style="display:none;"></a>
+			                                        </li>
+			                                    </ul>
+			                                </div>
+			                                <?php foreach($images as $imagesGroup): ?>
+			                                	<div class="wrap-img-detail">
+			                                    	<ul class="clearfix">
+					                                <?php foreach($imagesGroup as $image): ?>
+					             						<li>
+				                                            <div class="bgcover" style="background-image:url(<?= $image->imageThumb ?>);"></div>
+				                                            <a data-lightbox="detail-post" class="group mask" href="<?= $image->imageLarge ?>"><em class="fa fa-search"></em><img src="<?= $image->imageLarge ?>" alt="" style="display:none;"></a>
+				                                            
+				                                        </li>
+					                                <?php endforeach; ?>
+					                                </ul>
+				                                </div>
+			                                <?php endforeach; ?>
+			                            </div>
+			                        </div>
+			            	<?php else: ?>
+			            			<div class="gallery-detail clearfix">
+			                            <div class="bxslider">
+			                                <div class="wrap-img-detail">
+			                                    <ul class="clearfix">
+			                                        <li class="img-big">
+			                                            <div class="bgcover" style="background-image:url(<?= $firstImage->file_name ?>);"></div>
+			                                            <a data-lightbox="detail-post" class="group mask" href="<?= $firstImage->file_name ?>"><em class="fa fa-search"></em><img src="<?= $firstImage->file_name ?>" alt="" style="display:none;"></a>
+			                                        </li>
+			                                    </ul>
+			                                </div>
+			                                <?php foreach($images as $imagesGroup): ?>
+			                                	<div class="wrap-img-detail">
+			                                    	<ul class="clearfix">
+					                                <?php foreach($imagesGroup as $image): ?>
+					             						<li>
+				                                            <div class="bgcover" style="background-image:url(<?= $image->file_name ?>);"></div>
+				                                            <a data-lightbox="detail-post" class="group mask" href="<?= $image->file_name ?>"><em class="fa fa-search"></em><img src="<?= $image->file_name ?>" alt="" style="display:none;"></a>
+				                                            
+				                                        </li>
+					                                <?php endforeach; ?>
+					                                </ul>
+				                                </div>
+			                                <?php endforeach; ?>
+			                            </div>
+			                        </div>
+			            	<?php endif; ?>
                         <?php else: ?>
-                        <div class="gallery-detail clearfix"><div class="bxslider no-image"><?= Yii::t('ads', 'Không có hình ảnh đính kèm') ?></div></div>
+                        <div class="gallery-detail clearfix"><div class="bxslider no-image"><?= Yii::t('ad', 'Không có hình ảnh đính kèm') ?></div></div>
                         <?php endif; ?>
                         <div class="row detail-post">
                             <div class="col-sm-8 dt-left-col">
-                                <h1 class="title-dt"><?= "{$product->home_no}, {$street->pre} {$street->name}, {$ward->pre} {$ward->name}, {$district->pre} {$district->name} {$city->name}" ?></h1>
+                                <h1 class="title-dt"><?= $address ?></h1>
+                                <p class="infor-post-date"><em class="fa fa-calendar"></em><?= date('d/m/Y', $product->created_at) ?></p>
                                 <p class="type-result"><em class="fa fa-circle for-rent"></em><?= mb_strtoupper("$categoryName $typeName", 'UTF-8') ?></p>
                                 <table>
                                     <?php if($product->project_building_id): ?>
@@ -90,11 +140,11 @@
                                     </tr>
                                 </table>
                                 <p class="ttmt">Thông tin mô tả</p>
-                                <div class="wrap-ttmt"><?= $product->content ?></div>
+                                <div class="wrap-ttmt" style="white-space: pre-wrap;"><?= $product->content ?></div>
                                 <?php
                                 	$additionInfo = $product->adProductAdditionInfo;
                                 	unset($additionInfo['product_id']);
-                                	if(array_filter($additionInfo->attributes)):
+                                	if($additionInfo && array_filter($additionInfo->attributes)):
                                 ?>
                                 <p class="ttmt">Thông tin thêm</p>
                                 <table>
@@ -149,6 +199,7 @@
                                 </table>
                                 <?php endif; ?>
                             </div>
+                            <?php if($product->adContactInfo): ?>
                             <div class="col-sm-4 dt-right-col">
                                 <div class="contact-wrapper">
                                     <div class="rating pull-right">
@@ -201,6 +252,7 @@
                                     </form>
                                 </div>
                             </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

@@ -230,7 +230,7 @@ $(document).ready(function() {
         valShow = 0,
         flagShow = false;
 
-    /*$(window).on('scroll', function(){
+    $(window).on('scroll', function(){
         valShow = $(window).scrollTop();
 
         if( valShow >= hHeader ) {
@@ -262,7 +262,7 @@ $(document).ready(function() {
             $container.removeClass('pdTContainer');
         }
 
-        if( valShow > 0 ) {
+        /*if( valShow > 0 ) {
             secondaryNav.addClass('is-fixed');
             setTimeout(function() {
                 secondaryNav.addClass('animate-children');
@@ -272,8 +272,8 @@ $(document).ready(function() {
             setTimeout(function() {
                 secondaryNav.removeClass('animate-children');
             }, 50);
-        }
-    });*/
+        }*/
+    });
     //end scroll fixed header
 
     //start home page search

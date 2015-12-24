@@ -211,8 +211,8 @@ class SiteController extends Controller
     	}
 
         $news = [
-            1=>['title'=>Yii::t('cms', 'News')],
-            2=>['title'=>Yii::t('cms', 'Projects')],
+            1=>['title'=>Yii::t('cms', 'Tin Tức')],
+            2=>['title'=>Yii::t('cms', 'Dự Án')],
         ];
 
 		$content = 'var dataCities = ' . json_encode($cities, JSON_UNESCAPED_UNICODE) . ';' .

@@ -13,10 +13,10 @@ use yii\helpers\Url;
             </a>
         </li>
         <li>
-            <a data-method="post" href="<?=\yii\helpers\Url::to(['/member/logout'])?>"><em class="icon-logout"></em>Logout</a>
+            <a data-method="post" href="<?=\yii\helpers\Url::to(['/member/logout'])?>"><em class="icon-logout"></em><?=Yii::t('user', 'Logout')?></a>
         </li>
     <?php }?>
-    <li class="lang-icon icon-en"><a href="<?=\yii\helpers\Url::current(['language-change'=>'en-US'])?>"></a></li>
-    <li class="lang-icon icon-vi"><a href="<?=\yii\helpers\Url::current(['language-change'=>'vi-VN'])?>"></a></li>
+    <li class="lang-icon icon-en"><a href="<?=Url::current(['language-change'=>'en-US'])?>"></a></li>
+    <li class="lang-icon icon-vi"><a href="<?=Url::current(['language-change'=>'vi-VN'])?>"></a></li>
 </ul>
 </div>

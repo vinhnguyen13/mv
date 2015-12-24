@@ -49,7 +49,7 @@ class Homefinder extends Component
         if (!empty($list)) {
             $start = time();
             foreach ($list as $idx => $item) {
-                if ($item->href && $idx > 0) {
+                if ($item->href && $idx >= 0) {
 //                    echo $item->title;
                     $this->getListProject($item->href);
                 }
@@ -127,6 +127,7 @@ class Homefinder extends Component
             $ward = $response_broker_table->wname;
             $street = $response_broker_table->sname;
             $description = $response_broker_table->mo_ta_chi_tiet;
+            $description = str_replace('<div id="LeftMainContent__productDetail_panelTag" class="tagpanel"></div>', '', $description);
             $home_no = $response_broker_table->so_nha;
             $lat = $response_broker_table->lat;
             $lon = $response_broker_table->lon;

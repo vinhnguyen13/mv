@@ -15,14 +15,14 @@ use Yii;
  *
  * @property AdProduct $product
  */
-class AdImagesBase extends \yii\db\ActiveRecord
+class AdImagesBase extends ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'ad_images';
+        return parent::$schemaPrefix . 'ad_images';
     }
 
     /**
