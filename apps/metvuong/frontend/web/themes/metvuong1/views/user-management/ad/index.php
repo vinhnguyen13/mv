@@ -60,7 +60,7 @@ $products = AdProduct::findAll(['status'=>1]);
                 <tbody>
                 <?php foreach($products as $key=>$product){?>
                 <tr>
-                    <th scope="row"><?=$key;?></th>
+                    <th scope="row"><?=$key+1;?></th>
                     <td><a href="#"><?=$product->getAddress();?></a></td>
                     <td>1.230</td>
                     <td>11/12/2015</td>
