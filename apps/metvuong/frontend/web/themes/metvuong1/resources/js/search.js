@@ -289,14 +289,13 @@
             setTimeout(function() {
                 $('#'+current).addClass('active');
             }, 30);
-
-            close();
         };
 
         //close box list
         function close () {
             $('.btn-close-search').on('click', function (e) {
                 e.preventDefault();
+
                 $(this).closest('.search-wrap').removeClass('active');
                 mv.settings.searchWrap.removeClass('active');
 
@@ -542,6 +541,8 @@
                     }
 
                     break;
+                }else {
+
                 }
             }
         };
@@ -551,74 +552,73 @@
             var flag = el.idItem >= 0 ? true : false,
                 item = $('<li><i>x</i><span></span></li>'),
                 idEl = flag ? el.idItem : el.parent().data('id'),
-                next = flag ? el.nextData : el.data('next'),
-                prev = flag ? el.prevData : el.data('prev'),
+                nextAttr = flag ? el.nextData : el.data('next'),
+                prevAttr = flag ? el.prevData : el.data('prev'),
                 txt = flag ? el.txt : el.text(),
                 dataItem = flag ? el.itemData : el.data('item');
 
             //add icon price
             if ( current == 'min-max' ) {
+                current = '';
+            }
+
+            if ( loadCost.valGet.length == 1 ) {
                 if ( itemEdit.length > 0 ) {
                     mv.settings.wrapSuggest.find(itemEdit).remove();
                     itemEdit = '';
                 }
-                for ( var i = 0; i < loadCost.valGet.length; i++ ) {
-                    if ( loadCost.valGet.length >= 2 ) {
-                        //remove placeholder khi chon ca 2 price
-                        getPlaceHolder(null, true);
-
-                        //check chon gia bat ky
-                        if ( el.parent().hasClass('anyVal') ) {
-                            //close khi chon price max
-                            $('.btn-close-search').trigger('click');
-
-                            return;
-                        }
-
-                        var txtMerge = '';
-                        itemEdit = mv.settings.wrapSuggest.find('li[data-item=min-max]');
-                        txtMerge = itemEdit.find('span').text() +' - '+ txt;
-                        txt = txtMerge;
-                        itemEdit.find('em').remove();
-
-                        //close khi chon price max
-                        $('.btn-close-search').trigger('click');
-
-                        break;
-                    }
-                    if ( loadCost.valGet[i].tab == 'min' ) {
-                        item.append('<em class="fa fa-long-arrow-up"></em>');
-                    }else if ( loadCost.valGet[i].tab == 'max' ) {
-                        item.append('<em class="fa fa-long-arrow-down"></em>');
-                        getPlaceHolder(null, true);
-                        //close khi chon price max
-                        $('.btn-close-search').trigger('click');
-                        if ( el.parent().hasClass('anyVal') ) {
-                            item.find('em').remove();
-                        }
-                    }
+                if ( loadCost.valGet[0].tab == 'min' ) {
+                    item.append('<em class="fa fa-long-arrow-up"></em>');
+                }else if ( loadCost.valGet[0].tab == 'max' ) {
+                    item.append('<em class="fa fa-long-arrow-down"></em>');
                     
+                    getPlaceHolder(null, true);
+                    
+                    //close khi chon price max
+                    $('.btn-close-search').trigger('click');
                 }
+            }else if ( loadCost.valGet.length == 2 ) {
+                itemEdit = mv.settings.wrapSuggest.find('li[data-item=min-max]');
+
+                //remove placeholder khi chon ca 2 price
+                getPlaceHolder(null, true);
+
+                //check chon gia bat ky
+                if ( el.parent().hasClass('anyVal') ) {
+                    //close khi chon price max
+                    $('.btn-close-search').trigger('click');
+
+                    return;
+                }
+
+                var txtMerge = '';
+                txtMerge = itemEdit.find('span').text() +' - '+ txt;
+                txt = txtMerge;
+                itemEdit.find('em').remove();
+
+                //close khi chon price max
+                $('.btn-close-search').trigger('click');
             }
+            
 
             //edit get item
             if ( itemEdit.length > 0 ) {
                 itemEdit.attr('data-id',idEl);
-                itemEdit.attr('data-next',next);
-                itemEdit.attr('data-prev',prev);
+                itemEdit.attr('data-next',nextAttr);
+                itemEdit.attr('data-prev',prevAttr);
                 itemEdit.find('span').html(txt);
                 itemEdit.attr('data-item',dataItem);
 
                 itemEdit.data('id', idEl);
-                itemEdit.data('next', next);
-                itemEdit.data('prev', prev);
+                itemEdit.data('next', nextAttr);
+                itemEdit.data('prev', prevAttr);
                 itemEdit.find('span').html(txt);
                 itemEdit.data('item', dataItem);
                 itemEdit = '';
             }else {
                 item.attr('data-id',idEl);
-                item.attr('data-next',next);
-                item.attr('data-prev',prev);
+                item.attr('data-next',nextAttr);
+                item.attr('data-prev',prevAttr);
                 item.find('span').html(txt);
                 item.attr('data-item',dataItem);
                 mv.settings.wrapSuggest.append(item).show();
@@ -628,23 +628,29 @@
                 if ( dataItem == 'tinh-thanh' ) {
                     idTinhThanhReload = idEl;
                 }
-                if ( dataItem == 'min-max' ) {
-                    loadCost.init(idEl);
+
+                // reload price
+                if ( dataItem == 'mua-thue' ) {
+                    idHinhThuc = idEl;
+                }else if (dataItem == 'ban-thue') {
+                    idHinhThuc = idEl;
                 }
+                loadCost.init(idHinhThuc);
 
                 stepLoad(dataItem, idTinhThanhReload);
 
-                $('#'+dataItem).find('ul li a').attr('data-next', next);
-                $('#'+dataItem).find('ul li a').attr('data-prev', prev);
+                $('#'+dataItem).find('ul li a').attr('data-next', nextAttr);
+                $('#'+dataItem).find('ul li a').attr('data-prev', prevAttr);
 
                 if ( dataItem == 'loai-bds' ) {
                     stepGet(dataItem);
                 }
                 
-                if ( (next != undefined || next != '') && count == (lenSuggest-1) ) {
-                    current = next;
-                    stepLoad(next, idTinhThanhReload);
+                if ( (nextAttr != undefined || nextAttr != '') && count == (lenSuggest-1) ) {
+                    current = nextAttr;
+                    stepLoad(nextAttr, idTinhThanhReload);
                     stepGet(current);
+                    close();
                 }
             }
             
@@ -714,9 +720,13 @@
 
             if ( itemEdit.length > 0 ) {
                 mv.settings.wrapSuggest.find('li').removeClass('active');
+                //stepGet(current);
+                current = itemEdit.data('next');
+                if ( current == '' ) {
+                    getPlaceHolder(null, true);
+                    return false;
+                }
                 itemEdit = '';
-                stepGet(current);
-                current = next;
                 setTimeout(function () {open();},310);
 
                 return true;
@@ -845,13 +855,13 @@
                         txtAnyPrice = arrType[j];
                         continue;
                     }
-                    item = $('<li data-id="'+idHinhThuc+'" data-cost="'+j+'"><span data-item="'+current+'" data-next data-prev>'+arrType[j]+'</span></li>');
+                    item = $('<li data-id="'+idHinhThuc+'" data-cost="'+j+'"><span data-item="min-max" data-next="" data-prev="">'+arrType[j]+'</span></li>');
                     $('.box-cost[data-tab='+tabShow+'] ul').append(item);
                     loadCost.clickChoice(item.find('span'));
                 }
                 //render element batky price max
                 if ( tabShow == 'max' ) {
-                    var item = $('<li data-id="'+idHinhThuc+'" class="anyVal"><span data-item="'+current+'" data-next data-prev>'+txtAnyPrice+'</span></li>');
+                    var item = $('<li data-id="'+idHinhThuc+'" class="anyVal"><span data-item="min-max" data-next="" data-prev="">'+txtAnyPrice+'</span></li>');
                     $('.box-cost[data-tab='+tabShow+'] ul').append(item);
                     loadCost.clickChoice(item.find('span'));    
                 }
@@ -906,14 +916,14 @@
                             for ( var i = 0; i < loadCost.numPriceShow; i++ ) {
                                 var costStr = loadCost.priceUnit(costValueChoice);
                                 if ( costValueChoice != priceFirst ) {
-                                    var item = $('<li data-id="'+idHinhThuc+'" data-cost="'+costValueChoice+'"><span data-item="'+current+'" data-next data-prev>'+costStr+'</span></li>');
+                                    var item = $('<li data-id="'+idHinhThuc+'" data-cost="'+costValueChoice+'"><span data-item="min-max" data-next="" data-prev="">'+costStr+'</span></li>');
                                     $('.box-cost[data-tab='+loadCost.flag+'] ul').append(item);
                                     loadCost.clickChoice(item.find('span'));
                                 }
                                 costValueChoice += loadCost.priceAdd;
                             }
                             //render element batky
-                            var item = $('<li data-id="'+idHinhThuc+'" class="anyVal"><span data-item="'+current+'" data-next data-prev>'+txtAnyPrice+'</span></li>');
+                            var item = $('<li data-id="'+idHinhThuc+'" class="anyVal"><span data-item="min-max" data-next="" data-prev="">'+txtAnyPrice+'</span></li>');
                             $('.box-cost[data-tab='+loadCost.flag+'] ul').append(item);
                             loadCost.clickChoice(item.find('span'));
                         }else {
