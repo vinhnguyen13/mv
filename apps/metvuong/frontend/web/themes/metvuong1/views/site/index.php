@@ -176,24 +176,22 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                                 <div class="wrap-step">
                                                     <h3></h3>
                                                     <div class="frm-cost-min-max clearfix">
-                                                        <div class="form-group inline-group box-cost col-xs-5" data-tab="min">
-                                                            <input name="costMin" id="minCost" type="text" class="form-control cost-value" placeholder="min" readonly="readonly">
-                                                            <div class="outsideevent wrap-cost-bds hidden-cost">
+                                                        <div class="form-group inline-group box-cost" data-tab="min">
+                                                            <input type="text" class="form-control cost-value" placeholder="min" readonly="readonly">
+                                                            <input type="hidden" id="minCost" name="costMin" class="valPrice">
+                                                            <div class=" wrap-cost-bds hidden-cost">
                                                                 <div class="wrap-effect-cost">
-                                                                    <ul>
-                                                                        <li data-cost="0"><span>0</span></li>
-                                                                    </ul>
+                                                                    <ul></ul>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="line-center form-group inline-group box-cost col-xs-2"><span></span></div>
-                                                        <div class="form-group inline-group box-cost col-xs-5" data-tab="max">
-                                                            <input name="costMax" id="maxCost" type="text" class="form-control cost-value" placeholder="max" readonly="readonly">
-                                                            <div class="outsideevent wrap-cost-bds hidden-cost">
+                                                        <div class="line-center form-group inline-group box-cost"><span></span></div>
+                                                        <div class="form-group inline-group box-cost" data-tab="max">
+                                                            <input type="text" class="form-control cost-value" placeholder="max" readonly="readonly">
+                                                            <input type="hidden" id="maxCost" name="costMax" class="valPrice">
+                                                            <div class=" wrap-cost-bds hidden-cost">
                                                                 <div class="wrap-effect-cost">
-                                                                    <ul>
-                                                                        <li data-cost="0"><span>0</span></li>
-                                                                    </ul>
+                                                                    <ul></ul>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -215,6 +213,8 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                 <input class="valInputHidden" id="valSearch" name="valSearch" type="hidden" value="">
                                 <input class="valInputHidden" id="valTabActive" name="activeSearch" type="hidden" value="">
                                 <input class="valInputHidden" id="valType" name="type" type="hidden" value="">
+                                <!-- <input name="price-min" class="valChoicePrice valInputHidden" type="hidden" value="">
+                                <input name="price-max" class="valChoicePrice valInputHidden" type="hidden" value=""> -->
 
                                 <input class="valInputHidden" id="valTinhThanh" name="city" type="hidden" value="">
                                 <input class="valInputHidden" id="valQuanHuyen" name="district" type="hidden" value="">

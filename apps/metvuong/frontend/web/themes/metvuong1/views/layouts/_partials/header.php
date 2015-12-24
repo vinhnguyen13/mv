@@ -167,36 +167,22 @@ $searchParams = json_decode($value);
                                         <div class="wrap-step">
                                             <h3></h3>
                                             <div class="frm-cost-min-max clearfix">
-                                                <div class="form-group inline-group box-cost col-xs-5" data-tab="min">
-                                                    <input name="costMin" id="minCost" type="text" class="form-control cost-value" placeholder="min" readonly="readonly">
-                                                    <div class="outsideevent wrap-cost-bds hidden-cost">
+                                                <div class="form-group inline-group box-cost" data-tab="min">
+                                                    <input type="text" class="form-control cost-value" placeholder="min" readonly="readonly">
+                                                    <input type="hidden" id="minCost" name="costMin" class="valPrice">
+                                                    <div class=" wrap-cost-bds hidden-cost">
                                                         <div class="wrap-effect-cost">
-                                                            <ul>
-                                                                <li data-cost="0" data-unit=""><span>0</span></li>
-                                                                <li data-cost="1" data-unit="triệu"><span>1 triệu</span></li>
-                                                                <li data-cost="2" data-unit="triệu"><span>2 triệu</span></li>
-                                                                <li data-cost="3" data-unit="triệu"><span>3 triệu</span></li>
-                                                                <li data-cost="4" data-unit="triệu"><span>4 triệu</span></li>
-                                                                <li data-cost="5" data-unit="triệu"><span>5 triệu</span></li>
-                                                                <li data-cost="6" data-unit="tỷ"><span>6 triệu</span></li>
-                                                            </ul>
+                                                            <ul></ul>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="line-center form-group inline-group box-cost col-xs-2"><span></span></div>
-                                                <div class="form-group inline-group box-cost col-xs-5" data-tab="max">
-                                                    <input name="costMax" id="maxCost" type="text" class="form-control cost-value" placeholder="max" readonly="readonly">
-                                                    <div class="outsideevent wrap-cost-bds hidden-cost">
+                                                <div class="line-center form-group inline-group box-cost"><span></span></div>
+                                                <div class="form-group inline-group box-cost" data-tab="max">
+                                                    <input type="text" class="form-control cost-value" placeholder="max" readonly="readonly">
+                                                    <input type="hidden" id="maxCost" name="costMax" class="valPrice">
+                                                    <div class=" wrap-cost-bds hidden-cost">
                                                         <div class="wrap-effect-cost">
-                                                            <ul>
-                                                                <li data-cost="0" data-unit=""><span>0</span></li>
-                                                                <li data-cost="1" data-unit="triệu"><span>1 triệu</span></li>
-                                                                <li data-cost="2" data-unit="triệu"><span>2 triệu</span></li>
-                                                                <li data-cost="3" data-unit="triệu"><span>3 triệu</span></li>
-                                                                <li data-cost="4" data-unit="triệu"><span>4 triệu</span></li>
-                                                                <li data-cost="5" data-unit="triệu"><span>5 triệu</span></li>
-                                                                <li data-cost="6" data-unit="tỷ"><span>6 triệu</span></li>
-                                                            </ul>
+                                                            <ul></ul>
                                                         </div>
                                                     </div>
                                                 </div>

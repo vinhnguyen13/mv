@@ -35,7 +35,6 @@
         	minmax.focusInput();
         	minmax.clickVal(item);
         	minmax.close(item);
-
 		},
 		close: function (item) {
 			$(document).on('click', function (e) {
@@ -163,6 +162,9 @@
 
 				minmax.toggleMinMax(attrInput, _this);
 			});
+		},
+		render: function () {
+			
 		}
 	};
 

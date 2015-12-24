@@ -257,6 +257,7 @@ $(document).ready(function() {
 
             flagShow = true;
         }else {
+            $('.options-search').removeClass('search-dropdown');
             $header.removeClass('is-fixed animate-children show-fixed');
             flagShow = false;
             $container.removeClass('pdTContainer');
@@ -284,19 +285,6 @@ $(document).ready(function() {
 
 
 function l(x){console.log(x);}
-
-function getActiveSuggert(objJson) {
-    var $wrapListSuggest = $('.type-search ul');
-    if( objJson.length > 0 ) {
-        $wrapListSuggest.show();    
-        for( var i = 0; i < objJson.length; i++ ) {
-            var $itemSuggest = $('<li data-step="'+objJson[i].idItem+'" data-step-id="'+objJson[i].stepId+'" data-step-show='+objJson[i].stepShow+'><i>x</i><span>'+objJson[i].name_item+'</span></li>');
-            $wrapListSuggest.append($itemSuggest);
-        }
-        //objEvent.resizeWidthInput();
-        //objEvent.updateSuggert( 3, $wrapListSuggest.find('li').length );
-    }
-}
 
 function scrollFixed() {
     var $colRight = $('.contact-wrapper'),
