@@ -14,9 +14,12 @@ class AdProduct extends AdProductBase
 	public function rules()
 	{
 		return [
-			[['category_id', 'home_no', 'city_id', 'district_id', 'type', 'content', 'start_date', 'end_date', 'created_at'], 'required'],
+			[['category_id', 'home_no', 'city_id', 'district_id', 'type', 'content', 'start_date', 'end_date', 'created_at', 'price', 'area'], 'required'],
 			[['category_id', 'project_building_id', 'user_id', 'city_id', 'district_id', 'ward_id', 'street_id', 'type', 'price', 'price_type', 'start_date', 'end_date', 'score', 'view', 'verified', 'created_at', 'updated_at', 'status'], 'integer'],
-			[['area', 'price_input', 'lng', 'lat'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/'],
+			[['price_input', 'lng', 'lat'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/'],
+			[['area'], 'number', 'max' => $this->category->limit_area, 'when' => function ($model) {
+        		return $model->category->limit_area;
+    		}],
 			[['home_no'], 'string', 'max' => 32],
 			[['content'], 'string', 'max' => 3200]
 		];

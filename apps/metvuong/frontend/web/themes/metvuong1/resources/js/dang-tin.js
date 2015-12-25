@@ -36,11 +36,20 @@ $(document).ready(function(){
 	});
 	
 	$('.ad-select').change(function(){
-		$(this).closest('.form-group').removeClass('error-frm').find('.help-block').text('').hide();
+		if($(this).hasClass('select2')) {
+			var el = $('#s2id_' + $(this).attr('id'));
+			if(el.hasClass('tooltipstered')) {
+				$('#s2id_' + $(this).attr('id')).tooltipster('hide');
+			}
+		} else {
+			if($(this).hasClass('tooltipstered')) {
+				$(this).tooltipster('hide');
+			}
+		}
 	});
 	$('.ad-input').keyup(function(){
-		if($(this).val() != '') {
-			$(this).closest('.form-group').removeClass('error-frm').find('.help-block').text('').hide();
+		if($(this).val() != '' && $(this).hasClass('tooltipstered')) {
+			$(this).tooltipster('hide');
 		}
 	});
 	
@@ -128,7 +137,7 @@ $(document).ready(function(){
 		if(validateStep2()) {
 			$('.editable').each(function(){
 				refText($(this));
-				$(this).append('<em class="icon-pencil"></em>');
+				// $(this).append('<em class="icon-pencil"></em>');
 			});
 			
 			$('#ref-adproduct-district_id').text(district['pre'] + ' ' + district['name']);
@@ -203,14 +212,14 @@ $(document).ready(function(){
 			text = ref.val();
 		}
 		
-		if(self.hasClass('not-required')) {
-			
-			if(text == '') {
-				self.closest('.not-required-wrap').hide();
-			} else {
-				self.closest('.not-required-wrap').show();
-			}
-		}
+//		if(self.hasClass('not-required')) {
+//			
+//			if(text == '') {
+//				self.closest('.not-required-wrap').hide();
+//			} else {
+//				self.closest('.not-required-wrap').show();
+//			}
+//		}
 		
 		if(ref.is('select')) {
 			text = ref.find('option:selected').text();
@@ -221,6 +230,10 @@ $(document).ready(function(){
 	
 	$('.editable').click(function(e){
 		var self = $(this);
+		
+		if($(this).hasClass('tooltipstered')) {
+			$(this).tooltipster('hide');
+		}
 		
 		if(!self.hasClass('editing')) {
 			self.addClass('editing');
@@ -296,6 +309,12 @@ $(document).ready(function(){
 		
 		return text;
 	}
+	
+	$('#detail-listing').on('hide.bs.modal', function (e) {
+		$(this).find('.tooltipstered').each(function(){
+			$(this).tooltipster('hide');
+		});
+	});
 
 	stepPost();
 });
@@ -333,64 +352,72 @@ function SetCaretAtEnd(elem) {
     } // if
 }
 
+function showMessage(el, m, pu) {
+	el.parent().addClass('error-frm');
+	if(!el.hasClass('tooltipstered')) {
+		var options = {content: m, animation: 'grow', position: 'right', trigger: 'custom', contentAsHTML: true, delay: 0};
+		
+		if(el.data('position')) {
+			options.position = el.data('position');
+		}
+		
+		if(pu) {
+			options.positionTracker = true;
+			options.theme = 'tooltipster-default model-tooltipster-default';
+		}
+		
+		el.tooltipster(options);
+	} else {
+		el.tooltipster('content', m);
+	}
+	el.tooltipster('show');
+}
+
 function validateStep1() {
 	$return = true;
 	
 	if(!$('#adproduct-home_no').val()) {
 		$return = false;
-		$('#adproduct-home_no').parent().addClass('error-frm');
-		$('#adproduct-home_no').next().show().html('Vui lòng nhập số nhà.');
+		showMessage($('#adproduct-home_no'), 'Vui lòng nhập số nhà.');
 	} else {
 		$('#adproduct-home_no').parent().removeClass('error-frm');
-		$('#adproduct-home_no').next().hide();
 	}
 	
 	if(!$('#adproduct-street_id').val()) {
 		$return = false;
-		$('#adproduct-street_id').parent().addClass('error-frm');
-		$('#adproduct-street_id').next().show().html('Vui lòng chọn tên Đường.');
+		showMessage($('#s2id_adproduct-street_id'), 'Vui lòng chọn tên Đường.');
 	} else {
 		$('#adproduct-street_id').parent().removeClass('error-frm');
-		$('#adproduct-street_id').next().hide();
 	}
 	
 	if(!$('#adproduct-ward_id').val()) {
 		$return = false;
-		$('#adproduct-ward_id').parent().addClass('error-frm');
-		$('#adproduct-ward_id').next().show().html('Vui lòng chọn Phường/Xã.');
+		showMessage($('#s2id_adproduct-ward_id'), 'Vui lòng chọn Phường/Xã.');
 	} else {
 		$('#adproduct-ward_id').parent().removeClass('error-frm');
-		$('#adproduct-ward_id').next().hide();
 	}
 	
 	if(!$('#adproduct-area').val()) {
 		$return = false;
-		$('#adproduct-area').parent().addClass('error-frm');
-		$('#adproduct-area').next().show().html('Vui lòng nhập diện tích.');
+		showMessage($('#adproduct-area'), 'Vui lòng nhập diện tích.');
 	} else if(/^0*$/.test($('#adproduct-area').val())) {
 		$return = false;
-		$('#adproduct-area').parent().addClass('error-frm');
-		$('#adproduct-area').next().show().html('Diện tích nhập không hợp lệ');
+		showMessage($('#adproduct-area'), 'Diện tích nhập không hợp lệ');
 	} else if($('#adproduct-area').data('limit') && $('#adproduct-area').val() > $('#adproduct-area').data('limit')) {
 		$return = false;
-		$('#adproduct-area').parent().addClass('error-frm');
-		$('#adproduct-area').next().show().html('Diện tích không được lớn hơn ' + $('#adproduct-area').data('limit') + 'm<sup style="font-size: .7em">2</sup>');
+		showMessage($('#adproduct-area'), 'Diện tích không được lớn hơn ' + $('#adproduct-area').data('limit') + 'm<sup style="font-size: .7em">2</sup>');
 	} else {
 		$('#adproduct-area').parent().removeClass('error-frm');
-		$('#adproduct-area').next().hide();
 	}
 	
 	if(!$('#adproduct-price').prop('disabled') && $('#adproduct-price').val() == '') {
 		$return = false;
-		$('#adproduct-price').parent().addClass('error-frm');
-		$('#adproduct-price').next().show().html('Vui lòng nhập giá.');
+		showMessage($('#adproduct-price'), 'Vui lòng nhập giá.');
 	} else if(/^0*$/.test($('#adproduct-price').val())) {
 		$return = false;
-		$('#adproduct-price').parent().addClass('error-frm');
-		$('#adproduct-price').next().show().html('Giá nhập không hợp lệ');
+		showMessage($('#adproduct-price'), 'Giá nhập không hợp lệ');
 	} else {
 		$('#adproduct-price').parent().removeClass('error-frm');
-		$('#adproduct-price').next().hide();
 	}
 	
 	return $return;
@@ -401,42 +428,33 @@ function validateStep2() {
 	
 	if(!$('#adproduct-content').val()) {
 		$return = false;
-		$('#adproduct-content').parent().addClass('error-frm');
-		$('#adproduct-content').next().show().html('Vui lòng nhập nội dung tin đăng.');
+		showMessage($('#adproduct-content'), 'Vui lòng nhập nội dung tin đăng.');
 	} else {
 		$('#adproduct-content').parent().removeClass('error-frm');
-		$('#adproduct-content').next().hide();
 	}
 	
 	if(!$('#adcontactinfo-mobile').val()) {
 		$return = false;
-		$('#adcontactinfo-mobile').parent().addClass('error-frm');
-		$('#adcontactinfo-mobile').next().show().html('Vui lòng nhập số di động.');
+		showMessage($('#adcontactinfo-mobile'), 'Vui lòng nhập số di động.');
 	} else if($('#adcontactinfo-mobile').val().length < 7 || $('#adcontactinfo-mobile').val().length > 11) {
 		$return = false;
-		$('#adcontactinfo-mobile').parent().addClass('error-frm');
-		$('#adcontactinfo-mobile').next().show().html('Số di động không được ít hơn 7 hoặc nhiều hơn 11 số.');
+		showMessage($('#adcontactinfo-mobile'), 'Số di động không được ít hơn 7 hoặc nhiều hơn 11 số.');
 	} else {
 		$('#adcontactinfo-mobile').parent().removeClass('error-frm');
-		$('#adcontactinfo-mobile').next().hide();
 	}
 	
 	if($('#adcontactinfo-email').val() != '' && !validateEmail($('#adcontactinfo-email').val())) {
 		$return = false;
-		$('#adcontactinfo-email').parent().addClass('error-frm');
-		$('#adcontactinfo-email').next().show().html('Địa chỉ email không hợp lệ');
+		showMessage($('#adcontactinfo-email'), 'Địa chỉ email không hợp lệ');
 	} else {
 		$('#adcontactinfo-email').parent().removeClass('error-frm');
-		$('#adcontactinfo-email').next().hide();
 	}
 	
 	if($('#adcontactinfo-phone').val() != '' && ($('#adcontactinfo-phone').val().length < 7 || $('#adcontactinfo-phone').val().length > 11)) {
 		$return = false;
-		$('#adcontactinfo-phone').parent().addClass('error-frm');
-		$('#adcontactinfo-phone').next().show().html('Số di động không được ít hơn 7 hoặc nhiều hơn 11 số.');
+		showMessage($('#adcontactinfo-phone'), 'Số điện thoại không được ít hơn 7 hoặc nhiều hơn 11 số.');
 	} else {
 		$('#adcontactinfo-phone').parent().removeClass('error-frm');
-		$('#adcontactinfo-phone').next().hide();
 	}
 	
 	return $return;
@@ -520,6 +538,10 @@ function stepPost () {
 				if ( _this.hasClass('next') ) {
 					objSP.nextStep(_this);
 				}else if( _this.hasClass('previous') ) {
+					$('#frm-post-tin').find('.tooltipstered').each(function(){
+						$(this).tooltipster('hide');
+					});
+					
 					objSP.previouStep(_this);
 				}
 
@@ -538,7 +560,15 @@ function stepPost () {
 		        				var errors = response.errors[index];
 		        				for(j in errors) {
 		        					var error = errors[j];
-		        					$('#' + index + '-' + j).next().show().html(error);
+		        					var el = $('#' + index + '-' + j);
+		        					
+		        					if(el.data('ref-back')) {
+		        						ref = $('#ref-' + el.data('ref-back'));
+		        					} else {
+		        						ref = $('#ref-' + index + '-' + j);
+		        					}
+		        					
+		        					showMessage(ref, error[0], true);
 		        				}
 		        			}
 		        		}
