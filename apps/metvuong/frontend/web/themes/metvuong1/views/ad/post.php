@@ -19,7 +19,6 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/select2
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/gmap.js', ['position' => View::POS_END]);
 $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=apiLoaded', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/dang-tin.js', ['position' => View::POS_END]);
-$this->registerCss('.preview canvas {vertical-align: middle;} .price-editable{position: relative;} .price-editable .price-format {display: inline; position: absolute; top: 10px; left: 100%; white-space: nowrap; padding-left: 9px;} .preview img {width: 120px; height: 80px;} .select2-drop-active {border-color: #ccc;} .select2-drop {margin-top: -2px;} .editable select.select2 {padding: 0 20px;} .editable {cursor: pointer; max-width: 100%; min-width: 160px;} .editable:not(.editing):hover {background: rgba(0, 0, 0, 0.15);border-radius: 4px;padding: 3px;}');
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/jquery.bxslider.js', ['position' => View::POS_END]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/imagesloaded.3.0.4.js', ['position' => View::POS_END]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/lightbox.min.js', ['position' => View::POS_END]);
