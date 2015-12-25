@@ -41,6 +41,8 @@ use vsoft\ad\models\AdCategory;
         <div class="col-lg-11"><div class="help-block"><?= $model->getErrors('apply_to_type') ? current($model->getErrors('apply_to_type')) : '' ?></div></div>
     </div>
     <?= $form->field($model, 'template')->dropDownList(AdCategory::templateLabelMap()) ?>
+    <?= $form->field($model, 'limit_area')->textInput() ?>
+    <?= $form->field($model, 'status')->checkbox(['label' => 'Actived']) ?>
     <div class="form-group">
         <label class="col-lg-1 control-label"></label>
         <div class="col-lg-11">

@@ -13,6 +13,7 @@ use Yii;
  * @property integer $order
  * @property integer $status
  * @property integer $template
+ * @property integer $limit_area
  *
  * @property AdBuildingProjectCategory[] $adBuildingProjectCategories
  * @property AdProduct[] $adProducts
@@ -34,7 +35,7 @@ class AdCategoryBase extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'apply_to_type'], 'required'],
-            [['apply_to_type', 'order', 'status', 'template'], 'integer'],
+            [['apply_to_type', 'order', 'status', 'template', 'limit_area'], 'integer'],
             [['name'], 'string', 'max' => 32]
         ];
     }
@@ -51,6 +52,7 @@ class AdCategoryBase extends \yii\db\ActiveRecord
             'order' => 'Order',
             'status' => 'Status',
             'template' => 'Template',
+            'limit_area' => 'Limit Area',
         ];
     }
 
