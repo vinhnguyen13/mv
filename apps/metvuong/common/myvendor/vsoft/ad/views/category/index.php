@@ -29,6 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
 			'status',
 			'limit_area',
+			'template',
+			'apply_to_type',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

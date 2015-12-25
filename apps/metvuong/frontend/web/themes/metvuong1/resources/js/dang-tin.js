@@ -371,6 +371,10 @@ function validateStep1() {
 		$return = false;
 		$('#adproduct-area').parent().addClass('error-frm');
 		$('#adproduct-area').next().show().html('Diện tích nhập không hợp lệ');
+	} else if($('#adproduct-area').data('limit') && $('#adproduct-area').val() > $('#adproduct-area').data('limit')) {
+		$return = false;
+		$('#adproduct-area').parent().addClass('error-frm');
+		$('#adproduct-area').next().show().html('Diện tích không được lớn hơn ' + $('#adproduct-area').data('limit') + 'm<sup style="font-size: .7em">2</sup>');
 	} else {
 		$('#adproduct-area').parent().removeClass('error-frm');
 		$('#adproduct-area').next().hide();

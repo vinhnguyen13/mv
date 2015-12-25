@@ -9,6 +9,7 @@ use yii\helpers\ArrayHelper;
 use vsoft\ad\models\AdProductAdditionInfo;
 use vsoft\ad\models\AdContactInfo;
 use common\widgets\CKEditor;
+use vsoft\ad\models\AdCategory;
 $this->title = Yii::t ( 'express', 'We offer exeptional amenities and renowned white - glove services' );
 
 $this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/select2.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
@@ -86,17 +87,19 @@ if(Yii::$app->user->identity->profile->avatar) {
 						</div>
 					</div>
 				</div>
+				<?php if($category->template == AdCategory::TEMPLATE_SUGGEST_LIST): ?>
 				<div class="form-group">
 					<label for="" class="col-sm-3 control-label">Thuộc dự án</label>
 					<div class="col-sm-9 group-item-frm">
 						<?= Html::activeDropDownList($model, 'project_building_id', [], ['class' => 'form-control mgB-0', 'prompt' => 'Dự án'])?>
 					</div>
 				</div>
+				<?php endif; ?>
 				<div class="form-group text-inline">
 					<label for="" class="col-sm-3 control-label">Diện tích *</label>
 					<div class="col-sm-9">
 						<div class="inline-group col-xs-6">
-							<?= Html::activeTextInput($model, 'area', ['class' => 'form-control number-only ad-input', 'data-float' => '1']) ?>
+							<?= Html::activeTextInput($model, 'area', ['class' => 'form-control number-only ad-input', 'data-float' => '1', 'data-limit' => $category->limit_area]) ?>
 						<div class="help-block" style="display: none;"></div>
 						</div>
 						<div class="inline-group col-xs-6 pdR-0">
