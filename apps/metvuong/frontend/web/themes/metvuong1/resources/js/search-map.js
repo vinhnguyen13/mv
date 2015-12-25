@@ -49,7 +49,7 @@ function start() {
 		
 		infoWindow = new InfoWindow();
 		
-		$('#detail-wrap').on('click', '.close', function(){
+		$('#detail-wrap').on('click', '.btn-close-detail', function(){
 			$('#detail-wrap').css({
 				left: '0px'
 			});
@@ -269,6 +269,7 @@ function makeMarker(product) {
                     '<p class="rice-result">' + price + '</p>' +
                     '<p class="beds-baths-sqft">' + product['area'] + 'm<sup>2</sup> ' + floorNo + roomNo + toiletNo + '</p>' +
                     '<p class="date-post-rent">' + product.previous_time + '</p>' +
+                    '<div class="icon-item-listing"><a title="Lưu" class="icon-hear" href="#"><em class="icon-heart"></em></a><a class="icon-favo" href="#"><em class="icon-like"></em></a></div>' +
                 '</div>' +
             '</li>';
 	return li;

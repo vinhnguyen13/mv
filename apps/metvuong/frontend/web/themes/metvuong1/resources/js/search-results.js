@@ -193,8 +193,10 @@
 				$(document).trigger('click');
 			});
 		}
-	}
+	};
 
 	minmax.init();
+
+	
 	
 })();

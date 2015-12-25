@@ -241,6 +241,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
 	        
             <li>
                 <button id="submit-filter" type="button" class="btn btn-primary btn-sm btn-common"><em class="fa fa-filter"></em>Chọn lọc</button>
+                <button id="reset-filter" type="button" class="btn btn-primary btn-sm btn-common">Reset</button>
             </li>
 	    </ul>
     </form>
