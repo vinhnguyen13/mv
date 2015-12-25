@@ -1,6 +1,8 @@
 (function($){
     $.fn.MVS = function (options) {
+        
         var prices = {"thue": {"0" : "0","-1": "Giá bất kỳ","2000000" : "2 triệu","4000000" : "4 triệu","5000000" : "6 triệu","8000000" : "8 triệu","10000000": "10 triệu","12000000": "12 triệu","14000000": "14 triệu","16000000": "16 triệu","18000000": "18 triệu","20000000": "20 triệu",},"muaban": {"0" : "0","-1": "Giá bất kỳ","2000000000" : "2 tỷ","4000000000" : "4 tỷ","6000000000" : "6 tỷ","8000000000" : "8 tỷ","10000000000": "10 tỷ","12000000000": "12 tỷ","14000000000": "14 tỷ","16000000000": "16 tỷ","18000000000": "18 tỷ","20000000000": "20 tỷ"}};
+        
         var getLang = getValCookie('language') == undefined ? 'vi-VN' : getValCookie('language');
 
         if ( getLang.search('vi-VN') >= 0 ) {
@@ -568,52 +570,38 @@
                 current = '';
             }
 
-
-            if ( flag) {
+            if ( flag ) {
                 //add icon price
                 if ( dataItem == 'min-max' ) {
                     item.append(el.icon);
                 }
             }
 
-            if ( loadCost.valGet.length == 1 ) {
-                if ( itemEdit.length > 0 ) {
-                    mv.settings.wrapSuggest.find(itemEdit).remove();
-                    itemEdit = '';
-                }
-                if ( loadCost.valGet[0].tab == 'min' ) {
-                    item.append('<em class="fa fa-long-arrow-up"></em>');
-                }else if ( loadCost.valGet[0].tab == 'max' ) {
-                    item.append('<em class="fa fa-long-arrow-down"></em>');
-                    
-                    getPlaceHolder(null, true);
-                    
-                    //close khi chon price max
-                    $('.btn-close-search').trigger('click');
-                }
-            }else if ( loadCost.valGet.length == 2 ) {
-                itemEdit = mv.settings.wrapSuggest.find('li[data-item=min-max]');
+            var valMin = $('.box-cost[data-tab="min"] .cost-value').val(),
+                valMax = $('.box-cost[data-tab="max"] .cost-value').val(),
+                txtMerge = '';
 
-                //remove placeholder khi chon ca 2 price
-                getPlaceHolder(null, true);
-
-                //check chon gia bat ky
-                if ( el.parent().hasClass('anyVal') ) {
-                    //close khi chon price max
-                    $('.btn-close-search').trigger('click');
-
-                    return;
-                }
-
-                var txtMerge = '';
-                txtMerge = itemEdit.find('span').text() +' - '+ txt;
-                txt = txtMerge;
-                itemEdit.find('em').remove();
-
-                //close khi chon price max
-                $('.btn-close-search').trigger('click');
+            if ( valMin != '' ) {
+                item.append('<em class="fa fa-long-arrow-up"></em>');
+            }else if ( valMax != '' ) {
+                item.append('<em class="fa fa-long-arrow-down"></em>');
             }
-            
+
+            // update text suggest min-max
+            if ( mv.settings.wrapSuggest.find('li[data-item=min-max]').length > 0 ) {
+                itemEdit = mv.settings.wrapSuggest.find('li[data-item=min-max]');
+                
+                if ( valMax != '' && !el.parent().hasClass('anyVal') ) {
+                    txtMerge = valMin+' - '+valMax;
+                    itemEdit.find('em').remove();
+                }else { // chi gia tri Min
+                    txtMerge = valMin;
+                    itemEdit.append('<em class="fa fa-long-arrow-up"></em>');
+                }
+                
+                txt = txtMerge;
+                getPlaceHolder(null, true);
+            }
 
             //edit get item
             if ( itemEdit.length > 0 ) {
@@ -912,8 +900,6 @@
 
                     loadCost.valGet.push(getVal);
 
-                    renderSuggest(_this);
-
                     //value input get number price vd: 1000000000
                     $('.box-cost[data-tab='+tabIndex+'] .valPrice').val(costValueChoice);
 
@@ -948,6 +934,8 @@
                         
                         loadCost.flag = 'min';
                     }
+
+                    renderSuggest(_this);
                 });
             },
             priceUnit: function (num) {
