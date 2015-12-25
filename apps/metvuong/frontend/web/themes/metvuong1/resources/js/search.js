@@ -1,7 +1,7 @@
 (function($){
     $.fn.MVS = function (options) {
         
-        var prices = {"thue": {"0" : "0","-1": "Giá bất kỳ","2000000" : "2 triệu","4000000" : "4 triệu","5000000" : "6 triệu","8000000" : "8 triệu","10000000": "10 triệu","12000000": "12 triệu","14000000": "14 triệu","16000000": "16 triệu","18000000": "18 triệu","20000000": "20 triệu",},"muaban": {"0" : "0","-1": "Giá bất kỳ","2000000000" : "2 tỷ","4000000000" : "4 tỷ","6000000000" : "6 tỷ","8000000000" : "8 tỷ","10000000000": "10 tỷ","12000000000": "12 tỷ","14000000000": "14 tỷ","16000000000": "16 tỷ","18000000000": "18 tỷ","20000000000": "20 tỷ"}};
+        var prices = {"thue": {"0" : "0","-1": "Giá bất kỳ","2000000" : "2 triệu","4000000" : "4 triệu","6000000" : "6 triệu","8000000" : "8 triệu","10000000": "10 triệu","12000000": "12 triệu","14000000": "14 triệu","16000000": "16 triệu","18000000": "18 triệu","20000000": "20 triệu",},"muaban": {"0" : "0","-1": "Giá bất kỳ","2000000000" : "2 tỷ","4000000000" : "4 tỷ","6000000000" : "6 tỷ","8000000000" : "8 tỷ","10000000000": "10 tỷ","12000000000": "12 tỷ","14000000000": "14 tỷ","16000000000": "16 tỷ","18000000000": "18 tỷ","20000000000": "20 tỷ"}};
         
         var getLang = getValCookie('language') == undefined ? 'vi-VN' : getValCookie('language');
 
@@ -590,13 +590,15 @@
             // update text suggest min-max
             if ( mv.settings.wrapSuggest.find('li[data-item=min-max]').length > 0 ) {
                 itemEdit = mv.settings.wrapSuggest.find('li[data-item=min-max]');
-                
-                if ( valMax != '' && !el.parent().hasClass('anyVal') ) {
+                itemEdit.find('em').remove();
+                if ( valMax != '' && !el.parent().hasClass('anyVal') && valMin != '' ) {
                     txtMerge = valMin+' - '+valMax;
-                    itemEdit.find('em').remove();
-                }else { // chi gia tri Min
+                }else if ( valMin != '' ) { // chi gia tri Min
                     txtMerge = valMin;
                     itemEdit.append('<em class="fa fa-long-arrow-up"></em>');
+                }else if ( valMax != '' ) { // chi gia tri Max
+                    txtMerge = valMax;
+                    itemEdit.append('<em class="fa fa-long-arrow-down"></em>');
                 }
                 
                 txt = txtMerge;
@@ -662,14 +664,12 @@
             item.find('i').on('click', function (e) {
                 e.preventDefault();
                 itemEdit = '';
-                loadCost.valGet = [];
                 getItemEvent($(this).parent(), true);
             });
 
             //update item suggest
             mv.settings.wrapSuggest.find('li').removeClass('active');
             item.on('click', function (e) {
-                loadCost.valGet = [];
                 if ( !$(e.target).is('i') ) {// DETECT btn delete
                     mv.settings.wrapSuggest.find('li').removeClass('active');
                     $(this).addClass('active');
@@ -815,7 +815,6 @@
             flag: '',
             numPriceShow: 11,
             priceAdd: '',
-            valGet: [],
             txtAnyPrice: '',
             init: function (idHinhThuc) {
                 loadCost.show(idHinhThuc);
@@ -833,8 +832,13 @@
                         $('.box-cost[data-tab="min"] ul').html('');
                     }
 
-                    loadCost.renderPrice(idHinhThuc, tabShow);
-                    
+                    if ( tabShow == 'max' && $('.box-cost[data-tab="min"] .cost-value').val() != '' ) {
+                        var valGetMin = $('.box-cost[data-tab="min"] .valPrice').val();
+                        loadCost.priceMaxRender(parseInt(valGetMin));
+                    }else {
+                        loadCost.renderPrice(idHinhThuc, tabShow);
+                    }
+
                     loadCost.hide();
 
                     loadCost.open(tabShow);
@@ -888,22 +892,13 @@
                     var _this = $(this),
                         textChoice = _this.html(),
                         costValueChoice = _this.parent().data('cost'),
-                        tabIndex = _this.closest('.box-cost').data('tab'),
-                        priceFirst,
-                        getVal = {};
+                        tabIndex = _this.closest('.box-cost').data('tab');
 
                     //value input show number and text vd: 1 ty
                     $('.box-cost[data-tab='+tabIndex+'] .cost-value').val(textChoice);
 
-                    getVal.tab = tabIndex;
-                    getVal.value = costValueChoice;
-
-                    loadCost.valGet.push(getVal);
-
                     //value input get number price vd: 1000000000
                     $('.box-cost[data-tab='+tabIndex+'] .valPrice').val(costValueChoice);
-
-                    priceFirst = parseInt(costValueChoice);
 
                     loadCost.hide();
 
@@ -912,20 +907,7 @@
                         $('.box-cost[data-tab='+loadCost.flag+'] .cost-value').val('');
 
                         if ( parseInt($('.box-cost[data-tab="min"] .cost-value').val()) != 0 ) {
-                            //render price max
-                            for ( var i = 0; i < loadCost.numPriceShow; i++ ) {
-                                var costStr = loadCost.priceUnit(costValueChoice);
-                                if ( costValueChoice != priceFirst ) {
-                                    var item = $('<li data-id="'+idHinhThuc+'" data-cost="'+costValueChoice+'"><span data-item="min-max" data-next="" data-prev="">'+costStr+'</span></li>');
-                                    $('.box-cost[data-tab='+loadCost.flag+'] ul').append(item);
-                                    loadCost.clickChoice(item.find('span'));
-                                }
-                                costValueChoice += loadCost.priceAdd;
-                            }
-                            //render element batky
-                            var item = $('<li data-id="'+idHinhThuc+'" class="anyVal"><span data-item="min-max" data-next="" data-prev="">'+txtAnyPrice+'</span></li>');
-                            $('.box-cost[data-tab='+loadCost.flag+'] ul').append(item);
-                            loadCost.clickChoice(item.find('span'));
+                            loadCost.priceMaxRender(costValueChoice);
                         }else {
                             loadCost.renderPrice(idHinhThuc, loadCost.flag);
                         }
@@ -959,6 +941,23 @@
                 }   
                 if(isNegative) { formattedNumber = '-' + formattedNumber }
                 return formattedNumber;
+            },
+            priceMaxRender: function (costValueChoice) {
+                //render price max
+                var priceFirst = parseInt(costValueChoice);
+                for ( var i = 0; i < loadCost.numPriceShow; i++ ) {
+                    var costStr = loadCost.priceUnit(costValueChoice);
+                    if ( costValueChoice != priceFirst ) {
+                        var item = $('<li data-id="'+idHinhThuc+'" data-cost="'+costValueChoice+'"><span data-item="min-max" data-next="" data-prev="">'+costStr+'</span></li>');
+                        $('.box-cost[data-tab=max] ul').append(item);
+                        loadCost.clickChoice(item.find('span'));
+                    }
+                    costValueChoice += loadCost.priceAdd;
+                }
+                //render element batky
+                var item = $('<li data-id="'+idHinhThuc+'" class="anyVal"><span data-item="min-max" data-next="" data-prev="">'+txtAnyPrice+'</span></li>');
+                $('.box-cost[data-tab=max] ul').append(item);
+                loadCost.clickChoice(item.find('span'));
             }
         };
 
