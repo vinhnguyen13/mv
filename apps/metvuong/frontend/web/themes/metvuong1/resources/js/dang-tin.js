@@ -222,7 +222,9 @@ $(document).ready(function(){
 //		}
 		
 		if(ref.is('select')) {
-			text = ref.find('option:selected').text();
+			if(ref.val() != '') {
+				text = ref.find('option:selected').text();
+			}
 		}
 		
 		self.text(text);
