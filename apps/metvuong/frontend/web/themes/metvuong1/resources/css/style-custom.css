@@ -4963,6 +4963,19 @@ header.wrap-page-home .box-search-header.ani-search > div {
     box-shadow: 0 0 2px rgba(0,0,0,0.19999999999999996);
     background-color: white;
     padding: 5px 0 15px 0;
+    top: 0;
+    position: static;
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transition: transform 0.25s;
+    -webkit-transition: transform 0.25s;
+    -moz-transition: transform 0.25s;
+    -ms-transition: transform 0.25s;
+}
+.infor-user-profile .fixElScroll {
+    position: fixed;
 }
 .title-box h2{
     font-weight: bold;
@@ -5447,4 +5460,7 @@ button.btn.btn-default.dropdown-toggle {
 #detail-listing #report-listing .modal-dialog {
     width: 600px;
     margin-top: 70px;
+}
+.icon-item-listing a span {
+    padding-left: 5px;   
 }
