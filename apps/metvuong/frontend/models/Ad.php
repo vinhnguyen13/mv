@@ -95,7 +95,7 @@ class Ad extends Component
         if(Yii::$app->request->isPost && Yii::$app->request->isAjax) {
             $post = Yii::$app->request->post();
             if(!empty($post['id'])){
-                if(empty($adSaved = AdProductSaved::findOne(['id'=>$post['id']]))){
+                if(($adSaved = AdProductSaved::findOne(['id'=>$post['id']])) === null){
                     $adSaved = new AdProductSaved();
                     $adSaved->product_id = $post['id'];
                 }
