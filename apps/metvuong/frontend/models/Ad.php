@@ -96,10 +96,11 @@ class Ad extends Component
                     $adSaved = new AdProductSaved();
                     $adSaved->product_id = $post['id'];
                     $adSaved->user_id = Yii::$app->user->id;
-                    $adSaved->validate();
-                    if(!$adSaved->hasErrors()){
-                        $adSaved->save();
-                    }
+                }
+                $adSaved->saved_at = !empty($post['stt']) ? time() : 0;
+                $adSaved->validate();
+                if(!$adSaved->hasErrors()){
+                    $adSaved->save();
                 }
                 return ['statusCode'=>200, 'parameters'=>['msg'=>'']];
             }

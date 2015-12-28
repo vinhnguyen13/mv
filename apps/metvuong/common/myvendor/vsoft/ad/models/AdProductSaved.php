@@ -25,7 +25,7 @@ class AdProductSaved extends AdProductSavedBase
     public function behaviors()
     {
         return [
-            [
+            /*[
                 'class' => AttributeBehavior::className(),
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_VALIDATE => 'saved_at',
@@ -33,12 +33,6 @@ class AdProductSaved extends AdProductSavedBase
                 'value' => function ($event) {
                     return time();
                 },
-            ],
-            /*[
-                'class' => TimestampBehavior::className(),
-                'createdAtAttribute' => 'saved_at',
-                'updatedAtAttribute' => 'saved_at',
-                'value' => new Expression('NOW()'),
             ],*/
         ];
     }

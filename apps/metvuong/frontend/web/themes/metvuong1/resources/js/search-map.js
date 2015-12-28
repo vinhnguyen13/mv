@@ -60,15 +60,17 @@ function start() {
 			var _this = $(this);
 			var _id = _this.attr('data-id');
 			var callUrl = _this.attr('data-url');
+			_this.toggleClass('active');
+			var _stt = (_this.hasClass('active')) ? 1 : 0;
 			clearTimeout(timer);
 			timer = setTimeout(function() {
 				$.ajax({
 					type: "post",
 					dataType: 'json',
 					url: callUrl,
-					data: {id: _id},
+					data: {id: _id, stt: _stt},
 					success: function(data) {
-						_this.toggleClass('active');
+
 					}
 				});
 			}, 500);
