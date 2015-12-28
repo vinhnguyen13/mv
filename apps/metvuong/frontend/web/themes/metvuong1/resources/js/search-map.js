@@ -77,7 +77,14 @@ function start() {
 					url: callUrl,
 					data: {id: _id, stt: _stt},
 					success: function(data) {
-
+						if(_stt) {
+							saved.push(Number(_id));
+						} else {
+							var index = saved.indexOf(Number(_id));
+							if (index > -1) {
+								saved.splice(index, 1);
+							}
+						}
 					}
 				});
 			}, 500);
@@ -144,7 +151,9 @@ function start() {
 				
 				$('#map-loading').height($('.cd-main-content').height()).show();
 				
-				$.get('/ad/detail', {id: $(this).data('detail'), isCraw: $(this).data('is-craw')}, function(response){
+				var id = $(this).data('detail');
+				
+				$.get('/ad/detail', {id: id, isCraw: $(this).data('is-craw')}, function(response){
 					$('#map-loading').hide();
 					var width = $('.wrap-map-result').width();
 					width = (width > 820) ? 820 : width;
@@ -154,7 +163,15 @@ function start() {
 						left: '-' + width + 'px',
 						height: $('.result-items').height()
 					});
-					$('#detail-listing').html($(response).html());
+					
+					var res = $(response);
+					
+					var index = saved.indexOf(Number(id));
+					if (index > -1) {
+						res.find('.icon-hear').addClass('active');
+					}
+					
+					$('#detail-listing').html(res.html());
 					
 
 					if(!self.data('clone')) {
@@ -332,8 +349,15 @@ function makeMarker(product) {
 	if(product['floor_no']) {
 		floorNo = '• ' + product['floor_no'] + ' tầng ';
 	}
+
+	var className = 'icon-hear';
 	
-	
+	for(i = 0; i < saved.length; i++) {
+		if(product.id == saved[i]) {
+			className += ' active';
+			break;
+		}
+	}
 	
 	var li = '<li data-is-craw="' + product.is_craw +'" data-detail="' + product.id +'" data-id="' + markerId + '">' +
                 '<div class="bgcover wrap-img pull-left" style="background-image:url('+product.image_url+')"><a href="#" class=""></a></div>' +
@@ -343,7 +367,7 @@ function makeMarker(product) {
                     '<p class="rice-result">' + price + '</p>' +
                     '<p class="beds-baths-sqft">' + product['area'] + 'm<sup>2</sup> ' + floorNo + roomNo + toiletNo + '</p>' +
                     '<p class="date-post-rent">' + product.previous_time + '</p>' +
-                    '<div class="icon-item-listing"><a title="Lưu" class="icon-hear" data-id="' + product.id + '" data-url="/ad/favorite"><em class="fa fa-heart-o"></em></a></div>' +
+                    '<div class="icon-item-listing"><a title="Lưu" class="' + className + '" data-id="' + product.id + '" data-url="/ad/favorite"><em class="fa fa-heart-o"></em></a></div>' +
                 '</div>' +
             '</li>';
 	return li;

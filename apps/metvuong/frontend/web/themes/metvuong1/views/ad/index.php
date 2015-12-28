@@ -4,6 +4,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use vsoft\ad\models\AdCategory;
 use vsoft\ad\models\AdProductSaved;
+use yii\helpers\ArrayHelper;
 $this->title = Yii::t('express','We offer exeptional amenities and renowned white - glove services');
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/gmap.js', ['position' => View::POS_END]);
 $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=apiLoaded', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
@@ -13,6 +14,9 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/jquery.
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/search-map.js', ['position' => View::POS_END]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/search-results.js', ['position' => View::POS_END]);
 $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy('id')->asArray(true)->all()) . ';', View::POS_BEGIN);
+
+$saved = Yii::$app->user->isGuest ? [] : ArrayHelper::getColumn(AdProductSaved::find()->where('user_id = ' . Yii::$app->user->id)->andWhere('saved_at != 0')->all(), 'product_id');
+$this->registerJs('var saved = ' . json_encode($saved) . ';', View::POS_BEGIN);
 ?>
 <div id="map-loading" style="display:none;position: absolute;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.5);z-index: 3;">
 	<img style="    position: absolute;left: 50%;top: 50%;margin-left: -24px;margin-top: -24px;" src="<?= Yii::$app->view->theme->baseUrl ?>/resources/images/map-loading.gif" />
