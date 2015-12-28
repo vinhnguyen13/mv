@@ -283,4 +283,8 @@ class AdController extends Controller
 	public function actionFavorites() {
 		return Ad::find()->favorites();
 	}
+
+	public function actionReport() {
+		return Ad::find()->report();
+	}
 }

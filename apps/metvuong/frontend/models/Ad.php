@@ -84,4 +84,7 @@ class Ad extends Component
     public function favorites(){
 
     }
+    public function report(){
+
+    }
 }
