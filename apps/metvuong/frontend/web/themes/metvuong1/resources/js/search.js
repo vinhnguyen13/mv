@@ -1,6 +1,8 @@
 (function($){
     $.fn.MVS = function (options) {
-        var prices = {"thue": {"0" : "0","-1": "Giá bất kỳ","2000000" : "2 triệu","4000000" : "4 triệu","5000000" : "6 triệu","8000000" : "8 triệu","10000000": "10 triệu","12000000": "12 triệu","14000000": "14 triệu","16000000": "16 triệu","18000000": "18 triệu","20000000": "20 triệu",},"muaban": {"0" : "0","-1": "Giá bất kỳ","2000000000" : "2 tỷ","4000000000" : "4 tỷ","6000000000" : "6 tỷ","8000000000" : "8 tỷ","10000000000": "10 tỷ","12000000000": "12 tỷ","14000000000": "14 tỷ","16000000000": "16 tỷ","18000000000": "18 tỷ","20000000000": "20 tỷ"}};
+        
+        var prices = {"thue": {"0" : "0","-1": "Giá bất kỳ","2000000" : "2 triệu","4000000" : "4 triệu","6000000" : "6 triệu","8000000" : "8 triệu","10000000": "10 triệu","12000000": "12 triệu","14000000": "14 triệu","16000000": "16 triệu","18000000": "18 triệu","20000000": "20 triệu",},"muaban": {"0" : "0","-1": "Giá bất kỳ","2000000000" : "2 tỷ","4000000000" : "4 tỷ","6000000000" : "6 tỷ","8000000000" : "8 tỷ","10000000000": "10 tỷ","12000000000": "12 tỷ","14000000000": "14 tỷ","16000000000": "16 tỷ","18000000000": "18 tỷ","20000000000": "20 tỷ"}};
+        
         var getLang = getValCookie('language') == undefined ? 'vi-VN' : getValCookie('language');
 
         if ( getLang.search('vi-VN') >= 0 ) {
@@ -199,6 +201,13 @@
                 objItem.prevData = prevData;
                 objItem.itemData = itemData;
                 objItem.txt = txt;
+
+                if ( itemData == 'min-max' ) {
+                    var cloneItem = _this.clone();
+                    cloneItem.find('i').remove();
+                    cloneItem.find('span').remove();
+                    objItem.icon = cloneItem.html();
+                }
 
                 objSave.push(objItem);
 
@@ -429,7 +438,7 @@
                     $('#'+itemRender).find('ul').html('');
                     for ( var j in dataCategories ) {
                         if ( dataCategories[j].apply_to_type == idLoadBy || dataCategories[j].apply_to_type == 3 ) {
-                            var item = $('<li data-id="'+j+'"><a href="#" data-item="loai-bds" data-slug-name="'+ChangeToSlug(dataCategories[j].name)+'">'+dataCategories[j].name+'</a></li>');
+                            var item = $('<li data-id="'+j+'"><a href="#" data-item="loai-bds" data-slug-name="'+ChangeToSlug(dataCategories[j].name)+'" data-template="'+dataCategories[j].template+'">'+dataCategories[j].name+'</a></li>');
                             $('#'+itemRender).find('ul').append(item);
                         }
                     }
@@ -519,18 +528,23 @@
                     if ( typeof next == 'object' ) {
                         $('#'+stepCurrent).find('ul li a').each(function () {
                             var _this = $(this),
-                                slug = _this.data('slugName');
+                                slug = _this.data('slugName'),
+                                template = _this.data('template');
 
-                            for ( var j in next ) {
-                                if ( slug == j ) {
-                                    _this.attr('data-next', next[j].next);
-                                    _this.attr('data-prev', next[j].prev);
-                                    _this.addClass('flag');
-                                    break;
-                                }
-                                if ( !_this.hasClass('flag') ) {
-                                    _this.attr('data-next', next[j].next);
-                                    _this.attr('data-prev', next[j].prev);
+                            if ( template != undefined ) {
+                                _this.attr('data-next', template);
+                            }else {
+                                for ( var j in next ) {
+                                    if ( slug == j ) {
+                                        _this.attr('data-next', next[j].next);
+                                        _this.attr('data-prev', next[j].prev);
+                                        _this.addClass('flag');
+                                        break;
+                                    }
+                                    if ( !_this.hasClass('flag') ) {
+                                        _this.attr('data-next', next[j].next);
+                                        _this.attr('data-prev', next[j].prev);
+                                    }
                                 }
                             }
                         });
@@ -557,49 +571,44 @@
                 txt = flag ? el.txt : el.text(),
                 dataItem = flag ? el.itemData : el.data('item');
 
-            //add icon price
             if ( current == 'min-max' ) {
                 current = '';
             }
 
-            if ( loadCost.valGet.length == 1 ) {
-                if ( itemEdit.length > 0 ) {
-                    mv.settings.wrapSuggest.find(itemEdit).remove();
-                    itemEdit = '';
+            if ( flag ) {
+                //add icon price
+                if ( dataItem == 'min-max' ) {
+                    item.append(el.icon);
                 }
-                if ( loadCost.valGet[0].tab == 'min' ) {
-                    item.append('<em class="fa fa-long-arrow-up"></em>');
-                }else if ( loadCost.valGet[0].tab == 'max' ) {
-                    item.append('<em class="fa fa-long-arrow-down"></em>');
-                    
-                    getPlaceHolder(null, true);
-                    
-                    //close khi chon price max
-                    $('.btn-close-search').trigger('click');
-                }
-            }else if ( loadCost.valGet.length == 2 ) {
-                itemEdit = mv.settings.wrapSuggest.find('li[data-item=min-max]');
-
-                //remove placeholder khi chon ca 2 price
-                getPlaceHolder(null, true);
-
-                //check chon gia bat ky
-                if ( el.parent().hasClass('anyVal') ) {
-                    //close khi chon price max
-                    $('.btn-close-search').trigger('click');
-
-                    return;
-                }
-
-                var txtMerge = '';
-                txtMerge = itemEdit.find('span').text() +' - '+ txt;
-                txt = txtMerge;
-                itemEdit.find('em').remove();
-
-                //close khi chon price max
-                $('.btn-close-search').trigger('click');
             }
-            
+
+            var valMin = $('.box-cost[data-tab="min"] .cost-value').val(),
+                valMax = $('.box-cost[data-tab="max"] .cost-value').val(),
+                txtMerge = '';
+
+            if ( valMin != '' ) {
+                item.append('<em class="fa fa-long-arrow-up"></em>');
+            }else if ( valMax != '' ) {
+                item.append('<em class="fa fa-long-arrow-down"></em>');
+            }
+
+            // update text suggest min-max
+            if ( mv.settings.wrapSuggest.find('li[data-item=min-max]').length > 0 ) {
+                itemEdit = mv.settings.wrapSuggest.find('li[data-item=min-max]');
+                itemEdit.find('em').remove();
+                if ( valMax != '' && !el.parent().hasClass('anyVal') && valMin != '' ) {
+                    txtMerge = valMin+' - '+valMax;
+                }else if ( valMin != '' ) { // chi gia tri Min
+                    txtMerge = valMin;
+                    itemEdit.append('<em class="fa fa-long-arrow-up"></em>');
+                }else if ( valMax != '' ) { // chi gia tri Max
+                    txtMerge = valMax;
+                    itemEdit.append('<em class="fa fa-long-arrow-down"></em>');
+                }
+                
+                txt = txtMerge;
+                getPlaceHolder(null, true);
+            }
 
             //edit get item
             if ( itemEdit.length > 0 ) {
@@ -660,14 +669,12 @@
             item.find('i').on('click', function (e) {
                 e.preventDefault();
                 itemEdit = '';
-                loadCost.valGet = [];
                 getItemEvent($(this).parent(), true);
             });
 
             //update item suggest
             mv.settings.wrapSuggest.find('li').removeClass('active');
             item.on('click', function (e) {
-                loadCost.valGet = [];
                 if ( !$(e.target).is('i') ) {// DETECT btn delete
                     mv.settings.wrapSuggest.find('li').removeClass('active');
                     $(this).addClass('active');
@@ -813,7 +820,6 @@
             flag: '',
             numPriceShow: 11,
             priceAdd: '',
-            valGet: [],
             txtAnyPrice: '',
             init: function (idHinhThuc) {
                 loadCost.show(idHinhThuc);
@@ -831,8 +837,13 @@
                         $('.box-cost[data-tab="min"] ul').html('');
                     }
 
-                    loadCost.renderPrice(idHinhThuc, tabShow);
-                    
+                    if ( tabShow == 'max' && $('.box-cost[data-tab="min"] .cost-value').val() != '' ) {
+                        var valGetMin = $('.box-cost[data-tab="min"] .valPrice').val();
+                        loadCost.priceMaxRender(parseInt(valGetMin));
+                    }else {
+                        loadCost.renderPrice(idHinhThuc, tabShow);
+                    }
+
                     loadCost.hide();
 
                     loadCost.open(tabShow);
@@ -886,24 +897,13 @@
                     var _this = $(this),
                         textChoice = _this.html(),
                         costValueChoice = _this.parent().data('cost'),
-                        tabIndex = _this.closest('.box-cost').data('tab'),
-                        priceFirst,
-                        getVal = {};
+                        tabIndex = _this.closest('.box-cost').data('tab');
 
                     //value input show number and text vd: 1 ty
                     $('.box-cost[data-tab='+tabIndex+'] .cost-value').val(textChoice);
 
-                    getVal.tab = tabIndex;
-                    getVal.value = costValueChoice;
-
-                    loadCost.valGet.push(getVal);
-
-                    renderSuggest(_this);
-
                     //value input get number price vd: 1000000000
                     $('.box-cost[data-tab='+tabIndex+'] .valPrice').val(costValueChoice);
-
-                    priceFirst = parseInt(costValueChoice);
 
                     loadCost.hide();
 
@@ -912,20 +912,7 @@
                         $('.box-cost[data-tab='+loadCost.flag+'] .cost-value').val('');
 
                         if ( parseInt($('.box-cost[data-tab="min"] .cost-value').val()) != 0 ) {
-                            //render price max
-                            for ( var i = 0; i < loadCost.numPriceShow; i++ ) {
-                                var costStr = loadCost.priceUnit(costValueChoice);
-                                if ( costValueChoice != priceFirst ) {
-                                    var item = $('<li data-id="'+idHinhThuc+'" data-cost="'+costValueChoice+'"><span data-item="min-max" data-next="" data-prev="">'+costStr+'</span></li>');
-                                    $('.box-cost[data-tab='+loadCost.flag+'] ul').append(item);
-                                    loadCost.clickChoice(item.find('span'));
-                                }
-                                costValueChoice += loadCost.priceAdd;
-                            }
-                            //render element batky
-                            var item = $('<li data-id="'+idHinhThuc+'" class="anyVal"><span data-item="min-max" data-next="" data-prev="">'+txtAnyPrice+'</span></li>');
-                            $('.box-cost[data-tab='+loadCost.flag+'] ul').append(item);
-                            loadCost.clickChoice(item.find('span'));
+                            loadCost.priceMaxRender(costValueChoice);
                         }else {
                             loadCost.renderPrice(idHinhThuc, loadCost.flag);
                         }
@@ -934,6 +921,8 @@
                         
                         loadCost.flag = 'min';
                     }
+
+                    renderSuggest(_this);
                 });
             },
             priceUnit: function (num) {
@@ -957,6 +946,23 @@
                 }   
                 if(isNegative) { formattedNumber = '-' + formattedNumber }
                 return formattedNumber;
+            },
+            priceMaxRender: function (costValueChoice) {
+                //render price max
+                var priceFirst = parseInt(costValueChoice);
+                for ( var i = 0; i < loadCost.numPriceShow; i++ ) {
+                    var costStr = loadCost.priceUnit(costValueChoice);
+                    if ( costValueChoice != priceFirst ) {
+                        var item = $('<li data-id="'+idHinhThuc+'" data-cost="'+costValueChoice+'"><span data-item="min-max" data-next="" data-prev="">'+costStr+'</span></li>');
+                        $('.box-cost[data-tab=max] ul').append(item);
+                        loadCost.clickChoice(item.find('span'));
+                    }
+                    costValueChoice += loadCost.priceAdd;
+                }
+                //render element batky
+                var item = $('<li data-id="'+idHinhThuc+'" class="anyVal"><span data-item="min-max" data-next="" data-prev="">'+txtAnyPrice+'</span></li>');
+                $('.box-cost[data-tab=max] ul').append(item);
+                loadCost.clickChoice(item.find('span'));
             }
         };
 

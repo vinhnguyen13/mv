@@ -195,7 +195,7 @@ class SiteController extends Controller
     		$cities[$cityId]['districts'][$k] = $district;
     	}
     	
-    	$categories = AdCategory::find()->indexBy('id')->select('id, name, apply_to_type, template')->where(['status'=>1])->asArray(true)->all();
+    	$categories = AdCategory::find()->indexBy('id')->select('id, name, apply_to_type, template, limit_area')->where(['status'=>1])->asArray(true)->all();
     	$templateMap = AdCategory::templateMap();
     	
     	foreach ($categories as $k => &$category) {

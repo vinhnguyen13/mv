@@ -20,6 +20,7 @@ use yii\widgets\LinkPager;
 use vsoft\ad\models\AdCity;
 use yii\helpers\ArrayHelper;
 use vsoft\ad\models\AdDistrict;
+use vsoft\ad\models\AdCategory;
 
 class AdController extends Controller
 {
@@ -184,7 +185,7 @@ class AdController extends Controller
     	
 		$district = AdDistrict::find()->indexBy('id')->where('city_id = :city_id', [':city_id' => $cityId])->all();
 
-		if($district && isset($district[$districtId]) && $categoryId) {
+		if($district && isset($district[$districtId]) && $categoryId && ($category = AdCategory::findOne($categoryId))) {
 			$model = new AdProduct();
 			$model->loadDefaultValues();
 	    	$model->city_id = $cityId;
@@ -236,7 +237,7 @@ class AdController extends Controller
 	    		return $result;
 	    	}
 			    	
-			return $this->render('post', ['model' => $model, 'adProductAdditionInfo' => $adProductAdditionInfo, 'adContactInfo' => $adContactInfo]);
+			return $this->render('post', ['model' => $model, 'adProductAdditionInfo' => $adProductAdditionInfo, 'adContactInfo' => $adContactInfo, 'category' => $category]);
 		}
 		
 		return $this->render('requireParam');
@@ -278,4 +279,12 @@ class AdController extends Controller
     		return $response;
     	}
     }
+
+	public function actionFavorites() {
+		return Ad::find()->favorites();
+	}
+
+	public function actionReport() {
+		return Ad::find()->report();
+	}
 }

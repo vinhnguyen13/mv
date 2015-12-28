@@ -49,10 +49,10 @@
 	}
 ?>
 <div id="detail-listing">
-        <div>
+        <div class="detail-slide">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close btn-close-detail" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -252,6 +252,56 @@
                                             <button type="button" class="btn btn-primary">Gửi tin nhắn cho người này</button>
                                         </div>
                                     </form>
+                                </div>
+                                <div class="function-listing clearfix">
+                                    <p>Đánh giá</p>
+                                    <div class="rating">
+                                        <ul class="clearfix">
+                                            <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                            <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                            <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                            <li><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                            <li><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="dropdown report-listing">
+                                        <button class="btn btn-default dropdown-toggle" type="button" id="btn-report" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            Report
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="btn-report">
+                                            <li><a href="#" data-toggle="modal" data-target="#report-listing">Lừa đảo</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#report-listing">Trùng địa chỉ</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#report-listing">Tin đã đăng</a></li>
+                                        </ul>
+                                        <div class="modal fade" id="report-listing" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="wrap-modal clearfix">
+                                                            <h3>Report</h3>
+                                                            <textarea class="form-control" rows="3" placeholder="nội dung report..."></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="icon-item-listing">
+                                        <a title="Lưu" class="icon-hear" href="#">
+                                            <em class="icon-heart"></em>
+                                            <span>Lưu</span>
+                                        </a>
+                                        <!--<a class="icon-favo" href="#">
+                                            <em class="icon-ok-sign"></em>
+                                            <span>Yêu thích</span>
+                                        </a>-->
+                                    </div>
                                 </div>
                             </div>
                             <?php endif; ?>

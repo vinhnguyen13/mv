@@ -49,6 +49,16 @@ class CategoryController extends Controller
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
 		
+			$model->apply_to_type = 0;
+			
+			if(Yii::$app->request->post('for_sell')) {
+				$model->apply_to_type += Yii::$app->request->post('for_sell');
+			}
+				
+			if(Yii::$app->request->post('for_rent')) {
+				$model->apply_to_type += Yii::$app->request->post('for_rent');
+			}
+			
 			if($model->validate()) {
 				$model->save(false);
 					

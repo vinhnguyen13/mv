@@ -262,24 +262,14 @@ $(document).ready(function() {
             flagShow = false;
             $container.removeClass('pdTContainer');
         }
-
-        /*if( valShow > 0 ) {
-            secondaryNav.addClass('is-fixed');
-            setTimeout(function() {
-                secondaryNav.addClass('animate-children');
-            }, 50);
-        } else {
-            secondaryNav.removeClass('is-fixed');
-            setTimeout(function() {
-                secondaryNav.removeClass('animate-children');
-            }, 50);
-        }*/
     });
     //end scroll fixed header
 
     //start home page search
     //animateSearch();
     //end home page search
+
+    $('.infor-user-profile .inner-infor').scfix();
 
 });
 
@@ -318,4 +308,76 @@ function scrollFixed() {
             });
         }
     });
+}
+
+$.fn.scfix = function (options) {
+
+    return this.each(function() {
+        var defaults = {
+            elTopH: ['.home-page'],
+            elBottomH: [],
+            elCol: $('.quanlytinraoban'),
+            headerFix: true,
+            headerFixEl: $('header'),
+            ajaxLoad: false
+        },
+        sc = {},
+        valScroll = 0,
+        posiTopEl = 0,
+        hTop = 0,
+        hBottom = 0,
+        el = $(this),
+        wElFirst = el.outerWidth(),
+        hColOther = 0;
+
+        if ( el.length == 0 ) return el;
+
+        sc.settings = $.extend({}, defaults, options);
+
+        posiTopEl = el.offset().top;
+
+        hColOther = sc.settings.elCol.outerHeight();
+
+        if ( sc.settings.ajaxLoad ) {
+            hColOther = sc.settings.elCol.outerHeight();
+        }
+
+        for ( var i = 0; i < sc.settings.elTopH.length; i++ ) {
+            var $item = $(sc.settings.elTopH[i]);
+            hTop += $item.outerHeight();
+        }
+        for ( var i = 0; i < sc.settings.elBottomH.length; i++ ) {
+            var $item = $(sc.settings.elBottomH[i]);
+            hBottom += $item.outerHeight();
+        }
+
+        $(window).on('scroll', function (e) {
+            e.preventDefault();
+            valScroll = $(this).scrollTop();
+            
+            if ( sc.settings.headerFix ) {
+                if ( sc.settings.headerFixEl.hasClass('is-fixed') ) {
+                    hTop = sc.settings.headerFixEl.outerHeight();
+                }
+            }
+
+            if ( valScroll >= posiTopEl ) {
+                el.addClass('fixElScroll');
+                el.css({
+                    'transform': 'translateY('+(hTop+20)+'px)',
+                    '-webkit-transform': 'translateY('+(hTop+20)+'px)',
+                    '-moz-transform': 'translateY('+(hTop+20)+'px)',
+                    '-ms-transform': 'translateY('+(hTop+20)+'px)',
+                    width: wElFirst+'px'
+                });
+            }else {
+                el.removeClass('fixElScroll');
+                el.css({
+                    'transform': 'translateY(0)',
+                    width: 'auto'
+                });
+            }
+        });
+    });
+
 }

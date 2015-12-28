@@ -9,18 +9,20 @@ use yii\helpers\ArrayHelper;
 use vsoft\ad\models\AdProductAdditionInfo;
 use vsoft\ad\models\AdContactInfo;
 use common\widgets\CKEditor;
+use vsoft\ad\models\AdCategory;
 $this->title = Yii::t ( 'express', 'We offer exeptional amenities and renowned white - glove services' );
 
 $this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/select2.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
+$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/tooltipster.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
 
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/select2.min.js', ['position' => View::POS_END]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/gmap.js', ['position' => View::POS_END]);
 $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=apiLoaded', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/dang-tin.js', ['position' => View::POS_END]);
-$this->registerCss('.preview canvas {vertical-align: middle;} .price-editable{position: relative;} .price-editable .price-format {display: inline; position: absolute; top: 10px; left: 100%; white-space: nowrap; padding-left: 9px;} .preview img {width: 120px; height: 80px;} .select2-drop-active {border-color: #ccc;} .select2-drop {margin-top: -2px;} .editable select.select2 {padding: 0 20px;} .editable {cursor: pointer; max-width: 100%; min-width: 160px;} .editable:not(.editing):hover {background: rgba(0, 0, 0, 0.15);border-radius: 4px;padding: 3px;}');
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/jquery.bxslider.js', ['position' => View::POS_END]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/imagesloaded.3.0.4.js', ['position' => View::POS_END]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/lightbox.min.js', ['position' => View::POS_END]);
+$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/jquery.tooltipster.min.js', ['position' => View::POS_END]);
 
 $type = [ 
 	AdProduct::TYPE_FOR_SELL => Yii::t ( 'ad', 'Nhà đất bán' ),
@@ -41,6 +43,7 @@ if(Yii::$app->user->identity->profile->avatar) {
 		<?php $form = ActiveForm::begin ( [ 
 				'id' => 'frm-post-tin',
 				'options' => [ 
+					'autocomplete' => 'off',
 					'spellcheck' => 'false',
 					'class' => 'form-horizontal'
 				]]); ?>
@@ -86,17 +89,19 @@ if(Yii::$app->user->identity->profile->avatar) {
 						</div>
 					</div>
 				</div>
+				<?php if($category->template == AdCategory::TEMPLATE_SUGGEST_LIST): ?>
 				<div class="form-group">
 					<label for="" class="col-sm-3 control-label">Thuộc dự án</label>
 					<div class="col-sm-9 group-item-frm">
 						<?= Html::activeDropDownList($model, 'project_building_id', [], ['class' => 'form-control mgB-0', 'prompt' => 'Dự án'])?>
 					</div>
 				</div>
+				<?php endif; ?>
 				<div class="form-group text-inline">
 					<label for="" class="col-sm-3 control-label">Diện tích *</label>
 					<div class="col-sm-9">
 						<div class="inline-group col-xs-6">
-							<?= Html::activeTextInput($model, 'area', ['class' => 'form-control number-only ad-input', 'data-float' => '1']) ?>
+							<?= Html::activeTextInput($model, 'area', ['class' => 'form-control number-only ad-input', 'data-float' => '1', 'data-limit' => $category->limit_area, 'data-ref-back' => 'area-format']) ?>
 						<div class="help-block" style="display: none;"></div>
 						</div>
 						<div class="inline-group col-xs-6 pdR-0">
@@ -111,7 +116,7 @@ if(Yii::$app->user->identity->profile->avatar) {
 					<label for="" class="col-sm-3 control-label">Giá *</label>
 					<div class="col-sm-9 group-item-frm">
 						<div class="inline-group col-xs-6 mgB-10">
-							<?= Html::activeTextInput($model, 'price', ['class' => 'form-control number-only ad-input']) ?>
+							<?= Html::activeTextInput($model, 'price', ['class' => 'form-control number-only ad-input', 'data-ref-back' => 'price-format']) ?>
 							<div class="help-block" style="display: none;"></div>
 						</div>
 						<div class="inline-group col-xs-6 pdR-0">
@@ -126,7 +131,7 @@ if(Yii::$app->user->identity->profile->avatar) {
 			</div>
 			<div class="fieldset clearfix" style="display: none;">
 		    	<div class="form-group">
-		    		<?= Html::activeTextarea($model, 'content', ['class' => 'form-control ad-input', 'placeholder' => 'Nội dung tin đăng', 'style' => 'height: 100px;']) ?>
+		    		<?= Html::activeTextarea($model, 'content', ['class' => 'form-control ad-input', 'placeholder' => 'Nội dung tin đăng', 'style' => 'height: 100px;', 'data-position' => 'bottom']) ?>
 		    		<div class="help-block" style="display: none;"></div>
 		    	</div>
 				<?= FileUploadUI::widget([
@@ -185,18 +190,18 @@ if(Yii::$app->user->identity->profile->avatar) {
 							<?= Html::activeTextInput($adContactInfo, 'name', ['class' => 'form-control', 'placeholder' => 'Tên liên hệ']) ?>
 						</div>
 						<div class="col-xs-3">
-							<?= Html::activeTextInput($adContactInfo, 'phone', ['class' => 'form-control number-only', 'placeholder' => 'Điện thoại', 'data-zero-first' => '1']) ?>
+							<?= Html::activeTextInput($adContactInfo, 'phone', ['class' => 'form-control ad-input number-only', 'placeholder' => 'Điện thoại', 'data-zero-first' => '1', 'data-position' => 'top']) ?>
 							<div class="help-block" style="display: none;"></div>
 						</div>
 						<div class="col-xs-3">
 							<div class="form-group mgB-0">
-								<?= Html::activeTextInput($adContactInfo, 'mobile', ['class' => 'form-control ad-input number-only', 'placeholder' => 'Di động *', 'data-zero-first' => '1']) ?>
+								<?= Html::activeTextInput($adContactInfo, 'mobile', ['class' => 'form-control ad-input number-only', 'placeholder' => 'Di động *', 'data-zero-first' => '1', 'data-position' => 'top']) ?>
 								<div class="help-block" style="display: none;"></div>
 							</div>
 						</div>
 						<div class="col-xs-3">
 							<div class="form-group mgB-0">
-								<?= Html::activeTextInput($adContactInfo, 'email', ['class' => 'form-control ad-input', 'placeholder' => 'Email']) ?>
+								<?= Html::activeTextInput($adContactInfo, 'email', ['class' => 'form-control ad-input', 'placeholder' => 'Email', 'data-position' => 'top']) ?>
 								<div class="help-block" style="display: none;"></div>
 							</div>
 						</div>
@@ -263,10 +268,12 @@ if(Yii::$app->user->identity->profile->avatar) {
                                 	<span id="ref-adproduct-city_id"></span>
                                 </h1>
                                 <table>
+                                	<?php if($category->template == AdCategory::TEMPLATE_SUGGEST_LIST): ?>
                                     <tr class="not-required-wrap">
                                         <th>Dự án</th>
                                         <td><span class="editable not-required" id="ref-adproduct-project_building_id"></span></td>
                                     </tr>
+                                    <?php endif; ?>
                                     <tr>
                                         <th>Giá:</th>
                                         <td><span class="editable price-editable" id="ref-price-format"></span></td>

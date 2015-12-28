@@ -40,7 +40,10 @@
 			$(document).on('click', function (e) {
 				//e.preventDefault();
 				var container = $(".list-filters-result .outsideevent");
-		        if ( !container.is(e.target) && container.has(e.target).length === 0 ){
+				/*if ( e.target.id == "submit-filter" || e.target.parentElement.id == "submit-filter" ) {
+
+				}*/
+		        if ( (!container.is(e.target) && container.has(e.target).length === 0) || e.target.id == "submit-filter" || e.target.parentElement.id == "submit-filter" ){
 		        	//minmax.wrapVal.hide();
 		        	minmax.wrapVal.removeClass('active');
 					setTimeout(function() {
@@ -190,8 +193,10 @@
 				$(document).trigger('click');
 			});
 		}
-	}
+	};
 
 	minmax.init();
+
+	
 	
 })();
