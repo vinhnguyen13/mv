@@ -89,7 +89,7 @@
 					                                	<div class="bgcover" style="background-image:url(<?= $image->file_name ?>);"></div>
 					                                	<a data-lightbox="detail-post" class="group mask" href="<?= $image->file_name ?>"><em class="fa fa-search"></em><img src="<?= $image->file_name ?>" alt="" style="display:none;"></a>
 					                                </li>
-					                                <?php endforeach; ?>
+					                                <?php endif; endforeach; ?>
 					                                </ul>
 				                                </div>
 			                                <?php endforeach; ?>
