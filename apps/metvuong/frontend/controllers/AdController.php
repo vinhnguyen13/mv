@@ -135,7 +135,7 @@ class AdController extends Controller
         		$productResponse[$k]['area'] = StringHelper::formatCurrency($product['area']);
         		
         		if($product['file_name']) {
-        			if($product['is_craw']) {
+        			if(StringHelper::startsWith($product['file_name'], 'http')) {
         				$productResponse[$k]['image_url'] = $product['file_name'];
         			} else {
         				$productResponse[$k]['image_url'] = AdImages::getImageUrl($product['file_name']);
