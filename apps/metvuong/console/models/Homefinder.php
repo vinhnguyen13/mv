@@ -528,6 +528,7 @@ class Homefinder extends Component
         $insertCount = 0;
         $log = $this->loadFileLog();
         $start_project = empty($log["last_project_index"]) ? 0 : $log["last_project_index"];
+        $start_file = empty($log["last_file_index"]) ? 0 : $log["last_file_index"];
         $counter_project = count($log["projects"]);
 
         if ($counter_project > $start_project) {
@@ -540,25 +541,28 @@ class Homefinder extends Component
             $columnNameArray = ['category_id', 'home_no', 'user_id',
                 'city_id', 'district_id', 'ward_id', 'street_id',
                 'type', 'content', 'area', 'price', 'lat', 'lng',
-                'start_date', 'end_date', 'verified', 'created_at'];
+                'start_date', 'end_date', 'verified', 'created_at', 'source'];
             $bulkInsertArray = array();
+            $count_page = 1;
             print_r('Insert data...');
             for ($i = $start_project; $i < $counter_project; $i++) {
+                if($count_page > 300)
+                {
+                    break;
+                }
                 $project_name = $log["projects"][$i];
                 if (!empty($project_name)) {
 //                    $path = Yii::getAlias('@console') . "/data/homefinder/{$project_name}";
 //                    $project_files = $this->loadProjectFileLog($project_name);
                     $path = Yii::getAlias('@console') . "/data/homefinder/{$project_name}/files";
                     $project_files = scandir($path, 1);
-                    $start_file = empty($log["last_file_index"]) ? 0 : $log["last_file_index"];
                     $counter_file = count($project_files) - 3; // last file except .. and .
-                    if ($counter_file > $start_file) {
-                        for ($j = $start_file; $j < 500 ; $j++) {
-                            $log["last_project_index"] = $i;
-                            $log["last_file_index"] = $j;
-                            $log["last_import_time"] = date("d-m-Y H:i");
-                            $this->writeFileLog($log);
 
+                    if ($counter_file > $start_file) {
+                        for ($j = $start_file; $j < $counter_file ; $j++) {
+                            if($count_page > 300){
+                                break;
+                            }
                             $filename = $path . '/' . $project_files[$j];
                             $data = file_get_contents($filename);
                             $data = json_decode($data, true);
@@ -567,17 +571,20 @@ class Homefinder extends Component
                                 $district_id = $this->getDistrictId($value["district"], $districtData, $city_id);
                                 $ward_id = $this->getWardId($value["ward"], $wardData, $district_id);
                                 $street_id = $this->getStreetId($value["street"], $streetData, $district_id);
+
+                                $description = strip_tags($value["description"], '<p><br><ul><li>');
+                                $description = trim($description);
+
                                 $record = [
                                     'category_id' => 6,
-//                        'project_building_id' => 1,
                                     'home_no' => $value["home_no"],
-                                    'user_id' => 3,
+                                    'user_id' => null,
                                     'city_id' => $city_id,
                                     'district_id' => $district_id,
                                     'ward_id' => $ward_id,
                                     'street_id' => $street_id,
                                     'type' => $value["loai_giao_dich"] == 'Thuê' ? 2 : 1,
-                                    'content' => '' . $value["description"],
+                                    'content' => $description,
                                     'area' => $value["dientich"],
                                     'price' => $value["price"],
                                     'lat' => $value["lat"],
@@ -586,20 +593,41 @@ class Homefinder extends Component
                                     'end_date' => $value["end_date"],
                                     'verified' => 1,
                                     'created_at' => $value["start_date"],
-
+                                    'source' => 2
                                 ];
                                 $bulkInsertArray[] = $record;
                             }
+
+                            $log["last_project_index"] = $i;
+                            $log["last_project_name"] = $project_name;
+                            $log["last_file_index"] = $j;
+//                            $log["last_file_name"] = $project_files[$j];
+                            $log["last_import_time"] = date("d-m-Y H:i");
+                            $this->writeFileLog($log);
+                            $count_page++;
+
                         } // end items loop
-                    } // end project["files"];
+                    }
                 } // end projects loop
-                if (count($bulkInsertArray) > 0) {
-                    // below line insert all your record and return number of rows inserted
-                    $insertCount = Yii::$app->db->createCommand()
-                        ->batchInsert($tableName, $columnNameArray, $bulkInsertArray)
-                        ->execute();
+            }
+            if (count($bulkInsertArray) > 0) {
+                // below line insert all your record and return number of rows inserted
+                $insertCount = Yii::$app->db->createCommand()
+                    ->batchInsert($tableName, $columnNameArray, $bulkInsertArray)
+                    ->execute();
+
+                if ($insertCount < 1) {
+                    $log = $this->loadFileLog();
+                    $log["last_project_index"] = $start_project;
+//                    $log["last_project_name"] = "";
+                    $log["last_file_index"] = $start_file;
+//                    $log["last_file_name"] = "";
+                    $log["last_import_time"] = date("d-m-Y H:i");
+                    $this->writeFileLog($log);
+                    print_r("\nCannot insert ad_product");
                 }
             }
+
         }
         else{
             print_r("---------------\n");

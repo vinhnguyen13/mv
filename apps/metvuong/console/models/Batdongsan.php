@@ -538,6 +538,11 @@ class Batdongsan extends Component
                             print_r("\nInser contact info done");
                     }
                 } else{
+                    $log = $this->loadFileLog();
+                    $log["last_import"] = $start;
+                    $log["last_import_name"] = "";
+                    $log["last_import_time"] = date("d-m-Y H:i");
+                    $this->writeFileLog($log);
                     print_r("\nCannot insert ad_product");
                 }
             }
