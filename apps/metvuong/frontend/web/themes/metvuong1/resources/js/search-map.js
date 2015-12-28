@@ -68,7 +68,7 @@ function start() {
 					url: callUrl,
 					data: {id: _id},
 					success: function(data) {
-						_this.removeClass('active').addClass('active');
+						_this.toggleClass('active');
 					}
 				});
 			}, 500);
