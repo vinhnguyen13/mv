@@ -1,8 +1,8 @@
 <?php
 namespace vsoft\express\components;
 
-use yii\helpers\StringHelper;
-class StringHelper extends StringHelper {
+use yii\helpers\StringHelper as SH;
+class StringHelper extends SH {
 	public static function previousTime($Time) {
 		$StartDay = mktime( 0, 0, 0 );
 		$Yesterday = $StartDay - 86400;
