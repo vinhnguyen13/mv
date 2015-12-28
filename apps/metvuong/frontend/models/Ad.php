@@ -109,6 +109,11 @@ class Ad extends Component
     }
 
     public function report(){
+        if(Yii::$app->user->isGuest){
+            throw new NotFoundHttpException('You must login !');
+        }
+        if(Yii::$app->request->isPost && Yii::$app->request->isAjax) {
 
+        }
     }
 }
