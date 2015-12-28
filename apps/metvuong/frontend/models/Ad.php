@@ -7,6 +7,7 @@
  */
 
 namespace frontend\models;
+use vsoft\ad\models\AdProductSaved;
 use Yii;
 use yii\base\Component;
 use yii\helpers\ArrayHelper;
@@ -14,6 +15,7 @@ use yii\helpers\Url;
 use vsoft\news\models\CmsShow;
 use vsoft\ad\models\AdBuildingProject;
 use yii\web\Cookie;
+use yii\web\NotFoundHttpException;
 
 class Ad extends Component
 {
@@ -86,6 +88,21 @@ class Ad extends Component
     }
 
     public function report(){
+        if(Yii::$app->user->isGuest){
+            throw new NotFoundHttpException();
+        }
 
+        if(Yii::$app->request->isPost && Yii::$app->request->isAjax) {
+            $post = Yii::$app->request->post();
+            if(!empty($post['id'])){
+                if(empty($adSaved = AdProductSaved::findOne(['id'=>$post['id']]))){
+                    $adSaved = new AdProductSaved();
+                    $adSaved->product_id = $post['id'];
+                }
+                $adSaved->user_id = Yii::$app->user->id;
+            }
+
+        }
+        return false;
     }
 }
