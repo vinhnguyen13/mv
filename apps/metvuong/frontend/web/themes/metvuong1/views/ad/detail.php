@@ -77,7 +77,7 @@
 			                                	<div class="wrap-img-detail">
 			                                    	<ul class="clearfix">
 					                                <?php foreach($imagesGroup as $image): 
-					                                		if(StringHelper::startsWith($image->file_name, 'http')):
+					                                		if(!StringHelper::startsWith($image->file_name, 'http')):
 					                                ?>
 					             						<li>
 				                                            <div class="bgcover" style="background-image:url(<?= $image->imageThumb ?>);"></div>
