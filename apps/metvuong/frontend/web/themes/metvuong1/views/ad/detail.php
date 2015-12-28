@@ -297,10 +297,10 @@
                                             <em class="icon-heart"></em>
                                             <span>Lưu</span>
                                         </a>
-                                        <a class="icon-favo" href="#">
-                                            <em class="icon-like"></em>
+                                        <!--<a class="icon-favo" href="#">
+                                            <em class="icon-ok-sign"></em>
                                             <span>Yêu thích</span>
-                                        </a>
+                                        </a>-->
                                     </div>
                                 </div>
                             </div>
