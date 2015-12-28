@@ -57,7 +57,14 @@ function start() {
 
 		var timer = 0;
 		$('#detail-wrap').on('click', '.icon-hear', function(){
-			var _this = $(this);
+			addToFavorite($(this));
+		});
+		$('#moi-nhat').on('click', '.icon-hear', function(e){
+			e.preventDefault();
+			addToFavorite($(this));
+		});
+		
+		function addToFavorite(_this) {
 			var _id = _this.attr('data-id');
 			var callUrl = _this.attr('data-url');
 			_this.toggleClass('active');
@@ -74,7 +81,7 @@ function start() {
 					}
 				});
 			}, 500);
-		});
+		}
 
 		$('#detail-wrap').on('click', '.rating li a', function(){
 			var _this = $(this);
@@ -131,66 +138,84 @@ function start() {
 			marker.setIcon('/images/marker.png');
 		});
 		
-		listResult.on('click', '> li', function(){
-			var self = $(this);
-			
-			$('#map-loading').height($('.cd-main-content').height()).show();
-			
-			$.get('/ad/detail', {id: $(this).data('detail'), isCraw: $(this).data('is-craw')}, function(response){
-				$('#map-loading').hide();
-				var width = $('.wrap-map-result').width();
-				width = (width > 820) ? 820 : width;
+		listResult.on('click', '> li', function(e){
+			if(!$(e.target).hasClass('icon-hear') && $(e.target).closest('.icon-hear').length == 0) {
+				var self = $(this);
 				
-				$('#detail-wrap').css({
-					width: width,
-					left: '-' + width + 'px',
-					height: $('.result-items').height()
-				});
-				$('#detail-listing').html($(response).html());
+				$('#map-loading').height($('.cd-main-content').height()).show();
 				
+				$.get('/ad/detail', {id: $(this).data('detail'), isCraw: $(this).data('is-craw')}, function(response){
+					$('#map-loading').hide();
+					var width = $('.wrap-map-result').width();
+					width = (width > 820) ? 820 : width;
+					
+					$('#detail-wrap').css({
+						width: width,
+						left: '-' + width + 'px',
+						height: $('.result-items').height()
+					});
+					$('#detail-listing').html($(response).html());
+					
 
-				if(!self.data('clone')) {
-					var marker = gmap.getMarker(self.data('id'));
-					if(marker) {
-						var position = marker.getPosition();
-						gmap.setCenter({lat: position.lat(), lng: position.lng()});
-					}
-				}
-				
-				$('.gallery-detail').imagesLoaded()
-				 	.always( function( instance ) {
-						if($('#detail-listing .bxslider').find('.wrap-img-detail').length > 0) {
-							setTimeout(function() {
-					 			$('#detail-listing .bxslider').bxSlider({
-					                moveSlides: 1,
-					                startSlide: 0,
-					                minSlides: 1,
-					                maxSlides: 2,
-					                slideWidth: 444,
-					                startSlide: 0,
-					                onSliderLoad: function() {
-					                    this.infiniteLoop = false;
-					                    this.hideControlOnEnd = true;
-					                    scrollFixed();
-					                }
-					            });
-								lightbox.option({
-						            'resizeDuration': 300,
-						            'fadeDuration': 400
-						        });
-					 		},500);
+					if(!self.data('clone')) {
+						var marker = gmap.getMarker(self.data('id'));
+						if(marker) {
+							var position = marker.getPosition();
+							gmap.setCenter({lat: position.lat(), lng: position.lng()});
 						}
-				 	});
-			});
+					}
+					
+					$('.gallery-detail').imagesLoaded()
+					 	.always( function( instance ) {
+							if($('#detail-listing .bxslider').find('.wrap-img-detail').length > 0) {
+								setTimeout(function() {
+						 			$('#detail-listing .bxslider').bxSlider({
+						                moveSlides: 1,
+						                startSlide: 0,
+						                minSlides: 1,
+						                maxSlides: 2,
+						                slideWidth: 444,
+						                startSlide: 0,
+						                onSliderLoad: function() {
+						                    this.infiniteLoop = false;
+						                    this.hideControlOnEnd = true;
+						                    scrollFixed();
+						                }
+						            });
+									lightbox.option({
+							            'resizeDuration': 300,
+							            'fadeDuration': 400
+							        });
+						 		},500);
+							}
+					 	});
+				});
+			}
 		});
 		
-		$('#order-by-tab a').click(function(){
+		$('#order-by-tab a').click(function(e){
+			
 			gmap.removeAllMarker();
-			$('#order-by').val($(this).data('order'));
-			search(function(r){
-				response = r;
-				loadListing();
-			});
+			
+			if($(this).data('href')) {
+				listResult.empty();
+				$('#listing-loading').show();
+				$('.pagination').remove();
+				$('#no-result').hide();
+				
+				$.get($(this).data('href'), {}, function(r) {
+					$('#listing-loading').hide();
+					
+					response = r;
+					loadListing();
+				});
+			} else {
+				$('#order-by').val($(this).data('order'));
+				search(function(r){
+					response = r;
+					loadListing();
+				});
+			}
 		});
 		
 		$('#moi-nhat').on('click', '.pagination a', function(e){
@@ -318,7 +343,7 @@ function makeMarker(product) {
                     '<p class="rice-result">' + price + '</p>' +
                     '<p class="beds-baths-sqft">' + product['area'] + 'm<sup>2</sup> ' + floorNo + roomNo + toiletNo + '</p>' +
                     '<p class="date-post-rent">' + product.previous_time + '</p>' +
-                    '<div class="icon-item-listing"><a title="Lưu" class="icon-hear" href="#"><em class="fa fa-heart-o"></em></a></div>' +
+                    '<div class="icon-item-listing"><a title="Lưu" class="icon-hear" data-id="' + product.id + '" data-url="/ad/favorite"><em class="fa fa-heart-o"></em></a></div>' +
                 '</div>' +
             '</li>';
 	return li;
