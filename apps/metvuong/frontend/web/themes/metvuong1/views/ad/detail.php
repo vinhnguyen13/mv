@@ -68,8 +68,13 @@
 			                                <div class="wrap-img-detail">
 			                                    <ul class="clearfix">
 			                                        <li class="img-big">
+			                                        	<?php if(!StringHelper::startsWith($firstImage->file_name, 'http')): ?>
 			                                            <div class="bgcover" style="background-image:url(<?= $firstImage->imageMedium ?>);"></div>
 			                                            <a data-lightbox="detail-post" class="group mask" href="<?= $firstImage->imageLarge ?>"><em class="fa fa-search"></em><img src="<?= $firstImage->imageLarge ?>" alt="" style="display:none;"></a>
+			                                        	<?php else: ?>
+			                                        	<div class="bgcover" style="background-image:url(<?= $firstImage->file_name ?>);"></div>
+			                                            <a data-lightbox="detail-post" class="group mask" href="<?= $firstImage->file_name ?>"><em class="fa fa-search"></em><img src="<?= $firstImage->file_name ?>" alt="" style="display:none;"></a>
+			                                        	<?php endif; ?>
 			                                        </li>
 			                                    </ul>
 			                                </div>
