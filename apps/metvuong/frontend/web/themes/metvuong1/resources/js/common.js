@@ -354,9 +354,7 @@ $.fn.scfix = function (options) {
         $(window).on('scroll', function (e) {
             e.preventDefault();
             valScroll = $(this).scrollTop();
-            l('val scroll '+valScroll);
-            l(' val offset '+posiTopEl);
-
+            
             if ( sc.settings.headerFix ) {
                 if ( sc.settings.headerFixEl.hasClass('is-fixed') ) {
                     hTop = sc.settings.headerFixEl.outerHeight();

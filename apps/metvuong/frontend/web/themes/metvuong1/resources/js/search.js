@@ -438,7 +438,7 @@
                     $('#'+itemRender).find('ul').html('');
                     for ( var j in dataCategories ) {
                         if ( dataCategories[j].apply_to_type == idLoadBy || dataCategories[j].apply_to_type == 3 ) {
-                            var item = $('<li data-id="'+j+'"><a href="#" data-item="loai-bds" data-slug-name="'+ChangeToSlug(dataCategories[j].name)+'">'+dataCategories[j].name+'</a></li>');
+                            var item = $('<li data-id="'+j+'"><a href="#" data-item="loai-bds" data-slug-name="'+ChangeToSlug(dataCategories[j].name)+'" data-template="'+dataCategories[j].template+'">'+dataCategories[j].name+'</a></li>');
                             $('#'+itemRender).find('ul').append(item);
                         }
                     }
@@ -528,18 +528,23 @@
                     if ( typeof next == 'object' ) {
                         $('#'+stepCurrent).find('ul li a').each(function () {
                             var _this = $(this),
-                                slug = _this.data('slugName');
+                                slug = _this.data('slugName'),
+                                template = _this.data('template');
 
-                            for ( var j in next ) {
-                                if ( slug == j ) {
-                                    _this.attr('data-next', next[j].next);
-                                    _this.attr('data-prev', next[j].prev);
-                                    _this.addClass('flag');
-                                    break;
-                                }
-                                if ( !_this.hasClass('flag') ) {
-                                    _this.attr('data-next', next[j].next);
-                                    _this.attr('data-prev', next[j].prev);
+                            if ( template != undefined ) {
+                                _this.attr('data-next', template);
+                            }else {
+                                for ( var j in next ) {
+                                    if ( slug == j ) {
+                                        _this.attr('data-next', next[j].next);
+                                        _this.attr('data-prev', next[j].prev);
+                                        _this.addClass('flag');
+                                        break;
+                                    }
+                                    if ( !_this.hasClass('flag') ) {
+                                        _this.attr('data-next', next[j].next);
+                                        _this.attr('data-prev', next[j].prev);
+                                    }
                                 }
                             }
                         });

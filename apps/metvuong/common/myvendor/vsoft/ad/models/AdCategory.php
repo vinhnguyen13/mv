@@ -23,8 +23,8 @@ class AdCategory extends AdCategoryBase
 	
 	public static function templateMap() {
 		return [
-			self::TEMPLATE_SUGGEST_LIST => 'suggest-list',
-			self::TEMPLATE_COST_MIN_MAX => 'cost-min-max',
+			self::TEMPLATE_SUGGEST_LIST => 'loai-duan',
+			self::TEMPLATE_COST_MIN_MAX => 'min-max',
 		];
 	}
 	
