@@ -63,7 +63,7 @@
 									$firstImage = array_shift($images);
 									$images = array_chunk($images, 4);
 
-									if(!Yii::$app->request->get('isCraw')):
+									if(StringHelper::startsWith($images->file_name, 'http')):
 						?>
 			                        <div class="gallery-detail clearfix">
 			                            <div class="bxslider">
