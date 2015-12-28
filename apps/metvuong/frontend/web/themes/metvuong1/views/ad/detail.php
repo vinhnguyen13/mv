@@ -253,7 +253,7 @@
                                         </div>
                                     </form>
                                 </div>
-                                <div class="function-listing">
+                                <div class="function-listing clearfix">
                                     <p>Đánh giá</p>
                                     <div class="rating">
                                         <ul class="clearfix">
