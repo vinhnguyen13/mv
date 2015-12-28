@@ -280,8 +280,8 @@ class AdController extends Controller
     	}
     }
 
-	public function actionFavorites() {
-		return Ad::find()->favorites();
+	public function actionFavorite() {
+		return Ad::find()->favorite();
 	}
 
 	public function actionReport() {

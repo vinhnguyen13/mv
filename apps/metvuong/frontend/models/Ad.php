@@ -16,6 +16,7 @@ use vsoft\news\models\CmsShow;
 use vsoft\ad\models\AdBuildingProject;
 use yii\web\Cookie;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 class Ad extends Component
 {
@@ -83,30 +84,30 @@ class Ad extends Component
         return $url;
     }
 
-    public function favorites(){
-
+    public function favorite(){
+        if(Yii::$app->user->isGuest){
+            throw new NotFoundHttpException('You must login !');
+        }
+        if(Yii::$app->request->isPost && Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $post = Yii::$app->request->post();
+            if(!empty($post['id'])){
+                if(($adSaved = AdProductSaved::findOne(['product_id'=>$post['id'], 'user_id'=>Yii::$app->user->id])) === null){
+                    $adSaved = new AdProductSaved();
+                    $adSaved->product_id = $post['id'];
+                    $adSaved->user_id = Yii::$app->user->id;
+                    $adSaved->validate();
+                    if(!$adSaved->hasErrors()){
+                        $adSaved->save();
+                    }
+                }
+                return ['statusCode'=>200, 'parameters'=>['msg'=>'']];
+            }
+        }
+        return ['statusCode'=>404, 'parameters'=>['msg'=>'']];
     }
 
     public function report(){
-        if(Yii::$app->user->isGuest){
-            throw new NotFoundHttpException();
-        }
 
-        if(Yii::$app->request->isPost && Yii::$app->request->isAjax) {
-            $post = Yii::$app->request->post();
-            if(!empty($post['id'])){
-                if(($adSaved = AdProductSaved::findOne(['id'=>$post['id']])) === null){
-                    $adSaved = new AdProductSaved();
-                    $adSaved->product_id = $post['id'];
-                }
-                $adSaved->user_id = Yii::$app->user->id;
-                $adSaved->validate();
-                if(!$adSaved->hasErrors()){
-                    $adSaved->save();
-                }
-            }
-
-        }
-        return false;
     }
 }

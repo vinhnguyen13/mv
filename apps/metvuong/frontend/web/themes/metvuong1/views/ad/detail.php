@@ -293,7 +293,7 @@
                                         </div>
                                     </div>
                                     <div class="icon-item-listing">
-                                        <a title="Lưu" class="icon-hear" href="#">
+                                        <a title="Lưu" class="icon-hear" data-id="<?=$product->id;?>" href="#" data-url="<?=Url::to(['/ad/favorite'])?>">
                                             <em class="icon-heart"></em>
                                             <span>Lưu</span>
                                         </a>

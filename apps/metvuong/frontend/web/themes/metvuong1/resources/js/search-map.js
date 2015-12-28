@@ -54,6 +54,25 @@ function start() {
 				left: '0px'
 			});
 		});
+
+		var timer = 0;
+		$('#detail-wrap').on('click', '.icon-hear', function(){
+			var _this = $(this);
+			var _id = _this.attr('data-id');
+			var callUrl = _this.attr('data-url');
+			clearTimeout(timer);
+			timer = setTimeout(function() {
+				$.ajax({
+					type: "post",
+					dataType: 'json',
+					url: callUrl,
+					data: {id: _id},
+					success: function(data) {
+						_this.removeClass('active').addClass('active');
+					}
+				});
+			}, 500);
+		});
 		
 		var hoverTimeout;
 		listResult.on('mouseenter', '> li', function() {
