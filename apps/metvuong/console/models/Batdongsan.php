@@ -99,7 +99,6 @@ class Batdongsan extends Component
                     $checkExists = false;
                     if(!empty($log["files"])) {
                         $checkExists = in_array($productId, $log["files"]);
-                        var_dump($productId);
                     }
 
                     if ($checkExists == false) {
@@ -110,6 +109,8 @@ class Batdongsan extends Component
                             $sequence_id = $sequence_id + 1;
 //                            $status = 1;
                         }
+                    } else {
+                        var_dump($productId);
                     }
                 }
                 return ['status' => $status, 'data' => $log];
@@ -372,7 +373,7 @@ class Batdongsan extends Component
 
         if ($counter > $start) {
             print_r("Prepare data...\n");
-            $user = User::find()->one();
+//            $user = User::find()->one();
             $cityData = AdCity::find()->all();
             $districtData = AdDistrict::find()->all();
 //            $wardData = AdWard::find()->all();
@@ -381,13 +382,16 @@ class Batdongsan extends Component
             $columnNameArray = ['category_id', 'user_id',
                 'city_id', 'district_id',
                 'type', 'content', 'area', 'price', 'lat', 'lng',
-                'start_date', 'end_date', 'verified', 'created_at'];
+                'start_date', 'end_date', 'verified', 'created_at', 'source'];
             $bulkInsertArray = array();
             $imageArray = array();
             $infoArray = array();
             $contactArray = array();
             print_r("Insert data...\n");
+            $count_page = 1;
             for($i = $start; $i < $counter; $i++) {
+                if($count_page > 500)
+                    break;
                 $filename = $files[$i];
                 $filePath = $path.'/'.$filename;
                 if(file_exists($filePath)) {
@@ -423,7 +427,7 @@ class Batdongsan extends Component
 
                         $record = [
                             'category_id' => $value[$filename]["loai_tai_san"],
-                            'user_id' => $user->id,
+                            'user_id' => null,
                             'city_id' => $city_id,
                             'district_id' => $district_id,
                             'type' => $value[$filename]["loai_giao_dich"],
@@ -436,7 +440,7 @@ class Batdongsan extends Component
                             'end_date' => $value[$filename]["end_date"],
                             'verified' => 1,
                             'created_at' => $value[$filename]["start_date"],
-
+                            'source' => 1
                         ];
 
                         $bulkInsertArray[] = $record;
@@ -445,14 +449,13 @@ class Batdongsan extends Component
                     $log["last_import_name"] = $files[$i];
                     $log["last_import_time"] = date("d-m-Y H:i");
                     $this->writeFileLog($log);
+                    $count_page++;
                 }
             }
             if(count($bulkInsertArray)>0){
                 // below line insert all your record and return number of rows inserted
                 $insertCount = Yii::$app->db->createCommand()
-                    ->batchInsert(
-                        $tableName, $columnNameArray, $bulkInsertArray
-                    )->execute();
+                    ->batchInsert( $tableName, $columnNameArray, $bulkInsertArray )->execute();
                 print_r(" Done!");
 
                 if($insertCount > 0) {
