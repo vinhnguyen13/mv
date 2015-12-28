@@ -5421,9 +5421,9 @@ header.animate-children .wrap-search-home .search-select a {
 .icon-item-listing a:hover {
     text-decoration: none;
 }
-.icon-item-listing a:hover em {
+.icon-item-listing a.active,
+.icon-item-listing a:hover{
     color: #39793A;
-    font-weight: bold;
 }
 .function-listing {
     margin-top: 20px;
@@ -5472,11 +5472,10 @@ button.btn.btn-default.dropdown-toggle {
 .icon-item-listing a span {
     padding-left: 5px;   
 }
-.icon-hear.active em:before {
+.icon-hear.active em {
     font: normal normal normal 14px/1 FontAwesome;
-    content: "\f004";
-    font-size: 14px;
-    width: 40px;
+    font-size: 18px;
+    /* width: 40px; */
     vertical-align: middle;
     margin: 0;
     display: inline-block;
@@ -5486,4 +5485,7 @@ button.btn.btn-default.dropdown-toggle {
     transition: all .2s;
     line-height: 30px;
     color: #39793A;
+}
+.icon-hear.active em:before {
+    content: "\f004";
 }
