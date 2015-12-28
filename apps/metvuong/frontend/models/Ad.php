@@ -80,4 +80,8 @@ class Ad extends Component
         Yii::$app->getResponse()->redirect($url);
         return $url;
     }
+
+    public function favorites(){
+
+    }
 }

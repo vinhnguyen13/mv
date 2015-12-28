@@ -279,4 +279,8 @@ class AdController extends Controller
     		return $response;
     	}
     }
+
+	public function actionFavorites() {
+		return Ad::find()->favorites();
+	}
 }
