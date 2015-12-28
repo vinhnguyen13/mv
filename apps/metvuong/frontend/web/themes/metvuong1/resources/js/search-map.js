@@ -288,7 +288,7 @@ function makeMarker(product) {
                     '<p class="rice-result">' + price + '</p>' +
                     '<p class="beds-baths-sqft">' + product['area'] + 'm<sup>2</sup> ' + floorNo + roomNo + toiletNo + '</p>' +
                     '<p class="date-post-rent">' + product.previous_time + '</p>' +
-                    '<div class="icon-item-listing"><a title="Lưu" class="icon-hear" href="#"><em class="icon-heart"></em></a></div>' +
+                    '<div class="icon-item-listing"><a title="Lưu" class="icon-hear" href="#"><em class="fa fa-heart-o"></em></a></div>' +
                 '</div>' +
             '</li>';
 	return li;

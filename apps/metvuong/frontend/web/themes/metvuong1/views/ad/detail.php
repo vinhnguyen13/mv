@@ -294,7 +294,7 @@
                                     </div>
                                     <div class="icon-item-listing">
                                         <a title="Lưu" class="icon-hear" data-id="<?=$product->id;?>" href="#" data-url="<?=Url::to(['/ad/favorite'])?>">
-                                            <em class="icon-heart"></em>
+                                            <em class="fa fa-heart-o"></em>
                                             <span>Lưu</span>
                                         </a>
                                         <!--<a class="icon-favo" href="#">
