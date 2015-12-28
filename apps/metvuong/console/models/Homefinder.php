@@ -59,6 +59,7 @@ class Homefinder extends Component
                     if ($item->href && $idx >= 0) {
 //                    echo $item->title;
                         $this->getListProject($item->href, $item->title);
+
                     }
                 }
             }
@@ -73,11 +74,14 @@ class Homefinder extends Component
         if(!empty($content)) {
             $list = $content->find('.menu ul.list_project li');
             if (!empty($list)) {
+                $log = $this->loadFileLog();
+                if(empty($log) == true ) $log["projects"] = array();
+                $counter = 1;
                 foreach ($list as $item) {
+                    if($counter > 5){
+                        exit();
+                    }
                     $start = time();
-                    $log = $this->loadFileLog();
-                    if(empty($log) == true ) $log["projects"] = array();
-
                     $projectId = null;
                     $attr = $item->getAttribute("ng-class");
                     if (!empty($attr)) {
@@ -95,6 +99,7 @@ class Homefinder extends Component
                                 mkdir($path, 0777);
                             }
                             $this->getProjectInfo($projectId, $log, $project_name, $path, $project_href);
+                            $counter = $counter + 1;
                         }
                     }
                     $end = time();
@@ -117,6 +122,7 @@ class Homefinder extends Component
         $lat = null;
         $lon = null;
         $home_no = 0;
+        $gioi_thieu = null;
         $url = "http://homefinder.vn/ajax/projectrender/".$projectId;
         $projectInfo = $curl->get($url);
         if(!empty($projectInfo)) {
@@ -257,10 +263,10 @@ class Homefinder extends Component
                 if (!empty($matches[1])) {
                     $room_id = $matches[1];
                     $room_id = str_replace('"', '', $room_id);
-                    $project_log = $this->loadProjectFileLog($project_name);
-                    if(empty($project_log[$project_name]))
-                        $project_log[$project_name]["files"] = array();
-                    $this->pagingListing($room_id, $this->page_current, $project_log, $project_name, $city, $district, $ward, $street, $description, $home_no, $lat, $lon);
+//                    $project_log = $this->loadProjectFileLog($project_name);
+//                    if(empty($project_log[$project_name]))
+//                        $project_log[$project_name]["files"] = array();
+                    $this->pagingListing($room_id, $this->page_current, null, $project_name, $city, $district, $ward, $street, $description, $home_no, $lat, $lon);
                 }
             }
         }
@@ -282,11 +288,11 @@ class Homefinder extends Component
         if (($response = json_decode($response)) && !empty($response->data)) {
             $totalItem = count($response->data);
             foreach ($response->data as $item) {
-                $checkExists = in_array($item->_id, $log[$project_name]["files"]);
-                if($checkExists) {
-                    continue;
-                }
-                else {
+//                $checkExists = in_array($item->_id, $log[$project_name]["files"]);
+//                if($checkExists) {
+//                    continue;
+//                }
+//                else {
                     $price = $item->gia;
                     // lay chi tiet trong danh sach bai dang tin
 //                    $res = $this->getListingDetail(self::DOMAIN . '/' . $item->_id, $item, $project_name, $city, $district, $ward, $street, $description, $home_no, $lat, $lon, $price);
@@ -342,16 +348,16 @@ class Homefinder extends Component
                     $path = $path . $filename;
                     $data = json_encode($arr_detail);
                     $res = $this->writeFileJson($path, $data);
-                    if ($res > 0 && !empty($filename)) {
-                        array_push($log[$project_name]["files"],$filename);
-                    }
-                }
+//                    if ($res > 0 && !empty($filename)) {
+//                        array_push($log[$project_name]["files"],$filename);
+//                    }
+//                }
             }
-            $this->writeProjectFileLog($project_name, $log);
+//            $this->writeProjectFileLog($project_name, $log);
 
             if (!empty($response->recordsTotal) && ($response->recordsTotal > ($totalItem * $page_current))) {
                 $page_current++;
-                $log = $this->loadProjectFileLog($project_name);
+//                $log = $this->loadProjectFileLog($project_name);
                 $this->pagingListing($pid, $page_current, $log, $project_name, $city, $district, $ward, $street, $description, $home_no, $lat, $lon);
             }
         }
