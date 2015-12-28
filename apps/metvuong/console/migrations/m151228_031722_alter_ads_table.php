@@ -12,8 +12,8 @@ class m151228_031722_alter_ads_table extends Migration
 		  `product_id` INT NOT NULL,
 		  `saved_at` INT NOT NULL,
 		  PRIMARY KEY (`user_id`, `product_id`),
-		  CONSTRAINT `user_id&user:id` FOREIGN KEY (`user_id`) REFERENCES `metvuong`.`user`(`id`),
-		  CONSTRAINT `prouct_id` FOREIGN KEY (`product_id`) REFERENCES `metvuong`.`ad_product`(`id`)
+		  CONSTRAINT `user_id&user:id` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`),
+		  CONSTRAINT `prouct_id` FOREIGN KEY (`product_id`) REFERENCES `ad_product`(`id`)
 		);");
     }
 
