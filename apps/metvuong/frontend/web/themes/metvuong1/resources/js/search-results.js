@@ -137,6 +137,7 @@
 				minmax.tabsClick.find('.txt-tab').hide();
 				minmax.tabsClick.find('.txt-show').html(txtVal).show();
 
+				minmax.tabsClick.find('em').remove();
 				if ( valMin != '' && valMax === '' ) {
 					//up-to
 					minmax.tabsClick.append('<em class="fa fa-long-arrow-up"></em>');
@@ -144,7 +145,7 @@
 					//down-to
 					minmax.tabsClick.prepend('<em class="fa fa-long-arrow-down"></em>');
 				}else {
-					minmax.tabsClick.find('em').remove();
+					
 				}
 
 				var valHidden = minmax.tabsClick.parent().find('.commaFormat[id="'+attrInput+'"]').data('priceshortcut');
@@ -298,11 +299,12 @@
         reset: function () {
         	$('.hidden_filter').val('');
         	minmax.tabs.removeClass('active');
+        	minmax.tabs.find('em').remove();
         	$('.dropdown-options li a').removeClass('active');
         	minmax.inputVal.val('');
-        	$(document).trigger('click');
         	$('.txt-tab').show();
         	$('.txt-show').hide().html('');
+        	$(document).trigger('click');
         }
 	};
 
