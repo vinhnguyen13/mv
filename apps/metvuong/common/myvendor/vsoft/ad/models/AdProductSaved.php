@@ -4,6 +4,8 @@ namespace vsoft\ad\models;
 
 use Yii;
 use vsoft\ad\models\base\AdProductSavedBase;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "ad_product_saved".
@@ -17,5 +19,15 @@ use vsoft\ad\models\base\AdProductSavedBase;
  */
 class AdProductSaved extends AdProductSavedBase
 {
-
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'saved_at',
+                'updatedAtAttribute' => 'saved_at',
+                'value' => new Expression('NOW()'),
+            ],
+        ];
+    }
 }
