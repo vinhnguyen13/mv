@@ -209,6 +209,7 @@ class Homefinder extends Component
                     $lon = $response_broker_table["lon"];
                     $this->getProjectDetail($project_href, $project_name, $city, $district, $ward, $street, $description, $home_no, $lat, $lon);
                     $log = $this->loadFileLog();
+                    if(empty($log["projects"])) $log["projects"] = array();
                     array_push($log["projects"], $project_name);
                     $this->writeFileLog($log);
                     $not_info = false;
