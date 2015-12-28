@@ -463,6 +463,7 @@ class Homefinder extends Component
     }
 
     function loadFileLog(){
+
 //        $path = Yii::getAlias('@console') . "/data/file_log.json";
         $path = Yii::getAlias('@console') . "/data/homefinder/homefinder_log.json";
         $data = null;
@@ -536,56 +537,54 @@ class Homefinder extends Component
             $bulkInsertArray = array();
             print_r('Insert data...');
             for ($i = $start_project; $i < $counter_project; $i++) {
-                $project_name = $log[$i];
+                $project_name = $log["projects"][$i];
                 if (!empty($project_name)) {
-                    $path = Yii::getAlias('@console') . "/data/homefinder/{$project_name}";
-                    $project_files = $this->loadProjectFileLog($project_name);
-                    if (!empty($project_files["files"])) {
-                        $files = $project_files["files"];
-                        $start_file = empty($log["last_file_index"]) ? 0 : $log["last_file_index"];
-                        $counter_file = count($files);
-                        if ($counter_file - 1 > $start_file) {
-                            for ($j = $start_file; $j < $counter_file; $j++) {
-                                $log["last_project_index"] = $i;
-                                $log["last_file_index"] = $j;
-                                $log["last_import_time"] = date("d-m-Y H:i");
-                                $this->writeFileLog($log);
+//                    $path = Yii::getAlias('@console') . "/data/homefinder/{$project_name}";
+//                    $project_files = $this->loadProjectFileLog($project_name);
+                    $path = Yii::getAlias('@console') . "/data/homefinder/{$project_name}/files";
+                    $project_files = scandir($path, 1);
+                    $start_file = empty($log["last_file_index"]) ? 0 : $log["last_file_index"];
+                    $counter_file = count($project_files) - 3; // last file except .. and .
+                    if ($counter_file > $start_file) {
+                        for ($j = $start_file; $j < 500 ; $j++) {
+                            $log["last_project_index"] = $i;
+                            $log["last_file_index"] = $j;
+                            $log["last_import_time"] = date("d-m-Y H:i");
+                            $this->writeFileLog($log);
 
-                                $filename = $path . '/' . $files[$j];
-                                $data = file_get_contents($filename);
-                                $data = json_decode($data, true);
-                                foreach ($data as $value) {
-                                    $city_id = $this->getCityId($value["city"], $cityData);
-                                    $district_id = $this->getDistrictId($value["district"], $districtData, $city_id);
-                                    $ward_id = $this->getWardId($value["ward"], $wardData, $district_id);
-                                    $street_id = $this->getStreetId($value["street"], $streetData, $district_id);
-                                    $record = [
-                                        'category_id' => 6,
+                            $filename = $path . '/' . $project_files[$j];
+                            $data = file_get_contents($filename);
+                            $data = json_decode($data, true);
+                            foreach ($data as $value) {
+                                $city_id = $this->getCityId($value["city"], $cityData);
+                                $district_id = $this->getDistrictId($value["district"], $districtData, $city_id);
+                                $ward_id = $this->getWardId($value["ward"], $wardData, $district_id);
+                                $street_id = $this->getStreetId($value["street"], $streetData, $district_id);
+                                $record = [
+                                    'category_id' => 6,
 //                        'project_building_id' => 1,
-                                        'home_no' => $value["home_no"],
-                                        'user_id' => 3,
-                                        'city_id' => $city_id,
-                                        'district_id' => $district_id,
-                                        'ward_id' => $ward_id,
-                                        'street_id' => $street_id,
-                                        'type' => $value["loai_giao_dich"] == 'Thuê' ? 2 : 1,
-                                        'content' => '' . $value["description"],
-                                        'area' => $value["dientich"],
-                                        'price' => $value["price"],
-                                        'lat' => $value["lat"],
-                                        'lng' => $value["lng"],
-                                        'start_date' => $value["start_date"],
-                                        'end_date' => $value["end_date"],
-                                        'verified' => 1,
-                                        'created_at' => time(),
+                                    'home_no' => $value["home_no"],
+                                    'user_id' => 3,
+                                    'city_id' => $city_id,
+                                    'district_id' => $district_id,
+                                    'ward_id' => $ward_id,
+                                    'street_id' => $street_id,
+                                    'type' => $value["loai_giao_dich"] == 'Thuê' ? 2 : 1,
+                                    'content' => '' . $value["description"],
+                                    'area' => $value["dientich"],
+                                    'price' => $value["price"],
+                                    'lat' => $value["lat"],
+                                    'lng' => $value["lng"],
+                                    'start_date' => $value["start_date"],
+                                    'end_date' => $value["end_date"],
+                                    'verified' => 1,
+                                    'created_at' => $value["start_date"],
 
-                                    ];
-                                    $bulkInsertArray[] = $record;
-                                }
-                            } // end items loop
-                        } // end project["files"];
-                    }
-                    ob_flush();
+                                ];
+                                $bulkInsertArray[] = $record;
+                            }
+                        } // end items loop
+                    } // end project["files"];
                 } // end projects loop
                 if (count($bulkInsertArray) > 0) {
                     // below line insert all your record and return number of rows inserted
