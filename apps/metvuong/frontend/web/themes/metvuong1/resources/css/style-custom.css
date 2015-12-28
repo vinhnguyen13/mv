@@ -5341,6 +5341,9 @@ header.wrap-page-home .box-search-header.ani-search > div {
 .list-filters-result li a span {
     padding-right: 5px;
 }
+.list-filters-result li a .txt-show {
+    display: none;
+}
 .list-filter > li:last-child button {
     padding: 5px 10px;
     position: absolute;
@@ -5468,4 +5471,19 @@ button.btn.btn-default.dropdown-toggle {
 }
 .icon-item-listing a span {
     padding-left: 5px;   
+}
+.icon-hear.active em:before {
+    font: normal normal normal 14px/1 FontAwesome;
+    content: "\f004";
+    font-size: 14px;
+    width: 40px;
+    vertical-align: middle;
+    margin: 0;
+    display: inline-block;
+    text-align: center;
+    -webkit-transition: all .2s;
+    -o-transition: all .2s;
+    transition: all .2s;
+    line-height: 30px;
+    color: #39793A;
 }
