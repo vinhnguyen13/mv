@@ -100,6 +100,10 @@ class Ad extends Component
                     $adSaved->product_id = $post['id'];
                 }
                 $adSaved->user_id = Yii::$app->user->id;
+                $adSaved->validate();
+                if(!$adSaved->hasErrors()){
+                    $adSaved->save();
+                }
             }
 
         }
