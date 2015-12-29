@@ -95,6 +95,8 @@ class AdProduct extends AdProductBase
 	}
 
 	public function getProductSaved() {
-		return $this->hasOne(AdProductSaved::className(), ['product_id' => 'id', 'user_id' => Yii::$app->user->id]);
+		$query = $this->hasOne(AdProductSaved::className(), ['product_id' => 'id']);
+		$query->andOnCondition('`user_id` = :user_id', [':user_id'=>Yii::$app->user->id]);
+		return $query;
 	}
 }
