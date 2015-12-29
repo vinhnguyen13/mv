@@ -5,19 +5,9 @@ $(document).ready(function(){
 		$('#city').append('<option value="' + index + '">' + city.name + '</option>');
 	}
 	
+	filterCat($(this).val());
 	$('#type').change(function(){
-		var val = $(this).val();
-		
-		$('#category option').each(function(){
-			var self = $(this);
-			var type = self.data('type');
-			
-			if(type == val || type == 3) {
-				self.show();
-			} else {
-				self.hide().prop('selected', false);
-			}
-		});
+		filterCat($(this).val());
 	});
 	
 	$('#city').change(function(){
@@ -36,3 +26,25 @@ $(document).ready(function(){
 	
 	$('.select2').select2({width: 'resolve'});
 });
+
+function filterCat(applyType) {
+	var category = $('#category');
+	var options = category.find('option');
+	var values = [];
+	
+	options.each(function(){
+		var option = $(this);
+		var type = option.data('type');
+		
+		if(type == applyType || type == TYPE_BOTH) {
+			option.show();
+			values.push(option.attr('value'));
+		} else {
+			option.hide();
+		}
+	});
+	
+	if(values.indexOf(category.val()) == -1) {
+		category.val(values[0]);
+	}
+}
