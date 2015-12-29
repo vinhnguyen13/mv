@@ -13,6 +13,7 @@
 		tabsClick: '',
 		numShow: 11,
 		priceAdd: '',
+		priceGetFirst: {},
 		init: function () {
 			minmax.clickTab();
 			minmax.render();
@@ -183,6 +184,28 @@
 					attrInput = _this.attr('id');
 
 				minmax.toggleMinMax(attrInput, _this);
+
+				if ( attrInput == 'max-val' && minmax.tabsClick.parent().find('.filter-common').data('filter') == 'price-min-max' ) {
+					minmax.tabsClick.parent().find('.minmax[data-toggle-filter=max-val] ul').html('');
+					for ( var j in minmax.priceGetFirst ) {
+	                    var item;
+	                    if ( parseInt(j) == 0 ) {
+	                    	continue;
+	                    }
+	                    if ( parseInt(j) < 0 ) {
+	                        txtAnyPrice = minmax.priceGetFirst[j];
+	                        continue;
+	                    }
+	                    item = $('<li data-number="'+j+'" data-unit=""><a class="option">'+minmax.priceGetFirst[j]+'</a></li>');
+	                    minmax.tabsClick.parent().find('.minmax[data-toggle-filter=max-val] ul').append(item);
+	                    minmax.clickVal(item.find('a'));
+	                }
+	                var item = $('<li data-number="" data-unit=""><a class="option">'+txtAnyPrice+'</a></li>');
+                    minmax.tabsClick.parent().find('.minmax[data-toggle-filter=max-val] ul').append(item);
+                    minmax.clickVal(item.find('a'));
+				}else {
+					minmax.renderMaxVal(0);
+				}
 			});
 		},
 		getValCookie: function (name) {
@@ -229,6 +252,8 @@
 	                    $('#min-price-options ul').append(item);
 	                    minmax.clickVal(item.find('a'));
 	                }
+
+	                minmax.priceGetFirst = arrType;
 
 	                break;
                 }
