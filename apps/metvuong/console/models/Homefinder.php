@@ -12,8 +12,10 @@ use DateTime;
 use keltstr\simplehtmldom\SimpleHTMLDom;
 use linslin\yii2\curl\Curl;
 use vsoft\ad\models\AdCity;
+use vsoft\ad\models\AdContactInfo;
 use vsoft\ad\models\AdDistrict;
 use vsoft\ad\models\AdProduct;
+use vsoft\ad\models\AdProductAdditionInfo;
 use vsoft\ad\models\AdStreet;
 use vsoft\ad\models\AdWard;
 use Yii;
@@ -74,14 +76,10 @@ class Homefinder extends Component
         if(!empty($content)) {
             $list = $content->find('.menu ul.list_project li');
             if (!empty($list)) {
-                $log = $this->loadFileLog();
-                if(empty($log) == true ) $log["projects"] = array();
-                $counter = 1;
                 foreach ($list as $item) {
-                    if($counter > 5){
-                        exit();
-                    }
                     $start = time();
+                    $log = $this->loadFileLog();
+                    if(empty($log) == true ) $log["projects"] = array();
                     $projectId = null;
                     $attr = $item->getAttribute("ng-class");
                     if (!empty($attr)) {
@@ -99,7 +97,6 @@ class Homefinder extends Component
                                 mkdir($path, 0777);
                             }
                             $this->getProjectInfo($projectId, $log, $project_name, $path, $project_href);
-                            $counter = $counter + 1;
                         }
                     }
                     $end = time();
@@ -122,19 +119,12 @@ class Homefinder extends Component
         $lat = null;
         $lon = null;
         $home_no = 0;
-        $gioi_thieu = null;
         $url = "http://homefinder.vn/ajax/projectrender/".$projectId;
         $projectInfo = $curl->get($url);
         if(!empty($projectInfo)) {
             $filename = $project_name . '-info.json';
-            if ($this->writeFileJson($path . $filename, $projectInfo) > 0) {
-                $log[$project_name]['info'] = $filename;
-            }
+            $this->writeFileJson($path . $filename, $projectInfo);
             $projectInfo = json_decode($projectInfo, true);
-            $gioi_thieu = $projectInfo["gioi_thieu"];
-            if(!empty($gioi_thieu)){
-                $gioi_thieu = $projectInfo["displayname"];
-            }
             $home_no = $projectInfo["so_nha"];
             $pos_home_no = strpos($home_no,"-");
             if($pos_home_no > 0){
@@ -152,9 +142,7 @@ class Homefinder extends Component
                             $poi["projectId"] = $projectId;
                             $data_response_poi = json_encode($poi);
                             $filePOI = $project_name . '-poi.json';
-                            if ($this->writeFileJson($path . $filePOI, $data_response_poi) > 0) {
-                                $log[$project_name]['poi'] = $filePOI;
-                            }
+                            $this->writeFileJson($path . $filePOI, $data_response_poi);
                         }
                     }
                 }
@@ -170,9 +158,7 @@ class Homefinder extends Component
                 $filename = $project_name . '-phone-broker.json';
                 $phone_broker["projectId"] = $projectId;
                 $data_phone_broker = json_encode($phone_broker);
-                if ($this->writeFileJson($path . $filename, $data_phone_broker) > 0) {
-                    $log[$project_name]["phone-broker"] = $filename;
-                }
+                $this->writeFileJson($path . $filename, $data_phone_broker);
             }
         }
 
@@ -180,16 +166,24 @@ class Homefinder extends Component
         $response_cost = $curl->get($url_cost);
         if(!empty($response_cost)) {
             $response_cost = json_decode($response_cost, true);
-            if (!empty($response_cost["aggs"]["ban"]["buckets"])) {
+            if (!empty($response_cost["aggs"]["loai_giao_dich"]["buckets"])) {
                 $data_response_cost = json_encode($response_cost);
-                $filename = $project_name . '-cost.json';
-                if ($this->writeFileJson($path . $filename, $data_response_cost) > 0) {
-                    $log[$project_name]["cost"] = $filename;
-                }
+                $filename = $project_name . '-price.json';
+                $this->writeFileJson($path . $filename, $data_response_cost);
             }
         }
 
-        $not_info = true;
+        $url_cost = self::DOMAIN . '/ajax/projectdata-entry/' . $projectId . '/cost';
+        $response_cost = $curl->get($url_cost);
+        if(!empty($response_cost)) {
+            $response_cost = json_decode($response_cost, true);
+            if (!empty($response_cost["aggs"]["loai_giao_dich"]["buckets"])) {
+                $data_response_cost = json_encode($response_cost);
+                $filename = $project_name . '-entry.json';
+                $this->writeFileJson($path . $filename, $data_response_cost);
+            }
+        }
+
         $url_broker = self::DOMAIN . '/ajax/projectdata/' . $projectId . '/broker';
         $response_broker = $curl->get($url_broker);
         if(!empty($response_broker)) {
@@ -197,62 +191,19 @@ class Homefinder extends Component
             if (!empty($response_broker["aggs"]["tsp"]["buckets"])) {
                 $data_response_broker = json_encode($response_broker);
                 $filename = $project_name . '-broker.json';
-                if ($this->writeFileJson($path . $filename, $data_response_broker) > 0) {
-                    $log[$project_name]["broker"] = $filename;
-                }
-
-                if (!empty($response_broker["table"][0])) {
-                    $response_broker_table = $response_broker["table"][0];
-                    $city = trim($response_broker_table["cname"]);
-                    $district = trim($response_broker_table["dname"]);
-                    $ward = trim($response_broker_table["wname"]);
-                    $street = trim($response_broker_table["sname"]);
-                    $description = trim($response_broker_table["mo_ta_chi_tiet"]);
-                    $description = str_replace('<div id="LeftMainContent__productDetail_panelTag" class="tagpanel"></div>', '', $description);
-                    $description = str_replace('<div id="LeftMainContent__productDetail_panelTag" class="tagpanel">', '', $description);
-//                    $home_no = trim($response_broker_table["so_nha"]);
-                    $lat = $response_broker_table["lat"];
-                    $lon = $response_broker_table["lon"];
-                    $this->getProjectDetail($project_href, $project_name, $city, $district, $ward, $street, $description, $home_no, $lat, $lon);
-                    $log = $this->loadFileLog();
-                    if(empty($log["projects"])) $log["projects"] = array();
-                    array_push($log["projects"], $project_name);
-                    $this->writeFileLog($log);
-                    $not_info = false;
-                }
-            } else {
-                $url_info = "http://homefinder.vn/projectinfo/{$projectId}";
-                $response_info = $curl->get($url_info);
-                if(!empty($response_info)) {
-                    $response_info = json_decode($response_info, true);
-                    if(!empty($response_info["proj_address"])) {
-                        $address = $response_info["proj_address"];
-                        $arr_address = split(',', $address);
-                        if(count($arr_address)>= 3) {
-                            $city = trim($arr_address[3]);
-                            $district = trim($arr_address[2]);
-                            $ward = trim($arr_address[1]);
-                            $street = trim($arr_address[0]);
-                            $this->getProjectDetail($project_href, $project_name, $city, $district, $ward, $street, $gioi_thieu, $home_no, $lat, $lon);
-                            $log = $this->loadFileLog();
-                            if(empty($log["projects"])) $log["projects"] = array();
-                            array_push($log["projects"], $project_name);
-                            $this->writeFileLog($log);
-                            $not_info = false;
-                        }
-                    }
-                }
+                $this->writeFileJson($path . $filename, $data_response_broker);
             }
         }
 
-        if($not_info){
-            array_push($log["projects"], $project_name);
-            $this->writeFileLog($log);
-        }
+        $this->getProjectDetail($project_href, $project_name, $home_no, $lat, $lon);
+//        $log = $this->loadFileLog();
+//        if(empty($log["projects"])) $log["projects"] = array();
+        array_push($log["projects"], $project_name);
+        $this->writeFileLog($log);
     }
 
     // Chi tiet cac Bai dang tin
-    public function getProjectDetail($href, $project_name, $city, $district, $ward, $street, $description, $home_no, $lat, $lon)
+    public function getProjectDetail($href, $project_name, $home_no, $lat, $lon)
     {
         $content = SimpleHTMLDom::file_get_html(self::DOMAIN . $href);
         $list = $content->find('script');
@@ -263,16 +214,13 @@ class Homefinder extends Component
                 if (!empty($matches[1])) {
                     $room_id = $matches[1];
                     $room_id = str_replace('"', '', $room_id);
-//                    $project_log = $this->loadProjectFileLog($project_name);
-//                    if(empty($project_log[$project_name]))
-//                        $project_log[$project_name]["files"] = array();
-                    $this->pagingListing($room_id, $this->page_current, null, $project_name, $city, $district, $ward, $street, $description, $home_no, $lat, $lon);
+                    $this->pagingListing($room_id, $this->page_current, $project_name, $home_no, $lat, $lon);
                 }
             }
         }
     }
     // Xu ly lay tin trong trang chi tiet
-    public function pagingListing($pid, $page_current, $log, $project_name, $city, $district, $ward, $street, $description, $home_no, $lat, $lon)
+    public function pagingListing($pid, $page_current, $project_name, $home_no, $lat, $lon)
     {
         $url = self::DOMAIN . '/ajax/projecttable/' . $pid . '/ban?draw=1&columns[0][data]=hinh_anh&columns[0][name]=' .
             '&columns[0][searchable]=true&columns[0][orderable]=true&columns[0][search][value]=&columns[0][search][regex]=false' .
@@ -288,139 +236,82 @@ class Homefinder extends Component
         if (($response = json_decode($response)) && !empty($response->data)) {
             $totalItem = count($response->data);
             foreach ($response->data as $item) {
-//                $checkExists = in_array($item->_id, $log[$project_name]["files"]);
-//                if($checkExists) {
-//                    continue;
-//                }
-//                else {
-                    $price = $item->gia;
-                    // lay chi tiet trong danh sach bai dang tin
-//                    $res = $this->getListingDetail(self::DOMAIN . '/' . $item->_id, $item, $project_name, $city, $district, $ward, $street, $description, $home_no, $lat, $lon, $price);
-                    $arr_detail = array();
-//                    $htmlDetail = SimpleHTMLDom::file_get_html($url);
-                    $currency_value = 1000000; // 1 trieu
-                    // item_id
-                    $arr_detail[$project_name]["item_id"] = trim($item->_id);
-                    // dien tich
-                    $arr_detail[$project_name]["dientich"] = trim($item->dien_tich_quy_hoach);
-
-//                    // tien ich phong ngu , toilet
-//                    $util = $htmlDetail->find('.left .line1', 0);
-//                    if (!empty($util)) {
-//                        $arr_util = explode(',', $util->plaintext);
-//                        if (!empty($arr_util[1])) {
-//                            $room_no = str_replace('Bedroom', '', $arr_util[1]);
-//                            $arr_detail[$project_name]["room_no"] = trim($room_no);
-//                        }
-//                        if (!empty($arr_util[2])) {
-//                            $toilet_no = str_replace('tolet', '', $arr_util[2]);
-//                            $arr_detail[$project_name]["toilet_no"] = trim($toilet_no);
-//                        }
-//                    }
-                    $arr_detail[$project_name]["lat"] = trim($lat);
-                    $arr_detail[$project_name]["lng"] = trim($lon);
-                    $arr_detail[$project_name]["city"] = trim($city);
-                    $arr_detail[$project_name]["district"] = trim($district);
-                    $arr_detail[$project_name]["ward"] = trim($ward);
-                    $arr_detail[$project_name]["street"] = trim($street);
-                    $arr_detail[$project_name]["description"] = trim($description);
-                    $arr_detail[$project_name]["home_no"] = trim($home_no);
-                    $arr_detail[$project_name]["price"] = $price * $currency_value;
-                    $arr_detail[$project_name]["loai_tai_san"] = trim($item->loai_tai_san);
-                    $arr_detail[$project_name]["loai_giao_dich"] = trim($item->loai_giao_dich);
-                    if(!empty($item->broker->name))
-                        $arr_detail[$project_name]["broker"] = $item->broker->name;
-                    if(!empty($item->broker->phone[0]))
-                        $arr_detail[$project_name]["phone"] = str_replace(" ", "", $item->broker->phone[0]);
-                    $start_date = trim($item->ngay_dang);
-                    $start_date = substr($start_date, 0, 10);
-                    $arr_detail[$project_name]["start_date"] = strtotime($start_date);
-                    $nDays = 30;
-                    $end_date = new DateTime($start_date);
-                    $end_date->add(new DateInterval('P' . $nDays . 'D'));
-                    $arr_detail[$project_name]["end_date"] = $end_date->getTimestamp();
-
-                    $filename = $item->_id;
-                    $path = Yii::getAlias('@console') . "/data/homefinder/{$project_name}/files/";
-                    if(!is_dir($path)){
-                        mkdir($path , 0777);
-                    }
-                    $path = $path . $filename;
-                    $data = json_encode($arr_detail);
-                    $res = $this->writeFileJson($path, $data);
-//                    if ($res > 0 && !empty($filename)) {
-//                        array_push($log[$project_name]["files"],$filename);
-//                    }
-//                }
+                $price = $item->gia;
+                // lay chi tiet trong danh sach bai dang tin
+                $this->getListingDetail($item->_id, $project_name, $home_no, $lat, $lon, $price);
             }
-//            $this->writeProjectFileLog($project_name, $log);
 
             if (!empty($response->recordsTotal) && ($response->recordsTotal > ($totalItem * $page_current))) {
                 $page_current++;
 //                $log = $this->loadProjectFileLog($project_name);
-                $this->pagingListing($pid, $page_current, $log, $project_name, $city, $district, $ward, $street, $description, $home_no, $lat, $lon);
+                $this->pagingListing($pid, $page_current, $project_name, $home_no, $lat, $lon);
             }
         }
     }
 
-    public function getListingDetail($url, $item, $project_name, $city, $district, $ward, $street, $description, $home_no, $lat, $lon, $price)
+    public function getListingDetail($id, $project_name, $home_no, $lat, $lon, $price)
     {
+        $curl = new Curl();
+        $url = self::DOMAIN . '/ajax/detailPreviewFull/' . $id;
         $arr_detail = array();
-        $htmlDetail = SimpleHTMLDom::file_get_html($url);
+        $responseDetail = $curl->get($url);
         $currency_value = 1000000; // 1 trieu
-        // item_id
-        $arr_detail[$project_name]["item_id"] = trim($item->_id);
-        // dien tich
-        $arr_detail[$project_name]["dientich"] = trim($item->dien_tich_quy_hoach);
 
+        $description = $project_name;
         // tien ich phong ngu , toilet
-        $util = $htmlDetail->find('.left .line1', 0);
-        if (!empty($util)) {
-            $arr_util = explode(',', $util->plaintext);
-            if (!empty($arr_util[1])) {
-                $room_no = str_replace('Bedroom', '', $arr_util[1]);
-                $arr_detail[$project_name]["room_no"] = trim($room_no);
-            }
-            if (!empty($arr_util[2])) {
-                $toilet_no = str_replace('tolet', '', $arr_util[2]);
-                $arr_detail[$project_name]["toilet_no"] = trim($toilet_no);
+        if (!empty($responseDetail)) {
+            $itemDetail = json_decode($responseDetail, true);
+            if(!empty($itemDetail["data"][0])){
+                $arr_detail[$project_name]["item_id"] = $id;
+                $arr_detail[$project_name]["dientich"] = $itemDetail["data"][0]["dien_tich_quy_hoach"];
+                $city = !empty($itemDetail["data"][0]["cname"]) ? $itemDetail["data"][0]["cname"] : null;
+                $district = !empty($itemDetail["data"][0]["dname"]) ? $itemDetail["data"][0]["dname"] : null;
+                $ward = !empty($itemDetail["data"][0]["wname"]) ? $itemDetail["data"][0]["wname"] : null;
+                $street = !empty($itemDetail["data"][0]["sname"]) ? $itemDetail["data"][0]["sname"] : null;
+
+                $description = !empty($itemDetail["data"][0]["mo_ta_chi_tiet"]) ? strip_tags($itemDetail["data"][0]["mo_ta_chi_tiet"]) : null;
+                $arr_detail[$project_name]["loai_tai_san"] = !empty($itemDetail["data"][0]["loai_tai_san"]) ? $itemDetail["data"][0]["loai_tai_san"] : null;
+                $arr_detail[$project_name]["loai_giao_dich"] = !empty($itemDetail["data"][0]["loai_giao_dich"]) ? $itemDetail["data"][0]["loai_giao_dich"] : null;
+
+                // addition info
+                $arr_detail[$project_name]["info"]["room_no"] = !empty($itemDetail["data"][0]["so_phong_ngu"]) ? $itemDetail["data"][0]["so_phong_ngu"] : 0;
+                $arr_detail[$project_name]["info"]["toilet_no"] = !empty($itemDetail["data"][0]["so_phong_tam_wc"]) ? $itemDetail["data"][0]["so_phong_tam_wc"] : 0;
+                $arr_detail[$project_name]["info"]["item_id"] = !empty($id) ? $id : 0;
+                // contact info
+                $arr_detail[$project_name]["contact"]["broker"] = !empty($itemDetail["data"][0]["broker"]["name"]) ? $itemDetail["data"][0]["broker"]["name"] : null;
+                $arr_detail[$project_name]["contact"]["address"] = !empty($itemDetail["data"][0]["broker"]["address"]) ? $itemDetail["data"][0]["broker"]["address"] : null;
+                $arr_detail[$project_name]["contact"]["email"] = !empty($itemDetail["data"][0]["broker"]["email"]) ? $itemDetail["data"][0]["broker"]["email"] : null;
+                $arr_detail[$project_name]["contact"]["phone"] = !empty($itemDetail["data"][0]["broker"]["phone"][0]) ? str_replace(" ", "", $itemDetail["data"][0]["broker"]["phone"][0]) : null;
+                $arr_detail[$project_name]["contact"]["item_id"] = !empty($id) ? $id : 0;
+
+                $start_date = trim($itemDetail["data"][0]["ngay_dang"]);
+                $start_date = substr($start_date, 0, 10);
+                $arr_detail[$project_name]["start_date"] = strtotime($start_date);
+                $nDays = 30;
+                $end_date = new DateTime($start_date);
+                $end_date->add(new DateInterval('P' . $nDays . 'D'));
+                $arr_detail[$project_name]["end_date"] = $end_date->getTimestamp();
+
+                $arr_detail[$project_name]["city"] = trim($city);
+                $arr_detail[$project_name]["district"] = trim($district);
+                $arr_detail[$project_name]["ward"] = trim($ward);
+                $arr_detail[$project_name]["street"] = trim($street);
             }
         }
+
         $arr_detail[$project_name]["lat"] = trim($lat);
         $arr_detail[$project_name]["lng"] = trim($lon);
-        $arr_detail[$project_name]["city"] = trim($city);
-        $arr_detail[$project_name]["district"] = trim($district);
-        $arr_detail[$project_name]["ward"] = trim($ward);
-        $arr_detail[$project_name]["street"] = trim($street);
         $arr_detail[$project_name]["description"] = trim($description);
         $arr_detail[$project_name]["home_no"] = trim($home_no);
         $arr_detail[$project_name]["price"] = $price * $currency_value;
-        $arr_detail[$project_name]["loai_tai_san"] = trim($item->loai_tai_san);
-        $arr_detail[$project_name]["loai_giao_dich"] = trim($item->loai_giao_dich);
-        if(!empty($item->broker->name))
-            $arr_detail[$project_name]["broker"] = $item->broker->name;
-        if(!empty($item->broker->phone[0]))
-            $arr_detail[$project_name]["phone"] = str_replace(" ", "", $item->broker->phone[0]);
-        $start_date = trim($item->ngay_dang);
-        $start_date = substr($start_date, 0, 10);
-        $arr_detail[$project_name]["start_date"] = strtotime($start_date);
-        $nDays = 30;
-        $end_date = new DateTime($start_date);
-        $end_date->add(new DateInterval('P' . $nDays . 'D'));
-        $arr_detail[$project_name]["end_date"] = $end_date->getTimestamp();
 
-        $filename = $item->_id;
         $path = Yii::getAlias('@console') . "/data/homefinder/{$project_name}/files/";
         if(!is_dir($path)){
             mkdir($path , 0777);
         }
-        $path = $path . $filename;
+        $path = $path . $id;
         $data = json_encode($arr_detail);
-        $res = $this->writeFileJson($path, $data);
-        if($res)
-            return $filename;
-        else
-            return null;
+        $this->writeFileJson($path, $data);
     }
 
     function getCityId($cityFile, $cityDB)
@@ -543,59 +434,71 @@ class Homefinder extends Component
                 'type', 'content', 'area', 'price', 'lat', 'lng',
                 'start_date', 'end_date', 'verified', 'created_at', 'source'];
             $bulkInsertArray = array();
+            $infoArray = array();
+            $contactArray = array();
+            $itemArray = array();
             $count_page = 1;
             print_r('Insert data...');
             for ($i = $start_project; $i < $counter_project; $i++) {
-                if($count_page > 300)
-                {
-                    break;
-                }
+                if($count_page > 3) break;
+
                 $project_name = $log["projects"][$i];
                 if (!empty($project_name)) {
-//                    $path = Yii::getAlias('@console') . "/data/homefinder/{$project_name}";
-//                    $project_files = $this->loadProjectFileLog($project_name);
+                    $imported = $this->loadProjectFileLog($project_name);
+                    if(empty($imported)) $imported = array();
+
                     $path = Yii::getAlias('@console') . "/data/homefinder/{$project_name}/files";
                     $project_files = scandir($path, 1);
+
                     $counter_file = count($project_files) - 3; // last file except .. and .
 
                     if ($counter_file > $start_file) {
-                        for ($j = $start_file; $j < $counter_file ; $j++) {
-                            if($count_page > 300){
-                                break;
-                            }
+                        for ($j = $start_file; $j <= $counter_file ; $j++) {
+                            if($count_page > 3) break;
+
                             $filename = $path . '/' . $project_files[$j];
                             $data = file_get_contents($filename);
                             $data = json_decode($data, true);
                             foreach ($data as $value) {
-                                $city_id = $this->getCityId($value["city"], $cityData);
-                                $district_id = $this->getDistrictId($value["district"], $districtData, $city_id);
-                                $ward_id = $this->getWardId($value["ward"], $wardData, $district_id);
-                                $street_id = $this->getStreetId($value["street"], $streetData, $district_id);
+                                $item_id = $value["item_id"];
+                                if(!in_array($item_id, $imported) && !empty($item_id)) {
+                                    $city_id = $this->getCityId($value["city"], $cityData);
+                                    $district_id = $this->getDistrictId($value["district"], $districtData, $city_id);
+                                    $ward_id = $this->getWardId($value["ward"], $wardData, $district_id);
+                                    $street_id = $this->getStreetId($value["street"], $streetData, $district_id);
+                                    $description = trim($value["description"]);
 
-                                $description = strip_tags($value["description"], '<p><br><ul><li>');
-                                $description = trim($description);
+                                    array_push($infoArray, $value["info"]);
+                                    array_push($contactArray, $value["contact"]);
 
-                                $record = [
-                                    'category_id' => 6,
-                                    'home_no' => $value["home_no"],
-                                    'user_id' => null,
-                                    'city_id' => $city_id,
-                                    'district_id' => $district_id,
-                                    'ward_id' => $ward_id,
-                                    'street_id' => $street_id,
-                                    'type' => $value["loai_giao_dich"] == 'Thuê' ? 2 : 1,
-                                    'content' => $description,
-                                    'area' => $value["dientich"],
-                                    'price' => $value["price"],
-                                    'lat' => $value["lat"],
-                                    'lng' => $value["lng"],
-                                    'start_date' => $value["start_date"],
-                                    'end_date' => $value["end_date"],
-                                    'verified' => 1,
-                                    'created_at' => $value["start_date"],
-                                    'source' => 2
-                                ];
-                                $bulkInsertArray[] = $record;
+                                    $record = [
+                                        'category_id' => 6,
+                                        'home_no' => $value["home_no"],
+                                        'user_id' => null,
+                                        'city_id' => $city_id,
+                                        'district_id' => $district_id,
+                                        'ward_id' => $ward_id,
+                                        'street_id' => $street_id,
+                                        'type' => $value["loai_giao_dich"] == 'Thuê' ? 2 : 1,
+                                        'content' => $description,
+                                        'area' => $value["dientich"],
+                                        'price' => $value["price"],
+                                        'lat' => $value["lat"],
+                                        'lng' => $value["lng"],
+                                        'start_date' => $value["start_date"],
+                                        'end_date' => $value["end_date"],
+                                        'verified' => 1,
+                                        'created_at' => $value["start_date"],
+                                        'source' => 2
+                                    ];
+                                    $bulkInsertArray[] = $record;
+                                    if(array_push($imported, $item_id) > 0){
+                                        $itemArray[$project_name] = array();
+                                        array_push($itemArray[$project_name], $item_id);
+                                    }
+
+                                    $this->writeProjectFileLog($project_name, $imported);
+                                }
                             }
 
                             $log["last_project_index"] = $i;
@@ -615,8 +518,61 @@ class Homefinder extends Component
                 $insertCount = Yii::$app->db->createCommand()
                     ->batchInsert($tableName, $columnNameArray, $bulkInsertArray)
                     ->execute();
+                if($insertCount > 0){
+                    print_r("\nInsert Product Done!");
+                    $ad_info_columns = ['product_id', 'room_no', 'toilet_no'];
+                    $ad_contact_columns = ['product_id', 'name', 'mobile', 'address', 'email'];
 
-                if ($insertCount < 1) {
+                    $bulkInfo = array();
+                    $bulkContact = array();
+
+                    $fromProductId = Yii::$app->db->getLastInsertID();
+                    $toProductId = $fromProductId + $insertCount - 1;
+
+                    $index = 0;
+                    for ($i = $fromProductId; $i <= $toProductId; $i++) {
+                        if(count($infoArray) > 0) {
+                            $room_no = $infoArray[$index]["room_no"];
+                            $toilet_no = $infoArray[$index]["toilet_no"];
+                            $infoRecord = [
+                                'product_id' => $i,
+                                'room_no' => $room_no,
+                                'toilet_no' => $toilet_no
+                            ];
+                            $bulkInfo[] = $infoRecord;
+                        }
+                        if(count($contactArray) > 0) {
+                            $name = empty($contactArray[$index]["broker"]) == false ? trim($contactArray[$index]["broker"]) : null;
+                            $email = empty($contactArray[$index]["email"]) == false ? trim($contactArray[$index]["email"]) : null;
+                            $mobile = empty($contactArray[$index]["phone"]) == false ? trim($contactArray[$index]["phone"]) : null;
+                            $address = empty($contactArray[$index]["address"]) == false ? trim($contactArray[$index]["address"]) : null;
+                            $contactRecord = [
+                                'product_id' => $i,
+                                'name' => $name,
+                                'mobile' => $mobile,
+                                'address' => $address,
+                                'email' => $email
+                            ];
+                            $bulkContact[] = $contactRecord;
+                        }
+                        $index = $index + 1;
+                    }
+                    if (count($bulkInfo) > 0) {
+                        $infoCount = Yii::$app->db->createCommand()
+                            ->batchInsert(AdProductAdditionInfo::tableName(), $ad_info_columns, $bulkInfo)
+                            ->execute();
+                        if ($infoCount > 0)
+                            print_r("\nInsert product addition info done");
+                    }
+                    if (count($bulkContact) > 0) {
+                        $contactCount = Yii::$app->db->createCommand()
+                            ->batchInsert(AdContactInfo::tableName(), $ad_contact_columns, $bulkContact)
+                            ->execute();
+                        if ($contactCount > 0)
+                            print_r("\nInsert contact info done");
+                    }
+                }
+                else {
                     $log = $this->loadFileLog();
                     $log["last_project_index"] = $start_project;
 //                    $log["last_project_name"] = "";
@@ -624,6 +580,14 @@ class Homefinder extends Component
 //                    $log["last_file_name"] = "";
                     $log["last_import_time"] = date("d-m-Y H:i");
                     $this->writeFileLog($log);
+
+                    foreach($itemArray as $pro_name => $items){
+                        $pro_files = $this->loadProjectFileLog($pro_name);
+                        foreach($items as $item){
+
+                        }
+                    }
+
                     print_r("\nCannot insert ad_product");
                 }
             }
