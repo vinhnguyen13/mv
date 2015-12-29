@@ -21,6 +21,13 @@ $(document).ready(function(){
 			loadListing();
 		});
 	});
+	
+	$('#reset-filter').click(function(){
+		search(function(r){
+			response = r;
+			loadListing();
+		});
+	});
 });
 
 function search(callback) {
