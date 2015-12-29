@@ -14,7 +14,6 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/jquery.
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/search-map.js', ['position' => View::POS_END]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/search-results.js', ['position' => View::POS_END]);
 $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy('id')->asArray(true)->all()) . ';', View::POS_BEGIN);
-$this->registerJs('var isGuest = ' . (Yii::$app->user->isGuest ? 'true' : 'false') . ';', View::POS_BEGIN);
 
 $saved = Yii::$app->user->isGuest ? [] : ArrayHelper::getColumn(AdProductSaved::find()->where('user_id = ' . Yii::$app->user->id)->andWhere('saved_at != 0')->all(), 'product_id');
 $this->registerJs('var saved = ' . json_encode($saved) . ';', View::POS_BEGIN);
