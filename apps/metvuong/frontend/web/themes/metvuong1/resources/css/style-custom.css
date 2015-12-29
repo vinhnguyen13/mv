@@ -3948,7 +3948,7 @@ div.wrap-page-home .logo-home {
     font-size: 1em;
     color: #4a933a;
 }
-.rating li a:hover {
+.rating li.hover-star a {
     color: rgba(94, 206, 69, 0.75);
 }
 .rating li.active a .fa-star-o:before{

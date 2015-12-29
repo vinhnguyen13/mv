@@ -20,6 +20,12 @@
 
 			//reset filter
 			$('#reset-filter').on('click', minmax.reset);
+
+			//submit
+			$('#submit-filter').on('click', function (e) {
+				e.preventDefault();
+				
+			});
 		},
 		open: function (item) {
 			var $root = item.parent();
@@ -55,6 +61,9 @@
 		        	minmax.wrapVal.addClass('hidden-effect');
 					minmax.tabs.removeClass('active');
 		        }
+		        if ( minmax.tabsClick.length > 0 ) {
+
+		        }
 			});
 		},
 		clickTab: function () {
@@ -83,6 +92,8 @@
 					dataNumber = $wrapVal.data('number'),
 					inputVal = $root.find('.commaFormat'),
 					txtVal = '',
+					valNumMin = '',
+					valNumMax = '',
 					txtSymbol = minmax.tabsClick.data('symbolUnit') === undefined ? '' : minmax.tabsClick.data('symbolUnit');
 
 				_this.closest('.minmax').find('li a').removeClass('active');
@@ -95,22 +106,20 @@
 					minmax.tabsClick.parent().find('.commaFormat[id="'+attrInput+'"]').val('');
 					minmax.toggleMinMax(attrInput, minmax.tabsClick);
 					minmax.tabsClick.parent().find('.commaFormat[id="max-val"]').trigger('click');
-					//minmax.tabsClick.find('.txt-tab').show();
-				}else {
-					//minmax.tabsClick.find('.txt-tab').hide();
 				}
 
 				minmax.tabsClick.parent().find('.commaFormat[id="'+attrInput+'"]').val(valShowMaxInput);
-				minmax.tabsClick.parent().find('.commaFormat[id="'+attrInput+'"]').data('valNum', dataNumber);
-
+				minmax.tabsClick.parent().find('.commaFormat[id="'+attrInput+'"]').data('valNum',dataNumber);
+				
 				minmax.toggleMinMax(attrInput, minmax.tabsClick);
 				
 				var valMin = minmax.tabsClick.parent().find('.commaFormat[id="min-val"]').val(),
-					valNumMin = minmax.tabsClick.parent().find('.commaFormat[id="min-val"]').data('valNum'),
-					valMax = minmax.tabsClick.parent().find('.commaFormat[id="max-val"]').val(),
-					valNumMax = minmax.tabsClick.parent().find('.commaFormat[id="max-val"]').data('valNum');
+					valMax = minmax.tabsClick.parent().find('.commaFormat[id="max-val"]').val();
 
-				if ( valNumMin != '' && attrInput == 'min-val' ) {
+				valNumMin = minmax.tabsClick.parent().find('.commaFormat[id="min-val"]').data('valNum');
+				valNumMax = minmax.tabsClick.parent().find('.commaFormat[id="max-val"]').data('valNum');
+
+				if ( valMin != '' && attrInput == 'min-val' ) {
 					minmax.renderMaxVal(valNumMin);
 				}
 
@@ -128,7 +137,6 @@
 				if ( _this.parent().hasClass('anyVal') ) {
 					valMax = '';
 					txtVal = valMin;
-					//minmax.tabsClick.find('.txt-tab').show();
 				}
 
 				minmax.tabsClick.find('.txt-show').html(txtVal).show();
@@ -142,17 +150,7 @@
 					minmax.tabsClick.append('<em class="fa fa-long-arrow-down"></em>');
 				}
 
-				var valHidden = minmax.tabsClick.parent().find('.commaFormat[id="'+attrInput+'"]').data('priceshortcut');
-
-				if ( $root.data('filter') == 'price-min-max' ) {
-					$('#price-min-filter').val(valNumMin);
-					$('#price-max-filter').val(valNumMax);
-				}else if ( $root.data('filter') == 'dt-min-max' ) {
-					$('#dt-min-filter').val(valNumMin);
-					$('#dt-max-filter').val(valNumMax);
-				}
-				valNumMin = '';
-				valNumMax = '';
+				minmax.valSubmit(valNumMin, valNumMax, true);
 
 				return;
 
@@ -164,6 +162,7 @@
 				item.parents('li').find('.minmax-options').removeClass('hide');
 				item.parents('li').find('.minmax-options[data-toggle-filter="max-val"]').addClass('hide');
 			}else if ( attrInput === 'min-val' && !item.is('input') ) {
+				minmax.tabsClick.parent().find('.commaFormat[id="max-val"]').data('valNum','');
 				minmax.tabsClick.parent().find('.filter-common #max-val').val('');
 				item.parents('li').find('.minmax-options').addClass('hide');
 				item.parents('li').find('.minmax-options[data-toggle-filter="max-val"]').removeClass('hide');
@@ -332,6 +331,19 @@
         	$(document).trigger('click');
         	$('.minmax-options').addClass('hide');
         	$('.minmax-options[data-toggle-filter=min-val]').removeClass('hide');
+        },
+        valSubmit: function (valNumMin, valNumMax, minmaxFlag) {
+
+        	if ( minmax.tabsClick.parent().find('.filter-common').data('filter') == 'price-min-max' && minmaxFlag ) {
+				$('#price-min-filter').val(valNumMin);
+				$('#price-max-filter').val(valNumMax);
+			}else if ( minmax.tabsClick.parent().find('.filter-common').data('filter') == 'dt-min-max' && minmaxFlag ) {
+				$('#dt-min-filter').val(valNumMin);
+				$('#dt-max-filter').val(valNumMax);
+			}
+
+			
+
         }
 	};
 
@@ -350,13 +362,12 @@
 				item.find('.txt-show').html(txt);
 				item.find('.txt-show').append('<em class="fa fa-long-arrow-up"></em>').show();
 
-				if ( _this.closest('.filter-common').data('filter') == 'phong-ngu' ) {
+				if ( minmax.tabsClick.parent().find('.filter-common').data('filter') == 'phong-ngu' ) {
 					$('#bed-filter').val(txt);
-				}else if ( _this.closest('.filter-common').data('filter') == 'phong-tam' ) {
+				}else if ( minmax.tabsClick.parent().find('.filter-common').data('filter') == 'phong-tam' ) {
 					$('#bath-filter').val(txt);
 				}
 				
-				minmax.close();
 				$(document).trigger('click');
 			});
 		}
