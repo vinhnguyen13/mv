@@ -55,7 +55,7 @@
 		close: function (item) {
 			$(document).unbind('click');
 			$(document).on('click', function (e) {
-				e.preventDefault();
+				//e.preventDefault();
 				var container = $(".list-filters-result .outsideevent");
 				if ( !container.is(e.target) && container.has(e.target).length === 0 ){
 		        	minmax.wrapVal.addClass('hidden-effect');
