@@ -28,6 +28,7 @@ class Homefinder extends Component
     protected $time_start = 0;
     protected $time_end = 0;
     protected $page_current = 1;
+    protected $so_du_an = 0;
 
     /**
      * @return mixed
@@ -100,11 +101,18 @@ class Homefinder extends Component
                         }
                     }
                     $end = time();
-                    print_r("\n");
-                    print_r("{$developer}: ".$a[0]->innertext() . " ... Done! ".($end - $start)."s");
-                    print_r("\n");
+                    $temp = $end - $start;
+                    if($temp > 0){
+                        $this->so_du_an = $this->so_du_an + 1;
+                        print_r("\n");
+                        print_r("{$developer}: ".$a[0]->innertext() . " ... Done! ".($end - $start)."s");
+                        print_r("\n");
+                    }
                     sleep(1);
                     ob_flush();
+
+                    if($this->so_du_an >= 5)
+                        exit();
                 }
             }
         }
@@ -146,7 +154,6 @@ class Homefinder extends Component
                         }
                     }
                 }
-
             }
         }
 
@@ -582,9 +589,9 @@ class Homefinder extends Component
                     $this->writeFileLog($log);
 
                     foreach($itemArray as $pro_name => $items){
-                        $pro_files = $this->loadProjectFileLog($pro_name);
-                        foreach($items as $item){
-
+                        if(count($items) > 0) {
+                            $pro_files = $this->loadProjectFileLog($pro_name);
+                            array_diff($pro_files, $items);
                         }
                     }
 
