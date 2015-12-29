@@ -188,7 +188,7 @@
                             <div class="col-sm-4 dt-right-col">
                                 <div class="contact-wrapper">
                                     <div class="rating pull-right">
-                                        <ul class="clearfix">
+                                        <ul class="clearfix" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/rating']);?>">
                                             <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
                                             <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
                                             <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>

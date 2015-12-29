@@ -321,4 +321,8 @@ class AdController extends Controller
 	public function actionReport() {
 		return Ad::find()->report();
 	}
+
+	public function actionRating() {
+		return Ad::find()->rating();
+	}
 }

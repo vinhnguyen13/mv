@@ -108,10 +108,21 @@ function start() {
 			var _this = $(this);
 			var _index = _this.parent().index();
 			var _ratingContainer = _this.closest('.rating');
+			var _url = _ratingContainer.find('ul').attr('data-url');
+			var _id = _ratingContainer.find('ul').attr('data-id');
 			_ratingContainer.find('ul > li').removeClass('active');
 			_ratingContainer.find('ul > li').each(function(i) {
 				if(i <= _index){
 					$(this).addClass('active');
+				}
+			});
+			$.ajax({
+				type: "post",
+				dataType: 'json',
+				url: _url,
+				data: {id: _id, core: _index},
+				success: function(data) {
+					console.log(data);
 				}
 			});
 		});
@@ -120,7 +131,6 @@ function start() {
 			var _this = $(this);
 			var _index = _this.index();
 			var _ratingContainer = _this.closest('.rating');
-			console.log(_index);
 			_ratingContainer.find('ul > li').removeClass('active');
 			_ratingContainer.find('ul > li').each(function(i) {
 				if(i <= _index){
