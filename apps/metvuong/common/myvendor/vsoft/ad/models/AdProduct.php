@@ -93,4 +93,8 @@ class AdProduct extends AdProductBase
 		}
 		return $address;
 	}
+
+	public function getProductSaved() {
+		return $this->hasOne(AdProductSaved::className(), ['product_id' => 'id', 'user_id' => Yii::$app->user->id]);
+	}
 }
