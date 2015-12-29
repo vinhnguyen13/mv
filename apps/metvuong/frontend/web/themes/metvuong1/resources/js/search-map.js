@@ -134,12 +134,12 @@ function start() {
 			_ratingContainer.find('ul > li').removeClass('active');
 			_ratingContainer.find('ul > li').each(function(i) {
 				if(i <= _index){
-					$(this).addClass('active');
+					$(this).addClass('hover-star');
 				}
 			});
-		}).on('mouseleave', '> li', function() {
+		}).on('mouseleave', '.rating li', function() {
 			var _ratingContainer = $(this).closest('.rating');
-			_ratingContainer.find('ul > li').removeClass('active');
+			_ratingContainer.find('ul > li').removeClass('hover-star');
 		});
 		
 		var hoverTimeout;
