@@ -159,6 +159,8 @@ function start() {
 			if(!$(e.target).hasClass('icon-hear') && $(e.target).closest('.icon-hear').length == 0) {
 				var self = $(this);
 				
+				// infoWindow.close();
+				
 				$('#map-loading').height($('.cd-main-content').height()).show();
 				
 				var id = $(this).data('detail');
