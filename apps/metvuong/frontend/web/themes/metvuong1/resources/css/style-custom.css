@@ -3948,9 +3948,17 @@ div.wrap-page-home .logo-home {
     font-size: 1em;
     color: #4a933a;
 }
-.rating li.active a .fa-star-o:before,
+.rating li a:hover {
+    color: rgba(94, 206, 69, 0.75);
+}
+.rating li.active a .fa-star-o:before{
+    content: "\f005";
+}
 .rating li a:hover .fa-star-o:before {
     content: "\f005";
+}
+.rating li.star-half a .fa-star-o:before {
+    content: "\f123";
 }
 .dt-left-col .panel-default>.panel-heading {
     background: #8E8E8E;
