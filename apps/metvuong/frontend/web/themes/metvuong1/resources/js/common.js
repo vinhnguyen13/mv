@@ -230,6 +230,7 @@ $(document).ready(function() {
     //start home page search
     //animateSearch();
     //end home page search
+    
 
     $('.infor-user-profile .inner-infor').scfix();
 

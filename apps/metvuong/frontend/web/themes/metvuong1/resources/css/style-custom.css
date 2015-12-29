@@ -1993,7 +1993,7 @@ footer {
     padding-top: 0;
     padding-bottom: 0;
     height: 100%;
-    padding-left: 0;
+    padding-left: 5px;
 }
 .animate-children #search-kind .search-wrap-end,
 .animate-children #search-kind .search-wrap {
@@ -3549,6 +3549,9 @@ form .inline-group {
 #btn-search .fa-pencil-square-o {
     margin-top: 3px;
 }
+.animate-children #btn-search em {
+    margin-top: 0px
+}
 #btn-search .fa-file-text {
     margin-top: 2px;
 }
@@ -4723,11 +4726,14 @@ div._2ix0 {
     height: 155px;
     background: #fff;
 }
+.animate-children .box-search-header .search-dropdown .search-select {
+    display: block;
+}
 .animate-children .options-search .search-select {
     margin: 0;
     float: none;
     width: 100%;
-    /* display: none; */
+    display: none;
 }
 .animate-children .options-search .icon-selected {
     display: block;
