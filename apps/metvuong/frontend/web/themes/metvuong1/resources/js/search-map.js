@@ -75,29 +75,33 @@ function start() {
 		});
 		
 		function addToFavorite(_this) {
-			var _id = _this.attr('data-id');
-			var callUrl = _this.attr('data-url');
-			_this.toggleClass('active');
-			var _stt = (_this.hasClass('active')) ? 1 : 0;
-			clearTimeout(timer);
-			timer = setTimeout(function() {
-				$.ajax({
-					type: "post",
-					dataType: 'json',
-					url: callUrl,
-					data: {id: _id, stt: _stt},
-					success: function(data) {
-						if(_stt) {
-							saved.push(Number(_id));
-						} else {
-							var index = saved.indexOf(Number(_id));
-							if (index > -1) {
-								saved.splice(index, 1);
+			if(isGuest) {
+				$('#frmLogin').modal('show');
+			} else {
+				var _id = _this.attr('data-id');
+				var callUrl = _this.attr('data-url');
+				_this.toggleClass('active');
+				var _stt = (_this.hasClass('active')) ? 1 : 0;
+				clearTimeout(timer);
+				timer = setTimeout(function() {
+					$.ajax({
+						type: "post",
+						dataType: 'json',
+						url: callUrl,
+						data: {id: _id, stt: _stt},
+						success: function(data) {
+							if(_stt) {
+								saved.push(Number(_id));
+							} else {
+								var index = saved.indexOf(Number(_id));
+								if (index > -1) {
+									saved.splice(index, 1);
+								}
 							}
 						}
-					}
-				});
-			}, 500);
+					});
+				}, 500);
+			}
 		}
 
 		$('#detail-wrap').on('click', '.rating li a', function(){
