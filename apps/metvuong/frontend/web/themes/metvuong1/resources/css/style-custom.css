@@ -3951,6 +3951,9 @@ div.wrap-page-home .logo-home {
 .rating li.hover-star a {
     color: rgba(94, 206, 69, 0.75);
 }
+.rating li.hover-star a em:before {
+    content: "\f005";
+}
 .rating li.active a .fa-star-o:before{
     content: "\f005";
 }

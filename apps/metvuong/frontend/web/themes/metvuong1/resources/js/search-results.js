@@ -61,9 +61,6 @@
 		        	minmax.wrapVal.addClass('hidden-effect');
 					minmax.tabs.removeClass('active');
 		        }
-		        if ( minmax.tabsClick.length > 0 ) {
-
-		        }
 			});
 		},
 		clickTab: function () {
