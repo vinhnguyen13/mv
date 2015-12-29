@@ -444,10 +444,10 @@ class Homefinder extends Component
             $infoArray = array();
             $contactArray = array();
             $itemArray = array();
-            $count_page = 1;
+            $count_page = 0;
             print_r('Insert data...');
             for ($i = $start_project; $i < $counter_project; $i++) {
-                if($count_page > 3) break;
+                if($count_page > 300) break;
 
                 $project_name = $log["projects"][$i];
                 if (!empty($project_name)) {
@@ -461,7 +461,7 @@ class Homefinder extends Component
 
                     if ($counter_file > $start_file) {
                         for ($j = $start_file; $j <= $counter_file ; $j++) {
-                            if($count_page > 3) break;
+                            if($count_page > 300) break;
 
                             $filename = $path . '/' . $project_files[$j];
                             $data = file_get_contents($filename);
