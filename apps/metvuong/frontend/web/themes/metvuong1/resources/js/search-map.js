@@ -67,11 +67,11 @@ function start() {
 				$('#detail-listing').find('.icon-hear').attr('class', self.attr('class'));
 			}
 			
-			if(savedTab && !self.hasClass('active')) {
-				var li = self.closest('li');
-				gmap.removeMarker(gmap.getMarker(li.data('id')));
-				li.remove();
-			}
+//			if(savedTab && !self.hasClass('active')) {
+//				var li = self.closest('li');
+//				gmap.removeMarker(gmap.getMarker(li.data('id')));
+//				li.remove();
+//			}
 		});
 		
 		function addToFavorite(_this) {
@@ -183,7 +183,8 @@ function start() {
 					
 					$('#detail-listing').data('id', id).html(res.html());
 					
-					$('#detail-listing').find('.icon-hear').click(function(){
+					$('#detail-listing').find('.icon-hear').click(function(e){
+						e.preventDefault();
 						addToFavorite($(this));
 						
 						self.find('.icon-hear').attr('class', $(this).attr('class'));
