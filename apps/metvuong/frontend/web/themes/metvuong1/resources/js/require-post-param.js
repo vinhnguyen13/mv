@@ -5,7 +5,7 @@ $(document).ready(function(){
 		$('#city').append('<option value="' + index + '">' + city.name + '</option>');
 	}
 	
-	filterCat($(this).val());
+	filterCat($('#type').val());
 	$('#type').change(function(){
 		filterCat($(this).val());
 	});
