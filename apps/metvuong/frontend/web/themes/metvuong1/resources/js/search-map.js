@@ -1,4 +1,4 @@
-var gmap = null, response = null, listResult, infoWindow;
+var gmap = null, response = null, listResult, infoWindow, savedTab = false;
 $(document).ready(function(){
 	listResult = $('.list-results');
 	var mapOptions = {
@@ -29,7 +29,7 @@ function search(callback) {
 	listResult.empty();
 	$('#listing-loading').show();
 	$('.pagination').remove();
-	$('#no-result').hide();
+	$('#no-result').hide().text('Chưa có tòa nhà nào được đăng như tìm kiếm của bạn.');
 	
 	$.get(searchForm.attr('action'), searchForm.serialize(), function(r) {
 		$('#listing-loading').hide();
@@ -56,12 +56,22 @@ function start() {
 		});
 
 		var timer = 0;
-		$('#detail-wrap').on('click', '.icon-hear', function(){
-			addToFavorite($(this));
-		});
+
 		$('#moi-nhat').on('click', '.icon-hear', function(e){
 			e.preventDefault();
-			addToFavorite($(this));
+			var self = $(this);
+			
+			addToFavorite(self);
+			
+			if($('#detail-listing').data('id') == self.data('id')) {
+				$('#detail-listing').find('.icon-hear').attr('class', self.attr('class'));
+			}
+			
+			if(savedTab && !self.hasClass('active')) {
+				var li = self.closest('li');
+				gmap.removeMarker(gmap.getMarker(li.data('id')));
+				li.remove();
+			}
 		});
 		
 		function addToFavorite(_this) {
@@ -171,8 +181,13 @@ function start() {
 						res.find('.icon-hear').addClass('active');
 					}
 					
-					$('#detail-listing').html(res.html());
+					$('#detail-listing').data('id', id).html(res.html());
 					
+					$('#detail-listing').find('.icon-hear').click(function(){
+						addToFavorite($(this));
+						
+						self.find('.icon-hear').attr('class', $(this).attr('class'));
+					});
 
 					if(!self.data('clone')) {
 						var marker = gmap.getMarker(self.data('id'));
@@ -214,12 +229,15 @@ function start() {
 			
 			gmap.removeAllMarker();
 			
+			$('.btn-close-detail').trigger('click');
+			
 			if($(this).data('href')) {
+				savedTab = true;
 				listResult.empty();
 				$('#listing-loading').show();
 				$('.pagination').remove();
-				$('#no-result').hide();
-				
+				$('#no-result').hide().text('Chưa có tòa nhà nào được lưu.');
+				$('#map-search-form').css('visibility', 'hidden');
 				$.get($(this).data('href'), {}, function(r) {
 					$('#listing-loading').hide();
 					
@@ -227,7 +245,9 @@ function start() {
 					loadListing();
 				});
 			} else {
+				savedTab = false;
 				$('#order-by').val($(this).data('order'));
+				$('#map-search-form').css('visibility', 'visible');
 				search(function(r){
 					response = r;
 					loadListing();

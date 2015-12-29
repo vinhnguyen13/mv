@@ -190,10 +190,6 @@ class AdController extends Controller
     }
     
     public function actionDetail($id, $isCraw) {
-    	if($isCraw) {
-    		ActiveRecord::$schemaPrefix = \Yii::$app->params['schemaPrefix'];
-    	}
-    	
     	$product = AdProduct::findOne($id);
     	return $this->renderPartial('detail', ['product' => $product]); 
     }
