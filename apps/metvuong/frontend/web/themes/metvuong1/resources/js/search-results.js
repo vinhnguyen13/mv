@@ -47,22 +47,14 @@
         	minmax.close(item);
 		},
 		close: function (item) {
+			$(document).unbind('click');
 			$(document).on('click', function (e) {
-				//e.preventDefault();
+				e.preventDefault();
 				var container = $(".list-filters-result .outsideevent");
-				/*if ( e.target.id == "submit-filter" || e.target.parentElement.id == "submit-filter" ) {
-
-				}*/
-		        if ( (!container.is(e.target) && container.has(e.target).length === 0) || e.target.id == "submit-filter" || e.target.parentElement.id == "submit-filter" ){
-		        	//minmax.wrapVal.hide();
-		        	minmax.wrapVal.removeClass('active');
-					setTimeout(function() {
-		                minmax.wrapVal.addClass('hidden-effect');
-		            }, 300);
-
-		        	minmax.tabs.removeClass('active');
+				if ( !container.is(e.target) && container.has(e.target).length === 0 ){
+		        	minmax.wrapVal.addClass('hidden-effect');
+					minmax.tabs.removeClass('active');
 		        }
-		        //return;
 			});
 		},
 		clickTab: function () {
@@ -102,20 +94,23 @@
 				if ( dataNumber === 0 ) {
 					minmax.tabsClick.parent().find('.commaFormat[id="'+attrInput+'"]').val('');
 					minmax.toggleMinMax(attrInput, minmax.tabsClick);
-					//return;
+					minmax.tabsClick.parent().find('.commaFormat[id="max-val"]').trigger('click');
+					//minmax.tabsClick.find('.txt-tab').show();
+				}else {
+					//minmax.tabsClick.find('.txt-tab').hide();
 				}
 
 				minmax.tabsClick.parent().find('.commaFormat[id="'+attrInput+'"]').val(valShowMaxInput);
 				minmax.tabsClick.parent().find('.commaFormat[id="'+attrInput+'"]').data('valNum', dataNumber);
 
 				minmax.toggleMinMax(attrInput, minmax.tabsClick);
-
+				
 				var valMin = minmax.tabsClick.parent().find('.commaFormat[id="min-val"]').val(),
 					valNumMin = minmax.tabsClick.parent().find('.commaFormat[id="min-val"]').data('valNum'),
 					valMax = minmax.tabsClick.parent().find('.commaFormat[id="max-val"]').val(),
 					valNumMax = minmax.tabsClick.parent().find('.commaFormat[id="max-val"]').data('valNum');
 
-				if ( valNumMin != '' ) {
+				if ( valNumMin != '' && attrInput == 'min-val' ) {
 					minmax.renderMaxVal(valNumMin);
 				}
 
@@ -133,9 +128,9 @@
 				if ( _this.parent().hasClass('anyVal') ) {
 					valMax = '';
 					txtVal = valMin;
+					//minmax.tabsClick.find('.txt-tab').show();
 				}
 
-				minmax.tabsClick.find('.txt-tab').hide();
 				minmax.tabsClick.find('.txt-show').html(txtVal).show();
 
 				minmax.tabsClick.find('em').remove();
@@ -144,9 +139,7 @@
 					minmax.tabsClick.append('<em class="fa fa-long-arrow-up"></em>');
 				}else if ( valMin === '' && valMax != '' ) {
 					//down-to
-					minmax.tabsClick.prepend('<em class="fa fa-long-arrow-down"></em>');
-				}else {
-					
+					minmax.tabsClick.append('<em class="fa fa-long-arrow-down"></em>');
 				}
 
 				var valHidden = minmax.tabsClick.parent().find('.commaFormat[id="'+attrInput+'"]').data('priceshortcut');
@@ -158,6 +151,8 @@
 					$('#dt-min-filter').val(valNumMin);
 					$('#dt-max-filter').val(valNumMax);
 				}
+				valNumMin = '';
+				valNumMax = '';
 
 				return;
 
@@ -165,9 +160,9 @@
 		},
 		toggleMinMax: function (attrInput, item) {
 			if ( attrInput === 'max-val' && !item.is('input') ) {
+				$(document).trigger('click');
 				item.parents('li').find('.minmax-options').removeClass('hide');
 				item.parents('li').find('.minmax-options[data-toggle-filter="max-val"]').addClass('hide');
-				$(document).trigger('click');
 			}else if ( attrInput === 'min-val' && !item.is('input') ) {
 				minmax.tabsClick.parent().find('.filter-common #max-val').val('');
 				item.parents('li').find('.minmax-options').addClass('hide');
@@ -181,30 +176,16 @@
 			minmax.inputVal.on('click', function (e) {
 				e.preventDefault();
 				var _this = $(this),
-					attrInput = _this.attr('id');
+					attrInput = _this.attr('id'),
+					minVal = minmax.tabsClick.parent().find('.filter-common .dualboxes input[id=min-val]').val(),
+					maxVal = minmax.tabsClick.parent().find('.filter-common .dualboxes input[id=max-val]').val();
 
 				minmax.toggleMinMax(attrInput, _this);
 
-				if ( attrInput == 'max-val' && minmax.tabsClick.parent().find('.filter-common').data('filter') == 'price-min-max' ) {
-					minmax.tabsClick.parent().find('.minmax[data-toggle-filter=max-val] ul').html('');
-					for ( var j in minmax.priceGetFirst ) {
-	                    var item;
-	                    if ( parseInt(j) == 0 ) {
-	                    	continue;
-	                    }
-	                    if ( parseInt(j) < 0 ) {
-	                        txtAnyPrice = minmax.priceGetFirst[j];
-	                        continue;
-	                    }
-	                    item = $('<li data-number="'+j+'" data-unit=""><a class="option">'+minmax.priceGetFirst[j]+'</a></li>');
-	                    minmax.tabsClick.parent().find('.minmax[data-toggle-filter=max-val] ul').append(item);
-	                    minmax.clickVal(item.find('a'));
-	                }
-	                var item = $('<li data-number="" data-unit=""><a class="option">'+txtAnyPrice+'</a></li>');
-                    minmax.tabsClick.parent().find('.minmax[data-toggle-filter=max-val] ul').append(item);
-                    minmax.clickVal(item.find('a'));
-				}else {
-					minmax.renderMaxVal(0);
+				if ( (minVal == 0 || minVal == '') && (minmax.tabsClick.parent().find('.filter-common').data('filter') == 'price-min-max') ) {
+					minmax.renderMaxFirst(minmax.priceGetFirst);
+				}else if ( (minVal == 0 || minVal == '') && (minmax.tabsClick.parent().find('.filter-common').data('filter') == 'dt-min-max') ) {
+					minmax.renderMaxFirst(dt);
 				}
 			});
 		},
@@ -275,6 +256,25 @@
                 minmax.clickVal(item.find('a'));
             }
 		},
+		renderMaxFirst: function (GetFirst) {
+			minmax.tabsClick.parent().find('.minmax[data-toggle-filter=max-val] ul').html('');
+			for ( var j in GetFirst ) {
+                var item;
+                if ( parseInt(j) == 0 ) {
+                	continue;
+                }
+                if ( parseInt(j) < 0 ) {
+                    txtAnyPrice = GetFirst[j];
+                    continue;
+                }
+                item = $('<li data-number="'+j+'" data-unit=""><a class="option">'+GetFirst[j]+'</a></li>');
+                minmax.tabsClick.parent().find('.minmax[data-toggle-filter=max-val] ul').append(item);
+                minmax.clickVal(item.find('a'));
+            }
+            var item = $('<li data-number="" data-unit=""><a class="option">'+txtAnyPrice+'</a></li>');
+            minmax.tabsClick.parent().find('.minmax[data-toggle-filter=max-val] ul').append(item);
+            minmax.clickVal(item.find('a'));
+		},
 		renderMaxVal: function (valMin) {
 			//render price max
 			minmax.tabsClick.parent().find('.minmax[data-toggle-filter=max-val] ul').html('');
@@ -330,6 +330,8 @@
         	$('.txt-tab').show();
         	$('.txt-show').hide().html('');
         	$(document).trigger('click');
+        	$('.minmax-options').addClass('hide');
+        	$('.minmax-options[data-toggle-filter=min-val]').removeClass('hide');
         }
 	};
 

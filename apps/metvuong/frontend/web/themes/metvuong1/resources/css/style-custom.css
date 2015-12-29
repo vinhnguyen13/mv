@@ -5359,10 +5359,11 @@ header.wrap-page-home .box-search-header.ani-search > div {
     font-size: .8em;
 }
 .list-filters-result li a span {
-    padding-right: 5px;
+    padding-left: 5px;
 }
 .list-filters-result li a .txt-show {
     display: none;
+    color: #a94442;
 }
 .list-filter > li:last-child button {
     padding: 5px 10px;

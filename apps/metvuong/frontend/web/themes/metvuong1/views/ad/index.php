@@ -96,7 +96,7 @@ $this->registerJs('var saved = ' . json_encode($saved) . ';', View::POS_BEGIN);
                 </div>
 	        </li>
 	        <li>
-	            <a href="#"><span class="txt-show"></span>Phòng ngủ</a>
+	            <a href="#">Phòng ngủ<span class="txt-show"></span></a>
                 <div class="filter-common filter-pane filter-bed filter-dropdown hidden-effect" data-filter="phong-ngu">
                     <div class="wrap-effect clearfix">
                         <div class="filter-bed">
@@ -114,7 +114,7 @@ $this->registerJs('var saved = ' . json_encode($saved) . ';', View::POS_BEGIN);
                 </div>
 	        </li>
             <li>
-                <a href="#"><span class="txt-show"></span>Phòng tắm</a>
+                <a href="#">Phòng tắm<span class="txt-show"></span></a>
                 <div class="filter-common filter-pane filter-bed filter-dropdown hidden-effect" data-filter="phong-tam">
                     <div class="wrap-effect clearfix">
                         <div class="filter-bed">
