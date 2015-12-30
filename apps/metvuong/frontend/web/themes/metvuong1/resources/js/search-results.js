@@ -24,7 +24,9 @@
 			//submit
 			$('#submit-filter').on('click', function (e) {
 				e.preventDefault();
-				
+				if ( $('.filter-common').is(':visible') ) {
+					$(document).trigger('click');
+				}
 			});
 		},
 		open: function (item) {
@@ -330,18 +332,14 @@
         	$('.minmax-options[data-toggle-filter=min-val]').removeClass('hide');
         },
         valSubmit: function (valNumMin, valNumMax, minmaxFlag) {
-
-        	if ( minmax.tabsClick.parent().find('.filter-common').data('filter') == 'price-min-max' && minmaxFlag ) {
+			if ( minmax.tabsClick.parent().find('.filter-common').data('filter') == 'price-min-max' && minmaxFlag ) {
 				$('#price-min-filter').val(valNumMin);
 				$('#price-max-filter').val(valNumMax);
 			}else if ( minmax.tabsClick.parent().find('.filter-common').data('filter') == 'dt-min-max' && minmaxFlag ) {
 				$('#dt-min-filter').val(valNumMin);
 				$('#dt-max-filter').val(valNumMax);
 			}
-
-			
-
-        }
+		}
 	};
 
 	var dropdownSelect = {
