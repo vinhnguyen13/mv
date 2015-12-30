@@ -139,7 +139,7 @@ class Ad extends Component
                     if(!$adProductRating->hasErrors()){
                         $adProductRating->save();
                         $_rating = $adProductRating->core;
-                        $core = AdProductRating::findBySql('SELECT AVG(core) as avgCore FROM `ad_product_rating` WHERE product_id = '.$adProduct->id)->one();
+                        $core = AdProductRating::findBySql('SELECT AVG(core) as avgCore FROM '.AdProductRating::tableName().' WHERE product_id = '.$adProduct->id)->one();
                         if(!empty($core->avgCore)){
                             $_rating = $core->avgCore;
                         }
