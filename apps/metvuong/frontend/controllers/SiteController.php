@@ -5,6 +5,7 @@ use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
+use funson86\cms\models\Status;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\filters\AccessControl;
@@ -204,7 +205,7 @@ class SiteController extends Controller
     	}
     	
 
-    	$catalogs = CmsCatalog::find()->indexBy('id')->select('id, title')->where(['parent_id'=>Yii::$app->params['newsCatID']])->asArray(true)->all();
+    	$catalogs = CmsCatalog::find()->indexBy('id')->select('id, title')->where(['parent_id'=>Yii::$app->params['newsCatID'], 'status'=>Status::STATUS_ACTIVE])->asArray(true)->all();
     	 
     	foreach ($catalogs as $k => &$catalog) {
     		unset($catalog['id']);
