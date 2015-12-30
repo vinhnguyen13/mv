@@ -52,6 +52,10 @@ function start() {
 			$('#detail-wrap').css({
 				left: '0px'
 			});
+
+			setTimeout(function(){
+				$('#detail-listing').html('');
+			}, 300);
 		});
 		
 		infoWindow = new InfoWindow();
@@ -60,6 +64,9 @@ function start() {
 			$('#detail-wrap').css({
 				left: '0px'
 			});
+			setTimeout(function(){
+				$('#detail-listing').html('');
+			}, 300);
 		});
 
 		var timer = 0;
