@@ -72,7 +72,7 @@ $products = AdProduct::findAll(['status'=>1, 'user_id'=>Yii::$app->user->id]);
 
                 </tbody>
             </table>
-            <ul class="pagination text-right">
+            <ul class="pagination text-right" style="display: none">
                 <li>
                     <a href="#" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
