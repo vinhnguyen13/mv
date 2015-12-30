@@ -20,6 +20,10 @@ class AdCategory extends AdCategoryBase
 {
 	const TEMPLATE_SUGGEST_LIST = 1;
 	const TEMPLATE_COST_MIN_MAX = 2;
+
+	const APPLY_TO_TYPE_SELL = 1;
+	const APPLY_TO_TYPE_RENT = 2;
+	const APPLY_TO_TYPE_BOTH = 3;
 	
 	public static function templateMap() {
 		return [

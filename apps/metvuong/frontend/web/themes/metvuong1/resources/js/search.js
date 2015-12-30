@@ -165,6 +165,9 @@
         function init () {
             mv.settings = $.extend({}, defaults, options);
             showBoxSearch();
+            if ( $('header.wrap-page-home').length > 0 ) {
+                scrollFixed();
+            }
         };
 
         //event click input type=text search
@@ -326,6 +329,7 @@
                     stepFirstShow = '';
                 
                 if ( _this.hasClass('active') ) {
+                    menuScroll (_this);
                     tabActiveGet = _this.data('active');
 
                     iconChange (tabActiveGet);
@@ -341,7 +345,7 @@
                 e.preventDefault();
                 var _this = $(this),
                     step = _this.data('step');
-
+                menuScroll (_this);
                 tabActiveGet = _this.data('active');
 
                 iconChange (tabActiveGet);
@@ -353,11 +357,9 @@
 
                 stepFirst(step);
 
-                //
+                //show and hide menu khi scroll
                 if ( _this.closest('.options-search').hasClass('search-dropdown') ) {
-                    _this.closest('.options-search').addClass('outsideevent');
-                }else {
-                    _this.closest('.options-search').removeClass('outsideevent');
+                    _this.closest('.options-search').removeClass('search-dropdown');
                 }
             });
 
@@ -975,8 +977,14 @@
             }
 
             if ( !container.is(e.target) && container.has(e.target).length === 0 ){
-                $('.btn-close-search').trigger('click');
-                reopen();
+                if ( mv.settings.searchWrap.is(':visible') ) {
+                    $('.btn-close-search').trigger('click');
+                    reopen();    
+                }
+
+                if ( $('.options-search').hasClass('search-dropdown') ) {
+                    $('.options-search').removeClass('search-dropdown');
+                }
             }
         };
 
@@ -1037,7 +1045,58 @@
             }else if ( tabActive == 3 ) {
                 mv.settings.btnSubmit.find('em').attr('class','fa fa-file-text');
             }
-        }
+        };
+
+        function scrollFixed () {
+            var $header = $('.cd-secondary-nav'),
+                $container = $('.o-wrapper'),
+                hHeader = $header.outerHeight(),
+                valShow = 0,
+                flagShow = false;
+
+            $(window).on('scroll', function(){
+                valShow = $(window).scrollTop();
+
+                if( valShow >= hHeader ) {
+                    if( flagShow ) {
+                        return;
+                    }
+                    $header.hide();
+                    $container.addClass('pdTContainer');
+                    $header.addClass('is-fixed animate-children');
+                    $('.options-search').addClass('outsideevent');
+
+                    setTimeout(function() {
+                        $header.show();
+                        setTimeout(function () {
+                            $header.addClass('show-fixed');
+                            inputResize();
+                        },50);
+                    }, 150);
+
+                    $('.icon-selected a').on('click', function() {
+                        var _this = $(this),
+                            $rootParent = _this.closest('.options-search');
+                        $rootParent.addClass('search-dropdown');
+
+                        return false;
+                    });
+
+                    flagShow = true;
+                }else {
+                    $('.options-search').removeClass('outsideevent');
+                    $('.options-search').removeClass('search-dropdown');
+                    $header.removeClass('is-fixed animate-children show-fixed');
+                    flagShow = false;
+                    $container.removeClass('pdTContainer');
+                }
+
+            });
+        };
+
+        function menuScroll (item) {
+            $('.icon-selected span').html(item.find('span').html());
+        };
 
         init();
     }

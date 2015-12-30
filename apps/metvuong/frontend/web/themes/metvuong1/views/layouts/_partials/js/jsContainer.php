@@ -32,6 +32,8 @@ Yii::$app->getView()->registerJsFile(Yii::$app->homeUrl . 'store/data/data.js', 
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/common.js', ['position'=>View::POS_BEGIN]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/search.js', ['position'=>View::POS_END]);
 
+Yii::$app->getView()->registerJs('var isGuest = ' . (Yii::$app->user->isGuest ? 'true' : 'false') . ';', View::POS_BEGIN);
+
 Yii::$app->view->registerLinkTag([
     'rel'=>'shortcut icon',
     'href'=>Yii::$app->view->theme->baseUrl.'/resources/favicon/favicon.png',

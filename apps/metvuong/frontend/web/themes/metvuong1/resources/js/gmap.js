@@ -118,6 +118,10 @@ function InfoWindow(options) {
 		infoWindow.open(marker.getMap(), marker.getOriginal());
 	}
 	
+	self.close = function(marker) {
+		infoWindow.close();
+	}
+	
 	self.setContent = function(content) {
 		infoWindow.setContent(content);
 	}

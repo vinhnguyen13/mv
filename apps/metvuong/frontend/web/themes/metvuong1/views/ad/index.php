@@ -3,6 +3,8 @@ use yii\web\View;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 use vsoft\ad\models\AdCategory;
+use vsoft\ad\models\AdProductSaved;
+use yii\helpers\ArrayHelper;
 $this->title = Yii::t('express','We offer exeptional amenities and renowned white - glove services');
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/gmap.js', ['position' => View::POS_END]);
 $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=apiLoaded', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
@@ -12,6 +14,9 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/jquery.
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/search-map.js', ['position' => View::POS_END]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/search-results.js', ['position' => View::POS_END]);
 $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy('id')->asArray(true)->all()) . ';', View::POS_BEGIN);
+
+$saved = Yii::$app->user->isGuest ? [] : ArrayHelper::getColumn(AdProductSaved::find()->where('user_id = ' . Yii::$app->user->id)->andWhere('saved_at != 0')->all(), 'product_id');
+$this->registerJs('var saved = ' . json_encode($saved) . ';', View::POS_BEGIN);
 ?>
 <div id="map-loading" style="display:none;position: absolute;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.5);z-index: 3;">
 	<img style="    position: absolute;left: 50%;top: 50%;margin-left: -24px;margin-top: -24px;" src="<?= Yii::$app->view->theme->baseUrl ?>/resources/images/map-loading.gif" />
@@ -24,16 +29,16 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
 		<input type="hidden" name="categoryId" id="category-id" value="<?= Yii::$app->request->get('category') ?>" />
 		<input type="hidden" name="orderBy" id="order-by" value="created_at" />
 		<input type="hidden" name="type" id="type" value="<?= Yii::$app->request->get('type') ?>" />
-        <input id="price-min-filter" type="hidden" name="costMin" value="<?= Yii::$app->request->get('costMin') ?>" />
-        <input id="price-max-filter" type="hidden" name="costMax" value="<?= Yii::$app->request->get('costMax') ?>" />
-        <input id="dt-min-filter" type="hidden" name="areaMin" value="<?= Yii::$app->request->get('areaMin') ?>" />
-        <input id="dt-max-filter" type="hidden" name="areaMax" value="<?= Yii::$app->request->get('areaMax') ?>" />
-        <input id="bed-filter" type="hidden" name="roomNo" value="<?= Yii::$app->request->get('roomNo') ?>" />
-        <input id="bath-filter" type="hidden" name="toiletNo" value="<?= Yii::$app->request->get('toiletNo') ?>" />
+        <input class="hidden_filter" id="price-min-filter" type="hidden" name="costMin" value="<?= Yii::$app->request->get('costMin') ?>" />
+        <input class="hidden_filter" id="price-max-filter" type="hidden" name="costMax" value="<?= Yii::$app->request->get('costMax') ?>" />
+        <input class="hidden_filter" id="dt-min-filter" type="hidden" name="areaMin" value="<?= Yii::$app->request->get('areaMin') ?>" />
+        <input class="hidden_filter" id="dt-max-filter" type="hidden" name="areaMax" value="<?= Yii::$app->request->get('areaMax') ?>" />
+        <input class="hidden_filter" id="bed-filter" type="hidden" name="roomNo" value="<?= Yii::$app->request->get('roomNo') ?>" />
+        <input class="hidden_filter" id="bath-filter" type="hidden" name="toiletNo" value="<?= Yii::$app->request->get('toiletNo') ?>" />
 
         <ul class="container clearfix outsideevent list-filter">
 	        <li>
-	            <a href="#">Giá</a>
+	            <a href="#"><span class="txt-tab">Giá</span><span class="txt-show"></span></a>
                 <div class="filter-pane filter-common hidden-effect" data-filter="price-min-max">
                     <div class="wrap-effect clearfix">
                         <div id="minmax-entries" class="minmax-entries search-entry">
@@ -50,30 +55,12 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
                         <div class="filter-minmax">
                             <div id="min-price-options" class="minmax-options min-price-options minmax" data-toggle-filter="min-val">
                                 <ul class="dropdown-options search-entry">
-                                    <li data-number="0" data-unit=""><a class="option">0</a></li>
-                                    <li data-number="100000000" data-unit="triệu"><a class="option">100 triệu</a></li>
-                                    <li data-number="500000000" data-unit="triệu"><a class="option">500 triệu</a></li>
-                                    <li data-number="1000000000" data-unit="tỷ"><a class="option">1 tỷ</a></li>
-                                    <li data-number="1500000000" data-unit="tỷ"><a class="option">1,5 tỷ</a></li>
-                                    <li data-number="2000000000" data-unit="tỷ"><a class="option">2 tỷ</a></li>
-                                    <li data-number="2500000000" data-unit="tỷ"><a class="option">2,5 tỷ</a></li>
-                                    <li data-number="3000000000" data-unit="tỷ"><a class="option">3 tỷ</a></li>
-                                    <li data-number="3500000000" data-unit="tỷ"><a class="option">3,5 tỷ</a></li>
-                                    <li data-number="4000000000" data-unit="tỷ"><a class="option">4 tỷ</a></li>
+                                    
                                 </ul>
                             </div>
                             <div id="max-price-options" class="minmax-options max-price-options hide minmax" data-toggle-filter="max-val">
                                 <ul class="dropdown-options search-entry">
-                                    <li data-number="100000000" data-unit="triệu"><a class="option">100 triệu</a></li>
-                                    <li data-number="500000000" data-unit="triệu"><a class="option">500 triệu</a></li>
-                                    <li data-number="1000000000" data-unit="tỷ"><a class="option">1 tỷ</a></li>
-                                    <li data-number="1500000000" data-unit="tỷ"><a class="option">1,5 tỷ</a></li>
-                                    <li data-number="2000000000" data-unit="tỷ"><a class="option">2 tỷ</a></li>
-                                    <li data-number="2500000000" data-unit="tỷ"><a class="option">2,5 tỷ</a></li>
-                                    <li data-number="3000000000" data-unit="tỷ"><a class="option">3 tỷ</a></li>
-                                    <li data-number="3500000000" data-unit="tỷ"><a class="option">3,5 tỷ</a></li>
-                                    <li data-number="4000000000" data-unit="tỷ"><a class="option">4 tỷ</a></li>
-                                    <li class="anyVal" data-number><a class="option">Bất kỳ</a></li>
+                                    
                                 </ul>
                             </div>
                         </div>
@@ -81,7 +68,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
                 </div>
 	        </li>
 	        <li>
-	            <a href="#" data-symbol-unit="m<sup>2</sup>">Diện tích</a>
+	            <a href="#" data-symbol-unit="m<sup>2</sup>"><span class="txt-tab">Diện tích</span><span class="txt-show"></span></a>
                 <div class="filter-common filter-pane hidden-effect" data-filter="dt-min-max">
                     <div class="wrap-effect clearfix">
                         <div id="minmax-entries" class="minmax-entries search-entry">
@@ -98,30 +85,10 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
                         <div class="filter-minmax">
                             <div id="min-dt-options" class="minmax-options min-dt-options minmax" data-toggle-filter="min-val">
                                 <ul class="dropdown-options search-entry">
-                                    <li data-number="0"><a class="option">0</a></li>
-                                    <li data-number="10"><a class="option">10 m<sup>2</sup></a></li>
-                                    <li data-number="20"><a class="option">20 m<sup>2</sup></a></li>
-                                    <li data-number="40"><a class="option">40 m<sup>2</sup></a></li>
-                                    <li data-number="60"><a class="option">60 m<sup>2</sup></a></li>
-                                    <li data-number="80"><a class="option">80 m<sup>2</sup></a></li>
-                                    <li data-number="100"><a class="option">100 m<sup>2</sup></a></li>
-                                    <li data-number="150"><a class="option">150 m<sup>2</sup></a></li>
-                                    <li data-number="200"><a class="option">200 m<sup>2</sup></a></li>
-                                    <li data-number="250"><a class="option">250 m<sup>2</sup></a></li>
                                 </ul>
                             </div>
                             <div id="max-dt-options" class="minmax-options max-dt-options hide minmax" data-toggle-filter="max-val">
                                 <ul class="dropdown-options search-entry">
-                                    <li data-number="10"><a class="option">10 m<sup>2</sup></a></li>
-                                    <li data-number="20"><a class="option">20 m<sup>2</sup></a></li>
-                                    <li data-number="40"><a class="option">40 m<sup>2</sup></a></li>
-                                    <li data-number="60"><a class="option">60 m<sup>2</sup></a></li>
-                                    <li data-number="80"><a class="option">80 m<sup>2</sup></a></li>
-                                    <li data-number="100"><a class="option">100 m<sup>2</sup></a></li>
-                                    <li data-number="150"><a class="option">150 m<sup>2</sup></a></li>
-                                    <li data-number="200"><a class="option">200 m<sup>2</sup></a></li>
-                                    <li data-number="250"><a class="option">250 m<sup>2</sup></a></li>
-                                    <li class="anyVal" data-number><a class="option">Bất kỳ</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -129,7 +96,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
                 </div>
 	        </li>
 	        <li>
-	            <a href="#"><span></span>Phòng ngủ</a>
+	            <a href="#">Phòng ngủ<span class="txt-show"></span></a>
                 <div class="filter-common filter-pane filter-bed filter-dropdown hidden-effect" data-filter="phong-ngu">
                     <div class="wrap-effect clearfix">
                         <div class="filter-bed">
@@ -147,7 +114,7 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
                 </div>
 	        </li>
             <li>
-                <a href="#"><span></span>Phòng tắm</a>
+                <a href="#">Phòng tắm<span class="txt-show"></span></a>
                 <div class="filter-common filter-pane filter-bed filter-dropdown hidden-effect" data-filter="phong-tam">
                     <div class="wrap-effect clearfix">
                         <div class="filter-bed">
@@ -261,6 +228,9 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
         <ul id="order-by-tab" class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a data-order="created_at" href="#" aria-controls="moi-nhat" role="tab" data-toggle="tab">Mới nhất</a></li>
             <li role="presentation"><a data-order="price" href="#" aria-controls="re-nhat" role="tab" data-toggle="tab">Rẻ nhất</a></li>
+            <?php if(!Yii::$app->user->isGuest): ?>
+            <li role="presentation"><a data-order="price" href="#" aria-controls="re-nhat" role="tab" data-toggle="tab" data-href="<?= Url::to(['saved-listing']) ?>">Đã lưu</a></li>
+            <?php endif; ?>
         </ul>
 
         <div class="tab-content">

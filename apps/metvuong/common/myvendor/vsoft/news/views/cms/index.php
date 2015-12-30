@@ -29,7 +29,14 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'banner',
                 'format' => 'html',
-                'value' => function ($model) { return Html::img(Yii::$app->request->getHostInfo() . '/store/news/show/' . $model->banner, ['width' => 100, 'alt' => $model->banner, 'title' => $model->brief]); }
+                'contentOptions' => ['class' => 'text-center'],
+                'value' => function ($model) {
+                    $imgPath = Yii::$app->request->getHostInfo() . '/store/news/show/' . $model->banner;
+                    if(!file_exists($imgPath)) {
+                        $imgPath = Yii::$app->request->getHostInfo() .  "/frontend/web/themes/metvuong1/resources/images/default-ads.jpg";
+                    }
+                    return Html::img($imgPath, ['width'=>100, 'height'=>100, 'alt'=>$model->banner, 'title'=>$model->brief]);
+                }
             ],
             [
                 'attribute' => 'title',

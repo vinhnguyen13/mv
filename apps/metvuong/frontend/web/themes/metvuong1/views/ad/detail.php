@@ -62,61 +62,44 @@
                     		if(!empty($images)) :
 									$firstImage = array_shift($images);
 									$images = array_chunk($images, 4);
-
-									if(!Yii::$app->request->get('isCraw')):
 						?>
 			                        <div class="gallery-detail clearfix">
 			                            <div class="bxslider">
 			                                <div class="wrap-img-detail">
 			                                    <ul class="clearfix">
 			                                        <li class="img-big">
+			                                        	<?php if(!StringHelper::startsWith($firstImage->file_name, 'http')): ?>
 			                                            <div class="bgcover" style="background-image:url(<?= $firstImage->imageMedium ?>);"></div>
 			                                            <a data-lightbox="detail-post" class="group mask" href="<?= $firstImage->imageLarge ?>"><em class="fa fa-search"></em><img src="<?= $firstImage->imageLarge ?>" alt="" style="display:none;"></a>
+			                                        	<?php else: ?>
+			                                        	<div class="bgcover" style="background-image:url(<?= $firstImage->file_name ?>);"></div>
+			                                            <a data-lightbox="detail-post" class="group mask" href="<?= $firstImage->file_name ?>"><em class="fa fa-search"></em><img src="<?= $firstImage->file_name ?>" alt="" style="display:none;"></a>
+			                                        	<?php endif; ?>
 			                                        </li>
 			                                    </ul>
 			                                </div>
 			                                <?php foreach($images as $imagesGroup): ?>
 			                                	<div class="wrap-img-detail">
 			                                    	<ul class="clearfix">
-					                                <?php foreach($imagesGroup as $image): ?>
+					                                <?php foreach($imagesGroup as $image): 
+					                                		if(!StringHelper::startsWith($image->file_name, 'http')):
+					                                ?>
 					             						<li>
 				                                            <div class="bgcover" style="background-image:url(<?= $image->imageThumb ?>);"></div>
 				                                            <a data-lightbox="detail-post" class="group mask" href="<?= $image->imageLarge ?>"><em class="fa fa-search"></em><img src="<?= $image->imageLarge ?>" alt="" style="display:none;"></a>
 				                                            
 				                                        </li>
-					                                <?php endforeach; ?>
+					                                <?php else: ?>
+					                                <li>
+					                                	<div class="bgcover" style="background-image:url(<?= $image->file_name ?>);"></div>
+					                                	<a data-lightbox="detail-post" class="group mask" href="<?= $image->file_name ?>"><em class="fa fa-search"></em><img src="<?= $image->file_name ?>" alt="" style="display:none;"></a>
+					                                </li>
+					                                <?php endif; endforeach; ?>
 					                                </ul>
 				                                </div>
 			                                <?php endforeach; ?>
 			                            </div>
 			                        </div>
-			            	<?php else: ?>
-			            			<div class="gallery-detail clearfix">
-			                            <div class="bxslider">
-			                                <div class="wrap-img-detail">
-			                                    <ul class="clearfix">
-			                                        <li class="img-big">
-			                                            <div class="bgcover" style="background-image:url(<?= $firstImage->file_name ?>);"></div>
-			                                            <a data-lightbox="detail-post" class="group mask" href="<?= $firstImage->file_name ?>"><em class="fa fa-search"></em><img src="<?= $firstImage->file_name ?>" alt="" style="display:none;"></a>
-			                                        </li>
-			                                    </ul>
-			                                </div>
-			                                <?php foreach($images as $imagesGroup): ?>
-			                                	<div class="wrap-img-detail">
-			                                    	<ul class="clearfix">
-					                                <?php foreach($imagesGroup as $image): ?>
-					             						<li>
-				                                            <div class="bgcover" style="background-image:url(<?= $image->file_name ?>);"></div>
-				                                            <a data-lightbox="detail-post" class="group mask" href="<?= $image->file_name ?>"><em class="fa fa-search"></em><img src="<?= $image->file_name ?>" alt="" style="display:none;"></a>
-				                                            
-				                                        </li>
-					                                <?php endforeach; ?>
-					                                </ul>
-				                                </div>
-			                                <?php endforeach; ?>
-			                            </div>
-			                        </div>
-			            	<?php endif; ?>
                         <?php else: ?>
                         <div class="gallery-detail clearfix"><div class="bxslider no-image"><?= Yii::t('ad', 'Không có hình ảnh đính kèm') ?></div></div>
                         <?php endif; ?>
@@ -256,7 +239,7 @@
                                 <div class="function-listing clearfix">
                                     <p>Đánh giá</p>
                                     <div class="rating">
-                                        <ul class="clearfix">
+                                        <ul class="clearfix" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/rating', 'type'=>'']);?>">
                                             <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
                                             <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
                                             <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
@@ -293,8 +276,8 @@
                                         </div>
                                     </div>
                                     <div class="icon-item-listing">
-                                        <a title="Lưu" class="icon-hear" href="#">
-                                            <em class="icon-heart"></em>
+                                        <a title="Lưu" class="icon-hear" data-id="<?=$product->id;?>" href="#" data-url="<?=Url::to(['/ad/favorite'])?>">
+                                            <em class="fa fa-heart-o"></em>
                                             <span>Lưu</span>
                                         </a>
                                         <!--<a class="icon-favo" href="#">

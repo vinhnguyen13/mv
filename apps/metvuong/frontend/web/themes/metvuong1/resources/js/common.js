@@ -224,50 +224,13 @@ $(document).ready(function() {
     //end page du-an
 
     //start scroll fixed header
-    var $header = $('.cd-secondary-nav'),
-        $container = $('.o-wrapper'),
-        hHeader = $header.outerHeight(),
-        valShow = 0,
-        flagShow = false;
-
-    $(window).on('scroll', function(){
-        valShow = $(window).scrollTop();
-
-        if( valShow >= hHeader ) {
-            if( flagShow ) {
-                return;
-            }
-            $header.hide();
-            $container.addClass('pdTContainer');
-            $header.addClass('is-fixed animate-children');
-            setTimeout(function() {
-                $header.show();
-                setTimeout(function () {
-                    $header.addClass('show-fixed');
-                },50);
-            }, 150);
-
-            $('.icon-selected a').on('click', function() {
-                var _this = $(this),
-                    $rootParent = _this.closest('.options-search');
-                $rootParent.addClass('search-dropdown');
-
-                return false;
-            });
-
-            flagShow = true;
-        }else {
-            $('.options-search').removeClass('search-dropdown');
-            $header.removeClass('is-fixed animate-children show-fixed');
-            flagShow = false;
-            $container.removeClass('pdTContainer');
-        }
-    });
+    
     //end scroll fixed header
 
     //start home page search
     //animateSearch();
     //end home page search
+    
 
     $('.infor-user-profile .inner-infor').scfix();
 

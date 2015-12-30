@@ -14,7 +14,7 @@ class Controller extends \yii\web\Controller
 {
     public function beforeAction($action)
     {
-        if(Yii::$app->user->isGuest && !in_array($action->id, ['login', 'register', 'error'])){
+        if(Yii::$app->user->isGuest && !in_array($action->id, ['login', 'register', 'error']) && !Yii::$app->request->isAjax){
 //            Yii::$app->session->setFlash('', 4);
             Yii::$app->getUser()->setReturnUrl(Url::current());
 //            $this->redirect(['/member/login']);

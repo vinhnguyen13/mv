@@ -1,4 +1,4 @@
-var gmap = null, response = null, listResult, infoWindow;
+var gmap = null, response = null, listResult, infoWindow, savedTab = false;
 $(document).ready(function(){
 	listResult = $('.list-results');
 	var mapOptions = {
@@ -21,6 +21,13 @@ $(document).ready(function(){
 			loadListing();
 		});
 	});
+	
+	$('#reset-filter').click(function(){
+		search(function(r){
+			response = r;
+			loadListing();
+		});
+	});
 });
 
 function search(callback) {
@@ -29,7 +36,7 @@ function search(callback) {
 	listResult.empty();
 	$('#listing-loading').show();
 	$('.pagination').remove();
-	$('#no-result').hide();
+	$('#no-result').hide().text('Chưa có tòa nhà nào được đăng như tìm kiếm của bạn.');
 	
 	$.get(searchForm.attr('action'), searchForm.serialize(), function(r) {
 		$('#listing-loading').hide();
@@ -53,6 +60,134 @@ function start() {
 			$('#detail-wrap').css({
 				left: '0px'
 			});
+		});
+
+		var timer = 0;
+
+		$('#moi-nhat').on('click', '.icon-hear', function(e){
+			e.preventDefault();
+			var self = $(this);
+			
+			addToFavorite(self);
+			
+			if($('#detail-listing').data('id') == self.data('id')) {
+				$('#detail-listing').find('.icon-hear').attr('class', self.attr('class'));
+			}
+			
+//			if(savedTab && !self.hasClass('active')) {
+//				var li = self.closest('li');
+//				gmap.removeMarker(gmap.getMarker(li.data('id')));
+//				li.remove();
+//			}
+		});
+		
+		function addToFavorite(_this) {
+			if(isGuest) {
+				$('#frmLogin').modal('show');
+			} else {
+				var _id = _this.attr('data-id');
+				var callUrl = _this.attr('data-url');
+				_this.toggleClass('active');
+				var _stt = (_this.hasClass('active')) ? 1 : 0;
+				clearTimeout(timer);
+				timer = setTimeout(function() {
+					$.ajax({
+						type: "post",
+						dataType: 'json',
+						url: callUrl,
+						data: {id: _id, stt: _stt},
+						success: function(data) {
+							if(_stt) {
+								saved.push(Number(_id));
+							} else {
+								var index = saved.indexOf(Number(_id));
+								if (index > -1) {
+									saved.splice(index, 1);
+								}
+							}
+						}
+					});
+				}, 500);
+			}
+		}
+
+		/*$('#detail-wrap').on('click', '.rating li a', function(){
+			var _this = $(this);
+			var _index = $('.ratingInfo').attr('data-index');
+			var _ratingContainer = _this.closest('.rating');
+			var _url = _ratingContainer.find('ul').attr('data-url');
+			var _id = _ratingContainer.find('ul').attr('data-id');			
+			console.log(_index);
+			_ratingContainer.find('ul > li').each(function(i) {				
+				if(i <= _index){
+					$(this).addClass('active');
+				}
+			});
+			if($('body').find('.ratingInfo').length != 0){
+				$.ajax({
+					type: "post",
+					dataType: 'json',
+					url: _url,
+					data: {id: _id, core: _index + 1},
+					success: function(data) {
+						console.log(data);
+					}
+				});
+			}
+		});*/
+
+		$(document).on('mouseenter', '.rating li', function(e){
+			var _this = $(this);
+			var _index = _this.index();			
+			var _ratingContainer = _this.closest('.rating');
+			/****/			
+			var offset = _this.offset();			
+			var mouseSide;
+			if ((e.pageX - this.offsetLeft) < (offset.left - ($(this).width() / 2))) {
+				mouseSide = 'L';
+			} else {
+				mouseSide = 'R';
+			}				
+			/****/
+			_ratingContainer.find('ul > li').removeClass('active');
+			_ratingContainer.find('ul > li').each(function(i) {
+				if(i <= _index){
+					$(this).addClass('hover-star');
+				}
+			});
+
+			if($('body').find('.ratingInfo').length == 0){
+				$('body').append("<div class='ratingInfo' style='display: none;'></div>");
+			}
+			$('.ratingInfo').attr('data-index', _index);						
+
+		}).on('mouseleave', '.rating li', function() {
+			var _ratingContainer = $(this).closest('.rating');
+			_ratingContainer.find('ul > li.hover-star').removeClass('hover-star');
+			$('.ratingInfo').remove();
+		}).on('click', '.rating li a', function(){
+			var _this = $(this);
+			var _index = $('.ratingInfo').attr('data-index');
+			var _ratingContainer = _this.closest('.rating');
+			var _url = _ratingContainer.find('ul').attr('data-url');
+			var _id = _ratingContainer.find('ul').attr('data-id');						
+			_ratingContainer.find('ul > li').removeClass('hover-star');
+			_ratingContainer.find('ul > li').each(function(i) {				
+				if(i <= _index){
+					$(this).addClass('active');
+				}
+			});
+			if($('body').find('.ratingInfo').length != 0){
+				$.ajax({
+					type: "post",
+					dataType: 'json',
+					url: _url,
+					data: {id: _id, core: parseInt(_index) + 1},
+					success: function(data) {
+						console.log(data);
+					}
+				});
+			}
 		});
 		
 		var hoverTimeout;
@@ -82,66 +217,107 @@ function start() {
 			marker.setIcon('/images/marker.png');
 		});
 		
-		listResult.on('click', '> li', function(){
-			var self = $(this);
-			
-			$('#map-loading').height($('.cd-main-content').height()).show();
-			
-			$.get('/ad/detail', {id: $(this).data('detail'), isCraw: $(this).data('is-craw')}, function(response){
-				$('#map-loading').hide();
-				var width = $('.wrap-map-result').width();
-				width = (width > 820) ? 820 : width;
+		listResult.on('click', '> li', function(e){
+			if(!$(e.target).hasClass('icon-hear') && $(e.target).closest('.icon-hear').length == 0) {
+				var self = $(this);
 				
-				$('#detail-wrap').css({
-					width: width,
-					left: '-' + width + 'px',
-					height: $('.result-items').height()
-				});
-				$('#detail-listing').html($(response).html());
+				// infoWindow.close();
 				
-
-				if(!self.data('clone')) {
-					var marker = gmap.getMarker(self.data('id'));
-					if(marker) {
-						var position = marker.getPosition();
-						gmap.setCenter({lat: position.lat(), lng: position.lng()});
+				$('#map-loading').height($('.cd-main-content').height()).show();
+				
+				var id = $(this).data('detail');
+				
+				$.get('/ad/detail', {id: id, isCraw: $(this).data('is-craw')}, function(response){
+					$('#map-loading').hide();
+					var width = $('.wrap-map-result').width();
+					width = (width > 820) ? 820 : width;
+					
+					$('#detail-wrap').css({
+						width: width,
+						left: '-' + width + 'px',
+						height: $('.result-items').height()
+					});
+					
+					var res = $(response);
+					
+					var index = saved.indexOf(Number(id));
+					if (index > -1) {
+						res.find('.icon-hear').addClass('active');
 					}
-				}
-				
-				$('.gallery-detail').imagesLoaded()
-				 	.always( function( instance ) {
-						if($('#detail-listing .bxslider').find('.wrap-img-detail').length > 0) {
-							setTimeout(function() {
-					 			$('#detail-listing .bxslider').bxSlider({
-					                moveSlides: 1,
-					                startSlide: 0,
-					                minSlides: 1,
-					                maxSlides: 2,
-					                slideWidth: 444,
-					                startSlide: 0,
-					                onSliderLoad: function() {
-					                    this.infiniteLoop = false;
-					                    this.hideControlOnEnd = true;
-					                    scrollFixed();
-					                }
-					            });
-								lightbox.option({
-						            'resizeDuration': 300,
-						            'fadeDuration': 400
-						        });
-					 		},500);
+					
+					$('#detail-listing').data('id', id).html(res.html());
+					
+					$('#detail-listing').find('.icon-hear').click(function(e){
+						e.preventDefault();
+						addToFavorite($(this));
+						
+						self.find('.icon-hear').attr('class', $(this).attr('class'));
+					});
+
+					if(!self.data('clone')) {
+						var marker = gmap.getMarker(self.data('id'));
+						if(marker) {
+							var position = marker.getPosition();
+							gmap.setCenter({lat: position.lat(), lng: position.lng()});
 						}
-				 	});
-			});
+					}
+					
+					$('.gallery-detail').imagesLoaded()
+					 	.always( function( instance ) {
+							if($('#detail-listing .bxslider').find('.wrap-img-detail').length > 0) {
+								setTimeout(function() {
+						 			$('#detail-listing .bxslider').bxSlider({
+						                moveSlides: 1,
+						                startSlide: 0,
+						                minSlides: 1,
+						                maxSlides: 2,
+						                slideWidth: 444,
+						                startSlide: 0,
+						                onSliderLoad: function() {
+						                    this.infiniteLoop = false;
+						                    this.hideControlOnEnd = true;
+						                    scrollFixed();
+						                }
+						            });
+									lightbox.option({
+							            'resizeDuration': 300,
+							            'fadeDuration': 400
+							        });
+						 		},500);
+							}
+					 	});
+				});
+			}
 		});
 		
-		$('#order-by-tab a').click(function(){
+		$('#order-by-tab a').click(function(e){
+			
 			gmap.removeAllMarker();
-			$('#order-by').val($(this).data('order'));
-			search(function(r){
-				response = r;
-				loadListing();
-			});
+			
+			$('.btn-close-detail').trigger('click');
+			
+			if($(this).data('href')) {
+				savedTab = true;
+				listResult.empty();
+				$('#listing-loading').show();
+				$('.pagination').remove();
+				$('#no-result').hide().text('Chưa có tòa nhà nào được lưu.');
+				$('#map-search-form').css('visibility', 'hidden');
+				$.get($(this).data('href'), {}, function(r) {
+					$('#listing-loading').hide();
+					
+					response = r;
+					loadListing();
+				});
+			} else {
+				savedTab = false;
+				$('#order-by').val($(this).data('order'));
+				$('#map-search-form').css('visibility', 'visible');
+				search(function(r){
+					response = r;
+					loadListing();
+				});
+			}
 		});
 		
 		$('#moi-nhat').on('click', '.pagination a', function(e){
@@ -258,8 +434,15 @@ function makeMarker(product) {
 	if(product['floor_no']) {
 		floorNo = '• ' + product['floor_no'] + ' tầng ';
 	}
+
+	var className = 'icon-hear';
 	
-	
+	for(i = 0; i < saved.length; i++) {
+		if(product.id == saved[i]) {
+			className += ' active';
+			break;
+		}
+	}
 	
 	var li = '<li data-is-craw="' + product.is_craw +'" data-detail="' + product.id +'" data-id="' + markerId + '">' +
                 '<div class="bgcover wrap-img pull-left" style="background-image:url('+product.image_url+')"><a href="#" class=""></a></div>' +
@@ -269,7 +452,7 @@ function makeMarker(product) {
                     '<p class="rice-result">' + price + '</p>' +
                     '<p class="beds-baths-sqft">' + product['area'] + 'm<sup>2</sup> ' + floorNo + roomNo + toiletNo + '</p>' +
                     '<p class="date-post-rent">' + product.previous_time + '</p>' +
-                    '<div class="icon-item-listing"><a title="Lưu" class="icon-hear" href="#"><em class="icon-heart"></em></a></div>' +
+                    '<div class="icon-item-listing"><a title="Lưu" class="' + className + '" data-id="' + product.id + '" data-url="/ad/favorite"><em class="fa fa-heart-o"></em></a></div>' +
                 '</div>' +
             '</li>';
 	return li;

@@ -93,4 +93,17 @@ class AdProduct extends AdProductBase
 		}
 		return $address;
 	}
+
+	public function getProductSaved() {
+		$query = $this->hasOne(AdProductSaved::className(), ['product_id' => 'id']);
+		$query->andOnCondition('`user_id` = :user_id', [':user_id'=>Yii::$app->user->id]);
+		return $query;
+	}
+	
+	public static function getAdTypes() {
+		return [
+			AdProduct::TYPE_FOR_SELL => 'Bán',
+			AdProduct::TYPE_FOR_RENT => 'Cho thuê',
+		];
+	}
 }

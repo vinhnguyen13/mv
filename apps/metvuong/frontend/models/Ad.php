@@ -7,6 +7,8 @@
  */
 
 namespace frontend\models;
+use vsoft\ad\models\AdProduct;
+use vsoft\ad\models\AdProductRating;
 use vsoft\ad\models\AdProductSaved;
 use Yii;
 use yii\base\Component;
@@ -16,6 +18,7 @@ use vsoft\news\models\CmsShow;
 use vsoft\ad\models\AdBuildingProject;
 use yii\web\Cookie;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 class Ad extends Component
 {
@@ -83,30 +86,70 @@ class Ad extends Component
         return $url;
     }
 
-    public function favorites(){
-
+    private function checkLogin(){
+        if(Yii::$app->user->isGuest){
+            throw new NotFoundHttpException('You must login !');
+        }
+        return true;
     }
 
-    public function report(){
-        if(Yii::$app->user->isGuest){
-            throw new NotFoundHttpException();
-        }
-
+    public function favorite(){
+        $this->checkLogin();
         if(Yii::$app->request->isPost && Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
             $post = Yii::$app->request->post();
             if(!empty($post['id'])){
-                if(($adSaved = AdProductSaved::findOne(['id'=>$post['id']])) === null){
+                if(($adSaved = AdProductSaved::findOne(['product_id'=>$post['id'], 'user_id'=>Yii::$app->user->id])) === null){
                     $adSaved = new AdProductSaved();
                     $adSaved->product_id = $post['id'];
+                    $adSaved->user_id = Yii::$app->user->id;
                 }
-                $adSaved->user_id = Yii::$app->user->id;
+                $adSaved->saved_at = !empty($post['stt']) ? time() : 0;
                 $adSaved->validate();
                 if(!$adSaved->hasErrors()){
                     $adSaved->save();
                 }
+                return ['statusCode'=>200, 'parameters'=>['msg'=>'']];
             }
+        }
+        return ['statusCode'=>404, 'parameters'=>['msg'=>'']];
+    }
+
+    public function report(){
+        $this->checkLogin();
+        if(Yii::$app->request->isPost && Yii::$app->request->isAjax) {
 
         }
-        return false;
+    }
+
+    public function rating(){
+        $this->checkLogin();
+        if(Yii::$app->request->isPost && Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $post = Yii::$app->request->post();
+            if(($adProduct = AdProduct::findOne(['id'=>$post['id']])) !== null && !empty($post['core'])){
+                if(($adProductRating = AdProductRating::findOne(['user_id'=>Yii::$app->user->id, 'product_id'=>$adProduct->id])) === null){
+                    $adProductRating = Yii::createObject(['class' => AdProductRating::className(),
+                        'user_id'=>Yii::$app->user->id,
+                        'product_id'=>$adProduct->id,
+                        'core'=>$post['core'],
+                        'rating_at'=>time(),
+                    ]);
+                    $adProductRating->validate();
+                    if(!$adProductRating->hasErrors()){
+                        $adProductRating->save();
+                        $_rating = $adProductRating->core;
+                        $core = AdProductRating::findBySql('SELECT AVG(core) as avgCore FROM '.AdProductRating::tableName().' WHERE product_id = '.$adProduct->id)->one();
+                        if(!empty($core->avgCore)){
+                            $_rating = $core->avgCore;
+                        }
+                        $adProduct->updateAttributes(['rating'=>$_rating]);
+                    }
+                    return ['statusCode'=>200, 'parameters'=>['msg'=>'Rating successs']];
+                };
+                return ['statusCode'=>404, 'parameters'=>['msg'=>'You rated']];
+            }
+            return ['statusCode'=>404, 'parameters'=>['msg'=>'Missing data']];
+        }
     }
 }
