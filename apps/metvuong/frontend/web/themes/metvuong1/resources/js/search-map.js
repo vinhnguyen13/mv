@@ -118,84 +118,26 @@ function start() {
 			}
 		}
 
-		/*$('#detail-wrap').on('click', '.rating li a', function(){
+
+		$(document).on('click', '.rating .rate input', function(e){
 			var _this = $(this);
-			var _index = $('.ratingInfo').attr('data-index');
-			var _ratingContainer = _this.closest('.rating');
-			var _url = _ratingContainer.find('ul').attr('data-url');
-			var _id = _ratingContainer.find('ul').attr('data-id');			
-			console.log(_index);
-			_ratingContainer.find('ul > li').each(function(i) {				
-				if(i <= _index){
-					$(this).addClass('active');
-				}
-			});
-			if($('body').find('.ratingInfo').length != 0){
+			var _core = _this.val();
+			var _url = $('.rating').attr('data-url');
+			var _id = $('.detail-post').attr('data-id');
+			console.log(_core);
+			if(_core != 0){
 				$.ajax({
 					type: "post",
 					dataType: 'json',
 					url: _url,
-					data: {id: _id, core: _index + 1},
-					success: function(data) {
-						console.log(data);
-					}
-				});
-			}
-		});*/
-
-		$(document).on('mouseenter', '.rating li', function(e){
-			var _this = $(this);
-			var _index = _this.index();			
-			var _ratingContainer = _this.closest('.rating');
-			/****/			
-			var offset = _this.offset();			
-			var mouseSide;
-			if ((e.pageX - this.offsetLeft) < (offset.left - ($(this).width() / 2))) {
-				mouseSide = 'L';
-			} else {
-				mouseSide = 'R';
-			}				
-			/****/
-			_ratingContainer.find('ul > li').removeClass('active');
-			_ratingContainer.find('ul > li').each(function(i) {
-				if(i <= _index){
-					$(this).addClass('hover-star');
-				}
-			});
-
-			if($('body').find('.ratingInfo').length == 0){
-				$('body').append("<div class='ratingInfo' style='display: none;'></div>");
-			}
-			$('.ratingInfo').attr('data-index', _index);						
-
-		}).on('mouseleave', '.rating li', function() {
-			var _ratingContainer = $(this).closest('.rating');
-			_ratingContainer.find('ul > li.hover-star').removeClass('hover-star');
-			$('.ratingInfo').remove();
-		}).on('click', '.rating li a', function(){
-			var _this = $(this);
-			var _index = $('.ratingInfo').attr('data-index');
-			var _ratingContainer = _this.closest('.rating');
-			var _url = _ratingContainer.find('ul').attr('data-url');
-			var _id = _ratingContainer.find('ul').attr('data-id');						
-			_ratingContainer.find('ul > li').removeClass('hover-star');
-			_ratingContainer.find('ul > li').each(function(i) {				
-				if(i <= _index){
-					$(this).addClass('active');
-				}
-			});
-			if($('body').find('.ratingInfo').length != 0){
-				$.ajax({
-					type: "post",
-					dataType: 'json',
-					url: _url,
-					data: {id: _id, core: parseInt(_index) + 1},
+					data: {id: _id, core: parseInt(_core)},
 					success: function(data) {
 						console.log(data);
 					}
 				});
 			}
 		});
+
 		
 		var hoverTimeout;
 		listResult.on('mouseenter', '> li', function() {
