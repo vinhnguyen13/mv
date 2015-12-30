@@ -36,93 +36,49 @@ class AdController extends Controller
         if($result) {
         	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         	
-        	$cityId = Yii::$app->request->get('cityId');
-        	$districtId = Yii::$app->request->get('districtId');
-        	$categoryId = Yii::$app->request->get('categoryId');
-        	$costMin = Yii::$app->request->get('costMin');
-        	$costMax = Yii::$app->request->get('costMax');
-        	$areaMin = Yii::$app->request->get('areaMin');
-        	$areaMax = Yii::$app->request->get('areaMax');
-        	$roomNo = Yii::$app->request->get('roomNo');
-        	$toiletNo = Yii::$app->request->get('toiletNo');
-        	$orderBy = Yii::$app->request->get('orderBy', 'created_at');
-        	$type = Yii::$app->request->get('type');
-        	$time = Yii::$app->request->get('time');
+        	$query = (new \yii\db\Query())->select('ad_product.*, ad_images.file_name, ad_product_addition_info.*')
+        				->from('ad_product')
+						->innerJoin('ad_product_addition_info', 'ad_product.id = ad_product_addition_info.product_id')
+        				->leftJoin('ad_images', 'ad_product.id = ad_images.product_id')
+        				->groupBy('ad_product.id');
         	
-        	$query = (new \yii\db\Query())->groupBy('ad_product.id')->select('ad_product.*, ad_images.file_name, ad_product_addition_info.*');
+        	$conditionMap = [
+				['type', '=', 'type'],
+				['city_id', '=', 'cityId'],
+				['district_id', '=', 'districtId'],
+				['category_id', '=', 'categoryId'],
+				['price', '>=', 'costMin'],
+				['price', '<=', 'costMax'],
+				['area', '>=', 'areaMin'],
+				['area', '<=', 'areaMax'],
+				['room_no', '>=', 'roomNo'],
+				['toilet_no', '>=', 'toiletNo'],
+				['type', '=', 'type'],
+				['type', '=', 'type'],
+        	];
         	
-        	if($type) {
-        		$query->where('type = :type', [':type' => $type]);
+        	foreach ($conditionMap as $cond) {
+        		$param = Yii::$app->request->get($cond[2]);
+        		
+        		if($param) {
+        			$query->andWhere("`{$cond[0]}` {$cond[1]} :{$cond[2]}", [":{$cond[2]}" => $param]);
+        		}
         	}
         	
-        	if($time) {
+        	if($time = Yii::$app->request->get('time')) {
         		$query->andWhere('created_at >= :created_at', [':created_at' => strtotime($time)]);
         	}
         	
-        	if($cityId) {
-        		$query->andWhere('city_id = :city_id', [':city_id' => $cityId]);
-        	}
-        	
-        	if($districtId) {
-        		$query->andWhere('district_id = :district_id', [':district_id' => $districtId]);
-        	}
-        	
-        	if($categoryId) {
-        		$query->andWhere('category_id = :category_id', [':category_id' => $categoryId]);
-        	}
-        	
-        	if($costMin) {
-        		$query->andWhere('price >= :cost_min', [':cost_min' => $costMin]);
-        	}
-        	
-        	if($costMax) {
-        		$query->andWhere('price <= :cost_max', [':cost_max' => $costMax]);
-        	}
-        	
-        	if($areaMin) {
-        		$query->andWhere('area >= :area_min', [':area_min' => $areaMin]);
-        	}
-        	 
-        	if($areaMax) {
-        		$query->andWhere('area <= :area_max', [':area_max' => $areaMax]);
-        	}
-        	
-        	if($roomNo) {
-        		$query->andWhere('room_no >= :room_no', [':room_no' => $roomNo]);
-        	}
-        	
-        	if($toiletNo) {
-        		$query->andWhere('toilet_no >= :toilet_no', [':toilet_no' => $toiletNo]);
-        	}
-        	
-        	if(isset(\Yii::$app->params['schemaPrefix'])) {
-        		$queryCraw = clone $query;
-        		 
-        		$query = $query->from('ad_product')->addSelect(["'0' AS `is_craw`"])
-        				->leftJoin('ad_product_addition_info', 'ad_product.id = ad_product_addition_info.product_id')
-        				->leftJoin('ad_images', 'ad_product.id = ad_images.product_id');
-        		$queryCraw = $queryCraw->from(\Yii::$app->params['schemaPrefix'] . 'ad_product')->addSelect(["'1' AS `is_craw`"])
-        				->leftJoin(\Yii::$app->params['schemaPrefix'] . 'ad_product_addition_info', 'ad_product.id = ad_product_addition_info.product_id')
-        				->leftJoin(\Yii::$app->params['schemaPrefix'] . 'ad_images', 'ad_product.id = ad_images.product_id');
-        		 
-        		$fullQuery = (new yii\db\Query())->from([$query->union($queryCraw)]);
+        	if($order = Yii::$app->request->get('orderBy')) {
+        		$query->orderBy("`$order` DESC");
         	} else {
-        		$query = $query->from('ad_product')->addSelect(["(0) AS is_craw"])
-        				->leftJoin('ad_product_addition_info', 'ad_product.id = ad_product_addition_info.product_id')
-        				->leftJoin('ad_images', 'ad_product.id = ad_images.product_id');
-        		$fullQuery = $query;
+        		$query->orderBy("`created_at` ASC");
         	}
         	
-        	if($orderBy == 'created_at') {
-        		$fullQuery->orderBy("$orderBy DESC");
-        	} else {
-        		$fullQuery->orderBy("$orderBy ASC");
-        	}
-        	
-        	$pages = new Pagination(['totalCount' => $fullQuery->count()]);
+        	$pages = new Pagination(['totalCount' => $query->count()]);
         	$pages->pageSize = isset(Yii::$app->params['listingLimit']) ? Yii::$app->params['listingLimit'] : 20;
         	
-        	$products = $fullQuery->limit($pages->limit)->offset($pages->offset)->all();
+        	$products = $query->limit($pages->limit)->offset($pages->offset)->all();
         	
         	$productResponse = [];
         	
