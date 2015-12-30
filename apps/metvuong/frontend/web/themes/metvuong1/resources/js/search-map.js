@@ -223,20 +223,21 @@ function start() {
 				
 				// infoWindow.close();
 				
-				$('#map-loading').height($('.cd-main-content').height()).show();
+				$('#map-loading').show();
+
+				var width = $('.wrap-map-result').width();
+				width = (width > 820) ? 820 : width;
+				
+				$('#detail-wrap').css({
+					width: width,
+					left: '-' + width + 'px',
+					height: $('.result-items').height()
+				});
 				
 				var id = $(this).data('detail');
 				
 				$.get('/ad/detail', {id: id, isCraw: $(this).data('is-craw')}, function(response){
 					$('#map-loading').hide();
-					var width = $('.wrap-map-result').width();
-					width = (width > 820) ? 820 : width;
-					
-					$('#detail-wrap').css({
-						width: width,
-						left: '-' + width + 'px',
-						height: $('.result-items').height()
-					});
 					
 					var res = $(response);
 					

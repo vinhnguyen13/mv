@@ -18,9 +18,6 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
 $saved = Yii::$app->user->isGuest ? [] : ArrayHelper::getColumn(AdProductSaved::find()->where('user_id = ' . Yii::$app->user->id)->andWhere('saved_at != 0')->all(), 'product_id');
 $this->registerJs('var saved = ' . json_encode($saved) . ';', View::POS_BEGIN);
 ?>
-<div id="map-loading" style="display:none;position: absolute;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.5);z-index: 3;">
-	<img style="    position: absolute;left: 50%;top: 50%;margin-left: -24px;margin-top: -24px;" src="<?= Yii::$app->view->theme->baseUrl ?>/resources/images/map-loading.gif" />
-</div>
 <div class="list-filters-result">
 	<form id="map-search-form" action="<?= Url::to('/real-estate/result') ?>" method="post">
 		<input type="hidden" name="result" value="1" />
@@ -219,7 +216,9 @@ $this->registerJs('var saved = ' . json_encode($saved) . ';', View::POS_BEGIN);
     </div>
 </div>
 <div class="col-md-4 result-items">
-	<div id="detail-wrap"><div id="detail-listing"></div></div>
+	<div id="detail-wrap" style="background: #FFF;"><div id="map-loading" style="position: absolute;background: rgba(0, 0, 0, 0.5);padding: 4px;left: 12px;top: 12px;z-index: 1;">
+	<img style="width: 32px;" src="<?= Yii::$app->view->theme->baseUrl ?>/resources/images/map-loading.gif" />
+</div><div id="detail-listing"></div></div>
     <div class="wrap-col-fixed-result clearfix" style="background: #FFFFFF">
         
         <h1 id="search-title" class="zsg-content_collapsed">Listings</h1>
