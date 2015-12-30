@@ -101,7 +101,7 @@
                         <?php else: ?>
                         <div class="gallery-detail clearfix"><div class="bxslider no-image"><?= Yii::t('ad', 'Không có hình ảnh đính kèm') ?></div></div>
                         <?php endif; ?>
-                        <div class="row detail-post">
+                        <div class="row detail-post" data-id="<?=$product->id;?>">
                             <div class="col-sm-8 dt-left-col">
                                 <h1 class="title-dt"><?= $address ?></h1>
                                 <p class="infor-post-date"><em class="fa fa-calendar"></em><?= date('d/m/Y', $product->created_at) ?></p>
@@ -186,13 +186,6 @@
                             <div class="col-sm-4 dt-right-col">
                                 <div class="contact-wrapper">
                                     <div class="rating pull-right">
-                                        <!-- <ul class="clearfix">
-                                            <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                            <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                            <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                            <li><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                            <li><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                        </ul> -->
                                         <fieldset class="rate">
                                             <input type="radio" id="rating-contact-10" name="rating-contact" value="10" /><label for="rating-contact-10" title="5 stars"></label>
                                             <input type="radio" id="rating-contact-9" name="rating-contact" value="9" /><label class="half" for="rating-contact-9" title="4 1/2 stars"></label>
@@ -248,25 +241,11 @@
                                 </div>
                                 <div class="function-listing clearfix">
                                     <p>Đánh giá</p>
-                                    <div class="rating">
-                                        <!-- <ul class="clearfix" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/rating', 'type'=>'']);?>">
-                                            <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                            <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                            <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                            <li><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                            <li><a href="#"><em class="fa fa-star-o"></em></a></li>
-                                        </ul> -->
+                                    <div class="rating" data-url="<?=Url::to(['/ad/rating', 'type'=>'']);?>">
                                         <fieldset class="rate">
-                                            <input type="radio" id="rating10" name="rating" value="10" /><label for="rating10" title="5 stars"></label>
-                                            <input type="radio" id="rating9" name="rating" value="9" /><label class="half" for="rating9" title="4 1/2 stars"></label>
-                                            <input type="radio" id="rating8" name="rating" value="8" /><label for="rating8" title="4 stars"></label>
-                                            <input type="radio" id="rating7" name="rating" value="7" /><label class="half" for="rating7" title="3 1/2 stars"></label>
-                                            <input type="radio" id="rating6" name="rating" value="6" /><label for="rating6" title="3 stars"></label>
-                                            <input type="radio" id="rating5" name="rating" value="5" /><label class="half" for="rating5" title="2 1/2 stars"></label>
-                                            <input type="radio" id="rating4" name="rating" value="4" /><label for="rating4" title="2 stars"></label>
-                                            <input type="radio" id="rating3" name="rating" value="3" /><label class="half" for="rating3" title="1 1/2 stars"></label>
-                                            <input type="radio" id="rating2" name="rating" value="2" /><label for="rating2" title="1 star"></label>
-                                            <input type="radio" id="rating1" name="rating" value="1" /><label class="half" for="rating1" title="1/2 star"></label>
+                                            <?php for($i = 10; $i > 0; $i--):?>
+                                            <input type="radio" id="rating<?=$i?>" name="rating" value="<?=$i?>" <?=($i==round($product->rating)) ? 'checked' : ''?> /><label for="rating<?=$i?>" <?=($i%2!=0) ? 'class="half"' : ''?> title="<?=ceil($i/2)?> stars"></label>
+                                            <?php endfor;?>
                                         </fieldset>
                                     </div>
                                     <div class="dropdown report-listing">
