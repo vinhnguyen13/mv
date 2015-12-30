@@ -89,3 +89,264 @@ a.desc:after {
     padding: 10px 20px;
     margin: 0 0 15px 0;
 }
+
+#map-loading {
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	z-index: 1;
+	top: 129px;
+	left: 50%;
+	margin-left: -20px;
+	background: rgba(221, 221, 221, 0);
+	display: none;
+	opacity: 0.9;
+}
+
+.loader .round {
+	display: block;
+	border-radius: 999px;
+	-webkit-border-radius: 999px;
+	-moz-border-radius: 999px;
+	-o-border-radius: 999px;
+	-ms-border-radius: 999px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	z-index: 5;
+	background: #DDD;
+	width: 8px;
+	height: 8px;
+	margin: -4px 0 0 -4px;
+}
+
+.loader .side {
+	position: absolute;
+	width: 10px;
+	height: 20px;
+	top: 0;
+	overflow: hidden;
+}
+.loader .side.s_left {
+	left: 0px;
+}
+#map-loading .side, #map-loading .fill {
+	width: 20px;
+	height: 40px;
+    box-sizing: content-box;
+}
+
+
+.loader .side .fill {
+	position: absolute;
+	width: 10px;
+	height: 20px;
+	background: #009745;
+	border-radius: 999px;
+	-webkit-border-radius: 999px;
+	-moz-border-radius: 999px;
+	-o-border-radius: 999px;
+	-ms-border-radius: 999px;
+}
+.loader .side.s_left .fill {
+	left: 0;
+	border-left: 20px solid #DDD;
+	animation: cssSpinnerLeft .8s infinite linear;
+	-webkit-animation: cssSpinnerLeft .8s infinite linear;
+	-moz-animation: cssSpinnerLeft .8s infinite linear;
+	-o-animation: cssSpinnerLeft .8s infinite linear;
+	-ms-animation: cssSpinnerLeft .8s infinite linear;
+}
+#map-loading .side.s_left .fill {
+	border-left-width: 20px;
+}
+
+.loader .side.s_right {
+	left: 10px;
+}
+#map-loading .side.s_right {
+	left: 20px;
+}
+.loader .side.s_right .fill {
+	right: 0;
+	border-right: 10px solid #DDD;
+	animation: cssSpinnerRight .8s infinite linear;
+	-webkit-animation: cssSpinnerRight .8s infinite linear;
+	-moz-animation: cssSpinnerRight .8s infinite linear;
+	-o-animation: cssSpinnerRight .8s infinite linear;
+	-ms-animation: cssSpinnerRight .8s infinite linear;
+}
+#map-loading .side.s_right .fill {
+	border-right-width: 20px;
+}
+
+@-webkit-keyframes cssSpinnerRight {
+	0% {
+	-webkit-transform:rotate(0deg);
+	}
+	20% {
+	-webkit-transform:rotate(90deg);
+	}
+	25% {
+	-webkit-transform:rotate(180deg);
+	}
+	50% {
+	-webkit-transform:rotate(180deg);
+	}
+	70% {
+	-webkit-transform:rotate(270deg);
+	}
+	75% {
+	-webkit-transform:rotate(360deg);
+	}
+	100% {
+	-webkit-transform:rotate(360deg);
+	}
+}
+@-webkit-keyframes cssSpinnerLeft {
+	0% {
+	-webkit-transform:rotate(0deg);
+	}
+	25% {
+	-webkit-transform:rotate(0deg);
+	}
+	35% {
+	-webkit-transform:rotate(90deg);
+	}
+	50% {
+	-webkit-transform:rotate(180deg);
+	}
+	75% {
+	-webkit-transform:rotate(180deg);
+	}
+	80% {
+	-webkit-transform:rotate(270deg);
+	}
+	100% {
+	-webkit-transform:rotate(360deg);
+	}
+}
+@-moz-keyframes cssSpinnerRight {
+	0% {
+	-moz-transform:rotate(0deg);
+	}
+	20% {
+	-moz-transform:rotate(90deg);
+	}
+	25% {
+	-moz-transform:rotate(180deg);
+	}
+	50% {
+	-moz-transform:rotate(180deg);
+	}
+	70% {
+	-moz-transform:rotate(270deg);
+	}
+	75% {
+	-moz-transform:rotate(360deg);
+	}
+	100% {
+	-moz-transform:rotate(360deg);
+	}
+}
+@-moz-keyframes cssSpinnerLeft {
+	0% {
+	-moz-transform:rotate(0deg);
+	}
+	25% {
+	-moz-transform:rotate(0deg);
+	}
+	35% {
+	-moz-transform:rotate(90deg);
+	}
+	50% {
+	-moz-transform:rotate(180deg);
+	}
+	75% {
+	-moz-transform:rotate(180deg);
+	}
+	80% {
+	-moz-transform:rotate(270deg);
+	}
+	100% {
+	-moz-transform:rotate(360deg);
+	}
+}
+@-o-keyframes cssSpinnerRight {
+	0% {
+	-o-transform:rotate(0deg);
+	}
+	20% {
+	-o-transform:rotate(90deg);
+	}
+	25% {
+	-o-transform:rotate(180deg);
+	}
+	50% {
+	-o-transform:rotate(180deg);
+	}
+	70% {
+	-o-transform:rotate(270deg);
+	}
+	75% {
+	-o-transform:rotate(360deg);
+	}
+	100% {
+	-o-transform:rotate(360deg);
+	}
+}
+@-o-keyframes cssSpinnerLeft {
+	0% {
+	-o-transform:rotate(0deg);
+	}
+	25% {
+	-o-transform:rotate(0deg);
+	}
+	35% {
+	-o-transform:rotate(90deg);
+	}
+	50% {
+	-o-transform:rotate(180deg);
+	}
+	75% {
+	-o-transform:rotate(180deg);
+	}
+	80% {
+	-o-transform:rotate(270deg);
+	}
+	100% {
+	-o-transform:rotate(360deg);
+	}
+}
+@keyframes cssSpinnerRight {
+	0% {
+	transform:rotate(0deg);
+	}
+	20% {
+	transform:rotate(90deg);
+	}
+	25% {
+	transform:rotate(180deg);
+	}
+	50% {
+	transform:rotate(180deg);
+	}
+	70% {
+	transform:rotate(270deg);
+	}
+	75% {
+	transform:rotate(360deg);
+	}
+	100% {
+	transform:rotate(360deg);
+	}
+}
+@keyframes cssSpinnerLeft {
+	0% { transform:rotate(0deg); }
+	25% { transform:rotate(0deg); }
+	35% { transform:rotate(90deg); }
+	50% { transform:rotate(180deg); }
+	75% { transform:rotate(180deg); }
+	80% { transform:rotate(270deg); }
+	100% { transform:rotate(360deg); }
+}

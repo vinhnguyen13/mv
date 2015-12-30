@@ -61,7 +61,7 @@
 									$firstImage = array_shift($images);
 									$images = array_chunk($images, 4);
 						?>
-			                        <div class="gallery-detail clearfix">
+			                        <div class="gallery-detail clearfix" style="visibility: hidden;">
 			                            <div class="bxslider">
 			                                <div class="wrap-img-detail">
 			                                    <ul class="clearfix">
