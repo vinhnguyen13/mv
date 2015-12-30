@@ -134,7 +134,7 @@ class AdController extends Controller
         		
         		if($product['file_name']) {
         			if(StringHelper::startsWith($product['file_name'], 'http')) {
-        				$productResponse[$k]['image_url'] = str_replace('/745x510/', '/120x90/', $product['file_name']);
+        				$productResponse[$k]['image_url'] = str_replace('/745x510/', '/350x280/', $product['file_name']);
         			} else {
         				$productResponse[$k]['image_url'] = AdImages::getImageUrl($product['file_name']);
         			}
