@@ -208,6 +208,10 @@ class AdController extends Controller
      */
     public function actionPost()
     {
+    	if(Yii::$app->user->isGuest) {
+    		return $this->render('/_systems/require_login');
+    	}
+    	
 		$type = Yii::$app->request->get('type');
     	$cityId = Yii::$app->request->get('city');
     	$districtId = Yii::$app->request->get('district');
