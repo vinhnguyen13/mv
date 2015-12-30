@@ -53,7 +53,7 @@
         	minmax.close(item);
 		},
 		close: function (item) {
-			$(document).unbind('click');
+			//$(document).unbind('click');
 			$(document).on('click', function (e) {
 				//e.preventDefault();
 				var container = $(".list-filters-result .outsideevent");

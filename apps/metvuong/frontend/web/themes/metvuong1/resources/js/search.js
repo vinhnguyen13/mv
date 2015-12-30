@@ -165,7 +165,9 @@
         function init () {
             mv.settings = $.extend({}, defaults, options);
             showBoxSearch();
-            scrollFixed();
+            if ( $('header.wrap-page-home').length > 0 ) {
+                scrollFixed();
+            }
         };
 
         //event click input type=text search
@@ -1088,6 +1090,7 @@
                     flagShow = false;
                     $container.removeClass('pdTContainer');
                 }
+
             });
         };
 
