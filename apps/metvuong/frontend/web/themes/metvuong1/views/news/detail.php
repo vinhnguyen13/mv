@@ -98,18 +98,6 @@ Yii::$app->view->registerMetaTag([
     </div>
 </div>
 
-<!-- <div class="social-share">
-    <ul>
-        <li><a href="#"><em class="fa fa-facebook"></em></a></li>
-        <li><a href="#"><em class="fa fa-twitter"></em></a></li>
-        <li><a href="#"><em class="fa fa-instagram"></em></a></li>
-        <li><a href="#"><em class="fa fa-google-plus"></em></a></li>
-        <li><a href="#"><em class="fa fa-youtube-play"></em></a></li>
-        <li><a href="#"><em class="fa fa-pinterest"></em></a></li>
-        <li><a href="#"><em class="fa fa-linkedin"></em></a></li>
-    </ul>
-</div> -->
-
 <style>
     .loading { display: none; margin-bottom: 20px;}
     .animated, .box-content img {
@@ -143,6 +131,13 @@ Yii::$app->view->registerMetaTag([
         -webkit-animation-name: fadeInLeft;
         animation-name: fadeInLeft;
     }
+
+    .last_news {
+        font-size: 10pt;
+        text-align: right;
+        font-style: italic;
+        padding-right: 20px;
+    }
 </style>
 <script type="text/javascript">
     $(document).ready(function(){
@@ -162,7 +157,7 @@ Yii::$app->view->registerMetaTag([
 
             $(window).scrollTop(function() {
                 var scroll = $(this).scrollTop();
-                if(hArticle - scroll <= 900){
+                if(hArticle - scroll <= 900 && currentID > 0){
                     $(".loading").show();
                     if ( timer ) clearTimeout(timer);
                     timer = setTimeout(function() {
@@ -216,6 +211,10 @@ Yii::$app->view->registerMetaTag([
                             error: function () {
                                 $('#current_id').val(0);
                                 $(".loading").hide();
+                                $(".loading").remove();
+                                var last_news = $('.wrap-detail-article').find(".last_news");
+                                if(!last_news[0])
+                                    $('.wrap-detail-article').append('<div class="last_news">This is last news</div>');
                             }
                         }); // end ajax
                     }, 800);

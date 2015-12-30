@@ -52,6 +52,10 @@ function start() {
 			$('#detail-wrap').css({
 				left: '0px'
 			});
+
+			setTimeout(function(){
+				$('#detail-listing').html('');
+			}, 300);
 		});
 		
 		infoWindow = new InfoWindow();
@@ -60,6 +64,9 @@ function start() {
 			$('#detail-wrap').css({
 				left: '0px'
 			});
+			setTimeout(function(){
+				$('#detail-listing').html('');
+			}, 300);
 		});
 
 		var timer = 0;
@@ -237,7 +244,7 @@ function start() {
 				var id = $(this).data('detail');
 				
 				$.get('/ad/detail', {id: id, isCraw: $(this).data('is-craw')}, function(response){
-					$('#map-loading').hide();
+					
 					
 					var res = $(response);
 					
@@ -255,36 +262,38 @@ function start() {
 						self.find('.icon-hear').attr('class', $(this).attr('class'));
 					});
 
-					if(!self.data('clone')) {
-						var marker = gmap.getMarker(self.data('id'));
-						if(marker) {
-							var position = marker.getPosition();
-							gmap.setCenter({lat: position.lat(), lng: position.lng()});
-						}
-					}
+//					if(!self.data('clone')) {
+//						var marker = gmap.getMarker(self.data('id'));
+//						if(marker) {
+//							var position = marker.getPosition();
+//							gmap.setCenter({lat: position.lat(), lng: position.lng()});
+//						}
+//					}
 					
 					$('.gallery-detail').imagesLoaded()
 					 	.always( function( instance ) {
+					 		
+					 		$('#map-loading').hide();
 							if($('#detail-listing .bxslider').find('.wrap-img-detail').length > 0) {
-								setTimeout(function() {
-						 			$('#detail-listing .bxslider').bxSlider({
-						                moveSlides: 1,
-						                startSlide: 0,
-						                minSlides: 1,
-						                maxSlides: 2,
-						                slideWidth: 444,
-						                startSlide: 0,
-						                onSliderLoad: function() {
-						                    this.infiniteLoop = false;
-						                    this.hideControlOnEnd = true;
-						                    scrollFixed();
-						                }
-						            });
-									lightbox.option({
-							            'resizeDuration': 300,
-							            'fadeDuration': 400
-							        });
-						 		},500);
+								
+								$('#detail-listing .bxslider').bxSlider({
+					                moveSlides: 1,
+					                startSlide: 0,
+					                minSlides: 1,
+					                maxSlides: 2,
+					                slideWidth: 444,
+					                startSlide: 0,
+					                onSliderLoad: function() {
+					                    this.infiniteLoop = false;
+					                    this.hideControlOnEnd = true;
+					                    scrollFixed();
+					                }
+					            });
+								lightbox.option({
+						            'resizeDuration': 300,
+						            'fadeDuration': 400
+						        });
+								$('.gallery-detail').css('visibility', 'visible');
 							}
 					 	});
 				});

@@ -216,9 +216,13 @@ $this->registerJs('var saved = ' . json_encode($saved) . ';', View::POS_BEGIN);
     </div>
 </div>
 <div class="col-md-4 result-items">
-	<div id="detail-wrap" style="background: #FFF;"><div id="map-loading" style="position: absolute;background: rgba(0, 0, 0, 0.5);padding: 4px;left: 12px;top: 12px;z-index: 1;">
-	<img style="width: 32px;" src="<?= Yii::$app->view->theme->baseUrl ?>/resources/images/map-loading.gif" />
-</div><div id="detail-listing"></div></div>
+	<div id="detail-wrap" style="background: #FFF;">
+		<div id="map-loading" class="loader">
+			<span class="round"></span>
+			<span class="side s_left"><span class="fill"></span></span>
+			<span class="side s_right"><span class="fill"></span></span>
+		</div>
+		<div id="detail-listing"></div></div>
     <div class="wrap-col-fixed-result clearfix" style="background: #FFFFFF">
         
         <h1 id="search-title" class="zsg-content_collapsed">Listings</h1>

@@ -75,7 +75,6 @@ class NewsController extends Controller
     {
         $current_id = Yii::$app->request->get('current_id');
         $cat_id = Yii::$app->request->get('cat_id');
-
         Yii::$app->response->format = Response::FORMAT_JSON;
         $model = CmsShow::find()->asArray()
 //            ->innerJoin('profile p', 'cms_show.created_by = p.user_id')
@@ -91,7 +90,9 @@ class NewsController extends Controller
         $user_id = $model["created_by"];
         $profile = Profile::find()->asArray()->select(['name as author_name', 'avatar', 'bio'])->where('user_id = :uid', [':uid' => $user_id])->one();
 
-        $result = array_merge($profile, $catalog, $model);
+        $result = null;
+        if(!empty($profile) && !empty($catalog) && !empty($model))
+            $result = array_merge($profile, $catalog, $model);
 
         return $result;
     }

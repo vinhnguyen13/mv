@@ -61,17 +61,17 @@
 									$firstImage = array_shift($images);
 									$images = array_chunk($images, 4);
 						?>
-			                        <div class="gallery-detail clearfix">
+			                        <div class="gallery-detail clearfix" style="visibility: hidden;">
 			                            <div class="bxslider">
 			                                <div class="wrap-img-detail">
 			                                    <ul class="clearfix">
 			                                        <li class="img-big">
 			                                        	<?php if(!StringHelper::startsWith($firstImage->file_name, 'http')): ?>
 			                                            <div class="bgcover" style="background-image:url(<?= $firstImage->imageMedium ?>);"></div>
-			                                            <a data-lightbox="detail-post" class="group mask" href="<?= $firstImage->imageLarge ?>"><em class="fa fa-search"></em><img src="<?= $firstImage->imageLarge ?>" alt="" style="display:none;"></a>
+			                                            <a data-lightbox="detail-post" class="group mask" href="<?= $firstImage->imageLarge ?>"><em class="fa fa-search"></em><img src="<?= $firstImage->imageMedium ?>" alt="" style="display:none;"></a>
 			                                        	<?php else: ?>
-			                                        	<div class="bgcover" style="background-image:url(<?= $firstImage->file_name ?>);"></div>
-			                                            <a data-lightbox="detail-post" class="group mask" href="<?= $firstImage->file_name ?>"><em class="fa fa-search"></em><img src="<?= $firstImage->file_name ?>" alt="" style="display:none;"></a>
+			                                        	<div class="bgcover" style="background-image:url(<?= str_replace('/745x510/', '/350x280/', $firstImage->file_name) ?>);"></div>
+			                                            <a data-lightbox="detail-post" class="group mask" href="<?= $firstImage->file_name ?>"><em class="fa fa-search"></em><img src="<?= str_replace('/745x510/', '/350x280/', $firstImage->file_name) ?>" alt="" style="display:none;"></a>
 			                                        	<?php endif; ?>
 			                                        </li>
 			                                    </ul>
@@ -84,13 +84,13 @@
 					                                ?>
 					             						<li>
 				                                            <div class="bgcover" style="background-image:url(<?= $image->imageThumb ?>);"></div>
-				                                            <a data-lightbox="detail-post" class="group mask" href="<?= $image->imageLarge ?>"><em class="fa fa-search"></em><img src="<?= $image->imageLarge ?>" alt="" style="display:none;"></a>
+				                                            <a data-lightbox="detail-post" class="group mask" href="<?= $image->imageLarge ?>"><em class="fa fa-search"></em><img src="<?= $image->imageThumb ?>" alt="" style="display:none;"></a>
 				                                            
 				                                        </li>
 					                                <?php else: ?>
 					                                <li>
-					                                	<div class="bgcover" style="background-image:url(<?= $image->file_name ?>);"></div>
-					                                	<a data-lightbox="detail-post" class="group mask" href="<?= $image->file_name ?>"><em class="fa fa-search"></em><img src="<?= $image->file_name ?>" alt="" style="display:none;"></a>
+					                                	<div class="bgcover" style="background-image:url(<?= str_replace('/745x510/', '/350x280/', $image->file_name) ?>);"></div>
+					                                	<a data-lightbox="detail-post" class="group mask" href="<?= $image->file_name ?>"><em class="fa fa-search"></em><img src="<?= str_replace('/745x510/', '/350x280/', $image->file_name) ?>" alt="" style="display:none;"></a>
 					                                </li>
 					                                <?php endif; endforeach; ?>
 					                                </ul>
