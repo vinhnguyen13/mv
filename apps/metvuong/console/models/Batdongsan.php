@@ -418,10 +418,11 @@ class Batdongsan extends Component
                         $desc = $value[$filename]["description"];
                         $content = null;
                         if(!empty($desc)) {
-                            $content = strip_tags($desc, '<p><br><ul><li>');
+                            $content = strip_tags($desc, '<br>');
                             $pos = strpos($content, 'Tìm kiếm theo từ khóa');
                             $content = substr($content, 0, $pos);
                             $content = str_replace('Tìm kiếm theo từ khóa','', $content);
+                            $content = str_replace('<br/>',PHP_EOL, $content);
                             $content = trim($content);
                         }
 
