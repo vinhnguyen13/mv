@@ -122,10 +122,10 @@ function start() {
 		$(document).on('click', '.rating .rate input', function(e){
 			var _this = $(this);
 			var _core = _this.val();
-			var _url = $('.rating').attr('data-url');
+			var _url = _this.closest('.rating').attr('data-url');
 			var _id = $('.detail-post').attr('data-id');
-			console.log(_core);
-			if(_core != 0){
+			console.log(_url);
+			if(_core != 0 && _url){
 				$.ajax({
 					type: "post",
 					dataType: 'json',
