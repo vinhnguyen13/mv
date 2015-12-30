@@ -262,13 +262,13 @@ function start() {
 						self.find('.icon-hear').attr('class', $(this).attr('class'));
 					});
 
-					if(!self.data('clone')) {
-						var marker = gmap.getMarker(self.data('id'));
-						if(marker) {
-							var position = marker.getPosition();
-							gmap.setCenter({lat: position.lat(), lng: position.lng()});
-						}
-					}
+//					if(!self.data('clone')) {
+//						var marker = gmap.getMarker(self.data('id'));
+//						if(marker) {
+//							var position = marker.getPosition();
+//							gmap.setCenter({lat: position.lat(), lng: position.lng()});
+//						}
+//					}
 					
 					$('.gallery-detail').imagesLoaded()
 					 	.always( function( instance ) {
