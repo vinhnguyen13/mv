@@ -19,7 +19,7 @@
 	$typeName = ($product->type == AdProduct::TYPE_FOR_SELL) ? 'bán' : 'cho thuê';
 	$direction = AdProductAdditionInfo::directionList();
 	
-	$owner = \dektrium\user\models\User::findOne($product->user_id);
+	$owner = \frontend\models\User::findOne($product->user_id);
 	if($owner && $owner->profile->avatar) {
 		$pathinfo = pathinfo($owner->profile->avatar);
 		
@@ -27,6 +27,7 @@
 	} else {
 		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
 	}
+    $avatar = $owner->profile->getAvatarUrl();
 	
 	$address = '';
 	

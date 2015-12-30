@@ -13,6 +13,7 @@ namespace frontend\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "profile".
@@ -97,5 +98,16 @@ class Profile extends ActiveRecord
     public function getUser()
     {
         return $this->hasOne($this->module->modelMap['User'], ['id' => 'user_id']);
+    }
+
+    public function getAvatarUrl()
+    {
+        if($this->avatar) {
+            $pathinfo = pathinfo($this->avatar);
+            $avatar = Url::to('/store/avatar/' . $pathinfo['filename'] . '.thumb.' . $pathinfo['extension']);
+        } else {
+            $avatar = Url::to( '/images/default-avatar.jpg');
+        }
+        return $avatar;
     }
 }
