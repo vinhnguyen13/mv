@@ -5360,7 +5360,7 @@ header.wrap-page-home .box-search-header.ani-search > div {
     font-style: italic;
 }
 .contact-wrapper .rating {
-    margin: 9px 10px 0 0;
+    margin: 3px 10px 0 0;
 }
 .detail-content {
     font-size: .8em;
@@ -5569,3 +5569,7 @@ label:hover, label:hover ~ label { color: #73B100;  } /* color previous stars on
 input:checked + label:hover, input:checked ~ label:hover, /* highlight current and previous stars */
 input:checked ~ label:hover ~ label, /* highlight previous selected stars for new rating */
 label:hover ~ input:checked ~ label /* highlight previous selected stars */ { color: #A6E72D;  } 
+
+.contact-wrapper .rate > label:before {
+    font-size: 17px;
+}
