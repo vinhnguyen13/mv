@@ -31,6 +31,7 @@ return [
             'modelMap' => [
                 'User' => 'frontend\models\User',
                 'Account' => 'frontend\models\Account',
+                'Profile' => 'frontend\models\Profile',
             ],
             'controllerMap' => [
                 'security' => 'frontend\controllers\SecurityController',
