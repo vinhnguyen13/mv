@@ -5563,10 +5563,11 @@ button.btn.btn-default.dropdown-toggle {
 }
 /* Click + hover color */
  /* color current and previous stars on checked */
-input:checked ~ label,
+
 label:hover, label:hover ~ label {color: #A6FF00;}
 
 /* Hover highlights */
+input:checked ~ label,
 input:checked + label:hover, input:checked ~ label:hover, /* highlight current and previous stars */
 input:checked ~ label:hover ~ label, /* highlight previous selected stars for new rating */
 label:hover ~ input:checked ~ label,

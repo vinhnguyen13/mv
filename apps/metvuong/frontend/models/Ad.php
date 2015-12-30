@@ -145,7 +145,7 @@ class Ad extends Component
                         }
                         $adProduct->updateAttributes(['rating'=>$_rating]);
                     }
-                    return ['statusCode'=>200, 'parameters'=>['msg'=>'Rating successs']];
+                    return ['statusCode'=>200, 'parameters'=>['msg'=>'Rating successs', 'data'=>round($_rating)]];
                 };
                 return ['statusCode'=>404, 'parameters'=>['msg'=>'You rated']];
             }
