@@ -114,7 +114,7 @@ function start() {
 							}
 						}
 					});
-				}, 500);
+				}, 1000);
 			}
 		}
 
@@ -126,15 +126,21 @@ function start() {
 			var _id = $('.detail-post').attr('data-id');
 			console.log(_url);
 			if(_core != 0 && _url){
-				$.ajax({
-					type: "post",
-					dataType: 'json',
-					url: _url,
-					data: {id: _id, core: parseInt(_core)},
-					success: function(data) {
-						console.log(data);
-					}
-				});
+				clearTimeout(timer);
+				timer = setTimeout(function() {
+					$.ajax({
+						type: "post",
+						dataType: 'json',
+						url: _url,
+						data: {id: _id, core: parseInt(_core)},
+						success: function(data) {
+							if(data.parameters.data){
+								_this.closest('.rating').find(":radio[value="+data.parameters.data+"]").prop('checked',true);
+								console.log(data.parameters.data);
+							}
+						}
+					});
+				}, 1000);
 			}
 		});
 
