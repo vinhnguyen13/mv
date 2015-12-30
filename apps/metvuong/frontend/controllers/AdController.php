@@ -69,10 +69,10 @@ class AdController extends Controller
         		$query->andWhere('created_at >= :created_at', [':created_at' => strtotime($time)]);
         	}
         	
-        	if($order = Yii::$app->request->get('orderBy')) {
-        		$query->orderBy("`$order` DESC");
+        	if(($order = Yii::$app->request->get('orderBy')) && $order != 'created_at') {
+        		$query->orderBy("`$order` ASC");
         	} else {
-        		$query->orderBy("`created_at` ASC");
+        		$query->orderBy("`created_at` DESC");
         	}
         	
         	$pages = new Pagination(['totalCount' => $query->count()]);
