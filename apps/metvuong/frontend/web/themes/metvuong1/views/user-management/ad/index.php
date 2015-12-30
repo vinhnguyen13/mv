@@ -1,6 +1,6 @@
 <?php
 use vsoft\ad\models\AdProduct;
-$products = AdProduct::findAll(['status'=>1]);
+$products = AdProduct::findAll(['status'=>1, 'user_id'=>Yii::$app->user->id]);
 ?>
 <div class="col-xs-9 right-profile quanlytinraoban">
     <div class="wrap-quanly-profile">
