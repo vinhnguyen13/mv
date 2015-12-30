@@ -1102,7 +1102,7 @@ CREATE TABLE `profile` (
 -- ----------------------------
 -- Records of profile
 -- ----------------------------
-INSERT INTO `profile` VALUES ('1', 'Nguyễn Quang Vinh', 'quangvinh@abc.com', '', 'd41d8cd98f00b204e9800998ecf8427e', '', 'http://local.mv.com', '', '561ce59f056fe.jpg');
+INSERT INTO `profile` VALUES ('1', 'Mét Vuông', 'quangvinh@abc.com', '', 'd41d8cd98f00b204e9800998ecf8427e', '', 'http://local.mv.com', '', '561ce59f056fe.jpg');
 INSERT INTO `profile` VALUES ('2', null, null, null, null, null, null, null, '');
 INSERT INTO `profile` VALUES ('3', null, null, null, null, null, null, null, '563724f17c985.png');
 

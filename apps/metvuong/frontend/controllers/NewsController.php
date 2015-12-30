@@ -2,8 +2,8 @@
 
 namespace frontend\controllers;
 
-use dektrium\user\models\Profile;
 use frontend\components\Controller;
+use frontend\models\Profile;
 use vsoft\news\models\CmsCatalog;
 use vsoft\news\models\CmsShow;
 use Yii;

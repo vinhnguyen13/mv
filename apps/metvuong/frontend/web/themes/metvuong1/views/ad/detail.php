@@ -20,14 +20,11 @@
 	$direction = AdProductAdditionInfo::directionList();
 	
 	$owner = \frontend\models\User::findOne($product->user_id);
-	if($owner && $owner->profile->avatar) {
-		$pathinfo = pathinfo($owner->profile->avatar);
-		
-		$avatar = Url::to('/store/avatar/' . $pathinfo['filename'] . '.thumb.' . $pathinfo['extension']);
+	if($owner && $owner->profile) {
+        $avatar = $owner->profile->getAvatarUrl();
 	} else {
 		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
 	}
-    $avatar = $owner->profile->getAvatarUrl();
 	
 	$address = '';
 	
