@@ -2,6 +2,7 @@
 
 namespace vsoft\news\controllers;
 
+use vsoft\news\models\Status;
 use Yii;
 use vsoft\news\models\CmsCatalog;
 use vsoft\news\models\CmsCatalogSearch as CmsCatalogSearch;
@@ -50,7 +51,7 @@ class CmsCatalogController extends \funson86\cms\controllers\backend\CmsCatalogC
         //if(!Yii::$app->user->can('viewYourAuth')) throw new ForbiddenHttpException(Yii::t('app', 'No Auth'));
 
         $searchModel = new CmsCatalogSearch();
-        $dataProvider = CmsCatalog::get(Yii::$app->params['newsCatID'], CmsCatalog::find()->asArray()->all());
+        $dataProvider = CmsCatalog::get(Yii::$app->params['newsCatID'], CmsCatalog::find()->where('status=:status',[':status' => Status::STATUS_ACTIVE])->asArray()->all());
 
         return $this->render('index', [
             'searchModel' => $searchModel,
