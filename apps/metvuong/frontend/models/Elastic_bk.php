@@ -11,7 +11,6 @@ namespace frontend\models;
 
 
 use Elasticsearch\ClientBuilder;
-use yii\base\Exception;
 
 class Elastic
 {
@@ -144,28 +143,6 @@ class Elastic
         // Document will be indexed to my_index/my_type/my_id
         $results = $this->client->get($params);
         return $results;
-    }
-
-
-    public function userData(){
-        try{
-            $this->connect();
-            if($this->client){
-                $params = [
-                    'index' => 'users',
-                    'type' => 'store',
-                    'id' => '28',
-                    'body' => [
-                        'doc' => [
-                            'title' => 'Ứng dụng công nghệ Holongram vào trình diễn dự án tại Việt Nam'
-                        ]
-                    ]
-                ];
-                $this->client->index($params);
-            }
-        }catch (Exception $e){
-
-        }
     }
 
 }

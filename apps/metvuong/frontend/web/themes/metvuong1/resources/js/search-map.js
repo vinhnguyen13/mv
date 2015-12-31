@@ -191,7 +191,7 @@ function start() {
 				
 				var id = $(this).data('detail');
 				
-				$.get('/ad/detail', {id: id, isCraw: $(this).data('is-craw')}, function(response){
+				$.get('/ad/detail', {id: id}, function(response){
 					
 					
 					var res = $(response);
@@ -402,7 +402,7 @@ function makeMarker(product) {
 		}
 	}
 	
-	var li = '<li data-is-craw="' + product.is_craw +'" data-detail="' + product.id +'" data-id="' + markerId + '">' +
+	var li = '<li data-detail="' + product.id +'" data-id="' + markerId + '">' +
                 '<div class="bgcover wrap-img pull-left" style="background-image:url('+product.image_url+')"><a href="#" class=""></a></div>' +
                 '<div class="infor-result">' +
                     '<p class="item-title">' + address + '</p>' +

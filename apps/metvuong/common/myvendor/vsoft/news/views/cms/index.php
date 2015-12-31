@@ -2,6 +2,7 @@
 
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
@@ -31,9 +32,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'html',
                 'contentOptions' => ['class' => 'text-center'],
                 'value' => function ($model) {
-                    $imgPath = Yii::$app->request->getHostInfo() . '/store/news/show/' . $model->banner;
-                    if(!file_exists($imgPath)) {
-                        $imgPath = Yii::$app->request->getHostInfo() .  "/frontend/web/themes/metvuong1/resources/images/default-ads.jpg";
+                    $imgPath = Url::to( '/themes/metvuong1/resources/images/default-ads.jpg');
+                    if($model->banner) {
+                        $checkFile = file_exists(Yii::getAlias('@store')."\\news\\show\\".$model->banner);     
+                        if($checkFile)
+                            $imgPath = Url::to('/store/news/show/' . $model->banner);
+                    } else {
+                        $imgPath = Url::to( '/themes/metvuong1/resources/images/default-ads.jpg');// /frontend/web/themes/metvuong1/resources/images/default-ads.jpg
                     }
                     return Html::img($imgPath, ['width'=>100, 'height'=>100, 'alt'=>$model->banner, 'title'=>$model->brief]);
                 }
