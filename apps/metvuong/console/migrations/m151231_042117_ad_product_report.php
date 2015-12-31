@@ -5,6 +5,7 @@ use yii\db\Migration;
 
 class m151231_042117_ad_product_report extends Migration
 {
+    private $table = 'ad_product_report';
     public function up()
     {
         $table_check = Yii::$app->db->schema->getTableSchema($this->table);
