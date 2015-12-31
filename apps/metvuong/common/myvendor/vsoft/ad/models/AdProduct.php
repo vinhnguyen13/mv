@@ -11,6 +11,9 @@ class AdProduct extends AdProductBase
 	const TYPE_FOR_SELL = 1;
 	const TYPE_FOR_RENT = 2;
 	
+	const STATUS_ACTIVE = 1;
+	const STATUS_INACTIVE = 0;
+	
 	public function rules()
 	{
 		return [

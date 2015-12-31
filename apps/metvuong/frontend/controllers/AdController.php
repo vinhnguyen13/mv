@@ -40,7 +40,8 @@ class AdController extends Controller
         				->from('ad_product')
 						->innerJoin('ad_product_addition_info', 'ad_product.id = ad_product_addition_info.product_id')
         				->leftJoin('ad_images', 'ad_product.id = ad_images.product_id')
-        				->groupBy('ad_product.id');
+        				->groupBy('ad_product.id')
+        				->andWhere('`status` = ' . AdProduct::STATUS_ACTIVE);
         	
         	$conditionMap = [
 				['type', '=', 'type'],
