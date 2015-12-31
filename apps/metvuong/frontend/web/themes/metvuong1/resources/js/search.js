@@ -398,6 +398,9 @@
                     $('#'+itemRender).find('ul').html('');
                     for ( var j in dataCities ) {
                         var item = $('<li data-id="'+j+'"><a href="#" data-item="tinh-thanh" data-slug-name="'+ChangeToSlug(dataCities[j].name)+'" data-next="'+next+'" data-prev="'+prev+'">'+dataCities[j].name+'</a></li>');
+                        if ( item.find('a').data('slugName') != 'ho-chi-minh' ) {
+                            item.find('a').addClass('disable');
+                        }
                         $('#'+itemRender).find('ul').append(item);
                     }
                     break;
@@ -756,7 +759,7 @@
 
             clickInput();
             
-            $(document).on('click', '.wrap-step li a', changeStep);
+            $(document).on('click', '.wrap-step li a:not(.disable)', changeStep);
 
             $(document).on('click', '#btn-search, .btn-cost button', function (e) {
                 e.preventDefault();
@@ -783,17 +786,17 @@
                 leftCenterSearch = Math.floor(wWin/2 - wSearchBox/2);
 
             logo.css({
-                'transform' : 'translate3d( '+leftCenterLogo+'px, '+topCenterLogo+'px, 0)',
-                '-moz-transform' : 'translate3d( '+leftCenterLogo+'px, '+topCenterLogo+'px, 0)',
-                '-webkit-transform' : 'translate3d( '+leftCenterLogo+'px, '+topCenterLogo+'px, 0)',
-                '-ms-transform' : 'translate3d( '+leftCenterLogo+'px, '+topCenterLogo+'px, 0)'
+                'transform' : 'translateX('+leftCenterLogo+'px) translateY('+topCenterLogo+'px)',
+                '-moz-transform' : 'translateX('+leftCenterLogo+'px) translateY('+topCenterLogo+'px)',
+                '-webkit-transform' : 'translateX('+leftCenterLogo+'px) translateY('+topCenterLogo+'px)',
+                '-ms-transform' : 'translateX('+leftCenterLogo+'px) translateY('+topCenterLogo+'px)'
 
             });
             searchBox.css({
-                'transform' : 'translate3d( '+leftCenterSearch+'px, '+topCenterSearch+'px, 0)',
-                '-webkit-transform' : 'translate3d( '+leftCenterSearch+'px, '+topCenterSearch+'px, 0)',
-                '-moz-transform' : 'translate3d( '+leftCenterSearch+'px, '+topCenterSearch+'px, 0)',
-                '-ms-transform' : 'translate3d( '+leftCenterSearch+'px, '+topCenterSearch+'px, 0)'
+                'transform' : 'translateX('+leftCenterSearch+'px) translateY('+topCenterSearch+'px)',
+                '-webkit-transform' : 'translateX('+leftCenterSearch+'px) translateY('+topCenterSearch+'px)',
+                '-moz-transform' : 'translateX('+leftCenterSearch+'px) translateY('+topCenterSearch+'px)',
+                '-ms-transform' : 'translateX('+leftCenterSearch+'px) translateY('+topCenterSearch+'px)'
             });
 
             setTimeout(function() {

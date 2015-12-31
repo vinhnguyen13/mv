@@ -50,9 +50,21 @@
         <div class="detail-slide">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close btn-close-detail" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <div class="tabs-detail-item clearfix">
+                        <ul class="pull-left">
+                            <li><a href="#" class="save-item"><em class="fa fa-heart-o"></em>Save</a></li>
+                            <li><a href="#" class="share-item"><em class="fa fa-share-alt"></em>Share</a></li>
+                            <li><a href="#" class="more-item">More<em class="fa fa-sort-desc"></em></a></li>
+                        </ul>
+                        <ul class="pull-right">
+                            <li><a href="#">Expand</a></li>
+                            <li class="close-detail">
+                                <button type="button" class="close btn-close-detail" data-dismiss="modal" aria-label="Close">
+                                    <em class="fa fa-close"></em>close
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="modal-body">
                     <div class="wrap-modal clearfix">
@@ -61,7 +73,7 @@
 									$firstImage = array_shift($images);
 									$images = array_chunk($images, 4);
 						?>
-			                        <div class="gallery-detail clearfix" style="visibility: hidden;">
+                                    <div class="gallery-detail clearfix" style="visibility: hidden;">
 			                            <div class="bxslider">
 			                                <div class="wrap-img-detail">
 			                                    <ul class="clearfix">

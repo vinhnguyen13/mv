@@ -5,7 +5,9 @@ var arrJSONReturn = {
 },objEvent;
 
 $(document).ready(function() {
-
+    $('[data-toggle="tooltip"]').tooltip({
+        html: true
+    });
     var $modal = $('.modal');
     $modal.on('show.bs.modal', function(e) {
         var curModal;
