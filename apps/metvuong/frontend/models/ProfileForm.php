@@ -1,5 +1,5 @@
 <?php
-namespace frontend\models\userManagement;
+namespace frontend\models;
 /**
  * Created by PhpStorm.
  * User: vinhnguyen

@@ -3,7 +3,7 @@
 namespace frontend\controllers;
 use dektrium\user\Mailer;
 use frontend\models\User;
-use frontend\models\userManagement\ProfileForm;
+use frontend\models\ProfileForm;
 use vsoft\express\components\ImageHelper;
 use Yii;
 use yii\db\mssql\PDO;
