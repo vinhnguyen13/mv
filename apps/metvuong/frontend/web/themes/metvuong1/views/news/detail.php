@@ -36,7 +36,7 @@ Yii::$app->view->registerMetaTag([
 <script>
     window.fbAsyncInit = function() {
         FB.init({
-            appId      : '526268097523112',
+            appId      : '680097282132293',
             xfbml      : true,
             version    : 'v2.5'
         });
