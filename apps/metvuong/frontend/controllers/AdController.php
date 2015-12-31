@@ -146,7 +146,7 @@ class AdController extends Controller
     	}
     }
     
-    public function actionDetail($id, $isCraw) {
+    public function actionDetail($id) {
     	$product = AdProduct::findOne($id);
     	return $this->renderPartial('detail', ['product' => $product]); 
     }
