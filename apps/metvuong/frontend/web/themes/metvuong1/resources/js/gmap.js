@@ -170,6 +170,12 @@ function Marker(options, id) {
 		});
 	}
 	
+	self.mouseup = function(callback) {
+		marker.addListener('mouseup', function(evt) {
+			callback({lat: evt.latLng.lat(), lng: evt.latLng.lng()});
+		});
+	}
+	
 	self.mouseover = function(callback) {
 		marker.addListener('mouseover', function(evt) {
 			callback({lat: evt.latLng.lat(), lng: evt.latLng.lng()});

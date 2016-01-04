@@ -458,20 +458,12 @@ function makeMarker(product) {
 		    icon: '/images/marker.png'
 		}, latLngToClass(product.lat, product.lng));
 		
-		marker.mouseover(function(latLng){
-			if(dragging)
-				return;
-			clearTimeout(closeInfowindow);
-			var id = marker.getId();
-			var listEl = $('#moi-nhat').clone(true).removeAttr('id').addClass('moi-nhat-onmap');
-			
-			listEl.find('.' + id).addClass('onmap').show();
-			listEl.find('li').not(listEl.find('.' + id)).remove();
-
-			infoWindow.setContent(listEl.get(0));
-			infoWindow.open(marker);
-			
-			marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
+		marker.mouseover(function(latLng) {
+			showinfo(latLng, marker);
+		});
+		
+		marker.mouseup(function(latLng) {
+			showinfo(latLng, marker);
 		});
 		
 		marker.mouseout(function(latLng){
@@ -543,4 +535,20 @@ function loadPage() {
 
 function latLngToClass(lat, lng) {
 	return 'p' + lat.replace('.', '_') + '-' + lng.replace('.', '_');
+}
+
+function showinfo(latLng, marker){
+	if(dragging)
+		return;
+	clearTimeout(closeInfowindow);
+	var id = marker.getId();
+	var listEl = $('#moi-nhat').clone(true).removeAttr('id').addClass('moi-nhat-onmap');
+	
+	listEl.find('.' + id).addClass('onmap').show();
+	listEl.find('li').not(listEl.find('.' + id)).remove();
+
+	infoWindow.setContent(listEl.get(0));
+	infoWindow.open(marker);
+	
+	marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
 }
