@@ -1,4 +1,4 @@
-var gmap = null, response = null, listResult, infoWindow, savedTab = false;
+var gmap = null, response = null, listResult, infoWindow, savedTab = false, closeInfowindow;
 var page = 1;
 var limit = 20;
 
@@ -187,6 +187,7 @@ function start() {
 		
 		var hoverTimeout;
 		listResult.on('mouseenter', '> li', function() {
+			clearTimeout(closeInfowindow);
 			var self = $(this);
 			
 			hoverTimeout = setTimeout(function(){
@@ -204,6 +205,10 @@ function start() {
 			}, 200);
 		}).on('mouseleave', '> li', function() {
 			clearTimeout(hoverTimeout);
+			
+			closeInfowindow = setTimeout(function(){
+				infoWindow.close();
+			}, 500);
 			
 			var self = $(this);
 			if(self.hasClass('onmap'))
@@ -377,6 +382,7 @@ function makeMarker(product) {
 	});
 	
 	marker.mouseover(function(latLng){
+		clearTimeout(closeInfowindow);
 		var id = marker.getId();
 		var listEl = $('#moi-nhat').clone(true).removeAttr('id');
 		listEl.find('.pagination').remove();
@@ -397,7 +403,9 @@ function makeMarker(product) {
 	});
 	
 	marker.mouseout(function(latLng){
-		infoWindow.close();
+		closeInfowindow = setTimeout(function(){
+			infoWindow.close();
+		}, 300);
 	});
 	
 	var markerId = gmap.addMarker(marker, true);
