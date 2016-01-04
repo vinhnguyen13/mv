@@ -3,24 +3,22 @@
 namespace frontend\controllers;
 use frontend\components\Controller;
 use frontend\models\Ad;
-use Yii;
-use yii\helpers\Url;
-use vsoft\news\models\CmsShow;
-use vsoft\ad\models\AdBuildingProject;
-use vsoft\ad\models\AdProduct;
-use vsoft\ad\models\AdImages;
-use vsoft\ad\models\AdProductAdditionInfo;
+use vsoft\ad\models\AdCategory;
 use vsoft\ad\models\AdContactInfo;
-use yii\web\Cookie;
+use vsoft\ad\models\AdDistrict;
+use vsoft\ad\models\AdImages;
+use vsoft\ad\models\AdProduct;
+use vsoft\ad\models\AdProductAdditionInfo;
+use vsoft\ad\models\AdProductReport;
 use vsoft\express\components\ImageHelper;
 use vsoft\express\components\StringHelper;
-use vsoft\ad\models\base\ActiveRecord;
+use vsoft\news\models\CmsShow;
+use vsoft\news\models\Status;
+use Yii;
 use yii\data\Pagination;
+use yii\helpers\Url;
+use yii\web\Response;
 use yii\widgets\LinkPager;
-use vsoft\ad\models\AdCity;
-use yii\helpers\ArrayHelper;
-use vsoft\ad\models\AdDistrict;
-use vsoft\ad\models\AdCategory;
 
 class AdController extends Controller
 {
@@ -290,13 +288,21 @@ class AdController extends Controller
 
     public function actionSendreport(){
         if(Yii::$app->request->isPost && Yii::$app->request->isAjax) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
+//            Yii::$app->response->format = Response::FORMAT_JSON;
             $post = Yii::$app->request->post();
             $user_ip = Yii::$app->getRequest()->getUserIP();
-            if (!empty($post["uid"]) && !empty($post["pid"])) {
-                return 200;
+            if (!empty($post["uid"]) && !empty($post["pid"]) && !empty($post["optionsRadios"])) {
+                $product_report = new AdProductReport();
+                $product_report->user_id = $post["uid"];
+                $product_report->product_id = $post["pid"];
+                $product_report->type = $post["optionsRadios"];
+                $product_report->ip = $user_ip;
+                $product_report->status = Status::STATUS_ACTIVE;
+                $product_report->report_at = time();
+                if($product_report->save())
+                    return 200;
             }
         }
-        return 400;
+        return 404;
     }
 }
