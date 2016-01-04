@@ -243,19 +243,13 @@ function start() {
 					if(marker.counter == 1) {
 						marker.setIcon('/images/marker-hover.png');
 					} else {
-						marker.setIcon('/images/marker-counter-hover.png');
-						
 						if(marker.counter > 9) {
 							var text = 'N';
 						} else {
-							var text = '' + marker.counter;
+							var text = marker.counter;
 						}
 						
-						marker.setLabel({
-							text: text,
-							color: '#FFF',
-							fontSize: '11px'
-						});
+						marker.setIcon('/images/marker-counter-hover-' + text + '.png');
 					}
 					
 					marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
@@ -278,19 +272,13 @@ function start() {
 			if(marker.counter == 1) {
 				marker.setIcon('/images/marker.png');
 			} else {
-				marker.setIcon('/images/marker-counter.png');
-				
 				if(marker.counter > 9) {
 					var text = 'N';
 				} else {
-					var text = '' + marker.counter;
+					var text = marker.counter;
 				}
 				
-				marker.setLabel({
-					text: text,
-					color: '#000',
-					fontSize: '11px'
-				});
+				marker.setIcon('/images/marker-counter-' + text + '.png');
 			}
 		});
 		
@@ -456,25 +444,18 @@ function makeMarker(product) {
 	var marker;
 	
 	if(marker = gmap.getMarker(markerId)) {
-		marker.setIcon('/images/marker-counter.png');
-		marker.counter++;
-		if(marker.counter > 9) {
-			var text = 'N';
-		} else {
-			var text = '' + marker.counter;
+		var text = ++marker.counter;
+		
+		if(text > 9) {
+			text = 'N';
 		}
 		
-		marker.setLabel({
-			text: text,
-			fontSize: '11px'
-		});
-		marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
+		marker.setIcon('/images/marker-counter-' + text + '.png');
 	} else {
 		marker = new Marker({
 			draggable: false,
 		    position: {lat: Number(product.lat), lng: Number(product.lng)},
-		    icon: '/images/marker.png',
-		    optimized: false
+		    icon: '/images/marker.png'
 		}, latLngToClass(product.lat, product.lng));
 		
 		marker.mouseover(function(latLng){
@@ -489,6 +470,8 @@ function makeMarker(product) {
 
 			infoWindow.setContent(listEl.get(0));
 			infoWindow.open(marker);
+			
+			marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
 		});
 		
 		marker.mouseout(function(latLng){
