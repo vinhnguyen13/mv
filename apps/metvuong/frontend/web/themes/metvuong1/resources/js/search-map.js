@@ -133,7 +133,6 @@ function start() {
 			}
 		}
 
-
 		$(document).on('click', '.rating .rate input', function(e){
 			var _this = $(this);
 			var _core = _this.val();
@@ -158,6 +157,32 @@ function start() {
 				}, 1000);
 			}
 		});
+
+
+		$(document).on('click', '.report_modal', function(e){
+			e.preventDefault();
+			var _this = $(this);
+			var _user_id = _this.attr('data-uid');
+			if(_user_id == 0) {
+				$('#frmLogin').modal('show');
+			} else {
+				var _url = _this.attr('data-url');
+				clearTimeout(timer);
+				timer = setTimeout(function () {
+					$.ajax({
+						type: "post",
+						dataType: 'json',
+						url: _url,
+						data: {user_id: _user_id},
+						success: function (data) {
+							console.log(data);
+						}
+					});
+				}, 1000);
+			}
+		});
+
+		
 
 		
 		var hoverTimeout;
