@@ -76,10 +76,7 @@ class AdController extends Controller
         		$query->orderBy("`created_at` DESC");
         	}
         	
-        	$pages = new Pagination(['totalCount' => $query->count()]);
-        	$pages->pageSize = isset(Yii::$app->params['listingLimit']) ? Yii::$app->params['listingLimit'] : 20;
-        	
-        	$products = $query->limit($pages->limit)->offset($pages->offset)->all();
+        	$products = $query->all();
         	
         	$productResponse = [];
         	
@@ -100,7 +97,7 @@ class AdController extends Controller
         		}
         	}
         	
-        	return ['productResponse' => $productResponse, 'pages' => LinkPager::widget(['pagination' => $pages,]), 'total' => $pages->totalCount];
+        	return ['productResponse' => $productResponse, 'total' => count($productResponse)];
         }
         
         return $this->render('index');

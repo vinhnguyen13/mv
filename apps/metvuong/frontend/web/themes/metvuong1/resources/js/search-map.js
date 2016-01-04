@@ -316,7 +316,6 @@ function loadListing() {
 		listResult.append(list);
 		
 		$('.pagination').remove();
-		$('#moi-nhat').append(response.pages);
 	} else {
 		$('#no-result').show();
 	}
