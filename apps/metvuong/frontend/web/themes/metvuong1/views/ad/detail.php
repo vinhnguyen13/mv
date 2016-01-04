@@ -73,6 +73,43 @@
                                 </button>
                             </li>
                         </ul>
+                        <div class="modal fade" id="report-listing" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="wrap-modal clearfix">
+                                            <h3>Báo cáo bài viết</h3>
+                                            <form id="frm-report" action="">
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="optionsRadios" id="" value="">
+                                                        Lừa đảo
+                                                    </label>
+                                                </div>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="optionsRadios" id="" value="">
+                                                        Trùng địa chỉ
+                                                    </label>
+                                                </div>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="optionsRadios" id="" value="">
+                                                        Tin đã đăng
+                                                    </label>
+                                                </div>
+                                                <button class="btn btn-common">Gửi báo cáo</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-body">
