@@ -416,6 +416,9 @@ function loadListing() {
 		$('#count-listing').text(response.total);
 		listResult.append(list);
 		
+		var marker = gmap.getMarker(listResult.find('> li:last-child').attr('class'));
+		gmap.setCenter(marker.getPosition());
+		
 		loadPage();
 		
 		$('.pagination').remove();
@@ -497,7 +500,7 @@ function makeMarker(product) {
 			}, 300);
 		});
 		
-		gmap.addMarker(marker, true);
+		gmap.addMarker(marker);
 	}
 	
 	var type = (product.type == 1) ? 'BÁN' : 'CHO THUÊ';
