@@ -131,11 +131,15 @@ function InfoWindow(options) {
 	}
 }
 
-function Marker(options) {
-	var id = markerCounter;
+function Marker(options, id) {
+	if(!id) {
+		id = markerCounter;
+	}
+
 	var self = this;
 	var marker = new google.maps.Marker(options);
 	var map;
+	this.counter = 1;
 	
 	self.dragend = function(callback) {
 		marker.addListener('dragend', function(evt) {
@@ -193,6 +197,10 @@ function Marker(options) {
 	
 	self.setIcon = function(icon) {
 		marker.setIcon(icon);
+	}
+	
+	self.setLabel = function(options) {
+		marker.setLabel(options);
 	}
 	
 	self.setZIndex = function(index) {

@@ -193,10 +193,27 @@ function start() {
 			hoverTimeout = setTimeout(function(){
 				if(self.hasClass('onmap'))
 					return;
-				var marker = gmap.getMarker(self.data('id'));
+				var marker = gmap.getMarker(self.attr('class'));
 
 				if(marker) {
-					marker.setIcon('/images/marker-hover.png');
+					if(marker.counter == 1) {
+						marker.setIcon('/images/marker-hover.png');
+					} else {
+						marker.setIcon('/images/marker-counter-hover.png');
+						
+						if(marker.counter > 9) {
+							var text = 'N';
+						} else {
+							var text = '' + marker.counter;
+						}
+						
+						marker.setLabel({
+							text: text,
+							color: '#FFF',
+							fontSize: '11px'
+						});
+					}
+					
 					marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
 					if(!gmap.getBounds().contains(marker.getPosition())) {
 						gmap.setCenter(marker.getPosition());
@@ -213,8 +230,24 @@ function start() {
 			var self = $(this);
 			if(self.hasClass('onmap'))
 				return;
-			var marker = gmap.getMarker(self.data('id'));
-			marker.setIcon('/images/marker.png');
+			var marker = gmap.getMarker(self.attr('class'));
+			if(marker.counter == 1) {
+				marker.setIcon('/images/marker.png');
+			} else {
+				marker.setIcon('/images/marker-counter.png');
+				
+				if(marker.counter > 9) {
+					var text = 'N';
+				} else {
+					var text = '' + marker.counter;
+				}
+				
+				marker.setLabel({
+					text: text,
+					color: '#000',
+					fontSize: '11px'
+				});
+			}
 		});
 		
 		listResult.on('click', '> li', function(e){
@@ -373,42 +406,53 @@ function makeMarker(product) {
 	} else {
 		address = address + ' ' + district.pre + ' ' + district.name + ', ' + city.name;
 	}
-
-	var marker = new Marker({
-		draggable: false,
-	    position: {lat: Number(product.lat), lng: Number(product.lng)},
-	    icon: '/images/marker.png',
-	    zIndex: google.maps.Marker.MAX_ZINDEX++
-	});
 	
-	marker.mouseover(function(latLng){
-		clearTimeout(closeInfowindow);
-		var id = marker.getId();
-		var listEl = $('#moi-nhat').clone(true).removeAttr('id');
-		listEl.find('.pagination').remove();
-		var list = listEl.find('li');
+	var markerId = latLngToClass(product.lat, product.lng);
+	var marker;
+	
+	if(marker = gmap.getMarker(markerId)) {
+		marker.setIcon('/images/marker-counter.png');
+		marker.counter++;
+		if(marker.counter > 9) {
+			var text = 'N';
+		} else {
+			var text = '' + marker.counter;
+		}
 		
-		list.each(function(){
-			if(id == $(this).data('id')) {
-				$(this).data('clone', true);
-				list.not($(this)).remove();
-				$(this).addClass('onmap').show();
-				
-				infoWindow.setContent(listEl.get(0));
-				return false;
-			}
+		marker.setLabel({
+			text: text,
+			fontSize: '11px'
+		});
+		marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
+	} else {
+		marker = new Marker({
+			draggable: false,
+		    position: {lat: Number(product.lat), lng: Number(product.lng)},
+		    icon: '/images/marker.png',
+		    zIndex: google.maps.Marker.MAX_ZINDEX++
+		}, latLngToClass(product.lat, product.lng));
+		
+		marker.mouseover(function(latLng){
+			clearTimeout(closeInfowindow);
+			var id = marker.getId();
+			var listEl = $('#moi-nhat').clone(true).removeAttr('id');
+			
+			listEl.find('.' + id).addClass('onmap').show();
+			listEl.find('li').not(listEl.find('.' + id)).remove();
+
+			infoWindow.setContent(listEl.get(0));
+			infoWindow.open(marker);
 		});
 		
-		infoWindow.open(marker);
-	});
+		marker.mouseout(function(latLng){
+			closeInfowindow = setTimeout(function(){
+				infoWindow.close();
+			}, 300);
+		});
+		
+		gmap.addMarker(marker, true);
+	}
 	
-	marker.mouseout(function(latLng){
-		closeInfowindow = setTimeout(function(){
-			infoWindow.close();
-		}, 300);
-	});
-	
-	var markerId = gmap.addMarker(marker, true);
 	var type = (product.type == 1) ? 'BÁN' : 'CHO THUÊ';
 	var category = categories[product.category_id]['name'].toUpperCase();
 	var price = (product.type == 1) ? product.price : product.price + '/tháng';
@@ -437,7 +481,7 @@ function makeMarker(product) {
 		}
 	}
 	
-	var li = '<li style="display: none;" data-detail="' + product.id +'" data-id="' + markerId + '">' +
+	var li = '<li style="display: none;" data-detail="' + product.id +'" class="' + markerId + '">' +
                 '<div class="bgcover wrap-img pull-left" style="background-image:url('+product.image_url+')"><a href="#" class=""></a></div>' +
                 '<div class="infor-result">' +
                     '<p class="item-title">' + address + '</p>' +
@@ -458,4 +502,8 @@ function loadPage() {
 	$('.list-results').children().slice(offset, offset+limit).show();
 	
 	page++;
+}
+
+function latLngToClass(lat, lng) {
+	return 'p' + lat.replace('.', '_') + '-' + lng.replace('.', '_');
 }
