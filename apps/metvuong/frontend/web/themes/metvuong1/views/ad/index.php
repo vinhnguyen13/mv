@@ -334,9 +334,6 @@ $this->registerJs('var saved = ' . json_encode($saved) . ';', View::POS_BEGIN);
                                 Tin đã đăng
                             </label>
                         </div>
-                        <div class="form-group">
-                            <textarea class="form-control" rows="3" placeholder="nội dung report..."></textarea>
-                        </div>
                         <button class="btn btn-common">Gửi báo cáo</button>
                     </form>
                 </div>
