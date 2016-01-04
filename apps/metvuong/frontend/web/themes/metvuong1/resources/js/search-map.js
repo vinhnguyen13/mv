@@ -73,7 +73,7 @@ function start() {
 			}, 300);
 		});
 		
-		infoWindow = new InfoWindow();
+		infoWindow = new InfoWindow({disableAutoPan: true});
 		
 		$('#detail-wrap').on('click', '.btn-close-detail', function(){
 			$('#detail-wrap').css({
