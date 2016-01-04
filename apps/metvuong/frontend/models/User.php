@@ -447,6 +447,13 @@ class User extends \dektrium\user\models\User
                 $this->_profile->link('user', $this);
             }
         }
+
+        if(!empty($this->profile)){
+            $attributes = [];
+            empty($this->profile->name) ? $attributes['name'] = $this->username : false;
+            empty($this->profile->public_email) ? $attributes['public_email'] = $this->email : false;
+            $this->profile->updateAttributes($attributes);
+        }
     }
 
     /** @inheritdoc */
