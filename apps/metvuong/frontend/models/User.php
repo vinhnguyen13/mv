@@ -452,7 +452,7 @@ class User extends \dektrium\user\models\User
             $attributes = [];
             empty($this->profile->name) ? $attributes['name'] = $this->username : false;
             empty($this->profile->public_email) ? $attributes['public_email'] = $this->email : false;
-            $this->profile->updateAttributes($attributes);
+            !empty($attributes) ? $this->profile->updateAttributes($attributes) : false;
         }
     }
 
