@@ -483,6 +483,10 @@ function makeMarker(product) {
 			}, 300);
 		});
 		
+		marker.mousedown(function(){
+			infoWindow.close();
+		});
+		
 		gmap.addMarker(marker);
 	}
 	
