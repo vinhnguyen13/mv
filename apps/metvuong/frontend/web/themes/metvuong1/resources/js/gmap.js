@@ -105,6 +105,17 @@ function Gmap(el, options) {
 		return map.getBounds();
 	}
 	
+	self.dragend = function(callback) {
+		map.addListener('dragend', function() {
+			callback();
+		});
+	};
+	self.dragstart = function(callback) {
+		map.addListener('dragstart', function() {
+			callback();
+		});
+	};
+	
 	mapCounter++;
 	
 	return self;
