@@ -117,9 +117,14 @@ class Ad extends Component
 
     public function report(){
         $this->checkLogin();
-        if(Yii::$app->request->isPost && Yii::$app->request->isAjax) {
-
+        if(Yii::$app->request->isPost && Yii::$app->request->isAjax){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $post = Yii::$app->request->post();
+            if(!empty($post['user_id'])){
+                return ['statusCode'=>200, 'parameters'=>['msg'=>'']];
+            }
         }
+        return ['statusCode'=>404, 'parameters'=>['msg'=>'user is not found']];
     }
 
     public function rating(){

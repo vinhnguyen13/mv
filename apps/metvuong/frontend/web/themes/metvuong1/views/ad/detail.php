@@ -59,7 +59,7 @@
                                     <div class="wrap-effect clearfix">
                                         <ul class='clearfix'>
                                             <li><a href="#"><em class="icon-printer"></em>Print</a></li>
-                                            <li><a href="#" data-toggle="modal" data-target="#report-listing"><em class="icon-info"></em>Báo cáo bài viết</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#report-listing" data-url="<?=Url::to(['/ad/report'])?>" data-uid="<?=empty(Yii::$app->user->id) ? 0 : Yii::$app->user->id?>"><em class="icon-info"></em>Báo cáo bài viết</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -84,26 +84,28 @@
                                     <div class="modal-body">
                                         <div class="wrap-modal clearfix">
                                             <h3>Báo cáo bài viết</h3>
-                                            <form id="frm-report" action="">
+                                            <form id="frm-report" action="<?=Url::to(['/ad/sendreport'])?>">
                                                 <div class="radio">
                                                     <label>
-                                                        <input type="radio" name="optionsRadios" id="" value="">
+                                                        <input type="radio" name="optionsRadios" id="r1" value="1">
                                                         Lừa đảo
                                                     </label>
                                                 </div>
                                                 <div class="radio">
                                                     <label>
-                                                        <input type="radio" name="optionsRadios" id="" value="">
+                                                        <input type="radio" name="optionsRadios" id="r2" value="2">
                                                         Trùng địa chỉ
                                                     </label>
                                                 </div>
                                                 <div class="radio">
                                                     <label>
-                                                        <input type="radio" name="optionsRadios" id="" value="">
+                                                        <input type="radio" name="optionsRadios" id="r3" value="3">
                                                         Tin đã đăng
                                                     </label>
                                                 </div>
-                                                <button class="btn btn-common">Gửi báo cáo</button>
+                                                <input type="hidden" id="pid" name="pid" value="<?=$product->id?>">
+                                                <input type="hidden" id="uid" name="uid" value="<?=empty(Yii::$app->user->id) ? 0 : Yii::$app->user->id?>">
+                                                <button class="btn btn-common send_report">Gửi báo cáo</button>
                                             </form>
                                         </div>
                                     </div>

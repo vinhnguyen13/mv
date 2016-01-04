@@ -287,4 +287,16 @@ class AdController extends Controller
 	public function actionRating() {
 		return Ad::find()->rating();
 	}
+
+    public function actionSendreport(){
+        if(Yii::$app->request->isPost && Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $post = Yii::$app->request->post();
+            $user_ip = Yii::$app->getRequest()->getUserIP();
+            if (!empty($post["uid"]) && !empty($post["pid"])) {
+                return 200;
+            }
+        }
+        return 400;
+    }
 }

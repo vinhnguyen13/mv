@@ -167,6 +167,7 @@ function start() {
 				$('#frmLogin').modal('show');
 			} else {
 				var _url = _this.attr('data-url');
+				console.log(_url);
 				clearTimeout(timer);
 				timer = setTimeout(function () {
 					$.ajax({
@@ -175,14 +176,46 @@ function start() {
 						url: _url,
 						data: {user_id: _user_id},
 						success: function (data) {
-							console.log(data);
+							if(data.statusCode == 200){
+
+							} else if(data.statusCode == 404){
+								alert(data.parameters.msg);
+							}
 						}
 					});
 				}, 1000);
+				return true;
 			}
 		});
 
-		
+		$(document).on('click', '#frm-report .send_report', function(e){
+			e.preventDefault();
+			var _this = $(this);
+			var _user_id = $('#frm-report #uid').val();
+			if(_user_id != 0) {
+				clearTimeout(timer);
+				timer = setTimeout(function () {
+					$.ajax({
+						type: "post",
+						dataType: 'json',
+						url: $('#frm-report').attr('action'),
+						data: $('#frm-report').serializeArray(),
+						success: function (data) {
+							if(data == 200){
+								$('#report-listing').modal('hide');
+								alert("Your message is sent.\nThank you.");
+							} else {
+								$('#report-listing').modal('hide');
+							}
+						},
+						error: function () {
+							$('#report-listing').modal('hide');
+						}
+					});
+				}, 500);
+			}
+			return false;
+		});
 
 		
 		var hoverTimeout;
