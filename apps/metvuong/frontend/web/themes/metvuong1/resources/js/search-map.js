@@ -1,4 +1,7 @@
 var gmap = null, response = null, listResult, infoWindow, savedTab = false;
+var page = 1;
+var limit = 20;
+
 $(document).ready(function(){
 	listResult = $('.list-results');
 	var mapOptions = {
@@ -28,9 +31,21 @@ $(document).ready(function(){
 			loadListing();
 		});
 	});
+	
+	$('.wrap-col-fixed-result').scroll(function() {
+		var self = $(this);
+	    clearTimeout($.data(this, 'scrollTimer'));
+	    $.data(this, 'scrollTimer', setTimeout(function() {
+	    	if(self.scrollTop() >= (self.get(0).scrollHeight - 100 - self.outerHeight())) {
+	    	       loadPage();
+	    	}
+	    }, 250));
+	});
 });
 
 function search(callback) {
+	page = 1;
+	
 	var searchForm = $('#map-search-form');
 	
 	listResult.empty();
@@ -265,7 +280,7 @@ function start() {
 				$('#map-search-form').css('visibility', 'hidden');
 				$.get($(this).data('href'), {}, function(r) {
 					$('#listing-loading').hide();
-					
+					page = 1;
 					response = r;
 					loadListing();
 				});
@@ -278,27 +293,6 @@ function start() {
 					loadListing();
 				});
 			}
-		});
-		
-		$('#moi-nhat').on('click', '.pagination a', function(e){
-			e.preventDefault();
-			
-			var self = $(this);
-			
-			if($(this).parent().hasClass('active')) {
-				return false;
-			}
-			
-			gmap.removeAllMarker();
-
-			listResult.empty();
-			$('#listing-loading').show();
-			
-			$.get(self.attr('href'), {}, function(r){
-				response = r;
-				$('#listing-loading').hide();
-				loadListing();
-			});
 		});
 		
 		loadListing();
@@ -316,6 +310,8 @@ function loadListing() {
 		
 		$('#count-listing').text(response.total);
 		listResult.append(list);
+		
+		loadPage();
 		
 		$('.pagination').remove();
 	} else {
@@ -365,7 +361,8 @@ function makeMarker(product) {
 			if(id == $(this).data('id')) {
 				$(this).data('clone', true);
 				list.not($(this)).remove();
-				$(this).addClass('onmap');
+				$(this).addClass('onmap').show();
+				
 				infoWindow.setContent(listEl.get(0));
 				return false;
 			}
@@ -403,7 +400,7 @@ function makeMarker(product) {
 		}
 	}
 	
-	var li = '<li data-detail="' + product.id +'" data-id="' + markerId + '">' +
+	var li = '<li style="display: none;" data-detail="' + product.id +'" data-id="' + markerId + '">' +
                 '<div class="bgcover wrap-img pull-left" style="background-image:url('+product.image_url+')"><a href="#" class=""></a></div>' +
                 '<div class="infor-result">' +
                     '<p class="item-title">' + address + '</p>' +
@@ -414,5 +411,14 @@ function makeMarker(product) {
                     '<div class="icon-item-listing"><a title="Lưu" class="' + className + '" data-id="' + product.id + '" data-url="/ad/favorite"><em class="fa fa-heart-o"></em></a></div>' +
                 '</div>' +
             '</li>';
+	
 	return li;
+}
+
+function loadPage() {
+	var offset = (page - 1) * limit;
+	
+	$('.list-results').children().slice(offset, offset+limit).show();
+	
+	page++;
 }
