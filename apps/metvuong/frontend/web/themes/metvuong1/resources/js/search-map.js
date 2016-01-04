@@ -435,7 +435,7 @@ function makeMarker(product) {
 		marker.mouseover(function(latLng){
 			clearTimeout(closeInfowindow);
 			var id = marker.getId();
-			var listEl = $('#moi-nhat').clone(true).removeAttr('id');
+			var listEl = $('#moi-nhat').clone(true).removeAttr('id').addClass('moi-nhat-onmap');
 			
 			listEl.find('.' + id).addClass('onmap').show();
 			listEl.find('li').not(listEl.find('.' + id)).remove();
