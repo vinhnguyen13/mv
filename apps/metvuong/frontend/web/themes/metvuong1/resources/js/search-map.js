@@ -351,7 +351,7 @@ function makeMarker(product) {
 	    zIndex: google.maps.Marker.MAX_ZINDEX++
 	});
 	
-	marker.click(function(latLng){
+	marker.mouseover(function(latLng){
 		var id = marker.getId();
 		var listEl = $('#moi-nhat').clone(true).removeAttr('id');
 		listEl.find('.pagination').remove();
@@ -369,6 +369,10 @@ function makeMarker(product) {
 		});
 		
 		infoWindow.open(marker);
+	});
+	
+	marker.mouseout(function(latLng){
+		infoWindow.close();
 	});
 	
 	var markerId = gmap.addMarker(marker, true);

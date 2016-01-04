@@ -118,6 +118,10 @@ function InfoWindow(options) {
 		infoWindow.open(marker.getMap(), marker.getOriginal());
 	}
 	
+	self.close = function() {
+		infoWindow.close();
+	}
+	
 	self.close = function(marker) {
 		infoWindow.close();
 	}
@@ -141,6 +145,18 @@ function Marker(options) {
 	
 	self.click = function(callback) {
 		marker.addListener('click', function(evt) {
+			callback({lat: evt.latLng.lat(), lng: evt.latLng.lng()});
+		});
+	}
+	
+	self.mouseover = function(callback) {
+		marker.addListener('mouseover', function(evt) {
+			callback({lat: evt.latLng.lat(), lng: evt.latLng.lng()});
+		});
+	}
+	
+	self.mouseout = function(callback) {
+		marker.addListener('mouseout', function(evt) {
 			callback({lat: evt.latLng.lat(), lng: evt.latLng.lng()});
 		});
 	}
