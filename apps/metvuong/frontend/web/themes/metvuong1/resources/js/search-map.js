@@ -208,11 +208,15 @@ function start() {
 						url: $('#frm-report').attr('action'),
 						data: $('#frm-report').serializeArray(),
 						success: function (data) {
+							$('#report-listing').modal('hide');
 							if(data == 200){
-								$('#report-listing').modal('hide');
 								alert("Your message is sent.\nThank you.");
-							} else {
-								$('#report-listing').modal('hide');
+							}
+							else if(data == 13){
+								alert("You reported with us");
+							}
+							else {
+								alert("Please, try again!");
 							}
 						},
 						error: function () {

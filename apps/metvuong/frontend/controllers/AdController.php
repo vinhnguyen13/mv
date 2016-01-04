@@ -16,6 +16,7 @@ use vsoft\news\models\CmsShow;
 use vsoft\news\models\Status;
 use Yii;
 use yii\data\Pagination;
+use yii\db\IntegrityException;
 use yii\helpers\Url;
 use yii\web\Response;
 use yii\widgets\LinkPager;
@@ -292,15 +293,20 @@ class AdController extends Controller
             $post = Yii::$app->request->post();
             $user_ip = Yii::$app->getRequest()->getUserIP();
             if (!empty($post["uid"]) && !empty($post["pid"]) && !empty($post["optionsRadios"])) {
-                $product_report = new AdProductReport();
-                $product_report->user_id = $post["uid"];
-                $product_report->product_id = $post["pid"];
-                $product_report->type = $post["optionsRadios"];
-                $product_report->ip = $user_ip;
-                $product_report->status = Status::STATUS_ACTIVE;
-                $product_report->report_at = time();
-                if($product_report->save())
-                    return 200;
+                try {
+                    $product_report = new AdProductReport();
+                    $product_report->user_id = $post["uid"];
+                    $product_report->product_id = $post["pid"];
+                    $product_report->type = $post["optionsRadios"];
+                    $product_report->ip = $user_ip;
+                    $product_report->status = Status::STATUS_ACTIVE;
+                    $product_report->report_at = time();
+                    if ($product_report->save())
+                        return 200;
+                } catch(IntegrityException $ie){
+                    if($ie->getMessage())
+                        return 13;
+                }
             }
         }
         return 404;
