@@ -187,21 +187,21 @@ if(Yii::$app->user->identity->profile->avatar) {
 				<div class="form-group">
 					<div class="row row-group-inline">
 						<div class="col-xs-3">
-							<?= Html::activeTextInput($adContactInfo, 'name', ['class' => 'form-control', 'placeholder' => 'Tên liên hệ']) ?>
+							<?= Html::activeTextInput($adContactInfo, 'name', ['class' => 'form-control', 'placeholder' => 'Tên liên hệ', 'value' => Yii::$app->user->identity->profile->name]) ?>
 						</div>
 						<div class="col-xs-3">
-							<?= Html::activeTextInput($adContactInfo, 'phone', ['class' => 'form-control ad-input number-only', 'placeholder' => 'Điện thoại', 'data-zero-first' => '1', 'data-position' => 'top']) ?>
+							<?= Html::activeTextInput($adContactInfo, 'phone', ['class' => 'form-control ad-input number-only', 'placeholder' => 'Điện thoại', 'data-zero-first' => '1', 'data-position' => 'top', 'value' => Yii::$app->user->identity->profile->phone]) ?>
 							<div class="help-block" style="display: none;"></div>
 						</div>
 						<div class="col-xs-3">
 							<div class="form-group mgB-0">
-								<?= Html::activeTextInput($adContactInfo, 'mobile', ['class' => 'form-control ad-input number-only', 'placeholder' => 'Di động *', 'data-zero-first' => '1', 'data-position' => 'top']) ?>
+								<?= Html::activeTextInput($adContactInfo, 'mobile', ['class' => 'form-control ad-input number-only', 'placeholder' => 'Di động *', 'data-zero-first' => '1', 'data-position' => 'top', 'value' => Yii::$app->user->identity->profile->mobile]) ?>
 								<div class="help-block" style="display: none;"></div>
 							</div>
 						</div>
 						<div class="col-xs-3">
 							<div class="form-group mgB-0">
-								<?= Html::activeTextInput($adContactInfo, 'email', ['class' => 'form-control ad-input', 'placeholder' => 'Email', 'data-position' => 'top']) ?>
+								<?= Html::activeTextInput($adContactInfo, 'email', ['class' => 'form-control ad-input', 'placeholder' => 'Email', 'data-position' => 'top', 'value' => Yii::$app->user->identity->profile->public_email]) ?>
 								<div class="help-block" style="display: none;"></div>
 							</div>
 						</div>
@@ -209,7 +209,7 @@ if(Yii::$app->user->identity->profile->avatar) {
 				</div>
 				<div class="clearfix"></div>
 				<div class="form-group">
-					<?= Html::activeTextInput($adContactInfo, 'address', ['class' => 'form-control', 'placeholder' => 'Địa chỉ']) ?>
+					<?= Html::activeTextInput($adContactInfo, 'address', ['class' => 'form-control', 'placeholder' => 'Địa chỉ', 'value' => Yii::$app->user->identity->profile->address]) ?>
 				</div>
 				<div class="form-group" style="display: none;">
 					<div class="title-sub-frm">Bản đồ</div>
