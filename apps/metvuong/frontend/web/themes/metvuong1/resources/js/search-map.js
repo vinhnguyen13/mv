@@ -172,6 +172,7 @@ function start() {
 			var _user_id = _this.attr('data-uid');
 			if(_user_id == 0) {
 				$('#frmLogin').modal('show');
+				$('#report-listing').modal('hide');
 			} else {
 				var _url = _this.attr('data-url');
 				console.log(_url);
@@ -191,7 +192,6 @@ function start() {
 						}
 					});
 				}, 1000);
-				return true;
 			}
 		});
 
