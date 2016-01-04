@@ -3315,7 +3315,7 @@ padding-bottom: 5px;
 .wrap-map-result {
     padding: 0;
     height: 100%;
-    padding-bottom: 48px;
+    /* padding-bottom: 48px; */
 }
 .wrap-map-result {
     width: 60%;
@@ -3372,7 +3372,7 @@ padding-bottom: 5px;
     border-bottom: none;
 }
 .list-results .infor-result {
-    min-height: 110px;
+    /* min-height: 110px; */
     /* padding-left: 160px; */
     overflow: hidden;
     /* width: 100%; */
@@ -3928,10 +3928,15 @@ div.wrap-page-home .logo-home {
     width: 63%;
 }
 .dt-left-col h1 {
-    font-weight: bold;
+    font-weight: 300;
     font-size: 1.5em;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     line-height: 28px;
+}
+.home-attr {
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 18px;
 }
 .dt-left-col table {
     margin-bottom: 15px;
@@ -4982,9 +4987,15 @@ header.wrap-page-home .box-search-header.ani-search > div {
     margin-top: 15px;
 }
 .dt-left-col .type-result {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     font-weight: bold;
     font-size: .8em;
+    border-bottom: 1px dashed #333;
+    padding-bottom: 3px;
+}
+.price-summary {
+    font-size: 26px;
+    font-weight: 300;
 }
 .dt-left-col .type-result em {
     margin-right: 5px;
@@ -4993,6 +5004,7 @@ header.wrap-page-home .box-search-header.ani-search > div {
     margin-bottom: 10px;
     color: #808080;
     font-size: .8em;
+    float: left;
 }
 .dt-left-col .infor-post-date em {
     margin-right: 5px;
@@ -5730,4 +5742,37 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
     color: #fff;
     font-size: 15px;
     text-transform: uppercase;
+}
+.dt-left-col .rating {
+    float: left;
+    margin-top: -10px;
+    margin-left: 20px;
+}
+.gm-style-iw .item-title,
+.gm-style-iw .date-post-rent,
+.gm-style-iw .icon-item-listing,
+.gm-style-iw .type-result {
+    display: none;
+}
+.gm-style-iw .infor-result {
+    top: 0;
+    width: 135px;
+    float: left;
+    overflow: inherit;
+}
+.gm-style-iw .infor-result .beds-baths-sqft {
+    font-size: 11px;
+    line-height: 15px;
+}
+.gm-style-iw li .wrap-img {
+    width: 50px;
+    height: 50px;
+}
+.gm-style-iw .infor-result .rice-result {
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 2px;
+}
+.gm-style .gm-style-iw {
+    left: 6px !important;
 }

@@ -125,6 +125,26 @@
                         <div class="row detail-post" data-id="<?=$product->id;?>">
                             <div class="col-sm-8 dt-left-col">
                                 <h1 class="title-dt"><?= $address ?></h1>
+                                <div class="pull-right hdp-summary">
+                                    <p class="type-result"><?= mb_strtoupper("$categoryName $typeName", 'UTF-8') ?></p>
+                                    <table>
+                                        <?php if($product->project_building_id): ?>
+                                        <tr>
+                                            <th>Dự án</th>
+                                            <td><?= AdBuildingProject::findOne($product->project_building_id)->name ?></td>
+                                        </tr>
+                                        <?php endif; ?>
+                                        <tr>
+                                            <th>Giá:</th>
+                                            <td><p class="price-summary"><?= StringHelper::formatCurrency($product->price) ?><?= $product->type == AdProduct::TYPE_FOR_RENT ? '/tháng' : '' ?></p></td>
+                                        </tr>
+                                        <tr>
+                                            <th>Diện tích:</th>
+                                            <td><?= StringHelper::formatNumber($product->area) ?> m<sup>2</sup></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <p class="home-attr">4 phòng <span>.</span> 3 toilets <span>.</span> 2,274 sqft</p>
                                 <p class="infor-post-date"><em class="fa fa-calendar"></em><?= date('d/m/Y', $product->created_at) ?></p>
                                 <div class="rating" data-url="<?=Url::to(['/ad/rating', 'type'=>'']);?>">
                                     <fieldset class="rate">
@@ -133,23 +153,8 @@
                                         <?php endfor;?>
                                     </fieldset>
                                 </div>
-                                <p class="type-result"><?= mb_strtoupper("$categoryName $typeName", 'UTF-8') ?></p>
-                                <table>
-                                    <?php if($product->project_building_id): ?>
-                                    <tr>
-                                        <th>Dự án</th>
-                                        <td><?= AdBuildingProject::findOne($product->project_building_id)->name ?></td>
-                                    </tr>
-                                    <?php endif; ?>
-                                    <tr>
-                                        <th>Giá:</th>
-                                        <td><?= StringHelper::formatCurrency($product->price) ?><?= $product->type == AdProduct::TYPE_FOR_RENT ? '/tháng' : '' ?></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Diện tích:</th>
-                                        <td><?= StringHelper::formatNumber($product->area) ?>m<sup>2</sup></td>
-                                    </tr>
-                                </table>
+                                <div class="clearfix"></div>
+                                
                                 <p class="ttmt">Thông tin mô tả</p>
                                 <div class="wrap-ttmt"><?= str_replace("\n", "<br />", htmlspecialchars($product->content)) ?></div>
                                 <?php
@@ -267,54 +272,6 @@
                                         </div>
                                     </form>
                                 </div>
-                                <!-- <div class="function-listing clearfix">
-                                    <p>Đánh giá</p>
-                                    <div class="rating" data-url="<?=Url::to(['/ad/rating', 'type'=>'']);?>">
-                                        <fieldset class="rate">
-                                            <?php for($i = 10; $i > 0; $i--):?>
-                                            <input type="radio" id="rating<?=$i?>" name="rating" value="<?=$i?>" <?=($i==round($product->rating)) ? 'checked' : ''?> /><label for="rating<?=$i?>" <?=($i%2!=0) ? 'class="half"' : ''?> title="<?=ceil($i/2)?> stars"></label>
-                                            <?php endfor;?>
-                                        </fieldset>
-                                    </div>
-                                    <div class="dropdown report-listing">
-                                        <button class="btn btn-default dropdown-toggle" type="button" id="btn-report" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                            Report
-                                            <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="btn-report">
-                                            <li><a href="#" data-toggle="modal" data-target="#report-listing">Lừa đảo</a></li>
-                                            <li><a href="#" data-toggle="modal" data-target="#report-listing">Trùng địa chỉ</a></li>
-                                            <li><a href="#" data-toggle="modal" data-target="#report-listing">Tin đã đăng</a></li>
-                                        </ul>
-                                        <div class="modal fade" id="report-listing" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="wrap-modal clearfix">
-                                                            <h3>Report</h3>
-                                                            <textarea class="form-control" rows="3" placeholder="nội dung report..."></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="icon-item-listing">
-                                        <a title="Lưu" class="icon-hear" data-id="<?=$product->id;?>" href="#" data-url="<?=Url::to(['/ad/favorite'])?>">
-                                            <em class="fa fa-heart-o"></em>
-                                            <span>Lưu</span>
-                                        </a>
-                                        <a class="icon-favo" href="#">
-                                            <em class="icon-ok-sign"></em>
-                                            <span>Yêu thích</span>
-                                        </a>
-                                    </div>
-                                </div> -->
                             </div>
                             <?php endif; ?>
                         </div>

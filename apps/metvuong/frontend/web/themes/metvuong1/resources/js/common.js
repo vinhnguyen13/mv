@@ -365,6 +365,7 @@ $.fn.dropdown = function (options) {
 
         sc.settings.linkShow.on('click', function () {
             if ( $(this).hasClass('active') && $(this).parent().find(el).is(':visible') ) {
+                sc.settings.linkShow.removeClass('active');
                 $(document).trigger('click');
                 return;
             }
