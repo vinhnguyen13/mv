@@ -71,8 +71,6 @@ Yii::$app->view->registerMetaTag([
                         <div class="mgT-10">
                             <img src="<?=$author->getAvatarUrl()?>" title="<?=$author->name?>" style="max-width:100%;">
                         </div>
-                        <div class="fItalic mgT-10"><?=$author->bio?></div>
-                        <div class="mgT-10"><a class="btn btn-primary btn-normal like">Yêu thích</a></div>
                     </div>
                     <div class="col-xs-9 detail-content pdL-5">
                         <div class="box-content">
@@ -188,8 +186,6 @@ Yii::$app->view->registerMetaTag([
                                         '<div class="mgT-10">' +
                                         '<img src="/store/avatar/' + data.avatar + '" title="" style="max-width:100%;">' +
                                         '</div>' +
-                                        '<div class="fItalic mgT-10">' + data.bio + '</div>' +
-                                        '<div class="mgT-10"><a class="btn btn-primary btn-normal" href="">Yêu thích</a></div>' +
                                         '</div>' +
                                         '<div class="col-xs-9 detail-content pdL-5">' +
                                         '<div class="box-content">' +
