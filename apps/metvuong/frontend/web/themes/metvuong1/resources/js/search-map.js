@@ -363,8 +363,6 @@ function start() {
 		
 		$('#order-by-tab a').click(function(e){
 			
-			gmap.removeAllMarker();
-			
 			$('.btn-close-detail').trigger('click');
 			
 			if($(this).data('href')) {
@@ -397,7 +395,7 @@ function start() {
 
 function loadListing() {
 	var list = '';
-	
+	gmap.removeAllMarker();
 	if(response.productResponse.length > 0) {
 		for(index in response.productResponse) {
 			var product = response.productResponse[index];
@@ -462,7 +460,7 @@ function makeMarker(product) {
 			draggable: false,
 		    position: {lat: Number(product.lat), lng: Number(product.lng)},
 		    icon: '/images/marker.png',
-		    zIndex: google.maps.Marker.MAX_ZINDEX++
+		    optimized: false
 		}, latLngToClass(product.lat, product.lng));
 		
 		marker.mouseover(function(latLng){
