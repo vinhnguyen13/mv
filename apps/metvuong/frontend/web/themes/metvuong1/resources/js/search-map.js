@@ -244,6 +244,8 @@ function start() {
 								$('.gallery-detail').css('visibility', 'visible');
 							}
 					 	});
+
+					$('.tabs-detail-item li .sub-more').dropdown();
 				});
 			}
 		});
@@ -405,7 +407,7 @@ function makeMarker(product) {
                 '<div class="bgcover wrap-img pull-left" style="background-image:url('+product.image_url+')"><a href="#" class=""></a></div>' +
                 '<div class="infor-result">' +
                     '<p class="item-title">' + address + '</p>' +
-                    '<p class="type-result"><em class="fa fa-circle for-rent"></em>' + category + ' ' + type + '</p>' +
+                    '<p class="type-result">' + category + ' ' + type + '</p>' +
                     '<p class="rice-result">' + price + '</p>' +
                     '<p class="beds-baths-sqft">' + product['area'] + 'm<sup>2</sup> ' + floorNo + roomNo + toiletNo + '</p>' +
                     '<p class="date-post-rent">' + product.previous_time + '</p>' +

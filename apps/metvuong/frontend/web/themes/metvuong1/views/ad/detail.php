@@ -52,9 +52,18 @@
                 <div class="modal-header">
                     <div class="tabs-detail-item clearfix">
                         <ul class="pull-left">
-                            <li><a href="#" class="save-item"><em class="fa fa-heart-o"></em>Save</a></li>
-                            <li><a href="#" class="share-item"><em class="fa fa-share-alt"></em>Share</a></li>
-                            <li><a href="#" class="more-item">More<em class="fa fa-sort-desc"></em></a></li>
+                            <li><a href="#" class="save-item icon-hear" data-id="<?=$product->id;?>" href="#" data-url="<?=Url::to(['/ad/favorite'])?>"><em class="fa fa-heart-o"></em>Save</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#box-share" class="share-item"><em class="fa fa-share-alt"></em>Share</a></li>
+                            <li><a href="#" class="more-item">More<em class="fa fa-sort-desc"></em></a>
+                                <div class="sub-more hidden-effect">
+                                    <div class="wrap-effect clearfix">
+                                        <ul class='clearfix'>
+                                            <li><a href="#"><em class="icon-printer"></em>Print</a></li>
+                                            <li><a href="#" data-toggle="modal" data-target="#report-listing"><em class="icon-info"></em>Báo cáo bài viết</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
                         </ul>
                         <ul class="pull-right">
                             <li><a href="#">Expand</a></li>
@@ -117,7 +126,14 @@
                             <div class="col-sm-8 dt-left-col">
                                 <h1 class="title-dt"><?= $address ?></h1>
                                 <p class="infor-post-date"><em class="fa fa-calendar"></em><?= date('d/m/Y', $product->created_at) ?></p>
-                                <p class="type-result"><em class="fa fa-circle for-rent"></em><?= mb_strtoupper("$categoryName $typeName", 'UTF-8') ?></p>
+                                <div class="rating" data-url="<?=Url::to(['/ad/rating', 'type'=>'']);?>">
+                                    <fieldset class="rate">
+                                        <?php for($i = 10; $i > 0; $i--):?>
+                                        <input type="radio" id="rating<?=$i?>" name="rating" value="<?=$i?>" <?=($i==round($product->rating)) ? 'checked' : ''?> /><label for="rating<?=$i?>" <?=($i%2!=0) ? 'class="half"' : ''?> title="<?=ceil($i/2)?> stars"></label>
+                                        <?php endfor;?>
+                                    </fieldset>
+                                </div>
+                                <p class="type-result"><?= mb_strtoupper("$categoryName $typeName", 'UTF-8') ?></p>
                                 <table>
                                     <?php if($product->project_building_id): ?>
                                     <tr>
@@ -251,7 +267,7 @@
                                         </div>
                                     </form>
                                 </div>
-                                <div class="function-listing clearfix">
+                                <!-- <div class="function-listing clearfix">
                                     <p>Đánh giá</p>
                                     <div class="rating" data-url="<?=Url::to(['/ad/rating', 'type'=>'']);?>">
                                         <fieldset class="rate">
@@ -293,12 +309,12 @@
                                             <em class="fa fa-heart-o"></em>
                                             <span>Lưu</span>
                                         </a>
-                                        <!--<a class="icon-favo" href="#">
+                                        <a class="icon-favo" href="#">
                                             <em class="icon-ok-sign"></em>
                                             <span>Yêu thích</span>
-                                        </a>-->
+                                        </a>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <?php endif; ?>
                         </div>

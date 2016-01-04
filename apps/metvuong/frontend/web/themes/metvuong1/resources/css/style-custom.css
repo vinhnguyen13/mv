@@ -2307,6 +2307,7 @@ div.wrap-page-home #search-kind .dropdown button {
     height: 100%;
     /* background: rgba(0, 0, 0, 0.42); */
 }
+.tabs-detail-item .sub-more.active,
 .filter-common.active,
 .search-wrap-end.active,
 .search-wrap.active {
@@ -2337,6 +2338,7 @@ div.wrap-page-home #search-kind .dropdown button {
     left: 0;
     width: 100%;
 }
+.tabs-detail-item .sub-more.active .wrap-effect,
 .filter-common.active .wrap-effect,
 .search-wrap-end.active .wrap-effect,
 .search-wrap.active .wrap-effect {
@@ -2829,6 +2831,7 @@ header.wrap-page-home .wrap-search-home .search-select a {
     padding: 0 15px;
     line-height: 35px;
 }
+.logo-social,
 .list-social-login .logo-social,
 .polli .logo-social {
     width: 35px;
@@ -2852,14 +2855,17 @@ header.wrap-page-home .wrap-search-home .search-select a {
     line-height: 35px;
     float: left;
 }
+.fb-icon,
 .list-social-login .fb-icon,
 .polli .fb-icon {
     background: #E8E8E8 url(../images/face-icon.png) no-repeat top left;
 }
+.twe-icon,
 .list-social-login .twe-icon,
 .polli .twe-icon {
     background: #E8E8E8 url(../images/twe-icon.png) no-repeat top left;
 }
+.g-icon,
 .list-social-login .g-icon,
 .polli .g-icon {
     background: #E8E8E8 url(../images/go-icon.png) no-repeat top left;
@@ -3310,6 +3316,12 @@ padding-bottom: 5px;
     padding: 0;
     height: 100%;
     padding-bottom: 48px;
+}
+.wrap-map-result {
+    width: 60%;
+}
+.result-items {
+    width: 40%;
 }
 .wrap-col-fixed-result,
 .container-map {
@@ -4978,7 +4990,7 @@ header.wrap-page-home .box-search-header.ani-search > div {
     margin-right: 5px;
 }
 .dt-left-col .infor-post-date {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     color: #808080;
     font-size: .8em;
 }
@@ -5516,7 +5528,7 @@ button.btn.btn-default.dropdown-toggle {
     font: normal normal normal 14px/1 FontAwesome;
     font-size: 18px;
     /* width: 40px; */
-    vertical-align: middle;
+    /* vertical-align: middle; */
     margin: 0;
     display: inline-block;
     text-align: center;
@@ -5551,7 +5563,7 @@ button.btn.btn-default.dropdown-toggle {
 /* The star of the show */
 .rate > label:before {
     display: inline-block;
-    font-size: 30px;
+    font-size: 22px;
     padding: .3rem .2rem;
     margin: 0;
     cursor: pointer;
@@ -5611,12 +5623,15 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
 .tabs-detail-item li {
     float: left;
     border-right: 1px solid #F3F3F3;
+    position: relative;
 }
 .tabs-detail-item li a {
-    padding: 15px 20px;
+    padding: 16px 20px;
     border-right: 1px solid #A9C3A4;
     display: block;
     color: #333;
+    font-size: 14px;
+    line-height: 100%;
 }
 .tabs-detail-item li a:hover {
     text-decoration: none;
@@ -5631,9 +5646,88 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
 }
 .tabs-detail-item .close-detail button {
     font-weight: normal;
-    font-size: 16px;
-    padding: 15px 20px;
+    font-size: 14px;
+    padding: 17px 20px 15px;
+    text-transform: capitalize;
+}
+.tabs-detail-item .close-detail button:hover {
+    background: #EFEFEF;
 }
 .tabs-detail-item .close-detail em {
     margin-right: 5px;
+}
+#box-share .modal-dialog {
+    width: 400px;
+    font-size: 14px;
+}
+.share-social {
+    border-top: 1px solid #BDBDBD;
+    margin-top: 30px;
+    padding-top: 25px;
+}
+.share-social li {
+    float: left;
+    margin-right: 20px;
+}
+.share-social li a {
+    margin-left: 0;
+    background-color: #fff;
+}
+.share-social li:first-child {
+    line-height: 35px;
+}
+#box-share .modal-dialog button {
+    color: #fff;
+    margin-top: 10px;
+}
+.tabs-detail-item li .sub-more {
+    position: absolute;
+    top: 47px;
+    left: -2px;
+    width: 160px;
+    opacity: 0;
+    -webkit-transition: opacity 0.25s ease-out;
+    transition: opacity 0.25s ease-out;
+    -webkit-backface-visibility: hidden;
+    will-change: opacity;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    z-index: 10;
+}
+.tabs-detail-item li li {
+    float: none;
+    width: 100%;
+    border: none;
+}
+.tabs-detail-item li li a {
+    border: none;
+    padding: 10px 8px;
+    font-size: 14px;
+}
+.tabs-detail-item .sub-more a em {
+    margin-right: 10px;
+}
+.tabs-detail-item .sub-more .wrap-effect {
+    border: none;
+}
+.tabs-detail-item li a.icon-hear.active em {
+    font-size: 14px;
+    line-height: 1;
+    margin: 0 5px;
+}
+#frm-report .radio {
+    font-size: 16px;
+}
+#frm-report .radio label {
+    line-height: 20px;
+}
+#frm-report .radio label:hover {
+    color: #AFAFAF;
+}
+#frm-report .btn-common {
+    color: #fff;
+    font-size: 15px;
+    text-transform: uppercase;
 }

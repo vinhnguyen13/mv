@@ -263,3 +263,84 @@ $this->registerJs('var saved = ' . json_encode($saved) . ';', View::POS_BEGIN);
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="box-share" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="wrap-modal clearfix">
+                    <h3>Chia sẻ</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="recipient-email">Email người nhận</label>
+                            <input type="text" class="form-control" id="recipient-email" placeholder="Email người nhận...">
+                        </div>
+                        <div class="form-group">
+                            <label for="your-email">Email của bạn</label>
+                            <input type="text" class="form-control" id="your-email" placeholder="Email của bạn...">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Nội dụng</label>
+                            <textarea class="form-control" name="" id="" cols="30" rows="5" placeholder="Nội dụng chia sẻ..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-common">Gửi email</button>
+                        </div>
+                        <ul class="share-social clearfix">
+                            <li>Chia sẻ kết nối</li>
+                            <li><a href="#" class="logo-social fb-icon"></a></li>
+                            <li><a href="#" class="logo-social twe-icon"></a></li>
+                            <li><a href="#" class="logo-social g-icon"></a></li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="report-listing" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="wrap-modal clearfix">
+                    <h3>Báo cáo bài viết</h3>
+                    <form id="frm-report" action="">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="optionsRadios" id="" value="">
+                                Lừa đảo
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="optionsRadios" id="" value="">
+                                Trùng địa chỉ
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="optionsRadios" id="" value="">
+                                Tin đã đăng
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3" placeholder="nội dung report..."></textarea>
+                        </div>
+                        <button class="btn btn-common">Gửi báo cáo</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

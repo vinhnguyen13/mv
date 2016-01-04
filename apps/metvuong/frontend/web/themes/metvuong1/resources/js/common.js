@@ -346,3 +346,62 @@ $.fn.scfix = function (options) {
     });
 
 }
+
+$.fn.dropdown = function (options) {
+
+    return this.each(function() {
+        var el = $(this);
+
+        var defaults = {
+            wrap: el.find('.wrap-effect'),
+            linkShow: $('.tabs-detail-item li .more-item'),
+            close: ''
+        },
+        sc = {};
+
+        if ( el.length == 0 ) return el;
+
+        sc.settings = $.extend({}, defaults, options);
+
+        sc.settings.linkShow.on('click', function () {
+            if ( $(this).hasClass('active') && $(this).parent().find(el).is(':visible') ) {
+                $(document).trigger('click');
+                return;
+            }
+            sc.settings.linkShow.removeClass('active');
+            $(this).addClass('active');
+
+            open($(this));
+        });
+
+        function open (item) {
+            el.addClass('hidden-effect');
+            el.removeClass('active');
+
+            item.parent().find(el).removeClass('hidden-effect');
+            setTimeout(function() {
+                item.parent().find(el).addClass('active');
+            }, 30);
+
+            close();
+        }
+
+        function close () {
+            $(document).on('click', clickOutsideevent);
+        }
+
+        function clickOutsideevent (e) {
+            var container = el.parent();
+            
+            if ( !container.is(e.target) && container.has(e.target).length === 0 || el.has(e.target).length > 0 ) {
+                el.removeClass('active');
+
+                setTimeout(function() {
+                    el.addClass('hidden-effect');
+                }, 300);
+            }
+        };
+
+    });
+
+}
