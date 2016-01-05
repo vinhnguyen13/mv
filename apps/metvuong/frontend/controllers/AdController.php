@@ -20,6 +20,7 @@ use yii\db\IntegrityException;
 use yii\helpers\Url;
 use yii\web\Response;
 use yii\widgets\LinkPager;
+use frontend\models\ProfileForm;
 
 class AdController extends Controller
 {
@@ -208,6 +209,9 @@ class AdController extends Controller
     				   
     						$adContactInfo->product_id = $model->id;
     						$adContactInfo->save();
+    						
+    						$profileForm = new ProfileForm();
+    						$profileForm->compareToUpdate($post['AdContactInfo']);
     				   
     						if(isset($post['images']) && $post['images']) {
     							$images = explode(',', $post['images']);

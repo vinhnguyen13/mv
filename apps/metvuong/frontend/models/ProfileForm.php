@@ -171,4 +171,31 @@ class ProfileForm extends Model
         return false;
     }
 
+    public function compareToUpdate($data) {
+    	$profile = Yii::$app->user->identity->profile;
+    	
+    	if(!empty($data['name']) && !$profile->name) {
+    		$profile->name = $data['name'];
+    	}
+    	
+    	if(!empty($data['phone']) && !$profile->phone) {
+    		$profile->phone = $data['phone'];
+    	}
+    	
+    	if(!empty($data['mobile']) && !$profile->mobile) {
+    		$profile->mobile = $data['mobile'];
+    	}
+    	
+    	if(!empty($data['email']) && !$profile->public_email) {
+    		$profile->public_email = $data['email'];
+    	}
+    	
+    	if(!empty($data['address']) && !$profile->address) {
+    		$profile->address = $data['address'];
+    	}
+    	
+    	if($profile->getDirtyAttributes()) {
+    		$profile->save();
+    	}
+    }
 }
