@@ -5396,15 +5396,19 @@ header.wrap-page-home .box-search-header.ani-search > div {
 #detail-listing {
     height: 100%;
 }
-#modal-detail-listting .modal-header .close {
+.result-items .modal-header .close {
     position: static;
+}
+.result-items #box-share .modal-header .close {
+    position: absolute;
+    margin-top: 0;
 }
 #modal-detail-listting,
 #detail-listing .modal-content,
 #detail-listing > div {
     height: 100%;
 }
-#modal-detail-listting {
+#detail-listing #modal-detail-listting {
     background: none;
     padding: 0;
     background: #fff;
@@ -5673,7 +5677,7 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
 .tabs-detail-item .expand-win em {
     margin-right: 5px;
 }
-.tabs-detail-item >ul li a {
+.tabs-detail-item > ul li a {
     padding: 16px 20px;
     border-right: 1px solid #A9C3A4;
     display: block;
@@ -5727,7 +5731,7 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
 .share-social li:first-child {
     line-height: 35px;
 }
-#box-share .modal-dialog .btn-common {
+#box-share .modal-dialog button {
     color: #fff;
     margin-top: 10px;
 }
