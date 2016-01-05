@@ -3346,7 +3346,15 @@ padding-bottom: 5px;
     width: 60%;
 }
 .result-items {
-    width: 30%;
+    width: 40%;
+}
+@media (min-width: 1680px) {
+    .wrap-map-result {
+        width: 70%;
+    }
+    .result-items {
+        width: 30%;
+    }
 }
 .wrap-col-fixed-result,
 .container-map {
