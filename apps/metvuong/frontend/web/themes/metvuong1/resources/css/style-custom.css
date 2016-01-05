@@ -2288,6 +2288,7 @@ div.wrap-page-home #search-kind .dropdown button {
     bottom: -10px;
     right: 0;
 }
+.container-effect,
 .search-wrap-end,
 .search-wrap {
     position: absolute;
@@ -2307,6 +2308,7 @@ div.wrap-page-home #search-kind .dropdown button {
     height: 100%;
     /* background: rgba(0, 0, 0, 0.42); */
 }
+.container-effect.active,
 .tabs-detail-item .sub-more.active,
 .filter-common.active,
 .search-wrap-end.active,
@@ -2338,6 +2340,7 @@ div.wrap-page-home #search-kind .dropdown button {
     left: 0;
     width: 100%;
 }
+.container-effect.active .wrap-effect,
 .tabs-detail-item .sub-more.active .wrap-effect,
 .filter-common.active .wrap-effect,
 .search-wrap-end.active .wrap-effect,
@@ -2551,7 +2554,6 @@ div.wrap-page-home #search-kind .dropdown button {
 }
 .home-page li a {
     color: #757575;
-    font-family: arial,sans-serif;
     font-size: 13px;
     padding: 0 0px 0 20px;
     font-weight: bold;
@@ -2585,11 +2587,13 @@ div.wrap-page-home #search-kind .dropdown button {
 .home-page a em.icon-key {
     left: 2px;
 }
+.select-lang .lang-icon,
 .home-page li.lang-icon a {
     padding: 0;
     width: 22px;
     height: 14px;
 }
+.select-lang .icon-en,
 .home-page li.icon-en a {
     background: url(../images/flag-en.png) no-repeat top left;
     margin-right: 7px;
@@ -2597,8 +2601,27 @@ div.wrap-page-home #search-kind .dropdown button {
     width: 26px;
     margin-left: 5px;
 }
+.home-page .menu-home .sub-setting .line-option .icon-en:hover {
+    background: url(../images/flag-en.png) no-repeat top left;
+    opacity: .7;
+}
+.select-lang .icon-en {
+    border: none;
+    margin-right: 0;
+    margin-left: 8px;
+    width: 19px;
+}
+.select-lang .icon-vi {
+    border-right: 1px solid #333;
+    width: 30px;
+}
+.home-page .menu-home .sub-setting .line-option .icon-vi:hover,
+.select-lang .icon-vi,
 .home-page li.icon-vi a {
     background: url(../images/flag-vn.png) no-repeat top left;
+}
+.home-page .menu-home .sub-setting .line-option .icon-vi:hover {
+    opacity: .6;
 }
 .wrap-page-home {
     /* position: relative; */
@@ -3913,7 +3936,7 @@ div.wrap-page-home .logo-home {
 #detail-listing .modal-dialog {
     width: 900px;
 }
-#detail-listing .wrap-modal {
+#modal-detail-listting .wrap-modal {
     padding: 0 0 100px 0;
     overflow-y: auto;
     overflow-x: hidden;
@@ -4905,6 +4928,11 @@ div.wrap-page-home .wrap-menu-option ul {
     float: left;
     margin-left: 10px;
     max-width: 170px;
+    position: relative;
+}
+.wrap-page-home .wrap-menu-option .user-loggin {
+    max-width: inherit;
+    margin-right: 10px;
 }
 .wrap-page-home .wrap-menu-option li:last-child {
     margin-left: 0;
@@ -5368,15 +5396,15 @@ header.wrap-page-home .box-search-header.ani-search > div {
 #detail-listing {
     height: 100%;
 }
-.result-items .modal-header .close {
+#modal-detail-listting .modal-header .close {
     position: static;
 }
-#detail-listing .modal-body,
+#modal-detail-listting,
 #detail-listing .modal-content,
 #detail-listing > div {
     height: 100%;
 }
-#detail-listing .modal-body {
+#modal-detail-listting {
     background: none;
     padding: 0;
     background: #fff;
@@ -5645,7 +5673,7 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
 .tabs-detail-item .expand-win em {
     margin-right: 5px;
 }
-.tabs-detail-item li a {
+.tabs-detail-item >ul li a {
     padding: 16px 20px;
     border-right: 1px solid #A9C3A4;
     display: block;
@@ -5656,7 +5684,7 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
 .tabs-detail-item .expand-win a {
     border-left: 1px solid #A9C3A4;
 }
-.tabs-detail-item li a:hover {
+.tabs-detail-item > ul li a:hover {
     text-decoration: none;
     background: #E0E0E0;
 }
@@ -5699,7 +5727,7 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
 .share-social li:first-child {
     line-height: 35px;
 }
-#box-share .modal-dialog button {
+#box-share .modal-dialog .btn-common {
     color: #fff;
     margin-top: 10px;
 }
@@ -5796,4 +5824,96 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
     max-height: 250px;
     overflow-x: hidden;
     overflow-y: auto;
+}
+.avatar-user {
+    display: block;
+    float: left;
+    margin-top: -5px;
+    margin-right: 8px;
+}
+.avatar-user img {
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+}
+.home-page li.user-loggin a {
+    overflow: inherit;
+    padding-top: 4px;
+}
+.home-page li.user-loggin a .name-user {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 170px;
+}
+.sub-setting {
+    top: 0;
+    background: #fff;
+    border: 1px solid #E2E2E2;
+    padding: 5px 0;
+    left: -153px;
+    width: 180px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+}
+.home-page li .sub-setting-user {
+    border: 1px solid #BBBBBB;
+    padding: 0px 3px 0px 3px;
+}
+.home-page li .sub-setting-user em {
+    position: static;
+}
+.home-page .menu-home .sub-setting em {
+    position: static;
+    font-size: 15px;
+}
+.home-page .menu-home .sub-setting li {
+    margin: 0;
+    max-width: inherit;
+    width: 100%;
+    text-align: left;
+}
+.home-page .menu-home .sub-setting a {
+    padding: 6px 15px;
+}
+.home-page .menu-home .sub-setting a,
+.home-page .menu-home .sub-setting li {
+    font-weight: 400;
+    font-size: 13px;
+    color: #333;
+}
+.home-page .menu-home .sub-setting .line-option a {
+    padding: 0;
+}
+.home-page .menu-home .sub-setting .line-option {
+    padding: 6px 15px;
+}
+.home-page .menu-home .sub-setting .line-option .select-lang {
+    border-top: 1px solid #A5A5A5;
+    width: 100%;
+    padding-top: 10px;
+    height: auto;
+    bottom: 0;
+    margin-right: 0;
+    display: block;
+    text-shadow: 1px 1px 1px #fff;
+    -webkit-text-shadow: 1px 1px 1px #fff;
+    -moz-text-shadow: 1px 1px 1px #fff;
+    -ms-text-shadow: 1px 1px 1px #fff;
+    font-size: 13px;
+}
+.home-page .menu-home .sub-setting a:hover {
+    text-decoration: none;
+    background: #E6E6E6;
+}
+.settings.container-effect {
+    top: 25px;
+}
+.sub-setting.wrap-effect:after, 
+.sub-setting.wrap-effect:before {
+    display: none;
 }
