@@ -443,14 +443,14 @@ function makeMarker(product) {
 			showinfo(latLng, marker);
 		});
 		
-//		marker.mouseout(function(latLng){
-//			if(dragging)
-//				return;
-//			
-//			closeInfowindow = setTimeout(function(){
-//				infoWindow.close();
-//			}, 400);
-//		});
+		marker.mouseout(function(latLng){
+			if(dragging)
+				return;
+			
+			closeInfowindow = setTimeout(function(){
+				infoWindow.close();
+			}, 400);
+		});
 		
 		marker.mousedown(function(){
 			infoWindow.close();
@@ -521,13 +521,13 @@ function showinfo(latLng, marker){
 	var id = marker.getId();
 	var listEl = $('#moi-nhat').clone(true).attr('id', 'moi-nhat-onmap').addClass('moi-nhat-onmap');
 	
-//	listEl.hover(function(){
-//		clearTimeout(closeInfowindow);
-//	}, function(){
-//		closeInfowindow = setTimeout(function(){
-//			infoWindow.close();
-//		}, 400);
-//	});
+	listEl.hover(function(){
+		clearTimeout(closeInfowindow);
+	}, function(){
+		closeInfowindow = setTimeout(function(){
+			infoWindow.close();
+		}, 400);
+	});
 	
 	listEl.find('.' + id).addClass('onmap').show();
 	listEl.find('li').not(listEl.find('.' + id)).remove();
@@ -536,18 +536,18 @@ function showinfo(latLng, marker){
 	infoWindow.open(marker);
 	
 	marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
-	
-	var gmStyle = listEl.closest('.gm-style-iw');
-	gmStyle.css({
-		overflow: 'visible'
-	});
-	listEl.parent().css({
-	    marginLeft: '-5px',
-    	marginTop: '-8px',
-    	marginBottom: '-10px',
-        marginRight: '-20px',
-        overflow: 'visible'
-	});
-	gmStyle.next().hide();
-	gmStyle.parent().width(300);
+//	
+//	var gmStyle = listEl.closest('.gm-style-iw');
+//	gmStyle.css({
+//		overflow: 'visible'
+//	});
+//	listEl.parent().css({
+//	    marginLeft: '-5px',
+//    	marginTop: '-8px',
+//    	marginBottom: '-10px',
+//        marginRight: '-20px',
+//        overflow: 'visible'
+//	});
+//	gmStyle.next().hide();
+//	gmStyle.parent().width(300);
 }
