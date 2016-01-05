@@ -154,7 +154,7 @@ class SiteController extends Controller
     		$imgSrcName = ($s == 0) ? 'mc' : 'mch';
     		
     		$markerImagesFolder = \Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . 'images';
-    		$markerSaveName = $markerImagesFolder . DIRECTORY_SEPARATOR . $imgSrcName . '-' . $t . '.png';
+    		$markerSaveName = $markerImagesFolder . DIRECTORY_SEPARATOR . 'genarate' . DIRECTORY_SEPARATOR . $imgSrcName . '-' . $t . '.png';
     		
     		if(file_exists($markerSaveName)) {
     			$im = @imagecreatefrompng($markerSaveName);
@@ -165,7 +165,7 @@ class SiteController extends Controller
     			imagealphablending($im, true);
     			imagesavealpha($im, true);
     			
-    			$font = \Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . 'fonts' . DIRECTORY_SEPARATOR . 'MyriadPro-Semibold.otf';
+    			$font = \Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . 'fonts' . DIRECTORY_SEPARATOR . 'MyriadPro-Regular.otf';
     			$size = 10;
     			$color = ($s == 0) ? imagecolorallocate($im, 0, 0, 0) : imagecolorallocate($im, 255, 255, 255);
     			
@@ -175,7 +175,14 @@ class SiteController extends Controller
     			$bbox = imagettfbbox($size, 0, $font, $t);
     			$dx = ($bbox[2]-$bbox[0])/2.0 - ($bbox[2]-$bbox[4])/2.0;
     			$dy = ($bbox[3]-$bbox[1])/2.0 + ($bbox[7]-$bbox[1])/2.0;
-    			$px = StringHelper::startsWith($t, '1') ? $offsetX - 1 - $dx : $offsetX - $dx;
+    			
+    			if(StringHelper::startsWith($t, '1')) {
+    				$recalOffsetX = $offsetX - 1;
+    			} else if(StringHelper::startsWith($t, '4')) {
+    				$recalOffsetX = $offsetX + 1;
+    			}
+    			$px = StringHelper::startsWith($t, '1') ? $recalOffsetX - $dx : $offsetX - $dx;
+    			
     			$py = $offsetY - $dy;
     			
     			imagettftext($im, $size, 0, $px, $py, $color, $font, $t);

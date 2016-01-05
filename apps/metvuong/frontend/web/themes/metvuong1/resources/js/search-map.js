@@ -243,13 +243,7 @@ function start() {
 					if(marker.counter == 1) {
 						marker.setIcon('/images/marker-hover.png');
 					} else {
-						if(marker.counter > 9) {
-							var text = 'N';
-						} else {
-							var text = marker.counter;
-						}
-						
-						marker.setIcon('/images/marker-counter-hover-' + text + '.png');
+						marker.setIcon('/site/map-image?s=1&t=' + marker.counter);
 					}
 					
 					marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
@@ -272,13 +266,7 @@ function start() {
 			if(marker.counter == 1) {
 				marker.setIcon('/images/marker.png');
 			} else {
-				if(marker.counter > 9) {
-					var text = 'N';
-				} else {
-					var text = marker.counter;
-				}
-				
-				marker.setIcon('/images/marker-counter-' + text + '.png');
+				marker.setIcon('/site/map-image?s=0&t=' + marker.counter);
 			}
 		});
 		
@@ -444,13 +432,7 @@ function makeMarker(product) {
 	var marker;
 	
 	if(marker = gmap.getMarker(markerId)) {
-		var text = ++marker.counter;
-		
-		if(text > 9) {
-			text = 'N';
-		}
-		
-		marker.setIcon('/images/marker-counter-' + text + '.png');
+		marker.setIcon('/site/map-image?s=0&t=' + ++marker.counter);
 	} else {
 		marker = new Marker({
 			draggable: false,
