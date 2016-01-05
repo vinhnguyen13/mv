@@ -1615,6 +1615,8 @@ footer {
     width: 155px;
 }
 .logo-duan img {
+    display: block;
+    height: 100%;
     max-width: 100%;
 }
 .logo-duan {
@@ -2059,7 +2061,7 @@ div.wrap-page-home #search-kind .dropdown button {
 .logo-duan {
     float: left;
     margin-right: 8%;
-    max-height: 70px;
+    height: 70px;
     max-width: 140px;
     text-align: center;
 }
@@ -3344,7 +3346,7 @@ padding-bottom: 5px;
     width: 60%;
 }
 .result-items {
-    width: 40%;
+    width: 30%;
 }
 .wrap-col-fixed-result,
 .container-map {
