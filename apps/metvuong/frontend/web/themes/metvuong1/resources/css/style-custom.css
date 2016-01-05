@@ -4337,7 +4337,7 @@ div.wrap-page-home .logo-home {
     padding-bottom: 2px;
     width: 200px;
 }
-.gallery-detail .bxslider li:first-child {
+.gallery-detail .bxslider .first-slide li:first-child {
     width: 400px;
     height: 300px;
 }
@@ -4419,6 +4419,9 @@ div.wrap-page-home .logo-home {
     float: left;
     width: 100%;
     height: 298px;
+}
+.wrap-img-detail:first-child {
+    border: 1px solid red;
 }
 .lightboxOverlay {
   position: absolute;
