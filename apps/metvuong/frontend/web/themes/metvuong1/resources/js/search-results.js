@@ -1,6 +1,6 @@
 (function () {
-	var prices = {"thue": {"0" : "0","-1": "Giá bất kỳ","2000000" : "2 triệu","4000000" : "4 triệu","6000000" : "6 triệu","8000000" : "8 triệu","10000000": "10 triệu","12000000": "12 triệu","14000000": "14 triệu","16000000": "16 triệu","18000000": "18 triệu","20000000": "20 triệu",},"muaban": {"0" : "0","-1": "Giá bất kỳ","2000000000" : "2 tỷ","4000000000" : "4 tỷ","6000000000" : "6 tỷ","8000000000" : "8 tỷ","10000000000": "10 tỷ","12000000000": "12 tỷ","14000000000": "14 tỷ","16000000000": "16 tỷ","18000000000": "18 tỷ","20000000000": "20 tỷ"}};
-	var dt = { "0": "0", "-1": "Bất kỳ", "10": "10 m<sup>2</sup>", "20": "20 m<sup>2</sup>", "30": "30 m<sup>2</sup>", "40": "40 m<sup>2</sup>", "50": "50 m<sup>2</sup>", "60": "60 m<sup>2</sup>", "70": "70 m<sup>2</sup>", "80": "80 m<sup>2</sup>", "90": "90 m<sup>2</sup>", "100": "100 m<sup>2</sup>"};
+	var prices = {"thue": {"0" : "0+","-1": "Giá bất kỳ","2000000" : "2 triệu","4000000" : "4 triệu","6000000" : "6 triệu","8000000" : "8 triệu","10000000": "10 triệu","12000000": "12 triệu","14000000": "14 triệu","16000000": "16 triệu","18000000": "18 triệu","20000000": "20 triệu",},"muaban": {"0" : "0+","-1": "Giá bất kỳ","2000000000" : "2 tỷ","4000000000" : "4 tỷ","6000000000" : "6 tỷ","8000000000" : "8 tỷ","10000000000": "10 tỷ","12000000000": "12 tỷ","14000000000": "14 tỷ","16000000000": "16 tỷ","18000000000": "18 tỷ","20000000000": "20 tỷ"}};
+	var dt = { "0": "0+", "-1": "Bất kỳ", "10": "10 m<sup>2</sup>", "20": "20 m<sup>2</sup>", "30": "30 m<sup>2</sup>", "40": "40 m<sup>2</sup>", "50": "50 m<sup>2</sup>", "60": "60 m<sup>2</sup>", "70": "70 m<sup>2</sup>", "80": "80 m<sup>2</sup>", "90": "90 m<sup>2</sup>", "100": "100 m<sup>2</sup>"};
 	var minmax = {
 		wrap: $('.filter-pane'),
 		wrapVal: $('.filter-common'),
@@ -350,11 +350,12 @@
 			dropdownSelect.itemVal.on('click', function (e) {
 				e.preventDefault();
 				var _this = $(this),
-					txt = _this.html();
+					txt = _this.parent().data('value'),
+					txtShow = _this.html();
 
 				minmax.tabsClick.parent().find('li a').removeClass('active');
 				_this.addClass('active');
-				item.find('.txt-show').html(txt);
+				item.find('.txt-show').html(txtShow);
 				item.find('.txt-show').append('<em class="fa fa-long-arrow-up"></em>').show();
 
 				if ( minmax.tabsClick.parent().find('.filter-common').data('filter') == 'phong-ngu' ) {

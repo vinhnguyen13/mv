@@ -98,13 +98,13 @@ $this->registerJs('var saved = ' . json_encode($saved) . ';', View::POS_BEGIN);
                     <div class="wrap-effect clearfix">
                         <div class="filter-bed">
                             <ul class="dropdown-options search-entry">
-                                <li data-value=""><a class="option">0</a></li>
-                                <li data-value=""><a class="option">1</a></li>
-                                <li data-value=""><a class="option">2</a></li>
-                                <li data-value=""><a class="option">3</a></li>
-                                <li data-value=""><a class="option">4</a></li>
-                                <li data-value=""><a class="option">5</a></li>
-                                <li data-value=""><a class="option">6</a></li>
+                                <li data-value="0"><a class="option">0+</a></li>
+                                <li data-value="1"><a class="option">1</a></li>
+                                <li data-value="2"><a class="option">2</a></li>
+                                <li data-value="3"><a class="option">3</a></li>
+                                <li data-value="4"><a class="option">4</a></li>
+                                <li data-value="5"><a class="option">5</a></li>
+                                <li data-value="6"><a class="option">6+</a></li>
                             </ul>
                         </div>
                     </div>
@@ -116,13 +116,13 @@ $this->registerJs('var saved = ' . json_encode($saved) . ';', View::POS_BEGIN);
                     <div class="wrap-effect clearfix">
                         <div class="filter-bed">
                             <ul class="dropdown-options search-entry">
-                                <li data-value=""><a class="option">0</a></li>
-                                <li data-value=""><a class="option">1</a></li>
-                                <li data-value=""><a class="option">2</a></li>
-                                <li data-value=""><a class="option">3</a></li>
-                                <li data-value=""><a class="option">4</a></li>
-                                <li data-value=""><a class="option">5</a></li>
-                                <li data-value=""><a class="option">6</a></li>
+                                <li data-value="0"><a class="option">0+</a></li>
+                                <li data-value="1"><a class="option">1</a></li>
+                                <li data-value="2"><a class="option">2</a></li>
+                                <li data-value="3"><a class="option">3</a></li>
+                                <li data-value="4"><a class="option">4</a></li>
+                                <li data-value="5"><a class="option">5</a></li>
+                                <li data-value="6"><a class="option">6+</a></li>
                             </ul>
                         </div>
                     </div>

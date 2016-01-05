@@ -3915,6 +3915,9 @@ div.wrap-page-home .logo-home {
 }
 #detail-listing .wrap-modal {
     padding: 0 0 100px 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%;
 }
 .gallery-detail {
     width: 100%;
@@ -5374,11 +5377,10 @@ header.wrap-page-home .box-search-header.ani-search > div {
     height: 100%;
 }
 #detail-listing .modal-body {
-    overflow-y: auto;
-    overflow-x: hidden;
     background: none;
     padding: 0;
     background: #fff;
+    padding-bottom: 47px;
 }
 .dt-left-col h1 * {
     font-size: 1em;
@@ -5637,6 +5639,12 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
     border-right: 1px solid #F3F3F3;
     position: relative;
 }
+.tabs-detail-item .expand-win {
+    border-left: 1px solid #F3F3F3;
+}
+.tabs-detail-item .expand-win em {
+    margin-right: 5px;
+}
 .tabs-detail-item li a {
     padding: 16px 20px;
     border-right: 1px solid #A9C3A4;
@@ -5644,6 +5652,9 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
     color: #333;
     font-size: 14px;
     line-height: 100%;
+}
+.tabs-detail-item .expand-win a {
+    border-left: 1px solid #A9C3A4;
 }
 .tabs-detail-item li a:hover {
     text-decoration: none;
@@ -5763,6 +5774,7 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
 .gm-style-iw .infor-result .beds-baths-sqft {
     font-size: 11px;
     line-height: 15px;
+    margin-bottom: 0;
 }
 .gm-style-iw li .wrap-img {
     width: 50px;
@@ -5775,4 +5787,13 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
 }
 .gm-style .gm-style-iw {
     left: 6px !important;
+    width: 250px !important;
+}
+.list-results .onmap {
+    padding: 7px 0 !important;
+}
+.moi-nhat-onmap {
+    max-height: 250px;
+    overflow-x: hidden;
+    overflow-y: auto;
 }

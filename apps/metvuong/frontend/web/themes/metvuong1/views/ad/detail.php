@@ -66,7 +66,7 @@
                             </li>
                         </ul>
                         <ul class="pull-right">
-                            <li><a href="#">Expand</a></li>
+                            <li class="expand-win"><a href="#"><em class="fa fa-expand"></em>Expand</a></li>
                             <li class="close-detail">
                                 <button type="button" class="close btn-close-detail" data-dismiss="modal" aria-label="Close">
                                     <em class="fa fa-close"></em>close
