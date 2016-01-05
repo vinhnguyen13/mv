@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 use frontend\components\Controller;
 use frontend\models\Ad;
+use frontend\models\ShareForm;
 use vsoft\ad\models\AdCategory;
 use vsoft\ad\models\AdContactInfo;
 use vsoft\ad\models\AdDistrict;
@@ -315,4 +316,33 @@ class AdController extends Controller
         }
         return 404;
     }
+
+	public function actionSendmail(){
+		if(Yii::$app->request->isPost && Yii::$app->request->isAjax) {
+			$post = Yii::$app->request->post();
+            $model = Yii::createObject([
+                'class'    => ShareForm::className(),
+                'scenario' => 'share',
+            ]);
+            $model->load($post);
+            $model->validate();
+            if (!$model->hasErrors()) {
+                // send to
+                Yii::$app->mailer->compose(['text' => 'notifyReceivedEmail-text',], ['contact' => $model])
+                    ->setFrom(Yii::$app->params['adminEmail'])
+                    ->setTo([$model->recipient_email])
+                    ->setSubject($model->your_email ." shared a listing on Metvuong.com to you")
+                    ->send();
+
+                // send from
+                Yii::$app->mailer->compose(['text' => 'notifyReceivedEmail-text',], ['contact' => $model])
+                    ->setFrom(Yii::$app->params['adminEmail'])
+                    ->setTo([$model->your_email])
+                    ->setSubject("Thanks for sharing a listing with ".$model->your_email)
+                    ->send();
+                return 200;
+            }
+		}
+        return 404;
+	}
 }

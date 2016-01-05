@@ -127,8 +127,7 @@ class ProfileForm extends Model
     }
 
     public function updateProfile(){
-        $user = User::findIdentity(Yii::$app->user->id);
-        $profile = $user->profile;
+        $profile = Yii::$app->user->identity->profile;
         if(!empty($profile)) {
             $profile->name = $this->name;
             $profile->public_email = $this->public_email;
@@ -141,9 +140,8 @@ class ProfileForm extends Model
     }
 
     public function loadProfile(){
-        $user = User::findIdentity(Yii::$app->user->id);
-        $profile = $user->profile;
-
+        $user_id = Yii::$app->user->id;
+        $profile = Yii::$app->user->identity->profile;
         $model = Yii::createObject([
             'class'    => ProfileForm::className(),
             'scenario' => 'updateprofile',
@@ -156,14 +154,12 @@ class ProfileForm extends Model
         $model->address = $profile->address;
         $model->avatar = $profile->avatar;
         $model->bio = $profile->bio;
-        $model->created_at = $user->created_at;
-
+        $model->created_at = $user_id;
         return $model;
     }
 
     public function updateAvatar($filename){
-        $user = User::findIdentity(Yii::$app->user->id);
-        $profile = $user->profile;
+        $profile = Yii::$app->user->identity->profile;
         if(!empty($profile)) {
             $profile->avatar = $filename;
             return $profile->save();

@@ -1,6 +1,5 @@
 <?php
 return [
-    'adminEmail' => 'admin@example.com',
     'meta' => [
         'attributes' => [
             'name' => ['keywords', 'description'],
