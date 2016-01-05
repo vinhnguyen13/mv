@@ -231,7 +231,6 @@ function start() {
 		
 		var hoverTimeout;
 		listResult.on('mouseenter', '> li', function() {
-			clearTimeout(closeInfowindow);
 			var self = $(this);
 			
 			hoverTimeout = setTimeout(function(){
@@ -254,10 +253,6 @@ function start() {
 			}, 200);
 		}).on('mouseleave', '> li', function() {
 			clearTimeout(hoverTimeout);
-			
-			closeInfowindow = setTimeout(function(){
-				infoWindow.close();
-			}, 500);
 			
 			var self = $(this);
 			if(self.hasClass('onmap'))
@@ -454,7 +449,7 @@ function makeMarker(product) {
 			
 			closeInfowindow = setTimeout(function(){
 				infoWindow.close();
-			}, 300);
+			}, 400);
 		});
 		
 		marker.mousedown(function(){
@@ -525,6 +520,14 @@ function showinfo(latLng, marker){
 	clearTimeout(closeInfowindow);
 	var id = marker.getId();
 	var listEl = $('#moi-nhat').clone(true).removeAttr('id').addClass('moi-nhat-onmap');
+	
+	listEl.hover(function(){
+		clearTimeout(closeInfowindow);
+	}, function(){
+		closeInfowindow = setTimeout(function(){
+			infoWindow.close();
+		}, 400);
+	});
 	
 	listEl.find('.' + id).addClass('onmap').show();
 	listEl.find('li').not(listEl.find('.' + id)).remove();
