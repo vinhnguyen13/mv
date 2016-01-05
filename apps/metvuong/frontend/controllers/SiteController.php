@@ -24,6 +24,7 @@ use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use vsoft\ad\models\AdCategory;
 use vsoft\news\models\CmsCatalog;
+use yii\helpers\StringHelper;
 
 /**
  * Site controller
@@ -144,6 +145,48 @@ class SiteController extends Controller
         print_r(phpinfo());
         echo "</pre>";
         exit;
+    }
+    
+    public function actionMapImage($t, $s) {
+    	if(ctype_digit($t) && $t < 1000 && $t > 1) {
+    		header('Content-Type: image/png');
+    		
+    		$imgSrcName = ($s == 0) ? 'mc' : 'mch';
+    		
+    		$markerImagesFolder = \Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . 'images';
+    		$markerSaveName = $markerImagesFolder . DIRECTORY_SEPARATOR . $imgSrcName . '-' . $t . '.png';
+    		
+    		if(file_exists($markerSaveName)) {
+    			$im = @imagecreatefrompng($markerSaveName);
+    			imagealphablending($im, true);
+    			imagesavealpha($im, true);
+    		} else {
+    			$im = @imagecreatefrompng($markerImagesFolder . DIRECTORY_SEPARATOR . $imgSrcName . '.png');
+    			imagealphablending($im, true);
+    			imagesavealpha($im, true);
+    			
+    			$font = \Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . 'fonts' . DIRECTORY_SEPARATOR . 'MyriadPro-Semibold.otf';
+    			$size = 10;
+    			$color = ($s == 0) ? imagecolorallocate($im, 0, 0, 0) : imagecolorallocate($im, 255, 255, 255);
+    			
+    			// calculate center text on image
+    			$offsetX = 12; // image width / 2
+    			$offsetY = 13; // image height / 2
+    			$bbox = imagettfbbox($size, 0, $font, $t);
+    			$dx = ($bbox[2]-$bbox[0])/2.0 - ($bbox[2]-$bbox[4])/2.0;
+    			$dy = ($bbox[3]-$bbox[1])/2.0 + ($bbox[7]-$bbox[1])/2.0;
+    			$px = StringHelper::startsWith($t, '1') ? $offsetX - 1 - $dx : $offsetX - $dx;
+    			$py = $offsetY - $dy;
+    			
+    			imagettftext($im, $size, 0, $px, $py, $color, $font, $t);
+    			
+    			imagepng($im, $markerSaveName);
+    		}
+    		
+    		imagepng($im);
+    		imagedestroy($im);
+    		exit();
+    	}
     }
     
     public function actionServiceLocationList() {
