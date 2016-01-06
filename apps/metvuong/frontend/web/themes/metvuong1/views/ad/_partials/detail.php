@@ -146,7 +146,8 @@ use yii\helpers\Url;
                                                 <?= $f->field($share_form, 'content')->textarea(['class'=>'form-control content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('content', 'Nội dung chia sẻ...')]) ?>
                                             </div>
                                             <?= $f->field($share_form, 'address')->hiddenInput(['value'=>$address])->label(false) ?>
-                                            <?= $f->field($share_form, 'detailUrl')->hiddenInput(['value'=>Url::to(['ad/detail', 'id'=>$product->id, 'slug'=>\yii\helpers\Inflector::slug($product->getAddress())])])->label(false) ?>
+                                            <?= $f->field($share_form, 'detailUrl')->hiddenInput(['value'=>Yii::$app->urlManager->createAbsoluteUrl(['ad/detail', 'id'=>$product->id, 'slug'=>\yii\helpers\Inflector::slug($product->getAddress())])])->label(false) ?>
+                                            <?= $f->field($share_form, 'domain')->hiddenInput(['value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
                                             <div class="form-group">
                                                 <button type="button" class="btn btn-common send_mail">Gửi email</button>
                                             </div>

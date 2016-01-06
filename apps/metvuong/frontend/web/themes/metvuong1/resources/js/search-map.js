@@ -182,16 +182,26 @@ function start() {
                         data: $('#share_form').serializeArray(),
                         success: function (data) {
                             $('#box-share').modal('hide');
-                            if(data == 200){
+                            if(data.status == 200){
                                 alert("Your message is sent.\nThank you.");
                             }
                             else {
-                                alert("Please, try again!");
+                                var strMessage = '';
+                                $.each(data.parameters, function(idx, val){
+                                    var element = 'change-pass-form-'+idx;
+                                    strMessage += "\n" + val;
+                                });
+                                alert(strMessage+"\nTry again");
                             }
                         },
                         error: function () {
                             $('#box-share').modal('hide');
-                            alert("Please, try again!");
+                            var strMessage = '';
+                            $.each(data.parameters, function(idx, val){
+                                var element = 'change-pass-form-'+idx;
+                                strMessage += "\n" + val;
+                            });
+                            alert(strMessage);
                         }
                     });
                 }, 500);
