@@ -168,6 +168,8 @@ function start() {
         // share-item click event
         $(document).on('click', '.share-item-1', function() {
             var _this = $(this);
+            $('#share_form_1 input[type=text]').val(null);
+            $('#share_form_1 textarea').val(null);
             var _address = $('#share_form_1 ._address');
             var _detailUrl = $('#share_form_1 ._detailUrl');
             if(_address != null && _detailUrl != null){

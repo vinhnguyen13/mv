@@ -58,7 +58,7 @@ use yii\helpers\Url;
                     <div class="tabs-detail-item clearfix">
                         <ul class="pull-left">
                             <li><a href="#" class="save-item icon-hear" data-id="<?=$product->id;?>" href="#" data-url="<?=Url::to(['/ad/favorite'])?>"><em class="fa fa-heart-o"></em>Save</a></li>
-                            <li><a href="#" data-toggle="modal" data-target="#box-share-1" data-url="<?=trim($detailUrl)?>" data-address="<?=trim($address)?>" class="share-item-1"><em class="fa fa-share-alt"></em>Share</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#box-share-1" data-pid="<?=$product->id;?>" data-url="<?=trim($detailUrl)?>" data-address="<?=trim($address)?>" class="share-item-1"><em class="fa fa-share-alt"></em>Share</a></li>
                             <li><a href="#" class="more-item">More<em class="fa fa-sort-desc"></em></a>
                                 <div class="sub-more hidden-effect">
                                     <div class="wrap-effect clearfix">
