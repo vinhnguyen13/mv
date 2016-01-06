@@ -48,6 +48,7 @@ use yii\helpers\Url;
 	}
 
     $detailUrl = Yii::$app->urlManager->createAbsoluteUrl(['ad/detail', 'id'=>$product->id, 'slug'=>\yii\helpers\Inflector::slug($product->getAddress())]);
+    $additionInfo = $product->adProductAdditionInfo;
 ?>
 <div id="detail-listing">
 
@@ -128,24 +129,9 @@ use yii\helpers\Url;
                                 <h1 class="title-dt"><?= $address ?></h1>
                                 <div class="pull-right hdp-summary">
                                     <p class="type-result"><?= mb_strtoupper("$categoryName $typeName", 'UTF-8') ?></p>
-                                    <table>
-                                        <?php if($product->project_building_id): ?>
-                                        <tr>
-                                            <th>Dự án</th>
-                                            <td><?= AdBuildingProject::findOne($product->project_building_id)->name ?></td>
-                                        </tr>
-                                        <?php endif; ?>
-                                        <tr>
-                                            <th>Giá:</th>
-                                            <td><p class="price-summary"><?= StringHelper::formatCurrency($product->price) ?><?= $product->type == AdProduct::TYPE_FOR_RENT ? '/tháng' : '' ?></p></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Diện tích:</th>
-                                            <td><?= StringHelper::formatNumber($product->area) ?> m<sup>2</sup></td>
-                                        </tr>
-                                    </table>
+                                    <p class="price-summary"><?= StringHelper::formatCurrency($product->price) ?><?= $product->type == AdProduct::TYPE_FOR_RENT ? '/tháng' : '' ?></p>
                                 </div>
-                                <p class="home-attr">4 phòng <span>.</span> 3 toilets <span>.</span> 2,274 sqft</p>
+                                <p class="home-attr"><?= $product->area ?> m<sup style="font-size: 12px">2</sup><?= $additionInfo->floor_no ? " <span>.</span> {$additionInfo->floor_no} tầng" : '' ?><?= $additionInfo->room_no ? " <span>.</span> {$additionInfo->room_no} phòng ngủ" : '' ?><?= $additionInfo->toilet_no ? " <span>.</span> {$additionInfo->toilet_no} nhà tắm" : '' ?></p>
                                 <p class="infor-post-date"><em class="fa fa-calendar"></em><?= date('d/m/Y', $product->created_at) ?></p>
                                 <div class="rating" data-url="<?=Url::to(['/ad/rating', 'type'=>'']);?>">
                                     <fieldset class="rate">
@@ -158,8 +144,8 @@ use yii\helpers\Url;
                                 
                                 <p class="ttmt">Thông tin mô tả</p>
                                 <div class="wrap-ttmt"><?= str_replace("\n", "<br />", htmlspecialchars($product->content)) ?></div>
-                                <?php
-                                	$additionInfo = $product->adProductAdditionInfo;
+                               <div style="display: none;">
+                               	 <?php
                                 	unset($additionInfo['product_id']);
                                 	if($additionInfo && array_filter($additionInfo->attributes)):
                                 ?>
@@ -215,6 +201,7 @@ use yii\helpers\Url;
                                     <?php endif; ?>
                                 </table>
                                 <?php endif; ?>
+                               </div>
                             </div>
                             <?php if($product->adContactInfo): ?>
                             <div class="col-sm-4 dt-right-col">
