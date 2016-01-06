@@ -196,7 +196,7 @@
                 parts = value.split("; "+name+"="),
                 valCookie;
 
-            if (parts.length == 3) 
+            if (parts.length == 2) 
                 valCookie = parts.pop().split(";").shift();
 
             return valCookie;

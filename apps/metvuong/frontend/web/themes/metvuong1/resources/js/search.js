@@ -242,7 +242,7 @@
             d.setTime(d.getTime() + (24*60*60*1000));
             var expires = "expires="+d.toUTCString();
 
-            document.cookie = "valSearch="+val+"; "+expires+"; path=/";
+            document.cookie = "valSearch="+val+"; path=/";
         };
 
         function getValCookie (name) {
@@ -250,7 +250,7 @@
                 parts = value.split("; "+name+"="),
                 valCookie;
 
-            if (parts.length == 3) 
+            if (parts.length == 2) 
                 valCookie = parts.pop().split(";").shift();
 
             return valCookie;
