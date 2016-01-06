@@ -354,31 +354,32 @@ function start() {
 //							gmap.setCenter({lat: position.lat(), lng: position.lng()});
 //						}
 //					}
-					
-					$('.gallery-detail').imagesLoaded()
-					 	.always( function( instance ) {
-					 		
-					 		$('#map-loading').hide();
-							if($('#detail-listing .bxslider').find('.wrap-img-detail').length > 0) {
-								
-								$('#detail-listing .bxslider').bxSlider({
-									moveSlides: 1,
-					                startSlide: 0,
-					                startSlide: 0,
-					                onSliderLoad: function() {
-					                    this.infiniteLoop = false;
-					                    this.hideControlOnEnd = true;
-					                    scrollFixed();
-					                }
-					            });
-								lightbox.option({
-						            'resizeDuration': 300,
-						            'fadeDuration': 400
-						        });
-								$('.gallery-detail').css('visibility', 'visible');
-							}
-					 	});
 
+					//$(document).trigger('gallery-load', [{data: '1'}, 'something']);
+
+					$('.gallery-detail').imagesLoaded()
+				 	.always( function( instance ) {
+				 		
+				 		$('#map-loading').hide();
+						if($('#detail-listing .bxslider').find('.wrap-img-detail').length > 0) {
+							
+							$('#detail-listing .bxslider').bxSlider({
+								moveSlides: 1,
+				                startSlide: 0,
+				                startSlide: 0,
+				                onSliderLoad: function() {
+				                    this.infiniteLoop = false;
+				                    this.hideControlOnEnd = true;
+				                }
+				            });
+							lightbox.option({
+					            'resizeDuration': 300,
+					            'fadeDuration': 400
+					        });
+							$('.gallery-detail').css('visibility', 'visible');
+						}
+				 	});
+					
 					$('.tabs-detail-item li .sub-more').dropdown();
 					
 				});

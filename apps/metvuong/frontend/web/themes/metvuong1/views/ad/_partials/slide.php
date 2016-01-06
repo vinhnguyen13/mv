@@ -36,3 +36,30 @@
 <?php else: ?>
 <div class="gallery-detail clearfix"><div class="bxslider no-image"><?= Yii::t('ad', 'Không có hình ảnh đính kèm') ?></div></div>
 <?php endif ?>
+
+<script type="text/javascript">
+	/*$(document).bind('gallery-load', function () {
+		$('.gallery-detail').imagesLoaded()
+	 	.always( function( instance ) {
+	 		
+	 		$('#map-loading').hide();
+			if($('#detail-listing .bxslider').find('.wrap-img-detail').length > 0) {
+				
+				$('#detail-listing .bxslider').bxSlider({
+					moveSlides: 1,
+	                startSlide: 0,
+	                startSlide: 0,
+	                onSliderLoad: function() {
+	                    this.infiniteLoop = false;
+	                    this.hideControlOnEnd = true;
+	                }
+	            });
+				lightbox.option({
+		            'resizeDuration': 300,
+		            'fadeDuration': 400
+		        });
+				$('.gallery-detail').css('visibility', 'visible');
+			}
+	 	});
+	});*/
+</script>
