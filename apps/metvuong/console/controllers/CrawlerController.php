@@ -2,6 +2,7 @@
 namespace console\controllers;
 
 use console\models\Batdongsan;
+use console\models\BatdongsanV2;
 use console\models\Homefinder;
 use yii\console\Controller;
 
@@ -36,10 +37,10 @@ class CrawlerController extends Controller
 
     public function actionBatdongsan()
     {
-        Batdongsan::find()->parse();
+        BatdongsanV2::find()->parse();
     }
     public function actionImportbatdongsan()
     {
-        Batdongsan::find()->importData();
+        BatdongsanV2::find()->importData();
     }
 }

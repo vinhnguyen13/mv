@@ -44,12 +44,10 @@ class Tracking extends Component
             'type' => 'tracking',
             'id' => $product_id,
         ];
-
-
         /****/
-        /*
+
         // Delete doc at /my_index/my_type/my_id
-        $response = $client->delete($params);
+        /*$response = $client->delete($params);
         echo "<pre>";
         print_r($response);
         echo "</pre>";
@@ -58,9 +56,21 @@ class Tracking extends Component
 
         try{
             if($client){
+                /*$mapParams = ['index' => 'listing',
+                    'type' => 'tracking'];
+                $kkkkk1 = $client->indices()->getMapping($mapParams);
+                $kkkkk1 = $client->indices()->deleteMapping($mapParams);
+//                $client->indices()->putMapping();
+                $params = ['index' => 'listing'];
+                $response = $client->indices()->delete($params);
+                echo "<pre>";
+                print_r($response);
+                echo "</pre>";
+                exit;*/
+
                 $exist = $this->productVisitorExist($product_id);
                 if(!empty($exist)){
-                    $users[] = $user_id;
+                    $users[] = ['userid'=>$user_id, 'time'=>time()];
                     if(!empty($exist[date('d-m-Y')])){
                         array_push($exist[date('d-m-Y')]['data']['users'], $user_id);
                         $users = $exist[date('d-m-Y')]['data']['users'];
@@ -82,7 +92,7 @@ class Tracking extends Component
                         date('d-m-Y') => [
                             'total'=>1,
                             'data' => [
-                                'users' => [$user_id],
+                                'users' => ['userid'=>$user_id, 'time'=>time()],
                                 'guest' => [$user_id],
                             ]
                         ]
