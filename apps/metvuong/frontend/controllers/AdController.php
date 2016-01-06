@@ -331,15 +331,19 @@ class AdController extends Controller
             $model->load($post);
             $model->validate();
             if (!$model->hasErrors()) {
+                echo "<pre>";
+                print_r($post);
+                echo "<pre>";
+                exit();
                 // send to
-                Yii::$app->mailer->compose(['text' => 'notifyReceivedEmail-text',], ['contact' => $model])
+                Yii::$app->mailer->compose(['html' => 'notifyReceivedEmail-html',], ['contact' => $model])
                     ->setFrom(Yii::$app->params['adminEmail'])
                     ->setTo([$model->recipient_email])
                     ->setSubject($model->your_email ." shared a listing on Metvuong.com to you")
                     ->send();
 
                 // send from
-                Yii::$app->mailer->compose(['text' => 'notifyReceivedEmail-text',], ['contact' => $model])
+                Yii::$app->mailer->compose(['html' => 'notifyReceivedEmail-html',], ['contact' => $model])
                     ->setFrom(Yii::$app->params['adminEmail'])
                     ->setTo([$model->your_email])
                     ->setSubject("Thanks for sharing a listing with ".$model->your_email)

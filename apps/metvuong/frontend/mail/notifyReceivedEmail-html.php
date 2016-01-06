@@ -6,6 +6,7 @@ use yii\helpers\Html;
 
 ?>
 <div class="password-reset">
-    <p>Hello <?= Html::encode($contact->name) ?>,</p>
-    <p>We are received your booking. Thank you !</p>
+    <p><b>Metvuong.com </b> <?= Html::encode($contact->detailUrl) ?></p>
+    <p> <?= Html::encode($contact->content)?></p>
+    <p>Thank you!</p>
 </div>

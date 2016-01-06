@@ -165,6 +165,40 @@ function start() {
 			}
 		});
 
+        $(document).on('click', '#share_form .send_mail', function(e){
+            e.preventDefault();
+            var timer = 0;
+            var _this = $(this);
+            var recipient_email = $('#share_form .recipient_email').val();
+            var your_email = $('#share_form .your_email').val();
+            if(recipient_email != null && your_email != null) {
+                var content_mail = $('#share_form .content_mail').val();
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                    $.ajax({
+                        type: "post",
+                        dataType: 'json',
+                        url: $('#share_form').attr('action'),
+                        data: $('#share_form').serializeArray(),
+                        success: function (data) {
+                            $('#box-share').modal('hide');
+                            if(data == 200){
+                                alert("Your message is sent.\nThank you.");
+                            }
+                            else {
+                                alert("Please, try again!");
+                            }
+                        },
+                        error: function () {
+                            $('#box-share').modal('hide');
+                            alert("Please, try again!");
+                        }
+                    });
+                }, 500);
+            }
+            return false;
+        });
+
 
 		$(document).on('click', '.report_modal', function(e){
 			e.preventDefault();

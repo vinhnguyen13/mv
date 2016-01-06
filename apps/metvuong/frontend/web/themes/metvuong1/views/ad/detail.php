@@ -140,17 +140,15 @@ use vsoft\express\components\StringHelper;
                                         ?>
                                             <div class="form-group">
                                                 <?= $f->field($share_form, 'recipient_email')->textInput(['class'=>'form-control recipient_email', 'placeholder'=>Yii::t('recipient_email', 'Email người nhận...')]) ?>
-<!--                                                    <input type="text" class="form-control recipient_email" name="recipient_email" id="recipient_email" placeholder="Email người nhận...">-->
                                             </div>
                                             <div class="form-group">
                                                 <?= $f->field($share_form, 'your_email')->textInput(['class'=>'form-control your_email', 'placeholder'=>Yii::t('your_email', 'Email của bạn...')]) ?>
-<!--                                                    <input type="text" class="form-control your_email" name="your_email" id="your_email" placeholder="Email của bạn...">-->
                                             </div>
                                             <div class="form-group">
-                                                <?= $f->field($share_form, 'content')->textarea(['class'=>'form-control content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('content', 'Nội dụng chia sẻ...')]) ?>
-<!--                                                    <textarea class="form-control content_mail" name="content_mail" id="content_mail" cols="30" rows="5" placeholder="Nội dụng chia sẻ..."></textarea>-->
+                                                <?= $f->field($share_form, 'content')->textarea(['class'=>'form-control content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('content', 'Nội dung chia sẻ...')]) ?>
                                             </div>
                                             <?= $f->field($share_form, 'address')->hiddenInput(['value'=>$address])->label(false) ?>
+                                            <?= $f->field($share_form, 'detailUrl')->hiddenInput(['value'=>Url::to(['ad/detail', 'id'=>$product->id, 'slug'=>\yii\helpers\Inflector::slug($product->getAddress())])])->label(false) ?>
                                             <div class="form-group">
                                                 <button type="button" class="btn btn-common send_mail">Gửi email</button>
                                             </div>
@@ -373,39 +371,4 @@ use vsoft\express\components\StringHelper;
             </div>
         </div>
     </div>
-    <script type="text/javascript">
-        $(document).on('click', '#share_form .send_mail', function(e){
-            e.preventDefault();
-            var timer = 0;
-            var _this = $(this);
-            var recipient_email = $('#share_form .recipient_email').val();
-            var your_email = $('#share_form .your_email').val();
-            if(recipient_email != null && your_email != null) {
-                var content_mail = $('#share_form .content_mail').val();
-                clearTimeout(timer);
-                timer = setTimeout(function () {
-                    $.ajax({
-                        type: "post",
-                        dataType: 'json',
-                        url: $('#share_form').attr('action'),
-                        data: $('#share_form').serializeArray(),
-                        success: function (data) {
-                            $('#box-share').modal('hide');
-                            if(data == 200){
-                                alert("Your message is sent.\nThank you.");
-                            }
-                            else {
-                                alert("Please, try again!");
-                            }
-                        },
-                        error: function () {
-                            $('#box-share').modal('hide');
-                            alert("Please, try again!");
-                        }
-                    });
-                }, 500);
-            }
-            return false;
-        });
-    </script>
 </div>
