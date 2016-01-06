@@ -4095,10 +4095,12 @@ div.wrap-page-home .logo-home {
     /* float: left; */
     /* width: 215px; */
 }
-.modal-content .contact-person > div {
-    overflow: inherit;
+#detail-wrap .modal-content .contact-person > div {
+    overflow: hidden;
     float: left;
-    width: 210px;
+}
+.modal-content .contact-person > div {
+    
 }
 .detail-slide .modal-content .contact-person > div {
     width: 180px;
@@ -4425,7 +4427,7 @@ div.wrap-page-home .logo-home {
     height: 298px;
 }
 .wrap-img-detail:first-child {
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 .lightboxOverlay {
   position: absolute;
