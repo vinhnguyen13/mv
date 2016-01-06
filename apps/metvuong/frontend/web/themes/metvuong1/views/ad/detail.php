@@ -330,4 +330,50 @@ use vsoft\express\components\StringHelper;
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        $(document).on('click', '#share_form button.send_mail', function(){
+            var timer = 0;
+            var _this = $(this);
+            var recipient_email = $('#share_form .recipient_email').val();
+            var your_email = $('#share_form .your_email').val();
+            if(recipient_email != null && your_email != null) {
+                var content_mail = $('#share_form .content').val();
+//                alert(recipient_email+your_email+content_mail);
+                $('#box-share').modal('hide');
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                    $.ajax({
+                        type: "post",
+                        dataType: 'json',
+                        url: $('#share_form').attr('action'),
+                        data: $('#share_form').serializeArray(),
+                        success: function (data) {
+                            if(data.status == 200){
+//                                alert("success");
+                            }
+                            else {
+                                var strMessage = '';
+                                $.each(data.parameters, function(idx, val){
+                                    var element = 'change-pass-form-'+idx;
+                                    strMessage += "\n" + val;
+                                });
+                                alert(strMessage+"\nTry again");
+                            }
+                            return true;
+                        },
+                        error: function () {
+                            var strMessage = '';
+                            $.each(data.parameters, function(idx, val){
+                                var element = 'change-pass-form-'+idx;
+                                strMessage += "\n" + val;
+                            });
+                            alert(strMessage);
+                            return false;
+                        }
+                    });
+                }, 1000);
+            }
+            return false;
+        });
+    </script>
 </div>

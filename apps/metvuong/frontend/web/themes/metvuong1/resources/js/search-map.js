@@ -178,49 +178,6 @@ function start() {
             }
         });
 
-        $(document).on('click', '#share_form .send_mail', function(){
-            var _this = $(this);
-            var recipient_email = $('#share_form .recipient_email').val();
-            var your_email = $('#share_form .your_email').val();
-            if(recipient_email != null && your_email != null) {
-                var content_mail = $('#share_form .content_mail').val();
-                $('#box-share').modal('hide');
-                clearTimeout(timer);
-                timer = setTimeout(function () {
-                    $.ajax({
-                        type: "post",
-                        dataType: 'json',
-                        url: $('#share_form').attr('action'),
-                        data: $('#share_form').serializeArray(),
-                        success: function (data) {
-                            if(data.status == 200){
-
-                            }
-                            else {
-                                var strMessage = '';
-                                $.each(data.parameters, function(idx, val){
-                                    var element = 'change-pass-form-'+idx;
-                                    strMessage += "\n" + val;
-                                });
-                                alert(strMessage+"\nTry again");
-                            }
-                            return true;
-                        },
-                        error: function () {
-                            var strMessage = '';
-                            $.each(data.parameters, function(idx, val){
-                                var element = 'change-pass-form-'+idx;
-                                strMessage += "\n" + val;
-                            });
-                            alert(strMessage);
-                            return false;
-                        }
-                    });
-                }, 1000);
-            }
-            return false;
-        });
-
         $(document).on('click', '#share_form_1 button.send_mail', function(){
             var _this = $(this);
             var recipient_email = $('#share_form_1 .recipient_email').val();
