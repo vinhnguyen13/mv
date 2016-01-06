@@ -5,6 +5,7 @@ namespace vsoft\ad\models;
 use Yii;
 use vsoft\ad\models\base\AdImagesBase;
 use yii\helpers\Url;
+use vsoft\express\components\StringHelper;
 
 class AdImages extends AdImagesBase
 {
@@ -19,9 +20,20 @@ class AdImages extends AdImagesBase
     }
     
     public static function getImageUrl($fileName, $size = 'thumb') {
-    	$pathinfo = pathinfo($fileName);
-    	
-    	return Url::to('/store/ad/' . $pathinfo['filename'] . '.' . $size . '.' . $pathinfo['extension']);
+    	if(StringHelper::startsWith($fileName, 'http')) {
+    		$defaultSize = '745x510';
+    		
+    		if($size == 'thumb') {
+    			$s = '350x280';
+    		} else {
+    			$s = $defaultSize;
+    		}
+    		
+    		return str_replace($defaultSize, $s, $fileName);
+    	} else {
+    		$pathinfo = pathinfo($fileName);
+    		return Url::to('/store/ad/' . $pathinfo['filename'] . '.' . $size . '.' . $pathinfo['extension']);
+    	}
     }
     
     public function getImageThumb() {
