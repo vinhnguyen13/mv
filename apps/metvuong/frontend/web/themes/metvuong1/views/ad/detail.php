@@ -69,14 +69,14 @@ use vsoft\express\components\StringHelper;
                             </div>
                         </li>
                     </ul>
-                    <ul class="pull-right">
+                    <!-- <ul class="pull-right">
                         <li class="expand-win"><a href="#"><em class="fa fa-expand"></em>Expand</a></li>
                         <li class="close-detail">
                             <button type="button" class="close btn-close-detail" data-dismiss="modal" aria-label="Close">
                                 <em class="fa fa-close"></em>close
                             </button>
                         </li>
-                    </ul>
+                    </ul> -->
                     <div class="modal fade" id="report-listing" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">

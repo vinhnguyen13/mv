@@ -3462,10 +3462,10 @@ padding-bottom: 5px;
     background: #ECECEC;
 }
 .list-results li.onmap:hover {
-    background: none;
+    background: #D0D0D0;
 }
 .list-results li.onmap {
-    padding: 0;
+    padding: 5px;
 }
 .zsg-content_collapsed {
     display: inline-block;
@@ -4950,7 +4950,7 @@ div.wrap-page-home .wrap-menu-option ul {
 }
 .wrap-page-home .wrap-menu-option .user-loggin {
     max-width: inherit;
-    margin-right: 10px;
+    margin-right: 30px;
 }
 .wrap-page-home .wrap-menu-option li:last-child {
     margin-left: 0;
@@ -5843,7 +5843,6 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
 }
 .list-results .onmap {
     padding: 0px;
-    margin: 10px 10px 0px 10px;
     border-bottom: none;
 }
 .list-results .onmap:last-child {
@@ -5870,19 +5869,23 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
     overflow: inherit;
     padding-top: 4px;
 }
+.home-page li.user-loggin a:hover {
+    color: #000;
+}
 .home-page li.user-loggin a .name-user {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     display: inline-block;
     max-width: 170px;
+    line-height: 15px;
 }
 .sub-setting {
     top: 0;
     background: #fff;
     border: 1px solid #E2E2E2;
     padding: 5px 0;
-    left: -153px;
+    left: -160px;
     width: 180px;
     border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -5890,11 +5893,20 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
     -ms-border-radius: 3px;
 }
 .home-page li .sub-setting-user {
-    border: 1px solid #BBBBBB;
-    padding: 0px 3px 0px 3px;
+    /* border: 1px solid #BBBBBB; */
+    /* padding: 0px 3px 0px 3px; */
+    width: 16px;
+    height: 16px;
+    background: url(../images/view-more-results.png) no-repeat center;
+    opacity: .5;
+    margin-top: 4px;
+}
+.home-page li .sub-setting-user:hover {
+    opacity: 1;
 }
 .home-page li .sub-setting-user em {
     position: static;
+    display: none;
 }
 .home-page .menu-home .sub-setting em {
     position: static;
