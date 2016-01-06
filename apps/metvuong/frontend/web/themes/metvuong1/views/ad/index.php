@@ -282,7 +282,7 @@ $this->registerJs('var saved = ' . json_encode($saved) . ';', View::POS_BEGIN);
 
                     $f1 = ActiveForm::begin([
                         'id' => 'share_form_1',
-                        'enableAjaxValidation' => true,
+                        'enableAjaxValidation' => false,
                         'enableClientValidation' => true,
                         'action' => Url::to(['/ad/sendmail'])
                     ]);

@@ -135,7 +135,7 @@ use vsoft\express\components\StringHelper;
 
                                         $f = ActiveForm::begin([
                                             'id' => 'share_form',
-                                            'enableAjaxValidation' => true,
+                                            'enableAjaxValidation' => false,
                                             'enableClientValidation' => true,
                                             'action' => Url::to(['/ad/sendmail'])
                                         ]);

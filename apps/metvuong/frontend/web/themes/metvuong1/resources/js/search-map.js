@@ -173,9 +173,7 @@ function start() {
             if(_address != null && _detailUrl != null){
                 _address.val(_this.attr("data-address"));
                 _detailUrl.val(_this.attr("data-url"));
-                return true;
             }
-            return false;
         });
 
         $(document).on('click', '#share_form .send_mail', function(){
@@ -221,7 +219,7 @@ function start() {
             return false;
         });
 
-        $(document).on('click', '#share_form_1 .send_mail', function(){
+        $(document).on('click', '#share_form_1 button.send_mail', function(){
             var _this = $(this);
             var recipient_email = $('#share_form_1 .recipient_email').val();
             var your_email = $('#share_form_1 .your_email').val();
