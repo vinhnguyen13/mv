@@ -5843,12 +5843,18 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
     width: 250px !important;
 }
 .list-results .onmap {
-    padding: 7px 0 !important;
+    padding: 0px;
+    margin: 10px 10px 0px 10px;
+    border-bottom: none;
 }
-.moi-nhat-onmap {
+.list-results .onmap:last-child {
+	margin-bottom: 10px;
+}
+.moi-nhat-onmap .list-results {
     max-height: 250px;
     overflow-x: hidden;
     overflow-y: auto;
+    margin-bottom: -10px;
 }
 .avatar-user {
     display: block;

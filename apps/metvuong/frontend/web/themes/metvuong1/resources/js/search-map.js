@@ -574,22 +574,24 @@ function showinfo(latLng, marker){
 	listEl.find('.' + id).addClass('onmap').show();
 	listEl.find('li').not(listEl.find('.' + id)).remove();
 
+	listEl.width(168);
+	listEl.find('.list-results').width(168 + 51);
+	
 	infoWindow.setContent(listEl.get(0));
 	infoWindow.open(marker);
 	
 	marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
-//	
-//	var gmStyle = listEl.closest('.gm-style-iw');
-//	gmStyle.css({
-//		overflow: 'visible'
-//	});
-//	listEl.parent().css({
-//	    marginLeft: '-5px',
-//    	marginTop: '-8px',
-//    	marginBottom: '-10px',
-//        marginRight: '-20px',
-//        overflow: 'visible'
-//	});
-//	gmStyle.next().hide();
-//	gmStyle.parent().width(300);
+	
+	var gmStyle = listEl.closest('.gm-style-iw');
+	gmStyle.css({
+		overflow: 'visible'
+	});
+	listEl.parent().css({
+	    marginLeft: '-5px',
+    	marginTop: '-8px',
+    	marginBottom: '-10px',
+        marginRight: '-20px',
+        overflow: 'visible'
+	});
+	gmStyle.next().hide();
 }
