@@ -1117,7 +1117,7 @@ function animateSearch() {
     var $boxSearch = $('.box-search-header'),
         wBox = $boxSearch.outerWidth(),
         wWin = $('.wrap-search-home').outerWidth(),
-        cBox = Math.floor(wWin/2 - wBox/2);
+        cBox = Math.floor(wWin/2 - 600/2);
 
     setTimeout(function() {
         $('.wrap-search-home .logo-home').addClass('ani-logo').css({
@@ -1128,7 +1128,7 @@ function animateSearch() {
         });
 
         $('.box-search-header').addClass('ani-search').css({
-            'transform': 'translate3d('+cBox+'px, 10px, 0px)',
+            'transform': 'translate3d(0px, 10px, 0px)',
             '-webkit-transform': 'translate3d('+cBox+'px, 10px, 0px)',
             '-moz-transform': 'translate3d('+cBox+'px, 10px, 0px)',
             '-ms-transform': 'translate3d('+cBox+'px, 10px, 0px)'
