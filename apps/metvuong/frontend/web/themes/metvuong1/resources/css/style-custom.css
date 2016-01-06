@@ -5013,14 +5013,17 @@ header.wrap-page-home .box-search-header.ani-search > div {
     font-family: 'Roboto';
     font-size: 1em;
 }
-@media (min-width: 1024px) and (max-width: 1280px) {
+@media (min-width: 1024px) {
     .wrap-page-home .box-search-header.ani-search {
-        width: 520px;
+        margin-left: auto;
+        margin-right: auto;
+        float: none;
+        width: 50%;
     }
 }
 @media (max-width: 1024px) {
     .wrap-page-home .box-search-header.ani-search {
-        width: 40%;
+        width: 47%;
     }
 }
 .list-results li .wrap-img {
