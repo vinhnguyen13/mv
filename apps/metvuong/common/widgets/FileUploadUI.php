@@ -29,6 +29,7 @@ class FileUploadUI extends FU {
 		$clientEvents = [
 			'fileuploadadd' => 'function(e, data) {return customFileUpload.fileuploadadd(e, data, this);}',
 			'fileuploaddone' => 'function(e, data) {customFileUpload.fileuploaddone(e, data, this);}',
+			'fileuploadcompleted' => 'function(e, data) {customFileUpload.fileuploadcompleted(e, data, this);}',
 			'fileuploaddestroyed' => 'function(e, data) {customFileUpload.fileuploaddestroyed(e, data, this);}',
 			'fileuploaddestroy' => 'function(e, data) {return customFileUpload.fileuploaddestroy(e, data, this);}',
 		];

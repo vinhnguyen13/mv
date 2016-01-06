@@ -5,7 +5,7 @@ $(document).ready(function(){
 	var wards = district['wards'];
 	var projects = district['projects'];
 	var sliderInstance;
-	
+	var files = $('.files');
 	for(index in streets) {
 		var street = streets[index];
 		$('#adproduct-street_id').append('<option value="' + index + '">' + street.pre + ' ' + street.name + '</option>');
@@ -144,7 +144,7 @@ $(document).ready(function(){
 			$('#ref-adproduct-city_id').text(city['name']);
 			
 			var images = [];
-			$('.files').find('img').each(function(){
+			files.find('img').each(function(){
 				images.push($(this).attr('src'));
 			});
 			
@@ -186,6 +186,7 @@ $(document).ready(function(){
 					slider.find('.gallery-detail').imagesLoaded().done( function( instance ) {
 				 		setTimeout(function() {
 				 			sliderInstance = slider.bxSlider({
+				 				infiniteLoop: false,
 				 				moveSlides: 1,
 				                startSlide: 0,
 				                slideWidth: 800,
@@ -200,22 +201,29 @@ $(document).ready(function(){
 				 	});
 				}
 				
-				slider.find('ul').sortable({
-					sort: function(event, ui) {
-						if(ui.helper.index() == 0) {
-							if(ui.placeholder.index() == 1) {
-								ui.placeholder.width(398).height(298);
-							} else {
-								ui.placeholder.width(198).height(148);
-								ui.helper.removeClass('item');
-								$(event.target).find('.item').eq(0).width(398).height(298);
+				slider.find('ul').each(function(){
+					var options = {};
+					var self = $(this);
+					if(self.parent().hasClass('first-slide')) {
+						options = {
+							sort: function(event, ui) {
+								if(ui.helper.index() == 0) {
+									if(ui.placeholder.index() == 1) {
+										ui.placeholder.width(398).height(298);
+									} else {
+										ui.placeholder.width(198).height(148);
+										ui.helper.removeClass('item');
+										$(event.target).find('.item').eq(0).width(398).height(298);
+									}
+								}
+							},
+							update: function( event, ui ) {
+								ui.item.addClass('item');
+								$(event.target).find('li').removeAttr('style');
 							}
-						}
-					},
-					update: function( event, ui ) {
-						ui.item.addClass('item');
-						$(event.target).find('li').removeAttr('style');
+						};
 					}
+					self.sortable(options);
 				});
 			} else {
 				slider.addClass('no-image').text('Không có hình ảnh đính kèm');
@@ -342,6 +350,20 @@ $(document).ready(function(){
 	});
 
 	stepPost();
+	
+	files.sortable({
+		update: function() {
+			resort();
+		}
+	});
+	
+	function resort() {
+		var values = [];
+		files.find('> li').each(function(){
+			values.push($(this).find('.preview a').attr('title'));
+		});
+		$('#images').prev().val(values.join(','));
+	}
 });
 
 Object.defineProperty(Array.prototype, 'chunk_inefficient', {
