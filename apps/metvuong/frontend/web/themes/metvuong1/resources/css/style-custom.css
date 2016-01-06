@@ -5846,7 +5846,7 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
     border-bottom: none;
 }
 .list-results .onmap:last-child {
-	margin-bottom: 10px;
+	/* margin-bottom: 10px; */
 }
 .moi-nhat-onmap .list-results {
     max-height: 250px;
