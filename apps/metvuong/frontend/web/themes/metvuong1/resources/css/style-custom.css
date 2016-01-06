@@ -4341,6 +4341,10 @@ div.wrap-page-home .logo-home {
     width: 400px;
     height: 300px;
 }
+.gallery-detail .bxslider .first-slide .ui-sortable-helper {
+    width: 400px;
+    height: 300px;
+}
 .gallery-detail .bxslider .bgcover {
     height: 100%;
 }

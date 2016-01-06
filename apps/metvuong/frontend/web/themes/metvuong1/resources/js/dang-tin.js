@@ -153,17 +153,24 @@ $(document).ready(function(){
 			if(images.length > 0) {
 				slider.removeClass('no-image')
 				
-				var firstImage = images.shift();
+				var firstGroup = images.splice(0, 5);
+				var firstGroupHtml = '';
 				
-				slider.append('<div class="wrap-img-detail"> <ul class="clearfix"> <li class="img-big"> <div class="bgcover" style="background-image:url(' + firstImage.replace('thumb', 'medium') + ');"></div> <a data-lightbox="detail-post" class="group mask" href="' + firstImage.replace('thumb', 'large') + '"><em class="fa fa-search"></em></a> </li> </ul> </div>');
+				for(i = 0; i < firstGroup.length; i++) {
+					var img = firstGroup[i];
+					firstGroupHtml += '<li class="item"> <div class="bgcover" style="background-image:url(' + img.replace('thumb', 'medium') + ');"></div> <a data-lightbox="detail-post" class="group mask" href="' + img.replace('thumb', 'large') + '"><em class="fa fa-search"></em><img src="' + img.replace('thumb', 'medium') + '" alt="" style="display:none;"></a> </li>';
+				}
 				
-				imagesGroup = images.chunk_inefficient(4);
+				slider.append('<div class="wrap-img-detail first-slide"><ul class="clearfix">' + firstGroupHtml + '</ul></div>');
+				
+				imagesGroup = images.chunk_inefficient(8);
 				
 				for(i = 0; i < imagesGroup.length; i++) {
 					var images = imagesGroup[i];
 					var append = '<div class="wrap-img-detail"><ul class="clearfix">';
 					for(j = 0; j < images.length; j++) {
-						append += '<li> <div class="bgcover" style="background-image:url(' + images[j] + ');"></div> <a data-lightbox="detail-post" class="group mask" href="' + images[j].replace('thumb', 'large') + '"><em class="fa fa-search"></em></a> </li>';
+						var img = images[j];
+						append += '<li class="item"> <div class="bgcover" style="background-image:url(' + img.replace('thumb', 'medium') + ');"></div> <a data-lightbox="detail-post" class="group mask" href="' + img.replace('thumb', 'large') + '"><em class="fa fa-search"></em><img src="' + img.replace('thumb', 'medium') + '" alt="" style="display:none;"></a> </li>';
 					}
 					append += '</ul></div>';
 					slider.append(append);
@@ -179,11 +186,9 @@ $(document).ready(function(){
 					slider.find('.gallery-detail').imagesLoaded().done( function( instance ) {
 				 		setTimeout(function() {
 				 			sliderInstance = slider.bxSlider({
-				                moveSlides: 1,
+				 				moveSlides: 1,
 				                startSlide: 0,
-				                minSlides: 1,
-				                maxSlides: 2,
-				                slideWidth: 444,
+				                slideWidth: 800,
 				                startSlide: 0,
 				                onSliderLoad: function() {
 				                    this.infiniteLoop = false;
@@ -194,6 +199,24 @@ $(document).ready(function(){
 				 		}, 300);
 				 	});
 				}
+				
+				slider.find('ul').sortable({
+					sort: function(event, ui) {
+						if(ui.helper.index() == 0) {
+							if(ui.placeholder.index() == 1) {
+								ui.placeholder.width(398).height(298);
+							} else {
+								ui.placeholder.width(198).height(148);
+								ui.helper.removeClass('item');
+								$(event.target).find('.item').eq(0).width(398).height(298);
+							}
+						}
+					},
+					update: function( event, ui ) {
+						ui.item.addClass('item');
+						$(event.target).find('li').removeAttr('style');
+					}
+				});
 			} else {
 				slider.addClass('no-image').text('Không có hình ảnh đính kèm');
 			}
