@@ -221,12 +221,10 @@ class AdController extends Controller
     						if(isset($post['images']) && $post['images']) {
     							$images = explode(',', $post['images']);
     							foreach($images as $k => $image) {
-    								if(!ctype_digit($image)) {
-    									unset($images[$k]);
+    								if(ctype_digit($image)) {
+    									Yii::$app->db->createCommand()->update('ad_images', ["product_id" => $model->id, "order" => $k], "`id` = $image AND user_id = " . Yii::$app->user->id)->execute();
     								}
     							}
-    		
-    							Yii::$app->db->createCommand()->update('ad_images', ["product_id" => $model->id], "`id` IN (" . implode(',', $images) . ") AND user_id = " . Yii::$app->user->id)->execute();
     						}
     				   
     						$result = ['success' => true];
