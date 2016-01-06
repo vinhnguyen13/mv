@@ -109,4 +109,9 @@ class AdProduct extends AdProductBase
 			AdProduct::TYPE_FOR_RENT => 'Cho thuê',
 		];
 	}
+	
+	public function getAdImages()
+	{
+		return $this->hasMany(AdImages::className(), ['product_id' => 'id'])->orderBy(['order' => SORT_ASC]);
+	}
 }
