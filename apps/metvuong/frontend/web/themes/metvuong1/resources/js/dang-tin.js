@@ -133,6 +133,8 @@ $(document).ready(function(){
         'resizeDuration': 300,
         'fadeDuration': 400
     });
+	
+	var slider = $('.bxslider');
 	$('#preview').click(function(e){
 		if(validateStep2()) {
 			$('.editable').each(function(){
@@ -145,10 +147,15 @@ $(document).ready(function(){
 			
 			var images = [];
 			files.find('img').each(function(){
-				images.push($(this).attr('src'));
+				var self = $(this);
+				
+				images.push({
+					src: self.attr('src'),
+					id: self.parent().attr('title')
+				});
 			});
 			
-			var slider = $('.bxslider').empty();
+			slider.empty();
 			
 			if(images.length > 0) {
 				slider.removeClass('no-image')
@@ -158,7 +165,7 @@ $(document).ready(function(){
 				
 				for(i = 0; i < firstGroup.length; i++) {
 					var img = firstGroup[i];
-					firstGroupHtml += '<li class="item"> <div class="bgcover" style="background-image:url(' + img.replace('thumb', 'medium') + ');"></div> <a data-lightbox="detail-post" class="group mask" href="' + img.replace('thumb', 'large') + '"><em class="fa fa-search"></em><img src="' + img.replace('thumb', 'medium') + '" alt="" style="display:none;"></a> </li>';
+					firstGroupHtml += '<li data-id="' + img.id + '" class="item"> <div class="bgcover" style="background-image:url(' + img.src.replace('thumb', 'medium') + ');"></div> <a data-lightbox="detail-post" class="group mask" href="' + img.src.replace('thumb', 'large') + '"><em class="fa fa-search"></em><img src="' + img.src.replace('thumb', 'medium') + '" alt="" style="display:none;"></a> </li>';
 				}
 				
 				slider.append('<div class="wrap-img-detail first-slide"><ul class="clearfix">' + firstGroupHtml + '</ul></div>');
@@ -170,7 +177,7 @@ $(document).ready(function(){
 					var append = '<div class="wrap-img-detail"><ul class="clearfix">';
 					for(j = 0; j < images.length; j++) {
 						var img = images[j];
-						append += '<li class="item"> <div class="bgcover" style="background-image:url(' + img.replace('thumb', 'medium') + ');"></div> <a data-lightbox="detail-post" class="group mask" href="' + img.replace('thumb', 'large') + '"><em class="fa fa-search"></em><img src="' + img.replace('thumb', 'medium') + '" alt="" style="display:none;"></a> </li>';
+						append += '<li data-id="' + img.id + '" class="item"> <div class="bgcover" style="background-image:url(' + img.src.replace('thumb', 'medium') + ');"></div> <a data-lightbox="detail-post" class="group mask" href="' + img.src.replace('thumb', 'large') + '"><em class="fa fa-search"></em><img src="' + img.src.replace('thumb', 'medium') + '" alt="" style="display:none;"></a> </li>';
 					}
 					append += '</ul></div>';
 					slider.append(append);
@@ -220,9 +227,15 @@ $(document).ready(function(){
 							update: function( event, ui ) {
 								ui.item.addClass('item');
 								$(event.target).find('li').removeAttr('style');
+								resortMapper();
 							}
 						};
+					} else {
+						options.update = function() {
+							resortMapper();
+						};
 					}
+					
 					self.sortable(options);
 				});
 			} else {
@@ -232,6 +245,25 @@ $(document).ready(function(){
 			e.stopPropagation();
 		}
 	});
+	
+	function resortMapper() {
+		var li = files.find('> li');
+		var obj = li.eq(0);
+		slider.find('li').each(function() {
+			var id = $(this).data('id');
+			
+			files.find('> li').each(function(){
+				var self = $(this);
+				
+				if($(this).find('.preview a').attr('title') == id) {
+					self.insertAfter(obj);
+					obj = self;
+					return false;
+				}
+			});
+		});
+		resort();
+	}
 	
 	function refText(self) {
 		var ref = $('#' + self.attr('id').replace('ref-', ''));
