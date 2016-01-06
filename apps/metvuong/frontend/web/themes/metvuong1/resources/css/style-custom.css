@@ -4335,10 +4335,10 @@ div.wrap-page-home .logo-home {
     position: relative;
     padding-right: 2px;
     padding-bottom: 2px;
-    width: 200px;
+    width: 25%;
 }
 .gallery-detail .bxslider .first-slide li:first-child {
-    width: 400px;
+    width: 50%;
     height: 300px;
 }
 .gallery-detail .bxslider .first-slide .ui-sortable-helper {

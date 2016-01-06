@@ -364,7 +364,6 @@ function start() {
 								$('#detail-listing .bxslider').bxSlider({
 									moveSlides: 1,
 					                startSlide: 0,
-					                slideWidth: 800,
 					                startSlide: 0,
 					                onSliderLoad: function() {
 					                    this.infiniteLoop = false;
