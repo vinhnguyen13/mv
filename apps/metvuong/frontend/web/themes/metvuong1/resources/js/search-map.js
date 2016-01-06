@@ -507,17 +507,17 @@ function makeMarker(product) {
 	var price = (product.type == 1) ? product.price : product.price + '/tháng';
 	
 	var toiletNo = '';
-	if(product['toilet_no']) {
+	if(product['toilet_no'] && product['toilet_no'] != 0) {
 		toiletNo = '• ' + product['toilet_no'] + ' Phòng tắm ';
 	}
 	
 	var roomNo = '';
-	if(product['room_no']) {
+	if(product['room_no'] && product['room_no'] != 0) {
 		roomNo = '• ' + product['room_no'] + ' phòng ngủ ';
 	}
 	
 	var floorNo = '';
-	if(product['floor_no']) {
+	if(product['floor_no'] && product['floor_no'] != 0) {
 		floorNo = '• ' + product['floor_no'] + ' tầng ';
 	}
 
