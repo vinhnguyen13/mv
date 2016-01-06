@@ -40,7 +40,7 @@ class AdController extends Controller
         	$query = (new \yii\db\Query())->select('ad_product.*, ad_images.file_name, ad_product_addition_info.*')
         				->from('ad_product')
 						->innerJoin('ad_product_addition_info', 'ad_product.id = ad_product_addition_info.product_id')
-        				->leftJoin('ad_images', 'ad_product.id = ad_images.product_id')
+        				->leftJoin('ad_images', 'ad_product.id = ad_images.product_id AND ad_images.order = 0')
         				->groupBy('ad_product.id')
         				->andWhere('`status` = ' . AdProduct::STATUS_ACTIVE);
         	

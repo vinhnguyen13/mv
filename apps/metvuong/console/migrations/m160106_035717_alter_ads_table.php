@@ -8,7 +8,7 @@ class m160106_035717_alter_ads_table extends Migration
     public function up()
     {
 		$this->execute("ALTER TABLE `ad_images`   
-  ADD COLUMN `order` INT NULL AFTER `uploaded_at`;");
+  ADD COLUMN `order` INT DEFAULT 0  NOT NULL AFTER `uploaded_at`;");
     }
 
     public function down()
