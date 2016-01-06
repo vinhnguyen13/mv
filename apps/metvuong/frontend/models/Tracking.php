@@ -9,6 +9,7 @@
 namespace frontend\models;
 use Yii;
 use yii\base\Component;
+use yii\base\Exception;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use vsoft\news\models\CmsShow;
@@ -23,7 +24,7 @@ class Tracking extends Component
      */
     public static function find()
     {
-        return Yii::createObject(Ad::className());
+        return Yii::createObject(Tracking::className());
     }
 
     private function checkLogin(){
@@ -33,23 +34,88 @@ class Tracking extends Component
         return true;
     }
 
-    public function productVisitor(){
+    public function productVisitor($product_id){
         $this->checkLogin();
-        if(Yii::$app->request->isPost && Yii::$app->request->isAjax) {
-            $elastic = new Elastic();
-            $client = $elastic->connect();
+        $user_id = Yii::$app->user->id;
+        $elastic = new Elastic();
+        $client = $elastic->connect();
+        $params = [
+            'index' => 'listing',
+            'type' => 'tracking',
+            'id' => $product_id,
+        ];
+
+
+        /****/
+        /*
+        // Delete doc at /my_index/my_type/my_id
+        $response = $client->delete($params);
+        echo "<pre>";
+        print_r($response);
+        echo "</pre>";
+        exit;*/
+        /****/
+
+        try{
             if($client){
-                $params = [
-                    'index' => 'listing',
-                    'type' => 'store',
-                    'id' => '28',
-                    'body' => [
+                $exist = $this->productVisitorExist($product_id);
+                if(!empty($exist)){
+                    $users[] = $user_id;
+                    if(!empty($exist[date('d-m-Y')])){
+                        array_push($exist[date('d-m-Y')]['data']['users'], $user_id);
+                        $users = $exist[date('d-m-Y')]['data']['users'];
+                        $users = array_unique($users);
+                    }
+                    $body = [
                         'doc' => [
-                            'title' => 'Ứng dụng công nghệ Holongram vào trình diễn dự án tại Việt Nam'
+                            date('d-m-Y') => [
+                                'total'=>count($users),
+                                'data' => [
+                                    'users' => $users,
+                                    'guest' => [$user_id],
+                                ]
+                            ]
                         ]
-                    ]
-                ];
+                    ];
+                }else{
+                    $body = [
+                        date('d-m-Y') => [
+                            'total'=>1,
+                            'data' => [
+                                'users' => [$user_id],
+                                'guest' => [$user_id],
+                            ]
+                        ]
+                    ];
+
+                }
+                $params = ArrayHelper::merge($params, [ 'body' => $body]);
+                if(!empty($exist)){
+                    $response = $client->update($params);
+                }else{
+                    $response = $client->index($params);
+                }
+                return $response;
             }
+        }catch(Exception $ex){
+            throw new NotFoundHttpException('Service error.');
+        }
+
+    }
+
+    private function productVisitorExist($product_id){
+        $elastic = new Elastic();
+        $client = $elastic->connect();
+        $params = [
+            'index' => 'listing',
+            'type' => 'tracking',
+            'id' => $product_id,
+        ];
+        $chk = $client->exists($params);
+        if(!empty($chk)){
+//            $result = $client->get($params);
+            $result = $client->getSource($params);
+            return $result;
         }
     }
 }

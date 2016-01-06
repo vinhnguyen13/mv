@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 use dektrium\user\Mailer;
 use frontend\models\Elastic;
+use frontend\models\Tracking;
 use vsoft\user\models\User;
 use Yii;
 use yii\db\mssql\PDO;
@@ -44,6 +45,12 @@ class TestController extends \yii\web\Controller
     }
 
     public function actionElastic(){
+        $ck = Tracking::find()->productVisitor(9);
+        echo "<pre>";
+        print_r($ck);
+        echo "</pre>";
+        exit;
+
         $time = microtime();
         $elastic = new Elastic();
         $client = $elastic->connect();

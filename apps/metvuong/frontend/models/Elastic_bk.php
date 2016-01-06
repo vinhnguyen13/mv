@@ -39,7 +39,7 @@ class Elastic
             'index' => 'my_index',
             'type' => 'my_type',
             'id' => 'my_id',
-            'body' => [ 'testField' => 'abc']
+            'body' => [ 'title' => 'abc']
         ];
         // Document will be indexed to my_index/my_type/my_id
         $response = $this->client->index($params);

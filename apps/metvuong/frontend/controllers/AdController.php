@@ -146,7 +146,11 @@ class AdController extends Controller
     
     public function actionDetail($id) {
     	$product = AdProduct::findOne($id);
-    	return $this->renderPartial('detail', ['product' => $product]); 
+		if(Yii::$app->request->isAjax){
+			return $this->renderPartial('_partials/detail', ['product' => $product]);
+		}else{
+			return $this->render('detail', ['product' => $product]);
+		}
     }
 
     /**
