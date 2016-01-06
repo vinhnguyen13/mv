@@ -67,7 +67,7 @@
                             </li>
                         </ul>
                         <ul class="pull-right">
-                            <li class="expand-win"><a href="#"><em class="fa fa-expand"></em>Expand</a></li>
+                            <li class="expand-win"><a href="<?=Url::to(['ad/detail', 'id'=>$product->id, 'slug'=>\yii\helpers\Inflector::slug($product->getAddress())])?>" target="_blank"><em class="fa fa-expand"></em>Expand</a></li>
                             <li class="close-detail">
                                 <button type="button" class="close btn-close-detail" data-dismiss="modal" aria-label="Close">
                                     <em class="fa fa-close"></em>close
