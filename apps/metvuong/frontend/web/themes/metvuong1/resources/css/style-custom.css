@@ -5853,7 +5853,6 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
     max-height: 250px;
     overflow-x: hidden;
     overflow-y: auto;
-    margin-bottom: -10px;
 }
 .avatar-user {
     display: block;
