@@ -147,7 +147,7 @@ class AdController extends Controller
     public function actionDetail($id) {
     	$product = AdProduct::findOne($id);
 		if(Yii::$app->request->isAjax){
-			return $this->renderPartial('_partials/detail', ['product' => $product]);
+			return $this->renderAjax('_partials/detail', ['product' => $product]);
 		}else{
 			return $this->render('detail', ['product' => $product]);
 		}
@@ -321,6 +321,7 @@ class AdController extends Controller
 
 	public function actionSendmail(){
 		if(Yii::$app->request->isPost && Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
 			$post = Yii::$app->request->post();
             $model = Yii::createObject([
                 'class'    => ShareForm::className(),
@@ -329,10 +330,6 @@ class AdController extends Controller
             $model->load($post);
             $model->validate();
             if (!$model->hasErrors()) {
-                echo "<pre>";
-                print_r($post);
-                echo "<pre>";
-                exit();
                 // send to
                 Yii::$app->mailer->compose(['html' => 'notifyReceivedEmail-html',], ['contact' => $model])
                     ->setFrom(Yii::$app->params['adminEmail'])
@@ -346,9 +343,10 @@ class AdController extends Controller
                     ->setTo([$model->your_email])
                     ->setSubject("Thanks for sharing a listing with ".$model->your_email)
                     ->send();
-                return 200;
+                return ['status' => 200];
+            } else {
+                return ['status' => 404, 'parameters' => $model->errors];
             }
 		}
-        return 404;
 	}
 }

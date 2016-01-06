@@ -165,14 +165,26 @@ function start() {
 			}
 		});
 
-        $(document).on('click', '#share_form .send_mail', function(e){
-            e.preventDefault();
-            var timer = 0;
+        // share-item click event
+        $(document).on('click', '.share-item-1', function() {
+            var _this = $(this);
+            var _address = $('#share_form_1 ._address');
+            var _detailUrl = $('#share_form_1 ._detailUrl');
+            if(_address != null && _detailUrl != null){
+                _address.val(_this.attr("data-address"));
+                _detailUrl.val(_this.attr("data-url"));
+                return true;
+            }
+            return false;
+        });
+
+        $(document).on('click', '#share_form .send_mail', function(){
             var _this = $(this);
             var recipient_email = $('#share_form .recipient_email').val();
             var your_email = $('#share_form .your_email').val();
             if(recipient_email != null && your_email != null) {
                 var content_mail = $('#share_form .content_mail').val();
+                $('#box-share').modal('hide');
                 clearTimeout(timer);
                 timer = setTimeout(function () {
                     $.ajax({
@@ -181,9 +193,8 @@ function start() {
                         url: $('#share_form').attr('action'),
                         data: $('#share_form').serializeArray(),
                         success: function (data) {
-                            $('#box-share').modal('hide');
                             if(data.status == 200){
-                                alert("Your message is sent.\nThank you.");
+
                             }
                             else {
                                 var strMessage = '';
@@ -193,9 +204,51 @@ function start() {
                                 });
                                 alert(strMessage+"\nTry again");
                             }
+                            return true;
                         },
                         error: function () {
-                            $('#box-share').modal('hide');
+                            var strMessage = '';
+                            $.each(data.parameters, function(idx, val){
+                                var element = 'change-pass-form-'+idx;
+                                strMessage += "\n" + val;
+                            });
+                            alert(strMessage);
+                            return false;
+                        }
+                    });
+                }, 1000);
+            }
+            return false;
+        });
+
+        $(document).on('click', '#share_form_1 .send_mail', function(){
+            var _this = $(this);
+            var recipient_email = $('#share_form_1 .recipient_email').val();
+            var your_email = $('#share_form_1 .your_email').val();
+            if(recipient_email != null && your_email != null) {
+                var content_mail = $('#share_form_1 .content_mail').val();
+                $('#box-share-1').modal('hide');
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                    $.ajax({
+                        type: "post",
+                        dataType: 'json',
+                        url: $('#share_form_1').attr('action'),
+                        data: $('#share_form_1').serializeArray(),
+                        success: function (data) {
+                            if(data.status == 200){
+
+                            }
+                            else {
+                                var strMessage = '';
+                                $.each(data.parameters, function(idx, val){
+                                    var element = 'share_form_1_'+idx;
+                                    strMessage += "\n" + val;
+                                });
+                                alert(strMessage+"\nTry again");
+                            }
+                        },
+                        error: function () {
                             var strMessage = '';
                             $.each(data.parameters, function(idx, val){
                                 var element = 'change-pass-form-'+idx;
@@ -204,7 +257,7 @@ function start() {
                             alert(strMessage);
                         }
                     });
-                }, 500);
+                }, 1000);
             }
             return false;
         });

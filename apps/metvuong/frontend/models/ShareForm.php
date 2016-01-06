@@ -12,6 +12,7 @@ class ShareForm extends Model
     public $content;
     public $address;
     public $detailUrl;
+    public $domain;
 
     public function __construct($config = [])
     {
@@ -22,16 +23,15 @@ class ShareForm extends Model
     public function scenarios()
     {
         return [
-            'share' => ['recipient_email', 'your_email', 'content', 'address'],
+            'share' => ['recipient_email', 'your_email', 'content', 'address', 'detailUrl', 'domain'],
         ];
     }
 
     public function attributeLabels()
     {
         return [
-            'recipient_email'    => Yii::t('share', 'Email người nhận'),
-            'your_email' => Yii::t('share', 'Email của bạn'),
-            'content' => Yii::t('share', 'Nội dung'),
+            'recipient_email'    => Yii::t('share', 'Recipient\'s email'),
+            'your_email' => Yii::t('share', 'Your email'),
         ];
     }
 

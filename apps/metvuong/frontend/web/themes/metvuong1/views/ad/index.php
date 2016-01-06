@@ -263,3 +263,54 @@ $this->registerJs('var saved = ' . json_encode($saved) . ';', View::POS_BEGIN);
         </div>
     </div>
 </div>
+<div class="modal fade" id="box-share-1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="wrap-modal clearfix">
+                    <h3>Chia sẻ</h3>
+                    <?php
+                    $share_form_1 = Yii::createObject([
+                        'class'    => \frontend\models\ShareForm::className(),
+                        'scenario' => 'share',
+                    ]);
+
+                    $f1 = ActiveForm::begin([
+                        'id' => 'share_form_1',
+                        'enableAjaxValidation' => true,
+                        'enableClientValidation' => true,
+                        'action' => Url::to(['/ad/sendmail'])
+                    ]);
+                    ?>
+                    <div class="form-group">
+                        <?= $f1->field($share_form_1, 'recipient_email')->textInput(['class'=>'form-control recipient_email', 'placeholder'=>Yii::t('recipient_email', 'Email người nhận...')]) ?>
+                    </div>
+                    <div class="form-group">
+                        <?= $f1->field($share_form_1, 'your_email')->textInput(['class'=>'form-control your_email', 'placeholder'=>Yii::t('your_email', 'Email của bạn...')]) ?>
+                    </div>
+                    <div class="form-group">
+                        <?= $f1->field($share_form_1, 'content')->textarea(['class'=>'form-control content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('content', 'Nội dung chia sẻ...')]) ?>
+                    </div>
+                    <?= $f1->field($share_form_1, 'address')->hiddenInput(['class' => '_address'])->label(false) ?>
+                    <?= $f1->field($share_form_1, 'detailUrl')->hiddenInput(['class' => '_detailUrl'])->label(false) ?>
+                    <?= $f1->field($share_form_1, 'domain')->hiddenInput(['value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-common send_mail">Gửi email</button>
+                    </div>
+                    <ul class="share-social clearfix">
+                        <li>Chia sẻ kết nối</li>
+                        <li><a href="#" class="logo-social fb-icon"></a></li>
+                        <li><a href="#" class="logo-social twe-icon"></a></li>
+                        <li><a href="#" class="logo-social g-icon"></a></li>
+                    </ul>
+                    <?php $f1->end(); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

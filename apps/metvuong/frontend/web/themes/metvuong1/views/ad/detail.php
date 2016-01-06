@@ -135,6 +135,8 @@ use vsoft\express\components\StringHelper;
 
                                         $f = ActiveForm::begin([
                                             'id' => 'share_form',
+                                            'enableAjaxValidation' => true,
+                                            'enableClientValidation' => true,
                                             'action' => Url::to(['/ad/sendmail'])
                                         ]);
                                         ?>
@@ -159,7 +161,7 @@ use vsoft\express\components\StringHelper;
                                                 <li><a href="#" class="logo-social twe-icon"></a></li>
                                                 <li><a href="#" class="logo-social g-icon"></a></li>
                                             </ul>
-                                        <?php $f->end(); ?>
+                                        <?php ActiveForm::end(); ?>
                                     </div>
                                 </div>
                             </div>

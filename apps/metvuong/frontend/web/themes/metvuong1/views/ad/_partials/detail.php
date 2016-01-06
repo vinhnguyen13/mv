@@ -46,6 +46,8 @@ use yii\helpers\Url;
 	} else {
 		$address = "{$district->pre} {$district->name}, {$city->name}";
 	}
+
+    $detailUrl = Yii::$app->urlManager->createAbsoluteUrl(['ad/detail', 'id'=>$product->id, 'slug'=>\yii\helpers\Inflector::slug($product->getAddress())]);
 ?>
 <div id="detail-listing">
 
@@ -55,7 +57,7 @@ use yii\helpers\Url;
                     <div class="tabs-detail-item clearfix">
                         <ul class="pull-left">
                             <li><a href="#" class="save-item icon-hear" data-id="<?=$product->id;?>" href="#" data-url="<?=Url::to(['/ad/favorite'])?>"><em class="fa fa-heart-o"></em>Save</a></li>
-                            <li><a href="#" data-toggle="modal" data-target="#box-share" class="share-item"><em class="fa fa-share-alt"></em>Share</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#box-share-1" data-url="<?=trim($detailUrl)?>" data-address="<?=trim($address)?>" class="share-item-1"><em class="fa fa-share-alt"></em>Share</a></li>
                             <li><a href="#" class="more-item">More<em class="fa fa-sort-desc"></em></a>
                                 <div class="sub-more hidden-effect">
                                     <div class="wrap-effect clearfix">
@@ -114,55 +116,7 @@ use yii\helpers\Url;
                                 </div>
                             </div>
                         </div>
-                        <div class="modal fade" id="box-share" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="wrap-modal clearfix">
-                                            <h3>Chia sẻ</h3>
-                                            <?php
-                                            $share_form = Yii::createObject([
-                                                'class'    => \frontend\models\ShareForm::className(),
-                                                'scenario' => 'share',
-                                            ]);
 
-                                            $f = ActiveForm::begin([
-                                                'id' => 'share_form',
-                                                'action' => Url::to(['/ad/sendmail'])
-                                            ]);
-                                            ?>
-                                            <div class="form-group">
-                                                <?= $f->field($share_form, 'recipient_email')->textInput(['class'=>'form-control recipient_email', 'placeholder'=>Yii::t('recipient_email', 'Email người nhận...')]) ?>
-                                            </div>
-                                            <div class="form-group">
-                                                <?= $f->field($share_form, 'your_email')->textInput(['class'=>'form-control your_email', 'placeholder'=>Yii::t('your_email', 'Email của bạn...')]) ?>
-                                            </div>
-                                            <div class="form-group">
-                                                <?= $f->field($share_form, 'content')->textarea(['class'=>'form-control content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('content', 'Nội dung chia sẻ...')]) ?>
-                                            </div>
-                                            <?= $f->field($share_form, 'address')->hiddenInput(['value'=>$address])->label(false) ?>
-                                            <?= $f->field($share_form, 'detailUrl')->hiddenInput(['value'=>Yii::$app->urlManager->createAbsoluteUrl(['ad/detail', 'id'=>$product->id, 'slug'=>\yii\helpers\Inflector::slug($product->getAddress())])])->label(false) ?>
-                                            <?= $f->field($share_form, 'domain')->hiddenInput(['value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
-                                            <div class="form-group">
-                                                <button type="button" class="btn btn-common send_mail">Gửi email</button>
-                                            </div>
-                                            <ul class="share-social clearfix">
-                                                <li>Chia sẻ kết nối</li>
-                                                <li><a href="#" class="logo-social fb-icon"></a></li>
-                                                <li><a href="#" class="logo-social twe-icon"></a></li>
-                                                <li><a href="#" class="logo-social g-icon"></a></li>
-                                            </ul>
-                                            <?php $f->end(); ?>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                 </div>
