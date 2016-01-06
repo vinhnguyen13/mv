@@ -1,7 +1,7 @@
 (function($){
     $.fn.MVS = function (options) {
         
-        var prices = {"thue": {"0" : "0","-1": "Giá bất kỳ","2000000" : "2 triệu","4000000" : "4 triệu","6000000" : "6 triệu","8000000" : "8 triệu","10000000": "10 triệu","12000000": "12 triệu","14000000": "14 triệu","16000000": "16 triệu","18000000": "18 triệu","20000000": "20 triệu",},"muaban": {"0" : "0","-1": "Giá bất kỳ","2000000000" : "2 tỷ","4000000000" : "4 tỷ","6000000000" : "6 tỷ","8000000000" : "8 tỷ","10000000000": "10 tỷ","12000000000": "12 tỷ","14000000000": "14 tỷ","16000000000": "16 tỷ","18000000000": "18 tỷ","20000000000": "20 tỷ"}};
+        var prices = {"thue": {"0" : "0+","-1": "Giá bất kỳ","2000000" : "2 triệu","4000000" : "4 triệu","6000000" : "6 triệu","8000000" : "8 triệu","10000000": "10 triệu","12000000": "12 triệu","14000000": "14 triệu","16000000": "16 triệu","18000000": "18 triệu","20000000": "20 triệu",},"muaban": {"0" : "0+","-1": "Giá bất kỳ","2000000000" : "2 tỷ","4000000000" : "4 tỷ","6000000000" : "6 tỷ","8000000000" : "8 tỷ","10000000000": "10 tỷ","12000000000": "12 tỷ","14000000000": "14 tỷ","16000000000": "16 tỷ","18000000000": "18 tỷ","20000000000": "20 tỷ"}};
         
         var getLang = getValCookie('language') == undefined ? 'vi-VN' : getValCookie('language');
 
@@ -238,7 +238,11 @@
         };
 
         function setValCookie (val) {
-            document.cookie = "valSearch="+val+"; path=/";
+            var d = new Date();
+            d.setTime(d.getTime() + (24*60*60*1000));
+            var expires = "expires="+d.toUTCString();
+
+            document.cookie = "valSearch="+val+"; "+expires+"; path=/";
         };
 
         function getValCookie (name) {
@@ -246,7 +250,7 @@
                 parts = value.split("; "+name+"="),
                 valCookie;
 
-            if (parts.length == 2) 
+            if (parts.length == 3) 
                 valCookie = parts.pop().split(";").shift();
 
             return valCookie;

@@ -3350,10 +3350,10 @@ padding-bottom: 5px;
 }
 @media (min-width: 1680px) {
     .wrap-map-result {
-        width: 70%;
+        width: 65%;
     }
     .result-items {
-        width: 30%;
+        width: 35%;
     }
 }
 .wrap-col-fixed-result,
@@ -5940,5 +5940,15 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
 }
 .sub-setting.wrap-effect:after, 
 .sub-setting.wrap-effect:before {
+    display: none;
+}
+.iframe-print {
+    width: 820px;
+    height: 900px;
+    background: rgb(255, 255, 255);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
     display: none;
 }

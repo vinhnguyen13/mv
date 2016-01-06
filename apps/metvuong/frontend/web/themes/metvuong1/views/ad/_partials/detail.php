@@ -60,7 +60,7 @@ use yii\helpers\Url;
                                 <div class="sub-more hidden-effect">
                                     <div class="wrap-effect clearfix">
                                         <ul class='clearfix'>
-                                            <li><a href="#"><em class="icon-printer"></em>Print</a></li>
+                                            <li><a class="print-detail" href="#"><em class="icon-printer"></em>Print</a></li>
                                             <li><a href="#" class="report_modal" data-toggle="modal" data-target="#report-listing" data-url="<?=Url::to(['/ad/report'])?>" data-uid="<?=empty(Yii::$app->user->id) ? 0 : Yii::$app->user->id?>"><em class="icon-info"></em>Báo cáo bài viết</a></li>
                                         </ul>
                                     </div>

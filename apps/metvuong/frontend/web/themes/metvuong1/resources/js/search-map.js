@@ -383,6 +383,7 @@ function start() {
 					 	});
 
 					$('.tabs-detail-item li .sub-more').dropdown();
+					
 				});
 			}
 		});
