@@ -219,7 +219,7 @@ $searchParams = json_decode($value);
                             <em class="fa fa-sort-desc"></em>
                         </div>
                         <div data-active="1" data-tab="mua-thue" class="search-select active" data-step='step1'>
-                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Tìm kiếm bất động sản cần <span>Mua</span> hoặc <span>Thuê</span>">
+                            <a href="#">
                                 <span>
                                     <em class="fa fa-home"></em>
                                     <em class="fa fa-search"></em>
@@ -228,7 +228,7 @@ $searchParams = json_decode($value);
                             </a>
                         </div>
                         <div data-active="2" data-tab="ban-thue" class="search-select" data-step='step2'>
-                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Rao tin bất động sản cần <span>Bán</span> hoặc <span>Cho Thuê</span>">
+                            <a href="#">
                                 <span>
                                     <em class="fa fa-home"></em>
                                     <em class="fa fa-pencil-square-o"></em>
@@ -237,7 +237,7 @@ $searchParams = json_decode($value);
                             </a>
                         </div>
                         <div data-active="3" data-tab="tin-tuc"  class="search-select" data-step='step3'>
-                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="<span>Tin Tức</span> và <span>dự án</span> bất động sản">
+                            <a href="#">
                                 <span>
                                     <em class="fa fa-home"></em>
                                     <em class="fa fa-file-text"></em>
