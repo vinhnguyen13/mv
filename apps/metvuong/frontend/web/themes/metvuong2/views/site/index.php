@@ -75,8 +75,8 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                 </li>
                                 <li class="line-option">
                                     <div class="select-lang">
-                                        <a href="<?=Url::current(['language-change'=>'en-US'])?>" class="lang-icon icon-en pull-right"></a>
                                         <a href="<?=Url::current(['language-change'=>'vi-VN'])?>" class="lang-icon icon-vi pull-right"></a>
+                                        <a href="<?=Url::current(['language-change'=>'en-US'])?>" class="lang-icon icon-en pull-right"></a>
                                         Language
                                     </div>
                                 </li>
