@@ -1,0 +1,74 @@
+[
+	{
+		"id" : 1,
+		"tinh_thanh" : "Hồ chí minh",
+		"quan_huyen": [
+			{
+				"id": 1,
+				"ten_quan_huyen" : "Quận 1"
+			},
+			{
+				"id": 2,
+				"ten_quan_huyen" : "Quận 2"
+			},
+			{
+				"id": 3,
+				"ten_quan_huyen" : "Quận 3"
+			}
+		]
+	},
+	{
+		"id" : 2,
+		"tinh_thanh" : "Hà nội",
+		"quan_huyen": [
+			{
+				"id": 1,
+				"ten_quan_huyen" : "Đống Đa"
+			},
+			{
+				"id": 2,
+				"ten_quan_huyen" : "Hai Bà Trưng"
+			},
+			{
+				"id": 3,
+				"ten_quan_huyen" : "Hà Tây"
+			}
+		]
+	},
+	{
+		"id" : 3,
+		"tinh_thanh" : "Biên hòa",
+		"quan_huyen": [
+			{
+				"id": 1,
+				"ten_quan_huyen" : "Vĩnh Cữu"
+			},
+			{"id": 2,
+				"ten_quan_huyen" : "Chợ Sặt"
+			},
+			{
+				"id": 3,
+				"ten_quan_huyen" : "Giầu Dây"
+			}
+		]
+	},
+	{
+		"id" : 4,
+		"tinh_thanh" : "Hải phòng",
+		
+		"quan_huyen": [
+			{
+				"id": 1,
+				"ten_quan_huyen" : "Lạng Sơn"
+			},
+			{
+				"id": 2,
+				"ten_quan_huyen" : "Sơn La"
+			},
+			{
+				"id": 3,
+				"ten_quan_huyen" : "La La"
+			}
+		]
+	}
+]

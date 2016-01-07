@@ -1,0 +1,12 @@
+[
+	{
+		"id": 1,
+		"ten_tt": "Tin tức",
+		"template": "suggest-list-news"
+	},
+	{
+		"id": 2,
+		"ten_tt": "Dự án",
+		"template": "tinh-thanh, quan-huyen, suggest-duan-news"
+	}
+]

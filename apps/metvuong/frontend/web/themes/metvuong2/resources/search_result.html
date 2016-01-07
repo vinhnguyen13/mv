@@ -1,0 +1,947 @@
+<!doctype html>
+<!--[if lt IE 9]> <html class="no-js ie-old" lang="en"> <![endif]-->
+<!--[if IE 9]> <html class="no-js ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]> <html lang="en"> <!--<![endif]-->
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/simple-line-icons.css" />
+    <link rel="stylesheet" href="css/style-custom.css" />
+    <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <script src="js/respond.min.js"></script>
+    <![endif]-->
+    
+</head>
+
+<body>
+    <div class="o-wrapper clearfix search-result-page">
+        <header class="home-page cd-secondary-nav border-shadow wrap-page-home">
+            <div class="container clearfix">
+                <ul class="pull-right menu-home">
+                    <li><a href="#" data-toggle="modal" data-target="#frmRegister"><em class="icon-user"></em>Đăng ký</a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#frmLogin"><em class="icon-key"></em>Đăng nhập</a></li>
+                    <li class="lang-icon icon-en"><a href="#"></a></li>
+                    <li class="lang-icon icon-vi"><a href="#"></a></li>
+                </ul>
+                <div class="wrap-search-home">
+                    <div class="bgcover logo-home ani-logo" style="background-image:url(images/logo.png);"><a href="/"></a></div>
+                    <div class="box-search-header clearfix ani-search">
+                        <div class="pull-left">
+                            <form class="form-inline pull-left" action="" id="search-kind">
+                                <div class="form-group">
+                                    <div class="type-search">
+                                        <ul></ul>
+                                        <input type="text" class="form-control" placeholder="Tìm Kiếm...">
+                                    </div>
+                                    <div id="step-1" class="search-wrap hidden-effect">
+                                        <div class="wrap-effect">
+                                            <div class="search-item">
+                                                <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                                <div class="suggest-search-text">
+                                                    <h3>--Gợi ý--</h3>
+                                                    <div class="loading-suggest"></div>
+                                                    <ul class="clearfix" style="display:none;">
+                                                        <li><a href="#">Huyện <strong>Nhà</strong> Bè, Hồ Chí Minh<span>(1935 tin)</span></a></li>
+                                                        <li><a href="#">Thành phố <strong>Nha</strong> Trang, Khánh Hòa<span>(1935 tin)</span></a></li>
+                                                        <li><a href="#">Phường Nhân Chính, Quận Thanh Xuân, Hà Nội<span>(1935 tin)</span></a></li>
+                                                        <li><a href="#">Thành phố <strong>Nha</strong> Trang, Khánh Hòa<span>(1935 tin)</span></a></li>
+                                                    </ul>
+                                                </div>
+                                                <h3>--Chọn Tỉnh/Thành phố--</h3>
+                                                <ul class="clearfix">
+                                                    <li><a href="#">Hồ Chí Minh</a></li>
+                                                    <li><a href="#">Hà Nội</a></li>
+                                                    <li><a href="#">Bình Dương</a></li>
+                                                    <li><a href="#">Đà Nẵng</a></li>
+                                                    <li><a href="#">Hải Phòng</a></li>
+                                                    <li><a href="#">Long An</a></li>
+                                                    <li><a href="#">Hồ Chí Minh</a></li>
+                                                    <li><a href="#">Hà Nội</a></li>
+                                                    <li><a href="#">Bình Dương</a></li>
+                                                    <li><a href="#">Đà Nẵng</a></li>
+                                                    <li><a href="#">Hải Phòng</a></li>
+                                                    <li><a href="#">Long An</a></li>
+                                                    <li><a href="#">Hồ Chí Minh</a></li>
+                                                    <li><a href="#">Hà Nội</a></li>
+                                                    <li><a href="#">Bình Dương</a></li>
+                                                    <li><a href="#">Đà Nẵng</a></li>
+                                                    <li><a href="#">Hải Phòng</a></li>
+                                                    <li><a href="#">Long An</a></li>
+                                                    <li><a href="#">Hồ Chí Minh</a></li>
+                                                    <li><a href="#">Hà Nội</a></li>
+                                                    <li><a href="#">Bình Dương</a></li>
+                                                    <li><a href="#">Đà Nẵng</a></li>
+                                                    <li><a href="#">Hải Phòng</a></li>
+                                                    <li><a href="#">Long An</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="step-2" class="search-wrap hidden-effect">
+                                        <div class="wrap-effect">
+                                            <div class="search-item clearfix">
+                                                <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                                <div class="suggest-search-text">
+                                                    <h3>--Gợi ý--</h3>
+                                                    <div class="loading-suggest"></div>
+                                                    <ul class="clearfix" style="display:none;">
+                                                        <li><a href="#">Bè, Hồ Chí Minh Huyện <strong>Nhà</strong> Bè, Hồ Chí Minh<span>(1935 tin)</span></a></li>
+                                                        <li><a href="#">Trang, Khánh Hòa Thành phố <strong>Nha</strong> Trang, Khánh Hòa<span>(1935 tin)</span></a></li>
+                                                        <li><a href="#">Quận Thanh Xuân, Hà Nội Phường Nhân Chính, Quận Thanh Xuân, Hà Nội<span>(1935 tin)</span></a></li>
+                                                        <li><a href="#">Thành phố <strong>Nha</strong> Trang, Khánh Hòa<span>(1935 tin)</span></a></li>
+                                                    </ul>
+                                                </div>
+                                                <h3>--Chọn Quận/Huyện--</h3>
+                                                <ul>
+                                                    <li><a href="#">Quận 1</a></li>
+                                                    <li><a href="#">Quận 2</a></li>
+                                                    <li><a href="#">Quận 3</a></li>
+                                                    <li><a href="#">Quận 4</a></li>
+                                                    <li><a href="#">Quận 5</a></li>
+                                                    <li><a href="#">Quận 6</a></li>
+                                                    <li><a href="#">Quận 7</a></li>
+                                                    <li><a href="#">Quận 8</a></li>
+                                                    <li><a href="#">Quận 9</a></li>
+                                                    <li><a href="#">Quận 10</a></li>
+                                                    <li><a href="#">Quận 11</a></li>
+                                                    <li><a href="#">Quận 12</a></li>
+                                                    <li><a href="#">Bình Tân</a></li>
+                                                    <li><a href="#">Bình Thạnh</a></li>
+                                                    <li><a href="#">Gò Vấp</a></li>
+                                                    <li><a href="#">Phú Nhuận</a></li>
+                                                    <li><a href="#">Tân Bình</a></li>
+                                                    <li><a href="#">Tân Phú</a></li>
+                                                    <li><a href="#">Hồ Chí Minh</a></li>
+                                                    <li><a href="#">Hà Nội</a></li>
+                                                    <li><a href="#">Bình Dương</a></li>
+                                                    <li><a href="#">Đà Nẵng</a></li>
+                                                    <li><a href="#">Hải Phòng</a></li>
+                                                    <li><a href="#">Long An</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="step-3" class="search-wrap hidden-effect">
+                                        <div class="wrap-effect">
+                                            <div class="search-item clearfix">
+                                                <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                                <div class="suggest-search-text">
+                                                    <h3>--Gợi ý--</h3>
+                                                    <div class="loading-suggest"></div>
+                                                    <ul class="clearfix" style="display:none;">
+                                                        <li><a href="#">Bè, Hồ Chí Minh Huyện <strong>Nhà</strong> Bè, Hồ Chí Minh<span>(1935 tin)</span></a></li>
+                                                        <li><a href="#">Trang, Khánh Hòa Thành phố <strong>Nha</strong> Trang, Khánh Hòa<span>(1935 tin)</span></a></li>
+                                                        <li><a href="#">Quận Thanh Xuân, Hà Nội Phường Nhân Chính, Quận Thanh Xuân, Hà Nội<span>(1935 tin)</span></a></li>
+                                                        <li><a href="#">Thành phố <strong>Nha</strong> Trang, Khánh Hòa<span>(1935 tin)</span></a></li>
+                                                    </ul>
+                                                </div>
+                                                <h3>--Chọn loại nhà đất--</h3>
+                                                <ul>
+                                                    <li><a href="#">Chung cư</a></li>
+                                                    <li><a href="#">Văn phòng</a></li>
+                                                    <li><a href="#">Nhà riêng</a></li>
+                                                    <li><a href="#">Nhà biệt thự, liền kề</a></li>
+                                                    <li><a href="#">Nhà mặt phố</a></li>
+                                                    <li><a href="#">Bán đất</a></li>
+                                                    <li><a href="#">Đất nền dự án</a></li>
+                                                    <li><a href="#">Trang trại, khu nghỉ dưỡng</a></li>
+                                                    <li><a href="#">Bán kho, nhà xưởng</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="step-4" class="search-wrap hidden-effect">
+                                        <div class="wrap-effect">
+                                            <div class="search-item clearfix">
+                                                <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                                <div class="suggest-search-text">
+                                                    <h3>--Gợi ý--</h3>
+                                                    <div class="loading-suggest"></div>
+                                                    <ul class="clearfix" style="display:none;">
+                                                        <li><a href="#">Bè, Hồ Chí Minh Huyện <strong>Nhà</strong> Bè, Hồ Chí Minh<span>(1935 tin)</span></a></li>
+                                                        <li><a href="#">Trang, Khánh Hòa Thành phố <strong>Nha</strong> Trang, Khánh Hòa<span>(1935 tin)</span></a></li>
+                                                        <li><a href="#">Quận Thanh Xuân, Hà Nội Phường Nhân Chính, Quận Thanh Xuân, Hà Nội<span>(1935 tin)</span></a></li>
+                                                        <li><a href="#">Thành phố <strong>Nha</strong> Trang, Khánh Hòa<span>(1935 tin)</span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="step-5" data-step-box="fixed" class="search-wrap hidden-effect">
+                                        <div class="wrap-effect">
+                                            <div class="search-item clearfix">
+                                                <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                                <div class="suggest-search-text">
+                                                    <h3>--Gợi ý--</h3>
+                                                    <div class="loading-suggest"></div>
+                                                    <ul class="clearfix" style="display:none;">
+                                                        <li><a href="#">Bè, Hồ Chí Minh Huyện <strong>Nhà</strong> Bè, Hồ Chí Minh<span>(1935 tin)</span></a></li>
+                                                        <li><a href="#">Trang, Khánh Hòa Thành phố <strong>Nha</strong> Trang, Khánh Hòa<span>(1935 tin)</span></a></li>
+                                                        <li><a href="#">Quận Thanh Xuân, Hà Nội Phường Nhân Chính, Quận Thanh Xuân, Hà Nội<span>(1935 tin)</span></a></li>
+                                                        <li><a href="#">Thành phố <strong>Nha</strong> Trang, Khánh Hòa<span>(1935 tin)</span></a></li>
+                                                    </ul>
+                                                </div>
+                                                <h3>--Chọn loại tin tức--</h3>
+                                                <ul>
+                                                    <li><a href="#">Tin tức</a></li>
+                                                    <li><a href="#">Dự án</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button id="btn-search" type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                            </form>
+                            <div class="pull-left text-right mgT-10 mgL-15">
+                                <div class="search-select active"><a href="#" data-placeholder="Tìm Kiếm..." rel="#dd-search">
+                                    <span><em class="fa fa-home"></em><em class="fa fa-search"></em></span><i>Mua Bán</i></a></div>
+                                <div class="search-select"><a href="#" data-placeholder="Đăng Ký..." rel="#dd-dky">
+                                    <span><em class="fa fa-home"></em><em class="fa <em class="fa fa-pencil-square-o"></em>"></em></span><i>Cho Thuê</i></a></div>
+                                <div class="search-select"><a href="#" class="" data-step-fix="step-5" data-placeholder="Tin Tức..." rel="#dd-news">
+                                    <span><em class="fa fa-home"></em><em class="fa fa-file-text"></em></span><i>Tin Tức</i></a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" id="more-option-results" class="pull-right"><em class="fa fa-reorder"></em></a>
+            </div>
+        </header>
+        <div class="container cd-main-content">
+            <div class="list-filters-result">
+                <ul class="container clearfix">
+                    <li>
+                        <a href="#">Giá</a>
+                    </li>
+                    <li>
+                        <a href="#">Diện tích</a>
+                    </li>
+                    <li>
+                        <a href="#">Phòng ngủ</a>
+                    </li>
+                    <li>
+                        <a href="#">Loại BDS</a>
+                    </li>
+                    <li>
+                        <a href="#">Khác</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-8 wrap-map-result">
+                <div class="container-map">
+                    <iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJ0T2NLikpdTERKxE8d61aX_E&key=AIzaSyDgukAnWQNq0fitebULUbottG5gvK64OCQ" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="col-md-4 result-items">
+                <div class="wrap-col-fixed-result clearfix">
+                    <h1 id="search-title" class="zsg-content_collapsed">Rental Listings</h1>
+                    <span class="num-results">10 results.</span>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#moi-nhat" aria-controls="moi-nhat" role="tab" data-toggle="tab">Mới nhất</a></li>
+                        <li role="presentation"><a href="#re-nhat" aria-controls="re-nhat" role="tab" data-toggle="tab">Rẻ nhất</a></li>
+                        <li role="presentation"><a href="#phong-ngu" aria-controls="phong-ngu" role="tab" data-toggle="tab">Phòng ngủ</a></li>
+                        <li role="presentation"><a href="#khac" aria-controls="khac" role="tab" data-toggle="tab">Khác</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade in active" id="moi-nhat">
+                            <ul class="list-results clearfix">
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-rent"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/ISxzl4dulivj820000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-sale"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-rent"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/ISxzl4dulivj820000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-sale"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-rent"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/ISxzl4dulivj820000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-sale"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-rent"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/ISxzl4dulivj820000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-sale"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-rent"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/ISxzl4dulivj820000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-sale"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-rent"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/ISxzl4dulivj820000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-sale"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-rent"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/ISxzl4dulivj820000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-sale"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="re-nhat">
+                            <ul class="list-results clearfix">
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV adsf adf adf</p>
+                                        <p class="type-result"><em class="fa fa-circle for-rent"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/ISxzl4dulivj820000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-sale"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-rent"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/ISxzl4dulivj820000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-sale"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-rent"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/ISxzl4dulivj820000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-sale"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-rent"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/ISxzl4dulivj820000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-sale"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-rent"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/ISxzl4dulivj820000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-sale"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-rent"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/ISxzl4dulivj820000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-sale"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/IS5em8q8mi2p8p0000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-rent"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#" class="wrap-img pull-left"><img src="images/ISxzl4dulivj820000000000.jpg" alt=""></a>
+                                    <div class="infor-result">
+                                        <p class="item-title">620 1/2 Locust Ave # B, Clarksburg, WV</p>
+                                        <p class="type-result"><em class="fa fa-circle for-sale"></em>APARTMENT FOR RENT</p>
+                                        <p class="rice-result">$750/mo</p>
+                                        <p class="beds-baths-sqft">2 phòng ngủ • 1 phòng tắm • 950 m<sup>2</sup> • Built 1950</p>
+                                        <p class="date-post-rent"><span class="toz-count">7&nbsp;</span>ngày trước</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="phong-ngu">
+                            
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="khac">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="clearfix">
+            <div class="pull-left copyright">
+                <p><span>&copy;</span>2015. Bản quyền thuộc về Công ty Metvuong</p>
+            </div>
+            <div class="pull-right polli">
+                <ul>
+                    <li><a href="#">Giới thiệu</a></li>
+                    <li><a href="#">Điều khoản</a></li>
+                    <li>
+                        <span>Kết nối:</span>
+                        <a title="facebook metvuong.com" class="logo-social fb-icon" href="#"></a>
+                        <a title="twitter metvuong.com" class="logo-social twe-icon" href="#"></a>
+                        <a title="google plus metvuong.com" class="logo-social g-icon" href="#"></a>
+                        <a title="youtube metvuong.com" class="logo-social ytu-icon" href="#"></a>
+                    </li>
+                </ul>
+            </div>
+        </footer>
+        <div id="iePopup">
+            <div id="jr_overlay"></div>
+            <div id="jr_wrap">
+                <div id="jr_inner">
+                    <h1 id="jr_header">Bạn có biết rằng trình duyệt của bạn đã lỗi thời?</h1>
+                    <p>Trình duyệt của bạn đã lỗi thời, và có thể không tương thích tốt với website, chắc chắn rằng trải nghiệm của bạn trên website sẽ bị hạn chế. Bên dưới là danh sách những trình duyệt phổ biến hiện nay.</p>
+                    <p>Click vào biểu tượng để tải trình duyệt bạn muốn.</p>
+                    <ul>
+                        <li id="jr_chrome"><a href="http://www.google.com/chrome/" target="_blank">Chrome 34</a></li>
+                        <li id="jr_firefox"><a href="http://www.mozilla.com/firefox/" target="_blank">Firefox 29</a></li>
+                        <li id="jr_msie"><a href="http://www.microsoft.com/windows/Internet-explorer/" target="_blank">Internet Explorer 10</a></li>
+                        <li id="jr_opera"><a href="http://www.opera.com/download/" target="_blank">Opera 20</a></li>
+                        <li id="jr_safari"><a href="http://www.apple.com/safari/download/" target="_blank">Safari</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="frmRegister" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="wrap-modal clearfix">
+                        <h3>Đăng ký</h3>
+                        <!-- <p class="txt-title">Hãy bắt đầu với một tài khoản miễn phí</p> -->
+                        <ul class="list-social-login clearfix">
+                            <li>Đăng nhập bằng tài khoản</li>
+                            <li><a href="#" class="btn btn-default facebook"> <i class="fa fa-facebook modal-icons"></i> Sign In with Facebook </a></li>
+                            <li><a href="#" class="btn btn-default twitter"> <i class="fa fa-twitter modal-icons"></i> Sign In with Twitter </a></li>
+                            <li><a href="#" class="btn btn-default google"> <i class="fa fa-google-plus modal-icons"></i> Sign In with Google </a></li>
+                        </ul>
+                        <form class="frmIcon" action="">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Tài khoản">
+                                <em class="icon-user"></em>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Email">
+                                <em class="icon-envelope-open"></em>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Mật khẩu">
+                                <em class="icon-lock"></em>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Xác nhận mật khẩu">
+                                <em class="icon-reload"></em>
+                            </div>
+                            <div class="checkbox"> <label> <input type="checkbox"> Chấp nhận <a href="#">điều khoản</a> sử dụng của <a href="#">metvuong.com</a></label> </div>
+                            <div class="footer-modal clearfix">
+                                <div class="pull-right">
+                                    <a href="#" data-toggle="modal" data-target="#frmLogin">Đăng nhập</a>
+                                    <a href="#" data-toggle="modal" data-target="#frmForgot">Quên mật khẩu ?</a>
+                                </div>
+                                <button type="button" class="btn btn-primary btn-common">Đăng ký</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="frmLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="wrap-modal clearfix">
+                        <h3>Đăng nhập</h3>
+                        <!-- <p class="txt-title">Hãy bắt đầu với một tài khoản miễn phí</p> -->
+                        <ul class="list-social-login clearfix">
+                            <li>Đăng nhập bằng tài khoản</li>
+                            <li><a href="#" class="btn btn-default facebook"> <i class="fa fa-facebook modal-icons"></i> Sign In with Facebook </a></li>
+                            <li><a href="#" class="btn btn-default twitter"> <i class="fa fa-twitter modal-icons"></i> Sign In with Twitter </a></li>
+                            <li><a href="#" class="btn btn-default google"> <i class="fa fa-google-plus modal-icons"></i> Sign In with Google </a></li>
+                        </ul>
+                        <form class="frmIcon" action="">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Email">
+                                <em class="icon-envelope-open"></em>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Mật khẩu">
+                                <em class="icon-lock"></em>
+                            </div>
+                            <div class="checkbox"> <label> <input type="checkbox"> Ghi nhớ đăng nhập</label> </div>
+                            <div class="footer-modal clearfix">
+                                <div class="pull-right">
+                                    <a href="#" data-toggle="modal" data-target="#frmRegister">Đăng ký</a>
+                                    <a href="#" data-toggle="modal" data-target="#frmForgot">Quên mật khẩu ?</a>
+                                </div>
+                                <button type="button" class="btn btn-primary btn-common">Đăng nhập</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="frmForgot" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="wrap-modal clearfix">
+                        <h3>Lấy lại mật khẩu</h3>
+                        <!-- <p class="txt-title">Hãy bắt đầu với một tài khoản miễn phí</p> -->
+                        <ul class="list-social-login clearfix">
+                            <li>Đăng nhập bằng tài khoản</li>
+                            <li><a href="#" class="btn btn-default facebook"> <i class="fa fa-facebook modal-icons"></i> Sign In with Facebook </a></li>
+                            <li><a href="#" class="btn btn-default twitter"> <i class="fa fa-twitter modal-icons"></i> Sign In with Twitter </a></li>
+                            <li><a href="#" class="btn btn-default google"> <i class="fa fa-google-plus modal-icons"></i> Sign In with Google </a></li>
+                        </ul>
+                        <form class="frmIcon" action="">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Email">
+                                <em class="icon-envelope-open"></em>
+                            </div>
+                            <div class="footer-modal clearfix">
+                                <div class="pull-right">
+                                    <a href="#" data-toggle="modal" data-target="#frmRegister">Đăng ký</a>
+                                    <a href="#" data-toggle="modal" data-target="#frmLogin">Đăng nhập</a>
+                                </div>
+                                <button type="button" class="btn btn-primary btn-common">Reset Pasword</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="modal fade" id="detail-listing" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="wrap-modal clearfix">
+                        <div class="gallery-detail clearfix">
+                            <div class="bxslider">
+                                <div class="wrap-img-detail">
+                                    <ul class="clearfix">
+                                        <li>
+                                            <div class="bgcover" style="background-image:url(http://photos1.zillowstatic.com/p_h/ISdc652nxhtvxs0000000000.jpg);"></div>
+                                            <a data-lightbox="detail-post" class="group mask" href="http://photos1.zillowstatic.com/p_h/ISdc652nxhtvxs0000000000.jpg"><em class="fa fa-search"></em><img src="http://photos1.zillowstatic.com/p_h/ISdc652nxhtvxs0000000000.jpg" alt="" style="display:none;"></a>
+                                            
+                                        </li>
+                                        <li>
+                                            <div class="bgcover" style="background-image:url(http://photos2.zillowstatic.com/p_c/ISptnvzc0h2vl21000000000.jpg);"></div>
+                                            <a data-lightbox="detail-post" class="group mask" href="http://photos1.zillowstatic.com/p_f/ISdc652nxhtvxs0000000000.jpg"><em class="fa fa-search"></em><img src="http://photos2.zillowstatic.com/p_c/ISptnvzc0h2vl21000000000.jpg" alt="" style="display:none;"></a>
+                                            
+                                        </li>
+                                        <li>
+                                            <div class="bgcover" style="background-image:url(http://photos2.zillowstatic.com/p_c/ISplloe7f3cvu21000000000.jpg);"></div>
+                                            <a data-lightbox="detail-post" class="group mask" href="http://photos2.zillowstatic.com/p_f/ISptnvzc0h2vl21000000000.jpg"><em class="fa fa-search"></em><img src="http://photos2.zillowstatic.com/p_c/ISplloe7f3cvu21000000000.jpg" alt="" style="display:none;"></a>
+                                            
+                                        </li>
+                                        <li>
+                                            <div class="bgcover" style="background-image:url(http://photos2.zillowstatic.com/p_c/ISd8nrbh00lw041000000000.jpg);"></div>
+                                            <a data-lightbox="detail-post" class="group mask" href="http://photos2.zillowstatic.com/p_c/ISd8nrbh00lw041000000000.jpg"><em class="fa fa-search"></em><img src="http://photos2.zillowstatic.com/p_c/ISd8nrbh00lw041000000000.jpg" alt="" style="display:none;"></a>
+                                            
+                                        </li>
+                                        <li>
+                                            <div class="bgcover" style="background-image:url(http://photos1.zillowstatic.com/p_c/IS9doo0n73xzj41000000000.jpg);"></div>
+                                            <a data-lightbox="detail-post" class="group mask" href="http://photos1.zillowstatic.com/p_c/IS9doo0n73xzj41000000000.jpg"><em class="fa fa-search"></em><img src="http://photos1.zillowstatic.com/p_c/IS9doo0n73xzj41000000000.jpg" alt="" style="display:none;"></a>
+                                            
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="wrap-img-detail">
+                                    <ul class="clearfix">
+                                        <li>
+                                            <div class="bgcover" style="background-image:url(http://photos3.zillowstatic.com/p_c/ISh7lgi7qlt58s1000000000.jpg);"></div>
+                                            <a data-lightbox="detail-post" class="group mask" href="http://photos3.zillowstatic.com/p_c/ISh7lgi7qlt58s1000000000.jpg"><em class="fa fa-search"></em><img src="http://photos3.zillowstatic.com/p_c/ISh7lgi7qlt58s1000000000.jpg" alt="" style="display:none;"></a>
+                                            
+                                        </li>
+                                        <li>
+                                            <div class="bgcover" style="background-image:url(http://photos1.zillowstatic.com/p_c/IS91z4ftnmff1w1000000000.jpg);"></div>
+                                            <a data-lightbox="detail-post" class="group mask" href="http://photos1.zillowstatic.com/p_c/IS91z4ftnmff1w1000000000.jpg"><em class="fa fa-search"></em><img src="http://photos1.zillowstatic.com/p_c/IS91z4ftnmff1w1000000000.jpg" alt="" style="display:none;"></a>
+                                            
+                                        </li>
+                                        <li>
+                                            <div class="bgcover" style="background-image:url(http://photos3.zillowstatic.com/p_c/IS5avcsirawn6w1000000000.jpg);"></div>
+                                            <a data-lightbox="detail-post" class="group mask" href="http://photos3.zillowstatic.com/p_c/IS5avcsirawn6w1000000000.jpg"><em class="fa fa-search"></em><img src="http://photos3.zillowstatic.com/p_c/IS5avcsirawn6w1000000000.jpg" alt="" style="display:none;"></a>
+                                            
+                                        </li>
+                                        <li>
+                                            <div class="bgcover" style="background-image:url(http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg);"></div>
+                                            <a data-lightbox="detail-post" class="group mask" href="http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg"><em class="fa fa-search"></em><img src="http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg" alt="" style="display:none;"></a>
+                                            
+                                        </li>
+                                        <li>
+                                            <div class="bgcover" style="background-image:url(http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg);"></div>
+                                            <a data-lightbox="detail-post" class="group mask" href="http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg"><em class="fa fa-search"></em><img src="http://photos2.zillowstatic.com/p_c/ISp1qarocv6yus1000000000.jpg" alt="" style="display:none;"></a>
+                                            
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row detail-post">
+                            <div class="col-sm-8 dt-left-col">
+                                <div class="rating pull-right">
+                                    <ul class="clearfix">
+                                        <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                        <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                        <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                        <li><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                        <li><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                    </ul>
+                                </div>
+                                <h1 class="title-dt">Mở bán tháp T5 căn hộ Maseti</h1>
+                                <table>
+                                    <tr>
+                                        <th>Giá:</th>
+                                        <td>1 tỷ 200 triệu</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Tiện ích:</th>
+                                        <td>10 phòng ngủ, 6 phòng tắm, 10 toilet</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Diện tích:</th>
+                                        <td>77m<sup>2</sup></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Địa chỉ:</th>
+                                        <td>123 Trần Não, Quận 2, Hồ Chí Minh</td>
+                                    </tr>
+                                </table>
+                                <p class="ttmt">Thông tin mô tả</p>
+                                <div class="wrap-ttmt">
+                                    <p style=" font-size: 14px; line-height: 20px; ">Chủ đầu tư- công ty cp đầu tư phát triển nhà Đà Nẵng(NDN).</p> <p style=" font-size: 14px; line-height: 20px; ">186 Trần Phú, quận Hải Châu, Tp Đà Nẵng.</p> <p style=" font-size: 14px; line-height: 20px; ">Chương trình chiết khấu đặc biệt.</p> <p style=" font-size: 14px; line-height: 20px; ">Phòng kinh doanh: Ms Lanh 0905.220.855.</p> <p style=" font-size: 14px; line-height: 20px; ">Email: Lanhtran266@gmail.com.</p><br> <p style=" font-size: 14px; line-height: 20px; ">+ Vị trí đắc địa: Nằm ở 4 mặt tiền đường (đường Trần Phú, Nguyễn Du, Đặng Tử Kính, đường nội bộ 5m), 1uận Hải Châu, Đà Nẵng. Cách sông Hàn 50m, được xem là con đường đắc địa và là quận 1 của Đà Nẵng. Đất trên con đường Trần Phú được định giá là 80 triệu/m2. Từ vị trí này đi ra bãi biển Mỹ Khê chỉ mất 5 phút xe máy.</p><br> <p style=" font-size: 14px; line-height: 20px; ">+ Tiện ích xung quanh: Chỉ mất 5- 7 phút xe máy là đi đến các trường học nổi tiếng của Đà Nẵng (trường mầm non Thần Đồng, trường tiểu học Phan Thanh, Phù Đổng, trường THPT Phan Chu Trinh…), đến bệnh viên lớn (Đa Khoa, bệnh viện C,.. ), đến các chợ lớn(chợ Hàn, chợ Cồn, Big C) và các khu vui chơi giải trí.</p><br> <p style=" font-size: 14px; line-height: 20px; ">+ Tổng quan tòa nhà:</p> <p style=" font-size: 14px; line-height: 20px; ">Đà Nẵng Plaza gồm 2 khối nhà 18 tầng và 1 tầng hầm. Trong đó 3 tầng đế là thương mại và tầng 4 có hồ bơi ngoài trời, phòng tập gym trong nhà, café, sân vườn. Còn từ tầng 4 đến tầng 18 là căn hộ. Đặc biệt tầng 17 và tầng 18 là căn Penthouse thông tầng, có sân vườn riêng biệt thoáng mát, rộng rãi.</p><br> <p style=" font-size: 14px; line-height: 20px; ">+ Thiết kế sang trọng, thông thoáng, an toàn:</p> <p style=" font-size: 14px; line-height: 20px; ">Trang bị hiện đại với 2 thang máy cao cấp, quản lý bằng thẻ từ. Hệ thống báo cháy tự động. Căn hộ được thiết kế với nhiều cửa sổ thông thoáng, View nhìn đẹp, phòng ngủ lót ván sàn, toàn bộ trần thạch cao trang trí với đèn lon đẹp mắt, WC có máy nước nóng, bếp hoàn thiện...</p> <p style=" font-size: 14px; line-height: 20px; ">Nhiều loại căn hộ: 1 PN, 2 PN và 3 Phòng ngủ. Diện tích từ: 69m2; 79m2; 130m2 và hai tầng dành riêng cho căn hộ Penthouse (diện tích từ 160 – 324m2).</p><br> <p style=" font-size: 14px; line-height: 20px; ">+ Gía hợp lý: Từ 1 tỷ 3 đến 2,34 tỷ. Căn Penthouse (giá từ 3,3 tỷ - 7,1 tỷ).</p> <p style=" font-size: 14px; line-height: 20px; ">Ngân hàng hỗ trợ cho vay đến 70% giá trị căn hộ, thời gian vay đến 15 năm.</p> <p style=" font-size: 14px; line-height: 20px; ">Rất thích hợp để ở - đi du lịch – đầu tư.</p>
+                                </div>
+                                <div class="wrap-tienich">
+                                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="headingOne">
+                                                <h4 class="panel-title">
+                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                                    <em class="fa fa-chevron-right pull-right"></em>Tiện ích xung quanh 1
+                                                </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                                <div class="panel-body">
+                                                    <p>Chỉ mất 5- 7 phút xe máy là đi đến các trường học nổi tiếng của Đà Nẵng (trường mầm non Thần Đồng, trường tiểu học Phan Thanh, Phù Đổng, trường THPT Phan Chu Trinh…), đến bệnh viên lớn (Đa Khoa, bệnh viện C,.. ), đến các chợ lớn(chợ Hàn, chợ Cồn, Big C) và các khu vui chơi giải trí.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="headingOne">
+                                                <h4 class="panel-title">
+                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                    <em class="fa fa-chevron-right pull-right"></em>Tiện ích xung quanh 2
+                                                </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                                <div class="panel-body">
+                                                    <p>Chỉ mất 5- 7 phút xe máy là đi đến các trường học nổi tiếng của Đà Nẵng (trường mầm non Thần Đồng, trường tiểu học Phan Thanh, Phù Đổng, trường THPT Phan Chu Trinh…), đến bệnh viên lớn (Đa Khoa, bệnh viện C,.. ), đến các chợ lớn(chợ Hàn, chợ Cồn, Big C) và các khu vui chơi giải trí.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="headingOne">
+                                                <h4 class="panel-title">
+                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                    <em class="fa fa-chevron-right pull-right"></em>Tiện ích xung quanh 3
+                                                </a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                                <div class="panel-body">
+                                                    <p>Chỉ mất 5- 7 phút xe máy là đi đến các trường học nổi tiếng của Đà Nẵng (trường mầm non Thần Đồng, trường tiểu học Phan Thanh, Phù Đổng, trường THPT Phan Chu Trinh…), đến bệnh viên lớn (Đa Khoa, bệnh viện C,.. ), đến các chợ lớn(chợ Hàn, chợ Cồn, Big C) và các khu vui chơi giải trí.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 dt-right-col">
+                                <div class="contact-wrapper">
+                                    <p class="title-contact">Liên hệ</p>
+                                    <div class="contact-person clearfix">
+                                        <a href="#" class="wrap-img pull-left"><img src="images/11.jpg" alt=""></a>
+                                        <div class="clearfix">
+                                            <div class="rating pull-right">
+                                                <ul class="clearfix">
+                                                    <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                                    <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                                    <li class="active"><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                                    <li><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                                    <li><a href="#"><em class="fa fa-star-o"></em></a></li>
+                                                </ul>
+                                            </div>
+                                            <p><strong>Tên:</strong>Nguyễn Văn A Tủn</p>
+                                            <p><strong>DĐ:</strong>0905269326</p>
+                                            <p><strong>ĐC:</strong>123 Trần Khánh Dư, Q1, HCM</p>
+                                        </div>
+                                    </div>
+                                    <form action="" id="frm-contact-person">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Tên bạn">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Email">
+                                        </div>
+                                        <div class="form-group mgB-0">
+                                            <input type="text" class="form-control" placeholder="Điện thoại">
+                                        </div>
+                                        <p class="alert">Tin nhắn này sẽ được đọc khi người này online</p>
+                                        <div class="checkbox">
+                                            <label><input type="checkbox"> Hiện thông báo khi người này đọc tin nhắn</label>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="button" class="btn btn-primary">Gửi tin nhắn cho người này</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        var url_tt = "https://dl.dropboxusercontent.com/u/43486987/metvuongtest/tinh-thanh.json",
+            url_loaibds = "https://dl.dropboxusercontent.com/u/43486987/metvuongtest/loai-bds.json",
+            url_ttuc = "https://dl.dropboxusercontent.com/u/43486987/metvuongtest/loai-tintuc.json";
+    </script>
+    <script src="js/lightbox.min.js"></script>
+    <script src="js/jquery.bxslider.js"></script>
+    <script src="js/common.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#detail-listing').modal();
+            $('.bxslider').bxSlider({
+                moveSlides: 1,
+                startSlide: 0,
+                slideWidth: 800,
+                startSlide: 0,
+                onSliderLoad: function() {
+                    this.infiniteLoop = false;
+                    this.hideControlOnEnd = true;
+                    scrollFixed();
+                }
+            });
+
+            lightbox.option({
+                'resizeDuration': 300,
+                'fadeDuration': 400
+            });
+        });
+    </script>
+</body>
+</html>

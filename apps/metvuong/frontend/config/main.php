@@ -61,11 +61,11 @@ return [
         ],
         'view' => [
             'theme' => [
-                'basePath' => '@webroot/themes/metvuong1',
-                'baseUrl' => '/frontend/web/themes/metvuong1',
+                'basePath' => '@webroot/themes/metvuong2',
+                'baseUrl' => '/frontend/web/themes/metvuong2',
                 'pathMap' => [
-                    '@app/views' => '@webroot/themes/metvuong1/views',
-                    '@dektrium/user/views' => '@webroot/themes/metvuong1/views',
+                    '@app/views' => '@webroot/themes/metvuong2/views',
+                    '@dektrium/user/views' => '@webroot/themes/metvuong2/views',
                 ],
             ],
         ],
