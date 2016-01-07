@@ -79,9 +79,11 @@ class BatdongsanV2 extends Component
                 }
             } else {
                 echo "Cannot find listing. End page!".self::DOMAIN;
+                $this->writeFileLogFail("Cannot find listing: $url"."\n");
             }
         } else {
             echo "Cannot access in get pages of ".self::DOMAIN;
+            $this->writeFileLogFail("Cannot access: $url"."\n");
         }
     }
 
@@ -96,11 +98,13 @@ class BatdongsanV2 extends Component
             if (count($list) > 0) {
                 // about 20 listing
                 foreach ($list as $item) {
-                    $startIndex = strripos($item->href, '-pr');
-                    $productId = substr($item->href, $startIndex, strlen($item->href));
-                    $productId = str_replace('-pr', '', $productId);
+                    if (preg_match('/pr(\d+)/', self::DOMAIN . $item->href, $matches)) {
+                        if(!empty($matches[1])){
+                            $productId = $matches[1];
+                        }
+                    }
                     $checkExists = false;
-                    if(!empty($log["files"])) {
+                    if(!empty($productId) && !empty($log["files"])) {
                         $checkExists = in_array($productId, $log["files"]);
                     }
 
@@ -118,10 +122,12 @@ class BatdongsanV2 extends Component
                 return ['data' => $log];
             } else {
                 echo "Cannot find listing. End page!".self::DOMAIN;
+                $this->writeFileLogFail("Cannot find listing: $href"."\n");
             }
 
         } else {
             echo "Cannot access in get List Project of ".self::DOMAIN;
+            $this->writeFileLogFail("Cannot access: $href"."\n");
         }
         return null;
     }
@@ -152,6 +158,7 @@ class BatdongsanV2 extends Component
         }
         else {
             echo "Error go to detail at " .self::DOMAIN.$href;
+            $this->writeFileLogFail("Cannot find detail: ".self::DOMAIN.$href."\n");
         }
     }
 
@@ -235,6 +242,14 @@ class BatdongsanV2 extends Component
         $file_name = Yii::getAlias('@console') . '/data/bds_html/bds_log.json';
         $log_data = json_encode($log);
         $this->writeFileJson($file_name, $log_data);
+    }
+
+    function writeFileLogFail($log){
+        $file_name = Yii::getAlias('@console') . '/data/bds_html/bds_log_fail.json';
+        $handle = fopen($file_name, 'a') or die('Cannot open file:  ' . $file_name);
+        $int = fwrite($handle, $log);
+        fclose($handle);
+        return $int;
     }
 
 
