@@ -49,7 +49,7 @@ class BatdongsanV2 extends Component
 
     public function getPages()
     {
-        $url = self::DOMAIN . '/nha-dat-ban';
+        $url = self::DOMAIN . '/nha-dat-ban-tp-hcm';
         $page = $this->getUrlContent($url);
         if(!empty($page)) {
             $html = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
