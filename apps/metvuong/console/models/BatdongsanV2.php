@@ -246,10 +246,13 @@ class BatdongsanV2 extends Component
 
     function writeFileLogFail($log){
         $file_name = Yii::getAlias('@console') . '/data/bds_html/bds_log_fail.json';
-        $handle = fopen($file_name, 'a') or die('Cannot open file:  ' . $file_name);
-        $int = fwrite($handle, $log);
-        fclose($handle);
-        return $int;
+        if( strpos(file_get_contents($file_name),$log) === false) {
+            // do stuff
+            $handle = fopen($file_name, 'a') or die('Cannot open file:  ' . $file_name);
+            $int = fwrite($handle, $log);
+            fclose($handle);
+            return $int;
+        }
     }
 
 
