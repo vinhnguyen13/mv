@@ -15,7 +15,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                 if (typeof ga !== "undefined") {
                     ga('send', {hitType: 'event',eventCategory: 'Listing',eventAction: 'click',eventLabel: 'SearchForm'});
                 }
-                setTimeout(function() {$('#search-kind').submit();},100);
+                //setTimeout(function() {$('#search-kind').submit();},100);
             },500);
             return false;
         });
@@ -27,7 +27,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                 if (typeof ga !== "undefined") {
                     ga('send', {hitType: 'event',eventCategory: 'PostListing',eventAction: 'click',eventLabel: 'SearchForm'});
                 }
-                setTimeout(function() {$('#search-kind').submit();},100);
+                //setTimeout(function() {$('#search-kind').submit();},100);
             },500);
         });
         
@@ -38,7 +38,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                 if (typeof ga !== "undefined") {
                     ga('send', {hitType: 'event',eventCategory: 'News',eventAction: 'click',eventLabel: 'SearchForm'});
                 }
-                setTimeout(function() {$('#search-kind').submit();},100);
+                //setTimeout(function() {$('#search-kind').submit();},100);
             },500);
         });
 
