@@ -40,8 +40,8 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
         <input class="hidden_filter" id="bath-filter" type="hidden" name="toiletNo" value="<?= Yii::$app->request->get('toiletNo') ?>" />
 
         <ul class="container clearfix outsideevent list-filter">
-	        <li>
-	            <a href="#"><span class="txt-tab">Giá</span><span class="txt-show"></span></a>
+            <li>
+	            <a href="#"><i class="pull-right"></i><span class="txt-tab">Giá</span><span class="txt-show"></span></a>
                 <div class="filter-pane filter-common hidden-effect" data-filter="price-min-max">
                     <div class="wrap-effect clearfix">
                         <div id="minmax-entries" class="minmax-entries search-entry">
@@ -71,7 +71,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                 </div>
 	        </li>
 	        <li>
-	            <a href="#" data-symbol-unit="m<sup>2</sup>"><span class="txt-tab">Diện tích</span><span class="txt-show"></span></a>
+	            <a href="#" data-symbol-unit="m<sup>2</sup>"><i class="pull-right"></i><span class="txt-tab">Diện tích</span><span class="txt-show"></span></a>
                 <div class="filter-common filter-pane hidden-effect" data-filter="dt-min-max">
                     <div class="wrap-effect clearfix">
                         <div id="minmax-entries" class="minmax-entries search-entry">
@@ -99,7 +99,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                 </div>
 	        </li>
 	        <li>
-	            <a href="#">Phòng ngủ<span class="txt-show"></span></a>
+	            <a href="#"><i class="pull-right"></i>Phòng ngủ<span class="txt-show"></span></a>
                 <div class="filter-common filter-pane filter-bed filter-dropdown hidden-effect" data-filter="phong-ngu">
                     <div class="wrap-effect clearfix">
                         <div class="filter-bed">
@@ -117,7 +117,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                 </div>
 	        </li>
             <li>
-                <a href="#">Phòng tắm<span class="txt-show"></span></a>
+                <a href="#"><i class="pull-right"></i>Phòng tắm<span class="txt-show"></span></a>
                 <div class="filter-common filter-pane filter-bed filter-dropdown hidden-effect" data-filter="phong-tam">
                     <div class="wrap-effect clearfix">
                         <div class="filter-bed">
@@ -134,47 +134,8 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                     </div>
                 </div>
             </li>
-	        <!-- <li>
-	            <a href="#">Loại BDS</a>
-                <div class="filter-common filter-pane filter-loaibds hidden-effect">
-                    <div class="wrap-effect clearfix">
-                        <ul class="hometype-options">
-                            <li class="hometype">
-                                <input type="checkbox" class="">
-                                <label>
-                                    <span id="hometype-top-filters-label" class="hometype-label option">Chung cư</span>
-                                </label>
-                            </li>
-                            <li class="hometype">
-                                <input id="hometype-input-2" name="hometype-input" type="checkbox" class="hometype-input checkbox">
-                                <label for="hometype-input-2">
-                                    <span id="hometype-top-filters-label" class="hometype-label option">Nhà riêng</span>
-                                </label>
-                            </li>
-                            <li class="hometype">
-                                <input id="hometype-input-3" name="hometype-input" type="checkbox" class="hometype-input checkbox">
-                                <label for="hometype-input-3">
-                                    <span id="hometype-top-filters-label" class="hometype-label option">Nhà biệt thự, liền kề</span>
-                                </label>
-                            </li>
-                            <li class="hometype">
-                                <input id="hometype-input-4" name="hometype-input" type="checkbox" class="hometype-input checkbox">
-                                <label for="hometype-input-4">
-                                    <span id="hometype-top-filters-label" class="hometype-label option">Nhà mặt phố</span>
-                                </label>
-                            </li>
-                            <li class="hometype">
-                                <input id="hometype-input-5" name="hometype-input" type="checkbox" class="hometype-input checkbox">
-                                <label for="hometype-input-5">
-                                    <span id="hometype-top-filters-label" class="hometype-label option">Đất nền dự án</span>
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-	        </li> -->
             <li>
-                <a href="#">Khác</a>
+                <a href="#"><i class="pull-right"></i>Khác</a>
                 <div class="filter-common filter-pane filter-other hidden-effect">
                     <div class="wrap-effect clearfix">
                     		<div class="form-group">
@@ -208,11 +169,13 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                     </div>
                 </div>
             </li>
-	        
-            <li>
+	        <li>
+                <a href="#">Set Alert<em class="fa fa-heart"></em></a>
+            </li>
+            <!-- <li>
                 <button id="submit-filter" type="button" class="btn btn-primary btn-sm btn-common"><em class="fa fa-filter"></em>Chọn lọc</button>
                 <button id="reset-filter" type="button" class="btn btn-primary btn-sm btn-common">Reset</button>
-            </li>
+            </li> -->
 	    </ul>
     </form>
 </div>
@@ -231,8 +194,8 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 		<div id="detail-listing"></div></div>
     <div class="wrap-col-fixed-result clearfix" style="background: #FFFFFF">
         
-        <h1 id="search-title" class="zsg-content_collapsed">Listings</h1>
-        <span class="num-results"><span id="count-listing">0</span> results.</span>
+        <!-- <h1 id="search-title" class="zsg-content_collapsed">Listings</h1>
+        <span class="num-results"><span id="count-listing">0</span> results.</span> -->
         
         <ul id="order-by-tab" class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a data-order="created_at" href="#" aria-controls="moi-nhat" role="tab" data-toggle="tab">Mới nhất</a></li>
@@ -240,6 +203,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
             <?php if(!Yii::$app->user->isGuest): ?>
             <li role="presentation"><a data-order="price" href="#" aria-controls="re-nhat" role="tab" data-toggle="tab" data-href="<?= Url::to(['saved-listing']) ?>">Đã lưu</a></li>
             <?php endif; ?>
+            <li><a href="#">Full Map</a></li>
         </ul>
 
         <div class="tab-content">

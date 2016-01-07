@@ -9,19 +9,19 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
 <script>
     $(document).ready(function(){
         $(document).bind( 'submit_search', function(event, json, string, callback){
-            animateSearch();
+            //animateSearch();
             setTimeout(function(){callback();},1000);
             setTimeout(function() {
                 if (typeof ga !== "undefined") {
                     ga('send', {hitType: 'event',eventCategory: 'Listing',eventAction: 'click',eventLabel: 'SearchForm'});
                 }
-                //setTimeout(function() {$('#search-kind').submit();},100);
+                setTimeout(function() {$('#search-kind').submit();},100);
             },500);
             return false;
         });
 
         $(document).bind( 'real-estate/news', function(event, json, string, callback){
-            animateSearch();
+            //animateSearch();
             setTimeout(function(){callback();},1000);
             setTimeout(function() {
                 if (typeof ga !== "undefined") {
@@ -32,13 +32,13 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
         });
         
         $(document).bind( 'real-estate/post', function(event, json, string, callback){
-            animateSearch();
+            //animateSearch();
             setTimeout(function(){callback();},1000);
             setTimeout(function() {
                 if (typeof ga !== "undefined") {
                     ga('send', {hitType: 'event',eventCategory: 'News',eventAction: 'click',eventLabel: 'SearchForm'});
                 }
-                //setTimeout(function() {$('#search-kind').submit();},100);
+                setTimeout(function() {$('#search-kind').submit();},100);
             },500);
         });
 
@@ -95,7 +95,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                     </li>
                 <?php }?>
             </ul>
-            <a href="#" class="logo-header"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png" alt=""></a>
+            <a href="<?=Url::home()?>" class="logo-header"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png" alt=""></a>
         </div>
     </header>
 
@@ -338,7 +338,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
     <section class="projects">
         <div class="container">
             <h2>Featured Project</h2>
-            <ul class="list-filter">
+            <ul class="list-filter-projects">
                 <li><a href="#">Condominium</a></li>
                 <li><a href="#">Town House</a></li>
                 <li><a href="#">Landed Property</a></li>

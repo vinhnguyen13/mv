@@ -39,215 +39,46 @@ $searchParams = json_decode($value);
 
     });
 </script>
-<header class="home-page cd-secondary-nav border-shadow wrap-page-home show-fixed">
-    <div class="container clearfix">
-        <?php $this->beginContent('@app/views/layouts/_partials/menuMain.php'); ?><?php $this->endContent();?>
-        <div class="wrap-search-home">
-            <div class="wrap-logo"><div class="bgcover logo-home ani-logo" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png);"><a href="<?=Url::home()?>"></a></div></div>
-            <div class="box-search-header clearfix ani-search">
-                <div class="pull-left">
-                    <?php $form = ActiveForm::begin([
-                        'options'=>['class' => 'form-inline pull-left', 'method'=>'POST'],
-                        'id'=>'search-kind',
-                        'action'=>Url::to(['/ad/redirect']),
-                        'fieldConfig' => [],
-                    ]); ?>
-                        <div class="form-group">
-                            <div class="type-search">
-                                <ul class="outsideevent"></ul>
-                                <input id="searchInput" name="search" type="text" class="form-control outsideevent" placeholder="" readonly="readonly">
-                            </div>
-
-                            <div id="mua-thue" class="outsideevent search-wrap hidden-effect" data-step-title="Muốn Mua/Thuê ?">
-                                <div class="wrap-effect">
-                                    <div class="search-item">
-                                        <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                        <div class="wrap-step">
-                                            <h3></h3>
-                                            <ul class="clearfix">
-                                                <li data-id="1"><a href="#" data-item="mua-thue" data-slug-name data-next="tinh-thanh" data-prev>Muốn Mua</a></li>
-                                                <li data-id="2"><a href="#" data-item="mua-thue" data-slug-name data-next="tinh-thanh" data-prev>Muốn Thuê</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
+<header class="clearfix">
+    <div class="container inner-header">
+        <ul class="pull-right list-menu">
+            <li><a href="#">Buy</a></li>
+            <li><a href="#">Rent</a></li>
+            <li><a href="#">Sell</a></li>
+            <li><a href="#">Market Insights</a></li>
+            <?php if(Yii::$app->user->isGuest){?>
+                <li class="link-signup"><a href="#" data-toggle="modal" data-target="#frmRegister">Sign up</a></li>
+                <li class="link-login"><a href="#" data-toggle="modal" data-target="#frmLogin">Login</a></li>
+                <li class="change-lang"><a href="<?=Url::current(['language-change'=>'en-US'])?>" class="lang-icon icon-en"></a></li>
+                <li class="change-lang"><a href="<?=Url::current(['language-change'=>'vi-VN'])?>" class="lang-icon icon-vi"></a></li>
+            <?php }else{?>
+                <li class="user-loggin"><a href="<?=Url::to(['user-management/index'])?>">
+                        <span class="avatar-user"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/default-avatar.jpg" alt="" width="40" height="40"></span>
+                        <span class="name-user"><?=!empty(Yii::$app->user->identity->profile->name) ? Yii::$app->user->identity->profile->name : Yii::$app->user->identity->email;?></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="sub-setting-user"></a>
+                    <div class="settings container-effect hidden-effect">
+                        <ul class="sub-setting wrap-effect">
+                            <li>
+                                <a data-method="post" href="<?=\yii\helpers\Url::to(['/member/logout'])?>"><em class="icon-logout pull-right"></em><?=Yii::t('user', 'Logout')?></a>
+                            </li>
+                            <li>
+                                <a href="<?=Url::to(['user-management/index'])?>"><em class="fa fa-cog pull-right"></em>Settings</a>
+                            </li>
+                            <li class="line-option">
+                                <div class="select-lang">
+                                    <a href="<?=Url::current(['language-change'=>'vi-VN'])?>" class="lang-icon icon-vi pull-right"></a>
+                                    <a href="<?=Url::current(['language-change'=>'en-US'])?>" class="lang-icon icon-en pull-right"></a>
+                                    Language
                                 </div>
-                            </div>
-
-                            <div id="ban-thue" class="outsideevent search-wrap hidden-effect" data-step-title="Đăng Ký Bán/Thuê ?">
-                                <div class="wrap-effect">
-                                    <div class="search-item">
-                                        <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                        <div class="wrap-step">
-                                            <h3></h3>
-                                            <ul class="clearfix">
-                                                <li data-id="1"><a href="#" data-item="ban-thue" data-slug-name data-next="tinh-thanh" data-prev>Đăng Ký Bán</a></li>
-                                                <li data-id="2"><a href="#" data-item="ban-thue" data-slug-name data-next="tinh-thanh" data-prev>Đăng Ký Cho Thuê</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="tinh-thanh" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn Tỉnh/Thành ?">
-                                <div class="wrap-effect">
-                                    <div class="search-item">
-                                        <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                        <div class="wrap-step">
-                                            <h3></h3>
-                                            <ul></ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="quan-huyen" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn Quận/Huyện ?">
-                                <div class="wrap-effect">
-                                    <div class="search-item">
-                                        <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                        <div class="wrap-step">
-                                            <h3></h3>
-                                            <ul></ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="loai-bds" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn loại bất động sản ?">
-                                <div class="wrap-effect">
-                                    <div class="search-item">
-                                        <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                        <div class="wrap-step">
-                                            <h3></h3>
-                                            <ul></ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="loai-tin-tuc" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn loại tin tức ?">
-                                <div class="wrap-effect">
-                                    <div class="search-item">
-                                        <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                        <div class="wrap-step">
-                                            <h3></h3>
-                                            <ul></ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="news" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn tin tức ?">
-                                <div class="wrap-effect">
-                                    <div class="search-item">
-                                        <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                        <div class="wrap-step">
-                                            <h3></h3>
-                                            <ul></ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="loai-duan" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn dự án ?">
-                                <div class="wrap-effect">
-                                    <div class="search-item">
-                                        <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                        <div class="wrap-step">
-                                            <h3></h3>
-                                            <ul></ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="min-max" class="outsideevent search-wrap hidden-effect" data-step-title="Nhập khoảng giá ?">
-                                <div class="wrap-effect">
-                                    <div class="search-item clearfix">
-                                        <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
-                                        <div class="wrap-step">
-                                            <h3></h3>
-                                            <div class="frm-cost-min-max clearfix">
-                                                <div class="form-group inline-group box-cost" data-tab="min">
-                                                    <input type="text" class="form-control cost-value" placeholder="min" readonly="readonly">
-                                                    <input type="hidden" id="minCost" name="costMin" class="valPrice">
-                                                    <div class=" wrap-cost-bds hidden-cost">
-                                                        <div class="wrap-effect-cost">
-                                                            <ul></ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="line-center form-group inline-group box-cost"><span></span></div>
-                                                <div class="form-group inline-group box-cost" data-tab="max">
-                                                    <input type="text" class="form-control cost-value" placeholder="max" readonly="readonly">
-                                                    <input type="hidden" id="maxCost" name="costMax" class="valPrice">
-                                                    <div class=" wrap-cost-bds hidden-cost">
-                                                        <div class="wrap-effect-cost">
-                                                            <ul></ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="btn-cost">
-                                                    <button type="button" class="btn btn-primary btn-sm btn-common">OK</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <button id="btn-search" type="submit" class="btn btn-default">
-                            <span><em class=""></em></span>
-                        </button>
-
-                        <input class="valInputHidden" id="valSearch" name="valSearch" type="hidden" value="">
-                        <input class="valInputHidden" id="valTabActive" name="activeSearch" type="hidden" value="">
-                        <input class="valInputHidden" id="valType" name="type" type="hidden" value="">
-
-                        <input class="valInputHidden" id="valTinhThanh" name="city" type="hidden" value="">
-                        <input class="valInputHidden" id="valQuanHuyen" name="district" type="hidden" value="">
-                        <input class="valInputHidden" id="valLoaiBDS" name="category" type="hidden" value="">
-                        <input class="valInputHidden" id="valDuAn" name="project" type="hidden" value="">
-                        <input class="valInputHidden" id="valTinTuc" name="newsType" type="hidden" value="">
-                        <input class="valInputHidden" id="valLoaiTinTuc" name="newsCat" type="hidden" value="">
-                        
-                    <?php ActiveForm::end(); ?>
-                    <div class="pull-left text-right mgT-10 options-search">
-                        <div class="icon-selected">
-                            <a href="#">
-                                <span><em class="fa fa-home"></em><em class="fa fa-file-text"></em></span>
-                            </a>
-                            <em class="fa fa-sort-desc"></em>
-                        </div>
-                        <div data-active="1" data-tab="mua-thue" class="search-select active" data-step='step1'>
-                            <a href="#">
-                                <span>
-                                    <em class="fa fa-home"></em>
-                                    <em class="fa fa-search"></em>
-                                </span>
-                                <i>Muốn Mua/Thuê</i>
-                            </a>
-                        </div>
-                        <div data-active="2" data-tab="ban-thue" class="search-select" data-step='step2'>
-                            <a href="#">
-                                <span>
-                                    <em class="fa fa-home"></em>
-                                    <em class="fa fa-pencil-square-o"></em>
-                                </span>
-                                <i>Đăng ký Bán/Thuê</i>
-                            </a>
-                        </div>
-                        <div data-active="3" data-tab="tin-tuc"  class="search-select" data-step='step3'>
-                            <a href="#">
-                                <span>
-                                    <em class="fa fa-home"></em>
-                                    <em class="fa fa-file-text"></em>
-                                </span>
-                                <i>Tin Tức</i>
-                            </a>
-                        </div>
+                            </li>
+                        </ul>
                     </div>
-                </div>
-            </div>
-        </div>
+                </li>
+            <?php }?>
+        </ul>
+        <a href="<?=Url::home()?>" class="logo-header"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png" alt=""></a>
     </div>
 </header>

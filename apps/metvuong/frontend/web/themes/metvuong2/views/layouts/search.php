@@ -2,7 +2,7 @@
 
 <?php $this->beginContent('@app/views/layouts/main.php'); ?>
     <?php $this->beginContent('@app/views/layouts/_partials/news/nav.php'); ?><?php $this->endContent();?>
-    <div class="o-wrapper clearfix search-result-page">
+    <div id="wrapper-body" class="o-wrapper clearfix search-result-page">
         <?php $this->beginContent('@app/views/layouts/_partials/header.php'); ?><?php $this->endContent();?>
         <div class="container cd-main-content">
             <?= $content ?>
