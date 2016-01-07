@@ -12,7 +12,6 @@ use yii\helpers\Url;
 use vsoft\ad\models\AdProductAdditionInfo;
 use vsoft\express\components\StringHelper;
 
-
     $images = $product->adImages;
 	$street = AdStreet::findOne($product->street_id);
 	$ward = AdWard::findOne($product->ward_id);
@@ -48,7 +47,58 @@ use vsoft\express\components\StringHelper;
 	} else {
 		$address = "{$district->pre} {$district->name}, {$city->name}";
 	}
+
+    $imgFB = Yii::$app->urlManager->hostInfo.Yii::$app->view->theme->baseUrl."/resources/images/logo.png";
+    if(!empty($images[0]["file_name"])) {
+        if (preg_match('/^(http|https):\\/\\/[a-z0-9_]+([\\-\\.]{1}[a-z_0-9]+)*\\.[_a-z]{2,5}' . '((:[0-9]{1,5})?\\/.*)?$/i', $images[0]["file_name"])) {
+            $imgFB = $images[0]["file_name"];
+        } else {
+            $imgFB = Yii::$app->urlManager->hostInfo.Yii::$app->view->theme->baseUrl."/".$images[0]["file_name"];
+        }
+    }
+
+    Yii::$app->view->registerMetaTag([
+        'property' => 'og:title',
+        'content' => trim($address)
+    ]);
+    Yii::$app->view->registerMetaTag([
+        'property' => 'og:description',
+        'content' => $product->content
+    ]);
+    Yii::$app->view->registerMetaTag([
+        'property' => 'og:type',
+        'content' => 'article'
+    ]);
+    Yii::$app->view->registerMetaTag([
+        'property' => 'og:image',
+        'content' => $imgFB
+    ]);
+
+    $fb_appId = '680097282132293';
+    if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
+        $fb_appId = '736950189771012';
+    else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
+        $fb_appId = '891967050918314';
+
 ?>
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : <?=$fb_appId?>,
+            xfbml      : true,
+            version    : 'v2.5'
+        });
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.async=true;
+        js.src = "//connect.facebook.net/vi_VN/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
 <div id="detail-listing">
 
     <div class="detail-slide">
@@ -56,7 +106,7 @@ use vsoft\express\components\StringHelper;
             <div class="modal-header">
                 <div class="tabs-detail-item clearfix">
                     <ul class="pull-left">
-                        <li><a href="#" class="save-item icon-hear" data-id="<?=$product->id;?>" href="#" data-url="<?=Url::to(['/ad/favorite'])?>"><em class="fa fa-heart-o"></em>Save</a></li>
+                        <li><a href="#" class="save-item icon-hear"  data-id="<?=$product->id;?>" href="#" data-url="<?=Url::to(['/ad/favorite'])?>"><em class="fa fa-heart-o"></em>Save</a></li>
                         <li><a href="#" data-toggle="modal" data-target="#box-share" class="share-item"><em class="fa fa-share-alt"></em>Share</a></li>
                         <li><a href="#" class="more-item">More<em class="fa fa-sort-desc"></em></a>
                             <div class="sub-more hidden-effect">
@@ -149,19 +199,18 @@ use vsoft\express\components\StringHelper;
                                             <div class="form-group">
                                                 <?= $f->field($share_form, 'content')->textarea(['class'=>'form-control content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('content', 'Nội dung chia sẻ...')]) ?>
                                             </div>
-                                            <?= $f->field($share_form, 'address')->hiddenInput(['value'=>$address])->label(false) ?>
-                                            <?= $f->field($share_form, 'detailUrl')->hiddenInput(['value'=>Yii::$app->urlManager->createAbsoluteUrl(['ad/detail', 'id'=>$product->id, 'slug'=>\yii\helpers\Inflector::slug($product->getAddress())])])->label(false) ?>
-                                            <?= $f->field($share_form, 'domain')->hiddenInput(['value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
+                                            <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=>$address])->label(false) ?>
+                                            <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=>Yii::$app->urlManager->createAbsoluteUrl(['ad/detail', 'id'=>$product->id, 'slug'=>\yii\helpers\Inflector::slug($product->getAddress())])])->label(false) ?>
+                                            <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
                                             <div class="form-group">
                                                 <button type="button" class="btn btn-common send_mail">Gửi email</button>
                                             </div>
                                             <ul class="share-social clearfix">
-                                                <li>Chia sẻ kết nối</li>
-                                                <li><a href="#" class="logo-social fb-icon"></a></li>
-                                                <li><a href="#" class="logo-social twe-icon"></a></li>
-                                                <li><a href="#" class="logo-social g-icon"></a></li>
+                                                <li class="right"><a href="#" class="logo-social g-icon"></a></li>
+                                                <li class="right"><a href="#" class="logo-social twe-icon"></a></li>
+                                                <li class="right"><a href="#" class="logo-social fb-icon"></a></li>
                                             </ul>
-                                        <?php ActiveForm::end(); ?>
+                                        <?php $f->end(); ?>
                                     </div>
                                 </div>
                             </div>
@@ -333,7 +382,6 @@ use vsoft\express\components\StringHelper;
     <script type="text/javascript">
         $(document).on('click', '#share_form button.send_mail', function(){
             var timer = 0;
-            var _this = $(this);
             var recipient_email = $('#share_form .recipient_email').val();
             var your_email = $('#share_form .your_email').val();
             if(recipient_email != null && your_email != null) {
@@ -374,6 +422,20 @@ use vsoft\express\components\StringHelper;
                 }, 1000);
             }
             return false;
+        });
+
+        $(document).on('click', '#share_form a.fb-icon', function() {
+            var detailUrl = $('#share_form ._detailUrl').val();
+            if(detailUrl == null || detailUrl == '' )
+                detailUrl = $('#share_form ._domain').val();
+            FB.ui({
+                method: 'share',
+                href: detailUrl
+            }, function(response){});
+        });
+
+        $(document).on('click', '#share_form a.twe-icon', function() {
+            location.href='skype:nhuttranm?chat';
         });
     </script>
 </div>
