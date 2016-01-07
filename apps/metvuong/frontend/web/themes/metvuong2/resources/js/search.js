@@ -336,7 +336,7 @@
                     menuScroll (_this);
                     tabActiveGet = _this.data('active');
 
-                    iconChange (tabActiveGet);
+                    //iconChange (tabActiveGet);
                     
                     if ( !flagCookie || current != '' ) {
                         stepFirst(step);
@@ -352,7 +352,7 @@
                 menuScroll (_this);
                 tabActiveGet = _this.data('active');
 
-                iconChange (tabActiveGet);
+                //iconChange (tabActiveGet);
 
                 tabs.removeClass('active');
                 $(this).addClass('active');
@@ -756,7 +756,7 @@
             cookieSearch();
             
             setTimeout(function() {
-                boxCenter();
+                //boxCenter();
             },150);
 
             renderStep();
@@ -816,8 +816,8 @@
         };
 
         $(window).resize(function () {
-            boxCenter();
-            inputResize();
+            //boxCenter();
+            //inputResize();
         });
 
         // price min-max khi chon search theo gia
