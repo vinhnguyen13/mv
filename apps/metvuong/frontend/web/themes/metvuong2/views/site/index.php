@@ -42,6 +42,16 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
             },500);
         });
 
+        var swiper = new Swiper('.swiper-container', {
+            scrollbar: '.swiper-scrollbar',
+            scrollbarHide: false,
+            slidesPerView: 4,
+            slidesPerColumn: 2,
+            paginationClickable: true,
+            spaceBetween: 0,
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+        });
     });
 </script>
 <div id="wrapper-body" class="o-wrapper clearfix wrap-page-home">
@@ -334,77 +344,156 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                 <li><a href="#">Landed Property</a></li>
             </ul>
             <div class="row list-du-an">
-                <div class="col-md-3">
-                    <a href="#">
-                        <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-1.jpg" alt="">
-                        <div>
-                            <p><span class="name-duan">Syrena Nha Trang</span>
-                              <span class="see-more">Click to see more</span></p>
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="col-md-3 swiper-slide">
+                            <a href="#">
+                                <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-1.jpg" alt="">
+                                <div>
+                                    <p><span class="name-duan">Syrena Nha Trang</span>
+                                      <span class="see-more">Click to see more</span></p>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
-                <div class="col-md-3">
-                    <a href="#">
-                        <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-2.jpg" alt="">
-                        <div>
-                            <p><span class="name-duan">Syrena Nha Trang</span>
-                              <span class="see-more">Click to see more</span></p>
+                        <div class="col-md-3 swiper-slide">
+                            <a href="#">
+                                <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-2.jpg" alt="">
+                                <div>
+                                    <p><span class="name-duan">Syrena Nha Trang</span>
+                                      <span class="see-more">Click to see more</span></p>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
-                <div class="col-md-3">
-                    <a href="#">
-                        <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-3.jpg" alt="">
-                        <div>
-                            <p><span class="name-duan">Syrena Nha Trang</span>
-                              <span class="see-more">Click to see more</span></p>
+                        <div class="col-md-3 swiper-slide">
+                            <a href="#">
+                                <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-3.jpg" alt="">
+                                <div>
+                                    <p><span class="name-duan">Syrena Nha Trang</span>
+                                      <span class="see-more">Click to see more</span></p>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
-                <div class="col-md-3">
-                    <a href="#">
-                        <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-4.jpg" alt="">
-                        <div>
-                            <p><span class="name-duan">Syrena Nha Trang</span>
-                              <span class="see-more">Click to see more</span></p>
+                        <div class="col-md-3 swiper-slide">
+                            <a href="#">
+                                <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-4.jpg" alt="">
+                                <div>
+                                    <p><span class="name-duan">Syrena Nha Trang</span>
+                                      <span class="see-more">Click to see more</span></p>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
-                <div class="col-md-3">
-                    <a href="#">
-                        <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-1.jpg" alt="">
-                        <div>
-                            <p><span class="name-duan">Syrena Nha Trang</span>
-                              <span class="see-more">Click to see more</span></p>
+                        <div class="col-md-3 swiper-slide">
+                            <a href="#">
+                                <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-1.jpg" alt="">
+                                <div>
+                                    <p><span class="name-duan">Syrena Nha Trang</span>
+                                      <span class="see-more">Click to see more</span></p>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
-                <div class="col-md-3">
-                    <a href="#">
-                        <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-2.jpg" alt="">
-                        <div>
-                            <p><span class="name-duan">Syrena Nha Trang</span>
-                              <span class="see-more">Click to see more</span></p>
+                        <div class="col-md-3 swiper-slide">
+                            <a href="#">
+                                <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-2.jpg" alt="">
+                                <div>
+                                    <p><span class="name-duan">Syrena Nha Trang</span>
+                                      <span class="see-more">Click to see more</span></p>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
-                <div class="col-md-3">
-                    <a href="#">
-                        <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-3.jpg" alt="">
-                        <div>
-                            <p><span class="name-duan">Syrena Nha Trang</span>
-                              <span class="see-more">Click to see more</span></p>
+                        <div class="col-md-3 swiper-slide">
+                            <a href="#">
+                                <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-3.jpg" alt="">
+                                <div>
+                                    <p><span class="name-duan">Syrena Nha Trang</span>
+                                      <span class="see-more">Click to see more</span></p>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
-                <div class="col-md-3">
-                    <a href="#">
-                        <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-4.jpg" alt="">
-                        <div>
-                            <p><span class="name-duan">Syrena Nha Trang</span>
-                              <span class="see-more">Click to see more</span></p>
+                        <div class="col-md-3 swiper-slide">
+                            <a href="#">
+                                <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-4.jpg" alt="">
+                                <div>
+                                    <p><span class="name-duan">Syrena Nha Trang</span>
+                                      <span class="see-more">Click to see more</span></p>
+                                </div>
+                            </a>
                         </div>
-                    </a>
+                        <div class="col-md-3 swiper-slide">
+                            <a href="#">
+                                <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-1.jpg" alt="">
+                                <div>
+                                    <p><span class="name-duan">Syrena Nha Trang</span>
+                                      <span class="see-more">Click to see more</span></p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3 swiper-slide">
+                            <a href="#">
+                                <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-2.jpg" alt="">
+                                <div>
+                                    <p><span class="name-duan">Syrena Nha Trang</span>
+                                      <span class="see-more">Click to see more</span></p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3 swiper-slide">
+                            <a href="#">
+                                <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-3.jpg" alt="">
+                                <div>
+                                    <p><span class="name-duan">Syrena Nha Trang</span>
+                                      <span class="see-more">Click to see more</span></p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3 swiper-slide">
+                            <a href="#">
+                                <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-4.jpg" alt="">
+                                <div>
+                                    <p><span class="name-duan">Syrena Nha Trang</span>
+                                      <span class="see-more">Click to see more</span></p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3 swiper-slide">
+                            <a href="#">
+                                <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-1.jpg" alt="">
+                                <div>
+                                    <p><span class="name-duan">Syrena Nha Trang</span>
+                                      <span class="see-more">Click to see more</span></p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3 swiper-slide">
+                            <a href="#">
+                                <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-2.jpg" alt="">
+                                <div>
+                                    <p><span class="name-duan">Syrena Nha Trang</span>
+                                      <span class="see-more">Click to see more</span></p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3 swiper-slide">
+                            <a href="#">
+                                <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-3.jpg" alt="">
+                                <div>
+                                    <p><span class="name-duan">Syrena Nha Trang</span>
+                                      <span class="see-more">Click to see more</span></p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-3 swiper-slide">
+                            <a href="#">
+                                <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-4.jpg" alt="">
+                                <div>
+                                    <p><span class="name-duan">Syrena Nha Trang</span>
+                                      <span class="see-more">Click to see more</span></p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="swiper-scrollbar"></div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
                 </div>
             </div>
         </div>
