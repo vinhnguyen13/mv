@@ -40,7 +40,7 @@ class ShareForm extends Model
             [['recipient_email', 'your_email'], 'required'],
             [['recipient_email', 'your_email'], 'email'],
             [['recipient_email', 'your_email'], 'string', 'max' => 255],
-            [['address', 'content', 'detailUrl'], 'string'],
+            [['address', 'content', 'detailUrl', 'domain'], 'string'],
         ];
     }
 

@@ -17,6 +17,12 @@ $this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy(
 
 $saved = Yii::$app->user->isGuest ? [] : ArrayHelper::getColumn(AdProductSaved::find()->where('user_id = ' . Yii::$app->user->id)->andWhere('saved_at != 0')->all(), 'product_id');
 $this->registerJs('var saved = ' . json_encode($saved) . ';', View::POS_BEGIN);
+
+$fb_appId = '680097282132293';
+if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
+    $fb_appId = '736950189771012';
+else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
+    $fb_appId = '891967050918314';
 ?>
 <div class="list-filters-result">
 	<form id="map-search-form" action="<?= Url::to('/real-estate/result') ?>" method="post">
@@ -240,19 +246,19 @@ $this->registerJs('var saved = ' . json_encode($saved) . ';', View::POS_BEGIN);
             <div role="tabpanel" class="tab-pane fade in active" id="moi-nhat">
                 <div id="listing-loading" style="padding: 10px;">
                 	<div class="loading_new_feed">          
-                            <div class="_2iwr"></div>            
-                            <div class="_2iws"></div>            
-                            <div class="_2iwt"></div>            
-                            <div class="_2iwu"></div>            
-                            <div class="_2iwv"></div>            
-                            <div class="_2iww"></div>            
-                            <div class="_2iwx"></div>            
-                            <div class="_2iwy"></div>            
-                            <div class="_2iwz"></div>            
-                            <div class="_2iw-"></div>            
-                            <div class="_2iw_"></div>            
-                            <div class="_2ix0"></div>        
-                        </div>
+                        <div class="_2iwr"></div>
+                        <div class="_2iws"></div>
+                        <div class="_2iwt"></div>
+                        <div class="_2iwu"></div>
+                        <div class="_2iwv"></div>
+                        <div class="_2iww"></div>
+                        <div class="_2iwx"></div>
+                        <div class="_2iwy"></div>
+                        <div class="_2iwz"></div>
+                        <div class="_2iw-"></div>
+                        <div class="_2iw_"></div>
+                        <div class="_2ix0"></div>
+                    </div>
                 </div>
                 <ul class="list-results clearfix"></ul>
                 <div id="no-result" style="text-align: center; padding: 22px; display: none;">Chưa có tòa nhà nào được đăng như tìm kiếm của bạn.</div>
@@ -263,6 +269,24 @@ $this->registerJs('var saved = ' . json_encode($saved) . ';', View::POS_BEGIN);
         </div>
     </div>
 </div>
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : <?=$fb_appId?>,
+            xfbml      : true,
+            version    : 'v2.5'
+        });
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.async=true;
+        js.src = "//connect.facebook.net/vi_VN/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
 <div class="modal fade" id="box-share-1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -298,12 +322,12 @@ $this->registerJs('var saved = ' . json_encode($saved) . ';', View::POS_BEGIN);
                     </div>
                     <?= $f1->field($share_form_1, 'address')->hiddenInput(['class' => '_address'])->label(false) ?>
                     <?= $f1->field($share_form_1, 'detailUrl')->hiddenInput(['class' => '_detailUrl'])->label(false) ?>
-                    <?= $f1->field($share_form_1, 'domain')->hiddenInput(['value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
+                    <?= $f1->field($share_form_1, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
                     <div class="form-group">
                         <button type="button" class="btn btn-common send_mail">Gửi email</button>
                     </div>
                     <ul class="share-social clearfix">
-                        <li>Chia sẻ kết nối</li>
+                        <li>Chia sẻ mạng xã hội</li>
                         <li><a href="#" class="logo-social fb-icon"></a></li>
                         <li><a href="#" class="logo-social twe-icon"></a></li>
                         <li><a href="#" class="logo-social g-icon"></a></li>

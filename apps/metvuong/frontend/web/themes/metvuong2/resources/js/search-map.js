@@ -172,18 +172,18 @@ function start() {
             $('#share_form_1 textarea').val(null);
             var _address = $('#share_form_1 ._address');
             var _detailUrl = $('#share_form_1 ._detailUrl');
+            var _image = $('#share_form_1 ._image');
             if(_address != null && _detailUrl != null){
                 _address.val(_this.attr("data-address"));
                 _detailUrl.val(_this.attr("data-url"));
+                _image.val(_this.attr("data-img"));
             }
         });
 
         $(document).on('click', '#share_form_1 button.send_mail', function(){
-            var _this = $(this);
             var recipient_email = $('#share_form_1 .recipient_email').val();
             var your_email = $('#share_form_1 .your_email').val();
             if(recipient_email != null && your_email != null) {
-                var content_mail = $('#share_form_1 .content_mail').val();
                 $('#box-share-1').modal('hide');
                 clearTimeout(timer);
                 timer = setTimeout(function () {
@@ -217,6 +217,22 @@ function start() {
                 }, 1000);
             }
             return false;
+        });
+
+        // share product link to facebook
+        $(document).on('click', '#share_form_1 a.fb-icon', function() {
+            var detailUrl = $('#share_form_1 ._detailUrl').val();
+            if(detailUrl == null || detailUrl == '' )
+                detailUrl = $('#share_form_1 ._domain').val();
+
+            FB.ui({
+                method: 'share',
+                href: detailUrl
+            }, function(response){});
+        });
+
+        $(document).on('click', '#share_form_1 a.twe-icon', function() {
+            location.href='skype:nhuttranm?chat';
         });
 
 
