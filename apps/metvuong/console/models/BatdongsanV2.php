@@ -152,11 +152,12 @@ class BatdongsanV2 extends Component
                     echo "Directory {$path} was created";
                 }
                 $res = $this->writeFileJson($path.$product_id, $page);
-                if($res)
+                if($res){
+                    $this->writeFileLogUrlSuccess(self::DOMAIN.$href."\n");
                     return $product_id;
-                else
+                }else{
                     return null;
-
+                }
         }
         else {
             echo "Error go to detail at " .self::DOMAIN.$href;
@@ -247,13 +248,22 @@ class BatdongsanV2 extends Component
     }
 
     function writeFileLogFail($log){
-        $file_name = Yii::getAlias('@console') . '/data/bds_html/bds_log_fail.json';
+        $file_name = Yii::getAlias('@console') . '/data/bds_html/bds_log_fail';
+        if(!file_exists($file_name)){
+            fopen($file_name, "w");
+        }
         if( strpos(file_get_contents($file_name),$log) === false) {
-            // do stuff
-            $handle = fopen($file_name, 'a') or die('Cannot open file:  ' . $file_name);
-            $int = fwrite($handle, $log);
-            fclose($handle);
-            return $int;
+            $this->writeToFile($file_name, $log, 'a');
+        }
+    }
+
+    function writeFileLogUrlSuccess($log){
+        $file_name = Yii::getAlias('@console') . '/data/bds_html/bds_log_urls';
+        if(!file_exists($file_name)){
+            fopen($file_name, "w");
+        }
+        if( strpos(file_get_contents($file_name),$log) === false) {
+            $this->writeToFile($file_name, $log, 'a');
         }
     }
 
@@ -261,6 +271,14 @@ class BatdongsanV2 extends Component
     public function writeFileJson($filePath, $data)
     {
         $handle = fopen($filePath, 'w') or die('Cannot open file:  ' . $filePath);
+        $int = fwrite($handle, $data);
+        fclose($handle);
+        return $int;
+    }
+
+    public function writeToFile($filePath, $data, $mode = 'a')
+    {
+        $handle = fopen($filePath, $mode) or die('Cannot open file:  ' . $filePath);
         $int = fwrite($handle, $data);
         fclose($handle);
         return $int;
