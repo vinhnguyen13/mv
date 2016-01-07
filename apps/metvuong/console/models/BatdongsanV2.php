@@ -76,6 +76,8 @@ class BatdongsanV2 extends Component
                         sleep(1);
                         ob_flush();
                     }
+                }else {
+                    $this->writeFileLogFail("Paging error: Current:$current_page_add , last:$last_page"."\n");
                 }
             } else {
                 echo "Cannot find listing. End page!".self::DOMAIN;
