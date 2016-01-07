@@ -26,6 +26,7 @@ use yii\helpers\FileHelper;
 class BatdongsanV2 extends Component
 {
     const DOMAIN = 'http://batdongsan.com.vn';
+    const TYPE = 'nha-dat-ban-tp-hcm';
     protected $time_start = 0;
     protected $time_end = 0;
 
@@ -49,16 +50,14 @@ class BatdongsanV2 extends Component
 
     public function getPages()
     {
-        $url = self::DOMAIN . '/nha-dat-ban-tp-hcm';
+        $url = self::DOMAIN . '/' . self::TYPE;
         $page = $this->getUrlContent($url);
         if(!empty($page)) {
             $html = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
             $pagination = $html->find('.container-default .background-pager-right-controls a');
             $count_page = count($pagination);
-            $last_page = (int)str_replace("/nha-dat-ban/p", "", $pagination[$count_page-1]->href);
-//            $last_page = str_replace("/nha-dat-ban-phuong-tan-quy/p", "", $pagination[$count_page-1]->href);
+            $last_page = (int)str_replace("/".self::TYPE."/p", "", $pagination[$count_page-1]->href);
             if($count_page > 0) {
-//                $last_page = 3;
                 $log = $this->loadFileLog();
                 $current_page = empty($log["current_page"]) ? 1 : ($log["current_page"]+1);
                 $current_page_add = $current_page + 4;
@@ -91,8 +90,7 @@ class BatdongsanV2 extends Component
 
     public function getListProject($current_page, $sequence_id, $log)
     {
-        $href = "/nha-dat-ban/p".$current_page;
-//        $href = "/nha-dat-ban-phuong-tan-quy/p".$current_page;
+        $href = "/".self::TYPE."/p".$current_page;
         $page = $this->getUrlContent(self::DOMAIN . $href);
         if(!empty($page)) {
             $html = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
@@ -300,7 +298,7 @@ class BatdongsanV2 extends Component
         curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.1.4322)');
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_REFERER, self::DOMAIN . '/nha-dat-ban/');
+        curl_setopt($ch, CURLOPT_REFERER, self::DOMAIN . '/'.self::TYPE.'/');
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
         curl_setopt($ch, CURLOPT_TIMEOUT, 100);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
