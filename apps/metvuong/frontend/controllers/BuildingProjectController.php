@@ -9,7 +9,7 @@ use yii\web\NotFoundHttpException;
 
 class BuildingProjectController extends Controller
 {
-	public $layout = '@app/views/layouts/news';
+	public $layout = '@app/views/layouts/layoutFull';
 	
 	function actionIndex() {
 		$model = AdBuildingProject::find()->where('`status` = ' . AdBuildingProject::STATUS_ENABLED)->one();
