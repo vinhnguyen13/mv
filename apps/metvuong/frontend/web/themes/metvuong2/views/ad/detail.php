@@ -74,7 +74,7 @@ use vsoft\express\components\StringHelper;
         'content' => $imgFB
     ]);
 
-    $fb_appId = '680097282132293';
+    $fb_appId = '680097282132293'; // stage.metvuong.com
     if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
         $fb_appId = '736950189771012';
     else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
@@ -206,7 +206,12 @@ use vsoft\express\components\StringHelper;
                                                 <button type="button" class="btn btn-common send_mail">Gửi email</button>
                                             </div>
                                             <ul class="share-social clearfix">
-                                                <li class="right"><a href="#" class="logo-social g-icon"></a></li>
+                                                <li class="right">
+                                                    <!-- Place this tag in your head or just before your close body tag. -->
+                                                    <script src="https://apis.google.com/js/platform.js" async defer></script>
+                                                    <!-- Place this tag where you want the share button to render. -->
+                                                    <div class="g-plus" data-action="share" data-height="24" data-href="http://local.metvuong.com/ad/detail?id=16382"></div>
+                                                </li>
                                                 <li class="right"><a href="#" class="logo-social twe-icon"></a></li>
                                                 <li class="right"><a href="#" class="logo-social fb-icon"></a></li>
                                             </ul>
