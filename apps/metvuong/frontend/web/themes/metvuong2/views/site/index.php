@@ -58,10 +58,10 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
     <header class="clearfix">
         <div class="container inner-header">
             <ul class="pull-right list-menu">
-                <li><a href="#">Buy</a></li>
-                <li><a href="#">Rent</a></li>
-                <li><a href="#">Sell</a></li>
-                <li><a href="#">Market Insights</a></li>
+                <li><a href="<?=Url::to(['ad/index', 'type'=>1]);?>">Buy</a></li>
+                <li><a href="<?=Url::to(['ad/index', 'type'=>1]);?>">Rent</a></li>
+                <li><a href="<?=Url::to(['ad/post']);?>">Sell</a></li>
+                <li><a href="javascript:alert('Comming Soon !');">Market Insights</a></li>
                 <?php if(Yii::$app->user->isGuest){?>
                     <li class="link-signup"><a href="#" data-toggle="modal" data-target="#frmRegister">Sign up</a></li>
                     <li class="link-login"><a href="#" data-toggle="modal" data-target="#frmLogin">Login</a></li>
