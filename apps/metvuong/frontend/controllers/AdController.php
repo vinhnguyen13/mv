@@ -149,6 +149,7 @@ class AdController extends Controller
 		if(Yii::$app->request->isAjax){
 			return $this->renderAjax('_partials/detail', ['product' => $product]);
 		}else{
+			$this->layout = '@app/views/layouts/layoutFull';
 			return $this->render('detail', ['product' => $product]);
 		}
     }
