@@ -595,9 +595,9 @@
                 valMax = $('.box-cost[data-tab="max"] .cost-value').val(),
                 txtMerge = '';
 
-            if ( valMin != '' ) {
+            if ( valMin != '' && valMin != undefined ) {
                 item.append('<em class="fa fa-long-arrow-up"></em>');
-            }else if ( valMax != '' ) {
+            }else if ( valMax != '' && valMax != undefined ) {
                 item.append('<em class="fa fa-long-arrow-down"></em>');
             }
 
@@ -1008,8 +1008,22 @@
         // resize input khi insert suggest
         function inputResize () {
             mv.settings.input.hide();
+
+            var wWrapSuggest = 0;
+            mv.settings.wrapSuggest.find('li').each(function () {
+                wWrapSuggest += $(this).outerWidth() + 7;
+            });
+            mv.settings.wrapSuggest.css('width', wWrapSuggest+'px');
+
+            if ( $('.type-search div').length > 0 ) {
+                var wItem = $('.type-search div').outerWidth();
+                if ( wItem < wWrapSuggest ) {
+                    $('.type-search div').scrollLeft(wWrapSuggest);
+                }
+            }
+
             var wWrapSuggest = mv.settings.wrapSuggest.outerWidth(),
-                wWrap = $('.type-search').outerWidth();
+                wWrap = $('.type-search').width();
             mv.settings.input.css('width', wWrap - wWrapSuggest).show();
         };
 

@@ -5,11 +5,25 @@ var arrJSONReturn = {
 },objEvent;
 
 $(document).ready(function() {
+
     var hscreenFirst = $('.search-reals').outerHeight();
     $('#scroll-rearch-reals').css({height: hscreenFirst+'px'});
+
     $('[data-toggle="tooltip"]').tooltip({
         html: true
     });
+
+    $('.see-less').on('click', function() {
+        if ( $(this).hasClass('active') ) {
+            $(this).parent().find('.wrap-infor-attr').slideDown();
+            $(this).removeClass('active');
+        }else {
+            $(this).addClass('active');
+            $(this).parent().find('.wrap-infor-attr').slideUp();
+        }
+        return false;
+    });
+
     var $modal = $('.modal');
     $modal.on('show.bs.modal', function(e) {
         var curModal;

@@ -1,19 +1,35 @@
-<!-- <footer class="clearfix">
-    <div class="pull-left copyright">
-        <p><span>&copy;</span>2015. Bản quyền thuộc về Công ty Metvuong</p>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <a href="#" class="logo-footer"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png" alt=""></a>
+            </div>
+            <div class="col-md-3">
+                <ul>
+                    <li><a href="#">home</a></li>
+                    <li><a href="#">pricing</a></li>
+                    <li><a href="#">new developments</a></li>
+                    <li><a href="#">area guides</a></li>
+                    <li><a href="#">market insight</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <ul>
+                    <li><a href="#">about us</a></li>
+                    <li><a href="#">contact us</a></li>
+                    <li><a href="#">met vuong evaluator</a></li>
+                    <li><a href="#">mortgage calculator</a></li>
+                    <li><a href="#">careers</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3 send-email">
+                <p>subscribe to our newsletter</p>
+                <form action="">
+                    <input type="text" placeholder="Email address">
+                    <button class="btn-submit-email"><span class="icon"></span></button>
+                </form>
+            </div>
+        </div>
     </div>
-    <div class="pull-right polli">
-        <ul>
-            <li><a href="#">Giới thiệu</a></li>
-            <li><a href="#">Điều khoản</a></li>
-            <li>
-                <span>Kết nối:</span>
-                <a title="facebook metvuong.com" class="logo-social fb-icon" href="#"></a>
-                <a title="twitter metvuong.com" class="logo-social twe-icon" href="#"></a>
-                <a title="google plus metvuong.com" class="logo-social g-icon" href="#"></a>
-                <a title="youtube metvuong.com" class="logo-social ytu-icon" href="#"></a>
-            </li>
-        </ul>
-    </div>
-</footer> -->
+</footer>
 <?php $this->beginContent('@app/views/layouts/_partials/popup.php'); ?><?php $this->endContent();?>

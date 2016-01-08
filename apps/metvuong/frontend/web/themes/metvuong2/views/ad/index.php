@@ -39,8 +39,110 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
         <input class="hidden_filter" id="bed-filter" type="hidden" name="roomNo" value="<?= Yii::$app->request->get('roomNo') ?>" />
         <input class="hidden_filter" id="bath-filter" type="hidden" name="toiletNo" value="<?= Yii::$app->request->get('toiletNo') ?>" />
 
-        <ul class="container clearfix outsideevent list-filter">
-            <li>
+        <ul class="clearfix outsideevent list-filter">
+            <li class="search-filter">
+                <div class="box-search-header clearfix">
+                    <div class="pull-left">
+                        <div class="pull-left text-right mgT-10 list-tabs-search" style="display:none;">
+                            <div data-active="1" data-tab="mua-thue" class="search-select active" data-step='step1'>
+                                <a href="#">
+                                    Buy/Rent
+                                </a>
+                            </div>
+                        </div>
+                        <?php $form = ActiveForm::begin([
+                            'options'=>['class' => 'form-inline pull-left', 'method'=>'POST'],
+                            'id'=>'search-kind',
+                            'action'=>Url::to(['/ad/redirect']),
+                            'fieldConfig' => [],
+                        ]); ?>
+                            <div class="form-group">
+                                <div class="type-search">
+                                    <div class="clearfix">
+                                        <ul class="outsideevent"></ul>
+                                        <input id="searchInput" name="search" type="text" class="form-control outsideevent" placeholder="" readonly="readonly">
+                                    </div>
+                                </div>
+
+                                <div id="mua-thue" class="outsideevent search-wrap hidden-effect" data-step-title="Muốn Mua/Thuê ?">
+                                    <div class="wrap-effect">
+                                        <div class="search-item">
+                                            <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                            <div class="wrap-step">
+                                                <h3></h3>
+                                                <ul class="clearfix">
+                                                    <li data-id="1"><a href="#" data-item="mua-thue" data-slug-name data-next="tinh-thanh" data-prev>Muốn Mua</a></li>
+                                                    <li data-id="2"><a href="#" data-item="mua-thue" data-slug-name data-next="tinh-thanh" data-prev>Muốn Thuê</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="tinh-thanh" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn Tỉnh/Thành ?">
+                                    <div class="wrap-effect">
+                                        <div class="search-item">
+                                            <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                            <div class="wrap-step">
+                                                <h3></h3>
+                                                <ul></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="quan-huyen" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn Quận/Huyện ?">
+                                    <div class="wrap-effect">
+                                        <div class="search-item">
+                                            <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                            <div class="wrap-step">
+                                                <h3></h3>
+                                                <ul></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="loai-bds" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn loại bất động sản ?">
+                                    <div class="wrap-effect">
+                                        <div class="search-item">
+                                            <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                            <div class="wrap-step">
+                                                <h3></h3>
+                                                <ul></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="loai-duan" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn dự án ?">
+                                    <div class="wrap-effect">
+                                        <div class="search-item">
+                                            <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                            <div class="wrap-step">
+                                                <h3></h3>
+                                                <ul></ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button id="btn-search" type="submit" class="btn btn-default icon">
+                                <span><em class=""></em></span>
+                            </button>
+
+                            <input class="valInputHidden" id="valSearch" name="valSearch" type="hidden" value="">
+                            <input class="valInputHidden" id="valTabActive" name="activeSearch" type="hidden" value="">
+                            <input class="valInputHidden" id="valType" name="type" type="hidden" value="">
+                            <input class="valInputHidden" id="valTinhThanh" name="city" type="hidden" value="">
+                            <input class="valInputHidden" id="valQuanHuyen" name="district" type="hidden" value="">
+                            <input class="valInputHidden" id="valLoaiBDS" name="category" type="hidden" value="">
+                            <input class="valInputHidden" id="valDuAn" name="project" type="hidden" value="">
+                        <?php ActiveForm::end(); ?>
+                    </div>
+                </div>
+            </li>
+	        <li>
 	            <a href="#"><i class="pull-right"></i><span class="txt-tab">Giá</span><span class="txt-show"></span></a>
                 <div class="filter-pane filter-common hidden-effect" data-filter="price-min-max">
                     <div class="wrap-effect clearfix">
