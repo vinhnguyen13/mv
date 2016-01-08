@@ -507,7 +507,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                     ?>
                     <div class="clearfix item-1">
                         <div class="pull-right img-review">
-                            <img src="<?=\vsoft\news\models\CmsShow::getBanner($news[$i]['id']) ?>" alt="<?=$news[$i]['title']?>" alt="<?=$news[$i]['title']?>" width="550" height="350">
+                            <img src="<?=Url::to('/store/news/show/' . $news[$i]['banner']) ?>" alt="<?=$news[$i]['title']?>" alt="<?=$news[$i]['title']?>" width="550" height="350">
                         </div>
                         <div class="item-review-txt">
                             <strong><?=$news[$i]['title']?></strong>
@@ -531,7 +531,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                             </div>
                         </div>
                         <div class="img-review">
-                            <img src="<?=\vsoft\news\models\CmsShow::getBanner($news[$i]['id']) ?>" alt="<?=$news[$i]['title']?>" width="550" height="350">
+                            <img src="<?=Url::to('/store/news/show/' . $news[$i]['banner']) ?>" alt="<?=$news[$i]['title']?>" width="550" height="350">
                         </div>
                     </div>
                 <?php }

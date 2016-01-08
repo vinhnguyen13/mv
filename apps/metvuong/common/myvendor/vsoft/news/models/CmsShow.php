@@ -113,7 +113,8 @@ class CmsShow extends \funson86\cms\models\CmsShow
     }
 
     public static function getShowForHomepage(){
-        $query = CmsShow::find()->select(['id','banner','title','slug','brief','catalog_id'])->where('catalog_id = :id', [':id' => Yii::$app->params['homepageCatID']])->asArray()->orderBy(['updated_at' => SORT_DESC])->limit(3)->all();
+        $query = CmsShow::find()->select(['id','banner','title','slug','brief','catalog_id'])->where('catalog_id = :id', [':id' => Yii::$app->params['homepageCatID']])
+            ->andWhere('cms_show.status = :status', [':status' => 1])->asArray()->orderBy(['updated_at' => SORT_DESC])->limit(3)->all();
         return $query;
     }
 
