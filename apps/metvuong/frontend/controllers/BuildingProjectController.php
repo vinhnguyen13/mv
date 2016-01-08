@@ -12,7 +12,12 @@ class BuildingProjectController extends Controller
 	public $layout = '@app/views/layouts/news';
 	
 	function actionIndex() {
-		$query = AdBuildingProject::find()->where('`status` = ' . AdBuildingProject::STATUS_ENABLED);
+		$model = AdBuildingProject::find()->where('`status` = ' . AdBuildingProject::STATUS_ENABLED)->one();
+		if($model) {
+			return $this->render('view', ['model' => $model,]);
+		} else {
+			throw new NotFoundHttpException('The requested page does not exist.');
+		}
 		$countQuery = clone $query;
 		$query = $query->orderBy('created_at DESC');
 		
