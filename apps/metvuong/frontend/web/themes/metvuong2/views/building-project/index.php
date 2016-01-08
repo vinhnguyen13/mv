@@ -10,8 +10,7 @@ use yii\widgets\LinkPager;
 	] );
 	$this->registerJs ( "$('.bxslider').bxSlider({ mode: 'fade', auto: true, autoHover: true });", View::POS_READY, 'bxslider' );
 ?>
-
-<div class="row">
+<div class="row" style="display:none;">
 	<div class="col-sm-8 col-lg-9 col-right-home duan-page">
 		<div class="news-hot box-danb-slide bxslider">
 			<div class="">
@@ -106,15 +105,3 @@ use yii\widgets\LinkPager;
 		<?= \vsoft\news\widgets\NewsWidget::widget(['view' => 'important'])?>
 	</div>
 </div>
-
-<!-- <div class="social-share">
-	<ul>
-		<li><a href="#"><em class="fa fa-facebook"></em></a></li>
-		<li><a href="#"><em class="fa fa-twitter"></em></a></li>
-		<li><a href="#"><em class="fa fa-instagram"></em></a></li>
-		<li><a href="#"><em class="fa fa-google-plus"></em></a></li>
-		<li><a href="#"><em class="fa fa-youtube-play"></em></a></li>
-		<li><a href="#"><em class="fa fa-pinterest"></em></a></li>
-		<li><a href="#"><em class="fa fa-linkedin"></em></a></li>
-	</ul>
-</div> -->

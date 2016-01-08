@@ -90,7 +90,231 @@ EOD;
 
 $areaTypes = AdBuildingProject::getAreaTypes ();
 ?>
-<div class="row">
+
+<div class="detail-template-2">
+	<div id="scroll-rearch-reals"></div>
+	<div class="intro-duan">
+		<div class="container">
+			<div class="name-duan">
+				<h1>LANCASTER LUX</h1>
+				<p>luxury for the privilege few</p>
+			</div>
+			<div class="wrap-quick-review">
+				<div class="quick-view clearfix">
+					<div class="">
+						<div class="txt-intro">
+							<div class="loca-modern">
+								<div><span></span>Perfect Location</div>
+								<p>In the heart of District 1</p>
+							</div>
+							<div class="loca-modern">
+								<div><span></span>Branded Residence</div>
+								<p>Unique branding</p>
+							</div>
+							<div class="loca-modern">
+								<div><span></span>Modern Design</div>
+								<p>Designed by International Architects</p>
+							</div>
+						</div>
+					</div>
+					<div class="">
+						<div class="txt-intro">
+							<p>An advanced admin panel allowing your users to easily and quickly customize theme.Layout, styling, color or even fonts, everything is never been so simple.</p>
+							<p>In less than 2 minutes, install your fresh wordpress thme and be ready to do somethign beautifull thanks to Lecco.</p>
+						</div>
+					</div>
+					<div class="">
+						<div class="txt-intro">
+							<a href="#" class="see-project-map">See project location on map</a>
+							<a href="#" class="see-gallery">See the Sale Gallery?</a>
+							<a href="#">Book us a visit now</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="btn-scroll-down"><a href="#">Scroll down for more</a></div>
+		</div>
+	</div>
+    <div class="swiper-container gallery-detail-duan">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-2.jpg)">
+                <a data-lightbox="detail-post" class="group" href="<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-2.jpg"></a>
+            </div>
+            <div class="swiper-slide bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-4.jpg)">
+                <a data-lightbox="detail-post" class="group" href="<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-4.jpg"></a>
+            </div>
+            <div class="swiper-slide bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/22311_Khai-truong-Pearl-Plaza-10.jpg)">
+                <a data-lightbox="detail-post" class="group" href="<?=Yii::$app->view->theme->baseUrl?>/resources/images/22311_Khai-truong-Pearl-Plaza-10.jpg"></a>
+            </div>
+            <div class="swiper-slide bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/23311_Khai-truong-Pearl-Plaza-11.jpg)">
+                <a data-lightbox="detail-post" class="group" href="<?=Yii::$app->view->theme->baseUrl?>/resources/images/23311_Khai-truong-Pearl-Plaza-11.jpg"></a>
+            </div>
+            <div class="swiper-slide bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-2.jpg)">
+                <a data-lightbox="detail-post" class="group" href="<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-2.jpg"></a>
+            </div>
+            <div class="swiper-slide bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg)">
+                <a data-lightbox="detail-post" class="group" href="<?=Yii::$app->view->theme->baseUrl?>/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg"></a>
+            </div>
+            <div class="swiper-slide bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/621042015085736.jpg)">
+                <a data-lightbox="detail-post" class="group" href="<?=Yii::$app->view->theme->baseUrl?>/resources/images/621042015085736.jpg"></a>
+            </div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+    <div class="container infor-listing">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="name-duan">LANCASTER LUX</p>
+                <p class="address-duan">230 NGUYEN TRAI, DISTRICT 1, BEN NGHE WARD</p>
+            </div>
+            <div class="col-md-6">
+                <a href="#" class="view-floorplan pull-left"><span class="icon"></span>View Floorplan</a>
+                <a href="#" class="view-map pull-left"><em class="fa fa-map-marker"></em>View map</a>
+                <div class="clearfix"></div>
+                <div class="pull-right pull-left pdT-20">
+                    <button class="btn-favorite"><em class="fa fa-heart-o"></em></button>
+                    <button class="btn-contact-agent">contact agent</button>
+                </div>
+            </div>
+        </div>
+        <div class="row item-infor-detail">
+            <div class="col-md-4">
+                <strong>Key details</strong>
+                <span class="num-infor">20</span>
+            </div>
+            <div class="wrap-infor-attr col-md-8">
+                <div class="col-md-6">
+                    <ul class="clearfix">
+                        <li><span>Ownership:</span>Freehold</li>
+                        <li><span>Minimum down payment:</span>10%</li>
+                        <li><span>Units in building:</span>458</li>
+                        <li><span>Unit floor:</span>12</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul class="clearfix">
+                        <li><span>Building floors:</span>40</li>
+                        <li><span>building age:</span>new</li>
+                        <li><span>Maintenance fee:</span>18,000VND/SQM/Month</li>
+                        <li><span>Developer:</span>TTG holding</li>
+                        <li><span>Designer:</span>Bim factory</li>
+                        <li><span>Contractor:</span>cofico</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="#" class="see-less pull-right"><span class="icon"></span>see less</a>
+        </div>
+        <div class="row item-infor-detail">
+            <div class="col-md-4">
+                <strong>Amenities</strong>
+                <span class="num-infor">20</span>
+            </div>
+            <div class="wrap-infor-attr col-md-8">
+                <div class="col-md-6">
+                    <ul class="clearfix">
+                        <li>Gym</li>
+                        <li>Spa</li>
+                        <li>Swimming pool</li>
+                        <li>Sky park</li>
+                        <li>Club house</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul class="clearfix">
+                        <li>Library</li>
+                        <li>Kids playroom</li>
+                        <li>Mailbox</li>
+                        <li>24/7 concierge</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="#" class="see-less pull-right"><span class="icon"></span>see less</a>
+        </div>
+        <div class="row item-infor-detail">
+            <div class="col-md-4">
+                <strong>Finishing schedule</strong>
+                <span class="num-infor">20</span>
+            </div>
+            <div class="wrap-infor-attr col-md-8">
+                <div class="col-md-6">
+                    <ul class="clearfix">
+                        <li><span>Kitchen</span></li>
+                        <li>Miele or bosch equivalent</li>
+                        <li>Refridgerator</li>
+                        <li>Kitchen hob</li>
+                        <li>Electric water heater</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul class="clearfix">
+                        <li><span>Living room</span></li>
+                        <li>Split typeaircon</li>
+                        <li>Home automation system</li>
+                        <li>Video phone unit</li>
+                        <li>Rfid / Password protected door</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="#" class="see-less pull-right"><span class="icon"></span>see less</a>
+        </div>
+        <div class="row item-infor-detail">
+            <div class="col-md-4">
+                <strong>Nearby landmarks</strong>
+            </div>
+        </div>
+        <div class="row item-infor-detail">
+            <div class="col-md-4">
+                <strong>Pricing schedule</strong>
+            </div>
+        </div>
+        <div class="row item-infor-detail">
+            <div class="col-md-4">
+                <strong>Payment terms</strong>
+            </div>
+        </div>
+        <div class="row item-infor-detail">
+            <div class="col-md-4">
+                <strong>Mortgate calculator</strong>
+            </div>
+        </div>
+        <div class="row item-infor-detail">
+            <div class="col-md-4">
+                <strong>Project status</strong>
+            </div>
+        </div>
+        <div class="contact-agent-bottom">
+            <a href="#" class="wrap-img infor-agent">
+                <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/demo-agent.jpg" alt="">
+                <span class="name-agent">Hao Do</span>
+                <span class="email-agent">hao.do@metvuong.vn</span>
+            </a>
+            <button class="btn-contact-agent">contact agent</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="<?=Yii::$app->view->theme->baseUrl?>/resources/js/lightbox.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var swiper = new Swiper('.swiper-container', {
+            slidesPerView: 'auto',
+            paginationClickable: true,
+            spaceBetween: 0,
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev'
+        });
+
+        lightbox.option({
+            'resizeDuration': 300,
+            'fadeDuration': 400
+        });
+    });
+</script>
+
+
+
+<div class="row hide">
 	<div class="col-xs-7 pdR-0">
 		<div class="wrap-detail-duan">
 			<div id="tab-show-1" class="item-detail item-tqda">
@@ -342,14 +566,3 @@ $areaTypes = AdBuildingProject::getAreaTypes ();
 		</div>
 	</div>
 </div>
-<!-- <div class="social-share">
-	<ul>
-		<li><a href="#"><em class="fa fa-facebook"></em></a></li>
-		<li><a href="#"><em class="fa fa-twitter"></em></a></li>
-		<li><a href="#"><em class="fa fa-instagram"></em></a></li>
-		<li><a href="#"><em class="fa fa-google-plus"></em></a></li>
-		<li><a href="#"><em class="fa fa-youtube-play"></em></a></li>
-		<li><a href="#"><em class="fa fa-pinterest"></em></a></li>
-		<li><a href="#"><em class="fa fa-linkedin"></em></a></li>
-	</ul>
-</div> -->

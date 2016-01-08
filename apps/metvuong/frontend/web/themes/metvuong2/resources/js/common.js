@@ -6,8 +6,8 @@ var arrJSONReturn = {
 
 $(document).ready(function() {
 
-    var hscreenFirst = $('.search-reals').outerHeight();
-    $('#scroll-rearch-reals').css({height: hscreenFirst+'px'});
+    var hscreenFirst = $('.search-reals, .intro-duan').outerHeight();
+    $('#scroll-rearch-reals').css({height: (hscreenFirst-80)+'px'});
 
     $('[data-toggle="tooltip"]').tooltip({
         html: true
