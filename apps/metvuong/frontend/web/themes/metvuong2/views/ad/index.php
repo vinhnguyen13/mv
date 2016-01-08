@@ -293,8 +293,8 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                     <ul class="share-social clearfix">
                         <li>Chia sẻ mạng xã hội</li>
                         <li><a href="#" class="logo-social fb-icon"></a></li>
-                        <li><a href="#" class="logo-social twe-icon"></a></li>
-                        <li><a href="#" class="logo-social g-icon"></a></li>
+<!--                        <li><a href="#" class="logo-social twe-icon"></a></li>-->
+<!--                        <li><a href="#" class="logo-social g-icon"></a></li>-->
                     </ul>
                     <?php $f1->end(); ?>
                 </div>
