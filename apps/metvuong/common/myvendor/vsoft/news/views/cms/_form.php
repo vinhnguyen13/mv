@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
     ]); ?>
 
     <?php
-    $parentCatalog = ArrayHelper::merge([2 => 'News'], ArrayHelper::map(CmsCatalog::get(Yii::$app->params['newsCatID'], CmsCatalog::find()->where(['status' => Status::STATUS_ACTIVE])->asArray()->all()), 'id', 'label'));
+    $parentCatalog = ArrayHelper::merge([20 => 'Homepage', 2 => 'News'], ArrayHelper::map(CmsCatalog::get(Yii::$app->params['newsCatID'], CmsCatalog::find()->where(['status' => Status::STATUS_ACTIVE])->asArray()->all()), 'id', 'label'));
 //    $catalog_data = ArrayHelper::map(CmsCatalog::find()->where(['status' => Status::STATUS_ACTIVE])->all(), 'id', 'title');
     echo $form->field($model, 'catalog_id')->dropDownList($parentCatalog, [
         'options' => [$model->title => ['selected ' => true]],

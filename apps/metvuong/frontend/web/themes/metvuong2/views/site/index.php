@@ -498,13 +498,47 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
             </div>
         </div>
     </section>
-
+    <?php if(!empty($news) && count($news) > 0){?>
     <section class="explore-us">
         <div class="container">
             <h2>Explore with us</h2>
-            <div class="clearfix item-1">
+            <?php for($i=0; $i<count($news); $i++) {
+                if ($i%2 == 0) {
+                    ?>
+                    <div class="clearfix item-1">
+                        <div class="pull-right img-review">
+                            <img src="<?=\vsoft\news\models\CmsShow::getBanner($news[$i]['id']) ?>" alt="<?=$news[$i]['title']?>" alt="<?=$news[$i]['title']?>" width="550" height="350">
+                        </div>
+                        <div class="item-review-txt">
+                            <strong><?=$news[$i]['title']?></strong>
+
+                            <p><?=$news[$i]['brief']?></p>
+
+                            <div class="find-more-btn">
+                                <a href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news[$i]['id'], 'slug' => $news[$i]['slug'], 'cat_id' => $news[$i]['catalog_id']]) ?>"><span class="icon pull-right"></span>Find out more</a>
+                            </div>
+                        </div>
+                    </div>
+                <?php } else { ?>
+                    <div class="clearfix item-2">
+                        <div class="pull-right item-review-txt">
+                            <strong><?=$news[$i]['title']?></strong>
+
+                            <p><?=$news[$i]['brief']?></p>
+
+                            <div class="find-more-btn">
+                                <a href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news[$i]['id'], 'slug' => $news[$i]['slug'], 'cat_id' => $news[$i]['catalog_id']]) ?>"><span class="icon pull-right"></span>Find out more</a>
+                            </div>
+                        </div>
+                        <div class="img-review">
+                            <img src="<?=\vsoft\news\models\CmsShow::getBanner($news[$i]['id']) ?>" alt="<?=$news[$i]['title']?>" width="550" height="350">
+                        </div>
+                    </div>
+                <?php }
+            }?>
+            <!--<div class="clearfix item-1">
                 <div class="pull-right img-review">
-                    <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/new-development.jpg" alt="">
+                    <img src="<?/*=Yii::$app->view->theme->baseUrl*/?>/resources/images/market-ins.jpg" alt="">
                 </div>
                 <div class="item-review-txt">
                     <strong>Lorem ipsum dolor sit amet consectetur</strong>
@@ -513,33 +547,10 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                         <a href="#"><span class="icon pull-right"></span>Find out more</a>
                     </div>
                 </div>
-            </div>
-            <div class="clearfix item-2">
-                <div class="pull-right item-review-txt">
-                    <strong>Lorem ipsum dolor sit amet consectetur</strong>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                    <div class="find-more-btn">
-                        <a href="#"><span class="icon pull-right"></span>Find out more</a>
-                    </div>
-                </div>
-                <div class="img-review">
-                    <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/area.jpg" alt="">
-                </div>
-            </div>
-            <div class="clearfix item-1">
-                <div class="pull-right img-review">
-                    <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/market-ins.jpg" alt="">
-                </div>
-                <div class="item-review-txt">
-                    <strong>Lorem ipsum dolor sit amet consectetur</strong>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                    <div class="find-more-btn">
-                        <a href="#"><span class="icon pull-right"></span>Find out more</a>
-                    </div>
-                </div>
-            </div>
+            </div>-->
         </div>
     </section>
+    <?php } ?>
 
     <div id="iePopup">
         <div id="jr_overlay"></div>

@@ -31,6 +31,8 @@ class CmsShowSearch extends \funson86\cms\models\CmsShowSearch
         //get list parent catalog
         $parentCatalog = ArrayHelper::map(CmsCatalog::get(Yii::$app->params['newsCatID'], CmsCatalog::find()->asArray()->all()), 'id', 'label');
         $keys = array_keys($parentCatalog);
+        array_push($keys, Yii::$app->params['homepageCatID']);
+
         $query = CmsShow::find()->where('catalog_id in ('. implode (", ", $keys) . ')');
 
         $query->orderBy(['created_at' => SORT_DESC]);

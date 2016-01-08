@@ -6,6 +6,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use funson86\cms\models\Status;
+use vsoft\news\models\CmsShow;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\filters\AccessControl;
@@ -89,6 +90,9 @@ class SiteController extends Controller
     {
         $this->layout = '@app/views/layouts/main';
         Yii::$app->meta->add(Yii::$app->request->absoluteUrl);
+        $homepage_news = CmsShow::getShowForHomepage();
+        if(count($homepage_news) > 0)
+            return $this->render('index',['news' => $homepage_news]);
         return $this->render('index');
     }
 

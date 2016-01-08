@@ -9,6 +9,7 @@ use yii\behaviors\SluggableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "cms_show".
@@ -109,6 +110,24 @@ class CmsShow extends \funson86\cms\models\CmsShow
         else
             $username=User::findOne(Yii::$app->user->getId());
         return $username->username;
+    }
+
+    public static function getShowForHomepage(){
+        $query = CmsShow::find()->select(['id','banner','title','slug','brief','catalog_id'])->where('catalog_id = :id', [':id' => Yii::$app->params['homepageCatID']])->asArray()->orderBy(['updated_at' => SORT_DESC])->limit(3)->all();
+        return $query;
+    }
+
+    public static function getBanner($id){
+        $model = CmsShow::findOne($id);
+        $imgPath = Url::to("/frontend/web/themes/metvuong2/resources/images/default-ads.jpg");
+        if($model->banner) {
+            $checkFile = file_exists(Yii::getAlias('@store')."\\news\\show\\".$model->banner);
+            if($checkFile)
+                $imgPath = Url::to('/store/news/show/' . $model->banner);
+        } else {
+            $imgPath = Url::to( '/themes/metvuong2/resources/images/default-ads.jpg');// /frontend/web/themes/metvuong1/resources/images/default-ads.jpg
+        }
+        return $imgPath;
     }
 
 }
