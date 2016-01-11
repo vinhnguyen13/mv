@@ -4,10 +4,18 @@ use yii\helpers\Url;
 <div class="infor-user-profile col-xs-3">
     <div class="inner-infor">
         <div class="wrap-infor-profile">
-            <div class="title-box">
+
+            <ul class="clearfix left-dashboard">
+                <li><a class="active" href="#">Current Listing</a></li>
+                <li>-</li>
+                <li><a href="#">Pending Listing</a></li>
+                <li>-</li>
+            </ul>
+
+            <div class="title-box hide">
                 <h2>Trang cá nhân</h2>
             </div>
-            <div class="clearfix list-profile">
+            <div class="clearfix list-profile hide">
                 <div class="item-box">
                     <ul class="clearfix">
                         <li><a href="<?=Url::to(['user-management/chart'])?>" class="partial">Thống kê</a></li>

@@ -6988,3 +6988,23 @@ li.search-filter .search-wrap {
     right: 50px;
     left: inherit;
 }
+.infor-listing {
+    padding-bottom: 50px;
+}
+.left-dashboard {
+    padding: 30px;
+}
+.left-dashboard a {
+    font-size: 19px;
+    color: #fff;
+    font-weight: 300;
+    display: block;
+}
+.left-dashboard a:hover,
+.left-dashboard a.active {
+    color: #66a3f4;
+}
+.left-dashboard li {
+    margin-bottom: 15px;
+    color: #fff;
+}

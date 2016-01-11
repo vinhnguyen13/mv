@@ -43,6 +43,12 @@ Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporti
 					<span>Notifications</span>
 				</a>
 			</li>
+			<li class="pull-right">
+				<a href="#">
+					<em class="icon-settings"></em>
+					<span>Settings</span>
+				</a>
+			</li>
 		</ul>
 	</div>
     <?php $this->beginContent('@app/views/user-management/layouts/menu.php'); ?><?php $this->endContent();?>
