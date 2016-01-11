@@ -1,5 +1,6 @@
 <?php
 use yii\web\View;
+use yii\helpers\Url;
 Yii::$app->getView()->registerJsFile('http://code.highcharts.com/highcharts.js', ['position' => View::POS_BEGIN]);
 Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporting.js', ['position' => View::POS_BEGIN]);
 ?>
@@ -8,7 +9,7 @@ Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporti
 	<div class="function-setting-user">
 		<ul class="clearfix">
 			<li>
-				<a href="#">
+				<a href="<?=Url::to(['user-management/chart'])?>">
 					<em class="icon-layers"></em>
 					<span>Dashboard</span>	
 				</a>
@@ -32,7 +33,7 @@ Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporti
 				</a>
 			</li>
 			<li>
-				<a href="#">
+				<a href="<?=Url::to(['user-management/ad'])?>">
 					<em class="icon-picture"></em>
 					<span>Listings</span>
 				</a>
