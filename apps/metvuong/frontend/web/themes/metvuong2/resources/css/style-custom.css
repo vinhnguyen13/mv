@@ -6900,12 +6900,12 @@ li.search-filter .search-wrap {
     top: 174px;
 }
 .infor-user-profile .inner-infor {
-    width: 25%;
+    width: 17%;
     padding-bottom: 0;
 }
 .user_management .wrap-setting-detail {
-    width: 75%;
-    left: 25%;
+    width: 83%;
+    left: 17%;
 }
 .user_management .wrap-setting-detail .wrap-settings, 
 .infor-user-profile .inner-infor .wrap-infor-profile {
