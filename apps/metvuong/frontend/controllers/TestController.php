@@ -44,23 +44,29 @@ class TestController extends \yii\web\Controller
         }
     }
 
-    public function actionElastic(){
-        $ck = Tracking::find()->productVisitor(9);
-        echo "<pre>";
-        print_r($ck);
-        echo "</pre>";
-        exit;
-
-        $time = microtime();
-        $elastic = new Elastic();
-        $client = $elastic->connect();
-        $results = $elastic->search();
-        echo "<pre>";
-        print_r($results);
-        print_r('<br>');
-        print_r(microtime()-$time);
-        echo "</pre>";
-        exit;
+    public function actionElastic($action=''){
+        if($action == 'add'){
+            $uids = [4, 2];
+            $pids = range(1, 2);
+            $times = [strtotime('6-1-2016 8:30'), strtotime('6-1-2016 12:30'),
+                strtotime('5-1-2016 7:30'), strtotime('5-1-2016 9:30'),
+                strtotime('4-1-2016 4:30'), strtotime('4-1-2016 7:30'),
+                strtotime('7-1-2016 4:30'), strtotime('7-1-2016 7:30')
+            ];
+            foreach($pids as $pid){
+                $uid = array_rand(array_flip($uids), 1);
+                $time = array_rand(array_flip($times), 1);
+                $ck = Tracking::find()->productVisitor($uid, $pid, $time);
+            }
+        }elseif($action == 'search'){
+            $startTime = strtotime('2-1-2016');
+            $endTime = strtotime('9-1-2016');
+            $dataTracking = Tracking::find()->getProductTracking($startTime, $endTime);
+            echo "<pre>";
+            print_r($dataTracking);
+            echo "</pre>";
+            exit;
+        }
     }
 
     private function index($client){

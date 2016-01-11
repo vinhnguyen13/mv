@@ -132,18 +132,23 @@ class Elastic
         return $results;
     }
 
-    public function findOne(){
+    public function findOne($index, $type, $id, $function = 'getSource'){
         /**
          * must have 2 field
          */
         $params = [
-            'index' => 'listing',
-            'type' => 'store',
-            'id' => '28',
+            'index' => $index,
+            'type' => $type,
+            'id' => $id,
         ];
         // Document will be indexed to my_index/my_type/my_id
-        $results = $this->client->get($params);
-        return $results;
+        $chk = $this->client->exists($params);
+        if(!empty($chk)){
+//            $result = $client->get($params);
+            $result = $this->client->$function($params);
+            return $result;
+        }
+        return false;
     }
 
 
