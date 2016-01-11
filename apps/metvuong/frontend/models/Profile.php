@@ -102,12 +102,14 @@ class Profile extends ActiveRecord
 
     public function getAvatarUrl()
     {
+        $avatar = Url::to( '/images/default-avatar.jpg');
         if($this->avatar) {
             $pathinfo = pathinfo($this->avatar);
-            $avatar = Url::to('/store/avatar/' . $pathinfo['filename'] . '.thumb.' . $pathinfo['extension']);
-        } else {
-            $avatar = Url::to( '/images/default-avatar.jpg');
-        }
+            $filePath = Yii::getAlias('@store').'/avatar/' . $pathinfo['filename'] . '.thumb.' . $pathinfo['extension'];
+            if(file_exists($filePath)){
+                $avatar = Url::to('/store/avatar/' . $pathinfo['filename'] . '.thumb.' . $pathinfo['extension']);
+            }
+        } 
         return $avatar;
     }
 }
