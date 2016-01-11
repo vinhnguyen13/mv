@@ -60,8 +60,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $model->getCatalog()->one()->title;
                     return '';
                 },
-                'filter' => Html::activeDropDownList($searchModel, 'catalog_id', ArrayHelper::map(\vsoft\news\models\CmsCatalog::find()->where('id NOT IN (:id)', [':id' => Yii::$app->params["buildingCatID"]])
-                    ->andWhere('status = :status', [':status' => 1])->asArray()->all(), 'id', 'title'),['class'=>'form-control','prompt' => 'All Category']),
+                'filter' => Html::activeDropDownList($searchModel, 'catalog_id', ArrayHelper::map(\vsoft\news\models\CmsCatalog::find()->where(['not in', 'id', [Yii::$app->params["buildingCatID"],Yii::$app->params["newsCatID"] ]])
+                    ->andWhere('status = :status', [':status' => 1])->asArray()->all(), 'id', 'title'),['class'=>'form-control','prompt' => 'All']),
             ],
 
             [
@@ -69,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($model) {
                     return \vsoft\news\models\Status::labels($model->status);
                 },
-                'options' => ['width' => '100']
+                'filter' => Html::activeDropDownList($searchModel, 'status', \vsoft\news\models\Status::labels(),['class'=>'form-control']),
             ],
             [
                 'attribute' => 'updated_at',
