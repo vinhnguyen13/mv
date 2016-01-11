@@ -29,9 +29,9 @@ $(document).ready(function() {
         var curModal;
         curModal = this;
         $modal.each(function(i) {
-          if (this !== curModal) {
-            $(this).modal("hide");
-          }
+            if (this !== curModal) {
+                $(this).modal("hide");
+            }
         });
 
         var _this = $(this);
@@ -39,7 +39,7 @@ $(document).ready(function() {
             //$('body').addClass('modal-open').css('padding-right', '17px');
         }
     });
-	
+    
     //start click scroll to top
 	var btnScrollTop = $('<div id="topcontrol" title="Lên đầu trang"></div>')
 	$('body').append(btnScrollTop);

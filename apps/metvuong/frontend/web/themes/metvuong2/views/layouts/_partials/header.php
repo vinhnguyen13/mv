@@ -45,7 +45,7 @@ $searchParams = json_decode($value);
             <li><a href="<?=Url::to(['ad/index', 'type'=>1]);?>">Buy</a></li>
             <li><a href="<?=Url::to(['ad/index', 'type'=>1]);?>">Rent</a></li>
             <li><a href="<?=Url::to(['ad/post']);?>">Sell</a></li>
-            <li><a href="#">Market Insights</a></li>
+            <li><a href="javascript:alert('Comming Soon !');">Market Insights</a></li>
             <?php if(Yii::$app->user->isGuest){?>
                 <li class="link-signup"><a href="#" data-toggle="modal" data-target="#frmRegister">Sign up</a></li>
                 <li class="link-login"><a href="#" data-toggle="modal" data-target="#frmLogin">Login</a></li>

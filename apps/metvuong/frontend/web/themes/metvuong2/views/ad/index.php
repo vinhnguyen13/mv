@@ -152,7 +152,7 @@ $this->registerJs('var districts = ' . json_encode($districts) . ';', View::POS_
 	        <li>
 	            <a href="#"><i class="pull-right"></i><span class="txt-tab">Giá</span><span class="txt-show"></span></a>
                 <div class="filter-pane filter-common hidden-effect" data-filter="price-min-max">
-                    <div class="wrap-effect clearfix">
+                    <div class="wrap-effect">
                         <div id="minmax-entries" class="minmax-entries search-entry">
                             <div class="dualboxes">
                                 <div class="box1">
@@ -182,7 +182,7 @@ $this->registerJs('var districts = ' . json_encode($districts) . ';', View::POS_
 	        <li>
 	            <a href="#" data-symbol-unit="m<sup>2</sup>"><i class="pull-right"></i><span class="txt-tab">Diện tích</span><span class="txt-show"></span></a>
                 <div class="filter-common filter-pane hidden-effect" data-filter="dt-min-max">
-                    <div class="wrap-effect clearfix">
+                    <div class="wrap-effect">
                         <div id="minmax-entries" class="minmax-entries search-entry">
                             <div class="dualboxes">
                                 <div class="box1">
@@ -210,7 +210,7 @@ $this->registerJs('var districts = ' . json_encode($districts) . ';', View::POS_
 	        <li>
 	            <a href="#"><i class="pull-right"></i>Phòng ngủ<span class="txt-show"></span></a>
                 <div class="filter-common filter-pane filter-bed filter-dropdown hidden-effect" data-filter="phong-ngu">
-                    <div class="wrap-effect clearfix">
+                    <div class="wrap-effect">
                         <div class="filter-bed">
                             <ul class="dropdown-options search-entry">
                                 <li data-value="0"><a class="option">0+</a></li>
@@ -228,7 +228,7 @@ $this->registerJs('var districts = ' . json_encode($districts) . ';', View::POS_
             <li>
                 <a href="#"><i class="pull-right"></i>Phòng tắm<span class="txt-show"></span></a>
                 <div class="filter-common filter-pane filter-bed filter-dropdown hidden-effect" data-filter="phong-tam">
-                    <div class="wrap-effect clearfix">
+                    <div class="wrap-effect">
                         <div class="filter-bed">
                             <ul class="dropdown-options search-entry">
                                 <li data-value="0"><a class="option">0+</a></li>
@@ -246,7 +246,7 @@ $this->registerJs('var districts = ' . json_encode($districts) . ';', View::POS_
             <li>
                 <a href="#"><i class="pull-right"></i>Khác</a>
                 <div class="filter-common filter-pane filter-other hidden-effect">
-                    <div class="wrap-effect clearfix">
+                    <div class="wrap-effect">
                     		<div class="form-group">
                                 <label for="" class="col-sm-4 control-label">Người đăng</label>
                                 <div class="col-sm-8">
@@ -312,7 +312,7 @@ $this->registerJs('var districts = ' . json_encode($districts) . ';', View::POS_
             <?php if(!Yii::$app->user->isGuest): ?>
             <li role="presentation"><a data-order="price" href="#" aria-controls="re-nhat" role="tab" data-toggle="tab" data-href="<?= Url::to(['saved-listing']) ?>">Đã lưu</a></li>
             <?php endif; ?>
-            <li><a href="#">Full Map</a></li>
+            <li class="full-map"><a href="#">Full Map</a></li>
         </ul>
 
         <div class="tab-content">

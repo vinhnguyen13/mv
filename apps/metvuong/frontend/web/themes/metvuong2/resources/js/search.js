@@ -1009,7 +1009,7 @@
         function inputResize () {
             mv.settings.input.hide();
 
-            var wWrapSuggest = 0;
+            /*var wWrapSuggest = 0;
             mv.settings.wrapSuggest.find('li').each(function () {
                 wWrapSuggest += $(this).outerWidth() + 7;
             });
@@ -1020,7 +1020,7 @@
                 if ( wItem < wWrapSuggest ) {
                     $('.type-search div').scrollLeft(wWrapSuggest);
                 }
-            }
+            }*/
 
             var wWrapSuggest = mv.settings.wrapSuggest.outerWidth(),
                 wWrap = $('.type-search').width();

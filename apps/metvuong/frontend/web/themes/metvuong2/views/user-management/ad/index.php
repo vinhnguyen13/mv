@@ -2,7 +2,97 @@
 use vsoft\ad\models\AdProduct;
 $products = AdProduct::findAll(['status'=>1, 'user_id'=>Yii::$app->user->id]);
 ?>
-<div class="col-xs-9 right-profile quanlytinraoban">
+<div class="wrap-manager-setting">
+    <div class="current-listing">
+        <div class="swiper-container">
+            <div class="swiper-button-next posi-top"></div>
+            <div class="swiper-button-prev posi-top"></div>
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <a href="#">
+                        <div class="bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-1.jpg);"></div>
+                        <span>Masteri Thao Dien</span>
+                        <span>District 2</span>
+                        <span>$240.000</span>
+                        <span class="line"></span>
+                    </a>
+                    <p>Septembre 2015</p>
+                </div>
+                <div class="swiper-slide">
+                    
+                        <a href="#">
+                            <div class="bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-2.jpg);"></div>
+                            <span>Masteri Thao Dien</span>
+                            <span>District 2</span>
+                            <span>$240.000</span>
+                            <span class="line"></span>
+                        </a>
+                    
+                    <p>Septembre 2015</p>
+                </div>
+                <div class="swiper-slide">
+                    
+                        <a href="#">
+                            <div class="bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-3.jpg);"></div>
+                            <span>Masteri Thao Dien</span>
+                            <span>District 2</span>
+                            <span>$240.000</span>
+                            <span class="line"></span>
+                        </a>
+                    
+                    <p>Septembre 2015</p>
+                </div>
+                <div class="swiper-slide">
+                    
+                        <a href="#">
+                            <div class="bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-4.jpg);"></div>
+                            <span>Masteri Thao Dien</span>
+                            <span>District 2</span>
+                            <span>$240.000</span>
+                            <span class="line"></span>
+                        </a>
+                    
+                    <p>Septembre 2015</p>
+                </div>
+                <div class="swiper-slide">
+                    
+                        <a href="#">
+                            <div class="bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-2.jpg);"></div>
+                            <span>Masteri Thao Dien</span>
+                            <span>District 2</span>
+                            <span>$240.000</span>
+                            <span class="line"></span>
+                        </a>
+                    <p>Septembre 2015</p>
+                </div>
+                <div class="swiper-slide">
+                    
+                        <a href="#">
+                            <div class="bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-3.jpg);"></div>
+                            <span>Masteri Thao Dien</span>
+                            <span>District 2</span>
+                            <span>$240.000</span>
+                            <span class="line"></span>
+                        </a>
+                    
+                    <p>Septembre 2015</p>
+                </div>
+            </div>
+            <div class="swiper-button-next posi-bottom"></div>
+            <div class="swiper-button-prev posi-bottom"></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var swiper = new Swiper('.current-listing .swiper-container', {
+            slidesPerView: 3,
+            paginationClickable: true,
+            spaceBetween: 30
+        });
+    });
+</script>
+<div class="hide col-xs-9 right-profile quanlytinraoban">
     <div class="wrap-quanly-profile">
         <div class="title-frm">Quản lý tin rao bán/cho thuê</div>
         <form class="frm-filter row" action="">

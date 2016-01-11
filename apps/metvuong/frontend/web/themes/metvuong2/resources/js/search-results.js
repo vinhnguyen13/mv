@@ -439,4 +439,20 @@
 	};
 
 	minmax.init();
+
+	$('.full-map a').on('click', function (e) {
+		var wListing = $('.result-items').outerWidth() + 5;
+		$('.result-items').css('right', -wListing+'px');
+		$('.show-listing').remove();
+		$('.result-items').append('<a class="show-listing" href="#">Show Listing</a>');
+		setTimeout(function () {
+			$('.show-listing').fadeIn();
+			$('.show-listing').on('click', function (e) {
+				$(this).remove();
+				$('.result-items').css('right',0);
+			});
+		},200);
+		
+		return false;
+	});
 })();

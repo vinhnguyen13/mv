@@ -1,4 +1,4 @@
-<div class="col-xs-9 right-profile managechart">
+<div class="right-profile managechart">
     <div class="wrap-quanly-profile">
         <div class="title-frm">Quản lý thống kê</div>
         <ul class="nav nav-tabs">
