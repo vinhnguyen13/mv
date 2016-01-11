@@ -156,7 +156,7 @@ class BatdongsanV2 extends Component
         }
 
         if(!empty($product_id)) {
-                $path = Yii::getAlias('@console') . '/data/bds_html/files/';
+                $path = Yii::getAlias('@console') . "/data/bds_html/{$type}/files/";
                 if(!is_dir($path)){
                     mkdir($path , 0777, true);
                     echo "Directory {$path} was created";
