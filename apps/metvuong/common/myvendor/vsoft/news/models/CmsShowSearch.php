@@ -47,7 +47,7 @@ class CmsShowSearch extends \funson86\cms\models\CmsShowSearch
 
         $query->andFilterWhere([
             'id' => $this->id,
-//            'catalog_id' => $this->catalog_id,
+            'catalog_id' => $this->catalog_id,
             'click' => $this->click,
             'status' => $this->status,
             'created_at' => $this->created_at,

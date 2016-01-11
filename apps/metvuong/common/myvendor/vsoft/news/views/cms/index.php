@@ -1,6 +1,7 @@
 <?php
 
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
@@ -34,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($model) {
                     $imgPath = Url::to( '/themes/metvuong1/resources/images/default-ads.jpg');
                     if($model->banner) {
-                        $checkFile = file_exists(Yii::getAlias('@store')."\\news\\show\\".$model->banner);
+                        $checkFile = file_exists(Yii::getAlias('@store')."/news/show/".$model->banner);
                         if($checkFile)
                             $imgPath = Url::to('/store/news/show/' . $model->banner);
                     } else {
@@ -59,6 +60,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $model->getCatalog()->one()->title;
                     return '';
                 },
+                'filter' => Html::activeDropDownList($searchModel, 'catalog_id', ArrayHelper::map(\vsoft\news\models\CmsCatalog::find()->where('id NOT IN (:id)', [':id' => Yii::$app->params["buildingCatID"]])
+                    ->andWhere('status = :status', [':status' => 1])->asArray()->all(), 'id', 'title'),['class'=>'form-control','prompt' => 'All Category']),
             ],
 
             [
