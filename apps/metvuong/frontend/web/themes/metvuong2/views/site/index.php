@@ -308,7 +308,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                 <p><?= $metvuong_news[$i]["brief"] ?></p>
 
                                 <div class="find-more-btn">
-                                    <a href="#"><span class="icon pull-right"></span>Find out more</a>
+                                    <a href="<?= \yii\helpers\Url::to(['news/view', 'id' => $metvuong_news[$i]['id'], 'slug' => $metvuong_news[$i]['slug'], 'cat_id' => $metvuong_news[$i]['catalog_id'], 'cat_slug' => $metvuong_news[$i]["cat_slug"]]) ?>"><span class="icon pull-right"></span>Find out more</a>
                                 </div>
                             </div>
                             <div class="img-review">
@@ -325,7 +325,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     <p><?= $metvuong_news[$i]["brief"] ?></p>
 
                                     <div class="find-more-btn">
-                                        <a href="#"><span class="icon pull-right"></span>Find out more</a>
+                                        <a href="<?= \yii\helpers\Url::to(['news/view', 'id' => $metvuong_news[$i]['id'], 'slug' => $metvuong_news[$i]['slug'], 'cat_id' => $metvuong_news[$i]['catalog_id'], 'cat_slug' => $metvuong_news[$i]["cat_slug"]]) ?>"><span class="icon pull-right"></span>Find out more</a>
                                     </div>
                                 </div>
                                 <div class="img-review">
@@ -343,7 +343,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     <strong><?= $metvuong_news[$i]["title"] ?></strong>
                                     <p><?= $metvuong_news[$i]["brief"] ?></p>
                                     <div class="find-more-btn">
-                                        <a href="#"><span class="icon pull-right"></span>Find out more</a>
+                                        <a href="<?= \yii\helpers\Url::to(['news/view', 'id' => $metvuong_news[$i]['id'], 'slug' => $metvuong_news[$i]['slug'], 'cat_id' => $metvuong_news[$i]['catalog_id'], 'cat_slug' => $metvuong_news[$i]["cat_slug"]]) ?>"><span class="icon pull-right"></span>Find out more</a>
                                     </div>
                                 </div>
                             </div>
@@ -534,7 +534,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                             <p><?=$news[$i]['brief']?></p>
 
                             <div class="find-more-btn">
-                                <a href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news[$i]['id'], 'slug' => $news[$i]['slug'], 'cat_id' => $news[$i]['catalog_id']]) ?>"><span class="icon pull-right"></span>Find out more</a>
+                                <a href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news[$i]['id'], 'slug' => $news[$i]['slug'], 'cat_id' => $news[$i]['catalog_id'], 'cat_slug' => $news[$i]["cat_slug"]]) ?>"><span class="icon pull-right"></span>Find out more</a>
                             </div>
                         </div>
                     </div>
@@ -546,7 +546,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                             <p><?=$news[$i]['brief']?></p>
 
                             <div class="find-more-btn">
-                                <a href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news[$i]['id'], 'slug' => $news[$i]['slug'], 'cat_id' => $news[$i]['catalog_id']]) ?>"><span class="icon pull-right"></span>Find out more</a>
+                                <a href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news[$i]['id'], 'slug' => $news[$i]['slug'], 'cat_id' => $news[$i]['catalog_id'], 'cat_slug' => $news[$i]["cat_slug"]]) ?>"><span class="icon pull-right"></span>Find out more</a>
                             </div>
                         </div>
                         <div class="img-review">
