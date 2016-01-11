@@ -21,13 +21,13 @@ Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporti
 			</li>
 			<li>
 				<a href="#">
-					<em class="icon-envelope"></em>
+					<em class="icon-envelope"><i>20</i></em>
 					<span>Leads</span>
 				</a>
 			</li>
 			<li>
 				<a href="#">
-					<em class="icon-bubble"></em>
+					<em class="icon-bubble"><i>5</i></em>
 					<span>Messages</span>
 				</a>
 			</li>

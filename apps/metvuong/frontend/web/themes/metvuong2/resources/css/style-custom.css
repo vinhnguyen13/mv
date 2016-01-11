@@ -6826,7 +6826,7 @@ li.search-filter .search-wrap {
     float: left;
 }
 .function-setting-user a {
-    padding: 15px 50px;
+    padding: 20px 50px;
     display: block;
     color: #9296a2;
     text-transform: uppercase;
@@ -6835,6 +6835,22 @@ li.search-filter .search-wrap {
     -webkit-transition: all .3s ease-out;
     -moz-transition: all .3s ease-out;
     -ms-transition: all .3s ease-out;
+    position: relative;
+    text-align: center;
+}
+.function-setting-user a i {
+    position: absolute;
+    top: -15px;
+    right: -25px;
+    background: #f0846a;
+    color: #fff;
+    padding: 5px;
+    font-size: 12px;
+    border-radius: 50%;
+    text-align: center;
+    min-width: 20px;
+    min-height: 20px;
+    font-style: normal;
 }
 .function-setting-user a span,
 .function-setting-user a em {
@@ -6846,6 +6862,9 @@ li.search-filter .search-wrap {
 }
 .function-setting-user a em {
     font-size: 26px;
+    position: relative;
+    width: auto;
+    display: inline-block;
 }
 .function-setting-user a .icon-camcorder {
     transform: rotate(-180deg);
@@ -6878,7 +6897,7 @@ li.search-filter .search-wrap {
     z-index: 2;
     height: auto;
     bottom: 0;
-    top: 164px;
+    top: 174px;
 }
 .infor-user-profile .inner-infor {
     width: 25%;
@@ -6939,20 +6958,33 @@ li.search-filter .search-wrap {
     color: #47485d;
     margin-top: 25px;
 }
+.swiper-button-next.posi-bottom,
+.swiper-button-prev.posi-bottom,
 .swiper-button-next.posi-top,
 .swiper-button-prev.posi-top {
     top: 0;
     right: 0;
-    background-image: none;
+    background-image: url(../images/icon.png);
     background-repeat: no-repeat;
     background-color: inherit;
+    margin-top: 0;
+    background-size: 250px;
+    width: 46px;
+    height: 32px;
 }
 .swiper-button-next.posi-bottom,
 .swiper-button-prev.posi-bottom {
     top: inherit;
     right: 0;
     bottom: 0;
-    background-image: none;
-    background-repeat: no-repeat;
-    background-color: inherit;
+}
+.swiper-button-next.posi-bottom,
+.swiper-button-next.posi-top {
+    background-position: -47px -71px;
+}
+.swiper-button-prev.posi-bottom,
+.swiper-button-prev.posi-top {
+    background-position: -1px -71px;
+    right: 50px;
+    left: inherit;
 }

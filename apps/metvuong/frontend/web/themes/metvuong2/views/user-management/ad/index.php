@@ -88,7 +88,9 @@ $products = AdProduct::findAll(['status'=>1, 'user_id'=>Yii::$app->user->id]);
         var swiper = new Swiper('.current-listing .swiper-container', {
             slidesPerView: 3,
             paginationClickable: true,
-            spaceBetween: 30
+            spaceBetween: 30,
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev'
         });
     });
 </script>
