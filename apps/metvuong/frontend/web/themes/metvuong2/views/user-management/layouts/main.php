@@ -44,7 +44,7 @@ Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporti
 				</a>
 			</li>
 			<li class="pull-right">
-				<a href="#">
+				<a href="<?=Url::to(['user-management/profile'])?>">
 					<em class="icon-settings"></em>
 					<span>Settings</span>
 				</a>
