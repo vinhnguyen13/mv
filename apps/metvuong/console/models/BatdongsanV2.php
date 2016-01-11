@@ -26,7 +26,10 @@ use yii\helpers\FileHelper;
 class BatdongsanV2 extends Component
 {
     const DOMAIN = 'http://batdongsan.com.vn';
-    const TYPE = 'nha-dat-ban-tp-hcm';
+    const TYPE = ['nha-dat-ban-quan-1','nha-dat-ban-quan-2','nha-dat-ban-quan-3','nha-dat-ban-quan-4','nha-dat-ban-quan-5','nha-dat-ban-quan-6',
+                'nha-dat-ban-quan-7','nha-dat-ban-quan-8', 'nha-dat-ban-quan-9','nha-dat-ban-quan-10','nha-dat-ban-quan-11','nha-dat-ban-quan-12',
+                'nha-dat-ban-binh-chanh','nha-dat-ban-binh-tan','nha-dat-ban-binh-thanh','nha-dat-ban-can-gio','nha-dat-ban-cu-chi','nha-dat-ban-go-vap',
+                'nha-dat-ban-hoc-mon','nha-dat-ban-nha-be','nha-dat-ban-tan-binh','nha-dat-ban-tan-phu','nha-dat-ban-phu-nhuan','nha-dat-ban-thu-duc'];
     protected $time_start = 0;
     protected $time_end = 0;
 
@@ -50,47 +53,56 @@ class BatdongsanV2 extends Component
 
     public function getPages()
     {
-        $url = self::DOMAIN . '/' . self::TYPE;
-        $page = $this->getUrlContent($url);
-        if(!empty($page)) {
-            $html = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
-            $pagination = $html->find('.container-default .background-pager-right-controls a');
-            $count_page = count($pagination);
-            $last_page = (int)str_replace("/".self::TYPE."/p", "", $pagination[$count_page-1]->href);
-            if($count_page > 0) {
-                $log = $this->loadFileLog();
-                $current_page = empty($log["current_page"]) ? 1 : ($log["current_page"]+1);
-                $current_page_add = $current_page + 4;
-                if($current_page_add <= $last_page) {
-                    for ($i = $current_page; $i <= $current_page_add; $i++) {
-                        $log = $this->loadFileLog();
-                        $sequence_id = empty($log["last_id"]) ? 0 : ($log["last_id"] + 1);
-                        $list_return = $this->getListProject($i, $sequence_id, $log);
-                        if (!empty($list_return["data"])) {
-                            $list_return["data"]["current_page"] = $i;
-                            $this->writeFileLog($list_return["data"]);
-                            print_r("Page " . $i . " done!");
-                            print_r("\n");
+        foreach(self::TYPE as $type) {
+            $url = self::DOMAIN . '/' . $type;
+            $page = $this->getUrlContent($url);
+            if (!empty($page)) {
+                $html = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
+                $pagination = $html->find('.container-default .background-pager-right-controls a');
+                $count_page = count($pagination);
+                $last_page = (int)str_replace("/" . $type . "/p", "", $pagination[$count_page - 1]->href);
+                if ($count_page > 0) {
+                    $log = $this->loadFileLog($type);
+                    $current_page = empty($log["current_page"]) ? 1 : ($log["current_page"] + 1);
+                    $current_page_add = $current_page;
+                    if ($current_page <= $last_page) {
+                        $current_page_add = $current_page + 4;
+                        for ($i = $current_page; $i <= $current_page_add; $i++) {
+                            $log = $this->loadFileLog($type);
+                            $sequence_id = empty($log["last_id"]) ? 0 : ($log["last_id"] + 1);
+                            $list_return = $this->getListProject($type, $i, $sequence_id, $log);
+                            if (!empty($list_return["data"])) {
+                                $list_return["data"]["current_page"] = $i;
+                                $this->writeFileLog($type, $list_return["data"]);
+                                print_r("Page " . $i . " done!");
+                                print_r("\n");
+                            }
+                            sleep(1);
+                            ob_flush();
                         }
-                        sleep(1);
-                        ob_flush();
+                    } else {
+                        $this->writeFileLogFail($type, "Paging end: Current:$current_page_add , last:$last_page" . "\n");
                     }
-                }else {
-                    $this->writeFileLogFail("Paging error: Current:$current_page_add , last:$last_page"."\n");
+                } else {
+                    echo "Cannot find listing. End page!" . self::DOMAIN;
+                    $this->writeFileLogFail($type, "Cannot find listing: $url" . "\n");
                 }
             } else {
-                echo "Cannot find listing. End page!".self::DOMAIN;
-                $this->writeFileLogFail("Cannot find listing: $url"."\n");
+                echo "Cannot access in get pages of " . self::DOMAIN;
+                $this->writeFileLogFail($type, "Cannot access: $url" . "\n");
             }
-        } else {
-            echo "Cannot access in get pages of ".self::DOMAIN;
-            $this->writeFileLogFail("Cannot access: $url"."\n");
+            $bds_log = $this->loadBdsLog($type);
+            if(empty($bds_log)){
+                $bds_log["quan"] = array();
+            }
+            array_push($bds_log["quan"], $type);
+            $this->writeBdsLog($type, $bds_log);
         }
     }
 
-    public function getListProject($current_page, $sequence_id, $log)
+    public function getListProject($type, $current_page, $sequence_id, $log)
     {
-        $href = "/".self::TYPE."/p".$current_page;
+        $href = "/".$type."/p".$current_page;
         $page = $this->getUrlContent(self::DOMAIN . $href);
         if(!empty($page)) {
             $html = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
@@ -109,7 +121,7 @@ class BatdongsanV2 extends Component
                     }
 
                     if ($checkExists == false) {
-                        $res = $this->getProjectDetail($item->href);
+                        $res = $this->getProjectDetail($type, $item->href);
                         if (!empty($res)) {
                             $log["files"][$sequence_id] = $res;
                             $log["last_id"] = $sequence_id;
@@ -122,17 +134,17 @@ class BatdongsanV2 extends Component
                 return ['data' => $log];
             } else {
                 echo "Cannot find listing. End page!".self::DOMAIN;
-                $this->writeFileLogFail("Cannot find listing: $href"."\n");
+                $this->writeFileLogFail($type, "Cannot find listing: $href"."\n");
             }
 
         } else {
             echo "Cannot access in get List Project of ".self::DOMAIN;
-            $this->writeFileLogFail("Cannot access: $href"."\n");
+            $this->writeFileLogFail($type, "Cannot access: $href"."\n");
         }
         return null;
     }
 
-    public function getProjectDetail($href)
+    public function getProjectDetail($type, $href)
     {
         $json = array();
         $page = $this->getUrlContent(self::DOMAIN . $href);
@@ -159,7 +171,7 @@ class BatdongsanV2 extends Component
         }
         else {
             echo "Error go to detail at " .self::DOMAIN.$href;
-            $this->writeFileLogFail("Cannot find detail: ".self::DOMAIN.$href."\n");
+            $this->writeFileLogFail($type, "Cannot find detail: ".self::DOMAIN.$href."\n");
         }
     }
 
@@ -215,7 +227,7 @@ class BatdongsanV2 extends Component
         return 0;
     }
 
-    function loadFileLog(){
+    function loadBdsLog($type){
         $path_folder = Yii::getAlias('@console') . "/data/bds_html/";
         $path = $path_folder."bds_log.json";
         if(!is_dir($path_folder)){
@@ -239,15 +251,45 @@ class BatdongsanV2 extends Component
             return null;
     }
 
-    function writeFileLog($log){
-        $file_name = Yii::getAlias('@console') . '/data/bds_html/bds_log.json';
+    function writeBdsLog($type, $log){
+        $file_name = Yii::getAlias('@console') . "/data/bds_html/bds_log.json";
+        $log_data = json_encode($log);
+        $this->writeFileJson($file_name, $log_data);
+    }
+
+    function loadFileLog($type){
+        $path_folder = Yii::getAlias('@console') . "/data/bds_html/{$type}";
+        $path = $path_folder."bds_log.json";
+        if(!is_dir($path_folder)){
+            mkdir($path_folder , 0777, true);
+            echo "Directory {$path_folder} was created";
+        }
+        $data = null;
+        if(file_exists($path))
+            $data = file_get_contents($path);
+        else
+        {
+            $this->writeFileJson($path, null);
+            $data = file_get_contents($path);
+        }
+
+        if(!empty($data)){
+            $data = json_decode($data, true);
+            return $data;
+        }
+        else
+            return null;
+    }
+
+    function writeFileLog($type, $log){
+        $file_name = Yii::getAlias('@console') . "/data/bds_html/{$type}/bds_log.json";
         $log_data = json_encode($log);
         $this->writeFileJson($file_name, $log_data);
     }
 
 
-    function writeFileLogFail($log){
-        $file_name = Yii::getAlias('@console') . '/data/bds_html/bds_log_fail';
+    function writeFileLogFail($type, $log){
+        $file_name = Yii::getAlias('@console') . "/data/bds_html/{$type}/bds_log_fail";
         if(!file_exists($file_name)){
             fopen($file_name, "w");
         }
@@ -299,7 +341,7 @@ class BatdongsanV2 extends Component
         curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.1.4322)');
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_REFERER, self::DOMAIN . '/'.self::TYPE.'/');
+        curl_setopt($ch, CURLOPT_REFERER, self::DOMAIN . '/nha-dat-ban-tp-hcm/');
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
         curl_setopt($ch, CURLOPT_TIMEOUT, 100);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
@@ -545,7 +587,7 @@ class BatdongsanV2 extends Component
         print_r(" - Total Record: ". $insertCount);
     }
 
-    public function parseDetail($filename)
+    public function parsDetail($filename)
     {
         $json = array();
         $page = file_get_contents($filename);
@@ -670,7 +712,7 @@ class BatdongsanV2 extends Component
                     }
                 }
             }
-            $json[self::TYPE][$product_id] = [
+            $json['nha-dat-ban-tp-hcm'][$product_id] = [
                 'lat' => trim($lat),
                 'lng' => trim($long),
                 'description' => trim($content),
