@@ -53,9 +53,8 @@ $searchParams = json_decode($value);
                 <li class="change-lang"><a href="<?=Url::current(['language-change'=>'vi-VN'])?>" class="lang-icon icon-vi"></a></li>
             <?php }else{?>
                 <li class="user-loggin"><a href="<?=Url::to(['user-management/index'])?>">
-                        <span class="avatar-user"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/default-avatar.jpg" alt="" width="40" height="40"></span>
-                        <span class="name-user"><?=!empty(Yii::$app->user->identity->profile->name) ? Yii::$app->user->identity->profile->name : Yii::$app->user->identity->email;?></span>
-                    </a>
+                    <span class="avatar-user"><img src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="" width="40" height="40"></span>
+                    <span class="name-user"><?=!empty(Yii::$app->user->identity->profile->name) ? Yii::$app->user->identity->profile->name : Yii::$app->user->identity->email;?></span>
                 </li>
                 <li>
                     <a href="#" class="sub-setting-user"></a>
