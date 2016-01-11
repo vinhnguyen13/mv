@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $model->getCatalog()->one()->title;
                     return '';
                 },
-                'filter' => Html::activeDropDownList($searchModel, 'catalog_id', ArrayHelper::map(\vsoft\news\models\CmsCatalog::find()->where(['not in', 'id', [Yii::$app->params['buildingCatID'],Yii::$app->params['newsCatID'] ]])
+                'filter' => Html::activeDropDownList($searchModel, 'catalog_id', ArrayHelper::map(\vsoft\news\models\CmsCatalog::find()->where(['not in', 'id', [!empty(Yii::$app->params['buildingCatID']) ? Yii::$app->params['buildingCatID'] : 1, !empty(Yii::$app->params['newsCatID']) ? Yii::$app->params['newsCatID'] : 2]])
                     ->andWhere('status = :status', [':status' => 1])->asArray()->all(), 'id', 'title'),['class'=>'form-control','prompt' => 'All']),
             ],
 
