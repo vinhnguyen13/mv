@@ -259,7 +259,7 @@ class BatdongsanV2 extends Component
 
     function loadFileLog($type){
         $path_folder = Yii::getAlias('@console') . "/data/bds_html/{$type}";
-        $path = $path_folder."bds_log.json";
+        $path = $path_folder."bds_log_{$type}.json";
         if(!is_dir($path_folder)){
             mkdir($path_folder , 0777, true);
             echo "Directory {$path_folder} was created";
@@ -282,7 +282,7 @@ class BatdongsanV2 extends Component
     }
 
     function writeFileLog($type, $log){
-        $file_name = Yii::getAlias('@console') . "/data/bds_html/{$type}/bds_log.json";
+        $file_name = Yii::getAlias('@console') . "/data/bds_html/{$type}/bds_log_{$type}.json";
         $log_data = json_encode($log);
         $this->writeFileJson($file_name, $log_data);
     }
