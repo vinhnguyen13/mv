@@ -296,42 +296,61 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                 </div>
                 <h3>A simple solution for those looking to find a new owner for their home</h3>
             </div>
-            <div class="item-review clearfix item-1">
-                <div class="pull-right item-review-txt">
-                    <strong>Lorem ipsum dolor sit amet consectetur</strong>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                    <div class="find-more-btn">
-                        <a href="#"><span class="icon pull-right"></span>Find out more</a>
-                    </div>
-                </div>
-                <div class="img-review">
-                    <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/chart-demo.jpg" alt="">
-                </div>
-            </div>
-            <div class="item-review clearfix item-2">
-                <div class="pull-right item-review-txt">
-                    <strong>Lorem ipsum dolor sit amet consectetur</strong>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                    <div class="find-more-btn">
-                        <a href="#"><span class="icon pull-right"></span>Find out more</a>
-                    </div>
-                </div>
-                <div class="img-review">
-                    <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/phone-demo.jpg" alt="">
-                </div>
-            </div>
-            <div class="item-review clearfix item-3">
-                <div class="pull-right img-review">
-                    <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/mac-demo.jpg" alt="">
-                </div>
-                <div class="item-review-txt">
-                    <strong>Lorem ipsum dolor sit amet consectetur</strong>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                    <div class="find-more-btn">
-                        <a href="#"><span class="icon pull-right"></span>Find out more</a>
-                    </div>
-                </div>
-            </div>
+            <?php
+            if(!empty($metvuong_news) && count($metvuong_news) > 0)
+            {
+                for ($i = 0; $i < count($metvuong_news); $i++) {
+                    if ($i == 0) { ?>
+                        <div class="item-review clearfix item-1">
+                            <div class="pull-right item-review-txt">
+                                <strong><?= $metvuong_news[$i]["title"] ?></strong>
+
+                                <p><?= $metvuong_news[$i]["brief"] ?></p>
+
+                                <div class="find-more-btn">
+                                    <a href="#"><span class="icon pull-right"></span>Find out more</a>
+                                </div>
+                            </div>
+                            <div class="img-review">
+                                <img src="<?= "/store/news/show/".$metvuong_news[$i]["banner"]?>" alt="<?= $metvuong_news[$i]["title"] ?>">
+                            </div>
+                        </div>
+                    <?php } else {
+                        if ($i % 2 != 0) {
+                            ?>
+                            <div class="item-review clearfix item-2">
+                                <div class="pull-right item-review-txt">
+                                    <strong><?= $metvuong_news[$i]["title"] ?></strong>
+
+                                    <p><?= $metvuong_news[$i]["brief"] ?></p>
+
+                                    <div class="find-more-btn">
+                                        <a href="#"><span class="icon pull-right"></span>Find out more</a>
+                                    </div>
+                                </div>
+                                <div class="img-review">
+                                    <img src="<?= "/store/news/show/" . $metvuong_news[$i]["banner"] ?>"
+                                         alt="<?= $metvuong_news[$i]["title"] ?>">
+                                </div>
+                            </div>
+                        <?php } else { ?>
+                            <div class="item-review clearfix item-3">
+                                <div class="pull-right img-review">
+                                    <img src="<?= "/store/news/show/" . $metvuong_news[$i]["banner"] ?>"
+                                         alt="<?= $metvuong_news[$i]["title"] ?>">
+                                </div>
+                                <div class="item-review-txt">
+                                    <strong><?= $metvuong_news[$i]["title"] ?></strong>
+                                    <p><?= $metvuong_news[$i]["brief"] ?></p>
+                                    <div class="find-more-btn">
+                                        <a href="#"><span class="icon pull-right"></span>Find out more</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php }
+                    }
+                }
+            }?>
         </div>
     </section>
 

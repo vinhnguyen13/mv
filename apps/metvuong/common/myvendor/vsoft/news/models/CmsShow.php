@@ -113,8 +113,20 @@ class CmsShow extends \funson86\cms\models\CmsShow
     }
 
     public static function getShowForHomepage(){
-        $query = CmsShow::find()->select(['id','banner','title','slug','brief','catalog_id'])->where('catalog_id = :id', [':id' => Yii::$app->params['homepageCatID']])
-            ->andWhere('cms_show.status = :status', [':status' => 1])->asArray()->orderBy(['updated_at' => SORT_DESC])->limit(3)->all();
+        $query = CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief','cms_show.catalog_id', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
+            ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
+            ->where('cms_show.catalog_id = :id', [':id' => Yii::$app->params['homepageCatID']])
+            ->andWhere('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
+            ->asArray()->orderBy(['cms_show.updated_at' => SORT_DESC])->limit(3)->all();
+        return $query;
+    }
+
+    public static function getShowForMetvuong(){
+        $query = CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief','cms_show.catalog_id', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
+            ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
+            ->where('cms_catalog.title = :title', [':title' => 'Metvuong'])
+            ->andWhere('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
+            ->asArray()->limit(3)->all();
         return $query;
     }
 
@@ -122,11 +134,11 @@ class CmsShow extends \funson86\cms\models\CmsShow
         $model = CmsShow::findOne($id);
         $imgPath = Url::to("/frontend/web/themes/metvuong2/resources/images/default-ads.jpg");
         if($model->banner) {
-            $checkFile = file_exists(Yii::getAlias('@store')."\\news\\show\\".$model->banner);
+            $checkFile = file_exists(Yii::getAlias('@store')."/news/show/".$model->banner);
             if($checkFile)
                 $imgPath = Url::to('/store/news/show/' . $model->banner);
         } else {
-            $imgPath = Url::to( '/themes/metvuong2/resources/images/default-ads.jpg');// /frontend/web/themes/metvuong1/resources/images/default-ads.jpg
+            $imgPath = Url::to( '/frontend/web/themes/metvuong2/resources/images/default-ads.jpg');// /frontend/web/themes/metvuong1/resources/images/default-ads.jpg
         }
         return $imgPath;
     }
