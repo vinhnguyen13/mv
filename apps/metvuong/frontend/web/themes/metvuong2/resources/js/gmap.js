@@ -30,7 +30,9 @@ function Gmap(el, options) {
 	var id = mapCounter;
 	var self = this;
 	var markers = {};
+	var groupMakers = {};
 	var map = new google.maps.Map(el, options);
+	self.status = 1;
 	
 	self.click = function(callback) {
 		map.addListener('click', function() {
@@ -56,12 +58,51 @@ function Gmap(el, options) {
 		return markerId;
 	};
 	
+	self.addMarkerGroup = function(marker, setCenter) {
+		if(marker.getMap()) {
+			self.removeMarker(marker);
+		}
+		
+		marker.setMap(self);
+		
+		if(setCenter) {
+			map.setCenter(marker.getPosition());
+		}
+		
+		var markerId = marker.getId();
+		
+		groupMakers[markerId] = marker;
+		
+		return markerId;
+	};
+	
 	self.removeAllMarker = function() {
 		for(markerId in markers) {
 			var marker = self.getMarker(markerId);
 			marker.setMap(null);
 		}
 		markers = {};
+	}
+	
+	self.hideAllMarker = function() {
+		for(markerId in markers) {
+			var marker = self.getMarker(markerId);
+			marker.setMap(null);
+		}
+		self.status = 0;
+	}
+	
+	self.showAllMarker = function() {
+		for(markerId in markers) {
+			var marker = self.getMarker(markerId);
+			marker.setMap(self);
+		}
+		self.status = 1;
+		
+		for(markerId in groupMakers) {
+			var marker = groupMakers[markerId];
+			marker.setMap(null);
+		}
 	}
 	
 	self.removeMarker = function(marker) {
@@ -71,6 +112,13 @@ function Gmap(el, options) {
 	
 	self.getMarker = function(markerId) {
 		return markers[markerId];
+	};
+	self.getGroupMakers = function() {
+		return groupMakers;
+	};
+	
+	self.getMarkers = function() {
+		return markers;
 	};
 	
 	self.setCenter = function(latLng) {
@@ -115,6 +163,14 @@ function Gmap(el, options) {
 			callback();
 		});
 	};
+	self.zoomChanged = function(callback) {
+		map.addListener('zoom_changed', function() {
+			callback();
+		});
+	};
+	self.getMap = function() {
+		return map;
+	};
 	
 	mapCounter++;
 	
@@ -151,6 +207,7 @@ function Marker(options, id) {
 	var marker = new google.maps.Marker(options);
 	var map;
 	this.counter = 1;
+	this.data = {};
 	
 	self.dragend = function(callback) {
 		marker.addListener('dragend', function(evt) {

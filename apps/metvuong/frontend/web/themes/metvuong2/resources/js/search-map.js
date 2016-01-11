@@ -1,6 +1,7 @@
-var gmap = null, response = null, listResult, infoWindow, savedTab = false, closeInfowindow, dragging = false;
+var gmap = null, response = null, listResult, infoWindow, savedTab = false, closeInfowindow, dragging = false, infoGroupWindow;
 var page = 1;
 var limit = 20;
+var ZOOM_CHANGE_LIMIT = 13;
 
 $(document).ready(function(){
 	listResult = $('.list-results');
@@ -32,7 +33,7 @@ $(document).ready(function(){
 		});
 	});
 	
-	$('.wrap-col-fixed-result').scroll(function() {
+	$('.tab-content').scroll(function() {
 		var self = $(this);
 	    clearTimeout($.data(this, 'scrollTimer'));
 	    $.data(this, 'scrollTimer', setTimeout(function() {
@@ -80,7 +81,85 @@ function start() {
 			dragging = false;
 		});
 		
+		var bermudaTriangles = [];
+		gmap.zoomChanged(function(){
+			if(gmap.getOriginal().getZoom() <= ZOOM_CHANGE_LIMIT) {
+				if(gmap.status == 1) {
+					gmap.hideAllMarker();
+
+					if($.isEmptyObject(gmap.getGroupMakers())) {
+						var markers = gmap.getMarkers();
+						for(index in markers) {
+							var marker = markers[index];
+							var district = districts[marker.data.districtId];
+							district.counter = Number(district.counter) + Number(marker.counter);
+						}
+
+						for(index in districts) {
+							var district = districts[index];
+							if(district.counter > 0) {
+								var lngLat = JSON.parse(district.geometry);
+								
+								if(lngLat) {
+									var triangleCoords = [];
+									var bounds = new google.maps.LatLngBounds();
+									for(index in lngLat) {
+										var ll = lngLat[index].split(',');
+										var a = new google.maps.LatLng(Number(ll[0]), Number(ll[1]));
+										triangleCoords.push(a);
+										bounds.extend(a);
+									}
+									var bermudaTriangle = new google.maps.Polygon({
+									    paths: triangleCoords,
+									    strokeColor: '#FF0000',
+									    strokeOpacity: 0.5,
+									    strokeWeight: 2,
+									    fillColor: '#FF0000',
+									    fillOpacity: 0.2
+									  });
+									bermudaTriangle.setMap(gmap.getOriginal());
+									bermudaTriangles.push(bermudaTriangle);
+									
+									var firstLatLng = new google.maps.LatLng(bounds.getCenter().lat(), bounds.getCenter().lng());
+									var option = {
+										draggable: false,
+									    position: firstLatLng,
+									    icon: '/images/marker.png'
+									};
+									if(district.counter > 1) {
+										option.icon = '/site/map-image?s=0&t=' + district.counter;
+									}
+									var markerGroup = new Marker(option);
+									gmap.addMarkerGroup(markerGroup);
+									addEvent(markerGroup, district);
+								}
+							}
+						}
+					} else {
+						var markers = gmap.getGroupMakers();
+						for(index in markers) {
+							var marker = markers[index];
+							marker.setMap(gmap);
+						}
+						
+						for(index in bermudaTriangles) {
+							bermudaTriangles[index].setMap(gmap.getOriginal());
+						}
+					}
+				}
+			} else {
+				if(gmap.status == 0) {
+					gmap.showAllMarker();
+					
+					for(index in bermudaTriangles) {
+						bermudaTriangles[index].setMap(null);
+					}
+				}
+			}
+		});
+
 		infoWindow = new InfoWindow({disableAutoPan: true});
+		infoGroupWindow = new InfoWindow({disableAutoPan: true});
 		
 		$('#detail-wrap').on('click', '.btn-close-detail', function(){
 			$('#detail-wrap').css({
@@ -138,6 +217,30 @@ function start() {
 					});
 				}, 1000);
 			}
+		}
+		
+		function addEvent(marker, district) {
+			marker.mouseover(function(latLng) {
+				var el = $('<div style="font-weight: bolder; padding-left: 8px;">' + district.name + '</div>');
+				infoWindow.setContent(el.get(0));
+				infoWindow.open(marker);
+				
+				var gmStyle = el.closest('.gm-style-iw');
+				gmStyle.css({
+					overflow: 'visible'
+				});
+				el.parent().css({
+				    marginLeft: '-5px',
+			    	marginTop: '-8px',
+			    	marginBottom: '-10px',
+			        marginRight: '-20px',
+			        overflow: 'visible'
+				});
+				gmStyle.next().hide();
+			});
+			marker.mouseout(function(latLng) {
+				infoWindow.close();
+			});
 		}
 
 		$(document).on('click', '.rating .rate input', function(e){
@@ -526,6 +629,8 @@ function makeMarker(product) {
 		});
 		
 		gmap.addMarker(marker);
+		
+		marker.data.districtId = product.district_id;
 	}
 	
 	var type = (product.type == 1) ? 'BÁN' : 'CHO THUÊ';
