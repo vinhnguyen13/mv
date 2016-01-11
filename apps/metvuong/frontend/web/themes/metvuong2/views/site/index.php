@@ -536,18 +536,6 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                     </div>
                 <?php }
             }?>
-            <!--<div class="clearfix item-1">
-                <div class="pull-right img-review">
-                    <img src="<?/*=Yii::$app->view->theme->baseUrl*/?>/resources/images/market-ins.jpg" alt="">
-                </div>
-                <div class="item-review-txt">
-                    <strong>Lorem ipsum dolor sit amet consectetur</strong>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-                    <div class="find-more-btn">
-                        <a href="#"><span class="icon pull-right"></span>Find out more</a>
-                    </div>
-                </div>
-            </div>-->
         </div>
     </section>
     <?php } ?>
