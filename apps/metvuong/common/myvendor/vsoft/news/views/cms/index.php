@@ -69,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($model) {
                     return \vsoft\news\models\Status::labels($model->status);
                 },
-                'filter' => Html::activeDropDownList($searchModel, 'status', \vsoft\news\models\Status::labels(),['class'=>'form-control']),
+                'filter' => Html::activeDropDownList($searchModel, 'status', \vsoft\news\models\Status::labels(),['class'=>'form-control','prompt' => 'All']),
             ],
             [
                 'attribute' => 'updated_at',
