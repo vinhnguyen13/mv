@@ -7,7 +7,7 @@
         <div class="container cd-main-content">
             <?= $content ?>
         </div>
-        <?php $this->beginContent('@app/views/layouts/_partials/footer.php'); ?><?php $this->endContent();?>
+<!--        --><?php //$this->beginContent('@app/views/layouts/_partials/footer.php'); ?><!----><?php //$this->endContent();?>
     </div>
 <?php $this->endContent();?>
 

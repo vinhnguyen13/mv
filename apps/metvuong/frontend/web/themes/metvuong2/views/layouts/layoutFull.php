@@ -5,7 +5,7 @@
     <div class="o-wrapper clearfix">
         <?php $this->beginContent('@app/views/layouts/_partials/header.php'); ?><?php $this->endContent();?>
             <?= $content ?>
-        <?php $this->beginContent('@app/views/layouts/_partials/footer.php'); ?><?php $this->endContent();?>
+<!--        --><?php //$this->beginContent('@app/views/layouts/_partials/footer.php'); ?><!----><?php //$this->endContent();?>
     </div>
 <?php $this->endContent();?>
 
