@@ -119,10 +119,6 @@ body .search-result-page > .container {
 #search-kind .dropdown button {
     border-left: none;
 }
-#btn-search:link,
-#btn-search:visited,
-#btn-search:active,
-#btn-search:focus,
 #btn-search {
     padding: 0;
     margin: 0px 0 0 0;
@@ -134,10 +130,16 @@ body .search-result-page > .container {
     border-radius: 0;
     background-size: 166px;
     border: none;
+    background-position: top left;
+}
+#btn-search:link,
+#btn-search:visited,
+#btn-search:active,
+#btn-search:focus {
+    background: red;
 }
 #btn-search:hover {
     box-shadow: none;
-    background-color: initial;
     opacity: .7;
 }
 button.btn.btn-default:hover {
