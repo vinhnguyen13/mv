@@ -142,20 +142,27 @@ class Elastic
             'id' => $id,
         ];
         // Document will be indexed to my_index/my_type/my_id
-        $chk = $this->client->exists($params);
-        if(!empty($chk)){
-//            $result = $client->get($params);
-            $result = $this->client->$function($params);
-            return $result;
+        try{
+
+            if($this->client->transport->getConnection()->ping()){
+                $chk = $this->client->exists($params);
+                if(!empty($chk)){
+        //            $result = $client->get($params);
+                    $result = $this->client->$function($params);
+                    return $result;
+                }
+                return false;
+            }
+        }catch (Exception $e){
+
         }
-        return false;
     }
 
 
     public function userData(){
         try{
             $this->connect();
-            if($this->client){
+            if($this->client->transport->getConnection()->ping()){
                 $params = [
                     'index' => 'users',
                     'type' => 'store',

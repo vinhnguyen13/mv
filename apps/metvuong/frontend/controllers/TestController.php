@@ -46,7 +46,7 @@ class TestController extends \yii\web\Controller
 
     public function actionElastic($action=''){
         if($action == 'add'){
-            $uids = [4, 2];
+            $uids = [4, 2, 3, 7, 9];
             $pids = range(1, 2);
             $times = [strtotime('6-1-2016 8:30'), strtotime('6-1-2016 12:30'),
                 strtotime('5-1-2016 7:30'), strtotime('5-1-2016 9:30'),
@@ -60,8 +60,8 @@ class TestController extends \yii\web\Controller
             }
         }elseif($action == 'search'){
             $startTime = strtotime('2-1-2016');
-            $endTime = strtotime('9-1-2016');
-            $dataTracking = Tracking::find()->getProductTracking($startTime, $endTime);
+            $endTime = strtotime('19-1-2016');
+            $dataTracking = Tracking::find()->getProductTracking($startTime, $endTime, [1513]);
             echo "<pre>";
             print_r($dataTracking);
             echo "</pre>";

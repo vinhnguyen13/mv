@@ -7,6 +7,7 @@
  */
 
 namespace frontend\models;
+use common\components\Util;
 use vsoft\ad\models\AdProduct;
 use Yii;
 use yii\base\Component;
@@ -22,8 +23,11 @@ class Tracking extends Component
 {
     const INDEX = 'listing';
     const TYPE = 'tracking';
+    const DATE_FORMAT = 'd-m-Y';
+
     protected $elastic = null;
     protected $client = null;
+    protected $dataChart = [];
 
     /**
      * __construct
@@ -51,7 +55,7 @@ class Tracking extends Component
 
     public function productVisitor($uid, $pid, $time = null){
         $this->checkLogin();
-        $today = date('d-m-Y', $time);
+        $today = date(self::DATE_FORMAT, $time);
         $time = !empty($time) ? $time : time();
         $params = [
             'index' => self::INDEX,
@@ -60,7 +64,7 @@ class Tracking extends Component
         ];
 
         try{
-            if($this->client){
+            if($this->client->transport->getConnection()->ping()){
                 $user = User::findOne($uid);
                 $product = AdProduct::findOne($pid);
                 $exist = $this->elastic->findOne(self::INDEX, self::TYPE, $uid.'_'.$pid.'_'.$today);
@@ -111,19 +115,43 @@ class Tracking extends Component
                 'query' => [
                     'filtered' => $filtered
                 ],
-                /*'aggs' => [
-                    'tag' => [
-                        'terms' => [
-                            'field' => 'tags'
-                        ],
-                    ],
-                ],*/
-
             ]
         ];
-        $results = $this->client->search($params);
-        if(!empty($results['hits']['hits'])){
-            return $results;
+        try{
+            if($this->client->transport->getConnection()->ping()){
+                $results = $this->client->search($params);
+                if(!empty($results['hits']['hits'])){
+                    return $results;
+                }
+                return false;
+            }
+        }catch(Exception $ex){
+            throw new NotFoundHttpException('Service error.');
+        }
+    }
+
+    public function parseTracking($from, $to, $pids = []){
+        $dataTracking = $this->getProductTracking($from, $to, $pids);
+        $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
+
+        $tmpDefaultData = array_map(function ($key, $date) {
+            return ['y' => 0,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact', 'date'=>$date])];
+        }, array_keys($dateRange), $dateRange);;
+
+        if(!empty($dataTracking['hits']['hits'])){
+            $tmpDataByPid = [];
+            foreach($dataTracking['hits']['hits'] as $key => $item){
+                $source = $item['_source'];
+                $day = date(self::DATE_FORMAT, $source['time']);
+                $key = $source['pid'];
+                if(empty($tmpDataByPid[$key]['data'])){
+                    $tmpDataByPid[$key]['data'] = $tmpDefaultData;
+                }
+                $kDate = array_search($day, $dateRange);
+                $tmpDataByPid[$key]['data'][$kDate]['y']++;
+                $tmpDataByPid[$key]['name'] = $source['p_name'];
+            }
+            return ['dataChart'=>$tmpDataByPid, 'categories'=>$dateRange];
         }
         return false;
     }

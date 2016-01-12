@@ -97,6 +97,7 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
 							<ol class="list-unstyled">
 								<li><a href="<?= Yii::$app->urlManager->createUrl(['gii']) ?>">Gii</a></li>
 								<li><a href="<?= Yii::$app->urlManager->createUrl(['setting']) ?>">Setting</a></li>
+								<li><a href="<?= Yii::$app->urlManager->createUrl(Yii::$app->request->hostInfo) ?>">Setting</a></li>
 							</ol>
 						</div>
 					</div>

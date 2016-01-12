@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use frontend\components\Controller;
 use frontend\models\Ad;
 use frontend\models\ShareForm;
+use frontend\models\Tracking;
 use vsoft\ad\models\AdCategory;
 use vsoft\ad\models\AdContactInfo;
 use vsoft\ad\models\AdDistrict;
@@ -16,6 +17,7 @@ use vsoft\express\components\StringHelper;
 use vsoft\news\models\CmsShow;
 use vsoft\news\models\Status;
 use Yii;
+use yii\base\Exception;
 use yii\data\Pagination;
 use yii\db\IntegrityException;
 use yii\helpers\Url;
@@ -175,6 +177,11 @@ class AdController extends Controller
     }
     
     public function actionDetail($id) {
+		try{
+			Tracking::find()->productVisitor(Yii::$app->user->id, $id, time());
+		} catch(Exception $ex){
+
+		}
     	$product = AdProduct::findOne($id);
 		if(Yii::$app->request->isAjax){
 			return $this->renderAjax('_partials/detail', ['product' => $product]);
