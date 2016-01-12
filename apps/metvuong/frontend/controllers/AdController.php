@@ -38,7 +38,7 @@ class AdController extends Controller
         	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         	
         	$query = new \yii\db\Query();
-        	$query->select('ad_product.city_id, ad_product.district_id, ad_product.ward_id, ad_product.lat, ad_product.lng,
+        	$query->select('ad_product.id, ad_product.city_id, ad_product.district_id, ad_product.ward_id, ad_product.lat, ad_product.lng,
         					ad_product.home_no, ad_product.category_id, ad_product.price, ad_product.area, ad_product.created_at,
         					ad_product_addition_info.floor_no, ad_product_addition_info.room_no, ad_product_addition_info.toilet_no, ad_images.file_name');
         	$query->from('ad_product');
