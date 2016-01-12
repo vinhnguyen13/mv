@@ -26,7 +26,7 @@ use yii\helpers\FileHelper;
 class BatdongsanV2 extends Component
 {
     const DOMAIN = 'http://batdongsan.com.vn';
-    const TYPE = ['nha-dat-ban-quan-1','nha-dat-ban-quan-2','nha-dat-ban-quan-3','nha-dat-ban-quan-4','nha-dat-ban-quan-5','nha-dat-ban-quan-6',
+    protected $types = ['nha-dat-ban-quan-1','nha-dat-ban-quan-2','nha-dat-ban-quan-3','nha-dat-ban-quan-4','nha-dat-ban-quan-5','nha-dat-ban-quan-6',
         'nha-dat-ban-quan-7','nha-dat-ban-quan-8', 'nha-dat-ban-quan-9','nha-dat-ban-quan-10','nha-dat-ban-quan-11','nha-dat-ban-quan-12',
         'nha-dat-ban-binh-chanh','nha-dat-ban-binh-tan','nha-dat-ban-binh-thanh','nha-dat-ban-can-gio','nha-dat-ban-cu-chi','nha-dat-ban-go-vap',
         'nha-dat-ban-hoc-mon','nha-dat-ban-nha-be','nha-dat-ban-tan-binh','nha-dat-ban-tan-phu','nha-dat-ban-phu-nhuan','nha-dat-ban-thu-duc'];
@@ -52,7 +52,7 @@ class BatdongsanV2 extends Component
     }
 
     public function setZeroCurrentPage(){
-        foreach (self::TYPE as $key_type => $type) {
+        foreach ($this->types as $key_type => $type) {
             $path_folder = Yii::getAlias('@console') . "/data/bds_html/{$type}/";
             $file = $path_folder."bds_log_{$type}.json";
             if(file_exists($file)){
@@ -72,7 +72,7 @@ class BatdongsanV2 extends Component
             $bds_log["type"] = array();
         }
         $last_type = empty($bds_log["last_type_index"]) ? 0 : ($bds_log["last_type_index"] + 1);
-        $count_type = count(self::TYPE);
+        $count_type = count($this->types);
 
         if($last_type >= $count_type) {
             $bds_log["type"] = array();
@@ -82,7 +82,7 @@ class BatdongsanV2 extends Component
             $this->setZeroCurrentPage();
         }
 
-        foreach (self::TYPE as $key_type => $type) {
+        foreach ($this->types as $key_type => $type) {
             if ($key_type >= $last_type) {
                 $url = self::DOMAIN . '/' . $type;
                 $page = $this->getUrlContent($url);
