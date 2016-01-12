@@ -3,6 +3,10 @@ var page = 1;
 var limit = 20;
 var ZOOM_CHANGE_LIMIT = 13;
 
+var CITY_ZOOM_LEVEL = 11;
+var DISTRICT_ZOOM_LEVEL = 12;
+var WARD_ZOOM_LEVEL = 13;
+
 $(document).ready(function(){
 	listResult = $('.list-results');
 	var mapOptions = {
@@ -206,11 +210,11 @@ function start() {
 						data: {id: _id, stt: _stt},
 						success: function(data) {
 							if(_stt) {
-								saved.push(Number(_id));
+								productSaved.push(Number(_id));
 							} else {
-								var index = saved.indexOf(Number(_id));
+								var index = productSaved.indexOf(Number(_id));
 								if (index > -1) {
-									saved.splice(index, 1);
+									productSaved.splice(index, 1);
 								}
 							}
 						}
@@ -462,7 +466,7 @@ function start() {
 					
 					var res = $(response);
 					
-					var index = saved.indexOf(Number(id));
+					var index = productSaved.indexOf(Number(id));
 					if (index > -1) {
 						res.find('.icon-hear').addClass('active');
 					}
@@ -634,7 +638,7 @@ function makeMarker(product) {
 	}
 	
 	var type = (product.type == 1) ? 'BÁN' : 'CHO THUÊ';
-	var category = categories[product.category_id]['name'].toUpperCase();
+	var category = dataCategories[product.category_id]['name'].toUpperCase();
 	var price = (product.type == 1) ? product.price : product.price + '/tháng';
 	
 	var toiletNo = '';
@@ -654,8 +658,8 @@ function makeMarker(product) {
 
 	var className = 'icon-hear';
 	
-	for(i = 0; i < saved.length; i++) {
-		if(product.id == saved[i]) {
+	for(i = 0; i < productSaved.length; i++) {
+		if(product.id == productSaved[i]) {
 			className += ' active';
 			break;
 		}

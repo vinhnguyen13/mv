@@ -2,10 +2,7 @@
 use yii\web\View;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
-use vsoft\ad\models\AdCategory;
-use vsoft\ad\models\AdProductSaved;
-use yii\helpers\ArrayHelper;
-use vsoft\ad\models\AdDistrict;
+
 $this->title = Yii::t('express','We offer exeptional amenities and renowned white - glove services');
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/gmap.js', ['position' => View::POS_END]);
 $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=apiLoaded', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
@@ -14,22 +11,15 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/lightbo
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/jquery.bxslider.js', ['position' => View::POS_END]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/search-map.js', ['position' => View::POS_END]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/search-results.js', ['position' => View::POS_END]);
-$this->registerJs('var categories = ' . json_encode(AdCategory::find()->indexBy('id')->asArray(true)->all()) . ';', View::POS_BEGIN);
-
-$saved = Yii::$app->user->isGuest ? [] : ArrayHelper::getColumn(AdProductSaved::find()->where('user_id = ' . Yii::$app->user->id)->andWhere('saved_at != 0')->all(), 'product_id');
-$this->registerJs('var saved = ' . json_encode($saved) . ';', View::POS_BEGIN);
+$this->registerJs('var city = ' . json_encode($city) . ';', View::POS_BEGIN);
+$this->registerJs('var districts = ' . json_encode($districts) . ';', View::POS_BEGIN);
+$this->registerJs('var productSaved = ' . json_encode($productSaved) . ';', View::POS_BEGIN);
 
 $fb_appId = '680097282132293';
 if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
     $fb_appId = '736950189771012';
 else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     $fb_appId = '891967050918314';
-
-$districts = [];
-if($cityId = Yii::$app->request->get('city')) {
-	$districts = AdDistrict::find()->select('*, (0) as `counter`')->indexBy('id')->asArray(true)->where(['city_id' => $cityId, 'status' => 1])->all();
-}
-$this->registerJs('var districts = ' . json_encode($districts) . ';', View::POS_BEGIN);
 ?>
 <div class="list-filters-result">
 	<form id="map-search-form" action="<?= Url::to('/real-estate/result') ?>" method="post">

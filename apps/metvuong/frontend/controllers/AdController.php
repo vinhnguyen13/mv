@@ -22,6 +22,8 @@ use yii\helpers\Url;
 use yii\web\Response;
 use yii\widgets\LinkPager;
 use frontend\models\ProfileForm;
+use vsoft\ad\models\AdProductSaved;
+use vsoft\ad\models\AdCity;
 
 class AdController extends Controller
 {
@@ -117,9 +119,19 @@ class AdController extends Controller
         	}
         	
         	return ['productResponse' => $productResponse, 'total' => count($productResponse)];
+        } else {
+        	$cityId = Yii::$app->request->get('city', 1);
+        	$city = AdCity::find()->select('id, name, geometry, center, color')->asArray(true)->where(['id' => $cityId])->one();
+        	
+        	if(!$city) {
+        		throw new NotFoundHttpException('The requested page does not exist.');
+        	}
+        	
+        	$districts = AdDistrict::find()->select('id, name, pre, geometry, center, color')->asArray(true)->indexBy('id')->where(['city_id' => $cityId, 'status' => 1])->all();
+        	$productSaved = AdProductSaved::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['!=', 'saved_at', 0])->all();
+        	
+        	return $this->render('index', ['city' => $city, 'districts' => $districts, 'productSaved' => $productSaved]);
         }
-        
-        return $this->render('index');
     }
     
     public function actionSavedListing() {
