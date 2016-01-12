@@ -242,6 +242,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                     </div>
                 </div>
             </div>
+            <div class="btn-out-more"><a href="#">Find out more</a></div>
         </div>
     </section>
     

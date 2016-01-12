@@ -44,7 +44,8 @@ $searchParams = json_decode($value);
         <ul class="pull-right list-menu">
             <li><a href="<?=Url::to(['ad/index', 'type'=>1]);?>">Buy</a></li>
             <li><a href="<?=Url::to(['ad/index', 'type'=>1]);?>">Rent</a></li>
-            <li><a href="<?=Url::to(['ad/post']);?>">Sell</a></li>
+            <!-- <li><a href="<?=Url::to(['ad/post']);?>">Sell</a></li> -->
+            <li><a href="#" data-toggle="modal" data-target="#regis-listing">Sell</a></li>
             <li><a href="javascript:alert('Comming Soon !');">Market Insights</a></li>
             <?php if(Yii::$app->user->isGuest){?>
                 <li class="link-signup"><a href="#" data-toggle="modal" data-target="#frmRegister">Sign up</a></li>
@@ -81,3 +82,230 @@ $searchParams = json_decode($value);
         <a href="<?=Url::home()?>" class="logo-header"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png" alt=""></a>
     </div>
 </header>
+
+<div class="modal fade regis-listing" id="regis-listing" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class=""></span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="wrap-modal clearfix">
+                    <div class="left-regis-listing">
+                        <div class="txt-title">steps</div>
+                        <ul class="list-steps">
+                            <li class="active"><a href="#"><span>step 1</span>General Information</a></li>
+                            <li class=""><a href="#"><span>step 2</span>Detali Information</a></li>
+                            <li><a href="#"><span>step 3</span>Amenities</a></li>
+                            <li><a href="#"><span>step 4</span>Upload Images</a></li>
+                            <li><a href="#"><span>step 5</span>Preview & Post</a></li>
+                        </ul>
+                    </div>
+                    <div class="right-regis-listing">
+                        <div class="title-step">Welcome to your best listing experience online</div>
+                        <form class="clearfix">
+                            <div class=" wrap-step step-listing-1">
+                                <div><strong>Your property is at:</strong></div>
+                                <div class="form-group row">
+                                    <div class="col-xs-6">
+                                        <select class="form-control" name="" id="">
+                                            <option value="" disabled selected>Chọn Tỉnh / Thành</option>
+                                            <option value="">Hồ Chí Minh</option>
+                                            <option value="">Hà Nội</option>
+                                            <option value="">Đồng Nai</option>
+                                        </select>
+                                        
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-xs-6">
+                                        <select class="form-control" name="" id="">
+                                            <option value="" disabled selected>Chọn Quận / Huyện</option>
+                                            <option value="">Bình Chánh</option>
+                                            <option value="">Tân Bình</option>
+                                            <option value="">Tân Phú</option>
+                                        </select>
+                                        
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <select class="form-control" name="" id="">
+                                            <option value="" disabled selected>Chọn Phường / Xã</option>
+                                            <option value="">1</option>
+                                            <option value="">2</option>
+                                            <option value="">3</option>
+                                        </select>
+                                        
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-xs-6">
+                                        <input type="text" class="form-control" id="" placeholder="Địa Chỉ">
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <select name="" id="">
+                                            <option value="" disabled selected>Level 24</option>
+                                            <option value="">1</option>
+                                            <option value="">2</option>
+                                            <option value="">3</option>
+                                        </select>
+                                        
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <select name="" id="">
+                                            <option value="" disabled selected>Unit 2401</option>
+                                            <option value="">1</option>
+                                            <option value="">2</option>
+                                            <option value="">3</option>
+                                        </select>
+                                        
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-xs-6">
+                                        <select name="" id="">
+                                            <option value="" disabled selected>Dự Án</option>
+                                            <option value="">1</option>
+                                            <option value="">2</option>
+                                            <option value="">3</option>
+                                        </select>
+                                        
+                                    </div>
+                                </div>
+                                <div class="mgT-30"><strong>Type of listing:</strong></div>
+                                <div class="form-group row">
+                                    <div class="col-xs-6">
+                                        <select name="" id="">
+                                            <option value="" disabled selected>Loại Bất Động Sản</option>
+                                            <option value="">1</option>
+                                            <option value="">2</option>
+                                            <option value="">3</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-3 num-bedrooms">
+                                        <input type="text" class="form-control" id=""> <span>Bedrooms</span>
+                                    </div>
+                                    <div class="col-xs-3 num-bathrooms">
+                                        <input type="text" class="form-control" id=""> <span>Bathrooms</span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-xs-3">
+                                        <input type="text" class="form-control" id="" placeholder="Diện Tích">    
+                                    </div>
+                                    <div class="col-xs-9 prices-regis">
+                                        <div><input type="text" class="form-control" id="" placeholder="Giá"> 
+                                        Total or</div>
+                                        <div><input type="text" class="form-control" id="" placeholder="Giá"> / m2</div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-xs-6"><input type="text" class="form-control" id="" placeholder="Diện Tích"></div>/ m2 Maintenance Fee
+                                </div>
+                            </div>
+                            <div class="hide wrap-step step-listing-2">
+                                <div><strong>Detail Information</strong></div>
+                                <div class="row">
+                                    <div class="col-xs-4 checkbox-ui">
+                                        <em class="fa fa-square-o"></em>
+                                        <input type="checkbox">
+                                        Kitchen
+                                    </div>
+                                    <div class="col-xs-4 checkbox-ui">
+                                        <em class="fa fa-square-o"></em>
+                                        <input type="checkbox">
+                                        Cooker
+                                    </div>
+                                    <div class="col-xs-4 checkbox-ui">
+                                        <em class="fa fa-square-o"></em>
+                                        <input type="checkbox">
+                                        Hood
+                                    </div>
+                                    <div class="col-xs-4 checkbox-ui">
+                                        <em class="fa fa-square-o"></em>
+                                        <input type="checkbox">
+                                        Microwave
+                                    </div>
+                                    <div class="col-xs-4 checkbox-ui">
+                                        <em class="fa fa-square-o"></em>
+                                        <input type="checkbox">
+                                        Dishwasher
+                                    </div>
+                                    <div class="col-xs-4 checkbox-ui">
+                                        <em class="fa fa-square-o"></em>
+                                        <input type="checkbox">
+                                        Balcony
+                                    </div>
+                                    <div class="col-xs-4 checkbox-ui">
+                                        <em class="fa fa-square-o"></em>
+                                        <input type="checkbox">
+                                        Air Conditioning
+                                    </div>
+                                    <div class="col-xs-4 checkbox-ui">
+                                        <em class="fa fa-square-o"></em>
+                                        <input type="checkbox">
+                                        Flooring
+                                    </div>
+                                    <div class="col-xs-4 checkbox-ui">
+                                        <em class="fa fa-square-o"></em>
+                                        <input type="checkbox">
+                                        Wardrobe
+                                    </div>
+                                    <div class="col-xs-4 checkbox-ui">
+                                        <em class="fa fa-square-o"></em>
+                                        <input type="checkbox">
+                                        Voice Intercom
+                                    </div>
+                                    <div class="col-xs-4 checkbox-ui">
+                                        <em class="fa fa-square-o"></em>
+                                        <input type="checkbox">
+                                        Furnitures
+                                    </div>
+                                    <div class="col-xs-4 checkbox-ui">
+                                        <em class="fa fa-square-o"></em>
+                                        <input type="checkbox">
+                                        Beds
+                                    </div>
+                                    <div class="col-xs-4 checkbox-ui">
+                                        <em class="fa fa-square-o"></em>
+                                        <input type="checkbox">
+                                        Sofa
+                                    </div>
+                                    <div class="col-xs-4 checkbox-ui">
+                                        <em class="fa fa-square-o"></em>
+                                        <input type="checkbox">
+                                        TV
+                                    </div>
+                                    <div class="col-xs-4 checkbox-ui">
+                                        <em class="fa fa-square-o"></em>
+                                        <input type="checkbox">
+                                        Dining Set
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hide wrap-step step-listing-4">
+                                <div><strong>Upload your listing images</strong></div>
+                                <div class="wrap-img-upload row">
+                                    <div class="col-xs-4">
+                                        <div class="img-uploaded"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-1.jpg" alt=""></div>
+                                        <input type="text" placeholder="Tabs...">
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div class="img-uploaded"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-1.jpg" alt=""></div>
+                                        <input type="text" placeholder="Tabs...">
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div class="img-uploaded"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-1.jpg" alt=""></div>
+                                        <input type="text" placeholder="Tabs...">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pull-right btn-bottom-step"><button class="btn-next-step">Next</button></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

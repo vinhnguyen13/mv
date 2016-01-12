@@ -17,9 +17,11 @@ $(document).ready(function() {
         if ( $(this).hasClass('active') ) {
             $(this).parent().find('.wrap-infor-attr').slideDown();
             $(this).removeClass('active');
+            $(this).find('.txt-toggle').html('see less');
         }else {
             $(this).addClass('active');
             $(this).parent().find('.wrap-infor-attr').slideUp();
+            $(this).find('.txt-toggle').html('see more');
         }
         return false;
     });

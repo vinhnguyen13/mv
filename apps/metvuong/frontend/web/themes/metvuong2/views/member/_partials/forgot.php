@@ -5,32 +5,32 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="icon"></span>
                 </button>
+                <h3>Lấy lại mật khẩu</h3>
             </div>
             <div class="modal-body">
                 <div class="wrap-modal clearfix">
-                    <h3>Lấy lại mật khẩu</h3>
-                    <?= \vsoft\user\widgets\Connect::widget([
-                        'baseAuthUrl' => ['/user/security/auth'],
-                        'groupTitle' => Yii::t('user', 'Login by social')
-                    ]) ?>
                     <form class="frmIcon" action="">
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Email">
-                            <em class="icon-envelope-open"></em>
                         </div>
                         <div class="footer-modal clearfix">
-                            <div class="pull-right">
-                                <a class="showPopup" href="#" data-toggle="modal" data-target="#frmRegister">Đăng ký</a>
-                                <a class="showPopup" href="#" data-toggle="modal" data-target="#frmLogin">Đăng nhập</a>
-                            </div>
-                            <button type="button" class="btn btn-primary btn-common">Reset Pasword</button>
+                            <button type="button" class="btn btn-primary btn-common btn-reset-pass">Reset Pasword</button>
                         </div>
                     </form>
+                    <?= \vsoft\user\widgets\Connect::widget([
+                        'baseAuthUrl' => ['/user/security/auth'],
+                        'groupTitle' => Yii::t('user', '')
+                    ]) ?>
+                    <div class="regis-login-link">
+                        <p>New to Met Vuong? <a class="showPopup" href="#" data-toggle="modal" data-target="#frmRegister">Sign up</a></p>
+                        <p>Already have an account? <a class="showPopup" href="#" data-toggle="modal" data-target="#frmLogin">Sign in here</a></p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+

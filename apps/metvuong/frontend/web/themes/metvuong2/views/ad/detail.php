@@ -171,7 +171,7 @@ use vsoft\express\components\StringHelper;
                     </ul>
                 </div>
             </div>
-            <a href="#" class="see-less pull-right"><span class="icon"></span>see less</a>
+            <a href="#" class="see-less pull-right"><span class="icon"></span><span class="txt-toggle">see less</span></a>
         </div>
         <div class="row item-infor-detail">
             <div class="col-md-4">
@@ -197,7 +197,7 @@ use vsoft\express\components\StringHelper;
                     </ul>
                 </div>
             </div>
-            <a href="#" class="see-less pull-right"><span class="icon"></span>see less</a>
+            <a href="#" class="see-less pull-right"><span class="icon"></span><span class="txt-toggle">see less</span></a>
         </div>
         <div class="row item-infor-detail">
             <div class="col-md-4">
@@ -224,7 +224,7 @@ use vsoft\express\components\StringHelper;
                     </ul>
                 </div>
             </div>
-            <a href="#" class="see-less pull-right"><span class="icon"></span>see less</a>
+            <a href="#" class="see-less pull-right"><span class="icon"></span><span class="txt-toggle">see less</span></a>
         </div>
         <div class="row item-infor-detail">
             <div class="col-md-4">
