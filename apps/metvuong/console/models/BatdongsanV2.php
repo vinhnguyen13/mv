@@ -53,50 +53,66 @@ class BatdongsanV2 extends Component
 
     public function getPages()
     {
-        foreach(self::TYPE as $type) {
-            $url = self::DOMAIN . '/' . $type;
-            $page = $this->getUrlContent($url);
-            if (!empty($page)) {
-                $html = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
-                $pagination = $html->find('.container-default .background-pager-right-controls a');
-                $count_page = count($pagination);
-                $last_page = (int)str_replace("/" . $type . "/p", "", $pagination[$count_page - 1]->href);
-                if ($count_page > 0) {
-                    $log = $this->loadFileLog($type);
-                    $current_page = empty($log["current_page"]) ? 1 : ($log["current_page"] + 1);
-                    $current_page_add = $current_page;
-                    if ($current_page <= $last_page) {
-                        $current_page_add = $current_page + 4;
-                        for ($i = $current_page; $i <= $current_page_add; $i++) {
-                            $log = $this->loadFileLog($type);
-                            $sequence_id = empty($log["last_id"]) ? 0 : ($log["last_id"] + 1);
-                            $list_return = $this->getListProject($type, $i, $sequence_id, $log);
-                            if (!empty($list_return["data"])) {
-                                $list_return["data"]["current_page"] = $i;
-                                $this->writeFileLog($type, $list_return["data"]);
-                                print_r("Page " . $i . " done!");
-                                print_r("\n");
+        $bds_log = $this->loadBdsLog();
+        if(empty($bds_log["type"])){
+            $bds_log["type"] = array();
+        }
+        $last_type = empty($bds_log["last_type_index"]) ? 0 : ($bds_log["last_type_index"] + 1);
+        $count_type = count(self::TYPE) - 1;
+        if($last_type > $count_type) $last_type = 0;
+        foreach (self::TYPE as $key_type => $type) {
+            if ($key_type >= $last_type) {
+                $url = self::DOMAIN . '/' . $type;
+                $page = $this->getUrlContent($url);
+                if (!empty($page)) {
+                    $html = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
+                    $pagination = $html->find('.container-default .background-pager-right-controls a');
+                    $count_page = count($pagination);
+                    $last_page = (int)str_replace("/" . $type . "/p", "", $pagination[$count_page - 1]->href);
+                    if ($count_page > 0) {
+                        $log = $this->loadFileLog($type);
+                        $current_page = empty($log["current_page"]) ? 1 : ($log["current_page"] + 1);
+
+                        $current_page_add = $current_page + 4; // +4 => total page to run are 5.
+                        if($current_page_add > $last_page)
+                            $current_page_add = $last_page;
+
+                        if ($current_page <= $last_page) {
+                            for ($i = $current_page; $i <= $current_page_add; $i++) {
+                                $log = $this->loadFileLog($type);
+                                $sequence_id = empty($log["last_id"]) ? 0 : ($log["last_id"] + 1);
+                                $list_return = $this->getListProject($type, $i, $sequence_id, $log);
+                                if (!empty($list_return["data"])) {
+                                    $list_return["data"]["current_page"] = $i;
+                                    $this->writeFileLog($type, $list_return["data"]);
+                                    print_r("\n{$type}-page " . $i . " done!\n");
+                                }
+                                sleep(1);
+                                ob_flush();
                             }
-                            sleep(1);
-                            ob_flush();
+                            break;
+                        } else {
+                            $log = $this->loadFileLog($type);
+                            if(!empty($log["data"]["current_page"]))
+                                $log["data"]["current_page"] = 0;
+                            $this->writeFileLogFail($type, "\nPaging end: Current:$current_page_add , last:$last_page" . "\n");
                         }
                     } else {
-                        $this->writeFileLogFail($type, "Paging end: Current:$current_page_add , last:$last_page" . "\n");
+                        echo "\nCannot find listing. End page!" . self::DOMAIN;
+                        $this->writeFileLogFail($type, "\nCannot find listing: $url" . "\n");
                     }
                 } else {
-                    echo "Cannot find listing. End page!" . self::DOMAIN;
-                    $this->writeFileLogFail($type, "Cannot find listing: $url" . "\n");
+                    echo "\nCannot access in get pages of " . self::DOMAIN;
+                    $this->writeFileLogFail($type, "\nCannot access: $url" . "\n");
                 }
-            } else {
-                echo "Cannot access in get pages of " . self::DOMAIN;
-                $this->writeFileLogFail($type, "Cannot access: $url" . "\n");
+
+                if(!in_array($type, $bds_log["type"])) {
+                    array_push($bds_log["type"], $type);
+                }
+                $bds_log["last_type_index"] = $key_type;
+                $this->writeBdsLog($bds_log);
+                print_r("\nTYPE: {$type} DONE!\n");
             }
-            $bds_log = $this->loadBdsLog($type);
-            if(empty($bds_log)){
-                $bds_log["quan"] = array();
-            }
-            array_push($bds_log["quan"], $type);
-            $this->writeBdsLog($type, $bds_log);
         }
     }
 
@@ -128,6 +144,11 @@ class BatdongsanV2 extends Component
                             $sequence_id = $sequence_id + 1;
                         }
                     } else {
+                        if(empty($log["p".$current_page]["duplicate"])){
+                            $log["p".$current_page]["duplicate"] = array();
+                        }
+                        array_unshift($log["p".$current_page]["duplicate"], $productId);
+                        $log["p".$current_page]["total"] = count($log["p".$current_page]["duplicate"]);
                         var_dump($productId);
                     }
                 }
@@ -146,7 +167,6 @@ class BatdongsanV2 extends Component
 
     public function getProjectDetail($type, $href)
     {
-        $json = array();
         $page = $this->getUrlContent(self::DOMAIN . $href);
         $matches = array();
         if (preg_match('/pr(\d+)/', self::DOMAIN . $href, $matches)) {
@@ -163,9 +183,9 @@ class BatdongsanV2 extends Component
                 }
                 $res = $this->writeFileJson($path.$product_id, $page);
                 if($res){
-                    $this->writeFileLogUrlSuccess(self::DOMAIN.$href."\n");
+                    $this->writeFileLogUrlSuccess($type, self::DOMAIN.$href."\n");
                     return $product_id;
-                }else{
+                } else {
                     return null;
                 }
         }
@@ -227,12 +247,12 @@ class BatdongsanV2 extends Component
         return 0;
     }
 
-    function loadBdsLog($type){
+    function loadBdsLog(){
         $path_folder = Yii::getAlias('@console') . "/data/bds_html/";
         $path = $path_folder."bds_log.json";
         if(!is_dir($path_folder)){
             mkdir($path_folder , 0777, true);
-            echo "Directory {$path_folder} was created";
+            echo "Directory {$path_folder} was created\n";
         }
         $data = null;
         if(file_exists($path))
@@ -251,18 +271,18 @@ class BatdongsanV2 extends Component
             return null;
     }
 
-    function writeBdsLog($type, $log){
+    function writeBdsLog($log){
         $file_name = Yii::getAlias('@console') . "/data/bds_html/bds_log.json";
         $log_data = json_encode($log);
         $this->writeFileJson($file_name, $log_data);
     }
 
     function loadFileLog($type){
-        $path_folder = Yii::getAlias('@console') . "/data/bds_html/{$type}";
+        $path_folder = Yii::getAlias('@console') . "/data/bds_html/{$type}/";
         $path = $path_folder."bds_log_{$type}.json";
         if(!is_dir($path_folder)){
             mkdir($path_folder , 0777, true);
-            echo "Directory {$path_folder} was created";
+            echo "Directory {$path_folder} was created\n";
         }
         $data = null;
         if(file_exists($path))
@@ -298,8 +318,8 @@ class BatdongsanV2 extends Component
         }
     }
 
-    function writeFileLogUrlSuccess($log){
-        $file_name = Yii::getAlias('@console') . '/data/bds_html/bds_log_urls';
+    function writeFileLogUrlSuccess($type, $log){
+        $file_name = Yii::getAlias('@console') . "/data/bds_html/{$type}/bds_log_urls";
         if(!file_exists($file_name)){
             fopen($file_name, "w");
         }
