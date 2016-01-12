@@ -37,49 +37,67 @@ class AdController extends Controller
         if($result) {
         	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         	
-        	$query = (new \yii\db\Query())->select('ad_product.*, ad_images.file_name, ad_product_addition_info.*')
-        				->from('ad_product')
-						->innerJoin('ad_product_addition_info', 'ad_product.id = ad_product_addition_info.product_id')
-        				->leftJoin('ad_images', 'ad_product.id = ad_images.product_id AND ad_images.order = 0')
-        				->groupBy('ad_product.id')
-        				->andWhere('`status` = ' . AdProduct::STATUS_ACTIVE);
+        	$query = new \yii\db\Query();
+        	$query->select('ad_product.city_id, ad_product.district_id, ad_product.ward_id, ad_product.lat, ad_product.lng,
+        					ad_product.home_no, ad_product.category_id, ad_product.price, ad_product.area, ad_product.created_at,
+        					ad_product_addition_info.floor_no, ad_product_addition_info.room_no, ad_product_addition_info.toilet_no, ad_images.file_name');
+        	$query->from('ad_product');
+        	$query->innerJoin('ad_product_addition_info', 'ad_product_addition_info.product_id = ad_product.id');
+        	$query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
+        	$where = ['ad_product.status' => 1];
         	
-        	$conditionMap = [
-				['type', '=', 'type'],
-				['city_id', '=', 'cityId'],
-				['district_id', '=', 'districtId'],
-				['category_id', '=', 'categoryId'],
-				['price', '>=', 'costMin'],
-				['price', '<=', 'costMax'],
-				['area', '>=', 'areaMin'],
-				['area', '<=', 'areaMax'],
-				['room_no', '>=', 'roomNo'],
-				['toilet_no', '>=', 'toiletNo'],
-				['type', '=', 'type'],
-				['type', '=', 'type'],
-        	];
+        	if($type = Yii::$app->request->get('type')) {
+        		$where['ad_product.type'] = intval($type);
+        	}
         	
-        	foreach ($conditionMap as $cond) {
-        		$param = Yii::$app->request->get($cond[2]);
-        		
-        		if($param) {
-        			$query->andWhere("`{$cond[0]}` {$cond[1]} :{$cond[2]}", [":{$cond[2]}" => $param]);
-        		}
+        	if($districtId = Yii::$app->request->get('districtId')) {
+        		$where['ad_product.district_id'] = intval($districtId);
+        	} else if($cityId = Yii::$app->request->get('cityId')) {
+        		$where['ad_product.city_id'] = intval($cityId);
+        	}
+        	
+        	if($categoryId = Yii::$app->request->get('categoryId')) {
+        		$where['ad_product.category_id'] = intval($categoryId);
+        	}
+        	
+        	$query->where($where);
+        	
+        	if($costMin = Yii::$app->request->get('costMin')) {
+        		$query->andWhere(['>=', 'ad_product.price', intval($costMin)]);
+        	}
+        	
+        	if($costMax = Yii::$app->request->get('costMax')) {
+        		$query->andWhere(['<=', 'ad_product.price', intval($costMax)]);
+        	}
+        	
+        	if($areaMin = Yii::$app->request->get('areaMin')) {
+        		$query->andWhere(['>=', 'ad_product.area', intval($areaMin)]);
+        	}
+        	
+        	if($areaMax = Yii::$app->request->get('areaMax')) {
+        		$query->andWhere(['<=', 'ad_product.area', intval($areaMax)]);
+        	}
+        	
+        	if($roomNo = Yii::$app->request->get('roomNo')) {
+        		$query->andWhere(['>=', 'ad_product_addition_info.room_no', intval($roomNo)]);
+        	}
+        	
+			if($toiletNo = Yii::$app->request->get('toiletNo')) {
+        		$query->andWhere(['>=', 'ad_product_addition_info.toilet_no', intval($toiletNo)]);
         	}
         	
         	if($time = Yii::$app->request->get('time')) {
-        		$query->andWhere('created_at >= :created_at', [':created_at' => strtotime($time)]);
+        		$query->andWhere(['>=', 'ad_product.created_at', strtotime($time)]);
         	}
         	
-        	if(($order = Yii::$app->request->get('orderBy')) && $order != 'created_at') {
-        		$query->orderBy("`$order` ASC");
+        	$order = Yii::$app->request->get('orderBy', 'created_at');
+        	if($order == 'created_at') {
+        		$query->orderBy("created_at DESC");
         	} else {
-        		$query->orderBy("`created_at` DESC");
+        		$query->orderBy("price ASC");
         	}
         	
-        	$products = $query->all();
-        	
-        	$productResponse = [];
+        	$products = $query->groupBy('ad_product.id')->all();
         	
         	foreach ($products as $k => $product) {
         		$productResponse[$k] = $product;
