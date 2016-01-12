@@ -429,211 +429,292 @@ class BatdongsanV2 extends Component
         $this->writeFileJson($file_name, $log_data);
     }
 
+    function loadBdsImportLog(){
+        $path_folder = Yii::getAlias('@console') . "/data/bds_html/import/";
+        if(!is_dir($path_folder)){
+            mkdir($path_folder , 0777, true);
+            echo "\nDirectory {$path_folder} was created";
+        }
+        $data = null;
+        $path = $path_folder."bds_import_log.json";
+        if(file_exists($path))
+            $data = file_get_contents($path);
+        else
+        {
+            $this->writeFileJson($path, null);
+            $data = file_get_contents($path);
+        }
 
+        if(!empty($data)){
+            $data = json_decode($data, true);
+            return $data;
+        }
+        else
+            return null;
+    }
+
+    function writeBdsImportLog($log){
+        $file_name = Yii::getAlias('@console') . "/data/bds_html/import/bds_import_log.json";
+        $log_data = json_encode($log);
+        $this->writeFileJson($file_name, $log_data);
+    }
+
+    public function getAddressFromLatLong($lat, $long){
+        $curl = new Curl();
+        $url = "http://maps.googleapis.com/maps/api/geocode/json?latlng={$lat},{$long}&sensor=true";
+        $address = array();
+        $response = $curl->get($url);
+        if(!empty($response)){
+            $results = json_decode($response, true);
+            if(!empty($results["results"][0]["address_components"])){
+                $detail = $results["results"][0]["address_components"];
+                if($detail[count($detail)-1]["short_name"] == "VN") {
+                    foreach($detail as $d){
+                        if($d["types"][0] == "street_number"){
+                            $address["home_no"] = $d["long_name"];
+                        }
+
+                        elseif($d["types"][0] == "route"){
+                            $address["street"] = $d["long_name"];
+                        }
+
+                        elseif($d["types"][0] == "sublocality_level_1"){
+                            $address["ward"] = $d["long_name"];
+                        }
+
+                        elseif($d["types"][0] == "administrative_area_level_2"){
+                            $address["district"] = $d["long_name"];
+                        }
+
+                        elseif($d["types"][0] == "administrative_area_level_1"){
+                            $address["city"] = $d["long_name"];
+                        }
+                    }
+                }
+            }
+        }
+        return $address;
+    }
 
     public function importData()
     {
         $start_time = time();
         $insertCount = 0;
+        $count_file = 1;
+
+        $bds_import_log = $this->loadBdsImportLog();
+        if(empty($bds_import_log["type"])){
+            $bds_import_log["type"] = array();
+        }
+        $last_type_import = empty($bds_import_log["last_type_index"]) ? 0 : ($bds_import_log["last_type_index"] + 1);
+        print_r("Prepare data...\n");
+        $columnNameArray = ['category_id', 'user_id', 'home_no',
+            'city_id', 'district_id', 'ward_id', 'street_id',
+            'type', 'content', 'area', 'price', 'lat', 'lng',
+            'start_date', 'end_date', 'verified', 'created_at', 'source'];
+        $bulkInsertArray = array();
+        $imageArray = array();
+        $infoArray = array();
+        $contactArray = array();
+
+        $cityData = AdCity::find()->all();
+        $districtData = AdDistrict::find()->all();
+        $wardData = AdWard::find()->all();
+        $streetData = AdStreet::find()->all();
+        $tableName = AdProduct::tableName();
+        $break_type = false;
         foreach ($this->types as $key_type => $type) {
-            $path = Yii::getAlias('@console') . "/data/bds_html/{$type}/files";
-            if(is_dir($path)) {
-                $log_import = $this->loadImportLog($type);
-                if (empty($log_import["files"])) $log_import["files"] = array();
+            if($key_type >= $last_type_import && !$break_type) {
+                $path = Yii::getAlias('@console') . "/data/bds_html/{$type}/files";
+                if (is_dir($path)) {
+                    $log_import = $this->loadImportLog($type);
+                    if (empty($log_import["files"])) $log_import["files"] = array();
+                    $files = scandir($path, 1);
 
-//        $start = empty($log["last_file_index"]) ? 0 : $log["last_file_index"];
-
-                $files = scandir($path, 1);
-                $counter = count($files) - 3;
-                if ($counter > 0) {
-                    print_r("Prepare data...\n");
-                    $cityData = AdCity::find()->all();
-                    $districtData = AdDistrict::find()->all();
-                    $wardData = AdWard::find()->all();
-                    $streetData = AdStreet::find()->all();
-                    $tableName = AdProduct::tableName();
-                    $columnNameArray = ['category_id', 'user_id',
-                        'city_id', 'district_id', 'ward_id', 'street_id',
-                        'type', 'content', 'area', 'price', 'lat', 'lng',
-                        'start_date', 'end_date', 'verified', 'created_at', 'source'];
-                    $bulkInsertArray = array();
-                    $imageArray = array();
-                    $infoArray = array();
-                    $contactArray = array();
-                    print_r("Insert data...\n");
-                    $count_file = 1;
-                    for ($i = 0; $i <= $counter; $i++) {
-                        if ($count_file > 500)
-                            break;
-
-                        $filename = $files[$i];
-                        if (in_array($filename, $log_import["files"])) {
-                            print_r("\n" . $filename . " imported.");
-                            continue;
-                        } else {
-                            $filePath = $path . "/" . $filename;
-                            if (file_exists($filePath)) {
-                                $data = $this->parseDetail($filePath);
-                                foreach ($data as $value) {
-                                    $imageArray[$count_file] = $value[$filename]["thumbs"];
-                                    $infoArray[$count_file] = $value[$filename]["info"];
-                                    $contactArray[$count_file] = $value[$filename]["contact"];
-
-                                    $city_id = $this->getCityId($value[$filename]["city"], $cityData);
-                                    if (empty($city_id))
-                                        continue;
-                                    $district_id = $this->getDistrictId($value[$filename]["district"], $districtData, $city_id);
-                                    if (empty($district_id))
-                                        continue;
-
-                                    $ward_id = $this->getWardId($value[$filename]["ward"], $wardData, $district_id);
-
-                                    $area = $value[$filename]["dientich"];
-                                    $price = $value[$filename]["price"];
-                                    if ($price == 0)
-                                        continue;
-
-                                    $desc = $value[$filename]["description"];
-                                    $content = null;
-                                    if (!empty($desc)) {
-                                        $content = strip_tags($desc, '<br>');
-                                        $pos = strpos($content, 'Tìm kiếm theo từ khóa');
-                                        if ($pos) {
-                                            $content = substr($content, 0, $pos);
-                                            $content = str_replace('Tìm kiếm theo từ khóa', '', $content);
-                                        }
-                                        $content = str_replace('<br/>', PHP_EOL, $content);
-                                        $content = trim($content);
-                                    }
-
-                                    $record = [
-                                        'category_id' => $value[$filename]["loai_tai_san"],
-                                        'user_id' => null,
-                                        'city_id' => $city_id,
-                                        'district_id' => $district_id,
-                                        'ward_id' => $city_id,
-                                        'street_id' => $district_id,
-                                        'type' => $value[$filename]["loai_giao_dich"],
-                                        'content' => $content,
-                                        'area' => $area,
-                                        'price' => $price,
-                                        'lat' => $value[$filename]["lat"],
-                                        'lng' => $value[$filename]["lng"],
-                                        'start_date' => $value[$filename]["start_date"],
-                                        'end_date' => $value[$filename]["end_date"],
-                                        'verified' => 1,
-                                        'created_at' => $value[$filename]["start_date"],
-                                        'source' => 1
-                                    ];
-
-
-                                    $bulkInsertArray[] = $record;
-                                }
-                                print_r("\n" . $filename . " added.");
-                                array_push($log_import["files"], $filename);
-                                $log_import["total_import_name"] = $count_file;
-                                $log_import["last_import_time"] = date("d-m-Y H:i");
-                                $this->writeImportLog($type, $log_import);
-                                $count_file++;
+                    $counter = count($files) - 3;
+                    if ($counter > 0) {
+                        print_r("Insert data...\n");
+                        for ($i = 0; $i <= $counter; $i++) {
+                            if ($count_file > 500) {
+                                $break_type = true;
+                                break;
                             }
-                        }
-                    }
-                    if (count($bulkInsertArray) > 0) {
-                        // below line insert all your record and return number of rows inserted
-                        $insertCount = Yii::$app->db->createCommand()
-                            ->batchInsert($tableName, $columnNameArray, $bulkInsertArray)->execute();
-                        print_r("\n Done!");
+                            $filename = $files[$i];
+                            if (in_array($filename, $log_import["files"])) {
+                                print_r("\n" . $filename . " imported.");
+                                continue;
+                            } else {
+                                $filePath = $path . "/" . $filename;
+                                if (file_exists($filePath)) {
+                                    $data = $this->parseDetail($filePath);
+                                    foreach ($data as $value) {
+                                        $imageArray[$count_file] = $value[$filename]["thumbs"];
+                                        $infoArray[$count_file] = $value[$filename]["info"];
+                                        $contactArray[$count_file] = $value[$filename]["contact"];
 
-                        if ($insertCount > 0) {
-                            $ad_image_columns = ['user_id', 'product_id', 'file_name', 'uploaded_at'];
-                            $ad_info_columns = ['product_id', 'floor_no', 'room_no', 'toilet_no'];
-                            $ad_contact_columns = ['product_id', 'name', 'phone', 'mobile', 'address'];
+                                        $city_id = $this->getCityId($value[$filename]["city"], $cityData);
+                                        if (empty($city_id))
+                                            continue;
+                                        $district_id = $this->getDistrictId($value[$filename]["district"], $districtData, $city_id);
+                                        if (empty($district_id))
+                                            continue;
 
-                            $bulkImage = array();
-                            $bulkInfo = array();
-                            $bulkContact = array();
+                                        $ward_id = $this->getWardId($value[$filename]["ward"], $wardData, $district_id);
+                                        $street_id = $this->getStreetId($value[$filename]["street"], $streetData, $district_id);
 
-                            $fromProductId = Yii::$app->db->getLastInsertID();
-                            $toProductId = $fromProductId + $insertCount - 1;
+                                        $area = $value[$filename]["dientich"];
+                                        $price = $value[$filename]["price"];
+                                        if ($price == 0)
+                                            continue;
 
-                            $index = 1;
-                            for ($i = $fromProductId; $i <= $toProductId; $i++) {
-                                $ad_product = AdProduct::findOne($i);
-                                if (!empty($ad_product)) {
-                                    if (count($imageArray) > 0) {
-                                        foreach ($imageArray[$index] as $imageValue) {
-                                            if (!empty($imageValue)) {
-                                                $imageRecord = [
-                                                    'user_id' => null,
-                                                    'product_id' => $i,
-                                                    'file_name' => $imageValue,
-                                                    'upload_at' => time()
-                                                ];
-                                                $bulkImage[] = $imageRecord;
+                                        $desc = $value[$filename]["description"];
+                                        $content = null;
+                                        if (!empty($desc)) {
+                                            $content = strip_tags($desc, '<br>');
+                                            $pos = strpos($content, 'Tìm kiếm theo từ khóa');
+                                            if ($pos) {
+                                                $content = substr($content, 0, $pos);
+                                                $content = str_replace('Tìm kiếm theo từ khóa', '', $content);
                                             }
+                                            $content = str_replace('<br/>', PHP_EOL, $content);
+                                            $content = trim($content);
                                         }
-                                    }
 
-                                    if (count($infoArray) > 0) {
-                                        $floor_no = empty($infoArray[$index]["Số tầng"]) == false ? trim(str_replace('(tầng)', '', $infoArray[$index]["Số tầng"])) : 0;
-                                        $room_no = empty($infoArray[$index]["Số phòng ngủ"]) == false ? trim(str_replace('(phòng)', '', $infoArray[$index]["Số phòng ngủ"])) : 0;
-                                        $toilet_no = empty($infoArray[$index]["Số toilet"]) == false ? trim($infoArray[$index]["Số toilet"]) : 0;
-                                        $infoRecord = [
-                                            'product_id' => $i,
-                                            'floor_no' => $floor_no,
-                                            'room_no' => $room_no,
-                                            'toilet_no' => $toilet_no
+                                        $record = [
+                                            'category_id' => $value[$filename]["loai_tai_san"],
+                                            'user_id' => null,
+                                            'home_no' => $value[$filename]["home_no"],
+                                            'city_id' => $city_id,
+                                            'district_id' => $district_id,
+                                            'ward_id' => $ward_id,
+                                            'street_id' => $street_id,
+                                            'type' => $value[$filename]["loai_giao_dich"],
+                                            'content' => $content,
+                                            'area' => $area,
+                                            'price' => $price,
+                                            'lat' => $value[$filename]["lat"],
+                                            'lng' => $value[$filename]["lng"],
+                                            'start_date' => $value[$filename]["start_date"],
+                                            'end_date' => $value[$filename]["end_date"],
+                                            'verified' => 1,
+                                            'created_at' => $value[$filename]["start_date"],
+                                            'source' => 1
                                         ];
-                                        $bulkInfo[] = $infoRecord;
+                                        // source = 1 for Batdongsan.com.vn
+                                        $bulkInsertArray[] = $record;
                                     }
-                                    if (count($contactArray) > 0) {
-                                        $name = empty($contactArray[$index]["Tên liên lạc"]) == false ? trim($contactArray[$index]["Tên liên lạc"]) : null;
-                                        $phone = empty($contactArray[$index]["Điện thoại"]) == false ? trim($contactArray[$index]["Điện thoại"]) : null;
-                                        $mobile = empty($contactArray[$index]["Mobile"]) == false ? trim($contactArray[$index]["Mobile"]) : null;
-                                        $address = empty($contactArray[$index]["Địa chỉ"]) == false ? trim($contactArray[$index]["Địa chỉ"]) : null;
-                                        $contactRecord = [
-                                            'product_id' => $i,
-                                            'name' => $name,
-                                            'phone' => $phone,
-                                            'mobile' => $mobile,
-                                            'address' => $address
-                                        ];
-                                        $bulkContact[] = $contactRecord;
-                                    }
-                                    $index = $index + 1;
+                                    print_r("\n" . $filename . " added.");
+                                    array_push($log_import["files"], $filename);
+                                    $log_import["import_total"] = $count_file;
+                                    $log_import["import_time"] = date("d-m-Y H:i");
+                                    $this->writeImportLog($type, $log_import);
+                                    $count_file++;
                                 }
                             }
+                        } // end file loop
 
-                            // execute image, info, contact
-                            if (count($bulkImage) > 0) {
-                                $imageCount = Yii::$app->db->createCommand()
-                                    ->batchInsert(AdImages::tableName(), $ad_image_columns, $bulkImage)
-                                    ->execute();
-                                if ($imageCount > 0)
-                                    print_r("\nInser image done");
+                        if(count($bulkInsertArray) > 0) {
+                            if (!in_array($type, $bds_import_log["type"])) {
+                                array_push($bds_import_log["type"], $type);
                             }
-                            if (count($bulkInfo) > 0) {
-                                $infoCount = Yii::$app->db->createCommand()
-                                    ->batchInsert(AdProductAdditionInfo::tableName(), $ad_info_columns, $bulkInfo)
-                                    ->execute();
-                                if ($infoCount > 0)
-                                    print_r("\nInser product addition info done");
-                            }
-                            if (count($bulkContact) > 0) {
-                                $contactCount = Yii::$app->db->createCommand()
-                                    ->batchInsert(AdContactInfo::tableName(), $ad_contact_columns, $bulkContact)
-                                    ->execute();
-                                if ($contactCount > 0)
-                                    print_r("\nInser contact info done");
-                            }
-                        } else {
-                            $log_import = $this->loadImportLog();
-                            $log_import["last_import_time"] = date("d-m-Y H:i");
-                            $this->writeImportLog($log_import);
-                            print_r("\nCannot insert ad_product");
+                            $bds_import_log["last_type_index"] = $key_type;
+                            $this->writeBdsImportLog($bds_import_log);
+                            print_r("\nTYPE: {$type} DONE!\n");
                         }
                     }
                 }
+            }
+        } // end types
+        if (count($bulkInsertArray) > 0) {
+            // below line insert all your record and return number of rows inserted
+            $insertCount = Yii::$app->db->createCommand()
+                ->batchInsert($tableName, $columnNameArray, $bulkInsertArray)->execute();
+            print_r("\n Done!");
+
+            if ($insertCount > 0) {
+                $ad_image_columns = ['user_id', 'product_id', 'file_name', 'uploaded_at'];
+                $ad_info_columns = ['product_id', 'floor_no', 'room_no', 'toilet_no'];
+                $ad_contact_columns = ['product_id', 'name', 'phone', 'mobile', 'address'];
+
+                $bulkImage = array();
+                $bulkInfo = array();
+                $bulkContact = array();
+
+                $fromProductId = Yii::$app->db->getLastInsertID();
+                $toProductId = $fromProductId + $insertCount - 1;
+
+                $index = 1;
+                for ($i = $fromProductId; $i <= $toProductId; $i++) {
+                    $ad_product = AdProduct::findOne($i);
+                    if (!empty($ad_product)) {
+                        if (count($imageArray) > 0) {
+                            foreach ($imageArray[$index] as $imageValue) {
+                                if (!empty($imageValue)) {
+                                    $imageRecord = [
+                                        'user_id' => null,
+                                        'product_id' => $i,
+                                        'file_name' => $imageValue,
+                                        'upload_at' => time()
+                                    ];
+                                    $bulkImage[] = $imageRecord;
+                                }
+                            }
+                        }
+
+                        if (count($infoArray) > 0) {
+                            $floor_no = empty($infoArray[$index]["Số tầng"]) == false ? trim(str_replace('(tầng)', '', $infoArray[$index]["Số tầng"])) : 0;
+                            $room_no = empty($infoArray[$index]["Số phòng ngủ"]) == false ? trim(str_replace('(phòng)', '', $infoArray[$index]["Số phòng ngủ"])) : 0;
+                            $toilet_no = empty($infoArray[$index]["Số toilet"]) == false ? trim($infoArray[$index]["Số toilet"]) : 0;
+                            $infoRecord = [
+                                'product_id' => $i,
+                                'floor_no' => $floor_no,
+                                'room_no' => $room_no,
+                                'toilet_no' => $toilet_no
+                            ];
+                            $bulkInfo[] = $infoRecord;
+                        }
+                        if (count($contactArray) > 0) {
+                            $name = empty($contactArray[$index]["Tên liên lạc"]) == false ? trim($contactArray[$index]["Tên liên lạc"]) : null;
+                            $phone = empty($contactArray[$index]["Điện thoại"]) == false ? trim($contactArray[$index]["Điện thoại"]) : null;
+                            $mobile = empty($contactArray[$index]["Mobile"]) == false ? trim($contactArray[$index]["Mobile"]) : null;
+                            $address = empty($contactArray[$index]["Địa chỉ"]) == false ? trim($contactArray[$index]["Địa chỉ"]) : null;
+                            $contactRecord = [
+                                'product_id' => $i,
+                                'name' => $name,
+                                'phone' => $phone,
+                                'mobile' => $mobile,
+                                'address' => $address
+                            ];
+                            $bulkContact[] = $contactRecord;
+                        }
+                        $index = $index + 1;
+                    }
+                }
+
+                // execute image, info, contact
+                if (count($bulkImage) > 0) {
+                    $imageCount = Yii::$app->db->createCommand()
+                        ->batchInsert(AdImages::tableName(), $ad_image_columns, $bulkImage)
+                        ->execute();
+                    if ($imageCount > 0)
+                        print_r("\nInser image done");
+                }
+                if (count($bulkInfo) > 0) {
+                    $infoCount = Yii::$app->db->createCommand()
+                        ->batchInsert(AdProductAdditionInfo::tableName(), $ad_info_columns, $bulkInfo)
+                        ->execute();
+                    if ($infoCount > 0)
+                        print_r("\nInser product addition info done");
+                }
+                if (count($bulkContact) > 0) {
+                    $contactCount = Yii::$app->db->createCommand()
+                        ->batchInsert(AdContactInfo::tableName(), $ad_contact_columns, $bulkContact)
+                        ->execute();
+                    if ($contactCount > 0)
+                        print_r("\nInser contact info done");
+                }
+            } else {
+                print_r("\nCannot insert ad_product!!");
             }
         }
 
@@ -657,6 +738,7 @@ class BatdongsanV2 extends Component
             $href = $detail->find('#form1', 0)->action;
             $lat = $detail->find('#hdLat', 0)->value;
             $long = $detail->find('#hdLong', 0)->value;
+
             $product_id = $detail->find('.pm-content', 0)->cid;
             $content = $detail->find('.pm-content', 0)->innertext;
 
@@ -705,6 +787,9 @@ class BatdongsanV2 extends Component
             $left = '';
             $city = null;
             $district = null;
+            $ward = null;
+            $street = null;
+            $home_no = null;
             $startdate = time();
             $endate = time();
             $loai_tai_san = 6;
@@ -726,15 +811,24 @@ class BatdongsanV2 extends Component
             }
 
             if (count($arr_info) > 0) {
-//                if (!empty($arr_info["Địa chỉ"])) {
-//                    $address = mb_split(',', $arr_info["Địa chỉ"]);
-//                    $count_address = count($address);
-//                    if ($count_address >= 3) {
-//                        $city = !empty($address[$count_address - 1]) ? $address[$count_address - 1] : null;
-//                        $district = !empty($address[$count_address - 2]) ? $address[$count_address - 2] : null;
-//                    }
-//                }
-                // get address from Google Maps
+                $address = $this->getAddressFromLatLong($lat, $long);
+                if(!empty($address["city"]) && !empty($address["district"])){
+                    $city = empty($address["city"]) ? null : $address["city"];
+                    $district = empty($address["district"]) ? null : $address["district"];
+                    $ward = empty($address["ward"]) ? null : $address["ward"];
+                    $street = empty($address["street"]) ? null : $address["street"];
+                    $home_no = empty($address["home_no"]) ? null : $address["home_no"];
+
+                } else {
+                    if (!empty($arr_info["Địa chỉ"])) {
+                        $address = mb_split(',', $arr_info["Địa chỉ"]);
+                        $count_address = count($address);
+                        if ($count_address >= 3) {
+                            $city = !empty($address[$count_address - 1]) ? $address[$count_address - 1] : null;
+                            $district = !empty($address[$count_address - 2]) ? $address[$count_address - 2] : null;
+                        }
+                    }
+                }
 
 
                 $startdate = empty($arr_info["Ngày đăng tin"]) ? time() : trim($arr_info["Ngày đăng tin"]);
@@ -783,6 +877,9 @@ class BatdongsanV2 extends Component
                 'contact' => $arr_contact,
                 'city' => $city,
                 'district' => $district,
+                'ward' => $ward,
+                'street' => $street,
+                'home_no' => $home_no,
                 'loai_tai_san' => $loai_tai_san,
                 'loai_giao_dich' => 1,
                 'price' => $price,
