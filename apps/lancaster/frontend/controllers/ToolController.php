@@ -88,7 +88,7 @@ class ToolController extends Controller
             $this->_session = Yii::$app->session;
             $this->_session->set($step, filter_var($app->request->post('total_project_cost'), FILTER_SANITIZE_NUMBER_INT));
 
-            $pathData = Yii::getAlias('@store').'\\chart\\';
+            $pathData = Yii::getAlias('@store').'/chart/';
 
             $data_file = 'data.json';
             if($step == 'scenario_1' || $step == "calculation_1"){
