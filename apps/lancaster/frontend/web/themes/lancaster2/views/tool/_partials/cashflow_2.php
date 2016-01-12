@@ -162,7 +162,7 @@ use yii\widgets\ActiveForm;
          * after save data to continue display chart
          */
         console.log(json.data);
-        window.location.href = "http://local.lancaster.com/en-US/tool/chart";
+        window.location.href = "<?=\yii\helpers\Url::to("/tool/chart")?>"";
     });
 
 
