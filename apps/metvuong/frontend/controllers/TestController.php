@@ -57,6 +57,7 @@ class TestController extends \yii\web\Controller
                 $uid = array_rand(array_flip($uids), 1);
                 $time = array_rand(array_flip($times), 1);
                 $ck = Tracking::find()->productVisitor($uid, $pid, $time);
+                var_dump($ck);
             }
         }elseif($action == 'search'){
             $startTime = strtotime('2-1-2016');
