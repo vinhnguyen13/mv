@@ -27,9 +27,9 @@ class BatdongsanV2 extends Component
 {
     const DOMAIN = 'http://batdongsan.com.vn';
     const TYPE = ['nha-dat-ban-quan-1','nha-dat-ban-quan-2','nha-dat-ban-quan-3','nha-dat-ban-quan-4','nha-dat-ban-quan-5','nha-dat-ban-quan-6',
-                'nha-dat-ban-quan-7','nha-dat-ban-quan-8', 'nha-dat-ban-quan-9','nha-dat-ban-quan-10','nha-dat-ban-quan-11','nha-dat-ban-quan-12',
-                'nha-dat-ban-binh-chanh','nha-dat-ban-binh-tan','nha-dat-ban-binh-thanh','nha-dat-ban-can-gio','nha-dat-ban-cu-chi','nha-dat-ban-go-vap',
-                'nha-dat-ban-hoc-mon','nha-dat-ban-nha-be','nha-dat-ban-tan-binh','nha-dat-ban-tan-phu','nha-dat-ban-phu-nhuan','nha-dat-ban-thu-duc'];
+        'nha-dat-ban-quan-7','nha-dat-ban-quan-8', 'nha-dat-ban-quan-9','nha-dat-ban-quan-10','nha-dat-ban-quan-11','nha-dat-ban-quan-12',
+        'nha-dat-ban-binh-chanh','nha-dat-ban-binh-tan','nha-dat-ban-binh-thanh','nha-dat-ban-can-gio','nha-dat-ban-cu-chi','nha-dat-ban-go-vap',
+        'nha-dat-ban-hoc-mon','nha-dat-ban-nha-be','nha-dat-ban-tan-binh','nha-dat-ban-tan-phu','nha-dat-ban-phu-nhuan','nha-dat-ban-thu-duc'];
     protected $time_start = 0;
     protected $time_end = 0;
 
@@ -51,6 +51,20 @@ class BatdongsanV2 extends Component
         print_r($this->time_end - $this->time_start);
     }
 
+    public function setZeroCurrentPage(){
+        foreach (self::TYPE as $key_type => $type) {
+            $path_folder = Yii::getAlias('@console') . "/data/bds_html/{$type}/";
+            $file = $path_folder."bds_log_{$type}.json";
+            if(file_exists($file)){
+                $file_log = $this->loadFileLog($type);
+                if(!empty($file_log["current_page"])){
+                    $file_log["current_page"] = 0;
+                    $this->writeFileLog($type, $file_log);
+                }
+            }
+        }
+    }
+
     public function getPages()
     {
         $bds_log = $this->loadBdsLog();
@@ -58,8 +72,16 @@ class BatdongsanV2 extends Component
             $bds_log["type"] = array();
         }
         $last_type = empty($bds_log["last_type_index"]) ? 0 : ($bds_log["last_type_index"] + 1);
-        $count_type = count(self::TYPE) - 1;
-        if($last_type > $count_type) $last_type = 0;
+        $count_type = count(self::TYPE);
+
+        if($last_type >= $count_type) {
+            $bds_log["type"] = array();
+            unset($bds_log["last_type_index"]);
+            $last_type = 0;
+            $this->writeBdsLog($bds_log);
+            $this->setZeroCurrentPage();
+        }
+
         foreach (self::TYPE as $key_type => $type) {
             if ($key_type >= $last_type) {
                 $url = self::DOMAIN . '/' . $type;
@@ -72,7 +94,6 @@ class BatdongsanV2 extends Component
                     if ($count_page > 0) {
                         $log = $this->loadFileLog($type);
                         $current_page = empty($log["current_page"]) ? 1 : ($log["current_page"] + 1);
-
                         $current_page_add = $current_page + 4; // +4 => total page to run are 5.
                         if($current_page_add > $last_page)
                             $current_page_add = $last_page;
@@ -90,11 +111,19 @@ class BatdongsanV2 extends Component
                                 sleep(1);
                                 ob_flush();
                             }
-                            break;
+
+                            if($current_page == $current_page_add){
+                                if(!in_array($type, $bds_log["type"])) {
+                                    array_push($bds_log["type"], $type);
+                                }
+                                $bds_log["last_type_index"] = $key_type;
+                                $this->writeBdsLog($bds_log);
+                                print_r("\nTYPE: {$type} DONE!\n");
+                            } else {
+                                break;
+                            }
+
                         } else {
-                            $log = $this->loadFileLog($type);
-                            if(!empty($log["data"]["current_page"]))
-                                $log["data"]["current_page"] = 0;
                             $this->writeFileLogFail($type, "\nPaging end: Current:$current_page_add , last:$last_page" . "\n");
                         }
                     } else {
@@ -105,13 +134,6 @@ class BatdongsanV2 extends Component
                     echo "\nCannot access in get pages of " . self::DOMAIN;
                     $this->writeFileLogFail($type, "\nCannot access: $url" . "\n");
                 }
-
-                if(!in_array($type, $bds_log["type"])) {
-                    array_push($bds_log["type"], $type);
-                }
-                $bds_log["last_type_index"] = $key_type;
-                $this->writeBdsLog($bds_log);
-                print_r("\nTYPE: {$type} DONE!\n");
             }
         }
     }
@@ -144,23 +166,23 @@ class BatdongsanV2 extends Component
                             $sequence_id = $sequence_id + 1;
                         }
                     } else {
-                        if(empty($log["p".$current_page]["duplicate"])){
-                            $log["p".$current_page]["duplicate"] = array();
-                        }
-                        array_unshift($log["p".$current_page]["duplicate"], $productId);
-                        $log["p".$current_page]["total"] = count($log["p".$current_page]["duplicate"]);
+//                        if(empty($log["p".$current_page]["duplicate"])){
+//                            $log["p".$current_page]["duplicate"] = array();
+//                        }
+//                        array_unshift($log["p".$current_page]["duplicate"], $productId);
+//                        $log["p".$current_page]["total"] = count($log["p".$current_page]["duplicate"]);
                         var_dump($productId);
                     }
                 }
                 return ['data' => $log];
             } else {
-                echo "Cannot find listing. End page!".self::DOMAIN;
-                $this->writeFileLogFail($type, "Cannot find listing: $href"."\n");
+                echo "\nCannot find listing. End page!".self::DOMAIN;
+                $this->writeFileLogFail($type, "\nCannot find listing: $href"."\n");
             }
 
         } else {
-            echo "Cannot access in get List Project of ".self::DOMAIN;
-            $this->writeFileLogFail($type, "Cannot access: $href"."\n");
+            echo "\nCannot access in get List Project of ".self::DOMAIN;
+            $this->writeFileLogFail($type, "\nCannot access: $href"."\n");
         }
         return null;
     }
@@ -179,7 +201,7 @@ class BatdongsanV2 extends Component
                 $path = Yii::getAlias('@console') . "/data/bds_html/{$type}/files/";
                 if(!is_dir($path)){
                     mkdir($path , 0777, true);
-                    echo "Directory {$path} was created";
+                    echo "\nDirectory {$path} was created";
                 }
                 $res = $this->writeFileJson($path.$product_id, $page);
                 if($res){
@@ -190,8 +212,8 @@ class BatdongsanV2 extends Component
                 }
         }
         else {
-            echo "Error go to detail at " .self::DOMAIN.$href;
-            $this->writeFileLogFail($type, "Cannot find detail: ".self::DOMAIN.$href."\n");
+            echo "\nError go to detail at " .self::DOMAIN.$href;
+            $this->writeFileLogFail($type, "\nCannot find detail: ".self::DOMAIN.$href."\n");
         }
     }
 
@@ -252,7 +274,7 @@ class BatdongsanV2 extends Component
         $path = $path_folder."bds_log.json";
         if(!is_dir($path_folder)){
             mkdir($path_folder , 0777, true);
-            echo "Directory {$path_folder} was created\n";
+            echo "\nDirectory {$path_folder} was created";
         }
         $data = null;
         if(file_exists($path))
@@ -282,7 +304,7 @@ class BatdongsanV2 extends Component
         $path = $path_folder."bds_log_{$type}.json";
         if(!is_dir($path_folder)){
             mkdir($path_folder , 0777, true);
-            echo "Directory {$path_folder} was created\n";
+            echo "\nDirectory {$path_folder} was created";
         }
         $data = null;
         if(file_exists($path))
@@ -376,7 +398,7 @@ class BatdongsanV2 extends Component
         $path = $path_folder."bds_log_import.json";
         if(!is_dir($path_folder)){
             mkdir($path_folder , 0777, true);
-            echo "Directory {$path_folder} was created";
+            echo "\nDirectory {$path_folder} was created";
         }
         $data = null;
         if(file_exists($path))
