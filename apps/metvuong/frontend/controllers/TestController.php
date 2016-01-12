@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 use dektrium\user\Mailer;
+use Elasticsearch\ClientBuilder;
 use frontend\models\Elastic;
 use frontend\models\Tracking;
 use vsoft\user\models\User;
@@ -70,19 +71,23 @@ class TestController extends \yii\web\Controller
         }
     }
 
-    private function index($client){
-        $cms = CmsShow::find()->all();
-        if(!empty($cms)){
-            foreach($cms as $item){
-                $params = [
-                    'index' => 'listing',
-                    'type' => 'store',
-                    'id' => $item->id,
-                    'body' => $item->attributes
-                ];
-                $response = $client->index($params);
-            }
-        }
+    public function actionElastic2(){
+        $hosts = [
+//            '127.0.0.1:9200',         // IP + Port
+//            '127.0.0.1',              // Just IP
+            'local.metvuong.com:9200', // Domain + Port
+            'local.metvuong.com',     // Just Domain
+        ];
+        $singleHandler  = ClientBuilder::singleHandler();
+        $multiHandler   = ClientBuilder::multiHandler();
+        $client = ClientBuilder::create()           // Instantiate a new ClientBuilder
+        ->setHosts($hosts)      // Set the hosts
+        ->setHandler($singleHandler)
+            ->build();              // Build the client object
+        echo "<pre>";
+        print_r($client);
+        echo "</pre>";
+        exit;
     }
 
     public function actionSelect(){
