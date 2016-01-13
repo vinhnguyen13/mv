@@ -5,6 +5,7 @@ use dektrium\user\Mailer;
 use Elasticsearch\ClientBuilder;
 use frontend\models\Elastic;
 use frontend\models\Tracking;
+use GuzzleHttp\Ring\Client\CurlHandler;
 use vsoft\user\models\User;
 use Yii;
 use yii\db\mssql\PDO;
@@ -72,22 +73,75 @@ class TestController extends \yii\web\Controller
     }
 
     public function actionElastic2(){
+
+        $content = $this->getUrlContent();
+        echo "<pre>";
+        var_dump($content);
+        echo "</pre>";
+        exit;
+        $handler = new CurlHandler();
+        $response = $handler([
+            'http_method' => 'GET',
+            'uri'         => '/',
+            'headers'     => [
+//                'host'  => ['localhost:9200/_all'],
+                'host'  => ['dev.metvuong.com:9200/demo'],
+                'x-foo' => ['baz']
+            ]
+        ]);
+
+        $response->then(function (array $response) {
+            echo $response['status'];
+        });
+
+        $response->wait();
+
+        echo "<pre>";
+        print_r(5);
+        echo "</pre>";
+        exit;
         $hosts = [
-//            '127.0.0.1:9200',         // IP + Port
-//            '127.0.0.1',              // Just IP
-            'local.metvuong.com:9200', // Domain + Port
-            'local.metvuong.com',     // Just Domain
+            '172.30.6.104:9200',         // IP + Port
+            '172.30.6.104',              // Just IP
+//            '125.234.107.93:9200',         // IP + Port
+//            '125.234.107.93',              // Just IP
+//            'dev.metvuong.com:9200', // Domain + Port
+//            'dev.metvuong.com',     // Just Domain
         ];
         $singleHandler  = ClientBuilder::singleHandler();
         $multiHandler   = ClientBuilder::multiHandler();
         $client = ClientBuilder::create()           // Instantiate a new ClientBuilder
-        ->setHosts($hosts)      // Set the hosts
-        ->setHandler($singleHandler)
+            ->setHosts($hosts)      // Set the hosts
+            ->setHandler($singleHandler)
             ->build();              // Build the client object
+        var_dump($client->transport->getConnection()->ping());
+        $params = [
+            'index' => [ 'demo' ]
+        ];
+        $results = $client->indices()->get($params);
+//        var_dump( exec('curl -XGET http://172.30.6.104:9200/_all') );
+//        var_dump( exec('curl http://batdongsan.com.vn/nha-dat-ban-quan-2') );
         echo "<pre>";
-        print_r($client);
+        print_r($results);
         echo "</pre>";
         exit;
+    }
+
+
+    private function getUrlContent()
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'http://172.30.2.184:9200/demo');
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.1.4322)');
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 100);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        $data = curl_exec($ch);
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        return ($httpcode >= 200 && $httpcode < 300) ? $data : null;
     }
 
     public function actionSelect(){
