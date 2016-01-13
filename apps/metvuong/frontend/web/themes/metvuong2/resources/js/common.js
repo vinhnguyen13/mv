@@ -28,18 +28,9 @@ $(document).ready(function() {
 
     var $modal = $('.modal');
     $modal.on('show.bs.modal', function(e) {
-        var curModal;
-        curModal = this;
-        $modal.each(function(i) {
-            if (this !== curModal) {
-                $(this).modal("hide");
-            }
-        });
-
-        var _this = $(this);
-        if( !$('body').hasClass('modal-open') ) {
-            //$('body').addClass('modal-open').css('padding-right', '17px');
-        }
+        var _this = $(this),
+            $root = _this.parent();
+        $('body').append(_this);
     });
     
     //start click scroll to top

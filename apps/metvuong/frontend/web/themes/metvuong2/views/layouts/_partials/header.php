@@ -83,6 +83,8 @@ $searchParams = json_decode($value);
     </div>
 </header>
 
+<?php $this->beginContent('@app/views/layouts/_partials/popup.php'); ?><?php $this->endContent();?>
+
 <div class="modal fade regis-listing" id="regis-listing" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

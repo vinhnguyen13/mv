@@ -537,4 +537,3 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
     </div>
 </div>
 <?php $this->beginContent('@app/views/layouts/_partials/footer.php'); ?><?php $this->endContent();?>
-<?php $this->beginContent('@app/views/layouts/_partials/popup.php'); ?><?php $this->endContent();?>

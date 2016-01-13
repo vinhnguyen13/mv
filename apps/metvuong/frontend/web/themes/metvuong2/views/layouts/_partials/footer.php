@@ -33,4 +33,3 @@
         <div class="pull-right">&copy; 2015 Met Vuong. All rights reserved</div>
     </div>
 </footer>
-<?php $this->beginContent('@app/views/layouts/_partials/popup.php'); ?><?php $this->endContent();?>
