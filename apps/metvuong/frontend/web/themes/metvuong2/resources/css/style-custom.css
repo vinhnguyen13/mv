@@ -3354,16 +3354,17 @@ li.search-filter .type-search,
     top: -3px;
 }
 .list-results .infor-result p {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 .infor-result .item-title {
-    font-weight: bold;
-    color: #3c763d;
-    font-size: 15px;
-    line-height: 18px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    font-weight: 400;
+    color: #000000;
+    font-size: 18px;
+    line-height: 25px;
+    /* white-space: nowrap; */
+    /* text-overflow: ellipsis; */
+    /* overflow: hidden; */
+    text-decoration: underline;
 }
 .infor-result .type-result {
     font-weight: bold;
@@ -4966,8 +4967,8 @@ header.wrap-page-home .box-search-header.ani-search > div {
     }
 }
 .list-results li .wrap-img {
-    width: 150px;
-    height: 115px;
+    width: 155px;
+    height: 165px;
     background-position: 50% center;
 }
 .fieldset #cke_adproduct-content {
