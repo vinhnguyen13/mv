@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <a href="#" class="logo-footer"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo.png" alt=""></a>
+                <a href="#" class="logo-footer"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/logo-footer.png" alt=""></a>
             </div>
             <div class="col-md-3">
                 <ul>

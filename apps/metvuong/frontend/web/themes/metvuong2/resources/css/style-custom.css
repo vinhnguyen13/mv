@@ -7213,6 +7213,9 @@ li.search-filter .search-wrap {
 #regis-listing .wrap-step {
     padding: 0 30px 100px;
 }
+#regis-listing .wrap-step {
+    display: none;
+}
 #regis-listing .title-step {
     padding: 50px 30px;
     font-weight: 700;
@@ -7260,17 +7263,21 @@ li.search-filter .search-wrap {
 #regis-listing span {
     color: #434450;
 }
+#regis-listing span {
+    font-weight: 700;
+    font-size: 14px;
+}
 #regis-listing ::-webkit-input-placeholder {
-   color: #434450;
+   color: #616161;
 }
 #regis-listing :-moz-placeholder { /* Firefox 18- */
-   color: #434450;  
+   color: #616161;  
 }
 #regis-listing ::-moz-placeholder {  /* Firefox 19+ */
-   color: #434450;  
+   color: #616161;  
 }
 #regis-listing :-ms-input-placeholder {  
-   color: #434450;  
+   color: #616161;  
 }
 #regis-listing .inline-row > div {
     display: inline-block;
@@ -7295,79 +7302,104 @@ li.search-filter .search-wrap {
     bottom: 0;
     left: 45px;
 }
- #regis-listing .wrap-step input[type=text] {
-     height: auto;
-     line-height: 100%;
-     padding-bottom: 2px;
- }
- #regis-listing .form-group {
-     margin-bottom: 25px;
-     color: #434450;
- }
- #regis-listing .prices-regis > div {
-     width: 50%;
-     float: left;
- }
- #regis-listing .prices-regis > div input {
-     width: 140px;
-     display: inline-block;
-     margin-right: 8px;
- }
- .btn-bottom-step {
-     position: absolute;
-     right: 25px;
-     bottom: 30px;
- }
- .btn-bottom-step button {
-     background: #252525;
-     border: none;
-     color: #fff;
-     font-weight: 400;
-     padding: 17px 70px 17px;
-     border-radius: 4px;
-     -webkit-border-radius: 4px;
-     -moz-border-radius: 4px;
-     -ms-border-radius: 4px;
-     font-size: 17px;
- }
- .btn-bottom-step button:hover {
-     background: #333;
- }
- .checkbox-ui {
-     position: relative;
-     padding-left: 45px;
-     margin-bottom: 18px;
- }
- .checkbox-ui input {
-     visibility: hidden;
-     position: absolute;
-     left: 16px;
-     top: -3px;
- }
- .checkbox-ui em {
+#regis-listing .wrap-step input[type=text] {
+    height: auto;
+    line-height: 100%;
+    padding-bottom: 2px;
+}
+#regis-listing .form-group {
+    margin-bottom: 25px;
+    color: #434450;
+}
+#regis-listing .prices-regis > div {
+    width: 50%;
+    float: left;
+}
+#regis-listing .prices-regis > div input {
+    width: 220px;
+    display: inline-block;
+    margin-right: 8px;
+}
+.btn-bottom-step {
+    position: absolute;
+    right: 25px;
+    bottom: 30px;
+}
+.btn-bottom-step button {
+    background: #252525;
+    border: none;
+    color: #fff;
+    font-weight: 400;
+    padding: 17px 70px 17px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    font-size: 17px;
+}
+.btn-bottom-step button:hover {
+    background: #333;
+}
+.checkbox-ui {
+    position: relative;
+    margin-bottom: 18px;
+}
+.checkbox-ui input {
+    visibility: hidden;
+    position: absolute;
+    left: 16px;
+    top: -3px;
+    z-index: 1;
+}
+.checkbox-ui label {
+    font-weight: 400;
+    cursor: pointer;
+    padding-left: 25px;
+}
+.checkbox-ui em {
     position: absolute;
     z-index: 2;
     color: red;
     font-size: 20px;
     left: 15px;
     top: -2px;
- }
- .img-uploaded {
-     width: 100%;
- }
- .img-uploaded img {
-     max-width: 100%;
-     margin-bottom: 10px;
- }
- #regis-listing .wrap-step  .wrap-img-upload input {
-     border: 1px solid #8E8E8E;
-     height: 30px;
-     line-height: 30px;
-     padding: 0 10px;
-     width: 100%;
-     border-radius: 3px;
-     -webkit-border-radius: 3px;
-     -moz-border-radius: 3px;
-     -ms-border-radius: 3px;
-     font-size: 14px;
- }
+    cursor: pointer;
+}
+.img-uploaded {
+    width: 100%;
+}
+.img-uploaded img {
+    max-width: 100%;
+    margin-bottom: 10px;
+}
+#regis-listing .wrap-step  .wrap-img-upload input {
+    border: 1px solid #8E8E8E;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+    width: 100%;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    font-size: 14px;
+}
+#regis-listing .dt-regis input[type=text] {
+    width: 115px;
+    display: inline-block;
+}
+#regis-listing .dt-regis > div {
+    width: auto;
+}
+#regis-listing select {
+    color: #616161;
+}
+#regis-listing select option {
+    color: #333;
+}
+.modal-open .modal {
+    overflow-y: scroll;
+}
+.modal-open {
+    
+}

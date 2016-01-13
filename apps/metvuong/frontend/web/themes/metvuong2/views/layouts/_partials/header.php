@@ -106,7 +106,7 @@ $searchParams = json_decode($value);
                     <div class="right-regis-listing">
                         <div class="title-step">Welcome to your best listing experience online</div>
                         <form class="clearfix">
-                            <div class=" wrap-step step-listing-1">
+                            <div class="wrap-step step-listing-1">
                                 <div><strong>Your property is at:</strong></div>
                                 <div class="form-group row">
                                     <div class="col-xs-6">
@@ -190,101 +190,108 @@ $searchParams = json_decode($value);
                                         <input type="text" class="form-control" id=""> <span>Bathrooms</span>
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <div class="col-xs-3">
-                                        <input type="text" class="form-control" id="" placeholder="Diện Tích">    
+                                <div class="form-group dt-regis row">
+                                    <div class="col-xs-6">
+                                        <input type="text" class="form-control" id="" placeholder="Diện Tích">  
+                                        <span>/ m2  </span>
                                     </div>
-                                    <div class="col-xs-9 prices-regis">
-                                        <div><input type="text" class="form-control" id="" placeholder="Giá"> 
-                                        Total or</div>
-                                        <div><input type="text" class="form-control" id="" placeholder="Giá"> / m2</div>
+                                    <div class="col-xs-6">
+                                        <input type="text" class="form-control" id="" placeholder="Diện Tích">
+                                        <span>/ m2 Maintenance Fee</span>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <div class="col-xs-6"><input type="text" class="form-control" id="" placeholder="Diện Tích"></div>/ m2 Maintenance Fee
+                                    <div class="col-xs-12 prices-regis">
+                                        <div><input type="text" class="form-control" id="" placeholder="Giá"> 
+                                        <span>Total or</span></div>
+                                        <div><input type="text" class="form-control" id="" placeholder="Giá"> <span>/ m2</span></div>
+                                    </div>    
                                 </div>
                             </div>
-                            <div class="hide wrap-step step-listing-2">
+                            <div class="wrap-step step-listing-2">
                                 <div><strong>Detail Information</strong></div>
                                 <div class="row">
                                     <div class="col-xs-4 checkbox-ui">
                                         <em class="fa fa-square-o"></em>
                                         <input type="checkbox">
-                                        Kitchen
+                                        <label for="">Kitchen</label>
                                     </div>
                                     <div class="col-xs-4 checkbox-ui">
                                         <em class="fa fa-square-o"></em>
                                         <input type="checkbox">
-                                        Cooker
+                                        <label for="">Cooker</label>
                                     </div>
                                     <div class="col-xs-4 checkbox-ui">
                                         <em class="fa fa-square-o"></em>
                                         <input type="checkbox">
-                                        Hood
+                                        <label for="">Hood</label>
                                     </div>
                                     <div class="col-xs-4 checkbox-ui">
                                         <em class="fa fa-square-o"></em>
                                         <input type="checkbox">
-                                        Microwave
+                                        <label for="">Microwave</label>
                                     </div>
                                     <div class="col-xs-4 checkbox-ui">
                                         <em class="fa fa-square-o"></em>
                                         <input type="checkbox">
-                                        Dishwasher
+                                        <label for="">Dishwasher</label>
                                     </div>
                                     <div class="col-xs-4 checkbox-ui">
                                         <em class="fa fa-square-o"></em>
                                         <input type="checkbox">
-                                        Balcony
+                                        <label for="">Balcony</label>
                                     </div>
                                     <div class="col-xs-4 checkbox-ui">
                                         <em class="fa fa-square-o"></em>
                                         <input type="checkbox">
-                                        Air Conditioning
+                                        <label for="">Air Conditioning</label>
                                     </div>
                                     <div class="col-xs-4 checkbox-ui">
                                         <em class="fa fa-square-o"></em>
                                         <input type="checkbox">
-                                        Flooring
+                                        <label for="">Flooring</label>
                                     </div>
                                     <div class="col-xs-4 checkbox-ui">
                                         <em class="fa fa-square-o"></em>
                                         <input type="checkbox">
-                                        Wardrobe
+                                        <label for="">Wardrobe</label>
                                     </div>
                                     <div class="col-xs-4 checkbox-ui">
                                         <em class="fa fa-square-o"></em>
                                         <input type="checkbox">
-                                        Voice Intercom
+                                        <label for="">Voice Intercom</label>
                                     </div>
                                     <div class="col-xs-4 checkbox-ui">
                                         <em class="fa fa-square-o"></em>
                                         <input type="checkbox">
-                                        Furnitures
+                                        <label for="">Furnitures</label>
                                     </div>
                                     <div class="col-xs-4 checkbox-ui">
                                         <em class="fa fa-square-o"></em>
                                         <input type="checkbox">
-                                        Beds
+                                        <label for="">Beds</label>
                                     </div>
                                     <div class="col-xs-4 checkbox-ui">
                                         <em class="fa fa-square-o"></em>
                                         <input type="checkbox">
-                                        Sofa
+                                        <label for="">Sofa</label>
                                     </div>
                                     <div class="col-xs-4 checkbox-ui">
                                         <em class="fa fa-square-o"></em>
                                         <input type="checkbox">
-                                        TV
+                                        <label for="">TV</label>
                                     </div>
                                     <div class="col-xs-4 checkbox-ui">
                                         <em class="fa fa-square-o"></em>
                                         <input type="checkbox">
-                                        Dining Set
+                                        <label for="">Dining Set</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="hide wrap-step step-listing-4">
+                            <div class="wrap-step step-listing-3">
+                                step 3
+                            </div>
+                            <div class="wrap-step step-listing-4">
                                 <div><strong>Upload your listing images</strong></div>
                                 <div class="wrap-img-upload row">
                                     <div class="col-xs-4">
@@ -300,6 +307,9 @@ $searchParams = json_decode($value);
                                         <input type="text" placeholder="Tabs...">
                                     </div>
                                 </div>
+                            </div>
+                            <div class="wrap-step step-listing-5">
+                                step 5
                             </div>
                             <div class="pull-right btn-bottom-step"><button class="btn-next-step">Next</button></div>
                         </form>

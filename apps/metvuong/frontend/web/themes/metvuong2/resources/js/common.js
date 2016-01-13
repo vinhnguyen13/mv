@@ -258,6 +258,85 @@ $(document).ready(function() {
         linkShow: $('.sub-setting-user')
     });
 
+    var regis_listing = {
+        wrapStep: $('#regis-listing .wrap-step'),
+        pagi: $('.list-steps li'),
+        btnNext: $('.btn-next-step'),
+        lenStep: $('.list-steps li').length,
+        init: function () {
+            regis_listing.pagi.find('a').on('click', regis_listing.showStep);
+            regis_listing.btnNext.on('click', regis_listing.next_step);
+            regis_listing.loadStep();
+        },
+        loadStep: function () {
+            regis_listing.pagi.each(function (i) {
+                if ( $(this).hasClass('active') ) {
+                    regis_listing.wrapStep.eq(i).show();
+                }
+            });
+        },
+        showStep: function (e) {
+            e.preventDefault();
+            var _this = $(this),
+                index = _this.parent().index();
+
+            regis_listing.pagi.removeClass('active');
+            _this.parent().addClass('active');
+
+            regis_listing.ani(index);
+
+            if ( index + 1 == regis_listing.lenStep ) {
+                regis_listing.btnNext.hide();
+            }else {
+                regis_listing.btnNext.show();
+            }
+        },
+        ani: function (index) {
+            regis_listing.wrapStep.hide();
+            regis_listing.wrapStep.eq(index).show();
+        },
+        next_step: function (e) {
+            e.preventDefault();
+            var current = $('.list-steps li.active').index();
+            if ( current + 1 == regis_listing.lenStep - 1 ) {
+                $(this).hide();
+            }
+            regis_listing.pagi.eq(current + 1).find('a').trigger('click');
+        }
+    }
+
+    regis_listing.init();
+
+    var checkbox_ui = {
+        item: $('.checkbox-ui'),
+        init: function () {
+            checkbox_ui.item.find('label').on('click', checkbox_ui.toggleCheck);
+
+            checkbox_ui.item.find('em').on('click', checkbox_ui.toggleCheck);
+        },
+        load: function () {
+
+        },
+        toggleCheck: function (e) {
+            e.preventDefault();
+            var _this = $(this);
+            if ( _this.parent().find('input[type=checkbox]').prop("checked") ) {
+                _this.parent().find('input[type=checkbox]').prop("checked", false);
+                checkbox_ui.checkedItem(_this, false);
+            }else {
+                _this.parent().find('input[type=checkbox]').prop("checked", true);
+                checkbox_ui.checkedItem(_this, true);
+            }
+        },
+        checkedItem: function (item, flagChecked) {
+            if ( flagChecked ) {
+                item.parent().find('em').removeClass('fa-square-o').addClass('fa-check-square-o');
+            }else {
+                item.parent().find('em').removeClass('fa-check-square-o').addClass('fa-square-o');
+            }
+        }
+    };
+    checkbox_ui.init();
 });
 
 
