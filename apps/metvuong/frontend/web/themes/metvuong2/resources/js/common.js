@@ -30,11 +30,16 @@ $(document).ready(function() {
     $modal.on('show.bs.modal', function(e) {
         var _this = $(this),
             $root = _this.parent();
+
         $('body').append(_this);
+
+        if ( $('.modal-backdrop').length > 0 ) {
+            $('.modal-backdrop').trigger('click');
+        }
     });
     
     //start click scroll to top
-	var btnScrollTop = $('<div id="topcontrol" title="Lên đầu trang"></div>')
+	var btnScrollTop = $('<div id="topcontrol" title="Lên đầu trang"></div>');
 	$('body').append(btnScrollTop);
 	$(window).scroll(function(){
 		var valScroll = $(this).scrollTop();

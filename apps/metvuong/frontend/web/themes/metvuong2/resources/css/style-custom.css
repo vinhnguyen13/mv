@@ -3162,17 +3162,18 @@ padding-bottom: 5px;
     top: 16px;
     left: 15px;
 }
-.list-social-login li a.facebook {
-    background: #3b5999;
-    color: #fff;
-}
-.list-social-login li a.twitter {
-    background: #00aced;
-    color: #fff;
-}
+.list-social-login li a.facebook,
 .list-social-login li a.google {
-    background: #dd4b39;
-    color: #fff;
+    background: #FFFFFF;
+    color: #4e4e4e;
+    border: 1px solid #4e4e4e;
+    font-size: 17px;
+}
+.list-social-login li a.google i {
+    color: #dd4b39;
+}
+.list-social-login li a.facebook i {
+    color: #3b5999;
 }
 .btn-common {
     background: #3c763d;
@@ -7400,7 +7401,7 @@ li.search-filter .search-wrap {
     color: #333;
 }
 .modal-open .modal {
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 .modal-open {
     
