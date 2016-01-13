@@ -258,7 +258,7 @@ $(document).ready(function() {
         loadStep: function () {
             regis_listing.pagi.each(function (i) {
                 if ( $(this).hasClass('active') ) {
-                    regis_listing.wrapStep.eq(i).show();
+                    regis_listing.wrapStep.eq(i).removeClass('hide-step');
                 }
             });
         },
@@ -279,8 +279,14 @@ $(document).ready(function() {
             }
         },
         ani: function (index) {
-            regis_listing.wrapStep.hide();
-            regis_listing.wrapStep.eq(index).show();
+            regis_listing.wrapStep.addClass('fadeOutUpShort');
+            regis_listing.wrapStep.addClass('hide-step');
+            regis_listing.wrapStep.eq(index).removeClass('hide-step');
+            regis_listing.wrapStep.eq(index).addClass('fadeOutDownShort');
+            setTimeout(function() {
+                
+                
+            },500);
         },
         next_step: function (e) {
             e.preventDefault();

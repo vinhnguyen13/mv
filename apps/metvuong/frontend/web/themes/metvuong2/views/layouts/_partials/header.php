@@ -108,7 +108,7 @@ $searchParams = json_decode($value);
                     <div class="right-regis-listing">
                         <div class="title-step">Welcome to your best listing experience online</div>
                         <form class="clearfix">
-                            <div class="wrap-step step-listing-1">
+                            <div class="animated go hide-step wrap-step step-listing-1">
                                 <div><strong>Your property is at:</strong></div>
                                 <div class="form-group row">
                                     <div class="col-xs-6">
@@ -210,7 +210,7 @@ $searchParams = json_decode($value);
                                     </div>    
                                 </div>
                             </div>
-                            <div class="wrap-step step-listing-2">
+                            <div class="animated go hide-step wrap-step step-listing-2">
                                 <div><strong>Detail Information</strong></div>
                                 <div class="row">
                                     <div class="col-xs-4 checkbox-ui">
@@ -290,10 +290,10 @@ $searchParams = json_decode($value);
                                     </div>
                                 </div>
                             </div>
-                            <div class="wrap-step step-listing-3">
+                            <div class="animated go hide-step wrap-step step-listing-3">
                                 step 3
                             </div>
-                            <div class="wrap-step step-listing-4">
+                            <div class="animated go hide-step wrap-step step-listing-4">
                                 <div><strong>Upload your listing images</strong></div>
                                 <div class="wrap-img-upload row">
                                     <div class="col-xs-4">
@@ -310,7 +310,7 @@ $searchParams = json_decode($value);
                                     </div>
                                 </div>
                             </div>
-                            <div class="wrap-step step-listing-5">
+                            <div class="animated go hide-step wrap-step step-listing-5">
                                 step 5
                             </div>
                             <div class="pull-right btn-bottom-step"><button class="btn-next-step">Next</button></div>

@@ -6121,7 +6121,7 @@ header {
 .item-review-txt p {
     line-height: 22px;
     font-size: 16px;
-    text-align: center;
+    /* text-align: center; */
 }
 .find-more-btn {
     float: right;
@@ -7217,7 +7217,7 @@ li.search-filter .search-wrap {
     padding: 0 30px 100px;
 }
 #regis-listing .wrap-step {
-    display: none;
+    /* display: none; */
 }
 #regis-listing .title-step {
     padding: 50px 30px;
@@ -7408,4 +7408,13 @@ li.search-filter .search-wrap {
 }
 .wrap-user-profile .modal-dialog {
     margin-top: 90px;
+}
+#regis-listing .wrap-step.animated {
+    -webkit-animation-duration: .5s;
+    animation-duration: .5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+#regis-listing .wrap-step.hide-step {
+    display: none;
 }
