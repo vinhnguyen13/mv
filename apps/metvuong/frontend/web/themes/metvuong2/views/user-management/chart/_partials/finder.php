@@ -118,7 +118,7 @@ $data = [
                                         url: _this.url,
                                         success: function (data) {
                                             $('#frmListVisit .wrap-modal').html($(data));
-                                            $('#frmListVisit').find('h3').html('Thống kê');
+                                            //$('#frmListVisit').find('h3').html('Thống kê');
                                             $('#frmListVisit').find('.total').html(_this.y);
                                             $('#frmListVisit').find('.totalNext').html(_this.y - 3);
                                             $('#frmListVisit').find('.desTotal').html('Danh sách người tìm kiếm tin: <b>'+_this.series.name+'</b>');

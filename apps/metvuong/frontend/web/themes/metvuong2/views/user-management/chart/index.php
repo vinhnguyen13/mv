@@ -17,9 +17,10 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="icon"></span>
                 </button>
+                <h3>Thống kê</h3>
             </div>
             <div class="modal-body">
                 <div class="wrap-modal clearfix">

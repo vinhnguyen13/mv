@@ -3023,6 +3023,7 @@ padding-bottom: 5px;
     margin-top: 70px;
     z-index: 1041;
 }
+#frmListVisit .modal-header,
 #frmForgot .modal-header,
 #frmLogin .modal-header,
 #frmRegister .modal-header {
@@ -5012,7 +5013,7 @@ header.wrap-page-home .box-search-header.ani-search > div {
     margin: 0;
     border-top: 1px solid #545454;
     position: relative;
-    z-index: 10;
+    z-index: 12;
 }
 .infor-user-profile .inner-infor {
     padding: 5px 0 15px 0;
@@ -6910,7 +6911,7 @@ li.search-filter .search-wrap {
 }
 .function-setting-user {
     position: relative;
-    z-index: 10;
+    z-index: 1;
 }
 .user_management,
 .infor-user-profile {
@@ -6924,7 +6925,7 @@ li.search-filter .search-wrap {
     position: fixed;
     left: 0;
     /* padding-top: 169px; */
-    z-index: 2;
+    z-index: 15;
     height: auto;
     bottom: 0;
     top: 174px;

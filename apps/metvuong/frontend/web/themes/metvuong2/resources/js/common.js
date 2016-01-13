@@ -242,16 +242,7 @@ $(document).ready(function() {
         $(idShowBox).css('visibility','visible').hide().fadeIn();
     }
     //end page du-an
-
-    //start scroll fixed header
     
-    //end scroll fixed header
-
-    //start home page search
-    //animateSearch();
-    //end home page search
-    
-
     $('.infor-user-profile .inner-infor').scfix();
 
     $('.settings').dropdown({
@@ -304,7 +295,6 @@ $(document).ready(function() {
             regis_listing.pagi.eq(current + 1).find('a').trigger('click');
         }
     }
-
     regis_listing.init();
 
     var checkbox_ui = {
@@ -337,6 +327,13 @@ $(document).ready(function() {
         }
     };
     checkbox_ui.init();
+
+    $('.btn-out-more').on('click', function () {
+        $('body,html').stop().animate({
+            scrollTop: $(window).outerHeight() - 80
+        }, 800);
+        return false;
+    });
 });
 
 
@@ -505,7 +502,6 @@ $.fn.dropdown = function (options) {
         };
 
     });
-
 }
 
 /*!
