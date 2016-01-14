@@ -305,6 +305,12 @@
             setTimeout(function() {
                 $('#'+current).addClass('active');
             }, 30);
+
+            if ( $('.filter-common').length > 0 ) {
+                $('.filter-common').addClass('hidden-effect');
+                $('.filter-common').removeClass('active');
+                $('.list-filter > li > a').removeClass('active');
+            }
         };
 
         //close box list

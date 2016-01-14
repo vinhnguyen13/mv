@@ -36,7 +36,10 @@
 		open: function (item) {
 			var $root = item.parent();
 
-			//minmax.wrapVal.hide();
+			if ( $('li.search-filter .search-wrap').length > 0 ) {
+				$('li.search-filter .search-wrap').addClass('hidden-effect');
+				$('li.search-filter .search-wrap').removeClass('active');
+			}
 
 			minmax.wrapVal.addClass('hidden-effect');
 			minmax.wrapVal.removeClass('active');
