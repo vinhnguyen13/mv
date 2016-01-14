@@ -209,7 +209,7 @@ var listing = {
 		listing.infoWindow.open(this);
 	},
 	markerOut: function() {
-		listing.infoWindow.close();
+		// listing.infoWindow.close();
 	},
 	markerClick: function() {
 		var ids = this.get('ids');
@@ -242,10 +242,10 @@ var listing = {
 		var address = listing.getAddress(product);
 		
 		var infoContent = '<div class="infoContent">' + 
-								'<div class="img-wrap"><img width="30" height="30" src="' + img + '" /></div>' +
+								'<div class="img-wrap bgcover" style="background-image:url('+img+')"></div><div>' +
 								'<div class="address">' + address + '</div>' +
 								'<div class="price">' + price + '</div>' +
-								'<div class="addition">' + addition + '</div>' +
+								'<div class="addition">' + addition + '</div></div>' +
 							'</div>';
 		return infoContent;
 	},

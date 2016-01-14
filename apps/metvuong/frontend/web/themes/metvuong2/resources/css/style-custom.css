@@ -3359,21 +3359,23 @@ li.search-filter .type-search,
     top: -3px;
 }
 .list-results .infor-result p {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 .infor-result .item-title {
     font-weight: 400;
     color: #000000;
     font-size: 18px;
     line-height: 25px;
-    /* white-space: nowrap; */
-    /* text-overflow: ellipsis; */
-    /* overflow: hidden; */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
     text-decoration: underline;
 }
 .infor-result .type-result {
     font-weight: bold;
     font-size: 11px;
+    text-transform: uppercase;
+    color: #808080;
 }
 .infor-result .type-result em {
     margin-right: 5px;
@@ -4972,8 +4974,8 @@ header.wrap-page-home .box-search-header.ani-search > div {
     }
 }
 .list-results li .wrap-img {
-    width: 155px;
-    height: 165px;
+    width: 150px;
+    height: 115px;
     background-position: 50% center;
 }
 .fieldset #cke_adproduct-content {
@@ -5788,14 +5790,14 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
 }
 .gm-style .gm-style-iw {
     left: 6px !important;
-    width: 250px !important;
+    width: 320px !important;
 }
 .list-results .onmap {
     padding: 0px;
     border-bottom: none;
 }
 .list-results .onmap:last-child {
-	/* margin-bottom: 10px; */
+	
 }
 .moi-nhat-onmap .list-results {
     max-height: 250px;
@@ -7462,4 +7464,51 @@ li.search-filter .search-wrap {
 .icon-social li.icon-twit a:hover {
     color: #28a9e0;
     border-color: #28a9e0;
+}
+.infoContent {
+    background: #fff;
+    float: left;
+    box-shadow: rgba(0, 0, 0, 0.63) 0px 1px 4px -1px;
+    border: 1px solid #AFAFAF;
+    color: #2B2B2B;
+    width: 320px;
+    padding: 1px;
+}
+.infoContent .img-wrap {
+    float: left;
+    margin-right: 7px;
+    width: 105px;
+    height: 91px;
+}
+.infoContent > div {
+    overflow: hidden;
+    padding: 5px 5px 5px 0;
+}
+.infoContent .address {
+    font-size: 14px;
+    font-weight: 300;
+    margin-bottom: 8px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-decoration: underline;
+}
+.infoContent .price{
+    font-size: 19px;
+    margin-bottom: 6px;
+    color: #464646;
+}
+.infoContent .addition {
+    font-size: 13px;
+    line-height: 17px;
+}
+.gm-style-iw .infoContent {
+    padding: 5px 0;
+    box-shadow: 0 0 0;
+    border: none;
+    border-bottom: 1px solid #D8D8D8;
+    /* width: 100%; */
+}
+.gm-style-iw .infoContent:last-child {
+    border-bottom: none;
 }
