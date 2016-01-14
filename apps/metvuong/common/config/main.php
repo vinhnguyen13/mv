@@ -9,6 +9,7 @@ return [
         '@vsoft/buildingProject' => dirname(__DIR__) . '/myvendor/vsoft/building-project',
         '@vsoft/express' => dirname(__DIR__) . '/myvendor/vsoft/express',
         '@vsoft/user' => dirname(__DIR__) . '/myvendor/vsoft/user',
+        '@vsoft/tracking' => dirname(__DIR__) . '/myvendor/vsoft/tracking',
         '@vsoft/ad' => dirname(__DIR__) . '/myvendor/vsoft/ad',
         '@funson86' => dirname(__DIR__) . '/myvendor/funson86',
         '@funson86/cms' => dirname(__DIR__) . '/myvendor/funson86/yii2-cms',
@@ -33,9 +34,6 @@ return [
             'enableCookieValidation' => true,
             'enableCsrfValidation' => true,
             'cookieValidationKey' => '6zRXJTEnacve8RrgN6K5eoXf0JI0AwFs',
-        ],
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
         ],
         'session' => [
             'class' => 'yii\web\DbSession',

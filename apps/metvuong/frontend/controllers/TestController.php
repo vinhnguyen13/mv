@@ -6,6 +6,7 @@ use Elasticsearch\ClientBuilder;
 use frontend\models\Elastic;
 use frontend\models\Tracking;
 use GuzzleHttp\Ring\Client\CurlHandler;
+use vsoft\tracking\models\AdProductVisitor;
 use vsoft\user\models\User;
 use Yii;
 use yii\db\mssql\PDO;
@@ -147,5 +148,20 @@ class TestController extends \yii\web\Controller
     public function actionSelect(){
         $this->layout = '@app/views/layouts/main';
         return $this->render('select');
+    }
+
+    public function actionMongo(){
+        if(($adProductVisitor = AdProductVisitor::findOne(['user_id'=>1, 'product_id'=>1]))===null){
+            $adProductVisitor = new AdProductVisitor();
+            $adProductVisitor->user_id = 1;
+            $adProductVisitor->product_id = 1;
+        }
+        $adProductVisitor->time = time();
+        $adProductVisitor->count = 1;
+        $adProductVisitor->save();
+        echo "<pre>";
+        print_r(5);
+        echo "</pre>";
+        exit;
     }
 }
