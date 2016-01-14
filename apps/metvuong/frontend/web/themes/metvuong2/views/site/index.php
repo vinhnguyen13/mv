@@ -8,40 +8,6 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
 <?php $this->beginContent('@app/views/layouts/_partials/js/jsContainer.php', ['options'=>[]]); ?><?php $this->endContent();?>
 <script>
     $(document).ready(function(){
-        /*$(document).bind( 'submit_search', function(event, json, string, callback){
-            //animateSearch();
-            setTimeout(function(){callback();},1000);
-            setTimeout(function() {
-                if (typeof ga !== "undefined") {
-                    ga('send', {hitType: 'event',eventCategory: 'Listing',eventAction: 'click',eventLabel: 'SearchForm'});
-                }
-                setTimeout(function() {$('#search-kind, #map-search-form').submit();},100);
-            },500);
-            return false;
-        });
-
-        $(document).bind( 'real-estate/news', function(event, json, string, callback){
-            //animateSearch();
-            setTimeout(function(){callback();},1000);
-            setTimeout(function() {
-                if (typeof ga !== "undefined") {
-                    ga('send', {hitType: 'event',eventCategory: 'PostListing',eventAction: 'click',eventLabel: 'SearchForm'});
-                }
-                //setTimeout(function() {$('#search-kind').submit();},100);
-            },500);
-        });
-        
-        $(document).bind( 'real-estate/post', function(event, json, string, callback){
-            //animateSearch();
-            setTimeout(function(){callback();},1000);
-            setTimeout(function() {
-                if (typeof ga !== "undefined") {
-                    ga('send', {hitType: 'event',eventCategory: 'News',eventAction: 'click',eventLabel: 'SearchForm'});
-                }
-                setTimeout(function() {$('#search-kind').submit();},100);
-            },500);
-        });*/
-
         var swiper = new Swiper('.swiper-container', {
             scrollbar: '.swiper-scrollbar',
             scrollbarHide: false,

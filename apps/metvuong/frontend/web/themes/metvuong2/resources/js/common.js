@@ -279,14 +279,8 @@ $(document).ready(function() {
             }
         },
         ani: function (index) {
-            regis_listing.wrapStep.addClass('fadeOutUpShort');
-            regis_listing.wrapStep.addClass('hide-step');
-            regis_listing.wrapStep.eq(index).removeClass('hide-step');
-            regis_listing.wrapStep.eq(index).addClass('fadeOutDownShort');
-            setTimeout(function() {
-                
-                
-            },500);
+            regis_listing.wrapStep.addClass('fadeOutUpShort hide-step');
+            regis_listing.wrapStep.eq(index).removeClass('hide-step').addClass('fadeOutDownShort');
         },
         next_step: function (e) {
             e.preventDefault();

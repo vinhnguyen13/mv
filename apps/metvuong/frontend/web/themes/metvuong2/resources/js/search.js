@@ -165,9 +165,6 @@
         function init () {
             mv.settings = $.extend({}, defaults, options);
             showBoxSearch();
-            if ( $('header.wrap-page-home').length > 0 ) {
-                scrollFixed();
-            }
         };
 
         //event click input type=text search
@@ -271,7 +268,7 @@
                 objItemGet = [];
             }
 
-            if ( objItemGet.length > 0 ) {
+            if ( objItemGet.length > 1 ) {
                 flagCookie = true;
             }
 
