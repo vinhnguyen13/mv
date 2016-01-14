@@ -239,9 +239,11 @@ var listing = {
 		var img = listing.getImageUrl(product.file_name, 'thumb');
 		var price = formatPrice(product.price);
 		var addition = listing.getAdditionInfo(product);
+		var address = listing.getAddress(product);
 		
 		var infoContent = '<div class="infoContent">' + 
 								'<div class="img-wrap"><img width="30" height="30" src="' + img + '" /></div>' +
+								'<div class="address">' + address + '</div>' +
 								'<div class="price">' + price + '</div>' +
 								'<div class="addition">' + addition + '</div>' +
 							'</div>';
