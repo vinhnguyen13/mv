@@ -238,8 +238,6 @@ $(document).ready(function() {
         $(idShowBox).css('visibility','visible').hide().fadeIn();
     }
     //end page du-an
-    
-    $('.infor-user-profile .inner-infor').scfix();
 
     $('.settings').dropdown({
         linkShow: $('.sub-setting-user')
@@ -324,12 +322,13 @@ $(document).ready(function() {
     };
     checkbox_ui.init();
 
-    $('.btn-out-more').on('click', function () {
+    $('.btn-out-more, .btn-scroll-down a').on('click', function () {
         $('body,html').stop().animate({
             scrollTop: $(window).outerHeight() - 80
         }, 800);
         return false;
     });
+
 });
 
 
