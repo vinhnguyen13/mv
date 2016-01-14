@@ -35,6 +35,13 @@ use yii\helpers\Url;
                     </ul>
                 </div>
             </div>
+            <div class="icon-social">
+                <ul>
+                    <li class="icon-cursor"><a href="#"><em class="icon-cursor"></em></a></li>
+                    <li class="icon-facebook"><a href="#"><em class="fa fa-facebook"></em></a></li>
+                    <li class="icon-twit"><a href="#"><em class="icon-social-twitter"></em></a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

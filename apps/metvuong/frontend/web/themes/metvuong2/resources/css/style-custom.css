@@ -6952,6 +6952,7 @@ li.search-filter .search-wrap {
 }
 .infor-user-profile .inner-infor .wrap-infor-profile {
     padding-top: 20px;
+    position: relative;
 }
 .user_management .wrap-setting-detail .wrap-settings {
     padding: 25px;
@@ -7421,4 +7422,44 @@ li.search-filter .search-wrap {
 }
 #regis-listing .wrap-step.hide-step {
     display: none;
+}
+.icon-social {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+.icon-social li {
+    display: inline-block;
+    margin-right: 25px;
+}
+.icon-social li:last-child {
+    margin-right: 0;
+}
+.icon-social li a {
+    display: block;
+    border: 1px solid rgba(146, 151, 163, 0.4);
+    color: rgba(146, 151, 163, 0.4);
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    vertical-align: middle;
+    font-weight: 700;
+    line-height: 30px;
+}
+.icon-social li em {
+    vertical-align: middle;
+    display: inline-block;
+}
+.icon-social li.icon-cursor a:hover {
+
+}
+.icon-social li.icon-facebook a:hover {
+    color: #3b5999;
+    border-color: #3b5999;
+}
+.icon-social li.icon-twit a:hover {
+    color: #28a9e0;
+    border-color: #28a9e0;
 }
