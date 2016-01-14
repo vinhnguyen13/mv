@@ -127,7 +127,6 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                             <button id="btn-search" type="submit" class="btn btn-default icon">
                                 <span><em class=""></em></span>
                             </button>
-
                             <input class="valInputHidden" id="valSearch" name="valSearch" type="hidden" value="">
                             <input class="valInputHidden" id="valTabActive" name="activeSearch" type="hidden" value="">
                             <input class="valInputHidden" id="valType" name="type" type="hidden" value="">

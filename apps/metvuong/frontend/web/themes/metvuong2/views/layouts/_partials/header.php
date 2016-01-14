@@ -12,7 +12,7 @@ $searchParams = json_decode($value);
                 if (typeof ga !== "undefined") {
                     ga('send', {hitType: 'event',eventCategory: 'Listing',eventAction: 'click',eventLabel: 'SearchForm'});
                 }
-                setTimeout(function() {$('#search-kind').submit();},100);
+                setTimeout(function() {$('#search-kind, #map-search-form').submit();},100);
             },100);
             return false;
         });
@@ -298,15 +298,27 @@ $searchParams = json_decode($value);
                                 <div class="wrap-img-upload row">
                                     <div class="col-xs-4">
                                         <div class="img-uploaded"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-1.jpg" alt=""></div>
-                                        <input type="text" placeholder="Tabs...">
+                                        <select class="form-control">
+                                            <option>Nội Thất</option>
+                                            <option>Ngoại Thất</option>
+                                            <option>Bản Vẽ</option>
+                                        </select>
                                     </div>
                                     <div class="col-xs-4">
                                         <div class="img-uploaded"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-1.jpg" alt=""></div>
-                                        <input type="text" placeholder="Tabs...">
+                                        <select class="form-control">
+                                            <option>Nội Thất</option>
+                                            <option>Ngoại Thất</option>
+                                            <option>Bản Vẽ</option>
+                                        </select>
                                     </div>
                                     <div class="col-xs-4">
                                         <div class="img-uploaded"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/du-an-1.jpg" alt=""></div>
-                                        <input type="text" placeholder="Tabs...">
+                                        <select class="form-control">
+                                            <option>Nội Thất</option>
+                                            <option>Ngoại Thất</option>
+                                            <option>Bản Vẽ</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>

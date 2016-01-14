@@ -132,9 +132,13 @@ body .search-result-page > .container {
     border: none;
     background-position: top left;
 }
+#btn-search:active,
 #btn-search:focus {
     background-size: 166px;
     background-position: top left;
+    background-color: inherit;
+    background-image: url(../images/icon.png);
+    background-repeat: no-repeat;
     background-color: inherit;
 }
 #btn-search:hover {
@@ -3290,7 +3294,7 @@ li.search-filter .type-search,
     position: absolute;
     right: 0;
     bottom: 0;
-    height: 85%;
+    height: 81%;
     transition: right .3s ease-out;
 }
 @media (min-width: 1680px) {
