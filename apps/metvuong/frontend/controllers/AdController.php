@@ -34,93 +34,83 @@ class AdController extends Controller
     /**
      * @return string
      */
-    public function actionIndex($result = false)
+    public function actionIndex()
     {
         $this->layout = '@app/views/layouts/search';
         
-        if($result) {
+        if(Yii::$app->request->isAjax) {
         	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         	
-        	$query = new \yii\db\Query();
-        	$query->select('ad_product.id, ad_product.city_id, ad_product.district_id, ad_product.ward_id, ad_product.lat, ad_product.lng,
-        					ad_product.home_no, ad_product.category_id, ad_product.price, ad_product.area, ad_product.created_at,
+        	$query = AdProduct::find();
+        	$query->select('ad_product.id, ad_product.city_id, ad_product.district_id, ad_product.ward_id, ad_product.street_id, ad_product.lat, ad_product.lng,
+        					ad_product.home_no, ad_product.category_id, ad_product.price, ad_product.area, ad_product.created_at, ad_product.type,
         					ad_product_addition_info.floor_no, ad_product_addition_info.room_no, ad_product_addition_info.toilet_no, ad_images.file_name');
         	$query->from('ad_product');
         	$query->innerJoin('ad_product_addition_info', 'ad_product_addition_info.product_id = ad_product.id');
         	$query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
         	$where = ['ad_product.status' => 1];
         	
-        	if($type = Yii::$app->request->get('type')) {
+        	if($type = Yii::$app->request->post('type')) {
         		$where['ad_product.type'] = intval($type);
         	}
         	
-        	if($districtId = Yii::$app->request->get('districtId')) {
+        	if($districtId = Yii::$app->request->post('districtId')) {
         		$where['ad_product.district_id'] = intval($districtId);
-        	} else if($cityId = Yii::$app->request->get('cityId')) {
+        	} else if($cityId = Yii::$app->request->post('cityId')) {
         		$where['ad_product.city_id'] = intval($cityId);
         	}
         	
-        	if($categoryId = Yii::$app->request->get('categoryId')) {
+        	if($categoryId = Yii::$app->request->post('categoryId')) {
         		$where['ad_product.category_id'] = intval($categoryId);
         	}
         	
         	$query->where($where);
         	
-        	if($costMin = Yii::$app->request->get('costMin')) {
+        	if($costMin = Yii::$app->request->post('costMin')) {
         		$query->andWhere(['>=', 'ad_product.price', intval($costMin)]);
         	}
         	
-        	if($costMax = Yii::$app->request->get('costMax')) {
+        	if($costMax = Yii::$app->request->post('costMax')) {
         		$query->andWhere(['<=', 'ad_product.price', intval($costMax)]);
         	}
         	
-        	if($areaMin = Yii::$app->request->get('areaMin')) {
+        	if($areaMin = Yii::$app->request->post('areaMin')) {
         		$query->andWhere(['>=', 'ad_product.area', intval($areaMin)]);
         	}
         	
-        	if($areaMax = Yii::$app->request->get('areaMax')) {
+        	if($areaMax = Yii::$app->request->post('areaMax')) {
         		$query->andWhere(['<=', 'ad_product.area', intval($areaMax)]);
         	}
         	
-        	if($roomNo = Yii::$app->request->get('roomNo')) {
+        	if($roomNo = Yii::$app->request->post('roomNo')) {
         		$query->andWhere(['>=', 'ad_product_addition_info.room_no', intval($roomNo)]);
         	}
         	
-			if($toiletNo = Yii::$app->request->get('toiletNo')) {
+			if($toiletNo = Yii::$app->request->post('toiletNo')) {
         		$query->andWhere(['>=', 'ad_product_addition_info.toilet_no', intval($toiletNo)]);
         	}
         	
-        	if($time = Yii::$app->request->get('time')) {
+        	if($time = Yii::$app->request->post('time')) {
         		$query->andWhere(['>=', 'ad_product.created_at', strtotime($time)]);
         	}
         	
-        	$order = Yii::$app->request->get('orderBy', 'created_at');
+        	$order = Yii::$app->request->post('orderBy', 'created_at');
         	if($order == 'created_at') {
         		$query->orderBy("created_at DESC");
         	} else {
         		$query->orderBy("price ASC");
         	}
         	
-        	$products = $query->groupBy('ad_product.id')->all();
+        	$rawProducts = $query->asArray(true)->groupBy('ad_product.id')->all();
         	
-        	foreach ($products as $k => $product) {
-        		$productResponse[$k] = $product;
-        		$productResponse[$k]['previous_time'] = StringHelper::previousTime($product['created_at']);
-        		$productResponse[$k]['price'] = StringHelper::formatCurrency($product['price']);
-        		$productResponse[$k]['area'] = StringHelper::formatCurrency($product['area']);
-        		
-        		if($product['file_name']) {
-        			if(StringHelper::startsWith($product['file_name'], 'http')) {
-        				$productResponse[$k]['image_url'] = str_replace('/745x510/', '/350x280/', $product['file_name']);
-        			} else {
-        				$productResponse[$k]['image_url'] = AdImages::getImageUrl($product['file_name']);
-        			}
-        		} else {
-        			$productResponse[$k]['image_url'] = Yii::$app->view->theme->baseUrl . '/resources/images/default-ads.jpg';;
-        		}
+        	$products = [];
+        	
+        	foreach ($rawProducts as $k => $product) {
+        		$products[$k] = $product;
+        		$products[$k]['previous_time'] = StringHelper::previousTime($product['created_at']);
         	}
         	
-        	return ['productResponse' => $productResponse, 'total' => count($productResponse)];
+        	return $products;
         } else {
         	$cityId = Yii::$app->request->get('city', 1);
         	$city = AdCity::find()->select('id, name, geometry, center, color')->asArray(true)->where(['id' => $cityId])->one();
@@ -131,8 +121,15 @@ class AdController extends Controller
         	
         	$districts = AdDistrict::find()->select('id, name, pre, geometry, center, color')->asArray(true)->indexBy('id')->where(['city_id' => $cityId, 'status' => 1])->all();
         	$productSaved = AdProductSaved::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['!=', 'saved_at', 0])->all();
+        	$districtId = Yii::$app->request->get('district', 0);
         	
-        	return $this->render('index', ['city' => $city, 'districts' => $districts, 'productSaved' => $productSaved]);
+        	if($districtId) {
+        		$initialZoom = 'listing.WARD_ZOOM_LEVEL';
+        	} else {
+        		$initialZoom = 'listing.DISTRICT_ZOOM_LEVEL';
+        	}
+        	
+        	return $this->render('index', ['city' => $city, 'districts' => $districts, 'productSaved' => $productSaved, 'initialZoom' => $initialZoom, 'districtId' => $districtId]);
         }
     }
     
