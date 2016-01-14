@@ -457,10 +457,11 @@ class Homefinder extends Component
                     $path = Yii::getAlias('@console') . "/data/homefinder/{$project_name}/files";
                     $project_files = scandir($path, 1);
 
-                    $counter_file = count($project_files) - 3; // last file except .. and .
+                    $counter_file = count($project_files) - 2;
+                    $last_file_index = $counter_file - 1;// last file except .. and .
 
                     if ($counter_file > $start_file) {
-                        for ($j = $start_file; $j <= $counter_file ; $j++) {
+                        for ($j = $start_file; $j <= $last_file_index ; $j++) {
                             if($count_page > 300) break;
 
                             $filename = $path . '/' . $project_files[$j];
