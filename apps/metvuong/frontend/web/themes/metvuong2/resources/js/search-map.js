@@ -50,8 +50,8 @@ $(document).ready(function(){
 });
 
 var listing = {
-	CITY_ZOOM_LEVEL: 11, DISTRICT_ZOOM_LEVEL: 12, WARD_ZOOM_LEVEL: 13,
-	status: 0, form: null, listEl: null, detailWrapEl: null, detailEl: null, gmap: null, products: [],
+	CITY_ZOOM_LEVEL: 12, DISTRICT_ZOOM_LEVEL: 13, WARD_ZOOM_LEVEL: 14,
+	status: 0, form: null, listEl: null, detailWrapEl: null, detailEl: null, tabContentEl: null, gmap: null, products: [],
 	markers: [], polygons: [], groupMarkers: [], infoWindow: null, InfoWindowMore: null, closeTimeout: null,
 	currentPage: 1, limit: 20,
 	state: {DRAW_DETAIL: 0, DRAW_WARD: 1, DRAW_DISTRICT: 2, DRAW_CITY: 3},
@@ -60,6 +60,7 @@ var listing = {
 		listing.listEl = $('.list-results');
 		listing.detailWrapEl = $('#detail-wrap');
 		listing.detailEl = $('#detail-listing');
+		listing.tabContentEl = $('.tab-content');
 		
 		listing.initMap(listing.waitInitFilter);
 		listing.initFilter(listing.waitInitMap);
@@ -72,7 +73,7 @@ var listing = {
 			listing.calDetailSize();
 		});
 		
-		$('.tab-content').scroll(function() {
+		listing.tabContentEl.scroll(function() {
 			var self = $(this);
 			clearTimeout($.data(this, 'scrollTimer'));
 		    $.data(this, 'scrollTimer', setTimeout(function() {
@@ -104,6 +105,18 @@ var listing = {
 			var marker = listing.getMarker(id);
 			var ids = marker.get('ids');
 			marker.setIcon(listing.icon(ids.length, 0));
+		});
+		
+		$('#order-by-tab').find('.order-button').click(function(){
+			var self = $(this);
+			
+			if(!self.parent().hasClass('active')) {
+				if(self.data('order') == 'price') {
+					listing.sort(self.data('order'), true);
+				} else {
+					listing.sort(self.data('order'));
+				}
+			}
 		});
 		
 		listing.detailWrapEl.on('click', '.btn-close-detail', function(){
@@ -353,8 +366,24 @@ var listing = {
 	search: function() {
 		// filter va ve lai marker
 	},
-	sort: function() {
-		// chỉ filter khong ve lai marker
+	sort: function(orderBy, asc) {
+		var n = asc ? -1 : 1;
+		var p = asc ? 1 : -1;
+		
+		listing.products.sort(function(a, b) {
+			var an = Number(a[orderBy]);
+			var bn = Number(b[orderBy]);
+			
+			if (an < bn)
+				return n;
+			else if (an > bn)
+				return p;
+			else 
+				return 0;
+		});
+		
+		listing.tabContentEl.scrollTop(0);
+		listing.list();
 	},
 	list: function() {
 		listing.currentPage = 1;

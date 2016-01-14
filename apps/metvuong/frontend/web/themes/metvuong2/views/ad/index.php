@@ -302,8 +302,8 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
         <span class="num-results"><span id="count-listing">0</span> results.</span> -->
         
         <ul id="order-by-tab" class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a data-order="created_at" href="#" aria-controls="moi-nhat" role="tab" data-toggle="tab">Mới nhất</a></li>
-            <li role="presentation"><a data-order="price" href="#" aria-controls="re-nhat" role="tab" data-toggle="tab">Rẻ nhất</a></li>
+            <li role="presentation" class="active"><a class="order-button" data-order="created_at" href="#" aria-controls="moi-nhat" role="tab" data-toggle="tab">Mới nhất</a></li>
+            <li role="presentation"><a class="order-button" data-order="price" href="#" aria-controls="re-nhat" role="tab" data-toggle="tab">Rẻ nhất</a></li>
             <?php if(!Yii::$app->user->isGuest): ?>
             <li role="presentation"><a data-order="price" href="#" aria-controls="re-nhat" role="tab" data-toggle="tab" data-href="<?= Url::to(['saved-listing']) ?>">Đã lưu</a></li>
             <?php endif; ?>
