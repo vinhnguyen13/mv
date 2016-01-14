@@ -12,6 +12,7 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/lightbo
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/jquery.bxslider.js', ['position' => View::POS_END]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/string-helper.js', ['position' => View::POS_END]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/search-map.js', ['position' => View::POS_END]);
+$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/listing-share.js', ['position' => View::POS_END]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/search-results.js', ['position' => View::POS_END]);
 $this->registerJs('var city = ' . json_encode($city) . ';', View::POS_BEGIN);
 $this->registerJs("var types = " . json_encode(AdProduct::getAdTypes()) . ";", View::POS_BEGIN);
