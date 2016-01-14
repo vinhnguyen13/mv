@@ -222,7 +222,7 @@ var listing = {
 		listing.infoWindow.open(this);
 	},
 	markerOut: function() {
-		// listing.infoWindow.close();
+		listing.infoWindow.close();
 	},
 	markerClick: function() {
 		var ids = this.get('ids');
@@ -282,7 +282,7 @@ var listing = {
 		};
 		
 		m2Map.initial(document.getElementById('map'), options, function(gmap) {
-			listing.infoWindow = new m2Map.InfoWindow();
+			listing.infoWindow = new m2Map.InfoWindow({offsetTop: 40});
 			listing.infoWindowMore = new google.maps.InfoWindow();
 			listing.infoWindowMore.addListener('domready', function() {
 				listing.infoWindow.close();
