@@ -86,6 +86,26 @@ var listing = {
 			listing.detail($(this).data('id'));
 		});
 		
+		listing.listEl.on('mouseenter', '> li', function(){
+			var id = $(this).data('id') + '';
+			
+			$.data(this, 'mouseenterTimer', setTimeout(function() {
+				if(listing.gmap.getZoom() > listing.WARD_ZOOM_LEVEL) {
+					var marker = listing.getMarker(id);
+					var ids = marker.get('ids');
+					marker.setIcon(listing.icon(ids.length, 1));
+					marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
+					listing.gmap.setCenter(marker.getPosition());
+				}
+		    }, 300));
+		}).on('mouseleave', '> li', function(){
+			clearTimeout($.data(this, 'mouseenterTimer'));
+			var id = $(this).data('id') + '';
+			var marker = listing.getMarker(id);
+			var ids = marker.get('ids');
+			marker.setIcon(listing.icon(ids.length, 0));
+		});
+		
 		listing.detailWrapEl.on('click', '.btn-close-detail', function(){
 			listing.closeDetail(function(){
 				listing.detailEl.empty();
@@ -146,16 +166,15 @@ var listing = {
 			}
 			
 			if(marker) {
-				listing.updateCounter(marker);
-				
 				var ids = marker.get('ids');
 				ids.push(product.id);
 				marker.set('ids', ids);
+				marker.setIcon(listing.icon(ids.length, 0));
 			} else {
 				marker = new google.maps.Marker({
 					position: latLng,
 					map: null,
-				    icon: '/images/marker.png'
+				    icon: listing.icon(1, 0)
 				});
 				
 				marker.set('ids', [product.id]);
@@ -166,6 +185,11 @@ var listing = {
 				listing.markers.push(marker);
 			}
 		}
+	},
+	icon: function(counter, status) {
+		var base = (counter > 1) ? '/site/map-image?s={status}&t=' + counter : '/images/marker-{status}.png';
+		
+		return base.replace('{status}', status);
 	},
 	markerOver: function() {
 		this.setZIndex(google.maps.Marker.MAX_ZINDEX++);
@@ -445,13 +469,6 @@ var listing = {
 
 		return polygon;
 	},
-	updateCounter: function(marker) {
-		var count = marker.get('counter') ? Number(marker.get('counter')) : 1;
-
-		marker.set('counter', ++count);
-		
-		marker.setIcon('/site/map-image?s=0&t=' + count);
-	},
 	getImageUrl: function(filename, size) {
 		if(filename) {
 			if(filename.indexOf('http://') == 0) {
@@ -525,6 +542,18 @@ var listing = {
 			
 			if(product.id == id) {
 				return product;
+			}
+		}
+	},
+	getMarker: function(id) {
+		var i;
+		
+		for(i = 0; i < listing.markers.length; i++) {
+			var marker = listing.markers[i];
+			var ids = marker.get('ids');
+			
+			if(ids.indexOf(id) != -1) {
+				return marker;
 			}
 		}
 	},
