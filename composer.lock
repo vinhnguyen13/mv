@@ -76,16 +76,16 @@
         },
         {
             "name": "2amigos/yii2-gallery-widget",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/2amigos/yii2-gallery-widget.git",
-                "reference": "77b82b4a4d33a5cb9013220ff843de75984e7e82"
+                "reference": "77ae3c5e19b027f5c2f2147ce8c14a7a916ad6fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/2amigos/yii2-gallery-widget/zipball/77b82b4a4d33a5cb9013220ff843de75984e7e82",
-                "reference": "77b82b4a4d33a5cb9013220ff843de75984e7e82",
+                "url": "https://api.github.com/repos/2amigos/yii2-gallery-widget/zipball/77ae3c5e19b027f5c2f2147ce8c14a7a916ad6fc",
+                "reference": "77ae3c5e19b027f5c2f2147ce8c14a7a916ad6fc",
                 "shasum": ""
             },
             "require": {
@@ -93,7 +93,8 @@
                 "yiisoft/yii2": "~2.0.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.0"
+                "phpunit/phpunit": "~4.0",
+                "scrutinizer/ocular": "~1.1"
             },
             "type": "yii2-extension",
             "extra": {
@@ -120,11 +121,6 @@
                     "email": "hola@2amigos.us",
                     "homepage": "http://2amigos.us",
                     "role": "Developer"
-                },
-                {
-                    "name": "Alexander Kochetov",
-                    "email": "creocoder@gmail.com",
-                    "role": "Developer"
                 }
             ],
             "description": "Blueimp gallery widget for the Yii framework",
@@ -137,20 +133,20 @@
                 "yii 2",
                 "yii2"
             ],
-            "time": "2015-04-12 22:21:58"
+            "time": "2016-01-04 06:27:31"
         },
         {
             "name": "bower-asset/blueimp-canvas-to-blob",
-            "version": "v2.2.2",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/blueimp/JavaScript-Canvas-to-Blob.git",
-                "reference": "9ec7a82c0e41bee4295dfa7564637cfdde7adee4"
+                "reference": "28258354628fe0aca67e9d13ba60fe75a6dd13c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/blueimp/JavaScript-Canvas-to-Blob/zipball/9ec7a82c0e41bee4295dfa7564637cfdde7adee4",
-                "reference": "9ec7a82c0e41bee4295dfa7564637cfdde7adee4",
+                "url": "https://api.github.com/repos/blueimp/JavaScript-Canvas-to-Blob/zipball/28258354628fe0aca67e9d13ba60fe75a6dd13c0",
+                "reference": "28258354628fe0aca67e9d13ba60fe75a6dd13c0",
                 "shasum": ""
             },
             "type": "bower-asset-library"
@@ -298,70 +294,32 @@
         },
         {
             "name": "bower-asset/blueimp-load-image",
-            "version": "1.14.0",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/blueimp/JavaScript-Load-Image.git",
-                "reference": "464fa505204e2a6592805e799a4b5f63578bea09"
+                "reference": "dfadfa3b9a471b941040c33675a527f24a6db827"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/blueimp/JavaScript-Load-Image/zipball/464fa505204e2a6592805e799a4b5f63578bea09",
-                "reference": "464fa505204e2a6592805e799a4b5f63578bea09",
+                "url": "https://api.github.com/repos/blueimp/JavaScript-Load-Image/zipball/dfadfa3b9a471b941040c33675a527f24a6db827",
+                "reference": "dfadfa3b9a471b941040c33675a527f24a6db827",
                 "shasum": ""
             },
-            "type": "bower-asset-library",
-            "extra": {
-                "bower-asset-main": [
-                    "js/load-image.js",
-                    "js/load-image-ios.js",
-                    "js/load-image-orientation.js",
-                    "js/load-image-meta.js",
-                    "js/load-image-exif.js",
-                    "js/load-image-exif-map.js"
-                ],
-                "bower-asset-ignore": [
-                    "/*.*",
-                    "css",
-                    "js/vendor",
-                    "js/demo.js",
-                    "test"
-                ]
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "JavaScript Load Image is a library to load images provided as File or Blob objects or via URL. It returns an optionally scaled and/or cropped HTML img or canvas element. It also provides a method to parse image meta data to extract Exif tags and thumbnails and to restore the complete image header after resizing.",
-            "keywords": [
-                "blob",
-                "canvas",
-                "crop",
-                "exif",
-                "file",
-                "image",
-                "img",
-                "javascript",
-                "load",
-                "loading",
-                "meta",
-                "resizing",
-                "scale",
-                "thumbnail",
-                "url"
-            ]
+            "type": "bower-asset-library"
         },
         {
             "name": "bower-asset/blueimp-tmpl",
-            "version": "2.5.6",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/blueimp/JavaScript-Templates.git",
-                "reference": "91d3f6f859521d43d424ad44b191536db0b7168b"
+                "reference": "42c8c31428d70d0f53ca1ab31b5c2b3a68af4c8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/blueimp/JavaScript-Templates/zipball/91d3f6f859521d43d424ad44b191536db0b7168b",
-                "reference": "91d3f6f859521d43d424ad44b191536db0b7168b",
+                "url": "https://api.github.com/repos/blueimp/JavaScript-Templates/zipball/42c8c31428d70d0f53ca1ab31b5c2b3a68af4c8a",
+                "reference": "42c8c31428d70d0f53ca1ab31b5c2b3a68af4c8a",
                 "shasum": ""
             },
             "type": "bower-asset-library"
@@ -818,12 +776,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-helpers.git",
-                "reference": "f16003c8c9cfdaa50b4c9574cae9f0310946696c"
+                "reference": "54262f6a450914f599f71e393c8592676f0fed24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-helpers/zipball/f16003c8c9cfdaa50b4c9574cae9f0310946696c",
-                "reference": "f16003c8c9cfdaa50b4c9574cae9f0310946696c",
+                "url": "https://api.github.com/repos/kartik-v/yii2-helpers/zipball/54262f6a450914f599f71e393c8592676f0fed24",
+                "reference": "54262f6a450914f599f71e393c8592676f0fed24",
                 "shasum": ""
             },
             "require": {
@@ -856,20 +814,20 @@
                 "yii",
                 "yii2"
             ],
-            "time": "2015-12-12 18:47:11"
+            "time": "2015-12-30 16:22:45"
         },
         {
             "name": "kartik-v/yii2-krajee-base",
-            "version": "v1.8.0",
+            "version": "1.8.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-krajee-base.git",
-                "reference": "602e7203680642ac4a2a5f9355316eaa9939b6ff"
+                "reference": "0c274e31e4392cbafc5fe158eae81738794e02ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/602e7203680642ac4a2a5f9355316eaa9939b6ff",
-                "reference": "602e7203680642ac4a2a5f9355316eaa9939b6ff",
+                "url": "https://api.github.com/repos/kartik-v/yii2-krajee-base/zipball/0c274e31e4392cbafc5fe158eae81738794e02ce",
+                "reference": "0c274e31e4392cbafc5fe158eae81738794e02ce",
                 "shasum": ""
             },
             "require": {
@@ -902,7 +860,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-12-11 19:01:49"
+            "time": "2016-01-10 12:26:29"
         },
         {
             "name": "kartik-v/yii2-widget-fileinput",
@@ -910,12 +868,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-fileinput.git",
-                "reference": "084447f095888ddb09a95a1a363842ca87e01c9d"
+                "reference": "36f9f493c2d814529f2a195422a8af2e020fc80c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-fileinput/zipball/084447f095888ddb09a95a1a363842ca87e01c9d",
-                "reference": "084447f095888ddb09a95a1a363842ca87e01c9d",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-fileinput/zipball/36f9f493c2d814529f2a195422a8af2e020fc80c",
+                "reference": "36f9f493c2d814529f2a195422a8af2e020fc80c",
                 "shasum": ""
             },
             "require": {
@@ -952,7 +910,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2015-08-17 13:03:50"
+            "time": "2016-01-10 16:10:58"
         },
         {
             "name": "lajax/yii2-translate-manager",
@@ -1669,17 +1627,17 @@
             "time": "2015-06-24 13:41:22"
         },
         {
-            "name": "zelenin/slugifier",
-            "version": "0.0.3",
+            "name": "zelenin/string",
+            "version": "0.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/zelenin/slugifier.git",
-                "reference": "c893d33536f7c2c9f445cac84a7ea428168dc1f0"
+                "url": "https://github.com/zelenin/string.git",
+                "reference": "d57f21f32d2b2eb52e96e892500afaeb0b3fac19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zelenin/slugifier/zipball/c893d33536f7c2c9f445cac84a7ea428168dc1f0",
-                "reference": "c893d33536f7c2c9f445cac84a7ea428168dc1f0",
+                "url": "https://api.github.com/repos/zelenin/string/zipball/d57f21f32d2b2eb52e96e892500afaeb0b3fac19",
+                "reference": "d57f21f32d2b2eb52e96e892500afaeb0b3fac19",
                 "shasum": ""
             },
             "require": {
@@ -1689,7 +1647,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Zelenin\\Slugifier\\": ""
+                    "Zelenin\\Ddd\\String\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1704,30 +1662,33 @@
                     "role": "Developer"
                 }
             ],
-            "description": "Slug generation library",
-            "homepage": "https://github.com/zelenin/slugifier",
+            "description": "String transformers collection",
+            "homepage": "https://github.com/zelenin/string",
             "keywords": [
-                "slug"
+                "ddd",
+                "slug",
+                "string",
+                "translit"
             ],
-            "time": "2015-07-31 16:00:22"
+            "time": "2015-12-23 00:06:30"
         },
         {
             "name": "zelenin/yii2-slug-behavior",
-            "version": "1.0.1",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/zelenin/yii2-slug-behavior.git",
-                "reference": "555b7d29cc4166316da9808f68cc177251124903"
+                "reference": "621d0af946fb4da26f3f57855cb49037ce698768"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/zelenin/yii2-slug-behavior/zipball/555b7d29cc4166316da9808f68cc177251124903",
-                "reference": "555b7d29cc4166316da9808f68cc177251124903",
+                "url": "https://api.github.com/repos/zelenin/yii2-slug-behavior/zipball/621d0af946fb4da26f3f57855cb49037ce698768",
+                "reference": "621d0af946fb4da26f3f57855cb49037ce698768",
                 "shasum": ""
             },
             "require": {
                 "yiisoft/yii2": "~2.0",
-                "zelenin/slugifier": "~0.0"
+                "zelenin/string": "~0.0.0"
             },
             "type": "yii2-extension",
             "autoload": {
@@ -1752,10 +1713,9 @@
             "keywords": [
                 "Behavior",
                 "slug",
-                "yii",
                 "yii2"
             ],
-            "time": "2015-08-21 14:42:56"
+            "time": "2015-12-23 00:49:37"
         }
     ],
     "packages-dev": [
