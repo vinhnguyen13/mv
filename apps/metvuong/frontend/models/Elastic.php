@@ -9,7 +9,7 @@
 
 namespace frontend\models;
 
-
+use Yii;
 use Elasticsearch\ClientBuilder;
 use yii\base\Exception;
 
@@ -21,21 +21,19 @@ class Elastic
     }
 
     public function connect(){
-        $hosts = [
-//            '127.0.0.1:9200',         // IP + Port
-//            '127.0.0.1',              // Just IP
-            'local.metvuong.com:9200', // Domain + Port
-            'local.metvuong.com',     // Just Domain
-        ];
-        $singleHandler  = ClientBuilder::singleHandler();
-        $multiHandler   = ClientBuilder::multiHandler();
-        if(empty($this->client)){
-            $this->client = ClientBuilder::create()           // Instantiate a new ClientBuilder
-            ->setHosts($hosts)      // Set the hosts
-            ->setHandler($singleHandler)
-            ->build();              // Build the client object
+        if(!empty(Yii::$app->params['elastic']['config']['hosts'])){
+            $hosts = Yii::$app->params['elastic']['config']['hosts'];
+            $singleHandler  = ClientBuilder::singleHandler();
+            $multiHandler   = ClientBuilder::multiHandler();
+            if(empty($this->client)){
+                $this->client = ClientBuilder::create()           // Instantiate a new ClientBuilder
+                ->setHosts($hosts)      // Set the hosts
+                ->setHandler($singleHandler)
+                ->build();              // Build the client object
+            }
+            return $this->client;
         }
-        return $this->client;
+        return false;
     }
 
     public function index(){

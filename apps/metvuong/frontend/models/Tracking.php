@@ -46,7 +46,7 @@ class Tracking extends Component
         return Yii::createObject(Tracking::className());
     }
 
-    private function checkLogin(){
+    private function checkAccess(){
         if(Yii::$app->user->isGuest){
             throw new NotFoundHttpException('You must login !');
         }
@@ -54,7 +54,7 @@ class Tracking extends Component
     }
 
     public function productVisitor($uid, $pid, $time = null){
-        $this->checkLogin();
+        $this->checkAccess();
         $today = date(self::DATE_FORMAT, $time);
         $time = !empty($time) ? $time : time();
         $params = [
@@ -64,7 +64,7 @@ class Tracking extends Component
         ];
 
         try{
-            if($this->client->transport->getConnection()->ping()){
+            if(!empty($this->client) && $this->client->transport->getConnection()->ping()){
                 $user = User::findOne($uid);
                 $product = AdProduct::findOne($pid);
                 $exist = $this->elastic->findOne(self::INDEX, self::TYPE, $uid.'_'.$pid.'_'.$today);
@@ -81,6 +81,7 @@ class Tracking extends Component
                 }
                 return $response;
             }
+            return false;
         }catch(Exception $ex){
             throw new NotFoundHttpException('Service error.');
         }
