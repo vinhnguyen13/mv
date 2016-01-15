@@ -9,16 +9,16 @@
     "packages": [
         {
             "name": "elasticsearch/elasticsearch",
-            "version": "v2.1.2",
+            "version": "v2.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/elastic/elasticsearch-php.git",
-                "reference": "6256a76072f8e17046ae0fbe672a0985f6cd531a"
+                "reference": "add7f77f8e388d7d24df6d204c0be16bbb6c57c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/elastic/elasticsearch-php/zipball/6256a76072f8e17046ae0fbe672a0985f6cd531a",
-                "reference": "6256a76072f8e17046ae0fbe672a0985f6cd531a",
+                "url": "https://api.github.com/repos/elastic/elasticsearch-php/zipball/add7f77f8e388d7d24df6d204c0be16bbb6c57c4",
+                "reference": "add7f77f8e388d7d24df6d204c0be16bbb6c57c4",
                 "shasum": ""
             },
             "require": {
@@ -59,7 +59,7 @@
                 "elasticsearch",
                 "search"
             ],
-            "time": "2015-12-01 22:25:13"
+            "time": "2016-01-08 22:58:44"
         },
         {
             "name": "guzzlehttp/ringphp",
