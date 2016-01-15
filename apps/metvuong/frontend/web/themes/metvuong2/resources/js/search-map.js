@@ -51,7 +51,7 @@ $(document).ready(function(){
 
 var listing = {
 	CITY_ZOOM_LEVEL: 12, DISTRICT_ZOOM_LEVEL: 13, WARD_ZOOM_LEVEL: 14,
-	status: 0, form: null, listEl: null, detailWrapEl: null, detailEl: null, tabContentEl: null, gmap: null, products: [],
+	status: 0, form: null, listEl: null, detailWrapEl: null, detailEl: null, tabContentEl: null, gmap: null, products: [], mapWaitingEl: null,
 	markers: [], polygons: [], groupMarkers: [], infoWindow: null, InfoWindowMore: null, closeTimeout: null, offsetCenterX: 0,
 	currentPage: 1, limit: 20,
 	state: {DRAW_DETAIL: 0, DRAW_WARD: 1, DRAW_DISTRICT: 2, DRAW_CITY: 3},
@@ -61,6 +61,7 @@ var listing = {
 		listing.detailWrapEl = $('#detail-wrap');
 		listing.detailEl = $('#detail-listing');
 		listing.tabContentEl = $('.tab-content');
+		listing.mapWaitingEl = $('#map-waiting');
 		
 		listing.initMap(listing.waitInitFilter);
 		listing.initFilter(listing.waitInitMap);
@@ -151,6 +152,9 @@ var listing = {
 	},
 	waitInitMap: function(products) {
 		listing.products = products;
+		
+		listing.list();
+		
 		listing.status++;
 		listing.start();
 	},
@@ -167,9 +171,12 @@ var listing = {
 	},
 	start: function() {
 		if(this.status == 2) {
-			listing.list();
-			listing.addMarkers();
-			listing.drawOnZoom();
+			setTimeout(function() {
+				listing.addMarkers();
+				listing.drawOnZoom();
+				
+				listing.mapWaitingEl.hide();
+			}, 1);
 		}
 	},
 	addMarkers: function() {

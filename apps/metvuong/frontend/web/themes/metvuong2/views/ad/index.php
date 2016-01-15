@@ -286,6 +286,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 </div>
 <div class="col-md-8 wrap-map-result" style="z-index: 0">
     <div class="container-map">
+    	<div id="map-waiting" style="position: absolute; background: rgba(0, 0, 0, 0.5); width: 100%; z-index: 1; height: 100%;"></div>
     	<div id="map" style="height: 100%;"></div>
     </div>
 </div>
