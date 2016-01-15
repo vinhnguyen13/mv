@@ -3016,15 +3016,14 @@ padding-bottom: 5px;
 }
 @media (min-width: 768px) {
     .modal-dialog {
-        margin: 30px auto;
+        margin: 0 auto 0;
     }
 }
 #frmForgot .modal-dialog,
 .modal-dialog,
 #frmRegister .modal-dialog {
-    /* width: 600px; */
-    margin-top: 70px;
     z-index: 1041;
+    margin: 0 auto 0;
 }
 #frmListVisit .modal-header,
 #frmForgot .modal-header,
@@ -7209,9 +7208,9 @@ li.search-filter .search-wrap {
     color: #9A9A9A;
     background: rgba(0, 0, 0, 0.33);
 }
-#regis-listing .modal-dialog {
+#regis-listing .modal-content {
     width: 840px;
-    margin-top: 115px;
+    margin: 70px auto 0;
 }
 #regis-listing .modal-dialog .wrap-modal {
     min-height: 500px;
@@ -7550,4 +7549,27 @@ li.search-filter .search-wrap {
     border-top-color: #000000;
     border-width: 10px;
     margin-left: -10px;
+}
+.modal-open .modal {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    overflow-y: scroll;
+}
+#regis-listing {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding-top: 80px;
+    background: url(../images/bg-home.jpg) no-repeat 50% center;
+    background-size: cover;
+    overflow-x: hidden;
+}
+#regis-listing .modal-dialog {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.52);
 }

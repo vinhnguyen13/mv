@@ -26,16 +26,39 @@ $(document).ready(function() {
         return false;
     });
 
+
+    var modalVerticalCenterClass = ".modal";
+    function centerModals($element) {
+        var $modals;
+        if ($element != undefined) {
+            $modals = $element;
+        } else {
+            $modals = $(modalVerticalCenterClass + ':visible');
+        }
+        $modals.each( function(i) {
+            var $clone = $(this).clone().css('display', 'block').appendTo('body');
+            var top = Math.round(($clone.height() - $clone.find('.modal-content').height()) / 2);
+            top = top > 0 ? top : 0;
+            $clone.remove();
+            $(this).find('.modal-content').css("margin-top", top);
+        });
+    }
     var $modal = $('.modal');
     $modal.on('show.bs.modal', function(e) {
         var _this = $(this),
             $root = _this.parent();
+
+        centerModals($(this));
 
         $('body').append(_this);
 
         if ( $('.modal-backdrop').length > 0 ) {
             $('.modal-backdrop').trigger('click');
         }
+    });
+
+    $(window).on('resize', function () {
+        centerModals();
     });
     
     //start click scroll to top
