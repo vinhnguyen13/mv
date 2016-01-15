@@ -97,7 +97,7 @@ var listing = {
 					var ids = marker.get('ids');
 					marker.setIcon(listing.icon(ids.length, 1));
 					marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
-					listing.gmap.setCenter(marker.getPosition());
+					listing.setCenter(marker.getPosition(), listing.offsetCenterX, 0);
 				}
 		    }, 300));
 		}).on('mouseleave', '> li', function(){
@@ -225,9 +225,9 @@ var listing = {
 		var product = listing.getProduct(id);
 		var infoContent = $('<div class="info-wrap-single">' + listing.buildInfoContent(product) + '</div>');
 		
-//		if(ids.length > 1) {
-//			infoContent.append('<div class="more">...</div>');
-//		}
+		if(ids.length > 1) {
+			infoContent.append('<div class="more">...</div>');
+		}
 		
 		infoContent.append('<div class="arrow"></div>');
 		
