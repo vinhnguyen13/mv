@@ -3030,8 +3030,11 @@ padding-bottom: 5px;
 }
 #frmListVisit .modal-header,
 #frmForgot .modal-header,
+.page-login .modal-header,
 #frmLogin .modal-header,
-#frmRegister .modal-header {
+#frmRegister .modal-header,
+.page-regis .modal-header,
+.page-forgot .modal-header {
     position: relative;
     min-height: inherit;
     border: none;
@@ -3138,7 +3141,8 @@ padding-bottom: 5px;
 }
 #frmForgot form,
 #frmLogin form,
-#frmRegister form {
+#frmRegister form,
+.page-regis form {
     float: left;
     width: 60%;
     padding-right: 15px;
@@ -3195,13 +3199,17 @@ padding-bottom: 5px;
 }
 #frmForgot .checkbox,
 #frmLogin .checkbox,
-#frmRegister .checkbox {
+.page-login .checkbox,
+#frmRegister .checkbox,
+.page-regis .checkbox {
     padding: 0px 0 15px;
     margin: 0;
 }
 #frmForgot .checkbox label,
 #frmLogin .checkbox label,
-#frmRegister .checkbox label {
+.page-login .checkbox label,
+#frmRegister .checkbox label,
+.page-regis .checkbox label {
     line-height: 20px;
     font-size: 13px;
 }
@@ -7065,11 +7073,15 @@ li.search-filter .search-wrap {
 }
 #frmForgot .modal-dialog,
 #frmRegister .modal-dialog,
-#frmLogin .modal-dialog {
+.page-regis .modal-dialog,
+#frmLogin .modal-dialog,
+.page-login .modal-dialog {
     width: 360px;
 }
+.page-login form,
 #frmForgot form,
 #frmRegister form,
+.page-regis form,
 #frmLogin form {
     width: 100%;
     float: none;
@@ -7090,6 +7102,7 @@ li.search-filter .search-wrap {
 .forgot-pass a:hover {
     opacity: .6;
 }
+.btn-reset-password,
 .btn-reset-pass,
 .btn-register,
 .btn-login {
@@ -7119,6 +7132,7 @@ li.search-filter .search-wrap {
 .regis-link a:hover {
     opacity: .7;
 }
+.btn-reset-password:hover,
 .btn-register:hover,
 .btn-reset-pass:hover,
 .btn-login:hover {
@@ -7585,4 +7599,17 @@ li.search-filter .search-wrap {
     overflow-x: hidden;
     width: 100%;
     background: rgba(0, 0, 0, 0.52);
+}
+.page-forgot .modal-dialog,
+.page-regis .modal-dialog,
+.page-login .modal-dialog {
+    z-index: 1;
+}
+.page-forgot .wrap-modal,
+.page-regis .wrap-modal,
+.page-login .wrap-modal {
+    padding: 20px 0 0;
+}
+.page-forgot .modal-dialog {
+    width: 360px;
 }
