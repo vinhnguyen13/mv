@@ -29,7 +29,6 @@ class CrawlerController extends Controller
     {
         Homefinder::find()->parse();
     }
-
     public function actionImporthomefinder()
     {
         Homefinder::find()->importData_2();
@@ -42,5 +41,9 @@ class CrawlerController extends Controller
     public function actionImportbatdongsan()
     {
         BatdongsanV2::find()->importData();
+    }
+    public function actionUpdatebatdongsan()
+    {
+        BatdongsanV2::find()->updateData();
     }
 }

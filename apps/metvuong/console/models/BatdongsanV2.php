@@ -426,14 +426,14 @@ class BatdongsanV2 extends Component
         $this->writeFileJson($file_name, $log_data);
     }
 
-    function loadBdsImportLog(){
+    function loadBdsImportLog($filename){
         $path_folder = Yii::getAlias('@console') . "/data/bds_html/import/";
         if(!is_dir($path_folder)){
             mkdir($path_folder , 0777, true);
             echo "\nDirectory {$path_folder} was created";
         }
         $data = null;
-        $path = $path_folder."bds_import_log.json";
+        $path = $path_folder.$filename;
         if(file_exists($path))
             $data = file_get_contents($path);
         else
@@ -450,44 +450,40 @@ class BatdongsanV2 extends Component
             return null;
     }
 
-    function writeBdsImportLog($log){
-        $file_name = Yii::getAlias('@console') . "/data/bds_html/import/bds_import_log.json";
+    function writeBdsImportLog($filename, $log){
+        $file_name = Yii::getAlias('@console') . "/data/bds_html/import/".$filename;
         $log_data = json_encode($log);
         $this->writeFileJson($file_name, $log_data);
     }
 
-    public function getAddressFromLatLongAPI($lat, $long){
-        $curl = new Curl();
-        $url = "http://maps.googleapis.com/maps/api/geocode/json?latlng={$lat},{$long}&sensor=true";
+    public function getAddress($lat, $long){
+        $api_key1 = 'AIzaSyCTwptkS584b_mcZWt0j_86ZFYLL0j-1Yw';
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?latlng={$lat},{$long}&key={$api_key1}";
         $address = array();
-        $response = $curl->get($url);
+        $response = @file_get_contents($url);
         if(!empty($response)){
             $results = json_decode($response, true);
-            if(!empty($results["results"][0]["address_components"])){
-                $detail = $results["results"][0]["address_components"];
-                if($detail[count($detail)-1]["short_name"] == "VN") {
-                    foreach($detail as $d){
-                        if($d["types"][0] == "street_number"){
-                            $address["home_no"] = $d["long_name"];
-                        }
-
-                        elseif($d["types"][0] == "route"){
-                            $address["street"] = $d["long_name"];
-                        }
-
-                        elseif($d["types"][0] == "sublocality_level_1"){
-                            $address["ward"] = $d["long_name"];
-                        }
-
-                        elseif($d["types"][0] == "administrative_area_level_2"){
-                            $address["district"] = $d["long_name"];
-                        }
-
-                        elseif($d["types"][0] == "administrative_area_level_1"){
-                            $address["city"] = $d["long_name"];
+            if(!empty($results["results"])) {
+                if (!empty($results["results"][0]["address_components"])) {
+                    $detail = $results["results"][0]["address_components"];
+                    if ($detail[count($detail) - 1]["short_name"] == "VN") {
+                        foreach ($detail as $d) {
+                            if ($d["types"][0] == "street_number") {
+                                $address["home_no"] = $d["long_name"];
+                            } elseif ($d["types"][0] == "route") {
+                                $address["street"] = $d["long_name"];
+                            } elseif ($d["types"][0] == "sublocality_level_1") {
+                                $address["ward"] = $d["long_name"];
+                            } elseif ($d["types"][0] == "administrative_area_level_2") {
+                                $address["district"] = $d["long_name"];
+                            } elseif ($d["types"][0] == "administrative_area_level_1") {
+                                $address["city"] = $d["long_name"];
+                            }
                         }
                     }
                 }
+            } else {
+                print_r("Google Map API limits at lat: {$lat} , long: {$long}");
             }
         }
         return $address;
@@ -499,7 +495,7 @@ class BatdongsanV2 extends Component
         $insertCount = 0;
         $count_file = 1;
 
-        $bds_import_log = $this->loadBdsImportLog();
+        $bds_import_log = $this->loadBdsImportLog("bds_import_log.json");
         if(empty($bds_import_log["type"])){
             $bds_import_log["type"] = array();
         }
@@ -522,7 +518,7 @@ class BatdongsanV2 extends Component
             $wardData = AdWard::find()->all();
             $streetData = AdStreet::find()->all();
             $tableName = AdProduct::tableName();
-            $break_type = false;
+            $break_type = false; // detect next type if it is false
             foreach ($this->types as $key_type => $type) {
                 if ($key_type >= $last_type_import && !$break_type) {
 
@@ -542,7 +538,6 @@ class BatdongsanV2 extends Component
                                 }
                                 $filename = $files[$i];
                                 if (in_array($filename, $log_import["files"])) {
-//                                    print_r("\n" . $filename . " imported.\n");
                                     continue;
                                 } else {
                                     $filePath = $path . "/" . $filename;
@@ -676,7 +671,7 @@ class BatdongsanV2 extends Component
                                     array_push($bds_import_log["type"], $type);
                                 }
                                 $bds_import_log["last_type_index"] = $key_type;
-                                $this->writeBdsImportLog($bds_import_log);
+                                $this->writeBdsImportLog("bds_import_log.json", $bds_import_log);
                                 print_r("\nADD: {$type} DONE!\n");
                             }
                         }
@@ -778,7 +773,7 @@ class BatdongsanV2 extends Component
 
                 if (!$break_type) {
                     $bds_import_log["file_imported"] = true;
-                    $this->writeBdsImportLog($bds_import_log);
+                    $this->writeBdsImportLog("bds_import_log.json",$bds_import_log);
                 }
             }
         }
@@ -1007,6 +1002,86 @@ class BatdongsanV2 extends Component
 
     function beginWith($haystack, $needle) {
         return substr($haystack, 0, strlen($needle)) === $needle;
+    }
+
+    public function updateData(){
+        $products = AdProduct::find()->orWhere(['ward_id' => null])->all();
+        if(count($products) > 0){
+            $cityData = AdCity::find()->all();
+            $districtData = AdDistrict::find()->all();
+            $wardData = AdWard::find()->all();
+            $streetData = AdStreet::find()->all();
+            $log_update = $this->loadBdsImportLog("bds_update_log.json");
+            if(empty($log_update["pids"])) $log_update["pids"] = array();
+            $c = empty($log_update["total-update"]) ? 0 : $log_update["total-update"];
+            foreach($products as $product){
+                echo "<pre>";
+                print_r($product);
+                echo "<pre>";
+                exit();
+                if(!in_array($product->id, $log_update["pids"])) {
+                    $lat = $product->lat;
+                    $lng = $product->lng;
+                    $address = $this->getAddress($lat, $lng);
+                    if (count($address) > 0) {
+                        if (empty($address["ward"])) {
+                            $product->verified = 0;
+                            $product->update();
+                            if(empty($log_update["NoWard"])) $log_update["NoWard"] = array();
+                            array_push($log_update["NoWard"], $product->id);
+                            print_r("\nNot verified ward: {$product->id} and {$lat}, {$lng}");
+                            continue;
+                        }
+                        if(!empty($address["city"])) {
+                            $city_id = $this->getCityId($address["city"], $cityData);
+                            if ($city_id != $product->city_id) {
+                                $product->verified = 0;
+                                $product->update();
+                                if(empty($log_update["NoCity"])) $log_update["NoCity"] = array();
+                                array_push($log_update["NoCity"], $product->id);
+                                print_r("\nNot verified city: {$product->id} and {$lat}, {$lng}");
+                                continue;
+                            }
+                        }
+                        if(!empty($address["district"])) {
+                            $district_id = $this->getDistrictId($address["district"], $districtData, $city_id);
+                            if ($district_id != $product->district_id) {
+                                $product->verified = 0;
+                                if(empty($log_update["NoDistrict"])) $log_update["NoDistrict"] = array();
+                                array_push($log_update["NoDistrict"], $product->id);
+                                print_r("\nNot verified district: {$product->id} and {$lat}, {$lng}");
+                                $product->update();
+                                continue;
+                            }
+                        }
+
+                        if (!empty($address["street"])) {
+                            $street_id = $this->getStreetId($address["street"], $streetData, $district_id);
+                            $product->street_id = $street_id;
+                        }
+
+                        $ward_id = $this->getWardId($address["ward"], $wardData, $district_id);
+                        $product->ward_id = $ward_id;
+
+                        if(!empty($address["home_no"]))
+                            $product->home_no = $address["home_no"];
+
+                        if ($product->update()) {
+                            $c++;
+                            print_r("\n{$c} - updated: {$product->id} and {$lat}, {$lng}");
+                        }
+                    }
+
+                }
+                array_push($log_update["pids"], $product->id);
+                break;
+            } // end for products loop
+            $log_update["total-update"] = count($log_update["pids"]);
+            $this->writeBdsImportLog("bds_update_log.json", $log_update);
+        }
+        else {
+            print_r("All products have been updated");
+        }
     }
 
 }
