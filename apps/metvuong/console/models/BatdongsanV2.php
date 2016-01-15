@@ -483,7 +483,7 @@ class BatdongsanV2 extends Component
                     }
                 }
             } else {
-                print_r("Google Map API limits at lat: {$lat} , long: {$long}");
+                print_r("\nGoogle Map API limits at lat: {$lat} , long: {$long}");
             }
         }
         return $address;
@@ -1005,82 +1005,66 @@ class BatdongsanV2 extends Component
     }
 
     public function updateData(){
-        $products = AdProduct::find()->orWhere(['ward_id' => null])->all();
+        $products = AdProduct::find()->where(['ward_id' => null])->andWhere(['verified' => 1])->all();
         if(count($products) > 0){
-            $cityData = AdCity::find()->all();
-            $districtData = AdDistrict::find()->all();
+//            $cityData = AdCity::find()->all();
+//            $districtData = AdDistrict::find()->all();
             $wardData = AdWard::find()->all();
             $streetData = AdStreet::find()->all();
             $log_update = $this->loadBdsImportLog("bds_update_log.json");
             if(empty($log_update["pids"])) $log_update["pids"] = array();
-            $c = empty($log_update["total-update"]) ? 0 : $log_update["total-update"];
+            $i = 1;
             foreach($products as $product){
-                echo "<pre>";
-                print_r($product);
-                echo "<pre>";
-                exit();
-                if(!in_array($product->id, $log_update["pids"])) {
-                    $lat = $product->lat;
-                    $lng = $product->lng;
-                    $address = $this->getAddress($lat, $lng);
-                    if (count($address) > 0) {
-                        if (empty($address["ward"])) {
-                            $product->verified = 0;
-                            $product->update();
-                            if(empty($log_update["NoWard"])) $log_update["NoWard"] = array();
+                if($i > 500)
+                    break;
+//                if(in_array($product->id, $log_update["pids"]))
+//                    continue;
+                $lat = $product->lat;
+                $lng = $product->lng;
+                $address = $this->getAddress($lat, $lng);
+                if (count($address) > 0) {
+                    if (empty($address["ward"])) {
+                        $product->verified = 0;
+                        if(empty($log_update["NoWard"])) $log_update["NoWard"] = array();
+                        if(!in_array($product->id, $log_update["NoWard"]))
                             array_push($log_update["NoWard"], $product->id);
-                            print_r("\nNot verified ward: {$product->id} and {$lat}, {$lng}");
-                            continue;
-                        }
-                        if(!empty($address["city"])) {
-                            $city_id = $this->getCityId($address["city"], $cityData);
-                            if ($city_id != $product->city_id) {
-                                $product->verified = 0;
-                                $product->update();
-                                if(empty($log_update["NoCity"])) $log_update["NoCity"] = array();
-                                array_push($log_update["NoCity"], $product->id);
-                                print_r("\nNot verified city: {$product->id} and {$lat}, {$lng}");
-                                continue;
-                            }
-                        }
-                        if(!empty($address["district"])) {
-                            $district_id = $this->getDistrictId($address["district"], $districtData, $city_id);
-                            if ($district_id != $product->district_id) {
-                                $product->verified = 0;
-                                if(empty($log_update["NoDistrict"])) $log_update["NoDistrict"] = array();
-                                array_push($log_update["NoDistrict"], $product->id);
-                                print_r("\nNot verified district: {$product->id} and {$lat}, {$lng}");
-                                $product->update();
-                                continue;
-                            }
-                        }
-
-                        if (!empty($address["street"])) {
-                            $street_id = $this->getStreetId($address["street"], $streetData, $district_id);
-                            $product->street_id = $street_id;
-                        }
-
-                        $ward_id = $this->getWardId($address["ward"], $wardData, $district_id);
-                        $product->ward_id = $ward_id;
-
-                        if(!empty($address["home_no"]))
-                            $product->home_no = $address["home_no"];
-
-                        if ($product->update()) {
-                            $c++;
-                            print_r("\n{$c} - updated: {$product->id} and {$lat}, {$lng}");
-                        }
+                        print_r("\nNot verified ward: {$product->id} and {$lat}, {$lng}");
+                        continue;
                     }
 
+                    if (!empty($address["street"])) {
+                        $street_id = $this->getStreetId($address["street"], $streetData, $product->district_id);
+                        $product->street_id = $street_id;
+                    }
+
+                    if(!empty($address["home_no"]))
+                        $product->home_no = $address["home_no"];
+
+                    $ward_id = $this->getWardId($address["ward"], $wardData, $product->district_id);
+                    if(empty($ward_id)){
+                        if(empty($log_update["NoWard"])) $log_update["NoWard"] = array();
+                        if(!in_array($product->id, $log_update["NoWard"]))
+                            array_push($log_update["NoWard"], $product->id);
+                        print_r("\nNot found ward in DB: {$product->id} and {$lat}, {$lng}");
+                        continue;
+                    } else {
+                        $product->ward_id = $ward_id;
+                        if($product->update(false))
+                            print_r("\n{$i} - updated id: {$product->id}");
+                        else
+                            print_r("\n{$i} - failed id: {$product->id}");
+                    }
                 }
-                array_push($log_update["pids"], $product->id);
-                break;
+                if(!in_array($product->id, $log_update["pids"]))
+                    array_push($log_update["pids"], $product->id);
+                $log_update["total-update"] = count($log_update["pids"]);
+                $this->writeBdsImportLog("bds_update_log.json", $log_update);
+                $i++;
+                sleep(2);
             } // end for products loop
-            $log_update["total-update"] = count($log_update["pids"]);
-            $this->writeBdsImportLog("bds_update_log.json", $log_update);
         }
         else {
-            print_r("All products have been updated");
+            print_r("\nAll products have been updated");
         }
     }
 
