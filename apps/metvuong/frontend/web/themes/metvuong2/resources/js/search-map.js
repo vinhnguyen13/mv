@@ -212,9 +212,9 @@ var listing = {
 		var product = listing.getProduct(id);
 		var infoContent = $('<div class="info-wrap-single">' + listing.buildInfoContent(product) + '</div>');
 		
-		if(ids.length > 1) {
-			infoContent.append('<div class="more">...</div>');
-		}
+//		if(ids.length > 1) {
+//			infoContent.append('<div class="more">...</div>');
+//		}
 		
 		infoContent.append('<div class="arrow"></div>');
 		
@@ -268,7 +268,8 @@ var listing = {
 		if(zoom > listing.WARD_ZOOM_LEVEL) {
 			listing.drawMarkerDetail();
 		} else if(zoom > listing.DISTRICT_ZOOM_LEVEL) {
-			listing.drawMarkerWard();
+			// listing.drawMarkerWard();
+			listing.drawMarkerDistrict();
 		} else if(zoom > listing.CITY_ZOOM_LEVEL) {
 			listing.drawMarkerDistrict();
 		} else {
@@ -419,6 +420,7 @@ var listing = {
 	drawMarkerDetail: function() {
 		if(listing.currentState != listing.state.DRAW_DETAIL) {
 			listing.removePolygons();
+			listing.removeGroupMarkers();
 			
 			for(i = 0; i < listing.markers.length; i++) {
 				var marker = listing.markers[i];
@@ -429,7 +431,15 @@ var listing = {
 		}
 	},
 	drawMarkerWard: function() {
-		
+		if(listing.currentState != listing.state.DRAW_WARD) {
+			var area = {};
+			
+			area = wards;
+			
+			listing.drawGroupMarker(area, 'ward_id');
+			
+			listing.currentState = listing.state.DRAW_WARD;
+		}
 	},
 	drawMarkerDistrict: function() {
 		if(listing.currentState != listing.state.DRAW_DISTRICT) {
@@ -452,8 +462,23 @@ var listing = {
 	drawGroupMarker: function(area, countBy) {
 		listing.removeMarkerDetail();
 		listing.removePolygons();
+		listing.removeGroupMarkers();
 		
-		for(index in area) {
+		var counters = {};
+		
+		for(var i = 0; i < listing.products.length; i++) {
+			var product = listing.products[i];
+			var areaId = product[countBy];
+			
+			if(counters[areaId]) {
+				counters[areaId] = counters[areaId] + 1;
+			} else {
+				counters[areaId] = 1;
+			}
+		}
+		
+		for(var index in area) {
+			
 			var ar = area[index];
 			
 			if(ar.geometry) {
@@ -461,7 +486,38 @@ var listing = {
 				polygon.setMap(listing.gmap);
 				listing.polygons.push(polygon);
 			}
+			
+			if(ar.center && counters[index]) {
+				var latLng = ar.center.split(',');
+				latLng = new google.maps.LatLng(Number(latLng[0]), Number(latLng[1]));
+				
+				var marker = new google.maps.Marker({
+					position: latLng,
+					map: listing.gmap,
+				    icon: listing.icon(counters[index], 0)
+				});
+				
+				marker.set('name', ar.name);
+				
+				marker.addListener('mouseover', listing.groupMakerMouseOver);
+				marker.addListener('mouseout', listing.groupMakerMouseOut);
+				marker.addListener('click', listing.groupMakerClick);
+				
+				listing.groupMarkers.push(marker);
+			}
 		}
+	},
+	groupMakerMouseOver: function() {
+		var infoContent = '<div class="info-wrap-single"><div style="padding: 6px 12px; font-weight: bold; font-size: 13px; white-space: nowrap">' + this.name + '</div><div class="arrow"></div></div>';
+		listing.infoWindow.setContent(infoContent);
+		listing.infoWindow.open(this);
+	},
+	groupMakerMouseOut: function() {
+		listing.infoWindow.close();
+	},
+	groupMakerClick: function() {
+		listing.gmap.setZoom(listing.WARD_ZOOM_LEVEL + 1);
+		listing.gmap.setCenter(this.getPosition());
 	},
 	removePolygons: function() {
 		for(i = 0; i < listing.polygons.length; i++) {
@@ -470,6 +526,14 @@ var listing = {
 		}
 		
 		listing.polygons = [];
+	},
+	removeGroupMarkers: function() {
+		for(i = 0; i < listing.groupMarkers.length; i++) {
+			var groupMarker = listing.groupMarkers[i];
+			groupMarker.setMap(null);
+		}
+		
+		listing.groupMarker = [];
 	},
 	removeMarkerDetail: function() {
 		for(i = 0; i < listing.markers.length; i++) {

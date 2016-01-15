@@ -20,6 +20,7 @@ $this->registerJs('var productSaved = ' . json_encode($productSaved) . ';', View
 $this->registerJs("var districtId = $districtId;", View::POS_BEGIN);
 $this->registerJs("var initialZoom = $initialZoom;", View::POS_END);
 $this->registerJs('var districts = ' . json_encode($districts) . ';', View::POS_BEGIN);
+$this->registerJs('var wards = ' . json_encode($wards) . ';', View::POS_BEGIN);
 
 $fb_appId = '680097282132293';
 if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))

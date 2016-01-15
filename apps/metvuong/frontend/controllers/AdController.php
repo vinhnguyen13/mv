@@ -26,6 +26,8 @@ use yii\widgets\LinkPager;
 use frontend\models\ProfileForm;
 use vsoft\ad\models\AdProductSaved;
 use vsoft\ad\models\AdCity;
+use vsoft\ad\models\AdWard;
+use yii\helpers\ArrayHelper;
 
 class AdController extends Controller
 {
@@ -125,11 +127,16 @@ class AdController extends Controller
         	
         	if($districtId) {
         		$initialZoom = 'listing.WARD_ZOOM_LEVEL';
+        		$whereDistrictId = $districtId;
         	} else {
-        		$initialZoom = 'listing.DISTRICT_ZOOM_LEVEL';
+        		$initialZoom = 'listing.WARD_ZOOM_LEVEL';
+        		$whereDistrictId = ArrayHelper::getColumn($districts, 'id');
         	}
         	
-        	return $this->render('index', ['city' => $city, 'districts' => $districts, 'productSaved' => $productSaved, 'initialZoom' => $initialZoom, 'districtId' => $districtId]);
+        	// $wards = AdWard::find()->select('id, name, pre, geometry, center, color, district_id')->asArray(true)->indexBy('id')->where(['district_id' => $whereDistrictId, 'status' => 1])->all();
+        	$wards = [];
+        	
+        	return $this->render('index', ['city' => $city, 'districts' => $districts, 'productSaved' => $productSaved, 'initialZoom' => $initialZoom, 'districtId' => $districtId, 'wards' => $wards]);
         }
     }
     
