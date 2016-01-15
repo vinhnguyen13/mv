@@ -7602,6 +7602,7 @@ li.search-filter .search-wrap {
     overflow-x: hidden;
     width: 100%;
     background: rgba(0, 0, 0, 0.52);
+    margin-top: 0;
 }
 .page-forgot .modal-dialog,
 .page-regis .modal-dialog,
