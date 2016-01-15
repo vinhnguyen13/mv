@@ -761,6 +761,8 @@ footer {
     background-size: cover !important;
     background-position: 50% top;
 }
+
+.img-wrap.bgcover {}
 .bgcover a {
     display: block;
     width: 100%;
@@ -7489,6 +7491,8 @@ li.search-filter .search-wrap {
     margin-right: 7px;
     width: 105px;
     height: 91px;
+    padding: 0;
+    background-position: 50% -6px;
 }
 .infoContent > div {
     overflow: hidden;
@@ -7518,6 +7522,10 @@ li.search-filter .search-wrap {
     border: none;
     border-bottom: 1px solid #D8D8D8;
     /* width: 100%; */
+    cursor: pointer;
+}
+.gm-style-iw .infoContent:hover {
+    background: #ECECEC;
 }
 .gm-style-iw .infoContent:last-child {
     border-bottom: none;
