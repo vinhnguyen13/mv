@@ -171,12 +171,9 @@ var listing = {
 	},
 	start: function() {
 		if(this.status == 2) {
-			setTimeout(function() {
-				listing.addMarkers();
-				listing.drawOnZoom();
-				
-				listing.mapWaitingEl.hide();
-			}, 1);
+			listing.addMarkers();
+			listing.drawOnZoom();
+			listing.mapWaitingEl.hide();
 		}
 	},
 	addMarkers: function() {
