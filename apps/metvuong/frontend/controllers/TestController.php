@@ -160,7 +160,7 @@ class TestController extends \yii\web\Controller
         $adProductVisitor->count = 1;
         $adProductVisitor->save();
         echo "<pre>";
-        print_r(5);
+        print_r($adProductVisitor);
         echo "</pre>";
         exit;
     }
