@@ -3024,7 +3024,7 @@ padding-bottom: 5px;
 .modal-dialog,
 #frmRegister .modal-dialog {
     z-index: 1041;
-    margin: 0 auto 0;
+    margin: 95px auto 0;
 }
 #frmListVisit .modal-header,
 #frmForgot .modal-header,
@@ -7559,11 +7559,6 @@ li.search-filter .search-wrap {
     border-top-color: #000000;
     border-width: 10px;
     margin-left: -10px;
-}
-.modal-open .modal {
-    padding-left: 0px !important;
-    padding-right: 0px !important;
-    overflow-y: scroll;
 }
 #regis-listing {
     position: fixed; 

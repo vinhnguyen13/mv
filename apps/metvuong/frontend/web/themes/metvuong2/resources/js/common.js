@@ -48,7 +48,7 @@ $(document).ready(function() {
         var _this = $(this),
             $root = _this.parent();
 
-        centerModals($(this));
+        //centerModals($(this));
 
         $('body').append(_this);
 
