@@ -280,6 +280,11 @@ class AdController extends Controller
 		]);
     }
 
+	public function actionPostListing()
+	{
+		return $this->render('post/index');
+	}
+
     public function actionUpload() {
     	$folder = 'ad';
     	$response = Yii::$app->runAction('express/upload/image', ['folder' => $folder, 'resizeForAds' => true]);

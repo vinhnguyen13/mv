@@ -83,6 +83,7 @@ return [
                 'real-estate/result' => 'ad/index',
                 'real-estate/redirect' => 'ad/redirect',
                 'real-estate/post' => 'ad/post',
+                'real-estate/post-listing' => 'ad/post-listing',
                 'real-estate/detail/<id:\d+>-<slug>' => 'ad/detail',
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',
 //                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
