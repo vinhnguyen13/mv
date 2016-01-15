@@ -8,26 +8,21 @@ var m2Map = {
 	            a[key] = b[key];
 	    return a;
 	},
-	loaded: function() {
+	loaded: function(fn) {
 		this.customInfoWindow();
 		
 		this.isLoaded = true;
-		
+
 		for(i = 0; i < this.queues.length; i++) {
-			var queue = this.queues[i];
-			queue.callback(new google.maps.Map(queue.el, queue.options));
+			var fn = this.queues[i];
+			fn();
 		}
 	},
-	initial: function(el, options, callback) {
+	initial: function(fn) {
 		if(this.isLoaded) {
-			callback(new google.maps.Map(el, options));
+			fn();
 		} else {
-			var queue = {
-				el: el,
-				options: options,
-				callback: callback
-			};
-			this.queues.push(queue);
+			this.queues.push(fn);
 		}
 	},
 	customInfoWindow: function() {

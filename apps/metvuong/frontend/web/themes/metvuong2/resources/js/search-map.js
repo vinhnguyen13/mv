@@ -52,7 +52,7 @@ $(document).ready(function(){
 var listing = {
 	CITY_ZOOM_LEVEL: 12, DISTRICT_ZOOM_LEVEL: 13, WARD_ZOOM_LEVEL: 14,
 	status: 0, form: null, listEl: null, detailWrapEl: null, detailEl: null, tabContentEl: null, gmap: null, products: [],
-	markers: [], polygons: [], groupMarkers: [], infoWindow: null, InfoWindowMore: null, closeTimeout: null,
+	markers: [], polygons: [], groupMarkers: [], infoWindow: null, InfoWindowMore: null, closeTimeout: null, offsetCenterX: 0,
 	currentPage: 1, limit: 20,
 	state: {DRAW_DETAIL: 0, DRAW_WARD: 1, DRAW_DISTRICT: 2, DRAW_CITY: 3},
 	init: function() {
@@ -132,8 +132,11 @@ var listing = {
 	},
 	calDetailSize: function() {
 		var rItem = $('.result-items');
+		var rItemWidth = rItem.width();
 		
-		var width = $('#map').width() - rItem.width();
+		listing.offsetCenterX = - (rItemWidth / 2);
+		
+		var width = $('#map').width() - rItemWidth;
 
 		width = (width > 820) ? 820 : width;
 		var css = {width: width, height: rItem.height()};
@@ -153,6 +156,12 @@ var listing = {
 	},
 	waitInitFilter: function(gmap) {
 		listing.gmap = gmap;
+		
+		var boundsChanged = listing.gmap.addListener('bounds_changed', function(){
+			listing.setCenter(listing.gmap.getCenter(), listing.offsetCenterX, 0);
+			google.maps.event.removeListener(boundsChanged);
+		});
+		
 		listing.status++;
 		listing.start();
 	},
@@ -277,12 +286,11 @@ var listing = {
 		}
 	},
 	initMap: function(fn) {
-		var options = {
-			center: {lat: 10.803164, lng: 106.631439},
-			zoom: initialZoom
-		};
-		
-		m2Map.initial(document.getElementById('map'), options, function(gmap) {
+		m2Map.initial(function(gmap) {
+			var center = districtId ? listing.parseLatLng(districts[districtId].center) : listing.parseLatLng(city.center);
+			var options = {center: center, zoom: initialZoom};
+			var gmap = new google.maps.Map(document.getElementById('map'), options);
+			
 			listing.infoWindow = new m2Map.InfoWindow({offsetTop: 40});
 			listing.infoWindowMore = new google.maps.InfoWindow();
 			listing.infoWindowMore.addListener('domready', function() {
@@ -517,7 +525,7 @@ var listing = {
 	},
 	groupMakerClick: function() {
 		listing.gmap.setZoom(listing.WARD_ZOOM_LEVEL + 1);
-		listing.gmap.setCenter(this.getPosition());
+		listing.setCenter(this.getPosition(), listing.offsetCenterX, 0);
 	},
 	removePolygons: function() {
 		for(i = 0; i < listing.polygons.length; i++) {
@@ -664,6 +672,29 @@ var listing = {
 				fn();
 			}
 		});
+	},
+	setCenter: function(latLng, offsetx, offsety) {
+		var scale = Math.pow(2, listing.gmap.getZoom());
+		var bounds = listing.gmap.getBounds();
+		var projection = listing.gmap.getProjection();
+		
+		var nw = new google.maps.LatLng(bounds.getNorthEast().lat(), bounds.getSouthWest().lng());
+		
+		var worldCoordinateCenter = projection.fromLatLngToPoint(latLng);
+		var pixelOffset = new google.maps.Point((offsetx/scale) || 0, (offsety/scale) || 0);
+		
+		var worldCoordinateNewCenter = new google.maps.Point(
+			worldCoordinateCenter.x - pixelOffset.x,
+			worldCoordinateCenter.y + pixelOffset.y
+		);
+		
+		var center = projection.fromPointToLatLng(worldCoordinateNewCenter);
+		
+		listing.gmap.setCenter(center);
+	},
+	parseLatLng: function(latLngString) {
+		var latLng = latLngString.split(',');
+		return new google.maps.LatLng(Number(latLng[0]), Number(latLng[1]));
 	}
 };
 
