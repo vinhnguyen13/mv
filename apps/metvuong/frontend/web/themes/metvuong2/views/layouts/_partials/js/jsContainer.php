@@ -11,6 +11,7 @@ if(!empty($jsOption)){
 use yii\web\View;
 $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/bootstrap.min.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'bootstrap');
 $this->registerCssFile("https://fonts.googleapis.com/css?family=Roboto:400,300,700", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'font-roboto');
+$this->registerCssFile("https://fonts.googleapis.com/css?family=Open+Sans:400,600,300,700", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'font-OpenSans');
 $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/font-awesome.min.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'font-awesome');
 $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/simple-line-icons.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'simple-line-icons');
 $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/animations.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'animations');

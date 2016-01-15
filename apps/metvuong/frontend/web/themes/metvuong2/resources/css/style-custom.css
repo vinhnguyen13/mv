@@ -231,7 +231,7 @@ div.wrap-page-home .ani-search #search-kind button span,
     color: #294000;
     border: none;
     float: right;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 100%;
 }
 div.wrap-page-home .ani-search #search-kind .form-group input, 
@@ -243,6 +243,7 @@ div.wrap-page-home  #search-kind .form-group input {
     -webkit-transition-delay: .2s;
     -moz-transition-delay: .2s;
     -ms-transition-delay: .2s;
+    font-family: 'Open Sans';
 }
 .resize-width #search-kind .form-group input {
     border-radius: 3px;
@@ -6031,17 +6032,22 @@ header {
     background: #f9f9f9;
     color: #000;
     text-transform: uppercase;
-    font-size: 20px;
-    padding: 12px 20px;
+    font-size: 17px;
+    padding: 10px 20px;
     display: block;
     border-radius: 4px 4px 0 0;
     -webkit-border-radius: 4px 4px 0 0;
     -moz-border-radius: 4px 4px 0 0;
     -ms-border-radius: 4px 4px 0 0;
+    font-family: 'Open Sans';
 }
 .search-select.active a,
 .search-select a:hover {
     background: #B1B1B1;
+    text-shadow: 1px 1px 1px #D2D2D2;
+    -webkit-text-shadow: 1px 1px 1px #D2D2D2;
+    -moz-text-shadow: 1px 1px 1px #D2D2D2;
+    -ms-text-shadow: 1px 1px 1px #D2D2D2;
 }
 #scroll-rearch-reals {
     min-height: 768px;
@@ -6094,10 +6100,11 @@ header {
     border-bottom: 3px solid #dfdfdf;
 }
 .txt-top h3 {
-    font-weight: bold;
+    font-weight: 600;
     font-size: 20px;
     color: #585858;
     margin-bottom: 70px;
+    font-family: 'Open Sans';
 }
 .tools-mv .img-review {
     width: 60%;
@@ -6112,21 +6119,24 @@ header {
     -webkit-text-shadow: 1px 1px 1px #fff;
     -moz-text-shadow: 1px 1px 1px #fff;
     -ms-text-shadow: 1px 1px 1px #fff;
+    font-family: 'Open Sans';
 }
 .item-review.item-1 {
     width: 90%;
     margin: 0 auto 150px;
 }
 .item-review-txt strong {
-    font-size: 20px;
+    font-size: 18px;
     margin-bottom: 15px;
     display: block;
     line-height: 25px;
+    font-family: 'Open Sans';
+    font-weight: 600;
 }
 .item-review-txt p {
     line-height: 22px;
-    font-size: 16px;
-    /* text-align: center; */
+    font-size: 14px;
+    font-family: 'Open Sans';
 }
 .find-more-btn {
     float: right;
