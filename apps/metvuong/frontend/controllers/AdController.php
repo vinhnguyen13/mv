@@ -282,6 +282,7 @@ class AdController extends Controller
 
 	public function actionPostListing()
 	{
+		$this->layout = '@app/views/layouts/layoutFull';
 		return $this->render('post/index');
 	}
 
