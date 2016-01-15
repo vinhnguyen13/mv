@@ -51,7 +51,7 @@ $(document).ready(function(){
 
 var listing = {
 	CITY_ZOOM_LEVEL: 12, DISTRICT_ZOOM_LEVEL: 13, WARD_ZOOM_LEVEL: 14,
-	status: 0, form: null, listEl: null, detailWrapEl: null, detailEl: null, tabContentEl: null, gmap: null, products: [], mapWaitingEl: null,
+	status: 0, form: null, listEl: null, detailWrapEl: null, detailEl: null, tabContentEl: null, gmap: null, products: [], mapWaitingEl: null, resultItemEl: null,
 	markers: [], polygons: [], groupMarkers: [], infoWindow: null, InfoWindowMore: null, closeTimeout: null, offsetCenterX: 0,
 	currentPage: 1, limit: 20,
 	state: {DRAW_DETAIL: 0, DRAW_WARD: 1, DRAW_DISTRICT: 2, DRAW_CITY: 3},
@@ -62,6 +62,7 @@ var listing = {
 		listing.detailEl = $('#detail-listing');
 		listing.tabContentEl = $('.tab-content');
 		listing.mapWaitingEl = $('#map-waiting');
+		listing.resultItemEl = $('.result-items');
 		
 		listing.initMap(listing.waitInitFilter);
 		listing.initFilter(listing.waitInitMap);
@@ -120,6 +121,16 @@ var listing = {
 			}
 		});
 		
+		$('.full-map a').click(function(){
+			listing.resultItemEl.addClass('h');
+			listing.calOffsetX();
+		});
+		
+		$(document).on('click', '.show-listing', function(){
+			listing.resultItemEl.removeClass('h');
+			listing.calOffsetX();
+		});
+		
 		listing.detailWrapEl.on('click', '.btn-close-detail', function(){
 			listing.closeDetail(function(){
 				listing.detailEl.empty();
@@ -132,15 +143,12 @@ var listing = {
 		});
 	},
 	calDetailSize: function() {
-		var rItem = $('.result-items');
-		var rItemWidth = rItem.width();
+		listing.calOffsetX();
 		
-		listing.offsetCenterX = - (rItemWidth / 2);
-		
-		var width = $('#map').width() - rItemWidth;
+		var width = $('#map').width() - listing.resultItemEl.width();
 
 		width = (width > 820) ? 820 : width;
-		var css = {width: width, height: rItem.height()};
+		var css = {width: width, height: listing.resultItemEl.height()};
 		
 		if(listing.detailWrapEl.hasClass('show')) {
 			css.left = '-' + width + 'px';
@@ -149,6 +157,19 @@ var listing = {
 		}
 		
 		listing.detailWrapEl.css(css);
+	},
+	calOffsetX: function() {
+		var offsetWidth = 0;
+		
+		if(listing.detailWrapEl.hasClass('show')) {
+			offsetWidth += listing.detailWrapEl.width();
+		}
+		
+		if(!listing.resultItemEl.hasClass('h')) {
+			offsetWidth += listing.resultItemEl.width();
+		}
+		
+		listing.offsetCenterX = - (offsetWidth / 2);
 	},
 	waitInitMap: function(products) {
 		listing.products = products;
@@ -342,6 +363,7 @@ var listing = {
 	},
 	closeDetail: function(fn) {
 		listing.detailWrapEl.removeClass('show').css('left', '0px');
+		listing.calOffsetX();
 		listing.closeTimeout = setTimeout(fn, 300);
 	},
 	detail: function(id) {
@@ -352,6 +374,7 @@ var listing = {
 		mapLoading.show();
 		
 		listing.detailWrapEl.addClass('show').css('left', '-' + listing.detailWrapEl.width() + 'px');
+		listing.calOffsetX();
 		
 		$.get('/ad/detail', {id: id}, function(responseHtml){
 			listing.detailEl.html($(responseHtml).html());
