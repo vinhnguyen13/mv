@@ -495,7 +495,8 @@ var listing = {
 		    strokeOpacity: 0.5,
 		    strokeWeight: 2,
 		    fillColor: color,
-		    fillOpacity: 0.2
+		    fillOpacity: 0.2,
+		    clickable: false
 		});
 
 		return polygon;
