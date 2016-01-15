@@ -390,4 +390,39 @@ class AdController extends Controller
             }
 		}
 	}
+	
+	public function actionGeocode() {
+		$token = \Yii::$app->request->post('token') ? \Yii::$app->request->post('token') : \Yii::$app->request->get('token');
+		
+		if($token && $token == '2UWa0KRnCQAON9Js6kae') {
+			if(Yii::$app->request->isPost) {
+				Yii::$app->response->format = Response::FORMAT_JSON;
+				
+				$data = \Yii::$app->request->post('data');
+				
+				if(isset($data[0])) {
+					$city = $data[0][0];
+					\Yii::$app->db->createCommand()->update('ad_city', ['center' => $city['latLng']], 'id = :id', [':id' => $city['id']])->execute();
+				}
+				
+				if(isset($data[1])) {
+					$districts = $data[1];
+					foreach ($districts as $district) {
+						\Yii::$app->db->createCommand()->update('ad_district', ['center' => $district['latLng']], 'id = :id', [':id' => $district['id']])->execute();
+					}
+				}
+				
+				if(isset($data[1])) {
+					$wards = $data[2];
+					foreach ($wards as $ward) {
+						\Yii::$app->db->createCommand()->update('ad_ward', ['center' => $ward['latLng']], 'id = :id', [':id' => $ward['id']])->execute();
+					}
+				}
+				
+				return [];
+			}
+			
+			return $this->render('geocode');
+		}
+	}
 }
