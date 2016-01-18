@@ -85,6 +85,16 @@ var listing = {
 		    }, 250));
 		});
 		
+		listing.listEl.on('click', '.save-item', function(e){
+			e.stopPropagation();
+			listing.save($(this));
+		});
+		
+		listing.detailEl.on('click', '.save-item', function(e) {
+			e.preventDefault();
+			listing.save($(this));
+		});
+		
 		listing.listEl.on('click', '> li', function(){
 			listing.detail($(this).data('id'));
 		});
@@ -141,6 +151,29 @@ var listing = {
 			'resizeDuration': 300,
 			'fadeDuration': 400
 		});
+	},
+	save: function(el) {
+		if(isGuest) {
+			$('#frmLogin').modal('show');
+		} else {
+			if(!el.hasClass('saving')) {
+				el.addClass('saving');
+				
+				var id = el.data('id');
+				var url = el.data('url');
+				var stt = el.hasClass('active') ? 0 : 1;
+				
+				$.ajax({
+					type: 'post',
+					url: url,
+					data: {id: id, stt: stt},
+					success: function() {
+						el.removeClass('saving');
+						el.toggleClass('active');
+					}
+				});
+			}
+		}
 	},
 	calDetailSize: function() {
 		listing.calOffsetX();
@@ -446,7 +479,7 @@ var listing = {
 				                '<p class="rice-result">' + formatPrice(product.price) + '</p>' +
 				                '<p class="beds-baths-sqft">' + listing.getAdditionInfo(product) + '</p>' +
 				                '<p class="date-post-rent">' + product.previous_time + '</p>' +
-				                '<div class="icon-item-listing"><a title="Lưu" data-url="/ad/favorite"><em class="fa fa-heart-o"></em></a></div>' +
+				                '<div class="icon-item-listing"><a data-id="' + product.id + '" class="save-item" title="Lưu" data-url="/ad/favorite"><em class="fa fa-heart-o"></em></a></div>' +
 				            '</div>' +
 				       '</li>';
 		}
