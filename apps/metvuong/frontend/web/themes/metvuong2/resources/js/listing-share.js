@@ -31,10 +31,7 @@
                     url: $('#share_form_1').attr('action'),
                     data: $('#share_form_1').serializeArray(),
                     success: function (data) {
-                        if (data.status == 200) {
-
-                        }
-                        else {
+                        if (data.status != 200) {
                             var strMessage = '';
                             $.each(data.parameters, function (idx, val) {
                                 var element = 'share_form_1_' + idx;
@@ -93,9 +90,7 @@
                     url: _url,
                     data: {user_id: _user_id},
                     success: function (data) {
-                        if (data.statusCode == 200) {
-
-                        } else if (data.statusCode == 404) {
+                        if (data.statusCode == 404) {
                             alert(data.parameters.msg);
                         }
                     }
