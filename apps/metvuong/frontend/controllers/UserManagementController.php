@@ -183,7 +183,7 @@ class UserManagementController extends Controller
 
             $image->saveAs($orginalPath);
 
-            $options = ($resizeForAds) ? [] : ['thumbWidth' => 128, 'thumbHeight' => 128];
+            $options = ($resizeForAds) ? [] : ['thumbWidth' => 120, 'thumbHeight' => 120];
             $imageHelper = new ImageHelper($orginalPath, $options);
             $imageHelper->makeThumb(false, $thumbnailPath);
 

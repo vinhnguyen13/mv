@@ -18,10 +18,10 @@ class FileUploadAvatar extends FU {
 			'uploadTemplateId' => null,
 			'downloadTemplateId' => null,
 			'previewCrop' => true,
-			'previewMinWidth' => 128,
-			'previewMinHeight' => 128,
-			'previewMaxWidth' => 128,
-			'previewMaxHeight' => 128,
+			'previewMinWidth' => 120,
+			'previewMinHeight' => 120,
+			'previewMaxWidth' => 120,
+			'previewMaxHeight' => 120,
 			'disableExitThumbnail' => false,
 			'formData' => [],
 		];
@@ -88,31 +88,12 @@ class FileUploadAvatar extends FU {
 			}
 			
 			$files = json_encode($files);
-//			$deleteDefault = Url::to(['user-management/delete-image', 'orginal' => 'default-avatar.jpg', 'thumbnail' => 'default-avatar.thumb.jpg', 'folder' => 'avatar'], true);
 			$script = <<<EOD
 			var $fieldVar = $('#$id');
 			var files = $files;
 			$fieldVar.fileupload('option', 'done').call($fieldVar, $.Event('done'), {result: {files: files}});
 EOD;
 			$view->registerJs($script, View::POS_READY);
-//            $scriptDeleteDefaultAjax = <<<EOD2
-//            var timer = 0;
-//			$(document).on('click', '#profile-form-avatar', function () {
-//                clearTimeout(timer);
-//                timer = setTimeout(function () {
-//                    $.ajax({
-//                        type: "post",
-//                        dataType: 'json',
-//                        url: '$deleteDefault',
-//                        success: function (data) {
-//                            console.log(data);
-//                        }
-//                    });
-//                }, 500);
-//                return false;
-//            });
-//EOD2;
-//            $view->registerJs($scriptDeleteDefaultAjax, View::POS_READY);
 		}
     }
 }
