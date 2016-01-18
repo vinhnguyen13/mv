@@ -5500,6 +5500,9 @@ header.animate-children .wrap-search-home .search-select a {
 .icon-item-listing a:hover{
     color: #39793A;
 }
+.icon-item-listing a.active em:before {
+    content: "\f004";
+}
 .function-listing {
     margin-top: 20px;
     padding: 20px 10px 30px 10px;
@@ -5680,6 +5683,7 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
 .tabs-detail-item .save-item em {
     margin-right: 5px;
 }
+.tabs-detail-item .save-item em {width: 16px;text-align: center;}
 .tabs-detail-item .close-detail button {
     font-weight: normal;
     font-size: 14px;
@@ -5981,9 +5985,10 @@ header {
 .list-menu li a {
     color: #fff;
     text-transform: uppercase;
-    font-size: 17px;
+    font-size: 16px;
     display: block;
     font-weight: 300;
+    font-family: 'Open Sans';
 }
 .list-menu li a:hover {
     color: #ADADAD;
@@ -6028,10 +6033,10 @@ header {
     text-align: center;
     font-size: 40px;
     color: #fff;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 45px;
     letter-spacing: 2px;
-    font-family: "Time News Roman";
+    font-family: "Open Sans";
 }
 .wrap-search {
     height: 100%;
