@@ -6899,11 +6899,11 @@ li.search-filter .search-wrap {
     float: left;
 }
 .function-setting-user a {
-    padding: 20px 50px;
+    padding: 25px 45px 10px;
     display: block;
     color: #9296a2;
     text-transform: uppercase;
-    font-size: 17px;
+    font-size: 15px;
     transition: all .3s ease-out;
     -webkit-transition: all .3s ease-out;
     -moz-transition: all .3s ease-out;
@@ -6932,10 +6932,10 @@ li.search-filter .search-wrap {
     text-align: center;
 }
 .function-setting-user a span {
-    margin-top: 15px;
+    margin-top: 6px;
 }
 .function-setting-user a em {
-    font-size: 26px;
+    font-size: 23px;
     position: relative;
     width: auto;
     display: inline-block;
@@ -6971,7 +6971,7 @@ li.search-filter .search-wrap {
     z-index: 15;
     height: auto;
     bottom: 0;
-    top: 160px;
+    top: 142px;
 }
 .infor-user-profile .inner-infor {
     width: 17%;
