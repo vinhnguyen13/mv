@@ -52,7 +52,7 @@ $(document).ready(function(){
 var listing = {
 	CITY_ZOOM_LEVEL: 12, DISTRICT_ZOOM_LEVEL: 13, WARD_ZOOM_LEVEL: 14,
 	status: 0, form: null, listEl: null, detailWrapEl: null, detailEl: null, tabContentEl: null, gmap: null, products: [], resultItemEl: null,
-	markers: {}, polygons: [], groupMarkers: [], infoWindow: null, InfoWindowMore: null, closeTimeout: null, offsetCenterX: 0,
+	markers: {}, polygons: [], groupMarkers: [], infoWindow: null, InfoWindowMore: null, closeTimeout: null, offsetCenterX: 0, offsetCenterY: 0,
 	currentPage: 1, limit: 20,
 	state: {DRAW_DETAIL: 0, DRAW_WARD: 1, DRAW_DISTRICT: 2, DRAW_CITY: 3},
 	init: function() {
@@ -135,7 +135,7 @@ var listing = {
 					var ids = marker.get('ids');
 					marker.setIcon(listing.icon(ids.length, 1));
 					marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
-					listing.setCenter(marker.getPosition(), listing.offsetCenterX, 0);
+					listing.setCenter(marker.getPosition(), listing.offsetCenterX, listing.offsetCenterY);
 				}
 		    }, 300));
 		}).on('mouseleave', '> li', function(){
@@ -259,6 +259,7 @@ var listing = {
 		}
 		
 		listing.offsetCenterX = - (offsetWidth / 2);
+		listing.offsetCenterY = - ($('.list-filters-result').height() / 2);
 	},
 	waitInitMap: function(products) {
 		listing.products = products;
@@ -272,7 +273,7 @@ var listing = {
 		listing.gmap = gmap;
 		
 		var boundsChanged = listing.gmap.addListener('bounds_changed', function(){
-			listing.setCenter(listing.gmap.getCenter(), listing.offsetCenterX, 0);
+			listing.setCenter(listing.gmap.getCenter(), listing.offsetCenterX, listing.offsetCenterY);
 			google.maps.event.removeListener(boundsChanged);
 		});
 		
@@ -669,7 +670,7 @@ var listing = {
 	},
 	groupMakerClick: function() {
 		listing.gmap.setZoom(listing.WARD_ZOOM_LEVEL + 1);
-		listing.setCenter(this.getPosition(), listing.offsetCenterX, 0);
+		listing.setCenter(this.getPosition(), listing.offsetCenterX, listing.offsetCenterY);
 	},
 	removePolygons: function() {
 		for(i = 0; i < listing.polygons.length; i++) {
