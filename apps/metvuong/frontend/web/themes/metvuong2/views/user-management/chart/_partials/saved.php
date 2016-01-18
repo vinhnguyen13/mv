@@ -2,7 +2,7 @@
 use yii\helpers\Url;
 use frontend\models\Chart;
 
-$data = Chart::find()->getDataVisitor();
+$data = Chart::find()->getDataSaved();
 if(!empty($data)) {
     $dataChart = $data['dataChart'];
     $categories = $data['categories'];
@@ -119,7 +119,7 @@ if(!empty($data)) {
     <div class="row">
         <div class="col-xs-12">
             <div class="alert alert-warning">
-                <p class="text-center">Chưa có người nào xem tin của bạn, bạn hãy <a href="">làm mới</a> tin của mình</p>
+                <p class="text-center">Chưa có người nào lưu tin của bạn, bạn hãy <a href="">làm mới</a> tin của mình</p>
             </div>
         </div>
     </div>

@@ -55,6 +55,7 @@ class Tracking extends Component
     }
 
     public function productVisitor($uid, $pid, $time = null){
+        $this->checkAccess();
         $time = !empty($time) ? $time : time();
         $query = AdProductVisitor::find();
         $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:01", $time)), strtotime(date("d-m-Y 59:59:59", $time))]);
@@ -71,42 +72,6 @@ class Tracking extends Component
         $adProductVisitor->time = $time;
         $adProductVisitor->save();
         return $adProductVisitor;
-
-
-
-
-        $this->checkAccess();
-        $today = date(self::DATE_FORMAT, $time);
-        $time = !empty($time) ? $time : time();
-        $params = [
-            'index' => self::INDEX,
-            'type' => self::TYPE,
-            'id' => $uid.'_'.$pid.'_'.$today,
-        ];
-
-        try{
-            if(!empty($this->client) && $this->client->transport->getConnection()->ping()){
-                $user = User::findOne($uid);
-                $product = AdProduct::findOne($pid);
-                $exist = $this->elastic->findOne(self::INDEX, self::TYPE, $uid.'_'.$pid.'_'.$today);
-                if(!empty($exist)) {
-                    $body = [
-                        'doc' => ['count'=>$exist['count']++]
-                    ];
-                    $params = ArrayHelper::merge($params, [ 'body' => $body]);
-                    $response = $this->client->update($params);
-                }else{
-                    $body = ['uid'=> $uid, 'u_name'=>!empty($user->profile->name) ? $user->profile->name : $user->email, 'pid'=> $pid, 'p_name'=> $product->getAddress(), 'time'=>$time, 'day'=>$today, 'count'=>1];
-                    $params = ArrayHelper::merge($params, [ 'body' => $body]);
-                    $response = $this->client->index($params);
-                }
-                return $response;
-            }
-            return false;
-        }catch(Exception $ex){
-            throw new NotFoundHttpException('Service error.');
-        }
-
     }
 
 
@@ -152,37 +117,4 @@ class Tracking extends Component
         }
     }
 
-    public function parseTracking($from, $to, $pids = []){
-        $query = AdProductVisitor::find();
-        $query->andFilterWhere(['between', 'time', $from, $to]);
-//        $query->andWhere(['>', 'time', $from]);
-//        $query->andWhere(['<', 'time', $to]);
-        if(!empty($pids)){
-            $query->where(['user_id' => ['$in' => $pids],]);
-        }
-        $adProductVisitors = $query->all();
-        $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
-        $tmpDefaultData = array_map(function ($key, $date) {
-            return ['y' => 0,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact', 'date'=>$date])];
-        }, array_keys($dateRange), $dateRange);;
-
-        if(!empty($adProductVisitors)){
-            $tmpDataByPid = [];
-            foreach($adProductVisitors as $k => $item){
-                $day = date(self::DATE_FORMAT, $item->time);
-                $product = AdProduct::getDb()->cache(function ($db) use ($item) {
-                    return AdProduct::find()->where(['id' => $item->product_id])->one();
-                });
-                $key = $item->product_id;
-                if(empty($tmpDataByPid[$key]['data'])){
-                    $tmpDataByPid[$key]['data'] = $tmpDefaultData;
-                }
-                $kDate = array_search($day, $dateRange);
-                $tmpDataByPid[$key]['data'][$kDate]['y']++;
-                $tmpDataByPid[$key]['name'] = $product->getAddress();
-            }
-            return ['dataChart'=>$tmpDataByPid, 'categories'=>$dateRange];
-        }
-        return false;
-    }
 }

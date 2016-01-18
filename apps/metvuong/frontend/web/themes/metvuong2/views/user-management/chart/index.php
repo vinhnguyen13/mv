@@ -4,6 +4,7 @@
         <ul class="nav nav-tabs">
             <li class="active"><a class="tab" href="javascript:void(0);" data-url="<?=\yii\helpers\Url::to(['/user-management/chart', 'view'=>'_partials/visitor'])?>">Người theo dõi</a></li>
             <li><a class="tab" href="javascript:void(0);" data-url="<?=\yii\helpers\Url::to(['/user-management/chart', 'view'=>'_partials/finder'])?>">Người tìm kiếm</a></li>
+            <li><a class="tab" href="javascript:void(0);" data-url="<?=\yii\helpers\Url::to(['/user-management/chart', 'view'=>'_partials/saved'])?>">Người lưu</a></li>
         </ul>
         <div class="wrapChart">
             <?php if(Yii::$app->request->isAjax){?>

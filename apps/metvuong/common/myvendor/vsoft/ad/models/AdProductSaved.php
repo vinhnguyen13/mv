@@ -21,7 +21,7 @@ use yii\db\Expression;
  */
 class AdProductSaved extends AdProductSavedBase
 {
-
+    public $time;
     public function behaviors()
     {
         return [
