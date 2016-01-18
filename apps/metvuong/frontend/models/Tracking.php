@@ -9,6 +9,7 @@
 namespace frontend\models;
 use common\components\Util;
 use vsoft\ad\models\AdProduct;
+use vsoft\tracking\models\AdProductVisitor;
 use Yii;
 use yii\base\Component;
 use yii\base\Exception;
@@ -54,6 +55,26 @@ class Tracking extends Component
     }
 
     public function productVisitor($uid, $pid, $time = null){
+        $time = !empty($time) ? $time : time();
+        $query = AdProductVisitor::find();
+        $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:01", $time)), strtotime(date("d-m-Y 59:59:59", $time))]);
+        $query->andWhere(['user_id' => $uid]);
+        $query->andWhere(['product_id' => $pid]);
+        if(($adProductVisitor = $query->one())===null){
+            $adProductVisitor = new AdProductVisitor();
+            $adProductVisitor->user_id = $uid;
+            $adProductVisitor->product_id = $pid;
+            $adProductVisitor->count = 1;
+        }else{
+            $adProductVisitor->count++;
+        }
+        $adProductVisitor->time = $time;
+        $adProductVisitor->save();
+        return $adProductVisitor;
+
+
+
+
         $this->checkAccess();
         $today = date(self::DATE_FORMAT, $time);
         $time = !empty($time) ? $time : time();
@@ -132,25 +153,33 @@ class Tracking extends Component
     }
 
     public function parseTracking($from, $to, $pids = []){
-        $dataTracking = $this->getProductTracking($from, $to, $pids);
+        $query = AdProductVisitor::find();
+        $query->andFilterWhere(['between', 'time', $from, $to]);
+//        $query->andWhere(['>', 'time', $from]);
+//        $query->andWhere(['<', 'time', $to]);
+        if(!empty($pids)){
+            $query->where(['user_id' => ['$in' => $pids],]);
+        }
+        $adProductVisitors = $query->all();
         $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
-
         $tmpDefaultData = array_map(function ($key, $date) {
             return ['y' => 0,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact', 'date'=>$date])];
         }, array_keys($dateRange), $dateRange);;
 
-        if(!empty($dataTracking['hits']['hits'])){
+        if(!empty($adProductVisitors)){
             $tmpDataByPid = [];
-            foreach($dataTracking['hits']['hits'] as $key => $item){
-                $source = $item['_source'];
-                $day = date(self::DATE_FORMAT, $source['time']);
-                $key = $source['pid'];
+            foreach($adProductVisitors as $k => $item){
+                $day = date(self::DATE_FORMAT, $item->time);
+                $product = AdProduct::getDb()->cache(function ($db) use ($item) {
+                    return AdProduct::find()->where(['id' => $item->product_id])->one();
+                });
+                $key = $item->product_id;
                 if(empty($tmpDataByPid[$key]['data'])){
                     $tmpDataByPid[$key]['data'] = $tmpDefaultData;
                 }
                 $kDate = array_search($day, $dateRange);
                 $tmpDataByPid[$key]['data'][$kDate]['y']++;
-                $tmpDataByPid[$key]['name'] = $source['p_name'];
+                $tmpDataByPid[$key]['name'] = $product->getAddress();
             }
             return ['dataChart'=>$tmpDataByPid, 'categories'=>$dateRange];
         }
