@@ -51,8 +51,8 @@ $(document).ready(function(){
 
 var listing = {
 	CITY_ZOOM_LEVEL: 12, DISTRICT_ZOOM_LEVEL: 13, WARD_ZOOM_LEVEL: 14,
-	status: 0, form: null, listEl: null, detailWrapEl: null, detailEl: null, tabContentEl: null, gmap: null, products: [], mapWaitingEl: null, resultItemEl: null,
-	markers: [], polygons: [], groupMarkers: [], infoWindow: null, InfoWindowMore: null, closeTimeout: null, offsetCenterX: 0,
+	status: 0, form: null, listEl: null, detailWrapEl: null, detailEl: null, tabContentEl: null, gmap: null, products: [], resultItemEl: null,
+	markers: {}, polygons: [], groupMarkers: [], infoWindow: null, InfoWindowMore: null, closeTimeout: null, offsetCenterX: 0,
 	currentPage: 1, limit: 20,
 	state: {DRAW_DETAIL: 0, DRAW_WARD: 1, DRAW_DISTRICT: 2, DRAW_CITY: 3},
 	init: function() {
@@ -61,7 +61,6 @@ var listing = {
 		listing.detailWrapEl = $('#detail-wrap');
 		listing.detailEl = $('#detail-listing');
 		listing.tabContentEl = $('.tab-content');
-		listing.mapWaitingEl = $('#map-waiting');
 		listing.resultItemEl = $('.result-items');
 		
 		listing.initMap(listing.waitInitFilter);
@@ -151,6 +150,7 @@ var listing = {
 			var self = $(this);
 			
 			if(!self.parent().hasClass('active')) {
+				$('#order-by').val(self.data('order'));
 				if(self.data('order') == 'price') {
 					listing.sort(self.data('order'), true);
 				} else {
@@ -283,28 +283,20 @@ var listing = {
 		if(this.status == 2) {
 			listing.addMarkers();
 			listing.drawOnZoom();
-			listing.mapWaitingEl.hide();
 		}
 	},
 	addMarkers: function() {
-		for(var i = 0; i < listing.markers.length; i++) {
+		for(var i in listing.markers) {
 			var marker = listing.markers[i];
 			marker.setMap(null);
 		}
 		
-		listing.markers = [];
+		listing.markers = {};
 		
 		for(i = 0; i < listing.products.length; i++) {
 			var product = listing.products[i];
-			var latLng = new google.maps.LatLng(Number(product.lat), Number(product.lng));
-			var marker = null;
-			
-			for(j = 0; j < listing.markers.length; j++) {
-				if(listing.markers[j].getPosition().equals(latLng)) {
-					marker = listing.markers[j];
-					break;
-				}
-			}
+			var index = product.lat + '-' + product.lng;
+			var marker = listing.markers[index];
 			
 			if(marker) {
 				var ids = marker.get('ids');
@@ -313,7 +305,7 @@ var listing = {
 				marker.setIcon(listing.icon(ids.length, 0));
 			} else {
 				marker = new google.maps.Marker({
-					position: latLng,
+					position: {lat: Number(product.lat), lng: Number(product.lng)},
 					map: null,
 				    icon: listing.icon(1, 0)
 				});
@@ -323,7 +315,7 @@ var listing = {
 				marker.addListener('mouseout', listing.markerOut);
 				marker.addListener('click', listing.markerClick);
 				
-				listing.markers.push(marker);
+				listing.markers[index] = marker;
 			}
 		}
 	},
@@ -518,7 +510,6 @@ var listing = {
 	},
 	search: function() {
 		listing.listEl.empty();
-		listing.mapWaitingEl.show();
 		
 		listing.filter(function(products) {
 			listing.products = products;
@@ -527,7 +518,6 @@ var listing = {
 
 			listing.addMarkers();
 			listing.drawOnZoom();
-			listing.mapWaitingEl.hide();
 		});
 	},
 	sort: function(orderBy, asc) {
@@ -589,7 +579,7 @@ var listing = {
 		listing.removePolygons();
 		listing.removeGroupMarkers();
 		
-		for(i = 0; i < listing.markers.length; i++) {
+		for(var i in listing.markers) {
 			var marker = listing.markers[i];
 			marker.setMap(listing.gmap);
 		}
@@ -698,7 +688,7 @@ var listing = {
 		listing.groupMarker = [];
 	},
 	removeMarkerDetail: function() {
-		for(i = 0; i < listing.markers.length; i++) {
+		for(var i in listing.markers) {
 			var marker = listing.markers[i];
 			marker.setMap(null);
 		}
@@ -804,9 +794,7 @@ var listing = {
 		}
 	},
 	getMarker: function(id) {
-		var i;
-		
-		for(i = 0; i < listing.markers.length; i++) {
+		for(var i in listing.markers) {
 			var marker = listing.markers[i];
 			var ids = marker.get('ids');
 			
