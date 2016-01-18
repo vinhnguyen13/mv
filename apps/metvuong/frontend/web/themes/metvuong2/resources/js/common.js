@@ -347,7 +347,7 @@ $(document).ready(function() {
 
     $('.btn-out-more, .btn-scroll-down a').on('click', function () {
         $('body,html').stop().animate({
-            scrollTop: $(window).outerHeight() - 80
+            scrollTop: $(window).outerHeight() - 60
         }, 800);
         return false;
     });

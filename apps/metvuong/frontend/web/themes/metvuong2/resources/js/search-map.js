@@ -524,6 +524,12 @@ var listing = {
 			}
 			
 			var imgs = listing.detailEl.find('img');
+
+			if ( listing.detailEl.find('.wrap-img-detail ul li').length == 1 ) {
+				listing.detailEl.find('.wrap-img-detail ul li').css({
+					float: 'none'
+				});
+			}
 			
 			listing.imgLoaded(imgs, function(){
 				mapLoading.hide();
