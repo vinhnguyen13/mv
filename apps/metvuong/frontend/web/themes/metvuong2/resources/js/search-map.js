@@ -877,6 +877,23 @@ var listing = {
 		
 		listing.gmap.setCenter(center);
 	},
+	getBounds: function() {
+		var scale = Math.pow(2, listing.gmap.getZoom());
+		var bounds = listing.gmap.getBounds();
+		var projection = listing.gmap.getProjection();
+		var northEast = bounds.getNorthEast();
+		
+		var worldCoordinateNorthEast = projection.fromLatLngToPoint(northEast);
+		var pixelOffset = new google.maps.Point(((listing.offsetCenterX*2)/scale) || 0, ((listing.offsetCenterY*2)/scale) || 0);
+		var worldCoordinateNewNorthEast = new google.maps.Point(
+			worldCoordinateNorthEast.x + pixelOffset.x,
+			worldCoordinateNorthEast.y - pixelOffset.y
+		);
+		
+		var newNorthEast = projection.fromPointToLatLng(worldCoordinateNewNorthEast);
+
+		return new google.maps.LatLngBounds(bounds.getSouthWest(), newNorthEast);
+	},
 	parseLatLng: function(latLngString) {
 		var latLng = latLngString.split(',');
 		return new google.maps.LatLng(Number(latLng[0]), Number(latLng[1]));
