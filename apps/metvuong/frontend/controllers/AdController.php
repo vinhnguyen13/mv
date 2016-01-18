@@ -122,7 +122,7 @@ class AdController extends Controller
         	}
         	
         	$districts = AdDistrict::find()->select('id, name, pre, geometry, center, color')->asArray(true)->indexBy('id')->where(['city_id' => $cityId, 'status' => 1])->all();
-        	$productSaved = AdProductSaved::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['!=', 'saved_at', 0])->all();
+        	$productSaved = ArrayHelper::getColumn(AdProductSaved::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['!=', 'saved_at', 0])->all(), 'product_id');
         	$districtId = Yii::$app->request->get('district', 0);
         	
         	if($districtId) {
@@ -143,40 +143,77 @@ class AdController extends Controller
     public function actionSavedListing() {
     	if(!Yii::$app->user->isGuest) {
     		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    		 
-    		$query = (new \yii\db\Query())->from('ad_product_saved')->where('ad_product_saved.user_id = ' . Yii::$app->user->id)
-    					->andWhere('saved_at != 0')
-    					->groupBy('ad_product.id')
-    					->select('ad_product.*, ad_images.file_name, ad_product_addition_info.*')
-    					->leftJoin('ad_product', 'ad_product.id = ad_product_saved.product_id')
-    					->leftJoin('ad_product_addition_info', 'ad_product.id = ad_product_addition_info.product_id')
-        				->leftJoin('ad_images', 'ad_product.id = ad_images.product_id');
     		
-    		$pages = new Pagination(['totalCount' => $query->count()]);
-    		$pages->pageSize = isset(Yii::$app->params['listingLimit']) ? Yii::$app->params['listingLimit'] : 20;
-    		 
-    		$products = $query->limit($pages->limit)->offset($pages->offset)->all();
-    		 
-    		$productResponse = [];
-    		 
-    		foreach ($products as $k => $product) {
-    			$productResponse[$k] = $product;
-    			$productResponse[$k]['previous_time'] = StringHelper::previousTime($product['created_at']);
-    			$productResponse[$k]['price'] = StringHelper::formatCurrency($product['price']);
-    			$productResponse[$k]['area'] = StringHelper::formatCurrency($product['area']);
+    		$query = AdProductSaved::find();
+    		$query->select('ad_product.id, ad_product.city_id, ad_product.district_id, ad_product.ward_id, ad_product.street_id, ad_product.lat, ad_product.lng,
+        					ad_product.home_no, ad_product.category_id, ad_product.price, ad_product.area, ad_product.created_at, ad_product.type,
+        					ad_product_addition_info.floor_no, ad_product_addition_info.room_no, ad_product_addition_info.toilet_no, ad_images.file_name');
+    		$query->innerJoin('ad_product', 'ad_product.id = ad_product_saved.product_id');
+    		$query->innerJoin('ad_product_addition_info', 'ad_product_addition_info.product_id = ad_product.id');
+    		$query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
+    		$where = ['ad_product.status' => 1];
     		
-    			if($product['file_name']) {
-    				if(StringHelper::startsWith($product['file_name'], 'http')) {
-    					$productResponse[$k]['image_url'] = $product['file_name'];
-    				} else {
-    					$productResponse[$k]['image_url'] = AdImages::getImageUrl($product['file_name']);
-    				}
-    			} else {
-    				$productResponse[$k]['image_url'] = Yii::$app->view->theme->baseUrl . '/resources/images/default-ads.jpg';;
-    			}
+    		$rawProducts = $query->andWhere('saved_at != 0')->asArray(true)->groupBy('ad_product.id')->all();
+    		
+    		$products = [];
+    		
+    		foreach ($rawProducts as $k => $product) {
+    			$products[$k] = $product;
+    			$products[$k]['previous_time'] = StringHelper::previousTime($product['created_at']);
     		}
     		
-    		return ['productResponse' => $productResponse, 'pages' => LinkPager::widget(['pagination' => $pages,]), 'total' => $pages->totalCount];
+    		return $products;
+    		
+//     		$query = AdProduct::find();
+
+//     		$query->from('ad_product');
+//     		$query->innerJoin('ad_product_addition_info', 'ad_product_addition_info.product_id = ad_product.id');
+//     		$query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
+//     		$query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
+//     		$where = ['ad_product.status' => 1];
+    		
+//     		$rawProducts = $query->asArray(true)->groupBy('ad_product.id')->all();
+    		 
+//     		$products = [];
+    		 
+
+    		 
+//     		
+    		
+    		
+//     		$query = (new \yii\db\Query())->from('ad_product_saved')->where('ad_product_saved.user_id = ' . Yii::$app->user->id)
+//     					->andWhere('saved_at != 0')
+//     					->groupBy('ad_product.id')
+//     					->select('ad_product.*, ad_images.file_name, ad_product_addition_info.*')
+//     					->leftJoin('ad_product', 'ad_product.id = ad_product_saved.product_id')
+//     					->leftJoin('ad_product_addition_info', 'ad_product.id = ad_product_addition_info.product_id')
+//         				->leftJoin('ad_images', 'ad_product.id = ad_images.product_id');
+    		
+//     		$pages = new Pagination(['totalCount' => $query->count()]);
+//     		$pages->pageSize = isset(Yii::$app->params['listingLimit']) ? Yii::$app->params['listingLimit'] : 20;
+    		 
+//     		$products = $query->limit($pages->limit)->offset($pages->offset)->all();
+    		 
+//     		$productResponse = [];
+    		 
+//     		foreach ($products as $k => $product) {
+//     			$productResponse[$k] = $product;
+//     			$productResponse[$k]['previous_time'] = StringHelper::previousTime($product['created_at']);
+//     			$productResponse[$k]['price'] = StringHelper::formatCurrency($product['price']);
+//     			$productResponse[$k]['area'] = StringHelper::formatCurrency($product['area']);
+    		
+//     			if($product['file_name']) {
+//     				if(StringHelper::startsWith($product['file_name'], 'http')) {
+//     					$productResponse[$k]['image_url'] = $product['file_name'];
+//     				} else {
+//     					$productResponse[$k]['image_url'] = AdImages::getImageUrl($product['file_name']);
+//     				}
+//     			} else {
+//     				$productResponse[$k]['image_url'] = Yii::$app->view->theme->baseUrl . '/resources/images/default-ads.jpg';;
+//     			}
+//     		}
+    		
+//     		return ['productResponse' => $productResponse, 'pages' => LinkPager::widget(['pagination' => $pages,]), 'total' => $pages->totalCount];
     	}
     }
     
