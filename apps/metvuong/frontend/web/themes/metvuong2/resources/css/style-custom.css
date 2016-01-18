@@ -6540,7 +6540,7 @@ li.search-filter .search-wrap {
     background: none;
 }
 .o-wrapper {
-    padding-top: 80px;
+    padding-top: 60px;
 }
 .gallery-detail-duan .swiper-slide {
     width: 45%;
@@ -6971,7 +6971,7 @@ li.search-filter .search-wrap {
     z-index: 15;
     height: auto;
     bottom: 0;
-    top: 180px;
+    top: 160px;
 }
 .infor-user-profile .inner-infor {
     width: 17%;
