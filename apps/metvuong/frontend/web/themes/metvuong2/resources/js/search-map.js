@@ -468,6 +468,10 @@ var listing = {
 		$.get('/ad/detail', {id: id}, function(responseHtml){
 			listing.detailEl.html($(responseHtml).html());
 			
+			if(productSaved.indexOf(Number(id)) != -1) {
+				listing.detailEl.find('.save-item ').addClass('active');
+			}
+			
 			var imgs = listing.detailEl.find('img');
 			
 			listing.imgLoaded(imgs, function(){
