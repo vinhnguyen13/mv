@@ -179,13 +179,19 @@ var listing = {
 			if(!self.parent().hasClass('active')) {
 				listing.listEl.empty();
 				listing.listingLoading.show();
+				listing.noResultEl.hide();
 				
 				$.get(self.data('href'), {}, function(products) {
 					listing.filterFieldsEl.addClass('hide');
 					listing.listingLoading.hide();
 					listing.products = products;
 					
-					listing.list();
+					if(listing.products.length) {
+						listing._list();
+					} else {
+						listing.noResultEl.text('Chưa có tòa nhà nào được lưu.').show();
+					}
+					
 					listing.addMarkers();
 					listing.drawMarkerDetail();
 					
@@ -571,14 +577,17 @@ var listing = {
 	},
 	list: function() {
 		if(listing.products.length) {
-			listing.currentPage = 1;
-			listing.listEl.empty();
-			
-			var products = listing.products.slice(0, listing.limit);
-			listing.appendList(products);
+			listing._list();
 		} else {
 			listing.noResultEl.text('Chưa có tòa nhà nào được đăng như tìm kiếm của bạn.').show();
 		}
+	},
+	_list: function() {
+		listing.currentPage = 1;
+		listing.listEl.empty();
+		
+		var products = listing.products.slice(0, listing.limit);
+		listing.appendList(products);
 	},
 	next: function() {
 		var offset = (++listing.currentPage - 1) * listing.limit;
