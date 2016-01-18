@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Url;
 
-$startTime = strtotime('-15 days');
+$startTime = strtotime('-30 days');
 $endTime = strtotime('+1 days');
 $pids = [];
 
