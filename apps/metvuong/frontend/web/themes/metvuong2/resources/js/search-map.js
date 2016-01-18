@@ -401,7 +401,8 @@ var listing = {
 		} else if(zoom > listing.CITY_ZOOM_LEVEL) {
 			listing.drawMarkerDistrict();
 		} else {
-			listing.drawMarkerCity();
+			// listing.drawMarkerCity();
+			listing.drawMarkerDistrict();
 		}
 	},
 	initMap: function(fn) {
