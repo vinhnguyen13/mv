@@ -139,7 +139,14 @@ var listing = {
 					var ids = marker.get('ids');
 					marker.setIcon(listing.icon(ids.length, 1));
 					marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
-					listing.setCenter(marker.getPosition(), listing.offsetCenterX, listing.offsetCenterY);
+					
+					var bounds = listing.getBounds();
+					
+					var position = marker.getPosition();
+					
+					if(!bounds.contains(position)) {
+						listing.setCenter(position, listing.offsetCenterX, listing.offsetCenterY);
+					}
 				}
 		    }, 300));
 		}).on('mouseleave', '> li', function(){
