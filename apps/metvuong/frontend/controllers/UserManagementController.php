@@ -161,7 +161,7 @@ class UserManagementController extends Controller
     }
 
 
-    public function actionAvatar($folder = 'building-project-images', $resizeForAds = false) {
+    public function actionAvatar($folder = 'avatar', $resizeForAds = false) {
         $model = Yii::createObject([
             'class' => ProfileForm::className(),
             'scenario' => 'updateavatar',
@@ -183,32 +183,34 @@ class UserManagementController extends Controller
 
             $image->saveAs($orginalPath);
 
-            $options = ($resizeForAds) ? [] : ['thumbWidth' => 120, 'thumbHeight' => 120];
+            $options = ($resizeForAds) ? [] : ['thumbWidth' => 128, 'thumbHeight' => 128];
             $imageHelper = new ImageHelper($orginalPath, $options);
             $imageHelper->makeThumb(false, $thumbnailPath);
 
             $response['files'][] = [
-                'url'           => Url::to("/store/$folder/". $orginal),
-                'thumbnailUrl'  => Url::to("/store/$folder/" . $thumbnail),
+                'url'           => Url::to("/store/$folder/" .$orginal),
+                'thumbnailUrl'  => Url::to("/store/$folder/" .$thumbnail),
                 'name'          => $orginal,
                 'type'          => $image->type,
                 'size'          => $image->size,
                 'deleteUrl'     => Url::to(['user-management/delete-image', 'orginal' => $orginal, 'thumbnail' => $thumbnail, 'folder' => $folder]),
                 'deleteType'    => 'DELETE',
-                'deleteLater'	=> 1,
+                'deleteLater'	=> 0,
             ];
             $model->updateAvatar($orginal);
             return $response;
         }
+        return $response['files'] = array();
     }
 
-    public function actionDeleteImage($orginal, $thumbnail, $deleteLater = false, $folder = 'building-project-images', $resizeForAds = false) {
+    public function actionDeleteImage($orginal, $thumbnail, $deleteLater = false, $folder = 'avatar') {
         Yii::$app->response->format = Response::FORMAT_JSON;
         if(!$deleteLater) {
             $dir = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $folder;
-            unlink($dir . DIRECTORY_SEPARATOR . $orginal);
-            if(unlink($dir . DIRECTORY_SEPARATOR . $thumbnail) && $thumbnail != "default-avatar.thumb.jpg")
+            if($orginal != "default-avatar.jpg" && $thumbnail != "default-avatar.thumb.jpg")
             {
+                unlink($dir . DIRECTORY_SEPARATOR . $orginal);
+                unlink($dir . DIRECTORY_SEPARATOR . $thumbnail);
                 $model = Yii::createObject([
                     'class' => ProfileForm::className(),
                     'scenario' => 'updateavatar',
@@ -216,10 +218,8 @@ class UserManagementController extends Controller
 
                 return $model->updateAvatar(null);
             }
-
         }
-
-        return ['files' => []];
+        return false;
     }
 
 }
