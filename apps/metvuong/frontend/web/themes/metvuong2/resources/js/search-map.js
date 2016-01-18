@@ -509,6 +509,10 @@ var listing = {
 				
 				listing.detailEl.find('.gallery-detail').css('visibility', 'visible');
 			});
+
+			$('.tabs-detail-item li .sub-more').dropdown({
+				linkShow: $('.tabs-detail-item a.more-item')
+			});
 		});
 	},
 	search: function() {
@@ -1312,7 +1316,9 @@ function start() {
 						}
 				 	});
 					
-					$('.tabs-detail-item li .sub-more').dropdown();
+					/*$('.tabs-detail-item li .sub-more').dropdown({
+						linkShow: $('.tabs-detail-item a.more-item')
+					});*/
 					
 				});
 			}

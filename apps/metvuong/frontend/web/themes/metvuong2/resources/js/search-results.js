@@ -349,8 +349,8 @@
 			listing.search();
 		},
 		print: function(){
-			var bgLogo = $('.logo-home').css('background-image');
-		    bgLogo = bgLogo.replace('url(','').replace(')','');
+			var bgLogo = $('.logo-header img').attr('src');
+		    //bgLogo = bgLogo.replace('url(','').replace(')','');
 		        
 			var strArticle = '<div class="logo_print"><img src='+bgLogo+' /></div>';
 
