@@ -287,6 +287,11 @@ var listing = {
 		}
 	},
 	addMarkers: function() {
+		for(var i = 0; i < listing.markers.length; i++) {
+			var marker = listing.markers[i];
+			marker.setMap(null);
+		}
+		
 		listing.markers = [];
 		
 		for(i = 0; i < listing.products.length; i++) {
@@ -429,7 +434,21 @@ var listing = {
 			});
 			
 			gmap.addListener('zoom_changed', function(){
-				listing.drawOnZoom();
+				var zoom = listing.gmap.getZoom();
+
+				if(zoom > listing.WARD_ZOOM_LEVEL) {
+					var zoomState = listing.state.DRAW_DETAIL;
+				} else if(zoom > listing.DISTRICT_ZOOM_LEVEL) {
+					var zoomState = listing.state.DRAW_DISTRICT;
+				} else if(zoom > listing.CITY_ZOOM_LEVEL) {
+					var zoomState = listing.state.DRAW_DISTRICT;
+				} else {
+					var zoomState = listing.state.DRAW_CITY;
+				}
+				
+				if(zoomState != listing.currentState) {
+					listing.drawOnZoom();
+				}
 			});
 			
 			gmap.addListener('mousedown', function(){
@@ -493,7 +512,18 @@ var listing = {
 		});
 	},
 	search: function() {
-		// filter va ve lai marker
+		listing.listEl.empty();
+		listing.mapWaitingEl.show();
+		
+		listing.filter(function(products) {
+			listing.products = products;
+			
+			listing.list();
+
+			listing.addMarkers();
+			listing.drawOnZoom();
+			listing.mapWaitingEl.hide();
+		});
 	},
 	sort: function(orderBy, asc) {
 		var n = asc ? -1 : 1;
@@ -551,46 +581,40 @@ var listing = {
 		listing.listEl.append(els);
 	},
 	drawMarkerDetail: function() {
-		if(listing.currentState != listing.state.DRAW_DETAIL) {
-			listing.removePolygons();
-			listing.removeGroupMarkers();
-			
-			for(i = 0; i < listing.markers.length; i++) {
-				var marker = listing.markers[i];
-				marker.setMap(listing.gmap);
-			}
-			
-			listing.currentState = listing.state.DRAW_DETAIL;
+		listing.removePolygons();
+		listing.removeGroupMarkers();
+		
+		for(i = 0; i < listing.markers.length; i++) {
+			var marker = listing.markers[i];
+			marker.setMap(listing.gmap);
 		}
+		
+		listing.currentState = listing.state.DRAW_DETAIL;
 	},
 	drawMarkerWard: function() {
-		if(listing.currentState != listing.state.DRAW_WARD) {
-			var area = {};
-			
-			area = wards;
-			
-			listing.drawGroupMarker(area, 'ward_id');
-			
-			listing.currentState = listing.state.DRAW_WARD;
-		}
+		var area = {};
+		
+		area = wards;
+		
+		listing.drawGroupMarker(area, 'ward_id');
+		
+		listing.currentState = listing.state.DRAW_WARD;
 	},
 	drawMarkerDistrict: function() {
-		if(listing.currentState != listing.state.DRAW_DISTRICT) {
-			var area = {};
-			
-			if(districtId) {
-				area[districtId] = districts[districtId];
-			} else {
-				area = districts;
-			}
-			
-			listing.drawGroupMarker(area, 'district_id');
-			
-			listing.currentState = listing.state.DRAW_DISTRICT;
+		var area = {};
+		
+		if(districtId) {
+			area[districtId] = districts[districtId];
+		} else {
+			area = districts;
 		}
+		
+		listing.drawGroupMarker(area, 'district_id');
+		
+		listing.currentState = listing.state.DRAW_DISTRICT;
 	},
 	drawMarkerCity: function() {
-
+		listing.currentState = listing.state.DRAW_CITY;
 	},
 	drawGroupMarker: function(area, countBy) {
 		listing.removeMarkerDetail();

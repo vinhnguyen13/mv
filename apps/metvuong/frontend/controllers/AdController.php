@@ -69,27 +69,27 @@ class AdController extends Controller
         	$query->where($where);
         	
         	if($costMin = Yii::$app->request->post('costMin')) {
-        		$query->andWhere(['>=', 'ad_product.price', intval($costMin)]);
+        		$query->andWhere(['>=', 'ad_product.price', $costMin]);
         	}
         	
         	if($costMax = Yii::$app->request->post('costMax')) {
-        		$query->andWhere(['<=', 'ad_product.price', intval($costMax)]);
+        		$query->andWhere(['<=', 'ad_product.price', $costMax]);
         	}
         	
         	if($areaMin = Yii::$app->request->post('areaMin')) {
-        		$query->andWhere(['>=', 'ad_product.area', intval($areaMin)]);
+        		$query->andWhere(['>=', 'ad_product.area', $areaMin]);
         	}
         	
         	if($areaMax = Yii::$app->request->post('areaMax')) {
-        		$query->andWhere(['<=', 'ad_product.area', intval($areaMax)]);
+        		$query->andWhere(['<=', 'ad_product.area', $areaMax]);
         	}
         	
         	if($roomNo = Yii::$app->request->post('roomNo')) {
-        		$query->andWhere(['>=', 'ad_product_addition_info.room_no', intval($roomNo)]);
+        		$query->andWhere(['>=', 'ad_product_addition_info.room_no', $roomNo]);
         	}
         	
 			if($toiletNo = Yii::$app->request->post('toiletNo')) {
-        		$query->andWhere(['>=', 'ad_product_addition_info.toilet_no', intval($toiletNo)]);
+        		$query->andWhere(['>=', 'ad_product_addition_info.toilet_no', $toiletNo]);
         	}
         	
         	if($time = Yii::$app->request->post('time')) {
