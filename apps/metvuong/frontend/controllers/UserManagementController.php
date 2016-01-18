@@ -195,7 +195,7 @@ class UserManagementController extends Controller
                 'size'          => $image->size,
                 'deleteUrl'     => Url::to(['user-management/delete-image', 'orginal' => $orginal, 'thumbnail' => $thumbnail, 'folder' => $folder]),
                 'deleteType'    => 'DELETE',
-                'deleteLater'	=> 0,
+                'deleteLater'	=> 1,
             ];
             $model->updateAvatar($orginal);
             return $response;
@@ -204,7 +204,7 @@ class UserManagementController extends Controller
 
     public function actionDeleteImage($orginal, $thumbnail, $deleteLater = false, $folder = 'building-project-images', $resizeForAds = false) {
         Yii::$app->response->format = Response::FORMAT_JSON;
-        if(! $deleteLater) {
+        if(!$deleteLater) {
             $dir = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $folder;
             unlink($dir . DIRECTORY_SEPARATOR . $orginal);
             if(unlink($dir . DIRECTORY_SEPARATOR . $thumbnail) && $thumbnail != "default-avatar.thumb.jpg")
@@ -214,7 +214,7 @@ class UserManagementController extends Controller
                     'scenario' => 'updateavatar',
                 ]);
 
-                $model->updateAvatar(null);
+                return $model->updateAvatar(null);
             }
 
         }

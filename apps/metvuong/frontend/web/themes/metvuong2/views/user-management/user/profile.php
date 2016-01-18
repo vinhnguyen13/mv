@@ -68,7 +68,7 @@ use yii\bootstrap\ActiveForm;
                         ],
                     ],
                 ]); ?>
-                <?=Html::hiddenInput('deleteLater', '', ['id' => 'delete-later']);?>
+                <?=Html::hiddenInput('deleteLater', '', ['id' => 'delete-later', 'value' => "/store/avatar/{$model->avatar}"]);?>
                 <?= $form->field($model, 'avatar')->widget(FileUploadUI::className(), [
                         'url' => Url::to(['/user-management/avatar', 'folder' => 'avatar']),
                         'clientOptions' => ['maxNumberOfFiles' => 1],
