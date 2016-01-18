@@ -151,9 +151,8 @@ class AdController extends Controller
     		$query->innerJoin('ad_product', 'ad_product.id = ad_product_saved.product_id');
     		$query->innerJoin('ad_product_addition_info', 'ad_product_addition_info.product_id = ad_product.id');
     		$query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
-    		$where = ['ad_product.status' => 1];
     		
-    		$rawProducts = $query->andWhere('saved_at != 0')->asArray(true)->groupBy('ad_product.id')->all();
+    		$rawProducts = $query->andWhere(['!=', 'saved_at', 0])->asArray(true)->groupBy('ad_product.id')->all();
     		
     		$products = [];
     		
