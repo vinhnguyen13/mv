@@ -2,6 +2,7 @@
  * Created by Nhut Tran on 1/14/2016.
  */
 (function($) {
+    var timer = 0;
 // share-item click event
     $(document).on('click', '.share-item-1', function () {
         var _this = $(this);
