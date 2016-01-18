@@ -51,10 +51,11 @@ $(document).ready(function(){
 
 var listing = {
 	CITY_ZOOM_LEVEL: 12, DISTRICT_ZOOM_LEVEL: 13, WARD_ZOOM_LEVEL: 14,
-	status: 0, form: null, listEl: null, detailWrapEl: null, detailEl: null, tabContentEl: null, gmap: null, products: [], resultItemEl: null,
+	status: 0, form: null, listEl: null, detailWrapEl: null, detailEl: null, tabContentEl: null, gmap: null, products: [],
+	resultItemEl: null, noResultEl: null, listingLoading: null, filterFieldsEl: null,
 	markers: {}, polygons: [], groupMarkers: [], infoWindow: null, InfoWindowMore: null, closeTimeout: null, offsetCenterX: 0, offsetCenterY: 0,
 	currentPage: 1, limit: 20,
-	state: {DRAW_DETAIL: 0, DRAW_WARD: 1, DRAW_DISTRICT: 2, DRAW_CITY: 3},
+	state: {DRAW_DETAIL: 0, DRAW_WARD: 1, DRAW_DISTRICT: 2, DRAW_CITY: 3, DRAW_SAVED: 4},
 	init: function() {
 		listing.form = $('#map-search-form');
 		listing.listEl = $('.list-results');
@@ -62,6 +63,9 @@ var listing = {
 		listing.detailEl = $('#detail-listing');
 		listing.tabContentEl = $('.tab-content');
 		listing.resultItemEl = $('.result-items');
+		listing.noResultEl = $('#no-result');
+		listing.listingLoading = $('#listing-loading');
+		listing.filterFieldsEl = $('.list-filters-result');
 		
 		listing.initMap(listing.waitInitFilter);
 		listing.initFilter(listing.waitInitMap);
@@ -130,7 +134,7 @@ var listing = {
 			var id = $(this).data('id') + '';
 			
 			$.data(this, 'mouseenterTimer', setTimeout(function() {
-				if(listing.gmap.getZoom() > listing.WARD_ZOOM_LEVEL) {
+				if(listing.gmap.getZoom() > listing.WARD_ZOOM_LEVEL || listing.currentState == listing.state.DRAW_SAVED) {
 					var marker = listing.getMarker(id);
 					var ids = marker.get('ids');
 					marker.setIcon(listing.icon(ids.length, 1));
@@ -147,30 +151,47 @@ var listing = {
 		});
 		
 		$('#order-by-tab').find('.order-button').click(function(){
+			
 			var self = $(this);
 			
 			if(!self.parent().hasClass('active')) {
 				$('#order-by').val(self.data('order'));
-				if(self.data('order') == 'price') {
-					listing.sort(self.data('order'), true);
+				
+				if(listing.currentState == listing.state.DRAW_SAVED) {
+					listing.search(function(){
+						listing.filterFieldsEl.removeClass('hide');
+					});
 				} else {
-					listing.sort(self.data('order'));
+					if(self.data('order') == 'price') {
+						listing.sort(self.data('order'), true);
+					} else {
+						listing.sort(self.data('order'));
+					}
 				}
 			}
 		});
 		
 		$('.saved-listing').click(function(e){
-//			e.preventDefault();
-//			
-//			var self = $(this);
-//			
-//			if(!self.parent().hasClass('active')) {
-//				$('#listing-loading').show();
-//				$.get(self.data('href'), {}, function(r) {
-//					$('#listing-loading').hide();
-//					
-//				});
-//			}
+			e.preventDefault();
+			
+			var self = $(this);
+			
+			if(!self.parent().hasClass('active')) {
+				listing.listEl.empty();
+				listing.listingLoading.show();
+				
+				$.get(self.data('href'), {}, function(products) {
+					listing.filterFieldsEl.addClass('hide');
+					listing.listingLoading.hide();
+					listing.products = products;
+					
+					listing.list();
+					listing.addMarkers();
+					listing.drawMarkerDetail();
+					
+					listing.currentState = listing.state.DRAW_SAVED;
+				});
+			}
 		});
 		
 		$('.full-map a').click(function(){
@@ -259,7 +280,7 @@ var listing = {
 		}
 		
 		listing.offsetCenterX = - (offsetWidth / 2);
-		listing.offsetCenterY = - ($('.list-filters-result').height() / 2);
+		listing.offsetCenterY = - (listing.filterFieldsEl.height() / 2);
 	},
 	waitInitMap: function(products) {
 		listing.products = products;
@@ -428,20 +449,22 @@ var listing = {
 			});
 			
 			gmap.addListener('zoom_changed', function(){
-				var zoom = listing.gmap.getZoom();
+				if(listing.currentState != listing.state.DRAW_SAVED) {
+					var zoom = listing.gmap.getZoom();
 
-				if(zoom > listing.WARD_ZOOM_LEVEL) {
-					var zoomState = listing.state.DRAW_DETAIL;
-				} else if(zoom > listing.DISTRICT_ZOOM_LEVEL) {
-					var zoomState = listing.state.DRAW_DISTRICT;
-				} else if(zoom > listing.CITY_ZOOM_LEVEL) {
-					var zoomState = listing.state.DRAW_DISTRICT;
-				} else {
-					var zoomState = listing.state.DRAW_CITY;
-				}
-				
-				if(zoomState != listing.currentState) {
-					listing.drawOnZoom();
+					if(zoom > listing.WARD_ZOOM_LEVEL) {
+						var zoomState = listing.state.DRAW_DETAIL;
+					} else if(zoom > listing.DISTRICT_ZOOM_LEVEL) {
+						var zoomState = listing.state.DRAW_DISTRICT;
+					} else if(zoom > listing.CITY_ZOOM_LEVEL) {
+						var zoomState = listing.state.DRAW_DISTRICT;
+					} else {
+						var zoomState = listing.state.DRAW_CITY;
+					}
+					
+					if(zoomState != listing.currentState) {
+						listing.drawOnZoom();
+					}
 				}
 			});
 			
@@ -456,10 +479,12 @@ var listing = {
 		listing.filter(fn);
 	},
 	filter: function(fn) {
-		var listingLoading = $('#listing-loading').show();
+		listing.listingLoading.show();
+		
+		listing.noResultEl.hide();
 		
 		$.post(listing.form.attr('action'), listing.form.serialize(), function(products){
-			listingLoading.hide();
+			listing.listingLoading.hide();
 			fn(products);
 		});
 	},
@@ -509,7 +534,7 @@ var listing = {
 			});
 		});
 	},
-	search: function() {
+	search: function(fn) {
 		listing.listEl.empty();
 		
 		listing.filter(function(products) {
@@ -519,6 +544,10 @@ var listing = {
 
 			listing.addMarkers();
 			listing.drawOnZoom();
+			
+			if(fn) {
+				fn();
+			}
 		});
 	},
 	sort: function(orderBy, asc) {
@@ -541,11 +570,15 @@ var listing = {
 		listing.list();
 	},
 	list: function() {
-		listing.currentPage = 1;
-		listing.listEl.empty();
-		
-		var products = listing.products.slice(0, listing.limit);
-		listing.appendList(products);
+		if(listing.products.length) {
+			listing.currentPage = 1;
+			listing.listEl.empty();
+			
+			var products = listing.products.slice(0, listing.limit);
+			listing.appendList(products);
+		} else {
+			listing.noResultEl.text('Chưa có tòa nhà nào được đăng như tìm kiếm của bạn.').show();
+		}
 	},
 	next: function() {
 		var offset = (++listing.currentPage - 1) * listing.limit;
