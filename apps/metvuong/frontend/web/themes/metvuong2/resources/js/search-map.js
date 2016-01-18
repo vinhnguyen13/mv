@@ -340,9 +340,9 @@ var listing = {
 		var product = listing.getProduct(id);
 		var infoContent = $('<div class="info-wrap-single">' + listing.buildInfoContent(product) + '</div>');
 		
-		if(ids.length > 1) {
-			infoContent.append('<div class="more">...</div>');
-		}
+//		if(ids.length > 1) {
+//			infoContent.append('<div class="more">...</div>');
+//		}
 		
 		infoContent.append('<div class="arrow"></div>');
 		
