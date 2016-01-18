@@ -6910,9 +6910,10 @@ li.search-filter .search-wrap {
     font-size: 12px;
     border-radius: 50%;
     text-align: center;
-    min-width: 20px;
-    min-height: 20px;
+    min-width: 25px;
+    min-height: 25px;
     font-style: normal;
+    line-height: 15px;
 }
 .function-setting-user a span,
 .function-setting-user a em {

@@ -81,7 +81,7 @@
 
 				minmax.open(_this);
 
-				dropdownSelect.init(_this);
+				minmax.dropdownSelect(_this);
 
 				return;
 			});
@@ -346,6 +346,7 @@
 				$('#dt-min-filter').val(valNumMin);
 				$('#dt-max-filter').val(valNumMax);
 			}
+			listing.search();
 		},
 		print: function(){
 			var bgLogo = $('.logo-home').css('background-image');
@@ -411,15 +412,13 @@
 	        objDoc.write("</html>");
 	        objDoc.close();
 	        setTimeout(function(){objFrame.focus();objFrame.print();}, 200);
-	    }
-	};
+	    },
+	    dropdownSelect: function (item) {
+	    	var itemVal = $('.filter-dropdown li a'),
+	    		tabs = $('.list-filter > li > a');
 
-	var dropdownSelect = {
-		itemVal: $('.filter-dropdown li a'),
-		tabs: $('.list-filter > li > a'),
-		init: function (item) {
-			dropdownSelect.itemVal.unbind('click');
-			dropdownSelect.itemVal.on('click', function (e) {
+	    	itemVal.unbind('click');
+			itemVal.on('click', function (e) {
 				e.preventDefault();
 				var _this = $(this),
 					txt = _this.parent().data('value'),
@@ -435,10 +434,12 @@
 				}else if ( minmax.tabsClick.parent().find('.filter-common').data('filter') == 'phong-tam' ) {
 					$('#bath-filter').val(txt);
 				}
+
+				listing.search();
 				
 				$(document).trigger('click');
 			});
-		}
+	    }
 	};
 
 	minmax.init();
