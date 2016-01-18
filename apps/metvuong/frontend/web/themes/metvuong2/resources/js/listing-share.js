@@ -46,7 +46,7 @@
                     error: function () {
                         var strMessage = '';
                         $.each(data.parameters, function (idx, val) {
-                            var element = 'change-pass-form-' + idx;
+                            var element = 'share_form_1_' + idx;
                             strMessage += "\n" + val;
                         });
                         alert(strMessage);
