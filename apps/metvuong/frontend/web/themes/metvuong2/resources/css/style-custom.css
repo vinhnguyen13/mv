@@ -2416,7 +2416,7 @@ footer {
     cursor: pointer;
     font-style: normal;
     position: absolute;
-    top: 9px;
+    top: 4px;
     left: 6px;
     font-size: 17px;
     color: #B3B3B3;
@@ -2433,7 +2433,7 @@ footer {
     white-space: nowrap;
     cursor: pointer;
     position: relative;
-    padding: 11px 0 9px 0;
+    padding: 7px 0 5px 0;
     height: 100%;
 }
 .type-search li span:hover {
@@ -3246,7 +3246,7 @@ padding-bottom: 5px;
 }
 li.search-filter .type-search,
 .list-filters-result li a {
-    font-size: 14px;
+    font-size: 12px;
     color: #585858;
     text-shadow: 1px 1px 1px #fff;
     -webkit-text-shadow: 1px 1px 1px #fff;
@@ -3257,7 +3257,7 @@ li.search-filter .type-search,
     display: block;
     border: 1px solid #999896;
     border-top: none;
-    padding: 17px 8px 17px 20px;
+    padding: 10px 2px 10px 12px;
     background: #f9f9f9;
     border-radius: 0 0 4px 4px;
     -webkit-border-radius: 0 0 4px 4px;
@@ -3268,7 +3268,7 @@ li.search-filter .type-search,
     width: 13px;
     height: 6px;
     background: url(../images/arrow-search.png) no-repeat center;
-    margin: 3px 5px 0 15px;
+    margin: 3px 5px 0 8px;
 }
 .list-filters-result li a em {
     margin: 0 5px;
@@ -3304,7 +3304,7 @@ li.search-filter .type-search,
     position: absolute;
     right: 0;
     bottom: 0;
-    height: 81%;
+    height: 90%;
     transition: right .3s ease-out;
 }
 @media (min-width: 1680px) {
@@ -3349,7 +3349,7 @@ li.search-filter .type-search,
     float: left;
     width: 100%;
     padding: 10px 0 10px 10px;
-    border-bottom: 1px solid #4a933a;
+    border-bottom: 1px solid #D6D6D6;
     cursor: pointer;
     transition: all .3s ease-out;
     -webkit-transition: all .3s ease-out;
@@ -3370,16 +3370,18 @@ li.search-filter .type-search,
 }
 .list-results .infor-result p {
     margin-bottom: 5px;
+    font-family: 'Open Sans';
 }
 .infor-result .item-title {
     font-weight: 400;
     color: #000000;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 25px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    text-decoration: underline;
+    /* text-decoration: underline; */
+    font-weight: 400;
 }
 .infor-result .type-result {
     font-weight: bold;
@@ -3398,6 +3400,7 @@ li.search-filter .type-search,
 }
 .infor-result .rice-result {
     font-size: 1.5em;
+    color: #463F3F;
 }
 .infor-result .beds-baths-sqft {
     font-size: 14px;
@@ -5492,13 +5495,15 @@ header.animate-children .wrap-search-home .search-select a {
 .icon-item-listing a {
     display: block;
     line-height: 35px;
+    color: #333;
+    font-size: 20px;
 }
 .icon-item-listing a:hover {
     text-decoration: none;
 }
 .icon-item-listing a.active,
 .icon-item-listing a:hover{
-    color: #39793A;
+    color: #252525;
 }
 .icon-item-listing a.active em:before {
     content: "\f004";
@@ -5562,7 +5567,7 @@ button.btn.btn-default.dropdown-toggle {
     -o-transition: all .2s;
     transition: all .2s;
     line-height: 30px;
-    color: #39793A;
+    color: #252525;
 }
 .icon-hear.active em:before {
     content: "\f004";
@@ -5644,33 +5649,33 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
     font-size: 14px;
 }
 .tabs-detail-item {
-    background: #E2E2E2;
+    background: #848484;
 }
 .tabs-detail-item li {
     float: left;
-    border-right: 1px solid #F3F3F3;
+    border-right: 1px solid #757575;
     position: relative;
 }
 .tabs-detail-item .expand-win {
-    border-left: 1px solid #F3F3F3;
+    border-left: 1px solid #757575;
 }
 .tabs-detail-item .expand-win em {
     margin-right: 5px;
 }
 .tabs-detail-item > ul li a {
     padding: 16px 20px;
-    border-right: 1px solid #A9C3A4;
+    border-right: 1px solid #FFFFFF;
     display: block;
-    color: #383838;
+    color: #FFFFFF;
     font-size: 14px;
     line-height: 100%;
 }
 .tabs-detail-item .expand-win a {
-    border-left: 1px solid #A9C3A4;
+    border-left: 1px solid #FFFFFF;
 }
 .tabs-detail-item > ul li a:hover {
     text-decoration: none;
-    background: #E0E0E0;
+    background: #545454;
 }
 .tabs-detail-item a em {
     margin-left: 5px;
@@ -5691,7 +5696,7 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
     text-transform: capitalize;
 }
 .tabs-detail-item .close-detail button:hover {
-    background: #EFEFEF;
+    background: #333333;
 }
 .tabs-detail-item .close-detail em {
     margin-right: 5px;
@@ -5745,6 +5750,10 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
     border: none;
     padding: 10px 8px;
     font-size: 14px;
+    color: #333;
+}
+.tabs-detail-item li li a:hover {
+    color: #fff;
 }
 .tabs-detail-item .sub-more a em {
     margin-right: 10px;
@@ -5821,7 +5830,7 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
 .avatar-user {
     display: inline-block;
     float: left;
-    margin-top: -11px;
+    margin-top: -8px;
     margin-right: 8px;
 }
 .avatar-user img {
@@ -5829,6 +5838,8 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
+    width: 35px;
+    height: auto;
 }
 .home-page li.user-loggin a {
     overflow: inherit;
@@ -5947,12 +5958,12 @@ a:hover {
     background-repeat: no-repeat;
     background-color: inherit;
 }
-#wrapper-body {padding-top: 80px;}
+#wrapper-body {padding-top: 60px;}
 header {
     padding: 0;
     margin: 0;
     background: rgba(27, 27, 27, 0.9);
-    height: 80px;
+    height: 60px;
     position: fixed;
     width: 100%;
     top: 0;
@@ -5961,15 +5972,15 @@ header {
 }
 .logo-header {
     display: inline-block;
-    padding: 12px 0;
+    padding: 8px 0 7px;
 }
 .logo-header img {
-    width: 150px;
+    width: 120px;
     vertical-align: middle;
 }
 .list-menu {
     height: 100%;
-    line-height: 80px;
+    line-height: 60px;
 }
 .list-menu li {
     margin-right: 45px;
@@ -5985,7 +5996,7 @@ header {
 .list-menu li a {
     color: #fff;
     text-transform: uppercase;
-    font-size: 16px;
+    font-size: 15px;
     display: block;
     font-weight: 300;
     font-family: 'Open Sans';
@@ -6013,7 +6024,7 @@ header {
 }
 .intro-duan,
 .search-reals {
-    padding-top: 80px;
+    padding-top: 50px;
     height: 100%;
     position: absolute;
     width: 100%;
@@ -6458,10 +6469,10 @@ li.search-filter .box-search-header {
     width: 300px;
 }
 li.search-filter .type-search {
-    height: 50px;
+    height: 35px;
     padding: 0;
     position: relative;
-    padding-left: 50px;
+    padding-left: 35px;
 }
 li.search-filter .form-group {
     margin: 0;
@@ -6470,23 +6481,23 @@ li.search-filter .type-search input {
     background: none;
     border: none;
     width: 100%;
-    height: 50px;
+    height: 35px;
     display: block;
-    line-height: 50px;
+    line-height: 35px;
     float: right;
 }
 li.search-filter .type-search ul {
-    height: 50px;
+    height: 35px;
     left: 0;
-    line-height: 50px;
+    line-height: 35px;
 }
 li.search-filter #btn-search {
     right: inherit;
-    left: 7px;
-    top: 5px;
-    width: 40px;
-    height: 40px;
-    background-size: 147px;
+    left: 5px;
+    top: 2px;
+    width: 30px;
+    height: 30px;
+    background-size: 118px;
 }
 .list-filters-result li.search-filter ul li {
     margin-right: 0;
@@ -6496,10 +6507,10 @@ li.search-filter li i {
     font-size: 13px;
 }
 li.search-filter li span {
-    font-size: 11px;
+    font-size: 10px;
 }
 li.search-filter .type-search div {
-    width: 248px;
+    width: 263px;
     float: right;
     position: relative;
     overflow-y: hidden;
@@ -7164,6 +7175,11 @@ li.search-filter .search-wrap {
 }
 #detail-wrap .modal-header button {
     margin: 0;
+    color: #fff;
+    text-shadow: none;
+    -webkit-text-shadow: none;
+    -moz-text-shadow: none;
+    -ms-text-shadow: none;
 }
 .btn-out-more {
     position: absolute;
@@ -7622,4 +7638,7 @@ li.search-filter .search-wrap {
 }
 .page-forgot .modal-dialog {
     width: 360px;
+}
+.gm-style-iw > div {
+    overflow-x: hidden !important;
 }
