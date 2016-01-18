@@ -77,7 +77,7 @@ use yii\bootstrap\ActiveForm;
                 <?php ActiveForm::end(); ?>
 <!--                <img src="https://www.zillowstatic.com/static/images/nophoto_h_g.png"> -->
             </div>
-            <div>Member since: <?= Yii::$app->formatter->asDatetime($model->created_at, "php:d/m/Y");?></div>
+            <div>Member since: <?= Yii::$app->formatter->asDate(User::findIdentity(Yii::$app->user->id)->created_at, "php:d/m/Y");?></div>
             <br>
             <div>
                 <?= $model->bio ?>
