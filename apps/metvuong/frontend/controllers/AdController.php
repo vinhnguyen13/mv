@@ -163,57 +163,6 @@ class AdController extends Controller
     		}
     		
     		return $products;
-    		
-//     		$query = AdProduct::find();
-
-//     		$query->from('ad_product');
-//     		$query->innerJoin('ad_product_addition_info', 'ad_product_addition_info.product_id = ad_product.id');
-//     		$query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
-//     		$query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
-//     		$where = ['ad_product.status' => 1];
-    		
-//     		$rawProducts = $query->asArray(true)->groupBy('ad_product.id')->all();
-    		 
-//     		$products = [];
-    		 
-
-    		 
-//     		
-    		
-    		
-//     		$query = (new \yii\db\Query())->from('ad_product_saved')->where('ad_product_saved.user_id = ' . Yii::$app->user->id)
-//     					->andWhere('saved_at != 0')
-//     					->groupBy('ad_product.id')
-//     					->select('ad_product.*, ad_images.file_name, ad_product_addition_info.*')
-//     					->leftJoin('ad_product', 'ad_product.id = ad_product_saved.product_id')
-//     					->leftJoin('ad_product_addition_info', 'ad_product.id = ad_product_addition_info.product_id')
-//         				->leftJoin('ad_images', 'ad_product.id = ad_images.product_id');
-    		
-//     		$pages = new Pagination(['totalCount' => $query->count()]);
-//     		$pages->pageSize = isset(Yii::$app->params['listingLimit']) ? Yii::$app->params['listingLimit'] : 20;
-    		 
-//     		$products = $query->limit($pages->limit)->offset($pages->offset)->all();
-    		 
-//     		$productResponse = [];
-    		 
-//     		foreach ($products as $k => $product) {
-//     			$productResponse[$k] = $product;
-//     			$productResponse[$k]['previous_time'] = StringHelper::previousTime($product['created_at']);
-//     			$productResponse[$k]['price'] = StringHelper::formatCurrency($product['price']);
-//     			$productResponse[$k]['area'] = StringHelper::formatCurrency($product['area']);
-    		
-//     			if($product['file_name']) {
-//     				if(StringHelper::startsWith($product['file_name'], 'http')) {
-//     					$productResponse[$k]['image_url'] = $product['file_name'];
-//     				} else {
-//     					$productResponse[$k]['image_url'] = AdImages::getImageUrl($product['file_name']);
-//     				}
-//     			} else {
-//     				$productResponse[$k]['image_url'] = Yii::$app->view->theme->baseUrl . '/resources/images/default-ads.jpg';;
-//     			}
-//     		}
-    		
-//     		return ['productResponse' => $productResponse, 'pages' => LinkPager::widget(['pagination' => $pages,]), 'total' => $pages->totalCount];
     	}
     }
     
