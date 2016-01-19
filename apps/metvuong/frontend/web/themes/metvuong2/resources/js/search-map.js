@@ -162,6 +162,10 @@ var listing = {
 			}
 		});
 		
+		$('#time').change(function(){
+			listing.search();
+		});
+		
 		$('.full-map a').click(function(){
 			listing.resultItemEl.addClass('h');
 			listing.calOffsetX();

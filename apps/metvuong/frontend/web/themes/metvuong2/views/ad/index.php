@@ -256,7 +256,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                             <div class="form-group">
                                 <label for="" class="col-sm-4 control-label">Ngày đăng</label>
                                 <div class="col-sm-8">
-                                    <select name="time" class="form-control">
+                                    <select id="time" name="time" class="form-control">
                                         <option value="">Bất kỳ</option>
                                         <option value="-1 day">1 ngày</option>
                                         <option value="-7 day">7 ngày</option>
@@ -330,7 +330,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                     </div>
                 </div>
                 <ul class="list-results clearfix"></ul>
-                <div id="no-result" style="text-align: center; padding: 22px; display: none;">Chưa có tòa nhà nào được đăng như tìm kiếm của bạn.</div>
+                <div id="no-result" style="text-align: center; padding: 22px; display: none;"></div>
             </div>
             <div role="tabpanel" class="tab-pane fade" id="re-nhat">
 
