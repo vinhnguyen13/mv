@@ -483,23 +483,5 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
         </div>
     </section>
     <?php } ?>
-
-    <div id="iePopup">
-        <div id="jr_overlay"></div>
-        <div id="jr_wrap">
-            <div id="jr_inner">
-                <h1 id="jr_header">Bạn có biết rằng trình duyệt của bạn đã lỗi thời?</h1>
-                <p>Trình duyệt của bạn đã lỗi thời, và có thể không tương thích tốt với website, chắc chắn rằng trải nghiệm của bạn trên website sẽ bị hạn chế. Bên dưới là danh sách những trình duyệt phổ biến hiện nay.</p>
-                <p>Click vào biểu tượng để tải trình duyệt bạn muốn.</p>
-                <ul>
-                    <li id="jr_chrome"><a href="http://www.google.com/chrome/" target="_blank">Chrome 34</a></li>
-                    <li id="jr_firefox"><a href="http://www.mozilla.com/firefox/" target="_blank">Firefox 29</a></li>
-                    <li id="jr_msie"><a href="http://www.microsoft.com/windows/Internet-explorer/" target="_blank">Internet Explorer 10</a></li>
-                    <li id="jr_opera"><a href="http://www.opera.com/download/" target="_blank">Opera 20</a></li>
-                    <li id="jr_safari"><a href="http://www.apple.com/safari/download/" target="_blank">Safari</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
 </div>
 <?php $this->beginContent('@app/views/layouts/_partials/footer.php'); ?><?php $this->endContent();?>
