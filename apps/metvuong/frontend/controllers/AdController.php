@@ -57,9 +57,10 @@ class AdController extends Controller
         	}
         	
         	if($districtId = Yii::$app->request->post('districtId')) {
-        		$where['ad_product.district_id'] = intval($districtId);
-        	} else if($cityId = Yii::$app->request->post('cityId')) {
-        		$where['ad_product.city_id'] = intval($cityId);
+        		$where['ad_product.district_id'] = $districtId;
+        	} else {
+        		$cityId = Yii::$app->request->post('cityId') ? Yii::$app->request->post('cityId') : 1;
+        		$where['ad_product.city_id'] = $cityId;
         	}
         	
         	if($categoryId = Yii::$app->request->post('categoryId')) {
