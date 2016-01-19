@@ -40,6 +40,7 @@ $searchParams = json_decode($value);
     });
 </script>
 <header class="clearfix">
+	<input type="hidden" id="search-value" value="<?= htmlentities(json_encode(Yii::$app->request->get())) ?>" />
     <div class="container inner-header">
         <ul class="pull-right list-menu">
             <li><a href="<?=Url::to(['ad/index', 'type'=>1]);?>">Buy</a></li>
