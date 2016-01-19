@@ -691,9 +691,13 @@ var listing = {
 			var ar = area[index];
 			
 			if(ar.geometry) {
-				var polygon = listing.drawPolygon(JSON.parse(ar.geometry), ar.color);
-				polygon.setMap(listing.gmap);
-				listing.polygons.push(polygon);
+				var bounds = JSON.parse(ar.geometry);
+				
+				for(var i = 0; i < bounds.length; i++) {
+					var polygon = listing.drawPolygon(bounds[i], ar.color);
+					polygon.setMap(listing.gmap);
+					listing.polygons.push(polygon);
+				}
 			}
 			
 			if(ar.center && counters[index]) {
