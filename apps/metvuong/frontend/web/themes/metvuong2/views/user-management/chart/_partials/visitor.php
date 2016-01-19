@@ -116,12 +116,8 @@ if(!empty($data)) {
     <?php
 }else {
     ?>
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="alert alert-warning">
-                <p class="text-center">Chưa có người nào xem tin của bạn, bạn hãy <a href="">làm mới</a> tin của mình</p>
-            </div>
-        </div>
+    <div class="alert alert-warning">
+        <p class="text-center">Chưa có người nào xem tin của bạn, bạn hãy <a href="">làm mới</a> tin của mình</p>
     </div>
     <?php
 }?>

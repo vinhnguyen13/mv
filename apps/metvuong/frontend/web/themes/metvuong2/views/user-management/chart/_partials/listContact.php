@@ -1,41 +1,34 @@
-<h3></h3>
+<?php
+use frontend\models\Chart;
+?>
 <p style="color: #4a933a;" class="desTotal"></p>
 <?php
-$yourArray = [
-    1 => [
-        'title' => 'Nguyễn Trung Ngạn',
-        'phone' => '090903xxxx',
-        'time' => date('H:i:s d-m-Y', strtotime('-2days')),
-    ],
-    2 => [
-        'title' => 'Quách Tuấn Lệnh',
-        'phone' => '090903xxxx',
-        'time' => date('H:i:s d-m-Y', strtotime('-3days')),
-    ],
-    3 => [
-        'title' => 'Quách Tuấn Du',
-        'phone' => '090903xxxx',
-        'time' => date('H:i:s d-m-Y', strtotime('-5days')),
-    ],
-
-];
-$provider = new \yii\data\ArrayDataProvider([
-    'allModels' => $yourArray,
-    /*'sort' => [
-        'attributes' => ['title'],
-    ],*/
-    'pagination' => [
-        'pageSize' => 15,
-    ],
-]);
-echo \yii\grid\GridView::widget([
-    'dataProvider' => $provider,
-    'summary'=>"",
-    'columns' => [
-        ['class' => 'yii\grid\SerialColumn'],
-        'title',
-        'phone',
-        'time',
-    ],
-]);?>
-<p style="color: #4a933a;">Và <span class="totalNext" style="font-weight: bold"></span> người khác nữa. Bạn vui lòng <a href="javascript:alert('Coming soon !');">nạp thêm tiền</a> để có thể xem thêm</p>
+$data = Chart::find()->getContacts();
+if(!empty($data)) {
+    $provider = new \yii\data\ArrayDataProvider([
+        'allModels' => $data,
+        /*'sort' => [
+            'attributes' => ['title'],
+        ],*/
+        'pagination' => [
+            'pageSize' => 15,
+        ],
+    ]);
+    echo \yii\grid\GridView::widget([
+        'dataProvider' => $provider,
+        'summary' => "",
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            'title',
+            'phone',
+            'time',
+        ],
+    ]);
+}else {
+    ?>
+    <div class="alert alert-warning">
+        <p class="text-center">Không có người nào trong dữ liệu</p>
+    </div>
+    <?php
+}
+?>

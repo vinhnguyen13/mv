@@ -9,6 +9,7 @@
 namespace frontend\models;
 use common\components\Util;
 use vsoft\ad\models\AdProduct;
+use vsoft\tracking\models\AdProductFinder;
 use vsoft\tracking\models\AdProductVisitor;
 use Yii;
 use yii\base\Component;
@@ -54,7 +55,7 @@ class Tracking extends Component
         return true;
     }
 
-    public function productVisitor($uid, $pid, $time = null){
+    public function productVisitor($uid, $pid, $time = null, $return = false){
         $this->checkAccess();
         $time = !empty($time) ? $time : time();
         $query = AdProductVisitor::find();
@@ -71,7 +72,27 @@ class Tracking extends Component
         }
         $adProductVisitor->time = $time;
         $adProductVisitor->save();
-        return $adProductVisitor;
+        return !empty($return) ? $adProductVisitor : true;
+    }
+
+    public function productFinder($uid, $pid, $time = null, $return = false){
+        $this->checkAccess();
+        $time = !empty($time) ? $time : time();
+        $query = AdProductFinder::find();
+        $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:01", $time)), strtotime(date("d-m-Y 59:59:59", $time))]);
+        $query->andWhere(['user_id' => $uid]);
+        $query->andWhere(['product_id' => $pid]);
+        if(($adProductFinder = $query->one())===null){
+            $adProductFinder = new AdProductFinder();
+            $adProductFinder->user_id = $uid;
+            $adProductFinder->product_id = $pid;
+            $adProductFinder->count = 1;
+        }else{
+            $adProductFinder->count++;
+        }
+        $adProductFinder->time = $time;
+        $adProductFinder->save();
+        return !empty($return) ? $adProductFinder : true;
     }
 
 

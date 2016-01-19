@@ -82,7 +82,7 @@ if(!empty($data)) {
                                                 //$('#frmListVisit').find('h3').html('Thống kê');
                                                 $('#frmListVisit').find('.total').html(_this.y);
                                                 $('#frmListVisit').find('.totalNext').html(_this.y - 3);
-                                                $('#frmListVisit').find('.desTotal').html('Danh sách người theo dõi tin: <b>' + _this.series.name + '</b>');
+                                                $('#frmListVisit').find('.desTotal').html('Danh sách người lưu tin: <b>' + _this.series.name + '</b>');
                                             }
                                         });
                                     }, 500);
@@ -116,12 +116,8 @@ if(!empty($data)) {
     <?php
 }else {
     ?>
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="alert alert-warning">
-                <p class="text-center">Chưa có người nào lưu tin của bạn, bạn hãy <a href="">làm mới</a> tin của mình</p>
-            </div>
-        </div>
+    <div class="alert alert-warning">
+        <p class="text-center">Chưa có người nào lưu tin của bạn, bạn hãy <a href="">làm mới</a> tin của mình</p>
     </div>
     <?php
 }?>

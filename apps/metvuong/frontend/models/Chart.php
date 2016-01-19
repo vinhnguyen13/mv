@@ -91,6 +91,29 @@ class Chart extends Component
         return false;
     }
 
+    public function getContacts(){
+        $data = [
+            1 => [
+                'title' => 'Nguyễn Trung Ngạn',
+                'phone' => '090903xxxx',
+                'time' => date('H:i:s d-m-Y', strtotime('-2days')),
+            ],
+            2 => [
+                'title' => 'Quách Tuấn Lệnh',
+                'phone' => '090903xxxx',
+                'time' => date('H:i:s d-m-Y', strtotime('-3days')),
+            ],
+            3 => [
+                'title' => 'Quách Tuấn Du',
+                'phone' => '090903xxxx',
+                'time' => date('H:i:s d-m-Y', strtotime('-5days')),
+            ],
+
+        ];
+        return $data;
+    }
+
+
     private function pushDataToChart($adProductSaveds, $defaultData, $dateRange){
         if(!empty($adProductSaveds)){
             $tmpDataByPid = [];
@@ -105,6 +128,7 @@ class Chart extends Component
                 }
                 $kDate = array_search($day, $dateRange);
                 $tmpDataByPid[$key]['data'][$kDate]['y']++;
+                $tmpDataByPid[$key]['data'][$kDate]['url'] = Url::to(['/user-management/chart', 'view'=>'_partials/listContact', 'date'=>$day, 'pid'=>$key]);
                 $tmpDataByPid[$key]['name'] = $product->getAddress();
             }
             return ['dataChart'=>$tmpDataByPid, 'categories'=>$dateRange];
