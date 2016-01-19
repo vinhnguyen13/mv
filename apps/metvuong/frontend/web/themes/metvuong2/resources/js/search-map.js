@@ -521,6 +521,14 @@ var listing = {
 					float: 'none'
 				});
 			}
+
+			var $modal = $('.modal');
+			    $modal.on('show.bs.modal', function(e) {
+			        var _this = $(this),
+			            $root = _this.parent();
+
+			        $('body').append(_this);
+			    });
 			
 			listing.imgLoaded(imgs, function(){
 				mapLoading.hide();

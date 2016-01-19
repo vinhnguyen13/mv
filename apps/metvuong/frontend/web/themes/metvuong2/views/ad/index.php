@@ -361,12 +361,13 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true" class="icon"></span>
                 </button>
+                <h3>Chia sẻ</h3>
             </div>
             <div class="modal-body">
                 <div class="wrap-modal clearfix">
-                    <h3>Chia sẻ</h3>
+                    
                     <?php
                     $share_form_1 = Yii::createObject([
                         'class'    => \frontend\models\ShareForm::className(),

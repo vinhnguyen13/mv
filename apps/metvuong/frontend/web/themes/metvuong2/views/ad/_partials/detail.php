@@ -82,12 +82,12 @@ use yii\helpers\Url;
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
+                                        <span aria-hidden="true" class="icon"></span>
                                     </button>
+                                    <h3>Báo cáo bài viết</h3>
                                 </div>
                                 <div class="modal-body">
                                     <div class="wrap-modal clearfix">
-                                        <h3>Báo cáo bài viết</h3>
                                         <form id="frm-report" action="<?=Url::to(['/ad/sendreport'])?>">
                                             <div class="radio">
                                                 <label>

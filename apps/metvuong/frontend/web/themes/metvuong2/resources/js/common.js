@@ -48,8 +48,6 @@ $(document).ready(function() {
         var _this = $(this),
             $root = _this.parent();
 
-        //centerModals($(this));
-
         $('body').append(_this);
 
         if ( $('.modal-backdrop').length > 0 ) {
@@ -58,7 +56,7 @@ $(document).ready(function() {
     });
 
     $(window).on('resize', function () {
-        centerModals();
+        //centerModals();
     });
     
     //start click scroll to top

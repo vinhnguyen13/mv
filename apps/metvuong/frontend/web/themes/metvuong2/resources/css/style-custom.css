@@ -3028,13 +3028,7 @@ padding-bottom: 5px;
     z-index: 1041;
     margin: 95px auto 0;
 }
-#frmListVisit .modal-header,
-#frmForgot .modal-header,
-.page-login .modal-header,
-#frmLogin .modal-header,
-#frmRegister .modal-header,
-.page-regis .modal-header,
-.page-forgot .modal-header {
+.modal-header {
     position: relative;
     min-height: inherit;
     border: none;
@@ -5771,6 +5765,7 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
 }
 #frm-report .radio {
     font-size: 16px;
+    margin: 0 0 15px 0;
 }
 #frm-report .radio label {
     line-height: 20px;
@@ -7652,4 +7647,10 @@ li.search-filter .search-wrap {
 }
 .wrap-search-reals .search-wrap {
     top: 60px;
+}
+#report-listing .modal-dialog {
+    width: 350px;
+}
+#box-share-1 .modal-dialog {
+    width: 400px;
 }
