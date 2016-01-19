@@ -5,7 +5,7 @@ $(document).ready(function(){
 var listing = {
 	CITY_ZOOM_LEVEL: 12, DISTRICT_ZOOM_LEVEL: 13, WARD_ZOOM_LEVEL: 14,
 	status: 0, form: null, listEl: null, detailWrapEl: null, detailEl: null, tabContentEl: null, gmap: null, products: [],
-	resultItemEl: null, noResultEl: null, listingLoading: null, filterFieldsEl: null,
+	resultItemEl: null, noResultEl: null, listingLoading: null, filterFieldsEl: null, currentRquest: null,
 	markers: {}, polygons: [], groupMarkers: [], infoWindow: null, InfoWindowMore: null, closeTimeout: null, offsetCenterX: 0, offsetCenterY: 0,
 	currentPage: 1, limit: 20,
 	state: {DRAW_DETAIL: 0, DRAW_WARD: 1, DRAW_DISTRICT: 2, DRAW_CITY: 3, DRAW_SAVED: 4},
@@ -118,6 +118,7 @@ var listing = {
 				$('#order-by').val(self.data('order'));
 				
 				if(listing.currentState == listing.state.DRAW_SAVED) {
+					listing.currentRquest.abort();
 					listing.search(function(){
 						listing.filterFieldsEl.removeClass('hide');
 					});
@@ -140,8 +141,9 @@ var listing = {
 				listing.listEl.empty();
 				listing.listingLoading.show();
 				listing.noResultEl.hide();
-				
-				$.get(self.data('href'), {}, function(products) {
+
+				listing.currentRquest.abort();
+				listing.currentRquest = $.get(self.data('href'), {}, function(products) {
 					listing.filterFieldsEl.addClass('hide');
 					listing.listingLoading.hide();
 					listing.products = products;
@@ -149,7 +151,7 @@ var listing = {
 					if(listing.products.length) {
 						listing._list();
 					} else {
-						listing.noResultEl.text('Chưa có tòa nhà nào được lưu.').show();
+						listing.showNoResultSaved();
 					}
 					
 					listing.addMarkers();
@@ -202,11 +204,44 @@ var listing = {
 						
 						listing.pushToProductSaved(Number(id), stt);
 						
+						if(!stt && listing.currentState == listing.state.DRAW_SAVED) {
+							var nextProduct = listing.products[listing.currentPage * listing.limit];
+							listing.removeProduct(id);
+							if(nextProduct) {
+								listing.listEl.append(listing.buildListItem(nextProduct, true));
+							}
+							
+							el.closest('li').slideUp(function(){
+								$(this).remove();
+								if(listing.listEl.children().length == 0) {
+									listing.showNoResultSaved();
+								}
+								
+								var marker = listing.getMarker(id + '');
+								var ids = marker.get('ids');
+								if(ids.length > 1) {
+									for(var i = 0; i < ids.length; i++) {
+										if(id == ids[i]) {
+											ids.splice(i, 1);
+											break;
+										}
+									}
+									marker.set('ids', ids);
+									marker.setIcon(listing.icon(ids.length, 0));
+								} else {
+									marker.setMap(null);
+								}
+							});
+						}
+						
 						fn(stt, id);
 					}
 				});
 			}
 		}
+	},
+	showNoResultSaved: function() {
+		listing.noResultEl.text('Chưa có tòa nhà nào được lưu.').show();
 	},
 	pushToProductSaved: function(id, stt) {
 		if(stt) {
@@ -448,8 +483,7 @@ var listing = {
 		listing.listingLoading.show();
 		
 		listing.noResultEl.hide();
-		
-		$.post(listing.form.attr('action'), listing.form.serialize(), function(products){
+		listing.currentRquest = $.post(listing.form.attr('action'), listing.form.serialize(), function(products){
 			listing.listingLoading.hide();
 			fn(products);
 		});
@@ -564,26 +598,27 @@ var listing = {
 		var els = '';
 		for(i = 0; i < products.length; i++) {
 			var product = products[i];
-			var saved = '';
+			var saved = (productSaved.indexOf(Number(product.id)) != -1) ? true : false;
 			
-			if(productSaved.indexOf(Number(product.id)) != -1) {
-				saved = ' active';
-			}
-			
-			els += '<li data-id="' + product.id +'">' +
-							'<div class="bgcover wrap-img pull-left" style="background-image:url(' + listing.getImageUrl(product.file_name, 'thumb') + ')"><a href="#" class=""></a></div>' +
-				            '<div class="infor-result">' +
-				                '<p class="item-title">' + listing.getAddress(product) + '</p>' +
-				                '<p class="type-result">' + dataCategories[product.category_id]['name'] + ' ' + types[product.type] + '</p>' +
-				                '<p class="rice-result">' + formatPrice(product.price) + '</p>' +
-				                '<p class="beds-baths-sqft">' + listing.getAdditionInfo(product) + '</p>' +
-				                '<p class="date-post-rent">' + product.previous_time + '</p>' +
-				                '<div class="icon-item-listing">' +
-				                '<a data-id="' + product.id + '" class="save-item' + saved + '" title="Lưu" data-url="/ad/favorite"><em class="fa fa-heart-o"></em></a></div>' +
-				            '</div>' +
-				       '</li>';
+			els += listing.buildListItem(product, saved);
 		}
 		listing.listEl.append(els);
+	},
+	buildListItem: function(product, saved) {
+		saved = saved ? ' active' : '';
+		
+		return '<li data-id="' + product.id +'">' +
+			'<div class="bgcover wrap-img pull-left" style="background-image:url(' + listing.getImageUrl(product.file_name, 'thumb') + ')"><a href="#" class=""></a></div>' +
+	        '<div class="infor-result">' +
+	            '<p class="item-title">' + listing.getAddress(product) + '</p>' +
+	            '<p class="type-result">' + dataCategories[product.category_id]['name'] + ' ' + types[product.type] + '</p>' +
+	            '<p class="rice-result">' + formatPrice(product.price) + '</p>' +
+	            '<p class="beds-baths-sqft">' + listing.getAdditionInfo(product) + '</p>' +
+	            '<p class="date-post-rent">' + product.previous_time + '</p>' +
+	            '<div class="icon-item-listing">' +
+	            '<a data-id="' + product.id + '" class="save-item' + saved + '" title="Lưu" data-url="/ad/favorite"><em class="fa fa-heart-o"></em></a></div>' +
+	        '</div>' +
+	   '</li>';
 	},
 	drawMarkerDetail: function() {
 		listing.removePolygons();
@@ -793,13 +828,21 @@ var listing = {
 		return address.join(', ');
 	},
 	getProduct: function(id) {
-		var i;
-		
-		for(i = 0; i < listing.products.length; i++) {
+		for(var i = 0; i < listing.products.length; i++) {
 			var product = listing.products[i];
 			
 			if(product.id == id) {
 				return product;
+			}
+		}
+	},
+	removeProduct: function(id) {
+		for(var i = 0; i < listing.products.length; i++) {
+			var product = listing.products[i];
+			
+			if(product.id == id) {
+				listing.products.splice(i, 1);
+				break;
 			}
 		}
 	},
