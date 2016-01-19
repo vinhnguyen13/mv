@@ -3258,6 +3258,9 @@ li.search-filter .type-search,
     -moz-border-radius: 0 0 4px 4px;
     -ms-border-radius: 0 0 4px 4px;
 }
+.list-filters-result li a {
+    float: left;
+}
 .list-filters-result a i{
     width: 13px;
     height: 6px;
@@ -7653,4 +7656,8 @@ li.search-filter .search-wrap {
 }
 #box-share-1 .modal-dialog {
     width: 400px;
+}
+.send_mail:hover,
+.send_mail {
+    color: #fff;
 }
