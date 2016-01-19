@@ -206,8 +206,9 @@
         },
         cookieSearch: function () {
             var valCookie = minmax.getValCookie('valSearch'),
-                objItemGet;
-
+                objItemGet,
+                valURL = $('#search-value').val();
+                   
             try {
                 objItemGet = JSON.parse(valCookie);
             }catch (e) {
@@ -218,32 +219,41 @@
                 flagCookie = true;
             }
 
-            for ( var i = 0; i < objItemGet.length; i++ ) {
+            if ( valURL != '' ) {
+            	valURL = JSON.parse(valURL);
+            	var type_price_load = parseInt(valURL.type);
+
+            	minmax.renderBy(type_price_load);
+            } 
+
+			/*for ( var i = 0; i < objItemGet.length; i++ ) {
                 if ( objItemGet[i].itemData == 'mua-thue' || objItemGet[i].itemData == 'ban-thue' ) {
-                	var arrType = {};
-	                for ( var j in prices ) { // prices theo hinh thuc mua-ban-thue
-	                    if ( objItemGet[i].idItem == 1 && j == 'muaban' ) { // hinh thuc mua-ban
-	                        arrType = prices[j];
-	                    }else if ( objItemGet[i].idItem == 2 && j == 'thue' ) { // hinh thuc cho thue - muon thue
-	                        arrType = prices[j];
-	                    }
-	                }
-	                for ( var j in arrType ) {
-	                    var item;
-	                    if ( parseInt(j) < 0 ) {
-	                        txtAnyPrice = arrType[j];
-	                        continue;
-	                    }
-	                    item = $('<li data-number="'+j+'" data-unit=""><a class="option">'+arrType[j]+'</a></li>');
-	                    $('#min-price-options ul').append(item);
-	                    minmax.clickVal(item.find('a'));
-	                }
-
-	                minmax.priceGetFirst = arrType;
-
-	                break;
+                	minmax.renderBy(objItemGet[i].idItem);
+					break;
+                }
+            }*/
+        },
+        renderBy: function (idType) {
+        	var arrType = {};
+            for ( var j in prices ) { // prices theo hinh thuc mua-ban-thue
+                if ( idType == 1 && j == 'muaban' ) { // hinh thuc mua-ban
+                    arrType = prices[j];
+                }else if ( idType == 2 && j == 'thue' ) { // hinh thuc cho thue - muon thue
+                    arrType = prices[j];
                 }
             }
+            for ( var j in arrType ) {
+                var item;
+                if ( parseInt(j) < 0 ) {
+                    txtAnyPrice = arrType[j];
+                    continue;
+                }
+                item = $('<li data-number="'+j+'" data-unit=""><a class="option">'+arrType[j]+'</a></li>');
+                $('#min-price-options ul').append(item);
+                minmax.clickVal(item.find('a'));
+            }
+
+            minmax.priceGetFirst = arrType;
         },
 		render: function () {
 			// render gia theo hinh thuc vd: mua-thue or ban-thue

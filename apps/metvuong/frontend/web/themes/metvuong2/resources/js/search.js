@@ -272,6 +272,37 @@
                 flagCookie = true;
             }
 
+            var valURL = $('#search-value').val();
+            valURL = JSON.parse(valURL);
+
+            var type_price_load = valURL.type == undefined ? '' : parseInt(valURL.type),
+                idCity = valURL.city == undefined ? '' : parseInt(valURL.city),
+                idDistrict = valURL.district == undefined ? '' : parseInt(valURL.district),
+                idCategory = valURL.category == undefined ? '' : parseInt(valURL.category),
+                idDuan = valURL.project == undefined ? '' : parseInt(valURL.project),
+                numMin = valURL.costMin == undefined ? '' : parseInt(valURL.costMin),
+                numMax = valURL.costMax == undefined ? '' : parseInt(valURL.costMax);
+
+            if ( type_price_load > 2 ) {
+                alert('Error !!!');
+                history.back();
+                return;
+            }
+
+            if ( type_price_load != '' && objItemGet.length <= 2 ) {
+                var objMuaThue = {},
+                    item = $('#mua-thue li[data-id='+type_price_load+']');
+
+                objMuaThue.idItem = type_price_load;
+                objMuaThue.itemData = item.find('a').data('item');
+                objMuaThue.nextData = item.find('a').data('next');
+                objMuaThue.prevData = item.find('a').data('prev');
+                objMuaThue.txt = item.find('a').text();
+                
+                renderSuggest(objMuaThue);
+                return;
+            }
+
             for ( var i = 0; i < objItemGet.length; i++ ) {
                 if ( i === 0 ) { // tab active
                     $('.search-select').removeClass('active');
@@ -279,7 +310,21 @@
                     var stepOld = $('.search-select[data-active="'+objItemGet[i]+'"]').data('step');
                     getDataStep(stepOld);
                 }else {
-                    renderSuggest(objItemGet[i], i, objItemGet.length);
+                    if ( type_price_load != '' && objItemGet[i].itemData == 'mua-thue' ) {
+                        renderSuggest(objItemGet[i], i, objItemGet.length);
+                    }else if ( idCity != '' && objItemGet[i].itemData == 'tinh-thanh' ) {
+                        objItemGet[i].idItem = idCity;
+                        renderSuggest(objItemGet[i], i, objItemGet.length);
+                    }else if ( idDistrict != '' && objItemGet[i].itemData == 'quan-huyen' ) {
+                        objItemGet[i].idItem = idDistrict;
+                        renderSuggest(objItemGet[i], i, objItemGet.length);
+                    }else if ( idCategory != '' && objItemGet[i].itemData == 'loai-bds' ) {
+                        objItemGet[i].idItem = idCategory;
+                        renderSuggest(objItemGet[i], i, objItemGet.length);
+                    }else if ( idDuan != '' && objItemGet[i].itemData == 'du-an' ) {
+                        objItemGet[i].idItem = idDuan;
+                        renderSuggest(objItemGet[i], i, objItemGet.length);
+                    }
                 }
             }
         };
@@ -667,7 +712,7 @@
                     stepGet(dataItem);
                 }
                 
-                if ( (nextAttr != undefined || nextAttr != '') && count == (lenSuggest-1) ) {
+                if ( (nextAttr != undefined || nextAttr != '')/* && count == (lenSuggest-1)*/ ) {
                     current = nextAttr;
                     stepLoad(nextAttr, idTinhThanhReload);
                     stepGet(current);

@@ -2244,7 +2244,7 @@ footer {
 .search-wrap-end,
 .search-wrap {
     position: absolute;
-    top: 60px;
+    top: 52px;
     left: 0;
     width: 100%;
     z-index: 9999;
@@ -3237,7 +3237,7 @@ padding-bottom: 5px;
     z-index: 5;
     top: 0;
     left: 10px;
-    width: 100%;
+    width: auto;
 }
 .list-filters-result li {
     float: left;
@@ -3257,7 +3257,7 @@ li.search-filter .type-search,
     display: block;
     border: 1px solid #999896;
     border-top: none;
-    padding: 10px 2px 10px 12px;
+    padding: 14px 5px 14px 20px;
     background: #f9f9f9;
     border-radius: 0 0 4px 4px;
     -webkit-border-radius: 0 0 4px 4px;
@@ -3268,7 +3268,7 @@ li.search-filter .type-search,
     width: 13px;
     height: 6px;
     background: url(../images/arrow-search.png) no-repeat center;
-    margin: 3px 5px 0 8px;
+    margin: 3px 5px 0 7px;
 }
 .list-filters-result li a em {
     margin: 0 5px;
@@ -5213,7 +5213,7 @@ header.wrap-page-home .box-search-header.ani-search > div {
     -webkit-box-shadow: 0 1px 4px 0 rgba(0,0,0,.5);
     -moz-box-shadow: 0 1px 4px 0 rgba(0,0,0,.5);
     -ms-box-shadow: 0 1px 4px 0 rgba(0,0,0,.5);
-    top: 60px;
+    top: 52px;
     left: 0;
     z-index: 10;
     width: 234px;
@@ -5930,7 +5930,7 @@ label ~ input:checked ~ label /* highlight previous selected stars */ {color:#73
     background: #E6E6E6;
 }
 .settings.container-effect {
-    top: 55px;
+    top: 45px;
 }
 .sub-setting.wrap-effect:after, 
 .sub-setting.wrap-effect:before {
@@ -6472,10 +6472,10 @@ li.search-filter .box-search-header {
     width: 300px;
 }
 li.search-filter .type-search {
-    height: 35px;
+    height: 41px;
     padding: 0;
     position: relative;
-    padding-left: 35px;
+    padding-left: 40px;
 }
 li.search-filter .form-group {
     margin: 0;
@@ -6484,20 +6484,21 @@ li.search-filter .type-search input {
     background: none;
     border: none;
     width: 100%;
-    height: 35px;
+    height: 100%;
     display: block;
     line-height: 35px;
     float: right;
+    padding-left: 0;
 }
 li.search-filter .type-search ul {
-    height: 35px;
-    left: 0;
-    line-height: 35px;
+    height: 100%;
+    left: -5px;
+    line-height: 41px;
 }
 li.search-filter #btn-search {
     right: inherit;
     left: 5px;
-    top: 2px;
+    top: 5px;
     width: 30px;
     height: 30px;
     background-size: 118px;
@@ -6513,11 +6514,12 @@ li.search-filter li span {
     font-size: 10px;
 }
 li.search-filter .type-search div {
-    width: 263px;
+    width: 100%;
     float: right;
     position: relative;
     overflow-y: hidden;
     overflow-x: auto;
+    height: 100%;
 }
 .list-filters-result li.search-filter .wrap-step ul li {
     float: left;
@@ -7611,12 +7613,12 @@ li.search-filter .search-wrap {
     margin-left: -10px;
 }
 #regis-listing {
-    position: fixed; 
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    padding-top: 80px;
+    padding-top: 60px;
     background: url(../images/bg-home.jpg) no-repeat 50% center;
     background-size: cover;
     overflow-x: hidden;
@@ -7647,4 +7649,7 @@ li.search-filter .search-wrap {
 }
 .wrap-img-detail ul {
     width: auto;
+}
+.wrap-search-reals .search-wrap {
+    top: 60px;
 }
