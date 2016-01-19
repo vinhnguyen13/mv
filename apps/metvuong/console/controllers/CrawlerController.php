@@ -4,6 +4,7 @@ namespace console\controllers;
 use console\models\Batdongsan;
 use console\models\BatdongsanV2;
 use console\models\Homefinder;
+use console\models\Muaban_net;
 use yii\console\Controller;
 
 /**
@@ -46,4 +47,10 @@ class CrawlerController extends Controller
     {
         BatdongsanV2::find()->updateData();
     }
+
+    public function actionMuaban()
+    {
+        Muaban_net::find()->parse();
+    }
+
 }
