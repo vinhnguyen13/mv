@@ -112,4 +112,9 @@ class Profile extends ActiveRecord
         } 
         return $avatar;
     }
+
+    public function getDisplayName()
+    {
+        return !empty($this->name) ? $this->name : $this->user->email;
+    }
 }

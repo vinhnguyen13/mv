@@ -10,15 +10,23 @@ namespace frontend\models;
 use common\components\Util;
 use vsoft\ad\models\AdProduct;
 use vsoft\ad\models\AdProductSaved;
-use vsoft\tracking\models\AdProductFinder;
-use vsoft\tracking\models\AdProductVisitor;
+use vsoft\ad\models\AdProductSavedSearch;
+use vsoft\tracking\models\base\AdProductFinder;
+use vsoft\tracking\models\base\AdProductVisitor;
+use vsoft\tracking\models\AdProductVisitorSearch;
 use Yii;
 use yii\base\Component;
 use yii\helpers\Url;
+use yii\web\HttpException;
+use yii\web\NotFoundHttpException;
 
 class Chart extends Component
 {
     const DATE_FORMAT = 'd-m-Y';
+    const TYPE_VISITOR = 1;
+    const TYPE_FINDER = 2;
+    const TYPE_SAVED = 3;
+
     public static function find()
     {
         return Yii::createObject(Chart::className());
@@ -40,7 +48,7 @@ class Chart extends Component
             return ['y' => 0,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact', 'date'=>$date])];
         }, array_keys($dateRange), $dateRange);
         if(!empty($adProductVisitors)){
-            return $this->pushDataToChart($adProductVisitors, $defaultData, $dateRange);
+            return $this->pushDataToChart($adProductVisitors, $defaultData, $dateRange, self::TYPE_FINDER);
         }
         return false;
     }
@@ -64,7 +72,7 @@ class Chart extends Component
             return ['y' => 0,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact', 'date'=>$date])];
         }, array_keys($dateRange), $dateRange);
         if(!empty($adProductVisitors)){
-            return $this->pushDataToChart($adProductVisitors, $defaultData, $dateRange);
+            return $this->pushDataToChart($adProductVisitors, $defaultData, $dateRange, self::TYPE_VISITOR);
         }
         return false;
     }
@@ -86,13 +94,21 @@ class Chart extends Component
             return ['y' => 0,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact', 'date'=>$date])];
         }, array_keys($dateRange), $dateRange);
         if(!empty($adProductSaveds)){
-            return $this->pushDataToChart($adProductSaveds, $defaultData, $dateRange);
+            return $this->pushDataToChart($adProductSaveds, $defaultData, $dateRange, self::TYPE_SAVED);
         }
         return false;
     }
 
     public function getContacts(){
-        $data = [
+        $date = Yii::$app->request->get('date');
+        $type = Yii::$app->request->get('type');
+        $pid = Yii::$app->request->get('pid');
+        $from = strtotime($date);
+        $to = strtotime('+1 days', strtotime($date));
+        if(empty($type)){
+            throw new NotFoundHttpException('Not found');
+        }
+        $provider = [
             1 => [
                 'title' => 'Nguyễn Trung Ngạn',
                 'phone' => '090903xxxx',
@@ -110,11 +126,26 @@ class Chart extends Component
             ],
 
         ];
-        return $data;
+        switch($type){
+            case self::TYPE_VISITOR:
+                $searchModel = new AdProductVisitorSearch();
+                $searchModel->product_id = $pid;
+                $provider = $searchModel->search2(Yii::$app->request->queryParams, $from, $to);
+                break;
+            case self::TYPE_FINDER:
+                break;
+            case self::TYPE_SAVED:
+                $searchModel = new AdProductSavedSearch();
+                $searchModel->product_id = $pid;
+                $provider = $searchModel->search2(Yii::$app->request->queryParams, $pid, $from, $to);
+                break;
+        }
+        return $provider;
+
     }
 
 
-    private function pushDataToChart($adProductSaveds, $defaultData, $dateRange){
+    private function pushDataToChart($adProductSaveds, $defaultData, $dateRange, $type){
         if(!empty($adProductSaveds)){
             $tmpDataByPid = [];
             foreach($adProductSaveds as $k => $item){
@@ -128,7 +159,7 @@ class Chart extends Component
                 }
                 $kDate = array_search($day, $dateRange);
                 $tmpDataByPid[$key]['data'][$kDate]['y']++;
-                $tmpDataByPid[$key]['data'][$kDate]['url'] = Url::to(['/user-management/chart', 'view'=>'_partials/listContact', 'date'=>$day, 'pid'=>$key]);
+                $tmpDataByPid[$key]['data'][$kDate]['url'] = Url::to(['/user-management/chart', 'view'=>'_partials/listContact', 'date'=>$day, 'pid'=>$key, 'type'=>$type]);
                 $tmpDataByPid[$key]['name'] = $product->getAddress();
             }
             return ['dataChart'=>$tmpDataByPid, 'categories'=>$dateRange];

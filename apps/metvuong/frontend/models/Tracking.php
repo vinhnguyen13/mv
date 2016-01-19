@@ -7,10 +7,8 @@
  */
 
 namespace frontend\models;
-use common\components\Util;
-use vsoft\ad\models\AdProduct;
-use vsoft\tracking\models\AdProductFinder;
-use vsoft\tracking\models\AdProductVisitor;
+use vsoft\tracking\models\base\AdProductFinder;
+use vsoft\tracking\models\base\AdProductVisitor;
 use Yii;
 use yii\base\Component;
 use yii\base\Exception;

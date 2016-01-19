@@ -5,7 +5,7 @@
  * Date: 1/14/2016
  * Time: 1:58 PM
  */
-namespace vsoft\tracking\models;
+namespace vsoft\tracking\models\base;
 
 use yii\mongodb\ActiveRecord;
 
