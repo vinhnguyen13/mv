@@ -7,7 +7,6 @@ use vsoft\ad\models\AdProduct;
 $this->title = Yii::t('express','We offer exeptional amenities and renowned white - glove services');
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/gmap-v2.js', ['position' => View::POS_END]);
 $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=m2Map.loaded', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
-$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/imagesloaded.4.0.0.js', ['position' => View::POS_END]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/lightbox.min.js', ['position' => View::POS_END]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/jquery.bxslider.js', ['position' => View::POS_END]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/string-helper.js', ['position' => View::POS_END]);
