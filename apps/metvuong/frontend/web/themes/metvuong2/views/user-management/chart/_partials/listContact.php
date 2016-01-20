@@ -29,7 +29,7 @@ if(!empty($data)) {
                     $user = \frontend\models\User::getDb()->cache(function ($db) use ($model) {
                         return \frontend\models\User::find()->where(['id' => $model->user_id])->one();
                     });
-                    return $user->profile->mobile;
+                    return '0909xxxxxx';
                 }
             ],
             [
