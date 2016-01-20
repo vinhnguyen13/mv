@@ -24,23 +24,32 @@ AppAsset::register($this);
     <script type="text/javascript">
     	window.onload = function(){
     		if (navigator.userAgent.indexOf('MSIE') !== -1 || navigator.appVersion.indexOf('Trident/') > 0) {
-				var msie = navigator.userAgent.indexOf('MSIE'),
-		    		ua = navigator.userAgent,
-		    		getNumVersion = ua.substring (msie+5, ua.indexOf (".", msie ));
+	    		function GetIEVersion() {
+					var sAgent = window.navigator.userAgent;
+					var Idx = sAgent.indexOf("MSIE");
 
-				if ( getNumVersion > 9 ) {
+					if (Idx > 0) 
+						return parseInt(sAgent.substring(Idx+ 5, sAgent.indexOf(".", Idx)));
+
+					else if (!!navigator.userAgent.match(/Trident\/7\./)) 
+						return 11;
+
+					else
+						return 0;
+				}
+
+				if (GetIEVersion() > 9) {
 					var head  = document.getElementsByTagName('head')[0];
 				    var link  = document.createElement('link');
 				    link.rel  = 'stylesheet';
 				    link.type = 'text/css';
 				    link.href = '<?=Yii::$app->view->theme->baseUrl?>/resources/css/ie.css';
-				    head.appendChild(link);		
+				    head.appendChild(link);	
 				}else {
 					document.getElementById('wrapper-body').style.display = 'none';
 					document.getElementById('iePopup').style.display = 'block';
-				}
-				return;
-			}       
+				}   
+			}
         };
 	</script>
 </head>
