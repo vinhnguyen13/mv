@@ -10,7 +10,7 @@ $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/lightbox.min.js', ['position' => View::POS_END]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/jquery.bxslider.js', ['position' => View::POS_END]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/string-helper.js', ['position' => View::POS_END]);
-$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/search-map.js', ['position' => View::POS_END]);
+$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/search-map.js?v=1', ['position' => View::POS_END]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/listing-share.js', ['position' => View::POS_END]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/search-results.js', ['position' => View::POS_END]);
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/geometries/1.js', ['position' => View::POS_END]);
