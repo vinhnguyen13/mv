@@ -122,7 +122,7 @@ class AdController extends Controller
         		throw new NotFoundHttpException('The requested page does not exist.');
         	}
         	
-        	$districts = AdDistrict::find()->select('id, name, pre, geometry, center, color')->asArray(true)->indexBy('id')->where(['city_id' => $cityId, 'status' => 1])->all();
+        	$districts = AdDistrict::find()->select('id, name, pre, center, color')->asArray(true)->indexBy('id')->where(['city_id' => $cityId, 'status' => 1])->all();
         	$productSaved = ArrayHelper::getColumn(AdProductSaved::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['!=', 'saved_at', 0])->all(), 'product_id');
         	$districtId = Yii::$app->request->get('district', 0);
         	

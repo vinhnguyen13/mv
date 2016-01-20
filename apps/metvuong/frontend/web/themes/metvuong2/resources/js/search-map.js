@@ -690,8 +690,8 @@ var listing = {
 			
 			var ar = area[index];
 			
-			if(ar.geometry) {
-				var bounds = JSON.parse(ar.geometry);
+			if(geometries[index]) {
+				var bounds = geometries[index];
 				
 				for(var i = 0; i < bounds.length; i++) {
 					var polygon = listing.drawPolygon(bounds[i], ar.color);
