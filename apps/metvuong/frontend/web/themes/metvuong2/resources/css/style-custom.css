@@ -226,13 +226,13 @@ div.wrap-page-home .ani-search #search-kind button span,
 .ani-search #search-kind .form-group input,
 #search-kind .form-group input {
     width: 100%;
-    padding-left: 20px;
+    padding-left: 15px;
     height: 60px;
     color: #294000;
     border: none;
     float: right;
     font-size: 16px;
-    line-height: 100%;
+    line-height: 59px;
 }
 div.wrap-page-home .ani-search #search-kind .form-group input, 
 div.wrap-page-home  #search-kind .form-group input {
@@ -2391,7 +2391,7 @@ footer {
 }
 .type-search ul {
     position: absolute;
-    left: 0;
+    left: 5px;
     height: 60px;
     vertical-align: middle;
     line-height: 60px;
@@ -5614,7 +5614,7 @@ button.btn.btn-default.dropdown-toggle {
 /* Click + hover color */
  /* color current and previous stars on checked */
 
-label:hover, label:hover ~ label {color: inherit;opacity: .7;}
+label:hover, label:hover ~ label {color: #d5dd00; opacity: .9;}
 
 /* Hover highlights */
 input:checked ~ label,
@@ -6253,12 +6253,13 @@ header {
     display: inline-block;
     height: 100%;
     vertical-align: middle;
-    margin-right: -1em;/* Adjusts for spacing */
+    margin-right: -15px;/* Adjusts for spacing */
 }
 .projects .list-du-an a p {
     display: inline-block;
     vertical-align: middle;
     width: 100%;
+    margin-left: 10px;
 }
 .projects .list-du-an a span {
     display: block;
@@ -6561,7 +6562,7 @@ li.search-filter .search-wrap {
     text-transform: uppercase;
     color: #5d5d5d;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 18px;
     margin-bottom: 8px;
 }
 .date-duan {
@@ -7533,6 +7534,7 @@ li.search-filter .search-wrap {
     overflow: hidden;
     padding: 5px 5px 5px 0;
     font-weight: 400;
+    max-height: 90px;
 }
 .infoContent .address {
     font-size: 14px;
@@ -7545,13 +7547,13 @@ li.search-filter .search-wrap {
 }
 .infoContent .price{
     font-size: 19px;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
     color: #464646;
     line-height: 30px;
 }
 .infoContent .addition {
     font-size: 13px;
-    line-height: 17px;
+    line-height: 16px;
 }
 .gm-style-iw .infoContent {
     padding: 5px 0;
