@@ -44,9 +44,10 @@ var listing = {
 		listing.listEl.on('click', '.save-item', function(e){
 			e.stopPropagation();
 			
-			var id = $(this).data('id');
+			var self = $(this);
+			var id = self.data('id');
 			
-			listing.save($(this), function(stt, id) {
+			listing.save(self, function(stt, id) {
 				var saveItem = listing.detailEl.find('.save-item');
 				
 				if(id == saveItem.data('id')) {
@@ -55,6 +56,10 @@ var listing = {
 					} else {
 						saveItem.removeClass('active');
 					}
+				}
+				
+				if(!stt) {
+					listing.removeFromSavedList(id, self);
 				}
 			});
 		});
@@ -71,6 +76,7 @@ var listing = {
 							self.addClass('active');
 						} else {
 							self.removeClass('active');
+							listing.removeFromSavedList(id, self);
 						}
 						
 						return false;
@@ -208,40 +214,41 @@ var listing = {
 						
 						listing.pushToProductSaved(Number(id), stt);
 						
-						if(!stt && listing.currentState == listing.state.DRAW_SAVED) {
-							var nextProduct = listing.products[listing.currentPage * listing.limit];
-							listing.removeProduct(id);
-							if(nextProduct) {
-								listing.listEl.append(listing.buildListItem(nextProduct, true));
-							}
-							
-							el.closest('li').slideUp(function(){
-								$(this).remove();
-								if(listing.listEl.children().length == 0) {
-									listing.showNoResultSaved();
-								}
-								
-								var marker = listing.getMarker(id + '');
-								var ids = marker.get('ids');
-								if(ids.length > 1) {
-									for(var i = 0; i < ids.length; i++) {
-										if(id == ids[i]) {
-											ids.splice(i, 1);
-											break;
-										}
-									}
-									marker.set('ids', ids);
-									marker.setIcon(listing.icon(ids.length, 0));
-								} else {
-									marker.setMap(null);
-								}
-							});
-						}
-						
 						fn(stt, id);
 					}
 				});
 			}
+		}
+	},
+	removeFromSavedList: function(id, el) {
+		if(listing.currentState == listing.state.DRAW_SAVED) {
+			var nextProduct = listing.products[listing.currentPage * listing.limit];
+			listing.removeProduct(id);
+			if(nextProduct) {
+				listing.listEl.append(listing.buildListItem(nextProduct, true));
+			}
+			
+			el.closest('li').slideUp(function(){
+				$(this).remove();
+				if(listing.listEl.children().length == 0) {
+					listing.showNoResultSaved();
+				}
+				
+				var marker = listing.getMarker(id + '');
+				var ids = marker.get('ids');
+				if(ids.length > 1) {
+					for(var i = 0; i < ids.length; i++) {
+						if(id == ids[i]) {
+							ids.splice(i, 1);
+							break;
+						}
+					}
+					marker.set('ids', ids);
+					marker.setIcon(listing.icon(ids.length, 0));
+				} else {
+					marker.setMap(null);
+				}
+			});
 		}
 	},
 	showNoResultSaved: function() {
