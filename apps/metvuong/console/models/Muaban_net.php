@@ -78,7 +78,7 @@ class Muaban_net extends Component
                 }
                 $log["current_page"] = $current_page;
                 $this->writeFileLog($log);
-                print_r("\nPage 1 done.");
+                print_r("\nPage {$current_page} done.\n");
             }
         }
 
@@ -102,7 +102,7 @@ class Muaban_net extends Component
             $current_page_add = $current_page + 4; // +4 => total page to run are 5.
             if($current_page_add > $total_page)
                 $current_page_add = $total_page;
-            
+
             if($current_page > $total_page)
                 $current_page = 0;
 
@@ -132,7 +132,7 @@ class Muaban_net extends Component
                         }
                         $log["current_page"] = $i;
                         $this->writeFileLog($log);
-                        print_r("\nPage {$i} done.");
+                        print_r("\nPage {$i} done.\n");
                     }
                 }
             }
