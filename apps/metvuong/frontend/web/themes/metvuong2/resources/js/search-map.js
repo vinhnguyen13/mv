@@ -3,7 +3,7 @@ $(document).ready(function(){
 });
 
 var listing = {
-	CITY_ZOOM_LEVEL: 12, DISTRICT_ZOOM_LEVEL: 13, WARD_ZOOM_LEVEL: 14,
+	CITY_ZOOM_LEVEL: 11, DISTRICT_ZOOM_LEVEL: 12, WARD_ZOOM_LEVEL: 13,
 	status: 0, form: null, listEl: null, detailWrapEl: null, detailEl: null, tabContentEl: null, gmap: null, products: [],
 	resultItemEl: null, noResultEl: null, listingLoading: null, filterFieldsEl: null, currentRquest: null,
 	markers: {}, polygons: [], groupMarkers: [], infoWindow: null, InfoWindowMore: null, closeTimeout: null, offsetCenterX: 0, offsetCenterY: 0,

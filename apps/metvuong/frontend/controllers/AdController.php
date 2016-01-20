@@ -130,7 +130,7 @@ class AdController extends Controller
         		$initialZoom = 'listing.WARD_ZOOM_LEVEL';
         		$whereDistrictId = $districtId;
         	} else {
-        		$initialZoom = 'listing.WARD_ZOOM_LEVEL';
+        		$initialZoom = 'listing.DISTRICT_ZOOM_LEVEL';
         		$whereDistrictId = ArrayHelper::getColumn($districts, 'id');
         	}
         	
