@@ -57,7 +57,7 @@ class Chart extends Component
     public function getDataVisitor(){
         $from = strtotime('-30 days');
         $to = strtotime('+1 days');
-        $pids = [];
+        $pids = [1];
 
         $query = AdProductVisitor::find();
         $query->andFilterWhere(['between', 'time', $from, $to]);
