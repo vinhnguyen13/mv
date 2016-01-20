@@ -31,7 +31,6 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 ?>
 <div class="list-filters-result">
 	<form id="map-search-form" action="<?= Url::to('/real-estate/result') ?>" method="post">
-		<input type="hidden" name="result" value="1" />
 		<input type="hidden" name="cityId" id="city-id" value="<?= Yii::$app->request->get('city') ?>" />
 		<input type="hidden" name="districtId" id="district-id" value="<?= Yii::$app->request->get('district') ?>" />
 		<input type="hidden" name="categoryId" id="category-id" value="<?= Yii::$app->request->get('category') ?>" />
