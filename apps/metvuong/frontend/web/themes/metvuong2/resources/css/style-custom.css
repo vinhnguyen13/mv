@@ -3296,7 +3296,7 @@ li.search-filter .type-search,
     width: 100%;
 }
 .result-items {
-    width: 40%;
+    width: 38%;
     position: absolute;
     right: 0;
     bottom: 0;
@@ -4988,7 +4988,7 @@ header.wrap-page-home .box-search-header.ani-search > div {
 .list-results li .wrap-img {
     width: 150px;
     height: 115px;
-    background-position: 50% center;
+    /* background-position: 50% center; */
 }
 .fieldset #cke_adproduct-content {
     margin-top: 15px;
@@ -5212,7 +5212,7 @@ header.wrap-page-home .box-search-header.ani-search > div {
     top: 52px;
     left: 0;
     z-index: 10;
-    width: 234px;
+    width: 235px;
     opacity: 0;
     -webkit-transition: opacity 0.25s ease-out;
     transition: opacity 0.25s ease-out;
@@ -5252,7 +5252,7 @@ header.wrap-page-home .box-search-header.ani-search > div {
     border: 1px solid #ccc;
     background-color: #fff;
     box-shadow: inset 0 2px 2px #f4f4f4,0 0 0 #7fb9f1;
-    font-size: .9em;
+    font-size: 14px;
     cursor: pointer;
 }
 .filter-pane .minmax-entries {
@@ -5371,6 +5371,7 @@ header.wrap-page-home .box-search-header.ani-search > div {
     width: 800px;
     left: 0px;
     bottom: 0;
+    z-index: 20;
 }
 #detail-listing {
     height: 100%;
@@ -6252,7 +6253,7 @@ header {
     display: inline-block;
     height: 100%;
     vertical-align: middle;
-    margin-right: -0.25em; /* Adjusts for spacing */
+    margin-right: -1em;/* Adjusts for spacing */
 }
 .projects .list-du-an a p {
     display: inline-block;
@@ -6445,6 +6446,7 @@ footer li {
 .wrap-col-fixed-result {
     position: relative;
     height: 100%;
+    z-index: 21;
 }
 #order-by-tab {
     position: absolute;
@@ -6478,7 +6480,8 @@ li.search-filter .type-search input {
     display: block;
     line-height: 35px;
     float: right;
-    padding-left: 0;
+    padding-left: 4px;
+    font-weight: 400;
 }
 li.search-filter .type-search ul {
     height: 100%;
@@ -6499,9 +6502,11 @@ li.search-filter #btn-search {
 }
 li.search-filter li i {
     font-size: 13px;
+    top: 6px;
 }
 li.search-filter li span {
     font-size: 10px;
+    padding-bottom: 7px;
 }
 li.search-filter .type-search div {
     width: 100%;
@@ -6859,13 +6864,13 @@ li.search-filter .search-wrap {
 }
 .show-listing {
     position: absolute;
-    top: 58px;
-    left: -91px;
+    top: 67px;
+    left: -104px;
     border: 1px solid #989898;
     background: #fff;
     font-size: 13px;
-    z-index: 15;
-    width: 150px;
+    z-index: 10;
+    width: 165px;
     text-align: center;
     padding: 9px;
     transform: rotate(-90deg);
@@ -7520,27 +7525,29 @@ li.search-filter .search-wrap {
 .infoContent .img-wrap {
     float: left;
     margin-right: 7px;
-    width: 105px;
+    width: 117px;
     height: 90px;
     padding: 0;
 }
 .infoContent > div {
     overflow: hidden;
     padding: 5px 5px 5px 0;
+    font-weight: 400;
 }
 .infoContent .address {
     font-size: 14px;
-    font-weight: 300;
-    margin-bottom: 8px;
+    margin-bottom: 3px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    text-decoration: underline;
+    color: #000;
+    font-weight: 600;
 }
 .infoContent .price{
     font-size: 19px;
     margin-bottom: 6px;
     color: #464646;
+    line-height: 30px;
 }
 .infoContent .addition {
     font-size: 13px;
@@ -7651,4 +7658,22 @@ li.search-filter .search-wrap {
 .send_mail:hover,
 .send_mail {
     color: #fff;
+}
+.page-forgot .modal-header,
+.page-login .modal-header,
+.page-regis .modal-header {
+    background: none;
+    padding: 0;
+    height: auto;
+    line-height: 30px;
+    margin-bottom: 20px;
+}
+.page-forgot .modal-header h3,
+.page-login .modal-header h3,
+.page-regis .modal-header h3 {
+    color: #616161;
+    font-weight: 600;
+    line-height: inherit;
+    text-transform: uppercase;
+    border-bottom: 1px solid #616161;
 }
