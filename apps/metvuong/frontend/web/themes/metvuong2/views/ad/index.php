@@ -29,7 +29,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     $fb_appId = '891967050918314';
 ?>
 <div class="list-filters-result">
-	<form id="map-search-form" action="<?= Url::to('/real-estate/result') ?>" method="post">
+	<form id="map-search-form" action="<?= Url::to('/real-estate/result', true) ?>" method="post">
 		<input type="hidden" name="cityId" id="city-id" value="<?= Yii::$app->request->get('city') ?>" />
 		<input type="hidden" name="districtId" id="district-id" value="<?= Yii::$app->request->get('district') ?>" />
 		<input type="hidden" name="categoryId" id="category-id" value="<?= Yii::$app->request->get('category') ?>" />
