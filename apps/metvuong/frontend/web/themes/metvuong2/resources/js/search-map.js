@@ -228,27 +228,26 @@ var listing = {
 				listing.listEl.append(listing.buildListItem(nextProduct, true));
 			}
 			
-			el.closest('li').slideUp(function(){
-				$(this).remove();
-				if(listing.listEl.children().length == 0) {
-					listing.showNoResultSaved();
-				}
-				
-				var marker = listing.getMarker(id + '');
-				var ids = marker.get('ids');
-				if(ids.length > 1) {
-					for(var i = 0; i < ids.length; i++) {
-						if(id == ids[i]) {
-							ids.splice(i, 1);
-							break;
-						}
+			el.closest('li').remove();
+			
+			if(listing.listEl.children().length == 0) {
+				listing.showNoResultSaved();
+			}
+			
+			var marker = listing.getMarker(id + '');
+			var ids = marker.get('ids');
+			if(ids.length > 1) {
+				for(var i = 0; i < ids.length; i++) {
+					if(id == ids[i]) {
+						ids.splice(i, 1);
+						break;
 					}
-					marker.set('ids', ids);
-					marker.setIcon(listing.icon(ids.length, 0));
-				} else {
-					marker.setMap(null);
 				}
-			});
+				marker.set('ids', ids);
+				marker.setIcon(listing.icon(ids.length, 0));
+			} else {
+				marker.setMap(null);
+			}
 		}
 	},
 	showNoResultSaved: function() {
