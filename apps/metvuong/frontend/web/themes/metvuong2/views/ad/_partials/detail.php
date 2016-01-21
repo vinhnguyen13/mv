@@ -131,6 +131,7 @@ use yii\helpers\Url;
                                 <p class="price-summary"><?= StringHelper::formatCurrency($product->price) ?><?= $product->type == AdProduct::TYPE_FOR_RENT ? '/tháng' : '' ?></p>
                             </div>
                             <p class="home-attr"><?= $product->area ?> m<sup style="font-size: 12px">2</sup><?= $additionInfo->floor_no ? " <span>.</span> {$additionInfo->floor_no} tầng" : '' ?><?= $additionInfo->room_no ? " <span>.</span> {$additionInfo->room_no} phòng ngủ" : '' ?><?= $additionInfo->toilet_no ? " <span>.</span> {$additionInfo->toilet_no} nhà tắm" : '' ?></p>
+                            <p class="pull-left id-listing"><strong>ID:</strong>#123456</p>
                             <p class="infor-post-date"><em class="fa fa-calendar"></em><?= date('d/m/Y', $product->created_at) ?></p>
                             <div class="rating" data-url="<?=Url::to(['/ad/rating', 'type'=>'']);?>">
                                 <fieldset class="rate">
