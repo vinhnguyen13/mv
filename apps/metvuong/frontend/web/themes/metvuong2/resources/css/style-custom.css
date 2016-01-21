@@ -3418,6 +3418,7 @@ li.search-filter .type-search,
     font-size: 14px;
     margin-bottom: 0;
     line-height: 20px;
+    color: #A0A0A0;
 }
 .infor-result .date-post-rent span {
     font-size: 1em;
@@ -5623,7 +5624,7 @@ button.btn.btn-default.dropdown-toggle {
 /* Click + hover color */
  /* color current and previous stars on checked */
 
-label:hover, label:hover ~ label {color: #d5dd00; opacity: .9;}
+.rating label:hover, .rating label:hover ~ .rating label {color: #d5dd00; opacity: .9;}
 
 /* Hover highlights */
 input:checked ~ label,
@@ -7762,4 +7763,24 @@ li.search-filter .search-wrap {
     line-height: 23px;
     height: 35px;
     padding: 0 0 0 10px;
+}
+.loading-proccess span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    border: solid 3px transparent;
+    border-top-color: #FFF;
+    border-left-color: #FFF;
+    border-radius: 10px;
+    -webkit-animation: pace-spinner 400ms linear infinite;
+    -moz-animation: pace-spinner 400ms linear infinite;
+    -ms-animation: pace-spinner 400ms linear infinite;
+    -o-animation: pace-spinner 400ms linear infinite;
+    animation: pace-spinner 400ms linear infinite;
+}
+#change-profile-form label {
+    font-weight: 400;
+    font-size: 14px;
 }

@@ -39,11 +39,58 @@ use yii\bootstrap\ActiveForm;
                             ],
                         ],
                     ]); ?>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="id-personal">ID</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="id-personal" class="form-control" name="" value="">
+                            <div class="help-block help-block-error "></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="id-personal">Giới tính</label>
+                        <div class="col-sm-9">
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptions" id="" value="option1"> Nam
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptions" id="" value="option1"> Nữ
+                            </label>
+                            <div class="help-block help-block-error "></div>
+                        </div>
+                    </div>
                     <?= $form->field($model, 'name')->textInput(['class' => 'form-control name']) ?>
                     <?= $form->field($model, 'public_email')->textInput(['class' => 'form-control public_email']) ?>
                     <?= $form->field($model, 'phone')->textInput(['class' => 'form-control phone']) ?>
                     <?= $form->field($model, 'mobile')->textInput(['class' => 'form-control mobile']) ?>
                     <?= $form->field($model, 'address')->textInput(['class' => 'form-control address']) ?>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="id-personal">Company</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="id-personal" class="form-control" name="" value="">
+                            <div class="help-block help-block-error "></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="id-personal">Company phone</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="id-personal" class="form-control" name="" value="">
+                            <div class="help-block help-block-error "></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="id-personal">Company address</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="id-personal" class="form-control" name="" value="">
+                            <div class="help-block help-block-error "></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="id-personal">Position in Company</label>
+                        <div class="col-sm-9">
+                            <input type="text" id="id-personal" class="form-control" name="" value="">
+                            <div class="help-block help-block-error "></div>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <div class="col-lg-offset-3 col-lg-9">
                             <?= Html::Button(Yii::t('user', 'Save'), ['class' => 'btn btn-block btn-success save']) ?>
