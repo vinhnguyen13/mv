@@ -11,6 +11,7 @@ return [
         '@vsoft/user' => dirname(__DIR__) . '/myvendor/vsoft/user',
         '@vsoft/tracking' => dirname(__DIR__) . '/myvendor/vsoft/tracking',
         '@vsoft/ad' => dirname(__DIR__) . '/myvendor/vsoft/ad',
+        '@vsoft/craw' => dirname(__DIR__) . '/myvendor/vsoft/craw',
         '@funson86' => dirname(__DIR__) . '/myvendor/funson86',
         '@funson86/cms' => dirname(__DIR__) . '/myvendor/funson86/yii2-cms',
         '@funson86/setting' => dirname(__DIR__) . '/myvendor/funson86/yii2-setting',

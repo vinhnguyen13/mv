@@ -57,6 +57,9 @@ return [
         'ad' => [
             'class' => 'vsoft\ad\Module',
         ],
+        'craw' => [
+            'class' => 'vsoft\craw\Module',
+        ],
         'express' => [
             'class' => 'vsoft\express\Module',
         ],

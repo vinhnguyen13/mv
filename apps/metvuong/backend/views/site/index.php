@@ -32,6 +32,16 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
         	<div class="col-lg-3 sizer"></div>
             <div class="col-lg-3 item">
             	<div class="panel panel-primary">
+			      <div class="panel-heading">Quản lý tin CRAW</div>
+			      <div class="panel-body">
+			      	<ol class="list-unstyled">
+	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['craw/manager/'])?>">Quản lý tin CRAW</a></li>
+	                </ol>
+			      </div>
+			    </div>
+            </div>
+            <div class="col-lg-3 item">
+            	<div class="panel panel-primary">
 			      <div class="panel-heading">Quản lý tin đăng</div>
 			      <div class="panel-body">
 			      	<ol class="list-unstyled">
