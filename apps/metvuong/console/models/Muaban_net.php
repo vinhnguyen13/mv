@@ -113,7 +113,7 @@ class Muaban_net extends Component
                     $link_page = $page_->find('.mbn-body .container .mbn-box-right .mbn-box-list li.mbn-title a');
                     if(count($link_page)){
                         foreach ($link_page as $a) {
-                            $href = $a->href;
+                            $href = trim($a->href);
                             if (!empty($href)) {
                                 $product_id = $this->getId($href);
                                 if(empty($product_id))
@@ -579,7 +579,7 @@ class Muaban_net extends Component
                                             'end_date' => $value[$filename]["end_date"],
                                             'verified' => 1,
                                             'created_at' => $value[$filename]["start_date"],
-                                            'source' => 1
+                                            'source' => 3
                                         ];
                                         // source = 1 for Batdongsan.com.vn
                                         $bulkInsertArray[] = $record;

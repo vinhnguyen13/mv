@@ -43,9 +43,17 @@ class CrawlerController extends Controller
     {
         BatdongsanV2::find()->importData();
     }
+    public function actionImportbatdongsan2()
+    {
+        BatdongsanV2::find()->importDataForTool();
+    }
     public function actionUpdatebatdongsan()
     {
         BatdongsanV2::find()->updateData();
+    }
+    public function actionGetagentbds()
+    {
+        BatdongsanV2::find()->getAgents();
     }
 
     public function actionMuaban()
