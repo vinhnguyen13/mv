@@ -84,4 +84,8 @@ class AdWard extends \yii\db\ActiveRecord
     {
         return $this->hasOne(AdDistrict::className(), ['id' => 'district_id']);
     }
+    
+    public function getFullName() {
+    	return $this->pre ? $this->pre . ' ' . $this->name : $this->name;
+    }
 }

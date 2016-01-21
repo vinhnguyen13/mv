@@ -111,4 +111,8 @@ class AdDistrict extends \yii\db\ActiveRecord
     {
         return $this->hasMany(AdWard::className(), ['district_id' => 'id']);
     }
+    
+    public function getFullName() {
+    	return $this->pre ? $this->pre . ' ' . $this->name : $this->name;
+    }
 }

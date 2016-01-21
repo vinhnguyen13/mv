@@ -3,7 +3,7 @@
 namespace vsoft\craw\models;
 
 use Yii;
-use yii\data\ActiveDataProvider;
+use vsoft\ad\models\AdProduct as AP;
 
 /**
  * This is the model class for table "ad_product".
@@ -51,7 +51,7 @@ use yii\data\ActiveDataProvider;
  * @property AdProductSaved[] $adProductSaveds
  * @property User[] $users1
  */
-class AdProduct extends \yii\db\ActiveRecord
+class AdProduct extends AP
 {
     /**
      * @inheritdoc
@@ -89,15 +89,20 @@ class AdProduct extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'category_id' => 'Category ID',
-            'project_building_id' => 'Project Building ID',
-            'home_no' => 'Home No',
+            'category_id' => 'Phân loại',
+            'project_building_id' => 'Thuộc dự án',
+            'project' => 'Thuộc dự án',
+            'home_no' => 'Số nhà',
             'user_id' => 'User ID',
             'city_id' => 'City ID',
+            'city' => 'Tỉnh/Thành',
             'district_id' => 'District ID',
+            'district' => 'Quận/Huyện',
             'ward_id' => 'Ward ID',
+            'ward' => 'Phưỡng/Xã',
             'street_id' => 'Street ID',
-            'type' => 'Type',
+            'street' => 'Đường/Phố',
+            'type' => 'Hình thức',
             'content' => 'Content',
             'area' => 'Area',
             'price' => 'Price',
@@ -173,6 +178,14 @@ class AdProduct extends \yii\db\ActiveRecord
     {
         return $this->hasOne(AdWard::className(), ['id' => 'ward_id']);
     }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProject()
+    {
+    	return $this->hasOne(AdBuildingProject::className(), ['id' => 'project_building_id']);
+    }
 
     /**
      * @return \yii\db\ActiveQuery
@@ -230,17 +243,12 @@ class AdProduct extends \yii\db\ActiveRecord
         return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('ad_product_saved', ['product_id' => 'id']);
     }
     
-    public function search() {
-    	$query = AdProduct::find();
-    	$query->orderBy(['created_at' => SORT_DESC]);
+    public function getTypeText() {
+    	$type = [
+    		AdProduct::TYPE_FOR_SELL => Yii::t ( 'ad', 'Nhà đất bán' ),
+    		AdProduct::TYPE_FOR_RENT => Yii::t ( 'ad', 'Nhà đất cho thuê' )
+    	];
     	
-    	$provider = new ActiveDataProvider([
-			'query' => AdProduct::find(),
-			'pagination' => [
-				'pageSize' => 20,
-			],
-		]);
-    	
-    	return $provider;
+    	return $type[$this->type];
     }
 }
