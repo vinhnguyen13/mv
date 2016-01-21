@@ -70,13 +70,15 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                                 <div id="mua-thue" class="outsideevent search-wrap hidden-effect" data-step-title="Muốn Mua/Thuê ?">
                                     <div class="wrap-effect">
                                         <div class="search-item">
-                                            <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                            <a href="#" class="btn-close-search"></a>
                                             <div class="wrap-step">
                                                 <h3></h3>
-                                                <ul class="clearfix">
-                                                    <li data-id="1"><a href="#" data-item="mua-thue" data-slug-name data-next="tinh-thanh" data-prev>Muốn Mua</a></li>
-                                                    <li data-id="2"><a href="#" data-item="mua-thue" data-slug-name data-next="tinh-thanh" data-prev>Muốn Thuê</a></li>
-                                                </ul>
+                                                <div class="item-render clearfix">
+                                                    <ul class="clearfix">
+                                                        <li class="buy-icon" data-id="1"><a href="#" data-item="mua-thue" data-slug-name data-next="tinh-thanh" data-prev><span></span>Muốn Mua</a></li>
+                                                        <li class="rent-icon" data-id="2"><a href="#" data-item="mua-thue" data-slug-name data-next="tinh-thanh" data-prev><span></span>Muốn Thuê</a></li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -85,10 +87,12 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                                 <div id="tinh-thanh" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn Tỉnh/Thành ?">
                                     <div class="wrap-effect">
                                         <div class="search-item">
-                                            <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                            <a href="#" class="btn-close-search"></a>
                                             <div class="wrap-step">
                                                 <h3></h3>
-                                                <ul></ul>
+                                                <div class="item-render clearfix">
+                                                    <ul></ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -97,10 +101,12 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                                 <div id="quan-huyen" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn Quận/Huyện ?">
                                     <div class="wrap-effect">
                                         <div class="search-item">
-                                            <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                            <a href="#" class="btn-close-search"></a>
                                             <div class="wrap-step">
                                                 <h3></h3>
-                                                <ul></ul>
+                                                <div class="item-render clearfix">
+                                                    <ul></ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -109,10 +115,12 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                                 <div id="loai-bds" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn loại bất động sản ?">
                                     <div class="wrap-effect">
                                         <div class="search-item">
-                                            <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                            <a href="#" class="btn-close-search"></a>
                                             <div class="wrap-step">
                                                 <h3></h3>
-                                                <ul></ul>
+                                                <div class="item-render clearfix">
+                                                    <ul></ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -121,10 +129,12 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                                 <div id="loai-duan" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn dự án ?">
                                     <div class="wrap-effect">
                                         <div class="search-item">
-                                            <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                            <a href="#" class="btn-close-search"></a>
                                             <div class="wrap-step">
                                                 <h3></h3>
-                                                <ul></ul>
+                                                <div class="item-render clearfix">
+                                                    <ul></ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

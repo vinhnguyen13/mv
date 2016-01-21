@@ -6544,6 +6544,11 @@ li.search-filter .type-search div {
     font-weight: 400;
     font-size: 14px;
     line-height: 18px;
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 li.search-filter .search-wrap {
     width: 600px;
@@ -6553,9 +6558,9 @@ li.search-filter .search-wrap {
     border: none;
     font-size: 17px;
     top: 7px;
-}
-.list-filters-result li.search-filter .btn-close-search:hover {
-    background: none;
+    width: 18px;
+    height: 17px;
+    background: url(../images/close-search.png) no-repeat top left;
 }
 .o-wrapper {
     padding-top: 60px;
@@ -6847,8 +6852,11 @@ li.search-filter .search-wrap {
     position: relative;
 }
 .wrap-quick-review {
-    display: inline-block;
-    vertical-align: middle;
+    height: 100%;
+    display: -webkit-flex;
+    -webkit-align-items: center;
+    display: flex;
+    align-items: center;
 }
 .btn-scroll-down {
     position: absolute;
@@ -7725,6 +7733,8 @@ li.search-filter .search-wrap {
     float: left;
     margin-right: 10px;
 }
+.list-filters-result li.search-filter .wrap-step .rent-icon a,
+.list-filters-result li.search-filter .wrap-step .buy-icon a,
 .search-item ul .rent-icon a,
 .search-item ul .buy-icon a {
     line-height: 29px;
@@ -7749,7 +7759,7 @@ li.search-filter .search-wrap {
     opacity: .7;
 }
 #search-kind .box-cost.form-group input {
-    line-height: inherit;
+    line-height: 23px;
     height: 35px;
     padding: 0 0 0 10px;
 }

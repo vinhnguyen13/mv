@@ -289,7 +289,7 @@
                 return;
             }
 
-            if ( type_price_load != '' && objItemGet.length <= 2 ) {
+            /*if ( type_price_load != '' && objItemGet.length <= 2 ) {
                 var objMuaThue = {},
                     item = $('#mua-thue li[data-id='+type_price_load+']');
 
@@ -301,7 +301,7 @@
                 
                 renderSuggest(objMuaThue);
                 return;
-            }
+            }*/
 
             for ( var i = 0; i < objItemGet.length; i++ ) {
                 if ( i === 0 ) { // tab active

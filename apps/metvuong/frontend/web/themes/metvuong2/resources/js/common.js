@@ -487,6 +487,8 @@ $.fn.dropdown = function (options) {
             $(this).addClass('active');
 
             open($(this));
+
+            return false;
         });
 
         function open (item) {
