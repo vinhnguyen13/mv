@@ -4078,10 +4078,10 @@ form .inline-group {
 .contact-person > div p {
     line-height: 17px;
     margin-bottom: 5px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 100%;
+    /* white-space: nowrap; */
+    /* overflow: hidden; */
+    /* text-overflow: ellipsis; */
+    /* width: 100%; */
 }
 .contact-person > div p strong {
     padding-right: 5px;
