@@ -33,7 +33,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                         <div class="pull-left text-right mgT-10 list-tabs-search">
                             <div data-active="1" data-tab="mua-thue" class="search-select active" data-step='step1'>
                                 <a href="#">
-                                    Buy/Rent
+                                    Buy / Rent
                                 </a>
                             </div>
                             <div data-active="2" data-tab="ban-thue" class="search-select" data-step='step2'>
@@ -54,67 +54,77 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     <input id="searchInput" name="search" type="text" class="form-control outsideevent" placeholder="" readonly="readonly">
                                 </div>
 
-                                <div id="mua-thue" class="outsideevent search-wrap hidden-effect" data-step-title="Muốn Mua/Thuê ?">
+                                <div id="mua-thue" class="outsideevent search-wrap hidden-effect" data-step-title="Bạn Muốn Mua / Thuê ?">
                                     <div class="wrap-effect">
                                         <div class="search-item">
-                                            <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                            <a href="#" class="btn-close-search"></a>
                                             <div class="wrap-step">
                                                 <h3></h3>
-                                                <ul class="clearfix">
-                                                    <li data-id="1"><a href="#" data-item="mua-thue" data-slug-name data-next="tinh-thanh" data-prev>Muốn Mua</a></li>
-                                                    <li data-id="2"><a href="#" data-item="mua-thue" data-slug-name data-next="tinh-thanh" data-prev>Muốn Thuê</a></li>
-                                                </ul>
+                                                <div class="item-render clearfix">
+                                                    <ul class="clearfix">
+                                                        <li class="buy-icon" data-id="1"><a href="#" data-item="mua-thue" data-slug-name data-next="tinh-thanh" data-prev><span></span>Muốn Mua</a></li>
+                                                        <li class="rent-icon" data-id="2"><a href="#" data-item="mua-thue" data-slug-name data-next="tinh-thanh" data-prev><span></span>Muốn Thuê</a></li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div id="ban-thue" class="outsideevent search-wrap hidden-effect" data-step-title="Đăng Ký Bán/Thuê ?">
+                                <div id="ban-thue" class="outsideevent search-wrap hidden-effect" data-step-title="Đăng Ký Bán / Thuê ?">
                                     <div class="wrap-effect">
                                         <div class="search-item">
-                                            <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                            <a href="#" class="btn-close-search"></a>
                                             <div class="wrap-step">
                                                 <h3></h3>
-                                                <ul class="clearfix">
-                                                    <li data-id="1"><a href="#" data-item="ban-thue" data-slug-name data-next="tinh-thanh" data-prev>Đăng Ký Bán</a></li>
-                                                    <li data-id="2"><a href="#" data-item="ban-thue" data-slug-name data-next="tinh-thanh" data-prev>Đăng Ký Cho Thuê</a></li>
-                                                </ul>
+                                                <div class="item-render clearfix">
+                                                    <ul class="clearfix">
+                                                        <li class="buy-icon" data-id="1"><a href="#" data-item="ban-thue" data-slug-name data-next="tinh-thanh" data-prev><span></span>Đăng Ký Bán</a></li>
+                                                        <li class="rent-icon" data-id="2"><a href="#" data-item="ban-thue" data-slug-name data-next="tinh-thanh" data-prev><span></span>Đăng Ký Cho Thuê</a></li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div id="tinh-thanh" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn Tỉnh/Thành ?">
+                                <div id="tinh-thanh" class="outsideevent search-wrap hidden-effect" data-step-title="Hãy Chọn Tỉnh / Thành ?">
                                     <div class="wrap-effect">
                                         <div class="search-item">
-                                            <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                            <a href="#" class="btn-close-search"></a>
                                             <div class="wrap-step">
                                                 <h3></h3>
-                                                <ul></ul>
+                                                <div class="item-render clearfix">
+                                                    <ul></ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div id="quan-huyen" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn Quận/Huyện ?">
+                                <div id="quan-huyen" class="outsideevent search-wrap hidden-effect" data-step-title="Hãy Chọn Quận / Huyện ?">
                                     <div class="wrap-effect">
                                         <div class="search-item">
-                                            <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                            <a href="#" class="btn-close-search"></a>
                                             <div class="wrap-step">
                                                 <h3></h3>
-                                                <ul></ul>
+                                                <div class="item-render clearfix">
+                                                    <ul></ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div id="loai-bds" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn loại bất động sản ?">
+                                <div id="loai-bds" class="outsideevent search-wrap hidden-effect" data-step-title="Loại bất động sản Bạn cần tìm ?">
                                     <div class="wrap-effect">
                                         <div class="search-item">
-                                            <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                            <a href="#" class="btn-close-search"></a>
                                             <div class="wrap-step">
                                                 <h3></h3>
-                                                <ul></ul>
+                                                <div class="item-render clearfix">
+                                                    <ul></ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -123,10 +133,12 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                 <div id="loai-tin-tuc" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn loại tin tức ?">
                                     <div class="wrap-effect">
                                         <div class="search-item">
-                                            <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                            <a href="#" class="btn-close-search"></a>
                                             <div class="wrap-step">
                                                 <h3></h3>
-                                                <ul></ul>
+                                                <div class="item-render clearfix">
+                                                    <ul></ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -135,36 +147,40 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                 <div id="news" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn tin tức ?">
                                     <div class="wrap-effect">
                                         <div class="search-item">
-                                            <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                            <a href="#" class="btn-close-search"></a>
                                             <div class="wrap-step">
                                                 <h3></h3>
-                                                <ul></ul>
+                                                <div class="item-render clearfix">
+                                                    <ul></ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div id="loai-duan" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn dự án ?">
+                                <div id="loai-duan" class="outsideevent search-wrap hidden-effect" data-step-title="Chọn dự án chung cư ?">
                                     <div class="wrap-effect">
                                         <div class="search-item">
-                                            <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                            <a href="#" class="btn-close-search"></a>
                                             <div class="wrap-step">
                                                 <h3></h3>
-                                                <ul></ul>
+                                                <div class="item-render clearfix">
+                                                    <ul></ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div id="min-max" class="outsideevent search-wrap hidden-effect" data-step-title="Nhập khoảng giá ?">
+                                <div id="min-max" class="outsideevent search-wrap hidden-effect" data-step-title="Khoảng giá Bạn cần tìm ?">
                                     <div class="wrap-effect">
                                         <div class="search-item clearfix">
-                                            <a href="#" class="btn-close-search"><em class="icon-close"></em></a>
+                                            <a href="#" class="btn-close-search"></a>
                                             <div class="wrap-step">
                                                 <h3></h3>
                                                 <div class="frm-cost-min-max clearfix">
                                                     <div class="form-group inline-group box-cost" data-tab="min">
-                                                        <input type="text" class="form-control cost-value" placeholder="min" readonly="readonly">
+                                                        <input type="text" class="form-control cost-value" placeholder="Min" readonly="readonly">
                                                         <input type="hidden" id="minCost" name="costMin" class="valPrice">
                                                         <div class=" wrap-cost-bds hidden-cost">
                                                             <div class="wrap-effect-cost">
@@ -174,7 +190,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                                     </div>
                                                     <div class="line-center form-group inline-group box-cost"><span></span></div>
                                                     <div class="form-group inline-group box-cost" data-tab="max">
-                                                        <input type="text" class="form-control cost-value" placeholder="max" readonly="readonly">
+                                                        <input type="text" class="form-control cost-value" placeholder="Max" readonly="readonly">
                                                         <input type="hidden" id="maxCost" name="costMax" class="valPrice">
                                                         <div class=" wrap-cost-bds hidden-cost">
                                                             <div class="wrap-effect-cost">
