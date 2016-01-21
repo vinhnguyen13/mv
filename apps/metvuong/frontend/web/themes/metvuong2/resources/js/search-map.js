@@ -766,10 +766,8 @@ var listing = {
 		}
 		var triangleCoords = [];
 		
-		for(index in geometry) {
-			var latLng = geometry[index].split(',');
-			latLng = new google.maps.LatLng(Number(latLng[0]), Number(latLng[1]));
-			triangleCoords.push(latLng);
+		for(var i = 0; i < geometry.length; i++) {
+			triangleCoords.push(new google.maps.LatLng(Number(geometry[i][0]), Number(geometry[i][1])));
 		}
 		
 		var polygon = new google.maps.Polygon({
