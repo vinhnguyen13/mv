@@ -62,3 +62,54 @@ Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporti
     </div>
 </div>
 <?php $this->endContent();?>
+
+<div class="chat-group">
+	<div class="title-chat clearfix">
+		<em class="fa fa-close pull-right"></em><em class="fa fa-comments"></em>Nhà mô giới
+	</div>
+	<div class="wrap-chat clearfix">
+		<div class="wrap-me chat-infor">
+			<div class="avatar-chat pull-left"><a href="#"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/2015 - dddd1.jpg" alt=""></a></div>
+			<div class="wrap-txt-chat pull-left">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+			</div>
+		</div>
+		<div class="wrap-you chat-infor">
+			<div class="avatar-chat pull-right"><a href="#"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/621042015085736.jpg" alt=""></a></div>
+			<div class="wrap-txt-chat pull-right">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+			</div>
+		</div>
+		<div class="wrap-me chat-infor">
+			<div class="avatar-chat pull-left"><a href="#"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/2015 - dddd1.jpg" alt=""></a></div>
+			<div class="wrap-txt-chat pull-left">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+			</div>
+		</div>
+		<div class="wrap-you chat-infor">
+			<div class="avatar-chat pull-right"><a href="#"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/621042015085736.jpg" alt=""></a></div>
+			<div class="wrap-txt-chat pull-right">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+			</div>
+		</div>
+		<div class="wrap-me chat-infor">
+			<div class="avatar-chat pull-left"><a href="#"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/2015 - dddd1.jpg" alt=""></a></div>
+			<div class="wrap-txt-chat pull-left">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+			</div>
+		</div>
+		<div class="wrap-you chat-infor">
+			<div class="avatar-chat pull-right"><a href="#"><img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/621042015085736.jpg" alt=""></a></div>
+			<div class="wrap-txt-chat pull-right">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+			</div>
+		</div>
+		<div class="loading-chat">
+			Typing<span class="one">.</span><span class="two">.</span><span class="three">.</span>
+		</div>
+	</div>
+	<div class="type-input-chat">
+		<input type="text" placeholder="Nhập tin nhắn...">
+		<button class="sm-chat"><em class="fa fa-location-arrow"></em></button>
+	</div>
+</div>

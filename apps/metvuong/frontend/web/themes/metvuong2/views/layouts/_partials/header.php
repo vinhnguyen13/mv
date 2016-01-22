@@ -59,10 +59,33 @@ $searchParams = json_decode($value);
                     <span class="name-user"><?=!empty(Yii::$app->user->identity->profile->name) ? Yii::$app->user->identity->profile->name : Yii::$app->user->identity->email;?></span></a>
                 </li>
                 <li class="icon-notifi">
-                    <a href="#"><em class="fa fa-bell"></em><span>5</span></a>
+                    <a href="#" class="item-link-dropdown"><em class="fa fa-bell"></em><span>5</span></a>
+                    <div class="sub-noti container-effect hidden-effect">
+                        <ul class="wrap-effect">
+                            <li>
+                                <a href="#"><em class="fa fa-heart"></em>Có <span>5 người</span> lưu tin của bạn</a>
+                            </li>
+                            <li>
+                                <a href="#"><em class="fa fa-search"></em>Có <span>80 người</span> tìm kiếm tin của bạn.</a>
+                            </li>
+                            <li>
+                                <a href="#"><em class="fa fa-exclamation-circle"></em>Có <span>2 tin</span> vừa hết hạn, Bạn có muốn reup không ?</a>
+                            </li>
+                            <li>
+                                <a href="#"><em class="fa fa-heart"></em>Có <span>5 người</span> lưu tin của bạn</a>
+                            </li>
+                            <li>
+                                <a href="#"><em class="fa fa-search"></em>Có <span>80 người</span> tìm kiếm tin của bạn.</a>
+                            </li>
+                            <li>
+                                <a href="#"><em class="fa fa-exclamation-circle"></em>Có <span>2 tin</span> vừa hết hạn, Bạn có muốn reup không ?</a>
+                            </li>
+                        </ul>
+                        <a href="#" class="more-noti">see more</a>
+                    </div>
                 </li>
                 <li>
-                    <a href="#" class="sub-setting-user"></a>
+                    <a href="#" class="sub-setting-user item-link-dropdown"></a>
                     <div class="settings container-effect hidden-effect">
                         <ul class="sub-setting wrap-effect">
                             <li>

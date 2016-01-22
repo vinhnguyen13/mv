@@ -260,9 +260,7 @@ $(document).ready(function() {
     }
     //end page du-an
 
-    $('.settings').dropdown({
-        linkShow: $('.sub-setting-user')
-    });
+    $('.container-effect').dropdown();
 
     var regis_listing = {
         wrapStep: $('#regis-listing .wrap-step'),
@@ -468,7 +466,7 @@ $.fn.dropdown = function (options) {
 
         var defaults = {
             wrap: el.find('.wrap-effect'),
-            linkShow: $('.tabs-detail-item li .more-item'),
+            linkShow: $('.item-link-dropdown'),
             close: ''
         },
         sc = {};
