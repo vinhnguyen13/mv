@@ -6007,7 +6007,7 @@ header {
     position: relative;
 }
 .list-menu .user-loggin {
-    margin-right: 20px;
+    margin-right: 15px;
 }
 .list-menu li:last-child {
     margin-right: 0;
@@ -6021,6 +6021,26 @@ header {
 }
 .list-menu li a:hover {
     color: #ADADAD;
+}
+.list-menu li.icon-notifi {
+    margin-right: 20px;
+}
+.list-menu li.icon-notifi a {
+    font-size: 18px;
+}
+.list-menu li.icon-notifi span {
+    background-color: #dc0d17;
+    background-image: -webkit-linear-gradient(#fa3c45, #dc0d17);
+    background-image: linear-gradient(#fa3c45, #dc0d17);
+    color: #fff;
+    padding: 2px 3px;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .4);
+    border-radius: 2px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .7);
+    font-size: 12px;
+    position: absolute;
+    top: -8px;
+    right: -9px;
 }
 .list-menu .change-lang {
     margin-right: 0;

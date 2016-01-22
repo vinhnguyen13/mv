@@ -56,7 +56,10 @@ $searchParams = json_decode($value);
             <?php }else{?>
                 <li class="user-loggin"><a href="<?=Url::to(['user-management/index'])?>">
                     <span class="avatar-user"><img src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="" width="40" height="40"></span>
-                    <span class="name-user"><?=!empty(Yii::$app->user->identity->profile->name) ? Yii::$app->user->identity->profile->name : Yii::$app->user->identity->email;?></span>
+                    <span class="name-user"><?=!empty(Yii::$app->user->identity->profile->name) ? Yii::$app->user->identity->profile->name : Yii::$app->user->identity->email;?></span></a>
+                </li>
+                <li class="icon-notifi">
+                    <a href="#"><em class="fa fa-bell"></em><span>5</span></a>
                 </li>
                 <li>
                     <a href="#" class="sub-setting-user"></a>
