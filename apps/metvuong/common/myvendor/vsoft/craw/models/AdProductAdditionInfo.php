@@ -3,6 +3,7 @@
 namespace vsoft\craw\models;
 
 use Yii;
+use vsoft\ad\models\AdProductAdditionInfo as APAI;
 
 /**
  * This is the model class for table "ad_product_addition_info".
@@ -19,7 +20,7 @@ use Yii;
  *
  * @property AdProduct $product
  */
-class AdProductAdditionInfo extends \yii\db\ActiveRecord
+class AdProductAdditionInfo extends APAI
 {
     /**
      * @inheritdoc
@@ -75,5 +76,17 @@ class AdProductAdditionInfo extends \yii\db\ActiveRecord
     public function getProduct()
     {
         return $this->hasOne(AdProduct::className(), ['id' => 'product_id']);
+    }
+    
+    public function getHomeDirection() {
+    	$dl = self::directionList();
+    	
+    	return empty($dl[$this->home_direction]) ? null : $dl[$this->home_direction];
+    }
+    
+    public function getFacadeDirection() {
+    	$dl = self::directionList();
+    	
+    	return empty($dl[$this->facade_direction]) ? null : $dl[$this->facade_direction];
     }
 }
