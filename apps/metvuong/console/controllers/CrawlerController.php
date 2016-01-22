@@ -26,6 +26,7 @@ class CrawlerController extends Controller
         echo "cron service runnning";
     }
 
+    // Homefinder
     public function actionHomefinder()
     {
         Homefinder::find()->parse();
@@ -35,6 +36,7 @@ class CrawlerController extends Controller
         Homefinder::find()->importData_2();
     }
 
+    // Batdongsan
     public function actionBatdongsan()
     {
         BatdongsanV2::find()->parse();
@@ -51,11 +53,16 @@ class CrawlerController extends Controller
     {
         BatdongsanV2::find()->updateData();
     }
-    public function actionGetagentbds()
+    public function actionAgentbatdongsan()
     {
         BatdongsanV2::find()->getAgents();
     }
+    public function actionImportagentbds()
+    {
+        BatdongsanV2::find()->importAgent();
+    }
 
+    // Muaban.net
     public function actionMuaban()
     {
         Muaban_net::find()->parse();

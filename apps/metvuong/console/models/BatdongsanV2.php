@@ -8,9 +8,7 @@
 namespace console\models;
 
 use Collator;
-use frontend\models\User;
 use keltstr\simplehtmldom\SimpleHTMLDom;
-use linslin\yii2\curl\Curl;
 use vsoft\ad\models\AdCity;
 use vsoft\ad\models\AdContactInfo;
 use vsoft\ad\models\AdDistrict;
@@ -21,7 +19,7 @@ use vsoft\ad\models\AdStreet;
 use vsoft\ad\models\AdWard;
 use Yii;
 use yii\base\Component;
-use yii\helpers\FileHelper;
+use yii\base\ErrorException;
 
 class BatdongsanV2 extends Component
 {
@@ -167,11 +165,6 @@ class BatdongsanV2 extends Component
                             $sequence_id = $sequence_id + 1;
                         }
                     } else {
-//                        if(empty($log["p".$current_page]["duplicate"])){
-//                            $log["p".$current_page]["duplicate"] = array();
-//                        }
-//                        array_unshift($log["p".$current_page]["duplicate"], $productId);
-//                        $log["p".$current_page]["total"] = count($log["p".$current_page]["duplicate"]);
                         var_dump($productId);
                     }
                 }
@@ -1355,75 +1348,306 @@ class BatdongsanV2 extends Component
     }
 
     public function getAgentId($href){
-        if (preg_match('/eb(\d+)/',$href, $matches)) {
-            if(!empty($matches[1])){
-                return $product_id = $matches[1];
-            }
-        }
-        return null;
+        $lastIndex = strripos($href, '-')+1;
+        $result = substr($href, $lastIndex);
+        return $result;
     }
 
-    public function checkProductExists($path, $product_id){
+    public function checkProductExists($path, $product_id, $mobile, $current_page){
         if(!is_dir($path)){
             mkdir($path , 0777, true);
             echo "\nDirectory {$path} was created";
         }
-        $filename = $path.$product_id;
+        $filename = $path.$current_page."-".$product_id."-".$mobile;;
         return file_exists($filename);
     }
 
     public function getAgents(){
-        $url = "http://batdongsan.com.vn/nha-moi-gioi";
+        $path = Yii::getAlias('@console') . "/data/bds_html/agents/";
+        $file_log = "agent_log.json";
+        $log = $this->loadLog($path, $file_log);
+        $current_page = empty($log["current_page"]) ? 1 : ($log["current_page"] + 1);
+        $url = "http://batdongsan.com.vn/nha-moi-gioi/p{$current_page}";
         $page = $this->getUrlContent($url);
         if(!empty($page)){
+            print_r("\nGoto: {$url}\n");
             $html = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
-            $path = Yii::getAlias('@console') . "/data/bds_html/agents/";
-            $file_log = "agent_log.json";
-            $log = $this->loadLog($path, $file_log);
-            $current_page = empty($log["current_page"]) ? 1 : ($log["current_page"] + 1);
-            $list_page1 = $html->find('.tenmg h3 a');
-            if(count($list_page1)){
-                $i = 1;
-                foreach ($list_page1 as $a) {
+            $list_page = $html->find('.ttmgl');
+            if(count($list_page)){
+                foreach ($list_page as $p) {
+                    $a = $p->find('.tenmg a', 0);
                     $href = $a->href;
                     if (!empty($href)) {
                         $product_id = $this->getAgentId($href);
                         if(empty($product_id))
                             continue;
+                        $_info = $p->find('.ttmg div');
+                        $broker_info = array();
+                        $left = '';
+                        foreach($_info as $div){
+                            $class = trim($div->class);
+                            if (!(empty($class))) {
+                                if ($class == 'left')
+                                    $left = trim($div->innertext);
+                                else if ($class == 'right') {
+                                    $broker_info[$left] = trim($div->plaintext);
+                                }
+                            }
+                        }
+                        $mobile = empty($broker_info["Di động:"]) ? null : ($broker_info["Di động:"] == "Đang cập nhật" ? null : $broker_info["Di động:"]);
                         // check agent exists in folder
-                        if($this->checkProductExists($path."/files/", $product_id)){
-                            var_dump($product_id);
+                        if($this->checkProductExists($path."files/", $product_id, $mobile, $current_page)){
+                            print_r("\nduplicate: ".$current_page."-".$product_id."-".$mobile);
                             continue;
                         } else {
-                            var_dump($this->getAgentDetail($path."/files/", $product_id, $href));
+                            $this->getAgentDetail($path."files/", $product_id, $href, $broker_info, $current_page);
+
                         }
                     }
-                    $i++;
                 }
                 $log["current_page"] = $current_page;
                 $this->writeLog($log, $path, $file_log);
                 print_r("\nPage {$current_page} done.\n");
             }
+
+            $pagination = $html->find('.container-default .pager-block a');
+            $total_page = (int)str_replace("/nha-moi-gioi/p", "", $pagination[count($pagination) - 1]->href);
+            if($total_page > 0){
+                $current_page_add = $current_page + 9; // +4 => total page to run are 10.
+                if($current_page_add > $total_page)
+                    $current_page_add = $total_page;
+
+                if($current_page > $total_page)
+                    $current_page = 0;
+
+                for($i=$current_page+1; $i<=$current_page_add; $i++){
+                    $url = "http://batdongsan.com.vn/nha-moi-gioi/p{$i}";
+                    $page = $this->getUrlContent($url);
+                    if(!empty($page)){
+                        print_r("\nGoto: {$url}\n");
+                        $html_page = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
+                        $list_page = $html_page->find('.ttmgl');
+                        if(count($list_page)){
+                            foreach ($list_page as $p) {
+                                $a = $p->find('.tenmg a', 0);
+                                $href = $a->href;
+                                if (!empty($href)) {
+                                    $product_id = $this->getAgentId($href);
+                                    if(empty($product_id))
+                                        continue;
+
+                                    $_info = $p->find('.ttmg div');
+                                    $broker_info = array();
+                                    $left = '';
+                                    foreach($_info as $div){
+                                        $class = trim($div->class);
+                                        if (!(empty($class))) {
+                                            if ($class == 'left')
+                                                $left = trim($div->innertext);
+                                            else if ($class == 'right') {
+                                                $broker_info[$left] = trim($div->plaintext);
+                                            }
+                                        }
+                                    }
+                                    $mobile = empty($broker_info["Di động:"]) ? null : ($broker_info["Di động:"] == "Đang cập nhật" ? null : $broker_info["Di động:"]);
+                                    // check agent exists in folder
+                                    if($this->checkProductExists($path."files/", $product_id, $mobile, $i)){
+                                        print_r("\n".$i."-".$product_id."-".$mobile." duplicated.");
+                                        continue;
+                                    } else {
+
+                                        $this->getAgentDetail($path."files/", $product_id, $href, $broker_info, $i);
+                                    }
+                                }
+                            }
+                            $log["current_page"] = $i;
+                            $this->writeLog($log, $path, $file_log);
+                            print_r("\nPage {$i} done.\n");
+                            sleep(1);
+                        }
+                    } else {
+                        print_r("\nCannot access {$url}");
+                    }
+                }
+            } else {
+                print_r("Why not get total page?");
+            }
         }
     }
 
-    public function getAgentDetail($path, $product_id, $href){
+    public function getAgentDetail($path, $product_id, $href, $broker_info, $current_page){
         $page = $this->getUrlContent($this->domain.$href);
         if(!empty($page)){
-            $html = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
-            $broker_intro = $html->find('#broker_intro', 0)->plaintext;
-            if(!empty($broker_intro)){
-                if(!is_dir($path)){
-                    mkdir($path , 0777, true);
-                    echo "\nDirectory {$path} was created";
-                }
-                $res = $this->writeFileJson($path.$product_id, $page);
-                if($res){
-                    return true;
+            if(!is_dir($path)){
+                mkdir($path , 0777, true);
+                echo "\nDirectory {$path} was created";
+            }
+            $mobile = empty($broker_info["Di động:"]) ? null : ($broker_info["Di động:"] == "Đang cập nhật" ? null : $broker_info["Di động:"]);
+            $filename = $current_page."-".$product_id."-".$mobile;
+            if($this->writeFileJson($path.$filename, $page) > 0){
+                return true;
+            }
+        } else {
+            print_r("\nCannot access {$href}");
+        }
+        return false;
+    }
+
+    public function importAgent(){
+        $path = Yii::getAlias('@console') . "/data/bds_html/agents/";
+        $file_log = "import_agent_log.json";
+        $log_import = $this->loadLog($path, $file_log);
+        if (empty($log_import["files"]))
+            $log_import["files"] = array();
+        $agent_imported = empty($log_import["agent_imported"]) ? false : $log_import["agent_imported"];
+
+        if(!$agent_imported) {
+            $columnNameArray = ['name', 'address', 'mobile', 'phone', 'fax', 'email', 'website', 'rating', 'working_area', 'source', 'type', 'tax_code', 'updated_at'];
+            $bulkInsertArray = array();
+            $files = scandir($path."/files", 1);
+            $counter = count($files) - 2;
+            $last_file_index = $counter - 1;
+            if ($counter > 0) {
+                $filename = null;
+                $count_file = 1;
+                for ($i = 0; $i <= $last_file_index; $i++) {
+                    if ($count_file > 400) {
+                        break;
+                    }
+                    $filename = $files[$i];
+                    if (in_array($filename, $log_import["files"])) {
+                        continue;
+                    } else {
+                        $filePath = $path ."files/". $filename;
+                        if (file_exists($filePath)) {
+                            print_r("\n" . $count_file . " - {$filename}");
+                            $value = $this->parseAgentDetail($path, $filename);
+                            if (empty($value)) {
+                                print_r(" Error: no content\n");
+                                continue;
+                            }
+
+                            $record = [
+                                'name' => $value["name"],
+                                'address' => $value["name"],
+                                'mobile' => $value["mobile"],
+                                'phone' => $value["phone"],
+                                'fax' => $value["fax"],
+                                'email' => $value["email"],
+                                'website' => $value["website"],
+                                'rating' => $value["rating"],
+                                'working_area' => $value["working_area"],
+                                'source' => $value["source"],
+                                'type' => $value["type"],
+                                'tax_code' => $value["tax_code"],
+                                'updated_at' => $value["updated_at"]
+                            ];
+                            // source = 1 for Batdongsan.com.vn
+                            $bulkInsertArray[] = $record;
+
+                            print_r(" Added.\n");
+                            array_push($log_import["files"], $filename);
+                            $log_import["import_total"] = count($log_import["files"]);
+                            $log_import["import_time"] = date("d-m-Y H:i");
+                            $count_file++;
+                        }
+                    }
+                } // end file loop
+                $this->writeLog($log_import, $path, $file_log);
+                if (count($bulkInsertArray) > 0) {
+                    print_r("\nInsert data...");
+                    // below line insert all your record and return number of rows inserted
+                    $insertCount = Yii::$app->db->createCommand()
+                        ->batchInsert("agent", $columnNameArray, $bulkInsertArray)->execute();
+                    print_r(" DONE!");
                 }
             }
         }
-        return false;
+    }
+
+    public function parseAgentDetail($path, $filename){
+        $json = array();
+        $filePath = $path."files/".$filename;
+        $page = file_get_contents($filePath);
+        if(empty($page))
+            return null;
+        $detail = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
+        if (!empty($detail)) {
+            $name_obj = $detail->find('.broker-detail h1', 0);
+            $name = null;
+            if(!empty($name_obj)){
+                $name = $name_obj->plaintext;
+            } else {
+                return null;
+            }
+            $rating = 0;
+
+            $broker_info = array();
+            $left = '';
+            $broker_detail = $detail->find('.broker-detail .ttmg div');
+            if(empty($broker_detail)) return null;
+            foreach ($broker_detail as $div) {
+                $class = $div->class;
+                if (!(empty($class))) {
+                    if ($class == 'left')
+                        $left = trim($div->innertext);
+                    else if ($class == 'right') {
+                        $broker_info[$left] = trim(str_replace(":","",$div->innertext));
+                    }
+                }
+            }
+
+            $address = empty($broker_info["Địa chỉ"]) ? null : $broker_info["Địa chỉ"];
+            $filename_array = explode("-",$filename);
+            $mobile = null;
+            if(count($filename_array) > 0)
+                $mobile = $filename_array[count($filename_array)-1];
+
+            $dt = empty($broker_info["ĐT"]) ? null : ($broker_info["ĐT"] == "Đang cập nhật" ? null : $broker_info["ĐT"]);
+            $dienthoai = empty($broker_info["Điện thoại"]) ? null : ($broker_info["Điện thoại"] == "Đang cập nhật" ? null : $broker_info["Điện thoại"]);
+            $fax = empty($broker_info["Fax"]) ? null : ($broker_info["Fax"] == "Đang cập nhật" ? null : $broker_info["Fax"]);
+            $str_email = empty($broker_info["Email"]) ? null : ($broker_info["Email"] == "Đang cập nhật" ? null : $broker_info["Email"]);
+            $email = null;
+            if(!empty($str_email)) {
+                $email = substr($str_email, strpos($str_email, "var attr = '"));
+                $email = str_replace("var attr = '", "", $email);
+                $email = substr($email, 0, strpos($email, "var txt ="));
+                $email = str_replace("';", "", $email);
+                $email = html_entity_decode($email);
+            }
+            $web = empty($broker_info["Website"]) ? null : ($broker_info["Website"] == "Đang cập nhật" ? null : $broker_info["Website"]);
+            $type_ = $detail->find('.introtitle', 0);
+            $type = null;
+            if(!empty($type_) && $type_->plaintext == "Khu vực công ty môi giới")
+                $type = 1;
+            else
+                $type = 2;
+            $working_list = $detail->find('.ltrAreaIntro ul li');
+            $working = null;
+            if(!empty($working_list)){
+                foreach($working_list as $place){
+                    $working .= " ".trim($place->plaintext).";";
+                }
+                $working = rtrim($working, ";");
+            }
+
+            $tax = empty($broker_info["Mã số thuế"]) ? null : ($broker_info["Mã số thuế"] == "Đang cập nhật" ? null : $broker_info["Mã số thuế"]);
+
+            $json = [
+                'name' => trim($name), 'address' => $address,
+                'mobile' => $mobile,
+                'phone' => empty($dt) ? $dienthoai : $dt,
+                'fax' => $fax,
+                'email' => $email,
+                'website' => $web,
+                'rating' => $rating,
+                'working_area' => $working,
+                'source' => 1,
+                'type' => $type,
+                'tax_code' => $tax, 'updated_at' => time()
+            ];
+            return $json;
+        }
     }
 
 }

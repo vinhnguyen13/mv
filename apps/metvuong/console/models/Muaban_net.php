@@ -124,7 +124,7 @@ class Muaban_net extends Component
                                     var_dump($product_id);
                                     continue;
                                 } else {
-                                    $res = $this->getFileDetail($path, $product_id, $href, $i);
+                                    $this->getFileDetail($path, $product_id, $href, $i);
                                 }
                             }
                             sleep(1);
