@@ -276,9 +276,9 @@ class AdProductSearch extends AdProduct
 
     	if($this->content) {
     		if($this->content == '1') {
-    			$query->andWhere(['IS NOT', 'content', null]);
+    			$query->andWhere(['!=', 'content', '']);
     		} else {
-    			$query->andWhere(['content' => null]);
+    			$query->andWhere(['content' => '']);
     		}
     	}
 
