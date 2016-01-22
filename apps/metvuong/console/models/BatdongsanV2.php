@@ -1198,10 +1198,22 @@ class BatdongsanV2 extends Component
 
                 if ($this->beginWith($loai_tin, "Bán căn hộ chung cư")) {
                     $loai_tai_san = 6;
-                } else if ($this->beginWith($loai_tin, "Bán nhà")) {
+                } else if ($this->beginWith($loai_tin, "Bán nhà riêng")) {
                     $loai_tai_san = 7;
-                } else if ($this->beginWith($loai_tin, "Bán đất")) {
+                } else if ($this->beginWith($loai_tin, "Bán nhà biệt thự, liền kề")) {
+                    $loai_tai_san = 8;
+                } else if ($this->beginWith($loai_tin, "Bán nhà mặt phố")) {
+                    $loai_tai_san = 9;
+                } else if ($this->beginWith($loai_tin, "Bán đất nền dự án")) {
                     $loai_tai_san = 10;
+                } else if ($this->beginWith($loai_tin, "Bán đất")) {
+                    $loai_tai_san = 11;
+                } else if ($this->beginWith($loai_tin, "Bán trang trại, khu nghỉ dưỡng")) {
+                    $loai_tai_san = 12;
+                } else if ($this->beginWith($loai_tin, "Bán kho, nhà xưởng")) {
+                    $loai_tai_san = 13;
+                } else {
+                    $loai_tai_san = 14;
                 }
             }
 
