@@ -7935,6 +7935,7 @@ li.search-filter .search-wrap {
     border-radius: 5px 5px 0 0;
     overflow: hidden;
     z-index: 99;
+    transition: height .5s ease-out;
 }
 .avatar-chat{
     width: 35px;

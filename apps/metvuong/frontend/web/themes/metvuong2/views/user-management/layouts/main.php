@@ -3,6 +3,7 @@ use yii\web\View;
 use yii\helpers\Url;
 Yii::$app->getView()->registerJsFile('http://code.highcharts.com/highcharts.js', ['position' => View::POS_BEGIN]);
 Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporting.js', ['position' => View::POS_BEGIN]);
+Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/dashboard.js', ['position'=>View::POS_BEGIN]);
 ?>
 <?php $this->beginContent('@app/views/layouts/layout-no-footer.php'); ?>
 <div class="wrap-user-profile row">
@@ -63,6 +64,13 @@ Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporti
 </div>
 <?php $this->endContent();?>
 
+<div class="notifi-popup">
+	<div class="notifi-item">
+		<em class="fa fa-comment-o"></em>Có 1 tin nhắn từ <a href="#">Minh Quang</a> gửi cho bạn		
+	</div>
+</div>
+
+	
 <div class="chat-group">
 	<div class="title-chat clearfix">
 		<em class="fa fa-close pull-right"></em><em class="fa fa-comments"></em>Nhà mô giới

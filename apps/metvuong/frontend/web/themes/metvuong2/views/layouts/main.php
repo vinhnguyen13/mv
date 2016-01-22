@@ -76,11 +76,7 @@ AppAsset::register($this);
 	    </div>
 	</div>
 
-	<div class="notifi-popup">
-		<div class="notifi-item">
-			<em class="fa fa-comment-o"></em>Có 1 tin nhắn từ <a href="#">Minh Quang</a> gửi cho bạn		
-		</div>
-	</div>
+	
 </body>
 </html>
 <?php $this->endPage() ?>
