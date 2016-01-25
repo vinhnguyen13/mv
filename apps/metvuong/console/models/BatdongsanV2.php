@@ -1616,7 +1616,7 @@ class BatdongsanV2 extends Component
                 }
             }
 
-            $address = empty($broker_info["Địa chỉ"]) ? null : trim(strip_tags($broker_info["Địa chỉ"]));
+            $address = empty($broker_info["Địa chỉ"]) ? null : strip_tags($broker_info["Địa chỉ"]);
             $filename_array = explode("-",$filename);
             $mobile = null;
             if(count($filename_array) > 0)
@@ -1654,17 +1654,18 @@ class BatdongsanV2 extends Component
 
             $json = [
                 'name' => trim($name),
-                'address' => $address,
-                'mobile' => $mobile,
-                'phone' => empty($dt) ? $dienthoai : $dt,
-                'fax' => $fax,
-                'email' => $email,
-                'website' => $web,
-                'rating' => $rating,
-                'working_area' => $working,
+                'address' => trim($address),
+                'mobile' => trim($mobile),
+                'phone' => empty($dt) ? trim($dienthoai) : trim($dt),
+                'fax' => trim($fax),
+                'email' => trim($email),
+                'website' => trim($web),
+                'rating' => trim($rating),
+                'working_area' => trim($working),
                 'source' => 1,
                 'type' => $type,
-                'tax_code' => $tax, 'updated_at' => time()
+                'tax_code' => trim($tax),
+                'updated_at' => time()
             ];
             return $json;
         }
