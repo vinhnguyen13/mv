@@ -1524,7 +1524,7 @@ class BatdongsanV2 extends Component
                 $filename = null;
                 $count_file = 1;
                 for ($i = 0; $i <= $last_file_index; $i++) {
-                    if ($count_file > 5) {
+                    if ($count_file > 500) {
                         break;
                     }
                     $filename = $files[$i];
@@ -1557,8 +1557,6 @@ class BatdongsanV2 extends Component
                             ];
                             // source = 1 for Batdongsan.com.vn
                             $bulkInsertArray[] = $record;
-
-                            print_r(" Added.\n");
                             array_push($log_import["files"], $filename);
                             $log_import["import_total"] = count($log_import["files"]);
                             $log_import["import_time"] = date("d-m-Y H:i");
@@ -1572,9 +1570,15 @@ class BatdongsanV2 extends Component
                     // below line insert all your record and return number of rows inserted
                     $insertCount = AdAgent::getDb()->createCommand()
                         ->batchInsert("ad_agent", $columnNameArray, $bulkInsertArray)->execute();
-                    print_r(" DONE!");
+                    if($insertCount > 0) {
+                        $log_import["agent_imported"] = true;
+                        $this->writeLog($log_import, $path, "import_agent_log.json");
+                        print_r(" DONE!");
+                    }
                 }
             }
+        } else {
+            print_r("File imported !!");
         }
     }
 
