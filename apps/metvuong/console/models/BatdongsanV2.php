@@ -17,6 +17,7 @@ use vsoft\ad\models\AdProduct;
 use vsoft\ad\models\AdProductAdditionInfo;
 use vsoft\ad\models\AdStreet;
 use vsoft\ad\models\AdWard;
+use vsoft\craw\models\AdAgent;
 use Yii;
 use yii\base\Component;
 use yii\base\ErrorException;
@@ -1523,7 +1524,7 @@ class BatdongsanV2 extends Component
                 $filename = null;
                 $count_file = 1;
                 for ($i = 0; $i <= $last_file_index; $i++) {
-                    if ($count_file > 400) {
+                    if ($count_file > 5) {
                         break;
                     }
                     $filename = $files[$i];
@@ -1541,7 +1542,7 @@ class BatdongsanV2 extends Component
 
                             $record = [
                                 'name' => $value["name"],
-                                'address' => $value["name"],
+                                'address' => $value["address"],
                                 'mobile' => $value["mobile"],
                                 'phone' => $value["phone"],
                                 'fax' => $value["fax"],
@@ -1569,7 +1570,7 @@ class BatdongsanV2 extends Component
                 if (count($bulkInsertArray) > 0) {
                     print_r("\nInsert data...");
                     // below line insert all your record and return number of rows inserted
-                    $insertCount = Yii::$app->db->createCommand()
+                    $insertCount = AdAgent::getDb()->createCommand()
                         ->batchInsert("ad_agent", $columnNameArray, $bulkInsertArray)->execute();
                     print_r(" DONE!");
                 }
@@ -1609,7 +1610,7 @@ class BatdongsanV2 extends Component
                 }
             }
 
-            $address = empty($broker_info["Địa chỉ"]) ? null : $broker_info["Địa chỉ"];
+            $address = empty($broker_info["Địa chỉ"]) ? null : strip_tags($broker_info["Địa chỉ"]);
             $filename_array = explode("-",$filename);
             $mobile = null;
             if(count($filename_array) > 0)
@@ -1627,7 +1628,7 @@ class BatdongsanV2 extends Component
                 $email = str_replace("';", "", $email);
                 $email = html_entity_decode($email);
             }
-            $web = empty($broker_info["Website"]) ? null : ($broker_info["Website"] == "Đang cập nhật" ? null : $broker_info["Website"]);
+            $web = empty($broker_info["Website"]) ? null : ($broker_info["Website"] == "Đang cập nhật" ? null : strip_tags($broker_info["Website"]));
             $type_ = $detail->find('.introtitle', 0);
             $type = null;
             if(!empty($type_) && $type_->plaintext == "Khu vực công ty môi giới")
@@ -1646,7 +1647,8 @@ class BatdongsanV2 extends Component
             $tax = empty($broker_info["Mã số thuế"]) ? null : ($broker_info["Mã số thuế"] == "Đang cập nhật" ? null : $broker_info["Mã số thuế"]);
 
             $json = [
-                'name' => trim($name), 'address' => $address,
+                'name' => trim($name),
+                'address' => $address,
                 'mobile' => $mobile,
                 'phone' => empty($dt) ? $dienthoai : $dt,
                 'fax' => $fax,

@@ -5,7 +5,7 @@ namespace vsoft\craw\models\base;
 use Yii;
 
 /**
- * This is the model class for table "agent".
+ * This is the model class for table "ad_agent".
  *
  * @property integer $id
  * @property string $name
@@ -22,14 +22,14 @@ use Yii;
  * @property integer $type
  * @property integer $updated_at
  */
-class AgentBase extends \yii\db\ActiveRecord
+class AdAgentBase extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'agent';
+        return 'ad_agent';
     }
 
     /**
