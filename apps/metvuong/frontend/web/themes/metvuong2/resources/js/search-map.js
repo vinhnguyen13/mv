@@ -717,6 +717,7 @@ var listing = {
 				});
 				
 				marker.set('name', ar.name);
+				marker.set('counter', counters[index]);
 				
 				marker.addListener('mouseover', listing.groupMakerMouseOver);
 				marker.addListener('mouseout', listing.groupMakerMouseOut);
@@ -727,12 +728,17 @@ var listing = {
 		}
 	},
 	groupMakerMouseOver: function() {
+		if(this.get('counter') > 999) {
+			listing.infoWindow.setOffsetTop(48);
+		}
+		
 		var infoContent = '<div class="info-wrap-single"><div style="padding: 6px 12px; font-weight: bold; font-size: 13px; white-space: nowrap">' + this.name + '</div><div class="arrow"></div></div>';
 		listing.infoWindow.setContent(infoContent);
 		listing.infoWindow.open(this);
 	},
 	groupMakerMouseOut: function() {
 		listing.infoWindow.close();
+		listing.infoWindow.setOffsetTop(40);
 	},
 	groupMakerClick: function() {
 		listing.gmap.setZoom(listing.WARD_ZOOM_LEVEL + 1);

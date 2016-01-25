@@ -117,5 +117,13 @@ var m2Map = {
 				}
 			}
 		};
+
+		m2Map.InfoWindow.prototype.setOffsetTop = function(offsetTop) {
+			this.options.offsetTop = offsetTop;
+		};
+		
+		m2Map.InfoWindow.prototype.getOffsetTop = function(offsetTop) {
+			return this.options.offsetTop;
+		};
 	}
 };

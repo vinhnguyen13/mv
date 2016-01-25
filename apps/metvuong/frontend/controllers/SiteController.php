@@ -151,10 +151,18 @@ class SiteController extends Controller
     }
     
     public function actionMapImage($t, $s) {
-    	if(ctype_digit($t) && $t < 1000 && $t > 1) {
+    	if(ctype_digit($t) && $t < 10000 && $t > 1) {
     		header('Content-Type: image/png');
     		
-    		$imgSrcName = ($s == 0) ? 'mc' : 'mch';
+    		if(strlen($t) > 3) {
+    			$imgSrcName = ($s == 0) ? 'mc-1' : 'mch-1';
+    			$offsetX = 16; // image width / 2
+    			$offsetY = 17; // image height / 2
+    		} else {
+    			$imgSrcName = ($s == 0) ? 'mc' : 'mch';
+    			$offsetX = 12; // image width / 2
+    			$offsetY = 13; // image height / 2
+    		}
     		
     		$markerImagesFolder = \Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . 'images';
     		$markerSaveName = $markerImagesFolder . DIRECTORY_SEPARATOR . 'genarate' . DIRECTORY_SEPARATOR . $imgSrcName . '-' . $t . '.png';
@@ -173,8 +181,6 @@ class SiteController extends Controller
     			$color = ($s == 0) ? imagecolorallocate($im, 0, 0, 0) : imagecolorallocate($im, 255, 255, 255);
     			
     			// calculate center text on image
-    			$offsetX = 12; // image width / 2
-    			$offsetY = 13; // image height / 2
     			$bbox = imagettfbbox($size, 0, $font, $t);
     			$dx = ($bbox[2]-$bbox[0])/2.0 - ($bbox[2]-$bbox[4])/2.0;
     			$dy = ($bbox[3]-$bbox[1])/2.0 + ($bbox[7]-$bbox[1])/2.0;
