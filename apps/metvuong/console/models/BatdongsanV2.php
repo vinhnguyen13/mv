@@ -1524,7 +1524,7 @@ class BatdongsanV2 extends Component
                 $filename = null;
                 $count_file = 1;
                 for ($i = 0; $i <= $last_file_index; $i++) {
-                    if ($count_file > 500) {
+                    if ($count_file > 5) {
                         $break_type = true;
                         break;
                     }
@@ -1575,12 +1575,13 @@ class BatdongsanV2 extends Component
                         print_r(" DONE!");
                     }
                 }
-
-                if(!$break_type){
-                    $log_import["agent_imported"] = true;
-                    $this->writeLog($log_import, $path, "import_agent_log.json");
-                }
             }
+
+//            if(!$break_type){
+//                $log_import["agent_imported"] = true;
+//                $this->writeLog($log_import, $path, "import_agent_log.json");
+//            }
+
         } else {
             print_r("Agents imported !!");
         }
