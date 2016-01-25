@@ -810,7 +810,7 @@ class BatdongsanV2 extends Component
             $districtData = AdDistrict::find()->all();
             $wardData = AdWard::find()->all();
             $streetData = AdStreet::find()->all();
-            $tableName = AdProduct::tableName();
+            $tableName = \vsoft\craw\models\AdProduct::tableName();
             $break_type = false; // detect next type if it is false
             foreach ($this->types as $key_type => $type) {
                 if ($key_type >= $last_type_import && !$break_type) {
@@ -931,7 +931,7 @@ class BatdongsanV2 extends Component
                     $bulkInfo = array();
                     $bulkContact = array();
 
-                    $fromProductId = Yii::$app->db->getLastInsertID();
+                    $fromProductId = \vsoft\craw\models\AdProduct::getDb()->getLastInsertID();
                     $toProductId = $fromProductId + $insertCount - 1;
 
                     $index = 1;
@@ -995,21 +995,21 @@ class BatdongsanV2 extends Component
                     // execute image, info, contact
                     if (count($bulkImage) > 0) {
                         $imageCount = \vsoft\craw\models\AdImages::getDb()->createCommand()
-                            ->batchInsert(AdImages::tableName(), $ad_image_columns, $bulkImage)
+                            ->batchInsert(\vsoft\craw\models\AdImages::tableName(), $ad_image_columns, $bulkImage)
                             ->execute();
                         if ($imageCount > 0)
                             print_r("\nInser image done");
                     }
                     if (count($bulkInfo) > 0) {
                         $infoCount = \vsoft\craw\models\AdProductAdditionInfo::getDb()->createCommand()
-                            ->batchInsert(AdProductAdditionInfo::tableName(), $ad_info_columns, $bulkInfo)
+                            ->batchInsert(\vsoft\craw\models\AdProductAdditionInfo::tableName(), $ad_info_columns, $bulkInfo)
                             ->execute();
                         if ($infoCount > 0)
                             print_r("\nInser product addition info done");
                     }
                     if (count($bulkContact) > 0) {
                         $contactCount = \vsoft\craw\models\AdContactInfo::getDb()->createCommand()
-                            ->batchInsert(AdContactInfo::tableName(), $ad_contact_columns, $bulkContact)
+                            ->batchInsert(\vsoft\craw\models\AdContactInfo::tableName(), $ad_contact_columns, $bulkContact)
                             ->execute();
                         if ($contactCount > 0)
                             print_r("\nInser contact info done");
