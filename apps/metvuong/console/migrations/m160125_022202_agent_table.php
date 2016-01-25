@@ -7,7 +7,7 @@ class m160125_022202_agent_table extends Migration
 {
     public function up()
     {
-        $this->execute("CREATE TABLE `agent` (
+        $this->execute("CREATE TABLE `ad_agent` (
               `id` int(11) NOT NULL AUTO_INCREMENT,
               `name` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
               `address` varchar(500) CHARACTER SET latin1 DEFAULT NULL,

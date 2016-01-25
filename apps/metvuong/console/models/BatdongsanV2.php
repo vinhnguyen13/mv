@@ -1570,7 +1570,7 @@ class BatdongsanV2 extends Component
                     print_r("\nInsert data...");
                     // below line insert all your record and return number of rows inserted
                     $insertCount = Yii::$app->db->createCommand()
-                        ->batchInsert("agent", $columnNameArray, $bulkInsertArray)->execute();
+                        ->batchInsert("ad_agent", $columnNameArray, $bulkInsertArray)->execute();
                     print_r(" DONE!");
                 }
             }
