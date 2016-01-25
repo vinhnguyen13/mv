@@ -99,7 +99,7 @@ class AdProduct extends AP
             'district_id' => 'District ID',
             'district' => 'Quận/Huyện',
             'ward_id' => 'Ward ID',
-            'ward' => 'Phưỡng/Xã',
+            'ward' => 'Phường/Xã',
             'street_id' => 'Street ID',
             'street' => 'Đường/Phố',
             'type' => 'Hình thức',

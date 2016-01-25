@@ -14,63 +14,121 @@ use vsoft\craw\models\AdProductAdditionInfo;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CmsShowSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$this->registerCss('.container {max-width: none; width: auto;} .summary {float: right;font-size: 20px;margin-top: 28px;} .title {float: left;} .min {width: 100px; display: inline-block;} table {white-space: nowrap;}');
+$this->registerCss('.filter-col {margin-right: 12px;} .container {max-width: none; width: auto;} .summary {float: right;font-size: 20px;margin-top: 28px;} .title {float: left;} .min {width: 100px; display: inline-block;} table {white-space: nowrap;}');
 
 $script = <<<EOD
-	$(document).ready(function(){
-		$('.price').keyup(function(){
-			formatCurrency($(this));
-		}).each(function(){
-			formatCurrency($(this));
-		});
+	$('.price').keyup(function(){
+		formatCurrency($(this));
+	}).each(function(){
+		formatCurrency($(this));
+	});
+	
+	$('input[type=text]').change(function(e){
+		e.stopPropagation();
+	});
+	
+	function formatCurrency(el) {
+		var val = el.val();
+		var next = el.next();
+		var text = '';
 		
-		$('input[type=text]').change(function(e){
-			e.stopPropagation();
-		});
-		
-		function formatCurrency(el) {
-			var val = el.val();
-			var next = el.next();
-			var text = '';
-			
-			if(/^0*$/.test(val)) {
-				next.text('');
-			} else {
-				if(val) {
-					text = val.split( /(?=(?:\d{3})+(?:\.|$))/g ).join(".");
-					
-					if(val.length > 9) {
-						text = (val / 1000000000) + '';
-						text = formatNumber(text.replace('.', ',')) + ' tỷ';
-					} else if(val.length > 6) {
-						text = (val / 1000000) + '';
-						text = text.replace('.', ',') + ' triệu';
-					}
-					
-					if($('#adproduct-type').val() == 2) {
-						text += '/tháng';
-					}
+		if(/^0*$/.test(val)) {
+			next.text('');
+		} else {
+			if(val) {
+				text = val.split( /(?=(?:\d{3})+(?:\.|$))/g ).join(".");
+				
+				if(val.length > 9) {
+					text = (val / 1000000000) + '';
+					text = formatNumber(text.replace('.', ',')) + ' tỷ';
+				} else if(val.length > 6) {
+					text = (val / 1000000) + '';
+					text = text.replace('.', ',') + ' triệu';
 				}
 				
-				next.text(text);
+				if($('#adproduct-type').val() == 2) {
+					text += '/tháng';
+				}
 			}
+			
+			next.text(text);
+		}
+	}
+	
+	function formatNumber(val) {
+		if(/^0*$/.test(val)) {
+			return '';
 		}
 		
-		function formatNumber(val) {
-			if(/^0*$/.test(val)) {
-				return '';
-			}
-			
-			val = val.split(',');
-			var text = val[0];
-			text = text.split( /(?=(?:\d{3})+(?:\.|$))/g ).join(".");
-			
-			if(val.length > 1) {
-				text = text + ',' + val[1];
-			}
-			
-			return text;
+		val = val.split(',');
+		var text = val[0];
+		text = text.split( /(?=(?:\d{3})+(?:\.|$))/g ).join(".");
+		
+		if(val.length > 1) {
+			text = text + ',' + val[1];
 		}
+		
+		return text;
+	}
+		
+	function setCookie(cname, cvalue, exdays) {
+	    var d = new Date();
+	    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+	    var expires = "expires="+d.toUTCString();
+	    document.cookie = cname + "=" + cvalue + "; " + expires;
+	}
+		
+	function getCookie(cname) {
+	    var name = cname + "=";
+	    var ca = document.cookie.split(';');
+	    for(var i=0; i<ca.length; i++) {
+	        var c = ca[i];
+	        while (c.charAt(0)==' ') c = c.substring(1);
+	        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+	    }
+	    return "";
+	}
+		
+	function setCol() {
+		var p = [];
+		$('#filter-column').find('input').each(function(){
+			var index = $(this).attr('id').replace('col-', '');
+			if(!$(this).prop('checked')) {
+				p.push(index);
+			}
+		});
+		setCookie('cols', p.join(','));
+	}
+	function getCol() {
+		return getCookie('cols').split(',');
+	}
+
+	$('th').each(function(index, val){
+		var cols = getCol();
+		if(cols.indexOf(index + '') == -1) {
+			var input = $('<label class="filter-col"><input checked="checked" type="checkbox" id="col-' + index + '" /> ' + $(this).text() + '</label>');
+		} else {
+			var input = $('<label class="filter-col"><input type="checkbox" id="col-' + index + '" /> ' + $(this).text() + '</label>');
+			$('tr').each(function(){
+				$(this).children().eq(index).hide();
+			});
+		}
+		
+		$('#filter-column').append(input);
+		input.find('input').change(function(){
+			var index = $(this).attr('id').replace('col-', '');
+			if($(this).prop('checked')) {
+				$('tr').each(function(){
+					$(this).children().eq(index).show();
+				});
+			} else {
+				setCookie(index, '');
+				$('tr').each(function(){
+					$(this).children().eq(index).hide();
+				});
+			}
+			setCol();
+		});
 	});
 EOD;
 $this->registerJs($script, View::POS_READY);
@@ -91,7 +149,7 @@ $directionList = AdProductAdditionInfo::directionList();
         'dataProvider' => $dataProvider,
         'filterModel' => $filterModel,
     	'formatter' => ['class' => 'yii\i18n\Formatter','nullDisplay' => '<span style="color: red; font-style: italic;">[null]</span>'],
-    	'summary' => '</div><div class="summary">Hiển thị <b>{begin}-{end}</b> của <b>{totalCount}</b> tin.</div>',
+    	'summary' => '<div class="summary">Hiển thị <b>{begin}-{end}</b> của <b>{totalCount}</b> tin.</div><div id="filter-column" style="clear: both;"></div>',
         'columns' => [
 			['attribute' => 'category_id', 'value' => 'category.name', 'filter' => Html::activeDropDownList($filterModel, 'category_id', ArrayHelper::map(AdCategory::find()->all(), 'id', 'name'), ['class' => 'form-control', 'prompt' => 'Chọn loại tin'])],
 			['format' => 'raw', 'attribute' => 'content', 'value' => function($model) { return $model->content ? mb_substr($model->content, 0, 20, 'UTF-8') . '...' : '<span style="color: red; font-style: italic;">[null]</span>'; },
