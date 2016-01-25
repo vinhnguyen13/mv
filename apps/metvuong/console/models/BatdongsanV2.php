@@ -1668,7 +1668,7 @@ class BatdongsanV2 extends Component
                 'working_area' => trim($working),
                 'source' => 1,
                 'type' => $type,
-                'tax_code' => trim($tax),
+                'tax_code' => empty($tax) ? null : trim($tax),
                 'updated_at' => time()
             ];
             return $json;
