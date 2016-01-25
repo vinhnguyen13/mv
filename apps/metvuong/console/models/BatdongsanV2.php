@@ -882,7 +882,7 @@ class BatdongsanV2 extends Component
                                             'content' => $content,
                                             'area' => $area,
                                             'price' => $price,
-                                            'price_type' => $price != -1 ? 1 : 0,
+                                            'price_type' => empty($price) ? 0 : 1,
                                             'lat' => $value[$filename]["lat"],
                                             'lng' => $value[$filename]["lng"],
                                             'start_date' => $value[$filename]["start_date"],
@@ -918,7 +918,7 @@ class BatdongsanV2 extends Component
             if (count($bulkInsertArray) > 0) {
                 print_r("\nInsert data...");
                 // below line insert all your record and return number of rows inserted
-                $insertCount = Yii::$app->db->createCommand()
+                $insertCount = \vsoft\craw\models\AdProduct::getDb()->createCommand()
                     ->batchInsert($tableName, $columnNameArray, $bulkInsertArray)->execute();
                 print_r(" DONE!");
 
@@ -994,21 +994,21 @@ class BatdongsanV2 extends Component
 
                     // execute image, info, contact
                     if (count($bulkImage) > 0) {
-                        $imageCount = Yii::$app->db->createCommand()
+                        $imageCount = \vsoft\craw\models\AdImages::getDb()->createCommand()
                             ->batchInsert(AdImages::tableName(), $ad_image_columns, $bulkImage)
                             ->execute();
                         if ($imageCount > 0)
                             print_r("\nInser image done");
                     }
                     if (count($bulkInfo) > 0) {
-                        $infoCount = Yii::$app->db->createCommand()
+                        $infoCount = \vsoft\craw\models\AdProductAdditionInfo::getDb()->createCommand()
                             ->batchInsert(AdProductAdditionInfo::tableName(), $ad_info_columns, $bulkInfo)
                             ->execute();
                         if ($infoCount > 0)
                             print_r("\nInser product addition info done");
                     }
                     if (count($bulkContact) > 0) {
-                        $contactCount = Yii::$app->db->createCommand()
+                        $contactCount = \vsoft\craw\models\AdContactInfo::getDb()->createCommand()
                             ->batchInsert(AdContactInfo::tableName(), $ad_contact_columns, $bulkContact)
                             ->execute();
                         if ($contactCount > 0)
@@ -1050,21 +1050,22 @@ class BatdongsanV2 extends Component
             $content = $detail->find('.pm-content', 0)->innertext;
 
             $dientich = trim($detail->find('.gia-title', 1)->plaintext);
-            $dt = 0;
+            $dt = null;
             if (strpos($dientich, 'm²')) {
                 $dientich = str_replace('m²', '', $dientich);
                 $dientich = str_replace('Diện tích:', '', $dientich);
                 $dientich = trim($dientich);
-                $dt = $dientich;
+                $dt = (float)$dientich;
             }
 
             $gia = trim($detail->find('.gia-title', 0)->plaintext);
-            $price = 0;
+            $price = null;
             if (strpos($gia, ' triệu')) {
                 $gia = str_replace('Giá:', '', $gia);
                 if (strpos($gia, ' triệu/m²')) {
                     $gia = str_replace(' triệu/m²&nbsp;', '', $gia);
-                    $gia = $gia * $dt;
+                    $dt_temp = empty($dt) ? 0 : $dt;
+                    $gia = $gia * $dt_temp;
                 }
                 else
                     $gia = str_replace(' triệu&nbsp;', '', $gia);
@@ -1076,8 +1077,7 @@ class BatdongsanV2 extends Component
                 $gia = str_replace(' tỷ&nbsp;', '', $gia);
                 $gia = trim($gia);
                 $price = $gia * 1000000000;
-            } else
-                $price = -1;
+            }
 
             $imgs = $detail->find('.pm-middle-content .img-map #thumbs li img');
             $thumbs = array();
@@ -1513,7 +1513,7 @@ class BatdongsanV2 extends Component
         if (empty($log_import["files"]))
             $log_import["files"] = array();
         $agent_imported = empty($log_import["agent_imported"]) ? false : $log_import["agent_imported"];
-
+        $break_type = false;
         if(!$agent_imported) {
             $columnNameArray = ['name', 'address', 'mobile', 'phone', 'fax', 'email', 'website', 'rating', 'working_area', 'source', 'type', 'tax_code', 'updated_at'];
             $bulkInsertArray = array();
@@ -1525,6 +1525,7 @@ class BatdongsanV2 extends Component
                 $count_file = 1;
                 for ($i = 0; $i <= $last_file_index; $i++) {
                     if ($count_file > 500) {
+                        $break_type = true;
                         break;
                     }
                     $filename = $files[$i];
@@ -1571,14 +1572,15 @@ class BatdongsanV2 extends Component
                     $insertCount = AdAgent::getDb()->createCommand()
                         ->batchInsert("ad_agent", $columnNameArray, $bulkInsertArray)->execute();
                     if($insertCount > 0) {
-                        $log_import["agent_imported"] = true;
-                        $this->writeLog($log_import, $path, "import_agent_log.json");
                         print_r(" DONE!");
                     }
                 }
+
+                if(!$break_type){
+                    $log_import["agent_imported"] = true;
+                    $this->writeLog($log_import, $path, "import_agent_log.json");
+                }
             }
-        } else {
-            print_r("File imported !!");
         }
     }
 
@@ -1614,14 +1616,14 @@ class BatdongsanV2 extends Component
                 }
             }
 
-            $address = empty($broker_info["Địa chỉ"]) ? null : strip_tags($broker_info["Địa chỉ"]);
+            $address = empty($broker_info["Địa chỉ"]) ? null : trim(strip_tags($broker_info["Địa chỉ"]));
             $filename_array = explode("-",$filename);
             $mobile = null;
             if(count($filename_array) > 0)
                 $mobile = $filename_array[count($filename_array)-1];
 
-            $dt = empty($broker_info["ĐT"]) ? null : ($broker_info["ĐT"] == "Đang cập nhật" ? null : $broker_info["ĐT"]);
-            $dienthoai = empty($broker_info["Điện thoại"]) ? null : ($broker_info["Điện thoại"] == "Đang cập nhật" ? null : $broker_info["Điện thoại"]);
+            $dt = empty($broker_info["ĐT"]) ? null : ($broker_info["ĐT"] == "Đang cập nhật" ? null : trim($broker_info["ĐT"]));
+            $dienthoai = empty($broker_info["Điện thoại"]) ? null : ($broker_info["Điện thoại"] == "Đang cập nhật" ? null : trim($broker_info["Điện thoại"]));
             $fax = empty($broker_info["Fax"]) ? null : ($broker_info["Fax"] == "Đang cập nhật" ? null : $broker_info["Fax"]);
             $str_email = empty($broker_info["Email"]) ? null : ($broker_info["Email"] == "Đang cập nhật" ? null : $broker_info["Email"]);
             $email = null;
