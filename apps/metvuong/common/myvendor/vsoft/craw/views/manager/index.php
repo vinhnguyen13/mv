@@ -162,7 +162,10 @@ $directionList = AdProductAdditionInfo::directionList();
 				Html::activeDropDownList($filterModel, 'wardFilter', ['1' => 'Có', '2' => 'Không'], ['class' => 'form-control', 'prompt' => 'Tất cả'])
 			],
     		['attribute' => 'district', 'value' => 'district.fullName'],
-    		['attribute' => 'street', 'value' => 'street.fullName'],
+    		['attribute' => 'street', 'value' => 'street.fullName', 'filter' =>
+    			Html::activeTextInput($filterModel, 'street', ['class' => 'form-control']) .
+				Html::activeDropDownList($filterModel, 'streetFilter', ['1' => 'Có', '2' => 'Không'], ['class' => 'form-control', 'prompt' => 'Tất cả'])
+			],
     		['attribute' => 'city', 'value' => 'city.name'],
     		['attribute' => 'type', 'value' => function($m) { return $m->getTypeText(); }, 'filter' => Html::activeDropDownList($filterModel, 'type', $type, ['class' => 'form-control', 'prompt' => 'Chọn hình thức'])],
             [

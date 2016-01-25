@@ -35,6 +35,7 @@ class AdProductSearch extends AdProduct
     public $toilet;
     public $toiletFilter;
     public $interior;
+    public $streetFilter;
     public $wardFilter;
     public $name;
     public $nameFilter;
@@ -54,7 +55,7 @@ class AdProductSearch extends AdProduct
             'priceFilter', 'content', 'facadeWidth', 'facadeFilter', 'landWidth', 'landFilter',
             'homeDirection', 'homeDirectionFilter', 'facadeDirection', 'facadeDirectionFilter', 'floor', 'floorFilter', 'room', 'roomFilter',
             'toilet', 'toiletFilter', 'interior', 'wardFilter', 'name', 'nameFilter', 'address', 'addressFilter', 'mobile', 'mobileFilter', 'phone', 'phoneFilter',
-            'email', 'emailFilter'], 'safe'],
+            'email', 'emailFilter', 'streetFilter'], 'safe'],
         ];
     }
     
@@ -265,6 +266,14 @@ class AdProductSearch extends AdProduct
     		}
     	}
 
+    	if($this->streetFilter) {
+    		if($this->streetFilter == '1') {
+    			$query->andWhere(['IS NOT', 'street_id', null]);
+    		} else {
+    			$query->andWhere(['street_id' => null]);
+    		}
+    	}
+    	
     	if($this->interior) {
     		if($this->interior == '1') {
     			$query->andWhere(['IS NOT', 'ad_product_addition_info.interior', null]);
