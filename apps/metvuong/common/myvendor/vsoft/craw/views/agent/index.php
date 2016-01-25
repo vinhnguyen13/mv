@@ -9,6 +9,10 @@ use yii\grid\GridView;
 
 $this->title = Yii::t('agent', 'Agents');
 $this->params['breadcrumbs'][] = $this->title;
+$type = [
+    1 => Yii::t ( 'agent', 'Batdongsan.com.vn' ),
+    2 => Yii::t ( 'agent', 'Homefinder.vn' )
+];
 ?>
 <div class="ad-agent-index">
 
@@ -30,6 +34,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'address',
             'mobile',
             'phone',
+            [
+                'format' => 'raw',
+                'attribute' => 'source',
+                'value' => function ($model) {
+                    return $model->source == 1 ? '<a href="//batdongsan.com.vn">Batdongsan.com.vn</a>' : '<a href="//homefinder.vn">Homefinder.vn</a>';
+                },
+                'filter' => Html::activeDropDownList($searchModel, 'source', $type,['class'=>'form-control','prompt' => 'All']),
+            ],
             // 'fax',
             // 'email:email',
             // 'website',
