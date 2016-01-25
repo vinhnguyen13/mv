@@ -729,7 +729,7 @@ var listing = {
 	},
 	groupMakerMouseOver: function() {
 		if(this.get('counter') > 999) {
-			listing.infoWindow.setOffsetTop(48);
+			listing.infoWindow.setOffsetTop(50);
 		}
 		
 		var infoContent = '<div class="info-wrap-single"><div style="padding: 6px 12px; font-weight: bold; font-size: 13px; white-space: nowrap">' + this.name + '</div><div class="arrow"></div></div>';
