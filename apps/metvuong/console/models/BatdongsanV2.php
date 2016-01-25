@@ -1581,6 +1581,8 @@ class BatdongsanV2 extends Component
                     $this->writeLog($log_import, $path, "import_agent_log.json");
                 }
             }
+        } else {
+            print_r("Agents imported !!");
         }
     }
 
@@ -1635,12 +1637,14 @@ class BatdongsanV2 extends Component
                 $email = html_entity_decode($email);
             }
             $web = empty($broker_info["Website"]) ? null : ($broker_info["Website"] == "Đang cập nhật" ? null : strip_tags($broker_info["Website"]));
-            $type_ = $detail->find('.introtitle', 0);
+            $type_ = trim($detail->find('.introtitle', 0)->plaintext);
             $type = null;
-            if(!empty($type_) && $type_->plaintext == "Khu vực công ty môi giới")
-                $type = 1;
-            else
-                $type = 2;
+            if(!empty($type_)) {
+                if ($type_ == "Khu vực công ty môi giới")
+                    $type = 1;
+                else
+                    $type = 2;
+            }
             $working_list = $detail->find('.ltrAreaIntro ul li');
             $working = null;
             if(!empty($working_list)){
