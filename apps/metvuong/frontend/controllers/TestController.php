@@ -7,7 +7,7 @@ use Elasticsearch\ClientBuilder;
 use frontend\models\Elastic;
 use frontend\models\Tracking;
 use GuzzleHttp\Ring\Client\CurlHandler;
-use vsoft\tracking\models\AdProductVisitor;
+use vsoft\tracking\models\base\AdProductVisitor;
 use vsoft\user\models\User;
 use Yii;
 use yii\db\mssql\PDO;
