@@ -157,6 +157,10 @@ return [
                 ],
             ],
         ],
+        'mobileDetect' => [
+//            'class' => dirname(dirname(__DIR__)) . '/common/myvendor/dkeeper/yii2-mobiledetect-master/Detect'
+            'class' => 'dkeeper\mobiledetect\Detect'
+        ]
     ],
     'params' => $params,
 ];

@@ -162,4 +162,9 @@ class TestController extends \yii\web\Controller
         echo "</pre>";
         exit;
     }
+
+    public function actionDevice(){
+        echo 'Mobile: '.Yii::$app->mobileDetect->isMobile();
+        echo 'Tablet: '.Yii::$app->mobileDetect->isTablet();
+    }
 }

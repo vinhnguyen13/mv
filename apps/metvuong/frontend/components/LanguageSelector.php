@@ -24,6 +24,21 @@ class LanguageSelector implements BootstrapInterface
 
         $app->language = $preferredLanguage;
         $this->changeLanguage();
+
+        if(Yii::$app->mobileDetect->isMobile()){
+            Yii::$app->set('view', [
+                'class' => 'yii\web\View',
+                'title' => '2amigOS! Consulting Group LLC',
+                'theme' => [
+                    'basePath' => '@webroot/themes/mv_mobile1',
+                    'baseUrl' => '/frontend/web/themes/mv_mobile1',
+                    'pathMap' => [
+                        '@app/views' => '@webroot/themes/mv_mobile1/views',
+                        '@dektrium/user/views' => '@webroot/themes/mv_mobile1/views',
+                    ],
+                ],
+            ]);
+        }
     }
 
     public function changeLanguage()

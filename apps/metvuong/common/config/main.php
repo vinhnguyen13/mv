@@ -16,6 +16,7 @@ return [
         '@funson86/cms' => dirname(__DIR__) . '/myvendor/funson86/yii2-cms',
         '@funson86/setting' => dirname(__DIR__) . '/myvendor/funson86/yii2-setting',
         '@linslin/yii2/curl' => dirname(__DIR__) . '/myvendor/linslin/yii2-curl',
+        '@dkeeper/mobiledetect' => dirname(__DIR__) . '/myvendor/dkeeper/yii2-mobiledetect-master',
     ),
     'modules' => [
         'express' => [
