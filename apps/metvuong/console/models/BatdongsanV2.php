@@ -8,6 +8,8 @@
 namespace console\models;
 
 use Collator;
+use DOMDocument;
+use DOMXPath;
 use keltstr\simplehtmldom\SimpleHTMLDom;
 use vsoft\ad\models\AdCity;
 use vsoft\ad\models\AdContactInfo;
@@ -684,7 +686,7 @@ class BatdongsanV2 extends Component
                 if ($insertCount > 0) {
                     $ad_image_columns = ['user_id', 'product_id', 'file_name', 'uploaded_at'];
                     $ad_info_columns = ['product_id', 'floor_no', 'room_no', 'toilet_no'];
-                    $ad_contact_columns = ['product_id', 'name', 'phone', 'mobile', 'address'];
+                    $ad_contact_columns = ['product_id', 'name', 'phone', 'mobile', 'address', 'email'];
 
                     $bulkImage = array();
                     $bulkInfo = array();
@@ -728,12 +730,14 @@ class BatdongsanV2 extends Component
                                 $phone = empty($contactArray[$index]["Điện thoại"]) == false ? trim($contactArray[$index]["Điện thoại"]) : null;
                                 $mobile = empty($contactArray[$index]["Mobile"]) == false ? trim($contactArray[$index]["Mobile"]) : null;
                                 $address = empty($contactArray[$index]["Địa chỉ"]) == false ? trim($contactArray[$index]["Địa chỉ"]) : null;
+                                $email = empty($contactArray[$index]["Email"]) == false ? trim($contactArray[$index]["Email"]) : null;
                                 $contactRecord = [
                                     'product_id' => $i,
                                     'name' => $name,
                                     'phone' => $phone,
                                     'mobile' => $mobile,
-                                    'address' => $address
+                                    'address' => $address,
+                                    'email' => $email
                                 ];
                                 $bulkContact[] = $contactRecord;
                             }
@@ -925,7 +929,7 @@ class BatdongsanV2 extends Component
                 if ($insertCount > 0) {
                     $ad_image_columns = ['user_id', 'product_id', 'file_name', 'uploaded_at'];
                     $ad_info_columns = ['product_id', 'facade_width', 'land_width', 'home_direction', 'facade_direction', 'floor_no', 'room_no', 'toilet_no', 'interior'];
-                    $ad_contact_columns = ['product_id', 'name', 'phone', 'mobile', 'address'];
+                    $ad_contact_columns = ['product_id', 'name', 'phone', 'mobile', 'address', 'email'];
 
                     $bulkImage = array();
                     $bulkInfo = array();
@@ -979,12 +983,14 @@ class BatdongsanV2 extends Component
                                 $phone = empty($contactArray[$index]["Điện thoại"]) == false ? trim($contactArray[$index]["Điện thoại"]) : null;
                                 $mobile = empty($contactArray[$index]["Mobile"]) == false ? trim($contactArray[$index]["Mobile"]) : null;
                                 $address = empty($contactArray[$index]["Địa chỉ"]) == false ? trim($contactArray[$index]["Địa chỉ"]) : null;
+                                $email = empty($contactArray[$index]["Email"]) == false ? trim($contactArray[$index]["Email"]) : null;
                                 $contactRecord = [
                                     'product_id' => $i,
                                     'name' => $name,
                                     'phone' => $phone,
                                     'mobile' => $mobile == null ? $phone : $mobile,
-                                    'address' => $address
+                                    'address' => $address,
+                                    'email' => $email
                                 ];
                                 $bulkContact[] = $contactRecord;
                             }
@@ -1088,9 +1094,39 @@ class BatdongsanV2 extends Component
                 }
             }
 
-            $left_detail = $detail->find('.pm-content-detail .left-detail', 0);
-            $div_info = $left_detail->find('div div');
-            $left = '';
+            $arr_contact = array();
+            $contact = $detail->find('.pm-content-detail #divCustomerInfo', 0);
+            if(!empty($contact)) {
+                $div_contact = $contact->find('div.right-content div');
+                $right = '';
+                if (count($div_contact) > 0) {
+                    foreach ($div_contact as $div) {
+                        $class = $div->class;
+                        if (!(empty($class))) {
+                            if (strpos($class, 'left') == true) {
+                                $right = $div->plaintext;
+                                $right = trim($right);
+                            } else if ($class == 'right') {
+                                if (array_key_exists($right, $arr_contact)) {
+                                    $right = $right . '_1';
+                                }
+                                $value = $div->innertext;
+                                $arr_contact[$right] = trim($value);
+                            }
+                        }
+                    }
+                    if(!empty($arr_contact["Email"])) {
+                        $str_email = $arr_contact["Email"];
+                        $email = substr($str_email, strpos($str_email, "mailto:"));
+                        $email = str_replace("mailto:", "", $email);
+                        $email = substr($email, 0, strpos($email, "'>"));
+                        $email = str_replace("';", "", $email);
+                        $email = html_entity_decode($email);
+                        $arr_contact["Email"] = $email;
+                    }
+                }
+            }
+
             $city = null;
             $district = null;
             $ward = null;
@@ -1098,19 +1134,64 @@ class BatdongsanV2 extends Component
             $home_no = null;
             $startdate = time();
             $endate = time();
-            $loai_tai_san = 6;
+            $loai_tai_san = null;
             $arr_info = [];
-            if (count($div_info) > 0) {
-                foreach ($div_info as $div) {
-                    $class = $div->class;
-                    if (!(empty($class))) {
-                        if ($class == 'left')
-                            $left = trim($div->innertext);
-                        else if ($class == 'right') {
-                            if (array_key_exists($left, $arr_info)) {
-                                $left = $left . '_1';
+            $left_detail = $detail->find('.pm-content-detail .left-detail', 0);
+            if(empty($left_detail)){
+                $dom = new DOMDocument();
+                @$dom->loadHTMLFile($filename);
+                if($dom->hasChildNodes()) {
+                    $dom->preserveWhiteSpace = false; // discard white space
+                    $xpath = new DOMXPath($dom);
+                    // thumbs
+                    foreach ($xpath->query('.//ul[@id="thumbs"]/li') as $li) {
+                        $img_link = $xpath->query('.//img', $li)->item(0)->attributes[3]->value;
+                        array_push($thumbs, $img_link);
+                    }
+
+                    // arr_info
+                    foreach ($xpath->query('.//div[@class="left-detail"]/div') as $add) {
+                        $div_left = trim($xpath->query('.//div[@class="left"]', $add)->item(0)->nodeValue);
+                        $div_right = trim($xpath->query('.//div[@class="right"]', $add)->item(0)->nodeValue);
+                        $arr_info[$div_left] = $div_right;
+                    }
+
+                    // arr_contact
+                    foreach ($xpath->query('.//div[@id="divCustomerInfo"]/div[@class="right-content"]') as $ad) {
+                        $div_left = trim($xpath->query('.//div[@class="normalblue left"]', $ad)->item(0)->nodeValue);
+                        $div_right = trim($xpath->query('.//div[@class="right"]', $ad)->item(0)->nodeValue);
+                        $arr_contact[$div_left] = $div_right;
+                    }
+                    if(!empty($arr_contact["Email"])) {
+                        $str_email = $arr_contact["Email"];
+                        $email = substr($str_email, strpos($str_email, "mailto:"));
+                        $email = str_replace("mailto:", "", $email);
+                        $email = substr($email, 0, strpos($email, "'>"));
+                        $email = str_replace("';", "", $email);
+                        $email = html_entity_decode($email);
+                        $arr_contact["Email"] = $email;
+                    }
+
+
+                } else {
+                    return null;
+                }
+            }
+            else {
+                $div_info = $left_detail->find('div div');
+                $left = '';
+                if (count($div_info) > 0) {
+                    foreach ($div_info as $div) {
+                        $class = $div->class;
+                        if (!(empty($class))) {
+                            if ($class == 'left')
+                                $left = trim($div->innertext);
+                            else if ($class == 'right') {
+                                if (array_key_exists($left, $arr_info)) {
+                                    $left = $left . '_1';
+                                }
+                                $arr_info[$left] = trim($div->plaintext);
                             }
-                            $arr_info[$left] = trim($div->plaintext);
                         }
                     }
                 }
@@ -1216,29 +1297,10 @@ class BatdongsanV2 extends Component
                 } else {
                     $loai_tai_san = 14;
                 }
+            } else {
+                return null;
             }
 
-            $contact = $detail->find('.pm-content-detail #divCustomerInfo', 0);
-            $div_contact = $contact->find('div.right-content div');
-            $right = '';
-            $arr_contact = [];
-            if (count($div_contact) > 0) {
-                foreach ($div_contact as $div) {
-                    $class = $div->class;
-                    if (!(empty($class))) {
-                        if (strpos($class, 'left') == true) {
-                            $right = $div->plaintext;
-                            $right = trim($right);
-                        } else if ($class == 'right') {
-                            if (array_key_exists($right, $arr_contact)) {
-                                $right = $right . '_1';
-                            }
-                            $value = $div->innertext;
-                            $arr_contact[$right] = trim($value);
-                        }
-                    }
-                }
-            }
             $json[$product_id] = [
                 'lat' => trim($lat),
                 'lng' => trim($long),
@@ -1261,6 +1323,28 @@ class BatdongsanV2 extends Component
             ];
         }
         return $json;
+    }
+
+    public function parseOtherDetail($filename){
+        $json = array();
+        $dom = new DOMDocument();
+        @$dom->loadHTMLFile($filename);
+        if($dom->hasChildNodes()) {
+            $dom->preserveWhiteSpace = false; // discard white space
+            $xpath = new DOMXPath($dom);
+
+            // thumbs
+            $thumbs = array();
+            foreach ($xpath->query('.//ul[@id="thumbs"]/li') as $li) {
+                $img_link = $xpath->query('.//img', $li)->item(0)->attributes[3]->value;
+                array_push($thumbs, $img_link);
+            }
+
+            echo "<pre>";
+            print_r($thumbs);
+            echo "<pre>";
+            exit();
+        }
     }
 
     function beginWith($haystack, $needle) {

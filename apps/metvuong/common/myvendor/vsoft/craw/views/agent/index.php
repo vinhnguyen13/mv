@@ -9,9 +9,13 @@ use yii\grid\GridView;
 
 $this->title = Yii::t('agent', 'Agents');
 $this->params['breadcrumbs'][] = $this->title;
-$type = [
+$source = [
     1 => Yii::t ( 'agent', 'Batdongsan.com.vn' ),
     2 => Yii::t ( 'agent', 'Homefinder.vn' )
+];
+$type = [
+    1 => Yii::t ( 'agent', 'Công ty' ),
+    2 => Yii::t ( 'agent', 'Cá nhân' )
 ];
 ?>
 <div class="ad-agent-index">
@@ -20,7 +24,9 @@ $type = [
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('agent', 'Create Ad Agent'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('agent', 'Create Agent'), ['create'], ['class' => 'btn btn-success']) ?>
+
+        <?= Html::a(Yii::t('agent', 'Reset filter'), ['index'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -34,22 +40,28 @@ $type = [
             'address',
             'mobile',
             'phone',
+            'fax',
+            'email:email',
+            'website:url',
             [
                 'format' => 'raw',
                 'attribute' => 'source',
                 'value' => function ($model) {
                     return $model->source == 1 ? '<a href="//batdongsan.com.vn">Batdongsan.com.vn</a>' : '<a href="//homefinder.vn">Homefinder.vn</a>';
                 },
-                'filter' => Html::activeDropDownList($searchModel, 'source', $type,['class'=>'form-control','prompt' => 'All']),
+                'filter' => Html::activeDropDownList($searchModel, 'source', $source,['class'=>'form-control','prompt' => 'All']),
             ],
-            // 'fax',
-            // 'email:email',
-            // 'website',
-            // 'tax_code',
-            // 'rating',
-            // 'working_area',
-            // 'source',
-            // 'type',
+            'tax_code',
+            'rating',
+            'working_area',
+            [
+                'format' => 'html',
+                'attribute' => 'type',
+                'value' => function ($model) {
+                    return $model->type == 1 ? Html::tag('span','Công ty') : Html::tag('span','Cá nhân');
+                },
+                'filter' => Html::activeDropDownList($searchModel, 'type', $type,['class'=>'form-control','prompt' => 'All']),
+            ],
             // 'updated_at',
 
             ['class' => 'yii\grid\ActionColumn'],
