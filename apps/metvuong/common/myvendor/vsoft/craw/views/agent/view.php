@@ -34,14 +34,24 @@ $this->params['breadcrumbs'][] = $this->title;
             'mobile',
             'phone',
             'fax',
-            'email:email',
-            'website',
+            'email',
+            'website:url',
             'tax_code',
             'rating',
             'working_area',
-            'source',
-            'type',
-            'updated_at',
+            [
+                'attribute' => 'source',
+                'value' => $model->source == 1 ? "Batdongsan.com.vn" : "Homefinder.vn",
+            ],
+            [
+                'attribute' => 'type',
+                'value' => $model->type == 1 ? "Công ty" : "Cá nhân",
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value' => $model->updated_at,
+                'format' => ['datetime', 'php: d/m/Y H:i a']
+            ],
         ],
     ]) ?>
 

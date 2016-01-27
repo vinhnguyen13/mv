@@ -14,8 +14,8 @@ $source = [
     2 => Yii::t ( 'agent', 'Homefinder.vn' )
 ];
 $type = [
-    1 => Yii::t ( 'agent', 'Công ty' ),
-    2 => Yii::t ( 'agent', 'Cá nhân' )
+    1 => Yii::t ( 'agent', 'CÃ´ng ty' ),
+    2 => Yii::t ( 'agent', 'CÃ¡ nhÃ¢n' )
 ];
 ?>
 <div class="ad-agent-index">
@@ -40,6 +40,17 @@ $type = [
             'mobile',
             'phone',
             'fax',
+            'tax_code',
+            'rating',
+            'working_area',
+            [
+                'format' => 'html',
+                'attribute' => 'type',
+                'value' => function ($model) {
+                    return $model->type == 1 ? 'CÃ´ng ty' : 'CÃ¡ nhÃ¢n';
+                },
+                'filter' => Html::activeDropDownList($searchModel, 'type', $type,['class'=>'form-control','prompt' => 'Táº¥t cáº£']),
+            ],
             'email',
             'website:url',
             [
@@ -48,18 +59,7 @@ $type = [
                 'value' => function ($model) {
                     return $model->source == 1 ? '<a href="//batdongsan.com.vn">Batdongsan.com.vn</a>' : '<a href="//homefinder.vn">Homefinder.vn</a>';
                 },
-                'filter' => Html::activeDropDownList($searchModel, 'source', $source,['class'=>'form-control','prompt' => 'All']),
-            ],
-            'tax_code',
-            'rating',
-            'working_area',
-            [
-                'format' => 'html',
-                'attribute' => 'type',
-                'value' => function ($model) {
-                    return $model->type == 1 ? Html::tag('span','Công ty') : Html::tag('span','Cá nhân');
-                },
-                'filter' => Html::activeDropDownList($searchModel, 'type', $type,['class'=>'form-control','prompt' => 'All']),
+                'filter' => Html::activeDropDownList($searchModel, 'source', $source,['class'=>'form-control','prompt' => 'Táº¥t cáº£']),
             ],
             // 'updated_at',
 
