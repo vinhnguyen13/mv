@@ -30,11 +30,11 @@ $model = Yii::createObject(LoginForm::className());
 
 <script>
     $(document).ready(function () {
-        var timer = 0;
-        $(document).on('click', '.signin .btn-login', function () {
+        var timer1 = 0;
+        $(document).on('click', '.signin #btn-login', function () {
             var _this = $(this);
-            clearTimeout(timer);
-            timer = setTimeout(function () {
+            clearTimeout(timer1);
+            timer1 = setTimeout(function () {
                 $.ajax({
                     type: "post",
                     dataType: 'json',
@@ -64,7 +64,45 @@ $model = Yii::createObject(LoginForm::className());
 
         $('.signin #login-form input').keypress(function (e) {
             if (e.which == 13) {
-                $('.signin #login-form .btn-login').click();
+                $('.signin #login-form #btn-login').click();
+            }
+        });
+
+        var timer2 = 0;
+        $(document).on('click', '.signup #btn-register', function(){
+            clearTimeout(timer2);
+            timer2 = setTimeout(function() {
+                $.ajax({
+                    type: "post",
+                    dataType: 'json',
+                    url: $('#signup-form').attr('action'),
+                    data: $('#signup-form').serializeArray(),
+                    success: function(data) {
+                        if(data.statusCode == 200){
+                            $('a[data-target="#frmRegister"]').parent().remove();
+                            $('a[data-target="#frmLogin"]').parent().remove();
+                            $('ul.menu-home').prepend('<li><a data-method="post" href="<?=Url::to(['/site/logout'])?>"><em class="icon-user"></em>' + data.parameters.username + '</a></li>');
+                            location.href = '<?=Yii::$app->getUser()->getReturnUrl();?>';
+                        } else if (data.statusCode == 404) {
+                            var arr = [];
+                            console.log(data.parameters);
+                            $.each(data.parameters, function (idx, val) {
+                                var element = 'register-form-' + idx;
+                                arr[element] = val;
+                            })
+                            $('#signup-form').yiiActiveForm('updateMessages', arr, true);
+                        } else {
+                            _this.html('Try again !');
+                        }
+                    }
+                });
+            }, 500);
+            return false;
+        });
+
+        $('.signup #signup-form input').keypress(function (e) {
+            if (e.which == 13) {
+                $('.signup #signup-form #btn-register').click();
             }
         });
     });

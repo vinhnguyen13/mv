@@ -26,7 +26,7 @@ $model = Yii::createObject(LoginForm::className());
     </p>
 </div>
 <div class="footer-modal clearfix">
-    <button type="button" class="btn btn-primary btn-common btn-login">Đăng nhập</button>
+    <button type="button" class="btn btn-primary btn-common btn-login" id="btn-login">Đăng nhập</button>
 </div>
 <?php ActiveForm::end(); ?>
 

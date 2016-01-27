@@ -21,7 +21,7 @@ $model = Yii::createObject(RegistrationForm::className());
     <div class="checkbox"><label> <input type="checkbox"> Chấp nhận <a href="#">điều khoản</a> sử dụng của <a href="#">metvuong.com</a></label>
     </div>
     <div class="footer-modal clearfix">
-        <button type="button" class="btn btn-primary btn-common btn-login">Đăng ký</button>
+        <button type="button" class="btn btn-primary btn-common btn-login" id="btn-register">Đăng ký</button>
     </div>
 <?php ActiveForm::end(); ?>
 <?= \vsoft\user\widgets\Connect::widget([
