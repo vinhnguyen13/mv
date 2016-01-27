@@ -122,7 +122,7 @@ class BatdongsanV2 extends Component
                     if ($count_page > 0) {
                         $log = $this->loadFileLog($type, $path_folder."/".$type."/", "bds_log_{$type}.json");
                         $current_page = empty($log["current_page"]) ? 1 : ($log["current_page"] + 1);
-                        $current_page_add = $current_page + 4; // +4 => total page to run are 5.
+                        $current_page_add = $current_page + 4; // +4 => total pages to run that are 5.
                         if($current_page_add > $last_page)
                             $current_page_add = $last_page;
 
@@ -145,15 +145,13 @@ class BatdongsanV2 extends Component
                             }
 
                         } else {
-                            $this->writeFileLogFail($type, "\nPaging end: Current:$current_page_add , last:$last_page" . "\n");
+                            print_r("\nLast file of {$type} done.");
                         }
                     } else {
                         echo "\nCannot find listing. End page!" . self::DOMAIN;
-                        $this->writeFileLogFail($type, "\nCannot find listing: $url" . "\n");
                     }
                 } else {
                     echo "\nCannot access in get pages of " . self::DOMAIN;
-                    $this->writeFileLogFail($type, "\nCannot access: $url" . "\n");
                 }
 
                 if(!in_array($type, $bds_log["type"])) {
