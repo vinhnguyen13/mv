@@ -28,7 +28,7 @@ class LanguageSelector implements BootstrapInterface
         if(Yii::$app->mobileDetect->isMobile()){
             Yii::$app->set('view', [
                 'class' => 'yii\web\View',
-                'title' => '2amigOS! Consulting Group LLC',
+//                'title' => '2amigOS! Consulting Group LLC',
                 'theme' => [
                     'basePath' => '@webroot/themes/mv_mobile1',
                     'baseUrl' => '/frontend/web/themes/mv_mobile1',

@@ -88,7 +88,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $this->layout = '@app/views/layouts/main';
+        $this->layout = '@app/views/layouts/layout';
         Yii::$app->meta->add(Yii::$app->request->absoluteUrl);
         $homepage_news = CmsShow::getShowForHomepage();
         $metvuong_news = CmsShow::getShowForMetvuong();
