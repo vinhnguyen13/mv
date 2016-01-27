@@ -7,8 +7,8 @@ class m160127_025555_alter_ads_table extends Migration
 {
     public function up()
     {
-		$this->execute("ALTER TABLE `ad_city` ADD COLUMN `slug` VARCHAR(32) NULL AFTER `name`;");
-		$this->execute("ALTER TABLE `ad_district` ADD COLUMN `slug` VARCHAR(32) NULL AFTER `name`;");
+		$this->execute("ALTER TABLE `ad_city` ADD COLUMN `slug` VARCHAR(32) NULL AFTER `name`, CHANGE `geometry` `geometry` MEDIUMTEXT NULL;");
+		$this->execute("ALTER TABLE `ad_district` ADD COLUMN `slug` VARCHAR(32) NULL AFTER `name`, CHANGE `geometry` `geometry` MEDIUMTEXT NULL;");
 		$this->execute("ALTER TABLE `ad_ward` ADD COLUMN `slug` VARCHAR(32) NULL AFTER `name`;");
     	
     	$this->updateTable('ad_city');
@@ -54,8 +54,8 @@ class m160127_025555_alter_ads_table extends Migration
 
     public function down()
     {
-        $this->dropColumn('ad_city', 'slug');
-        $this->dropColumn('ad_district', 'slug');
+        $this->execute("ALTER TABLE `ad_city` DROP COLUMN `slug`, CHANGE `geometry` `geometry` TEXT CHARSET utf8 COLLATE utf8_general_ci NULL;");
+        $this->execute("ALTER TABLE `ad_district` DROP COLUMN `slug`, CHANGE `geometry` `geometry` TEXT CHARSET utf8 COLLATE utf8_general_ci NULL;");
         $this->dropColumn('ad_ward', 'slug');
     }
 
