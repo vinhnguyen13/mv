@@ -1,3 +1,6 @@
+<?php
+use yii\helpers\Url;
+?>
 <header class="clearfix">
     <a href="#menu-header" id="menu-toggle" class="pull-left icon"></a>
     <div class="logo">
@@ -17,9 +20,9 @@
                 <li><a href="#" class="disable">vũng tàu</a></li>
                 <li><a href="#" class="disable">nha trang</a></li>
                 <li class="regis-login">
-                    <a href="#">Đăng nhập</a>
+                    <a href="<?=Url::to(['member/login'])?>">Đăng nhập</a>
                     <span>/</span>
-                    <a href="#">Đăng ký</a>
+                    <a href="<?=Url::to(['member/signup'])?>">Đăng ký</a>
                 </li>
             </ul>
         </div>
