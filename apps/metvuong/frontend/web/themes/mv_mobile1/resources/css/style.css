@@ -28,6 +28,7 @@ header {
     z-index: 5;
     background: #fff;
     height: 50px;
+    border-bottom: 1px solid #9b9b9b;
 }
 .search-box {
     border-top: 1px solid #171616;
@@ -70,10 +71,10 @@ header {
 .search-homepage > ul {
     border: 1px solid #979797;
     width: 100%;
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    -ms-border-radius: 3px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
     overflow: hidden;
     margin-bottom: 10px;
 }
@@ -91,6 +92,7 @@ header {
         font-size: .9em;
     }
 }
+.search-subpage input,
 .search-homepage input {
     width: 100%;
     height: 50px;
@@ -104,7 +106,7 @@ header {
 .search-homepage form {
     position: relative;
 }
-.search-homepage button {
+#btn-search {
     position: absolute;
     top: 0;
     right: 0;
@@ -114,7 +116,7 @@ header {
     border-left: none;
     background: none;
 }
-.search-homepage button span {
+#btn-search span {
     display: inline-block;
     width: 30px;
     height: 30px;
@@ -939,6 +941,154 @@ label {
     color: #fff;
     font-weight: 600;
     text-align: center;
-    padding: 10px 0;
+    padding: 10px;
     font-size: 1.2em;
+}
+.list-img li {
+    float: left;
+    width: 100%;
+    border-bottom: 1px solid #bdbdbd;
+    /* padding: 0 15px; */
+    position: relative;
+}
+.list-img .edit-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 1;
+    background: #171616;
+    width: 30%;
+}
+.list-img .edit-img a:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -0.25em; /* Adjusts for spacing */
+}
+.list-img .edit-img a {
+    display: block;
+    text-align: center;
+    height: 50%;
+    vertical-align: middle;
+    color: #fff;
+    font-size: 1.5em;
+    width: 100%;
+}
+.list-img .edit-img em {
+    display: inline-block;
+    vertical-align: middle;
+}
+.list-img .edit-img .move-img {
+    border-bottom: 1px solid #fff;
+}
+.list-img li .edit-img .remove-img {
+    
+}
+.list-img li .img-attr {
+    float: left;
+    width: 100%;
+    padding: 10px 15px;
+    position: relative;
+    z-index: 2;
+    background: #fff;
+}
+.list-img li .wrap-img {
+    width: 30%;
+    position: relative;
+}
+.icon-pic {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 38px;
+    height: 38px;
+    background-position: 0 -74px;
+    background-size: 150px;
+    margin-top: -19px;
+    margin-left: -19px;
+}
+.list-img li .img-txt {
+    width: 100%;
+    color: #171616;
+    font-size: 1.1em;
+    font-weight: 600;
+    height: 100%;
+    float: left;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-left: 34%;
+    padding-top: 10px;
+}
+.list-img .img-txt .attr-img {
+    color: #777777;
+    font-size: .9em;
+    position: absolute;
+    bottom: 10px;
+}
+.list-img .img-txt .attr-img,
+.list-img .img-txt .title-img {
+    padding-left: 10px;
+}
+#back-screen {
+    padding: 10px 15px;
+    font-weight: 600;
+    color: #000;
+    font-size: 1.2em;
+    position: fixed;
+    width: 100%;
+    background: #fff;
+    z-index: 11;
+    bottom: 0;
+    border-top: 1px solid #bdbdbd;
+}
+.hinh-anh {
+    padding-bottom: 44px;
+}
+#back-screen span {
+    width: 14px;
+    height: 23px;
+    background-position: -132px -2px;
+    background-size: 150px;
+    float: left;
+    margin-right: 15px;
+}
+.search-subpage {
+    padding: 0 75px 15px 15px;
+    margin: 15px 0;
+    border-bottom: 1px solid #9b9b9b;
+}
+.search-subpage form {
+    position: relative;
+}
+.search-subpage #btn-search {
+    border-left: 1px solid #9b9b9b;
+}
+.advande-search {
+    position: absolute;
+    top: 0;
+    right: -60px;
+    border: 1px solid #979797;
+    width: 50px;
+    height: 50px;
+}
+.advande-search span {
+    display: block;
+    width: 1px;
+    height: 100%;
+    position: absolute;
+}
+.advande-search .bd-left {
+    border-left: 2px solid #000000;
+    left: 50%;
+    height: 80%;
+    top: 10%
+}
+.advande-search .bd-right {
+    border-top: 2px solid #000000;
+    width: 80%;
+    top: 50%;
+    left: 10%;
 }
