@@ -22,7 +22,7 @@ $arr = [
 
     ]
 ];
-$this->beginContent('@app/views/layouts/_partials/js/jsContainer.php', ['options'=>[]]); ?><?php $this->endContent();
+$this->beginContent('@app/views/layouts/_partials/head/container.php', ['options'=>[]]); ?><?php $this->endContent();
 $this->registerCssFile('https://select2.github.io/dist/css/select2.min.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
 $this->registerJsFile ( 'https://select2.github.io/dist/js/select2.full.js', ['position' => View::POS_BEGIN]);
 

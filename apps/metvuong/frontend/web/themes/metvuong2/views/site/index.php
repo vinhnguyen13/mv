@@ -5,7 +5,7 @@ use yii\helpers\Url;
 
 $this->title = Yii::t('express','We offer exeptional amenities and renowned white - glove services');
 ?>
-<?php $this->beginContent('@app/views/layouts/_partials/js/jsContainer.php', ['options'=>[]]); ?><?php $this->endContent();?>
+<?php $this->beginContent('@app/views/layouts/_partials/head/container.php', ['options'=>[]]); ?><?php $this->endContent();?>
 <script>
     $(document).ready(function(){
         var swiper = new Swiper('.swiper-container', {
