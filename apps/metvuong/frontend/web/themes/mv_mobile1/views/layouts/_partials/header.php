@@ -29,7 +29,7 @@ use yii\helpers\Url;
                     <li class="regis-login">
                         <a href="<?=Url::to(['user-management/index'])?>">
                             <span class="avatar-user"><img src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="" width="40" height="40"></span>
-                            <span class="name-user"><?=!empty(Yii::$app->user->identity->profile->name) ? Yii::$app->user->identity->profile->name : Yii::$app->user->identity->email;?></span></a>
+                            <span class="name-user"><?=Yii::$app->user->identity->profile->getDisplayName();?></span></a>
                         <span>/</span>
                         <a data-method="post" href="<?=\yii\helpers\Url::to(['/member/logout'])?>"><em class="icon-logout pull-right"></em><?=Yii::t('user', 'Logout')?></a>
                     </li>
