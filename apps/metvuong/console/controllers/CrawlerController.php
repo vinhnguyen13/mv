@@ -68,6 +68,11 @@ class CrawlerController extends Controller
         BatdongsanV2::find()->parseRent();
     }
 
+    public function actionImportrentbds()
+    {
+        BatdongsanV2::find()->importDataForTool(2);
+    }
+
     // Muaban.net
     public function actionMuaban()
     {
