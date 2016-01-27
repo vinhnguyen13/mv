@@ -25,7 +25,6 @@ $type = [
 
     <p>
         <?= Html::a(Yii::t('agent', 'Create Agent'), ['create'], ['class' => 'btn btn-success']) ?>
-
         <?= Html::a(Yii::t('agent', 'Reset filter'), ['index'], ['class' => 'btn btn-success']) ?>
     </p>
 
@@ -41,7 +40,7 @@ $type = [
             'mobile',
             'phone',
             'fax',
-            'email:email',
+            'email',
             'website:url',
             [
                 'format' => 'raw',

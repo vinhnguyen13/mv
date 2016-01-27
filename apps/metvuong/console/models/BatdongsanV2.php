@@ -940,62 +940,59 @@ class BatdongsanV2 extends Component
 
                     $index = 1;
                     for ($i = $fromProductId; $i <= $toProductId; $i++) {
-                        $ad_product = AdProduct::findOne($i);
-                        if (!empty($ad_product)) {
-                            if (count($imageArray) > 0) {
-                                foreach ($imageArray[$index] as $imageValue) {
-                                    if (!empty($imageValue)) {
-                                        $imageRecord = [
-                                            'user_id' => null,
-                                            'product_id' => $i,
-                                            'file_name' => $imageValue,
-                                            'upload_at' => time()
-                                        ];
-                                        $bulkImage[] = $imageRecord;
-                                    }
+                        if (count($imageArray) > 0) {
+                            foreach ($imageArray[$index] as $imageValue) {
+                                if (!empty($imageValue)) {
+                                    $imageRecord = [
+                                        'user_id' => null,
+                                        'product_id' => $i,
+                                        'file_name' => $imageValue,
+                                        'upload_at' => time()
+                                    ];
+                                    $bulkImage[] = $imageRecord;
                                 }
                             }
-
-                            if (count($infoArray) > 0) {
-                                $facade_width = empty($infoArray[$index]["Mặt tiền"]) == false ? trim($infoArray[$index]["Mặt tiền"]) : null;
-                                $land_width = empty($infoArray[$index]["Đường vào"]) == false ? trim($infoArray[$index]["Đường vào"]) : null;
-                                $home_direction = empty($infoArray[$index]["direction"]) == false ? trim($infoArray[$index]["direction"]) : null;
-                                $facade_direction = null;
-                                $floor_no = empty($infoArray[$index]["Số tầng"]) == false ? trim(str_replace('(tầng)', '', $infoArray[$index]["Số tầng"])) : 0;
-                                $room_no = empty($infoArray[$index]["Số phòng ngủ"]) == false ? trim(str_replace('(phòng)', '', $infoArray[$index]["Số phòng ngủ"])) : 0;
-                                $toilet_no = empty($infoArray[$index]["Số toilet"]) == false ? trim($infoArray[$index]["Số toilet"]) : 0;
-                                $interior = empty($infoArray[$index]["Nội thất"]) == false ? trim($infoArray[$index]["Nội thất"]) : null;
-                                $infoRecord = [
-                                    'product_id' => $i,
-                                    'facade_width' => $facade_width,
-                                    'land_width' => $land_width,
-                                    'home_direction' => $home_direction,
-                                    'facade_direction' => $facade_direction,
-                                    'floor_no' => $floor_no,
-                                    'room_no' => $room_no,
-                                    'toilet_no' => $toilet_no,
-                                    'interior' => $interior
-                                ];
-                                $bulkInfo[] = $infoRecord;
-                            }
-                            if (count($contactArray) > 0) {
-                                $name = empty($contactArray[$index]["Tên liên lạc"]) == false ? trim($contactArray[$index]["Tên liên lạc"]) : null;
-                                $phone = empty($contactArray[$index]["Điện thoại"]) == false ? trim($contactArray[$index]["Điện thoại"]) : null;
-                                $mobile = empty($contactArray[$index]["Mobile"]) == false ? trim($contactArray[$index]["Mobile"]) : null;
-                                $address = empty($contactArray[$index]["Địa chỉ"]) == false ? trim($contactArray[$index]["Địa chỉ"]) : null;
-                                $email = empty($contactArray[$index]["Email"]) == false ? trim($contactArray[$index]["Email"]) : null;
-                                $contactRecord = [
-                                    'product_id' => $i,
-                                    'name' => $name,
-                                    'phone' => $phone,
-                                    'mobile' => $mobile == null ? $phone : $mobile,
-                                    'address' => $address,
-                                    'email' => $email
-                                ];
-                                $bulkContact[] = $contactRecord;
-                            }
-                            $index = $index + 1;
                         }
+
+                        if (count($infoArray) > 0) {
+                            $facade_width = empty($infoArray[$index]["Mặt tiền"]) == false ? trim($infoArray[$index]["Mặt tiền"]) : null;
+                            $land_width = empty($infoArray[$index]["Đường vào"]) == false ? trim($infoArray[$index]["Đường vào"]) : null;
+                            $home_direction = empty($infoArray[$index]["direction"]) == false ? trim($infoArray[$index]["direction"]) : null;
+                            $facade_direction = null;
+                            $floor_no = empty($infoArray[$index]["Số tầng"]) == false ? trim(str_replace('(tầng)', '', $infoArray[$index]["Số tầng"])) : 0;
+                            $room_no = empty($infoArray[$index]["Số phòng ngủ"]) == false ? trim(str_replace('(phòng)', '', $infoArray[$index]["Số phòng ngủ"])) : 0;
+                            $toilet_no = empty($infoArray[$index]["Số toilet"]) == false ? trim($infoArray[$index]["Số toilet"]) : 0;
+                            $interior = empty($infoArray[$index]["Nội thất"]) == false ? trim($infoArray[$index]["Nội thất"]) : null;
+                            $infoRecord = [
+                                'product_id' => $i,
+                                'facade_width' => $facade_width,
+                                'land_width' => $land_width,
+                                'home_direction' => $home_direction,
+                                'facade_direction' => $facade_direction,
+                                'floor_no' => $floor_no,
+                                'room_no' => $room_no,
+                                'toilet_no' => $toilet_no,
+                                'interior' => $interior
+                            ];
+                            $bulkInfo[] = $infoRecord;
+                        }
+                        if (count($contactArray) > 0) {
+                            $name = empty($contactArray[$index]["Tên liên lạc"]) == false ? trim($contactArray[$index]["Tên liên lạc"]) : null;
+                            $phone = empty($contactArray[$index]["Điện thoại"]) == false ? trim($contactArray[$index]["Điện thoại"]) : null;
+                            $mobile = empty($contactArray[$index]["Mobile"]) == false ? trim($contactArray[$index]["Mobile"]) : null;
+                            $address = empty($contactArray[$index]["Địa chỉ"]) == false ? trim($contactArray[$index]["Địa chỉ"]) : null;
+                            $email = empty($contactArray[$index]["Email"]) == false ? trim($contactArray[$index]["Email"]) : null;
+                            $contactRecord = [
+                                'product_id' => $i,
+                                'name' => $name,
+                                'phone' => $phone,
+                                'mobile' => $mobile == null ? $phone : $mobile,
+                                'address' => $address,
+                                'email' => $email
+                            ];
+                            $bulkContact[] = $contactRecord;
+                        }
+                        $index = $index + 1;
                     }
 
                     // execute image, info, contact
@@ -1011,7 +1008,7 @@ class BatdongsanV2 extends Component
                             ->batchInsert(\vsoft\craw\models\AdProductAdditionInfo::tableName(), $ad_info_columns, $bulkInfo)
                             ->execute();
                         if ($infoCount > 0)
-                            print_r("\nInser product addition info done");
+                            print_r("\nInser addition info done");
                     }
                     if (count($bulkContact) > 0) {
                         $contactCount = \vsoft\craw\models\AdContactInfo::getDb()->createCommand()
