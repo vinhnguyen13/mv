@@ -28,10 +28,12 @@ class BatdongsanV2 extends Component
 {
     const DOMAIN = 'http://batdongsan.com.vn';
     protected $domain = 'http://batdongsan.com.vn';
-    protected $types = ['nha-dat-ban-quan-1','nha-dat-ban-quan-2','nha-dat-ban-quan-3','nha-dat-ban-quan-4','nha-dat-ban-quan-5','nha-dat-ban-quan-6',
-        'nha-dat-ban-quan-7','nha-dat-ban-quan-8', 'nha-dat-ban-quan-9','nha-dat-ban-quan-10','nha-dat-ban-quan-11','nha-dat-ban-quan-12',
-        'nha-dat-ban-binh-chanh','nha-dat-ban-binh-tan','nha-dat-ban-binh-thanh','nha-dat-ban-can-gio','nha-dat-ban-cu-chi','nha-dat-ban-go-vap',
-        'nha-dat-ban-hoc-mon','nha-dat-ban-nha-be','nha-dat-ban-tan-binh','nha-dat-ban-tan-phu','nha-dat-ban-phu-nhuan','nha-dat-ban-thu-duc'];
+    protected $types = ['nha-dat-ban-quan-1','nha-dat-ban-quan-2'];
+
+    protected $rent_types = ['nha-dat-cho-thue-quan-1','nha-dat-cho-thue-quan-2','nha-dat-cho-thue-quan-3','nha-dat-cho-thue-quan-4','nha-dat-cho-thue-quan-5','nha-dat-cho-thue-quan-6',
+        'nha-dat-cho-thue-quan-7','nha-dat-cho-thue-quan-8', 'nha-dat-cho-thue-quan-9','nha-dat-cho-thue-quan-10','nha-dat-cho-thue-quan-11','nha-dat-cho-thue-quan-12',
+        'nha-dat-cho-thue-binh-chanh','nha-dat-cho-thue-binh-tan','nha-dat-cho-thue-binh-thanh','nha-dat-cho-thue-can-gio','nha-dat-cho-thue-cu-chi','nha-dat-cho-thue-go-vap',
+        'nha-dat-cho-thue-hoc-mon','nha-dat-cho-thue-nha-be','nha-dat-cho-thue-tan-binh','nha-dat-cho-thue-tan-phu','nha-dat-cho-thue-phu-nhuan','nha-dat-cho-thue-thu-duc'];
     protected $time_start = 0;
     protected $time_end = 0;
 
@@ -47,14 +49,24 @@ class BatdongsanV2 extends Component
     {
         ob_start();
         $this->time_start = time();
-        $this->getPages();
+        $this->getPages(1);
         $this->time_end = time();
         print_r("\nTime: ");
         print_r($this->time_end - $this->time_start);
     }
 
-    public function setZeroCurrentPage(){
-        foreach ($this->types as $key_type => $type) {
+    public function parseRent()
+    {
+        ob_start();
+        $this->time_start = time();
+        $this->getPages(2);
+        $this->time_end = time();
+        print_r("\nTime: ");
+        print_r($this->time_end - $this->time_start);
+    }
+
+    public function setZeroCurrentPage($types){
+        foreach ($types as $key_type => $type) {
             $path_folder = Yii::getAlias('@console') . "/data/bds_html/{$type}/";
             $file = $path_folder."bds_log_{$type}.json";
             if(file_exists($file)){
@@ -67,24 +79,25 @@ class BatdongsanV2 extends Component
         }
     }
 
-    public function getPages()
+    public function getPages($product_type)
     {
+        $types = $product_type == 1 ? $this->types : $this->rent_types;
         $bds_log = $this->loadBdsLog();
         if(empty($bds_log["type"])){
             $bds_log["type"] = array();
         }
         $last_type = empty($bds_log["last_type_index"]) ? 0 : ($bds_log["last_type_index"] + 1);
-        $count_type = count($this->types);
+        $count_type = count($types);
 
         if($last_type >= $count_type) {
             $bds_log["type"] = array();
             unset($bds_log["last_type_index"]);
             $last_type = 0;
             $this->writeBdsLog($bds_log);
-            $this->setZeroCurrentPage();
+            $this->setZeroCurrentPage($types);
         }
 
-        foreach ($this->types as $key_type => $type) {
+        foreach ($types as $key_type => $type) {
             if ($key_type >= $last_type) {
                 $url = self::DOMAIN . '/' . $type;
                 $page = $this->getUrlContent($url);
@@ -104,7 +117,7 @@ class BatdongsanV2 extends Component
                             for ($i = $current_page; $i <= $current_page_add; $i++) {
                                 $log = $this->loadFileLog($type);
                                 $sequence_id = empty($log["last_id"]) ? 0 : ($log["last_id"] + 1);
-                                $list_return = $this->getListProject($type, $i, $sequence_id, $log);
+                                $list_return = $this->getListProject($type, $i, $sequence_id, $log, $product_type);
                                 if (!empty($list_return["data"])) {
                                     $list_return["data"]["current_page"] = $i;
                                     $this->writeFileLog($type, $list_return["data"]);
@@ -140,7 +153,7 @@ class BatdongsanV2 extends Component
         }
     }
 
-    public function getListProject($type, $current_page, $sequence_id, $log)
+    public function getListProject($type, $current_page, $sequence_id, $log, $product_type=1)
     {
         $href = "/".$type."/p".$current_page;
         $page = $this->getUrlContent(self::DOMAIN . $href);
@@ -161,7 +174,7 @@ class BatdongsanV2 extends Component
                     }
 
                     if ($checkExists == false) {
-                        $res = $this->getProjectDetail($type, $item->href);
+                        $res = $this->getProjectDetail($type, $item->href, $product_type=1);
                         if (!empty($res)) {
                             $log["files"][$sequence_id] = $res;
                             $log["last_id"] = $sequence_id;
@@ -184,8 +197,9 @@ class BatdongsanV2 extends Component
         return null;
     }
 
-    public function getProjectDetail($type, $href)
+    public function getProjectDetail($type, $href, $product_type=1)
     {
+        $folder = $product_type == 1 ? "files" : "rent_files";
         $page = $this->getUrlContent(self::DOMAIN . $href);
         $matches = array();
         if (preg_match('/pr(\d+)/', self::DOMAIN . $href, $matches)) {
@@ -195,22 +209,24 @@ class BatdongsanV2 extends Component
         }
 
         if(!empty($product_id)) {
-                $path = Yii::getAlias('@console') . "/data/bds_html/{$type}/files/";
-                if(!is_dir($path)){
-                    mkdir($path , 0777, true);
-                    echo "\nDirectory {$path} was created";
-                }
-                $res = $this->writeFileJson($path.$product_id, $page);
-                if($res){
-                    $this->writeFileLogUrlSuccess($type, self::DOMAIN.$href."\n");
-                    return $product_id;
-                } else {
-                    return null;
-                }
+
+            $path = Yii::getAlias('@console') . "/data/bds_html/{$type}/{$folder}/";
+            if (!is_dir($path)) {
+                mkdir($path, 0777, true);
+                echo "\nDirectory {$path} was created";
+            }
+            $res = $this->writeFileJson($path . $product_id, $page);
+            if ($res) {
+                $this->writeFileLogUrlSuccess($type, self::DOMAIN . $href . "\n");
+                return $product_id;
+            } else {
+                return null;
+            }
         }
         else {
             echo "\nError go to detail at " .self::DOMAIN.$href;
             $this->writeFileLogFail($type, "\nCannot find detail: ".self::DOMAIN.$href."\n");
+            return null;
         }
     }
 
@@ -383,7 +399,7 @@ class BatdongsanV2 extends Component
         curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.1.4322)');
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_REFERER, self::DOMAIN . '/nha-dat-ban-tp-hcm/');
+        curl_setopt($ch, CURLOPT_REFERER, self::DOMAIN);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
         curl_setopt($ch, CURLOPT_TIMEOUT, 100);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
@@ -486,8 +502,9 @@ class BatdongsanV2 extends Component
         return $address;
     }
 
-    public function importData()
+    public function importData($product_type)
     {
+        $types = $product_type == 1 ? $this->types : $this->rent_types;
         $start_time = time();
         $insertCount = 0;
         $count_file = 1;
@@ -516,7 +533,7 @@ class BatdongsanV2 extends Component
             $streetData = AdStreet::find()->all();
             $tableName = AdProduct::tableName();
             $break_type = false; // detect next type if it is false
-            foreach ($this->types as $key_type => $type) {
+            foreach ($types as $key_type => $type) {
                 if ($key_type >= $last_type_import && !$break_type) {
 
                     $path = Yii::getAlias('@console') . "/data/bds_html/{$type}/files";
@@ -657,13 +674,15 @@ class BatdongsanV2 extends Component
 
                                         print_r(" Added.\n");
                                         array_push($log_import["files"], $filename);
-                                        $log_import["import_total"] = count($log_import["files"]);
-                                        $log_import["import_time"] = date("d-m-Y H:i");
                                         $count_file++;
                                     }
                                 }
                             } // end file loop
+
+                            $log_import["import_total"] = count($log_import["files"]);
+                            $log_import["import_time"] = date("d-m-Y H:i");
                             $this->writeImportLog($type, $log_import);
+
                             if ($break_type == false && count($bulkInsertArray) > 0) {
                                 if (!in_array($type, $bds_import_log["type"])) {
                                     array_push($bds_import_log["type"], $type);
@@ -786,8 +805,14 @@ class BatdongsanV2 extends Component
         print_r("s - Total Record: ". $insertCount);
     }
 
-    public function importDataForTool()
+    public function importDataForTool($product_type)
     {
+        $types = $this->types;
+        $folder = "files";
+        if($product_type == 2) {
+            $types = $this->rent_types;
+            $folder = "rent_files";
+        }
         $start_time = time();
         $insertCount = 0;
         $count_file = 1;
@@ -816,9 +841,9 @@ class BatdongsanV2 extends Component
             $streetData = AdStreet::find()->all();
             $tableName = \vsoft\craw\models\AdProduct::tableName();
             $break_type = false; // detect next type if it is false
-            foreach ($this->types as $key_type => $type) {
+            foreach ($types as $key_type => $type) {
                 if ($key_type >= $last_type_import && !$break_type) {
-                    $path = Yii::getAlias('@console') . "/data/bds_html/{$type}/files";
+                    $path = Yii::getAlias('@console') . "/data/bds_html/{$type}/{$folder}";
                     if (is_dir($path)) {
                         $log_import = $this->loadImportLog($type);
                         if (empty($log_import["files"]))
@@ -1022,8 +1047,8 @@ class BatdongsanV2 extends Component
                 }
 
                 if (!$break_type) {
-                    $bds_import_log["file_for_tool_imported"] = true;
-                    $this->writeBdsImportLog("bds_import_log.json",$bds_import_log);
+                    $bds_import_log = array();
+                    $this->writeBdsImportLog("bds_import_log.json", $bds_import_log);
                 }
             }
         }
@@ -1036,7 +1061,7 @@ class BatdongsanV2 extends Component
         print_r("s - Total Record: ". $insertCount);
     }
 
-    public function parseDetail($filename)
+    public function parseDetail($filename, $product_type=null)
     {
         $json = array();
         $page = file_get_contents($filename);
@@ -1044,8 +1069,8 @@ class BatdongsanV2 extends Component
             return null;
         $detail = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
         if (!empty($detail)) {
-//                $title = $detail->find('h1', 0)->innertext;
-            $href = $detail->find('#form1', 0)->action;
+//            $title = $detail->find('h1', 0)->innertext;
+//            $href = $detail->find('#form1', 0)->action;
             $lat = $detail->find('#hdLat', 0)->value;
             $long = $detail->find('#hdLong', 0)->value;
 
@@ -1311,7 +1336,7 @@ class BatdongsanV2 extends Component
                 'street' => $street,
                 'home_no' => $home_no,
                 'loai_tai_san' => $loai_tai_san,
-                'loai_giao_dich' => 1,
+                'loai_giao_dich' => empty($product_type) ? 1 : $product_type,
                 'price' => $price,
                 'dientich' => $dt,
                 'start_date' => $startdate,

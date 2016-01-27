@@ -36,23 +36,24 @@ class CrawlerController extends Controller
         Homefinder::find()->importData_2();
     }
 
-    // Batdongsan
+    // Sale Batdongsan
     public function actionBatdongsan()
     {
         BatdongsanV2::find()->parse();
     }
     public function actionImportbatdongsan()
     {
-        BatdongsanV2::find()->importData();
+        BatdongsanV2::find()->importData(1);
     }
     public function actionImportbatdongsan2()
     {
-        BatdongsanV2::find()->importDataForTool();
+        BatdongsanV2::find()->importDataForTool(1);
     }
     public function actionUpdatebatdongsan()
     {
         BatdongsanV2::find()->updateData();
     }
+    // Agent Batdongsan
     public function actionAgentbatdongsan()
     {
         BatdongsanV2::find()->getAgents();
@@ -60,6 +61,11 @@ class CrawlerController extends Controller
     public function actionImportagentbds()
     {
         BatdongsanV2::find()->importAgent();
+    }
+    // Rent Batdongsan
+    public function actionRentbatdongsan()
+    {
+        BatdongsanV2::find()->parseRent();
     }
 
     // Muaban.net
