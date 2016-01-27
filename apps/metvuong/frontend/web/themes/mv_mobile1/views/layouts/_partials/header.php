@@ -19,11 +19,21 @@ use yii\helpers\Url;
                 <li><a href="#" class="disable">đà nẵng</a></li>
                 <li><a href="#" class="disable">vũng tàu</a></li>
                 <li><a href="#" class="disable">nha trang</a></li>
-                <li class="regis-login">
-                    <a href="<?=Url::to(['member/login'])?>">Đăng nhập</a>
-                    <span>/</span>
-                    <a href="<?=Url::to(['member/signup'])?>">Đăng ký</a>
-                </li>
+                <?php if(Yii::$app->user->isGuest){?>
+                    <li class="regis-login">
+                        <a href="<?=Url::to(['member/login'])?>">Đăng nhập</a>
+                        <span>/</span>
+                        <a href="<?=Url::to(['member/signup'])?>">Đăng ký</a>
+                    </li>
+                <?php }else{?>
+                    <li class="regis-login">
+                        <a href="<?=Url::to(['user-management/index'])?>">
+                            <span class="avatar-user"><img src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="" width="40" height="40"></span>
+                            <span class="name-user"><?=!empty(Yii::$app->user->identity->profile->name) ? Yii::$app->user->identity->profile->name : Yii::$app->user->identity->email;?></span></a>
+                        <span>/</span>
+                        <a data-method="post" href="<?=\yii\helpers\Url::to(['/member/logout'])?>"><em class="icon-logout pull-right"></em><?=Yii::t('user', 'Logout')?></a>
+                    </li>
+                <?php }?>
             </ul>
         </div>
     </div>

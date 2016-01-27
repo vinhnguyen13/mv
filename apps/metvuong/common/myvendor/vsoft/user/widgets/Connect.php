@@ -15,6 +15,8 @@ use Yii;
 use yii\authclient\ClientInterface;
 use yii\authclient\widgets\AuthChoice;
 use yii\authclient\widgets\AuthChoiceAsset;
+use yii\authclient\widgets\AuthChoiceItem;
+use yii\base\InvalidConfigException;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
