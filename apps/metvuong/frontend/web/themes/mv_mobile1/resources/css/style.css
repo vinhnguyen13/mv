@@ -310,7 +310,6 @@ header {
 .help-block {
     color: red;
     font-size: .9em;
-    display: none;
 }
 ::-webkit-input-placeholder {
    color: #4e4e4e !important;
