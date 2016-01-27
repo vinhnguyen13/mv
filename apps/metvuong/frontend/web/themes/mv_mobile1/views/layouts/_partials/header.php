@@ -30,7 +30,8 @@ use yii\helpers\Url;
                         <a href="<?=Url::to(['user-management/index'])?>">
                             <span class="avatar-user"><img src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="" width="40" height="40"></span>
                             <span class="name-user"><?=Yii::$app->user->identity->profile->getDisplayName();?></span></a>
-                        <span>/</span>
+                    </li>
+                    <li>
                         <a data-method="post" href="<?=\yii\helpers\Url::to(['/member/logout'])?>"><em class="icon-logout pull-right"></em><?=Yii::t('user', 'Logout')?></a>
                     </li>
                 <?php }?>
