@@ -168,8 +168,12 @@ header {
     position: relative;
     z-index: 5;
     background: #fff;
-    padding: 10px 0 20px 0;
+    padding: 0px 0 20px 0;
     width: 80%;
+    height: 100%;
+    overflow: visible;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 #hide-menu {
     display: block;
@@ -930,4 +934,12 @@ label {
 }
 .detail-listing .edit-gallery .icon-edit {
     margin-top: 6px;
+}
+.title-top {
+    background: #000000;
+    color: #fff;
+    font-weight: 600;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 1.2em;
 }
