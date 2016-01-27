@@ -285,6 +285,13 @@ class SiteController extends Controller
     }
     
     public function actionTest() {
-    	return $this->render('test');
+//     	$districts = json_decode('{"tp-ho-chi-minh":"TP. Hồ Chí Minh","ha-noi":"Hà Nội","da-nang":"Đà Nẵng","binh-duong":"Bình Dương","dong-nai":"Đồng Nai","ba-ria-vung-tau":"Bà Rịa - Vũng Tàu","hai-phong":"Hải Phòng","long-an":"Long An","an-giang":"An Giang","bac-giang":"Bắc Giang","bac-kan":"Bắc Kạn","bac-lieu":"Bạc Liêu","bac-ninh":"Bắc Ninh","ben-tre":"Bến Tre","binh-dinh":"Bình Định","binh-phuoc":"Bình Phước","binh-thuan":"Bình Thuận","ca-mau":"Cà Mau","can-tho":"Cần Thơ","cao-bang":"Cao Bằng","dak-lak":"Đắk Lắk","dak-nong":"Đăk Nông","dien-bien":"Điện Biên","dong-thap":"Đồng Tháp","gia-lai":"Gia Lai","ha-giang":"Hà Giang","hai-duong":"Hải Dương","ha-nam":"Hà Nam","ha-tinh":"Hà Tĩnh","hau-giang":"Hậu Giang","hoa-binh":"Hòa Bình","hung-yen":"Hưng Yên","khanh-hoa":"Khánh Hòa","kien-giang":"Kiên Giang","kon-tum":"Kon Tum","lai-chau":"Lai Châu","lam-dong":"Lâm Đồng","lang-son":"Lạng Sơn","lao-cai":"Lào Cai","nam-dinh":"Nam Định","nghe-an":"Nghệ An","ninh-binh":"Ninh Bình","ninh-thuan":"Ninh Thuận","phu-tho":"Phú Thọ","phu-yen":"Phú Yên","quang-binh":"Quảng Bình","quang-nam":"Quảng Nam","quang-ngai":"Quảng Ngãi","quang-ninh":"Quảng Ninh","quang-tri":"Quảng Trị","soc-trang":"Sóc Trăng","son-la":"Sơn La","tay-ninh":"Tây Ninh","thai-binh":"Thái Bình","thai-nguyen":"Thái Nguyên","thanh-hoa":"Thanh Hóa","thua-thien-hue":"Thừa Thiên - Huế","tien-giang":"Tiền Giang","tra-vinh":"Trà Vinh","tuyen-quang":"Tuyên Quang","vinh-long":"Vĩnh Long","vinh-phuc":"Vĩnh Phúc","yen-bai":"Yên Bái"}', true);
+    	
+//     	foreach ($districts as $slug => $district) {
+//     		$url = 'https://www.zita.vn/api/provinces/' + $slug + '/districts.json';
+    		
+//     	}
+    	
+//     	var_dump(file_get_contents('https://www.zita.vn/api/provinces/long-an/districts.json'));
     }
 }
