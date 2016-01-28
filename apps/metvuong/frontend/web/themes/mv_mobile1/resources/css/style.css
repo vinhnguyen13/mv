@@ -109,7 +109,7 @@ header {
 #btn-search {
     position: absolute;
     top: 0;
-    right: 0;
+    right: 65px;
     width: 50px;
     height: 50px;
     border: 1px solid #979797;
@@ -410,6 +410,9 @@ header {
     background-size: cover !important;
     background-position: 50% top;
 }
+.bgcover a {
+    display: block;
+}
 .gallery-detail .swiper-slide .bgcover {
     height: 100%;
 }
@@ -451,10 +454,10 @@ header {
 }
 .address-listing {
     font-weight: 700;
+    font-size: 1.1em;
 }
 .attr-home .price {
     font-weight: bold;
-    font-size: 1.2em;
     display: inline-block;
 }
 .attr-detail .title-attr-listing {
@@ -626,6 +629,9 @@ label {
 .title-duan {
     color: #868686;
 }
+.infor-by-up {
+    font-size: 1.1em;
+}
 .infor-duan .address-listing,
 .name-duan {
     font-weight: 700;
@@ -755,6 +761,9 @@ label {
     line-height: 40px;
     font-size: 1.2em;
     margin: 0 auto 0;
+}
+.step-link li .active {
+    background: #000;
 }
 .step-link li span {
     position: absolute;
@@ -1056,7 +1065,7 @@ label {
     margin-right: 15px;
 }
 .search-subpage {
-    padding: 0 75px 15px 15px;
+    padding: 0 15px 15px 15px;
     margin: 15px 0;
     border-bottom: 1px solid #9b9b9b;
 }
@@ -1066,29 +1075,133 @@ label {
 .search-subpage #btn-search {
     border-left: 1px solid #9b9b9b;
 }
-.advande-search {
+.advande-search-btn {
     position: absolute;
     top: 0;
-    right: -60px;
+    right: 0px;
     border: 1px solid #979797;
     width: 50px;
     height: 50px;
 }
-.advande-search span {
+.advande-search-btn span {
     display: block;
     width: 1px;
     height: 100%;
     position: absolute;
 }
-.advande-search .bd-left {
+.advande-search-btn .bd-left {
     border-left: 2px solid #000000;
     left: 50%;
     height: 80%;
     top: 10%
 }
-.advande-search .bd-right {
+.advande-search-btn .bd-right {
     border-top: 2px solid #000000;
     width: 80%;
     top: 50%;
     left: 10%;
+    height: 1px;
+}
+.search-fill {
+    padding-right: 65px;
+    position: relative;
+}
+.advande-search .item-advande {
+    display: none;
+}
+.val-selected,
+.value-selected {
+    border: 1px solid #979797;
+    background: #fff;
+    height: 40px;
+    box-shadow: 0px 1px 1px rgba(144, 144, 144, 0.65);
+    -webkit-box-shadow: 0px 1px 1px rgba(144, 144, 144, 0.65);
+    -moz-box-shadow: 0px 1px 1px rgba(144, 144, 144, 0.65);
+    -ms-box-shadow: 0px 1px 1px rgba(144, 144, 144, 0.65);
+    line-height: 37px;
+    padding-left: 10px;
+}
+.each-advande {
+    margin-top: 10px;
+}
+.wrap-listing {
+    padding: 0 15px;
+}
+.option-show-listing .selected {
+    font-weight: 700;
+}
+.option-show-listing {
+    margin-bottom: 15px;
+}
+.pagi a {
+    display: block;
+    width: 35px;
+    border: 1px solid #979797;
+    float: left;
+}
+.style-click:hover {
+    box-shadow: 0px 0px 1px red;
+    -webkit-box-shadow: 0px 0px 1px red;
+    -moz-box-shadow: 0px 0px 1px red;
+    -ms-box-shadow: 0px 0px 1px red;
+}
+.pagi a span {
+    display: block;
+    width: 16px;
+    height: 30px;
+    margin: 10px auto;
+}
+.pagi .prev-pagi {
+    border-right: none;
+}
+.pagi .prev-pagi span {
+    background-position: -176px 0;
+    background-size: 200px;
+}
+.pagi .next-pagi span {
+    background-position: -159px 0;
+    background-size: 200px;
+}
+.item-dropdown {
+    display: none;
+}
+.top-listing {
+    line-height: 50px;
+}
+.item-listing .img-intro {
+    height: 335px;
+    margin-bottom: 10px;
+}
+.item-listing {
+    margin: 20px 0;
+    border-bottom: 2px solid #000;
+    padding-bottom: 15px;
+}
+.item-listing:last-child {
+    border-bottom: none;
+}
+.infor-by-up a {
+    font-weight: 700;
+    color: #5F5D5D;
+}
+.icon-bed {
+    display: inline-block;
+    width: 25px;
+    height: 22px;
+    background-position: 2px -24px;
+    background-size: 208px;
+    position: relative;
+    top: 5px;
+}
+.icon-bath {
+    display: inline-block;
+    width: 17px;
+    height: 22px;
+    background-position: -22px -24px;
+    background-size: 208px;
+    position: relative;
+    top: 5px;
+}
+.attr-home {
+    font-size: 1.2em;
 }
