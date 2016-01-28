@@ -724,19 +724,24 @@
         },
         {
             "name": "kartik-v/bootstrap-fileinput",
-            "version": "v4.2.8",
+            "version": "v4.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/bootstrap-fileinput.git",
-                "reference": "6ba4295298ee3abe26171b4e2078c27a2f3b35b0"
+                "reference": "cde72929649da55470e0a81a5e85921f80f28f29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/6ba4295298ee3abe26171b4e2078c27a2f3b35b0",
-                "reference": "6ba4295298ee3abe26171b4e2078c27a2f3b35b0",
+                "url": "https://api.github.com/repos/kartik-v/bootstrap-fileinput/zipball/cde72929649da55470e0a81a5e85921f80f28f29",
+                "reference": "cde72929649da55470e0a81a5e85921f80f28f29",
                 "shasum": ""
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "kartik\\plugins\\fileinput\\": ""
@@ -768,7 +773,7 @@
                 "progress",
                 "upload"
             ],
-            "time": "2015-11-18 17:56:04"
+            "time": "2016-01-25 16:55:20"
         },
         {
             "name": "kartik-v/yii2-helpers",
@@ -1106,16 +1111,16 @@
         },
         {
             "name": "rmrevin/yii2-minify-view",
-            "version": "1.9.1",
+            "version": "1.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rmrevin/yii2-minify-view.git",
-                "reference": "a2bb08ffd500166a62cf034a7a42a347dd45092b"
+                "reference": "36018d5892576b55e832d2a2e6d7e60fd957d181"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rmrevin/yii2-minify-view/zipball/a2bb08ffd500166a62cf034a7a42a347dd45092b",
-                "reference": "a2bb08ffd500166a62cf034a7a42a347dd45092b",
+                "url": "https://api.github.com/repos/rmrevin/yii2-minify-view/zipball/36018d5892576b55e832d2a2e6d7e60fd957d181",
+                "reference": "36018d5892576b55e832d2a2e6d7e60fd957d181",
                 "shasum": ""
             },
             "require": {
@@ -1135,8 +1140,8 @@
             "authors": [
                 {
                     "name": "Revin Roman",
-                    "email": "xgismox@gmail.com",
-                    "homepage": "http://phptime.ru/"
+                    "email": "roman@rmrevin.com",
+                    "homepage": "https://rmrevin.com/"
                 }
             ],
             "description": "Yii2 View component with minification css & js",
@@ -1147,7 +1152,7 @@
                 "view",
                 "yii2"
             ],
-            "time": "2015-08-20 09:27:04"
+            "time": "2016-01-27 18:17:29"
         },
         {
             "name": "swiftmailer/swiftmailer",
