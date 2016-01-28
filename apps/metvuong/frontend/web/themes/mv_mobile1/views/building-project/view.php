@@ -4,6 +4,12 @@
  * User: Nhut Tran
  * Date: 1/28/2016 11:12 AM
  */
+use yii\helpers\Url;
+
+$image = '';
+if ($gallery = explode(',', $model->gallery)) {
+    $image = $gallery[0];
+}
 ?>
 <div class="search-subpage clearfix">
     <form id="" action="">
@@ -16,7 +22,7 @@
     <div class="gallery-detail swiper-container">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
-                <div class="bgcover" style="background-image:url(images/21311_Khai-truong-Pearl-Plaza-2.jpg)"></div>
+                <div class="bgcover" style="background-image:url(<?= Url::to('/store/building-project-images/' . $image) ?>)"></div>
                 <ul class="clearfix">
                     <li><a href="#" class="icon icon-loca"></a></li>
                     <li><a href="#" class="icon icon-fave"></a></li>
