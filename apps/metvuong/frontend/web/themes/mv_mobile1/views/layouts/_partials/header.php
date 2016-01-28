@@ -13,7 +13,7 @@ use yii\helpers\Url;
                 <li><a href="#">mua</a></li>
                 <li><a href="#">thuê</a></li>
                 <li><a href="#">bán / cho thuê</a></li>
-                <li><a href="#">dự án mới</a></li>
+                <li><a href="<?=Url::to(['building-project/index']);?>">dự án mới</a></li>
                 <li class="line-city"><a href="#">tp.hcm</a></li>
                 <li><a href="#" class="disable">hà nội</a></li>
                 <li><a href="#" class="disable">đà nẵng</a></li>

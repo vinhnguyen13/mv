@@ -93,8 +93,10 @@ use yii\widgets\LinkPager;
 					</a>
 				</div>
 			</div>
-			<?php endforeach; ?>
+			<?php endforeach;
+            if(!empty($pages)){  ?>
 			<?= LinkPager::widget(['pagination' => $pages, 'nextPageLabel' => '<em class="fa fa-chevron-right"></em>', 'prevPageLabel' => '<em class="fa fa-chevron-left"></em>']) ?>
+            <?php } ?>
 		</div>
 	</div>
 	<div class="col-sm-4 col-lg-3 col-left-home">

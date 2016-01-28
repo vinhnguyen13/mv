@@ -79,6 +79,7 @@ return [
 //                'site/signup' => 'user/registration/register',
                 '<cat_id:\d+>-<cat_slug>/<id:\d+>-<slug>' => 'news/view',
                 '<cat_id:\d+>-<slug>' => 'news/list',
+                'building' => 'building-project/index',
                 'building/<slug>' => 'building-project/view',
                 'real-estate/result' => 'ad/index',
                 'real-estate/redirect' => 'ad/redirect',

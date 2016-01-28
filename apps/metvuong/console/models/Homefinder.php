@@ -324,7 +324,7 @@ class Homefinder extends Component
     function getCityId($cityFile, $cityDB)
     {
         foreach ($cityDB as $obj) {
-            preg_match('/'.$obj->name.'$/', $cityFile, $match);
+            preg_match('/'.$obj->name.'$/', trim($cityFile), $match);
             if (!empty($match[0])) {
                 return (int)$obj->id;
             }
@@ -335,7 +335,7 @@ class Homefinder extends Component
     function getDistrictId($districtFile, $districtDB, $city_id)
     {
         foreach ($districtDB as $obj) {
-            preg_match('/'.$obj->name.'$/', $districtFile, $match);
+            preg_match('/'.$obj->name.'$/', trim($districtFile), $match);
             if (!empty($match[0]) && $obj->city_id == $city_id) {
                 return (int)$obj->id;
             }
@@ -346,7 +346,7 @@ class Homefinder extends Component
     function getWardId($_file, $_data, $_id)
     {
         foreach ($_data as $obj) {
-            preg_match('/'.$obj->name.'$/', $_file, $match);
+            preg_match('/'.$obj->name.'$/', trim($_file), $match);
             if (!empty($match[0]) && $obj->district_id == $_id) {
                 return (int)$obj->id;
             }
@@ -358,7 +358,7 @@ class Homefinder extends Component
     {
         foreach ($_data as $obj) {
             $a = preg_quote($obj->name, '/'); //  / -> \/
-            $b = preg_quote($_file);
+            $b = preg_quote(trim($_file));
             preg_match('/'.$a.'$/', $b, $match);
             if (!empty($match[0]) && $obj->district_id == $_id) {
                 return (int)$obj->id;

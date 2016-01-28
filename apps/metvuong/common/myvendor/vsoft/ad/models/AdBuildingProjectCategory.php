@@ -16,5 +16,5 @@ use vsoft\ad\models\base\AdBuildingProjectCategoryBase;
  */
 class AdBuildingProjectCategory extends AdBuildingProjectCategoryBase
 {
-	
+
 }
