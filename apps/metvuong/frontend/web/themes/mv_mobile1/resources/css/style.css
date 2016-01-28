@@ -870,9 +870,9 @@ label {
 }
 .list-tienich li .icon {
     width: 68px;
-    height: 48px;
+    height: 45px;
     margin: 0 auto 5px;
-    background-position: 0 -36px;
+    background-position: 2px -36px;
     background-size: 165px;
 }
 .agent-avatar {
@@ -909,7 +909,7 @@ label {
 }
 .checkbox-ui {
     width: 25px;
-    height: 25px;
+    height: 24px;
     margin: 0 auto 0;
     background-position: -52px -27px;
     background-size: 125px;
@@ -1125,7 +1125,7 @@ label {
     margin-top: 10px;
 }
 .wrap-listing {
-    padding: 0 15px;
+    padding: 0 15px 30px;
 }
 .option-show-listing .selected {
     font-weight: 700;
