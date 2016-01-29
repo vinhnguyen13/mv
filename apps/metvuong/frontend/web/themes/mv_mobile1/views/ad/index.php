@@ -1,5 +1,9 @@
 <?php 
 	use vsoft\ad\models\AdImages;
+	use vsoft\express\components\StringHelper;
+use vsoft\ad\models\AdCategory;
+
+	$categories = AdCategory::find()->indexBy('id')->asArray(true)->all();	
 ?>
 <div class="search-subpage clearfix">
 	<form id="" action="">
@@ -100,14 +104,18 @@
 			<a href="#"></a>
 		</div>
 		<p class="infor-by-up">
-			Căn hộ cho thuê bởi <a href="#">Môi Giới</a>
+			<?= ucfirst($categories[$product->category_id]['name']) ?> bởi <a href="#">Môi Giới</a>
 		</p>
-		<p class="address-listing">22 Lê Thánh Tôn, Q1, P. Bến Nghé</p>
-		<p class="attr-home">2 <span class="icon icon-bed"></span> | 2 <span class="icon icon-bath"></span> | <span class="price">3,5 bil VNĐ</span></p>
+		<p class="address-listing"><?= $product->getAddress(true) ?></p>
+		<p class="attr-home">
+			<?= $product->adProductAdditionInfo->room_no ? $product->adProductAdditionInfo->room_no . ' <span class="icon icon-bed"></span> | ' : '' ?>
+			<?= $product->adProductAdditionInfo->toilet_no ? $product->adProductAdditionInfo->toilet_no . ' <span class="icon icon-bath"></span> | ' : '' ?>
+			<span class="price"><?= StringHelper::formatCurrency($product->price) ?></span>
+		</p>
 	</div>
 	<?php endforeach; ?>
 	<div class="pull-right pagi">
-		<a href="#" class="prev-pagi style-click"><span class="icon"></span></a>
-		<a href="#" class="next-pagi style-click"><span class="icon"></span></a>
+		<a href="<?= $pages->page == 0 ? 'javascript:;' : $pages->createUrl($pages->page-1) ?>" class="prev-pagi style-click"><span class="icon"></span></a>
+		<a href="<?= $pages->page == $pages->pageCount - 1 ? 'javascript:;' : $pages->createUrl($pages->page+1) ?>" class="next-pagi style-click"><span class="icon"></span></a>
 	</div>
 </div>

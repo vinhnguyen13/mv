@@ -74,7 +74,7 @@ class AdProduct extends AdProductBase
 		return parent::beforeSave($insert);
 	}
 
-	public function getAddress() {
+	public function getAddress($withoutCity = false) {
 		$address = '';
 		$street = AdStreet::findOne($this->street_id);
 		$ward = AdWard::findOne($this->ward_id);
@@ -90,10 +90,15 @@ class AdProduct extends AdProductBase
 			$address .= "{$ward->pre} {$ward->name}, ";
 		}
 		if($address) {
-			$address .= "{$district->pre} {$district->name}, {$city->name}";
+			$address .= "{$district->pre} {$district->name}";
 		} else {
-			$address = "{$district->pre} {$district->name}, {$city->name}";
+			$address = "{$district->pre} {$district->name}";
 		}
+		
+		if(!$withoutCity) {
+			$address .= ", {$city->name}";
+		}
+		
 		return $address;
 	}
 
