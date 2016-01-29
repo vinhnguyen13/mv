@@ -111,7 +111,7 @@
 			<div class="wrap-listing clearfix">
 				<div class="dropdown-select option-show-listing">
 					<div class="val-selected style-click">Hiển thị tin theo <span class="selected">Tin mới nhất</span></div>
-					<div class="item-dropdown">
+					<div class="item-dropdown hide-dropdown">
 						<ul>
 							<li><a href="#">Điểm MetVuong cao nhất</a></li>
 							<li><a href="#">Mới nhất</a></li>
@@ -197,5 +197,10 @@
 	<script src="js/jquery.mmenu.min.js"></script>
 	<script src="js/swiper.min.js"></script>
 	<script src="js/common.js"></script>
+	<script>
+		$(document).ready(function () {
+			$('.dropdown-select').dropdown();
+		});
+	</script>
 </body>
 </html>

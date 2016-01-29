@@ -47,6 +47,10 @@
 		</header>
 		<div id="wrapper">
 			<section class="search-box">
+				<div class="text-center sologan">
+					Đưa bạn đến ngôi nhà yêu thích<br>
+					Tìm hiểu & giao dịch bất động sản dễ dàng
+				</div>
 				<div class="search-homepage">
 					<ul class="clearfix">
 						<li><a href="#">Mua</a></li>
@@ -76,7 +80,7 @@
 			</section>
 			<section class="search-home">
 				<h2>Chúng tôi sẽ giúp bạn tìm được ngôi nhà mà mình mong muốn trong chôc lát</h2>
-				<p>Being the savage's bowsman, that is, the person who pulled the bow-oar in his boat (the second one from forward), it was my cheerful duty to attend upon him while taking that hard-scrabble scramble upon the dead whale's back. You have seen Italian organ-boys holding a dancing-ape by a long cord.</p>
+				<p>Mét Vuông cung cấp một số lượng lớn các căn hộ cao cấp, nhà riêng và biệt thự cho thuê hoặc đang rao bán tại hầu hết các tỉnh thành trên cả nước. Thông qua những mô tả chi tiết và hình ảnh chân thật, chúng tôi cam kết giúp bạn tìm và lựa chọn ngôi nhà phù hợp nhất với nhu cầu của bạn một cách nhanh chóng và hiệu quả.</p>
 				<div class="wrap-pic-demo wrap-img">
 					<img src="images/mac-demo.jpg" alt="" />
 				</div>
@@ -84,7 +88,7 @@
 			</section>
 			<section class="regis-home">
 				<h2>Tìm người khách hàng cho căn nhà của bạn dễ dàng hơn bao giờ hết</h2>
-				<p>Being the savage's bowsman, that is, the person who pulled the bow-oar in his boat (the second one from forward), it was my cheerful duty to attend upon him while taking that hard-scrabble scramble upon the dead whale's back. You have seen Italian organ-boys holding a dancing-ape by a long cord. </p>
+				<p>Chỉ với vài thao tác nhập thông tin đơn giản, Mét Vuông sẽ là cầu nối giúp bạn nhanh chóng tiếp cận với nguồn khách hàng tiềm năng. Bạn có thể giới thiệu về BĐS của mình tới hàng triệu người có nhu cầu một cách trực quan nhất.</p>
 				<div class="wrap-pic-demo wrap-img">
 					<img src="images/mac-demo.jpg" alt="" />
 				</div>
@@ -95,11 +99,40 @@
 			
 		</footer>
 	</div>
+	<div class="modal fade" id="select-area" role="dialog" aria-labelledby="myModalLabel">
+	    <div class="modal-dialog" role="document">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+	                    <span aria-hidden="true" class="icon"></span>
+	                </button>
+	                <h3>Chào mừng bạn đến Mét Vuông</h3>
+	            </div>
+	            <div class="modal-body">
+	                <div class="wrap-modal clearfix">
+	                    <p>Mét Vuông giúp bạn tìm kiếm mua, thuê, cho thuê hoặc bán căn nhà của mình. Bạn hãy bắt đầu bằng cách chọn những thành phố mà hiện tại Mét Vuông đang phủ sóng.</p>
+	                    <ul>
+	                    	<li><a href="#">Hồ Chí Minh</a></li>
+	                    	<li><a class="disable" href="#">Hà Nội</a></li>
+	                    	<li><a class="disable" href="#">Vũng Tàu</a></li>
+	                    	<li><a class="disable" href="#">Hải Phòng</a></li>
+	                    	<li><a class="disable" href="#">Phú Quốc</a></li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script src="js/jquery.easing.min.js"></script>
 	<script src="js/jquery.mmenu.min.js"></script>
 	<script src="js/swiper.min.js"></script>
 	<script src="js/common.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			$('#select-area').modal();
+		});
+	</script>
 </body>
 </html>
