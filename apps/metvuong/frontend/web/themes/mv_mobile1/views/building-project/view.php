@@ -10,9 +10,9 @@ $image = '';
 if ($gallery = explode(',', $model->gallery)) {
     $image = $gallery[0];
 }
-$investor = $model->investors[0]->name;
-$architect = $model->architects[0]->name;
-$contractor = $model->contractors[0]->name;
+$investor = !empty($model->investors[0]) ? $model->investors[0]->name : null;
+$architect = !empty($model->architects[0]) ? $model->architects[0]->name : null;
+$contractor = !empty($model->contractors[0]) ? $model->contractors[0]->name : null;
 ?>
 <div class="search-subpage clearfix">
     <form id="" action="">
