@@ -61,7 +61,7 @@ class AdController extends Controller
     	$query->with('adProductAdditionInfo');
     	$products = $query->offset($pages->offset)->limit($pages->limit)->orderBy('created_at DESC')->all();
     	
-    	return $this->render('index', ['products' => $products]);
+    	return $this->render('index', ['products' => $products, 'pages' => $pages]);
     }
     
     public function listing()

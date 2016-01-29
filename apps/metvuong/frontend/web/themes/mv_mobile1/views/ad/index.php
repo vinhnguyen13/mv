@@ -82,10 +82,10 @@
 	</div>
 	<div class="top-listing clearfix">
 		<div class="pull-right pagi">
-			<a href="#" class="prev-pagi style-click"><span class="icon"></span></a>
-			<a href="#" class="next-pagi style-click"><span class="icon"></span></a>
+			<a href="<?= $pages->page == 0 ? 'javascript:;' : $pages->createUrl($pages->page-1) ?>" class="prev-pagi style-click"><span class="icon"></span></a>
+			<a href="<?= $pages->page == $pages->pageCount - 1 ? 'javascript:;' : $pages->createUrl($pages->page+1) ?>" class="next-pagi style-click"><span class="icon"></span></a>
 		</div>
-		<p>1 - 24 Tin từ 48,000 Tin</p>
+		<p><?= $pages->offset + 1 ?> - <?= $pages->offset + count($products) ?> Tin từ <?= $pages->totalCount ?> Tin</p>
 	</div>
 	<?php foreach ($products as $product): ?>
 	<div class="item-listing">
