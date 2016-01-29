@@ -10,9 +10,9 @@ use yii\helpers\Url;
         <div class="wrap-menu">
             <a href="#" id="hide-menu" class="icon hidden"></a>
             <ul class="clearfix">
-                <li><a href="#">mua</a></li>
+                <li><a href="<?= Url::to(['/ad/index']) ?>">mua</a></li>
                 <li><a href="#">thuê</a></li>
-                <li><a href="#">bán / cho thuê</a></li>
+                <li><a href="<?= Url::to(['/ad/post']) ?>">bán / cho thuê</a></li>
                 <li><a href="<?=Url::to(['building-project/index']);?>">dự án mới</a></li>
                 <li class="line-city"><a href="#">tp.hcm</a></li>
                 <li><a href="#" class="disable">hà nội</a></li>

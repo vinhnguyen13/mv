@@ -219,10 +219,23 @@ class AdController extends Controller
         $this->redirect($url);
     }
 
+    
+    public function actionPost() {
+    	if(Yii::$app->mobileDetect->isMobile()) {
+    		return $this->postMobile();
+    	} else {
+    		return $this->post();
+    	}
+    }
+    
+    public function postMobile() {
+    	return $this->render('post');
+    }
+    
     /**
      * @return string
      */
-    public function actionPost()
+    public function post()
     {
     	if(Yii::$app->user->isGuest) {
     		return $this->render('/_systems/require_login');
