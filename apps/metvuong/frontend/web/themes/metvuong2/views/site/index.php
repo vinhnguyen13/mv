@@ -21,8 +21,6 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
     });
 </script>
 <div id="wrapper-body" class="o-wrapper clearfix wrap-page-home">
-    <?php $this->beginContent('@app/views/layouts/_partials/header.php'); ?><?php $this->endContent();?>
-
     <div id="scroll-rearch-reals"></div>
     <section class="search-reals">
         <div class="wrap-search">
