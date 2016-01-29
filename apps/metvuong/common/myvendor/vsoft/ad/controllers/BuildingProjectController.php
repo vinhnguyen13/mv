@@ -1,6 +1,8 @@
 <?php
 namespace vsoft\ad\controllers;
 
+use vsoft\ad\models\AdArchitect;
+use vsoft\ad\models\AdContractor;
 use Yii;
 use yii\web\Controller;
 use vsoft\ad\models\AdBuildingProject;
@@ -37,7 +39,9 @@ class BuildingProjectController extends Controller
 		
 		$investors = AdInvestor::find()->all();
 		$categories = AdCategory::find()->where(['status'=>1])->all();
-		
+        $architects = AdArchitect::find()->where(['status'=>1])->all();
+        $contractor = AdContractor::find()->where(['status'=>1])->all();
+
 		if(Yii::$app->request->isPost) {
 			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 			
@@ -71,7 +75,7 @@ class BuildingProjectController extends Controller
     		return $response;
 		}
 		
-		return $this->render('create', ['model' => $model, 'areaTypeMapLabels' => $areaTypeMapLabels, 'areaTypes' => $areaTypes, 'investors' => $investors, 'categories' => $categories]);
+		return $this->render('create', ['model' => $model, 'areaTypeMapLabels' => $areaTypeMapLabels, 'areaTypes' => $areaTypes, 'investors' => $investors, 'categories' => $categories, 'architects' => $architects, 'contractors' => $contractor]);
 	}
     public function actionView($id)
     {
@@ -99,25 +103,29 @@ class BuildingProjectController extends Controller
 
     	$investors = AdInvestor::find()->all();
     	$categories = AdCategory::find()->where(['status'=>1])->all();
-    	
+        $architects = AdArchitect::find()->where(['status'=>1])->all();
+        $contractors = AdContractor::find()->where(['status'=>1])->all();
+
     	if($model) {
     		if(Yii::$app->request->isPost) {
     			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     			$post = Yii::$app->request->post();
-    			
+
     			$model->load(Yii::$app->request->post());
-    			 
+
     			$response = ['success' => true];
-    			 
+
     			if($model->validate()) {
     				$model->save(false);
     				$model->saveMultiple($post['BuildingProject'], $investors, 'investors');
     				$model->saveMultiple($post['BuildingProject'], $categories, 'categories');
-    				
+    				$model->saveMultiple($post['BuildingProject'], $architects, 'architects');
+    				$model->saveMultiple($post['BuildingProject'], $contractors, 'contractors');
+
 	    			$mapFormName = AdAreaType::mapFormName();
 	    			foreach ($mapFormName as $type => $formName) {
 	    				$arrayType = $areaTypes[$type];
-	    				
+
 	    				if(array_filter($post[$formName])) {
 	    					$arrayType->load($post);
 	    					$arrayType->building_project_id = $model->id;
@@ -126,10 +134,10 @@ class BuildingProjectController extends Controller
 	    					$arrayType->delete();
 	    				}
 	    			}
-    				
-    					
+
+
     				$deleteLater = array_filter(explode(',', Yii::$app->request->post('deleteLater')));
-    					
+
     				foreach ($deleteLater as $orginal) {
     					$pathInfo = pathinfo($orginal);
     					$thumb = $pathInfo['filename'] .  '.thumb.' . $pathInfo['extension'];
@@ -150,13 +158,13 @@ class BuildingProjectController extends Controller
     
     			return $response;
     		}
-    		 
-    		return $this->render('update', ['model' => $model, 'areaTypeMapLabels' => AdAreaType::mapLabels(), 'areaTypes' => $areaTypes, 'investors' => $investors, 'categories' => $categories]);
+
+    		return $this->render('update', ['model' => $model, 'areaTypeMapLabels' => AdAreaType::mapLabels(), 'areaTypes' => $areaTypes, 'investors' => $investors, 'categories' => $categories, 'architects' => $architects, 'contractors' => $contractors]);
     	} else {
     		throw new NotFoundHttpException('The requested page does not exist.');
     	}
     }
-    
+
 
     public function actionDelete($id)
     {

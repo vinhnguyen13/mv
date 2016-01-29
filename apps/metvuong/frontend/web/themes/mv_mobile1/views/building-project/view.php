@@ -10,6 +10,9 @@ $image = '';
 if ($gallery = explode(',', $model->gallery)) {
     $image = $gallery[0];
 }
+$investor = $model->investors[0]->name;
+$architect = $model->architects[0]->name;
+$contractor = $model->contractors[0]->name;
 ?>
 <div class="search-subpage clearfix">
     <form id="" action="">
@@ -28,43 +31,22 @@ if ($gallery = explode(',', $model->gallery)) {
                     <li><a href="#" class="icon icon-fave"></a></li>
                 </ul>
             </div>
-            <div class="swiper-slide">
-                <div class="bgcover" style="background-image:url(images/22311_Khai-truong-Pearl-Plaza-6.jpg)"></div>
-                <ul class="clearfix">
-                    <li><a href="#" class="icon icon-loca"></a></li>
-                    <li><a href="#" class="icon icon-fave"></a></li>
-                </ul>
-            </div>
-            <div class="swiper-slide">
-                <div class="bgcover" style="background-image:url(images/22311_Khai-truong-Pearl-Plaza-7.jpg)"></div>
-                <ul class="clearfix">
-                    <li><a href="#" class="icon icon-loca"></a></li>
-                    <li><a href="#" class="icon icon-fave"></a></li>
-                </ul>
-            </div>
-            <div class="swiper-slide">
-                <div class="bgcover" style="background-image:url(images/22311_Khai-truong-Pearl-Plaza-8.jpg)"></div>
-                <ul class="clearfix">
-                    <li><a href="#" class="icon icon-loca"></a></li>
-                    <li><a href="#" class="icon icon-fave"></a></li>
-                </ul>
-            </div>
         </div>
         <div class="swiper-pagination"></div>
     </div>
     <div class="infor-listing infor-duan">
-        <p class="title-duan">Chung cư căn hộ cao cấp</p>
-        <p class="name-duan">DEUSTCH HAUS OFFICE TOWER</p>
-        <p class="address-listing">22 Lê Thánh Tôn, Q1, P. Bến Nghé</p>
+        <p class="title-duan"><?= !empty($model->categories[0]->name) ? ucfirst($model->categories[0]->name) : "Chung cư căn hộ cao cấp" ?></p>
+        <p class="name-duan"><?= strtoupper($model->name)?></p>
+        <p class="address-listing"><?=$model->location?></p>
     </div>
     <div class="infor-listing infor-unit">
-        <p><span>CHỦ ĐẦU TƯ:</span> ABC COMPANY</p>
-        <p><span>KIẾN TRÚC SƯ:</span> XYZ ARCHITECT</p>
-        <p><span>NHÀ THẦU THI CÔNG:</span> DEF CONSTRUCTION CO</p>
+        <?php if(!empty($investor)){?> <p><span>CHỦ ĐẦU TƯ:</span> <?= $investor ?></p> <?php }?>
+        <?php if(!empty($architect)){?> <p><span>KIẾN TRÚC SƯ:</span> <?=$architect ?></p> <?php }?>
+        <?php if(!empty($contractor)){?> <p><span>NHÀ THẦU THI CÔNG:</span> <?=$contractor ?></p> <?php }?>
     </div>
     <div class="attr-detail">
         <div class="title-attr-listing">Diễn tả chi tiết</div>
-        <p>Mauris non tempor quam, et lacinia sapien. Mauris accumsan eros eget libero posuere vulputate. Etiam elit elit, elementum sed varius at, adipiscing vitae est. Sed nec felis pellentesque, lacinia dui sed, ultricies sapien. Pellentesque orci lectus, consectetur vel posuere posuere, rutrum eu ipsum.</p>
+        <p><?=$model->description?></p>
         <div class="text-right see-more-listing"><a href="#">Xem thêm</a></div>
     </div>
     <div class="attr-detail">

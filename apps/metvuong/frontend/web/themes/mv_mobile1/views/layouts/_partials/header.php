@@ -16,7 +16,7 @@ use yii\helpers\Url;
                 <li><a href="<?=Url::to(['building-project/index']);?>">dự án mới</a></li>
                 <li class="line-city"><a href="#">tp.hcm</a></li>
                 <li><a href="#" class="disable">hà nội</a></li>
-                <li><a href="#" class="disable">đà nẵng</a></li>
+                <li><a href="#"  ="disable">đà nẵng</a></li>
                 <li><a href="#" class="disable">vũng tàu</a></li>
                 <li><a href="#" class="disable">nha trang</a></li>
                 <?php if(Yii::$app->user->isGuest){?>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
@@ -80,7 +80,10 @@ foreach ($districts as $district) {
 	    			<input type="hidden" name="BuildingProject[district_id]" value="" />
 	    			<?= $form->field($model, 'district_id')->dropDownList($districtData, ['options' => $districtOptions, 'prompt' => '---', 'class' => 'select-2 form-control', 'disabled' => ($model->city_id) ? false : true]) ?>
 	  				<?= $form->field($model, 'categories')->dropDownList(ArrayHelper::map($categories, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
-	  				<?= $form->field($model, 'investors')->dropDownList(ArrayHelper::map($investors, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
+                    <?= $form->field($model, 'description')->textarea(['rows' => 4])?>
+                    <?= $form->field($model, 'investors')->dropDownList(ArrayHelper::map($investors, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
+                    <?= $form->field($model, 'architects')->dropDownList(ArrayHelper::map($architects, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
+                    <?= $form->field($model, 'contractors')->dropDownList(ArrayHelper::map($contractors, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
 			    	<?= $form->field($model, 'logo')->widget(FileUploadUI::className(), [
 						'url' => Url::to('/express/upload/image'),
 						'clientOptions' => ['maxNumberOfFiles' => 1] ]) ?>
@@ -239,6 +242,6 @@ foreach ($districts as $district) {
     </div>
     <?php ActiveForm::end(); ?>
 </div>
-<?php 
+<?php
 	$this->registerJs('buildingProject.customColorbox($(".map-area >.files >li >.preview >a"), false);', View::POS_READY, 'colorboxMapArea');
 ?>

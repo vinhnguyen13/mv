@@ -27,21 +27,18 @@ use yii\helpers\Url;
             ?>
             <div class="item-duan">
                 <div class="intro-img">
-                    <div class="wrap-img"><img src="<?= Url::to('/store/building-project-images/' . $image) ?>" alt=""/>
+                    <div class="wrap-img"><img src="<?= Url::to('/store/building-project-images/' . $image) ?>" alt="<?=$model->name?>"/>
                     </div>
-                    <p class="title-duan"><?= !empty($model->categories[0]->name) ? ucwords($model->categories[0]->name) : "Chung cư căn hộ cao cấp" ?></p>
+                    <p class="title-duan"><?= !empty($model->categories[0]->name) ? ucfirst($model->categories[0]->name) : "Chung cư căn hộ cao cấp" ?></p>
 
                     <p class="name-duan"><?= mb_strtoupper($model->name) ?></p>
 
                     <p class="address-listing"><?= $model->location ?></p>
                 </div>
                 <div class="short-txt">
-                    <p>Mauris non tempor quam, et lacinia sapien. Mauris accumsan eros eget libero posuere vulputate.
-                        Etiam elit elit, elementum sed varius at, adipiscing vitae est. Sed nec felis pellentesque,
-                        lacinia dui sed, ultricies sapien. Pellentesque orci lectus, consectetur vel posuere posuere,
-                        rutrum eu ipsum.</p>
+                    <p style="text-align: justify;"><?=strlen($model->description) > 0 ? mb_substr($model->description, 0, 200)."..." : "Thông tin chi tiết về {$model->name}..." ?></p>
 
-                    <div class="text-right see-more-listing"><a href="<?= Url::to(["building/$model->slug"]); ?>">Xem thêm</a></div>
+                    <div class="text-right see-more-listing"><a href="<?= Url::to(["building/$model->slug"]); ?>" title="<?=$model->name?>">Xem thêm</a></div>
                 </div>
             </div>
         <?php endforeach;

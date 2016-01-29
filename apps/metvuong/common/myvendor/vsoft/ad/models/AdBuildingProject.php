@@ -2,12 +2,11 @@
 
 namespace vsoft\ad\models;
 
-use Yii;
 use vsoft\ad\models\base\AdBuildingProjectBase;
-use vsoft\ad\models\base\AdAreaTypeBase;
+use Yii;
 use yii\behaviors\TimestampBehavior;
-use yii\db\Expression;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 use yii\helpers\ArrayHelper;
 
 
@@ -26,7 +25,7 @@ class AdBuildingProject extends AdBuildingProjectBase
         return [
 	        [['city_id', 'district_id', 'created_at', 'updated_at', 'status'], 'integer'],
 	        [['name'], 'required'],
-	        [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video', 'progress'], 'string'],
+	        [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video', 'progress', 'description'], 'string'],
 	        [['lng', 'lat'], 'number'],
 	        [['name', 'logo', 'land_area', 'apartment_no', 'floor_no', 'start_time', 'estimate_finished', 'hotline', 'slug'], 'string', 'max' => 32],
 	        [['location', 'investment_type', 'commercial_leasing_area', 'owner_type', 'facilities', 'website'], 'string', 'max' => 255]
@@ -54,6 +53,7 @@ class AdBuildingProject extends AdBuildingProjectBase
     	'name' => 'Tên dự án',
     	'logo' => 'Logo / Ảnh đại diện',
     	'location' => 'Vị trí',
+    	'description' => 'Thông tin mô tả',
     	'investment_type' => 'Loại hình đầu tư',
     	'land_area' => 'Diện tích khu đất',
     	'commercial_leasing_area' => 'Diện tích trung tâm văn phòng dịch vụ',
@@ -185,6 +185,14 @@ class AdBuildingProject extends AdBuildingProjectBase
 	
 	public function getCategories() {
 		return $this->hasMany(AdCategory::className(), ['id' => 'category_id'])->viaTable('ad_building_project_category', ['building_project_id' => 'id']);
+	}
+
+    public function getArchitects() {
+		return $this->hasMany(AdArchitect::className(), ['id' => 'architect_id'])->viaTable('ad_architect_building_project', ['building_project_id' => 'id']);
+	}
+
+	public function getContractors() {
+		return $this->hasMany(AdContractor::className(), ['id' => 'contractor_id'])->viaTable('ad_contractor_building_project', ['building_project_id' => 'id']);
 	}
 	
 	public function saveMultiple($data, $relationModels, $field) {
