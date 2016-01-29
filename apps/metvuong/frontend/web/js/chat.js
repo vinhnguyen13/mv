@@ -3,8 +3,18 @@
     //    var BOSH_SERVICE = 'http://172.30.6.104:5280/wating';
     //    var BOSH_SERVICE = 'http://dev.metvuong.com:5222/wating';
     var connection = null;
-    function log(msg) {
-        $('#log').append('<div></div>').append(document.createTextNode(msg));
+    function log(msg, typeMsg) {
+    	console.log(typeMsg);
+    	if(typeMsg == 1){
+    		var msgAppend = $('#chat-send-template').html().replace("{{msg}}", msg);
+			$('.wrap-chat').append(msgAppend);
+    	}else if(typeMsg == 2){
+    		var msgAppend = $('#chat-receive-template').html().replace("{{msg}}", msg);
+			$('.wrap-chat').append(msgAppend);
+    	}else{
+    		$('.wrap-chat').append('<div></div>').append(document.createTextNode(msg));	
+    	}        
+    	$(".wrap-chat").scrollTop(99999999999);
     }
     function rawInput(data) {
 //      log('RECV: ' + data);
@@ -65,14 +75,10 @@
         var elems = msg.getElementsByTagName('body');
         if (type == "chat" && elems.length > 0) {
             var body = elems[0];
-            log('ECHOBOT: I got a message from ' + from + ': ' +
-                Strophe.getText(body));
-            var text = Strophe.getText(body) + " (this is echo)";
-
             //var reply = $msg({to: from, from: to, type: 'chat', id: 'purple4dac25e4'}).c('active', {xmlns: "http://jabber.org/protocol/chatstates"}).up().cnode(body);
             //.cnode(Strophe.copyElement(body));
             //connection.send(reply.tree());
-            log('ECHOBOT: I sent ' + from + ': ' + Strophe.getText(body));
+            log(Strophe.getText(body), 2);
         }
 
         if (type == "headline") {
@@ -126,7 +132,7 @@
 		var key = e.which;
 		var msg = $(this).val();
  		if(key == 13){
-			$(this).trigger('chat/msgSend', [{'message': msg, 'to': 'kt200707g11@metvuong.com'}]);
+			$(this).trigger('chat/msgSend', [{'message': msg, 'to': $('.chat-group').attr('to')+'@'+dm}]);
 			$(this).val('');			
 			return false;
 		}
@@ -141,7 +147,7 @@
 		connection = new Strophe.Connection(BOSH_SERVICE);		
         connection.rawInput = rawInput;
         connection.rawOutput = rawOutput;
-		connection.connect('admin@metvuong.com','123456', onConnect);		
+		connection.connect(usrname+'@'+dm,'123456', onConnect);		
         /*connection.disconnect();*/
 	});
 	
@@ -154,7 +160,7 @@
                 type: 'chat'
             }).cnode(Strophe.xmlElement('body', message)).up().c('active', {xmlns: "http://jabber.org/protocol/chatstates"});
             connection.send(reply);
-            log('I sent ' + to + ': ' + message);
+            log(message, 1);
         }
 	});
 	/**---END REGISTER EVENT---**/
