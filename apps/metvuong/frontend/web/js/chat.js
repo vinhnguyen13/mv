@@ -139,6 +139,13 @@
 				
 		
 	});
+
+	$(document).on('click', '.sm-chat', function (e) {
+		var msg = $('#typingMsg').val();
+		$(this).trigger('chat/msgSend', [{'message': msg, 'to': $('.chat-group').attr('to')+'@'+dm}]);
+		$('#typingMsg').val('');			
+		return false;
+	});	
 	/**---END ACTION---**/
 
 	/**---REGISTER EVENT---**/
