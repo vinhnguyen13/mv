@@ -54,8 +54,8 @@ $model = Yii::createObject(LoginForm::className());
                 $.ajax({
                     type: "post",
                     dataType: 'json',
-                    url: $('#login-form').attr('action'),
-                    data: $('#login-form').serializeArray(),
+                    url: $('.frmManualLogin #login-form').attr('action'),
+                    data: $('.frmManualLogin #login-form').serializeArray(),
                     success: function(data) {
                         if(data.statusCode == 200){
                             $('a[data-target="#frmRegister"]').parent().remove();
@@ -68,7 +68,7 @@ $model = Yii::createObject(LoginForm::className());
                                 var element = 'login-form-'+idx;
                                 arr[element] = val;
                             })
-                            $('#login-form').yiiActiveForm('updateMessages', arr, true);
+                            $('.frmManualLogin #login-form').yiiActiveForm('updateMessages', arr, true);
                         }else{
                             _this.html('Try again !');
                         }
