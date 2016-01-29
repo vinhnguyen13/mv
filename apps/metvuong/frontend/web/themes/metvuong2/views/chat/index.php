@@ -5,7 +5,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script src='../js/strophe.js'></script>
     <script>
-        var BOSH_SERVICE = 'http://chat.metvuong.com:5280/wating';
+        var BOSH_SERVICE = 'http://metvuong.com:5280/wating';
         //    var BOSH_SERVICE = 'http://172.30.6.104:5280/wating';
         //    var BOSH_SERVICE = 'http://dev.metvuong.com:5222/wating';
         var connection = null;
@@ -156,7 +156,7 @@
 <div id='login' style='text-align: center'>
     <form name='cred'>
         <label for='jid'>JID:</label>
-        <input type='text' id='jid' value="vinh@chat.metvuong.com">
+        <input type='text' id='jid' value="admin@metvuong.com">
         <label for='pass'>Password:</label>
         <input type='password' id='pass' value="123456">
         <input type='button' id='connect' value='connect'>
