@@ -1,0 +1,113 @@
+<?php 
+	use vsoft\ad\models\AdImages;
+?>
+<div class="search-subpage clearfix">
+	<form id="" action="">
+		<div class="search-fill">
+			<input class="style-click" type="text"
+				placeholder="Tìm kiếm nhanh...">
+			<button type="submit" id="btn-search" class="style-click">
+				<span class="icon"></span>
+			</button>
+			<a href="#" class="advande-search-btn style-click"><span
+				class="bd-left"></span><span class="bd-right"></span></a>
+		</div>
+		<div class="advande-search">
+			<div class="each-advande">
+				<div class="value-selected price-search style-click">Giá</div>
+				<div class="item-advande row">
+					<div class="col-xs-5">
+						<input type="text" class="form-control style-click" id=""
+							placeholder="Thấp nhất">
+					</div>
+					<div class="col-xs-2">đến</div>
+					<div class="col-xs-5">
+						<input type="text" class="form-control style-click" id=""
+							placeholder="Cao nhất">
+					</div>
+				</div>
+			</div>
+			<div class="each-advande">
+				<div class="value-selected dt-search style-click">Diện tích</div>
+				<div class="item-advande row">
+					<div class="col-xs-5">
+						<input type="text" class="form-control style-click" id=""
+							placeholder="Thấp nhất">
+					</div>
+					<div class="col-xs-2">đến</div>
+					<div class="col-xs-5">
+						<input type="text" class="form-control style-click" id=""
+							placeholder="Cao nhất">
+					</div>
+				</div>
+			</div>
+			<div class="each-advande row">
+				<div class="col-xs-6 num-phongngu">
+					<div class="value-selected style-click">Phòng ngủ</div>
+				</div>
+				<div class="col-xs-6 num-phongtam">
+					<div class="value-selected style-click">Phòng tắm</div>
+				</div>
+				<div class="item-advande">
+					<ul class="clearfix">
+						<li><a class="style-click" href="#" data-value="1">1</a></li>
+						<li><a class="style-click" href="#" data-value="2">2</a></li>
+						<li><a class="style-click" href="#" data-value="3">3</a></li>
+						<li><a class="style-click" href="#" data-value="4">4+</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="each-advande row">
+				<div class="col-xs-12 other-fill">
+					<div class="value-selected style-click">Thêm tuỳ chọn</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class="wrap-listing clearfix">
+	<div class="dropdown-select option-show-listing">
+		<div class="val-selected style-click">
+			Hiển thị tin theo <span class="selected">Tin mới nhất</span>
+		</div>
+		<div class="item-dropdown">
+			<ul>
+				<li><a href="#">Điểm MetVuong cao nhất</a></li>
+				<li><a href="#">Mới nhất</a></li>
+				<li><a href="#">Giá thấp nhất - cao nhất</a></li>
+				<li><a href="#">Giá cao nhất - thấp nhất</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="top-listing clearfix">
+		<div class="pull-right pagi">
+			<a href="#" class="prev-pagi style-click"><span class="icon"></span></a>
+			<a href="#" class="next-pagi style-click"><span class="icon"></span></a>
+		</div>
+		<p>1 - 24 Tin từ 48,000 Tin</p>
+	</div>
+	<?php foreach ($products as $product): ?>
+	<div class="item-listing">
+		<?php 
+			if($image = AdImages::find()->where(['order' => 0, 'product_id' => $product->id])->one()) {
+				$imgUrl = $image->imageMedium;
+			} else {
+				$imgUrl = '/themes/metvuong2/resources/images/default-ads.jpg';
+			}
+		?>
+		<div class="bgcover img-intro" style="background-image: url(<?= $imgUrl ?>);">
+			<a href="#"></a>
+		</div>
+		<p class="infor-by-up">
+			Căn hộ cho thuê bởi <a href="#">Môi Giới</a>
+		</p>
+		<p class="address-listing">22 Lê Thánh Tôn, Q1, P. Bến Nghé</p>
+		<p class="attr-home">2 <span class="icon icon-bed"></span> | 2 <span class="icon icon-bath"></span> | <span class="price">3,5 bil VNĐ</span></p>
+	</div>
+	<?php endforeach; ?>
+	<div class="pull-right pagi">
+		<a href="#" class="prev-pagi style-click"><span class="icon"></span></a>
+		<a href="#" class="next-pagi style-click"><span class="icon"></span></a>
+	</div>
+</div>
