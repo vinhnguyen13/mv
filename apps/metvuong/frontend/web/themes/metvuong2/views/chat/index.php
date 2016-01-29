@@ -65,11 +65,6 @@
             return true;
         }
         function onMessage(msg) {
-        	connection.send($iq({type: 'set', id: 'autoSave'}).c('auto', {
-                save: 'true',
-                xmlns: 'urn:xmpp:archive'
-            }));
-            
             var to = msg.getAttribute('to');
             var from = msg.getAttribute('from');
             var type = msg.getAttribute('type');

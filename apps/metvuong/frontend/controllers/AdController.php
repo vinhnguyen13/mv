@@ -36,7 +36,35 @@ class AdController extends Controller
     /**
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex() {
+    	if(Yii::$app->mobileDetect->isMobile()) {
+    		return $this->listingMobile();
+    	} else {
+    		return $this->listing();
+    	}
+    }
+    
+    public function listingMobile() {
+    	$this->layout = '@app/views/layouts/search';
+    	
+    	$query = AdProduct::find();
+    	
+    	$where = ['ad_product.status' => 1];
+    	
+    	// Other where
+    	
+    	$query->where($where);
+    	
+    	$countQuery = clone $query;
+    	$pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 24]);
+    	
+    	$query->with('adProductAdditionInfo');
+    	$products = $query->offset($pages->offset)->limit($pages->limit)->orderBy('created_at DESC')->all();
+    	
+    	return $this->render('index', ['products' => $products]);
+    }
+    
+    public function listing()
     {
         $this->layout = '@app/views/layouts/search';
         
