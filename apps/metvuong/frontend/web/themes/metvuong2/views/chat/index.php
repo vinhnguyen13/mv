@@ -15,7 +15,8 @@ Yii::$app->getView()->registerJsFile('/js/strophe.js', ['position'=>View::POS_BE
 Yii::$app->getView()->registerJsFile('/js/chat.js', ['position'=>View::POS_BEGIN]);
 ?>
 <ul>
-    <li><a>kt200707g11</a></li>
+    <li><a href="chat?from=kt200707g11&to=admin">kt200707g11</a></li>
+    <li><a href="chat?from=admin&to=kt200707g11">admin</a></li>
 </ul>
 <script id="chat-send-template" type="text/x-handlebars-template">
     <div class="wrap-me chat-infor">
