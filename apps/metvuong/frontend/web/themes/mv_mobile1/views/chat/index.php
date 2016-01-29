@@ -2,6 +2,8 @@
 use yii\web\View;
 use yii\helpers\Url;
 
+Yii::$app->getView()->registerCssFile('/css/chat.css');
+
 $script = <<< JS
 var usrname = '__username__';
 var dm = 'metvuong.com';
