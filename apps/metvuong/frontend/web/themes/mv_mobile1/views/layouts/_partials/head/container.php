@@ -22,6 +22,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/bootstrap.min.js', ['position'=>View::POS_END]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.easing.min.js', ['position'=>View::POS_END]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.mmenu.min.js', ['position'=>View::POS_END]);
+Yii::$app->getView()->registerJsFile(Yii::$app->homeUrl . 'store/data/data.js', ['position'=>View::POS_BEGIN]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/swiper.min.js', ['position'=>View::POS_END]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/common.js', ['position'=>View::POS_END]);
 
