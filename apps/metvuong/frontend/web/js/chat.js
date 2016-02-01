@@ -4,9 +4,6 @@
     //    var BOSH_SERVICE = 'http://dev.metvuong.com:5222/wating';
     var connection = null;
     function log(msg, typeMsg) {
-        if($('.loading-chat')){
-            $('.loading-chat').remove();
-        }
     	if(typeMsg == 1){
     		var msgAppend = $('#chat-send-template').html().replace("{{msg}}", msg);
 			$('.wrap-chat').append(msgAppend);
@@ -74,7 +71,9 @@
         return true;
     }
     function onMessage(msg) {
-        console.log('onMessage');
+        if($('.loading-chat')){
+            $('.loading-chat').remove();
+        }
         var to = msg.getAttribute('to');
         var from = msg.getAttribute('from');
         var type = msg.getAttribute('type');
