@@ -4,14 +4,16 @@
     //    var BOSH_SERVICE = 'http://dev.metvuong.com:5222/wating';
     var connection = null;
     function log(msg, typeMsg) {
-    	console.log(typeMsg);
     	if(typeMsg == 1){
     		var msgAppend = $('#chat-send-template').html().replace("{{msg}}", msg);
 			$('.wrap-chat').append(msgAppend);
     	}else if(typeMsg == 2){
     		var msgAppend = $('#chat-receive-template').html().replace("{{msg}}", msg);
 			$('.wrap-chat').append(msgAppend);
-    	}else{
+        }else if(typeMsg == 3){
+            var msgAppend = $('#chat-typing-template').html().replace("{{msg}}", msg);
+            $('.wrap-chat').append(msgAppend);
+        }else{
     		$('.wrap-chat').append('<div></div>').append(document.createTextNode(msg));	
     	}        
     	$(".wrap-chat").scrollTop(99999999999);
@@ -82,9 +84,14 @@
         }
 
         if (type == "headline") {
-            log('headline from: ' + from + ' send to: ' + to);
-//        var body = elems[0];
-//        log(Strophe.getText(body));
+            var prefer = msg.getElementsByTagName('prefer');
+            var length = prefer[0].getAttribute('length');
+            if($('.loading-chat')){
+                $('.loading-chat').remove();
+            }
+            if(length > 0){
+                log(to, 3);
+            }
         }
         // we must return true to keep the handler alive.
         // returning false would remove it after it finishes.
@@ -127,12 +134,22 @@
 		}
 		
 	});
-
-	$(document).on('keypress', '.chat-group #typingMsg', function (e) {
+    var timer = 0;
+	$(document).on('keyup', '.chat-group #typingMsg', function (e) {
 		var key = e.which;
 		var msg = $(this).val();
+        var to = $('.chat-group').attr('to')+'@'+dm;
+
+        clearTimeout(timer);
+        timer = setTimeout(function() {
+            console.log(msg.length);
+            connection.send($msg({
+                to: to,
+                "type": 'headline'
+            }).c('prefer', {xmlns: "http://jabber.org/protocol/chatstates", type: 'typing', to: to, length: msg.length}));
+        }, 500);
  		if(key == 13){
-			$(this).trigger('chat/msgSend', [{'message': msg, 'to': $('.chat-group').attr('to')+'@'+dm}]);
+			$(this).trigger('chat/msgSend', [{'message': msg, 'to': to}]);
 			$(this).val('');			
 			return false;
 		}

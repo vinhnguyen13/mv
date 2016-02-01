@@ -93,3 +93,32 @@
 .type-input-chat .sm-chat:hover {
     opacity: .7;
 }
+.loading-chat .one {
+    opacity: 0;
+    -webkit-animation: dot 1.3s infinite;
+    -webkit-animation-delay: 0.0s;
+    animation: dot 1.3s infinite;
+    animation-delay: 0.0s;
+}
+
+.loading-chat .two {
+    opacity: 0;
+    -webkit-animation: dot 1.3s infinite;
+    -webkit-animation-delay: 0.2s;
+    animation: dot 1.3s infinite;
+    animation-delay: 0.2s;
+}
+.loading-chat .three {
+    opacity: 0;
+    -webkit-animation: dot 1.3s infinite;
+    -webkit-animation-delay: 0.3s;
+    animation: dot 1.3s infinite;
+    animation-delay: 0.3s;
+}
+.loading-chat {
+    color: #9C9C9C;
+    font-size: 13px;
+    float: left;
+    width: 100%;
+    margin-top: 10px;
+}

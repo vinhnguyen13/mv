@@ -15,8 +15,8 @@ Yii::$app->getView()->registerJsFile('/js/strophe.js', ['position'=>View::POS_BE
 Yii::$app->getView()->registerJsFile('/js/chat.js', ['position'=>View::POS_BEGIN]);
 ?>
 <ul>
-    <li><a href="chat?from=kt200707g11&to=admin">kt200707g11</a></li>
-    <li><a href="chat?from=admin&to=kt200707g11">admin</a></li>
+    <li>Chat with: <a href="chat?from=kt200707g11&to=admin">admin</a></li>
+    <li>Chat with: <a href="chat?from=admin&to=kt200707g11">kt200707g11</a></li>
 </ul>
 <script id="chat-send-template" type="text/x-handlebars-template">
     <div class="wrap-me chat-infor">
@@ -35,7 +35,7 @@ Yii::$app->getView()->registerJsFile('/js/chat.js', ['position'=>View::POS_BEGIN
     </div>
 </script>
 <script id="chat-typing-template" type="text/x-handlebars-template">
-    <div class="loading-chat">Typing<span class="one">.</span><span class="two">.</span><span class="three">.</span></div>
+    <div class="loading-chat">{{msg}} is typing<span class="one">.</span><span class="two">.</span><span class="three">.</span></div>
 </script>
 
 <div class="chat-group" to="<?=$to;?>">
