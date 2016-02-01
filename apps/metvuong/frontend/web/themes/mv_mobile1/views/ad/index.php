@@ -2,6 +2,7 @@
 	use vsoft\ad\models\AdImages;
 	use vsoft\express\components\StringHelper;
 use vsoft\ad\models\AdCategory;
+use yii\helpers\Url;
 
 	$categories = AdCategory::find()->indexBy('id')->asArray(true)->all();	
 ?>
@@ -101,12 +102,12 @@ use vsoft\ad\models\AdCategory;
 			}
 		?>
 		<div class="bgcover img-intro" style="background-image: url(<?= $imgUrl ?>);">
-			<a href="#"></a>
+			<a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"></a>
 		</div>
 		<p class="infor-by-up">
 			<?= ucfirst($categories[$product->category_id]['name']) ?> bởi <a href="#">Môi Giới</a>
 		</p>
-		<p class="address-listing"><?= $product->getAddress(true) ?></p>
+		<p class="address-listing"><a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"><?= $product->getAddress(true) ?></a></p>
 		<p class="attr-home">
 			<?= $product->adProductAdditionInfo->room_no ? $product->adProductAdditionInfo->room_no . ' <span class="icon icon-bed"></span> | ' : '' ?>
 			<?= $product->adProductAdditionInfo->toilet_no ? $product->adProductAdditionInfo->toilet_no . ' <span class="icon icon-bath"></span> | ' : '' ?>
