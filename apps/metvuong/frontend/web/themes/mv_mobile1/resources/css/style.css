@@ -419,6 +419,7 @@ header {
 }
 .bgcover a {
     display: block;
+    height: 100%;
 }
 .gallery-detail .swiper-slide .bgcover {
     height: 100%;
@@ -462,6 +463,9 @@ header {
 .address-listing {
     font-weight: 700;
     font-size: 1.1em;
+}
+.address-listing a {
+    color: #333;
 }
 .attr-home .price {
     font-weight: bold;

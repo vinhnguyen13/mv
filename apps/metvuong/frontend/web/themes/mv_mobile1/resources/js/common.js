@@ -67,17 +67,56 @@ $.fn.dropdown = function (options) {
             selectValue: false
         },
         sc = {},
-        el = $(this);
+        el = $(this),
+        itemList = el.parent().find('.item-dropdown li a'),
+        hiddenFillValue = el.parent().find('#value_selected');
 
         if ( el.length == 0 ) return el;
 
         sc.settings = $.extend({}, defaults, options);
 
-        el.on('click', toggleView);
+        el.find('.val-selected').on('click', toggleView);
+
+        showSortLoad();
+
+        function showSortLoad () {
+            if ( hiddenFillValue.val() != '' ) {
+                valGet = hiddenFillValue.val();
+                itemList.each(function () {
+                    var dataGet = $(this).data('value');
+                    if ( dataGet == valGet ) {
+                        el.find('.val-selected .selected').text($(this).text());
+                    }
+                });
+            }
+        }
 
         function toggleView (e) {
             var _this = $(this);
-            
+            if ( sc.settings.styleShow ) { // relative
+                if ( _this.hasClass('active') ) {
+                    _this.removeClass('active');
+                    _this.parent().find('.item-dropdown').velocity("slideUp", { duration: 350 });
+                }else {
+                    _this.addClass('active');
+                    _this.parent().find('.item-dropdown').velocity("slideDown", { duration: 350 });
+                    selectItem(_this);
+                }
+            }else { // absolute
+
+            }
+        }
+
+        function selectItem (item) {
+            itemList.on('click', function () {
+                var txt = $(this).text(),
+                    dataValue = $(this).data('value');
+
+                hiddenFillValue.val(dataValue);
+                item.parent().find('.item-dropdown').hide();
+                item.removeClass('active');
+                el.find('.val-selected .selected').text(txt);
+            });
         }
     });
 }
