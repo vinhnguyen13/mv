@@ -3,8 +3,10 @@
 	use vsoft\express\components\StringHelper;
 use vsoft\ad\models\AdCategory;
 use yii\helpers\Url;
+use vsoft\ad\models\AdProduct;
 
-	$categories = AdCategory::find()->indexBy('id')->asArray(true)->all();	
+	$categories = AdCategory::find()->indexBy('id')->asArray(true)->all();
+	$types = AdProduct::getAdTypes();
 ?>
 <div class="search-subpage clearfix">
 	<form id="" action="">
@@ -105,7 +107,7 @@ use yii\helpers\Url;
 			<a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"></a>
 		</div>
 		<p class="infor-by-up">
-			<?= ucfirst($categories[$product->category_id]['name']) ?> bởi <a href="#">Môi Giới</a>
+			<?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?> bởi <a href="#">Môi Giới</a>
 		</p>
 		<p class="address-listing"><a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"><?= $product->getAddress(true) ?></a></p>
 		<p class="attr-home">

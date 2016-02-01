@@ -1,0 +1,243 @@
+<?php 
+	use vsoft\ad\models\AdCategory;
+use vsoft\ad\models\AdProduct;
+use vsoft\express\components\StringHelper;
+use yii\web\View;
+	
+	$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=loaded', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
+	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/detail.js', ['position' => View::POS_END]);
+	$this->registerCss('.map-wrap {position: relative;} .map-wrap:after {display: block; content: ""; padding-top: 60%;} .map-inside {position: absolute; width: 100%; height: 100%;} #map {height: 100%;}');
+	
+	$categories = AdCategory::find()->indexBy('id')->asArray(true)->all();
+	$types = AdProduct::getAdTypes();
+?>
+<div class="search-subpage clearfix">
+	<form id="" action="">
+		<div class="search-fill">
+			<input type="text" placeholder="Tìm kiếm nhanh...">
+			<button type="submit" id="btn-search">
+				<span class="icon"></span>
+			</button>
+			<a href="#" class="advande-search-btn"><span class="bd-left"></span><span
+				class="bd-right"></span></a>
+		</div>
+		<div class="advande-search">
+			<div class="each-advande">
+				<div class="value-selected price-search">Giá</div>
+				<div class="item-advande row">
+					<div class="col-xs-5">
+						<input type="text" class="form-control" id=""
+							placeholder="Thấp nhất">
+					</div>
+					<div class="col-xs-2">đến</div>
+					<div class="col-xs-5">
+						<input type="text" class="form-control" id=""
+							placeholder="Cao nhất">
+					</div>
+				</div>
+			</div>
+			<div class="each-advande">
+				<div class="value-selected dt-search">Diện tích</div>
+				<div class="item-advande row">
+					<div class="col-xs-5">
+						<input type="text" class="form-control" id=""
+							placeholder="Thấp nhất">
+					</div>
+					<div class="col-xs-2">đến</div>
+					<div class="col-xs-5">
+						<input type="text" class="form-control" id=""
+							placeholder="Cao nhất">
+					</div>
+				</div>
+			</div>
+			<div class="each-advande row">
+				<div class="col-xs-6 num-phongngu">
+					<div class="value-selected">Phòng ngủ</div>
+				</div>
+				<div class="col-xs-6 num-phongtam">
+					<div class="value-selected">Phòng tắm</div>
+				</div>
+				<div class="item-advande">
+					<ul class="clearfix">
+						<li><a href="#" data-value="1">1</a></li>
+						<li><a href="#" data-value="2">2</a></li>
+						<li><a href="#" data-value="3">3</a></li>
+						<li><a href="#" data-value="4">4+</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="each-advande row">
+				<div class="col-xs-12 other-fill">
+					<div class="value-selected">Thêm tuỳ chọn</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="detail-listing">
+	<?php 
+		$images = $product->adImages;
+		if($images):
+	?>
+	<div class="gallery-detail swiper-container">
+		<div class="swiper-wrapper">
+			<?php foreach ($images as $image): ?>
+			<div class="swiper-slide">
+				<div class="bgcover" style="background-image: url(<?= $image->imageMedium ?>)"></div>
+				<ul class="clearfix">
+					<li><a href="#" class="icon icon-loca"></a></li>
+					<li><a href="#" class="icon icon-fave"></a></li>
+				</ul>
+			</div>
+			<?php endforeach; ?>
+		</div>
+		<div class="swiper-pagination"></div>
+	</div>
+	<?php endif; ?>
+	<div class="infor-listing">
+		<p class="infor-by-up">
+			<?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?> bởi <a href="#">Môi Giới</a>
+		</p>
+		<p class="address-listing"><?= $product->getAddress(true) ?></p>
+		<p class="attr-home">
+			<?= $product->adProductAdditionInfo->room_no ? $product->adProductAdditionInfo->room_no . ' <span class="icon icon-bed"></span> | ' : '' ?>
+			<?= $product->adProductAdditionInfo->toilet_no ? $product->adProductAdditionInfo->toilet_no . ' <span class="icon icon-bath"></span> | ' : '' ?>
+			<span class="price"><?= StringHelper::formatCurrency($product->price) ?></span>
+		</p>
+	</div>
+	<div class="attr-detail">
+		<div class="title-attr-listing">Diễn tả chi tiết</div>
+		<p><?= $product->content ?></p>
+		<div class="text-right see-more-listing">
+			<a href="#">Xem thêm</a>
+		</div>
+	</div>
+	<div class="attr-detail">
+		<div class="title-attr-listing">Thông tin chi tiết</div>
+		<?php if($product->area): ?>
+		<p>Diện tích: <?= $product->area ?>m<sup>2</sup></p>
+		<?php endif; ?>
+		<?php if($product->adProductAdditionInfo->facade_width): ?>
+		<p>Mặt tiền: <?= $product->adProductAdditionInfo->facade_width ?>m</p>
+		<?php endif; ?>
+		<?php if($product->adProductAdditionInfo->land_width): ?>
+		<p>Đường vào: <?= $product->adProductAdditionInfo->land_width ?>m</p>
+		<?php endif; ?>
+		<?php if($product->adProductAdditionInfo->floor_no): ?>
+		<p>Tầng cao: <?= $product->adProductAdditionInfo->floor_no ?>  Tầng</p>
+		<?php endif; ?>
+		<div class="text-right see-more-listing">
+			<a href="#">Xem thêm</a>
+		</div>
+	</div>
+	<div class="attr-detail">
+		<div class="title-attr-listing">Tiện ích (6)</div>
+		<p>Hồ bơi</p>
+		<p>Mailbox</p>
+		<p>BBQ Area</p>
+		<p>Tennis Court</p>
+		<p>24/7 Bảo Vệ</p>
+		<p>Gym</p>
+		<div class="text-right see-more-listing">
+			<a href="#">Xem thêm</a>
+		</div>
+	</div>
+	<div class="attr-detail">
+		<div class="title-attr-listing">Địa điểm</div>
+		<div class="map-wrap">
+			<div class="map-inside">
+				<div data-lat="<?= $product->lat ?>" data-lng="<?= $product->lng ?>" id="map"></div>
+			</div>
+		</div>
+	</div>
+	<div class="attr-detail">
+		<div class="title-attr-listing">Điểm Met Vuong cho khu vực</div>
+		<div class="rating-mv-listing">
+			<ul>
+				<li>
+					<div class="clearfix">
+						<span class="pull-right">6/10</span> Thông tin chung
+					</div>
+					<div class="rating-percent">
+						<div class="num-percent" style="width: 50%;"></div>
+					</div>
+				</li>
+				<li>
+					<div class="clearfix">
+						<span class="pull-right">6/10</span> Thông tin chi tiết
+					</div>
+					<div class="rating-percent">
+						<div class="num-percent" style="width: 80%;"></div>
+					</div>
+				</li>
+				<li>
+					<div class="clearfix">
+						<span class="pull-right">6/10</span> Hình ảnh
+					</div>
+					<div class="rating-percent">
+						<div class="num-percent" style="width: 60%;"></div>
+					</div>
+				</li>
+				<li>
+					<div class="clearfix">
+						<span class="pull-right">6/10</span> Bản vẽ mặt bằng
+					</div>
+					<div class="rating-percent">
+						<div class="num-percent" style="width: 20%;"></div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="attr-detail">
+		<div class="title-attr-listing">Liên hệ</div>
+		<div class="infor-agent">
+			<a href="#" class="wrap-img"><img src="images/MV-Agent Photo.jpg"
+				alt="" /></a> <a href="#" class="name-agent">Barbara Mendez</a>
+			<div class="rating-start">
+				<fieldset class="rate">
+					<input type="radio" id="rating10" name="rating" value="10"> <label
+						for="rating10" title="5 stars"> </label> <input type="radio"
+						id="rating9" name="rating" value="9"> <label for="rating9"
+						class="half" title="5 stars"> </label> <input type="radio"
+						id="rating8" name="rating" value="8"> <label for="rating8"
+						title="4 stars"> </label> <input type="radio" id="rating7"
+						name="rating" value="7"> <label for="rating7" class="half"
+						title="4 stars"> </label> <input type="radio" id="rating6"
+						name="rating" value="6"> <label for="rating6" title="3 stars"> </label>
+					<input type="radio" id="rating5" name="rating" value="5"> <label
+						for="rating5" class="half" title="3 stars"> </label> <input
+						type="radio" id="rating4" name="rating" value="4"> <label
+						for="rating4" title="2 stars"> </label> <input type="radio"
+						id="rating3" name="rating" value="3"> <label for="rating3"
+						class="half" title="2 stars"> </label> <input type="radio"
+						id="rating2" name="rating" value="2"> <label for="rating2"
+						title="1 stars"> </label> <input type="radio" id="rating1"
+						name="rating" value="1"> <label for="rating1" class="half"
+						title="1 stars"> </label>
+				</fieldset>
+			</div>
+			<div class="email-agent">
+				<div>
+					<span class="icon"></span>
+				</div>
+				ccollins@twimbo.info
+			</div>
+			<div class="phone-agent">
+				<div>
+					<span class="icon"></span>
+				</div>
+				8 (800) 123456789
+			</div>
+			<div class="id-agent">
+				<div>
+					<span class="icon"></span>
+				</div>
+				AGENT ID TTG001
+			</div>
+		</div>
+	</div>
+	<div class="attr-detail text-center">
+		<button class="contact-agent">Liên hệ Môi giới</button>
+	</div>
+</div>
