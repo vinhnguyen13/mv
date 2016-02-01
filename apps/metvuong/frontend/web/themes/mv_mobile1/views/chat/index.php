@@ -1,16 +1,15 @@
 <?php
 use yii\web\View;
 use yii\helpers\Url;
+use frontend\models\Chat;
 
 Yii::$app->getView()->registerCssFile('/css/chat.css');
 $from = Yii::$app->request->get('from', 'admin');
 $to = Yii::$app->request->get('to', 'kt200707g11');
 
-$script = <<< JS
-var usrname = '__username__';
-var dm = 'metvuong.com';
-JS;
-Yii::$app->getView()->registerJs(strtr($script, ['__username__'=>$from/*Yii::$app->user->identity->username*/]), View::POS_HEAD);
+/*Yii::$app->user->identity->username*/
+$script = "var usrname = '".$from."';var dm = '".Chat::DOMAIN."';";
+Yii::$app->getView()->registerJs($script, View::POS_HEAD);
 Yii::$app->getView()->registerJsFile('/js/strophe.js', ['position'=>View::POS_BEGIN]);
 Yii::$app->getView()->registerJsFile('/js/chat.js', ['position'=>View::POS_BEGIN]);
 ?>

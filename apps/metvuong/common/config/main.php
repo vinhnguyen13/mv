@@ -10,6 +10,7 @@ return [
         '@vsoft/express' => dirname(__DIR__) . '/myvendor/vsoft/express',
         '@vsoft/user' => dirname(__DIR__) . '/myvendor/vsoft/user',
         '@vsoft/tracking' => dirname(__DIR__) . '/myvendor/vsoft/tracking',
+        '@vsoft/chat' => dirname(__DIR__) . '/myvendor/vsoft/chat',
         '@vsoft/ad' => dirname(__DIR__) . '/myvendor/vsoft/ad',
         '@vsoft/craw' => dirname(__DIR__) . '/myvendor/vsoft/craw',
         '@funson86' => dirname(__DIR__) . '/myvendor/funson86',
