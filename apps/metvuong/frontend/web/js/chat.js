@@ -74,6 +74,7 @@
         return true;
     }
     function onMessage(msg) {
+        console.log('onMessage');
         var to = msg.getAttribute('to');
         var from = msg.getAttribute('from');
         var type = msg.getAttribute('type');
@@ -141,7 +142,6 @@
 
         clearTimeout(timer);
         timer = setTimeout(function() {
-            console.log(msg.length);
             connection.send($msg({
                 to: to,
                 "type": 'headline'
@@ -166,8 +166,7 @@
 
 	/**---REGISTER EVENT---**/
 	$(document).bind('chat/connect', function (event, data) {
-		console.log(usrname);				
-		connection = new Strophe.Connection(BOSH_SERVICE);		
+		connection = new Strophe.Connection(BOSH_SERVICE);
         connection.rawInput = rawInput;
         connection.rawOutput = rawOutput;
 		connection.connect(usrname+'@'+dm,'123456', onConnect);		
