@@ -3,6 +3,7 @@
 use vsoft\ad\models\AdProduct;
 use vsoft\express\components\StringHelper;
 use yii\web\View;
+use frontend\models\User;
 	
 	$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=loaded', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/detail.js', ['position' => View::POS_END]);
@@ -10,6 +11,13 @@ use yii\web\View;
 	
 	$categories = AdCategory::find()->indexBy('id')->asArray(true)->all();
 	$types = AdProduct::getAdTypes();
+	
+	$owner = User::findOne($product->user_id);
+	if($owner && $owner->profile) {
+		$avatar = $owner->profile->getAvatarUrl();
+	} else {
+		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
+	}
 ?>
 <div class="search-subpage clearfix">
 	<form id="" action="">
@@ -192,7 +200,7 @@ use yii\web\View;
 	<div class="attr-detail">
 		<div class="title-attr-listing">Liên hệ</div>
 		<div class="infor-agent">
-			<a href="#" class="wrap-img"><img src="images/MV-Agent Photo.jpg"
+			<a href="#" class="wrap-img"><img src="<?= $avatar ?>"
 				alt="" /></a> <a href="#" class="name-agent">Barbara Mendez</a>
 			<div class="rating-start">
 				<fieldset class="rate">
