@@ -201,7 +201,7 @@ use frontend\models\User;
 		<div class="title-attr-listing">Liên hệ</div>
 		<div class="infor-agent">
 			<a href="#" class="wrap-img"><img src="<?= $avatar ?>"
-				alt="" /></a> <a href="#" class="name-agent">Barbara Mendez</a>
+				alt="" /></a> <a href="#" class="name-agent"><?= $product->adContactInfo->name ?></a>
 			<div class="rating-start">
 				<fieldset class="rate">
 					<input type="radio" id="rating10" name="rating" value="10"> <label
@@ -225,24 +225,22 @@ use frontend\models\User;
 						title="1 stars"> </label>
 				</fieldset>
 			</div>
-			<div class="email-agent">
-				<div>
-					<span class="icon"></span>
-				</div>
-				ccollins@twimbo.info
-			</div>
+			<?php if($product->adContactInfo->mobile): ?>
 			<div class="phone-agent">
 				<div>
 					<span class="icon"></span>
 				</div>
-				8 (800) 123456789
+				<?= $product->adContactInfo->mobile ?>
 			</div>
-			<div class="id-agent">
+			<?php endif; ?>
+			<?php if($product->adContactInfo->email): ?>
+			<div class="email-agent">
 				<div>
 					<span class="icon"></span>
 				</div>
-				AGENT ID TTG001
+				<?= $product->adContactInfo->email ?>
 			</div>
+			<?php endif; ?>
 		</div>
 	</div>
 	<div class="attr-detail text-center">
