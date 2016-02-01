@@ -55,48 +55,69 @@
 						<a href="#" class="advande-search-btn style-click"><span class="bd-left"></span><span class="bd-right"></span></a>
 					</div>
 					<div class="advande-search">
-						<div class="each-advande">
-							<div class="value-selected price-search style-click">Giá</div>
+						<div class="each-advande choice_price_dt">
+							<div class="value-selected price-search style-click">
+								Giá 
+								<div>
+									<span class="tu">từ</span>
+									<span class="wrap-min">1 tỷ</span>
+									<span class="trolen">trở lên</span>
+									<span class="den">đến</span>
+									<span class="wrap-max">4 tỷ</span>
+									<span class="troxuong">trở xuống</span>
+								</div>
+							</div>
 							<div class="item-advande row">
 								<div class="col-xs-5">
-									<input type="text" class="form-control style-click" id="" placeholder="Thấp nhất">
+									<input type="number" class="form-control style-click input-min min-max" id="" placeholder="Thấp nhất">
 								</div>
-								<div class="col-xs-2">
+								<div class="col-xs-2 from-to-value">
 									đến
 								</div>
 								<div class="col-xs-5">
-									<input type="text" class="form-control style-click" id="" placeholder="Cao nhất">
+									<input type="number" class="form-control style-click input-max min-max" id="" placeholder="Cao nhất">
 								</div>
 							</div>
 						</div>
-						<div class="each-advande">
+						<div class="each-advande choice_price_dt">
 							<div class="value-selected dt-search style-click">Diện tích</div>
 							<div class="item-advande row">
 								<div class="col-xs-5">
-									<input type="text" class="form-control style-click" id="" placeholder="Thấp nhất">
+									<input type="number" class="form-control style-click" id="" placeholder="Thấp nhất">
 								</div>
-								<div class="col-xs-2">
+								<div class="col-xs-2 from-to-value">
 									đến
 								</div>
 								<div class="col-xs-5">
-									<input type="text" class="form-control style-click" id="" placeholder="Cao nhất">
+									<input type="number" class="form-control style-click" id="" placeholder="Cao nhất">
 								</div>
 							</div>
 						</div>
-						<div class="each-advande row">
+						<div class="each-advande clearfix">
 							<div class="col-xs-6 num-phongngu">
-								<div class="value-selected style-click">Phòng ngủ</div>
+								<div class="value-selected style-click val-selected" data-text-add="Phòng ngủ trở lên"><span class="selected">Phòng ngủ</span></div>
+
+								<div class="item-advande item-dropdown item-bed-bath">
+									<ul class="clearfix">
+										<li><a href="#">1</a></li>
+										<li><a href="#">2</a></li>
+										<li><a href="#">3</a></li>
+										<li><a href="#">4</a></li>
+										<li><a href="#">5</a></li>
+									</ul>
+								</div>
 							</div>
 							<div class="col-xs-6 num-phongtam">
-								<div class="value-selected style-click">Phòng tắm</div>
-							</div>
-							<div class="item-advande">
-								<ul class="clearfix">
-									<li><a class="style-click" href="#" data-value="1">1</a></li>
-									<li><a class="style-click" href="#" data-value="2">2</a></li>
-									<li><a class="style-click" href="#" data-value="3">3</a></li>
-									<li><a class="style-click" href="#" data-value="4">4+</a></li>
-								</ul>
+								<div class="value-selected style-click val-selected" data-text-add="Phòng tắm trở lên"><span class="selected">Phòng tắm</span></div>
+								<div class="item-advande item-dropdown item-bed-bath">
+									<ul class="clearfix">
+										<li><a href="#">1</a></li>
+										<li><a href="#">2</a></li>
+										<li><a href="#">3</a></li>
+										<li><a href="#">4</a></li>
+										<li><a href="#">5</a></li>
+									</ul>
+								</div>
 							</div>
 						</div>
 						<div class="each-advande row">
@@ -117,7 +138,7 @@
 								<li><a data-value="-price" href="#">Giá thấp nhất - cao nhất</a></li>
 								<li><a data-value="price" href="#">Giá cao nhất - thấp nhất</a></li>
 							</ul>
-							<input type="hidden" name="sort" id="value_selected" value="score" />
+							<input type="hidden" name="sort" id="sort" class="value_selected" value="price" />
 						</div>
 					</div>
 					<div class="top-listing clearfix">
@@ -202,6 +223,12 @@
 	<script>
 		$(document).ready(function () {
 			$('.dropdown-select').dropdown();
+			$('.num-phongngu, .num-phongtam').dropdown({
+				txtAdd: true,
+				styleShow: 0
+			});
+			$('.search-subpage').toggleShowMobi();
+			$('.choice_price_dt').price_dt();
 		});
 	</script>
 </body>

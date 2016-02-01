@@ -107,6 +107,10 @@ header {
     -webkit-border-radius: 0px 0px 0px;
     border: 1px solid #979797;
 }
+.search-subpage .choice_price_dt input {
+    padding-right: 0;
+    background: #fff;
+}
 .search-box .search-homepage #btn-search {
     right: 0;
 }
@@ -1113,6 +1117,10 @@ label {
     width: 1px;
     height: 100%;
     position: absolute;
+    transition: 0.3s;
+    -webkit-transition: 0.3s;
+    -moz-transition: 0.3s;
+    -ms-transition: 0.3s;
 }
 .advande-search-btn .bd-left {
     border-left: 2px solid #000000;
@@ -1146,8 +1154,27 @@ label {
     line-height: 37px;
     padding-left: 10px;
 }
+.value-selected {
+    margin-bottom: 10px;
+}
+.value-selected.active {
+    background: #E2E2E2;
+}
 .each-advande {
     margin-top: 10px;
+    position: relative;
+}
+.each-advande .num-phongtam,
+.each-advande .num-phongngu {
+    position: static;
+}
+.each-advande .num-phongngu {
+    padding-left: 0;
+    padding-right: 10px;
+}
+.each-advande .num-phongtam {
+    padding-right: 0;
+    padding-left: 10px;
 }
 .wrap-listing {
     padding: 0 15px 30px;
@@ -1169,6 +1196,10 @@ label {
     -webkit-box-shadow: 0px 0px 1px red;
     -moz-box-shadow: 0px 0px 1px red;
     -ms-box-shadow: 0px 0px 1px red;
+}
+.advande-search-btn.active span {
+    -webkit-transform: rotate3d(0,0,1,45deg);
+    transform: rotate3d(0,0,1,45deg);    
 }
 .pagi a span {
     display: block;
@@ -1545,4 +1576,51 @@ label {
 }
 .hide-dropdown {
     display: none;
+}
+.from-to-value {
+    height: 50px;
+    line-height: 50px;
+    color: #000;
+    font-weight: 700;
+}
+.selected_val {
+    font-weight: 700;
+}
+.item-bed-bath li {
+    float: left;
+    width: 20%;
+    padding: 0 10px;
+}
+.item-bed-bath li a {
+    padding: 10px 0;
+    border: 1px solid #333;
+    text-align: center;
+}
+.advande-search .num-phongtam .item-advande,
+.advande-search .num-phongngu .item-advande {
+    position: absolute;
+    top: 45px;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #9b9b9b;
+    z-index: 2;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    box-shadow: 0px 0px 5px #868686;
+    -webkit-box-shadow: 0px 0px 5px #868686;
+    -moz-box-shadow: 0px 0px 5px #868686;
+    -ms-box-shadow: 0px 0px 5px #868686;
+}
+.price-search div {
+    display: inline-block;
+}
+.price-search div span {
+    display: none;
+}
+.wrap-min,
+.wrap-max {
+    font-weight: bold;
 }
