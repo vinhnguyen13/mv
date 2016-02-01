@@ -82,16 +82,15 @@
             //connection.send(reply.tree());
             log(Strophe.getText(body), 2);
         }
-
         if (type == "headline") {
             var prefer = msg.getElementsByTagName('prefer');
             var length = prefer[0].getAttribute('length');
-            if($('.loading-chat')){
-                $('.loading-chat').remove();
-            }
             if(length > 0){
                 log(to, 3);
             }
+        }
+        if($('.loading-chat')){
+            $('.loading-chat').remove();
         }
         // we must return true to keep the handler alive.
         // returning false would remove it after it finishes.
