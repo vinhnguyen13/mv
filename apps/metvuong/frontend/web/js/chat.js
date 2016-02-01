@@ -4,6 +4,9 @@
     //    var BOSH_SERVICE = 'http://dev.metvuong.com:5222/wating';
     var connection = null;
     function log(msg, typeMsg) {
+        if($('.loading-chat')){
+            $('.loading-chat').remove();
+        }
     	if(typeMsg == 1){
     		var msgAppend = $('#chat-send-template').html().replace("{{msg}}", msg);
 			$('.wrap-chat').append(msgAppend);
@@ -88,9 +91,6 @@
             if(length > 0){
                 log(to, 3);
             }
-        }
-        if($('.loading-chat')){
-            $('.loading-chat').remove();
         }
         // we must return true to keep the handler alive.
         // returning false would remove it after it finishes.
