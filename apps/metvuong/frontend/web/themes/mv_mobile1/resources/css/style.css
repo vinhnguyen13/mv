@@ -1614,9 +1614,11 @@ label {
     -moz-box-shadow: 0px 0px 5px #868686;
     -ms-box-shadow: 0px 0px 5px #868686;
 }
+.dt-search div,
 .price-search div {
     display: inline-block;
 }
+.dt-search div span,
 .price-search div span {
     display: none;
 }

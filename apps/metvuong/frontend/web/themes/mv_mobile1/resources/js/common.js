@@ -120,7 +120,7 @@ $.fn.dropdown = function (options) {
             itemList.unbind('click');
             itemList.on('click', function () {
                 var txt = $(this).text(),
-                    dataValue = $(this).data('value');
+                    dataValue = $(this).data('value') != undefined ? $(this).data('value') : txt;
 
                 hiddenFillValue.val(dataValue);
                 item.parent().find('.item-dropdown').hide();
@@ -210,15 +210,23 @@ $.fn.price_dt = function (options) {
 
             el.find('.tu').show();
 
-            l(checkVal(_this));
-
-            if ( checkVal(_this) == 1 ) {// min rong
-                el.find('.troxuong').show();
-            }else if ( checkVal(_this) == 2 ) {// max rong
+            if ( checkVal() == 1 ) {// min va max rong
+                el.find('.tu').hide();
+                el.find('.wrap-min').hide();
+                el.find('.trolen').hide();
                 el.find('.den').hide();
+                el.find('.wrap-max').hide();
+                el.find('.troxuong').hide();
+            }else if ( checkVal() == 2 ) {// min rong
+                el.find('.troxuong').show();
+                el.find('.den').hide();
+            }else if ( checkVal() == 3 ) {// max rong
                 el.find('.trolen').show();
-            }else if ( checkVal(_this) == 3 ) {
-                
+                el.find('.den').hide();
+            }else if ( checkVal() == 4 ) {
+                el.find('.trolen').hide();
+                el.find('.den').show();
+                el.find('.troxuong').hide();
             }
 
             if ( _this.is($(sc.settings.inputMax)) ) {
@@ -228,15 +236,16 @@ $.fn.price_dt = function (options) {
             }
         });
 
-        function checkVal (item) {
-            if ( item.val() == "" && item.is($(sc.settings.inputMin)) ) {
+        function checkVal () {
+            if ( el.find(sc.settings.inputMin).val() == "" && el.find(sc.settings.inputMax).val() == "" ) {
                 return 1; // min k co gia tri
-            }else if ( item.val() == "" && item.is($(sc.settings.inputMax)) ) {
+            }else if ( el.find(sc.settings.inputMin).val() == "" ) {
                 return 2; // max k co gia tri
-            }else { // min hoac max co gia tri
+            }else if ( el.find(sc.settings.inputMax).val() == "" ) { // min hoac max co gia tri
                 return 3;
+            }else {
+                return 4;
             }
         }
     });
-
 }
