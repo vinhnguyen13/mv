@@ -100,10 +100,8 @@ class UserManagementController extends Controller
         ]);
 
         $model = $model->loadProfile();
-        if($model->avatar) {
-            $model->avatar  = Url::to('/store/avatar/' . $model->avatar);
-        } else {
-            $model->avatar  = Url::to('/store/avatar/default-avatar.jpg');
+        if(!$model->avatar) {
+            $model->avatar  = 'default-avatar.jpg';
         }
 
         if(Yii::$app->request->isAjax) {
@@ -211,8 +209,10 @@ class UserManagementController extends Controller
             $dir = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $folder;
             if($orginal != "default-avatar.jpg" && $thumbnail != "default-avatar.thumb.jpg")
             {
-                unlink($dir . DIRECTORY_SEPARATOR . $orginal);
-                unlink($dir . DIRECTORY_SEPARATOR . $thumbnail);
+                if(file_exists($dir . DIRECTORY_SEPARATOR . $orginal))
+                    unlink($dir . DIRECTORY_SEPARATOR . $orginal);
+                if(file_exists($dir . DIRECTORY_SEPARATOR . $thumbnail))
+                    unlink($dir . DIRECTORY_SEPARATOR . $thumbnail);
                 $model = Yii::createObject([
                     'class' => ProfileForm::className(),
                     'scenario' => 'updateavatar',

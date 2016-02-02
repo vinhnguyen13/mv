@@ -11,10 +11,13 @@ use frontend\models\Profile;
 use frontend\models\User;
 use yii\base\Model;
 use Yii;
+use Zelenin\Slugifier\Slugifier;
+use Zelenin\yii\behaviors\Slug;
 
 class ProfileForm extends Model
 {
     /** @var string */
+    public $user_id;
     public $name;
     public $public_email;
     public $phone;
@@ -23,6 +26,10 @@ class ProfileForm extends Model
     public $avatar;
     public $created_at;
     public $bio;
+    public $about;
+    public $activity;
+    public $experience;
+    public $slug;
 
     /** @var string */
     public $old_password;
@@ -53,7 +60,7 @@ class ProfileForm extends Model
     public function scenarios()
     {
         return [
-            'updateprofile' => ['name', 'public_email', 'phone', 'mobile', 'address'],
+            'updateprofile' => ['user_id', 'name', 'public_email', 'phone', 'mobile', 'address', 'about', 'activity', 'experience', 'slug'],
             'password' => ['old_password', 'new_password'],
             'updateavatar' => ['avatar', 'created_at', 'bio'],
         ];
@@ -129,14 +136,29 @@ class ProfileForm extends Model
     public function updateProfile(){
         $profile = Yii::$app->user->identity->profile;
         if(!empty($profile)) {
+            $profile->user_id = $this->user_id;
             $profile->name = $this->name;
             $profile->public_email = $this->public_email;
             $profile->phone = $this->phone;
             $profile->mobile = $this->mobile;
             $profile->address = $this->address;
+            $profile->about = $this->about;
+            $profile->activity = $this->activity;
+            $profile->experience = $this->experience;
+            $profile->slug = $this->slugify($this->name."-".$this->user_id, '-', true, 'Russian-Latin/BGN; Any-Latin; Latin-ASCII; NFD; [:Nonspacing Mark:] Remove; NFC;');
             return $profile->save();
         }
         return false;
+    }
+
+    public function slugify($string, $replacement = '-', $lowercase = true, $transliterateOptions = null){
+        $slugifier = new Slugifier($string);
+        if ($transliterateOptions !== null) {
+            $slugifier->transliterateOptions = $transliterateOptions;
+        }
+        $slugifier->replacement = $replacement;
+        $slugifier->lowercase = $lowercase;
+        return $slugifier->getSlug();
     }
 
     public function loadProfile(){
@@ -147,6 +169,7 @@ class ProfileForm extends Model
             'scenario' => 'updateprofile',
         ]);
 
+        $model->user_id = $profile->user_id;
         $model->name = $profile->name;
         $model->public_email = $profile->public_email;
         $model->phone = $profile->phone;
@@ -155,6 +178,10 @@ class ProfileForm extends Model
         $model->avatar = $profile->avatar;
         $model->bio = $profile->bio;
         $model->created_at = $user_id;
+        $model->about = $profile->about;
+        $model->activity = $profile->activity;
+        $model->experience = $profile->experience;
+        $model->slug = $profile->slug;
         return $model;
     }
 

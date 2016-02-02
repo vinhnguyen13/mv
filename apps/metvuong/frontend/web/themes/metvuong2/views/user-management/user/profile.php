@@ -63,6 +63,9 @@ use yii\bootstrap\ActiveForm;
                     <?= $form->field($model, 'phone')->textInput(['class' => 'form-control phone']) ?>
                     <?= $form->field($model, 'mobile')->textInput(['class' => 'form-control mobile']) ?>
                     <?= $form->field($model, 'address')->textInput(['class' => 'form-control address']) ?>
+                    <?= $form->field($model, 'about')->textarea(['class' => 'form-control about', 'rows' => 3]) ?>
+                    <?= $form->field($model, 'activity')->textarea(['class' => 'form-control activity', 'rows' => 3]) ?>
+                    <?= $form->field($model, 'experience')->textarea(['class' => 'form-control experience', 'rows' => 3]) ?>
                     <div class="form-group">
                         <label class="control-label col-sm-3" for="id-personal">Company</label>
                         <div class="col-sm-9">

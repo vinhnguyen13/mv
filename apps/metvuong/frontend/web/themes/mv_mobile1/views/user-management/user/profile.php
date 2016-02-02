@@ -4,7 +4,11 @@
  * User: Nhut Tran
  * Date: 2/2/2016 10:19 AM
  */
+use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
+$avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_SEPARATOR . $model->avatar;
 ?>
 <div class="profile-user">
     <div class="title-top clearfix"><a href="#" class="icon icon-back-top pull-left"></a> Profile <a href="#" class="icon icon-back-top pull-right"></a></div>
@@ -15,9 +19,9 @@
             <span class="icon-add">+</span>
         </div>
         <div class="col-xs-4 avatar-user-pr">
-            <div class="wrap-img avatar"><img src="<?=Yii::$app->view->theme->baseUrl."/resources/images/MV-Agent Photo.jpg"?>" alt="" /></div>
-            <span class="name-user">Hao Do</span>
-            <span class="address-user"><em class="fa fa-map-marker"></em>HO CHI MINH, VIETNAM</span>
+            <div class="wrap-img avatar"><img data-toggle="modal" data-target="#avatar" src="<?= file_exists($avatar) ? Url::to('/store/avatar/' . $model->avatar) : Yii::$app->view->theme->baseUrl."/resources/images/MV-Agent Photo.jpg"?>" alt="metvuong.com avatar" /></div>
+            <span class="name-user"><?=!empty($model->name) ? $model->name : "NO NAME"?></span>
+            <span class="address-user"><em class="fa fa-map-marker"></em><?= !empty($model->address) ? $model->address : "HO CHI MINH, VIETNAM"?></span>
         </div>
         <div class="col-xs-4 num-rating">
             <span class="num">4.3</span>
@@ -46,8 +50,8 @@
                 </h4>
             </div>
             <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                <div class="panel-body">
-                    Mauris non tempor quam, et lacinia sapien. Mauris accumsan eros eget libero posuere vulputate. Etiam elit elit, elementum sed varius at, adipiscing vitae est. Sed nec felis pellentesque, lacinia dui sed, ultricies sapien. Pellentesque orci lectus, consectetur vel posuere posuere, rutrum eu ipsum.
+                <div class="panel-body" contenteditable>
+                    <?=$model->about?>
                 </div>
             </div>
         </div>
@@ -55,13 +59,13 @@
             <div class="panel-heading" role="tab" id="headingTwo">
                 <h4 class="panel-title">
                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        Các...<span class="icon"></span>
+                        Hoạt động<span class="icon"></span>
                     </a>
                 </h4>
             </div>
             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                <div class="panel-body">
-                    Mauris non tempor quam, et lacinia sapien. Mauris accumsan eros eget libero posuere vulputate. Etiam elit elit, elementum sed varius at, adipiscing vitae est. Sed nec felis pellentesque, lacinia dui sed, ultricies sapien. Pellentesque orci lectus, consectetur vel posuere posuere, rutrum eu ipsum.
+                <div class="panel-body" contenteditable>
+                    <?=$model->activity?>
                 </div>
             </div>
         </div>
@@ -74,8 +78,8 @@
                 </h4>
             </div>
             <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-                <div class="panel-body">
-                    Mauris non tempor quam, et lacinia sapien. Mauris accumsan eros eget libero posuere vulputate. Etiam elit elit, elementum sed varius at, adipiscing vitae est. Sed nec felis pellentesque, lacinia dui sed, ultricies sapien. Pellentesque orci lectus, consectetur vel posuere posuere, rutrum eu ipsum.
+                <div class="panel-body" contenteditable>
+                    <?=$model->experience?>
                 </div>
             </div>
         </div>
@@ -269,11 +273,114 @@
             </div>
             <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
                 <div class="panel-body">
-                    <div class="email-agent"><div><span class="icon"></span></div>ccollins@twimbo.info</div>
-                    <div class="phone-agent"><div><span class="icon"></span></div>8 (800) 123456789</div>
-                    <div class="id-agent"><div><span class="icon"></span></div>AGENT ID TTG001</div>
+                    <?php if(!empty($model->public_email)){?><div class="email-agent"><div><span class="icon"></span></div><div class="public_email" style="width: 80%" contenteditable><?= $model->public_email ?></div></div><?php }?>
+                    <?php if(!empty($model->mobile)){?>
+                        <div class="phone-agent"><div><span class="icon"></span></div><div class="mobile" style="width: 80%" contenteditable><?= $model->mobile ?></div></div>
+                    <?php } else if(!empty($model->phone)){?>
+                        <div class="phone-agent"><div><span class="icon"></span></div><div class="phone" contenteditable><?= $model->phone ?></div></div><?php }?>
+                    <?php if(!empty($model->user_id)){?><div class="id-agent"><div><span class="icon"></span></div>AGENT ID TTG<?=str_pad($model->user_id, 3, '0', STR_PAD_LEFT)?></div><?php }?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="avatar" tabindex="-1" role="dialog" aria-labelledby="myModalAvatar">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" class="icon"></span>
+                    </button>
+                    <h3>Thay đổi hình đại diện</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="wrap-modal clearfix">
+                        <div class="avatar" style="margin-bottom: 50px;">
+                            <?php $form = ActiveForm::begin([
+                                'id' => 'change-avatar-form',
+                                'enableAjaxValidation' => false,
+                                'enableClientValidation' => true,
+                                'layout' => 'horizontal',
+                                'fieldConfig' => [
+                                    'horizontalCssClasses' => [
+                                        'wrapper' => 'col-sm-9',
+                                    ],
+                                ],
+                            ]); ?>
+                            <?=Html::hiddenInput('deleteLater', '', ['id' => 'delete-later']);?>
+                            <?= $form->field($model, 'avatar')->widget(\common\widgets\FileUploadAvatar::className(), [
+                                'url' => Url::to(['/user-management/avatar', 'folder' => 'avatar']),
+                                'clientOptions' => ['maxNumberOfFiles' => 1, 'maxFileSize' => 2000000],
+                                'fieldOptions' => ['folder' => 'avatar'],
+                            ])->label(false) ?>
+                            <?php ActiveForm::end(); ?>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 'auto',
+        spaceBetween: 10
+    });
+
+    $('#avatar button.close').click(function(){
+        var url = $('.files .name a').attr("href");
+        $('.avatar img').attr("src", url);
+    });
+
+    var editable = document.querySelectorAll('div[contentEditable]');
+    for (var i=0, len = editable.length; i<len; i++){
+        editable[i].setAttribute('data-orig', editable[i].innerText);
+        editable[i].onblur = function(){
+            if (this.innerText == this.getAttribute('data-orig')) { }
+            else {
+                // change has happened, store new value
+                var $email = $.trim(this.innerText);
+                var re = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
+                if ($email == '' || !re.test($email))
+                {
+                    alert('Please enter a valid email address.');
+                } else {
+                    // after valid email
+                    this.setAttribute('data-orig', $email);
+
+                }
+            }
+        };
+    }
+
+    $(".phone").keypress(function (e) {
+        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+            return false;
+        }
+    });
+
+    $(".mobile").keypress(function (e) {
+        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+            return false;
+        }
+        if(e.length > 5)
+            return false;
+    });
+
+    function sendInfo(txt){
+        var timer = 0;
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+            $.ajax({
+                type: "post",
+                dataType: 'json',
+                url: <?=Url::to(['/user-management/profile'])?>,
+                data: {txt : txt},
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+        }, 500);
+        return false;
+    }
+
+</script>
