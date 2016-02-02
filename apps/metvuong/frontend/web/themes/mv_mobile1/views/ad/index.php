@@ -68,8 +68,4 @@ $types = AdProduct::getAdTypes ();
 		<a href="<?= $pages->page == 0 ? 'javascript:;' : $pages->createUrl($pages->page-1) ?>" class="prev-pagi style-click"><span class="icon"></span></a>
 		<a href="<?= $pages->page == $pages->pageCount - 1 ? 'javascript:;' : $pages->createUrl($pages->page+1) ?>" class="next-pagi style-click"><span class="icon"></span></a>
 	</div>
-	<div class="pull-right pagi">
-		<a href="#" class="prev-pagi style-click"><span class="icon"></span></a>
-		<a href="#" class="next-pagi style-click"><span class="icon"></span></a>
-	</div>
 </div>
