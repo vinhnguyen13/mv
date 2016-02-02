@@ -1690,6 +1690,9 @@ label {
     padding: 10px 0;
     display: none;
 }
+.filter-minmax ul[data-wrap-minmax=max-val] a {
+    text-align: right;
+}
 .filter-minmax ul.min-val {
     display: block;
 }

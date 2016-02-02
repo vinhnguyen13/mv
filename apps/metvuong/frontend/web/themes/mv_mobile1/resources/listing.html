@@ -55,7 +55,7 @@
 						<a href="#" class="advande-search-btn style-click"><span class="bd-left"></span><span class="bd-right"></span></a>
 					</div>
 					<div class="advande-search">
-						<div class="each-advande choice_price_dt">
+						<div class="each-advande choice_price_dt" data-item-minmax="prices">
 							<div class="value-selected price-search style-click">
 								Giá 
 								<div>
@@ -67,19 +67,20 @@
 									<span class="troxuong">trở xuống</span>
 								</div>
 							</div>
-							<div class="item-advande row">
-								<div class="col-xs-5">
-									<input type="number" class="form-control style-click input-min min-max" id="" placeholder="Thấp nhất">
+
+							<div class="item-advande">
+								<div class="box-input clearfix">
+									<input readonly="readonly" class="min-max active min-val" name="price-min" id="" type="text" placeholder="Thấp nhất">
+									<span class="text-center">Đến</span>
+									<input readonly="readonly" class="min-max max-val" name="price-max" id="" type="text" placeholder="Cao nhất">
 								</div>
-								<div class="col-xs-2 from-to-value">
-									đến
-								</div>
-								<div class="col-xs-5">
-									<input type="number" class="form-control style-click input-max min-max" id="" placeholder="Cao nhất">
+								<div class="filter-minmax clearfix">
+									<ul data-wrap-minmax="min-val" class="wrap-minmax"></ul>
+									<ul data-wrap-minmax="max-val" class="wrap-minmax"></ul>
 								</div>
 							</div>
 						</div>
-						<div class="each-advande choice_price_dt">
+						<div class="each-advande choice_price_dt" data-item-minmax="area">
 							<div class="value-selected dt-search style-click">
 								Diện tích
 								<div>
@@ -91,15 +92,15 @@
 									<span class="troxuong">trở xuống</span>
 								</div>
 							</div>
-							<div class="item-advande row">
-								<div class="col-xs-5">
-									<input type="number" class="form-control style-click min-max input-min" id="" placeholder="Thấp nhất">
+							<div class="item-advande">
+								<div class="box-input clearfix">
+									<input readonly="readonly" class="min-max active min-val" name="price-min" id="" type="text" placeholder="Thấp nhất">
+									<span class="text-center">Đến</span>
+									<input readonly="readonly" class="min-max max-val" name="price-max" id="" type="text" placeholder="Cao nhất">
 								</div>
-								<div class="col-xs-2 from-to-value">
-									đến
-								</div>
-								<div class="col-xs-5">
-									<input type="number" class="form-control style-click min-max input-max" id="" placeholder="Cao nhất">
+								<div class="filter-minmax clearfix">
+									<ul data-wrap-minmax="min-val" class="wrap-minmax"></ul>
+									<ul data-wrap-minmax="max-val" class="wrap-minmax"></ul>
 								</div>
 							</div>
 						</div>
@@ -231,15 +232,28 @@
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script src="js/jquery.mmenu.min.js"></script>
 	<script src="js/swiper.min.js"></script>
+	<script src="js/string-helper.js"></script>
 	<script src="js/common.js"></script>
 	<script>
 		$(document).ready(function () {
-			$('.dropdown-select').dropdown();
-			$('.num-phongngu, .num-phongtam').dropdown({
-				txtAdd: true,
-				styleShow: 0
+			$('.dropdown-select').dropdown({
+				hiddenFillValue: '#sort'
 			});
+			
+			$('.num-phongngu').dropdown({
+				txtAdd: true,
+				styleShow: 0,
+				hiddenFillValue: '#val-bed'
+			});
+			
+			$('.num-phongtam').dropdown({
+				txtAdd: true,
+				styleShow: 0,
+				hiddenFillValue: '#val-bath'
+			});
+
 			$('.search-subpage').toggleShowMobi();
+			
 			$('.choice_price_dt').price_dt();
 		});
 	</script> 

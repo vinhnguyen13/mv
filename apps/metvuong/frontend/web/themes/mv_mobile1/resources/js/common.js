@@ -64,12 +64,13 @@ $.fn.dropdown = function (options) {
     return this.each(function() {
         var defaults = {
             styleShow: 1, // 1. relative, 0. absolute
-            txtAdd: false
+            txtAdd: false,
+            hiddenFillValue: ''
         },
         sc = {},
         el = $(this),
         itemList = el.parent().find('.item-dropdown li a'),
-        hiddenFillValue = el.parent().find('.value_selected');
+        wrapBoxEffect = $('<div class="dropdown-up-style hide"></div>');
 
         if ( el.length == 0 ) return el;
 
@@ -77,12 +78,18 @@ $.fn.dropdown = function (options) {
 
         el.find('.val-selected').on('click', toggleView);
 
+        if ( sc.settings.styleShow == 0 ) {
+            el.find('.item-dropdown').addClass('wrap-effect');
+            wrapBoxEffect.insertBefore(el.find('.item-dropdown'));
+            wrapBoxEffect.append(el.find('.item-dropdown'));
+        }
+
         showSortLoad();
         outsiteClick();
 
         function showSortLoad () {
-            if ( hiddenFillValue.val() != '' && hiddenFillValue.length > 0 ) {
-                valGet = hiddenFillValue.val();
+            if ( $(sc.settings.hiddenFillValue).val() != '' && $(sc.settings.hiddenFillValue).length > 0 ) {
+                valGet = $(sc.settings.hiddenFillValue).val();
                 itemList.each(function () {
                     var dataGet = $(this).data('value');
                     if ( dataGet == valGet ) {
@@ -107,10 +114,16 @@ $.fn.dropdown = function (options) {
             }else { // absolute
                 if ( _this.hasClass('active') ) {
                     _this.removeClass('active');
-                    _this.parent().find('.item-dropdown').hide();
+                    el.find('.dropdown-up-style').removeClass('active');
+                    setTimeout(function() {
+                        el.find('.dropdown-up-style').addClass('hide');
+                    },250);
                 }else {
                     _this.addClass('active');
-                    _this.parent().find('.item-dropdown').show();
+                    el.find('.dropdown-up-style').removeClass('hide');
+                    setTimeout(function() {
+                        el.find('.dropdown-up-style').addClass('active');
+                    },50);
                     selectItem(_this);
                 }
             }
@@ -122,8 +135,17 @@ $.fn.dropdown = function (options) {
                 var txt = $(this).text(),
                     dataValue = $(this).data('value') != undefined ? $(this).data('value') : txt;
 
-                hiddenFillValue.val(dataValue);
-                item.parent().find('.item-dropdown').hide();
+                $(sc.settings.hiddenFillValue).val(dataValue);
+
+                if (sc.settings.styleShow) {
+                    item.parent().find('.item-dropdown').hide();
+                }else {
+                    el.find('.dropdown-up-style').removeClass('active');
+                    setTimeout(function() {
+                        el.find('.dropdown-up-style').addClass('hide');
+                    },250);
+                }
+                
                 item.removeClass('active');
                 if ( sc.settings.txtAdd ) {
                     var getTxtAdd = el.find('.val-selected').data('textAdd');
@@ -139,7 +161,14 @@ $.fn.dropdown = function (options) {
                 var container = el;
                 if ( !container.is(e.target) && container.has(e.target).length === 0 ){
                     el.find('.val-selected').removeClass('active');
-                    el.find('.val-selected').parent().find('.item-dropdown').velocity("slideUp", { duration: 0 });
+                    if ( sc.settings.styleShow ) {
+                        el.find('.val-selected').parent().find('.item-dropdown').velocity("slideUp", { duration: 0 });
+                    }else {
+                        el.find('.dropdown-up-style').removeClass('active');
+                        setTimeout(function() {
+                            el.find('.dropdown-up-style').addClass('hide');
+                        },250);
+                    }
                 }
             });
         }
@@ -150,26 +179,50 @@ $.fn.toggleShowMobi = function (options) {
 
     return this.each(function() {
         var defaults = {
+            //styleShow: 1, // 1 relative and 0 absolute
+            styleEffect: 'slide', // slideDownUp -> absolute, slideDown and slideUp = slide -> relative
             btnEvent: '.advande-search-btn',
             itemToggle: '.advande-search'
         },
         sc = {},
-        el = $(this);
+        el = $(this),
+        wrapBoxEffect = $('<div class="dropdown-up-style hide"></div>');
 
         if ( el.length == 0 ) return el;
 
         sc.settings = $.extend({}, defaults, options);
 
+        if ( sc.settings.styleEffect == 'slideDownUp' ) {
+            el.find(sc.settings.itemToggle).addClass('wrap-effect');
+            wrapBoxEffect.insertBefore(el.find(sc.settings.itemToggle));
+            wrapBoxEffect.append(el.find(sc.settings.itemToggle));
+        }
+
         el.find(sc.settings.btnEvent).on('click', toggleShow);
 
         function toggleShow (e) {
             var _this = $(this);
+
             if ( _this.hasClass('active') ) {
                 _this.removeClass('active');
-                el.find(sc.settings.itemToggle).velocity("slideUp", { duration: 350 });
+                if ( sc.settings.styleEffect == 'slide' ) {
+                    el.find(sc.settings.itemToggle).velocity("slideUp", { duration: 350 });
+                }else if ( sc.settings.styleEffect == 'slideDownUp' ) {
+                    el.find('.dropdown-up-style').removeClass('active');
+                    setTimeout(function() {
+                        el.find('.dropdown-up-style').addClass('hide');
+                    },250);
+                }
             }else {
                 _this.addClass('active');
-                el.find(sc.settings.itemToggle).velocity("slideDown", { duration: 350 });
+                if ( sc.settings.styleEffect == 'slide' ) {
+                    el.find(sc.settings.itemToggle).velocity("slideDown", { duration: 350 });
+                }else if ( sc.settings.styleEffect == 'slideDownUp' ) {
+                    el.find('.dropdown-up-style').removeClass('hide');
+                    setTimeout(function() {
+                        el.find('.dropdown-up-style').addClass('active');
+                    },50);
+                }
                 outsiteClick();
             }
         }
@@ -179,7 +232,14 @@ $.fn.toggleShowMobi = function (options) {
                 var container = el;
                 if ( !container.is(e.target) && container.has(e.target).length === 0 ){
                     el.find(sc.settings.btnEvent).removeClass('active');
-                    el.find(sc.settings.itemToggle).velocity("slideUp", { duration: 0 });
+                    if ( sc.settings.styleEffect == 'slide' ) {
+                        el.find(sc.settings.itemToggle).velocity("slideUp", { duration: 0 });
+                    }else if ( sc.settings.styleEffect == 'slideDownUp' ) {
+                        el.find('.dropdown-up-style').removeClass('active');
+                        setTimeout(function() {
+                            el.find('.dropdown-up-style').addClass('hide');
+                        },250);
+                    }
                 }
             });
         }
@@ -188,10 +248,15 @@ $.fn.toggleShowMobi = function (options) {
 
 $.fn.price_dt = function (options) {
 
+    var prices = {"thue": {"0" : "0+","-1": "Giá bất kỳ","2000000" : "2 triệu","4000000" : "4 triệu","6000000" : "6 triệu","8000000" : "8 triệu","10000000": "10 triệu","12000000": "12 triệu","14000000": "14 triệu","16000000": "16 triệu","18000000": "18 triệu","20000000": "20 triệu",},"mua": {"0" : "0+","-1": "Giá bất kỳ","2000000000" : "2 tỷ","4000000000" : "4 tỷ","6000000000" : "6 tỷ","8000000000" : "8 tỷ","10000000000": "10 tỷ","12000000000": "12 tỷ","14000000000": "14 tỷ","16000000000": "16 tỷ","18000000000": "18 tỷ","20000000000": "20 tỷ"}};
+    var dt = { "0": "0+", "-1": "Bất kỳ", "10": "10m2", "20": "20m2", "30": "30m2", "40": "40m2", "50": "50m2", "60": "60m2", "70": "70m2", "80": "80m2", "90": "90m2", "100": "100m2"};
+    
     return this.each(function() {
         var defaults = {
             inputMin: '.input-min',
-            inputMax: '.input-max'
+            inputMax: '.input-max',
+            hinhthuc: 'thue', // co 2 hinh thuc, (thue, cho thue) và (bán,)
+            numRenderMax: 11
         },
         sc = {},
         el = $(this);
@@ -201,51 +266,134 @@ $.fn.price_dt = function (options) {
         sc.settings = $.extend({}, defaults, options);
 
         el.toggleShowMobi({
+            styleEffect: 'slideDownUp',
             btnEvent: '.value-selected',
             itemToggle: '.item-advande'
         });
 
-        el.find('.min-max').keyup(function(e){
-            var _this = $(this);
-
-            el.find('.tu').show();
-
-            if ( checkVal() == 1 ) {// min va max rong
-                el.find('.tu').hide();
-                el.find('.wrap-min').hide();
-                el.find('.trolen').hide();
-                el.find('.den').hide();
-                el.find('.wrap-max').hide();
-                el.find('.troxuong').hide();
-            }else if ( checkVal() == 2 ) {// min rong
-                el.find('.troxuong').show();
-                el.find('.den').hide();
-            }else if ( checkVal() == 3 ) {// max rong
-                el.find('.trolen').show();
-                el.find('.den').hide();
-            }else if ( checkVal() == 4 ) {
-                el.find('.trolen').hide();
-                el.find('.den').show();
-                el.find('.troxuong').hide();
+        if ( el.data('itemMinmax') == 'prices' ) {
+            for ( var i in prices[sc.settings.hinhthuc] ) {
+                if ( parseInt(i) < 0 ) {
+                    continue;
+                }
+                var item = $('<li data-number="'+i+'"><a class="option">'+prices[sc.settings.hinhthuc][i]+'</a></li>');
+                el.find('.wrap-minmax').append(item);
             }
-
-            if ( _this.is($(sc.settings.inputMax)) ) {
-                el.find('.wrap-max').show().html(_this.val());
-            }else if ( _this.is($(sc.settings.inputMin)) ) {
-                el.find('.wrap-min').show().html(_this.val());
-            }
-        });
-
-        function checkVal () {
-            if ( el.find(sc.settings.inputMin).val() == "" && el.find(sc.settings.inputMax).val() == "" ) {
-                return 1; // min k co gia tri
-            }else if ( el.find(sc.settings.inputMin).val() == "" ) {
-                return 2; // max k co gia tri
-            }else if ( el.find(sc.settings.inputMax).val() == "" ) { // min hoac max co gia tri
-                return 3;
-            }else {
-                return 4;
+        }else if ( el.data('itemMinmax') == 'area' ) {
+            for ( var i in dt ) {
+                if ( parseInt(i) < 0 ) {
+                    continue;
+                }
+                var item = $('<li data-number="'+i+'"><a class="option">'+dt[i]+'</a></li>');
+                el.find('.wrap-minmax').append(item);
             }
         }
+
+        el.find('ul[data-wrap-minmax=min-val]').show();
+
+        el.find('.filter-minmax li a').on('click', seletedVal);
+
+        el.find('.min-max').on('click', clickInput);
+
+        function seletedVal (e) {
+            var _this = $(this),
+                numberVal = _this.parent().data('number'),
+                txt = _this.text(),
+                minmax = _this.closest('.wrap-minmax').data('wrapMinmax');
+
+            el.find('.'+minmax).val(txt);
+
+            renderTxtShow(minmax, txt);
+
+            if ( minmax == 'min-val' ) {
+                toggleMinMax(minmax);
+                renderMax(numberVal);
+            }else {// hidden khi chon xong gia tri max
+                el.find('.value-selected').trigger('click');
+            }
+            
+            return false;
+        }
+
+        function clickInput (e) {
+            var _this = $(this);
+            if ( _this.hasClass('min-val') ) {
+                toggleMinMax('max-val');
+            }else {
+                toggleMinMax('min-val');
+            }
+        }
+
+        function renderMax (valMin) {
+            var itemMax = el.find('ul[data-wrap-minmax=max-val]'), valMax = 0, valFirst;
+            itemMax.html('');
+            valMax = valMin;
+            for ( var i = 0; i < sc.settings.numRenderMax; i++ ) {
+                valMax += priceUnit(valMin);
+                var item = $('<li data-number="'+valMax+'"><a class="option">'+formatPrice(''+valMax+'')+'</a></li>');
+                itemMax.append(item);
+            }
+        }
+
+        function toggleMinMax (item) {
+            el.find('.min-max').removeClass('active');
+            el.find('.wrap-minmax').hide();
+            if ( item == 'min-val' ) {
+                el.find('ul[data-wrap-minmax=max-val]').show();
+                el.find('.max-val').addClass('active');
+            }else if ( item == 'max-val' ) {
+                el.find('ul[data-wrap-minmax=min-val]').show();
+                el.find('.min-val').addClass('active');
+            }
+        }
+
+        function checkValMinMax () {
+            if ( el.find('.min-val').val() == "" && el.find('.max-val').val() == "" ) {
+                return 1;
+            }else if ( el.find('.min-val').val() == "" ) {
+                return 2;
+            }else if ( el.find('.max-val').val() == "" ) {
+                return 3;
+            }
+        }
+
+        function renderTxtShow (minmax, txt) {
+            var wrapTxt = el.find('.value-selected');
+
+            if ( minmax == 'min-val' ) {
+                wrapTxt.find('.wrap-min').html(txt);
+            }else {
+                wrapTxt.find('.wrap-max').html(txt);
+            }
+
+            wrapTxt.find('.tu').show();
+
+            if ( checkValMinMax() == 1 ) {// min, max rong
+                wrapTxt.find('.wrap-min, .trolen, .den, .wrap-max, .troxuong').hide();
+            }else if ( checkValMinMax() == 2 ) {// min rong
+                wrapTxt.find('.den, .wrap-min, .trolen').hide();
+                wrapTxt.find('.troxuong, .wrap-max').show();
+            }else if ( checkValMinMax() == 3 ) {// max rong
+                wrapTxt.find('.troxuong, .den, .wrap-max').hide();
+                wrapTxt.find('.trolen, .wrap-min').show();
+            }else {
+                wrapTxt.find('.trolen, .troxuong').hide();
+                wrapTxt.find('.den, .wrap-min, .wrap-max').show();
+            }
+        }
+
+        function priceUnit (num) {
+            num = Math.abs(num);
+            if (num >= 1000000000) {
+                return 2000000000;
+            } else if (num >= 1000000) {
+                return 2000000;
+            } else  if (num >= 1000) {
+                return 2000;
+            } else {
+                return 2;
+            }
+        }
+
     });
 }
