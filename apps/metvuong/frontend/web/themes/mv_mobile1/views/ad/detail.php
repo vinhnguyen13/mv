@@ -19,69 +19,7 @@ use frontend\models\User;
 		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
 	}
 ?>
-<div class="search-subpage clearfix">
-	<form id="" action="">
-		<div class="search-fill">
-			<input type="text" placeholder="Tìm kiếm nhanh...">
-			<button type="submit" id="btn-search">
-				<span class="icon"></span>
-			</button>
-			<a href="#" class="advande-search-btn"><span class="bd-left"></span><span
-				class="bd-right"></span></a>
-		</div>
-		<div class="advande-search">
-			<div class="each-advande">
-				<div class="value-selected price-search">Giá</div>
-				<div class="item-advande row">
-					<div class="col-xs-5">
-						<input type="text" class="form-control" id=""
-							placeholder="Thấp nhất">
-					</div>
-					<div class="col-xs-2">đến</div>
-					<div class="col-xs-5">
-						<input type="text" class="form-control" id=""
-							placeholder="Cao nhất">
-					</div>
-				</div>
-			</div>
-			<div class="each-advande">
-				<div class="value-selected dt-search">Diện tích</div>
-				<div class="item-advande row">
-					<div class="col-xs-5">
-						<input type="text" class="form-control" id=""
-							placeholder="Thấp nhất">
-					</div>
-					<div class="col-xs-2">đến</div>
-					<div class="col-xs-5">
-						<input type="text" class="form-control" id=""
-							placeholder="Cao nhất">
-					</div>
-				</div>
-			</div>
-			<div class="each-advande row">
-				<div class="col-xs-6 num-phongngu">
-					<div class="value-selected">Phòng ngủ</div>
-				</div>
-				<div class="col-xs-6 num-phongtam">
-					<div class="value-selected">Phòng tắm</div>
-				</div>
-				<div class="item-advande">
-					<ul class="clearfix">
-						<li><a href="#" data-value="1">1</a></li>
-						<li><a href="#" data-value="2">2</a></li>
-						<li><a href="#" data-value="3">3</a></li>
-						<li><a href="#" data-value="4">4+</a></li>
-					</ul>
-				</div>
-			</div>
-			<div class="each-advande row">
-				<div class="col-xs-12 other-fill">
-					<div class="value-selected">Thêm tuỳ chọn</div>
-				</div>
-			</div>
-		</div>
-	</form>
-</div>
+<?= $this->render('_partials/search-form') ?>
 <div class="detail-listing">
 	<?php 
 		$images = $product->adImages;
