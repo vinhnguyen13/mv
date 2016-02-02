@@ -23,7 +23,7 @@ class Chat extends Component
         return Yii::createObject(Chat::className());
     }
 
-    public function register(){
+    public function getTigUser(){
         if (!Yii::$app->user->isGuest) {
             $user_id = Yii::$app->user->identity->username.'@'.self::DOMAIN;
             if(($tigUser = TigUsers::findOne(['user_id'=>$user_id])) === null){
@@ -33,13 +33,23 @@ class Chat extends Component
                 $tigUser->user_pw = $this->generateKey();
                 $tigUser->save();
             }
+            return $tigUser;
         }
+    }
+
+    public function getKey(){
+        $tigUser = $this->getTigUser();
+        return $tigUser->user_pw;
+    }
+
+    public function getDomain(){
+        return self::DOMAIN;
     }
 
     public function generateKey(){
         if (!Yii::$app->user->isGuest) {
             $key = Yii::$app->user->identity->getAuthKey();
-            return $key;
+            return md5($key);
         }
         return false;
     }

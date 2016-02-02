@@ -3,12 +3,13 @@ use yii\web\View;
 use yii\helpers\Url;
 use frontend\models\Chat;
 
+
 Yii::$app->getView()->registerCssFile('/css/chat.css');
 $from = Yii::$app->request->get('from', 'admin');
 $to = Yii::$app->request->get('to', 'kt200707g11');
-
 /*Yii::$app->user->identity->username*/
-$script = "var usrname = '".$from."';var dm = '".Chat::DOMAIN."';";
+$script = "var xmpp_jid = '".$from."';var xmpp_dm = '".Chat::find()->getDomain()."';var xmpp_key = '".Chat::find()->getKey()."';";
+
 Yii::$app->getView()->registerJs($script, View::POS_HEAD);
 Yii::$app->getView()->registerJsFile('/js/strophe.js', ['position'=>View::POS_BEGIN]);
 Yii::$app->getView()->registerJsFile('/js/chat.js', ['position'=>View::POS_BEGIN]);
@@ -34,7 +35,7 @@ Yii::$app->getView()->registerJsFile('/js/chat.js', ['position'=>View::POS_BEGIN
     </div>
 </script>
 <script id="chat-typing-template" type="text/x-handlebars-template">
-    <div class="loading-chat">{{msg}} is typing<span class="one">.</span><span class="two">.</span><span class="three">.</span></div>
+    <div class="loading-chat">{{from}} is typing<span class="one">.</span><span class="two">.</span><span class="three">.</span></div>
 </script>
 
 <div class="chat-group" to="<?=$to;?>">
