@@ -61,6 +61,7 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
 	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['ad/investor/'])?>">Chủ đầu tư</a></li>
 	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['ad/architect/'])?>">Danh sách kiến trúc sư</a></li>
 	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['ad/contractor/'])?>">Nhà thầu thi công</a></li>
+	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['ad/facility/'])?>">Tiện ích</a></li>
 	                </ol>
 			      </div>
 			    </div>

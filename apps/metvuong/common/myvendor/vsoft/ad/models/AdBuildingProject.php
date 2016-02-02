@@ -26,9 +26,11 @@ class AdBuildingProject extends AdBuildingProjectBase
 	        [['city_id', 'district_id', 'created_at', 'updated_at', 'status'], 'integer'],
 	        [['name'], 'required'],
 	        [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video', 'progress', 'description'], 'string'],
+            [['facade_width'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/', 'max' => 10000],
+            [['lift'], 'integer', 'max' => 100],
 	        [['lng', 'lat'], 'number'],
 	        [['name', 'logo', 'land_area', 'apartment_no', 'floor_no', 'start_time', 'estimate_finished', 'hotline', 'slug'], 'string', 'max' => 32],
-	        [['location', 'investment_type', 'commercial_leasing_area', 'owner_type', 'facilities', 'website'], 'string', 'max' => 255]
+	        [['location', 'investment_type', 'commercial_leasing_area', 'owner_type', 'website'], 'string', 'max' => 255]
         ];
     }
     
@@ -81,6 +83,9 @@ class AdBuildingProject extends AdBuildingProjectBase
     	'status' => 'Status',
     	'investors' => 'Chủ đầu tư',
     	'categories' => 'Phân loại',
+    	'facade_width' => 'Mặt tiền(m)',
+    	'lift' => 'Thang máy(cái)',
+    	'start_date' => 'Ngày khởi công',
     	];
     }
     
@@ -103,7 +108,7 @@ class AdBuildingProject extends AdBuildingProjectBase
 				'class' => TimestampBehavior::className(),
 				'attributes' => [
 	    			ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-	    			ActiveRecord::EVENT_BEFORE_UPDATE => 'updated_at',
+	    			ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
 				],
 				'value' => new Expression('UNIX_TIMESTAMP()'),
 			],
@@ -193,6 +198,10 @@ class AdBuildingProject extends AdBuildingProjectBase
 
 	public function getContractors() {
 		return $this->hasMany(AdContractor::className(), ['id' => 'contractor_id'])->viaTable('ad_contractor_building_project', ['building_project_id' => 'id']);
+	}
+
+    public function getFacilities() {
+		return $this->hasMany(AdFacility::className(), ['id' => 'facility_id'])->viaTable('ad_facility_building_project', ['building_project_id' => 'id']);
 	}
 	
 	public function saveMultiple($data, $relationModels, $field) {

@@ -3,6 +3,7 @@ namespace vsoft\ad\controllers;
 
 use vsoft\ad\models\AdArchitect;
 use vsoft\ad\models\AdContractor;
+use vsoft\ad\models\AdFacility;
 use Yii;
 use yii\web\Controller;
 use vsoft\ad\models\AdBuildingProject;
@@ -40,7 +41,8 @@ class BuildingProjectController extends Controller
 		$investors = AdInvestor::find()->all();
 		$categories = AdCategory::find()->where(['status'=>1])->all();
         $architects = AdArchitect::find()->where(['status'=>1])->all();
-        $contractor = AdContractor::find()->where(['status'=>1])->all();
+        $contractors = AdContractor::find()->where(['status'=>1])->all();
+        $facilities = AdFacility::find()->where(['status'=>1])->all();
 
 		if(Yii::$app->request->isPost) {
 			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
@@ -48,6 +50,11 @@ class BuildingProjectController extends Controller
 			$post = Yii::$app->request->post();
 			
 			$model->load($post);
+            $start_date = null;
+            if(!empty($post["BuildingProject"]["start_date"])){
+                $start_date = strtotime($post["BuildingProject"]["start_date"]);
+                $model->start_date = $start_date;
+            }
 			
 			$response = ['success' => true];
 			
@@ -55,6 +62,9 @@ class BuildingProjectController extends Controller
     			$model->save(false);
     			$model->saveMultiple($post['BuildingProject'], $investors, 'investors');
     			$model->saveMultiple($post['BuildingProject'], $categories, 'categories');
+                $model->saveMultiple($post['BuildingProject'], $architects, 'architects');
+                $model->saveMultiple($post['BuildingProject'], $contractors, 'contractors');
+                $model->saveMultiple($post['BuildingProject'], $facilities, 'facilities');
     			
     			$mapFormName = AdAreaType::mapFormName();
     			foreach ($mapFormName as $type => $formName) {
@@ -105,6 +115,7 @@ class BuildingProjectController extends Controller
     	$categories = AdCategory::find()->where(['status'=>1])->all();
         $architects = AdArchitect::find()->where(['status'=>1])->all();
         $contractors = AdContractor::find()->where(['status'=>1])->all();
+        $facilities = AdFacility::find()->where(['status'=>1])->all();
 
     	if($model) {
     		if(Yii::$app->request->isPost) {
@@ -112,6 +123,11 @@ class BuildingProjectController extends Controller
     			$post = Yii::$app->request->post();
 
     			$model->load(Yii::$app->request->post());
+                $start_date = null;
+                if(!empty($post["BuildingProject"]["start_date"])){
+                    $start_date = strtotime($post["BuildingProject"]["start_date"]);
+                    $model->start_date = $start_date;
+                }
 
     			$response = ['success' => true];
 
@@ -121,6 +137,7 @@ class BuildingProjectController extends Controller
     				$model->saveMultiple($post['BuildingProject'], $categories, 'categories');
     				$model->saveMultiple($post['BuildingProject'], $architects, 'architects');
     				$model->saveMultiple($post['BuildingProject'], $contractors, 'contractors');
+    				$model->saveMultiple($post['BuildingProject'], $facilities, 'facilities');
 
 	    			$mapFormName = AdAreaType::mapFormName();
 	    			foreach ($mapFormName as $type => $formName) {

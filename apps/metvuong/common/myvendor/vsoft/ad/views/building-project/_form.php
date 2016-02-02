@@ -33,6 +33,8 @@ foreach ($districts as $district) {
 	$districtOptions[$district->id] = ['data-city-id' => $district->city_id];
 	$districtData[$district->id] = $district->pre . ' ' . $district->name;
 }
+
+$facility = \vsoft\ad\models\AdFacility::find()->where(['status'=>1])->all();
 ?>
 <div id="project-building-form" class="cms-show-form">
 	<?php
@@ -97,10 +99,13 @@ foreach ($districts as $district) {
 			    	<?= $form->field($model, 'commercial_leasing_area')->textArea() ?>
 			    	<?= $form->field($model, 'apartment_no') ?>
 			    	<?= $form->field($model, 'floor_no') ?>
+			    	<?= $form->field($model, 'facade_width')->input('number') ?>
+			    	<?= $form->field($model, 'lift')->input('number') ?>
+			    	<?= $form->field($model, 'start_date')->widget(\yii\jui\DatePicker::className(), ['options' => ['class' => 'form-control']]) ?>
 			    	<?= $form->field($model, 'start_time') ?>
 			    	<?= $form->field($model, 'estimate_finished') ?>
 			    	<?= $form->field($model, 'owner_type') ?>
-			    	<?= $form->field($model, 'facilities') ?>
+			    	<?= $form->field($model, 'facilities')->checkboxList(ArrayHelper::map($facility, 'id', 'name')) ?>
 			    	<?= $form->field($model, 'hotline')->textArea()->hint('Mổi số điện thoại trên 1 dòng') ?>
 			    	<?= $form->field($model, 'website') ?>
 	    		</li>

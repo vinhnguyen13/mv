@@ -16,7 +16,9 @@ use frontend\components\Controller;
 
 class UserManagementController extends Controller
 {
-    public $layout = '@app/views/user-management/layouts/main';
+//    public $layout = '@app/views/user-management/layouts/main';
+
+    public $layout = '@app/views/layouts/layout';
 
     public function beforeAction($action)
     {

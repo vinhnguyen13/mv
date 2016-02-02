@@ -6,13 +6,6 @@
  */
 use yii\helpers\Url;
 
-$image = '';
-if ($gallery = explode(',', $model->gallery)) {
-    $image = $gallery[0];
-}
-$investor = !empty($model->investors[0]) ? $model->investors[0]->name : null;
-$architect = !empty($model->architects[0]) ? $model->architects[0]->name : null;
-$contractor = !empty($model->contractors[0]) ? $model->contractors[0]->name : null;
 ?>
 <div class="search-subpage clearfix">
     <form id="" action="">
@@ -24,13 +17,30 @@ $contractor = !empty($model->contractors[0]) ? $model->contractors[0]->name : nu
 <div class="detail-listing">
     <div class="gallery-detail swiper-container">
         <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <div class="bgcover" style="background-image:url(<?= Url::to('/store/building-project-images/' . $image) ?>)"></div>
-                <ul class="clearfix">
-                    <li><a href="#" class="icon icon-loca"></a></li>
-                    <li><a href="#" class="icon icon-fave"></a></li>
-                </ul>
-            </div>
+            <?php
+            $gallery = explode(',', $model->gallery);
+            if(!empty($gallery[0])) {
+                foreach ($gallery as $image) {
+                    ?>
+                    <div class="swiper-slide">
+                        <div class="bgcover"
+                             style="background-image:url(<?= Url::to('/store/building-project-images/' . $image) ?>)"></div>
+                        <ul class="clearfix">
+                            <li><a href="#" class="icon icon-loca"></a></li>
+                            <li><a href="#" class="icon icon-fave"></a></li>
+                        </ul>
+                    </div>
+                <?php }
+            } else { ?>
+                <div class="swiper-slide">
+                    <div class="bgcover"
+                         style="background-image:url(<?= Yii::$app->view->theme->baseUrl."/resources/images/img-duan-demo.jpg" ?>)"></div>
+                    <ul class="clearfix">
+                        <li><a href="#" class="icon icon-loca"></a></li>
+                        <li><a href="#" class="icon icon-fave"></a></li>
+                    </ul>
+                </div>
+            <?php }  ?>
         </div>
         <div class="swiper-pagination"></div>
     </div>
@@ -40,23 +50,23 @@ $contractor = !empty($model->contractors[0]) ? $model->contractors[0]->name : nu
         <p class="address-listing"><?=$model->location?></p>
     </div>
     <div class="infor-listing infor-unit">
-        <?php if(!empty($investor)){?> <p><span>CHỦ ĐẦU TƯ:</span> <?= $investor ?></p> <?php }?>
-        <?php if(!empty($architect)){?> <p><span>KIẾN TRÚC SƯ:</span> <?=$architect ?></p> <?php }?>
-        <?php if(!empty($contractor)){?> <p><span>NHÀ THẦU THI CÔNG:</span> <?=$contractor ?></p> <?php }?>
+        <?php if(!empty($model->investors[0])){?> <p><span>CHỦ ĐẦU TƯ:</span> <?= $model->investors[0]->name  ?></p> <?php }?>
+        <?php if(!empty($model->architects[0])){?> <p><span>KIẾN TRÚC SƯ:</span> <?=$model->architects[0]->name ?></p> <?php }?>
+        <?php if(!empty($model->contractors[0])){?> <p><span>NHÀ THẦU THI CÔNG:</span> <?=$model->contractors[0]->name ?></p> <?php }?>
     </div>
     <div class="attr-detail">
         <div class="title-attr-listing">Diễn tả chi tiết</div>
-        <p><?=$model->description?></p>
+        <p style="text-align: justify;"><?=!empty($model->description) ? $model->description : "Thông tin sẽ được cập nhật."?></p>
         <div class="text-right see-more-listing"><a href="#">Xem thêm</a></div>
     </div>
     <div class="attr-detail">
         <div class="title-attr-listing">Thông tin chi tiết</div>
-        <p>Mặt tiền: 10m</p>
-        <p>Tầng cao: 19 Tầng</p>
-        <p>Thang máy: 4</p>
-        <p>Chủ Đầu Tư: TTG Holding</p>
-        <p>Nhà thầu xây dựng: COTECLAND</p>
-        <p>Ngày khởi công: 15/01/2004</p>
+        <?php if(!empty($model->facade_width)){?> <p><span>Mặt tiền:</span> <?= $model->facade_width."m" ?></p> <?php }?>
+        <?php if(!empty($model->floor_no)){?> <p><span>Tầng cao:</span> <?= $model->floor_no ?></p> <?php }?>
+        <?php if(!empty($model->lift)){?> <p><span>Thang máy:</span> <?= $model->lift ?></p> <?php }?>
+        <?php if(!empty($model->start_date)){?> <p><span>Ngày khởi công:</span> <?= Yii::$app->formatter->asDate($model->start_date, 'dd-MM-yyyy')?></p> <?php }?>
+        <?php if(!empty($model->start_time)){?> <p><span>Bắt đầu dự án:</span> <?=$model->start_time?></p> <?php }?>
+        <?php if(!empty($model->estimate_finished)){?> <p><span>Kết thúc dự án:</span> <?=$model->estimate_finished?></p> <?php }?>
         <div class="text-right see-more-listing"><a href="#">Xem thêm</a></div>
     </div>
     <div class="attr-detail">
@@ -71,51 +81,51 @@ $contractor = !empty($model->contractors[0]) ? $model->contractors[0]->name : nu
     </div>
     <div class="attr-detail">
         <div class="title-attr-listing">Địa điểm</div>
-        <div class="wrap-map wrap-img"><img src="images/MV-Địa-điểm.jpg" alt="" /></div>
+        <div class="wrap-map wrap-img"><img src="<?=Yii::$app->view->theme->baseUrl."/resources/images/MV-Địa-điểm.jpg" ?>" alt="metvuong.com" /></div>
     </div>
-    <div class="attr-detail">
-        <div class="title-attr-listing">Điểm Met Vuong cho khu vực</div>
-        <div class="rating-mv-listing">
-            <ul>
-                <li>
-                    <div class="clearfix">
-                        <span class="pull-right">6/10</span>
-                        Thông tin chung
-                    </div>
-                    <div class="rating-percent">
-                        <div class="num-percent" style="width:50%;"></div>
-                    </div>
-                </li>
-                <li>
-                    <div class="clearfix">
-                        <span class="pull-right">6/10</span>
-                        Thông tin chi tiết
-                    </div>
-                    <div class="rating-percent">
-                        <div class="num-percent" style="width:80%;"></div>
-                    </div>
-                </li>
-                <li>
-                    <div class="clearfix">
-                        <span class="pull-right">6/10</span>
-                        Hình ảnh
-                    </div>
-                    <div class="rating-percent">
-                        <div class="num-percent" style="width:60%;"></div>
-                    </div>
-                </li>
-                <li>
-                    <div class="clearfix">
-                        <span class="pull-right">6/10</span>
-                        Bản vẽ mặt bằng
-                    </div>
-                    <div class="rating-percent">
-                        <div class="num-percent" style="width:20%;"></div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
+<!--    <div class="attr-detail">-->
+<!--        <div class="title-attr-listing">Điểm Met Vuong cho khu vực</div>-->
+<!--        <div class="rating-mv-listing">-->
+<!--            <ul>-->
+<!--                <li>-->
+<!--                    <div class="clearfix">-->
+<!--                        <span class="pull-right">6/10</span>-->
+<!--                        Thông tin chung-->
+<!--                    </div>-->
+<!--                    <div class="rating-percent">-->
+<!--                        <div class="num-percent" style="width:50%;"></div>-->
+<!--                    </div>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <div class="clearfix">-->
+<!--                        <span class="pull-right">6/10</span>-->
+<!--                        Thông tin chi tiết-->
+<!--                    </div>-->
+<!--                    <div class="rating-percent">-->
+<!--                        <div class="num-percent" style="width:80%;"></div>-->
+<!--                    </div>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <div class="clearfix">-->
+<!--                        <span class="pull-right">6/10</span>-->
+<!--                        Hình ảnh-->
+<!--                    </div>-->
+<!--                    <div class="rating-percent">-->
+<!--                        <div class="num-percent" style="width:60%;"></div>-->
+<!--                    </div>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <div class="clearfix">-->
+<!--                        <span class="pull-right">6/10</span>-->
+<!--                        Bản vẽ mặt bằng-->
+<!--                    </div>-->
+<!--                    <div class="rating-percent">-->
+<!--                        <div class="num-percent" style="width:20%;"></div>-->
+<!--                    </div>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </div>-->
     <div class="attr-detail">
         <div class="title-attr-listing">45 Căn hộ được đăng tin</div>
         <div class="listing-duan-result">
@@ -227,3 +237,12 @@ $contractor = !empty($model->contractors[0]) ? $model->contractors[0]->name : nu
         <button class="contact-agent">Xem chi tiết căn hộ</button>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            spaceBetween: 30
+        });
+    });
+</script>

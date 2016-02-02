@@ -25,8 +25,8 @@ class m160129_043939_ad_contractor_table extends Migration
         $this->execute("CREATE TABLE `ad_contractor_building_project` (
                           `building_project_id` int(11) DEFAULT NULL,
                           `contractor_id` int(11) DEFAULT NULL,
-                        CONSTRAINT `fk_building_project_id` FOREIGN KEY (`building_project_id`) REFERENCES `db_mv3`.`ad_building_project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-                        CONSTRAINT `fk_contractor_id` FOREIGN KEY (`contractor_id`) REFERENCES `db_mv3`.`ad_contractor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+                        CONSTRAINT `fk_building_project_id` FOREIGN KEY (`building_project_id`) REFERENCES `ad_building_project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+                        CONSTRAINT `fk_contractor_id` FOREIGN KEY (`contractor_id`) REFERENCES `ad_contractor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
                         UNIQUE INDEX `building_project_id&contractor_id` (`building_project_id` ASC, `contractor_id` ASC)  COMMENT '',
                         INDEX `fk_building_project_id_idx` (`building_project_id` ASC)  COMMENT '',
                         INDEX `fk_contractor_id_idx` (`contractor_id` ASC)  COMMENT ''
