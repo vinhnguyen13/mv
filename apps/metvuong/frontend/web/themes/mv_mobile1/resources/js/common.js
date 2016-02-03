@@ -299,18 +299,29 @@ $.fn.price_dt = function (options) {
             var _this = $(this),
                 numberVal = _this.parent().data('number'),
                 txt = _this.text(),
-                minmax = _this.closest('.wrap-minmax').data('wrapMinmax');
+                minmax = _this.closest('.wrap-minmax').data('wrapMinmax'),
+                valMin = '', valMax = '';
 
             el.find('.'+minmax).val(txt);
-
-            renderTxtShow(minmax, txt);
 
             if ( minmax == 'min-val' ) {
                 toggleMinMax(minmax);
                 renderMax(numberVal);
+                el.find('.max-val').val('');
+                valMin = numberVal;
+
             }else {// hidden khi chon xong gia tri max
                 el.find('.value-selected').trigger('click');
+                valMax = numberVal;
             }
+
+            if ( el.data('itemMinmax') == 'prices' ) {
+                minmax == 'min-val' ? $('#priceMin').val(valMin) : $('#priceMax').val(valMax);
+            }else if ( el.data('itemMinmax') == 'area' ) {
+                minmax == 'min-val' ? $('#dtMin').val(valMin) : $('#dtMax').val(valMax);
+            }
+
+            renderTxtShow(minmax, txt);
             
             return false;
         }
@@ -325,12 +336,16 @@ $.fn.price_dt = function (options) {
         }
 
         function renderMax (valMin) {
-            var itemMax = el.find('ul[data-wrap-minmax=max-val]'), valMax = 0, valFirst;
+            var itemMax = el.find('ul[data-wrap-minmax=max-val]'), valMax = 0, valFirst, unitDT = '';
             itemMax.html('');
             valMax = valMin;
+            if ( el.data('itemMinmax') == 'area' ) {
+                unitDT = 'm2';
+            }
             for ( var i = 0; i < sc.settings.numRenderMax; i++ ) {
                 valMax += priceUnit(valMin);
-                var item = $('<li data-number="'+valMax+'"><a class="option">'+formatPrice(''+valMax+'')+'</a></li>');
+                var item = $('<li data-number="'+valMax+'"><a class="option">'+formatPrice(''+valMax+'')+unitDT+'</a></li>');
+                item.find('a').on('click', seletedVal);
                 itemMax.append(item);
             }
         }
