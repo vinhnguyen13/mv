@@ -81,7 +81,9 @@ use yii\helpers\Url;
     </div>
     <div class="attr-detail">
         <div class="title-attr-listing">Địa điểm</div>
-        <div class="wrap-map wrap-img"><img src="<?=Yii::$app->view->theme->baseUrl."/resources/images/MV-Địa-điểm.jpg" ?>" alt="metvuong.com" /></div>
+        <div class="wrap-map wrap-img">
+            <div id="map" style="height: 189px; width: 100%;"></div>
+        </div>
     </div>
     <div class="attr-detail">
         <div class="title-attr-listing">5 Căn hộ được đăng tin</div>
@@ -194,6 +196,33 @@ use yii\helpers\Url;
         <button class="contact-agent">Xem chi tiết căn hộ</button>
     </div>
 </div>
+<script>
+    function initMap() {
+        var mapLatLng = {lat: <?=$model->lat?>, lng: <?=$model->lng?>};
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 15,
+            center: mapLatLng
+        });
+
+        var contentString = '<b><?=strtoupper($model->name)?></b>';
+
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString,
+            maxWidth: 300
+        });
+
+        var marker = new google.maps.Marker({
+            position: mapLatLng,
+            map: map,
+            title: '<?=$model->name?>'
+        });
+        marker.addListener('click', function() {
+            infowindow.open(map, marker);
+        });
+    }
+</script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTwptkS584b_mcZWt0j_86ZFYLL0j-1Yw&callback=initMap"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         var swiper = new Swiper('.swiper-container', {
