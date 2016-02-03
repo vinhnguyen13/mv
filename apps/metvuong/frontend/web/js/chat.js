@@ -143,14 +143,13 @@
         onHeadline: function(msg) {
             console.log(5);
         },
-        sendNotifiTyping: function(from, to, msg){
-            clearTimeout(timer);
-            timer = setTimeout(function() {
+        sendNotifiTyping: function(from, to, message){
+            if (to) {
                 connection.send($msg({
                     to: to,
                     type: 'chat'
-                }).c('typing', {xmlns: "http://jabber.org/protocol/chatstates", length: msg.length, from: from}));
-            }, 500);
+                }).c('typing', {xmlns: "http://jabber.org/protocol/chatstates", length: message.length, from: from}));
+            }
         },
         sendMessage: function(to, message){
             if (message && to) {
@@ -188,7 +187,10 @@
             chatUI.sendMessage();
 			return false;
 		}else{
-            chatFunction.sendNotifiTyping(from, to, msg);
+            clearTimeout(timer);
+            timer = setTimeout(function() {
+                chatFunction.sendNotifiTyping(from, to, msg);
+            }, 100);
             return false;
         }
 	});
@@ -201,10 +203,6 @@
 	/**---REGISTER EVENT---**/
 	$(document).bind('chat/connect', function (event, data) {
         chatFunction.connect(xmpp_jid, xmpp_dm, xmpp_key);
-	});
-
-	$(document).bind('chat/msgSend', function (event, data) {
-
 	});
 	/**---END REGISTER EVENT---**/
 })();

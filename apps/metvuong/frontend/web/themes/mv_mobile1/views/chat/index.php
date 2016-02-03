@@ -42,7 +42,7 @@ Yii::$app->getView()->registerJsFile('/js/chat.js', ['position'=>View::POS_BEGIN
         <div class="title-chat clearfix"><em class="fa fa-close pull-right"></em><em class="fa fa-comments"></em>{{to}}</div>
         <div class="wrap-chat clearfix">
         </div>
-        <div class="type-input-chat"><input type="text" id="typingMsg" placeholder="Nhập tin nhắn...">
+        <div class="type-input-chat"><input type="text" id="typingMsg" placeholder="Tin nhắn của bạn...">
             <button class="sm-chat"><em class="fa fa-location-arrow"></em></button>
         </div>
     </div>
