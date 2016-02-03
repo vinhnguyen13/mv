@@ -33,6 +33,7 @@ header {
     background: #fff;
     height: 50px;
     border-bottom: 1px solid #9b9b9b;
+    padding: 0 15px;
 }
 .search-box {
     border-top: 1px solid #171616;
@@ -54,7 +55,7 @@ header {
 #menu-toggle {
     width: 25px;
     height: 20px;
-    margin: 15px 0 0 14px;
+    margin: 15px 0 0 0;
     background-size: 336px;
 }
 #wrapper {
@@ -129,6 +130,7 @@ header {
     border-left: none;
     background: none;
 }
+#search-header,
 #btn-search span {
     display: inline-block;
     width: 30px;
@@ -1739,4 +1741,35 @@ label {
     -webkit-transform: translateY(0);
     -ms-transform: translateY(0);
     transform: translateY(0);
+}
+#search-header {
+    float: right;
+    margin: 10px 0 0 0px;
+}
+.fillter-fast .val-selected {
+    height: 50px;
+    line-height: 46px;
+}
+.fillter-fast .val-selected .selected {
+    color: #4A4A4A;
+    font-weight: 400;
+    font-size: 1em;
+}
+.fillter-fast .item-dropdown {
+    border: 1px solid #9b9b9b;
+    border-radius: 0 0 3px;
+    -webkit-border-radius: 0 0 3px;
+    -moz-border-radius: 0 0 3px;
+    -ms-border-radius: 0 0 3px;
+}
+.fillter-fast .dropdown-up-style {
+    top: 65px;
+}
+.fillter-fast .item-dropdown li {
+    float: left;
+    width: 25%;
+    text-align: center;
+}
+.fillter-fast .item-dropdown li a {
+    display: block;
 }
