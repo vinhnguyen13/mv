@@ -20,8 +20,8 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
         </div>
         <div class="col-xs-4 avatar-user-pr">
             <div class="wrap-img avatar"><img data-toggle="modal" data-target="#avatar" src="<?= file_exists($avatar) ? Url::to('/store/avatar/' . $model->avatar) : Yii::$app->view->theme->baseUrl."/resources/images/MV-Agent Photo.jpg"?>" alt="metvuong.com avatar" /></div>
-            <div class="name-user" name="name" contenteditable><?=!empty($model->name) ? $model->name : "NO NAME"?></div>
-            <div class="address-user" name="address" contenteditable><em class="fa fa-map-marker"></em><?= !empty($model->address) ? $model->address : "HO CHI MINH, VIETNAM"?></div>
+            <div class="name-user" name="name" contentEditable=true><?=!empty($model->name) ? $model->name : "NO NAME"?></div>
+            <div class="address-user" name="address" contentEditable=true><em class="fa fa-map-marker"></em><?= !empty($model->address) ? $model->address : "HO CHI MINH, VIETNAM"?></div>
         </div>
         <div class="col-xs-4 num-rating">
             <span class="num">4.3</span>
@@ -50,7 +50,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                 </h4>
             </div>
             <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                <div class="panel-body" name="about" contenteditable>
+                <div class="panel-body" name="about" contentEditable=true textplace="Vui lòng chia sẻ tiểu sử">
                     <?=$model->about?>
                 </div>
             </div>
@@ -64,7 +64,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                 </h4>
             </div>
             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                <div class="panel-body" name="activity" contenteditable>
+                <div class="panel-body" name="activity" contentEditable=true textplace="Vui lòng chia sẻ hoạt động">
                     <?=$model->activity?>
                 </div>
             </div>
@@ -78,7 +78,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                 </h4>
             </div>
             <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-                <div class="panel-body" name="experience" contenteditable>
+                <div class="panel-body" name="experience" contentEditable=true textplace="Vui lòng nhập chia sẻ kinh nghiệm">
                     <?=$model->experience?>
                 </div>
             </div>
@@ -273,12 +273,9 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
             </div>
             <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
                 <div class="panel-body">
-                    <?php if(!empty($model->public_email)){?><div class="email-agent"><div><span class="icon"></span></div><div name="public_email" style="width: 80%" contenteditable><?= $model->public_email ?></div></div><?php }?>
-                    <?php if(!empty($model->mobile)){?>
-                        <div class="phone-agent"><div><span class="icon"></span></div><div name="mobile" style="width: 80%" contenteditable><?= $model->mobile ?></div></div>
-                    <?php } else if(!empty($model->phone)){?>
-                        <div class="phone-agent"><div><span class="icon"></span></div><div name="phone" contenteditable><?= $model->phone ?></div></div><?php }?>
-                    <?php if(!empty($model->user_id)){?><div class="id-agent"><div><span class="icon"></span></div>AGENT ID TTG<?=str_pad($model->user_id, 3, '0', STR_PAD_LEFT)?></div><?php }?>
+                    <div class="email-agent"><div><span class="icon"></span></div><div name="public_email" style="width: 80%;" contentEditable=true textplace="Vui lòng nhập email"><?= $model->public_email ?></div></div>
+                    <div class="phone-agent"><div><span class="icon"></span></div><div name="mobile" style="width: 80%;" contentEditable=true textplace="Vui lòng nhập số điện thoại"><?= $model->mobile ?></div></div>
+                    <div class="id-agent"><div><span class="icon"></span></div>AGENT ID TTG<?=str_pad($model->user_id, 3, '0', STR_PAD_LEFT)?></div>
                 </div>
             </div>
         </div>
@@ -320,6 +317,11 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
         </div>
     </div>
 </div>
+<style>
+    div[contentEditable]:empty:not(:focus):before{
+        content:attr(textplace);
+    }
+</style>
 <script>
     var swiper = new Swiper('.swiper-container', {
         slidesPerView: 'auto',
@@ -331,7 +333,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
         $('.avatar img').attr("src", url);
     });
 
-    var editable = document.querySelectorAll('div[contentEditable]');
+    var editable = document.querySelectorAll('div[contentEditable=true]');
     for (var i=0, len = editable.length; i<len; i++){
         editable[i].setAttribute('data-orig', editable[i].innerText);
         editable[i].onblur = function(){

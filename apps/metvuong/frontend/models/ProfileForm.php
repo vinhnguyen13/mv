@@ -145,21 +145,24 @@ class ProfileForm extends Model
             $profile->about = $this->about;
             $profile->activity = $this->activity;
             $profile->experience = $this->experience;
-            $profile->slug = $this->slugify($this->name."-".$this->user_id, '-', true, 'Russian-Latin/BGN; Any-Latin; Latin-ASCII; NFD; [:Nonspacing Mark:] Remove; NFC;');
+            if(!empty($profile->slug)) {
+                $user = User::findIdentity(Yii::$app->user->id);
+                $profile->slug = $user->username;
+            }
             return $profile->save();
         }
         return false;
     }
 
-    public function slugify($string, $replacement = '-', $lowercase = true, $transliterateOptions = null){
-        $slugifier = new Slugifier($string);
-        if ($transliterateOptions !== null) {
-            $slugifier->transliterateOptions = $transliterateOptions;
-        }
-        $slugifier->replacement = $replacement;
-        $slugifier->lowercase = $lowercase;
-        return $slugifier->getSlug();
-    }
+//    public function slugify($string, $replacement = '-', $lowercase = true, $transliterateOptions = null){
+//        $slugifier = new Slugifier($string);
+//        if ($transliterateOptions !== null) {
+//            $slugifier->transliterateOptions = $transliterateOptions;
+//        }
+//        $slugifier->replacement = $replacement;
+//        $slugifier->lowercase = $lowercase;
+//        return $slugifier->getSlug();
+//    }
 
     public function loadProfile(){
         $user_id = Yii::$app->user->id;
