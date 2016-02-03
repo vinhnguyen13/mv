@@ -20,8 +20,8 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
         </div>
         <div class="col-xs-4 avatar-user-pr">
             <div class="wrap-img avatar"><img data-toggle="modal" data-target="#avatar" src="<?= file_exists($avatar) ? Url::to('/store/avatar/' . $model->avatar) : Yii::$app->view->theme->baseUrl."/resources/images/MV-Agent Photo.jpg"?>" alt="metvuong.com avatar" /></div>
-            <div class="name-user" name="name" contentEditable=true><?=!empty($model->name) ? $model->name : "NO NAME"?></div>
-            <div class="address-user" name="address" contentEditable=true><em class="fa fa-map-marker"></em><?= !empty($model->address) ? $model->address : "HO CHI MINH, VIETNAM"?></div>
+            <div class="name-user" name="name" contenteditable="true" placeholder="Vui lòng nhập tên"><?=$model->name?></div>
+            <div class="address-user" name="address" contenteditable="true" placeholder="Vui lòng nhập địa chỉ"><em class="fa fa-map-marker"></em><?=$model->address?></div>
         </div>
         <div class="col-xs-4 num-rating">
             <span class="num">4.3</span>
@@ -50,7 +50,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                 </h4>
             </div>
             <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                <div class="panel-body" name="about" contentEditable=true textplace="Vui lòng chia sẻ tiểu sử">
+                <div class="panel-body" name="about" contenteditable="true" placeholder="Vui lòng chia sẻ tiểu sử">
                     <?=$model->about?>
                 </div>
             </div>
@@ -64,7 +64,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                 </h4>
             </div>
             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                <div class="panel-body" name="activity" contentEditable=true textplace="Vui lòng chia sẻ hoạt động">
+                <div class="panel-body" name="activity" contenteditable="true" placeholder="Vui lòng chia sẻ hoạt động">
                     <?=$model->activity?>
                 </div>
             </div>
@@ -78,7 +78,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                 </h4>
             </div>
             <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-                <div class="panel-body" name="experience" contentEditable=true textplace="Vui lòng nhập chia sẻ kinh nghiệm">
+                <div class="panel-body" name="experience" contenteditable="true" placeholder="Vui lòng nhập chia sẻ kinh nghiệm">
                     <?=$model->experience?>
                 </div>
             </div>
@@ -273,8 +273,8 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
             </div>
             <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
                 <div class="panel-body">
-                    <div class="email-agent"><div><span class="icon"></span></div><div name="public_email" style="width: 80%;" contentEditable=true textplace="Vui lòng nhập email"><?= $model->public_email ?></div></div>
-                    <div class="phone-agent"><div><span class="icon"></span></div><div name="mobile" style="width: 80%;" contentEditable=true textplace="Vui lòng nhập số điện thoại"><?= $model->mobile ?></div></div>
+                    <div class="email-agent"><div><span class="icon"></span></div><div name="public_email" style="width: 80%;" contenteditable="true" placeholder="Vui lòng nhập email"><?= $model->public_email ?></div></div>
+                    <div class="phone-agent"><div><span class="icon"></span></div><div name="mobile" style="width: 80%;" contenteditable="true" placeholder="Vui lòng nhập số điện thoại"><?= $model->mobile ?></div></div>
                     <div class="id-agent"><div><span class="icon"></span></div>AGENT ID TTG<?=str_pad($model->user_id, 3, '0', STR_PAD_LEFT)?></div>
                 </div>
             </div>
@@ -317,77 +317,80 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
         </div>
     </div>
 </div>
-<style>
-    div[contentEditable]:empty:not(:focus):before{
-        content:attr(textplace);
-    }
-</style>
 <script>
-    var swiper = new Swiper('.swiper-container', {
-        slidesPerView: 'auto',
-        spaceBetween: 10
-    });
+    $(document).ready(function () {
+        var swiper = new Swiper('.swiper-container', {
+            slidesPerView: 'auto',
+            spaceBetween: 10
+        });
 
-    $('#avatar button.close').click(function(){
-        var url = $('.files .name a').attr("href");
-        $('.avatar img').attr("src", url);
-    });
+        $('#avatar button.close').click(function () {
+            var url = $('.files .name a').attr("href");
+            $('.avatar img').attr("src", url);
+        });
 
-    var editable = document.querySelectorAll('div[contentEditable=true]');
-    for (var i=0, len = editable.length; i<len; i++){
-        editable[i].setAttribute('data-orig', editable[i].innerText);
-        editable[i].onblur = function(){
-            if (this.innerText == this.getAttribute('data-orig')) { }
-            else {
-                var name = this.getAttribute('name');
-                txt = $.trim(this.innerText);
-                // change has happened, store new value
-                if(name == 'public_email'){
-                    var check = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
-                    if (txt == '' || !check.test(txt)) {
-                        alert('Please enter a valid email address.');
-                    } else {
-                        // after valid email call ajax
+        var editable = document.querySelectorAll('div[contenteditable=true]');
+        for (var i = 0, len = editable.length; i < len; i++) {
+            var textTrim = editable[i].innerHTML.trim();
+            if (textTrim == "")
+                editable[i].innerHTML = "";
+            editable[i].setAttribute('data-orig', $.trim(editable[i].innerHTML));
+            editable[i].onblur = function () {
+                if ($.trim(this.innerHTML) == this.getAttribute('data-orig')) {
+                }
+                else {
+                    var name = this.getAttribute('name');
+                    txt = $.trim(this.innerHTML);
+                    // change has happened, store new value
+                    if (name == 'public_email') {
+                        var check = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
+                        if (txt == '' || !check.test(txt)) {
+                            alert("Vui lòng nhập email hợp lệ.");
+//                            this.focus();
+                        } else {
+                            // after valid email call ajax
+                            this.setAttribute('data-orig', txt);
+                            sendDataProfile(<?=$model->user_id?>, txt, name);
+                        }
+                    }
+                    else {
                         this.setAttribute('data-orig', txt);
                         sendDataProfile(<?=$model->user_id?>, txt, name);
                     }
-                } else {
-                    this.setAttribute('data-orig', txt);
-                    sendDataProfile(<?=$model->user_id?>, txt, name);
                 }
+            };
+        }
+
+        $("div[name=mobile]").keypress(function (e) {
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                return false;
             }
-        };
-    }
+            if (e.length > 5)
+                return false;
+        });
 
-    $(".phone").keypress(function (e) {
-        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+        function sendDataProfile(user_id, txtData, type) {
+            var timer = 0;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                $.ajax({
+                    type: "post",
+                    dataType: 'json',
+                    url: '<?=Url::to(['/user-management/profile-mobile'])?>',
+                    data: {uid: user_id, txt: txtData, type: type},
+                    success: function (data) {
+                        console.log(data);
+                    }
+                });
+            }, 500);
             return false;
         }
     });
-
-    $(".mobile").keypress(function (e) {
-        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
-            return false;
-        }
-        if(e.length > 5)
-            return false;
-    });
-
-    function sendDataProfile(user_id, txtData, type){
-        var timer = 0;
-        clearTimeout(timer);
-        timer = setTimeout(function () {
-            $.ajax({
-                type: "post",
-                dataType: 'json',
-                url: '<?=Url::to(['/user-management/profile-mobile'])?>',
-                data: {uid : user_id,txt : txtData, type: type},
-                success: function (data) {
-                    console.log(data);
-                }
-            });
-        }, 500);
-        return false;
-    }
-
 </script>
+<style>
+    div[contenteditable=true]:empty:before {
+        content: attr(placeholder);
+        font-style: italic;
+        display: block; /* For Firefox */
+    }
+</style>
