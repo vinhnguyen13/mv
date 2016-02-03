@@ -83,55 +83,12 @@ use yii\helpers\Url;
         <div class="title-attr-listing">Địa điểm</div>
         <div class="wrap-map wrap-img"><img src="<?=Yii::$app->view->theme->baseUrl."/resources/images/MV-Địa-điểm.jpg" ?>" alt="metvuong.com" /></div>
     </div>
-<!--    <div class="attr-detail">-->
-<!--        <div class="title-attr-listing">Điểm Met Vuong cho khu vực</div>-->
-<!--        <div class="rating-mv-listing">-->
-<!--            <ul>-->
-<!--                <li>-->
-<!--                    <div class="clearfix">-->
-<!--                        <span class="pull-right">6/10</span>-->
-<!--                        Thông tin chung-->
-<!--                    </div>-->
-<!--                    <div class="rating-percent">-->
-<!--                        <div class="num-percent" style="width:50%;"></div>-->
-<!--                    </div>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <div class="clearfix">-->
-<!--                        <span class="pull-right">6/10</span>-->
-<!--                        Thông tin chi tiết-->
-<!--                    </div>-->
-<!--                    <div class="rating-percent">-->
-<!--                        <div class="num-percent" style="width:80%;"></div>-->
-<!--                    </div>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <div class="clearfix">-->
-<!--                        <span class="pull-right">6/10</span>-->
-<!--                        Hình ảnh-->
-<!--                    </div>-->
-<!--                    <div class="rating-percent">-->
-<!--                        <div class="num-percent" style="width:60%;"></div>-->
-<!--                    </div>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <div class="clearfix">-->
-<!--                        <span class="pull-right">6/10</span>-->
-<!--                        Bản vẽ mặt bằng-->
-<!--                    </div>-->
-<!--                    <div class="rating-percent">-->
-<!--                        <div class="num-percent" style="width:20%;"></div>-->
-<!--                    </div>-->
-<!--                </li>-->
-<!--            </ul>-->
-<!--        </div>-->
-<!--    </div>-->
     <div class="attr-detail">
-        <div class="title-attr-listing">45 Căn hộ được đăng tin</div>
+        <div class="title-attr-listing">5 Căn hộ được đăng tin</div>
         <div class="listing-duan-result">
             <ul class="clearfix">
                 <li>
-                    <a href="#" class="wrap-img bgcover" style="background-image:url(images/21311_Khai-truong-Pearl-Plaza-2.jpg)"></a>
+                    <a href="#" class="wrap-img bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl."/resources/images/21311_Khai-truong-Pearl-Plaza-2.jpg)"?>"></a>
                     <div class="infor-attr-duan">
                         <div class="clearfix row">
                             <div class="col-xs-6">
@@ -151,7 +108,7 @@ use yii\helpers\Url;
                     </div>
                 </li>
                 <li>
-                    <a href="#" class="wrap-img bgcover" style="background-image:url(images/21311_Khai-truong-Pearl-Plaza-2.jpg)"></a>
+                    <a href="#" class="wrap-img bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl."/resources/images/21311_Khai-truong-Pearl-Plaza-2.jpg)"?>"></a>
                     <div class="infor-attr-duan">
                         <div class="clearfix row">
                             <div class="col-xs-6">
@@ -171,7 +128,7 @@ use yii\helpers\Url;
                     </div>
                 </li>
                 <li>
-                    <a href="#" class="wrap-img bgcover" style="background-image:url(images/21311_Khai-truong-Pearl-Plaza-2.jpg)"></a>
+                    <a href="#" class="wrap-img bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl."/resources/images/21311_Khai-truong-Pearl-Plaza-2.jpg)"?>"></a>
                     <div class="infor-attr-duan">
                         <div class="clearfix row">
                             <div class="col-xs-6">
@@ -191,7 +148,7 @@ use yii\helpers\Url;
                     </div>
                 </li>
                 <li>
-                    <a href="#" class="wrap-img bgcover" style="background-image:url(images/21311_Khai-truong-Pearl-Plaza-2.jpg)"></a>
+                    <a href="#" class="wrap-img bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl."/resources/images/21311_Khai-truong-Pearl-Plaza-2.jpg)"?>"></a>
                     <div class="infor-attr-duan">
                         <div class="clearfix row">
                             <div class="col-xs-6">
@@ -211,7 +168,7 @@ use yii\helpers\Url;
                     </div>
                 </li>
                 <li>
-                    <a href="#" class="wrap-img bgcover" style="background-image:url(images/21311_Khai-truong-Pearl-Plaza-2.jpg)"></a>
+                    <a href="#" class="wrap-img bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl."/resources/images/21311_Khai-truong-Pearl-Plaza-2.jpg)"?>"></a>
                     <div class="infor-attr-duan">
                         <div class="clearfix row">
                             <div class="col-xs-6">
