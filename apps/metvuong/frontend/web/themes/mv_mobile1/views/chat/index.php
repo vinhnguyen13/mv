@@ -5,7 +5,7 @@ use frontend\models\Chat;
 
 
 Yii::$app->getView()->registerCssFile('/css/chat.css');
-$from = Yii::$app->request->get('from', 'admin');
+$from = Yii::$app->request->get('from', Yii::$app->user->identity->username);
 $to = Yii::$app->request->get('to', 'kt200707g11');
 /*Yii::$app->user->identity->username*/
 $script = "var xmpp_jid = '".$from."';var xmpp_dm = '".Chat::find()->getDomain()."';var xmpp_key = '".Chat::find()->getKey()."';";
@@ -15,8 +15,8 @@ Yii::$app->getView()->registerJsFile('/js/strophe.js', ['position'=>View::POS_BE
 Yii::$app->getView()->registerJsFile('/js/chat.js', ['position'=>View::POS_BEGIN]);
 ?>
 <ul>
-    <li>Chat with: <a href="chat?from=kt200707g11&to=admin">admin</a></li>
-    <li>Chat with: <a href="chat?from=admin&to=kt200707g11">kt200707g11</a></li>
+    <li>Chat with: <a class="chatNow" chat-to="quangvinhit2010" href="#">quangvinhit2010</a></li>
+    <li>Chat with: <a class="chatNow" chat-to="superadmin" href="#">superadmin</a></li>
 </ul>
 <script id="chat-send-template" type="text/x-handlebars-template">
     <div class="wrap-me chat-infor">
@@ -37,13 +37,16 @@ Yii::$app->getView()->registerJsFile('/js/chat.js', ['position'=>View::POS_BEGIN
 <script id="chat-typing-template" type="text/x-handlebars-template">
     <div class="loading-chat">{{from}} is typing<span class="one">.</span><span class="two">.</span><span class="three">.</span></div>
 </script>
+<script id="chat-box-template" type="text/x-handlebars-template">
+    <div class="chat-group" chat-from="{{from}}" chat-to="{{to}}">
+        <div class="title-chat clearfix"><em class="fa fa-close pull-right"></em><em class="fa fa-comments"></em>{{to}}</div>
+        <div class="wrap-chat clearfix">
+        </div>
+        <div class="type-input-chat"><input type="text" id="typingMsg" placeholder="Nhập tin nhắn...">
+            <button class="sm-chat"><em class="fa fa-location-arrow"></em></button>
+        </div>
+    </div>
+</script>
+<div id="chat-container">
 
-<div class="chat-group" to="<?=$to;?>">
-    <div class="title-chat clearfix"><em class="fa fa-close pull-right"></em><em class="fa fa-comments"></em><?=$to;?></div>
-    <div class="wrap-chat clearfix">
-    </div>
-    <div class="type-input-chat"><input type="text" id="typingMsg" placeholder="Nhập tin nhắn...">
-        <button class="sm-chat"><em class="fa fa-location-arrow"></em></button>
-    </div>
 </div>
-

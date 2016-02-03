@@ -2,6 +2,7 @@
     var connection = null, timer = 0;
     var chatUI = {
         appendMsg: function(msg, typeMsg) {
+            chatUI.showTyping();
             if(typeMsg == 1){
                 var msgAppend = $('#chat-send-template').html().replace("{{msg}}", msg);
                 $('.wrap-chat').append(msgAppend);
@@ -15,11 +16,21 @@
         },
         sendMessage: function(){
             var msg = $('#typingMsg').val();
-            var to = chatFunction.getJid($('.chat-group').attr('to'));
+            var to = chatFunction.getJid($('.chat-group').attr('chat-to'));
             chatFunction.sendMessage(to, msg);
             $('#typingMsg').val('');
         },
-        typing: function(from){
+        showChatBox: function(from, to){
+            from = chatFunction.parseJid(from);
+            to = chatFunction.parseJid(to);
+            var chatBoxExist = $(".chat-group[chat-from='"+from+"'][chat-to='"+to+"']");
+            if(chatBoxExist.length > 0){
+                chatBoxExist.show();
+            }else{
+                $('#chat-container').append($('#chat-box-template').html().replace("{{from}}", from).replace("{{to}}", to).replace("{{to}}", to));
+            }
+        },
+        showTyping: function(from){
             if($('.loading-chat')){
                 $('.loading-chat').remove();
             }
@@ -46,7 +57,7 @@
     };
 
     var chatFunction = {
-        init: function(xmpp_jid, xmpp_dm, xmpp_key) {
+        connect: function(xmpp_jid, xmpp_dm, xmpp_key) {
             var BOSH_SERVICE = 'http://'+xmpp_dm+':5280/wating';
             connection = new Strophe.Connection(BOSH_SERVICE);
             connection.rawInput = chatUI.rawInput;
@@ -56,6 +67,12 @@
         },
         getJid: function(jid) {
             return jid+'@'+xmpp_dm;
+        },
+        parseJid: function(jid_full) {
+            if(jid_full.indexOf('@'+xmpp_dm)){
+                return jid_full.split('@')[0];
+            }
+            return jid_full;
         },
         onConnect: function(status) {
             if (status == Strophe.Status.CONNECTING) {
@@ -99,10 +116,20 @@
             return true;
         },
         onMessage: function(msg) {
-            chatUI.typing();
             var to = msg.getAttribute('to');
             var from = msg.getAttribute('from');
             var type = msg.getAttribute('type');
+            chatUI.showChatBox(to, from);
+            var typing = msg.getElementsByTagName('typing');
+            if(typing.length > 0){
+                var from = typing[0].getAttribute('from');
+                var length = typing[0].getAttribute('length');
+                if(length > 0){
+                    chatUI.showTyping(from);
+                }else{
+                    chatUI.showTyping();
+                }
+            }
             var elems = msg.getElementsByTagName('body');
             if (type == "chat" && elems.length > 0) {
                 var body = elems[0];
@@ -110,14 +137,6 @@
                 //.cnode(Strophe.copyElement(body));
                 //connection.send(reply.tree());
                 chatUI.appendMsg(Strophe.getText(body), 2);
-            }
-            var typing = msg.getElementsByTagName('typing');
-            if(typing.length > 0){
-                var from = typing[0].getAttribute('from');
-                var length = typing[0].getAttribute('length');
-                if(length > 0){
-                    chatUI.typing(from);
-                }
             }
             return true;
         },
@@ -151,19 +170,27 @@
         $(this).trigger('chat/connect');
     });
 	/**---ACTION---**/
+	$(document).on('click','.title-chat .fa-close', function () {
+        $(this).parent().parent().hide();
+    });
 	$(document).on('click','.title-chat', function () {
         chatUI.showHideChatBox();
 	});
+    $(document).on('click','.chatNow', function () {
+        chatUI.showChatBox(xmpp_jid, $(this).attr('chat-to'));
+    });
 	$(document).on('keyup', '.chat-group #typingMsg', function (e) {
         var key = e.which;
         var msg = $('#typingMsg').val();
-        var to = chatFunction.getJid($('.chat-group').attr('to'));
+        var to = chatFunction.getJid($('.chat-group').attr('chat-to'));
         var from = xmpp_jid;
-        chatFunction.sendNotifiTyping(from, to, msg);
  		if(key == 13){
             chatUI.sendMessage();
 			return false;
-		}
+		}else{
+            chatFunction.sendNotifiTyping(from, to, msg);
+            return false;
+        }
 	});
 	$(document).on('click', '.chat-group .sm-chat', function (e) {
         chatUI.sendMessage();
@@ -173,7 +200,7 @@
 
 	/**---REGISTER EVENT---**/
 	$(document).bind('chat/connect', function (event, data) {
-        chatFunction.init(xmpp_jid, xmpp_dm, xmpp_key);
+        chatFunction.connect(xmpp_jid, xmpp_dm, xmpp_key);
 	});
 
 	$(document).bind('chat/msgSend', function (event, data) {
