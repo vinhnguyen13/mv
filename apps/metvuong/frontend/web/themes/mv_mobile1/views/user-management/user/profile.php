@@ -20,8 +20,8 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
         </div>
         <div class="col-xs-4 avatar-user-pr">
             <div class="wrap-img avatar"><img data-toggle="modal" data-target="#avatar" src="<?= file_exists($avatar) ? Url::to('/store/avatar/' . $model->avatar) : Yii::$app->view->theme->baseUrl."/resources/images/MV-Agent Photo.jpg"?>" alt="metvuong.com avatar" /></div>
-            <span class="name-user"><?=!empty($model->name) ? $model->name : "NO NAME"?></span>
-            <span class="address-user"><em class="fa fa-map-marker"></em><?= !empty($model->address) ? $model->address : "HO CHI MINH, VIETNAM"?></span>
+            <div class="name-user" name="name" contenteditable><?=!empty($model->name) ? $model->name : "NO NAME"?></div>
+            <div class="address-user" name="address" contenteditable><em class="fa fa-map-marker"></em><?= !empty($model->address) ? $model->address : "HO CHI MINH, VIETNAM"?></div>
         </div>
         <div class="col-xs-4 num-rating">
             <span class="num">4.3</span>
@@ -50,7 +50,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                 </h4>
             </div>
             <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                <div class="panel-body" contenteditable>
+                <div class="panel-body" name="about" contenteditable>
                     <?=$model->about?>
                 </div>
             </div>
@@ -64,7 +64,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                 </h4>
             </div>
             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                <div class="panel-body" contenteditable>
+                <div class="panel-body" name="activity" contenteditable>
                     <?=$model->activity?>
                 </div>
             </div>
@@ -78,7 +78,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                 </h4>
             </div>
             <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-                <div class="panel-body" contenteditable>
+                <div class="panel-body" name="experience" contenteditable>
                     <?=$model->experience?>
                 </div>
             </div>
@@ -273,11 +273,11 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
             </div>
             <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
                 <div class="panel-body">
-                    <?php if(!empty($model->public_email)){?><div class="email-agent"><div><span class="icon"></span></div><div class="public_email" style="width: 80%" contenteditable><?= $model->public_email ?></div></div><?php }?>
+                    <?php if(!empty($model->public_email)){?><div class="email-agent"><div><span class="icon"></span></div><div name="public_email" style="width: 80%" contenteditable><?= $model->public_email ?></div></div><?php }?>
                     <?php if(!empty($model->mobile)){?>
-                        <div class="phone-agent"><div><span class="icon"></span></div><div class="mobile" style="width: 80%" contenteditable><?= $model->mobile ?></div></div>
+                        <div class="phone-agent"><div><span class="icon"></span></div><div name="mobile" style="width: 80%" contenteditable><?= $model->mobile ?></div></div>
                     <?php } else if(!empty($model->phone)){?>
-                        <div class="phone-agent"><div><span class="icon"></span></div><div class="phone" contenteditable><?= $model->phone ?></div></div><?php }?>
+                        <div class="phone-agent"><div><span class="icon"></span></div><div name="phone" contenteditable><?= $model->phone ?></div></div><?php }?>
                     <?php if(!empty($model->user_id)){?><div class="id-agent"><div><span class="icon"></span></div>AGENT ID TTG<?=str_pad($model->user_id, 3, '0', STR_PAD_LEFT)?></div><?php }?>
                 </div>
             </div>
@@ -337,16 +337,21 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
         editable[i].onblur = function(){
             if (this.innerText == this.getAttribute('data-orig')) { }
             else {
+                var name = this.getAttribute('name');
+                txt = $.trim(this.innerText);
                 // change has happened, store new value
-                var $email = $.trim(this.innerText);
-                var re = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
-                if ($email == '' || !re.test($email))
-                {
-                    alert('Please enter a valid email address.');
+                if(name == 'public_email'){
+                    var check = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
+                    if (txt == '' || !check.test(txt)) {
+                        alert('Please enter a valid email address.');
+                    } else {
+                        // after valid email call ajax
+                        this.setAttribute('data-orig', txt);
+                        sendDataProfile(<?=$model->user_id?>, txt, name);
+                    }
                 } else {
-                    // after valid email
-                    this.setAttribute('data-orig', $email);
-
+                    this.setAttribute('data-orig', txt);
+                    sendDataProfile(<?=$model->user_id?>, txt, name);
                 }
             }
         };
@@ -366,15 +371,15 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
             return false;
     });
 
-    function sendInfo(txt){
+    function sendDataProfile(user_id, txtData, type){
         var timer = 0;
         clearTimeout(timer);
         timer = setTimeout(function () {
             $.ajax({
                 type: "post",
                 dataType: 'json',
-                url: <?=Url::to(['/user-management/profile'])?>,
-                data: {txt : txt},
+                url: '<?=Url::to(['/user-management/profile-mobile'])?>',
+                data: {uid : user_id,txt : txtData, type: type},
                 success: function (data) {
                     console.log(data);
                 }
