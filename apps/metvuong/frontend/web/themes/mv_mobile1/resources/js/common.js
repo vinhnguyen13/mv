@@ -499,7 +499,7 @@ $.fn.slideSection = function (options) {
                 nextBack.removeClass('hide');
 
                 if ( current+1 == lenItem ) {
-                    
+                    btnNext.addClass('disable');
                 }
             }
 
@@ -522,12 +522,15 @@ $.fn.slideSection = function (options) {
             
             if ( current == 0 ) {
                 nextBack.addClass('hide');
+            }else {
+                btnNext.removeClass('disable');
             }
 
             return false;
         }
 
         function pagi (current) {
+            if ( current == 0 ) return;
             $(sc.settings.pagi).find('li a').removeClass('active');
             $(sc.settings.pagi).find('li').eq(current-1).find('a').addClass('active');
         }
