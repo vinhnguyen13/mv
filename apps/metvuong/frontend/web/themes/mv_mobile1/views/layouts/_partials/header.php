@@ -4,7 +4,7 @@ use yii\helpers\Url;
 <header class="clearfix">
     <a href="#menu-header" id="menu-toggle" class="pull-left icon"></a>
     <div class="logo">
-        <a href="#">metvuong</a>
+        <a href="/">metvuong</a>
     </div>
     <div id="menu-header" class="menu-header">
         <div class="wrap-menu">
