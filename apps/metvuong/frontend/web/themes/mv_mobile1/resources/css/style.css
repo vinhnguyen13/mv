@@ -16,7 +16,7 @@ a:link {
     position: fixed;
     top: 0px;
     left: 0;
-    width: 100%;
+    width: 80%;
     display: none;
     height: 100%;
     overflow-x: hidden;
@@ -187,7 +187,7 @@ header {
     z-index: 5;
     background: #fff;
     padding: 0px 0 20px 0;
-    width: 80%;
+    /* width: 80%; */
     height: 100%;
     overflow: visible;
     overflow-x: hidden;
@@ -199,7 +199,10 @@ header {
     height: 25px;
     background-position: -50px 0;
     background-size: 267px;
-    margin: 0 0 0 15px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 10;
 }
 .wrap-menu ul {
     margin-top: 10px;
@@ -1265,7 +1268,7 @@ label {
     line-height: 50px;
 }
 .item-listing .img-intro {
-    height: 335px;
+    height: 225px;
     margin-bottom: 10px;
 }
 .item-listing {
@@ -1860,4 +1863,10 @@ label {
 .btn-submit {
     display: block;
     width: 100%;
+}
+#avatar-user {
+    float: right;
+    width: 35px;
+    height: 35px;
+    margin-top: 8px;
 }

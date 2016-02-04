@@ -3,13 +3,13 @@ use yii\helpers\Url;
 ?>
 <header class="clearfix">
     <a href="#menu-header" id="menu-toggle" class="pull-left icon"></a>
-    <a href="#" id="search-header" class="icon"></a>
+    <a href="#" id="avatar-user" class="wrap-img"><img src="/images/default-avatar.jpg" alt=""></a>
     <div class="logo">
         <a href="/">metvuong</a>
     </div>
     <div id="menu-header" class="menu-header">
         <div class="wrap-menu">
-            <a href="#" id="hide-menu" class="icon hidden"></a>
+            <a href="#" id="hide-menu" class="icon"></a>
             <ul class="clearfix">
                 <li><a href="<?= Url::to(['/ad/index']) ?>">mua</a></li>
                 <li><a href="#">thuê</a></li>
@@ -38,5 +38,10 @@ use yii\helpers\Url;
                 <?php }?>
             </ul>
         </div>
+    </div>
+
+    <div id="settings-user" class="settings-user">
+        <a href="#" id="hide-settings" class="icon"></a>
+
     </div>
 </header>

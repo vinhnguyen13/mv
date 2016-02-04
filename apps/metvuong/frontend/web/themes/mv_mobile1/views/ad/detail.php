@@ -31,8 +31,8 @@ use frontend\models\User;
 			<div class="swiper-slide">
 				<div class="bgcover" style="background-image: url(<?= $image->imageMedium ?>)"></div>
 				<ul class="clearfix">
-					<li><a href="#" class="icon icon-loca"></a></li>
-					<li><a href="#" class="icon icon-fave"></a></li>
+					<li><a href="#" class=""><span class="icon icon-loca"></span></a></li>
+					<li><a href="#" class=""><span class="icon icon-fave"></span></a></li>
 				</ul>
 			</div>
 			<?php endforeach; ?>
