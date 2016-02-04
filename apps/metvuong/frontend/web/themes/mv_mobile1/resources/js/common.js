@@ -452,7 +452,7 @@ $.fn.slideSection = function (options) {
         },
         sc = {},
         el = $(this),
-        nextBack = $('<div class="fixed-prev-next hide"><a href="#" id="back-screen"><span class="icon"></span>Back</a><a href="#" id="next-screen" class=""><span class="icon"></span>Next</a></div>'),
+        nextBack = $('<div class="fixed-prev-next"><a href="#" id="back-screen"><span class="icon"></span>Back</a><a href="#" id="next-screen" class=""><span class="icon"></span>Next</a></div>'),
         btnNext = nextBack.find('#next-screen'),
         btnBack = nextBack.find('#back-screen'),
         current = 0,
@@ -475,12 +475,12 @@ $.fn.slideSection = function (options) {
 
         current = sc.settings.active;
 
-        if ( sc.settings.active > 0 ) {
-            nextBack.removeClass('hide');
+        if ( current == 0 ) {
+            btnBack.addClass('disable');
         }
 
         function next () {
-            
+            if ( $(this).hasClass('disable') ) return;
             if ( !sc.settings.validateFrm() ) return;
 
             el.find('.section').removeClass('back-in back-out');
@@ -496,17 +496,18 @@ $.fn.slideSection = function (options) {
 
                 el.find('.section').eq(current).addClass('in').removeClass('hide');
 
-                nextBack.removeClass('hide');
-
                 if ( current+1 == lenItem ) {
                     btnNext.addClass('disable');
                 }
+
+                btnBack.removeClass('disable');
             }
 
             return false;
         }
 
         function back () {
+            if ( $(this).hasClass('disable') ) return;
             el.find('.section').removeClass('in out');
             var oldItem = current;
             el.find('.section').eq(oldItem).removeClass('back-in').addClass('back-out');
@@ -521,7 +522,8 @@ $.fn.slideSection = function (options) {
             el.find('.section').eq(current).addClass('back-in').removeClass('out hide');
             
             if ( current == 0 ) {
-                nextBack.addClass('hide');
+                //nextBack.addClass('hide');
+                btnBack.addClass('disable');
             }else {
                 btnNext.removeClass('disable');
             }

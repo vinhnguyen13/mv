@@ -188,7 +188,7 @@
 							</li>
 							<li>
 								<a class="frm-radio" href="#">
-									<span class="radio-ui icon"><input data-flag="true" name="agent" type="radio"></span>
+									<span class="radio-ui icon"><input data-flag="true" name="agent" type="radio" checked></span>
 									<span>Chủ nhà</span>
 									<span class="txt-limit">ĐĂNG ĐẾN 3 TIN</span>
 								</a>
@@ -458,11 +458,11 @@
 
 			$('.frm-radio').radio({
 				done: function (item) {
-					if ( item.attr('name') == 'agent' ) {
+					/*if ( item.attr('name') == 'agent' ) {
 						setTimeout(function() {
 							$('#next-screen').trigger('click');
 						},250);
-					}
+					}*/
 				}
 			});
 
