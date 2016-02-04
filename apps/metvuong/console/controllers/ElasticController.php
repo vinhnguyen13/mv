@@ -42,7 +42,7 @@ class ElasticController extends Controller {
 		$cities = $this->getTermFromDb('ad_city');
 		
 		foreach($cities as $city) {
-			$cityTerm = $this->buildTerm('city', $city['id'], $city['name'], $city['name'], intval($this->countProducts(['city_id' => $city['id']])));
+			$cityTerm = $this->buildTerm('city', $city['id'], $city['id'], $city['name'], $city['name'], intval($this->countProducts(['city_id' => $city['id']])));
 			$elastic->index($cityTerm);
 			
 			$districts = $this->getTermFromDb('ad_district', ['city_id' => $city['id']]);
@@ -50,12 +50,12 @@ class ElasticController extends Controller {
 			foreach ($districts as $district) {
 				$districtName = $district['pre'] ? $district['pre'] . ' ' . $district['name'] : $district['name'];
 				$districtFullName = $districtName . ', ' . $city['name'];
-				$districtTerm = $this->buildTerm('district', $district['id'], $districtName, $districtFullName, intval($this->countProducts(['district_id' => $district['id']])));
+				$districtTerm = $this->buildTerm('district', $district['id'], $city['id'], $districtName, $districtFullName, intval($this->countProducts(['district_id' => $district['id']])));
 				$elastic->index($districtTerm);
 				
-				$this->buildTermsBelongDistrict('ad_ward', 'ward', $district['id'], $districtFullName);
-				$this->buildTermsBelongDistrict('ad_street', 'street', $district['id'], $districtFullName);
-				$this->buildTermsBelongDistrict('ad_building_project', 'project_building', $district['id'], $districtFullName, false);
+				$this->buildTermsBelongDistrict('ad_ward', 'ward', $city['id'], $district['id'], $districtFullName);
+				$this->buildTermsBelongDistrict('ad_street', 'street', $city['id'], $district['id'], $districtFullName);
+				$this->buildTermsBelongDistrict('ad_building_project', 'project_building', $city['id'], $district['id'], $districtFullName, false);
 			}
 		}
 	}
@@ -78,7 +78,7 @@ class ElasticController extends Controller {
 	private function addTerms($type, $terms) {
 		
 	}
-	private function buildTermsBelongDistrict($table, $type, $districtId, $districtFullName, $hasPre = true) {
+	private function buildTermsBelongDistrict($table, $type, $cityId, $districtId, $districtFullName, $hasPre = true) {
 		$elastic = new Elastic();
 		$elastic->connect();
 		
@@ -93,7 +93,9 @@ class ElasticController extends Controller {
 			
 			$fullName = $name . ', ' . $districtFullName;
 			
-			$buildTerm = $this->buildTerm($type, $term['id'], $name, $fullName, intval($this->countProducts([$type . "_id" => $term['id']])));
+			$buildTerm = $this->buildTerm($type, $term['id'], $cityId, $name, $fullName, intval($this->countProducts([$type . "_id" => $term['id']])));
+			
+			$buildTerm['body']['district_id'] = $districtId;
 			
 			$elastic->index($buildTerm);
 		}
@@ -105,12 +107,13 @@ class ElasticController extends Controller {
 		$p = AdProduct::find()->select(['count' => 'COUNT(*)'])->where($where)->asArray(true)->one();
 		return $p['count'];
 	}
-	private function buildTerm($type, $id, $name, $fullName, $total = 0) {
+	private function buildTerm($type, $id, $cityId, $name, $fullName, $total = 0) {
 		return $params = [
 			'index' => 'term',
 			'type' => $type,
 			'id' => $id,
 			'body' => [
+				'city_id'		=> $cityId,
 				'full_name' 	=> $fullName,
 				'name'			=> $name,
 				'search_field'	=> Elastic::transform($name),

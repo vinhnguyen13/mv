@@ -286,9 +286,33 @@ class SiteController extends Controller
     }
     
     public function actionSearch() {
+    	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    	
     	$v = \Yii::$app->request->post('v');
     	$v = Elastic::transform($v);
-    	var_dump($v);
+    	
+    	$elastic = new Elastic();
+    	$elastic->connect();
+		$params = [
+			'index' => 'term',
+			'body' => [
+				'query' => [
+					'match_phrase_prefix' => ['search_field' => $v],
+				],
+				'sort' => ['total' => ['order' => 'desc']],
+				'_source' => ['full_name', 'total']
+			],
+		];
+		
+    	$result = $elastic->search($params);
+    	
+    	$response = [];
+    	
+    	foreach ($result['hits']['hits'] as $hit) {
+    		$response[] = $hit['_source'];
+    	}
+    	
+    	return $response;
     }
     
 	public function actionTest() {

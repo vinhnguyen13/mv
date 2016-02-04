@@ -9,12 +9,29 @@ $(document).ready(function() {
 	$(document).on('click','.link-regis', function() {$('a[href=#tab-signup]').trigger('click');});
 	
 	$('#search').keyup(function() {
+		clearTimeout($.data(this, 'search'));
 		var val = $(this).val();
+		var ss = $('.suggest-search');
+		
 		if(val.length > 3) {
 			var url = $(this).data('url');
-			$.post(url, {v: val}, function(){
-				
-			});
+			
+		    $.data(this, 'search', setTimeout(function() {
+		    	$.post(url, {v: val}, function(response){
+					var cs = $('.content-suggest ul');
+					if(response.length > 0) {
+						ss.removeClass('hide');
+						cs.html('');
+						for(var i in response) {
+							cs.append('<li><a href="#">' + response[i].full_name + ' <span>(' + response[i].total + ')</span></a></li>');
+						}
+					} else {
+						ss.addClass('hide');
+					}
+				});
+		    }, 300));
+		} else {
+			ss.addClass('hide');
 		}
 	});
 });

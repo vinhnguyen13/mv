@@ -11,19 +11,9 @@
         <form id="" action="">
             <input data-url="<?= Url::to(['site/search']) ?>" id="search" type="text" placeholder="Tìm kiếm nhanh..." />
             <button type="submit" id="btn-search"><span class="icon"></span></button>
-            <div class="suggest-search">
+            <div class="suggest-search hide">
                 <div class="content-suggest">
-                    <strong>Buildings</strong>
-                    <ul>
-                        <li><a href="#">Lancaster, 22 Lê Thánh Tôn Q1. <span>(10)</span></a></li>
-                    </ul>
-                    <strong>Apartment Listing</strong>
-                    <ul>
-                        <li><a href="#">230 Nguyen Tat Thanh St, Dist 4, Unit 2103</a></li>
-                        <li><a href="#">2 Beds 2 Baths | 3,5 ty VND</a></li>
-                        <li><a href="#">230 Nguyen Trai St, Dist 1, Unit 2204</a></li>
-                        <li><a href="#">3 Beds 3 Baths | 4,5 ty VND</a></li>
-                    </ul>
+                    <ul></ul>
                 </div>
             </div>
         </form>
