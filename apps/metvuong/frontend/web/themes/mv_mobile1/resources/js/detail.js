@@ -14,7 +14,8 @@ function loaded() {
 		    zoom: 16,
 		    mapTypeControl: false,
 		    zoomControl: false,
-		    streetViewControl: false
+		    streetViewControl: false,
+		    draggable: false
 		});
 		
 		var marker = new google.maps.Marker({
