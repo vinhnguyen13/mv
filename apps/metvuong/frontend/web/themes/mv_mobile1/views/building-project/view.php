@@ -82,7 +82,7 @@ use yii\helpers\Url;
     <div class="attr-detail">
         <div class="title-attr-listing">Địa điểm</div>
         <div class="wrap-map wrap-img">
-            <div id="map" style="height: 189px; width: 100%;"></div>
+            <div id="map" style="height: 250px; width: 100%;"></div>
         </div>
     </div>
     <div class="attr-detail">

@@ -21,7 +21,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
         <div class="col-xs-4 avatar-user-pr">
             <div class="wrap-img avatar"><img data-toggle="modal" data-target="#avatar" src="<?= file_exists($avatar) ? Url::to('/store/avatar/' . $model->avatar) : Yii::$app->view->theme->baseUrl."/resources/images/MV-Agent Photo.jpg"?>" alt="metvuong.com avatar" /></div>
             <div class="name-user" name="name" contenteditable="true" placeholder="Vui lòng nhập tên"><?=$model->name?></div>
-            <div class="address-user" name="address" contenteditable="true" placeholder="Vui lòng nhập địa chỉ"><em class="fa fa-map-marker"></em><?=$model->address?></div>
+            <em class="fa fa-map-marker"></em><div class="address-user" name="address" contenteditable="true" placeholder="Vui lòng nhập địa chỉ"><?=$model->address?></div>
         </div>
         <div class="col-xs-4 num-rating">
             <span class="num">4.3</span>

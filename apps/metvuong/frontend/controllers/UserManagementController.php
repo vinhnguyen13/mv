@@ -150,7 +150,7 @@ class UserManagementController extends Controller
                 $model->validate();
                 if (!$model->hasErrors()) {
                     if($post["type"])
-                        $model->$post["type"] = $post["txt"];
+                        $model->$post["type"] = strip_tags(html_entity_decode($post["txt"]));
                     $res = $model->updateProfile();
                     return ['statusCode'=>true];
                 }else{
