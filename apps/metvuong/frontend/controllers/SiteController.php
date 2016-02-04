@@ -293,7 +293,10 @@ class SiteController extends Controller
     	
     	$params = [
 			'query' => [
-				'match_phrase_prefix' => ['search_field' => $v],
+				'match_phrase_prefix' => ['search_field' => [
+					'query' => $v,
+					'max_expansions' => 100
+    			]],
 			],
 			'sort' => ['total' => ['order' => 'desc']],
 			'_source' => ['full_name', 'total']
