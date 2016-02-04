@@ -521,6 +521,8 @@ header {
     display: block;
     border-radius: 100%;
     overflow: hidden;
+    width: 120px;
+    margin: 0 auto 0;
 }
 .name-agent {
     display: block;
@@ -730,7 +732,7 @@ label {
     margin-bottom: 5px;
 }
 .post-listing {
-    padding: 0 15px 50px;
+    padding: 0 15px 0px;
     position: relative;
 }
 .post-listing .step-txt {
@@ -738,7 +740,7 @@ label {
     font-size: 1.3em;
     background: #ebeff2;
     padding: 5px 0;
-    margin-bottom: 2px;
+    border-bottom: 2px solid #fff;
 }
 .step-check {
     border-right: 1px solid #C5C5C5;
@@ -769,6 +771,7 @@ label {
 }
 .step-link {
     margin: 0;
+    padding: 20px 0;
 }
 .step-link li {
     float: left;
@@ -801,7 +804,7 @@ label {
     background-size: 175px;
 }
 .item-step {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
 .item-step .title-step {
     font-weight: 700;
@@ -1072,7 +1075,6 @@ label {
     z-index: 11;
     bottom: 0;
     border-top: 1px solid #bdbdbd;
-    display: none;
 }
 .fixed-prev-next a {
     font-weight: 600;
@@ -1085,8 +1087,12 @@ label {
 .fixed-prev-next #next-screen {
     float: right;
 }
+.fixed-prev-next .disable {
+    opacity: .5;
+    cursor: default;
+}
 .hinh-anh {
-    padding-bottom: 44px;
+    /* padding-bottom: 44px; */
 }
 #next-screen span,
 #back-screen span {
@@ -1146,7 +1152,7 @@ label {
     height: 1px;
 }
 .search-fill {
-    padding-right: 65px;
+    /* padding-right: 65px; */
     position: relative;
 }
 .advande-search .item-advande {
@@ -1288,26 +1294,43 @@ label {
     font-size: 1.2em;
 }
 .advande-search {
-    display: none;
+    /* display: none; */
+    padding-top: 5px;
 }
 .section {
-    top: 0;
+    top: 80px;
     left: 0;
     width: 100%;
     min-height: 100%;
     position: absolute;
-    display: none;
-    padding: 0 15px 0px;
+    padding: 0 15px 50px;
 }
-.section.active {
-    display: block;
+.select-type {
+    background: #ebeff2;
+    top: 0;
 }
 @-webkit-keyframes slideouttoleft{
     from {
-        transform: translateX(0)
+        -webkit-transform: translateX(0)
     }
     to {
-        transform: translateX(-100%)
+        -webkit-transform: translateX(-100%)
+    }
+}
+@-webkit-keyframes slideouttoright{
+    from {
+        -webkit-transform: translateX(0)
+    }
+    to {
+        -webkit-transform: translateX(100%)
+    }
+}
+@-webkit-keyframes slideoutformright{
+    from {
+        -webkit-transform: translateX(-100%)
+    }
+    to {
+        -webkit-transform: translateX(0)
     }
 }
 @-webkit-keyframes slideinfromright{
@@ -1327,11 +1350,20 @@ label {
 .section.out {
     -webkit-animation-timing-function: ease-in-out;
     -webkit-animation-duration: 350ms;
-    -webkit-transform: translateX(100%);
     -webkit-animation-name: slideouttoleft;
+    -webkit-transform: translateX(0);
 }
-.sub-step .section {
-    top: 55px;
+.section.back-out {
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-duration: 350ms;
+    -webkit-animation-name: slideouttoright;
+    -webkit-transform: translateX(100%);
+}
+.section.back-in {
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-duration: 350ms;
+    -webkit-animation-name: slideoutformright;
+    -webkit-transform: translateX(0);
 }
 .sologan {
     color: #fff;
@@ -1412,6 +1444,7 @@ label {
 }
 .infor-user > div {
     padding: 0;
+    text-align: center;
 }
 .avatar-user-pr .avatar {
     border-radius: 100%;
@@ -1442,6 +1475,7 @@ label {
     font-weight: 700;
     font-size: .9em;
     position: relative;
+    text-align: center;
 }
 .avatar-user-pr .address-user em {
     margin-right: 7px;
