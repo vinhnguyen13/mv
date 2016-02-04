@@ -325,6 +325,9 @@ header {
     -ms-border-radius: 0px;
     padding-left: 0;
 }
+.tab-content .tab-pane #login-form input {
+    padding-left: 10px;
+}
 .help-block {
     color: red;
     font-size: .9em;
@@ -479,6 +482,7 @@ header {
 .attr-home .price {
     font-weight: bold;
     display: inline-block;
+    font-size: 1.3em;
 }
 .attr-detail .title-attr-listing {
     font-weight: 700;
@@ -1295,6 +1299,9 @@ label {
 .attr-home {
     font-size: 1.2em;
 }
+.attr-home {
+
+}
 .advande-search {
     /* display: none; */
     padding-top: 5px;
@@ -1305,7 +1312,7 @@ label {
     width: 100%;
     min-height: 100%;
     position: absolute;
-    padding: 0 15px 50px;
+    padding: 0 15px 80px;
     background: #fff;
 }
 .select-type {
@@ -1816,4 +1823,10 @@ label {
 }
 .fillter-fast .item-dropdown ul {
     margin-top: 5px;
+}
+.content-suggest ul {
+    padding-top: 10px;
+}
+.content-suggest li a {
+    line-height: 23px;
 }
