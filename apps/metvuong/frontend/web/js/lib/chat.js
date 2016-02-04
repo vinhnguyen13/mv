@@ -132,14 +132,17 @@ var Chat = {
             }
             Chat.messages.push(messageInfo);
             chatUI.showBoxChat(to, from);
-            chatUI.appendMessage(2, Strophe.getText(body));
-            chatUI.typingMessage();
+            chatUI.appendMessage(from, 2, Strophe.getText(body));
+            chatUI.typingMessage(from, 1);
         }
         // we must return true to keep the handler alive.
         // returning false would remove it after it finishes.
         return true;
     },
     sendMessage : function(messgeTo,message,type){
+        if(message.length <= 0){
+            return false;
+        }
         var messagetype = (type) ? type : 'chat';
         var reply;
         if (messagetype === 'groupchat') {
@@ -157,7 +160,7 @@ var Chat = {
         }
         Chat.connection.send(reply.tree());
         Chat.log('I sent ' + messgeTo + ': ' + message, reply.tree());
-        chatUI.appendMessage(1, message);
+        chatUI.appendMessage(messgeTo, 1, message);
         return true;
     },
     Roster : [],

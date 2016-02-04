@@ -76,10 +76,10 @@ Yii::$app->getView()->registerCssFile('/css/chat.css');
         $(this).trigger('chat/connect');
 
         $(document).on('click', '.chatNow', function (e) {
-            $(this).trigger('chat/showBoxChat', {from: xmpp_jid, to: $(this).attr('chat-to')});
+            chatUI.showBoxChat(xmpp_jid, $(this).attr('chat-to'));
         });
         $(document).on('click','.title-chat .fa-close', function () {
-            $(this).parent().parent().hide();
+            $(this).closest('.chat-group').hide();
         });
         $(document).on('click','.title-chat', function () {
             if ( $('.title-chat').hasClass('active') ) {
@@ -93,11 +93,13 @@ Yii::$app->getView()->registerCssFile('/css/chat.css');
         var timer = 0;
         $(document).on('keyup', '.chat-group #typingMsg', function (e) {
             var key = e.which;
-            var msg = $('#typingMsg').val();
-            var to_jid = $('.chat-group').attr('chat-to')+ '@'+xmpp_dm;
+            var chatBoxExist = $(this).closest('.chat-group');
+            var to = chatBoxExist.attr('chat-to');
+            var to_jid = chatUI.genJid(to);
+            var msg = chatBoxExist.find('#typingMsg').val();
             if(key == 13){
                 Chat.sendMessage(to_jid , msg);
-                $('#typingMsg').val('');
+                chatBoxExist.find('#typingMsg').val('');
                 return false;
             }else{
                 Chat.sendChatState(to_jid, 'composing');
