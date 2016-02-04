@@ -449,10 +449,11 @@ header {
     margin-right: 0;
 }
 .gallery-detail .swiper-slide a {
-    width: 25px;
-    height: 25px;
-    border: 1px solid red;
     display: block;
+    background: rgba(0, 0, 0, 0.52);
+    padding: 6px 0 3px;
+    width: 40px;
+    text-align: center;
 }
 .attr-detail,
 .infor-listing {
@@ -1297,7 +1298,7 @@ label {
     top: 5px;
 }
 .attr-home {
-    font-size: 1.2em;
+    font-size: 1em;
 }
 .attr-home {
 
@@ -1829,4 +1830,16 @@ label {
 }
 .content-suggest li a {
     line-height: 23px;
+}
+.icon-fave,
+.icon-loca {
+    display: inline-block;
+    width: 20px;
+    height: 29px;
+    background-position: -79px -58px;
+    background-size: 130px;
+}
+.icon-fave {
+    background-position: -31px -78px;
+    width: 27px;
 }
