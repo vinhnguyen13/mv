@@ -291,26 +291,26 @@ class SiteController extends Controller
     	$v = \Yii::$app->request->post('v');
     	$v = Elastic::transform($v);
     	
-    	$elastic = new Elastic();
-		$params = [
-			'index' => 'term',
-			'body' => [
-				'query' => [
-					'match_phrase_prefix' => ['search_field' => $v],
-				],
-				'sort' => ['total' => ['order' => 'desc']],
-				'_source' => ['full_name', 'total']
+    	$params = [
+			'query' => [
+				'match_phrase_prefix' => ['search_field' => $v],
 			],
+			'sort' => ['total' => ['order' => 'desc']],
+			'_source' => ['full_name', 'total']
 		];
-		
-    	$result = $elastic->search($params);
+    			
+    	$ch = curl_init(Yii::$app->params['elastic']['config']['hosts'][0] . '/term/_search');
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET"); 
+    	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
+    	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     	
+    	$result = json_decode(curl_exec($ch), true);
     	$response = [];
-    	
-    	foreach ($result['hits']['hits'] as $hit) {
-    		$response[] = $hit['_source'];
-    	}
-    	
+    	 
+		foreach ($result['hits']['hits'] as $hit) {
+			$response[] = $hit['_source'];
+		}
+		
     	return $response;
     }
     
