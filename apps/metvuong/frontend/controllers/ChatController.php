@@ -17,4 +17,11 @@ class ChatController extends Controller
         }
         return $this->render('index');
     }
+
+    public function actionIndex2(){
+        if(Yii::$app->user->isGuest) {
+            return $this->render('/_systems/require_login');
+        }
+        return $this->render('index2');
+    }
 }

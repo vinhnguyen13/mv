@@ -62,6 +62,7 @@
             connection = new Strophe.Connection(BOSH_SERVICE);
             connection.rawInput = chatUI.rawInput;
             connection.rawOutput = chatUI.rawOutput;
+            console.log(chatFunction.getJid(xmpp_jid), xmpp_key, BOSH_SERVICE);
             connection.connect(chatFunction.getJid(xmpp_jid), xmpp_key, chatFunction.onConnect);
             /*connection.disconnect();*/
         },
