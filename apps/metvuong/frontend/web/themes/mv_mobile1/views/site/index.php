@@ -9,7 +9,7 @@
             <li><a href="#">Bán / Cho Thuê</a></li>
         </ul>
         <form id="" action="">
-            <input data-url="<?= Url::to(['site/search']) ?>" id="search" type="text" placeholder="Tìm kiếm nhanh..." />
+            <input autocomplete="off" data-url="<?= Url::to(['site/search']) ?>" id="search" type="text" placeholder="Tìm kiếm nhanh..." />
             <button type="submit" id="btn-search"><span class="icon"></span></button>
             <div class="suggest-search hide">
                 <div class="content-suggest">
