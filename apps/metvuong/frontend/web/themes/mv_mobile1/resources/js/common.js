@@ -7,6 +7,16 @@ $(document).ready(function() {
 
 	$(document).on('click','.link-login', function() {$('a[href=#tab-signin]').trigger('click');});
 	$(document).on('click','.link-regis', function() {$('a[href=#tab-signup]').trigger('click');});
+	
+	$('#search').keyup(function() {
+		var val = $(this).val();
+		if(val.length > 3) {
+			var url = $(this).data('url');
+			$.post(url, {v: val}, function(){
+				
+			});
+		}
+	});
 });
 
 function l(x){console.log(x);}

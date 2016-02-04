@@ -26,6 +26,7 @@ use yii\web\Response;
 use vsoft\ad\models\AdCategory;
 use vsoft\news\models\CmsCatalog;
 use yii\helpers\StringHelper;
+use frontend\models\Elastic;
 
 /**
  * Site controller
@@ -282,6 +283,12 @@ class SiteController extends Controller
     	$file = fopen(Yii::getAlias('@store') . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . "data.js", "w");
     	fwrite($file, $content);
 		fclose($file);
+    }
+    
+    public function actionSearch() {
+    	$v = \Yii::$app->request->post('v');
+    	$v = Elastic::transform($v);
+    	var_dump($v);
     }
     
 	public function actionTest() {

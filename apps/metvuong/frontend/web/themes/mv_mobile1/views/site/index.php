@@ -1,3 +1,6 @@
+<?php 
+	use yii\helpers\Url;
+?>
 <section class="search-box">
     <div class="search-homepage">
         <ul class="clearfix">
@@ -6,7 +9,7 @@
             <li><a href="#">Bán / Cho Thuê</a></li>
         </ul>
         <form id="" action="">
-            <input type="text" placeholder="Tìm kiếm nhanh..." />
+            <input data-url="<?= Url::to(['site/search']) ?>" id="search" type="text" placeholder="Tìm kiếm nhanh..." />
             <button type="submit" id="btn-search"><span class="icon"></span></button>
             <div class="suggest-search">
                 <div class="content-suggest">
