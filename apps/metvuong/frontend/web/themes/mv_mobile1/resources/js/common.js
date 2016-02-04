@@ -468,7 +468,7 @@ $.fn.slideSection = function (options) {
         btnBack.on('click', back);
 
         if ( countEl == 1 ) {
-            $('body').append(nextBack);
+            $('#container').append(nextBack);
         }
         
         el.find('.section').eq(sc.settings.active).removeClass('hide');

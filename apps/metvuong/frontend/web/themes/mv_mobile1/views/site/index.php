@@ -2,6 +2,10 @@
 	use yii\helpers\Url;
 ?>
 <section class="search-box">
+    <div class="text-center sologan">
+        Đưa bạn đến ngôi nhà yêu thích<br>
+        Tìm hiểu &amp; giao dịch bất động sản dễ dàng
+    </div>
     <div class="search-homepage">
         <ul class="clearfix">
             <li><a href="#">Mua</a></li>
