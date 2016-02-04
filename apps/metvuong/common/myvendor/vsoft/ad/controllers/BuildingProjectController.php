@@ -42,7 +42,7 @@ class BuildingProjectController extends Controller
 		$categories = AdCategory::find()->where(['status'=>1])->all();
         $architects = AdArchitect::find()->where(['status'=>1])->all();
         $contractors = AdContractor::find()->where(['status'=>1])->all();
-        $facilities = AdFacility::find()->where(['status'=>1])->all();
+        $facility = AdFacility::find()->where(['status'=>1])->all();
 
 		if(Yii::$app->request->isPost) {
 			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
@@ -55,6 +55,9 @@ class BuildingProjectController extends Controller
                 $start_date = strtotime($post["BuildingProject"]["start_date"]);
                 $model->start_date = $start_date;
             }
+            if(!empty($post["BuildingProject"]["facilities"])){
+                $model->facilities = implode(",", $post["BuildingProject"]["facilities"]);
+            }
 			
 			$response = ['success' => true];
 			
@@ -64,8 +67,7 @@ class BuildingProjectController extends Controller
     			$model->saveMultiple($post['BuildingProject'], $categories, 'categories');
                 $model->saveMultiple($post['BuildingProject'], $architects, 'architects');
                 $model->saveMultiple($post['BuildingProject'], $contractors, 'contractors');
-                $model->saveMultiple($post['BuildingProject'], $facilities, 'facilities');
-    			
+
     			$mapFormName = AdAreaType::mapFormName();
     			foreach ($mapFormName as $type => $formName) {
     				if(array_filter($post[$formName])) {
@@ -85,7 +87,7 @@ class BuildingProjectController extends Controller
     		return $response;
 		}
 		
-		return $this->render('create', ['model' => $model, 'areaTypeMapLabels' => $areaTypeMapLabels, 'areaTypes' => $areaTypes, 'investors' => $investors, 'categories' => $categories, 'architects' => $architects, 'contractors' => $contractor]);
+		return $this->render('create', ['model' => $model, 'areaTypeMapLabels' => $areaTypeMapLabels, 'areaTypes' => $areaTypes, 'investors' => $investors, 'categories' => $categories, 'architects' => $architects, 'contractors' => $contractors, 'facility' => $facility]);
 	}
     public function actionView($id)
     {
@@ -115,18 +117,19 @@ class BuildingProjectController extends Controller
     	$categories = AdCategory::find()->where(['status'=>1])->all();
         $architects = AdArchitect::find()->where(['status'=>1])->all();
         $contractors = AdContractor::find()->where(['status'=>1])->all();
-        $facilities = AdFacility::find()->where(['status'=>1])->all();
-
+        $facility = AdFacility::find()->where(['status'=>1])->all();
     	if($model) {
     		if(Yii::$app->request->isPost) {
     			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     			$post = Yii::$app->request->post();
-
     			$model->load(Yii::$app->request->post());
                 $start_date = null;
                 if(!empty($post["BuildingProject"]["start_date"])){
                     $start_date = strtotime($post["BuildingProject"]["start_date"]);
                     $model->start_date = $start_date;
+                }
+                if(!empty($post["BuildingProject"]["facilities"])){
+                    $model->facilities = implode(",", $post["BuildingProject"]["facilities"]);
                 }
 
     			$response = ['success' => true];
@@ -137,7 +140,6 @@ class BuildingProjectController extends Controller
     				$model->saveMultiple($post['BuildingProject'], $categories, 'categories');
     				$model->saveMultiple($post['BuildingProject'], $architects, 'architects');
     				$model->saveMultiple($post['BuildingProject'], $contractors, 'contractors');
-    				$model->saveMultiple($post['BuildingProject'], $facilities, 'facilities');
 
 	    			$mapFormName = AdAreaType::mapFormName();
 	    			foreach ($mapFormName as $type => $formName) {
@@ -151,7 +153,6 @@ class BuildingProjectController extends Controller
 	    					$arrayType->delete();
 	    				}
 	    			}
-
 
     				$deleteLater = array_filter(explode(',', Yii::$app->request->post('deleteLater')));
 
@@ -176,7 +177,7 @@ class BuildingProjectController extends Controller
     			return $response;
     		}
 
-    		return $this->render('update', ['model' => $model, 'areaTypeMapLabels' => AdAreaType::mapLabels(), 'areaTypes' => $areaTypes, 'investors' => $investors, 'categories' => $categories, 'architects' => $architects, 'contractors' => $contractors]);
+    		return $this->render('update', ['model' => $model, 'areaTypeMapLabels' => AdAreaType::mapLabels(), 'areaTypes' => $areaTypes, 'investors' => $investors, 'categories' => $categories, 'architects' => $architects, 'contractors' => $contractors, 'facility' => $facility]);
     	} else {
     		throw new NotFoundHttpException('The requested page does not exist.');
     	}

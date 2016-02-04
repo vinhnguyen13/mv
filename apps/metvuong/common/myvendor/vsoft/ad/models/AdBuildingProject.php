@@ -199,10 +199,6 @@ class AdBuildingProject extends AdBuildingProjectBase
 	public function getContractors() {
 		return $this->hasMany(AdContractor::className(), ['id' => 'contractor_id'])->viaTable('ad_contractor_building_project', ['building_project_id' => 'id']);
 	}
-
-    public function getFacilities() {
-		return $this->hasMany(AdFacility::className(), ['id' => 'facility_id'])->viaTable('ad_facility_building_project', ['building_project_id' => 'id']);
-	}
 	
 	public function saveMultiple($data, $relationModels, $field) {
 		$postIds = $data[$field] ? $data[$field] : [];

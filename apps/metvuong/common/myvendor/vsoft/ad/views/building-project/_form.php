@@ -34,7 +34,11 @@ foreach ($districts as $district) {
 	$districtData[$district->id] = $district->pre . ' ' . $district->name;
 }
 
-$facility = \vsoft\ad\models\AdFacility::find()->where(['status'=>1])->all();
+if(!$model->isNewRecord) {
+    //get selected value from db if value exist
+    $checkedList = explode(",", $model->facilities);
+    $model->facilities = $checkedList;
+}
 ?>
 <div id="project-building-form" class="cms-show-form">
 	<?php
@@ -106,6 +110,7 @@ $facility = \vsoft\ad\models\AdFacility::find()->where(['status'=>1])->all();
 			    	<?= $form->field($model, 'estimate_finished') ?>
 			    	<?= $form->field($model, 'owner_type') ?>
 			    	<?= $form->field($model, 'facilities')->checkboxList(ArrayHelper::map($facility, 'id', 'name')) ?>
+                    <div style="padding-left: 10px">Khác: </div>
 			    	<?= $form->field($model, 'hotline')->textArea()->hint('Mổi số điện thoại trên 1 dòng') ?>
 			    	<?= $form->field($model, 'website') ?>
 	    		</li>

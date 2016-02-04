@@ -6,6 +6,9 @@
  */
 use yii\helpers\Url;
 
+$facilityListId = explode(",", $model->facilities);
+$facilities = \vsoft\ad\models\AdFacility::find()->where(['id' => $facilityListId])->all();
+$count_facilities = count($facilities);
 ?>
 <div class="search-subpage clearfix">
     <form id="" action="">
@@ -70,13 +73,11 @@ use yii\helpers\Url;
         <div class="text-right see-more-listing"><a href="#">Xem thêm</a></div>
     </div>
     <div class="attr-detail">
-        <div class="title-attr-listing">Tiện ích (6) </div>
-        <p>Hồ bơi</p>
-        <p>Mailbox</p>
-        <p>BBQ Area</p>
-        <p>Tennis Court</p>
-        <p>24/7 Bảo Vệ</p>
-        <p>Gym</p>
+        <div class="title-attr-listing">Tiện ích <?=$count_facilities > 0 ? "({$count_facilities})" : ""?> </div>
+        <?php if($count_facilities > 0){
+            foreach($facilities as $facility) {?>
+                <p><?= $facility->name?></p>
+        <?php } } ?>
         <div class="text-right see-more-listing"><a href="#">Xem thêm</a></div>
     </div>
     <div class="attr-detail">

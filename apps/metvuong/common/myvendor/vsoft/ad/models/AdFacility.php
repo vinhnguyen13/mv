@@ -46,4 +46,10 @@ class AdFacility extends AdFacilityBase
             ]
         ];
     }
+
+    public function addFacility($name){
+        $facility = new AdFacility();
+        $facility->name = $name;
+        $facility->save(false);
+    }
 }

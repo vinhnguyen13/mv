@@ -33,6 +33,7 @@ class m160201_085204_ad_facility_table extends Migration
 
     public function down()
     {
+        $this->dropTable("ad_facility_building_project");
         $this->dropTable("ad_facility");
     }
 
