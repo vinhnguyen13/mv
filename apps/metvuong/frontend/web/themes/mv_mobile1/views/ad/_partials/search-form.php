@@ -18,7 +18,7 @@
 								<input type="hidden" id="quan-huyen" class="">
 							</div>
 						</div>
-						<a href="#" class="advande-search-btn style-click"><span class="bd-left"></span><span class="bd-right"></span></a>
+						<!-- <a href="#" class="advande-search-btn style-click"><span class="bd-left"></span><span class="bd-right"></span></a> -->
 					</div>
 					<div class="advande-search">
 						<div class="each-advande choice_price_dt" data-item-minmax="prices">
@@ -108,6 +108,7 @@
 								<div class="value-selected style-click">Thêm tuỳ chọn</div>
 							</div>
 						</div>
+						<button class="btn-submit btn-common">Tìm kiếm</button>
 					</div>
 				</div>
 </form>

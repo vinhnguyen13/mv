@@ -86,6 +86,42 @@ $.fn.radio = function (options) {
     });
 }
 
+$.fn.checkbox_ui = function (options) {
+
+    return this.each(function() {
+        var defaults = {
+            done: function(){}
+        },
+        sc = {},
+        el = $(this);
+
+        if ( el.length == 0 ) return el;
+
+        sc.settings = $.extend({}, defaults, options);
+
+        function toggleCheck (e) {
+            e.preventDefault();
+            var _this = $(this);
+            if ( _this.parent().find('input[type=checkbox]').prop("checked") ) {
+                _this.parent().find('input[type=checkbox]').prop("checked", false);
+                checkedItem(_this, false);
+            }else {
+                _this.parent().find('input[type=checkbox]').prop("checked", true);
+                checkedItem(_this, true);
+            }
+        }
+
+        function checkedItem (item, flagChecked) {
+            if ( flagChecked ) {
+                item.parent().find('em').removeClass('fa-square-o').addClass('fa-check-square-o');
+            }else {
+                item.parent().find('em').removeClass('fa-check-square-o').addClass('fa-square-o');
+            }
+        }
+
+    });
+}
+
 $.fn.dropdown = function (options) {
 
     return this.each(function() {
