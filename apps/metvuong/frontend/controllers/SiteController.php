@@ -292,7 +292,6 @@ class SiteController extends Controller
     	$v = Elastic::transform($v);
     	
     	$elastic = new Elastic();
-    	$elastic->connect();
 		$params = [
 			'index' => 'term',
 			'body' => [
