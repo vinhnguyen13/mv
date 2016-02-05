@@ -3,7 +3,7 @@ use yii\helpers\Url;
 ?>
 <header class="clearfix">
     <a href="#menu-header" id="menu-toggle" class="pull-left icon"></a>
-    <a href="#" id="avatar-user" class="wrap-img"><img src="/images/default-avatar.jpg" alt=""></a>
+    <a href="#settings-user" id="avatar-user" class="wrap-img"><img src="/images/default-avatar.jpg" alt=""></a>
     <div class="logo">
         <a href="/">metvuong</a>
     </div>
@@ -42,6 +42,21 @@ use yii\helpers\Url;
 
     <div id="settings-user" class="settings-user">
         <a href="#" id="hide-settings" class="icon"></a>
-
+        <ul class="clearfix">
+            <li class="user-edit">
+                <a href="#">
+                    <span class="wrap-img"><img src="/images/default-avatar.jpg" alt="" width="40" height="40"></span>
+                    <div>
+                        <span class="name-user">Huan Ta</span>
+                        <span class="address">Ho Chi Minh City, Vietnam</span>
+                    </div>
+                </a>
+            </li>
+            <li><a href="#">Đăng tin mới</a></li>
+            <li><a href="#">Tất cả dự án</a></li>
+            <li><a href="#">Statistics</a></li>
+            <li><a href="#">Chat</a></li>
+            <li><a href="#">Đăng xuất</a></li>
+        </ul>
     </div>
 </header>

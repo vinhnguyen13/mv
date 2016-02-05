@@ -5,10 +5,23 @@ $(document).ready(function() {
         }
     });
 
-    var API = $("#menu-header").data( "mmenu" );
+    $("#settings-user").mmenu({
+        navbar: {
+            add: false
+        },
+        offCanvas: {
+            position: "right"
+        }
+    });
+
+    var API_MENU = $("#menu-header").data("mmenu");
+    var API_USER = $("#settings-user").data("mmenu");
 
     $("#hide-menu").click(function() {
-        API.close();
+        API_MENU.close();
+    });
+    $("#hide-settings").click(function() {
+        API_USER.close();
     });
 
     $(document).on('click','.link-login', function() {$('a[href=#tab-signin]').trigger('click');});
