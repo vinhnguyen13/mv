@@ -29,7 +29,7 @@ $count_facilities = count($facilities);
                         <div class="bgcover"
                              style="background-image:url(<?= Url::to('/store/building-project-images/' . $image) ?>)"></div>
                         <ul class="clearfix">
-                            <li><a href="#" class=""><span class="icon icon-loca"></span></a></li>
+                            <li><a href="#diadiem" class=""><span class="icon icon-loca"></span></a></li>
                             <li><a href="#" class=""><span class="icon icon-fave"></span></a></li>
                         </ul>
                     </div>
@@ -39,7 +39,7 @@ $count_facilities = count($facilities);
                     <div class="bgcover"
                          style="background-image:url(<?= Yii::$app->view->theme->baseUrl."/resources/images/img-duan-demo.jpg" ?>)"></div>
                     <ul class="clearfix">
-                        <li><a href="#" class="icon icon-loca"></a></li>
+                        <li><a href="#diadiem" class="icon icon-loca"></a></li>
                         <li><a href="#" class="icon icon-fave"></a></li>
                     </ul>
                 </div>
@@ -80,7 +80,7 @@ $count_facilities = count($facilities);
         <?php } } ?>
         <div class="text-right see-more-listing"><a href="#">Xem thêm</a></div>
     </div>
-    <div class="attr-detail">
+    <div id="diadiem" class="attr-detail">
         <div class="title-attr-listing">Địa điểm</div>
         <div class="wrap-map wrap-img">
             <div id="map" style="height: 250px; width: 100%;"></div>

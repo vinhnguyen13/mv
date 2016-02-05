@@ -306,7 +306,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                             <?=Html::hiddenInput('deleteLater', '', ['id' => 'delete-later']);?>
                             <?= $form->field($model, 'avatar')->widget(\common\widgets\FileUploadAvatar::className(), [
                                 'url' => Url::to(['/user-management/avatar', 'folder' => 'avatar']),
-                                'clientOptions' => ['maxNumberOfFiles' => 1, 'maxFileSize' => 2000000],
+                                'clientOptions' => ['maxNumberOfFiles' => 1],
                                 'fieldOptions' => ['folder' => 'avatar'],
                             ])->label(false) ?>
                             <?php ActiveForm::end(); ?>
