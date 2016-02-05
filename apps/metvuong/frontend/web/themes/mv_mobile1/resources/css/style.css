@@ -154,7 +154,7 @@ header {
     font-size: 1.3em;
     font-weight: 600;
     text-align: center;
-    line-height: 20px;
+    line-height: 25px;
     margin: 20px 0 20px;
     color: #171616;
 }
@@ -1886,7 +1886,7 @@ label {
     top: 12px;
 }
 #settings-user ul {
-    padding: 25px 15px 15px;
+    padding: 15px;
 }
 #settings-user li {
     float: left;
@@ -1894,7 +1894,7 @@ label {
 }
 #settings-user li a {
     display: block;
-    padding: 10px 0;
+    padding: 15px 0;
     border-bottom: 1px solid #333;
     color: #333;
     font-size: 1em;
@@ -1929,4 +1929,7 @@ label {
 #settings-user li a em {
     margin-right: 10px;
     font-size: 1.2em;
+}
+.mm-pageshadow {
+    
 }
