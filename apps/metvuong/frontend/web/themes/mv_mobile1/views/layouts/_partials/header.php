@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Url;
 ?>
-<header class="clearfix">
+<header class="clearfix header">
     <a href="#menu-header" id="menu-toggle" class="pull-left icon"></a>
     <a href="#settings-user" id="avatar-user" class="wrap-img"><img src="/images/default-avatar.jpg" alt=""></a>
     <div class="logo">
@@ -52,11 +52,11 @@ use yii\helpers\Url;
                     </div>
                 </a>
             </li>
-            <li><a href="#">Đăng tin mới</a></li>
-            <li><a href="#">Tất cả dự án</a></li>
-            <li><a href="#">Statistics</a></li>
-            <li><a href="#">Chat</a></li>
-            <li><a href="#">Đăng xuất</a></li>
+            <li><a href="#"><em class="icon-plus"></em>Đăng tin mới</a></li>
+            <li><a href="#"><em class="icon-docs"></em>Tất cả dự án</a></li>
+            <li><a href="#"><em class="icon-bar-chart"></em>Statistics</a></li>
+            <li><a href="#"><em class="icon-bubbles"></em>Chat</a></li>
+            <li><a href="#"><em class="icon-power"></em>Đăng xuất</a></li>
         </ul>
     </div>
 </header>

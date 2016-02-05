@@ -2,6 +2,14 @@ $(document).ready(function() {
     $("#menu-header").mmenu({
         navbar: {
             add: false
+        },
+        extensions: ["pageshadow"]
+    },{
+        // configuration
+        classNames: {
+            fixedElements: {
+                fixed: "header"
+            }
         }
     });
 
@@ -9,6 +17,7 @@ $(document).ready(function() {
         navbar: {
             add: false
         },
+        extensions: ["pageshadow"],
         offCanvas: {
             position: "right"
         }

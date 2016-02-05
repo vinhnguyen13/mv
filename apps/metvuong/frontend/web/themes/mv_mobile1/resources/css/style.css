@@ -26,19 +26,19 @@ a:link {
     background: url(../images/icon.png) no-repeat top left;
 }
 header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 5;
     background: #fff;
+    width: 100%;
     height: 50px;
     border-bottom: 1px solid #9b9b9b;
     padding: 0 15px;
+    position: fixed;
+    z-index: 9;
+    top: 0px;
+    left: 0px;
 }
 .search-box {
     border-top: 1px solid #171616;
-    min-height: 500px;
+    min-height: 420px;
     background: url(../images/bg-home.jpg) no-repeat 50% center;
     background-size: cover;
 }
@@ -151,7 +151,7 @@ header {
 }
 .regis-home h2,
 .search-home h2 {
-    font-size: 1em;
+    font-size: 1.3em;
     font-weight: 600;
     text-align: center;
     line-height: 20px;
@@ -160,7 +160,7 @@ header {
 }
 .regis-home p,
 .search-home p {
-    font-size: .9em;
+    font-size: 1.1em;
     margin-bottom: 15px;
     color: #777777;
 }
@@ -201,13 +201,13 @@ header {
     background-position: -50px 0;
     background-size: 267px;
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 15px;
+    left: 15px;
     z-index: 10;
 }
 .wrap-menu ul {
-    margin-top: 10px;
     width: 100%;
+    padding-top: 50px;
 }
 .wrap-menu ul li {
     padding: 0 15px;
@@ -1383,7 +1383,7 @@ label {
 }
 .sologan {
     color: #fff;
-    font-size: 1.2em;
+    font-size: 1.5em;
     font-family: 'arial';
     margin-top: 50px;
 }
@@ -1881,10 +1881,12 @@ label {
     max-width: inherit;
 }
 #hide-settings {
-    
+    left: inherit;
+    right: 15px;
+    top: 12px;
 }
 #settings-user ul {
-    padding: 15px;
+    padding: 25px 15px 15px;
 }
 #settings-user li {
     float: left;
@@ -1899,6 +1901,7 @@ label {
     text-transform: uppercase;
     float: left;
     width: 100%;
+    font-weight: 600;
 }
 #settings-user li span {
     display: block;
@@ -1922,4 +1925,8 @@ label {
 }
 #settings-user .mm-panels {
     width: 100%;
+}
+#settings-user li a em {
+    margin-right: 10px;
+    font-size: 1.2em;
 }
