@@ -224,7 +224,7 @@ class MemberController extends Controller
     {
         $user = User::findOne(['username'=>$usrn]);
         $profile = $user->profile;
-        $avatarPath = Yii::getAlias('@store').( '/images/default-avatar.jpg');
+        $avatarPath = Yii::getAlias('@webroot').( '/images/default-avatar.jpg');
         if($profile->avatar) {
             $pathinfo = pathinfo($profile->avatar);
             $filePath = Yii::getAlias('@store').'/avatar/' . $pathinfo['filename'] . '.thumb.' . $pathinfo['extension'];
