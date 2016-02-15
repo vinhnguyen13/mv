@@ -28,13 +28,10 @@ $types = AdProduct::getAdTypes ();
 	</div>
 	
 	<div class="top-listing clearfix">
-		<div class="pull-right pagi">
-			<a href="<?= $pages->page == 0 ? 'javascript:;' : $pages->createUrl($pages->page-1) ?>" class="prev-pagi style-click"><span class="icon"></span></a>
-			<a href="<?= $pages->page == $pages->pageCount - 1 ? 'javascript:;' : $pages->createUrl($pages->page+1) ?>" class="next-pagi style-click"><span class="icon"></span></a>
-		</div>
 		<p><?= $pages->offset + 1 ?> - <?= $pages->offset + count($products) ?> Tin từ <?= $pages->totalCount ?> Tin</p>
 	</div>
 	<div id="listing-list">
+		<?php if($pages->page < $pages->pageCount - 1): ?>
 		<?php foreach ($products as $product): ?>
 		<div class="item-listing">
 			<?php
@@ -64,6 +61,7 @@ $types = AdProduct::getAdTypes ();
 			</p>
 		</div>
 		<?php endforeach; ?>
+		<?php endif; ?>
 	</div>
 	<div id="item-loading" style="text-align: center;">
 		<img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/loading-listing.gif' ?>" />
