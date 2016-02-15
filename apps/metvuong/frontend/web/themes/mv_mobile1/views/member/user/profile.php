@@ -276,6 +276,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                     <div class="email-agent"><div><span class="icon"></span></div><div name="public_email" style="width: 80%;" contenteditable="true" placeholder="Vui lòng nhập email"><?= $model->public_email ?></div></div>
                     <div class="phone-agent"><div><span class="icon"></span></div><div name="mobile" style="width: 80%;" contenteditable="true" placeholder="Vui lòng nhập số điện thoại"><?= $model->mobile ?></div></div>
                     <div class="id-agent"><div><span class="icon"></span></div>AGENT ID TTG<?=str_pad($model->user_id, 3, '0', STR_PAD_LEFT)?></div>
+                    <div class="pull-right"><a href="<?=Url::to(["member/password"])?>">Thay đổi mật khẩu</a></div>
                 </div>
             </div>
         </div>
@@ -305,7 +306,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                             ]); ?>
                             <?=Html::hiddenInput('deleteLater', '', ['id' => 'delete-later']);?>
                             <?= $form->field($model, 'avatar')->widget(\common\widgets\FileUploadAvatar::className(), [
-                                'url' => Url::to(['/dashboard/avatar', 'folder' => 'avatar']),
+                                'url' => Url::to(['/member/avatar', 'folder' => 'avatar']),
                                 'clientOptions' => ['maxNumberOfFiles' => 1],
                                 'fieldOptions' => ['folder' => 'avatar'],
                             ])->label(false) ?>
@@ -376,7 +377,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                 $.ajax({
                     type: "post",
                     dataType: 'json',
-                    url: '<?=Url::to(['/dashboard/profile'])?>',
+                    url: '<?=Url::to(['/member/profile', 'username'=>$username])?>',
                     data: {uid: user_id, txt: txtData, type: type},
                     success: function (data) {
                         console.log(data);

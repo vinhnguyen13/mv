@@ -268,19 +268,54 @@ class MemberController extends Controller
                     if($post["type"])
                         $model->$post["type"] = strip_tags(html_entity_decode($post["txt"]));
                     $res = $model->updateProfile();
-                    return ['statusCode'=>true];
+                    return ['statusCode'=>true, 'username'=>$username];
+                }else{
+                    return ['statusCode'=> false, 'parameters' => $model->errors, 'username'=>$username];
+                }
+            }
+            return $this->renderAjax('user/profile', [
+                'model' => $model, 'username'=>$username
+            ]);
+        }
+        return $this->render('user/profile', [
+            'model' => $model, 'username'=>$username
+        ]);
+    }
+
+    public function actionPassword()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = Yii::createObject([
+            'class'    => ProfileForm::className(),
+            'scenario' => 'password',
+        ]);
+
+        if(Yii::$app->request->isAjax) {
+            if(Yii::$app->request->isPost){
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                $post = Yii::$app->request->post();
+                $model->load($post);
+                $model->validate();
+                if (!$model->hasErrors()) {
+                    $res = $model->resetPass();
+                    return ['statusCode'=>$res];
                 }else{
                     return ['statusCode'=> false, 'parameters' => $model->errors];
                 }
             }
-            return $this->renderAjax('user/profile', [
+            return $this->renderAjax('user/password', [
                 'model' => $model
             ]);
         }
-        return $this->render('user/profile', [
-            'model' => $model
+
+        return $this->render('user/password', [
+            'model'=>$model
         ]);
     }
+
 
 
 }
