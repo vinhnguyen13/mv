@@ -31,7 +31,6 @@ $types = AdProduct::getAdTypes ();
 		<p><?= $pages->offset + 1 ?> - <?= $pages->offset + count($products) ?> Tin từ <?= $pages->totalCount ?> Tin</p>
 	</div>
 	<div id="listing-list">
-		<?php if($pages->page < $pages->pageCount - 1): ?>
 		<?php foreach ($products as $product): ?>
 		<div class="item-listing">
 			<?php
@@ -61,9 +60,10 @@ $types = AdProduct::getAdTypes ();
 			</p>
 		</div>
 		<?php endforeach; ?>
-		<?php endif; ?>
 	</div>
+	<?php if($pages->page < $pages->pageCount - 1): ?>
 	<div id="item-loading" style="text-align: center;">
 		<img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/loading-listing.gif' ?>" />
 	</div>
+	<?php endif; ?>
 </div>

@@ -13,11 +13,13 @@ $(document).ready(function(){
 				searchForm.append(inputPage);
 				
 				$.get(searchForm.attr('action'), searchForm.serialize(), function(r){
-					var items = $(r).find('.item-listing');
+					r = $(r);
+
 					inputPage.remove();
 					
-					if(items.length > 0) {
-						listingList.append(items);
+					listingList.append(r.find('.item-listing'));
+					
+					if(r.find('#item-loading').length > 0) {
 						self.data('loading', false);
 					} else {
 						$('#item-loading').hide();
