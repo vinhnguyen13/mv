@@ -59,7 +59,16 @@ class AdController extends Controller
     	$pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 24]);
     	
     	$query->with('adProductAdditionInfo');
-    	$products = $query->offset($pages->offset)->limit($pages->limit)->orderBy('created_at DESC')->all();
+    	
+    	
+    	$sort = Yii::$app->request->get('sort', 'created_at');
+    	$doa = 'DESC';
+    	if(StringHelper::startsWith($sort, '-')) {
+    		$sort = str_replace('-', '', $sort);
+    		$doa = 'ASC';
+    	}
+    	
+    	$products = $query->offset($pages->offset)->limit($pages->limit)->orderBy("$sort $doa")->all();
     	
     	return $this->render('index', ['products' => $products, 'pages' => $pages]);
     }
