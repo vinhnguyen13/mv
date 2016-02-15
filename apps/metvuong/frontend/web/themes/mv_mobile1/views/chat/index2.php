@@ -107,17 +107,24 @@ Yii::$app->getView()->registerCssFile('/css/chat.css');
             if(key == 13){
                 Chat.sendMessage(to_jid , msg);
                 chatBoxExist.find('#typingMsg').val('');
-                return false;
             }else{
                 Chat.sendChatState(to_jid, 'composing');
                 clearTimeout(timer);
                 timer = setTimeout(function() {
                 }, 100);
-                return false;
             }
+            return false;
         });
         $(document).on('click', '.chat-group .sm-chat', function (e) {
-            $('#typingMsg').val('');
+            var key = e.which;
+            var chatBoxExist = $(this).closest('.chat-group');
+            var to = chatBoxExist.attr('chat-to');
+            var to_jid = chatUI.genJid(to);
+            var msg = chatBoxExist.find('#typingMsg').val();
+            if(msg){
+                Chat.sendMessage(to_jid , msg);
+                chatBoxExist.find('#typingMsg').val('');
+            }
             return false;
         });
     });
