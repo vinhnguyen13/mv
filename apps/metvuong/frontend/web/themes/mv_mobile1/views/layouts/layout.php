@@ -2,11 +2,15 @@
 
 <?php $this->beginContent('@app/views/layouts/main.php'); ?>
 <div id="container">
-    <?php $this->beginContent('@app/views/layouts/_partials/header.php'); ?><?php $this->endContent();?>
+    <?php if(empty($this->params['noHeader'])){?>
+        <?php $this->beginContent('@app/views/layouts/_partials/header.php'); ?><?php $this->endContent();?>
+    <?php }?>
     <div id="wrapper">
         <?=$content;?>
     </div>
-    <?php $this->beginContent('@app/views/layouts/_partials/footer.php'); ?><?php $this->endContent();?>
+    <?php if(empty($this->params['noFooter'])){?>
+        <?php $this->beginContent('@app/views/layouts/_partials/footer.php'); ?><?php $this->endContent();?>
+    <?php }?>
 </div>
 <?php $this->endContent();?>
 

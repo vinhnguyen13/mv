@@ -11,6 +11,12 @@ class ChatController extends Controller
 {
     public $layout = '@app/views/layouts/layout';
 
+    public function beforeAction($action)
+    {
+        $this->view->params['noFooter'] = true;
+        return parent::beforeAction($action);
+    }
+
     public function actionIndex(){
         if(Yii::$app->user->isGuest) {
             return $this->render('/_systems/require_login');
