@@ -17,7 +17,11 @@ $(document).ready(function(){
 
 					inputPage.remove();
 					
-					listingList.append(r.find('.item-listing'));
+					var items = r.find('.item-listing');
+					
+					listingList.append(items);
+					
+					$('#count-to').text(Number($('#count-to').text()) + items.length);
 					
 					if(r.find('#item-loading').length > 0) {
 						self.data('loading', false);
