@@ -1,3 +1,10 @@
+<?php
+use yii\web\View;
+use yii\helpers\Url;
+Yii::$app->getView()->registerJsFile('http://code.highcharts.com/highcharts.js', ['position' => View::POS_BEGIN]);
+Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporting.js', ['position' => View::POS_BEGIN]);
+Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/dashboard.js', ['position'=>View::POS_BEGIN]);
+?>
 <div class="right-profile managechart">
     <div class="wrap-quanly-profile">
         <div class="title-frm">Quản lý thống kê</div>
