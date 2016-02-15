@@ -58,7 +58,7 @@ use yii\helpers\Url;
             <li><a href="#"><em class="icon-docs"></em>Tất cả dự án</a></li>
             <li><a href="#"><em class="icon-bar-chart"></em>Statistics</a></li>
             <li><a href="#"><em class="icon-bubbles"></em>Chat</a></li>
-            <li><a href="#"><em class="icon-power"></em>Đăng xuất</a></li>
+            <li><a data-method="post" href="<?=\yii\helpers\Url::to(['/member/logout'])?>"><em class="icon-power"></em>Đăng xuất</a></li>
         </ul>
         <?php } ?>
     </div>
