@@ -15,23 +15,6 @@ use yii\helpers\Url;
                 <li><a href="#">thuê</a></li>
                 <li><a href="<?= Url::to(['/ad/post']) ?>">bán / cho thuê</a></li>
                 <li><a href="<?=Url::to(['building-project/index']);?>">dự án mới</a></li>
-                
-                <?php if(Yii::$app->user->isGuest){?>
-                    <li class="regis-login">
-                        <a href="<?=Url::to(['member/login'])?>">Đăng nhập</a>
-                        <span>/</span>
-                        <a href="<?=Url::to(['member/signup'])?>">Đăng ký</a>
-                    </li>
-                <?php }else{?>
-                    <li class="regis-login">
-                        <a href="<?=Url::to(['dashboard/profile'])?>">
-                            <span class="avatar-user"><img src="<?=Url::to(['/member/avatar', 'usrn'=>Yii::$app->user->identity->username]);?>" alt="" width="40" height="40"></span>
-                            <span class="name-user"><?=Yii::$app->user->identity->profile->getDisplayName();?></span></a>
-                    </li>
-                    <li>
-                        <a data-method="post" href="<?=Url::to(['/member/logout'])?>"><em class="icon-logout pull-right"></em><?=Yii::t('user', 'Logout')?></a>
-                    </li>
-                <?php }?>
             </ul>
         </div>
     </div>
@@ -46,7 +29,7 @@ use yii\helpers\Url;
         <?php } else{?>
         <ul class="clearfix">
             <li class="user-edit">
-                <a href="<?=Url::to(['dashboard/profile'])?>">
+                <a href="<?=Url::to(['member/profile', 'username'=>Yii::$app->user->identity->username])?>">
                     <span class="wrap-img"><img src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="" width="40" height="40"></span>
                     <div>
                         <span class="name-user"><?=Yii::$app->user->identity->profile->getDisplayName();?></span>

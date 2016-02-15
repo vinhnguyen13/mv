@@ -20,6 +20,7 @@ use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use frontend\models\RecoveryForm;
+use frontend\models\ProfileForm;
 
 /**
  * Site controller
@@ -240,5 +241,46 @@ class MemberController extends Controller
         }
         return $response->send();
     }
+
+    public function actionProfile($username)
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = Yii::createObject([
+            'class'    => ProfileForm::className(),
+            'scenario' => 'updateprofile',
+        ]);
+
+        $model = $model->loadProfile();
+        if(!$model->avatar) {
+            $model->avatar  = 'default-avatar.jpg';
+        }
+
+        if(Yii::$app->request->isAjax) {
+            if(Yii::$app->request->isPost){
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                $post = Yii::$app->request->post();
+                $model->load($post);
+                $model->validate();
+                if (!$model->hasErrors()) {
+                    if($post["type"])
+                        $model->$post["type"] = strip_tags(html_entity_decode($post["txt"]));
+                    $res = $model->updateProfile();
+                    return ['statusCode'=>true];
+                }else{
+                    return ['statusCode'=> false, 'parameters' => $model->errors];
+                }
+            }
+            return $this->renderAjax('user/profile', [
+                'model' => $model
+            ]);
+        }
+        return $this->render('user/profile', [
+            'model' => $model
+        ]);
+    }
+
 
 }
