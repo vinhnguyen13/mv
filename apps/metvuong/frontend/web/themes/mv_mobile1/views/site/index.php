@@ -8,9 +8,9 @@
     </div>
     <div class="search-homepage">
         <ul class="clearfix">
-            <li><a href="#">Mua</a></li>
+            <li><a href="<?= Url::to(['/ad/index']) ?>">Mua</a></li>
             <li><a href="#">Thuê</a></li>
-            <li><a href="#">Bán / Cho Thuê</a></li>
+            <li><a href="<?= Url::to(['/ad/post']) ?>">Bán / Cho Thuê</a></li>
         </ul>
         <form id="" action="">
             <input autocomplete="off" data-url="<?= Url::to(['site/search']) ?>" id="search" type="text" placeholder="Tìm kiếm nhanh..." />
