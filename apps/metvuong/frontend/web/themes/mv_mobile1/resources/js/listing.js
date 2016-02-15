@@ -26,7 +26,7 @@ $(document).ready(function(){
 	$('.dropdown-select').dropdown({
 		hiddenFillValue: '#sort',
 		ajaxSubmit: function () {
-			alert(1);
+			searchForm.submit();
 		}
 	});
 
