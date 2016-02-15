@@ -1,5 +1,10 @@
-<form>
+<?php 
+
+use yii\helpers\Url;
+?>
+<form id="search-form" action="<?= Url::to(['/ad/index']) ?>" method="get">
 	<input type="hidden" name="sort" id="sort" class="value_selected" value="price" />
+	<input type="hidden" name="page" id="page" value="<?= ($page = Yii::$app->request->get('page')) ? $page : 2 ?>" />
 	<div class="search-subpage clearfix">
 					<div class="search-fill">
 						<div class="fillter-fast">
