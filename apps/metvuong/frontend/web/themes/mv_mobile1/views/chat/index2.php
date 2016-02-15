@@ -77,8 +77,8 @@ Yii::$app->getView()->registerCssFile('/css/chat.css');
 
         timer = setTimeout(function() {
             console.log('===========================================');
-            chatUI.onlineList();
-            console.log('===========================================');
+            var onlines = chatUI.onlineList();
+            console.log('===========================================', onlines);
             clearTimeout(timer);
         }, 5000);
 

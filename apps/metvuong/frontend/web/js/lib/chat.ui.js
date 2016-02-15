@@ -80,8 +80,6 @@
             }
         },
         onlineList: function () {
-            console.log(Chat.presenceMessage);
-            return false;
             return Chat.presenceMessage;
         }
     };

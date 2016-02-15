@@ -29,7 +29,7 @@ use yii\helpers\Url;
                             <span class="name-user"><?=Yii::$app->user->identity->profile->getDisplayName();?></span></a>
                     </li>
                     <li>
-                        <a data-method="post" href="<?=\yii\helpers\Url::to(['/member/logout'])?>"><em class="icon-logout pull-right"></em><?=Yii::t('user', 'Logout')?></a>
+                        <a data-method="post" href="<?=Url::to(['/member/logout'])?>"><em class="icon-logout pull-right"></em><?=Yii::t('user', 'Logout')?></a>
                     </li>
                 <?php }?>
             </ul>
@@ -57,9 +57,9 @@ use yii\helpers\Url;
             <li><a href="#"><em class="icon-plus"></em>Đăng tin mới</a></li>
             <li><a href="#"><em class="icon-docs"></em>Tất cả dự án</a></li>
             <li><a href="#"><em class="icon-bar-chart"></em>Statistics</a></li>
-            <li><a href="#"><em class="icon-bubbles"></em>Chat <span>5</span></a></li>
+            <li><a href="<?=Url::to(['/chat'])?>"><em class="icon-bubbles"></em>Chat <span>5</span></a></li>
             <li><a href="#"><em class="icon-bell"></em>Notification <span>5</span></a></li>
-            <li><a data-method="post" href="<?=\yii\helpers\Url::to(['/member/logout'])?>"><em class="icon-power"></em>Đăng xuất</a></li>
+            <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><em class="icon-power"></em>Đăng xuất</a></li>
         </ul>
         <?php } ?>
     </div>
