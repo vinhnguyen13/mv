@@ -28,7 +28,7 @@ $types = AdProduct::getAdTypes ();
 	</div>
 	<?php if(count($products) > 0): ?>
 	<div class="top-listing clearfix">
-		<p><?= $pages->offset + 1 ?> - <?= $pages->offset + count($products) ?> Tin từ <?= $pages->totalCount ?> Tin</p>
+		<p><?= $pages->offset + 1 ?> - <span id="count-to"><?= $pages->offset + count($products) ?></span> Tin từ <?= $pages->totalCount ?> Tin</p>
 	</div>
 	<div id="listing-list">
 		<?php foreach ($products as $product): ?>
