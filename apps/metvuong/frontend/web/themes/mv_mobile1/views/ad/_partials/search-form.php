@@ -119,10 +119,6 @@ use yii\helpers\Url;
 </form>
 <script>
 $(document).ready(function () {
-	$('.dropdown-select').dropdown({
-		hiddenFillValue: '#sort'
-	});
-
 	$('.fillter-fast').dropdown({
 		hiddenFillValue: '#quan-huyen',
 		styleShow: 0

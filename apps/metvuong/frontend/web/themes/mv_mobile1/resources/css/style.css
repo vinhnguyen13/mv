@@ -6,6 +6,9 @@ body {
     overflow-x: hidden;
     overflow-y: auto;
 }
+.heightFull body {
+    padding-bottom: 50px;
+}
 p{margin:0;padding:0;}
 a:active,
 a:visited,
@@ -745,6 +748,7 @@ label {
 .post-listing {
     padding: 0 15px 0px;
     position: relative;
+    margin-bottom: 25px;
 }
 .post-listing .step-txt {
     font-weight: 600;
@@ -1316,10 +1320,10 @@ label {
     top: 80px;
     left: 0;
     width: 100%;
-    min-height: 100%;
     position: absolute;
-    padding: 0 15px 80px;
+    padding: 0 15px 0px;
     background: #fff;
+    margin-bottom: 0;
 }
 .select-type {
     background: #ebeff2;
@@ -1991,4 +1995,7 @@ footer .col-xs-6 {
 }
 footer li:last-child {
     border-top: 1.5px solid #9A9191;
+}
+.mm-slideout {
+    /* min-height: 100%; */
 }

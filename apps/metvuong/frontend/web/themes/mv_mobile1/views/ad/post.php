@@ -411,5 +411,7 @@
 				return true;
 			}
 		});
+
+		$('html').addClass('heightFull');
 	});
 </script> 

@@ -156,7 +156,8 @@ $.fn.dropdown = function (options) {
         var defaults = {
             styleShow: 1, // 1. relative, 0. absolute
             txtAdd: false,
-            hiddenFillValue: ''
+            hiddenFillValue: '',
+            ajaxSubmit: function () {}
         },
         sc = {},
         el = $(this),
@@ -227,6 +228,8 @@ $.fn.dropdown = function (options) {
                     dataValue = $(this).data('value') != undefined ? $(this).data('value') : txt;
 
                 $(sc.settings.hiddenFillValue).val(dataValue);
+
+                sc.settings.ajaxSubmit();
 
                 if (sc.settings.styleShow) {
                     item.parent().find('.item-dropdown').hide();
@@ -537,6 +540,8 @@ $.fn.slideSection = function (options) {
         
         el.find('.section').eq(sc.settings.active).removeClass('hide');
 
+        hWrapSection(sc.settings.active);
+
         current = sc.settings.active;
 
         if ( current == 0 ) {
@@ -550,15 +555,20 @@ $.fn.slideSection = function (options) {
             el.find('.section').removeClass('back-in back-out');
             if ( current+1 < lenItem ) {
                 var oldItem = current;
+
                 el.find('.section').eq(oldItem).addClass('out').removeClass('in');
+
                 setTimeout(function () {
                     el.find('.section').eq(oldItem).addClass('hide');
                 },350);
+
                 current = current+1;
 
                 pagi(current);
 
                 el.find('.section').eq(current).addClass('in').removeClass('hide');
+
+                hWrapSection(current);
 
                 if ( current+1 == lenItem ) {
                     btnNext.addClass('disable');
@@ -572,9 +582,13 @@ $.fn.slideSection = function (options) {
 
         function back () {
             if ( $(this).hasClass('disable') ) return;
+
             el.find('.section').removeClass('in out');
+
             var oldItem = current;
+
             el.find('.section').eq(oldItem).removeClass('back-in').addClass('back-out');
+
             setTimeout(function () {
                 el.find('.section').eq(oldItem).addClass('hide');
             },350);
@@ -584,6 +598,8 @@ $.fn.slideSection = function (options) {
             pagi(current);
 
             el.find('.section').eq(current).addClass('back-in').removeClass('out hide');
+
+            hWrapSection(current);
             
             if ( current == 0 ) {
                 //nextBack.addClass('hide');
@@ -593,6 +609,13 @@ $.fn.slideSection = function (options) {
             }
 
             return false;
+        }
+
+        function hWrapSection (current) {
+            var hActive = el.find('.section').eq(current).outerHeight();
+            el.css({
+                height: hActive+'px'
+            });
         }
 
         function pagi (current) {
