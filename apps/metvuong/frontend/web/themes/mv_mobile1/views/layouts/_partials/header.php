@@ -3,7 +3,7 @@ use yii\helpers\Url;
 ?>
 <header class="clearfix header">
     <a href="#menu-header" id="menu-toggle" class="pull-left icon"></a>
-    <a href="#settings-user" id="avatar-user" class="wrap-img"><img src="/images/default-avatar.jpg" alt=""></a>
+    <a href="#settings-user" id="avatar-user" class="wrap-img"><img src="/images/default-avatar.jpg" alt=""><span>10</span></a>
     <div class="logo">
         <a href="/">metvuong</a>
     </div>
@@ -57,7 +57,8 @@ use yii\helpers\Url;
             <li><a href="#"><em class="icon-plus"></em>Đăng tin mới</a></li>
             <li><a href="#"><em class="icon-docs"></em>Tất cả dự án</a></li>
             <li><a href="#"><em class="icon-bar-chart"></em>Statistics</a></li>
-            <li><a href="#"><em class="icon-bubbles"></em>Chat</a></li>
+            <li><a href="#"><em class="icon-bubbles"></em>Chat <span>5</span></a></li>
+            <li><a href="#"><em class="icon-bell"></em>Notification <span>5</span></a></li>
             <li><a data-method="post" href="<?=\yii\helpers\Url::to(['/member/logout'])?>"><em class="icon-power"></em>Đăng xuất</a></li>
         </ul>
         <?php } ?>
