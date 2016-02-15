@@ -19,6 +19,7 @@
             chatUI.to = to;
         },
         showBoxChat: function (from, to) {
+            chatUI.onlineList();
             var from = chatUI.usrFromJid(from);
             var to = chatUI.usrFromJid(to);
             var template = Handlebars.compile($("#chat-box-template").html());
@@ -53,7 +54,7 @@
                 var html = template({msg: msg});
             }else if(typeMsg == 2){
                 var template = Handlebars.compile($("#chat-receive-template").html());
-                var html = template({msg: msg});
+                var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(from)+'/avatar'});
             }else{
                 var html = document.createTextNode(msg);
             }
@@ -77,6 +78,11 @@
                 var html = template({from: from});
                 chatBoxExist.find('.wrap-chat').append(html);
             }
+        },
+        onlineList: function () {
+            console.log(Chat.presenceMessage);
+            return false;
+            return Chat.presenceMessage;
         }
     };
 

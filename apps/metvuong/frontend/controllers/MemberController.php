@@ -7,6 +7,7 @@ use frontend\models\LoginForm;
 use frontend\models\RegistrationForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\Token;
+use frontend\models\User;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\filters\AccessControl;
@@ -216,6 +217,28 @@ class MemberController extends Controller
         return $this->render('reset', [
             'model' => $model,
         ]);
+    }
+
+    public function actionAvatar($usrn)
+    {
+        $user = User::findOne(['username'=>$usrn]);
+        $profile = $user->profile;
+        $avatarPath = Yii::getAlias('@store').( '/images/default-avatar.jpg');
+        if($profile->avatar) {
+            $pathinfo = pathinfo($profile->avatar);
+            $filePath = Yii::getAlias('@store').'/avatar/' . $pathinfo['filename'] . '.thumb.' . $pathinfo['extension'];
+            if(file_exists($filePath)){
+                $avatarPath = $filePath;
+            }
+        }
+        $pathinfo = pathinfo($avatarPath);
+        $response = Yii::$app->getResponse();
+        $response->headers->set('Content-Type', 'image/'.$pathinfo['extension']);
+        $response->format = Response::FORMAT_RAW;
+        if ( !is_resource($response->stream = fopen($avatarPath, 'r')) ) {
+            throw new \yii\web\ServerErrorHttpException('file access failed: permission deny');
+        }
+        return $response->send();
     }
 
 }

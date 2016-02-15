@@ -86,6 +86,7 @@ return [
                 'real-estate/post' => 'ad/post',
                 'real-estate/post-listing' => 'ad/post-listing',
                 'real-estate/detail/<id:\d+>-<slug>' => 'ad/detail',
+                'member/<usrn>/avatar' => 'member/avatar',
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',
 //                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
 //                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',

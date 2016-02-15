@@ -25,7 +25,7 @@ Yii::$app->getView()->registerCssFile('/css/chat.css');
 <div style="text-align: center;">
     <h1>Chat Feature</h1>
     <ul>
-            <li>Chat with: <a class="chatNow" chat-to="quangvinhit2010" href="#">quangvinhit2010</a></li>
+        <li>Chat with: <a class="chatNow" chat-to="quangvinhit2010" href="#">quangvinhit2010</a></li>
         <li>Chat with: <a class="chatNow" chat-to="superadmin" href="#">superadmin</a></li>
     </ul>
 </div>
@@ -41,16 +41,16 @@ Yii::$app->getView()->registerCssFile('/css/chat.css');
 
 <script id="chat-send-template" type="text/x-handlebars-template">
     <div class="wrap-me chat-infor">
-        <div class="avatar-chat pull-left"><a href="#"><img src="/frontend/web/themes/metvuong2/resources/images/2015 - dddd1.jpg" alt=""></a></div>
-        <div class="wrap-txt-chat pull-left">
+        <div class="avatar-chat pull-right"></div>
+        <div class="wrap-txt-chat pull-right">
             {{msg}}
         </div>
     </div>
 </script>
 <script id="chat-receive-template" type="text/x-handlebars-template">
     <div class="wrap-you chat-infor">
-        <div class="avatar-chat pull-right"><a href="#"><img src="/frontend/web/themes/metvuong2/resources/images/621042015085736.jpg" alt=""></a></div>
-        <div class="wrap-txt-chat pull-right">
+        <div class="avatar-chat pull-left"><a href="#"><img src="{{avatarUrl}}" alt=""></a></div>
+        <div class="wrap-txt-chat pull-left">
             {{msg}}
         </div>
     </div>
@@ -74,6 +74,13 @@ Yii::$app->getView()->registerCssFile('/css/chat.css');
 <script>
     $(document).ready(function () {
         $(this).trigger('chat/connect');
+
+        timer = setTimeout(function() {
+            console.log('===========================================');
+            chatUI.onlineList();
+            console.log('===========================================');
+            clearTimeout(timer);
+        }, 5000);
 
         $(document).on('click', '.chatNow', function (e) {
             chatUI.showBoxChat(xmpp_jid, $(this).attr('chat-to'));

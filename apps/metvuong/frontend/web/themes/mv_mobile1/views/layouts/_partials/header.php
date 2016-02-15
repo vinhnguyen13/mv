@@ -25,7 +25,7 @@ use yii\helpers\Url;
                 <?php }else{?>
                     <li class="regis-login">
                         <a href="<?=Url::to(['user-management/profile'])?>">
-                            <span class="avatar-user"><img src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="" width="40" height="40"></span>
+                            <span class="avatar-user"><img src="<?=Url::to(['/member/avatar', 'usrn'=>Yii::$app->user->identity->username]);?>" alt="" width="40" height="40"></span>
                             <span class="name-user"><?=Yii::$app->user->identity->profile->getDisplayName();?></span></a>
                     </li>
                     <li>
