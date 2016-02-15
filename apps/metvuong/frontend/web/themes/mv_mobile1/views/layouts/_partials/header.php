@@ -38,13 +38,19 @@ use yii\helpers\Url;
 
     <div id="settings-user" class="settings-user">
         <a href="#" id="hide-settings" class="icon"></a>
+        <?php if(Yii::$app->user->isGuest){?>
+            <ul class="clearfix">
+                <li><a href="<?=Url::to(['member/login'])?>">Đăng nhập</a></li>
+                <li><a href="<?=Url::to(['member/signup'])?>">Đăng ký</a></li>
+            </ul>
+        <?php } else{?>
         <ul class="clearfix">
             <li class="user-edit">
-                <a href="#">
-                    <span class="wrap-img"><img src="/images/default-avatar.jpg" alt="" width="40" height="40"></span>
+                <a href="<?=Url::to(['user-management/profile'])?>">
+                    <span class="wrap-img"><img src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="" width="40" height="40"></span>
                     <div>
-                        <span class="name-user">Huan Ta</span>
-                        <span class="address">Ho Chi Minh City, Vietnam</span>
+                        <span class="name-user"><?=Yii::$app->user->identity->profile->getDisplayName();?></span>
+                        <span class="address"><?=Yii::$app->user->identity->profile->address?></span>
                     </div>
                 </a>
             </li>
@@ -54,5 +60,6 @@ use yii\helpers\Url;
             <li><a href="#"><em class="icon-bubbles"></em>Chat</a></li>
             <li><a href="#"><em class="icon-power"></em>Đăng xuất</a></li>
         </ul>
+        <?php } ?>
     </div>
 </header>
