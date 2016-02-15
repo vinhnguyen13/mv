@@ -5,7 +5,6 @@ html,
 body {
     overflow-x: hidden;
     overflow-y: auto;
-    height: 100%;
 }
 p{margin:0;padding:0;}
 a:active,
@@ -1964,4 +1963,32 @@ label {
     top: -3px;
     left: inherit;
     right: -9px;
+}
+footer {
+    border-top: 2px solid #CCC;
+    padding: 15px 0 10px 0;
+}
+.infor-address {
+    border-top: 1px solid #636363;
+    padding-top: 10px;
+    font-size: .8em;
+    text-align: center;
+    font-weight: 600;
+    margin: 10px 10px 0;
+}
+.infor-address p {
+    margin-bottom: 5px;
+}
+footer li a {
+    color: #333;
+    font-weight: 600;
+    padding: 10px 0;
+    display: block;
+}
+footer .col-xs-6 {
+    padding: 0 10px;
+    font-size: .8em;
+}
+footer li:last-child {
+    border-top: 1.5px solid #9A9191;
 }
