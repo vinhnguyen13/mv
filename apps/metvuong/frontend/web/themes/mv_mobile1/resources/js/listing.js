@@ -5,7 +5,7 @@ $(document).ready(function(){
 	
 	$(window).scroll(function() {
 		var self = $(this);
-		if(self.scrollTop() >= (document.body.scrollHeight - 100 - self.height())) {
+		if(self.scrollTop() >= (document.body.scrollHeight - 240 - self.height())) {
 			if(!self.data('loading')) {
 				self.data('loading', true);
 				$.get(searchForm.attr('action'), searchForm.serialize(), function(r){
