@@ -396,7 +396,8 @@ $.fn.price_dt = function (options) {
                 minmax = _this.closest('.wrap-minmax').data('wrapMinmax'),
                 valMin = '', valMax = '';
 
-            el.find('.'+minmax).val(txt);
+            el.find('.'+minmax).html(txt);
+            el.find('.'+minmax).data('value',numberVal);
 
             if ( minmax == 'min-val' ) {
                 toggleMinMax(minmax);
@@ -457,11 +458,11 @@ $.fn.price_dt = function (options) {
         }
 
         function checkValMinMax () {
-            if ( el.find('.min-val').val() == "" && el.find('.max-val').val() == "" ) {
+            if ( el.find('.min-val').data('value') == "" && el.find('.max-val').data('value') == "" ) {
                 return 1;
-            }else if ( el.find('.min-val').val() == "" ) {
+            }else if ( el.find('.min-val').data('value') == "" ) {
                 return 2;
-            }else if ( el.find('.max-val').val() == "" ) {
+            }else if ( el.find('.max-val').data('value') == "" ) {
                 return 3;
             }
         }
@@ -614,7 +615,7 @@ $.fn.slideSection = function (options) {
         function hWrapSection (current) {
             var hActive = el.find('.section').eq(current).outerHeight();
             el.css({
-                height: hActive+'px'
+                height: hActive+80+'px'
             });
         }
 

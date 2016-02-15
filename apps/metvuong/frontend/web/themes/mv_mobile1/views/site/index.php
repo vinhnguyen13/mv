@@ -25,7 +25,7 @@
 </section>
 <section class="search-home">
     <h2>Chúng tôi sẽ giúp bạn tìm được ngôi nhà mà mình mong muốn trong chôc lát</h2>
-    <p>Being the savage's bowsman, that is, the person who pulled the bow-oar in his boat (the second one from forward), it was my cheerful duty to attend upon him while taking that hard-scrabble scramble upon the dead whale's back. You have seen Italian organ-boys holding a dancing-ape by a long cord.</p>
+    <p>Mét Vuông cung cấp lên đến hàng chục ngàn các căn hộ cao cấp, nhà riêng và biệt thự cho thuê hoặc đang rao bán tại hầu hết các tỉnh thành trên cả nước. Thông qua những mô tả chi tiết và hình ảnh chân thật, chúng tôi cam kết giúp khách hàng tìm được sản phẩm phù hợp nhất, một cách nhanh chóng và hiệu quả.</p>
     <div class="wrap-pic-demo wrap-img">
         <img src="<?=Yii::$app->view->theme->baseUrl."/resources/"?>images/mac-demo.jpg" alt="" />
     </div>
@@ -33,7 +33,7 @@
 </section>
 <section class="regis-home">
     <h2>Tìm người khách hàng cho căn nhà của bạn dễ dàng hơn bao giờ hết</h2>
-    <p>Being the savage's bowsman, that is, the person who pulled the bow-oar in his boat (the second one from forward), it was my cheerful duty to attend upon him while taking that hard-scrabble scramble upon the dead whale's back. You have seen Italian organ-boys holding a dancing-ape by a long cord. </p>
+    <p>Chỉ với vài thao tác nhập thông tin đơn giản, Mét Vuông sẽ là cầu nối giúp bạn nhanh chóng tiếp cận với nguồn khách hàng tiềm năng. Bạn có thể giới thiệu về BĐS của mình tới hàng triệu người có nhu cầu một cách trực quan nhất.</p>
     <div class="wrap-pic-demo wrap-img">
         <img src="<?=Yii::$app->view->theme->baseUrl."/resources/"?>images/mac-demo.jpg" alt="" />
     </div>

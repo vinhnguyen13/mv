@@ -40,11 +40,13 @@ use yii\helpers\Url;
 
 							<div class="item-advande">
 								<div class="box-input clearfix">
-									<input readonly="readonly" class="min-max active min-val" name="price-min" id="" type="text" placeholder="Thấp nhất">
+									<!-- <input readonly="readonly" class="min-max active min-val" name="price-min" id="" type="text" placeholder="Thấp nhất"> -->
+									<span class="txt-min min-max active min-val" data-value="">Thấp nhất</span>
 									<span class="text-center">Đến</span>
-									<input readonly="readonly" class="min-max max-val" name="price-max" id="" type="text" placeholder="Cao nhất">
-									<input type="hidden" id="priceMin" />
-									<input type="hidden" id="priceMax" />
+									<!-- <input readonly="readonly" class="min-max max-val" name="price-max" id="" type="text" placeholder="Cao nhất"> -->
+									<span class="txt-max min-max max-val" data-value="">Cao nhất</span>
+									<input type="hidden" id="priceMin" name="price-min" />
+									<input type="hidden" id="priceMax" name="price-max" />
 								</div>
 								<div class="filter-minmax clearfix">
 									<ul data-wrap-minmax="min-val" class="wrap-minmax"></ul>
@@ -66,11 +68,13 @@ use yii\helpers\Url;
 							</div>
 							<div class="item-advande">
 								<div class="box-input clearfix">
-									<input readonly="readonly" class="min-max active min-val" name="price-min" id="" type="text" placeholder="Thấp nhất">
+									<span class="txt-min min-max active min-val" data-value="">Thấp nhất</span>
+									<!-- <input readonly="readonly" class="min-max active min-val" name="dt-min" id="" type="text" placeholder="Thấp nhất"> -->
 									<span class="text-center">Đến</span>
-									<input readonly="readonly" class="min-max max-val" name="price-max" id="" type="text" placeholder="Cao nhất">
-									<input type="hidden" id="dtMin" />
-									<input type="hidden" id="dtMax" />
+									<!-- <input readonly="readonly" class="min-max max-val" name="dt-max" id="" type="text" placeholder="Cao nhất"> -->
+									<span class="txt-max min-max max-val" data-value="">Cao nhất</span>
+									<input type="hidden" id="dtMin" name="dt-min" />
+									<input type="hidden" id="dtMax" name="dt-max" />
 								</div>
 								<div class="filter-minmax clearfix">
 									<ul data-wrap-minmax="min-val" class="wrap-minmax"></ul>
