@@ -36,6 +36,26 @@ $(document).ready(function() {
     $(document).on('click','.link-login', function() {$('a[href=#tab-signin]').trigger('click');});
     $(document).on('click','.link-regis', function() {$('a[href=#tab-signup]').trigger('click');});
 
+    var hWin = $(window).outerHeight(), flagScroll = false;
+    $(window).on('scroll', function () {
+        var _this = $(this),
+            val = _this.scrollTop();
+
+        if ( val >= hWin ) {
+            flagScroll = true;
+        }else {
+            flagScroll = false;
+        }
+
+        if ( flagScroll ) {
+            return;
+        }
+
+        /*if () {
+            $('#scroll-top').fadeIn();
+        }*/
+    });
+
     $('#search').keyup(function() {
       var self = $(this);
       var val = self.val();
@@ -349,7 +369,7 @@ $.fn.price_dt = function (options) {
         var defaults = {
             inputMin: '.input-min',
             inputMax: '.input-max',
-            hinhthuc: 'thue', // co 2 hinh thuc, (thue, cho thue) và (bán,)
+            hinhthuc: 'mua', // co 2 hinh thuc, (thue, cho thue) và (bán,)
             numRenderMax: 11
         },
         sc = {},
