@@ -26,7 +26,7 @@ $types = AdProduct::getAdTypes ();
 			</ul>
 		</div>
 	</div>
-	
+	<?php if(count($products) > 0): ?>
 	<div class="top-listing clearfix">
 		<p><?= $pages->offset + 1 ?> - <?= $pages->offset + count($products) ?> Tin từ <?= $pages->totalCount ?> Tin</p>
 	</div>
@@ -61,6 +61,9 @@ $types = AdProduct::getAdTypes ();
 		</div>
 		<?php endforeach; ?>
 	</div>
+	<?php else: ?>
+	Chưa có tin đăng theo tìm kiếm của bạn, <a href="#">đăng ký nhận thông báo khi có tin đăng phù hợp</a>.
+	<?php endif; ?>
 	<?php if($pages->page < $pages->pageCount - 1): ?>
 	<div id="item-loading" style="text-align: center;">
 		<img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/loading-listing.gif' ?>" />

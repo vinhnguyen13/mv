@@ -45,8 +45,8 @@ use yii\helpers\Url;
 									<span class="text-center">Đến</span>
 									<!-- <input readonly="readonly" class="min-max max-val" name="price-max" id="" type="text" placeholder="Cao nhất"> -->
 									<span class="txt-max min-max max-val" data-value="">Cao nhất</span>
-									<input type="hidden" id="priceMin" name="price-min" />
-									<input type="hidden" id="priceMax" name="price-max" />
+									<input type="hidden" id="priceMin" name="price-min" value="<?= Yii::$app->request->get('price-min') ?>" />
+									<input type="hidden" id="priceMax" name="price-max" value="<?= Yii::$app->request->get('price-max') ?>" />
 								</div>
 								<div class="filter-minmax clearfix">
 									<ul data-wrap-minmax="min-val" class="wrap-minmax"></ul>
@@ -73,8 +73,8 @@ use yii\helpers\Url;
 									<span class="text-center">Đến</span>
 									<!-- <input readonly="readonly" class="min-max max-val" name="dt-max" id="" type="text" placeholder="Cao nhất"> -->
 									<span class="txt-max min-max max-val" data-value="">Cao nhất</span>
-									<input type="hidden" id="dtMin" name="dt-min" />
-									<input type="hidden" id="dtMax" name="dt-max" />
+									<input type="hidden" id="dtMin" name="dt-min" value="<?= Yii::$app->request->get('dt-min') ?>" />
+									<input type="hidden" id="dtMax" name="dt-max" value="<?= Yii::$app->request->get('dt-max') ?>" />
 								</div>
 								<div class="filter-minmax clearfix">
 									<ul data-wrap-minmax="min-val" class="wrap-minmax"></ul>

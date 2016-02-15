@@ -51,9 +51,23 @@ class AdController extends Controller
     	
     	$where = ['ad_product.status' => 1];
     	
-    	// Other where
-    	
     	$query->where($where);
+    	
+    	if($priceMin = Yii::$app->request->get('price-min')) {
+    		$query->andWhere(['>=', 'ad_product.price', $priceMin]);
+    	}
+    	 
+    	if($priceMax = Yii::$app->request->get('price-max')) {
+    		$query->andWhere(['<=', 'ad_product.price', $priceMax]);
+    	}
+    	
+    	if($dtMin = Yii::$app->request->get('dt-min')) {
+    		$query->andWhere(['>=', 'ad_product.area', $dtMin]);
+    	}
+    	
+    	if($dtMax = Yii::$app->request->get('dt-max')) {
+    		$query->andWhere(['<=', 'ad_product.area', $dtMax]);
+    	}
     	
     	$countQuery = clone $query;
     	$pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 24]);
