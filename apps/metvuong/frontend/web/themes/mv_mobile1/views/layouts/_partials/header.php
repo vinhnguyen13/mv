@@ -3,9 +3,16 @@ use yii\helpers\Url;
 ?>
 <header class="clearfix header">
     <a href="#menu-header" id="menu-toggle" class="pull-left icon"></a>
-    <a href="#settings-user" id="avatar-user" class="wrap-img"><img src="/images/default-avatar.jpg" alt=""><span>10</span></a>
+    <a href="#settings-user" id="avatar-user" class="wrap-img">
+        <?php if(Yii::$app->user->isGuest){?>
+            <img src="/images/default-avatar.jpg" alt="">
+        <?php } else{?>
+            <img src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="">
+            <span>10</span>
+        <?php }?>
+    </a>
     <div class="logo">
-        <a href="/">metvuong</a>
+        <a href="<?=Url::home()?>">metvuong</a>
     </div>
     <div id="menu-header" class="menu-header">
         <div class="wrap-menu">
