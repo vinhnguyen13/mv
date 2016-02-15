@@ -305,7 +305,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                             ]); ?>
                             <?=Html::hiddenInput('deleteLater', '', ['id' => 'delete-later']);?>
                             <?= $form->field($model, 'avatar')->widget(\common\widgets\FileUploadAvatar::className(), [
-                                'url' => Url::to(['/user-management/avatar', 'folder' => 'avatar']),
+                                'url' => Url::to(['/dashboard/avatar', 'folder' => 'avatar']),
                                 'clientOptions' => ['maxNumberOfFiles' => 1],
                                 'fieldOptions' => ['folder' => 'avatar'],
                             ])->label(false) ?>
@@ -376,7 +376,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                 $.ajax({
                     type: "post",
                     dataType: 'json',
-                    url: '<?=Url::to(['/user-management/profile-mobile'])?>',
+                    url: '<?=Url::to(['/dashboard/profile'])?>',
                     data: {uid: user_id, txt: txtData, type: type},
                     success: function (data) {
                         console.log(data);
