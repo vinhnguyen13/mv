@@ -10,7 +10,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 ?>
-<div class="col-xs-12 right-profile quanlytinraoban">
+<div class="col-xs-12 right-profile quanlytinraoban" style="margin-top: 25px;">
     <div class="wrap-quanly-profile">
         <div class="title-frm"></div>
         <div class="col-md-12">
@@ -33,10 +33,10 @@ use yii\helpers\Url;
                     <?= $form->field($model, 'new_password')->textInput(['class' => 'form-control', 'type' => 'password']) ?>
                     <div class="form-group">
                         <div class="col-lg-offset-3 col-lg-12">
-                            <?= Html::submitButton(Yii::t('user', 'Reset'), ['class' => 'btn btn-block btn-success reset']) ?>
+                            <?= Html::submitButton(Yii::t('user', 'Change password'), ['class' => 'btn btn-block btn-success reset']) ?>
                         </div>
                     </div>
-                    <a class="showPopup" href="#" data-toggle="modal" data-target="#frmForgot">Quên mật khẩu ?</a>
+<!--                    <a class="showPopup" href="#" data-toggle="modal" data-target="#frmForgot">Quên mật khẩu ?</a>-->
                     <?php ActiveForm::end(); ?>
                 </div>
             </div>

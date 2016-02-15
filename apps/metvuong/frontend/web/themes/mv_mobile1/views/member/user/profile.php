@@ -19,7 +19,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
             <span class="icon-add">+</span>
         </div>
         <div class="col-xs-4 avatar-user-pr">
-            <div class="wrap-img avatar"><img data-toggle="modal" data-target="#avatar" src="<?= file_exists($avatar) ? Url::to('/store/avatar/' . $model->avatar) : Yii::$app->view->theme->baseUrl."/resources/images/MV-Agent Photo.jpg"?>" alt="metvuong.com avatar" /></div>
+            <div class="wrap-img avatar"><img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="<?= file_exists($avatar) ? Url::to('/store/avatar/' . $model->avatar) : Yii::$app->view->theme->baseUrl."/resources/images/MV-Agent Photo.jpg"?>" alt="metvuong.com avatar" /></div>
             <div class="name-user" name="name" contenteditable="true" placeholder="Vui lòng nhập tên"><?=$model->name?></div>
             <em class="fa fa-map-marker"></em><div class="address-user" name="address" contenteditable="true" placeholder="Vui lòng nhập địa chỉ"><?=$model->address?></div>
         </div>
@@ -276,7 +276,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                     <div class="email-agent"><div><span class="icon"></span></div><div name="public_email" style="width: 80%;" contenteditable="true" placeholder="Vui lòng nhập email"><?= $model->public_email ?></div></div>
                     <div class="phone-agent"><div><span class="icon"></span></div><div name="mobile" style="width: 80%;" contenteditable="true" placeholder="Vui lòng nhập số điện thoại"><?= $model->mobile ?></div></div>
                     <div class="id-agent"><div><span class="icon"></span></div>AGENT ID TTG<?=str_pad($model->user_id, 3, '0', STR_PAD_LEFT)?></div>
-                    <div class="pull-right"><a href="<?=Url::to(["member/password"])?>">Thay đổi mật khẩu</a></div>
+                    <div class="change-pass pull-right"><a href="<?=Url::to(["member/password"])?>">Thay đổi mật khẩu</a></div>
                 </div>
             </div>
         </div>
@@ -306,7 +306,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                             ]); ?>
                             <?=Html::hiddenInput('deleteLater', '', ['id' => 'delete-later']);?>
                             <?= $form->field($model, 'avatar')->widget(\common\widgets\FileUploadAvatar::className(), [
-                                'url' => Url::to(['/member/avatar', 'folder' => 'avatar']),
+                                'url' => Url::to(['/user-management/avatar', 'folder' => 'avatar']),
                                 'clientOptions' => ['maxNumberOfFiles' => 1],
                                 'fieldOptions' => ['folder' => 'avatar'],
                             ])->label(false) ?>
@@ -327,39 +327,53 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
 
         $('#avatar button.close').click(function () {
             var url = $('.files .name a').attr("href");
+            $('#headAvatar').attr("src", url);
             $('.avatar img').attr("src", url);
         });
 
+        var username = '<?=Yii::$app->user->identity->username?>';
+        var paramUsername = '<?=$username?>';
+
+        if(username != paramUsername) {
+            $('#profileAvatar').removeAttr("data-target");
+        }
+
         var editable = document.querySelectorAll('div[contenteditable=true]');
         for (var i = 0, len = editable.length; i < len; i++) {
-            var textTrim = editable[i].innerHTML.trim();
-            if (textTrim == "")
-                editable[i].innerHTML = "";
-            editable[i].setAttribute('data-orig', $.trim(editable[i].innerHTML));
-            editable[i].onblur = function () {
-                if ($.trim(this.innerHTML) == this.getAttribute('data-orig')) {
-                }
-                else {
-                    var name = this.getAttribute('name');
-                    txt = $.trim(this.innerHTML);
-                    // change has happened, store new value
-                    if (name == 'public_email') {
-                        var check = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
-                        if (txt == '' || !check.test(txt)) {
-                            alert("Vui lòng nhập email hợp lệ.");
+            if(username != paramUsername) {
+                editable[i].setAttribute("contenteditable", false);
+                $('.change-pass').hide();
+            }
+            else {
+                var textTrim = editable[i].innerHTML.trim();
+                if (textTrim == "")
+                    editable[i].innerHTML = "";
+                editable[i].setAttribute('data-orig', $.trim(editable[i].innerHTML));
+                editable[i].onblur = function () {
+                    if ($.trim(this.innerHTML) == this.getAttribute('data-orig')) {
+                    }
+                    else {
+                        var name = this.getAttribute('name');
+                        txt = $.trim(this.innerHTML);
+                        // change has happened, store new value
+                        if (name == 'public_email') {
+                            var check = /[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}/igm;
+                            if (txt == '' || !check.test(txt)) {
+                                alert("Vui lòng nhập email hợp lệ.");
 //                            this.focus();
-                        } else {
-                            // after valid email call ajax
+                            } else {
+                                // after valid email call ajax
+                                this.setAttribute('data-orig', txt);
+                                sendDataProfile(<?=$model->user_id?>, txt, name);
+                            }
+                        }
+                        else {
                             this.setAttribute('data-orig', txt);
                             sendDataProfile(<?=$model->user_id?>, txt, name);
                         }
                     }
-                    else {
-                        this.setAttribute('data-orig', txt);
-                        sendDataProfile(<?=$model->user_id?>, txt, name);
-                    }
-                }
-            };
+                };
+            }
         }
 
         $("div[name=mobile]").keypress(function (e) {
@@ -394,4 +408,5 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
         font-style: italic;
         display: block; /* For Firefox */
     }
+
 </style>

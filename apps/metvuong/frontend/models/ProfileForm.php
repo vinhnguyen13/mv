@@ -164,9 +164,13 @@ class ProfileForm extends Model
 //        return $slugifier->getSlug();
 //    }
 
-    public function loadProfile(){
-        $user_id = Yii::$app->user->id;
-        $profile = Yii::$app->user->identity->profile;
+    public function loadProfile($username){
+        $profile = null;
+        $user = User::find()->where('username = :usrn', [':usrn' => $username])->one();
+        if($user){
+            $profile = $user->profile;
+        }
+
         $model = Yii::createObject([
             'class'    => ProfileForm::className(),
             'scenario' => 'updateprofile',
@@ -180,7 +184,7 @@ class ProfileForm extends Model
         $model->address = $profile->address;
         $model->avatar = $profile->avatar;
         $model->bio = $profile->bio;
-        $model->created_at = $user_id;
+        $model->created_at = Yii::$app->user->id;
         $model->about = $profile->about;
         $model->activity = $profile->activity;
         $model->experience = $profile->experience;

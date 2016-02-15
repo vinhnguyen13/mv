@@ -99,7 +99,7 @@ class UserManagementController extends Controller
             'scenario' => 'updateprofile',
         ]);
 
-        $model = $model->loadProfile();
+        $model = $model->loadProfile(Yii::$app->user->username);
         if(!$model->avatar) {
             $model->avatar  = 'default-avatar.jpg';
         }
@@ -137,7 +137,7 @@ class UserManagementController extends Controller
             'scenario' => 'updateprofile',
         ]);
 
-        $model = $model->loadProfile();
+        $model = $model->loadProfile(Yii::$app->user->username);
         if(!$model->avatar) {
             $model->avatar  = 'default-avatar.jpg';
         }

@@ -7,7 +7,7 @@ use yii\helpers\Url;
         <?php if(Yii::$app->user->isGuest){?>
             <img src="/images/default-avatar.jpg" alt="">
         <?php } else{?>
-            <img src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="">
+            <img id="headAvatar" src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="">
             <span>10</span>
         <?php }?>
     </a>

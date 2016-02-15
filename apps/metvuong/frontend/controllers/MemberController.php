@@ -253,7 +253,7 @@ class MemberController extends Controller
             'scenario' => 'updateprofile',
         ]);
 
-        $model = $model->loadProfile();
+        $model = $model->loadProfile($username);
         if(!$model->avatar) {
             $model->avatar  = 'default-avatar.jpg';
         }
