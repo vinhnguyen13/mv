@@ -5,6 +5,7 @@ html,
 body {
     overflow-x: hidden;
     overflow-y: auto;
+    height: 100%;
 }
 p{margin:0;padding:0;}
 a:active,
@@ -418,7 +419,7 @@ header {
     background: #bdbdbd;
 }
 .gallery-detail .swiper-slide {
-    height: 400px;
+    height: 290px;
     position: relative;
 }
 .gallery-detail .swiper-slide img {
@@ -1909,7 +1910,7 @@ label {
 #settings-user li a span {
     position: absolute;
     top: 4px;
-    left: 9px;
+    left: 10px;
     background: #FF4E16;
     color: #fff;
     line-height: 100%;
@@ -1940,6 +1941,7 @@ label {
 #settings-user .user-edit div {
     overflow: hidden;
     padding-left: 10px;
+    padding-top: 5px;
 }
 #settings-user .user-edit .name-user {
     font-weight: 700;

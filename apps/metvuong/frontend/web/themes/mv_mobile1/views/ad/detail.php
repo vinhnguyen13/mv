@@ -137,7 +137,7 @@ use frontend\models\User;
 	</div>
 	<div class="attr-detail">
 		<div class="title-attr-listing">Liên hệ</div>
-		<div class="infor-agent">
+		<div class="infor-agent clearfix">
 			<a href="#" class="wrap-img"><img src="<?= $avatar ?>"
 				alt="" /></a> <a href="#" class="name-agent"><?= $product->adContactInfo->name ?></a>
 			<div class="rating-start">
