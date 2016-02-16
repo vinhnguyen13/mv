@@ -306,7 +306,7 @@ Strophe.addConnectionPlugin('muc', {
             to: room,
             type: "get"
         }).c("query", {
-                xmlns: Strophe.NS.MUC_OWNER
+                xmlns: Strophe.NS.MUC
             });
         stanza = config.tree();
         return this._connection.sendIQ(stanza, handler_cb, error_cb);
@@ -325,7 +325,7 @@ Strophe.addConnectionPlugin('muc', {
             to: room,
             type: "set"
         }).c("query", {
-                xmlns: Strophe.NS.MUC_OWNER
+                xmlns: Strophe.NS.MUC
             }).c("x", {
                 xmlns: "jabber:x:data",
                 type: "cancel"
@@ -348,7 +348,7 @@ Strophe.addConnectionPlugin('muc', {
             to: room,
             type: "set"
         }).c("query", {
-                xmlns: Strophe.NS.MUC_OWNER
+                xmlns: Strophe.NS.MUC
             });
         if (config instanceof Form) {
             config.type = "submit";
@@ -379,7 +379,7 @@ Strophe.addConnectionPlugin('muc', {
             to: room,
             type: "set"
         }).c("query", {
-                xmlns: Strophe.NS.MUC_OWNER
+                xmlns: Strophe.NS.MUC
             }).c("x", {
                 xmlns: "jabber:x:data",
                 type: "submit"
