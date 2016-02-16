@@ -13,6 +13,7 @@ use frontend\models\User;
 	$types = AdProduct::getAdTypes();
 	
 	$owner = User::findOne($product->user_id);
+
 	if($owner && $owner->profile) {
 		$avatar = $owner->profile->getAvatarUrl();
 	} else {
@@ -138,8 +139,13 @@ use frontend\models\User;
 	<div class="attr-detail">
 		<div class="title-attr-listing">Liên hệ</div>
 		<div class="infor-agent clearfix">
-			<a href="#" class="wrap-img"><img src="<?= $avatar ?>"
-				alt="" /></a> <a href="#" class="name-agent"><?= $product->adContactInfo->name ?></a>
+            <?php if(!empty($owner->username)) { ?>
+			<a href="<?=\yii\helpers\Url::to(['member/profile','username' => $owner->username])?>" class="wrap-img">
+                <img src="<?= $avatar ?>" alt="" /></a>
+            <?php } else { ?>
+                <a class="wrap-img"><img src="<?= $avatar ?>" alt="" /></a>
+            <?php } ?>
+            <a href="#" class="name-agent"><?= $product->adContactInfo->name ?></a>
 			<div class="rating-start">
 				<fieldset class="rate">
 					<input type="radio" id="rating10" name="rating" value="10"> <label
