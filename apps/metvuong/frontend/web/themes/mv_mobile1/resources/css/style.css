@@ -2322,3 +2322,118 @@ html.mm-opening .mm-slideout {
 .chat-list .item span {
     display: block;
 }
+.type-input-chat {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+.type-input-chat input {
+    background: #fff;
+    height: 35px;
+    line-height: 35px;
+    padding: 0 0 0 10px;
+    width: 100%;
+}
+.type-input-chat .sm-chat {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 35px;
+    border: none;
+    border: 1px solid #B3B3B3;
+    background: #fff;
+    padding: 0 10px;
+}
+.chat-real {
+    height: 100%;
+    padding-bottom: 40px;
+}
+.wrap-chat-item {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    padding: 86px 0 35px 0;
+}
+.wrap-chat-item .container-chat {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 25px 15px;
+    background: #ececec;
+}
+.container-chat .item {
+    margin-bottom: 20px;
+}
+.container-chat .item .avatar {
+    width: 40px;
+    display: block;
+    height: 40px;
+    overflow: hidden;
+    border-radius: 50%;
+    float: left;
+    /* margin-right: 10px; */
+}
+.container-chat .item .chat-txt {
+    overflow: hidden;
+    padding: 5px 5px 5px 20px;
+    position: relative;
+}
+.container-chat .chat-txt .txt-detail {
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 1px 1px 1px #ADADAD;
+    -webkit-box-shadow: 1px 1px 1px #ADADAD;
+    -moz-box-shadow: 1px 1px 1px #ADADAD;
+    -ms-box-shadow: 1px 1px 1px #ADADAD;
+    padding: 10px;
+    font-size: .9em;
+    position: relative;
+    z-index: 2;
+}
+.container-chat .item.box-you .txt-detail {
+    box-shadow: -1px 1px 1px #ADADAD;
+    -webkit-box-shadow: -1px 1px 1px #ADADAD;
+    -ms-box-shadow: -1px 1px 1px #ADADAD;
+    -moz-box-shadow: -1px 1px 1px #ADADAD;
+}
+.container-chat .chat-txt .time-detail {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: .75em;
+    color: #A0A0A0;
+    text-shadow: 1px 1px 1px #fff;
+    margin-top: 5px;
+    padding-left: 15px;
+}
+.container-chat .item.box-you .avatar {
+    float: right;
+    margin-right: 0;
+    /* margin-left: 10px; */
+}
+.container-chat .item.box-you .time-detail {
+    padding: 0;
+    text-align: right;
+    padding-right: 15px;
+}
+.container-chat .chat-txt:after {
+   content: "";
+   position: absolute;
+   top: 21px;
+   left: 10px;
+   border-top: 20px solid #fff;
+   border-top-color: inherit;
+   border-left: 20px solid transparent;
+   border-right: 20px solid transparent;
+   z-index: 1;
+   color: #fff;
+}
+.container-chat .item.box-you .chat-txt {
+    padding-left: 5px;
+    padding-right: 20px;
+}
+.container-chat .item.box-you .chat-txt:after {
+    left: inherit;
+    right: 8px;
+}
