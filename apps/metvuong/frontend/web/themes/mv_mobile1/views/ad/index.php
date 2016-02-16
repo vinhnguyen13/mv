@@ -62,7 +62,7 @@ $types = AdProduct::getAdTypes ();
 		<?php endforeach; ?>
 	</div>
 	<?php else: ?>
-	Chưa có tin đăng theo tìm kiếm của bạn, <a href="#">đăng ký nhận thông báo khi có tin đăng phù hợp</a>.
+	<div id="no-result">Chưa có tin đăng theo tìm kiếm của bạn, <a href="#">đăng ký nhận thông báo khi có tin đăng phù hợp</a>.</div>
 	<?php endif; ?>
 	<?php if($pages->page < $pages->pageCount - 1): ?>
 	<div id="item-loading" style="text-align: center;">
