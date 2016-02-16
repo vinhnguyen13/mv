@@ -53,27 +53,36 @@ class AdController extends Controller
     	
     	$query->where($where);
     	
-    	if($priceMin = Yii::$app->request->get('price-min')) {
+    	if($priceMin = Yii::$app->request->get('costMin')) {
     		$query->andWhere(['>=', 'ad_product.price', $priceMin]);
     	}
     	 
-    	if($priceMax = Yii::$app->request->get('price-max')) {
+    	if($priceMax = Yii::$app->request->get('costMax')) {
     		$query->andWhere(['<=', 'ad_product.price', $priceMax]);
     	}
     	
-    	if($dtMin = Yii::$app->request->get('dt-min')) {
+    	if($dtMin = Yii::$app->request->get('areaMin')) {
     		$query->andWhere(['>=', 'ad_product.area', $dtMin]);
     	}
     	
-    	if($dtMax = Yii::$app->request->get('dt-max')) {
+    	if($dtMax = Yii::$app->request->get('areaMax')) {
     		$query->andWhere(['<=', 'ad_product.area', $dtMax]);
     	}
+    	
+    	if($roomNo = Yii::$app->request->get('roomNo')) {
+    		$query->andWhere(['>=', 'ad_product_addition_info.room_no', $roomNo]);
+    	}
+    	
+    	if($toiletNo = Yii::$app->request->get('toiletNo')) {
+    		$query->andWhere(['>=', 'ad_product_addition_info.toilet_no', $toiletNo]);
+    	}
+    	
+    	$query->leftJoin('ad_product_addition_info', '`ad_product_addition_info`.`product_id` = `ad_product`.`id`');
     	
     	$countQuery = clone $query;
     	$pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 24]);
     	
     	$query->with('adProductAdditionInfo');
-    	
     	
     	$sort = Yii::$app->request->get('sort', 'created_at');
     	$doa = 'DESC';
