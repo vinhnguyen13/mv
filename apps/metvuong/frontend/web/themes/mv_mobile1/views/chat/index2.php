@@ -76,6 +76,10 @@ Yii::$app->getView()->registerCssFile('/css/chat.css');
         $(this).trigger('chat/connect');
 
         timer = setTimeout(function() {
+            /*
+            First: Chat.mucJoin('chatroom2@muc.metvuong.com', chatUI.genJid(xmpp_jid), xmpp_key);
+            Next typing: Chat.sendMessage(to+'@muc.metvuong.com' , msg,"groupchat");
+            */
             console.log('===========================================');
             var onlines = chatUI.onlineList();
             console.log('===========================================', onlines);
