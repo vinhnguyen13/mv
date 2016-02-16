@@ -1899,6 +1899,7 @@ label {
     width: 60%;
     min-width: inherit;
     max-width: inherit;
+    display: none;
 }
 #hide-settings {
     left: inherit;
@@ -2272,4 +2273,52 @@ html.mm-right.mm-opening .mm-slideout {
 html.mm-opening .mm-slideout {
     -webkit-transform: translate3d(60%,0,0);
     transform: translate3d(60%,0,0);
+}
+.chat-list {
+    padding: 5px 15px 15px;
+}
+.chat-list .wrap-img {
+    float: left;
+    margin-right: 20px;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    overflow: hidden;
+}
+.chat-list .wrap-img img {
+    height: 100%;
+    width: 100%;
+}
+.chat-list .chat-detail {
+    overflow: hidden;
+    font-size: .9em;
+}
+.chat-list .item {
+    padding: 18px 0;
+    border-bottom: 1px solid #B1B1B1;
+    float: left;
+    width: 100%;
+}
+.chat-list .item:last-child {
+    border: none;
+}
+.chat-list .item a {
+    color: #777;
+}
+.chat-list .item .name {
+    color: #000;
+    font-weight: 700;
+    font-size: 1.15em;
+}
+.mm-slideout {
+    background: #fff;
+}
+.mm-menu.mm-offcanvas.mm-current {
+    display: block !important;
+}
+.chat-list .item span {
+    display: block;
 }
