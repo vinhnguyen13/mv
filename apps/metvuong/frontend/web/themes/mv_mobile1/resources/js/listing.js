@@ -1,68 +1,71 @@
 $(document).ready(function(){
 	var searchForm = $('#search-form');
 	var page = 1;
+	var listingListId = '#listing-list';
+	var itemLoadingId = '#item-loading';
 	
-	$(window).on('scroll', next);
-
+	if(!$(itemLoadingId).hasClass('hide')) {
+		$(window).on('scroll', next);
+	}
+	
+	function next() {
+		var self = $(this);
+		
+		if(self.scrollTop() >= (document.body.scrollHeight - 260 - self.height())) {
+			$(window).off('scroll', next);
+			
+			var inputPage = $('<input type="hidden" name="page" value="' + (++page) + '" />');
+			searchForm.append(inputPage);
+			
+			$.get(searchForm.attr('action'), searchForm.serialize(), function(r){
+				r = $(r);
+				
+				inputPage.remove();
+				
+				var items = r.find('.item-listing');
+				$(listingListId).append(items);
+				
+				var countTo = $('#count-to');
+				countTo.text(Number(countTo.text()) + items.length);
+				
+				if(r.find(itemLoadingId).hasClass('hide')) {
+					$(itemLoadingId).addClass('hide');
+				} else {
+					$(window).on('scroll', next);
+				}
+			});
+		}
+	}
+	
 	$('.dropdown-select').dropdown({
 		hiddenFillValue: '#sort',
 		ajaxSubmit: function () {
 			searchForm.submit();
 		}
 	});
-
+	
 	searchForm.submit(function(e){
 		e.preventDefault();
 		
-		searchForm.data('loading', false);
 		$(window).off('scroll', next);
+		
+		$(itemLoadingId).removeClass('hide');
 		
 		var id = '#content-holder';
 		var contentHolder = $(id).html('');
 		
-		$('#item-loading').show();
+		page = 1;
 		
 		$.get(searchForm.attr('action'), searchForm.serialize(), function(r){
 			r = $(r);
 			
-			contentHolder.html(r.find(id));
-
-			$(window).on('scroll', next);
+			contentHolder.html(r.find(id).html());
 			
-			if(r.find('#item-loading').length == 0) {
-				searchForm.data('loading', true);
-				$('#item-loading').hide();
+			if(r.find(itemLoadingId).hasClass('hide')) {
+				$(itemLoadingId).addClass('hide');
+			} else {
+				$(window).on('scroll', next);
 			}
-
-			page = 1;
 		});
 	});
-	
-	function next() {
-		var self = $(this);
-		if((self.scrollTop() >= (document.body.scrollHeight - 260 - self.height())) && !searchForm.data('loading')) {
-			searchForm.data('loading', true);
-
-			var inputPage = $('<input type="hidden" name="page" value="' + (++page) + '" />');
-			searchForm.append(inputPage);
-			
-			$.get(searchForm.attr('action'), searchForm.serialize(), function(r){
-				r = $(r);
-
-				inputPage.remove();
-				
-				var items = r.find('.item-listing');
-				
-				$('#listing-list').append(items);
-				
-				$('#count-to').text(Number($('#count-to').text()) + items.length);
-				
-				if(r.find('#item-loading').length > 0) {
-					searchForm.data('loading', false);
-				} else {
-					$('#item-loading').hide();
-				}
-			});
-    	}
-	}
 });

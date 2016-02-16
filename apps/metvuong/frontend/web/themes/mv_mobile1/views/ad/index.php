@@ -66,9 +66,7 @@ $types = AdProduct::getAdTypes ();
 		<div id="no-result">Chưa có tin đăng theo tìm kiếm của bạn, <a href="#">đăng ký nhận thông báo khi có tin đăng phù hợp</a>.</div>
 		<?php endif; ?>
 	</div>
-	<?php if($pages->page < $pages->pageCount - 1): ?>
-	<div id="item-loading" style="text-align: center;">
+	<div id="item-loading" style="text-align: center;" class="<?php if($pages->page >= $pages->pageCount - 1) echo 'hide' ?>">
 		<img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/loading-listing.gif' ?>" />
 	</div>
-	<?php endif; ?>
 </div>
