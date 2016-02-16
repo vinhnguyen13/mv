@@ -139,6 +139,7 @@ var Chat = {
         // returning false would remove it after it finishes.
         return true;
     },
+    sttSaveMsg: false,
     sendMessage : function(messgeTo,message,type){
         if(message.length <= 0){
             return false;
@@ -161,6 +162,14 @@ var Chat = {
         Chat.connection.send(reply.tree());
         Chat.log('I sent ' + messgeTo + ': ' + message, reply.tree());
         chatUI.appendMessage(messgeTo, 1, message);
+        /**save message**/
+        if(Chat.sttSaveMsg){
+            Chat.connection.send($iq({type: 'set', id: 'autoSave'}).c('auto', {
+                save: 'true',
+                xmlns: 'urn:xmpp:archive'
+            }));
+        }
+        /**end save**/
         return true;
     },
     Roster : [],
