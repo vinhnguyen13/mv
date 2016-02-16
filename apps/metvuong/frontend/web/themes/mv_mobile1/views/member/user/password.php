@@ -10,7 +10,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 ?>
-<div class="col-xs-12 right-profile quanlytinraoban" style="margin-top: 25px;">
+<div style="margin-top: 20px;">
     <div class="wrap-quanly-profile">
         <div class="title-frm"></div>
         <div class="col-md-12">
