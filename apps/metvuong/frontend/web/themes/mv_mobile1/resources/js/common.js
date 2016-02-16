@@ -48,40 +48,39 @@ $(document).ready(function() {
         }
 
         if ( flagScroll ) {
-            return;
-        }
-
-        /*if () {
             $('#scroll-top').fadeIn();
-        }*/
+            return;
+        }else {
+            $('#scroll-top').hide();
+        }
     });
 
     $('#search').keyup(function() {
-      var self = $(this);
-      var val = self.val();
-      var ss = $('.suggest-search');
-      
-      if(val.length > 3 && val != self.data('val')) {
-       self.data('val', val);
-       
-       var url = self.data('url');
-       
-       $.post(url, {v: val}, function(response){
-        var cs = $('.content-suggest ul');
-        if(response.length > 0) {
-         ss.removeClass('hide');
-         cs.html('');
-         for(var i in response) {
-          cs.append('<li><a href="#">' + response[i].full_name + ' <span>(' + response[i].total + ')</span></a></li>');
-         }
+        var self = $(this);
+        var val = self.val();
+        var ss = $('.suggest-search');
+
+        if(val.length > 3 && val != self.data('val')) {
+            self.data('val', val);
+
+            var url = self.data('url');
+
+            $.post(url, {v: val}, function(response){
+                var cs = $('.content-suggest ul');
+                if(response.length > 0) {
+                    ss.removeClass('hide');
+                    cs.html('');
+                    for(var i in response) {
+                        cs.append('<li><a href="#">' + response[i].full_name + ' <span>(' + response[i].total + ')</span></a></li>');
+                    }
+                } else {
+                    ss.addClass('hide');
+                }
+            });
         } else {
-         ss.addClass('hide');
+            ss.addClass('hide');
         }
-       });
-      } else {
-       ss.addClass('hide');
-      }
-     });
+    });
 });
 
 function l(x){console.log(x);}
@@ -422,7 +421,8 @@ $.fn.price_dt = function (options) {
             if ( minmax == 'min-val' ) {
                 toggleMinMax(minmax);
                 renderMax(numberVal);
-                el.find('.max-val').val('');
+                el.find('.max-val').html('');
+                el.find('.max-val').data('value','');
                 valMin = numberVal;
 
             }else {// hidden khi chon xong gia tri max

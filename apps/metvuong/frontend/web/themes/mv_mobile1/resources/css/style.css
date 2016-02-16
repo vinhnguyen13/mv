@@ -2008,11 +2008,16 @@ footer .col-xs-6 {
     padding: 0 10px;
     font-size: .85em;
 }
+footer .col-xs-6 > div {
+    float: left;
+    margin-left: 5px;
+}
 footer li:last-child {
     border-top: 1.5px solid #9A9191;
 }
 footer .col-xs-6 em {
-    margin-right: 5px;
+    float: left;
+    margin-top: 2px;
 }
 footer {
     text-shadow: 1px 1px 1px #fff;

@@ -7,13 +7,9 @@
 use yii\helpers\Url;
 
 ?>
-<div class="search-subpage clearfix">
-    <form id="" action="">
-        <input type="text" placeholder="Tìm kiếm nhanh...">
-        <button type="submit" id="btn-search"><span class="icon"></span></button>
-        <a href="#" class="advande-search"><span class="bd-left"></span><span class="bd-right"></span></a>
-    </form>
-</div>
+
+<?= $this->render('_partials/search-form') ?>
+
 <div class="infor-duan">
     <h1>THÔNG TIN DỰ ÁN</h1>
     <p class="intro-duan">Mét Vuông mang lại cho bạn những thông tin dự án mới và chi tiết nhất</p>

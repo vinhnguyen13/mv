@@ -13,10 +13,10 @@
 			</ul>
 		</div>
 		<div class="pull-left col-xs-6">
-			<em class="icon-call-out"></em> <strong>(08) 123 456</strong> hoặc <strong>0908 123 456</strong>
+  			<em class="icon-call-out"></em> <div><strong>(08) 123 456</strong> hoặc </div><div><strong>0908 123 456</strong></div>
 		</div>
 		<div class="pull-right col-xs-6">
-			<em class="fa fa-envelope-o"></em><strong>info@metvuong.com</strong>
+  			<em class="fa fa-envelope-o"></em><div><strong>info@metvuong.com</strong></div>
 		</div>
 	</div>
 	<div class="infor-address">

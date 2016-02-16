@@ -10,13 +10,9 @@ $facilityListId = explode(",", $model->facilities);
 $facilities = \vsoft\ad\models\AdFacility::find()->where(['id' => $facilityListId])->all();
 $count_facilities = count($facilities);
 ?>
-<div class="search-subpage clearfix">
-    <form id="" action="">
-        <input type="text" placeholder="Tìm kiếm nhanh...">
-        <button type="submit" id="btn-search"><span class="icon"></span></button>
-        <a href="#" class="advande-search"><span class="bd-left"></span><span class="bd-right"></span></a>
-    </form>
-</div>
+
+<?= $this->render('_partials/search-form') ?>
+
 <div class="detail-listing">
     <div class="gallery-detail swiper-container">
         <div class="swiper-wrapper">
@@ -60,7 +56,7 @@ $count_facilities = count($facilities);
     <div class="attr-detail">
         <div class="title-attr-listing">Diễn tả chi tiết</div>
         <p style="text-align: justify;"><?=!empty($model->description) ? $model->description : "Thông tin sẽ được cập nhật."?></p>
-        <div class="text-right see-more-listing"><a href="#">Xem thêm</a></div>
+        
     </div>
     <div class="attr-detail">
         <div class="title-attr-listing">Thông tin chi tiết</div>
@@ -70,7 +66,7 @@ $count_facilities = count($facilities);
         <?php if(!empty($model->start_date)){?> <p><span>Ngày khởi công:</span> <?= Yii::$app->formatter->asDate($model->start_date, 'dd-MM-yyyy')?></p> <?php }?>
         <?php if(!empty($model->start_time)){?> <p><span>Bắt đầu dự án:</span> <?=$model->start_time?></p> <?php }?>
         <?php if(!empty($model->estimate_finished)){?> <p><span>Kết thúc dự án:</span> <?=$model->estimate_finished?></p> <?php }?>
-        <div class="text-right see-more-listing"><a href="#">Xem thêm</a></div>
+        
     </div>
     <div class="attr-detail">
         <div class="title-attr-listing">Tiện ích <?=$count_facilities > 0 ? "({$count_facilities})" : ""?> </div>
@@ -78,7 +74,7 @@ $count_facilities = count($facilities);
             foreach($facilities as $facility) {?>
                 <p><?= $facility->name?></p>
         <?php } } ?>
-        <div class="text-right see-more-listing"><a href="#">Xem thêm</a></div>
+        
     </div>
     <div id="diadiem" class="attr-detail">
         <div class="title-attr-listing">Địa điểm</div>
