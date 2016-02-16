@@ -7,13 +7,11 @@ $(document).ready(function(){
 	$('.dropdown-select').dropdown({
 		hiddenFillValue: '#sort',
 		ajaxSubmit: function () {
-			console.log('sort');
 			searchForm.submit();
 		}
 	});
 
 	searchForm.submit(function(e){
-		console.log('submit');
 		e.preventDefault();
 		
 		searchForm.data('loading', false);
@@ -43,7 +41,6 @@ $(document).ready(function(){
 	function next() {
 		var self = $(this);
 		if((self.scrollTop() >= (document.body.scrollHeight - 260 - self.height())) && !searchForm.data('loading')) {
-			console.log('scroll');
 			searchForm.data('loading', true);
 
 			var inputPage = $('<input type="hidden" name="page" value="' + (++page) + '" />');
