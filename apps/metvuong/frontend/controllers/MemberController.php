@@ -264,13 +264,13 @@ class MemberController extends Controller
                 $post = Yii::$app->request->post();
                 $model->load($post);
                 $model->validate();
-                if (!$model->hasErrors()) {
+                if (!$model->hasErrors() && $username == Yii::$app->user->identity->username) {
                     if($post["type"])
                         $model->$post["type"] = strip_tags(html_entity_decode($post["txt"]));
                     $res = $model->updateProfile();
                     return ['statusCode'=>true, 'username'=>$username];
                 }else{
-                    return ['statusCode'=> false, 'parameters' => $model->errors, 'username'=>$username];
+                    return ['statusCode'=> false, 'parameters' => $model->errors, 'user'=> 'error'];
                 }
             }
             return $this->renderAjax('user/profile', [

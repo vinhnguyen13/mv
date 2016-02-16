@@ -16,7 +16,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
         <div class="col-xs-4 num-follow">
             <span class="num">1.3K</span>
             <span class="txt-num">FOLLOWERS</span>
-            <span class="icon-add">+</span>
+            <?php if($username != Yii::$app->user->identity->username) {?><span class="icon-add">+</span><?php } ?>
         </div>
         <div class="col-xs-4 avatar-user-pr">
             <div class="wrap-img avatar"><img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="<?= file_exists($avatar) ? Url::to('/store/avatar/' . $model->avatar) : Yii::$app->view->theme->baseUrl."/resources/images/MV-Agent Photo.jpg"?>" alt="metvuong.com avatar" /></div>
@@ -26,7 +26,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
         <div class="col-xs-4 num-rating">
             <span class="num">4.3</span>
             <span class="txt-num">RATING</span>
-            <span class="notifa"><em class="icon-bubble"></em></span>
+            <?php if($username != Yii::$app->user->identity->username) {?><span class="notifa"><em class="icon-bubble"></em></span><?php } ?>
         </div>
     </div>
     <div class="swiper-container gallery-img-user">
@@ -309,10 +309,10 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                                 'url' => Url::to(['/user-management/avatar', 'folder' => 'avatar']),
                                 'clientOptions' => [
                                     'maxNumberOfFiles' => 1,
+                                    'imageMaxWidth' => 1024,
+                                    'imageMaxHeight' => 1024,
                                     'disableImageResize' => false,
-                                    'imageMaxWidth' => 800,
-                                    'imageMaxHeight' => 800,
-//                                    'imageCrop' => true,
+                                    'imageCrop' => true,
                                 ],
                                 'fieldOptions' => ['folder' => 'avatar'],
                             ])->label(false) ?>
