@@ -1890,12 +1890,13 @@ label {
     margin-top: 8px;
     position: relative;
 }
+#menu-header,
 #settings-user {
     position: fixed;
     top: 0;
     right: 0;
     background: #fff;
-    /* width: 50%; */
+    width: 60%;
     min-width: inherit;
     max-width: inherit;
 }
@@ -2263,4 +2264,12 @@ footer {
     height: 100px;
     float: left;
     margin-right: 15px;
+}
+html.mm-right.mm-opening .mm-slideout {
+    -webkit-transform: translate3d(-60%,0,0);
+    transform: translate3d(-60%,0,0);
+}
+html.mm-opening .mm-slideout {
+    -webkit-transform: translate3d(60%,0,0);
+    transform: translate3d(60%,0,0);
 }
