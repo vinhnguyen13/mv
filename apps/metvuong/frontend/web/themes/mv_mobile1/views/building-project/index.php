@@ -8,7 +8,7 @@ use yii\helpers\Url;
 
 ?>
 
-<?= $this->render('_partials/search-form') ?>
+
 
 <div class="infor-duan">
     <h1>THÔNG TIN DỰ ÁN</h1>

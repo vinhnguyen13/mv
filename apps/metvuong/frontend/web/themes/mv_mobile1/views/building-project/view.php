@@ -11,7 +11,7 @@ $facilities = \vsoft\ad\models\AdFacility::find()->where(['id' => $facilityListI
 $count_facilities = count($facilities);
 ?>
 
-<?= $this->render('_partials/search-form') ?>
+
 
 <div class="detail-listing">
     <div class="gallery-detail swiper-container">
