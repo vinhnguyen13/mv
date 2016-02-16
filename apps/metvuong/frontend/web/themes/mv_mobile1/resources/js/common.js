@@ -266,6 +266,8 @@ $.fn.dropdown = function (options) {
                 }
                 el.find('.val-selected .selected').addClass('selected_val');
                 el.find('.val-selected .selected').text(txt);
+
+                return false;
             });
         }
 

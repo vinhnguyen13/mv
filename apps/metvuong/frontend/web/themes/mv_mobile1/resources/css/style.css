@@ -2201,3 +2201,66 @@ footer {
     display: block;
     margin-bottom: 10px;
 }
+.wrap-noti {
+    padding: 0 0 0 25px;
+}
+.list-noti {
+    border-left: 1px solid #777777;
+    padding: 10px 0 50px 30px;
+}
+.list-noti .item {
+    padding: 15px 0;
+    border-bottom: 1px solid #A7A7A7;
+}
+.list-noti .item:last-child {
+    border: none;
+}
+.list-noti .user-get {
+    position: relative;
+}
+.list-noti .avatar {
+    position: absolute;
+    left: -50px;
+    top: 0;
+}
+.list-noti .user-get .name {
+    text-transform: capitalize;
+    font-weight: 600;
+    color: #000;
+    font-size: 1.2em;
+}
+.list-noti .user-get p {
+    color: #777777;
+}
+.list-noti .user-get p.date-type {
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    font-size: .9em;
+}
+.list-noti p.date-type span {
+    font-weight: bold;
+}
+.list-noti .list-photo .wrap-img {
+    height: 100px;
+}
+.list-noti .list-photo li {
+    float: left;
+    width: 32%;
+    height: auto;
+    padding: 0 5px;
+}
+.list-noti .post-get a {
+    display: block;
+    color: #777;
+    padding-right: 15px;
+}
+.list-noti .post-get span {
+    display: block;
+    overflow: hidden;
+}
+.list-noti .post-get .bgcover {
+    width: 30%;
+    height: 100px;
+    float: left;
+    margin-right: 15px;
+}
