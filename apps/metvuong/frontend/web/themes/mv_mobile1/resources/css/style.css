@@ -990,7 +990,7 @@ label {
 .title-top {
     background: #000000;
     color: #fff;
-    font-weight: 400;
+    font-weight: 600;
     text-align: center;
     padding: 8px 0;
     font-size: 1em;
@@ -1985,7 +1985,7 @@ label {
 footer {
     border-top: 2px solid #CCC;
     padding: 5px 0 10px 0;
-    background: #ECECEC;
+    background: #ececec;
 }
 .infor-address {
     border-top: 1px solid #9E9E9E;
@@ -2105,4 +2105,99 @@ footer {
     padding: 3px 8px 5px;
     color: #fff;
     display: none;
+}
+.statis section {
+    padding: 15px;
+}
+#sandbox-container input {
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    position: relative;
+    z-index: 2;
+    background: none;
+}
+.arrowDown {
+    display: inline-block;
+    width: 24px;
+    height: 13px;
+    background-position: -91px -27px;
+    background-size: 150px;
+}
+#sandbox-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+#sandbox-container .arrowDown {
+    position: absolute;
+    top: 11px;
+    right: 10px;
+    z-index: 1;
+}
+.dropdown-menu {
+    margin-top: 10px;
+}
+.views-stats {
+    color: #7f7f7f;
+}
+.views-stats em {
+    margin-right: 8px;
+    font-size: 1.1em;
+}
+.summary {
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 1.1em;
+}
+.summary .box-statis-num {
+    font-size: 1em;
+}
+.summary .wrap-chart {
+    margin: 15px 0 20px;
+}
+.box-statis-num {
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1.1em;
+}
+.box-statis-num em {
+    margin-right: 8px;
+    font-size: 1.1em;
+}
+.box-statis-num .num-statis {
+    margin-bottom: 10px;
+}
+.title-sub {
+    background: #ececec;
+    padding: 10px 15px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.1em;
+}
+.list-duan-stats li {
+    float: left;
+    width: 100%;
+    border-bottom: 1px dashed #A9A6A6;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+.list-duan-stats li:last-child {
+    border: none;
+}
+.list-duan-stats li .bgcover {
+    width: 40%;
+    height: 150px;
+    background-position: 50% bottom;
+    float: left;
+    margin-right: 15px;
+}
+.list-duan-stats li .stat-item-duan {
+    overflow: hidden;
+}
+.list-duan-stats .stat-item-duan .name-duan {
+    text-transform: uppercase;
+    line-height: 20px;
+    display: block;
+    margin-bottom: 10px;
 }
