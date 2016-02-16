@@ -26,44 +26,46 @@ $types = AdProduct::getAdTypes ();
 			</ul>
 		</div>
 	</div>
-	<?php if(count($products) > 0): ?>
-	<div class="top-listing clearfix">
-		<p><?= $pages->offset + 1 ?> - <span id="count-to"><?= $pages->offset + count($products) ?></span> Tin từ <?= $pages->totalCount ?> Tin</p>
-	</div>
-	<div id="listing-list">
-		<?php foreach ($products as $product): ?>
-		<div class="item-listing">
-			<?php
-			if ($image = AdImages::find ()->where ( [ 
-					'order' => 0,
-					'product_id' => $product->id 
-			] )->one ()) {
-				$imgUrl = $image->imageMedium;
-			} else {
-				$imgUrl = '/themes/metvuong2/resources/images/default-ads.jpg';
-			}
-			?>
-			<div class="bgcover img-intro" style="background-image: url(<?= $imgUrl ?>);">
-				<a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"></a>
-			</div>
-			<p class="infor-by-up">
-				<?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?> bởi <a
-					href="#">Môi Giới</a>
-			</p>
-			<p class="address-listing">
-				<a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"><?= $product->getAddress(true) ?></a>
-			</p>
-			<p class="attr-home">
-				<?= $product->adProductAdditionInfo->room_no ? $product->adProductAdditionInfo->room_no . ' <span class="icon icon-bed"></span> | ' : ''?>
-				<?= $product->adProductAdditionInfo->toilet_no ? $product->adProductAdditionInfo->toilet_no . ' <span class="icon icon-bath"></span> | ' : ''?>
-				<span class="price"><?= StringHelper::formatCurrency($product->price) ?></span>
-			</p>
+	<div id="content-holder">
+		<?php if(count($products) > 0): ?>
+		<div class="top-listing clearfix">
+			<p><?= $pages->offset + 1 ?> - <span id="count-to"><?= $pages->offset + count($products) ?></span> Tin từ <?= $pages->totalCount ?> Tin</p>
 		</div>
-		<?php endforeach; ?>
+		<div id="listing-list">
+			<?php foreach ($products as $product): ?>
+			<div class="item-listing">
+				<?php
+				if ($image = AdImages::find ()->where ( [ 
+						'order' => 0,
+						'product_id' => $product->id 
+				] )->one ()) {
+					$imgUrl = $image->imageMedium;
+				} else {
+					$imgUrl = '/themes/metvuong2/resources/images/default-ads.jpg';
+				}
+				?>
+				<div class="bgcover img-intro" style="background-image: url(<?= $imgUrl ?>);">
+					<a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"></a>
+				</div>
+				<p class="infor-by-up">
+					<?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?> bởi <a
+						href="#">Môi Giới</a>
+				</p>
+				<p class="address-listing">
+					<a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"><?= $product->getAddress(true) ?></a>
+				</p>
+				<p class="attr-home">
+					<?= $product->adProductAdditionInfo->room_no ? $product->adProductAdditionInfo->room_no . ' <span class="icon icon-bed"></span> | ' : ''?>
+					<?= $product->adProductAdditionInfo->toilet_no ? $product->adProductAdditionInfo->toilet_no . ' <span class="icon icon-bath"></span> | ' : ''?>
+					<span class="price"><?= StringHelper::formatCurrency($product->price) ?></span>
+				</p>
+			</div>
+			<?php endforeach; ?>
+		</div>
+		<?php else: ?>
+		<div id="no-result">Chưa có tin đăng theo tìm kiếm của bạn, <a href="#">đăng ký nhận thông báo khi có tin đăng phù hợp</a>.</div>
+		<?php endif; ?>
 	</div>
-	<?php else: ?>
-	<div id="no-result">Chưa có tin đăng theo tìm kiếm của bạn, <a href="#">đăng ký nhận thông báo khi có tin đăng phù hợp</a>.</div>
-	<?php endif; ?>
 	<?php if($pages->page < $pages->pageCount - 1): ?>
 	<div id="item-loading" style="text-align: center;">
 		<img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/loading-listing.gif' ?>" />
