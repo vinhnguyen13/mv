@@ -30,4 +30,8 @@ class ChatController extends Controller
         }
         return $this->render('index2');
     }
+
+    public function actionWith($username){
+        return $this->render('with');
+    }
 }

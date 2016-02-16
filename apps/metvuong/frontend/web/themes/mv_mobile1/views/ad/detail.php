@@ -1,9 +1,10 @@
 <?php 
-	use vsoft\ad\models\AdCategory;
+use vsoft\ad\models\AdCategory;
 use vsoft\ad\models\AdProduct;
 use vsoft\express\components\StringHelper;
 use yii\web\View;
 use frontend\models\User;
+use yii\helpers\Url;
 	
 	$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=loaded', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/detail.js', ['position' => View::POS_END]);
@@ -188,6 +189,8 @@ use frontend\models\User;
 		</div>
 	</div>
 	<div class="attr-detail text-center">
-		<button class="contact-agent">Liên hệ Môi giới</button>
+		<?php if(!empty($owner->username)) { ?>
+			<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" class="contact-agent">Liên hệ Môi giới</a>
+		<?php } ?>
 	</div>
 </div>
