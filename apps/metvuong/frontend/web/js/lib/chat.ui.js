@@ -12,6 +12,12 @@
             }
             return jid_full;
         },
+        usrFromJidResource: function(jid_full_resource) {
+            if(jid_full_resource.indexOf('/'+xmpp_dm)){
+                return jid_full_resource.split('/')[0];
+            }
+            return jid_full_resource;
+        },
         from: null,
         to: null,
         setConservation: function(from, to){
@@ -34,17 +40,21 @@
         getBoxChat: function (from, to) {
             var from = chatUI.usrFromJid(from);
             var to = chatUI.usrFromJid(to);
-            var chatBoxExist1 = $(".chat-group[chat-from='" + from + "'][chat-to='" + to + "']");
-            var chatBoxExist2 = $(".chat-group[chat-from='" + to + "'][chat-to='" + from + "']");
-            if (chatBoxExist1.length > 0) {
-                return chatBoxExist1;
-            }
-            if (chatBoxExist2.length > 0) {
-                return chatBoxExist2;
+            if(from == to){
+                return $(".chat-group[chat-from='" + from + "']");
+            }else{
+                var chatBoxExist1 = $(".chat-group[chat-from='" + from + "'][chat-to='" + to + "']");
+                var chatBoxExist2 = $(".chat-group[chat-from='" + to + "'][chat-to='" + from + "']");
+                if (chatBoxExist1.length > 0) {
+                    return chatBoxExist1;
+                }
+                if (chatBoxExist2.length > 0) {
+                    return chatBoxExist2;
+                }
             }
         },
         appendMessage: function (from, typeMsg, msg) {
-            chatBoxExist = chatUI.getBoxChat(chatUI.usrFromJid(Chat.connection.jid), from);
+            chatBoxExist = chatUI.getBoxChat(Chat.connection.jid, from);
             if(!chatBoxExist){
                 return false;
             }

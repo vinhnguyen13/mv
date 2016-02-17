@@ -112,6 +112,7 @@ Yii::$app->getView()->registerJsFile('/js/lib/chat.js', ['position'=>View::POS_B
 			var msg = chatBoxExist.find('#typingMsg').val();
 			if(key == 13){
 				Chat.sendMessage(to_jid , msg);
+				Chat.sendMessage(chatUI.genJid(xmpp_jid), msg);
 				chatBoxExist.find('#typingMsg').val('');
 			}else{
 				Chat.sendChatState(to_jid, 'composing');
@@ -129,6 +130,7 @@ Yii::$app->getView()->registerJsFile('/js/lib/chat.js', ['position'=>View::POS_B
 			var msg = chatBoxExist.find('#typingMsg').val();
 			if(msg){
 				Chat.sendMessage(to_jid , msg);
+				Chat.sendMessage(chatUI.genJid(xmpp_jid), msg);
 				chatBoxExist.find('#typingMsg').val('');
 			}
 			return false;

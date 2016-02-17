@@ -147,20 +147,20 @@ var Chat = {
         var reply;
         if (messagetype === 'groupchat') {
             reply = $msg({to: messgeTo,
-                          from: Chat.connection.jid,
+                          from: chatUI.usrFromJidResource(Chat.connection.jid),
                           type: messagetype,
                           id: Chat.connection.getUniqueId()
             }).c("body", {xmlns: Strophe.NS.CLIENT}).t(message);
         }
         else{
             reply = $msg({to: messgeTo,
-                          from: Chat.connection.jid,
+                          from: chatUI.usrFromJidResource(Chat.connection.jid),
                           type: messagetype
             }).c("body").t(message);
         }
         Chat.connection.send(reply.tree());
         Chat.log('I sent ' + messgeTo + ': ' + message, reply.tree());
-        chatUI.appendMessage(messgeTo, 1, message);
+        //chatUI.appendMessage(messgeTo, 1, message);
         /**save message**/
         if(Chat.sttSaveMsg){
             Chat.connection.send($iq({type: 'set', id: 'autoSave'}).c('auto', {
