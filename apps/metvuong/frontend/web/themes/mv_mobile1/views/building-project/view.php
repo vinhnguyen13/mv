@@ -197,8 +197,12 @@ $count_facilities = count($facilities);
     function initMap() {
         var mapLatLng = {lat: <?=$model->lat?>, lng: <?=$model->lng?>};
         var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 15,
-            center: mapLatLng
+            zoom: 16,
+            center: mapLatLng,
+            draggable: false,
+            mapTypeControl: false,
+            zoomControl: false,
+            streetViewControl: false
         });
 
         var contentString = '<b><?=strtoupper($model->name)?></b>';

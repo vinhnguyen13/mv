@@ -334,11 +334,12 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
         $('#avatar').on('hidden.bs.modal', function () {
             var url = $('.files .name a').attr("href");
             if(url == null || url == '')
-                url = '/images/default-avatar.jpg';
+                url = '/store/avatar/default-avatar.jpg';
             $('#headAvatar').attr("src", url);
             $('.avatar img').attr("src", url);
+            $('.user-edit img').attr("src", url);
         });
-        
+
         var username = '<?=Yii::$app->user->identity->username?>';
         var paramUsername = '<?=$username?>';
 

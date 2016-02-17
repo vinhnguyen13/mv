@@ -22,7 +22,7 @@ class FileUploadAvatar extends FU {
 			'previewMinHeight' => 120,
 			'previewMaxWidth' => 120,
 			'previewMaxHeight' => 120,
-			'disableExitThumbnail' => false,
+			'disableExifThumbnail' => true,
 			'formData' => [],
 		];
 		$fieldOptions = ['name' => 'upload'];
