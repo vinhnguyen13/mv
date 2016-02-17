@@ -19,7 +19,7 @@ class ChatController extends Controller
         $this->view->params['noFooter'] = true;
         return parent::beforeAction($action);
     }
-    
+
     public function init()
     {
         parent::init();

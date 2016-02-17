@@ -35,7 +35,7 @@ Yii::$app->getView()->registerJsFile('/js/lib/chat.js', ['position'=>View::POS_B
 <!--chat script-->
 <script id="chat-send-template" type="text/x-handlebars-template">
 	<div class="item box-me">
-		<a href="#" class="avatar wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.png' ?>" alt=""></a>
+		<a href="#" class="avatar wrap-img"><img src="{{avatarUrl}}" alt=""></a>
 		<div class="chat-txt">
 			<div class="txt-detail">
 				<p>{{msg}}</p>
@@ -46,7 +46,7 @@ Yii::$app->getView()->registerJsFile('/js/lib/chat.js', ['position'=>View::POS_B
 </script>
 <script id="chat-receive-template" type="text/x-handlebars-template">
 	<div class="item box-you">
-		<a href="#" class="avatar wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/MV-Agent Photo.jpg' ?>" alt=""></a>
+		<a href="#" class="avatar wrap-img"><img src="{{avatarUrl}}" alt=""></a>
 		<div class="chat-txt">
 			<div class="txt-detail">
 				<p>{{msg}}</p>

@@ -50,7 +50,7 @@
             }
             if(typeMsg == 1){
                 var template = Handlebars.compile($("#chat-send-template").html());
-                var html = template({msg: msg});
+                var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(xmpp_jid)+'/avatar'});
             }else if(typeMsg == 2){
                 var template = Handlebars.compile($("#chat-receive-template").html());
                 var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(from)+'/avatar'});
