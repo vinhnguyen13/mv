@@ -535,7 +535,7 @@ header {
     margin-bottom: 10px;
 }
 .infor-agent {
-    width: 55%;
+    width: 44%;
     margin: 20px auto 15px;
 }
 .infor-agent .wrap-img {
@@ -1937,11 +1937,14 @@ label {
     font-weight: 600;
     position: relative;
 }
+#settings-user li.user-edit a {
+    color: #009544;
+}
 #avatar-user span,
 #settings-user li a span {
     position: absolute;
-    top: 4px;
-    left: 10px;
+    top: 7px;
+    left: 13px;
     background: #FF4E16;
     color: #fff;
     line-height: 100%;
@@ -1988,8 +1991,11 @@ label {
     width: 100%;
 }
 #settings-user li a em {
-    margin-right: 15px;
-    font-size: 1.2em;
+    margin-right: 20px;
+    font-size: 1.6em;
+    color: #009544;
+    position: relative;
+    top: 3px;
 }
 #avatar-user span {
     top: -3px;
@@ -2096,7 +2102,7 @@ footer {
 }
 .wrap-list-duan .intro-detail .icon-edit {
     position: absolute;
-    top: 5px;
+    top: 0px;
     right: 0;
 }
 .wrap-list-duan .intro-detail .name-duan {

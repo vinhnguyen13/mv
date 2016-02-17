@@ -25,7 +25,7 @@
 </section>
 <section class="search-home">
     <div class="txt-intro">
-        <h2>Chúng tôi sẽ giúp bạn tìm được ngôi nhà mà mình mong muốn trong chôc lát</h2>
+        <h2>Chúng tôi sẽ giúp bạn tìm được ngôi nhà mà mình mong muốn trong chốc lát</h2>
         <p>Mét Vuông cung cấp lên đến hàng chục ngàn các căn hộ cao cấp, nhà riêng và biệt thự cho thuê hoặc đang rao bán tại hầu hết các tỉnh thành trên cả nước. Thông qua những mô tả chi tiết và hình ảnh chân thật, chúng tôi cam kết giúp khách hàng tìm được sản phẩm phù hợp nhất, một cách nhanh chóng và hiệu quả.</p>
     </div>
 </section>
