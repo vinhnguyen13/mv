@@ -46,16 +46,6 @@ header {
     background-size: cover;
     position: relative;
 }
-.search-box:after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.32);
-    top: 0;
-    left: 0;
-    z-index: 1;
-}
 .logo {
     text-align: center;
     height: 100%;
@@ -97,7 +87,7 @@ header {
     margin-bottom: 10px;
 }
 .search-homepage > ul li a {
-    background: rgba(0, 0, 0, 0.44);
+    background: rgba(0, 0, 0, 0.6);
     display: block;
     font-size: 1.1em;
     color: #FFFFFF;
@@ -2498,4 +2488,35 @@ input[type=text]:focus {
 }
 .statis .panel-heading .panel-title a {
     background: none;
+}
+.statis .panel-default>.panel-heading+.panel-collapse>.panel-body {
+    border: none;
+}
+.statis .panel-heading em {
+    color: #119e52;
+    font-size: 22px;
+    margin-right: 10px;
+    position: relative;
+    top: 4px;
+}
+.statis .panel-body .list-item {
+    padding: 0 20px;
+}
+.statis .panel-body .list-item em {
+    color: #d8d8d8;
+    font-size: 25px;
+    margin-right: 15px;
+    position: relative;
+    top: 3px;
+}
+.statis .panel-body .list-item li {
+    margin-bottom: 10px;
+}
+.statis .panel-body .list-item a {
+    font-size: 1.1em;
+    color: #000;
+}
+.statis .panel-body .list-item span {
+    color: #119e52;
+    font-weight: 700;
 }

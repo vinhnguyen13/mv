@@ -29,7 +29,20 @@ use yii\helpers\Url;
 			</div>
 			<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 				<div class="panel-body">
-					
+					<ul class="clearfix list-item">
+						<li>
+							<em class="fa fa-circle"></em><a href="#">James Bond</a>
+							<span class="pull-right">7</span>
+						</li>
+						<li>
+							<em class="fa fa-circle"></em><a href="#">James Bond</a>
+							<span class="pull-right">7</span>
+						</li>
+						<li>
+							<em class="fa fa-circle"></em><a href="#">James Bond</a>
+							<span class="pull-right">7</span>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
