@@ -87,7 +87,6 @@ var Chat = {
     messages : [],
     chatStates:{},
     receiveMessage : function(msg){
-        Chat.log("message received: ",msg);
         var to = msg.getAttribute('to');
         var from = msg.getAttribute('from');
         var type = msg.getAttribute('type');
@@ -131,15 +130,19 @@ var Chat = {
                 'message': Strophe.getText(body)
             }
             Chat.messages.push(messageInfo);
-            chatUI.appendMessage(from, 2, Strophe.getText(body));
-            chatUI.typingMessage(from, 1);
+            if(msg.getElementsByTagName('params').length){
+                var params = msg.getElementsByTagName('params')[0];
+                var type = (Strophe.getBareJidFromJid(from) == Strophe.getBareJidFromJid(to)) ? 1 : 2;
+                chatUI.appendMessage(params.getAttribute('from'), params.getAttribute('to'), Strophe.getText(body), type);
+                chatUI.typingMessage(from, 1);
+            }
         }
         // we must return true to keep the handler alive.
         // returning false would remove it after it finishes.
         return true;
     },
     sttSaveMsg: false,
-    sendMessage : function(messgeTo,message,type){
+    sendMessage : function(messgeTo,message,type,params){
         if(message.length <= 0){
             return false;
         }
@@ -147,22 +150,24 @@ var Chat = {
         var reply;
         if (messagetype === 'groupchat') {
             reply = $msg({to: messgeTo,
-                          from: chatUI.usrFromJidResource(Chat.connection.jid),
+                          from: Strophe.getBareJidFromJid(Chat.connection.jid),
                           type: messagetype,
                           id: Chat.connection.getUniqueId()
             }).c("body", {xmlns: Strophe.NS.CLIENT}).t(message);
         }
         else{
             reply = $msg({to: messgeTo,
-                          from: chatUI.usrFromJidResource(Chat.connection.jid),
+                          from: Strophe.getBareJidFromJid(Chat.connection.jid),
                           type: messagetype
             }).c("body").t(message);
+            if(params){
+                reply.up().c("params", {from: params.from, to: params.to});
+            }
         }
         Chat.connection.send(reply.tree());
         Chat.log('I sent ' + messgeTo + ': ' + message, reply.tree());
-        //chatUI.appendMessage(messgeTo, 1, message);
         /**save message**/
-        if(Chat.sttSaveMsg){
+        if(Chat.sttSaveMsg == true){
             Chat.connection.send($iq({type: 'set', id: 'autoSave'}).c('auto', {
                 save: 'true',
                 xmlns: 'urn:xmpp:archive'

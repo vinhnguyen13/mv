@@ -40,34 +40,27 @@
         getBoxChat: function (from, to) {
             var from = chatUI.usrFromJid(from);
             var to = chatUI.usrFromJid(to);
-            if(from == to){
-                return $(".chat-group[chat-from='" + from + "']");
-            }else{
-                var chatBoxExist1 = $(".chat-group[chat-from='" + from + "'][chat-to='" + to + "']");
-                var chatBoxExist2 = $(".chat-group[chat-from='" + to + "'][chat-to='" + from + "']");
-                if (chatBoxExist1.length > 0) {
-                    return chatBoxExist1;
-                }
-                if (chatBoxExist2.length > 0) {
-                    return chatBoxExist2;
-                }
+            var chatBoxExist1 = $(".chat-group[chat-from='" + from + "'][chat-to='" + to + "']");
+            var chatBoxExist2 = $(".chat-group[chat-from='" + to + "'][chat-to='" + from + "']");
+            if (chatBoxExist1.length > 0) {
+                return chatBoxExist1;
+            }
+            if (chatBoxExist2.length > 0) {
+                return chatBoxExist2;
             }
         },
-        appendMessage: function (from, typeMsg, msg) {
-            chatBoxExist = chatUI.getBoxChat(Chat.connection.jid, from);
+        appendMessage: function (from, to, msg, type) {
+            chatBoxExist = chatUI.getBoxChat(from, to);
             if(!chatBoxExist){
                 return false;
             }
+            console.log(type);
             var from = chatUI.usrFromJid(from);
-            var to = chatUI.usrFromJid(Chat.connection.jid);
-            if(from == to){
-                typeMsg = 1;
-            }
-
-            if(typeMsg == 1){
+            var to = chatUI.usrFromJid(to);
+            if(type == 1){
                 var template = Handlebars.compile($("#chat-send-template").html());
                 var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(xmpp_jid)+'/avatar'});
-            }else if(typeMsg == 2){
+            }else if(type == 2){
                 var template = Handlebars.compile($("#chat-receive-template").html());
                 var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(from)+'/avatar'});
             }else{
