@@ -19,19 +19,16 @@ if(!empty($jid_id)){
 		if(!empty($msgs)) {
 			foreach($msgs as $msg){
 				if($msg['owner_id'] == $jid_id['jid_id']){
-					$jid_user = Yii::$app->dbChat->cache(function ($db) use ($msg) {
-						return Yii::$app->dbChat->createCommand('SELECT jid FROM tig_ma_jids tmj WHERE jid_id=:jid_id')->bindValues([':jid_id'=>$msg['buddy_id']])->queryOne();
+					$jid_user = Yii::$app->get('dbChat')->cache(function ($db) use ($msg) {
+						return Yii::$app->get('dbChat')->createCommand('SELECT jid FROM tig_ma_jids tmj WHERE jid_id=:jid_id')->bindValues([':jid_id'=>$msg['buddy_id']])->queryOne();
 					});
 				}else{
-					$jid_user = Yii::$app->dbChat->cache(function ($db) use ($msg) {
-						return Yii::$app->dbChat->createCommand('SELECT jid FROM tig_ma_jids tmj WHERE jid_id=:jid_id')->bindValues([':jid_id'=>$msg['owner_id']])->queryOne();
+					$jid_user = Yii::$app->get('dbChat')->cache(function ($db) use ($msg) {
+						return Yii::$app->get('dbChat')->createCommand('SELECT jid FROM tig_ma_jids tmj WHERE jid_id=:jid_id')->bindValues([':jid_id'=>$msg['owner_id']])->queryOne();
 					});
 				}
 				if(!empty($jid_user['jid'])){
 					$username = Chat::find()->getUsername($jid_user['jid']);
-//					$user = \frontend\models\User::getDb()->cache(function ($db) use ($username) {
-//						return \frontend\models\User::find()->where(['username' => $username])->one();
-//					});
 					$user = \frontend\models\User::find()->where(['username' => $username])->one();
 				}
 				if(!empty($user->profile)){
