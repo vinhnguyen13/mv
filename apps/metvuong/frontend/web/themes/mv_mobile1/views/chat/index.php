@@ -35,7 +35,7 @@ if(!empty($jid_id)){
 			?>
 					<div class="item">
 						<a href="<?= Url::to(['/chat/with', 'username' => $user->username]) ?>">
-							<span class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg' ?>" alt=""></span>
+							<span class="wrap-img"><img src="<?=$user->profile->getAvatarUrl();?>" alt=""></span>
 							<div class="chat-detail">
 								<span class="pull-right time-chat"><?=$msg['ts'];?></span>
 								<span class="name"><?=$user->profile->getDisplayName();?></span>
