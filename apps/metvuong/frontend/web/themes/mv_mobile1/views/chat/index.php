@@ -29,11 +29,12 @@ if(!empty($jid_id)){
 				}
 				if(!empty($jid_user['jid'])){
 					$username = Chat::find()->getUsername($jid_user['jid']);
-					$user = \frontend\models\User::getDb()->cache(function ($db) use ($username) {
-						return \frontend\models\User::find()->where(['username' => $username])->one();
-					});
+//					$user = \frontend\models\User::getDb()->cache(function ($db) use ($username) {
+//						return \frontend\models\User::find()->where(['username' => $username])->one();
+//					});
+					$user = \frontend\models\User::find()->where(['username' => $username])->one();
 				}
-				if(!empty($user->profile) && !empty($user->profile->getDisplayName())){
+				if(!empty($user->profile)){
 			?>
 					<div class="item">
 						<a href="<?= Url::to(['/chat/with', 'username' => $user->username]) ?>">
