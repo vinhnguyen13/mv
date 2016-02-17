@@ -7,7 +7,7 @@ $params = [':jid' => Chat::find()->getJid(Yii::$app->user->identity->username)];
 $jid_id = Yii::$app->dbChat->createCommand('SELECT jid_id FROM tig_ma_jids tmj WHERE jid=:jid')->bindValues($params)->queryOne();
 if(!empty($jid_id)){
 	$sql = 'SELECT tbl.* '.
-		'FROM (SELECT owner_id, buddy_id, ts, body, direction, CONCAT(owner_id, "_",buddy_id) as groupchat FROM tig_ma_msgs tmm WHERE owner_id=:jid_id OR buddy_id=:jid_id ORDER BY ts DESC) as tbl '.
+		'FROM (SELECT owner_id, buddy_id, ts, body, direction, CONCAT(owner_id, "_",buddy_id) as groupchat FROM tig_ma_msgs tmm WHERE (owner_id=:jid_id OR buddy_id=:jid_id) AND (owner_id != buddy_id) ORDER BY ts DESC) as tbl '.
 		'GROUP BY tbl.groupchat';
 	$msgs = Yii::$app->dbChat->createCommand($sql)->bindValues([':jid_id'=>$jid_id['jid_id']])->queryAll();
 }
