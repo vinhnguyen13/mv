@@ -3,9 +3,12 @@
 namespace frontend\controllers;
 use frontend\components\Controller;
 use Yii;
+use yii\base\Event;
+use yii\base\ViewEvent;
 use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;
+use yii\web\View;
 
 class ChatController extends Controller
 {
@@ -16,18 +19,18 @@ class ChatController extends Controller
         $this->view->params['noFooter'] = true;
         return parent::beforeAction($action);
     }
+    
+    public function init()
+    {
+        parent::init();
+        $this->checkAccess();
+    }
 
     public function actionIndex(){
-        if(Yii::$app->user->isGuest) {
-            return $this->render('/_systems/require_login');
-        }
         return $this->render('index');
     }
 
     public function actionIndex2(){
-        if(Yii::$app->user->isGuest) {
-            return $this->render('/_systems/require_login');
-        }
         return $this->render('index2');
     }
 

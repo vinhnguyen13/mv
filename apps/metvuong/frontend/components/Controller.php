@@ -19,4 +19,12 @@ class Controller extends \yii\web\Controller
         }
         return parent::beforeAction($action);
     }
+
+    protected function checkAccess()
+    {
+        if(Yii::$app->user->isGuest) {
+            $this->redirect('/member/login');
+        }
+        return true;
+    }
 }
