@@ -1979,6 +1979,10 @@ label {
 }
 #settings-user .user-edit .name-user {
     font-weight: 700;
+    width: 100%;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
 }
 #settings-user .user-edit .address {
     font-size: .7em;
