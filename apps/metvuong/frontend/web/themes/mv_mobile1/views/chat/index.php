@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Url;
-use vsoft\chat\models\base\TigMaMsgs;
 use frontend\models\Chat;
+Chat::find()->getKey();
 
 $params = [':jid' => Chat::find()->getJid(Yii::$app->user->identity->username)];
 $jid_id = Yii::$app->dbChat->createCommand('SELECT jid_id FROM tig_ma_jids tmj WHERE jid=:jid')->bindValues($params)->queryOne();
