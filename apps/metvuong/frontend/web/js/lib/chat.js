@@ -113,10 +113,10 @@ var Chat = {
             Chat.log("Sender is Paused");
             Chat.chatStates[from] = "paused";
         }
-        else if(msg.getElementsByTagName('active').length){
+        /*else if(msg.getElementsByTagName('active').length){
             Chat.log("Sender is Active");
             Chat.chatStates[from] = "active" ;
-        }
+        }*/
         else if(msg.getElementsByTagName('composing').length){
             Chat.log("Sender is composing");
             Chat.chatStates[from] = "composing"
@@ -131,7 +131,6 @@ var Chat = {
                 'message': Strophe.getText(body)
             }
             Chat.messages.push(messageInfo);
-            chatUI.showBoxChat(to, from);
             chatUI.appendMessage(from, 2, Strophe.getText(body));
             chatUI.typingMessage(from, 1);
         }

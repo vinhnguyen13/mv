@@ -19,7 +19,6 @@
             chatUI.to = to;
         },
         showBoxChat: function (from, to) {
-            chatUI.onlineList();
             var from = chatUI.usrFromJid(from);
             var to = chatUI.usrFromJid(to);
             var template = Handlebars.compile($("#chat-box-template").html());
