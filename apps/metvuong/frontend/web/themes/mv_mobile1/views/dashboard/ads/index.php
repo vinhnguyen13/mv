@@ -15,56 +15,64 @@ use yii\helpers\Url;
 		<ul class="clearfix">
 			<li>
 				<div class="img-intro pull-left">
-					<div class="bgcover" style="background-image:url(<?= Yii::$app->view->theme->baseUrl . '/resources/images/img-duan-demo.jpg' ?>);"><a href="#"></a></div>
+					<div class="bgcover" style="background-image:url(<?= Yii::$app->view->theme->baseUrl . '/resources/images/img-duan-demo.jpg' ?>);"><a href="<?=Url::to(['/dashboard/statistics'])?>"></a></div>
 					<a href="<?=Url::to(['/dashboard/statistics'])?>"><em class="icon-bar-chart"></em>View Stats</a>
+					<a class="active-pro" href="#"><em class="fa fa-check"></em>Active Project</a>
 				</div>
 				<div class="intro-detail">
 					<a href="#" class="icon-edit icon"></a>
 					<div class="name-duan">
-						<p class="name">Lancaster X</p>
-						<p class="loca-duan"><em class="icon-pointer"></em> Ho Chi Minh</p>
+						<p class="name"><a href="<?=Url::to(['/dashboard/statistics'])?>">Lancaster X</a></p>
+						<p class="date-post">Ngày đăng tin: 12/02/2016</p>
+						<p class="loca-duan"><em class="icon-pointer"></em> Quận 4, Ho Chi Minh</p>
 					</div>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud...</p>
 				</div>
 			</li>
 			<li>
 				<div class="img-intro pull-left">
-					<div class="bgcover" style="background-image:url(<?= Yii::$app->view->theme->baseUrl . '/resources/images/img-duan-demo.jpg' ?>);"><a href="#"></a></div>
+					<div class="bgcover" style="background-image:url(<?= Yii::$app->view->theme->baseUrl . '/resources/images/img-duan-demo.jpg' ?>);"><a href="<?=Url::to(['/dashboard/statistics'])?>"></a></div>
 					<a href="<?=Url::to(['/dashboard/statistics'])?>"><em class="icon-bar-chart"></em>View Stats</a>
+					<a class="unactive-pro" href="#"><em class="fa fa-close"></em> Inactive Project</a>
 				</div>
 				<div class="intro-detail">
 					<a href="#" class="icon-edit icon"></a>
 					<div class="name-duan">
-						<p class="name">Lancaster X</p>
-						<p class="loca-duan"><em class="icon-pointer"></em> Ho Chi Minh</p>
+						<p class="name"><a href="<?=Url::to(['/dashboard/statistics'])?>">Lancaster X</a></p>
+						<p class="date-post">Ngày đăng tin: 12/02/2016</p>
+						<p class="loca-duan"><em class="icon-pointer"></em> Quận 4, Ho Chi Minh</p>
 					</div>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud...</p>
 				</div>
 			</li>
 			<li>
 				<div class="img-intro pull-left">
-					<div class="bgcover" style="background-image:url(<?= Yii::$app->view->theme->baseUrl . '/resources/images/img-duan-demo.jpg' ?>);"><a href="#"></a></div>
+					<div class="bgcover" style="background-image:url(<?= Yii::$app->view->theme->baseUrl . '/resources/images/img-duan-demo.jpg' ?>);"><a href="<?=Url::to(['/dashboard/statistics'])?>"></a></div>
 					<a href="<?=Url::to(['/dashboard/statistics'])?>"><em class="icon-bar-chart"></em>View Stats</a>
+					<a class="active-pro" href="#"><em class="fa fa-check"></em>Active Project</a>
 				</div>
 				<div class="intro-detail">
 					<a href="#" class="icon-edit icon"></a>
 					<div class="name-duan">
-						<p class="name">Lancaster X</p>
-						<p class="loca-duan"><em class="icon-pointer"></em> Ho Chi Minh</p>
+						<p class="name"><a href="<?=Url::to(['/dashboard/statistics'])?>">Lancaster X</a></p>
+						<p class="date-post">Ngày đăng tin: 12/02/2016</p>
+						<p class="loca-duan"><em class="icon-pointer"></em> Quận 4, Ho Chi Minh</p>
 					</div>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud...</p>
 				</div>
 			</li>
 			<li>
 				<div class="img-intro pull-left">
-					<div class="bgcover" style="background-image:url(<?= Yii::$app->view->theme->baseUrl . '/resources/images/img-duan-demo.jpg' ?>);"><a href="#"></a></div>
+					<div class="bgcover" style="background-image:url(<?= Yii::$app->view->theme->baseUrl . '/resources/images/img-duan-demo.jpg' ?>);"><a href="<?=Url::to(['/dashboard/statistics'])?>"></a></div>
 					<a href="<?=Url::to(['/dashboard/statistics'])?>"><em class="icon-bar-chart"></em>View Stats</a>
+					<a class="unactive-pro" href="#"><em class="fa fa-close"></em> Inactive Project</a>
 				</div>
 				<div class="intro-detail">
 					<a href="#" class="icon-edit icon"></a>
 					<div class="name-duan">
-						<p class="name">Lancaster X</p>
-						<p class="loca-duan"><em class="icon-pointer"></em> Ho Chi Minh</p>
+						<p class="name"><a href="<?=Url::to(['/dashboard/statistics'])?>">Lancaster X</a></p>
+						<p class="date-post">Ngày đăng tin: 12/02/2016</p>
+						<p class="loca-duan"><em class="icon-pointer"></em> Quận 4, Ho Chi Minh</p>
 					</div>
 					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud...</p>
 				</div>
