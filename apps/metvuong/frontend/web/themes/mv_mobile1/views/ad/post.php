@@ -263,27 +263,6 @@
 			hiddenFillValue: '#sort'
 		});
 
-		$('.fillter-fast').dropdown({
-			hiddenFillValue: '#quan-huyen',
-			styleShow: 0
-		});
-		
-		$('.num-phongngu').dropdown({
-			txtAdd: true,
-			styleShow: 0,
-			hiddenFillValue: '#val-bed'
-		});
-		
-		$('.num-phongtam').dropdown({
-			txtAdd: true,
-			styleShow: 0,
-			hiddenFillValue: '#val-bath'
-		});
-
-		$('.search-subpage').toggleShowMobi();
-		
-		$('.choice_price_dt').price_dt();
-
 		$('.frm-radio').radio({
 			done: function (item) {
 				/*if ( item.attr('name') == 'agent' ) {

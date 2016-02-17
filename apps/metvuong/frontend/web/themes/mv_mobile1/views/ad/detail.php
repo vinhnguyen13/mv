@@ -28,14 +28,14 @@ use yii\helpers\Url;
 		if($images):
 	?>
 	<div class="gallery-detail swiper-container">
+		<ul class="clearfix icons-detail">
+			<li><a href="#" class=""><span class="icon icon-loca"></span></a></li>
+			<li><a href="#" class=""><span class="icon icon-fave"></span></a></li>
+		</ul>
 		<div class="swiper-wrapper">
 			<?php foreach ($images as $image): ?>
 			<div class="swiper-slide">
 				<div class="bgcover" style="background-image: url(<?= $image->imageMedium ?>)"></div>
-				<ul class="clearfix">
-					<li><a href="#" class=""><span class="icon icon-loca"></span></a></li>
-					<li><a href="#" class=""><span class="icon icon-fave"></span></a></li>
-				</ul>
 			</div>
 			<?php endforeach; ?>
 		</div>
@@ -56,9 +56,7 @@ use yii\helpers\Url;
 	<div class="attr-detail">
 		<div class="title-attr-listing">Diễn tả chi tiết</div>
 		<p><?= $product->content ?></p>
-		<div class="text-right see-more-listing">
-			<a href="#">Xem thêm</a>
-		</div>
+		
 	</div>
 	<div class="attr-detail">
 		<div class="title-attr-listing">Thông tin chi tiết</div>
@@ -74,9 +72,7 @@ use yii\helpers\Url;
 		<?php if($product->adProductAdditionInfo->floor_no): ?>
 		<p>Tầng cao: <?= $product->adProductAdditionInfo->floor_no ?>  Tầng</p>
 		<?php endif; ?>
-		<div class="text-right see-more-listing">
-			<a href="#">Xem thêm</a>
-		</div>
+		
 	</div>
 	<div class="attr-detail">
 		<div class="title-attr-listing">Tiện ích (6)</div>
@@ -86,9 +82,7 @@ use yii\helpers\Url;
 		<p>Tennis Court</p>
 		<p>24/7 Bảo Vệ</p>
 		<p>Gym</p>
-		<div class="text-right see-more-listing">
-			<a href="#">Xem thêm</a>
-		</div>
+		
 	</div>
 	<div class="attr-detail">
 		<div class="title-attr-listing">Địa điểm</div>
@@ -175,7 +169,7 @@ use yii\helpers\Url;
 				<div>
 					<span class="icon"></span>
 				</div>
-				<?= $product->adContactInfo->mobile ?>
+				<a href="tel:<?= $product->adContactInfo->mobile ?>"><?= $product->adContactInfo->mobile ?></a>
 			</div>
 			<?php endif; ?>
 			<?php if($product->adContactInfo->email): ?>

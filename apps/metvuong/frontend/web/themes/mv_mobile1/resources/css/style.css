@@ -443,19 +443,20 @@ header {
 .gallery-detail .swiper-slide .bgcover {
     height: 100%;
 }
-.gallery-detail .swiper-slide ul {
+.icons-detail {
     position: absolute;
     bottom: 12px;
     left: 15px;
+    z-index: 5;
 }
-.gallery-detail .swiper-slide li {
+.icons-detail li {
     float: left;
     margin-right: 10px;
 }
-.gallery-detail .swiper-slide li:last-child {
+.icons-detail li:last-child {
     margin-right: 0;
 }
-.gallery-detail .swiper-slide a {
+.icons-detail a {
     display: block;
     background: rgba(0, 0, 0, 0.52);
     padding: 6px 0 3px;
@@ -628,6 +629,9 @@ label {
     margin-bottom: 10px;
     float: left;
     width: 100%;
+}
+.phone-agent a {
+    color: #333;
 }
 .id-agent span {
     background-position: -64px -1px;
@@ -1317,7 +1321,7 @@ label {
 }
 .advande-search {
     /* display: none; */
-    padding-top: 5px;
+    /* padding-top: 5px; */
 }
 .section {
     top: 80px;
@@ -1754,11 +1758,11 @@ label {
 .filter-minmax  li a {
     display: block;
     font-size: 1.3em;
-    padding: 6px 15px;
+    padding: 4px 15px;
     color: #333;
 }
 .filter-minmax ul {
-    padding: 10px 0;
+    padding: 5px 0;
     display: none;
 }
 .filter-minmax ul[data-wrap-minmax=max-val] a {
@@ -1816,8 +1820,8 @@ label {
     margin: 10px 0 0 0px;
 }
 .fillter-fast .val-selected {
-    height: 50px;
-    line-height: 46px;
+    height: 40px;
+    line-height: 37px;
 }
 .fillter-fast .val-selected .selected {
     color: #4A4A4A;
@@ -1836,7 +1840,7 @@ label {
     -ms-box-shadow: 0px 10px 10px -10px black;
 }
 .fillter-fast .dropdown-up-style {
-    top: 65px;
+    top: 44px;
 }
 .fillter-fast .item-dropdown li {
     float: left;
@@ -2014,6 +2018,10 @@ footer .col-xs-6 {
 footer .col-xs-6 > div {
     float: left;
     margin-left: 5px;
+}
+footer .col-xs-6 > div a {
+    font-weight: 700;
+    color: #333;
 }
 footer li:last-child {
     border-top: 1.5px solid #9A9191;
@@ -2437,4 +2445,9 @@ html.mm-opening .mm-slideout {
 .container-chat .item.box-you .chat-txt:after {
     left: inherit;
     right: 8px;
+}
+.filter-minmax {
+    height: 150px;
+    overflow-x: hidden;
+    overflow-y: auto;
 }

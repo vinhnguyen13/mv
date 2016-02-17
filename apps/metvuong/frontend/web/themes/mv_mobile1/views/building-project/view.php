@@ -15,6 +15,10 @@ $count_facilities = count($facilities);
 
 <div class="detail-listing">
     <div class="gallery-detail swiper-container">
+        <ul class="clearfix icons-detail">
+            <li><a href="#" class=""><span class="icon icon-loca"></span></a></li>
+            <li><a href="#" class=""><span class="icon icon-fave"></span></a></li>
+        </ul>
         <div class="swiper-wrapper">
             <?php
             $gallery = explode(',', $model->gallery);
@@ -34,10 +38,6 @@ $count_facilities = count($facilities);
                 <div class="swiper-slide">
                     <div class="bgcover"
                          style="background-image:url(<?= Yii::$app->view->theme->baseUrl."/resources/images/img-duan-demo.jpg" ?>)"></div>
-                    <ul class="clearfix">
-                        <li><a href="#diadiem"><span class="icon icon-loca"></span></a></li>
-                        <li><a href="#"><span class="icon icon-fave"></span></a></li>
-                    </ul>
                 </div>
             <?php }  ?>
         </div>

@@ -13,7 +13,7 @@
 			</ul>
 		</div>
 		<div class="pull-left col-xs-6">
-  			<em class="icon-call-out"></em> <div><strong>(08) 123 456</strong> hoặc </div><div><strong>0908 123 456</strong></div>
+  			<em class="icon-call-out"></em> <div><a href="tel:08123456">(08) 123 456</a> hoặc </div><div><a href="tel:0908123456">0908 123 456</a></div>
 		</div>
 		<div class="pull-right col-xs-6">
   			<em class="fa fa-envelope-o"></em><div><strong>info@metvuong.com</strong></div>
