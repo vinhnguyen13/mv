@@ -313,6 +313,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                                     'imageMaxHeight' => 800,
                                     'disableImageResize' => false,
                                     'imageCrop' => true,
+                                    'noAvatar' => file_exists($avatar) ? true : false,
                                 ],
                                 'fieldOptions' => ['folder' => 'avatar'],
                             ])->label(false) ?>

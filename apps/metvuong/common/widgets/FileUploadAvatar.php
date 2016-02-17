@@ -22,7 +22,7 @@ class FileUploadAvatar extends FU {
 			'previewMinHeight' => 120,
 			'previewMaxWidth' => 120,
 			'previewMaxHeight' => 120,
-			'disableExifThumbnail' => true,
+			'disableExifThumbnail' => false,
 			'formData' => [],
 		];
 		$fieldOptions = ['name' => 'upload'];
@@ -43,6 +43,39 @@ class FileUploadAvatar extends FU {
 			$this->fieldOptions['multiple'] = false;
 		}
 	}
+
+    public function run()
+    {
+        echo $this->render($this->uploadTemplateView);
+        echo $this->render($this->downloadTemplateView);
+        echo $this->render($this->formView);
+
+        if ($this->gallery) {
+            echo $this->render($this->galleryTemplateView);
+        }
+
+        $this->registerClientScript();
+    }
+
+    public function registerClientScriptNoAvatar()
+    {
+        $view = $this->getView();
+
+        $view->registerJsFile(\Yii::getAlias('@web') . '/js/upload.js', ['depends' => ['yii\web\YiiAsset']]);
+        $view->registerCssFile(\Yii::getAlias('@web') . '/css/upload.css', ['depends' => ['yii\bootstrap\BootstrapAsset']]);
+
+        parent::registerClientScript();
+
+        $id = $this->options['id'];
+        $fieldVar = $this->attribute . 'upload';
+
+        $field = $this->attribute;
+        if($this->model) {
+            $values = $this->model->$field;
+        } else {
+            $values = $this->fieldOptions['values'];
+        }
+    }
 	
 	/**
      * Registers required script for the plugin to work as jQuery File Uploader UI
@@ -69,8 +102,8 @@ class FileUploadAvatar extends FU {
 		$values = array_filter(explode(',', $values));
 		
 		$folder = isset($this->fieldOptions['folder']) ? $this->fieldOptions['folder'] : 'avatar';
-		
-		if($values) {
+
+		if($values && $values[0] != 'default-avatar.jpg') {
 			$files = [];
 			foreach ($values as $value) {
 				$pathInfo = pathinfo($value);
