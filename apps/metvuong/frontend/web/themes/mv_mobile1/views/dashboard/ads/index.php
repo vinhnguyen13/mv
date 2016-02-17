@@ -16,7 +16,7 @@ use yii\helpers\Url;
 			<li>
 				<div class="img-intro pull-left">
 					<div class="bgcover" style="background-image:url(<?= Yii::$app->view->theme->baseUrl . '/resources/images/img-duan-demo.jpg' ?>);"><a href="#"></a></div>
-					<a href="#"><em class="icon-bar-chart"></em>View Stats</a>
+					<a href="<?=Url::to(['/dashboard/statistics'])?>"><em class="icon-bar-chart"></em>View Stats</a>
 				</div>
 				<div class="intro-detail">
 					<a href="#" class="icon-edit icon"></a>
@@ -30,7 +30,7 @@ use yii\helpers\Url;
 			<li>
 				<div class="img-intro pull-left">
 					<div class="bgcover" style="background-image:url(<?= Yii::$app->view->theme->baseUrl . '/resources/images/img-duan-demo.jpg' ?>);"><a href="#"></a></div>
-					<a href="#"><em class="icon-bar-chart"></em>View Stats</a>
+					<a href="<?=Url::to(['/dashboard/statistics'])?>"><em class="icon-bar-chart"></em>View Stats</a>
 				</div>
 				<div class="intro-detail">
 					<a href="#" class="icon-edit icon"></a>
@@ -44,7 +44,7 @@ use yii\helpers\Url;
 			<li>
 				<div class="img-intro pull-left">
 					<div class="bgcover" style="background-image:url(<?= Yii::$app->view->theme->baseUrl . '/resources/images/img-duan-demo.jpg' ?>);"><a href="#"></a></div>
-					<a href="#"><em class="icon-bar-chart"></em>View Stats</a>
+					<a href="<?=Url::to(['/dashboard/statistics'])?>"><em class="icon-bar-chart"></em>View Stats</a>
 				</div>
 				<div class="intro-detail">
 					<a href="#" class="icon-edit icon"></a>
@@ -58,7 +58,7 @@ use yii\helpers\Url;
 			<li>
 				<div class="img-intro pull-left">
 					<div class="bgcover" style="background-image:url(<?= Yii::$app->view->theme->baseUrl . '/resources/images/img-duan-demo.jpg' ?>);"><a href="#"></a></div>
-					<a href="#"><em class="icon-bar-chart"></em>View Stats</a>
+					<a href="<?=Url::to(['/dashboard/statistics'])?>"><em class="icon-bar-chart"></em>View Stats</a>
 				</div>
 				<div class="intro-detail">
 					<a href="#" class="icon-edit icon"></a>

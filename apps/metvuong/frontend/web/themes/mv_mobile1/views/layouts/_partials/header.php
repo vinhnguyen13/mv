@@ -46,7 +46,6 @@ use yii\helpers\Url;
             </li>
             <li><a href="<?= Url::to(['/ad/post']) ?>"><em class="icon-plus"></em>Đăng tin mới</a></li>
             <li><a href="<?=Url::to(['/dashboard/ads'])?>"><em class="icon-docs"></em>Tất cả dự án</a></li>
-            <li><a href="<?=Url::to(['/dashboard/statistics'])?>"><em class="icon-bar-chart"></em>Statistics</a></li>
             <li><a href="<?=Url::to(['/chat'])?>"><em class="icon-bubbles"></em>Chat <span>5</span></a></li>
             <li><a href="<?=Url::to(['/dashboard/notification'])?>"><em class="icon-bell"></em>Notification <span>5</span></a></li>
             <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><em class="icon-power"></em>Đăng xuất</a></li>

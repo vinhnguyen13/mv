@@ -1,72 +1,54 @@
 <?php
 use yii\helpers\Url;
-?>
-<!-- Chat History
-<br>
-Chat with <a href="<?=Url::to(['/chat/with', 'username'=>'xxxx'])?>">XXXX</a> -->
+use vsoft\chat\models\base\TigMaMsgs;
+use frontend\models\Chat;
 
+$params = [':jid' => Chat::find()->getJid(Yii::$app->user->identity->username)];
+$jid_id = Yii::$app->dbChat->createCommand('SELECT jid_id FROM tig_ma_jids tmj WHERE jid=:jid')->bindValues($params)->queryOne();
+if(!empty($jid_id)){
+	$sql = 'SELECT tbl.* '.
+		'FROM (SELECT owner_id, buddy_id, ts, body, direction, CONCAT(owner_id, "_",buddy_id) as groupchat FROM tig_ma_msgs tmm WHERE owner_id=:jid_id OR buddy_id=:jid_id ORDER BY ts DESC) as tbl '.
+		'GROUP BY tbl.groupchat';
+	$msgs = Yii::$app->dbChat->createCommand($sql)->bindValues([':jid_id'=>$jid_id['jid_id']])->queryAll();
+}
+?>
 <div class="chat-history">
 	<div class="title-top">Chat history</div>
 	<div class="chat-list clearfix">
-		<div class="item">
-			<a href="<?=Url::to(['/chat/with', 'username'=>'xxxx'])?>">
-				<span class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg' ?>" alt=""></span>
-				<div class="chat-detail">
-					<span class="pull-right time-chat">8h</span>
-					<span class="name">James Bond</span>
-					<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</span>
-				</div>
-			</a>
-		</div>
-		<div class="item">
-			<a href="<?=Url::to(['/chat/with', 'username'=>'xxxx'])?>">
-				<span class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/MV-Agent Photo.jpg' ?>" alt=""></span>
-				<div class="chat-detail">
-					<span class="pull-right time-chat">8h</span>
-					<span class="name">James Bond</span>
-					<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</span>
-				</div>
-			</a>
-		</div>
-		<div class="item">
-			<a href="<?=Url::to(['/chat/with', 'username'=>'xxxx'])?>">
-				<span class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg' ?>" alt=""></span>
-				<div class="chat-detail">
-					<span class="pull-right time-chat">8h</span>
-					<span class="name">James Bond</span>
-					<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</span>
-				</div>
-			</a>
-		</div>
-		<div class="item">
-			<a href="<?=Url::to(['/chat/with', 'username'=>'xxxx'])?>">
-				<span class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/22311_Khai-truong-Pearl-Plaza-7.jpg' ?>" alt=""></span>
-				<div class="chat-detail">
-					<span class="pull-right time-chat">1d</span>
-					<span class="name">James Bond</span>
-					<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</span>
-				</div>
-			</a>
-		</div>
-		<div class="item">
-			<a href="<?=Url::to(['/chat/with', 'username'=>'xxxx'])?>">
-				<span class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg' ?>" alt=""></span>
-				<div class="chat-detail">
-					<span class="pull-right time-chat">1d</span>
-					<span class="name">James Bond</span>
-					<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</span>
-				</div>
-			</a>
-		</div>
-		<div class="item">
-			<a href="<?=Url::to(['/chat/with', 'username'=>'xxxx'])?>">
-				<span class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/MV-Agent Photo.jpg' ?>" alt=""></span>
-				<div class="chat-detail">
-					<span class="pull-right time-chat">2d</span>
-					<span class="name">James Bond</span>
-					<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</span>
-				</div>
-			</a>
-		</div>
+		<?php
+		if(!empty($msgs)) {
+			foreach($msgs as $msg){
+				if($msg['owner_id'] == $jid_id['jid_id']){
+					$jid_user = Yii::$app->dbChat->cache(function ($db) use ($msg) {
+						return Yii::$app->dbChat->createCommand('SELECT jid FROM tig_ma_jids tmj WHERE jid_id=:jid_id')->bindValues([':jid_id'=>$msg['buddy_id']])->queryOne();
+					});
+				}else{
+					$jid_user = Yii::$app->dbChat->cache(function ($db) use ($msg) {
+						return Yii::$app->dbChat->createCommand('SELECT jid FROM tig_ma_jids tmj WHERE jid_id=:jid_id')->bindValues([':jid_id'=>$msg['owner_id']])->queryOne();
+					});
+				}
+				if(!empty($jid_user['jid'])){
+					$username = Chat::find()->getUsername($jid_user['jid']);
+					$user = \frontend\models\User::getDb()->cache(function ($db) use ($username) {
+						return \frontend\models\User::find()->where(['username' => $username])->one();
+					});
+				}
+				if(!empty($user->profile) && !empty($user->profile->getDisplayName())){
+			?>
+					<div class="item">
+						<a href="<?= Url::to(['/chat/with', 'username' => $user->username]) ?>">
+							<span class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg' ?>" alt=""></span>
+							<div class="chat-detail">
+								<span class="pull-right time-chat"><?=$msg['ts'];?></span>
+								<span class="name"><?=$user->profile->getDisplayName();?></span>
+								<span><?=$msg['body'];?></span>
+							</div>
+						</a>
+					</div>
+			<?php
+				}
+			}
+		}
+		?>
 	</div>
 </div>

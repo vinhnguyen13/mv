@@ -25,7 +25,7 @@ class Chat extends Component
 
     public function getTigUser(){
         if (!Yii::$app->user->isGuest) {
-            $user_id = Yii::$app->user->identity->username.'@'.self::DOMAIN;
+            $user_id = $this->getJid(Yii::$app->user->identity->username);
             if(($tigUser = TigUsers::findOne(['user_id'=>$user_id])) === null){
                 $tigUser = new TigUsers();
                 $tigUser->user_id = $user_id;
@@ -35,6 +35,14 @@ class Chat extends Component
             }
             return $tigUser;
         }
+    }
+
+    public function getJid($username){
+        return $username.'@'.self::DOMAIN;
+    }
+
+    public function getUsername($jid){
+        return str_replace('@'.self::DOMAIN, '', $jid);
     }
 
     public function getKey(){
