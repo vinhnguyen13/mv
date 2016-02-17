@@ -461,6 +461,7 @@ header {
     padding: 6px 0 3px;
     width: 40px;
     text-align: center;
+    line-height: 100%;
 }
 .attr-detail,
 .infor-listing {

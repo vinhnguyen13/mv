@@ -35,8 +35,8 @@ $count_facilities = count($facilities);
                     <div class="bgcover"
                          style="background-image:url(<?= Yii::$app->view->theme->baseUrl."/resources/images/img-duan-demo.jpg" ?>)"></div>
                     <ul class="clearfix">
-                        <li><a href="#diadiem" class="icon icon-loca"></a></li>
-                        <li><a href="#" class="icon icon-fave"></a></li>
+                        <li><a href="#diadiem"><span class="icon icon-loca"></span></a></li>
+                        <li><a href="#"><span class="icon icon-fave"></span></a></li>
                     </ul>
                 </div>
             <?php }  ?>

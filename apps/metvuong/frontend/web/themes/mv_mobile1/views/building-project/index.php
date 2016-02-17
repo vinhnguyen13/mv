@@ -23,7 +23,7 @@ use yii\helpers\Url;
             ?>
             <div class="item-duan">
                 <div class="intro-img">
-                    <div class="wrap-img"><img src="<?= Url::to('/store/building-project-images/' . $image) ?>" alt="<?=$model->name?>"/>
+                    <div class="wrap-img"><a href="<?= Url::to(["building/$model->slug"]); ?>" title="<?=$model->name?>"><img src="<?= Url::to('/store/building-project-images/' . $image) ?>" alt="<?=$model->name?>"/></a>
                     </div>
                     <p class="title-duan"><?= !empty($model->categories[0]->name) ? ucfirst($model->categories[0]->name) : "Chung cư căn hộ cao cấp" ?></p>
 
