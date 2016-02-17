@@ -58,6 +58,12 @@
             if(!chatBoxExist){
                 return false;
             }
+            var from = chatUI.usrFromJid(from);
+            var to = chatUI.usrFromJid(Chat.connection.jid);
+            if(from == to){
+                typeMsg = 1;
+            }
+
             if(typeMsg == 1){
                 var template = Handlebars.compile($("#chat-send-template").html());
                 var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(xmpp_jid)+'/avatar'});
@@ -74,7 +80,7 @@
             }
         },
         typingMessage: function (from, close) {
-            chatBoxExist = chatUI.getBoxChat(chatUI.usrFromJid(Chat.connection.jid), from);
+            chatBoxExist = chatUI.getBoxChat(Chat.connection.jid, from);
             if(!chatBoxExist){
                 return false;
             }
