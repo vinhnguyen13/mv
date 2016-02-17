@@ -309,8 +309,8 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                                 'url' => Url::to(['/user-management/avatar', 'folder' => 'avatar']),
                                 'clientOptions' => [
                                     'maxNumberOfFiles' => 1,
-                                    'imageMaxWidth' => 1024,
-                                    'imageMaxHeight' => 1024,
+                                    'imageMaxWidth' => 800,
+                                    'imageMaxHeight' => 800,
                                     'disableImageResize' => false,
                                     'imageCrop' => true,
                                 ],
@@ -331,12 +331,14 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
             spaceBetween: 10
         });
 
-        $('#avatar button.close').click(function () {
+        $('#avatar').on('hidden.bs.modal', function () {
             var url = $('.files .name a').attr("href");
+            if(url == null || url == '')
+                url = '/images/default-avatar.jpg';
             $('#headAvatar').attr("src", url);
             $('.avatar img').attr("src", url);
         });
-
+        
         var username = '<?=Yii::$app->user->identity->username?>';
         var paramUsername = '<?=$username?>';
 
