@@ -288,7 +288,7 @@ class SiteController extends Controller
     public function actionSearch() {
     	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     	
-    	$v = \Yii::$app->request->post('v');
+    	$v = \Yii::$app->request->get('v');
     	$v = Elastic::transform($v);
     	
     	$params = [

@@ -56,30 +56,40 @@ $(document).ready(function() {
     });
 
     $('#search').keyup(function() {
-        var self = $(this);
-        var val = self.val();
-        var ss = $('.suggest-search');
-
-        if(val.length > 3 && val != self.data('val')) {
-            self.data('val', val);
-
-            var url = self.data('url');
-
-            $.post(url, {v: val}, function(response){
-                var cs = $('.content-suggest ul');
-                if(response.length > 0) {
-                    ss.removeClass('hide');
-                    cs.html('');
-                    for(var i in response) {
-                        cs.append('<li><a href="#">' + response[i].full_name + ' <span>(' + response[i].total + ')</span></a></li>');
-                    }
-                } else {
-                    ss.addClass('hide');
-                }
-            });
-        } else {
-            ss.addClass('hide');
-        }
+    	var self = $(this);
+    	var val = self.val().trim();
+    	var url = self.data('url');
+    	var ss = $('.suggest-search');
+    	
+    	if(val.length > 3) {
+    		if($.data(this, 'v') != val) {
+    			$.data(this, 'v', val);
+            	
+    			if($.data(this, 'ajax')) {
+    				$.data(this, 'ajax').abort();
+    			}
+    			
+    			$.data(this, 'ajax', $.get(url, {v: val}, function(response){
+            		var cs = $('.content-suggest ul');
+            		
+            		if(response.length > 0) {
+            			ss.removeClass('hide');
+            			
+            			var html = '';
+            			for(var i in response) {
+            				html += '<li><a href="#">' + response[i].full_name + ' <span>(' + response[i].total + ')</span></a></li>';
+                      	}
+            			
+            			$('.content-suggest ul').html(html);
+            		} else {
+            			ss.addClass('hide');
+            		}
+            	}));
+    		}
+    	} else {
+    		$.data(this, 'v', '');
+    		ss.addClass('hide');
+    	}
     });
 });
 
