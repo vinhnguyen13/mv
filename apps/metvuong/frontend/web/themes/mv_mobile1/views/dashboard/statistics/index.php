@@ -24,6 +24,7 @@ use yii\helpers\Url;
 				<h4 class="panel-title">
 					<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 					<em class="icon-eye"></em> views
+					<span class="pull-right icon"></span>
 					</a>
 				</h4>
 			</div>
@@ -51,12 +52,26 @@ use yii\helpers\Url;
 				<h4 class="panel-title">
 					<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
 					<em class="icon-user"></em> visitors
+					<span class="pull-right icon"></span>
 					</a>
 				</h4>
 			</div>
 			<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 				<div class="panel-body">
-					
+					<ul class="clearfix list-item">
+						<li>
+							<em class="fa fa-circle"></em><a href="#">James Bond</a>
+							<span class="pull-right">7</span>
+						</li>
+						<li>
+							<em class="fa fa-circle"></em><a href="#">James Bond</a>
+							<span class="pull-right">7</span>
+						</li>
+						<li>
+							<em class="fa fa-circle"></em><a href="#">James Bond</a>
+							<span class="pull-right">7</span>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
@@ -65,15 +80,63 @@ use yii\helpers\Url;
 				<h4 class="panel-title">
 					<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
 					<em class="icon-heart"></em> favourites
+					<span class="pull-right icon"></span>
 					</a>
 				</h4>
 			</div>
 			<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
 				<div class="panel-body">
-					
+					<ul class="clearfix list-item">
+						<li>
+							<em class="fa fa-circle"></em><a href="#">James Bond</a>
+							<span class="pull-right">7</span>
+						</li>
+						<li>
+							<em class="fa fa-circle"></em><a href="#">James Bond</a>
+							<span class="pull-right">7</span>
+						</li>
+						<li>
+							<em class="fa fa-circle"></em><a href="#">James Bond</a>
+							<span class="pull-right">7</span>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
+	</div>
+
+	<div class="title-sub">Property's info</div>
+	<div class="share-social">
+		<ul class="clearfix">
+			<li>
+				<a href="#">
+					<span class="wrap-around"><em class="icon-envelope"></em></span>
+					Share With Email
+					<span class="pull-right icon arrow-left"></span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<span class="wrap-around"><em class="fa fa-facebook"></em></span>
+					Share With Facebook
+					<span class="pull-right icon arrow-left"></span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<span class="wrap-around"><em class="fa fa-twitter"></em></span>
+					Share With Twitter
+					<span class="pull-right icon arrow-left"></span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<span class="wrap-around"><em class="fa fa-instagram"></em></span>
+					Share With Instagram
+					<span class="pull-right icon arrow-left"></span>
+				</a>
+			</li>
+		</ul>
 	</div>
 </div>
 

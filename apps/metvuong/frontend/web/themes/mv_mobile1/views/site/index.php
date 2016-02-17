@@ -24,18 +24,140 @@
     </div>
 </section>
 <section class="search-home">
-    <h2>Chúng tôi sẽ giúp bạn tìm được ngôi nhà mà mình mong muốn trong chôc lát</h2>
-    <p>Mét Vuông cung cấp lên đến hàng chục ngàn các căn hộ cao cấp, nhà riêng và biệt thự cho thuê hoặc đang rao bán tại hầu hết các tỉnh thành trên cả nước. Thông qua những mô tả chi tiết và hình ảnh chân thật, chúng tôi cam kết giúp khách hàng tìm được sản phẩm phù hợp nhất, một cách nhanh chóng và hiệu quả.</p>
-    <div class="wrap-pic-demo wrap-img">
-        <img src="<?=Yii::$app->view->theme->baseUrl."/resources/"?>images/mac-demo.jpg" alt="" />
+    <div class="txt-intro">
+        <h2>Chúng tôi sẽ giúp bạn tìm được ngôi nhà mà mình mong muốn trong chôc lát</h2>
+        <p>Mét Vuông cung cấp lên đến hàng chục ngàn các căn hộ cao cấp, nhà riêng và biệt thự cho thuê hoặc đang rao bán tại hầu hết các tỉnh thành trên cả nước. Thông qua những mô tả chi tiết và hình ảnh chân thật, chúng tôi cam kết giúp khách hàng tìm được sản phẩm phù hợp nhất, một cách nhanh chóng và hiệu quả.</p>
     </div>
-    <div class="text-center"><a class="txt-link-timnha" href="#">tìm nhà</a></div>
 </section>
-<section class="regis-home">
-    <h2>Tìm người khách hàng cho căn nhà của bạn dễ dàng hơn bao giờ hết</h2>
-    <p>Chỉ với vài thao tác nhập thông tin đơn giản, Mét Vuông sẽ là cầu nối giúp bạn nhanh chóng tiếp cận với nguồn khách hàng tiềm năng. Bạn có thể giới thiệu về BĐS của mình tới hàng triệu người có nhu cầu một cách trực quan nhất.</p>
-    <div class="wrap-pic-demo wrap-img">
-        <img src="<?=Yii::$app->view->theme->baseUrl."/resources/"?>images/mac-demo.jpg" alt="" />
+
+<div class="title-sub">Featured properties</div>
+<section class="box-item">
+    <div class="wrap-item">
+        <div class="item">
+            <a href="#" class="pic-intro">
+                <div class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg' ?>" alt=""></div>
+                <span class="address-feat">
+                    <strong>Lancaster x</strong>
+                    21 Nguyễn Trung Ngạn, P.Bến Nghé, Q1
+                </span>
+                <div class="title-item">Căn hộ cho thuê</div>
+            </a>
+            <div class="info-item">
+                <ul class="clearfix list-tienich-intro">
+                    <li>
+                        <span class="wrap-icon"><span class="icon icon-dt"></span></span>Diện tích
+                        <strong class="pull-right color-30a868">52m2</strong>
+                    </li>
+                    <li>
+                        <span class="wrap-icon"><span class="icon icon-pt"></span></span>Phòng tắm
+                        <strong class="pull-right color-30a868">02</strong>
+                    </li>
+                    <li>
+                        <span class="wrap-icon"><span class="icon icon-bed"></span></span>Phòng ngủ
+                        <strong class="pull-right color-30a868">02</strong>
+                    </li>
+                    <li class="price-line">
+                        <span class="price">2.8 tỷ</span>
+                        <span class="pull-right arrow-left icon"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="item">
+            <a href="#" class="pic-intro">
+                <div class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg' ?>" alt=""></div>
+                <span class="address-feat">
+                    <strong>Lancaster x</strong>
+                    21 Nguyễn Trung Ngạn, P.Bến Nghé, Q1
+                </span>
+                <div class="title-item">Căn hộ cho thuê</div>
+            </a>
+            <div class="info-item">
+                <ul class="clearfix list-tienich-intro">
+                    <li>
+                        <span class="wrap-icon"><span class="icon icon-dt"></span></span>Diện tích
+                        <strong class="pull-right color-30a868">52m2</strong>
+                    </li>
+                    <li>
+                        <span class="wrap-icon"><span class="icon icon-pt"></span></span>Phòng tắm
+                        <strong class="pull-right color-30a868">02</strong>
+                    </li>
+                    <li>
+                        <span class="wrap-icon"><span class="icon icon-bed"></span></span>Phòng ngủ
+                        <strong class="pull-right color-30a868">02</strong>
+                    </li>
+                    <li class="price-line">
+                        <span class="price">2.8 tỷ</span>
+                        <span class="pull-right arrow-left icon"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="item">
+            <a href="#" class="pic-intro">
+                <div class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg' ?>" alt=""></div>
+                <span class="address-feat">
+                    <strong>Lancaster x</strong>
+                    21 Nguyễn Trung Ngạn, P.Bến Nghé, Q1
+                </span>
+                <div class="title-item">Căn hộ cho thuê</div>
+            </a>
+            <div class="info-item">
+                <ul class="clearfix list-tienich-intro">
+                    <li>
+                        <span class="wrap-icon"><span class="icon icon-dt"></span></span>Diện tích
+                        <strong class="pull-right color-30a868">52m2</strong>
+                    </li>
+                    <li>
+                        <span class="wrap-icon"><span class="icon icon-pt"></span></span>Phòng tắm
+                        <strong class="pull-right color-30a868">02</strong>
+                    </li>
+                    <li>
+                        <span class="wrap-icon"><span class="icon icon-bed"></span></span>Phòng ngủ
+                        <strong class="pull-right color-30a868">02</strong>
+                    </li>
+                    <li class="price-line">
+                        <span class="price">2.8 tỷ</span>
+                        <span class="pull-right arrow-left icon"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <div class="text-center"><a class="txt-link-timnha" href="#">đăng tin</a></div>
+</section>
+
+<div class="title-sub">news</div>
+<section class="box-item news-item">
+    <div class="wrap-item">
+        <div class="item clearfix">
+            <a href="#">
+                <span class="title-news color-30a868">Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>
+                <div class="wrap-img bgcover" style="background-image:url(<?= Yii::$app->view->theme->baseUrl . '/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg' ?>);"></div>
+                <span class="txt-short-news">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+                    <span class="date-news">12/02/2016</span>
+                </span>
+            </a>
+        </div>
+        <div class="item clearfix">
+            <a href="#">
+                <span class="title-news color-30a868">Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>
+                <div class="wrap-img bgcover" style="background-image:url(<?= Yii::$app->view->theme->baseUrl . '/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg' ?>);"></div>
+                <span class="txt-short-news">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+                    <span class="date-news">12/02/2016</span>
+                </span>
+            </a>
+        </div>
+        <div class="item clearfix">
+            <a href="#">
+                <span class="title-news color-30a868">Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>
+                <div class="wrap-img bgcover" style="background-image:url(<?= Yii::$app->view->theme->baseUrl . '/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg' ?>);"></div>
+                <span class="txt-short-news">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+                    <span class="date-news">12/02/2016</span>
+                </span>
+            </a>
+        </div>
+    </div>
 </section>

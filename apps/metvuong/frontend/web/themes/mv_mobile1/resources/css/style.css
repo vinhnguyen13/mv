@@ -146,10 +146,13 @@ header {
     background-size: 287px;
     margin-top: 2px;
 }
-.regis-home,
 .search-home {
     padding: 0 15px;
-    margin-bottom: 45px;
+}
+.search-home .txt-intro {
+    border-bottom: 1px solid #a6a6a6;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
 }
 .wrap-img img {
     max-width: 100%;
@@ -1000,7 +1003,7 @@ label {
     font-weight: 600;
     text-align: center;
     padding: 8px 0;
-    font-size: 1em;
+    font-size: 1.2em;
     text-transform: uppercase;
 }
 .list-img li {
@@ -1994,12 +1997,13 @@ label {
     right: -9px;
 }
 footer {
-    border-top: 2px solid #CCC;
     padding: 5px 0 10px 0;
-    background: #ececec;
+    background: #33ac6a;
+    color: #fff;
+    margin-top: 50px;
 }
 .infor-address {
-    border-top: 1px solid #9E9E9E;
+    border-top: 1px solid #fff;
     padding-top: 10px;
     font-size: .8em;
     text-align: center;
@@ -2010,7 +2014,7 @@ footer {
     margin-bottom: 5px;
 }
 footer li a {
-    color: #333;
+    color: #fff;
     font-weight: 600;
     padding: 10px 0;
     display: block;
@@ -2025,17 +2029,16 @@ footer .col-xs-6 > div {
 }
 footer .col-xs-6 > div a {
     font-weight: 700;
-    color: #333;
+    color: #fff;
 }
 footer li:last-child {
-    border-top: 1.5px solid #9A9191;
+    border-top: 1.5px solid #fff;
 }
 footer .col-xs-6 em {
     float: left;
     margin-top: 2px;
 }
 footer {
-    text-shadow: 1px 1px 1px #fff;
     position: relative;
     z-index: 99;
 }
@@ -2198,11 +2201,12 @@ footer {
     margin-bottom: 10px;
 }
 .title-sub {
-    background: #ececec;
     padding: 10px 15px;
     text-transform: uppercase;
-    font-weight: 700;
-    font-size: 1.1em;
+    font-weight: 600;
+    font-size: 1.2em;
+    color: #009745;
+    margin-bottom: 10px;
 }
 .list-duan-stats li {
     float: left;
@@ -2472,7 +2476,7 @@ html.mm-opening .mm-slideout {
 }
 input[type=text]:active,
 input[type=text]:focus {
-    border: 1px solid red;
+    border: 1px solid #00873e;
     box-shadow: none;
     -webkit-box-shadow: none;
 }
@@ -2519,4 +2523,154 @@ input[type=text]:focus {
 .statis .panel-body .list-item span {
     color: #119e52;
     font-weight: 700;
+}
+.share-social ul li {
+    border-bottom: 1px solid #bdbdbd;
+}
+.share-social li a {
+    display: block;
+    padding: 10px 15px;
+    color: #777777;
+    font-size: 1.2em;
+}
+.wrap-around {
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: inline-block;
+    text-align: center;
+    line-height: 38px;
+    background: #009745;
+    color: #fff;
+    margin-right: 15px;
+}
+.wrap-around em {
+    font-size: 1.1em;  
+}
+.arrow-left {
+    display: inline-block;
+    width: 12px;
+    height: 23px;
+    background-position: -120px -2px;
+    background-size: 150px;
+}
+.share-social a .arrow-left {
+    margin-top: 8px;
+}
+.statis {
+    padding-bottom: 50px;
+}
+.infor-address a {
+    color: #fff;
+}
+.box-item {
+    padding: 0 15px;
+    margin-bottom: 30px;
+}
+.box-item .wrap-item {
+    padding: 0 7px;
+    border-bottom: 1px solid #a6a6a6;
+}
+.news-item .wrap-item {
+    border-bottom: none;
+}
+.box-item .wrap-item .item {
+    margin-bottom: 30px;
+}
+.box-item .pic-intro {
+    display: block;
+    background: #30a868;
+    position: relative;
+}
+.box-item .pic-intro .address-feat {
+    display: block;
+    padding: 10px 15px;
+    color: #fff;
+}
+.box-item .address-feat strong {
+    display: block;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+.box-item .pic-intro .title-item {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.37);
+    padding: 5px 15px;
+    color: #fff;
+}
+.list-tienich-intro {
+    padding: 10px 15px;
+}
+.list-tienich-intro li {
+    float: left;
+    width: 100%;
+    border-top: 1px solid #959595;
+    padding: 7px 0;
+    font-size: 1.15em;
+    color: #000;
+    font-weight: 400;
+}
+.list-tienich-intro li:first-child,
+.list-tienich-intro li:last-child {
+    border-top: none;
+}
+.color-30a868 {
+    color: #30a868 !important;
+}
+.icon-dt {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background-position: -53px -71px;
+    background-size: 115px;
+}
+.icon-pt {
+    display: inline-block;
+    width: 21px;
+    height: 25px;
+    background-position: 0px -100px;
+    background-size: 135px;
+}
+.list-tienich-intro li .wrap-icon {
+    display: inline-block;
+    width: 35px;
+}
+.list-tienich-intro li.price-line {
+    padding: 15px 0;
+}
+.list-tienich-intro li.price-line .price {
+    border: 1px solid #30a868;
+    color: #30a868;
+    padding: 5px 35px;
+    font-weight: 600;
+}
+.news-item .item a {
+    display: block;
+    float: left;
+    width: 100%;
+    color: #000;
+}
+.news-item .item span {
+    display: block;
+}
+.news-item .item .wrap-img {
+    float: left;
+    width: 40%;
+    height: 110px;
+    margin-right: 15px;
+}
+.news-item .item .txt-short-news {
+    overflow: hidden;
+    font-size: .9em;
+}
+.news-item .item .title-news {
+    margin-bottom: 10px;
+    font-weight: 600;
+    line-height: 18px;
+}
+.news-item .item .date-news {
+    margin-top: 7px;
 }
