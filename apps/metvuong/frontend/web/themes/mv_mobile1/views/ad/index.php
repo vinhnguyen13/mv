@@ -157,7 +157,13 @@ $types = AdProduct::getAdTypes ();
 				return flag;
 			},
 			callBackAjax: function () {
-				alert(1);
+				$('body').loading();
+				$.ajax({
+					url: "https://dl.dropboxusercontent.com/u/43486987/test.txt", 
+					success: function(result){
+				        $('body').loading({done: true});
+				    }
+				});
 			}
 		});
 

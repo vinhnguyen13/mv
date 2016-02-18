@@ -587,6 +587,8 @@ $.fn.slideSection = function (options) {
             if ( $(this).hasClass('disable') ) return;
             if ( !sc.settings.validateFrm() ) return;
 
+            sc.settings.callBackAjax();
+
             el.find('.section').removeClass('back-in back-out');
             if ( current+1 < lenItem ) {
                 var oldItem = current;
@@ -659,5 +661,50 @@ $.fn.slideSection = function (options) {
             $(sc.settings.pagi).find('li').eq(current-1).find('a').addClass('active');
         }
 
+    });
+}
+
+$.fn.loading = function (options) {
+
+    return this.each(function() {
+        var defaults = {
+            inside: false,
+            insideElement: '#demo',
+            full: true,
+            done: false
+        },
+        sc = {},
+        el = $(this),
+        $loading = $('<div class="loading-proccess"><span></span></div>');
+
+        if ( el.length == 0 ) return el;
+
+        sc.settings = $.extend({}, defaults, options);
+
+        if ( sc.settings.done ) {
+            $('body').find('.loading-proccess').fadeOut(300, function () {
+                $(this).remove();
+            });
+            return;
+        }
+
+        if ( sc.settings.full ) {
+            $loading.css({
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                'z-index': 99999,
+                background: 'rgba(0, 0, 0, 0.51)'
+            });
+            $('body').append($loading);
+            return;
+        }
+
+        if ( sc.settings.inside ) {
+
+            return;
+        }
     });
 }
