@@ -1,6 +1,3 @@
-
-<?= $this->render('_partials/search-form') ?>
-
 <div class="post-listing">
 	<form action="">
 		<div class="step-link">

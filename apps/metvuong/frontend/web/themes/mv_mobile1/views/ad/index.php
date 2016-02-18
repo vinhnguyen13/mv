@@ -44,8 +44,11 @@ $types = AdProduct::getAdTypes ();
 					$imgUrl = '/themes/metvuong2/resources/images/default-ads.jpg';
 				}
 				?>
-				<div class="bgcover img-intro" style="background-image: url(<?= $imgUrl ?>);">
-					<a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"></a>
+
+				<div class="bgcover img-intro">
+					<div>
+						<a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"><img src="<?= $imgUrl ?>"></a>
+					</div>
 				</div>
 				<p class="infor-by-up">
 					<?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?> bởi <a
