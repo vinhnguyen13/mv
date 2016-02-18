@@ -141,7 +141,7 @@ var Chat = {
         // returning false would remove it after it finishes.
         return true;
     },
-    sttSaveMsg: false,
+    sttSaveMsg: true,
     sendMessage : function(messgeTo,message,type,params){
         if(message.length <= 0){
             return false;
