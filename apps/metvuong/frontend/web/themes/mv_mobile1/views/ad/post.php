@@ -9,7 +9,8 @@
 				<li><a data-active-section="tt-lienhe" href="#">5</a></li>
 			</ul>
 		</div>
-		<div data-section="select-type" class="section select-type hide">
+		
+		<div class="section select-type hide">
 			<p class="text-center step-txt">4 bước dễ dàng</p>
 		
 			<ul class="clearfix step-check">
@@ -42,7 +43,7 @@
 			</ul>
 		</div>
 
-		<div data-section="tt-chung" class="tt-chung item-step section hide">
+		<div class="tt-chung item-step section hide">
 			<div class="title-step">Thông tin chung</div>
 			<div class="row">
 				<div class="col-xs-6 form-group">
@@ -110,7 +111,7 @@
 			</div>
 		</div>
 
-		<div data-section="tt-chitiet" class="tt-chitiet item-step section hide">
+		<div class="tt-chitiet item-step section hide">
 			<div class="title-step">Thông tin chi tiết</div>
 			<div class="row">
 				<div class="col-xs-12 form-group">
@@ -190,7 +191,7 @@
 			</div>
 		</div>
 
-		<div data-section="hinh-anh" class="hinh-anh item-step section hide">
+		<div class="hinh-anh item-step section hide">
 			<div class="title-step">Hình ảnh</div>
 			<ul class="clearfix upload-img">
 				<li>
@@ -202,7 +203,7 @@
 			</ul>
 		</div>
 
-		<div data-section="tien-ich" class="tien-ich item-step section hide">
+		<div class="tien-ich item-step section hide">
 			<div class="title-step">Tiện ích</div>
 			<ul class="clearfix list-tienich">
 				<li>
@@ -226,7 +227,7 @@
 			</ul>
 		</div>
 
-		<div data-section="tt-lienhe" class="tt-lienhe item-step section hide">
+		<div class="tt-lienhe item-step section hide">
 			<div class="title-step">Thông tin liên hệ</div>
 			<div class="row">
 				<div class="col-xs-12 form-group">
