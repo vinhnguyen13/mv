@@ -11,7 +11,6 @@ if(!empty($jid_id)){
 	$msgs = Yii::$app->dbChat->createCommand($sql)->bindValues([':jid_id'=>$jid_id['jid_id']])->queryAll();
 }
 ?>
-<?php $this->beginContent('@app/views/chat/_partials/connect.php'); ?><?php $this->endContent();?>
 <div class="chat-history">
 	<div class="title-top">Chat history</div>
 	<div class="chat-list clearfix">
@@ -27,7 +26,7 @@ if(!empty($jid_id)){
 				}
 				if(!empty($user->profile)){
 			?>
-					<div class="item">
+					<div class="item" chat-to="<?=$user->username;?>">
 						<a href="<?= Url::to(['/chat/with', 'username' => $user->username]) ?>">
 							<span class="wrap-img"><img src="<?=$user->profile->getAvatarUrl();?>" alt=""></span>
 							<div class="chat-detail">
@@ -45,10 +44,23 @@ if(!empty($jid_id)){
 	</div>
 </div>
 
+<script id="chat-receive-template" type="text/x-handlebars-template">
+	<div class="item">
+		<a href="{{chatUrl}}">
+			<span class="wrap-img"><img src="{{avatarUrl}}" alt=""></span>
+			<div class="chat-detail">
+				<span class="pull-right time-chat">{{time}}</span>
+				<span class="name">{{name}}</span>
+				<span>{{msg}}</span>
+			</div>
+		</a>
+	</div>
+</script>
 <script>
 	$(document).ready(function () {
 		$(document).bind('chat/receiveMessage', function (event, data) {
-			console.log(data);
+			chatUI.notify(null, null, chatUI.NOTIFY_CHAT);
+//			chatUI.appendMessageToList(data.from, data.to, data.msg, data.type);
 		});
 	});
 </script>

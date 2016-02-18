@@ -5,7 +5,6 @@ use frontend\models\Chat;
 $to = Yii::$app->request->get('username');
 $user = \frontend\models\User::find()->where(['username' => $to])->one();
 ?>
-<?php $this->beginContent('@app/views/chat/_partials/connect.php'); ?><?php $this->endContent();?>
 <div id="chat-container">
 
 </div>

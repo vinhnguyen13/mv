@@ -1,5 +1,7 @@
 //(function(){
     var chatUI = {
+        NOTIFY_CHAT: 1,
+        NOTIFY_OTHER: 2,
         BOSH_SERVICE: 'http://metvuong.com:5280/wating',
         connect: function() {
             Chat.connect(chatUI.genJid(xmpp_jid), xmpp_key, chatUI.BOSH_SERVICE, true);
@@ -73,7 +75,32 @@
             }
         },
         appendMessageToList: function (from, to, msg, type) {
-
+            chatBoxExist = $('.chat-history');
+            $(".chat-history[chat-to='" + to + "']");
+            var template = Handlebars.compile($("#chat-receive-template").html());
+            var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(from)+'/avatar'});
+            chatBoxExist.find('.chat-list').append(html);
+        },
+        notify: function (from, to, type) {
+            var sumChat = 0, sumOther = 0, sumTotal = 0;
+            if(type == chatUI.NOTIFY_CHAT){
+                sumChat = (($('#notifyChat').length > 0) ? parseInt($('#notifyChat').html()) : 0) + 1;
+                var objNotifyChat = this.findObjectNotify('wrapNotifyChat', 'notifyChat');
+                objNotifyChat.html(sumChat);
+            }else if(type == chatUI.NOTIFY_OTHER){
+                sumChat = (($('#notifyOther').length > 0) ? parseInt($('#notifyOther').html()) : 0) + 1;
+                var objNotifyChat = this.findObjectNotify('wrapNotifyOther', 'notifyChat');
+                objNotifyChat.html(sumChat);
+            }
+            sumTotal = (($('#notifyChat').length > 0) ? parseInt($('#notifyChat').html()) : 0) + (($('#notifyOther').length > 0) ? parseInt($('#notifyOther').html()) : 0);
+            var objNotifyTotal = this.findObjectNotify('avatar-user', 'notifyTotal');
+            objNotifyTotal.html(sumTotal);
+        },
+        findObjectNotify: function (parent, child) {
+            if($('#'+parent).find('#'+child).length == 0){
+                $('#'+parent).append($('<span id="'+child+'"></span>'));
+            }
+            return $('#'+parent).find('#'+child);
         },
         typingMessage: function (from, close) {
             chatBoxExist = chatUI.getBoxChat(Chat.connection.jid, from);

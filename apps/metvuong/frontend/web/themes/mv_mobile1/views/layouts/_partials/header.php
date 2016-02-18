@@ -8,7 +8,7 @@ use yii\helpers\Url;
             <img src="/images/default-avatar.jpg" alt="">
         <?php } else{?>
             <img id="headAvatar" src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="">
-            <span>10</span>
+<!--            <span id="notifyTotal"></span>-->
         <?php }?>
     </a>
     <div class="logo">
@@ -46,9 +46,9 @@ use yii\helpers\Url;
                 </a>
             </li>
             <!-- <li><a href="<?= Url::to(['/ad/post']) ?>"><em class="icon-plus"></em>Đăng tin mới</a></li> -->
-            <li><a href="<?=Url::to(['/dashboard/notification'])?>"><em class="icon-bell"></em>Thông báo<span>5</span></a></li>
+            <li><a href="<?=Url::to(['/dashboard/notification'])?>" id="wrapNotifyOther"><em class="icon-bell"></em>Thông báo<!--<span id="notifyOther">5</span>--></a></li>
             <li><a href="<?=Url::to(['/dashboard/ads'])?>"><em class="icon-docs"></em>Listings</a></li>
-            <li><a href="<?=Url::to(['/chat'])?>"><em class="icon-bubbles"></em>Chat <span>5</span></a></li>
+            <li><a href="<?=Url::to(['/chat'])?>" id="wrapNotifyChat"><em class="icon-bubbles"></em>Chat<!--<span id="notifyChat">5</span>--></a></li>
             <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><em class="icon-power"></em>Đăng xuất</a></li>
         </ul>
         <?php } ?>

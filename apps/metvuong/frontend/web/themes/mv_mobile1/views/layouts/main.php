@@ -23,6 +23,7 @@ AppAsset::register($this);
     <?php $this->head() ?>
 </head>
 <body>
+    <?php $this->beginContent('@app/views/chat/_partials/connect.php'); ?><?php $this->endContent();?>
     <?php $this->beginBody() ?>
         <?= $content ?>
     <?php $this->endBody() ?>
