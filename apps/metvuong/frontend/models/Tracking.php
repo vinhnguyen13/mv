@@ -153,4 +153,30 @@ class Tracking extends Component
         }
     }
 
+    public function getVisitors($pid){
+        $query = AdProductVisitor::find()->where(['product_id' => $pid])->all();
+        $visitors = array();
+        foreach($query as $k => $q){
+            $username = User::findIdentity($q->user_id)->username;
+            if(array_key_exists($username, $visitors)){
+                $visitors[$username]++;
+            } else
+                $visitors[$username] = 1;
+        }
+        return $visitors;
+    }
+
+    public static function getFinders($pid){
+        $query = AdProductFinder::find()->where(['product_id' => $pid])->all();
+        $finders = array();
+        foreach($query as $k => $q){
+            $username = User::findIdentity($q->user_id)->username;
+            if(array_key_exists($username, $finders)){
+                $finders[$username]++;
+            } else
+                $finders[$username] = 1;
+        }
+        return $finders;
+    }
+
 }

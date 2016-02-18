@@ -1,10 +1,14 @@
 <?php
 
 namespace frontend\controllers;
+use common\components\Util;
 use dektrium\user\Mailer;
+use frontend\models\Tracking;
 use frontend\models\User;
 use frontend\models\ProfileForm;
 use vsoft\express\components\ImageHelper;
+use vsoft\tracking\models\base\AdProductFinder;
+use vsoft\tracking\models\base\AdProductVisitor;
 use Yii;
 use yii\db\mssql\PDO;
 use yii\helpers\Url;
@@ -31,9 +35,24 @@ class DashboardController extends Controller
         $this->redirect('/dashboard/statistics');
     }
 
-    public function actionStatistics()
+    public function actionStatistics($id=1)
     {
+        $visitors = Tracking::find()->getVisitors($id);
+        $finders = Tracking::find()->getFinders($id);
+
+//        $uids = [5,4,3,2,1];
+//        $pids = [1, 2, 4, 3, 5, 6];
+//        $times = Util::me()->dateRange(strtotime('-30 days'), strtotime('0 days'), '+1 day', 'd-m-Y H:i:s');
+//        foreach($pids as $pid){
+//            $uid = array_rand(array_flip($uids), 1);
+//            $time = array_rand(array_flip($times), 1);
+//            $time = strtotime($time);
+//            $ck = Tracking::find()->productVisitor($uid, $pid, $time);
+//        }
+
         return $this->render('statistics/index', [
+            'visitors' => $visitors,
+            'finders' => $finders,
         ]);
     }
 

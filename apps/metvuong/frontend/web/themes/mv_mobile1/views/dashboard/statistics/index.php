@@ -1,6 +1,8 @@
 <?php
 use yii\web\View;
 use yii\helpers\Url;
+
+$id = 1;
 ?>
 
 <div class="statis">
@@ -31,18 +33,16 @@ use yii\helpers\Url;
 			<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 				<div class="panel-body">
 					<ul class="clearfix list-item">
+                        <?php if(!empty($finders) && count($finders)){
+                        foreach($finders as $key => $finder){?>
 						<li>
-							<em class="fa fa-circle"></em><a href="#">James Bond</a>
-							<span class="pull-right">7</span>
+							<em class="fa fa-circle"></em><a href="#"><?=$key?></a>
+							<span class="pull-right"><?=$finder?></span>
 						</li>
-						<li>
-							<em class="fa fa-circle"></em><a href="#">James Bond</a>
-							<span class="pull-right">7</span>
-						</li>
-						<li>
-							<em class="fa fa-circle"></em><a href="#">James Bond</a>
-							<span class="pull-right">7</span>
-						</li>
+                        <?php }
+                        } else { ?>
+                        <li>Không có người tìm kiếm</li>
+                        <?php }?>
 					</ul>
 				</div>
 			</div>
@@ -59,18 +59,16 @@ use yii\helpers\Url;
 			<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 				<div class="panel-body">
 					<ul class="clearfix list-item">
-						<li>
-							<em class="fa fa-circle"></em><a href="#">James Bond</a>
-							<span class="pull-right">7</span>
-						</li>
-						<li>
-							<em class="fa fa-circle"></em><a href="#">James Bond</a>
-							<span class="pull-right">7</span>
-						</li>
-						<li>
-							<em class="fa fa-circle"></em><a href="#">James Bond</a>
-							<span class="pull-right">7</span>
-						</li>
+                        <?php if(!empty($visitors) && count($visitors)){
+                            foreach($visitors as $key => $visitor){?>
+                                <li>
+                                    <em class="fa fa-circle"></em><a href="#"><?=$key?></a>
+                                    <span class="pull-right"><?=$visitor?></span>
+                                </li>
+                            <?php }
+                        }  else { ?>
+                            <li>Không có ghé thăm listing</li>
+                        <?php }?>
 					</ul>
 				</div>
 			</div>

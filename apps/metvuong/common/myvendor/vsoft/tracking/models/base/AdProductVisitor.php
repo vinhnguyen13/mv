@@ -37,4 +37,5 @@ class AdProductVisitor extends ActiveRecord
     {
         return ['_id', 'user_id', 'product_id', 'time', 'count', 'device'];
     }
+
 }
