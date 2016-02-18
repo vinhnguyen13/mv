@@ -6,7 +6,7 @@ use yii\helpers\Url;
 	<input type="hidden" name="sort" id="sort" class="value_selected" value="<?= ($sort = Yii::$app->request->get('sort')) ? $sort : 'created_at' ?>" />
 	<div class="search-subpage clearfix">
 		<div class="search-fill">
-			<div class="fillter-fast">
+			<!-- <div class="fillter-fast">
 				<div class="val-selected style-click"><span class="selected selected_val">Tìm kiếm nhanh...</span></div>
 				<div class="item-dropdown hide-dropdown">
 					<strong>Bạn hãy chọn quận</strong>
@@ -21,7 +21,7 @@ use yii\helpers\Url;
 					</ul>
 					<input type="hidden" id="quan-huyen" class="">
 				</div>
-			</div>
+			</div> -->
 			<!-- <a href="#" class="advande-search-btn style-click"><span class="bd-left"></span><span class="bd-right"></span></a> -->
 		</div>
 		<div class="advande-search">
@@ -36,6 +36,7 @@ use yii\helpers\Url;
 						<span class="wrap-max">4 tỷ</span>
 						<span class="troxuong">trở xuống</span>
 					</div>
+					<span class="pull-right icon arrowDown"></span>
 				</div>
 
 				<div class="item-advande">
@@ -65,6 +66,7 @@ use yii\helpers\Url;
 						<span class="wrap-max">4 tỷ</span>
 						<span class="troxuong">trở xuống</span>
 					</div>
+					<span class="pull-right icon arrowDown"></span>
 				</div>
 				<div class="item-advande">
 					<div class="box-input clearfix">
@@ -84,7 +86,7 @@ use yii\helpers\Url;
 			</div>
 			<div class="each-advande clearfix">
 				<div class="col-xs-6 num-phongngu">
-					<div class="value-selected style-click val-selected" data-text-add="Phòng ngủ trở lên"><span class="selected">Phòng ngủ</span></div>
+					<div class="value-selected style-click val-selected" data-text-add="Phòng ngủ trở lên"><span class="selected">Phòng ngủ</span><span class="pull-right icon arrowDown"></span></div>
 
 					<div class="item-advande item-dropdown item-bed-bath">
 						<ul class="clearfix">
@@ -98,7 +100,7 @@ use yii\helpers\Url;
 					</div>
 				</div>
 				<div class="col-xs-6 num-phongtam">
-					<div class="value-selected style-click val-selected" data-text-add="Phòng tắm trở lên"><span class="selected">Phòng tắm</span></div>
+					<div class="value-selected style-click val-selected" data-text-add="Phòng tắm trở lên"><span class="selected">Phòng tắm</span><span class="pull-right icon arrowDown"></span></div>
 					<div class="item-advande item-dropdown item-bed-bath">
 						<ul class="clearfix">
 							<li><a href="#">1</a></li>
@@ -113,7 +115,7 @@ use yii\helpers\Url;
 			</div>
 			<div class="each-advande row">
 				<div class="col-xs-12 other-fill">
-					<div class="value-selected style-click">Thêm tuỳ chọn</div>
+					<div class="value-selected style-click">Thêm tuỳ chọn<span class="pull-right icon arrowDown"></span></div>
 				</div>
 			</div>
 			<button class="btn-submit btn-common">Tìm kiếm</button>

@@ -185,7 +185,6 @@ $.fn.dropdown = function (options) {
         var defaults = {
             styleShow: 1, // 1. relative, 0. absolute
             txtAdd: false,
-            hiddenFillValue: '',
             ajaxSubmit: function () {}
         },
         sc = {},
@@ -209,8 +208,8 @@ $.fn.dropdown = function (options) {
         outsiteClick();
 
         function showSortLoad () {
-            if ( $(sc.settings.hiddenFillValue).val() != '' && $(sc.settings.hiddenFillValue).length > 0 ) {
-                valGet = $(sc.settings.hiddenFillValue).val();
+            if ( $(el.find('input[type=hidden]')).val() != '' && $(el.find('input[type=hidden]')).length > 0 ) {
+                valGet = $(el.find('input[type=hidden]')).val();
                 itemList.each(function () {
                     var dataGet = $(this).data('value');
                     if ( dataGet == valGet ) {
@@ -256,7 +255,7 @@ $.fn.dropdown = function (options) {
                 var txt = $(this).text(),
                     dataValue = $(this).data('value') != undefined ? $(this).data('value') : txt;
 
-                $(sc.settings.hiddenFillValue).val(dataValue);
+                $(el.find('input[type=hidden]')).val(dataValue);
 
                 sc.settings.ajaxSubmit();
 
@@ -548,7 +547,9 @@ $.fn.slideSection = function (options) {
         var defaults = {
             active: 0,
             pagi: '.step-link',
-            validateFrm: function () {}
+            navi: true,
+            validateFrm: function () {},
+            callBackAjax: function () {}
         },
         sc = {},
         el = $(this),
@@ -566,8 +567,9 @@ $.fn.slideSection = function (options) {
 
         btnNext.on('click', next);
         btnBack.on('click', back);
+        $('[data-next-section=true]').on('click', next);
 
-        if ( countEl == 1 ) {
+        if ( countEl == 1 && sc.settings.navi ) {
             $('#container').append(nextBack);
         }
         
