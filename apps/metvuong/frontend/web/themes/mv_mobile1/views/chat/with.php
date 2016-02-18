@@ -3,6 +3,7 @@ use yii\web\View;
 use yii\helpers\Url;
 use frontend\models\Chat;
 $to = Yii::$app->request->get('username');
+$user = \frontend\models\User::find()->where(['username' => $to])->one();
 ?>
 <?php $this->beginContent('@app/views/chat/_partials/connect.php'); ?><?php $this->endContent();?>
 <div id="chat-container">
@@ -36,7 +37,7 @@ $to = Yii::$app->request->get('username');
 </script>
 <script id="chat-box-template" type="text/x-handlebars-template">
 	<div class="chat-real chat-group" chat-from="{{from}}" chat-to="{{to}}">
-		<div class="title-top">{{to}}</div>
+		<div class="title-top"><?=$user->profile->getDisplayName();?></div>
 		<div class="wrap-chat-item">
 			<div class="container-chat wrap-chat">
 
@@ -90,6 +91,10 @@ $to = Yii::$app->request->get('username');
 				chatBoxExist.find('#typingMsg').val('');
 			}
 			return false;
+		});
+
+		$(document).bind('chat/receiveMessage', function (event, data) {
+			chatUI.appendMessageToBox(data.from, data.to, data.msg, data.type);
 		});
 	});
 </script>

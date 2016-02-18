@@ -44,3 +44,11 @@ if(!empty($jid_id)){
 		?>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function () {
+		$(document).bind('chat/receiveMessage', function (event, data) {
+			console.log(data);
+		});
+	});
+</script>

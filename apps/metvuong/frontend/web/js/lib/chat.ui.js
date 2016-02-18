@@ -50,7 +50,7 @@
                 return chatBoxExist2;
             }
         },
-        appendMessage: function (from, to, msg, type) {
+        appendMessageToBox: function (from, to, msg, type) {
             chatBoxExist = chatUI.getBoxChat(from, to);
             if(!chatBoxExist){
                 return false;
@@ -71,6 +71,9 @@
             }else{
                 chatBoxExist.find('.wrap-chat').append(html);
             }
+        },
+        appendMessageToList: function (from, to, msg, type) {
+
         },
         typingMessage: function (from, close) {
             chatBoxExist = chatUI.getBoxChat(Chat.connection.jid, from);

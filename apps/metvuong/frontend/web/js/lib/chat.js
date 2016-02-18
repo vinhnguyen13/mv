@@ -128,13 +128,13 @@ var Chat = {
                 'message': Strophe.getText(body)
             }
             Chat.messages.push(messageInfo);
-            chatUI.appendMessage(from, to, Strophe.getText(body), 2);
+            $(document).trigger('chat/receiveMessage', {from: Strophe.getBareJidFromJid(from), to: Strophe.getBareJidFromJid(to), msg: Strophe.getText(body), type: 2});
             chatUI.typingMessage(from, 1);
         }else if(type == 'headline'){
             var body = msg.getElementsByTagName('msg')[0];
             if(msg.getElementsByTagName('chatmeParams').length){
                 var params = msg.getElementsByTagName('chatmeParams')[0];
-                chatUI.appendMessage(params.getAttribute('from'), params.getAttribute('to'), Strophe.getText(body), 1);
+                $(document).trigger('chat/receiveMessage', {from: params.getAttribute('from'), to: params.getAttribute('to'), msg: Strophe.getText(body), type: 1});
                 chatUI.typingMessage(from, 1);
             }
         }
