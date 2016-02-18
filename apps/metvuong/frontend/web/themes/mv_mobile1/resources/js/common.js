@@ -77,7 +77,7 @@ $(document).ready(function() {
             			
             			var html = '';
             			for(var i in response) {
-            				html += '<li><a href="#">' + response[i].full_name + ' <span>(' + response[i].total + ')</span></a></li>';
+            				html += '<li><a href="' + response[i].url + '">' + response[i].full_name + ' <span>(' + response[i].total + ')</span></a></li>';
                       	}
             			
             			$('.content-suggest ul').html(html);

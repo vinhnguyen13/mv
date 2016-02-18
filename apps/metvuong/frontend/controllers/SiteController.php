@@ -309,9 +309,10 @@ class SiteController extends Controller
     	
     	$result = json_decode(curl_exec($ch), true);
     	$response = [];
-    	 
-		foreach ($result['hits']['hits'] as $hit) {
-			$response[] = $hit['_source'];
+    	
+    	foreach ($result['hits']['hits'] as $k => $hit) {
+			$response[$k] = $hit['_source'];
+			$response[$k]['url'] = Url::to(['/ad/index', $hit['_type'] => $hit['_id']]);
 		}
 		
     	return $response;
