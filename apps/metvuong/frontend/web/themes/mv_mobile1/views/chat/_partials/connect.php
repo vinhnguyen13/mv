@@ -21,5 +21,9 @@ Yii::$app->getView()->registerJsFile('/js/lib/chat.js', ['position'=>View::POS_B
 <script>
     $(document).ready(function () {
         $(this).trigger('chat/connect');
+        $(document).bind('chat/receiveMessage', function (event, data) {
+            chatUI.notify(null, null, chatUI.NOTIFY_CHAT);
+
+        });
     });
 </script>

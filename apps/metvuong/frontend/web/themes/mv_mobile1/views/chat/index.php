@@ -56,11 +56,3 @@ if(!empty($jid_id)){
 		</a>
 	</div>
 </script>
-<script>
-	$(document).ready(function () {
-		$(document).bind('chat/receiveMessage', function (event, data) {
-			chatUI.notify(null, null, chatUI.NOTIFY_CHAT);
-//			chatUI.appendMessageToList(data.from, data.to, data.msg, data.type);
-		});
-	});
-</script>
