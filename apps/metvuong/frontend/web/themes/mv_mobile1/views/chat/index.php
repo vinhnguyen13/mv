@@ -7,8 +7,8 @@ $params = [':jid' => Chat::find()->getJid(Yii::$app->user->identity->username)];
 $jid_id = Yii::$app->dbChat->createCommand('SELECT jid_id FROM tig_ma_jids tmj WHERE jid=:jid')->bindValues($params)->queryOne();
 if(!empty($jid_id)){
 	$sql = 'SELECT tbl.* '.
-		'FROM (SELECT owner_id, buddy_id, ts, body, direction, CONCAT(owner_id, "_",buddy_id) as groupchat FROM tig_ma_msgs tmm WHERE (owner_id=:jid_id OR buddy_id=:jid_id) AND (owner_id != buddy_id) ORDER BY ts DESC) as tbl '.
-		'GROUP BY tbl.groupchat';
+		'FROM (SELECT owner_id, buddy_id, ts, body, direction, IF(owner_id = :jid_id, buddy_id, owner_id) AS withuser FROM tig_ma_msgs tmm WHERE :jid_id IN (owner_id, buddy_id) AND (owner_id != buddy_id) ORDER BY ts DESC) as tbl '.
+		'GROUP BY tbl.withuser';
 	$msgs = Yii::$app->dbChat->createCommand($sql)->bindValues([':jid_id'=>$jid_id['jid_id']])->queryAll();
 }
 ?>
@@ -18,15 +18,9 @@ if(!empty($jid_id)){
 		<?php
 		if(!empty($msgs)) {
 			foreach($msgs as $msg){
-				if($msg['owner_id'] == $jid_id['jid_id']){
-					$jid_user = Yii::$app->get('dbChat')->cache(function ($db) use ($msg) {
-						return Yii::$app->get('dbChat')->createCommand('SELECT jid FROM tig_ma_jids tmj WHERE jid_id=:jid_id')->bindValues([':jid_id'=>$msg['buddy_id']])->queryOne();
-					});
-				}else{
-					$jid_user = Yii::$app->get('dbChat')->cache(function ($db) use ($msg) {
-						return Yii::$app->get('dbChat')->createCommand('SELECT jid FROM tig_ma_jids tmj WHERE jid_id=:jid_id')->bindValues([':jid_id'=>$msg['owner_id']])->queryOne();
-					});
-				}
+				$jid_user = Yii::$app->get('dbChat')->cache(function ($db) use ($msg) {
+					return Yii::$app->get('dbChat')->createCommand('SELECT jid FROM tig_ma_jids tmj WHERE jid_id=:jid_id')->bindValues([':jid_id'=>$msg['withuser']])->queryOne();
+				});
 				if(!empty($jid_user['jid'])){
 					$username = Chat::find()->getUsername($jid_user['jid']);
 					$user = \frontend\models\User::find()->where(['username' => $username])->one();
