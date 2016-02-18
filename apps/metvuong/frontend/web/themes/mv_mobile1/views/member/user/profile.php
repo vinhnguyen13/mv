@@ -26,7 +26,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
         <div class="col-xs-4 num-rating">
             <span class="num">4.3</span>
             <span class="txt-num">RATING</span>
-            <?php if($username != Yii::$app->user->identity->username) {?><span class="notifa"><em class="icon-bubble"></em></span><?php } ?>
+            <?php if($username != Yii::$app->user->identity->username) {?><a href="<?=Url::to(['/chat/with', 'username'=>$username])?>"><span class="notifa"><em class="icon-bubble"></em></span></a><?php } ?>
         </div>
     </div>
     <div class="swiper-container gallery-img-user">
