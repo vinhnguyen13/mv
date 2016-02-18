@@ -18,7 +18,7 @@ class AdProductVisitorSearch extends AdProductVisitor
     public function rules()
     {
         return [
-            [['_id', 'user_id', 'product_id', 'time', 'count'], 'safe'],
+            [['_id', 'user_id', 'product_id', 'time', 'count', 'device'], 'safe'],
         ];
     }
 
@@ -58,7 +58,8 @@ class AdProductVisitorSearch extends AdProductVisitor
             ->andFilterWhere(['like', 'user_id', $this->user_id])
             ->andFilterWhere(['like', 'product_id', $this->product_id])
             ->andFilterWhere(['like', 'time', $this->time])
-            ->andFilterWhere(['like', 'count', $this->count]);
+            ->andFilterWhere(['like', 'count', $this->count])
+            ->andFilterWhere(['like', 'device', $this->device]);
 
         return $dataProvider;
     }
@@ -83,7 +84,8 @@ class AdProductVisitorSearch extends AdProductVisitor
             ->andFilterWhere(['like', 'user_id', $this->user_id])
 //            ->andFilterWhere(['like', 'product_id', $this->product_id])
             ->andFilterWhere(['between', 'time', $from, $to])
-            ->andFilterWhere(['like', 'count', $this->count]);
+            ->andFilterWhere(['like', 'count', $this->count])
+            ->andFilterWhere(['like', 'device', $this->device]);
         $query->andWhere(['product_id' => [intval($this->product_id)]]);
 
         return $dataProvider;

@@ -25,7 +25,7 @@ class AdProductFinder extends ActiveRecord
     {
         return [
             [['user_id', 'product_id'], 'required'],
-            [['user_id', 'product_id', 'time', 'count'], 'integer'],
+            [['user_id', 'product_id', 'time', 'count', 'device'], 'integer'],
         ];
     }
     /**
@@ -33,6 +33,6 @@ class AdProductFinder extends ActiveRecord
      */
     public function attributes()
     {
-        return ['_id', 'user_id', 'product_id', 'time', 'count'];
+        return ['_id', 'user_id', 'product_id', 'time', 'count', 'device'];
     }
 }

@@ -24,6 +24,9 @@ class Tracking extends Component
     const INDEX = 'listing';
     const TYPE = 'tracking';
     const DATE_FORMAT = 'd-m-Y';
+    const DESKTOP = 0;
+    const MOBILE = 1;
+    const TABLET = 2;
 
     protected $elastic = null;
     protected $client = null;
@@ -53,13 +56,24 @@ class Tracking extends Component
         return true;
     }
 
+    public function getMobileDetect(){
+        if(Yii::$app->mobileDetect->isMobile()){
+            return self::MOBILE;
+        }
+        if(Yii::$app->mobileDetect->isTablet()){
+            return self::TABLET;
+        }
+        return self::DESKTOP;
+    }
+
     public function productVisitor($uid, $pid, $time = null, $return = false){
         $this->checkAccess();
         $time = !empty($time) ? $time : time();
         $query = AdProductVisitor::find();
-        $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:01", $time)), strtotime(date("d-m-Y 59:59:59", $time))]);
+        $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:01", $time)), strtotime(date("d-m-Y 23:59:59", $time))]);
         $query->andWhere(['user_id' => $uid]);
         $query->andWhere(['product_id' => $pid]);
+        $query->orderBy('time DESC');
         if(($adProductVisitor = $query->one())===null){
             $adProductVisitor = new AdProductVisitor();
             $adProductVisitor->user_id = $uid;
@@ -69,6 +83,7 @@ class Tracking extends Component
             $adProductVisitor->count++;
         }
         $adProductVisitor->time = $time;
+        $adProductVisitor->device = $this->getMobileDetect();
         $adProductVisitor->save();
         return !empty($return) ? $adProductVisitor : true;
     }
@@ -77,9 +92,10 @@ class Tracking extends Component
         $this->checkAccess();
         $time = !empty($time) ? $time : time();
         $query = AdProductFinder::find();
-        $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:01", $time)), strtotime(date("d-m-Y 59:59:59", $time))]);
+        $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:01", $time)), strtotime(date("d-m-Y 23:59:59", $time))]);
         $query->andWhere(['user_id' => $uid]);
         $query->andWhere(['product_id' => $pid]);
+        $query->orderBy('time DESC');
         if(($adProductFinder = $query->one())===null){
             $adProductFinder = new AdProductFinder();
             $adProductFinder->user_id = $uid;
@@ -89,6 +105,7 @@ class Tracking extends Component
             $adProductFinder->count++;
         }
         $adProductFinder->time = $time;
+        $adProductFinder->device = $this->getMobileDetect();
         $adProductFinder->save();
         return !empty($return) ? $adProductFinder : true;
     }
