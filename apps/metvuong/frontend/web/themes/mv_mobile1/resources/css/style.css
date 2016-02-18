@@ -97,7 +97,7 @@ header {
 }
 @media (max-width: 430px) {
     .search-homepage > ul li a {
-        font-size: .9em;
+        font-size: .84em;
     }
 }
 .search-subpage input,

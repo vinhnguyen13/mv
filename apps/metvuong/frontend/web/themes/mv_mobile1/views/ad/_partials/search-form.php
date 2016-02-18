@@ -6,23 +6,7 @@ use yii\helpers\Url;
 	<input type="hidden" name="sort" id="sort" class="value_selected" value="<?= ($sort = Yii::$app->request->get('sort')) ? $sort : 'created_at' ?>" />
 	<div class="search-subpage clearfix">
 		<div class="search-fill">
-			<!-- <div class="fillter-fast">
-				<div class="val-selected style-click"><span class="selected selected_val">Tìm kiếm nhanh...</span></div>
-				<div class="item-dropdown hide-dropdown">
-					<strong>Bạn hãy chọn quận</strong>
-					<ul class="clearfix">
-						<li><a href="#">Quận 1</a></li>
-						<li><a href="#">Quận 2</a></li>
-						<li><a href="#">Quận 3</a></li>
-						<li><a href="#">Quận 4</a></li>
-						<li><a href="#">Quận 5</a></li>
-						<li><a href="#">Quận 6</a></li>
-						<li><a href="#">Quận 7</a></li>
-					</ul>
-					<input type="hidden" id="quan-huyen" class="">
-				</div>
-			</div> -->
-			<!-- <a href="#" class="advande-search-btn style-click"><span class="bd-left"></span><span class="bd-right"></span></a> -->
+
 		</div>
 		<div class="advande-search">
 			<div class="each-advande choice_price_dt" data-item-minmax="prices">
@@ -124,23 +108,11 @@ use yii\helpers\Url;
 </form>
 <script>
 $(document).ready(function () {
-	$('.fillter-fast').dropdown({
-		hiddenFillValue: '#quan-huyen',
+	$('.num-phongngu,.num-phongtam').dropdown({
+		txtAdd: true,
 		styleShow: 0
 	});
 	
-	$('.num-phongngu').dropdown({
-		txtAdd: true,
-		styleShow: 0,
-		hiddenFillValue: '#val-bed'
-	});
-	
-	$('.num-phongtam').dropdown({
-		txtAdd: true,
-		styleShow: 0,
-		hiddenFillValue: '#val-bath'
-	});
-
 	$('.search-subpage').toggleShowMobi();
 	
 	$('.choice_price_dt').price_dt();

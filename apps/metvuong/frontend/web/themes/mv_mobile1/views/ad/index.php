@@ -12,7 +12,7 @@ $categories = AdCategory::find ()->indexBy ( 'id' )->asArray ( true )->all ();
 $types = AdProduct::getAdTypes ();
 ?>
 <div class="result-listing clearfix">
-	<div class="section hide">
+	<div class="section hide choice-city">
 		<div class="select-first-search">
 			<div class="frm-item">
 				<div class="title-frm color-30a868">Bạn ở thành phố nào?</div>
@@ -145,7 +145,16 @@ $types = AdProduct::getAdTypes ();
 			validateFrm: function () {
 				//return false => fill khong thoa yeu cau => khong next
 				//return true => fill thoa yeu cau => next screen
-				return true;
+				var flag = true;
+				$('.choice-city').find('input[type=hidden]').each(function () {
+					if ( $(this).val() == '' ) {
+						flag = false;
+						$(this).closest('.frm-item').find('.val-selected').addClass('error');
+					}else {
+						$(this).closest('.frm-item').find('.val-selected').removeClass('error');
+					}
+				});
+				return flag;
 			},
 			callBackAjax: function () {
 				alert(1);
