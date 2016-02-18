@@ -1,7 +1,8 @@
 //(function(){
     var chatUI = {
+        BOSH_SERVICE: 'http://metvuong.com:5280/wating',
         connect: function() {
-            Chat.connect(chatUI.genJid(xmpp_jid), xmpp_key);
+            Chat.connect(chatUI.genJid(xmpp_jid), xmpp_key, chatUI.BOSH_SERVICE, true);
         },
         genJid: function(jid) {
             return jid+'@'+xmpp_dm;
@@ -54,7 +55,6 @@
             if(!chatBoxExist){
                 return false;
             }
-            console.log(type);
             var from = chatUI.usrFromJid(from);
             var to = chatUI.usrFromJid(to);
             if(type == 1){

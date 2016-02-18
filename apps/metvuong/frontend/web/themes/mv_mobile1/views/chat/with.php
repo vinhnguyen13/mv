@@ -2,36 +2,12 @@
 use yii\web\View;
 use yii\helpers\Url;
 use frontend\models\Chat;
-$username = Yii::$app->user->identity->username;
 $to = Yii::$app->request->get('username');
-$script = "var xmpp_jid = '".$username."';var xmpp_dm = '".Chat::find()->getDomain()."';var xmpp_key = '".Chat::find()->getKey()."';";
-Yii::$app->getView()->registerJs($script, View::POS_HEAD);
-
-Yii::$app->getView()->registerJsFile('https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js', ['position'=>View::POS_BEGIN]);
-
-Yii::$app->getView()->registerJsFile('/js/strophe.js', ['position'=>View::POS_HEAD]);
-Yii::$app->getView()->registerJsFile('/js/lib/strophe.chatstates.js', ['position'=>View::POS_HEAD]);
-Yii::$app->getView()->registerJsFile('/js/lib/strophe.disco.js', ['position'=>View::POS_HEAD]);
-Yii::$app->getView()->registerJsFile('/js/lib/strophe.muc.js', ['position'=>View::POS_HEAD]);
-Yii::$app->getView()->registerJsFile('/js/lib/strophe.ping.js', ['position'=>View::POS_HEAD]);
-Yii::$app->getView()->registerJsFile('/js/lib/strophe.pubsub.js', ['position'=>View::POS_HEAD]);
-Yii::$app->getView()->registerJsFile('/js/lib/strophe.register.js', ['position'=>View::POS_HEAD]);
-Yii::$app->getView()->registerJsFile('/js/lib/strophe.roster.js', ['position'=>View::POS_HEAD]);
-Yii::$app->getView()->registerJsFile('/js/lib/chat.ui.js', ['position'=>View::POS_BEGIN]);
-Yii::$app->getView()->registerJsFile('/js/lib/chat.js', ['position'=>View::POS_BEGIN]);
-
-//Yii::$app->getView()->registerCssFile('/css/chat.css');
 ?>
-
+<?php $this->beginContent('@app/views/chat/_partials/connect.php'); ?><?php $this->endContent();?>
 <div id="chat-container">
 
 </div>
-
-
-
-
-
-
 <!--chat script-->
 <script id="chat-send-template" type="text/x-handlebars-template">
 	<div class="item box-me">
@@ -74,36 +50,16 @@ Yii::$app->getView()->registerJsFile('/js/lib/chat.js', ['position'=>View::POS_B
 </script>
 <script>
 	$(document).ready(function () {
-		$(this).trigger('chat/connect');
-
+		var timer = 0;
 		timer = setTimeout(function() {
 			/*
 			 First: Chat.mucJoin('chatroom2@muc.metvuong.com', chatUI.genJid(xmpp_jid), xmpp_key);
 			 Next typing: Chat.sendMessage(to+'@muc.metvuong.com' , msg,"groupchat");
 			 */
-			console.log('===========================================');
 			var onlines = chatUI.onlineList();
-			console.log('===========================================', onlines);
 			clearTimeout(timer);
 		}, 5000);
 		chatUI.showBoxChat(xmpp_jid, '<?=$to;?>');
-
-		$(document).on('click', '.chatNow', function (e) {
-
-		});
-		$(document).on('click','.title-chat .fa-close', function () {
-			$(this).closest('.chat-group').hide();
-		});
-		$(document).on('click','.title-chat', function () {
-			if ( $('.title-chat').hasClass('active') ) {
-				$('.title-chat').parent().css('height','auto');
-				$('.title-chat').removeClass('active');
-			}else {
-				$('.title-chat').parent().css('height','34px');
-				$('.title-chat').addClass('active');
-			}
-		});
-		var timer = 0;
 		$(document).on('keyup', '.chat-group #typingMsg', function (e) {
 			var key = e.which;
 			var chatBoxExist = $(this).closest('.chat-group');

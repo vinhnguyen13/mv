@@ -10,7 +10,7 @@ var Chat = {
 
     connect : function(jid,password,BOSH_SERVICE,debugginMode) {
         Chat.BOSH_SERVICE = (BOSH_SERVICE) ? BOSH_SERVICE : Chat.BOSH_SERVICE;
-        Chat.debuggingMode = (debugginMode) ? debugginMode : true; //set to false after done testing!!
+        Chat.debuggingMode = (debugginMode) ? debugginMode : false; //set to false after done testing!!
         Chat.connection = new Strophe.Connection(Chat.BOSH_SERVICE);
         Chat.connection.connect(jid,password, Chat.onConnect);
     },
