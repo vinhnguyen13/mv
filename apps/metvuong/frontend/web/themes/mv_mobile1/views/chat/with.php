@@ -111,8 +111,8 @@ Yii::$app->getView()->registerJsFile('/js/lib/chat.js', ['position'=>View::POS_B
 			var to_jid = chatUI.genJid(to);
 			var msg = chatBoxExist.find('#typingMsg').val();
 			if(key == 13){
-				Chat.sendMessage(to_jid , msg, 'chat', {from: chatUI.genJid(xmpp_jid), to: to_jid});
-				Chat.sendMessage(chatUI.genJid(xmpp_jid), msg, 'chat', {from: chatUI.genJid(xmpp_jid), to: to_jid});
+				Chat.sendMessage(to_jid , msg);
+				Chat.sendMessage(chatUI.genJid(xmpp_jid), msg, 'chatme', {from: chatUI.genJid(xmpp_jid), to: to_jid});
 				chatBoxExist.find('#typingMsg').val('');
 			}else{
 				Chat.sendChatState(to_jid, 'composing');
@@ -129,8 +129,8 @@ Yii::$app->getView()->registerJsFile('/js/lib/chat.js', ['position'=>View::POS_B
 			var to_jid = chatUI.genJid(to);
 			var msg = chatBoxExist.find('#typingMsg').val();
 			if(msg){
-				Chat.sendMessage(to_jid , msg, 'chat', {from: chatUI.genJid(xmpp_jid), to: to_jid});
-				Chat.sendMessage(chatUI.genJid(xmpp_jid), msg, 'chat', {from: chatUI.genJid(xmpp_jid), to: to_jid});
+				Chat.sendMessage(to_jid , msg);
+				Chat.sendMessage(chatUI.genJid(xmpp_jid), msg, 'chatme', {from: chatUI.genJid(xmpp_jid), to: to_jid});
 				chatBoxExist.find('#typingMsg').val('');
 			}
 			return false;

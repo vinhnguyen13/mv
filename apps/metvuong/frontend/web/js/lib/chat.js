@@ -91,12 +91,10 @@ var Chat = {
         var from = msg.getAttribute('from');
         var type = msg.getAttribute('type');
         //var elems = msg.getElementsByTagName('body');
-
         //GroupChat message
         if(type == 'groupchat'){
             Chat.log("Group Chat message");
         }
-
         //pubsub message
         else if(from === Chat.pubsubJid && msg.getElementsByTagName('summary').length){
             Chat.log("pubsub message",msg.getElementsByTagName('summary')[0]);
@@ -130,10 +128,13 @@ var Chat = {
                 'message': Strophe.getText(body)
             }
             Chat.messages.push(messageInfo);
-            if(msg.getElementsByTagName('params').length){
-                var params = msg.getElementsByTagName('params')[0];
-                var type = (Strophe.getBareJidFromJid(from) == Strophe.getBareJidFromJid(to)) ? 1 : 2;
-                chatUI.appendMessage(params.getAttribute('from'), params.getAttribute('to'), Strophe.getText(body), type);
+            chatUI.appendMessage(from, to, Strophe.getText(body), 2);
+            chatUI.typingMessage(from, 1);
+        }else if(type == 'headline'){
+            var body = msg.getElementsByTagName('msg')[0];
+            if(msg.getElementsByTagName('chatmeParams').length){
+                var params = msg.getElementsByTagName('chatmeParams')[0];
+                chatUI.appendMessage(params.getAttribute('from'), params.getAttribute('to'), Strophe.getText(body), 1);
                 chatUI.typingMessage(from, 1);
             }
         }
@@ -154,26 +155,30 @@ var Chat = {
                           type: messagetype,
                           id: Chat.connection.getUniqueId()
             }).c("body", {xmlns: Strophe.NS.CLIENT}).t(message);
-        }
-        else{
+        }else if (messagetype === 'chatme') {
+            reply = $msg({to: messgeTo,
+                from: Strophe.getBareJidFromJid(Chat.connection.jid),
+                type: 'headline'
+            }).c("msg").t(message);
+            if(params){
+                reply.up().c("chatmeParams", {from: params.from, to: params.to});
+            }
+        }else{
             reply = $msg({to: messgeTo,
                           from: Strophe.getBareJidFromJid(Chat.connection.jid),
                           type: messagetype
             }).c("body").t(message);
-            if(params){
-                reply.up().c("params", {from: params.from, to: params.to});
+            /**save message**/
+            if(Chat.sttSaveMsg == true){
+                Chat.connection.send($iq({type: 'set', id: 'autoSave'}).c('auto', {
+                    save: 'true',
+                    xmlns: 'urn:xmpp:archive'
+                }));
             }
+            /**end save**/
         }
         Chat.connection.send(reply.tree());
         Chat.log('I sent ' + messgeTo + ': ' + message, reply.tree());
-        /**save message**/
-        if(Chat.sttSaveMsg == true){
-            Chat.connection.send($iq({type: 'set', id: 'autoSave'}).c('auto', {
-                save: 'true',
-                xmlns: 'urn:xmpp:archive'
-            }));
-        }
-        /**end save**/
         return true;
     },
     Roster : [],
