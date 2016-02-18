@@ -22,6 +22,7 @@ use yii\helpers\Url;
                 <li><a href="#">thuê</a></li>
                 <li><a href="<?= Url::to(['/ad/post']) ?>">bán / cho thuê</a></li>
                 <li><a href="<?=Url::to(['building-project/index']);?>">dự án mới</a></li>
+                <li><a href="#">Tin tức</a></li>
             </ul>
         </div>
     </div>
@@ -48,8 +49,6 @@ use yii\helpers\Url;
             <li><a href="<?=Url::to(['/dashboard/notification'])?>"><em class="icon-bell"></em>Thông báo<span>5</span></a></li>
             <li><a href="<?=Url::to(['/dashboard/ads'])?>"><em class="icon-docs"></em>Listings</a></li>
             <li><a href="<?=Url::to(['/chat'])?>"><em class="icon-bubbles"></em>Chat <span>5</span></a></li>
-            <li><a href="#"><em class="icon-users"></em>Bạn bè</a></li>
-            <li><a href="#"><em class="fa fa-newspaper-o"></em>Tin tức</a></li>
             <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><em class="icon-power"></em>Đăng xuất</a></li>
         </ul>
         <?php } ?>

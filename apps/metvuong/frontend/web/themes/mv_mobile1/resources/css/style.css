@@ -2376,6 +2376,10 @@ html.mm-opening .mm-slideout {
     line-height: 35px;
     padding: 0 0 0 10px;
     width: 100%;
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    -ms-border-radius: 0px;
 }
 .type-input-chat .sm-chat {
     position: absolute;
@@ -2463,7 +2467,7 @@ html.mm-opening .mm-slideout {
 .container-chat .chat-txt:after {
    content: "";
    position: absolute;
-   top: 21px;
+   top: 14px;
    left: 10px;
    border-top: 20px solid #fff;
    border-top-color: inherit;
@@ -2637,6 +2641,8 @@ input[type=text]:focus {
     height: 18px;
     background-position: -53px -71px;
     background-size: 115px;
+    position: relative;
+    top: 3px;
 }
 .icon-pt {
     display: inline-block;
@@ -2644,6 +2650,8 @@ input[type=text]:focus {
     height: 25px;
     background-position: 0px -100px;
     background-size: 135px;
+    position: relative;
+    top: 3px;
 }
 .list-tienich-intro li .wrap-icon {
     display: inline-block;

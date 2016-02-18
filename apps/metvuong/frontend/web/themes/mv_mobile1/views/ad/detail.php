@@ -84,53 +84,14 @@ use yii\helpers\Url;
 		<p>Gym</p>
 		
 	</div>
-	<div class="attr-detail">
+	<!-- <div class="attr-detail">
 		<div class="title-attr-listing">Địa điểm</div>
 		<div class="map-wrap">
 			<div class="map-inside">
 				<div data-lat="<?= $product->lat ?>" data-lng="<?= $product->lng ?>" id="map"></div>
 			</div>
 		</div>
-	</div>
-	<div class="attr-detail">
-		<div class="title-attr-listing">Điểm Met Vuong cho khu vực</div>
-		<div class="rating-mv-listing">
-			<ul>
-				<li>
-					<div class="clearfix">
-						<span class="pull-right">6/10</span> Thông tin chung
-					</div>
-					<div class="rating-percent">
-						<div class="num-percent" style="width: 50%;"></div>
-					</div>
-				</li>
-				<li>
-					<div class="clearfix">
-						<span class="pull-right">6/10</span> Thông tin chi tiết
-					</div>
-					<div class="rating-percent">
-						<div class="num-percent" style="width: 80%;"></div>
-					</div>
-				</li>
-				<li>
-					<div class="clearfix">
-						<span class="pull-right">6/10</span> Hình ảnh
-					</div>
-					<div class="rating-percent">
-						<div class="num-percent" style="width: 60%;"></div>
-					</div>
-				</li>
-				<li>
-					<div class="clearfix">
-						<span class="pull-right">6/10</span> Bản vẽ mặt bằng
-					</div>
-					<div class="rating-percent">
-						<div class="num-percent" style="width: 20%;"></div>
-					</div>
-				</li>
-			</ul>
-		</div>
-	</div>
+	</div> -->
 	<div class="attr-detail">
 		<div class="title-attr-listing">Liên hệ</div>
 		<div class="infor-agent clearfix">
