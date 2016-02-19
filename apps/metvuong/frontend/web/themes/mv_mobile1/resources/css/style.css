@@ -761,16 +761,8 @@ label {
 }
 .post-listing {
     padding: 44px 15px 0px;
-    /* position: relative; */
-    /* margin-top: 14px; */
-    /* position: fixed; */
+    position: relative;
     width: 100%;
-    min-height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-    top: 0;
-    left: 0;
-    z-index: 5;
 }
 .post-listing form {
     
@@ -1209,6 +1201,15 @@ label {
     padding-left: 10px;
     padding-right: 10px;
     position: relative;
+    font-size: .9em;
+}
+.val-selected .selected {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+    text-transform: capitalize;
 }
 .value-selected {
     margin-bottom: 10px;
@@ -1220,27 +1221,25 @@ label {
 .value-selected.active {
     background: #E2E2E2;
 }
-.each-advande {
-    margin-top: 10px;
-    position: relative;
-}
-.each-advande .num-phongtam,
-.each-advande .num-phongngu {
+.frm-item .num-phongtam,
+.frm-item .num-phongngu {
     position: static;
 }
-.each-advande .num-phongngu {
+.frm-item .num-phongngu {
     padding-left: 0;
-    padding-right: 10px;
+    padding-right: 5px;
 }
-.each-advande .num-phongtam {
+.frm-item .num-phongtam {
     padding-right: 0;
-    padding-left: 10px;
+    padding-left: 5px;
 }
 .wrap-listing {
     padding: 0 15px 80px;
 }
 .option-show-listing .selected {
     font-weight: 700;
+    width: auto;
+    overflow: visible;
 }
 .option-show-listing {
     margin-bottom: 15px;
@@ -1342,22 +1341,19 @@ label {
 
 }
 .advande-search {
-    /* display: none; */
-    /* padding-top: 5px; */
+    padding-top: 15px;
 }
 .section {
-    /* top: 170px; */
+    top: 120px;
     left: 0;
     width: 100%;
     position: absolute;
-    padding: 0 0 50px;
+    padding: 0 15px 50px;
     background: #fff;
     margin-bottom: 0;
-    position: relative;
 }
 .select-type {
     background: #ebeff2;
-    /* top: 94px; */
     padding-bottom: 15px;
 }
 @-webkit-keyframes slideouttoleft{
@@ -1769,8 +1765,9 @@ label {
     box-shadow: 0px 0px 5px #333;
 }
 .box-input {
-    padding: 10px;
     border-bottom: 1px solid  #B3B3B3;
+    padding-bottom: 10px;
+    font-size: .85em;
 }
 .box-input input {
     float: left;
@@ -1779,14 +1776,10 @@ label {
 .choice_price_dt .txt-min.active,
 .box-input input.active {
     background: #E2E2E2;
-    box-shadow: 0px 0px 3px #4A4A4A;
-    -webkit-box-shadow: 0px 0px 3px #4A4A4A;
-    -moz-box-shadow: 0px 0px 3px #4A4A4A;
-    -ms-box-shadow: 0px 0px 3px #4A4A4A;
 }
 .filter-minmax  li a {
     display: block;
-    font-size: 1.3em;
+    font-size: 1em;
     padding: 4px 15px;
     color: #333;
 }
@@ -2194,10 +2187,11 @@ footer {
 }
 .arrowDown {
     display: inline-block;
-    width: 24px;
-    height: 13px;
-    background-position: -91px -27px;
-    background-size: 150px;
+    width: 16px;
+    height: 9px;
+    background-position: -67px -20px;
+    background-size: 110px;
+    background-color: #f4f4f4;
 }
 #sandbox-container {
     position: relative;
@@ -2518,7 +2512,6 @@ html.mm-opening .mm-slideout {
     right: 8px;
 }
 .filter-minmax {
-    height: 150px;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -2754,6 +2747,7 @@ input[type=text]:focus {
 .result-listing {
     position: relative;
     width: 100%;
+    overflow: hidden;
 }
 .result-listing .section {
     top: 0;
@@ -2768,15 +2762,15 @@ input[type=text]:focus {
     margin-bottom: 5px;
 }
 .frm-item {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 .box-dropdown {
     position: relative;
 }
 .box-dropdown .arrowDown {
     position: absolute;
-    top: 12px;
-    right: 8px;
+    top: 16px;
+    right: 10px;
 }
 .box-dropdown .dropdown-up-style .item-dropdown {
     border: 1px solid #A7A7A7;
@@ -2790,15 +2784,10 @@ input[type=text]:focus {
 }
 .value-selected.active .arrowDown,
 .val-selected.active .arrowDown {
-    background-position: -36px -73px;
+    background-position: -27px -54px;
 }
 .frm-item .error {
     border: 1px solid #C11111;
-}
-.advande-search .arrowDown {
-    position: absolute;
-    top: 13px;
-    right: 5px;
 }
 @-webkit-keyframes pace-spinner {
 	0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
@@ -2883,4 +2872,20 @@ input[type=text]:focus {
 }
 .list-choice-city li:last-child span.arrow-left {
     display: none;
+}
+.num-phongtam .box-dropdown .item-dropdown li,
+.num-phongngu .box-dropdown .item-dropdown li {
+    padding: 0;
+    width: 100%;
+}
+.num-phongtam .box-dropdown li a,
+.num-phongngu .box-dropdown li a {
+    border: none;
+    font-size: 1.2em;
+    padding: 5px 0;
+}
+.num-phongtam .box-dropdown .item-dropdown,
+.num-phongngu .box-dropdown .item-dropdown {
+    padding-top: 0;
+    padding-bottom: 0;
 }

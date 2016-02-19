@@ -36,14 +36,18 @@ $(document).ready(function() {
     $(document).on('click','.link-login', function() {$('a[href=#tab-signin]').trigger('click');});
     $(document).on('click','.link-regis', function() {$('a[href=#tab-signup]').trigger('click');});
 
-    var hWin = $(window).outerHeight(), flagScroll = false;
-    $(window).on('scroll', function () {
+    var hWin = screen.height,
+        flagScroll = false,
+        elScroll = $('<a href="#" id="scroll-top"><em class="fa fa-arrow-up"></em></a>');
+    $(document).on('scroll', function () {
         var _this = $(this),
             val = _this.scrollTop();
 
         if ( val >= hWin ) {
+            $('body').append(elScroll);
             flagScroll = true;
         }else {
+            $('body').remove('#scroll-top');
             flagScroll = false;
         }
 
@@ -273,10 +277,10 @@ $.fn.dropdown = function (options) {
                 
                 itemValueClick.removeClass('active');
                 if ( sc.settings.txtAdd ) {
-                    var getTxtAdd = el.find('.val-selected').data('textAdd');
+                    var getTxtAdd = el.find('.val-selected').data('textAdd') == undefined ? '' : el.find('.val-selected').data('textAdd');
                     txt += ' '+getTxtAdd;
                 }
-                el.find('.val-selected .selected').addClass('selected_val');
+                
                 el.find('.val-selected .selected').text(txt);
 
                 sc.settings.funCallBack($(this));
@@ -394,11 +398,11 @@ $.fn.price_dt = function (options) {
 
         sc.settings = $.extend({}, defaults, options);
 
-        el.toggleShowMobi({
+        /*el.toggleShowMobi({
             styleEffect: 'slideDownUp',
             btnEvent: '.value-selected',
-            itemToggle: '.item-advande'
-        });
+            itemToggle: '.wrap-min-max'
+        });*/
 
         if ( el.data('itemMinmax') == 'prices' ) {
             for ( var i in prices[sc.settings.hinhthuc] ) {
@@ -581,7 +585,7 @@ $.fn.slideSection = function (options) {
         
         el.find('.section').eq(sc.settings.active).removeClass('hide');
 
-        //hWrapSection(sc.settings.active);
+        hWrapSection(sc.settings.active);
 
         current = sc.settings.active;
 
@@ -613,7 +617,7 @@ $.fn.slideSection = function (options) {
 
                 el.find('.section').eq(current).addClass('in').removeClass('hide');
 
-                //hWrapSection(current);
+                hWrapSection(current);
 
                 if ( current+1 == lenItem ) {
                     btnNext.addClass('disable');
@@ -644,7 +648,7 @@ $.fn.slideSection = function (options) {
 
             el.find('.section').eq(current).addClass('back-in').removeClass('out hide');
 
-            //hWrapSection(current);
+            hWrapSection(current);
             
             if ( current == 0 ) {
                 btnNext.removeClass('disable');

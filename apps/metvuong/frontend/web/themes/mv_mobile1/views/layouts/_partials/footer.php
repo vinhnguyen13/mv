@@ -24,4 +24,3 @@
 		<p>&copy; Copyright 2016 <a href="#">metvuong.com</a>. All rights reserved.</p>
 	</div>
 </footer>
-<a href="#" id="scroll-top"><em class="fa fa-arrow-up"></em></a>

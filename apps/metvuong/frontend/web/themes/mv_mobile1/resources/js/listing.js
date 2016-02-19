@@ -33,6 +33,7 @@ $(document).ready(function(){
 				} else {
 					$(window).on('scroll', next);
 				}
+				$('.result-listing').css({height: $(listingListId).outerHeight()});
 			});
 		}
 	}
