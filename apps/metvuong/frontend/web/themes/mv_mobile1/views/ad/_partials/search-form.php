@@ -3,11 +3,12 @@
 use yii\helpers\Url;
 ?>
 <form id="search-form" action="<?= Url::to(['/ad/index']) ?>" method="get">
+	<div class="list-choice-city">
+		<ul class="clearfix"></ul>
+	</div>
+
 	<input type="hidden" name="sort" id="sort" class="value_selected" value="<?= ($sort = Yii::$app->request->get('sort')) ? $sort : 'created_at' ?>" />
 	<div class="search-subpage clearfix">
-		<div class="search-fill">
-
-		</div>
 		<div class="advande-search">
 			<div class="each-advande choice_price_dt" data-item-minmax="prices">
 				<div class="value-selected price-search style-click">

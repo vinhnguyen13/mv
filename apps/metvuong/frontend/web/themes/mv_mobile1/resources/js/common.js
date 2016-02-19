@@ -185,11 +185,12 @@ $.fn.dropdown = function (options) {
         var defaults = {
             styleShow: 1, // 1. relative, 0. absolute
             txtAdd: false,
-            ajaxSubmit: function () {}
+            ajaxSubmit: function () {},
+            funCallBack: function () {},
+            renderAddEvent: function () {}
         },
         sc = {},
         el = $(this),
-        itemList = el.parent().find('.item-dropdown li a'),
         wrapBoxEffect = $('<div class="dropdown-up-style hide"></div>');
 
         if ( el.length == 0 ) return el;
@@ -221,7 +222,9 @@ $.fn.dropdown = function (options) {
 
         function toggleView (e) {
             e.preventDefault();
-            var _this = $(this);
+            var _this = $(this),
+                itemList = el.parent().find('.item-dropdown li a');
+
             if ( sc.settings.styleShow ) { // relative
                 if ( _this.hasClass('active') ) {
                     _this.removeClass('active');
@@ -229,7 +232,7 @@ $.fn.dropdown = function (options) {
                 }else {
                     _this.addClass('active');
                     _this.parent().find('.item-dropdown').velocity("slideDown", { duration: 350 });
-                    selectItem(_this);
+                    selectItem(itemList, _this);
                 }
             }else { // absolute
                 if ( _this.hasClass('active') ) {
@@ -244,23 +247,23 @@ $.fn.dropdown = function (options) {
                     setTimeout(function() {
                         el.find('.dropdown-up-style').addClass('active');
                     },50);
-                    selectItem(_this);
+                    selectItem(itemList, _this);
                 }
             }
         }
 
-        function selectItem (item) {
-            itemList.unbind('click');
-            itemList.on('click', function () {
+        function selectItem (item, itemValueClick) {
+            item.unbind('click');
+            item.on('click', function () {
                 var txt = $(this).text(),
-                    dataValue = $(this).data('value') != undefined ? $(this).data('value') : txt;
+                dataValue = $(this).data('value') != undefined ? $(this).data('value') : txt;
 
                 $(el.find('input[type=hidden]')).val(dataValue);
 
                 sc.settings.ajaxSubmit();
 
                 if (sc.settings.styleShow) {
-                    item.parent().find('.item-dropdown').hide();
+                    itemValueClick.parent().find('.item-dropdown').hide();
                 }else {
                     el.find('.dropdown-up-style').removeClass('active');
                     setTimeout(function() {
@@ -268,13 +271,15 @@ $.fn.dropdown = function (options) {
                     },250);
                 }
                 
-                item.removeClass('active');
+                itemValueClick.removeClass('active');
                 if ( sc.settings.txtAdd ) {
                     var getTxtAdd = el.find('.val-selected').data('textAdd');
                     txt += ' '+getTxtAdd;
                 }
                 el.find('.val-selected .selected').addClass('selected_val');
                 el.find('.val-selected .selected').text(txt);
+
+                sc.settings.funCallBack($(this));
 
                 return false;
             });
@@ -549,7 +554,7 @@ $.fn.slideSection = function (options) {
             pagi: '.step-link',
             navi: true,
             validateFrm: function () {},
-            callBackAjax: function () {}
+            funCallBack: function () {}
         },
         sc = {},
         el = $(this),
@@ -587,7 +592,9 @@ $.fn.slideSection = function (options) {
             if ( $(this).hasClass('disable') ) return;
             if ( !sc.settings.validateFrm() ) return;
 
-            sc.settings.callBackAjax();
+            sc.settings.funCallBack();
+
+            el.find('.section').eq(current).find('.val-selected').removeClass('error');
 
             el.find('.section').removeClass('back-in back-out');
             if ( current+1 < lenItem ) {
@@ -639,7 +646,7 @@ $.fn.slideSection = function (options) {
             hWrapSection(current);
             
             if ( current == 0 ) {
-                //nextBack.addClass('hide');
+                btnNext.removeClass('disable');
                 btnBack.addClass('disable');
             }else {
                 btnNext.removeClass('disable');

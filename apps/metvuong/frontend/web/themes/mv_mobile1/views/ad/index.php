@@ -11,6 +11,7 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/listing.j
 $categories = AdCategory::find ()->indexBy ( 'id' )->asArray ( true )->all ();
 $types = AdProduct::getAdTypes ();
 ?>
+
 <div class="result-listing clearfix">
 	<div class="section hide choice-city">
 		<div class="select-first-search">
@@ -18,15 +19,11 @@ $types = AdProduct::getAdTypes ();
 				<div class="title-frm color-30a868">Bạn ở thành phố nào?</div>
 				<div class="box-dropdown">
 					<div class="val-selected style-click">
-						<span class="selected selected_val">Chọn thành phố...</span>
+						<span class="selected selected_val" data-placeholder="Chọn tỉnh/thành...">Chọn tỉnh/thành...</span>
 						<span class="pull-right icon arrowDown"></span>
 					</div>
 					<div class="item-dropdown hide-dropdown">
-						<ul class="clearfix">
-							<li><a href="#">Hồ Chí Minh</a></li>
-							<li><a href="#">Hà Nội</a></li>
-							<li><a href="#">Đà Nẵng</a></li>
-						</ul>
+						<ul class="clearfix tinh-thanh"></ul>
 						<input type="hidden" id="tinh-thanh" class="">
 					</div>
 				</div>
@@ -35,17 +32,11 @@ $types = AdProduct::getAdTypes ();
 				<div class="title-frm color-30a868">Bạn ở quận nào?</div>
 				<div class="box-dropdown">
 					<div class="val-selected style-click">
-						<span class="selected selected_val">Chọn quận...</span>
+						<span class="selected selected_val" data-placeholder="Chọn quận/huyện...">Chọn quận/huyện...</span>
 						<span class="pull-right icon arrowDown"></span>
 					</div>
 					<div class="item-dropdown hide-dropdown">
-						<ul class="clearfix">
-							<li><a href="#">Quận 1</a></li>
-							<li><a href="#">Quận 2</a></li>
-							<li><a href="#">Tân Bình</a></li>
-							<li><a href="#">Tân Phú</a></li>
-							<li><a href="#">Quận 3</a></li>
-						</ul>
+						<ul class="clearfix quan-huyen"></ul>
 						<input type="hidden" id="quan-huyen" class="">
 					</div>
 				</div>
@@ -54,15 +45,11 @@ $types = AdProduct::getAdTypes ();
 				<div class="title-frm color-30a868">Bất động sản bạn đang tìm?</div>
 				<div class="box-dropdown">
 					<div class="val-selected style-click">
-						<span class="selected selected_val">Loại BĐS...</span>
+						<span class="selected selected_val" data-placeholder="Loại BĐS...">Loại BĐS...</span>
 						<span class="pull-right icon arrowDown"></span>
 					</div>
 					<div class="item-dropdown hide-dropdown">
-						<ul class="clearfix">
-							<li><a href="#">Nhà Riêng</a></li>
-							<li><a href="#">Chung Cư</a></li>
-							<li><a href="#">Nhà Phố</a></li>
-						</ul>
+						<ul class="clearfix loai-bds"></ul>
 						<input type="hidden" id="loai-bds" class="">
 					</div>
 				</div>
@@ -137,38 +124,74 @@ $types = AdProduct::getAdTypes ();
 		</div>
 	</div>
 </div>
+
 <script>
 	$(document).ready(function () {
 		$('.result-listing').slideSection({
 			active: 0,
-			navi: false,
 			validateFrm: function () {
 				//return false => fill khong thoa yeu cau => khong next
 				//return true => fill thoa yeu cau => next screen
 				var flag = true;
-				$('.choice-city').find('input[type=hidden]').each(function () {
-					if ( $(this).val() == '' ) {
-						flag = false;
-						$(this).closest('.frm-item').find('.val-selected').addClass('error');
-					}else {
-						$(this).closest('.frm-item').find('.val-selected').removeClass('error');
-					}
-				});
+				if ( $('input#tinh-thanh').val() == '' ) {
+					flag = false;
+					$('input#tinh-thanh').closest('.frm-item').find('.val-selected').addClass('error');
+				}
 				return flag;
 			},
-			callBackAjax: function () {
-				$('body').loading();
-				$.ajax({
-					url: "https://dl.dropboxusercontent.com/u/43486987/test.txt", 
-					success: function(result){
-				        $('body').loading({done: true});
-				    }
-				});
+			funCallBack: function () {
+				
 			}
 		});
 
-		$('.box-dropdown').dropdown({
-			styleShow: 0
-		});
+		$('.tinh-thanh').html('');
+		$('.loai-bds').html('');
+		for ( var i in dataCities) {
+			var item = $('<li><a href="#" data-value="'+i+'" data-order="1">'+dataCities[i].name+'</a></li>');
+			$('.tinh-thanh').append(item);
+		}
+		for ( var i in dataCategories) {
+			var item = $('<li><a href="#" data-value="'+i+'" data-order="3">'+dataCategories[i].name+'</a></li>');
+			$('.loai-bds').append(item);
+		}
+
+		$('.choice-city .box-dropdown').dropdown({
+			styleShow: 0,
+			funCallBack: function (item) {
+				var selectedCityList = $('<li><a href="#" data-value="'+item.data('value')+'" data-order="'+item.data('order')+'">'+item.text()+'</a><span class="icon arrow-left arrow-small"></span></li>');
+
+				if ( $('.list-choice-city ul li').length > 0 ) {
+					$('.list-choice-city ul li').each(function () {
+						var _this = $(this),
+							orderThis = _this.find('a').data('order'),
+							orderAddItem = item.data('order');
+						if ( orderAddItem > orderThis ) {
+							selectedCityList.insertAfter(_this);
+						}else {
+							selectedCityList.insertBefore(_this);
+						}
+					});
+				}else {
+					$('.list-choice-city ul').append(selectedCityList);
+				}
+
+				if ( item.closest('.tinh-thanh').length > 0 ) {
+					var idTT = item.data('value');
+					$('.quan-huyen').html('');
+					var txtDefault = $('.quan-huyen').closest('.box-dropdown').find('.selected_val').data('placeholder');
+					$('.quan-huyen').closest('.box-dropdown').find('.selected_val').text(txtDefault);
+
+					for ( var i in dataCities) {
+						if ( i == idTT ) {
+							for ( var j in dataCities[i].districts ) {
+								var item = $('<li><a href="#" data-value="'+j+'" data-order="2">'+dataCities[i].districts[j].name+'</a></li>');
+								$('.quan-huyen').append(item);
+							}
+							break;
+						}
+					}
+				}
+			}
+		});		
 	});
 </script>
