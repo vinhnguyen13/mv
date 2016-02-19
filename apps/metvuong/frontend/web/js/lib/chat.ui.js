@@ -73,7 +73,7 @@
         appendMessageToList: function (from, to, msg, type, fromName, toName) {
             var chatBoxExist = $('.chat-history');
             var template = Handlebars.compile($("#chat-receive-template").html());
-            var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(from)+'/avatar', time: $.now(), name: fromName, chatUrl: '/', to: chatUI.usrFromJid(to)});
+            var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(from)+'/avatar', time: $.now(), fromName: fromName, chatUrl: '/chat/'+chatUI.usrFromJid(from), to: chatUI.usrFromJid(to)});
             if($(".item[chat-to='" + chatUI.usrFromJid(to) + "']")){
                 $(".item[chat-to='" + chatUI.usrFromJid(to) + "']").remove();
             }

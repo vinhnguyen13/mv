@@ -50,7 +50,7 @@ if(!empty($jid_id)){
 			<span class="wrap-img"><img src="{{avatarUrl}}" alt=""></span>
 			<div class="chat-detail">
 				<span class="pull-right time-chat">{{time}}</span>
-				<span class="name">{{name}}</span>
+				<span class="name">{{fromName}}</span>
 				<span>{{msg}}</span>
 			</div>
 		</a>
