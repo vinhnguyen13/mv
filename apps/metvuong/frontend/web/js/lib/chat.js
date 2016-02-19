@@ -135,7 +135,7 @@ var Chat = {
             var body = msg.getElementsByTagName('msg')[0];
             if(msg.getElementsByTagName('chatmeParams').length){
                 var params = msg.getElementsByTagName('chatmeParams')[0];
-                $(document).trigger('chat/receiveMessage', [Strophe.getText(body), 2, {from: params.getAttribute('from'), to: params.getAttribute('to'), fromName: params.getAttribute('fromName'), toName: params.getAttribute('toName')}]);
+                $(document).trigger('chat/receiveMessage', [Strophe.getText(body), 1, {from: params.getAttribute('from'), to: params.getAttribute('to'), fromName: params.getAttribute('fromName'), toName: params.getAttribute('toName')}]);
                 chatUI.typingMessage(from, 1);
             }
         }
