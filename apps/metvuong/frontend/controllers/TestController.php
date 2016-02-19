@@ -20,7 +20,7 @@ class TestController extends \yii\web\Controller
     public $layout = '@app/views/layouts/layout';
     public function actionMail()
     {
-        $user = User::findOne(5);
+        $user = User::findOne(1);
         $mailer = new Mailer();
         $chk = $mailer->sendWelcomeMessage($user, null, true);
         echo "<pre>";

@@ -29,10 +29,6 @@ $model = Yii::createObject([
                             <button type="button" class="btn btn-primary btn-common btn-reset-password">Send</button>
                         </div>
                     <?php ActiveForm::end(); ?>
-                    <?= \vsoft\user\widgets\Connect::widget([
-                        'baseAuthUrl' => ['/user/security/auth'],
-                        'groupTitle' => Yii::t('user', '')
-                    ]) ?>
                     <div class="regis-login-link">
                         <p>New to Met Vuong? <a class="showPopup" href="#" data-toggle="modal" data-target="#frmRegister">Sign up</a></p>
                         <p>Already have an account? <a class="showPopup" href="#" data-toggle="modal" data-target="#frmLogin">Sign in here</a></p>

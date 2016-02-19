@@ -187,11 +187,10 @@ class MemberController extends Controller
         }
 
         /** @var Token $token */
-        $token = Token::find()->where(['MD5(CONCAT(user_id, code))' => md5($id.$code), 'code' => $code, 'type' => Token::TYPE_RECOVERY])->one();
+        $token = Token::find()->where(['MD5(CONCAT(user_id, code))' => $id, 'code' => $code, 'type' => Token::TYPE_RECOVERY])->one();
         if ($token === null || $token->isExpired || $token->user === null) {
             Yii::$app->session->setFlash('danger', Yii::t('user', 'Recovery link is invalid or expired. Please try requesting a new one.'));
-
-            return $this->render('/message', [
+            return $this->render('/_systems/_alert', [
                 'title'  => Yii::t('user', 'Invalid or expired link'),
                 'module' => $this->module,
             ]);

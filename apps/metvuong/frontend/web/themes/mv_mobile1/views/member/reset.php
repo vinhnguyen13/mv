@@ -15,10 +15,6 @@ $model = Yii::createObject([
             <div class="modal-body">
                 <div class="wrap-modal clearfix">
                     <h3>Lấy lại mật khẩu</h3>
-                    <?= \vsoft\user\widgets\Connect::widget([
-                        'baseAuthUrl' => ['/user/security/auth'],
-                        'groupTitle' => Yii::t('user', 'Login by social')
-                    ]) ?>
                     <?php $form = ActiveForm::begin([
                         'id' => 'recover-form',
                         'action' => Url::current(),
@@ -58,7 +54,7 @@ $model = Yii::createObject([
                     success: function(data) {
                         if(data.statusCode == 200){
                             $('ul.menu-home').prepend('<li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><em class="icon-user"></em>' + data.parameters.username + '</a></li>');
-                            location.href = '<?=Yii::$app->getUser()->getReturnUrl();?>';
+                            location.href = '/';
                         }else if(data.statusCode == 404){
                             var arr = [];
                             $.each(data.parameters, function(idx, val){
