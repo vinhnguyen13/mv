@@ -2,7 +2,8 @@
 use yii\web\View;
 use yii\helpers\Url;
 use frontend\models\Chat;
-$to = Yii::$app->request->get('username');
+$to = $username;
+
 $userTo = \frontend\models\User::find()->where(['username' => $to])->one();
 $nameUserTo = $userTo->profile->getDisplayName();
 $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();

@@ -71,6 +71,7 @@
                 chatBoxExist.find('.wrap-chat').append(html);
             }
             $('.container-chat').scrollTop($('.wrap-chat').height());
+            $(document).trigger('chat/readNotify');
         },
         appendMessageToList: function (from, to, msg, type, fromName, toName) {
             msg = chatUI.decodeEntities(msg);
@@ -86,7 +87,6 @@
             chatBoxExist.find('.chat-list').prepend(html);
         },
         notify: function (from, to, type) {
-            console.log(from, to);
             var sumChat = 0, sumOther = 0, sumTotal = 0;
             if(type == chatUI.NOTIFY_CHAT){
                 sumChat = (($('#notifyChat').length > 0) ? parseInt($('#notifyChat').html()) : 0) + 1;
