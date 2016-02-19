@@ -99,7 +99,7 @@ class AdController extends Controller
         if(count($products) > 0) {
             foreach ($products as $product) {
                 try {
-                    Tracking::find()->productFinder(Yii::$app->user->id, $product->id, time());
+                    Tracking::find()->productFinder(Yii::$app->user->id, (int)$product->id, time());
                 } catch (Exception $ex) {
 
                 }

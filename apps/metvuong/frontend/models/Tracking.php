@@ -7,6 +7,7 @@
  */
 
 namespace frontend\models;
+use vsoft\ad\models\AdProductSaved;
 use vsoft\tracking\models\base\AdProductFinder;
 use vsoft\tracking\models\base\AdProductVisitor;
 use Yii;
@@ -72,12 +73,13 @@ class Tracking extends Component
         $query = AdProductVisitor::find();
         $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:01", $time)), strtotime(date("d-m-Y 23:59:59", $time))]);
         $query->andWhere(['user_id' => $uid]);
-        $query->andWhere(['product_id' => $pid]);
+        $query->andWhere(['product_id' => (int)$pid]);
         $query->orderBy('time DESC');
-        if(($adProductVisitor = $query->one())===null){
+        $adProductVisitor = $query->one();
+        if($adProductVisitor === null){
             $adProductVisitor = new AdProductVisitor();
             $adProductVisitor->user_id = $uid;
-            $adProductVisitor->product_id = $pid;
+            $adProductVisitor->product_id = (int)$pid;
             $adProductVisitor->count = 1;
         }else{
             $adProductVisitor->count++;
@@ -154,7 +156,9 @@ class Tracking extends Component
     }
 
     public function getVisitors($pid){
-        $query = AdProductVisitor::find()->where(['product_id' => $pid])->all();
+        $from = strtotime('-7 days');
+        $to = strtotime('+0 days');
+        $query = AdProductVisitor::find()->andWhere(['product_id' => (int)$pid])->all();
         $visitors = array();
         foreach($query as $k => $q){
             $username = User::findIdentity($q->user_id)->username;
@@ -167,7 +171,9 @@ class Tracking extends Component
     }
 
     public static function getFinders($pid){
-        $query = AdProductFinder::find()->where(['product_id' => $pid])->all();
+        $from = strtotime('-7 days');
+        $to = strtotime('+0 days');
+        $query = AdProductFinder::find()->andWhere(['product_id' => (int)$pid])->all();
         $finders = array();
         foreach($query as $k => $q){
             $username = User::findIdentity($q->user_id)->username;
@@ -177,6 +183,19 @@ class Tracking extends Component
                 $finders[$username] = 1;
         }
         return $finders;
+    }
+
+    public static function getFavourites($pid){
+        $query = AdProductSaved::find()->where(['product_id' => (int)$pid])->all();
+        $favourites = array();
+        foreach($query as $k => $q){
+            $username = User::findIdentity($q->user_id)->username;
+            if(array_key_exists($username, $favourites)){
+                $favourites[$username]++;
+            } else
+                $favourites[$username] = 1;
+        }
+        return $favourites;
     }
 
 }

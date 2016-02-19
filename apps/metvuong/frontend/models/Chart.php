@@ -32,20 +32,20 @@ class Chart extends Component
         return Yii::createObject(Chart::className());
     }
 
-    public function getDataFinder(){
-        $from = strtotime('-30 days');
-        $to = strtotime('+1 days');
-        $pids = [];
+    public function getDataFinder($pid){
+        $from = strtotime('-7 days');
+        $to = strtotime('+0 days');
+//        $pids = [1];
 
         $query = AdProductFinder::find();
         $query->andFilterWhere(['between', 'time', $from, $to]);
-        if(!empty($pids)){
-            $query->andWhere(['product_id' => $pids]);
+        if(!empty($pid)){
+            $query->andWhere(['product_id' => (int)$pid]);
         }
         $adProductVisitors = $query->all();
         $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
         $defaultData = array_map(function ($key, $date) {
-            return ['y' => 0,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact', 'date'=>$date])];
+            return ['y' => 0,'url' => Url::to(['/dashboard/chart', 'view'=>'_partials/listContact', 'date'=>$date])];
         }, array_keys($dateRange), $dateRange);
         if(!empty($adProductVisitors)){
             return $this->pushDataToChart($adProductVisitors, $defaultData, $dateRange, self::TYPE_FINDER);
@@ -53,23 +53,22 @@ class Chart extends Component
         return false;
     }
 
-
-    public function getDataVisitor(){
-        $from = strtotime('-30 days');
-        $to = strtotime('+1 days');
-        $pids = [1];
+    public function getDataVisitor($pid){
+        $from = strtotime('-7 days');
+        $to = strtotime('+0 days');
+//        $pids = [1];
 
         $query = AdProductVisitor::find();
         $query->andFilterWhere(['between', 'time', $from, $to]);
 //        $query->andWhere(['>', 'time', $from]);
 //        $query->andWhere(['<', 'time', $to]);
-        if(!empty($pids)){
-            $query->andWhere(['product_id' => $pids]);
+        if(!empty($pid)){
+            $query->andWhere(['product_id' => (int)$pid]);
         }
         $adProductVisitors = $query->all();
         $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
         $defaultData = array_map(function ($key, $date) {
-            return ['y' => 0,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact', 'date'=>$date])];
+            return ['y' => 0,'url' => Url::to(['/dashboard/chart', 'view'=>'_partials/listContact', 'date'=>$date])];
         }, array_keys($dateRange), $dateRange);
         if(!empty($adProductVisitors)){
             return $this->pushDataToChart($adProductVisitors, $defaultData, $dateRange, self::TYPE_VISITOR);
@@ -77,21 +76,21 @@ class Chart extends Component
         return false;
     }
 
-    public function getDataSaved(){
-        $from = strtotime('-30 days');
-        $to = strtotime('+1 days');
-        $pids = [];
+    public function getDataSaved($pid){
+        $from = strtotime('-7 days');
+        $to = strtotime('+0 days');
+//        $pids = [];
 
         $query = AdProductSaved::find();
         $query->select(['product_id', 'saved_at as time']);
         $query->andFilterWhere(['between', 'saved_at', $from, $to]);
         if(!empty($pids)){
-            $query->andWhere(['product_id' => $pids]);
+            $query->andWhere(['product_id' => $pid]);
         }
         $adProductSaveds = $query->all();
         $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
         $defaultData = array_map(function ($key, $date) {
-            return ['y' => 0,'url' => Url::to(['/user-management/chart', 'view'=>'_partials/listContact', 'date'=>$date])];
+            return ['y' => 0,'url' => Url::to(['/dashboard/chart', 'view'=>'_partials/listContact', 'date'=>$date])];
         }, array_keys($dateRange), $dateRange);
         if(!empty($adProductSaveds)){
             return $this->pushDataToChart($adProductSaveds, $defaultData, $dateRange, self::TYPE_SAVED);
@@ -143,7 +142,6 @@ class Chart extends Component
         return $provider;
 
     }
-
 
     private function pushDataToChart($adProductSaveds, $defaultData, $dateRange, $type){
         if(!empty($adProductSaveds)){

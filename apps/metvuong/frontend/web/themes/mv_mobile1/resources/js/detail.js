@@ -4,6 +4,7 @@ $(document).ready(function () {
 		paginationClickable: true,
         spaceBetween: 30
     });
+
 });
 function loaded() {
 	$(document).ready(function () {

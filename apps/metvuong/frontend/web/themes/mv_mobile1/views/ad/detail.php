@@ -30,7 +30,7 @@ use yii\helpers\Url;
 	<div class="gallery-detail swiper-container">
 		<ul class="clearfix icons-detail">
 			<li><a href="#" class=""><span class="icon icon-loca"></span></a></li>
-			<li><a href="<?= Url::to(['/ad/favorite']) ?>" class=""><span class="icon icon-fave"></span></a></li>
+			<li><a href="#" class="save-item" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>"><span class="icon icon-fave"></span></a></li>
 		</ul>
 		<div class="swiper-wrapper">
 			<?php foreach ($images as $image): ?>

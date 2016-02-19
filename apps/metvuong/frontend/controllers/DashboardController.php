@@ -36,24 +36,29 @@ class DashboardController extends Controller
         $this->redirect('/dashboard/statistics');
     }
 
-    public function actionStatistics($id=1)
+    public function actionStatistics()
     {
-        $visitors = Tracking::find()->getVisitors($id);
-        $finders = Tracking::find()->getFinders($id);
-
-//        $uids = [5,4,3,2,1];
-//        $pids = [1, 2, 4, 3, 5, 6];
-//        $times = Util::me()->dateRange(strtotime('-30 days'), strtotime('0 days'), '+1 day', 'd-m-Y H:i:s');
+//        $uids = [1,2,3,4,5];
+//        $pids = [1,1,1,1,1,1,1,1,1];
+//        $times = Util::me()->dateRange(strtotime('-30 days'), strtotime('+1 days'), '+1 day', 'd-m-Y H:i:s');
 //        foreach($pids as $pid){
 //            $uid = array_rand(array_flip($uids), 1);
 //            $time = array_rand(array_flip($times), 1);
 //            $time = strtotime($time);
 //            $ck = Tracking::find()->productVisitor($uid, $pid, $time);
+//            var_dump($ck);
 //        }
+        $id = (int)Yii::$app->request->get("id");
+        $visitors = Tracking::find()->getVisitors($id);
+        $finders = Tracking::find()->getFinders($id);
+        $favourites = Tracking::find()->getFavourites($id);
 
         return $this->render('statistics/index', [
             'visitors' => $visitors,
             'finders' => $finders,
+            'favourites' => $favourites,
+            'view' => '_partials/visitor',
+            'pid' => $id
         ]);
     }
 
@@ -104,7 +109,29 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function actionChart()
+    {
+        if(Yii::$app->request->isAjax) {
+            $view = Yii::$app->request->get('view', 'index');
+            $pid = Yii::$app->request->get('pid');
+            switch($view){
+                case '_partials/visitor';
 
+                    break;
+                case '_partials/finder';
+
+                    break;
+                case '_partials/listContact';
+
+                    break;
+            }
+            if(!empty($view)){
+                return $this->renderAjax('chart/'.$view, ['pid' => $pid]);
+            }
+            return false;
+        }
+        return false;
+    }
 
 
 }
