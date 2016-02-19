@@ -13,7 +13,6 @@ $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 <!--chat script-->
 <script id="chat-send-template" type="text/x-handlebars-template">
 	<div class="item box-me">
-		<a href="#" class="avatar wrap-img"><img src="{{avatarUrl}}" alt=""></a>
 		<div class="chat-txt">
 			<div class="txt-detail">
 				<p>{{msg}}</p>
