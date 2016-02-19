@@ -64,8 +64,9 @@ class DashboardController extends Controller
 
     public function actionAds()
     {
-        return $this->render('ads/index', [
-        ]);
+    	$products = AdProduct::find()->where(['user_id' => Yii::$app->user->id])->with('projectBuilding')->all();
+    	
+        return $this->render('ads/index', ['products' => $products]);
     }
 
     public function actionPassword()
