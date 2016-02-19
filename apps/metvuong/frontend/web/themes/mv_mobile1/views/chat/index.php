@@ -45,7 +45,7 @@ if(!empty($jid_id)){
 </div>
 
 <script id="chat-receive-template" type="text/x-handlebars-template">
-	<div class="item">
+	<div class="item" chat-to="{{to}}">
 		<a href="{{chatUrl}}">
 			<span class="wrap-img"><img src="{{avatarUrl}}" alt=""></span>
 			<div class="chat-detail">

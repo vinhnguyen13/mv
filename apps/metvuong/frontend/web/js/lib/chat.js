@@ -121,6 +121,7 @@ var Chat = {
         }
         else if(msg.getElementsByTagName('body').length){
             var body = msg.getElementsByTagName('body')[0];
+            var params = msg.getElementsByTagName('msgParams')[0];
             var messageInfo = {
                 'to' : to,
                 'from': from,
@@ -128,13 +129,13 @@ var Chat = {
                 'message': Strophe.getText(body)
             }
             Chat.messages.push(messageInfo);
-            $(document).trigger('chat/receiveMessage', {from: Strophe.getBareJidFromJid(from), to: Strophe.getBareJidFromJid(to), msg: Strophe.getText(body), type: 2});
+            $(document).trigger('chat/receiveMessage', [Strophe.getText(body), 2, {from: Strophe.getBareJidFromJid(from), to: Strophe.getBareJidFromJid(to), fromName: params.getAttribute('fromName'), toName: params.getAttribute('toName')}]);
             chatUI.typingMessage(from, 1);
         }else if(type == 'headline'){
             var body = msg.getElementsByTagName('msg')[0];
             if(msg.getElementsByTagName('chatmeParams').length){
                 var params = msg.getElementsByTagName('chatmeParams')[0];
-                $(document).trigger('chat/receiveMessage', {from: params.getAttribute('from'), to: params.getAttribute('to'), msg: Strophe.getText(body), type: 1});
+                $(document).trigger('chat/receiveMessage', [Strophe.getText(body), 2, {from: params.getAttribute('from'), to: params.getAttribute('to'), fromName: params.getAttribute('fromName'), toName: params.getAttribute('toName')}]);
                 chatUI.typingMessage(from, 1);
             }
         }
@@ -161,13 +162,16 @@ var Chat = {
                 type: 'headline'
             }).c("msg").t(message);
             if(params){
-                reply.up().c("chatmeParams", {from: params.from, to: params.to});
+                reply.up().c("chatmeParams", params);
             }
         }else{
             reply = $msg({to: messgeTo,
                           from: Strophe.getBareJidFromJid(Chat.connection.jid),
                           type: messagetype
             }).c("body").t(message);
+            if(params){
+                reply.up().c("msgParams", params);
+            }
             /**save message**/
             if(Chat.sttSaveMsg == true){
                 Chat.connection.send($iq({type: 'set', id: 'autoSave'}).c('auto', {

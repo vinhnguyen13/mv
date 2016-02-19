@@ -70,12 +70,17 @@
                 chatBoxExist.find('.wrap-chat').append(html);
             }
         },
-        appendMessageToList: function (from, to, msg, type) {
-            chatBoxExist = $('.chat-history');
-            $(".chat-history[chat-to='" + to + "']");
+        appendMessageToList: function (from, to, msg, type, fromName, toName) {
+            var chatBoxExist = $('.chat-history');
             var template = Handlebars.compile($("#chat-receive-template").html());
-            var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(from)+'/avatar'});
-            chatBoxExist.find('.chat-list').append(html);
+            var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(from)+'/avatar', time: $.now(), name: fromName, chatUrl: '/', to: chatUI.usrFromJid(to)});
+            if($(".item[chat-to='" + chatUI.usrFromJid(to) + "']")){
+                $(".item[chat-to='" + chatUI.usrFromJid(to) + "']").remove();
+            }
+            if($(".item[chat-to='" + chatUI.usrFromJid(from) + "']")){
+                $(".item[chat-to='" + chatUI.usrFromJid(from) + "']").remove();
+            }
+            chatBoxExist.find('.chat-list').prepend(html);
         },
         notify: function (from, to, type) {
             console.log(from, to);
@@ -119,8 +124,5 @@
         }
     };
 
-    $(document).bind('chat/connect', function (event, data) {
-        chatUI.connect();
-    });
 
 //})();

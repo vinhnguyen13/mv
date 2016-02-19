@@ -18,14 +18,27 @@ Yii::$app->getView()->registerJsFile('/js/lib/strophe.register.js', ['position'=
 Yii::$app->getView()->registerJsFile('/js/lib/strophe.roster.js', ['position'=>View::POS_BEGIN]);
 Yii::$app->getView()->registerJsFile('/js/lib/chat.ui.js', ['position'=>View::POS_BEGIN]);
 Yii::$app->getView()->registerJsFile('/js/lib/chat.js', ['position'=>View::POS_BEGIN]);
+
+$parseUrl = Yii::$app->urlManager->parseRequest(Yii::$app->request);
+$urlBase = !empty($parseUrl[0]) ? $parseUrl[0] : '';
 ?>
 <script>
     $(document).ready(function () {
-        $(this).trigger('chat/connect');
-        $(document).bind('chat/receiveMessage', function (event, data) {
-            if(data.type != chatUI.MSG_SEND_ME){
-                chatUI.notify(data.from, data.to, chatUI.NOTIFY_CHAT);
+        chatUI.connect();
+        $(document).bind('chat/receiveMessage', function (event, msg, type, params) {
+            console.log(msg, type, params);
+            if('<?=$urlBase?>' == 'chat/with'){
+                chatUI.appendMessageToBox(params.from, params.to, msg, type);
+            } else if('<?=$urlBase?>' == 'chat/index'){
+                chatUI.appendMessageToList(params.from, params.to, msg, type, params.fromName, params.toName);
+                $(document).trigger('chat/readNotify');
+            } else if(type != chatUI.MSG_SEND_ME){
+                chatUI.notify(params.from, params.to, chatUI.NOTIFY_CHAT);
             }
+        });
+        $(document).bind('chat/readNotify', function (event, data) {
+            console.log();
+            $('#notifyTotal').remove();
         });
     });
 </script>
