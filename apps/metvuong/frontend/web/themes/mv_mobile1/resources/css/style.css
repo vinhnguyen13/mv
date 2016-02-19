@@ -2740,11 +2740,11 @@ input[type=text]:focus {
     position: relative;
 }
 .result-listing .section {
-    top: 44px;
+    top: 0;
     padding: 0;
 }
 .select-first-search {
-    padding: 30px 15px 0;
+    padding: 25px 15px 0;
 }
 .frm-item .title-frm {
     text-align: center;
@@ -2822,6 +2822,17 @@ input[type=text]:focus {
 }
 .list-choice-city {
     padding: 10px 15px 0;
+    position: relative;
+}
+.list-choice-city .icon-pencil {
+    position: absolute;
+    top: 14px;
+    right: 20px;
+    color: #33AB6B;
+}
+.list-choice-city ul {
+    border: 1px solid #30A968;
+    padding: 3px 0px 3px 8px;
 }
 .list-choice-city li {
     float: left;
@@ -2829,18 +2840,15 @@ input[type=text]:focus {
     max-width: 33.333%;
     position: relative;
     padding-right: 10px;
-}
-.list-choice-city li a {
     font-size: .9em;
     color: #333;
-    border: 1px solid #CACACA;
     border-radius: 3px;
     display: block;
-    padding: 4px 6px;
-    background: #F3F3F3;
+    padding: 4px 14px 4px 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    text-transform: capitalize;
 }
 .arrow-left.arrow-small {
     width: 7px;
@@ -2851,7 +2859,7 @@ input[type=text]:focus {
 .list-choice-city li span.arrow-left {
     position: absolute;
     top: 7px;
-    right: 0;
+    right: 2px;
 }
 .list-choice-city li:last-child {
     padding-right: 0;

@@ -573,6 +573,7 @@ $.fn.slideSection = function (options) {
         btnNext.on('click', next);
         btnBack.on('click', back);
         $('[data-next-section=true]').on('click', next);
+        $('[data-prev-section=true]').on('click', back);
 
         if ( countEl == 1 && sc.settings.navi ) {
             $('#container').append(nextBack);

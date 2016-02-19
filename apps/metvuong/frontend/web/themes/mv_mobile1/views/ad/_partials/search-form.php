@@ -3,8 +3,9 @@
 use yii\helpers\Url;
 ?>
 <form id="search-form" action="<?= Url::to(['/ad/index']) ?>" method="get">
-	<div class="list-choice-city">
+	<div class="list-choice-city" data-prev-section="true">
 		<ul class="clearfix"></ul>
+		<em class="icon-pencil"></em>
 	</div>
 
 	<input type="hidden" name="sort" id="sort" class="value_selected" value="<?= ($sort = Yii::$app->request->get('sort')) ? $sort : 'created_at' ?>" />

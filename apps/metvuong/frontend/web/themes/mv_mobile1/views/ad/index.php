@@ -129,6 +129,7 @@ $types = AdProduct::getAdTypes ();
 	$(document).ready(function () {
 		$('.result-listing').slideSection({
 			active: 0,
+			navi: false,
 			validateFrm: function () {
 				//return false => fill khong thoa yeu cau => khong next
 				//return true => fill thoa yeu cau => next screen
@@ -158,12 +159,12 @@ $types = AdProduct::getAdTypes ();
 		$('.choice-city .box-dropdown').dropdown({
 			styleShow: 0,
 			funCallBack: function (item) {
-				var selectedCityList = $('<li><a href="#" data-value="'+item.data('value')+'" data-order="'+item.data('order')+'">'+item.text()+'</a><span class="icon arrow-left arrow-small"></span></li>');
+				var selectedCityList = $('<li data-value="'+item.data('value')+'" data-order="'+item.data('order')+'">'+item.text()+'<span class="icon arrow-left arrow-small"></span></li>');
 
 				if ( $('.list-choice-city ul li').length > 0 ) {
 					$('.list-choice-city ul li').each(function () {
 						var _this = $(this),
-							orderThis = _this.find('a').data('order'),
+							orderThis = _this.data('order'),
 							orderAddItem = item.data('order');
 						if ( orderAddItem > orderThis ) {
 							selectedCityList.insertAfter(_this);
