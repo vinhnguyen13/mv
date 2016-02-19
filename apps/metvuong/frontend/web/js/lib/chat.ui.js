@@ -49,6 +49,7 @@
             }
         },
         appendMessageToBox: function (from, to, msg, type) {
+            msg = chatUI.decodeEntities(msg);
             chatBoxExist = chatUI.getBoxChat(from, to);
             if(!chatBoxExist){
                 return false;
@@ -71,6 +72,7 @@
             }
         },
         appendMessageToList: function (from, to, msg, type, fromName, toName) {
+            msg = chatUI.decodeEntities(msg);
             var chatBoxExist = $('.chat-history');
             var template = Handlebars.compile($("#chat-receive-template").html());
             var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(from)+'/avatar', time: $.now(), fromName: fromName, chatUrl: '/chat/'+chatUI.usrFromJid(from), to: chatUI.usrFromJid(to)});
@@ -121,8 +123,12 @@
         },
         onlineList: function () {
             return Chat.presenceMessage;
+        },
+        decodeEntities: function (encodedString) {
+            var textArea = document.createElement('textarea');
+            textArea.innerHTML = encodedString;
+            return textArea.value;
         }
     };
-
 
 //})();
