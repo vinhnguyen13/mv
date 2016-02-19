@@ -581,7 +581,7 @@ $.fn.slideSection = function (options) {
         
         el.find('.section').eq(sc.settings.active).removeClass('hide');
 
-        hWrapSection(sc.settings.active);
+        //hWrapSection(sc.settings.active);
 
         current = sc.settings.active;
 
@@ -613,7 +613,7 @@ $.fn.slideSection = function (options) {
 
                 el.find('.section').eq(current).addClass('in').removeClass('hide');
 
-                hWrapSection(current);
+                //hWrapSection(current);
 
                 if ( current+1 == lenItem ) {
                     btnNext.addClass('disable');
@@ -644,7 +644,7 @@ $.fn.slideSection = function (options) {
 
             el.find('.section').eq(current).addClass('back-in').removeClass('out hide');
 
-            hWrapSection(current);
+            //hWrapSection(current);
             
             if ( current == 0 ) {
                 btnNext.removeClass('disable');
@@ -716,3 +716,9 @@ $.fn.loading = function (options) {
         }
     });
 }
+
+/*$(window).scroll(function () {
+    l(1);
+    var st = $(window).scrollTop();
+    l(st);
+});*/

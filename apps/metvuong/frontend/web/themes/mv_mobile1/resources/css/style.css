@@ -3,8 +3,8 @@ ul,li{list-style:none;padding:0;margin:0}
 *{margin:0;padding:0;}
 html,
 body {
-    overflow-x: hidden;
-    overflow-y: auto;
+    /* overflow-x: hidden; */
+    /* overflow-y: auto; */
 }
 .heightFull body {
     /* padding-bottom: 45px; */
@@ -62,6 +62,9 @@ header {
     height: 20px;
     margin: 15px 0 0 0;
     background-size: 336px;
+}
+#container {
+    
 }
 #wrapper {
     padding-top: 50px;
@@ -757,10 +760,20 @@ label {
     margin-bottom: 5px;
 }
 .post-listing {
-    padding: 0 15px 0px;
-    position: relative;
-    margin-bottom: 25px;
-    margin-top: 47px;
+    padding: 44px 15px 0px;
+    /* position: relative; */
+    /* margin-top: 14px; */
+    /* position: fixed; */
+    width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    top: 0;
+    left: 0;
+    z-index: 5;
+}
+.post-listing form {
+    
 }
 .post-listing .step-txt {
     font-weight: 600;
@@ -1224,7 +1237,7 @@ label {
     padding-left: 10px;
 }
 .wrap-listing {
-    padding: 0 15px 30px;
+    padding: 0 15px 80px;
 }
 .option-show-listing .selected {
     font-weight: 700;
@@ -1333,17 +1346,19 @@ label {
     /* padding-top: 5px; */
 }
 .section {
-    top: 80px;
+    /* top: 170px; */
     left: 0;
     width: 100%;
     position: absolute;
-    padding: 0 15px 0px;
+    padding: 0 0 50px;
     background: #fff;
     margin-bottom: 0;
+    position: relative;
 }
 .select-type {
     background: #ebeff2;
-    top: 0;
+    /* top: 94px; */
+    padding-bottom: 15px;
 }
 @-webkit-keyframes slideouttoleft{
     from {
@@ -2442,7 +2457,7 @@ html.mm-opening .mm-slideout {
 }
 .container-chat .item .chat-txt {
     overflow: hidden;
-    padding: 5px 5px 5px 20px;
+    padding: 5px 5px 5px 15px;
     position: relative;
 }
 .container-chat .chat-txt .txt-detail {
@@ -2457,7 +2472,7 @@ html.mm-opening .mm-slideout {
     position: relative;
     z-index: 2;
 }
-.container-chat .item.box-you .txt-detail {
+.container-chat .item.box-me .txt-detail {
     box-shadow: -1px 1px 1px #ADADAD;
     -webkit-box-shadow: -1px 1px 1px #ADADAD;
     -ms-box-shadow: -1px 1px 1px #ADADAD;
@@ -2472,7 +2487,7 @@ html.mm-opening .mm-slideout {
     margin-top: 5px;
     padding-left: 15px;
 }
-.container-chat .item.box-you .avatar {
+.container-chat .item.box-me .avatar {
     float: right;
     margin-right: 0;
     /* margin-left: 10px; */
@@ -2486,7 +2501,7 @@ html.mm-opening .mm-slideout {
    content: "";
    position: absolute;
    top: 14px;
-   left: 10px;
+   left: 5px;
    border-top: 20px solid #fff;
    border-top-color: inherit;
    border-left: 20px solid transparent;
@@ -2494,11 +2509,11 @@ html.mm-opening .mm-slideout {
    z-index: 1;
    color: #fff;
 }
-.container-chat .item.box-you .chat-txt {
+.container-chat .item.box-me .chat-txt {
     padding-left: 5px;
     padding-right: 20px;
 }
-.container-chat .item.box-you .chat-txt:after {
+.container-chat .item.box-me .chat-txt:after {
     left: inherit;
     right: 8px;
 }
@@ -2738,6 +2753,7 @@ input[type=text]:focus {
 }
 .result-listing {
     position: relative;
+    width: 100%;
 }
 .result-listing .section {
     top: 0;

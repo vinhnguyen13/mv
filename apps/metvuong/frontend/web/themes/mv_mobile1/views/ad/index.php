@@ -193,6 +193,6 @@ $types = AdProduct::getAdTypes ();
 					}
 				}
 			}
-		});		
+		});	
 	});
 </script>
