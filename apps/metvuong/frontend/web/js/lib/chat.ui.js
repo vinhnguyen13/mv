@@ -2,6 +2,8 @@
     var chatUI = {
         NOTIFY_CHAT: 1,
         NOTIFY_OTHER: 2,
+        MSG_SEND_ME: 1,
+        MSG_SEND_YOU: 2,
         BOSH_SERVICE: 'http://metvuong.com:5280/wating',
         connect: function() {
             Chat.connect(chatUI.genJid(xmpp_jid), xmpp_key, chatUI.BOSH_SERVICE, true);
@@ -14,12 +16,6 @@
                 return jid_full.split('@')[0];
             }
             return jid_full;
-        },
-        usrFromJidResource: function(jid_full_resource) {
-            if(jid_full_resource.indexOf('/'+xmpp_dm)){
-                return jid_full_resource.split('/')[0];
-            }
-            return jid_full_resource;
         },
         from: null,
         to: null,
@@ -82,15 +78,16 @@
             chatBoxExist.find('.chat-list').append(html);
         },
         notify: function (from, to, type) {
+            console.log(from, to);
             var sumChat = 0, sumOther = 0, sumTotal = 0;
             if(type == chatUI.NOTIFY_CHAT){
                 sumChat = (($('#notifyChat').length > 0) ? parseInt($('#notifyChat').html()) : 0) + 1;
                 var objNotifyChat = this.findObjectNotify('wrapNotifyChat', 'notifyChat');
                 objNotifyChat.html(sumChat);
             }else if(type == chatUI.NOTIFY_OTHER){
-                sumChat = (($('#notifyOther').length > 0) ? parseInt($('#notifyOther').html()) : 0) + 1;
-                var objNotifyChat = this.findObjectNotify('wrapNotifyOther', 'notifyChat');
-                objNotifyChat.html(sumChat);
+                sumOther = (($('#notifyOther').length > 0) ? parseInt($('#notifyOther').html()) : 0) + 1;
+                var objNotifyOther = this.findObjectNotify('wrapNotifyOther', 'notifyOther');
+                objNotifyOther.html(sumOther);
             }
             sumTotal = (($('#notifyChat').length > 0) ? parseInt($('#notifyChat').html()) : 0) + (($('#notifyOther').length > 0) ? parseInt($('#notifyOther').html()) : 0);
             var objNotifyTotal = this.findObjectNotify('avatar-user', 'notifyTotal');

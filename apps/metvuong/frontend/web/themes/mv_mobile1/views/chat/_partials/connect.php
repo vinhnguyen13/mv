@@ -2,6 +2,7 @@
 use yii\web\View;
 use yii\helpers\Url;
 use frontend\models\Chat;
+if(!Yii::$app->user->isGuest){
 $script = "var xmpp_jid = '".Yii::$app->user->identity->username."';var xmpp_dm = '".Chat::find()->getDomain()."';var xmpp_key = '".Chat::find()->getKey()."';";
 Yii::$app->getView()->registerJs($script, View::POS_HEAD);
 
@@ -22,8 +23,10 @@ Yii::$app->getView()->registerJsFile('/js/lib/chat.js', ['position'=>View::POS_B
     $(document).ready(function () {
         $(this).trigger('chat/connect');
         $(document).bind('chat/receiveMessage', function (event, data) {
-            chatUI.notify(null, null, chatUI.NOTIFY_CHAT);
-
+            if(data.type != chatUI.MSG_SEND_ME){
+                chatUI.notify(data.from, data.to, chatUI.NOTIFY_CHAT);
+            }
         });
     });
 </script>
+<?php }?>
