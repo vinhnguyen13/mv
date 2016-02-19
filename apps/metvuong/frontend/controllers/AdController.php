@@ -36,6 +36,12 @@ class AdController extends Controller
     /**
      * @return string
      */
+    public function beforeAction($action)
+    {
+    	$this->view->params['noFooter'] = true;
+    	return parent::beforeAction($action);
+    }
+    
     public function actionIndex() {
     	if(Yii::$app->mobileDetect->isMobile()) {
     		return $this->listingMobile();
@@ -45,8 +51,6 @@ class AdController extends Controller
     }
     
     public function listingMobile() {
-    	$this->layout = '@app/views/layouts/search';
-    	
     	$query = AdProduct::find();
     	
     	$where = ['ad_product.status' => 1];
