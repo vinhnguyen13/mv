@@ -70,7 +70,7 @@
             }else{
                 chatBoxExist.find('.wrap-chat').append(html);
             }
-            $(window).scrollTop($(document).height());
+            $('.container-chat').scrollTop($('.wrap-chat').height());
         },
         appendMessageToList: function (from, to, msg, type, fromName, toName) {
             msg = chatUI.decodeEntities(msg);

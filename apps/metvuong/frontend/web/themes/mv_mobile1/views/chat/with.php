@@ -40,8 +40,10 @@ $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 	<div class="chat-real chat-group" chat-from="{{from}}" chat-to="{{to}}">
 		<div class="title-top"><?=$nameUserTo;?></div>
 		<div class="wrap-chat-item">
-			<div class="container-chat wrap-chat">
+			<div class="container-chat">
+				<div class="wrap-chat">
 
+				</div>
 			</div>
 		</div>
 		<div class="type-input-chat">
