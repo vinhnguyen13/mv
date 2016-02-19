@@ -4,7 +4,7 @@ use Yii;
 use yii\base\BootstrapInterface;
 use yii\helpers\Url;
 
-class LanguageSelector implements BootstrapInterface
+class MVBootstrap implements BootstrapInterface
 {
     public $supportedLanguages = [];
     public $cookieName = 'language';

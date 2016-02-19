@@ -14,8 +14,8 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => [
         'log',
-        'languageSelector' => [
-            'class' => 'frontend\components\LanguageSelector',
+        'MVBootstrap' => [
+            'class' => 'frontend\components\MVBootstrap',
             'supportedLanguages' => ['en-US', 'vi-VN'],
         ],
     ],
