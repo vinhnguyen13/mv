@@ -16,7 +16,6 @@ $model = Yii::createObject(RegistrationForm::className());
     </div>
     <div class="form-group forgot-pass">
         <?= $form->field($model, 'password')->passwordInput(['class' => 'form-control', 'placeholder' => Yii::t('user', 'Password')])->label(false) ?>
-        <a class="showPopup" href="#" data-toggle="modal" data-target="#frmForgot">Forgot?</a>
     </div>
     <div class="checkbox"><label> <input type="checkbox"> Chấp nhận <a href="#">điều khoản</a> sử dụng của <a href="#">metvuong.com</a></label>
     </div>

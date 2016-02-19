@@ -15,10 +15,10 @@ $model = Yii::createObject([
             </div>
             <div class="modal-body">
                 <div class="wrap-modal clearfix">
-                    
+
                     <?php $form = ActiveForm::begin([
                         'id' => 'reset-password-form',
-                        'action' => Url::to(['/member/reset-password']),
+                        'action' => Url::to(['/member/forgot']),
                         'options'=>['class' => 'frmIcon']
                     ]); ?>
                         <div class="form-group">

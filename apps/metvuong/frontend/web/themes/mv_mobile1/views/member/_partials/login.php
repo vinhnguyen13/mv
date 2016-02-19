@@ -18,13 +18,9 @@ $model = Yii::createObject(LoginForm::className());
 </div>
 <div class="form-group forgot-pass">
     <?= $form->field($model, 'password')->passwordInput(['class' => 'form-control', 'placeholder' => Yii::t('user', 'Password')])->label(false) ?>
-    <a class="showPopup" href="#" data-toggle="modal" data-target="#frmForgot">Forgot?</a>
+    <a class="showPopup" href="<?=Url::to(['/member/forgot'])?>">Forgot?</a>
 </div>
 <div class="checkbox"> <?= $form->field($model, 'rememberMe')->checkbox() ?> </div>
-<div class="form-group txt-policiy">
-    <p>By signing up you confirm that you accept the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
-    </p>
-</div>
 <div class="footer-modal clearfix">
     <button type="button" class="btn btn-primary btn-common btn-login" id="btn-login">Đăng nhập</button>
 </div>
