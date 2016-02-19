@@ -11,9 +11,13 @@ use yii\helpers\Url;
 			<?php foreach($products as $product): ?>
 			<li>
 				<div class="img-intro pull-left">
-					<div class="bgcover" style="background-image:url(<?= $product->getImage() ?>);"><a href="<?=Url::to(['/dashboard/statistics'])?>"></a></div>
+					<div class="bgcover" style="background-image:url(<?= $product->getImage() ?>);"><a href="<?=Url::to(['/dashboard/statistics', 'id' => $product->id])?>"></a></div>
 					<a href="<?=Url::to(['/dashboard/statistics', 'id' => $product->id])?>"><em class="icon-bar-chart"></em>View Stats</a>
-					<a class="active-pro" href="#"><em class="fa fa-check"></em>Active Project</a>
+					<?php if($product->end_date < time()): ?>
+					<a class="active-pro" href="#"><em class="fa fa-check"></em>Active</a>
+					<?php else: ?>
+					<a class="unactive-pro" href="#"><em class="fa fa-close"></em>Inactive</a>
+					<?php endif; ?>
 				</div>
 				<div class="intro-detail">
 					<a href="#" class="icon-edit icon"></a>
@@ -22,9 +26,9 @@ use yii\helpers\Url;
 						<p class="name"><a href="<?=Url::to(['/dashboard/statistics', 'id' => $product->id])?>"><?= $product->projectBuilding->name ?></a></p>
 						<?php endif; ?>
 						<p class="date-post">Ngày đăng tin: <?= date("d/m/Y", $product->created_at) ?></p>
-						<p class="loca-duan"><em class="icon-pointer"></em> Quận 4, Ho Chi Minh</p>
+						<p class="loca-duan"><em class="icon-pointer"></em> <?= $product->address ?></p>
 					</div>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud...</p>
+					<p><?= (count($product->content) > 162) ? mb_substr($product->content, 0, 162) . '...' : $product->content ?></p>
 				</div>
 			</li>
 			<?php endforeach; ?>
