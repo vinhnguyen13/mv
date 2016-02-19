@@ -119,4 +119,18 @@ class AdProduct extends AdProductBase
 	{
 		return $this->hasMany(AdImages::className(), ['product_id' => 'id'])->orderBy(['order' => SORT_ASC]);
 	}
+	
+	public function getImage($size = false) {
+		$image = AdImages::find()->where(['product_id' => $this->id])->one();
+		
+		if($image) {
+			if(!$size) {
+				$size = AdImages::SIZE_THUMB;
+			}
+			
+			return AdImages::getImageUrl($image->file_name, $size);
+		} else {
+			return AdImages::defaultImage();
+		}
+	}
 }

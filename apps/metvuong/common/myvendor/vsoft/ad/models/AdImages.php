@@ -9,6 +9,10 @@ use vsoft\express\components\StringHelper;
 
 class AdImages extends AdImagesBase
 {
+	const SIZE_THUMB = 'thumb';
+	const SIZE_MEDIUM = 'medium';
+	const SIZE_LARGE = 'large';
+	
     public function attributeLabels()
     {
         return [
@@ -34,6 +38,10 @@ class AdImages extends AdImagesBase
     		$pathinfo = pathinfo($fileName);
     		return Url::to('/store/ad/' . $pathinfo['filename'] . '.' . $size . '.' . $pathinfo['extension']);
     	}
+    }
+    
+    public static function defaultImage() {
+    	return '/themes/metvuong2/resources/images/default-ads.jpg';
     }
     
     public function getImageThumb() {
