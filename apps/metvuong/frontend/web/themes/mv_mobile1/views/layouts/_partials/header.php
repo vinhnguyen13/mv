@@ -40,8 +40,8 @@ use yii\helpers\Url;
                 <a href="<?=Url::to(['member/profile', 'username'=>Yii::$app->user->identity->username])?>">
                     <span class="wrap-img"><img src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="" width="40" height="40"></span>
                     <div>
-                        <span class="name-user"><?=Yii::$app->user->identity->profile->getDisplayName();?></span>
-                        <span class="address"><?=Yii::$app->user->identity->profile->address?></span>
+                        <p><span class="name-user"><?=Yii::$app->user->identity->profile->getDisplayName();?></span>
+                        <span class="address"><?=Yii::$app->user->identity->profile->address?></span></p>
                     </div>
                 </a>
             </li>
