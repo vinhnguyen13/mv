@@ -17,6 +17,7 @@ use yii\web\Response;
 use yii\web\UploadedFile;
 use yii\web\View;
 use frontend\components\Controller;
+use vsoft\ad\models\AdProduct;
 
 class DashboardController extends Controller
 {
