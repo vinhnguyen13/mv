@@ -14,9 +14,9 @@ use yii\helpers\Url;
 					<div class="bgcover" style="background-image:url(<?= $product->getImage() ?>);"><a href="<?=Url::to(['/dashboard/statistics', 'id' => $product->id])?>"></a></div>
 					<a href="<?=Url::to(['/dashboard/statistics', 'id' => $product->id])?>"><em class="icon-bar-chart"></em>View Stats</a>
 					<?php if($product->end_date < time()): ?>
-					<a class="active-pro" href="#"><em class="fa fa-check"></em>Active</a>
-					<?php else: ?>
 					<a class="unactive-pro" href="#"><em class="fa fa-close"></em>Inactive</a>
+					<?php else: ?>
+					<a class="active-pro" href="#"><em class="fa fa-check"></em>Active</a>
 					<?php endif; ?>
 				</div>
 				<div class="intro-detail">
