@@ -70,6 +70,7 @@
             }else{
                 chatBoxExist.find('.wrap-chat').append(html);
             }
+            $(window).scrollTop($(document).height());
         },
         appendMessageToList: function (from, to, msg, type, fromName, toName) {
             msg = chatUI.decodeEntities(msg);
@@ -128,6 +129,9 @@
             var textArea = document.createElement('textarea');
             textArea.innerHTML = encodedString;
             return textArea.value;
+        },
+        formatOutPut: function (encodedString) {
+
         }
     };
 
