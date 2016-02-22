@@ -96,6 +96,9 @@ $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 			return false;
 		});
 
+		$(document).bind('chat/afterConnect', function (event, data) {
+			Chat.historyMessage('<?=Chat::find()->getJid($to);?>');
+		});
 
 	});
 </script>

@@ -73,7 +73,7 @@
                 chatBoxExist.find('.wrap-chat').append(chatList);
             }
             $('.container-chat').scrollTop($('.wrap-chat').height());
-            console.log('_______________________________', chatList);
+            console.log('_______________________________', iq);
         },
         loadMessageToBox: function (from, to, msg, type) {
             msg = chatUI.decodeEntities(msg);
@@ -84,9 +84,9 @@
             var from = chatUI.usrFromJid(from);
             var to = chatUI.usrFromJid(to);
             if(type == 1){
-                chatUI.buildMessageToBox(chatUI.usrFromJid(xmpp_jid), msg, type);
+                var html = chatUI.buildMessageToBox(chatUI.usrFromJid(xmpp_jid), msg, type);
             }else if(type == 2){
-                chatUI.buildMessageToBox(chatUI.usrFromJid(from), msg, type);
+                var html = chatUI.buildMessageToBox(chatUI.usrFromJid(from), msg, type);
             }else{
                 var html = document.createTextNode(msg);
             }

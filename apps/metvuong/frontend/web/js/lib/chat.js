@@ -46,7 +46,7 @@ var Chat = {
             Chat.discoverNodes();
             //getNodes user is subscribed to
             Chat.getSubscriptions();
-            Chat.historyMessage();
+            $(document).trigger('chat/afterConnect');
         }
     },
     onRegister : function(status){
@@ -185,23 +185,36 @@ var Chat = {
         Chat.log('I sent ' + messgeTo + ': ' + message, reply.tree());
         return true;
     },
-    historyMessage : function(start, end){
-        console.log(Chat.Roster);
+    historyMessage : function(_with, start, end){
+        var limitMsg = 50;
+        var startMsg = 0;
         var iq = $iq({
             type: 'get',
             id: Strophe.getBareJidFromJid(Chat.connection.jid)
         }).c('retrieve', {
             xmlns: 'urn:xmpp:archive',
-            with: 'vnphone2014@metvuong.com',
-            start: '2016-01-01T04:00:00Z',
-        }).c('set', {xmlns: 'http://jabber.org/protocol/rsm'}).c('max').t('100000');
-        if(typeof end !== 'undefined') {
-            iq.up().up().attrs({end: '2016-02-30T04:00:00Z'});
-        }
-        Chat.connection.sendIQ(iq, Chat.onGetChat);
-    },
-    onGetChat: function(iq) {
-        chatUI.loadMessageHistoryToBox(iq);
+            with: _with,
+        }).c('set', {xmlns: 'http://jabber.org/protocol/rsm'}).c('max').t('1').up().c('after').t('0');
+        Chat.connection.sendIQ(iq, function(response) {
+            var historyTotal = $(response).find("chat set count").text();
+            if(historyTotal > limitMsg){
+                startMsg = historyTotal - limitMsg;
+            }
+            var iq = $iq({
+                type: 'get',
+                id: Strophe.getBareJidFromJid(Chat.connection.jid)
+            }).c('retrieve', {
+                xmlns: 'urn:xmpp:archive',
+                with: _with,
+                //start: '2016-02-22T04:00:00Z',
+            }).c('set', {xmlns: 'http://jabber.org/protocol/rsm'}).c('max').t(limitMsg).up().c('after').t(startMsg);
+            if(typeof end !== 'undefined') {
+                iq.up().up().attrs({end: '2016-02-30T04:00:00Z'});
+            }
+            Chat.connection.sendIQ(iq, function(response) {
+                chatUI.loadMessageHistoryToBox(response);
+            });
+        });
     },
     Roster : [],
     getRoster : function(){
