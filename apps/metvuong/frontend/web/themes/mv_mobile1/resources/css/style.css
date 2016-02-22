@@ -2034,7 +2034,6 @@ footer {
     padding: 5px 0 10px 0;
     background: #33ac6a;
     color: #fff;
-    margin-top: 50px;
 }
 .infor-address {
     border-top: 1px solid #fff;
@@ -2915,5 +2914,7 @@ input[type=text]:focus {
     padding-top: 40px;
 }
 .news-item {
-    background: #f5f5f5;;
+    background: #f5f5f5;
+    margin-bottom: 0;
+    padding-bottom: 15px;
 }

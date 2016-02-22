@@ -34,7 +34,7 @@ $(document).ready(function(){
 					$(window).on('scroll', next);
 				}
 				$('.result-listing').css({height: $(listingListId).outerHeight()});
-				$('.wrap-lazy img').lazyload();
+				$('.wrap-listing img').lazyload();
 			});
 		}
 	}
@@ -42,6 +42,7 @@ $(document).ready(function(){
 	$('.dropdown-select').dropdown({
 		hiddenFillValue: '#sort',
 		ajaxSubmit: function () {
+			$('button.btn-submit').data('flag',false);
 			searchForm.submit();
 		}
 	});
@@ -75,7 +76,7 @@ $(document).ready(function(){
 			} else {
 				$(window).on('scroll', next);
 			}
-			$('.wrap-lazy img').lazyload();
+			$('.wrap-listing img').lazyload();
 		});
 	});
 });
