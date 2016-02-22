@@ -45,18 +45,17 @@ if(!empty($data)) {
                     }]
                 },
                 tooltip: {
-                    valueSuffix: ' người',
                     useHTML: true,
-                    /*formatter: function() {
+                    formatter: function() {
                      var tooltip;
                      if (this.key == 'last') {
                      tooltip = '<b>Final result is </b> ' + this.y;
                      }
                      else {
-                     tooltip =  '<span style="color:' + this.series.color + '">' + this.series.name + '</span>: <b>' + this.y + '</b><br/>';
+                     tooltip =  '<b>' + this.y + ' người lưu</b><br/>';
                      }
                      return tooltip;
-                     }*/
+                     }
                 },
                 plotOptions: {
                     column: {
