@@ -136,31 +136,31 @@
     <div class="wrap-item">
         <div class="item clearfix">
             <a href="#">
-                <span class="title-news color-30a868">Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>
                 <div class="wrap-img bgcover" style="background-image:url(<?= Yii::$app->view->theme->baseUrl . '/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg' ?>);"></div>
                 <span class="txt-short-news">
+                    <span class="title-news color-30a868">Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>
+                    <span class="date-news">12/02/2016, 14:30</span>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
-                    <span class="date-news">12/02/2016</span>
                 </span>
             </a>
         </div>
         <div class="item clearfix">
             <a href="#">
-                <span class="title-news color-30a868">Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>
                 <div class="wrap-img bgcover" style="background-image:url(<?= Yii::$app->view->theme->baseUrl . '/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg' ?>);"></div>
                 <span class="txt-short-news">
+                    <span class="title-news color-30a868">Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>
+                    <span class="date-news">12/02/2016, 14:30</span>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
-                    <span class="date-news">12/02/2016</span>
                 </span>
             </a>
         </div>
         <div class="item clearfix">
             <a href="#">
-                <span class="title-news color-30a868">Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>
                 <div class="wrap-img bgcover" style="background-image:url(<?= Yii::$app->view->theme->baseUrl . '/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg' ?>);"></div>
                 <span class="txt-short-news">
+                    <span class="title-news color-30a868">Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>
+                    <span class="date-news">12/02/2016, 14:30</span>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
-                    <span class="date-news">12/02/2016</span>
                 </span>
             </a>
         </div>
