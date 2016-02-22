@@ -6,24 +6,26 @@
         Đưa bạn đến ngôi nhà yêu thích<br>
         Tìm hiểu &amp; giao dịch bất động sản dễ dàng
     </div> -->
-    <div class="text-center logo-search-box wrap-img">
-        <img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/logo.png' ?>" alt="">
-    </div>
-    <div class="search-homepage">
-        <ul class="clearfix">
-            <li><a href="<?= Url::to(['/ad/index']) ?>">Mua</a></li>
-            <li><a href="#">Thuê</a></li>
-            <li><a href="<?= Url::to(['/ad/post']) ?>">Bán / Cho Thuê</a></li>
-        </ul>
-        <form id="" action="">
-            <input autocomplete="off" data-url="<?= Url::to(['site/search']) ?>" id="search" type="text" placeholder="Tìm kiếm nhanh..." />
-            <button type="submit" id="btn-search"><span class="icon"></span></button>
-            <div class="suggest-search hide">
-                <div class="content-suggest">
-                    <ul></ul>
+    <div class="search-wrap-home">
+        <div class="text-center logo-search-box wrap-img">
+            <img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/logo.png' ?>" alt="">
+        </div>
+        <div class="search-homepage">
+            <ul class="clearfix">
+                <li><a href="<?= Url::to(['/ad/index']) ?>">Mua</a></li>
+                <li><a href="#">Thuê</a></li>
+                <li><a href="<?= Url::to(['/ad/post']) ?>">Bán / Cho Thuê</a></li>
+            </ul>
+            <form id="" action="">
+                <input autocomplete="off" data-url="<?= Url::to(['site/search']) ?>" id="search" type="text" placeholder="Tìm kiếm nhanh..." />
+                <button type="submit" id="btn-search"><span class="icon"></span></button>
+                <div class="suggest-search hide">
+                    <div class="content-suggest">
+                        <ul></ul>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </section>
 <section class="search-home">
@@ -43,7 +45,7 @@
                     <strong>Lancaster x</strong>
                     21 Nguyễn Trung Ngạn, P.Bến Nghé, Q1
                 </span>
-                <div class="title-item">Căn hộ cho thuê</div>
+                
             </a>
             <div class="info-item">
                 <ul class="clearfix list-tienich-intro">
@@ -73,7 +75,7 @@
                     <strong>Lancaster x</strong>
                     21 Nguyễn Trung Ngạn, P.Bến Nghé, Q1
                 </span>
-                <div class="title-item">Căn hộ cho thuê</div>
+                
             </a>
             <div class="info-item">
                 <ul class="clearfix list-tienich-intro">
@@ -103,7 +105,7 @@
                     <strong>Lancaster x</strong>
                     21 Nguyễn Trung Ngạn, P.Bến Nghé, Q1
                 </span>
-                <div class="title-item">Căn hộ cho thuê</div>
+                
             </a>
             <div class="info-item">
                 <ul class="clearfix list-tienich-intro">

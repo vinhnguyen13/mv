@@ -156,31 +156,34 @@ header {
     margin-top: 0px;
 }
 .search-home {
-    padding: 20px;
+    padding: 30px 20px;
     background: #f5f5f5;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
 }
 .search-home .txt-intro {
-    
+    text-shadow: 1px 1px 1px #fff;
+    -webkit-text-shadow: 1px 1px 1px #fff;
+    -moz-text-shadow: 1px 1px 1px #fff;
+    -ms-text-shadow: 1px 1px 1px #fff;
 }
 .wrap-img img {
     max-width: 100%;
 }
 .regis-home h2,
 .search-home h2 {
-    font-weight: 600;
-    color: #171616;
+    font-weight: 400;
     margin: 0 0 10px 0;
     color: #00a769;
     line-height: 1.6;
     letter-spacing: 0.5px;
-    font-size: 1em;
+    font-size: 15px;
     text-transform: uppercase;
 }
 .regis-home p,
 .search-home p {
-    font-size: 1.1em;
+    font-size: 13px;
     color: #777777;
+    line-height: 1.7;
 }
 .regis-home a,
 .search-home a {
@@ -753,7 +756,7 @@ label {
 }
 .item-duan .short-txt,
 .item-duan .intro-img {
-    padding: 0 15px 0;
+    padding: 0 20px 0;
 }
 .item-duan .short-txt {
     color: #777777;
@@ -1155,7 +1158,7 @@ label {
     width: 13px;
 }
 .search-subpage {
-    padding: 0 15px 15px 15px;
+    padding: 0 20px 15px;
     margin: 0 0 15px;
     border-bottom: 1px solid #9b9b9b;
 }
@@ -1245,7 +1248,7 @@ label {
     padding-left: 5px;
 }
 .wrap-listing {
-    padding: 0 15px 80px;
+    padding: 0 20px 80px;
 }
 .option-show-listing .selected {
     font-weight: 700;
@@ -1359,7 +1362,7 @@ label {
     left: 0;
     width: 100%;
     position: absolute;
-    padding: 0 15px 50px;
+    padding: 0 20px 50px;
     background: #fff;
     margin-bottom: 0;
 }
@@ -1573,7 +1576,7 @@ label {
 }
 .panel-default>.panel-heading {
     padding: 0;
-    border: 1px solid #bdbdbd;
+    border-bottom: 1px solid #bdbdbd;
     border-radius: 0;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
@@ -1581,7 +1584,7 @@ label {
 }
 .panel-heading a {
     display: block;
-    padding: 10px 15px;
+    padding: 10px 20px;
 }
 .panel-group .panel {
     box-shadow: 0px 0px 0px;
@@ -2046,8 +2049,8 @@ label {
     right: -9px;
 }
 footer {
-    padding: 5px 0 10px 0;
-    background: #33ac6a;
+    padding: 5px 10px 10px 10px;
+    background: #00a769;
     color: #fff;
 }
 .infor-address {
@@ -2056,7 +2059,7 @@ footer {
     font-size: .8em;
     text-align: center;
     font-weight: 600;
-    margin: 10px 10px 0;
+    margin: 0 10px 0;
 }
 .infor-address p {
     margin-bottom: 5px;
@@ -2064,7 +2067,7 @@ footer {
 footer li a {
     color: #fff;
     font-weight: 600;
-    padding: 10px 0;
+    padding: 15px 0;
     display: block;
 }
 footer .col-xs-6 {
@@ -2257,8 +2260,8 @@ footer {
     padding: 10px 0;
     text-transform: uppercase;
     font-weight: 600;
-    font-size: 1.3em;
-    color: #009745;
+    font-size: 18px;
+    color: #00a769;
     margin-bottom: 10px;
     letter-spacing: 2px;
 }
@@ -2289,7 +2292,7 @@ footer {
     margin-bottom: 10px;
 }
 .wrap-noti {
-    padding: 0 0 0 25px;
+    padding: 0 0 0 30px;
 }
 .list-noti {
     border-left: 1px solid #777777;
@@ -2621,7 +2624,7 @@ input[type=text]:focus {
     color: #fff;
 }
 .box-item {
-    padding: 0 15px;
+    padding: 0 20px;
     margin-bottom: 30px;
 }
 .box-item .wrap-item {
@@ -2630,7 +2633,7 @@ input[type=text]:focus {
     border-bottom: none;
 }
 .box-item .wrap-item .item {
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 .news-item .wrap-item .item {
     border: none;
@@ -2931,11 +2934,16 @@ input[type=text]:focus {
 .news-item {
     background: #f5f5f5;
     margin-bottom: 0;
-    padding-bottom: 15px;
+    padding: 25px 20px;
 }
 .avatar-user-pr em {
     margin-right: 5px;
 }
 .avatar-user-pr .address-user {
     display: inline-block;
+}
+.panel-body {
+    padding: 20px;
+}
+.search-wrap-home {
 }
