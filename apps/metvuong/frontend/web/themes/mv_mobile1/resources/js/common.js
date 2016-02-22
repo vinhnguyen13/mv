@@ -68,7 +68,7 @@ $(document).ready(function() {
     	var url = self.data('url');
     	var ss = $('.suggest-search');
     	
-    	if(val.length > 3) {
+    	if(val.length > 2) {
     		if($.data(this, 'v') != val) {
     			$.data(this, 'v', val);
             	

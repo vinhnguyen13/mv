@@ -20,7 +20,7 @@ use yii\helpers\Url;
 						</div>
 						<div class="item-dropdown hide-dropdown">
 							<ul class="clearfix tinh-thanh"></ul>
-							<input type="hidden" id="tinh-thanh" class="">
+							<input name="city" type="hidden" id="tinh-thanh" class="">
 						</div>
 					</div>
 				</div>
@@ -32,7 +32,7 @@ use yii\helpers\Url;
 						</div>
 						<div class="item-dropdown hide-dropdown">
 							<ul class="clearfix quan-huyen"></ul>
-							<input type="hidden" id="quan-huyen" class="">
+							<input name="district" type="hidden" id="quan-huyen" class="">
 						</div>
 					</div>
 				</div>
@@ -44,7 +44,7 @@ use yii\helpers\Url;
 						</div>
 						<div class="item-dropdown hide-dropdown">
 							<ul class="clearfix loai-bds"></ul>
-							<input type="hidden" id="loai-bds" class="">
+							<input name="category" type="hidden" id="loai-bds" class="">
 						</div>
 					</div>
 				</div>
