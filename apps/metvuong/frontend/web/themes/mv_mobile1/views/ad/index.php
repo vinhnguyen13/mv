@@ -49,7 +49,7 @@ $types = AdProduct::getAdTypes ();
 
 					<div class="bgcover img-intro">
 						<div>
-							<a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"><img src="" data-original="<?= $imgUrl ?>"></a>
+							<a target="_blank" href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"><img src="" data-original="<?= $imgUrl ?>"></a>
 						</div>
 					</div>
 					<p class="infor-by-up">
@@ -57,7 +57,7 @@ $types = AdProduct::getAdTypes ();
 							href="#">Môi Giới</a>
 					</p>
 					<p class="address-listing">
-						<a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"><?= $product->getAddress(true) ?></a>
+						<a target="_blank" href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"><?= $product->getAddress(true) ?></a>
 					</p>
 					<p class="attr-home">
 						<?= $product->adProductAdditionInfo->room_no ? $product->adProductAdditionInfo->room_no . ' <span class="icon icon-bed"></span> | ' : ''?>
