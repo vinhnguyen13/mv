@@ -100,6 +100,10 @@ header {
     text-align: center;
     padding: 10px 0;
 }
+.search-homepage > ul li a:hover {
+    color: #fff;
+    background: #009A46;
+}
 @media (max-width: 430px) {
     .search-homepage > ul li a {
         font-size: .84em;
@@ -233,6 +237,9 @@ header {
     font-size: 1.1em;
     display: block;
     padding: 10px 0;
+}
+.wrap-menu li a:hover {
+    color: #00a769;
 }
 .wrap-menu li .disable {
     color: #B1B1B1;
@@ -766,6 +773,7 @@ label {
     padding: 44px 15px 0px;
     position: relative;
     width: 100%;
+    overflow: hidden;
 }
 .post-listing form {
     
@@ -1355,9 +1363,12 @@ label {
     background: #fff;
     margin-bottom: 0;
 }
+.post-listing .section {
+}
 .select-type {
     background: #ebeff2;
     padding-bottom: 15px;
+    top: 44px;
 }
 @-webkit-keyframes slideouttoleft{
     from {
@@ -1520,7 +1531,7 @@ label {
     font-weight: 700;
 }
 .avatar-user-pr .name-user {
-    font-size: 1.6em;
+    font-size: 1em;
 }
 .avatar-user-pr .address-user {
     color: #777777;
@@ -1787,6 +1798,9 @@ label {
     color: #333;
     text-align: center;
 }
+.filter-minmax li a:hover {
+    color: #33AB6B;
+}
 .filter-minmax ul {
     padding: 5px 0;
     display: none;
@@ -1910,6 +1924,7 @@ label {
 .btn-submit {
     display: block;
     width: 100%;
+    -webkit-tap-highlight-color: #217347;
 }
 #avatar-user {
     float: right;
@@ -2917,4 +2932,10 @@ input[type=text]:focus {
     background: #f5f5f5;
     margin-bottom: 0;
     padding-bottom: 15px;
+}
+.avatar-user-pr em {
+    margin-right: 5px;
+}
+.avatar-user-pr .address-user {
+    display: inline-block;
 }

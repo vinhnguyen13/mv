@@ -18,15 +18,15 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
             <span class="txt-num">FOLLOWERS</span>
             <?php if($username != Yii::$app->user->identity->username) {?><span class="icon-add">+</span><?php } ?>
         </div>
-        <div class="col-xs-4 avatar-user-pr">
-            <div class="wrap-img avatar"><img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="<?= file_exists($avatar) ? Url::to('/store/avatar/' . $model->avatar) : Yii::$app->view->theme->baseUrl."/resources/images/MV-Agent Photo.jpg"?>" alt="metvuong.com avatar" /></div>
-            <div class="name-user" name="name" contenteditable="true" placeholder="Vui lòng nhập tên"><?=$model->name?></div>
-            <em class="fa fa-map-marker"></em><div class="address-user" name="address" contenteditable="true" placeholder="Vui lòng nhập địa chỉ"><?=$model->address?></div>
-        </div>
-        <div class="col-xs-4 num-rating">
+        <div class="col-xs-4 num-rating pull-right">
             <span class="num">4.3</span>
             <span class="txt-num">RATING</span>
             <?php if($username != Yii::$app->user->identity->username) {?><a href="<?=Url::to(['/chat/with', 'username'=>$username])?>"><span class="notifa"><em class="icon-bubble"></em></span></a><?php } ?>
+        </div>
+        <div class="avatar-user-pr">
+            <div class="wrap-img avatar"><img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="<?= file_exists($avatar) ? Url::to('/store/avatar/' . $model->avatar) : Yii::$app->view->theme->baseUrl."/resources/images/MV-Agent Photo.jpg"?>" alt="metvuong.com avatar" /></div>
+            <div class="name-user" name="name" contenteditable="true" placeholder="Vui lòng nhập tên"><?=$model->name?></div>
+            <em class="fa fa-map-marker"></em><div class="address-user" name="address" contenteditable="true" placeholder="Vui lòng nhập địa chỉ"><?=$model->address?></div>
         </div>
     </div>
     <div class="swiper-container gallery-img-user">
