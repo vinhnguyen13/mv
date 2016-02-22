@@ -76,7 +76,6 @@
             console.log('_______________________________', iq);
         },
         loadMessageToBox: function (from, to, msg, type) {
-            msg = chatUI.decodeEntities(msg);
             chatBoxExist = chatUI.getBoxChat(from, to);
             if(!chatBoxExist){
                 return false;
@@ -99,6 +98,7 @@
             $(document).trigger('chat/readNotify');
         },
         buildMessageToBox: function (username, msg, type) {
+            msg = chatUI.decodeEntities(msg);
             if(type == 1){
                 var template = Handlebars.compile($("#chat-send-template").html());
                 var html = template({msg: msg, avatarUrl: '/member/'+username+'/avatar'});
