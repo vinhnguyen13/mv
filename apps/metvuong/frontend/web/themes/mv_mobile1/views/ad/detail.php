@@ -21,7 +21,6 @@ use yii\helpers\Url;
 		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
 	}
 ?>
-<?= $this->render('_partials/search-form') ?>
 <div class="detail-listing">
 	<?php 
 		$images = $product->adImages;
