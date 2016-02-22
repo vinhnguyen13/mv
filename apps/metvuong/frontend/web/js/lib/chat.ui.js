@@ -6,7 +6,7 @@
         MSG_SEND_YOU: 2,
         BOSH_SERVICE: 'http://metvuong.com:5280/wating',
         connect: function() {
-            Chat.connect(chatUI.genJid(xmpp_jid), xmpp_key, chatUI.BOSH_SERVICE, true);
+            Chat.connect(chatUI.genJid(xmpp_jid), xmpp_key, chatUI.BOSH_SERVICE, false);
         },
         genJid: function(jid) {
             return jid+'@'+xmpp_dm;
@@ -73,7 +73,17 @@
                 chatBoxExist.find('.wrap-chat').append(chatList);
             }
             $('.container-chat').scrollTop($('.wrap-chat').height());
-            console.log('_______________________________', iq);
+        },
+        buildMessageToBox: function (username, msg, type) {
+            msg = chatUI.decodeEntities(msg);
+            if(type == 1){
+                var template = Handlebars.compile($("#chat-send-template").html());
+                var html = template({msg: msg, avatarUrl: '/member/'+username+'/avatar'});
+            }else if(type == 2){
+                var template = Handlebars.compile($("#chat-receive-template").html());
+                var html = template({msg: msg, avatarUrl: '/member/'+username+'/avatar'});
+            }
+            return html;
         },
         loadMessageToBox: function (from, to, msg, type) {
             chatBoxExist = chatUI.getBoxChat(from, to);
@@ -95,24 +105,12 @@
                 chatBoxExist.find('.wrap-chat').append(html);
             }
             $('.container-chat').scrollTop($('.wrap-chat').height());
-            $(document).trigger('chat/readNotify');
-        },
-        buildMessageToBox: function (username, msg, type) {
-            msg = chatUI.decodeEntities(msg);
-            if(type == 1){
-                var template = Handlebars.compile($("#chat-send-template").html());
-                var html = template({msg: msg, avatarUrl: '/member/'+username+'/avatar'});
-            }else if(type == 2){
-                var template = Handlebars.compile($("#chat-receive-template").html());
-                var html = template({msg: msg, avatarUrl: '/member/'+username+'/avatar'});
-            }
-            return html;
         },
         loadMessageToList: function (from, to, msg, type, fromName, toName) {
             msg = chatUI.decodeEntities(msg);
             var chatBoxExist = $('.chat-history');
             var template = Handlebars.compile($("#chat-receive-template").html());
-            var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(from)+'/avatar', time: $.now(), fromName: fromName, chatUrl: '/chat/'+chatUI.usrFromJid(from), to: chatUI.usrFromJid(to)});
+            var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(from)+'/avatar', time: $.now(), fromName: fromName, chatUrl: '/chat/'+chatUI.usrFromJid(from), to: chatUI.usrFromJid(from)});
             if($(".item[chat-to='" + chatUI.usrFromJid(to) + "']")){
                 $(".item[chat-to='" + chatUI.usrFromJid(to) + "']").remove();
             }
