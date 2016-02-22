@@ -12,7 +12,7 @@ use yii\helpers\Url;
 	<div class="search-subpage clearfix">
 		<div class="advande-search">
 			<div class="frm-item">
-				<div class="box-dropdown">
+				<div class="box-dropdown dropdown-common">
 					<div class="val-selected style-click">
 						<span class="selected" data-placeholder="Bạn ở tỉnh/thành nào?">Bạn ở tỉnh/thành nào?</span>
 						<span class="pull-right icon arrowDown"></span>
@@ -24,7 +24,7 @@ use yii\helpers\Url;
 				</div>
 			</div>
 			<div class="frm-item">
-				<div class="box-dropdown">
+				<div class="box-dropdown dropdown-common">
 					<div class="val-selected style-click">
 						<span class="selected" data-placeholder="Bạn ở quận/huyện nào?">Bạn ở quận/huyện nào?</span>
 						<span class="pull-right icon arrowDown"></span>
@@ -36,7 +36,7 @@ use yii\helpers\Url;
 				</div>
 			</div>
 			<div class="frm-item">
-				<div class="box-dropdown">
+				<div class="box-dropdown dropdown-common">
 					<div class="val-selected style-click">
 						<span class="selected" data-placeholder="Bất động sản bạn đang tìm?">Bất động sản bạn đang tìm?</span>
 						<span class="pull-right icon arrowDown"></span>
@@ -90,7 +90,7 @@ use yii\helpers\Url;
 						</div>
 						<span class="pull-right icon arrowDown"></span>
 					</div>
-					<div class="item-dropdown hide-dropdown">
+					<div class="item-dropdown hide-dropdown wrap-min-max">
 						<div class="box-input clearfix">
 							<span class="txt-min min-max active min-val" data-value="">Thấp nhất</span>
 							<span class="text-center">Đến</span>
@@ -107,7 +107,7 @@ use yii\helpers\Url;
 			</div>
 			<div class="frm-item clearfix">
 				<div class="col-xs-6 num-phongngu">
-					<div class="box-dropdown">
+					<div class="box-dropdown dropdown-common">
 						<div class="val-selected style-click" data-text-add="Phòng ngủ trở lên"><span class="selected">Phòng ngủ</span><span class="pull-right icon arrowDown"></span></div>
 
 						<div class="item-dropdown item-bed-bath hide-dropdown">
@@ -123,7 +123,7 @@ use yii\helpers\Url;
 					</div>
 				</div>
 				<div class="col-xs-6 num-phongtam">
-					<div class="box-dropdown">
+					<div class="box-dropdown dropdown-common">
 						<div class="val-selected style-click" data-text-add="Phòng tắm trở lên"><span class="selected">Phòng tắm</span><span class="pull-right icon arrowDown"></span></div>
 						<div class="item-dropdown item-bed-bath hide-dropdown">
 							<ul class="clearfix">
@@ -160,7 +160,7 @@ $(document).ready(function () {
 		$('.loai-bds').append(item);
 	}
 
-	$('.box-dropdown').dropdown({
+	$('.dropdown-common').dropdown({
 		txtAdd: true,
 		styleShow: 0,
 		funCallBack: function (item) {

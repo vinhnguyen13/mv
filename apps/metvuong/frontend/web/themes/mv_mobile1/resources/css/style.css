@@ -1782,13 +1782,11 @@ label {
     font-size: 1em;
     padding: 4px 15px;
     color: #333;
+    text-align: center;
 }
 .filter-minmax ul {
     padding: 5px 0;
     display: none;
-}
-.filter-minmax ul[data-wrap-minmax=max-val] a {
-    text-align: right;
 }
 .filter-minmax ul.min-val {
     display: block;

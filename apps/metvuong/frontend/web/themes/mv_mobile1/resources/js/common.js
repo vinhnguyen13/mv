@@ -398,11 +398,11 @@ $.fn.price_dt = function (options) {
 
         sc.settings = $.extend({}, defaults, options);
 
-        /*el.toggleShowMobi({
+        el.toggleShowMobi({
             styleEffect: 'slideDownUp',
-            btnEvent: '.value-selected',
+            btnEvent: '.val-selected',
             itemToggle: '.wrap-min-max'
-        });*/
+        });
 
         if ( el.data('itemMinmax') == 'prices' ) {
             for ( var i in prices[sc.settings.hinhthuc] ) {
@@ -441,12 +441,15 @@ $.fn.price_dt = function (options) {
             if ( minmax == 'min-val' ) {
                 toggleMinMax(minmax);
                 renderMax(numberVal);
-                el.find('.max-val').html('');
-                el.find('.max-val').data('value','');
+                if ( el.find('.max-val').data('value') != '' ) {
+                    el.find('.max-val').html('');
+                    el.find('.max-val').data('value','');
+                }
+                
                 valMin = numberVal;
 
             }else {// hidden khi chon xong gia tri max
-                el.find('.value-selected').trigger('click');
+                el.find('.val-selected').trigger('click');
                 valMax = numberVal;
             }
 
@@ -508,7 +511,7 @@ $.fn.price_dt = function (options) {
         }
 
         function renderTxtShow (minmax, txt) {
-            var wrapTxt = el.find('.value-selected');
+            var wrapTxt = el.find('.val-selected');
 
             if ( minmax == 'min-val' ) {
                 wrapTxt.find('.wrap-min').html(txt);
