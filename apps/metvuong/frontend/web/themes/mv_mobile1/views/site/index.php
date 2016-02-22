@@ -2,9 +2,12 @@
 	use yii\helpers\Url;
 ?>
 <section class="search-box">
-    <div class="text-center sologan">
+    <!-- <div class="text-center sologan">
         Đưa bạn đến ngôi nhà yêu thích<br>
         Tìm hiểu &amp; giao dịch bất động sản dễ dàng
+    </div> -->
+    <div class="text-center logo-search-box wrap-img">
+        <img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/logo.png' ?>" alt="">
     </div>
     <div class="search-homepage">
         <ul class="clearfix">
@@ -30,8 +33,8 @@
     </div>
 </section>
 
-<div class="title-sub">Featured properties</div>
 <section class="box-item">
+    <div class="title-sub">Featured properties</div>
     <div class="wrap-item">
         <div class="item">
             <a href="#" class="pic-intro">
@@ -58,7 +61,7 @@
                     </li>
                     <li class="price-line">
                         <span class="price">2.8 tỷ</span>
-                        <span class="pull-right arrow-left icon"></span>
+                        <a href="#" class="pull-right">Chi tiết</a>
                     </li>
                 </ul>
             </div>
@@ -88,7 +91,7 @@
                     </li>
                     <li class="price-line">
                         <span class="price">2.8 tỷ</span>
-                        <span class="pull-right arrow-left icon"></span>
+                        <a href="#" class="pull-right">Chi tiết</a>
                     </li>
                 </ul>
             </div>
@@ -118,7 +121,7 @@
                     </li>
                     <li class="price-line">
                         <span class="price">2.8 tỷ</span>
-                        <span class="pull-right arrow-left icon"></span>
+                        <a href="#" class="pull-right">Chi tiết</a>
                     </li>
                 </ul>
             </div>
@@ -126,8 +129,8 @@
     </div>
 </section>
 
-<div class="title-sub">news</div>
 <section class="box-item news-item">
+    <div class="title-sub">news</div>
     <div class="wrap-item">
         <div class="item clearfix">
             <a href="#">

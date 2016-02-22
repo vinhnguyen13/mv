@@ -40,11 +40,9 @@ header {
     left: 0px;
 }
 .search-box {
-    border-top: 1px solid #171616;
-    min-height: 340px;
-    background: url(../images/bg-home.jpg) no-repeat 50% center;
-    background-size: cover;
+    min-height: 295px;
     position: relative;
+    padding: 0 20px;
 }
 .logo {
     text-align: center;
@@ -70,18 +68,22 @@ header {
     padding-top: 50px;
 }
 .search-homepage {
-    width: 90%;
-    margin: 40px auto 0;
+    margin: 25px auto 0;
     position: relative;
     z-index: 2;
 }
 .search-homepage > ul li {
     float: left;
-    width: 33.3333%;
-    border-right: 1px solid #FFFFFF;
+    width: 32%;
+}
+.search-homepage > ul li:first-child {
+    margin-right: 1%;
+    width: 33%;
 }
 .search-homepage > ul li:last-child {
     border-right: none;
+    margin-left: 1%;
+    width: 33%;
 }
 .search-homepage > ul {
     border: 1px solid #FFFFFF;
@@ -90,10 +92,10 @@ header {
     margin-bottom: 10px;
 }
 .search-homepage > ul li a {
-    background: rgba(0, 0, 0, 0.6);
+    background: #ebebeb;
     display: block;
     font-size: 1.1em;
-    color: #FFFFFF;
+    color: #404040;
     font-weight: 600;
     text-align: center;
     padding: 10px 0;
@@ -110,11 +112,11 @@ header {
     line-height: 40px;
     padding: 0 50px 0 10px;
     font-weight: 400;
-    border-radius: 4px;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    -ms-border-radius: 4px;
-    border: none;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    border: solid 1.5px #969696;
 }
 .search-subpage .choice_price_dt input {
     padding-right: 0;
@@ -147,32 +149,33 @@ header {
     vertical-align: middle;
     background-position: -23px -1px;
     background-size: 287px;
-    margin-top: 2px;
+    margin-top: 0px;
 }
 .search-home {
-    padding: 0 15px;
+    padding: 20px;
+    background: #f5f5f5;
+    margin-bottom: 15px;
 }
 .search-home .txt-intro {
-    border-bottom: 1px solid #a6a6a6;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
+    
 }
 .wrap-img img {
     max-width: 100%;
 }
 .regis-home h2,
 .search-home h2 {
-    font-size: 1.3em;
     font-weight: 600;
-    text-align: center;
-    line-height: 25px;
-    margin: 20px 0 20px;
     color: #171616;
+    margin: 0 0 10px 0;
+    color: #00a769;
+    line-height: 1.6;
+    letter-spacing: 0.5px;
+    font-size: 1em;
+    text-transform: uppercase;
 }
 .regis-home p,
 .search-home p {
     font-size: 1.1em;
-    margin-bottom: 15px;
     color: #777777;
 }
 .regis-home a,
@@ -2237,12 +2240,13 @@ footer {
     margin-bottom: 10px;
 }
 .title-sub {
-    padding: 10px 15px;
+    padding: 10px 0;
     text-transform: uppercase;
     font-weight: 600;
-    font-size: 1.2em;
+    font-size: 1.3em;
     color: #009745;
     margin-bottom: 10px;
+    letter-spacing: 2px;
 }
 .list-duan-stats li {
     float: left;
@@ -2586,7 +2590,7 @@ input[type=text]:focus {
 .wrap-around em {
     font-size: 1.1em;  
 }
-.arrow-left {
+.arrowLeft {
     display: inline-block;
     width: 12px;
     height: 23px;
@@ -2607,8 +2611,6 @@ input[type=text]:focus {
     margin-bottom: 30px;
 }
 .box-item .wrap-item {
-    padding: 0 7px;
-    border-bottom: 1px solid #a6a6a6;
 }
 .news-item .wrap-item {
     border-bottom: none;
@@ -2616,21 +2618,31 @@ input[type=text]:focus {
 .box-item .wrap-item .item {
     margin-bottom: 30px;
 }
+.news-item .wrap-item .item {
+    border: none;
+}
 .box-item .pic-intro {
     display: block;
-    background: #30a868;
+    background: #f5f5f5;
     position: relative;
+}
+.box-item .info-item {
+    border: solid 1px #dcdcdc;
+    border-top: none;
 }
 .box-item .pic-intro .address-feat {
     display: block;
     padding: 10px 15px;
-    color: #fff;
+    color: #3c3c3c;
+    border-left: solid 1px #dcdcdc;
+    border-right: solid 1px #dcdcdc;
 }
 .box-item .address-feat strong {
     display: block;
     font-size: 1.2em;
     text-transform: uppercase;
     font-weight: 600;
+    color: #00a769;;
 }
 .box-item .pic-intro .title-item {
     position: absolute;
@@ -2683,6 +2695,12 @@ input[type=text]:focus {
 }
 .list-tienich-intro li.price-line {
     padding: 15px 0;
+}
+.list-tienich-intro li.price-line a {
+    line-height: 1.7;
+    letter-spacing: 0.5px;
+    color: #3c3c3c;
+    font-weight: 600;
 }
 .list-tienich-intro li.price-line .price {
     border: 1px solid #30a868;
@@ -2889,4 +2907,13 @@ input[type=text]:focus {
 }
 .item-listing .img-intro > div img {
     background: url(../images/loading-listing.gif) no-repeat center;
+}
+.logo-search-box img {
+    width: 48%;
+}
+.logo-search-box {
+    padding-top: 40px;
+}
+.news-item {
+    background: #f5f5f5;;
 }
