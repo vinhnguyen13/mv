@@ -16,6 +16,7 @@ if(!Yii::$app->user->isGuest) {
     Yii::$app->getView()->registerJsFile('/js/lib/strophe.pubsub.js', ['position' => View::POS_BEGIN]);
     Yii::$app->getView()->registerJsFile('/js/lib/strophe.register.js', ['position' => View::POS_BEGIN]);
     Yii::$app->getView()->registerJsFile('/js/lib/strophe.roster.js', ['position' => View::POS_BEGIN]);
+    Yii::$app->getView()->registerJsFile('/js/lib/strophe.mam.js', ['position' => View::POS_BEGIN]);
     Yii::$app->getView()->registerJsFile('/js/lib/chat.ui.js', ['position' => View::POS_BEGIN]);
     Yii::$app->getView()->registerJsFile('/js/lib/chat.js', ['position' => View::POS_BEGIN]);
 
@@ -30,9 +31,9 @@ if(!Yii::$app->user->isGuest) {
                     chatUI.notify(params.from, params.to, chatUI.NOTIFY_CHAT);
                 }
                 if ('<?=$urlBase?>' == 'chat/with') {
-                    chatUI.appendMessageToBox(params.from, params.to, msg, type);
+                    chatUI.loadMessageToBox(params.from, params.to, msg, type);
                 } else if ('<?=$urlBase?>' == 'chat/index') {
-                    chatUI.appendMessageToList(params.from, params.to, msg, type, params.fromName, params.toName);
+                    chatUI.loadMessageToList(params.from, params.to, msg, type, params.fromName, params.toName);
                     $(document).trigger('chat/readNotify');
                 }
             });

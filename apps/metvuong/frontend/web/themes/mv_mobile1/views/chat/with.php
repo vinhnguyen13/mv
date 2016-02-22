@@ -58,7 +58,7 @@ $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 		timer = setTimeout(function() {
 			/*
 			 First: Chat.mucJoin('chatroom2@muc.metvuong.com', chatUI.genJid(xmpp_jid), xmpp_key);
-			 Next typing: Chat.sendMessage(to+'@muc.metvuong.com' , msg,"groupchat");
+			 Next typing: Chat.sendMessage('chatroom2@muc.metvuong.com' , msg,"groupchat");
 			 */
 			var onlines = chatUI.onlineList();
 			clearTimeout(timer);

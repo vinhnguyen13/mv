@@ -48,7 +48,34 @@
                 return chatBoxExist2;
             }
         },
-        appendMessageToBox: function (from, to, msg, type) {
+        loadMessageHistoryToBox: function (iq) {
+            var objHis = $(iq);
+            var child = objHis.children().children();
+            var length = child.length - 1;
+            var chatList = '';
+            chatBoxExist = chatUI.getBoxChat(objHis.attr('id'), objHis.children().attr('with'));
+            if(!chatBoxExist){
+                return false;
+            }
+            for(i=0;i<length;i++) {
+                var item = child.eq(i);
+                var body = item.find('body').text();
+                if(item.is('to')) {
+                    var chatItem = chatUI.buildMessageToBox(chatUI.usrFromJid(objHis.attr('id')), body, 1);
+                } else {
+                    var chatItem = chatUI.buildMessageToBox(chatUI.usrFromJid(objHis.children().attr('with')), body, 2);
+                }
+                chatList += chatItem;
+            }
+            if(chatBoxExist.find('.loading-chat').length > 0){
+                $(html).insertBefore( chatBoxExist.find('.wrap-chat .loading-chat') );
+            }else{
+                chatBoxExist.find('.wrap-chat').append(chatList);
+            }
+            $('.container-chat').scrollTop($('.wrap-chat').height());
+            console.log('_______________________________', chatList);
+        },
+        loadMessageToBox: function (from, to, msg, type) {
             msg = chatUI.decodeEntities(msg);
             chatBoxExist = chatUI.getBoxChat(from, to);
             if(!chatBoxExist){
@@ -57,11 +84,9 @@
             var from = chatUI.usrFromJid(from);
             var to = chatUI.usrFromJid(to);
             if(type == 1){
-                var template = Handlebars.compile($("#chat-send-template").html());
-                var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(xmpp_jid)+'/avatar'});
+                chatUI.buildMessageToBox(chatUI.usrFromJid(xmpp_jid), msg, type);
             }else if(type == 2){
-                var template = Handlebars.compile($("#chat-receive-template").html());
-                var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(from)+'/avatar'});
+                chatUI.buildMessageToBox(chatUI.usrFromJid(from), msg, type);
             }else{
                 var html = document.createTextNode(msg);
             }
@@ -73,7 +98,17 @@
             $('.container-chat').scrollTop($('.wrap-chat').height());
             $(document).trigger('chat/readNotify');
         },
-        appendMessageToList: function (from, to, msg, type, fromName, toName) {
+        buildMessageToBox: function (username, msg, type) {
+            if(type == 1){
+                var template = Handlebars.compile($("#chat-send-template").html());
+                var html = template({msg: msg, avatarUrl: '/member/'+username+'/avatar'});
+            }else if(type == 2){
+                var template = Handlebars.compile($("#chat-receive-template").html());
+                var html = template({msg: msg, avatarUrl: '/member/'+username+'/avatar'});
+            }
+            return html;
+        },
+        loadMessageToList: function (from, to, msg, type, fromName, toName) {
             msg = chatUI.decodeEntities(msg);
             var chatBoxExist = $('.chat-history');
             var template = Handlebars.compile($("#chat-receive-template").html());

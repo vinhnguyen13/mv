@@ -46,6 +46,7 @@ var Chat = {
             Chat.discoverNodes();
             //getNodes user is subscribed to
             Chat.getSubscriptions();
+            Chat.historyMessage();
         }
     },
     onRegister : function(status){
@@ -94,9 +95,8 @@ var Chat = {
         //GroupChat message
         if(type == 'groupchat'){
             Chat.log("Group Chat message");
-        }
-        //pubsub message
-        else if(from === Chat.pubsubJid && msg.getElementsByTagName('summary').length){
+        }else if(from === Chat.pubsubJid && msg.getElementsByTagName('summary').length){
+            //pubsub message
             Chat.log("pubsub message",msg.getElementsByTagName('summary')[0]);
             var items = msg.getElementsByTagName('items');
             var nodeName = items[0].getAttribute('node');
@@ -184,6 +184,24 @@ var Chat = {
         Chat.connection.send(reply.tree());
         Chat.log('I sent ' + messgeTo + ': ' + message, reply.tree());
         return true;
+    },
+    historyMessage : function(start, end){
+        console.log(Chat.Roster);
+        var iq = $iq({
+            type: 'get',
+            id: Strophe.getBareJidFromJid(Chat.connection.jid)
+        }).c('retrieve', {
+            xmlns: 'urn:xmpp:archive',
+            with: 'vnphone2014@metvuong.com',
+            start: '2016-01-01T04:00:00Z',
+        }).c('set', {xmlns: 'http://jabber.org/protocol/rsm'}).c('max').t('100000');
+        if(typeof end !== 'undefined') {
+            iq.up().up().attrs({end: '2016-02-30T04:00:00Z'});
+        }
+        Chat.connection.sendIQ(iq, Chat.onGetChat);
+    },
+    onGetChat: function(iq) {
+        chatUI.loadMessageHistoryToBox(iq);
     },
     Roster : [],
     getRoster : function(){
