@@ -1242,7 +1242,7 @@ label {
     overflow: visible;
 }
 .option-show-listing {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 .pagi a {
     display: block;
@@ -1297,7 +1297,7 @@ label {
     white-space: nowrap;
 }
 .top-listing {
-    line-height: 50px;
+    line-height: 25px;
 }
 .item-listing .img-intro {
     /* height: 225px; */

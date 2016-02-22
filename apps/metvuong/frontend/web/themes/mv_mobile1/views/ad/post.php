@@ -257,9 +257,9 @@
 
 <script>
 	$(document).ready(function () {
-		$('.dropdown-select').dropdown({
+		/*$('.dropdown-select').dropdown({
 			hiddenFillValue: '#sort'
-		});
+		});*/
 
 		$('.frm-radio').radio({
 			done: function (item) {

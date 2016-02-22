@@ -47,7 +47,14 @@ $(document).ready(function(){
 	
 	searchForm.submit(function(e){
 		e.preventDefault();
-		
+
+		if ( $(this).find('button.btn-submit').data('flag') ) {
+			$(this).find('button.btn-submit').data('flag', false);
+			return;
+		}else {
+			$(this).find('button.btn-submit').data('flag', true);
+		}
+
 		$(window).off('scroll', next);
 		
 		$(itemLoadingId).removeClass('hide');

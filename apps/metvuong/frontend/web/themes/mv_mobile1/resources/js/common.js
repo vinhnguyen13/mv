@@ -367,6 +367,7 @@ $.fn.toggleShowMobi = function (options) {
                     el.find(sc.settings.btnEvent).removeClass('active');
                     if ( sc.settings.styleEffect == 'slide' ) {
                         el.find(sc.settings.itemToggle).velocity("slideUp", { duration: 0 });
+                        el.find(sc.settings.btnEvent).data('flag',true);
                     }else if ( sc.settings.styleEffect == 'slideDownUp' ) {
                         el.find('.dropdown-up-style').removeClass('active');
                         setTimeout(function() {
