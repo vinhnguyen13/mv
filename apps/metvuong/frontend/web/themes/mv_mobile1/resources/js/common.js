@@ -1,4 +1,7 @@
 $(document).ready(function() {
+
+    $('.wrap-lazy img').lazyload();
+
     $("#menu-header").mmenu({
         navbar: {
             add: false

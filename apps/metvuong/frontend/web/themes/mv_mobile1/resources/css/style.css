@@ -2887,3 +2887,6 @@ input[type=text]:focus {
     padding-top: 0;
     padding-bottom: 0;
 }
+.item-listing .img-intro > div img {
+    background: url(../images/loading-listing.gif) no-repeat center;
+}

@@ -34,6 +34,7 @@ $(document).ready(function(){
 					$(window).on('scroll', next);
 				}
 				$('.result-listing').css({height: $(listingListId).outerHeight()});
+				$('.wrap-lazy img').lazyload();
 			});
 		}
 	}

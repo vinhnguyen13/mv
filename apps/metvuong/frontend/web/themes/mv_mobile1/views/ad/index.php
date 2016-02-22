@@ -33,7 +33,7 @@ $types = AdProduct::getAdTypes ();
 			<div class="top-listing clearfix">
 				<p><?= $pages->offset + 1 ?> - <span id="count-to"><?= $pages->offset + count($products) ?></span> Tin từ <?= $pages->totalCount ?> Tin</p>
 			</div>
-			<div id="listing-list">
+			<div id="listing-list" class="wrap-lazy">
 				<?php foreach ($products as $product): ?>
 				<div class="item-listing">
 					<?php
@@ -49,7 +49,7 @@ $types = AdProduct::getAdTypes ();
 
 					<div class="bgcover img-intro">
 						<div>
-							<a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"><img src="<?= $imgUrl ?>"></a>
+							<a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"><img src="" data-original="<?= $imgUrl ?>"></a>
 						</div>
 					</div>
 					<p class="infor-by-up">
