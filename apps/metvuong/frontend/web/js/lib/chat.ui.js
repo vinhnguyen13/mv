@@ -105,6 +105,7 @@
                 chatBoxExist.find('.wrap-chat').append(html);
             }
             $('.container-chat').scrollTop($('.wrap-chat').height());
+            $(document).trigger('chat/readNotify', [chatUI.NOTIFY_CHAT]);
         },
         loadMessageToList: function (from, to, msg, type, fromName, toName) {
             msg = chatUI.decodeEntities(msg);
@@ -118,6 +119,7 @@
                 $(".item[chat-to='" + chatUI.usrFromJid(from) + "']").remove();
             }
             chatBoxExist.find('.chat-list').prepend(html);
+            $(document).trigger('chat/readNotify', [chatUI.NOTIFY_CHAT]);
         },
         notify: function (from, to, type) {
             var sumChat = 0, sumOther = 0, sumTotal = 0;

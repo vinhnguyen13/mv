@@ -31,16 +31,12 @@ if(!Yii::$app->user->isGuest) {
                 }
                 if ('<?=$urlBase?>' == 'chat/with') {
                     chatUI.loadMessageToBox(params.from, params.to, msg, type);
-                    $(document).trigger('chat/readNotify', [chatUI.NOTIFY_CHAT]);
                 } else if ('<?=$urlBase?>' == 'chat/index') {
                     chatUI.loadMessageToList(params.from, params.to, msg, type, params.fromName, params.toName);
-                    $(document).trigger('chat/readNotify', [chatUI.NOTIFY_CHAT]);
-                    $(document).trigger('chat/readNotify');
                 }
             });
-            $(document).bind('chat/readNotify', function (event, abc) {
-                console.log(abc, '________________________________________');
-                if(abc == chatUI.NOTIFY_CHAT){
+            $(document).bind('chat/readNotify', function (event, type) {
+                if(type == chatUI.NOTIFY_CHAT){
                     $('#notifyChat').remove();
                     $('#notifyTotal').remove();
                 }
