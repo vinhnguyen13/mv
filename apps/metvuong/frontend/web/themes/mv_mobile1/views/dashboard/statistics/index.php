@@ -10,22 +10,22 @@ Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporti
 	<div class="title-top">Statistics</div>
 	<section>
 		<div id="sandbox-container">
-			<input type="text" class="form-control" placeholder="Hôm nay">
+			<input type="text" class="form-control picker" placeholder="Ngày">
 			<span class="icon arrowDown"></span>
 		</div>
 		<div class="summary clearfix">
 			SUMMARY
 			<span class="pull-right views-stats"><em class="fa fa-square-o"></em>
                 <select class="chart_stats">
-                    <option class="tab" value="visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'pid' => $pid])?>">Visitor</option>
-                    <option class="tab" value="finder" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'pid' => $pid])?>">Finder</option>
-                    <option class="tab" value="favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'pid' => $pid])?>">Favourite</option>
+                    <option class="tab" value="visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $from, 'to' => $to])?>">Visitor</option>
+                    <option class="tab" value="finder" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $from, 'to' => $to])?>">Finder</option>
+                    <option class="tab" value="favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'id' => $id, 'from' => $from, 'to' => $to])?>">Favourite</option>
                 </select>
             </span>
 			<div class="wrap-chart">
 				<div class="wrap-img">
                     <div class="wrapChart">
-                        <?=$this->render('/dashboard/chart/'.$view, ['pid' => $pid]);?>
+                        <?=$this->render('/dashboard/chart/'.$view, ['id' => $id, 'from' => $from, 'to' => $to]);?>
                     </div>
                     <div class="loading text-center" style="display: none;" >
                         <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/loading-listing.gif" alt="Loading..." />
@@ -157,10 +157,45 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 ?>
 
 <script>
+
+    $(document).ready(function () {
+        var params = getUrlVars();
+        if(params["date"] !== undefined){
+            var arrDate = params["date"].split("-");
+            var useDate = arrDate[2]+"/"+arrDate[1]+"/"+arrDate[0];
+            $('.picker').attr('placeholder', ""+useDate);
+        }
+    });
+
 	$('#sandbox-container input').datepicker({
 	    language: "vi",
-	    autoclose: true
+        autoclose: true,
+        onSelect: function() {
+            return $(this).trigger('change');
+        }
 	});
+
+    $('#sandbox-container input').change(function(){
+        var theDate = $(this).datepicker().val();
+        var arrDate = theDate.split("/");
+        var useDate = arrDate[2]+"-"+arrDate[1]+"-"+arrDate[0];
+        if(useDate) {
+            window.location = '<?=Url::to(['/dashboard/statistics','id' => $id])?>' + '&date=' + useDate;
+        }
+    });
+
+    function getUrlVars()
+    {
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for(var i = 0; i < hashes.length; i++)
+        {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
+    }
 
     $('.chart_stats').change(function () {
         var timer = 0;

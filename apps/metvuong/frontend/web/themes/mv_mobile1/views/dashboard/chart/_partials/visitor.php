@@ -2,7 +2,7 @@
 use yii\helpers\Url;
 use frontend\models\Chart;
 
-$data = Chart::find()->getDataVisitor($pid);
+$data = Chart::find()->getDataVisitor($id, $from, $to);
 if(!empty($data)) {
     $dataChart = $data['dataChart'];
     $categories = $data['categories'];
@@ -11,7 +11,6 @@ if(!empty($data)) {
     $dataChart = array_values($dataChart);
     ksort($categories);
     $categories = array_values($categories);
-
 
     ?>
     <div id="chartAds" style="min-width: 310px; height: 400px; margin: 0 auto"></div>

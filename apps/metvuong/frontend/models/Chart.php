@@ -32,9 +32,9 @@ class Chart extends Component
         return Yii::createObject(Chart::className());
     }
 
-    public function getDataFinder($pid){
-        $from = strtotime('-7 days');
-        $to = strtotime('+0 days');
+    public function getDataFinder($pid, $from, $to){
+//        $from = strtotime('-7 days');
+//        $to = strtotime('+0 days');
 //        $pids = [1];
 
         $query = AdProductFinder::find();
@@ -53,9 +53,9 @@ class Chart extends Component
         return false;
     }
 
-    public function getDataVisitor($pid){
-        $from = strtotime('-7 days');
-        $to = strtotime('+0 days');
+    public function getDataVisitor($pid, $from, $to){
+//        $from = strtotime('-7 days');
+//        $to = strtotime('+0 days');
 //        $pids = [1];
 
         $query = AdProductVisitor::find();
@@ -76,9 +76,9 @@ class Chart extends Component
         return false;
     }
 
-    public function getDataSaved($pid){
-        $from = strtotime('-7 days');
-        $to = strtotime('+0 days');
+    public function getDataSaved($pid, $from, $to){
+//        $from = strtotime('-7 days');
+//        $to = strtotime('+0 days');
 //        $pids = [];
 
         $query = AdProductSaved::find();

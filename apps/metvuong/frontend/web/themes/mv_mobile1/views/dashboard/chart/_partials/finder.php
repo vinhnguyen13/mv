@@ -2,7 +2,7 @@
 use yii\helpers\Url;
 use frontend\models\Chart;
 
-$data = Chart::find()->getDataFinder($pid);
+$data = Chart::find()->getDataFinder($id, $from, $to);
 if(!empty($data)) {
 $dataChart = $data['dataChart'];
 $categories = $data['categories'];

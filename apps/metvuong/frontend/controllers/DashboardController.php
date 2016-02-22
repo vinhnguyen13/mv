@@ -49,17 +49,53 @@ class DashboardController extends Controller
 //            var_dump($ck);
 //        }
         $id = (int)Yii::$app->request->get("id");
-        $visitors = Tracking::find()->getVisitors($id);
-        $finders = Tracking::find()->getFinders($id);
-        $favourites = Tracking::find()->getFavourites($id);
+
+        $date = Yii::$app->request->get("date");
+        if ($date) {
+            $useDate = new \DateTime($date);
+            $from = strtotime('-7 days', $useDate->getTimestamp());
+
+            $t = date_format($useDate, 'Y-m-d 23:59:59');
+            $dateTo = new \DateTime($t);
+            $to = $dateTo->getTimestamp();
+
+            $visitors = Tracking::find()->getVisitors($id, $from, $to);
+            $finders = Tracking::find()->getFinders($id, $from, $to);
+            $favourites = Tracking::find()->getFavourites($id, $from, $to);
+
+            return $this->render('statistics/index', [
+                'id' => $id,
+                'visitors' => $visitors,
+                'finders' => $finders,
+                'favourites' => $favourites,
+                'view' => '_partials/visitor',
+                'from' => $from,
+                'to' => $to
+            ]);
+        }
+
+
+        $useDate = new \DateTime(date('Y-m-d'));
+        $from = strtotime('-7 days', $useDate->getTimestamp());
+
+        $t = date_format($useDate, 'Y-m-d 23:59:59');
+        $dateTo = new \DateTime($t);
+        $to = $dateTo->getTimestamp();
+
+        $visitors = Tracking::find()->getVisitors($id, $from, $to);
+        $finders = Tracking::find()->getFinders($id, $from, $to);
+        $favourites = Tracking::find()->getFavourites($id, $from, $to);
 
         return $this->render('statistics/index', [
             'visitors' => $visitors,
             'finders' => $finders,
             'favourites' => $favourites,
             'view' => '_partials/visitor',
-            'pid' => $id
+            'id' => $id,
+            'from' => $from,
+            'to' => $to
         ]);
+
     }
 
     public function actionNotification()
@@ -113,7 +149,10 @@ class DashboardController extends Controller
     {
         if(Yii::$app->request->isAjax) {
             $view = Yii::$app->request->get('view', 'index');
-            $pid = Yii::$app->request->get('pid');
+            $id = Yii::$app->request->get('id');
+            $from = Yii::$app->request->get('from');
+            $to = Yii::$app->request->get('to');
+
             switch($view){
                 case '_partials/visitor';
 
@@ -126,7 +165,7 @@ class DashboardController extends Controller
                     break;
             }
             if(!empty($view)){
-                return $this->renderAjax('chart/'.$view, ['pid' => $pid]);
+                return $this->renderAjax('chart/'.$view, ['id' => $id, 'from' => $from, 'to' => $to]);
             }
             return false;
         }

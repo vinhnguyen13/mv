@@ -155,10 +155,10 @@ class Tracking extends Component
         }
     }
 
-    public function getVisitors($pid){
-        $from = strtotime('-7 days');
-        $to = strtotime('+0 days');
-        $query = AdProductVisitor::find()->andWhere(['product_id' => (int)$pid])->all();
+    public function getVisitors($pid, $from, $to){
+
+        $query = AdProductVisitor::find()->where(['between', 'time', $from, $to])->andWhere(['product_id' => (int)$pid])->all();
+
         $visitors = array();
         foreach($query as $k => $q){
             $username = User::findIdentity($q->user_id)->username;
@@ -170,10 +170,8 @@ class Tracking extends Component
         return $visitors;
     }
 
-    public static function getFinders($pid){
-        $from = strtotime('-7 days');
-        $to = strtotime('+0 days');
-        $query = AdProductFinder::find()->andWhere(['product_id' => (int)$pid])->all();
+    public function getFinders($pid, $from, $to){
+        $query = AdProductFinder::find()->where(['between', 'time', $from, $to])->andWhere(['product_id' => (int)$pid])->all();
         $finders = array();
         foreach($query as $k => $q){
             $username = User::findIdentity($q->user_id)->username;
@@ -185,8 +183,8 @@ class Tracking extends Component
         return $finders;
     }
 
-    public static function getFavourites($pid){
-        $query = AdProductSaved::find()->where(['product_id' => (int)$pid])->all();
+    public function getFavourites($pid, $from, $to){
+        $query = AdProductSaved::find()->where(['between', 'saved_at', $from, $to])->andWhere(['product_id' => (int)$pid])->all();
         $favourites = array();
         foreach($query as $k => $q){
             $username = User::findIdentity($q->user_id)->username;
