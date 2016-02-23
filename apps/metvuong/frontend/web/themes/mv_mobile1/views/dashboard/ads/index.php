@@ -11,8 +11,11 @@ use yii\helpers\Url;
 			<?php foreach($products as $product): ?>
 			<li>
 				<div class="img-intro pull-left">
-					<div class="bgcover" style="background-image:url(<?= $product->getImage() ?>);"><a href="<?=Url::to(['/dashboard/statistics', 'id' => $product->id])?>"></a></div>
-					<a href="<?=Url::to(['/dashboard/statistics', 'id' => $product->id])?>"><em class="icon-bar-chart"></em>View Stats</a>
+					<div class="img-show">
+						<div>
+							<a href="<?=Url::to(['/dashboard/statistics', 'id' => $product->id])?>"><img src="<?= $product->getImage() ?>"></a>
+						</div>
+					</div>
 					<?php if($product->end_date < time()): ?>
 					<a class="unactive-pro" href="#"><em class="fa fa-close"></em>Inactive</a>
 					<?php else: ?>

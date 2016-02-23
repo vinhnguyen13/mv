@@ -53,7 +53,7 @@ use yii\helpers\Url;
 
 		<div class="address-listing">
 			<p class="name-tdang">LIP SUM DOLOR SIT AMET</p>
-			<p><?= $product->getAddress(true) ?></p>
+			<p><span class="icon address-icon"></span><?= $product->getAddress(true) ?></p>
 		</div>
 		<!-- <p class="attr-home">
 			<?= $product->adProductAdditionInfo->room_no ? $product->adProductAdditionInfo->room_no . ' <span class="icon icon-bed"></span> | ' : '' ?>
@@ -215,12 +215,6 @@ use yii\helpers\Url;
 								<?= $product->adContactInfo->email ?>
 							</div>
 							<?php endif; ?>
-							<div class="item-agent">
-								<div>
-									<span class="icon icon-email"></span>
-								</div>
-								huan.ta@gmail.com
-							</div>
 							<div class="item-agent">
 								<div>
 									<span class="icon address-icon"></span>

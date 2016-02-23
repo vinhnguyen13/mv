@@ -57,13 +57,26 @@ $types = AdProduct::getAdTypes ();
 							href="#">Môi Giới</a>
 					</p>
 					<p class="address-listing">
-						<a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"><?= $product->getAddress(true) ?></a>
+						<span class="icon address-icon"></span><a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"><?= $product->getAddress(true) ?></a>
 					</p>
-					<p class="attr-home">
+					<!-- <p class="attr-home">
 						<?= $product->adProductAdditionInfo->room_no ? $product->adProductAdditionInfo->room_no . ' <span class="icon icon-bed"></span> | ' : ''?>
 						<?= $product->adProductAdditionInfo->toilet_no ? $product->adProductAdditionInfo->toilet_no . ' <span class="icon icon-bath"></span> | ' : ''?>
 						<span class="price"><?= StringHelper::formatCurrency($product->price) ?></span>
-					</p>
+					</p> -->
+					<ul class="clearfix list-attr-td">
+						<li>
+							<span class="icon icon-dt icon-dt-small"></span>80m2
+						</li>
+						<li>
+							<span class="icon icon-bed icon-bed-small"></span> 2
+						</li>
+						<li>
+							<span class="icon icon-pt icon-pt-small"></span> 2
+						</li>
+					</ul>
+					<span class="price"><?= StringHelper::formatCurrency($product->price) ?></span>
+					<a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>" class="pull-right view-more">Chi tiết</a>
 				</div>
 				<?php endforeach; ?>
 			</div>
