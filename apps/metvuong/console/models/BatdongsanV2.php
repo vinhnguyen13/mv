@@ -11,6 +11,7 @@ use Collator;
 use DOMDocument;
 use DOMXPath;
 use keltstr\simplehtmldom\SimpleHTMLDom;
+use linslin\yii2\curl\Curl;
 use vsoft\ad\models\AdCity;
 use vsoft\ad\models\AdContactInfo;
 use vsoft\ad\models\AdDistrict;
@@ -39,6 +40,8 @@ class BatdongsanV2 extends Component
         'nha-dat-cho-thue-hoc-mon','nha-dat-cho-thue-nha-be','nha-dat-cho-thue-tan-binh','nha-dat-cho-thue-tan-phu','nha-dat-cho-thue-phu-nhuan','nha-dat-cho-thue-thu-duc'];
     protected $time_start = 0;
     protected $time_end = 0;
+
+    protected $projects=['khu-can-ho','cao-oc-van-phong','khu-do-thi-moi','khu-thuong-mai-dich-vu','khu-phuc-hop','khu-dan-cu','khu-du-lich-nghi-duong','khu-cong-nghiep','du-an-khac'];
 
     /**
      * @return mixed
@@ -1481,6 +1484,9 @@ class BatdongsanV2 extends Component
         return file_exists($filename);
     }
 
+    /***
+     * CRAWLER AGENTs
+     */
     public function getAgents(){
         $path = Yii::getAlias('@console') . "/data/bds_html/agents/";
         $file_log = "agent_log.json";
@@ -1779,6 +1785,163 @@ class BatdongsanV2 extends Component
                 'updated_at' => time()
             ];
             return $json;
+        }
+    }
+
+    /***
+     * CRAWLER PROJECTs
+     */
+    public function getProjects(){
+        ob_start();
+        $this->time_start = time();
+        $types = $this->projects;
+        $path_folder = Yii::getAlias('@console') . "/data/bds_html/projects/";
+        $project_log = $this->loadLog($path_folder, "project.json");
+        if(empty($project_log["type"])){
+            $project_log["type"] = array();
+        }
+        $current_type = empty($project_log["current_type"]) ? 0 : $project_log["current_type"]+1;
+        $count_type = count($types);
+        if($current_type >= $count_type - 1){
+            $project_log["type"] = array();
+            $project_log["current_type"] = $current_type = 0;
+            $this->writeLog($project_log, $path_folder, "project.json");
+        }
+
+        foreach($types as $key_type => $type){
+            if ($key_type >= $current_type) {
+                $url = self::DOMAIN . "/" . $type;
+                $page = $this->getUrlContent($url);
+                if (!empty($page)) {
+                    $html = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
+                    $pagination = $html->find('.ks-pagination-links a');
+                    $count_page = count($pagination);
+                    $last_page = (int)str_replace("/".$type . "/p", "", $pagination[$count_page-1]->href);
+                    if ($last_page > 0) {
+                        $log = $this->loadLog($path_folder . $type . "/", "{$type}.json");
+                        if(empty($log["files"])){
+                            $log["files"] = array();
+                        }
+                        $sequence_id = empty($log["files_last_id"]) ? 0 : ($log["files_last_id"] + 1);
+                        $current_page = empty($log["current_page"]) ? 1 : ($log["current_page"] + 1);
+                        $current_page_add = $current_page + 4; // +4 => total pages to run that are 5.
+                        if ($current_page_add > $last_page)
+                            $current_page_add = $last_page;
+
+                        if ($current_page <= $last_page) {
+                            for ($i = $current_page; $i <= $last_page; $i++) {
+                                $list_return = $this->projectList($type, $i, $sequence_id, $log, $path_folder);
+                                if (!empty($list_return["data"])) {
+                                    $log = $list_return["data"];
+                                    $log["current_page"] = $i;
+                                    $this->writeLog($log, $path_folder.$type."/", "{$type}.json");
+                                    print_r("\n{$type}-page " . $i . " done!\n");
+                                }
+                                sleep(1);
+                                ob_flush();
+                            }
+                            // after 5 page break
+//                            if ($current_page != $current_page_add) {
+//                                break;
+//                            }
+
+                        } else {
+                            print_r("\nLast file of {$type} done.");
+                        }
+                    }
+                }
+
+                if(!in_array($type, $project_log["type"])) {
+                    array_push($project_log["type"], $type);
+                }
+                $project_log["current_type"] = $key_type;
+                $this->writeLog($project_log, $path_folder, "project.json");
+
+            }
+        }
+        $this->time_end = time();
+        print_r("\nTime: ");
+        print_r($this->time_end - $this->time_start);
+    }
+
+    public function projectList($type, $current_page, $sequence_id, $log, $path_folder){
+        $href = "/".$type."/p".$current_page;
+        $page = $this->getUrlContent(self::DOMAIN . $href);
+        if(!empty($page)) {
+            $html = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
+            $list = $html->find('.list2item2 .tc-img a');
+            if (count($list) > 0) {
+                // about 20 listing
+                $id = '';
+                foreach ($list as $item) {
+                    if (preg_match('/pj(\d+)/', self::DOMAIN . $item->href, $matches)) {
+                        if(!empty($matches[1])){
+                            $id = $matches[1];
+                        }
+                    }
+                    $checkExists = false;
+                    if(!empty($id) && !empty($log["files"])) {
+                        $checkExists = in_array($id, $log["files"]);
+                    }
+
+                    if ($checkExists == false) {
+                        $res = $this->projectDetail($type, $id, $item->href, $path_folder);
+                        if (!empty($res)) {
+                            array_push($log["files"], $id);
+//                            $log["files"][$sequence_id] = $res;
+//                            $log["files_last_id"] = $sequence_id;
+//                            $sequence_id = $sequence_id + 1;
+                        }
+                    } else {
+                        var_dump($id);
+                    }
+                }
+                return ['data' => $log];
+            } else {
+                echo "\nCannot find listing. End page!".self::DOMAIN;
+                $this->writeFileLogFail($type, "\nCannot find listing: $href"."\n");
+            }
+
+        } else {
+            echo "\nCannot access in get List Project of ".self::DOMAIN;
+            $this->writeFileLogFail($type, "\nCannot access: $href"."\n");
+        }
+        return null;
+    }
+
+    public function projectDetail($type, $id, $href, $path_folder){
+        $page = $this->getUrlContent(self::DOMAIN . $href);
+        if(!empty($page)) {
+            $path = $path_folder."{$type}/files/";
+            if (!is_dir($path)) {
+                mkdir($path, 0777, true);
+                echo "\nDirectory {$path} was created";
+            }
+            $res = $this->writeFileJson($path . $id, $page);
+            if ($res) {
+                $this->writeFileLogUrlSuccess($type, self::DOMAIN . $href . "\n", $path_folder);
+                return $id;
+            } else {
+                return null;
+            }
+        }
+        else {
+            echo "\nError go to detail at " .self::DOMAIN.$href;
+            return null;
+        }
+    }
+
+    public function importProjects(){
+        $path = Yii::getAlias('@console') . "/data/bds_html/projects/import";
+        $file_log = "import_project_log.json";
+        $log_import = $this->loadLog($path, $file_log);
+        $types = $this->projects;
+//        $break_type = false; // detect next type if it is false
+        $current_type = empty($log_import["current_type"]) ? 0 : $log_import["current_type"]+1;
+        foreach($types as $key_type => $type){
+            if($key_type >= $current_type){
+
+            }
         }
     }
 
