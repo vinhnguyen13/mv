@@ -131,7 +131,7 @@
 		<div style="width: 100%; height: 329px; background: #D3D3DE;" class="p">
 			<img style="width: 100%; height: 329px;" id="pl" alt="" src="" />
 			<span class="icon-edit icon" style="display: none;"></span>
-			<span class="icon-delete icon"></span>
+			<span class="icon-delete icon" style="display: none;"></span>
 		</div>
 		<input id="tai-anh-len" type="button" value="Tải ảnh lên" />
 	</div>
