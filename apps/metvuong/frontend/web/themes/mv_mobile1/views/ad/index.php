@@ -69,10 +69,10 @@ $types = AdProduct::getAdTypes ();
 							<span class="icon icon-dt icon-dt-small"></span>80m2
 						</li>
 						<li>
-							<span class="icon icon-bed icon-bed-small"></span> 2
+							<span class="icon icon-bed icon-bed-small"></span> 02
 						</li>
 						<li>
-							<span class="icon icon-pt icon-pt-small"></span> 2
+							<span class="icon icon-pt icon-pt-small"></span> 02
 						</li>
 					</ul>
 					<span class="price"><?= StringHelper::formatCurrency($product->price) ?></span>
