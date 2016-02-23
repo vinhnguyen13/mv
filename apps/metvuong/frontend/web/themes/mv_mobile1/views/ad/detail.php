@@ -21,20 +21,21 @@ use yii\helpers\Url;
 		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
 	}
 ?>
+
 <div class="detail-listing">
 	<?php 
 		$images = $product->adImages;
 		if($images):
 	?>
 	<div class="gallery-detail swiper-container">
-		<ul class="clearfix icons-detail">
-			<li><a href="#" class=""><span class="icon icon-loca"></span></a></li>
-			<li><a href="#" class="save-item" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>"><span class="icon icon-fave"></span></a></li>
-		</ul>
 		<div class="swiper-wrapper">
 			<?php foreach ($images as $image): ?>
 			<div class="swiper-slide">
-				<div class="bgcover" style="background-image: url(<?= $image->imageMedium ?>)"></div>
+				<div class="img-show">
+					<div>
+						<img src="<?= $image->imageMedium ?>">
+					</div>
+				</div>
 			</div>
 			<?php endforeach; ?>
 		</div>
@@ -42,22 +43,183 @@ use yii\helpers\Url;
 	</div>
 	<?php endif; ?>
 	<div class="infor-listing">
+		<ul class="pull-right icons-detail">
+			<li><a href="#" class="icon icon-fave" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>"></a></li>
+			<li><a href="#" class="icon save-item"></a></li>
+		</ul>
 		<p class="infor-by-up">
 			<?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?> bởi <a href="#">Môi Giới</a>
 		</p>
-		<p class="address-listing"><?= $product->getAddress(true) ?></p>
-		<p class="attr-home">
+
+		<div class="address-listing">
+			<p class="name-tdang">LIP SUM DOLOR SIT AMET</p>
+			<p><?= $product->getAddress(true) ?></p>
+		</div>
+		<!-- <p class="attr-home">
 			<?= $product->adProductAdditionInfo->room_no ? $product->adProductAdditionInfo->room_no . ' <span class="icon icon-bed"></span> | ' : '' ?>
 			<?= $product->adProductAdditionInfo->toilet_no ? $product->adProductAdditionInfo->toilet_no . ' <span class="icon icon-bath"></span> | ' : '' ?>
 			<span class="price"><?= StringHelper::formatCurrency($product->price) ?></span>
-		</p>
+		</p> -->
+		<div class="clearfix">
+			<div class="left-attr">
+				<ul class="clearfix">
+					<li>
+						<span class="wrap-icon"><span class="icon icon-dt icon-dt-1"></span></span> <?= $product->area ?>m2
+					</li>
+					<li>
+						<span class="wrap-icon"><span class="icon icon-bed icon-bed-1"></span></span> 2 Phòng ngủ
+					</li>
+					<li>
+						<span class="wrap-icon"><span class="icon icon-pt icon-pt-1"></span></span> 2 Phòng tắm
+					</li>
+				</ul>
+			</div>
+			<div class="right-attr">
+				<p class="price-td">
+					<span>$ Giá</span>
+					<?= StringHelper::formatCurrency($product->price) ?>
+				</p>
+			</div>
+		</div>
 	</div>
-	<div class="attr-detail">
+	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Diễn tả chi tiết<span class="icon"></span>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body" name="about" contenteditable="true" placeholder="Vui lòng chia sẻ tiểu sử">
+                    <p><?= $product->content ?></p>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Thông tin chi tiết<span class="icon"></span>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body" name="activity" contenteditable="true" placeholder="Vui lòng chia sẻ hoạt động">
+                    <?php if($product->area): ?>
+					<p>Diện tích: <?= $product->area ?>m<sup>2</sup></p>
+					<?php endif; ?>
+					<?php if($product->adProductAdditionInfo->facade_width): ?>
+					<p>Mặt tiền: <?= $product->adProductAdditionInfo->facade_width ?>m</p>
+					<?php endif; ?>
+					<?php if($product->adProductAdditionInfo->land_width): ?>
+					<p>Đường vào: <?= $product->adProductAdditionInfo->land_width ?>m</p>
+					<?php endif; ?>
+					<?php if($product->adProductAdditionInfo->floor_no): ?>
+					<p>Tầng cao: <?= $product->adProductAdditionInfo->floor_no ?>  Tầng</p>
+					<?php endif; ?>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingFour">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Tiện ích<span class="icon"></span>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                <div class="panel-body" name="experience" contenteditable="true" placeholder="Vui lòng nhập chia sẻ kinh nghiệm">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingSeven">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                        Bản đồ<span class="icon"></span>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseSeven" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
+                <div class="panel-body">
+                    
+                </div>
+            </div>
+
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingSeven">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEght" aria-expanded="false" aria-controls="collapseSeven">
+                        Liên hệ<span class="icon"></span>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseEght" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
+                <div class="panel-body">
+                    <div class="infor-agent clearfix">
+			            <?php if(!empty($owner->username)) { ?>
+						<a href="<?=\yii\helpers\Url::to(['member/profile','username' => $owner->username])?>" class="wrap-img">
+			                <img src="<?= $avatar ?>" alt="" /></a>
+			            <?php } else { ?>
+			                <a class="wrap-img"><img src="<?= $avatar ?>" alt="" /></a>
+			            <?php } ?>
+			            <a href="#" class="name-agent"><?= $product->adContactInfo->name ?></a>
+						<div class="rating-start">
+							<fieldset class="rate">
+								<input type="radio" id="rating10" name="rating" value="10"> <label
+									for="rating10" title="5 stars"> </label> <input type="radio"
+									id="rating9" name="rating" value="9"> <label for="rating9"
+									class="half" title="5 stars"> </label> <input type="radio"
+									id="rating8" name="rating" value="8"> <label for="rating8"
+									title="4 stars"> </label> <input type="radio" id="rating7"
+									name="rating" value="7"> <label for="rating7" class="half"
+									title="4 stars"> </label> <input type="radio" id="rating6"
+									name="rating" value="6"> <label for="rating6" title="3 stars"> </label>
+								<input type="radio" id="rating5" name="rating" value="5"> <label
+									for="rating5" class="half" title="3 stars"> </label> <input
+									type="radio" id="rating4" name="rating" value="4"> <label
+									for="rating4" title="2 stars"> </label> <input type="radio"
+									id="rating3" name="rating" value="3"> <label for="rating3"
+									class="half" title="2 stars"> </label> <input type="radio"
+									id="rating2" name="rating" value="2"> <label for="rating2"
+									title="1 stars"> </label> <input type="radio" id="rating1"
+									name="rating" value="1"> <label for="rating1" class="half"
+									title="1 stars"> </label>
+							</fieldset>
+						</div>
+						<?php if($product->adContactInfo->mobile): ?>
+						<div class="phone-agent">
+							<div>
+								<span class="icon"></span>
+							</div>
+							<a href="tel:<?= $product->adContactInfo->mobile ?>"><?= $product->adContactInfo->mobile ?></a>
+						</div>
+						<?php endif; ?>
+						<?php if($product->adContactInfo->email): ?>
+						<div class="email-agent">
+							<div>
+								<span class="icon"></span>
+							</div>
+							<?= $product->adContactInfo->email ?>
+						</div>
+						<?php endif; ?>
+					</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+	<!-- <div class="attr-detail">
 		<div class="title-attr-listing">Diễn tả chi tiết</div>
 		<p><?= $product->content ?></p>
 		
-	</div>
-	<div class="attr-detail">
+	</div> -->
+	<!-- <div class="attr-detail">
 		<div class="title-attr-listing">Thông tin chi tiết</div>
 		<?php if($product->area): ?>
 		<p>Diện tích: <?= $product->area ?>m<sup>2</sup></p>
@@ -72,8 +234,8 @@ use yii\helpers\Url;
 		<p>Tầng cao: <?= $product->adProductAdditionInfo->floor_no ?>  Tầng</p>
 		<?php endif; ?>
 		
-	</div>
-	<div class="attr-detail">
+	</div> -->
+	<!-- <div class="attr-detail">
 		<div class="title-attr-listing">Tiện ích (6)</div>
 		<p>Hồ bơi</p>
 		<p>Mailbox</p>
@@ -82,7 +244,7 @@ use yii\helpers\Url;
 		<p>24/7 Bảo Vệ</p>
 		<p>Gym</p>
 		
-	</div>
+	</div> -->
 	<!-- <div class="attr-detail">
 		<div class="title-attr-listing">Địa điểm</div>
 		<div class="map-wrap">
@@ -91,16 +253,16 @@ use yii\helpers\Url;
 			</div>
 		</div>
 	</div> -->
-	<div class="attr-detail">
+	<!-- <div class="attr-detail">
 		<div class="title-attr-listing">Liên hệ</div>
 		<div class="infor-agent clearfix">
-            <?php if(!empty($owner->username)) { ?>
+	            <?php if(!empty($owner->username)) { ?>
 			<a href="<?=\yii\helpers\Url::to(['member/profile','username' => $owner->username])?>" class="wrap-img">
-                <img src="<?= $avatar ?>" alt="" /></a>
-            <?php } else { ?>
-                <a class="wrap-img"><img src="<?= $avatar ?>" alt="" /></a>
-            <?php } ?>
-            <a href="#" class="name-agent"><?= $product->adContactInfo->name ?></a>
+	                <img src="<?= $avatar ?>" alt="" /></a>
+	            <?php } else { ?>
+	                <a class="wrap-img"><img src="<?= $avatar ?>" alt="" /></a>
+	            <?php } ?>
+	            <a href="#" class="name-agent"><?= $product->adContactInfo->name ?></a>
 			<div class="rating-start">
 				<fieldset class="rate">
 					<input type="radio" id="rating10" name="rating" value="10"> <label
@@ -141,7 +303,7 @@ use yii\helpers\Url;
 			</div>
 			<?php endif; ?>
 		</div>
-	</div>
+	</div> -->
 	<div class="attr-detail text-center">
 		<?php if(!empty($owner->username)) { ?>
 			<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" class="contact-agent">Liên hệ Môi giới</a>

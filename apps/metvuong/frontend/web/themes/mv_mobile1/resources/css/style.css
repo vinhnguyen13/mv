@@ -27,6 +27,7 @@ a:link {
 }
 .icon {
     background: url(../images/icon.png) no-repeat top left;
+    background-size: 33.333333333333336px 666.6666666666666px;
 }
 header {
     background: #fff;
@@ -40,7 +41,7 @@ header {
     left: 0px;
 }
 .search-box {
-    height: 400px;
+    height: 350px;
     position: relative;
     padding: 0 20px;
 }
@@ -66,9 +67,9 @@ header {
 }
 #menu-toggle {
     width: 25px;
-    height: 20px;
+    height: 18px;
     margin: 15px 0 0 0;
-    background-size: 336px;
+    background-position: 0 -24px;
 }
 #container {
     
@@ -157,11 +158,10 @@ header {
 #search-header,
 #btn-search span {
     display: inline-block;
-    width: 30px;
-    height: 30px;
+    width: 33.333px;
+    height: 33px;
     vertical-align: middle;
-    background-position: -23px -1px;
-    background-size: 287px;
+    background-position: 0 -206px;
     margin-top: 0px;
 }
 .search-home {
@@ -229,7 +229,6 @@ header {
     width: 25px;
     height: 25px;
     background-position: -50px 0;
-    background-size: 267px;
     position: absolute;
     top: 8px;
     left: 15px;
@@ -451,7 +450,6 @@ header {
     background: #bdbdbd;
 }
 .gallery-detail .swiper-slide {
-    height: 290px;
     position: relative;
 }
 .gallery-detail .swiper-slide img {
@@ -474,30 +472,22 @@ header {
     height: 100%;
 }
 .icons-detail {
-    position: absolute;
-    bottom: 12px;
-    left: 15px;
-    z-index: 5;
+    
 }
 .icons-detail li {
     float: left;
-    margin-right: 10px;
+    margin-right: 20px;
 }
 .icons-detail li:last-child {
     margin-right: 0;
 }
 .icons-detail a {
-    display: block;
-    background: rgba(0, 0, 0, 0.52);
-    padding: 6px 0 3px;
-    width: 40px;
-    text-align: center;
-    line-height: 100%;
+    
 }
 .attr-detail,
 .infor-listing {
     border-bottom: 1px solid #bdbdbd;
-    padding: 15px;
+    padding: 15px 20px;
     font-size: 1.1em;
     color: #717171;
 }
@@ -513,9 +503,21 @@ header {
     font-weight: 700;
 }
 .address-listing {
+    letter-spacing: 0.3px;
+    color: #171616;
+    font-weight: 400;
+    font-size: 14px;
+    margin-bottom: 5px;
+    position: relative;
+}
+.address-listing p {
+    /* padding-right: 50px; */
+}
+.address-listing .name-tdang {
+    letter-spacing: 0.5px;
+    color: #00a769;
+    font-size: 17px;
     font-weight: 700;
-    font-size: 1.1em;
-    line-height: 27px;
 }
 .address-listing a {
     color: #333;
@@ -645,12 +647,10 @@ label {
     width: 25px;
     display: block;
     background-position: -76px -1px;
-    background-size: 125px;
     margin: 0 auto 0;
 }
 .phone-agent span {
     background-position: -37px 0px;
-    background-size: 125px;
     height: 24px;
     width: 16px;
 }
@@ -665,7 +665,6 @@ label {
 }
 .id-agent span {
     background-position: -64px -1px;
-    background-size: 150px;
     height: 29px;
     width: 25px;
 }
@@ -704,10 +703,12 @@ label {
 }
 .infor-by-up,
 .title-duan {
-    color: #868686;
+    color: #3c3c3c;
 }
 .infor-by-up {
-    font-size: 1.1em;
+    font-weight: 400;
+    font-size: 13px;
+    margin-bottom: 5px;
 }
 .infor-duan .address-listing,
 .name-duan {
@@ -791,21 +792,18 @@ label {
     
 }
 .post-listing .step-txt {
-    font-weight: 600;
-    font-size: 1.3em;
-    background: #ebeff2;
-    padding: 5px 0;
-    border-bottom: 2px solid #fff;
+    font-weight: 400;
+    font-size: 18px;
+    padding: 15px 0;
+    color: #3c3c3c;
 }
 .step-check {
-    border-right: 1px solid #C5C5C5;
-    border-bottom: 1px solid #C5C5C5;
+    
 }
 .step-check li {
     float: left;
     width: 50%;
-    border-top: 1px solid #C5C5C5;
-    border-left: 1px solid #C5C5C5;
+    padding: 2px;
 }
 .step-check li a {
     display: block;
@@ -856,7 +854,6 @@ label {
     top: 9px;
     right: -8px;
     background-position: -140px -2px;
-    background-size: 175px;
 }
 .item-step {
     margin-bottom: 20px;
@@ -930,7 +927,6 @@ label {
     height: 50px;
     margin: 0 auto 5px;
     background-position: -151px -72px;
-    background-size: 200px;
 }
 .list-tienich {
     border-right: 1px solid #C1C1C1;
@@ -957,7 +953,6 @@ label {
     height: 45px;
     margin: 0 auto 5px;
     background-position: 2px -36px;
-    background-size: 165px;
 }
 .agent-avatar {
     width: 60%;
@@ -989,14 +984,13 @@ label {
     width: 200px;
 }
 .radio-ui {
-    width: 25px;
-    height: 24px;
+    width: 34px;
+    height: 34px;
     margin: 0 auto 0;
-    background-position: -52px -27px;
-    background-size: 125px;
+    background-position: 0 -137px;
 }
 .radio-ui.active {
-    background-position: -97px -21px;
+    background-position: 0 -171px;
 }
 .radio-ui input {
     display: none;
@@ -1009,7 +1003,6 @@ label {
     width: 25px;
     height: 25px;
     background-position: -53px -53px;
-    background-size: 130px;
     vertical-align: middle;
 }
 .detail-listing .edit-gallery {
@@ -1096,7 +1089,6 @@ label {
     width: 38px;
     height: 38px;
     background-position: 0 -74px;
-    background-size: 150px;
     margin-top: -19px;
     margin-left: -19px;
 }
@@ -1127,16 +1119,15 @@ label {
     padding: 10px 15px;
     position: fixed;
     width: 100%;
-    background: #E2E2E2;
     z-index: 999;
-    top: 49px;
-    border-top: 1px solid #bdbdbd;
+    top: 91px;
     left: 0;
+    box-shadow: 0 1px 1px 0 rgba(169, 169, 169, 0.5);
 }
 .fixed-prev-next a {
-    font-weight: 600;
-    color: #000;
-    font-size: 1.2em;
+    font-weight: 400;
+    color: #3c3c3c;
+    font-size: 15px;
 }
 .fixed-prev-next #back-screen {
     float: left;
@@ -1153,18 +1144,22 @@ label {
 }
 #next-screen span,
 #back-screen span {
-    width: 14px;
-    height: 23px;
-    background-position: -132px -2px;
-    background-size: 150px;
     float: left;
-    margin-right: 15px;
+    margin-right: 10px;
 }
 #next-screen span {
     float: right;
-    margin: 0 0 0 15px;
-    background-position: -119px -2px;
-    width: 13px;
+    margin: 0 0 0 10px;
+}
+.arrowRight-1 {
+    width: 12px;
+    height: 22px;
+    background-position: 0 -114px;
+}
+.arrowLeft-1 {
+    width: 12px;
+    height: 22px;
+    background-position: 0 -93px;
 }
 .search-subpage {
     padding: 0 20px 15px;
@@ -1294,11 +1289,9 @@ label {
 }
 .pagi .prev-pagi span {
     background-position: -176px 0;
-    background-size: 200px;
 }
 .pagi .next-pagi span {
     background-position: -159px 0;
-    background-size: 200px;
 }
 .item-dropdown {
     border: 1px solid #9b9b9b;
@@ -1341,10 +1334,9 @@ label {
 }
 .icon-bed {
     display: inline-block;
-    width: 25px;
-    height: 22px;
-    background-position: 2px -24px;
-    background-size: 208px;
+    width: 31px;
+    height: 20px;
+    background-position: 0 -43px;
     position: relative;
     top: 5px;
 }
@@ -1353,7 +1345,6 @@ label {
     width: 17px;
     height: 22px;
     background-position: -22px -24px;
-    background-size: 208px;
     position: relative;
     top: 5px;
 }
@@ -1378,7 +1369,6 @@ label {
 .post-listing .section {
 }
 .select-type {
-    background: #ebeff2;
     padding-bottom: 15px;
     top: 44px;
 }
@@ -1508,7 +1498,6 @@ label {
     width: 100%;
     height: 100%;
     background-position: -43px -1px;
-    background-size: 230px;
 }
 .profile-user .title-top {
     background: none;
@@ -1590,6 +1579,7 @@ label {
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     -ms-border-radius: 0;
+    background: none;
 }
 .panel-heading a {
     display: block;
@@ -1672,25 +1662,27 @@ label {
     font-size: .9em;
 }
 .panel-heading .panel-title a {
-    background: #DEDEDE;
+    background: none;
     text-shadow: 1px 1px 1px #fff;
     position: relative;
+    letter-spacing: 0.5px;
+    color: #3c3c3c;
+    font-weight: 700;
+    font-size: 14px;
 }
 .panel-heading .panel-title a span {
-    width: 19px;
-    height: 3px;
-    background-position: -77px -33px;
-    background-size: 125px;
+    width: 24px;
+    height: 2px;
+    background-position: 0 -581px;
     position: absolute;
     top: 15px;
     right: 15px;
 }
 .panel-heading .panel-title a.collapsed span {
-    background-position: -76px -36px;
+    background-position: 0 0;
     height: 19px;
     margin-top: 0;
     top: 7px;
-    background-size: 125px;
 }
 .panel-heading .panel-title a.collapsed {
     background: #fff;
@@ -1908,17 +1900,17 @@ label {
 .content-suggest li a {
     line-height: 23px;
 }
-.icon-fave,
-.icon-loca {
-    display: inline-block;
-    width: 20px;
-    height: 29px;
-    background-position: -79px -58px;
-    background-size: 130px;
-}
 .icon-fave {
-    background-position: -31px -78px;
-    width: 27px;
+    display: inline-block;
+    background-position: 0 -338px;
+    width: 28px;
+    height: 27px;
+}
+.save-item {
+    display: inline-block;
+    background-position: 0 -313px;
+    width: 28px;
+    height: 25px;
 }
 .btn-common {
     border: none;
@@ -1944,6 +1936,15 @@ label {
     height: 35px;
     margin-top: 8px;
     position: relative;
+    overflow: hidden;
+}
+#avatar-user img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
 }
 #menu-header,
 #settings-user {
@@ -2217,7 +2218,6 @@ footer {
     width: 16px;
     height: 9px;
     background-position: -67px -20px;
-    background-size: 110px;
     background-color: #f4f4f4;
 }
 #sandbox-container {
@@ -2621,7 +2621,6 @@ input[type=text]:focus {
     width: 12px;
     height: 23px;
     background-position: -120px -2px;
-    background-size: 150px;
 }
 .share-social a .arrow-left {
     margin-top: 8px;
@@ -2695,6 +2694,7 @@ input[type=text]:focus {
     font-size: 1.15em;
     color: #3c3c3c;
     font-weight: 400;
+    vertical-align: middle;
 }
 .list-tienich-intro li strong {
     font-weight: 600;
@@ -2708,25 +2708,24 @@ input[type=text]:focus {
 }
 .icon-dt {
     display: inline-block;
-    width: 18px;
-    height: 18px;
-    background-position: -53px -71px;
-    background-size: 115px;
+    width: 24px;
+    height: 24px;
+    background-position: 0 0;
     position: relative;
     top: 3px;
 }
 .icon-pt {
     display: inline-block;
-    width: 21px;
-    height: 25px;
-    background-position: 0px -100px;
-    background-size: 135px;
+    width: 24px;
+    height: 28px;
+    background-position: 0 -64px;
     position: relative;
     top: 3px;
 }
 .list-tienich-intro li .wrap-icon {
     display: inline-block;
-    width: 35px;
+    width: 45px;
+    vertical-align: middle;
 }
 .list-tienich-intro li.price-line {
     padding: 15px 0;
@@ -2912,7 +2911,6 @@ input[type=text]:focus {
     width: 7px;
     height: 13px;
     background-position: -68px 0px;
-    background-size: 85px;
 }
 .list-choice-city li span.arrow-left {
     position: absolute;
@@ -2968,4 +2966,67 @@ input[type=text]:focus {
 .search-wrap-home {
     display: inline-block;
     vertical-align: middle;
+    width: 100%;
+}
+.img-show {
+	position: relative;
+	overflow: hidden;
+}
+.img-show:before {
+	display: block;
+    content: "";
+    width: 100%;
+    padding-top: 65%;
+}
+.img-show > div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.icon-dt-1 {
+    background-position: 0 -240px;
+}
+.icon-bed-1 {
+    background-position: 0 -264px;
+}
+.icon-pt-1 {
+    background-position: 0 -285px;
+}
+.left-attr {
+    width: 170px;
+    float: left;
+}
+.right-attr {
+    overflow: hidden;
+}
+.left-attr li .wrap-icon {
+    display: inline-block;
+    width: 40px;
+    vertical-align: middle;
+}
+.left-attr li {
+    letter-spacing: 0.3px;
+    color: #3c3c3c;
+    font-weight: 600;
+    font-size: 15px;
+    vertical-align: middle;
+    padding: 2px 0;
+}
+.price-td {
+    letter-spacing: 0.7px;
+    color: #3c3c3c;
+    font-weight: 600;
+    font-size: 17px;
+}
+.price-td span {
+    letter-spacing: 0.7px;
+    color: #00a769;
+    font-size: 15px;
+    display: block;
+    font-weight: 700;
+}
+.panel-default>.panel-heading+.panel-collapse>.panel-body {
+    border: none;
 }

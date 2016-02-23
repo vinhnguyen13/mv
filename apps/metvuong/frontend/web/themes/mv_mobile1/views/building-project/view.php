@@ -11,8 +11,6 @@ $facilities = \vsoft\ad\models\AdFacility::find()->where(['id' => $facilityListI
 $count_facilities = count($facilities);
 ?>
 
-
-
 <div class="detail-listing">
     <div class="gallery-detail swiper-container">
         <ul class="clearfix icons-detail">

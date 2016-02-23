@@ -569,7 +569,7 @@ $.fn.slideSection = function (options) {
         },
         sc = {},
         el = $(this),
-        nextBack = $('<div class="fixed-prev-next"><a href="#" id="back-screen"><span class="icon"></span>Back</a><a href="#" id="next-screen" class=""><span class="icon"></span>Next</a></div>'),
+        nextBack = $('.fixed-prev-next'),
         btnNext = nextBack.find('#next-screen'),
         btnBack = nextBack.find('#back-screen'),
         current = 0,

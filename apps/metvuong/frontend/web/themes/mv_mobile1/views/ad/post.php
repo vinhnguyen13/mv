@@ -1,3 +1,4 @@
+<div class="title-top">Đăng tin</div>
 <div class="post-listing">
 	<form action="">
 		<div class="step-link">
@@ -9,7 +10,6 @@
 				<li><a data-active-section="tt-lienhe" href="#">5</a></li>
 			</ul>
 		</div>
-		
 		<div class="section select-type hide">
 			<p class="text-center step-txt">4 bước dễ dàng</p>
 		
@@ -253,6 +253,11 @@
 			</div>
 		</div>
 	</form>
+</div>
+
+<div class="fixed-prev-next">
+	<a href="#" id="back-screen"><span class="icon arrowRight-1"></span>Back</a>
+	<a href="#" id="next-screen" class=""><span class="icon arrowLeft-1"></span>Tiếp theo</a>
 </div>
 
 <script>
