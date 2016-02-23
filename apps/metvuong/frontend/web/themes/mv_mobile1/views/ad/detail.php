@@ -168,46 +168,67 @@ use yii\helpers\Url;
 			            <?php } else { ?>
 			                <a class="wrap-img"><img src="<?= $avatar ?>" alt="" /></a>
 			            <?php } ?>
-			            <a href="#" class="name-agent"><?= $product->adContactInfo->name ?></a>
-						<div class="rating-start">
-							<fieldset class="rate">
-								<input type="radio" id="rating10" name="rating" value="10"> <label
-									for="rating10" title="5 stars"> </label> <input type="radio"
-									id="rating9" name="rating" value="9"> <label for="rating9"
-									class="half" title="5 stars"> </label> <input type="radio"
-									id="rating8" name="rating" value="8"> <label for="rating8"
-									title="4 stars"> </label> <input type="radio" id="rating7"
-									name="rating" value="7"> <label for="rating7" class="half"
-									title="4 stars"> </label> <input type="radio" id="rating6"
-									name="rating" value="6"> <label for="rating6" title="3 stars"> </label>
-								<input type="radio" id="rating5" name="rating" value="5"> <label
-									for="rating5" class="half" title="3 stars"> </label> <input
-									type="radio" id="rating4" name="rating" value="4"> <label
-									for="rating4" title="2 stars"> </label> <input type="radio"
-									id="rating3" name="rating" value="3"> <label for="rating3"
-									class="half" title="2 stars"> </label> <input type="radio"
-									id="rating2" name="rating" value="2"> <label for="rating2"
-									title="1 stars"> </label> <input type="radio" id="rating1"
-									name="rating" value="1"> <label for="rating1" class="half"
-									title="1 stars"> </label>
-							</fieldset>
-						</div>
-						<?php if($product->adContactInfo->mobile): ?>
-						<div class="phone-agent">
-							<div>
-								<span class="icon"></span>
+			            <div class="img-agent">
+				            <a href="#" class="name-agent"><?= $product->adContactInfo->name ?></a>
+							<div class="rating-start">
+								<fieldset class="rate">
+									<input type="radio" id="rating10" name="rating" value="10"> <label
+										for="rating10" title="5 stars"> </label> <input type="radio"
+										id="rating9" name="rating" value="9"> <label for="rating9"
+										class="half" title="5 stars"> </label> <input type="radio"
+										id="rating8" name="rating" value="8"> <label for="rating8"
+										title="4 stars"> </label> <input type="radio" id="rating7"
+										name="rating" value="7"> <label for="rating7" class="half"
+										title="4 stars"> </label> <input type="radio" id="rating6"
+										name="rating" value="6"> <label for="rating6" title="3 stars"> </label>
+									<input type="radio" id="rating5" name="rating" value="5"> <label
+										for="rating5" class="half" title="3 stars"> </label> <input
+										type="radio" id="rating4" name="rating" value="4"> <label
+										for="rating4" title="2 stars"> </label> <input type="radio"
+										id="rating3" name="rating" value="3"> <label for="rating3"
+										class="half" title="2 stars"> </label> <input type="radio"
+										id="rating2" name="rating" value="2"> <label for="rating2"
+										title="1 stars"> </label> <input type="radio" id="rating1"
+										name="rating" value="1"> <label for="rating1" class="half"
+										title="1 stars"> </label>
+								</fieldset>
 							</div>
-							<a href="tel:<?= $product->adContactInfo->mobile ?>"><?= $product->adContactInfo->mobile ?></a>
-						</div>
-						<?php endif; ?>
-						<?php if($product->adContactInfo->email): ?>
-						<div class="email-agent">
-							<div>
-								<span class="icon"></span>
+							<div class="item-agent">
+								<div>
+									<span class="icon icon-person"></span>
+								</div>
+								Người Môi Giới
 							</div>
-							<?= $product->adContactInfo->email ?>
+							<?php if($product->adContactInfo->mobile): ?>
+							<div class="item-agent">
+								<div>
+									<span class="icon icon-phone"></span>
+								</div>
+								<a href="tel:<?= $product->adContactInfo->mobile ?>"><?= $product->adContactInfo->mobile ?></a>
+							</div>
+							<?php endif; ?>
+							<?php if($product->adContactInfo->email): ?>
+							<div class="item-agent">
+								<div>
+									<span class="icon icon-email"></span>
+								</div>
+								<?= $product->adContactInfo->email ?>
+							</div>
+							<?php endif; ?>
+							<div class="item-agent">
+								<div>
+									<span class="icon icon-email"></span>
+								</div>
+								huan.ta@gmail.com
+							</div>
+							<div class="item-agent">
+								<div>
+									<span class="icon address-icon"></span>
+								</div>
+								Ho Chi Minh City, Vietnam
+							</div>
+							<button class="btn-common btn-small">Chat</button>
 						</div>
-						<?php endif; ?>
 					</div>
                 </div>
             </div>
@@ -304,9 +325,9 @@ use yii\helpers\Url;
 			<?php endif; ?>
 		</div>
 	</div> -->
-	<div class="attr-detail text-center">
+	<!-- <div class="attr-detail text-center">
 		<?php if(!empty($owner->username)) { ?>
 			<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" class="contact-agent">Liên hệ Môi giới</a>
 		<?php } ?>
-	</div>
+	</div> -->
 </div>
