@@ -33,7 +33,9 @@ $(document).ready(function(){
 				} else {
 					$(window).on('scroll', next);
 				}
-				$('.wrap-listing img').lazyload();
+				$('.wrap-listing img').lazyload({
+					threshold : 200
+				});
 			});
 		}
 	}
@@ -75,7 +77,9 @@ $(document).ready(function(){
 			} else {
 				$(window).on('scroll', next);
 			}
-			$('.wrap-listing img').lazyload();
+			$('.wrap-listing img').lazyload({
+				threshold : 200
+			});
 		});
 	});
 });

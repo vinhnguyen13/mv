@@ -1,6 +1,8 @@
 $(document).ready(function() {
 
-    $('.wrap-lazy img').lazyload();
+    $('.wrap-lazy img').lazyload({
+        threshold : 200
+    });
 
     $("#menu-header").mmenu({
         navbar: {
