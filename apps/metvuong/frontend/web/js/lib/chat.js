@@ -185,7 +185,7 @@ var Chat = {
         Chat.log('I sent ' + messgeTo + ': ' + message, reply.tree());
         return true;
     },
-    historyMessage : function(_with, start, end){
+    historyMessage : function(_with){
         var limitMsg = 50;
         var startMsg = 0;
         var iq = $iq({
