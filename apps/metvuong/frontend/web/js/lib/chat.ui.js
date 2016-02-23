@@ -6,7 +6,7 @@
         MSG_SEND_YOU: 2,
         BOSH_SERVICE: 'http://metvuong.com:5280/wating',
         connect: function() {
-            Chat.connect(chatUI.genJid(xmpp_jid), xmpp_key, chatUI.BOSH_SERVICE, false);
+            Chat.connect(chatUI.genJid(xmpp_jid), xmpp_key, chatUI.BOSH_SERVICE, true);
         },
         genJid: function(jid) {
             return jid+'@'+xmpp_dm;
@@ -85,17 +85,15 @@
             }
             return html;
         },
-        loadMessageToBox: function (from, to, msg, type) {
-            chatBoxExist = chatUI.getBoxChat(from, to);
+        loadMessageToBox: function (msg, type) {
+            chatBoxExist = chatUI.getBoxChat(this.from, this.to);
             if(!chatBoxExist){
                 return false;
             }
-            var from = chatUI.usrFromJid(from);
-            var to = chatUI.usrFromJid(to);
-            if(type == 1){
-                var html = chatUI.buildMessageToBox(chatUI.usrFromJid(xmpp_jid), msg, type);
-            }else if(type == 2){
-                var html = chatUI.buildMessageToBox(chatUI.usrFromJid(from), msg, type);
+            if(type == chatUI.MSG_SEND_ME){
+                var html = chatUI.buildMessageToBox(chatUI.usrFromJid(this.to), msg, type);
+            }else if(type == chatUI.MSG_SEND_YOU){
+                var html = chatUI.buildMessageToBox(chatUI.usrFromJid(this.from), msg, type);
             }else{
                 var html = document.createTextNode(msg);
             }
@@ -107,21 +105,21 @@
             $('.container-chat').scrollTop($('.wrap-chat').height());
             $(document).trigger('chat/readNotify', [chatUI.NOTIFY_CHAT]);
         },
-        loadMessageToList: function (from, to, msg, type, fromName, toName) {
+        loadMessageToList: function (msg, type, fromName, toName) {
             msg = chatUI.decodeEntities(msg);
             var chatBoxExist = $('.chat-history');
             var template = Handlebars.compile($("#chat-receive-template").html());
-            var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(from)+'/avatar', time: $.now(), fromName: fromName, chatUrl: '/chat/'+chatUI.usrFromJid(from), to: chatUI.usrFromJid(from)});
-            if($(".item[chat-to='" + chatUI.usrFromJid(to) + "']")){
-                $(".item[chat-to='" + chatUI.usrFromJid(to) + "']").remove();
+            var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(this.from)+'/avatar', time: $.now(), fromName: fromName, chatUrl: '/chat/'+chatUI.usrFromJid(this.from), to: chatUI.usrFromJid(this.from)});
+            if($(".item[chat-to='" + chatUI.usrFromJid(this.to) + "']")){
+                $(".item[chat-to='" + chatUI.usrFromJid(this.to) + "']").remove();
             }
-            if($(".item[chat-to='" + chatUI.usrFromJid(from) + "']")){
-                $(".item[chat-to='" + chatUI.usrFromJid(from) + "']").remove();
+            if($(".item[chat-to='" + chatUI.usrFromJid(this.from) + "']")){
+                $(".item[chat-to='" + chatUI.usrFromJid(this.from) + "']").remove();
             }
             chatBoxExist.find('.chat-list').prepend(html);
             $(document).trigger('chat/readNotify', [chatUI.NOTIFY_CHAT]);
         },
-        notify: function (from, to, type) {
+        notify: function (type) {
             var sumChat = 0, sumOther = 0, sumTotal = 0;
             if(type == chatUI.NOTIFY_CHAT){
                 sumChat = (($('#notifyChat').length > 0) ? parseInt($('#notifyChat').html()) : 0) + 1;

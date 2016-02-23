@@ -129,13 +129,20 @@ var Chat = {
                 'message': Strophe.getText(body)
             }
             Chat.messages.push(messageInfo);
-            $(document).trigger('chat/receiveMessage', [Strophe.getText(body), 2, {from: Strophe.getBareJidFromJid(from), to: Strophe.getBareJidFromJid(to), fromName: params.getAttribute('fromName'), toName: params.getAttribute('toName')}]);
+            $(document).trigger('chat/receiveMessage', [Strophe.getText(body), 2, {from: Strophe.getBareJidFromJid(from), to: Strophe.getBareJidFromJid(to), fromName: params.getAttribute('fromName'), toName: params.getAttribute('toName'), ts: body.getAttribute('ts')}]);
             chatUI.typingMessage(from, 1);
-        }else if(type == 'headline'){
+        }else if(type == 'chatme'){
             var body = msg.getElementsByTagName('msg')[0];
             if(msg.getElementsByTagName('chatmeParams').length){
                 var params = msg.getElementsByTagName('chatmeParams')[0];
-                $(document).trigger('chat/receiveMessage', [Strophe.getText(body), 1, {from: params.getAttribute('from'), to: params.getAttribute('to'), fromName: params.getAttribute('fromName'), toName: params.getAttribute('toName')}]);
+                $(document).trigger('chat/receiveMessage', [Strophe.getText(body), 1, {from: params.getAttribute('from'), to: params.getAttribute('to'), fromName: params.getAttribute('fromName'), toName: params.getAttribute('toName'), ts: body.getAttribute('ts')}]);
+                chatUI.typingMessage(from, 1);
+            }
+        }else if(type == 'notify'){
+            var body = msg.getElementsByTagName('msg')[0];
+            if(msg.getElementsByTagName('notifyParams').length){
+                var params = msg.getElementsByTagName('notifyParams')[0];
+                $(document).trigger('chat/receiveMessage', [Strophe.getText(body), 2, {from: Strophe.getBareJidFromJid(from), to: Strophe.getBareJidFromJid(to), fromName: params.getAttribute('fromName'), toName: params.getAttribute('toName')}]);
                 chatUI.typingMessage(from, 1);
             }
         }
@@ -159,10 +166,18 @@ var Chat = {
         }else if (messagetype === 'chatme') {
             reply = $msg({to: messgeTo,
                 from: Strophe.getBareJidFromJid(Chat.connection.jid),
-                type: 'headline'
+                type: messagetype
             }).c("msg").t(message);
             if(params){
                 reply.up().c("chatmeParams", params);
+            }
+        }else if (messagetype === 'notify') {
+            reply = $msg({to: messgeTo,
+                from: Strophe.getBareJidFromJid(Chat.connection.jid),
+                type: messagetype
+            }).c("msg").t(message);
+            if(params){
+                reply.up().c("notifyParams", params);
             }
         }else{
             reply = $msg({to: messgeTo,
@@ -196,7 +211,7 @@ var Chat = {
             with: _with,
         }).c('set', {xmlns: 'http://jabber.org/protocol/rsm'}).c('max').t('1').up().c('after').t('0');
         Chat.connection.sendIQ(iq, function(response) {
-            var historyTotal = $(response).find("chat set count").text();
+            var historyTotal = $(response).find('chat set count').text();
             if(historyTotal > limitMsg){
                 startMsg = historyTotal - limitMsg;
             }

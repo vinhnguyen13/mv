@@ -26,13 +26,14 @@ if(!Yii::$app->user->isGuest) {
         $(document).ready(function () {
             chatUI.connect();
             $(document).bind('chat/receiveMessage', function (event, msg, type, params) {
+                chatUI.setConservation(params.from, params.to);
                 if(type != chatUI.MSG_SEND_ME){
-                    chatUI.notify(params.from, params.to, chatUI.NOTIFY_CHAT);
+                    chatUI.notify(chatUI.NOTIFY_CHAT);
                 }
                 if ('<?=$urlBase?>' == 'chat/with') {
-                    chatUI.loadMessageToBox(params.from, params.to, msg, type);
+                    chatUI.loadMessageToBox(msg, type);
                 } else if ('<?=$urlBase?>' == 'chat/index') {
-                    chatUI.loadMessageToList(params.from, params.to, msg, type, params.fromName, params.toName);
+                    chatUI.loadMessageToList(msg, type, params.fromName, params.toName);
                 }
             });
             $(document).bind('chat/readNotify', function (event, type) {
