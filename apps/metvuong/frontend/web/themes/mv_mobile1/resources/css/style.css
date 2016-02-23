@@ -27,16 +27,15 @@ a:link {
 }
 .icon {
     background: url(../images/icon.png) no-repeat top left;
-    background-size: 33.333333333333336px 666.6666666666666px;
+    background-size: 33px 666px;
     display: inline-block;
-    /* vertical-align: middle; */
 }
 header {
     background: #fff;
     width: 100%;
     height: 50px;
     border-bottom: 1px solid #9b9b9b;
-    padding: 0 15px;
+    padding: 0;
     position: fixed;
     z-index: 9;
     top: 0px;
@@ -67,14 +66,15 @@ header {
     font-weight: 600;
     font-size: 1.2em;
 }
-#menu-toggle {
+#menu-toggle span {
+    display: inline-block;
     width: 25px;
     height: 18px;
-    margin: 15px 0 0 0;
+    margin: 0 0 0 0;
     background-position: 0 -24px;
 }
-#container {
-    
+#menu-toggle {
+    padding: 13px 15px;
 }
 #wrapper {
     padding-top: 50px;
@@ -1695,7 +1695,7 @@ label {
 .panel-heading .panel-title a span {
     width: 24px;
     height: 2px;
-    background-position: 0 -581px;
+    background-position: 0 -580px;
     position: absolute;
     top: 22px;
     right: 15px;
@@ -1959,15 +1959,13 @@ label {
 }
 #avatar-user {
     float: right;
-    width: 35px;
-    height: 35px;
-    margin-top: 8px;
     position: relative;
     overflow: hidden;
+    padding: 7px 15px;
 }
 #avatar-user img {
-    width: 100%;
-    height: 100%;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
@@ -2730,6 +2728,7 @@ input[type=text]:focus {
     letter-spacing: 1.4px;
     color: #00a769;
     font-size: 15px;
+    margin-top: 5px;
 }
 .list-tienich-intro li:first-child,
 .list-tienich-intro li:last-child {
@@ -2757,9 +2756,9 @@ input[type=text]:focus {
     top: 3px;
 }
 .icon-pt-small {
-    background-position: 0 -621px;
+    background-position: 0 -620px;
     width: 19px;
-    height: 21px;
+    height: 22px;
 }
 .list-tienich-intro li .wrap-icon {
     display: inline-block;
@@ -3060,7 +3059,7 @@ input[type=text]:focus {
     letter-spacing: 0.3px;
     color: #3c3c3c;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 16px;
     vertical-align: middle;
     line-height: 100%;
     margin-bottom: 14px;
@@ -3103,7 +3102,7 @@ input[type=text]:focus {
     color: #3c3c3c;
 }
 .icon-phone {
-    background-position: 0 -583px;
+    background-position: 0 -582px;
     width: 17px;
     height: 18px;
 }
@@ -3160,7 +3159,7 @@ input[type=text]:focus {
     top: 3px;
 }
 .list-attr-td li .icon-pt {
-    top: -1px;
+    top: -3px;
 }
 .list-attr-td li:last-child span {
     vertical-align: middle;

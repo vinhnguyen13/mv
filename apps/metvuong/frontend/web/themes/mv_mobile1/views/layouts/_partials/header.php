@@ -2,7 +2,7 @@
 use yii\helpers\Url;
 ?>
 <header class="clearfix header">
-    <a href="#menu-header" id="menu-toggle" class="pull-left icon"></a>
+    <a href="#menu-header" id="menu-toggle" class="pull-left"><span class="icon"></span></a>
     <a href="#settings-user" id="avatar-user" class="wrap-img">
         <?php if(Yii::$app->user->isGuest){?>
             <img src="/images/default-avatar.jpg" alt="">
