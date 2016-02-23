@@ -33,6 +33,9 @@ class AdController extends Controller
 {
     public $layout = '@app/views/layouts/layout';
 
+    public function actionTest() {
+    	return $this->render('test');
+    }
     /**
      * @return string
      */
