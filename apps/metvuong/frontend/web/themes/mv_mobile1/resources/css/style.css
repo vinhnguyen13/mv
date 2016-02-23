@@ -474,11 +474,14 @@ header {
     height: 100%;
 }
 .icons-detail {
-    
+    position: absolute;
+    top: 15px;
+    right: 10px;
 }
 .icons-detail li {
     float: left;
     margin-right: 15px;
+    line-height: 100%;
 }
 .icons-detail li:last-child {
     margin-right: 0;
@@ -499,6 +502,7 @@ header {
 .infor-listing {
     color: #141915;
     line-height: 25px;
+    position: relative;
 }
 .infor-listing a {
     color: #868686;
@@ -1331,6 +1335,7 @@ label {
     /* height: 225px; */
     margin-bottom: 10px;
     position: relative;
+    background: #DEDEDE;
 }
 .item-listing {
     margin: 20px 0;
@@ -3132,7 +3137,7 @@ input[type=text]:focus {
 .list-attr-td li {
     float: left;
     color: #3c3c3c;
-    font-size: 15px;
+    font-size: 16px;
     border-right: 2px solid #B5B5B5;
     padding-right: 15px;
     margin-right: 15px;
@@ -3165,10 +3170,17 @@ input[type=text]:focus {
     font-weight: 700;
     padding: 5px 35px;
     display: inline-block;
+    font-size: 16px;
 }
 .view-more {
     letter-spacing: 0.3px;
     color: #3c3c3c;
     font-size: 15px;
     margin-top: 5px;
+}
+.detail-listing .address-listing {
+    margin: 7px 0 8px 0;
+    font-weight: 700;
+    font-size: 16px;
+    color: #00a769;
 }

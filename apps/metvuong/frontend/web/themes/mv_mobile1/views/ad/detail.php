@@ -52,7 +52,6 @@ use yii\helpers\Url;
 		</p>
 
 		<div class="address-listing">
-			<p class="name-tdang">LIP SUM DOLOR SIT AMET</p>
 			<p><span class="icon address-icon"></span><?= $product->getAddress(true) ?></p>
 		</div>
 		<!-- <p class="attr-home">
