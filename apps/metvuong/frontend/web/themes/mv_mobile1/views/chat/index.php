@@ -26,7 +26,7 @@ if(!empty($jid_id)){
 				}
 				if(!empty($user->profile)){
 			?>
-					<div class="item" chat-to="<?=$user->username;?>">
+					<div class="item" chat-with="<?=$user->username;?>">
 						<a href="<?= Url::to(['/chat/with', 'username' => $user->username]) ?>">
 							<span class="wrap-img"><img src="<?=$user->profile->getAvatarUrl();?>" alt=""></span>
 							<div class="chat-detail">
@@ -45,7 +45,7 @@ if(!empty($jid_id)){
 </div>
 
 <script id="chat-receive-template" type="text/x-handlebars-template">
-	<div class="item" chat-to="{{to}}">
+	<div class="item" chat-with="{{from}}">
 		<a href="{{chatUrl}}">
 			<span class="wrap-img"><img src="{{avatarUrl}}" alt=""></span>
 			<div class="chat-detail">

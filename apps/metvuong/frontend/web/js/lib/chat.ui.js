@@ -85,7 +85,7 @@
             }
             return html;
         },
-        loadMessageToBox: function (msg, type) {
+        loadMessageToBox: function (msg, type, params) {
             chatBoxExist = chatUI.getBoxChat(this.from, this.to);
             if(!chatBoxExist){
                 return false;
@@ -105,16 +105,17 @@
             $('.container-chat').scrollTop($('.wrap-chat').height());
             $(document).trigger('chat/readNotify', [chatUI.NOTIFY_CHAT]);
         },
-        loadMessageToList: function (msg, type, fromName, toName) {
+        loadMessageToList: function (msg, type, params) {
             msg = chatUI.decodeEntities(msg);
+            console.log('_____________',msg, type, params);
             var chatBoxExist = $('.chat-history');
             var template = Handlebars.compile($("#chat-receive-template").html());
-            var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(this.from)+'/avatar', time: $.now(), fromName: fromName, chatUrl: '/chat/'+chatUI.usrFromJid(this.from), to: chatUI.usrFromJid(this.from)});
-            if($(".item[chat-to='" + chatUI.usrFromJid(this.to) + "']")){
-                $(".item[chat-to='" + chatUI.usrFromJid(this.to) + "']").remove();
+            var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(this.from)+'/avatar', time: $.now(), fromName: params.fromName, chatUrl: '/chat/'+chatUI.usrFromJid(this.from), from: chatUI.usrFromJid(this.from)});
+            if($(".item[chat-with='" + chatUI.usrFromJid(this.to) + "']")){
+                $(".item[chat-with='" + chatUI.usrFromJid(this.to) + "']").remove();
             }
-            if($(".item[chat-to='" + chatUI.usrFromJid(this.from) + "']")){
-                $(".item[chat-to='" + chatUI.usrFromJid(this.from) + "']").remove();
+            if($(".item[chat-with='" + chatUI.usrFromJid(this.from) + "']")){
+                $(".item[chat-with='" + chatUI.usrFromJid(this.from) + "']").remove();
             }
             chatBoxExist.find('.chat-list').prepend(html);
             $(document).trigger('chat/readNotify', [chatUI.NOTIFY_CHAT]);

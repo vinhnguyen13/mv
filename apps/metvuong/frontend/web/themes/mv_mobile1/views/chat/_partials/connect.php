@@ -31,9 +31,9 @@ if(!Yii::$app->user->isGuest) {
                     chatUI.notify(chatUI.NOTIFY_CHAT);
                 }
                 if ('<?=$urlBase?>' == 'chat/with') {
-                    chatUI.loadMessageToBox(msg, type);
+                    chatUI.loadMessageToBox(msg, type, params);
                 } else if ('<?=$urlBase?>' == 'chat/index') {
-                    chatUI.loadMessageToList(msg, type, params.fromName, params.toName);
+                    chatUI.loadMessageToList(msg, type, params);
                 }
             });
             $(document).bind('chat/readNotify', function (event, type) {
