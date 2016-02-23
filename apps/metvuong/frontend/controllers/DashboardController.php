@@ -25,6 +25,7 @@ class DashboardController extends Controller
 
     public function beforeAction($action)
     {
+        $this->view->params['noFooter'] = true;
         if(Yii::$app->user->isGuest){
             $this->redirect(['/member/login']);
         }

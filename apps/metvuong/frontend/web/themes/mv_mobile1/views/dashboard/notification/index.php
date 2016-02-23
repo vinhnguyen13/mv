@@ -2,11 +2,20 @@
 use yii\web\View;
 use yii\helpers\Url;
 ?>
-
 <div class="noti-alert">
 	<div class="title-top">Thông báo</div>
 	<div class="wrap-noti">
 		<div class="list-noti clearfix">
+			<?php
+			if(!empty(YII_ENV) && in_array(YII_ENV, [YII_ENV_DEV])){
+				?>
+				<ul>
+					<li><a href="#" class="">Test save product</a></li>
+					<li><a href="#">Test view product</a></li>
+				</ul>
+				<?php
+			}
+			?>
 			<div class="item">
 				<div class="user-get">
 					<div class="avatar"><a href="#"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg' ?>" alt="" width="40" height="40"></a></div>
@@ -63,3 +72,9 @@ use yii\helpers\Url;
 		</div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function () {
+
+	});
+</script>
