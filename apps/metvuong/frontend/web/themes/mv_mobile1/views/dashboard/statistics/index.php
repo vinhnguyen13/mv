@@ -132,20 +132,20 @@ Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporti
 					<span class="pull-right icon arrow-left"></span>
 				</a>
 			</li>
-			<li>
-				<a href="#">
-					<span class="wrap-around"><em class="fa fa-twitter"></em></span>
-					Share With Twitter
-					<span class="pull-right icon arrow-left"></span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<span class="wrap-around"><em class="fa fa-instagram"></em></span>
-					Share With Instagram
-					<span class="pull-right icon arrow-left"></span>
-				</a>
-			</li>
+<!--			<li>-->
+<!--				<a href="#">-->
+<!--					<span class="wrap-around"><em class="fa fa-twitter"></em></span>-->
+<!--					Share With Twitter-->
+<!--					<span class="pull-right icon arrow-left"></span>-->
+<!--				</a>-->
+<!--			</li>-->
+<!--			<li>-->
+<!--				<a href="#">-->
+<!--					<span class="wrap-around"><em class="fa fa-instagram"></em></span>-->
+<!--					Share With Instagram-->
+<!--					<span class="pull-right icon arrow-left"></span>-->
+<!--				</a>-->
+<!--			</li>-->
 		</ul>
 	</div>
 </div>
