@@ -155,7 +155,7 @@ var Chat = {
                           from: Strophe.getBareJidFromJid(Chat.connection.jid),
                           type: messagetype,
                           id: Chat.connection.getUniqueId()
-            }).c("body", {xmlns: Strophe.NS.CLIENT}).t(message);
+            }).c("body", {xmlns: Strophe.NS.CLIENT, ts: $.now()}).t(message);
         }else if (messagetype === 'chatme') {
             reply = $msg({to: messgeTo,
                 from: Strophe.getBareJidFromJid(Chat.connection.jid),
@@ -168,7 +168,7 @@ var Chat = {
             reply = $msg({to: messgeTo,
                           from: Strophe.getBareJidFromJid(Chat.connection.jid),
                           type: messagetype
-            }).c("body").t(message);
+            }).c("body", {ts: $.now()}).t(message);
             if(params){
                 reply.up().c("msgParams", params);
             }
@@ -207,10 +207,13 @@ var Chat = {
                 xmlns: 'urn:xmpp:archive',
                 with: _with,
                 //start: '2016-02-22T04:00:00Z',
-            }).c('set', {xmlns: 'http://jabber.org/protocol/rsm'}).c('max').t(limitMsg).up().c('after').t(startMsg);
-            if(typeof end !== 'undefined') {
-                iq.up().up().attrs({end: '2016-02-30T04:00:00Z'});
+            }).c('set', {xmlns: 'http://jabber.org/protocol/rsm'}).c('max').t(limitMsg).up();
+            if(historyTotal > limitMsg){
+                iq.c('after').t(startMsg).up();
             }
+            /*if(typeof end !== 'undefined') {
+                iq.up().up().attrs({end: '2016-02-30T04:00:00Z'});
+            }*/
             Chat.connection.sendIQ(iq, function(response) {
                 chatUI.loadMessageHistoryToBox(response);
             });
