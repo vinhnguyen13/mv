@@ -62,33 +62,3 @@ use yii\helpers\Url;
 		</div>
 	</div>
 </div>
-
-<?php
-if(!empty(YII_ENV) && in_array(YII_ENV, [YII_ENV_DEV])){
-	$userVisit = Yii::$app->user->identity;
-	$userTo = \frontend\models\User::find()->where(['username' => 'superadmin'])->one();
-
-	$nameUserTo = $userTo->profile->getDisplayName();
-	$nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
-	?>
-	<ul>
-		<li><a href="javascript:void(0);" class="saveProduct">Save product</a></li>
-		<li><a href="javascript:void(0);" class="viewProduct">View product</a></li>
-	</ul>
-
-
-	<script>
-		$(document).ready(function () {
-			$(document).on('click', '.saveProduct', function (e) {
-				var to_jid = chatUI.genJid('<?=$userTo->username?>');
-				Chat.sendMessage(to_jid , 'save product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>'});
-			});
-			$(document).on('click', '.viewProduct', function (e) {
-				var to_jid = chatUI.genJid('<?=$userTo->username?>');
-				Chat.sendMessage(to_jid , 'view product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>'});
-			});
-		});
-	</script>
-	<?php
-}
-?>

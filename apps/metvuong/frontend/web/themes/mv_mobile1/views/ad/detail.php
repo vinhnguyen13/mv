@@ -218,7 +218,9 @@ use yii\helpers\Url;
 						</div>
 					</div>
 					<button id="" class="email-btn btn-common btn-small pull-left">Email</button>
-					<button id="" class="chat-btn btn-common btn-small pull-right">Chat</button>
+					<?php if(!empty($owner->username)) { ?>
+					<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small pull-right">Chat</a>
+					<?php }?>
                 </div>
             </div>
 
@@ -320,3 +322,25 @@ use yii\helpers\Url;
 		<?php } ?>
 	</div> -->
 </div>
+
+
+<?php
+if(!empty($owner->username)){
+	$userVisit = Yii::$app->user->identity;
+	$userTo = $owner;
+
+	$nameUserTo = $userTo->profile->getDisplayName();
+	$nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
+	?>
+	<script>
+		$(document).ready(function () {
+			$(document).on('click', '.save-item', function (e) {
+				var to_jid = chatUI.genJid('<?=$userTo->username?>');
+				Chat.sendMessage(to_jid , 'save product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>'});
+			});
+
+		});
+	</script>
+	<?php
+}
+?>
