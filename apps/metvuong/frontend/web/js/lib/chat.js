@@ -152,6 +152,7 @@ var Chat = {
     },
     sttSaveMsg: true,
     sendMessage : function(messgeTo,message,type,params){
+        message = $.trim(message);
         if(message.length <= 0){
             return false;
         }
