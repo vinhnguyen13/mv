@@ -7,6 +7,11 @@ $to = $username;
 $userTo = \frontend\models\User::find()->where(['username' => $to])->one();
 $nameUserTo = $userTo->profile->getDisplayName();
 $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
+
+//echo "<pre>";
+//print_r(date('h:i:s d-m-Y', 1456280961));
+//echo "</pre>";
+//exit;
 ?>
 <div id="chat-container">
 
@@ -18,7 +23,7 @@ $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 			<div class="txt-detail">
 				<p>{{msg}}</p>
 			</div>
-			<div class="time-detail">today, 14:35</div>
+			<div class="time-detail">{{time}}</div>
 		</div>
 	</div>
 </script>
@@ -29,7 +34,7 @@ $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 			<div class="txt-detail">
 				<p>{{msg}}</p>
 			</div>
-			<div class="time-detail">today, 14:35</div>
+			<div class="time-detail">{{time}}</div>
 		</div>
 	</div>
 </script>

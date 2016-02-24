@@ -61,9 +61,9 @@
                 var item = child.eq(i);
                 var body = item.find('body').text();
                 if(item.is('to')) {
-                    var chatItem = chatUI.buildMessageToBox(chatUI.usrFromJid(objHis.attr('id')), body, 1);
+                    var chatItem = chatUI.buildMessageToBox(chatUI.usrFromJid(objHis.attr('id')), body, 1, {ts: item.find('body').attr('ts')});
                 } else {
-                    var chatItem = chatUI.buildMessageToBox(chatUI.usrFromJid(objHis.children().attr('with')), body, 2);
+                    var chatItem = chatUI.buildMessageToBox(chatUI.usrFromJid(objHis.children().attr('with')), body, 2, {ts: item.find('body').attr('ts')});
                 }
                 chatList += chatItem;
             }
@@ -74,14 +74,17 @@
             }
             $('.container-chat').scrollTop($('.wrap-chat').height());
         },
-        buildMessageToBox: function (username, msg, type) {
+        buildMessageToBox: function (username, msg, type, params) {
             msg = chatUI.decodeEntities(msg);
+            var timestamp = (params.ts) ? params.ts : 0;
+            var _time = formatTime(timestamp);
+            console.log(_time);
             if(type == 1){
                 var template = Handlebars.compile($("#chat-send-template").html());
-                var html = template({msg: msg, avatarUrl: '/member/'+username+'/avatar'});
+                var html = template({msg: msg, avatarUrl: '/member/'+username+'/avatar', time: _time});
             }else if(type == 2){
                 var template = Handlebars.compile($("#chat-receive-template").html());
-                var html = template({msg: msg, avatarUrl: '/member/'+username+'/avatar'});
+                var html = template({msg: msg, avatarUrl: '/member/'+username+'/avatar', time: _time});
             }
             return html;
         },
@@ -91,9 +94,9 @@
                 return false;
             }
             if(type == chatUI.MSG_SEND_ME){
-                var html = chatUI.buildMessageToBox(chatUI.usrFromJid(this.to), msg, type);
+                var html = chatUI.buildMessageToBox(chatUI.usrFromJid(this.to), msg, type, params);
             }else if(type == chatUI.MSG_SEND_YOU){
-                var html = chatUI.buildMessageToBox(chatUI.usrFromJid(this.from), msg, type);
+                var html = chatUI.buildMessageToBox(chatUI.usrFromJid(this.from), msg, type, params);
             }else{
                 var html = document.createTextNode(msg);
             }
@@ -110,7 +113,7 @@
             console.log('_____________',msg, type, params);
             var chatBoxExist = $('.chat-history');
             var template = Handlebars.compile($("#chat-receive-template").html());
-            var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(this.from)+'/avatar', time: $.now(), fromName: params.fromName, chatUrl: '/chat/'+chatUI.usrFromJid(this.from), from: chatUI.usrFromJid(this.from)});
+            var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(this.from)+'/avatar', time: params.ts, fromName: params.fromName, chatUrl: '/chat/'+chatUI.usrFromJid(this.from), from: chatUI.usrFromJid(this.from)});
             if($(".item[chat-with='" + chatUI.usrFromJid(this.to) + "']")){
                 $(".item[chat-with='" + chatUI.usrFromJid(this.to) + "']").remove();
             }
@@ -168,5 +171,16 @@
 
         }
     };
+
+var formatTime = function(unixTimestamp) {
+    var date = new Date(parseInt(unixTimestamp));
+    var year    = date.getFullYear();
+    var month   = date.getMonth() + 1;
+    var day     = date.getDate();
+    var hour    = date.getHours();
+    var minute  = date.getMinutes();
+    var seconds = date.getSeconds();
+    return hour + ":" + minute + ":" + seconds + " " + day + "-" + month + "-" + year ;
+}
 
 //})();

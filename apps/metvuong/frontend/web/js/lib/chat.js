@@ -167,7 +167,7 @@ var Chat = {
             reply = $msg({to: messgeTo,
                 from: Strophe.getBareJidFromJid(Chat.connection.jid),
                 type: messagetype
-            }).c("msg").t(message);
+            }).c("msg", {ts: $.now()}).t(message);
             if(params){
                 reply.up().c("chatmeParams", params);
             }
@@ -175,7 +175,7 @@ var Chat = {
             reply = $msg({to: messgeTo,
                 from: Strophe.getBareJidFromJid(Chat.connection.jid),
                 type: messagetype
-            }).c("msg").t(message);
+            }).c("msg", {ts: $.now()}).t(message);
             if(params){
                 reply.up().c("notifyParams", params);
             }
