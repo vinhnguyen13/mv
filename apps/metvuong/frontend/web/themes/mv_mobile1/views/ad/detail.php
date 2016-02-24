@@ -147,12 +147,12 @@ use yii\helpers\Url;
         <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="headingSeven">
                 <h4 class="panel-title">
-                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEght" aria-expanded="false" aria-controls="collapseSeven">
+                    <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEght" aria-expanded="false" aria-controls="collapseSeven">
                         Liên hệ<span class="icon"></span>
                     </a>
                 </h4>
             </div>
-            <div id="collapseEght" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSeven">
+            <div id="collapseEght" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven">
                 <div class="panel-body">
                     <div class="infor-agent clearfix">
 			            <?php if(!empty($owner->username)) { ?>
@@ -336,7 +336,6 @@ if(!empty($owner->username)){
 	?>
 	<script>
 		$(document).ready(function () {
-			$('.panel a.collapsed[href="#collapseEght"]').trigger('click');
 			$(document).on('click', '.save-item', function (e) {
 				var to_jid = chatUI.genJid('<?=$userTo->username?>');
 				Chat.sendMessage(to_jid , 'save product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>'});

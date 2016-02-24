@@ -210,14 +210,7 @@
 
 		<div class="hinh-anh item-step section hide">
 			<div class="title-step">Hình ảnh</div>
-			<ul class="clearfix upload-img">
-				<li>
-					<a href="#"><span class="icon"></span><span>Hình ảnh</span></a>
-				</li>
-				<li>
-					<a href="#"><span class="icon"></span><span>Bản vẽ</span></a>
-				</li>
-			</ul>
+			
 		</div>
 
 		<div class="tt-lienhe item-step section hide">
