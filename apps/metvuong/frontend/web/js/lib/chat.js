@@ -129,20 +129,20 @@ var Chat = {
                 'message': Strophe.getText(body)
             }
             Chat.messages.push(messageInfo);
-            $(document).trigger('chat/receiveMessage', [Strophe.getText(body), 2, {from: Strophe.getBareJidFromJid(from), to: Strophe.getBareJidFromJid(to), fromName: params.getAttribute('fromName'), toName: params.getAttribute('toName'), ts: body.getAttribute('ts')}]);
+            $(document).trigger('chat/receiveMessage', [Strophe.getText(body),{type: 'chat', chatType: 2, from: Strophe.getBareJidFromJid(from), to: Strophe.getBareJidFromJid(to), fromName: params.getAttribute('fromName'), toName: params.getAttribute('toName'), ts: body.getAttribute('ts')}]);
             chatUI.typingMessage(from, 1);
         }else if(type == 'chatme'){
             var body = msg.getElementsByTagName('msg')[0];
             if(msg.getElementsByTagName('chatmeParams').length){
                 var params = msg.getElementsByTagName('chatmeParams')[0];
-                $(document).trigger('chat/receiveMessage', [Strophe.getText(body), 1, {from: params.getAttribute('from'), to: params.getAttribute('to'), fromName: params.getAttribute('fromName'), toName: params.getAttribute('toName'), ts: body.getAttribute('ts')}]);
+                $(document).trigger('chat/receiveMessage', [Strophe.getText(body), {type: 'chat', chatType: 1, from: params.getAttribute('from'), to: params.getAttribute('to'), fromName: params.getAttribute('fromName'), toName: params.getAttribute('toName'), ts: body.getAttribute('ts')}]);
                 chatUI.typingMessage(from, 1);
             }
         }else if(type == 'notify'){
             var body = msg.getElementsByTagName('msg')[0];
             if(msg.getElementsByTagName('notifyParams').length){
                 var params = msg.getElementsByTagName('notifyParams')[0];
-                $(document).trigger('chat/receiveMessage', [Strophe.getText(body), 2, {from: Strophe.getBareJidFromJid(from), to: Strophe.getBareJidFromJid(to), fromName: params.getAttribute('fromName'), toName: params.getAttribute('toName')}]);
+                $(document).trigger('chat/receiveMessage', [msg, {type: 'notify', from: Strophe.getBareJidFromJid(from), to: Strophe.getBareJidFromJid(to), fromName: params.getAttribute('fromName'), toName: params.getAttribute('toName')}]);
                 chatUI.typingMessage(from, 1);
             }
         }

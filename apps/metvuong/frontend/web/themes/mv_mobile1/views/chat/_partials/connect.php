@@ -25,15 +25,19 @@ if(!Yii::$app->user->isGuest) {
     <script>
         $(document).ready(function () {
             chatUI.connect();
-            $(document).bind('chat/receiveMessage', function (event, msg, type, params) {
+            $(document).bind('chat/receiveMessage', function (event, msg, params) {
                 chatUI.setConservation(params.from, params.to);
-                if(type != chatUI.MSG_SEND_ME){
-                    chatUI.notify(chatUI.NOTIFY_CHAT);
-                }
-                if ('<?=$urlBase?>' == 'chat/with') {
-                    chatUI.loadMessageToBox(msg, type, params);
-                } else if ('<?=$urlBase?>' == 'chat/index') {
-                    chatUI.loadMessageToList(msg, type, params);
+                if(params.type == 'chat'){
+                    if(params.chatType != chatUI.MSG_SEND_ME){
+                        chatUI.notify(chatUI.NOTIFY_CHAT);
+                    }
+                    if ('<?=$urlBase?>' == 'chat/with') {
+                        chatUI.loadMessageToBox(msg, params);
+                    } else if ('<?=$urlBase?>' == 'chat/index') {
+                        chatUI.loadMessageToList(msg, params);
+                    }
+                }else if(params.type == 'notify'){
+                    chatUI.notify(chatUI.NOTIFY_OTHER);
                 }
             });
             $(document).bind('chat/readNotify', function (event, type) {

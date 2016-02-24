@@ -61,9 +61,9 @@
                 var item = child.eq(i);
                 var body = item.find('body').text();
                 if(item.is('to')) {
-                    var chatItem = chatUI.buildMessageToBox(chatUI.usrFromJid(objHis.attr('id')), body, 1, {ts: item.find('body').attr('ts')});
+                    var chatItem = chatUI.buildMessageToBox(chatUI.usrFromJid(objHis.attr('id')), body, chatUI.MSG_SEND_ME, {ts: item.find('body').attr('ts')});
                 } else {
-                    var chatItem = chatUI.buildMessageToBox(chatUI.usrFromJid(objHis.children().attr('with')), body, 2, {ts: item.find('body').attr('ts')});
+                    var chatItem = chatUI.buildMessageToBox(chatUI.usrFromJid(objHis.children().attr('with')), body, chatUI.MSG_SEND_YOU, {ts: item.find('body').attr('ts')});
                 }
                 chatList += chatItem;
             }
@@ -78,16 +78,17 @@
             msg = chatUI.decodeEntities(msg);
             var timestamp = (params.ts) ? params.ts : 0;
             var _time = formatTime(timestamp);
-            if(type == 1){
+            if(type == chatUI.MSG_SEND_ME){
                 var template = Handlebars.compile($("#chat-send-template").html());
                 var html = template({msg: msg, avatarUrl: '/member/'+username+'/avatar', time: _time});
-            }else if(type == 2){
+            }else if(type == chatUI.MSG_SEND_YOU){
                 var template = Handlebars.compile($("#chat-receive-template").html());
                 var html = template({msg: msg, avatarUrl: '/member/'+username+'/avatar', time: _time});
             }
             return html;
         },
-        loadMessageToBox: function (msg, type, params) {
+        loadMessageToBox: function (msg, params) {
+            var type = params.chatType;
             chatBoxExist = chatUI.getBoxChat(this.from, this.to);
             if(!chatBoxExist){
                 return false;
@@ -107,7 +108,7 @@
             $('.container-chat').scrollTop($('.wrap-chat').height());
             $(document).trigger('chat/readNotify', [chatUI.NOTIFY_CHAT]);
         },
-        loadMessageToList: function (msg, type, params) {
+        loadMessageToList: function (msg, params) {
             msg = chatUI.decodeEntities(msg);
             var timestamp = (params.ts) ? params.ts : 0;
             var _time = formatTime(timestamp);
