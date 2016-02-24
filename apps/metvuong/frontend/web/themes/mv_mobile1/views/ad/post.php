@@ -3,11 +3,10 @@
 	<form action="">
 		<div class="step-link">
 			<ul class="clearfix">
-				<li><a data-active-section="tt-chung" class="active" href="#">1</a><span class="icon"></span></li>
-				<li><a data-active-section="tt-chitiet" href="#">2</a><span class="icon"></span></li>
-				<li><a data-active-section="hinh-anh" href="#">3</a><span class="icon"></span></li>
-				<li><a data-active-section="tien-ich" href="#">4</a><span class="icon"></span></li>
-				<li><a data-active-section="tt-lienhe" href="#">5</a></li>
+				<li><a data-active-section="tt-chung" class="active" href="#">1</a><span class="icon arrowLeft"></span></li>
+				<li><a data-active-section="tt-chitiet" href="#">2</a><span class="icon arrowLeft"></span></li>
+				<li><a data-active-section="hinh-anh" href="#">3</a><span class="icon arrowLeft"></span></li>
+				<li><a data-active-section="tien-ich" href="#">4</a><span class="icon arrowLeft"></span></li>
 			</ul>
 		</div>
 		<div class="section select-type hide item-step">
@@ -71,17 +70,9 @@
 				<div class="col-xs-12 form-group">
 					<input type="text" class="form-control" id="" placeholder="Số nhà">
 				</div>
-				<div class="col-xs-6 form-group">
+				<div class="col-xs-12 form-group">
 					<select class="form-control" name="" id="">
 						<option value="" disabled="" selected="">Phường</option>
-						<option value="">Hồ Chí Minh</option>
-						<option value="">Hà Nội</option>
-						<option value="">Đồng Nai</option>
-					</select>
-				</div>
-				<div class="col-xs-6 form-group">
-					<select class="form-control" name="" id="">
-						<option value="" disabled="" selected="">Loại BĐS</option>
 						<option value="">Hồ Chí Minh</option>
 						<option value="">Hà Nội</option>
 						<option value="">Đồng Nai</option>
@@ -192,6 +183,29 @@
 					<textarea class="form-control" rows="3" placeholder="Mô tả dự án (dưới 200 chữ)"></textarea>
 				</div>
 			</div>
+			<div class="tien-ich item-step hide">
+				<div class="title-step">Tiện ích</div>
+				<ul class="clearfix list-tienich">
+					<li>
+						<a href="#"><span class="icon"></span><span>24/7 Security</span></a>
+					</li>
+					<li>
+						<a href="#"><span class="icon"></span><span>Mailbox</span></a>
+					</li>
+					<li>
+						<a href="#"><span class="icon"></span><span>24/7 Security</span></a>
+					</li>
+					<li>
+						<a href="#"><span class="icon"></span><span>Swimming Pool</span></a>
+					</li>
+					<li>
+						<a href="#"><span class="icon"></span><span>Gym</span></a>
+					</li>
+					<li>
+						<a href="#"><span class="icon"></span><span>BBQ Area</span></a>
+					</li>
+				</ul>
+			</div>
 		</div>
 
 		<div class="hinh-anh item-step section hide">
@@ -202,30 +216,6 @@
 				</li>
 				<li>
 					<a href="#"><span class="icon"></span><span>Bản vẽ</span></a>
-				</li>
-			</ul>
-		</div>
-
-		<div class="tien-ich item-step section hide">
-			<div class="title-step">Tiện ích</div>
-			<ul class="clearfix list-tienich">
-				<li>
-					<a href="#"><span class="icon"></span><span>24/7 Security</span></a>
-				</li>
-				<li>
-					<a href="#"><span class="icon"></span><span>Mailbox</span></a>
-				</li>
-				<li>
-					<a href="#"><span class="icon"></span><span>24/7 Security</span></a>
-				</li>
-				<li>
-					<a href="#"><span class="icon"></span><span>Swimming Pool</span></a>
-				</li>
-				<li>
-					<a href="#"><span class="icon"></span><span>Gym</span></a>
-				</li>
-				<li>
-					<a href="#"><span class="icon"></span><span>BBQ Area</span></a>
 				</li>
 			</ul>
 		</div>
@@ -259,7 +249,7 @@
 </div>
 
 <div class="fixed-prev-next">
-	<a href="#" id="back-screen"><span class="icon arrowRight-1"></span>Back</a>
+	<a href="#" id="back-screen"><span class="icon arrowRight-1"></span>Trở lại</a>
 	<a href="#" id="next-screen" class=""><span class="icon arrowLeft-1"></span>Tiếp theo</a>
 </div>
 

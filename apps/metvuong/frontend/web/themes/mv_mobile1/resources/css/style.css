@@ -731,6 +731,13 @@ label {
     padding: 10px 20px;
     border-bottom: solid 1px #a5a5a5;
 }
+#listing-list .infor-by-up {
+    border: none;
+    padding: 0;
+}
+#listing-list .list-attr-td {
+    margin-bottom: 20px;
+}
 .infor-duan .address-listing,
 .name-duan {
     font-weight: 700;
@@ -804,7 +811,7 @@ label {
     margin-bottom: 5px;
 }
 .post-listing {
-    padding: 44px 15px 0px;
+    padding: 83px 15px 50px;
     position: relative;
     width: 100%;
     overflow: hidden;
@@ -849,11 +856,14 @@ label {
 }
 .step-link li {
     float: left;
-    width: 20%;
+    width: 25%;
     position: relative;
 }
+.step-link li:last-child span.icon {
+    display: none;
+}
 .step-link li a {
-    background: #777777;
+    background: #646464;
     border-radius: 100%;
     width: 40px;
     height: 40px;
@@ -866,23 +876,21 @@ label {
     margin: 0 auto 0;
 }
 .step-link li .active {
-    background: #000;
+    background: #00a769;
 }
 .step-link li span {
     position: absolute;
-    width: 15px;
-    height: 26px;
     top: 9px;
     right: -8px;
-    background-position: -140px -2px;
 }
 .item-step {
     margin-bottom: 20px;
 }
 .item-step .title-step {
     font-weight: 700;
-    font-size: 1.1em;
+    font-size: 15px;
     margin-bottom: 10px;
+    color: #3c3c3c;
 }
 .item-step select,
 .item-step textarea,
@@ -1046,6 +1054,11 @@ label {
     padding: 8px 0;
     font-size: 1.2em;
     text-transform: uppercase;
+    position: fixed;
+    top: 50px;
+    left: 0;
+    width: 100%;
+    z-index: 100;
 }
 .list-img li {
     float: left;
@@ -1138,10 +1151,11 @@ label {
     padding: 10px 15px;
     position: fixed;
     width: 100%;
-    z-index: 999;
+    z-index: 100;
     top: 91px;
     left: 0;
     box-shadow: 0 1px 1px 0 rgba(169, 169, 169, 0.5);
+    background: #fff;
 }
 .fixed-prev-next a {
     font-weight: 400;
@@ -1395,7 +1409,7 @@ label {
     padding-top: 15px;
 }
 .section {
-    top: 120px;
+    top: 160px;
     left: 0;
     width: 100%;
     position: absolute;
@@ -1404,6 +1418,7 @@ label {
     margin-bottom: 0;
 }
 .post-listing .section {
+    
 }
 .select-type {
     padding-bottom: 15px;
@@ -2160,7 +2175,7 @@ footer {
     width: 100%;
 }
 .wrap-list-duan {
-    padding: 20px 15px 0;
+    padding: 63px 15px 0;
     margin-bottom: 30px;
 }
 .wrap-list-duan li {
@@ -2180,10 +2195,6 @@ footer {
 .wrap-list-duan .img-intro {
     width: 40%;
     text-align: center;
-}
-.wrap-list-duan .img-intro .bgcover {
-    height: 140px;
-    background-position: 50% bottom;
 }
 .wrap-list-duan .intro-detail {
     position: relative;
@@ -2662,7 +2673,7 @@ input[type=text]:focus {
 .arrowLeft {
     display: inline-block;
     width: 11px;
-    height: 21px;
+    height: 22px;
     background-position: 0 -413px;
 }
 .share-social a .arrow-left {
@@ -3243,4 +3254,8 @@ input[type=text]:focus {
     background-position: 0 -662px;
     width: 19px;
     height: 26px;
+}
+.form-control {
+    padding-left: 8px;
+    padding-right: 8px;
 }

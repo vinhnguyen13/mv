@@ -672,7 +672,7 @@ $.fn.slideSection = function (options) {
         function hWrapSection (current) {
             var hActive = el.find('.section').eq(current).outerHeight();
             el.css({
-                height: hActive+80+'px'
+                height: hActive+120+'px'
             });
         }
 
@@ -724,7 +724,7 @@ $.fn.loading = function (options) {
         }
 
         if ( sc.settings.inside ) {
-
+            
             return;
         }
     });

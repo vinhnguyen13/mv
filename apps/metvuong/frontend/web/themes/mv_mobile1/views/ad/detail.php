@@ -42,11 +42,10 @@ use yii\helpers\Url;
 		<div class="swiper-pagination"></div>
 	</div>
 	<?php endif; ?>
+	<p class="infor-by-up">
+		<?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?> bởi <a href="#">Môi Giới</a>
+	</p>
 	<div class="infor-listing">
-		<p class="infor-by-up">
-			<?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?> bởi <a href="#">Môi Giới</a>
-		</p>
-
 		<div class="address-listing">
 			<p><?= $product->getAddress(true) ?></p>
 		</div>
