@@ -2109,9 +2109,9 @@ label {
     top: 3px;
 }
 #avatar-user span {
-    top: -3px;
+    top: 6px;
     left: inherit;
-    right: -9px;
+    right: 7px;
 }
 footer {
     padding: 5px 10px 10px 10px;

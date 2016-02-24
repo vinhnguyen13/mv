@@ -8,14 +8,14 @@ use yii\helpers\Url;
 	<?php if($products): ?>
 	<div class="wrap-list-duan">
 		<ul class="clearfix">
-			<li>
+			<!-- <li>
 				<div class="img-intro pull-left">
 					
 				</div>
 				<div class="intro-detail">
 					
 				</div>
-			</li>
+			</li> -->
 			<?php foreach($products as $product): ?>
 			<li>
 				<div class="img-intro pull-left">
