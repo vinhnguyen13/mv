@@ -325,6 +325,9 @@ use yii\helpers\Url;
 
 
 <?php
+/**
+ * notification
+ */
 if(!empty($owner->username)){
 	$userVisit = Yii::$app->user->identity;
 	$userTo = $owner;
@@ -340,7 +343,7 @@ if(!empty($owner->username)){
 			});
 			$(document).bind('chat/afterConnect', function (event, data) {
 				var to_jid = chatUI.genJid('<?=$userTo->username?>');
-				Chat.sendMessage(to_jid , 'save product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>'});
+				Chat.sendMessage(to_jid , 'view product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>'});
 			});
 		});
 	</script>
