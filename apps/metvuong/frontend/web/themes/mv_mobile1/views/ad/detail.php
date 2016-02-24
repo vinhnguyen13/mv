@@ -48,10 +48,6 @@ use yii\helpers\Url;
 		</p>
 
 		<div class="address-listing">
-			<ul class="pull-right icons-detail">
-				<li><a href="#" class="icon icon-fave" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>"></a></li>
-				<li><a href="#" class="icon save-item"></a></li>
-			</ul>
 			<p><?= $product->getAddress(true) ?></p>
 		</div>
 		<!-- <p class="attr-home">
@@ -59,27 +55,26 @@ use yii\helpers\Url;
 			<?= $product->adProductAdditionInfo->toilet_no ? $product->adProductAdditionInfo->toilet_no . ' <span class="icon icon-bath"></span> | ' : '' ?>
 			<span class="price"><?= StringHelper::formatCurrency($product->price) ?></span>
 		</p> -->
-		<div class="clearfix">
-			<div class="left-attr">
-				<ul class="clearfix">
-					<li>
-						<span class="wrap-icon"><span class="icon icon-dt icon-dt-1"></span></span> <?= $product->area ?>m2
-					</li>
-					<li>
-						<span class="wrap-icon"><span class="icon icon-bed icon-bed-1"></span></span> 2 Phòng ngủ
-					</li>
-					<li>
-						<span class="wrap-icon"><span class="icon icon-pt icon-pt-1"></span></span> 2 Phòng tắm
-					</li>
-				</ul>
-			</div>
-			<div class="right-attr">
-				<p class="price-td">
-					<span>$ Giá</span>
-					<?= StringHelper::formatCurrency($product->price) ?>
-				</p>
-			</div>
-		</div>
+		<ul class="clearfix list-attr-td">
+			<li>
+				<span class="icon icon-dt-1"></span>80m2
+			</li>
+			<li>
+				<span class="icon icon-bed-1"></span> 02
+			</li>
+			<li>
+				<span class="icon icon-pt-1"></span> 02
+			</li>
+		</ul>
+		<ul class="pull-right icons-detail">
+			<li><a href="#" class="icon icon-share-td"></a></li>
+			<li><a href="#" class="icon save-item" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>"></a></li>
+			<li><a href="#" class="icon icon-map-loca"></a></li>
+		</ul>
+		<p class="price-td">
+			<span>Giá</span>
+			<?= StringHelper::formatCurrency($product->price) ?>
+		</p>
 	</div>
 	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
         <div class="panel panel-default">

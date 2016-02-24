@@ -28,7 +28,7 @@ a:link {
 }
 .icon {
     background: url(../images/icon.png) no-repeat top left;
-    background-size: 33px 666px;
+    background-size: 33px 833px;
     display: inline-block;
 }
 header {
@@ -477,13 +477,12 @@ header {
     height: 100%;
 }
 .icons-detail {
-    position: absolute;
-    top: 0;
-    right: 0;
+    
+margin-top: 21px;
 }
 .icons-detail li {
     float: left;
-    margin-right: 15px;
+    margin-right: 24px;
     line-height: 100%;
 }
 .icons-detail li:last-child {
@@ -494,7 +493,7 @@ header {
 }
 .attr-detail,
 .infor-listing {
-    padding: 15px 20px;
+    padding: 10px 20px;
     font-size: 1.1em;
     color: #717171;
     border-bottom: solid 1px #a5a5a5;
@@ -521,7 +520,7 @@ header {
 .item-listing .address-listing {
     font-weight: 700;
     font-size: 15px;
-    margin: 10px 0 4px;
+    margin: 10px 0 6px;
 }
 .item-listing .address-listing span {
     margin-right: 5px;
@@ -728,8 +727,9 @@ label {
 }
 .infor-by-up {
     font-weight: 400;
-    font-size: 15px;
-    margin-bottom: 5px;
+    font-size: 14px;
+    padding: 10px 20px;
+    border-bottom: solid 1px #a5a5a5;
 }
 .infor-duan .address-listing,
 .name-duan {
@@ -1238,7 +1238,7 @@ label {
     padding-left: 10px;
     padding-right: 10px;
     position: relative;
-    font-size: .9em;
+    font-size: 13px;
     -webkit-tap-highlight-color: rgba(0, 167, 105, 0.23);
 }
 .val-selected .selected {
@@ -1278,10 +1278,20 @@ label {
     font-weight: 700;
     width: auto;
     overflow: visible;
+    float: right;
+    margin-right: 40px;
 }
 .option-show-listing {
     margin-bottom: 10px;
     padding: 0 20px;
+}
+.dropdown-select .arrowDown {
+    position: absolute;
+    top: 13px;
+    right: 10px;
+}
+.dropdown-select .val-selected {
+    padding-right: 0;
 }
 .pagi a {
     display: block;
@@ -1695,7 +1705,7 @@ label {
     letter-spacing: 0.5px;
     color: #3c3c3c;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 15px;
 }
 .panel-heading .panel-title a span {
     width: 24px;
@@ -1927,7 +1937,7 @@ label {
 .content-suggest li a {
     line-height: 23px;
 }
-.icon-fave {
+.icon-share-td {
     display: inline-block;
     background-position: 0 -338px;
     width: 28px;
@@ -2651,9 +2661,9 @@ input[type=text]:focus {
 }
 .arrowLeft {
     display: inline-block;
-    width: 12px;
-    height: 23px;
-    background-position: -120px -2px;
+    width: 11px;
+    height: 21px;
+    background-position: 0 -413px;
 }
 .share-social a .arrow-left {
     margin-top: 8px;
@@ -3041,20 +3051,25 @@ input[type=text]:focus {
     transform: translate(-50%,-50%);
 }
 .icon-dt-1 {
-    background-position: 0 -239px;
+    background-position: 0 -242px;
+    width: 19px;
+    height: 19px;
 }
 .icon-bed-1 {
-    background-position: 0 -264px;
+    background-position: 0 -284px;
+    width: 24px;
+    height: 18px;
 }
 .icon-pt-1 {
-    background-position: 0 -284px;
+    background-position: 0 -262px;
+    width: 19px;
+    height: 22px;
 }
 .left-attr {
-    width: 170px;
-    float: left;
+    
 }
 .right-attr {
-    overflow: hidden;
+    
 }
 .left-attr li .wrap-icon {
     display: inline-block;
@@ -3069,6 +3084,7 @@ input[type=text]:focus {
     vertical-align: middle;
     line-height: 100%;
     margin-bottom: 14px;
+    float: left;
 }
 .left-attr li:last-child {
     margin-bottom: 0;
@@ -3079,13 +3095,13 @@ input[type=text]:focus {
 }
 .price-td {
     letter-spacing: 0.7px;
-    color: #3c3c3c;
+    color: #00a769;
     font-weight: 700;
     font-size: 20px;
 }
 .price-td span {
     letter-spacing: 0.7px;
-    color: #00a769;
+    color: #3b3b3b;
     font-size: 16px;
     display: block;
     font-weight: 700;
@@ -3149,6 +3165,8 @@ input[type=text]:focus {
     padding-right: 15px;
     margin-right: 15px;
     height: 20px;
+    vertical-align: middle;
+    line-height: 19px;
 }
 .list-attr-td li:last-child {
     padding-right: 0;
@@ -3157,15 +3175,27 @@ input[type=text]:focus {
 }
 .list-attr-td li span {
     margin-right: 8px;
+    vertical-align: middle;
+    float: left;
+}
+.list-attr-td li .icon {
+    position: relative;
+}
+.list-attr-td li .icon-dt {
+    top: 0;
+}
+.list-attr-td li .icon-dt {
+    top: 0;
+}
+.list-attr-td li .icon-bed-1 {
+    position: relative;
+    top: 1px;
 }
 .list-attr-td {
-    margin-bottom: 22px;
-}
-.list-attr-td li .icon-bed {
-    top: 3px;
+    margin-bottom: 12px;
 }
 .list-attr-td li .icon-pt {
-    top: -3px;
+    top: -2px;
 }
 .list-attr-td li:last-child span {
     vertical-align: middle;
@@ -3186,10 +3216,10 @@ input[type=text]:focus {
     margin-top: 5px;
 }
 .detail-listing .address-listing {
-    margin: 10px 0 14px 0;
+    margin: 0 0 6px 0;
     font-weight: 700;
     font-size: 16px;
-    color: #00a769;
+    color: #3c3c3c;
 }
 .infor-agent {
     margin-bottom: 20px;
@@ -3207,4 +3237,10 @@ input[type=text]:focus {
     font-size: 17px;
     line-height: 100%;
     height: 37px;
+    text-transform: capitalize;
+}
+.icon-map-loca {
+    background-position: 0 -662px;
+    width: 19px;
+    height: 26px;
 }

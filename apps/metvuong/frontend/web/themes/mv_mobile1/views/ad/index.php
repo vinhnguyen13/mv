@@ -16,15 +16,16 @@ $types = AdProduct::getAdTypes ();
 	<?= $this->render('_partials/search-form') ?>
 	<div class="wrap-listing clearfix">
 		<div class="dropdown-select option-show-listing">
-			<div class="val-selected style-click">
-				Hiển thị tin theo <span class="selected">Tin mới nhất</span>
+			<div class="val-selected style-click clearfix">
+				Hiển thị theo <span class="selected">Tin mới nhất</span>
+				<span class="icon arrowDown pull-right"></span>
 			</div>
 			<div class="item-dropdown hide-dropdown">
 				<ul>
-					<li><a data-value="score" href="#">Điểm MetVuong cao nhất</a></li>
-					<li><a data-value="created_at" href="#">Mới nhất</a></li>
-					<li><a data-value="-price" href="#">Giá thấp nhất - cao nhất</a></li>
-					<li><a data-value="price" href="#">Giá cao nhất - thấp nhất</a></li>
+					<li><a data-value="created_at" href="#">Tin mới nhất</a></li>
+					<li><a data-value="-price" href="#">Giá giảm dần</a></li>
+					<li><a data-value="price" href="#">Giá tăng dần</a></li>
+					<li><a data-value="score" href="#">Điểm cao nhất</a></li>
 				</ul>
 			</div>
 		</div>

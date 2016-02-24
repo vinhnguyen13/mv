@@ -289,5 +289,10 @@
 		});
 
 		$('html').addClass('heightFull');
+
+		for ( var i in dataCategories ) {
+			var item = $('<option value="">'+dataCategories[i].name+'</option>');
+			$('#loai-bds-post').append(item);
+		}
 	});
 </script> 
