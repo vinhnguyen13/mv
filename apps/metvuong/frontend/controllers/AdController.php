@@ -36,6 +36,30 @@ class AdController extends Controller
     public function actionTest() {
     	return $this->render('test');
     }
+    public function actionUploadTest() {
+    	return $this->render('upload');
+    }
+    public function actionUploadTestHandle() {
+    	
+    	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    	
+    	
+    	return ['files' => [
+    	[
+	    	'url'           => 'https://cdn.photographylife.com/wp-content/uploads/2014/06/Nikon-D810-Image-Sample-6.jpg',
+	    	'thumbnailUrl'  => 'https://cdn.photographylife.com/wp-content/uploads/2014/06/Nikon-D810-Image-Sample-6.jpg',
+	    	'name'          => 'abc',
+	    	'deleteUrl'     => Url::to(['/ad/delete-img']),
+	    	'deleteType'    => 'DELETE'
+		]
+    	]];
+    }
+    public function actionDeleteImg() {
+    	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    	
+    	return ['files' => []];
+    }
+    
     /**
      * @return string
      */
