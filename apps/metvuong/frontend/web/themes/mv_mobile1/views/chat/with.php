@@ -75,7 +75,8 @@ $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 			var to = chatBoxExist.attr('chat-to');
 			var to_jid = chatUI.genJid(to);
 			var msg = chatBoxExist.find('#typingMsg').val();
-			if(key == 13){
+			msg = $.trim(msg);
+			if(key == 13 && msg.length > 0){
 				Chat.sendMessage(to_jid , msg, 'chat', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>'});
 				Chat.sendMessage(chatUI.genJid(xmpp_jid), msg, 'chatme', {from: chatUI.genJid(xmpp_jid), to: to_jid, fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>'});
 				chatBoxExist.find('#typingMsg').val('');
@@ -93,7 +94,8 @@ $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 			var to = chatBoxExist.attr('chat-to');
 			var to_jid = chatUI.genJid(to);
 			var msg = chatBoxExist.find('#typingMsg').val();
-			if(msg){
+			msg = $.trim(msg);
+			if(msg && msg.length > 0){
 				Chat.sendMessage(to_jid , msg, 'chat', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>'});
 				Chat.sendMessage(chatUI.genJid(xmpp_jid), msg, 'chatme', {from: chatUI.genJid(xmpp_jid), to: to_jid, fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>'});
 				chatBoxExist.find('#typingMsg').val('');
