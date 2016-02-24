@@ -220,9 +220,10 @@ use yii\helpers\Url;
 								</div>
 								Ho Chi Minh City, Vietnam
 							</div>
-							<button class="btn-common btn-small">Chat</button>
 						</div>
 					</div>
+					<button id="" class="email-btn btn-common btn-small pull-left">Email</button>
+					<button id="" class="chat-btn btn-common btn-small pull-right">Chat</button>
                 </div>
             </div>
 

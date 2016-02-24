@@ -10,7 +10,7 @@
 				<li><a data-active-section="tt-lienhe" href="#">5</a></li>
 			</ul>
 		</div>
-		<div class="section select-type hide">
+		<div class="section select-type hide item-step">
 			<p class="text-center step-txt">4 bước dễ dàng</p>
 		
 			<ul class="clearfix step-check">
@@ -30,17 +30,20 @@
 					<a class="frm-radio" href="#">
 						<span class="radio-ui icon"><input data-flag="true" name="agent" type="radio" checked></span>
 						<span>Chủ nhà</span>
-						<span class="txt-limit">ĐĂNG ĐẾN 3 TIN</span>
 					</a>
 				</li>
 				<li>
 					<a class="frm-radio" href="#">
 						<span class="radio-ui icon"><input data-flag="true" name="agent" type="radio"></span>
 						<span>Môi giới</span>
-						<span class="txt-limit">ĐĂNG ĐẾN 10 TIN</span>
 					</a>
 				</li>
 			</ul>
+			<div class="form-group">
+				<select class="form-control" name="" id="loai-bds-post">
+					<option value="" disabled="" selected="">Loại BĐS</option>
+				</select>
+			</div>
 		</div>
 
 		<div class="tt-chung item-step section hide">
