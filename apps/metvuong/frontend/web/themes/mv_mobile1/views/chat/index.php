@@ -30,7 +30,7 @@ if(!empty($jid_id)){
 						<a href="<?= Url::to(['/chat/with', 'username' => $user->username]) ?>">
 							<span class="wrap-img"><img src="<?=$user->profile->getAvatarUrl();?>" alt=""></span>
 							<div class="chat-detail">
-								<span class="pull-right time-chat"><?=$msg['ts'];?></span>
+								<span class="pull-right time-chat"><?=date('H:i:s d-m-Y', strtotime($msg['ts']));?></span>
 								<span class="name"><?=$user->profile->getDisplayName();?></span>
 								<span><?=$msg['body'];?></span>
 							</div>
