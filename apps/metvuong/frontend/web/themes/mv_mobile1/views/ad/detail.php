@@ -338,7 +338,10 @@ if(!empty($owner->username)){
 				var to_jid = chatUI.genJid('<?=$userTo->username?>');
 				Chat.sendMessage(to_jid , 'save product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>'});
 			});
-
+			$(document).bind('chat/afterConnect', function (event, data) {
+				var to_jid = chatUI.genJid('<?=$userTo->username?>');
+				Chat.sendMessage(to_jid , 'save product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>'});
+			});
 		});
 	</script>
 	<?php

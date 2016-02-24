@@ -73,6 +73,7 @@
                 chatBoxExist.find('.wrap-chat').append(chatList);
             }
             $('.container-chat').scrollTop($('.wrap-chat').height());
+            $('body').loading({done:true})
         },
         buildMessageToBox: function (username, msg, type, params) {
             msg = chatUI.decodeEntities(msg);
