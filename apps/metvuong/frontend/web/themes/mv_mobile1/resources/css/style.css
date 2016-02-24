@@ -1551,9 +1551,12 @@ label {
     height: 100%;
     background-position: -43px -1px;
 }
+.profile-user {
+    padding-top: 70px;
+}
 .profile-user .title-top {
-    background: none;
-    color: #000;
+    /* background: none; */
+    /* color: #000; */
 }
 .infor-user {
     padding: 0 15px;
@@ -2355,7 +2358,7 @@ footer {
     margin-bottom: 10px;
 }
 .wrap-noti {
-    padding: 0 0 0 30px;
+    padding: 43px 0 0 30px;
 }
 .list-noti {
     border-left: 1px solid #777777;
@@ -2370,6 +2373,7 @@ footer {
 }
 .list-noti .user-get {
     position: relative;
+    font-size: 13px;
 }
 .list-noti .avatar {
     position: absolute;
@@ -2380,7 +2384,7 @@ footer {
     text-transform: capitalize;
     font-weight: 600;
     color: #000;
-    font-size: 1.2em;
+    font-size: 15px;
 }
 .list-noti .user-get p {
     color: #777777;
@@ -2388,7 +2392,7 @@ footer {
 .list-noti .user-get p.date-type {
     margin-bottom: 10px;
     text-transform: uppercase;
-    font-size: .9em;
+    font-size: 12px;
 }
 .list-noti p.date-type span {
     font-weight: bold;
@@ -2426,7 +2430,7 @@ html.mm-opening .mm-slideout {
     transform: translate3d(70%,0,0);
 }
 .chat-list {
-    padding: 5px 15px 15px;
+    padding: 48px 15px 15px;
 }
 .chat-list .wrap-img {
     float: left;
