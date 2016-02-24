@@ -336,6 +336,7 @@ if(!empty($owner->username)){
 	?>
 	<script>
 		$(document).ready(function () {
+			$('.panel a.collapsed[href="#collapseEght"]').trigger('click');
 			$(document).on('click', '.save-item', function (e) {
 				var to_jid = chatUI.genJid('<?=$userTo->username?>');
 				Chat.sendMessage(to_jid , 'save product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>'});
