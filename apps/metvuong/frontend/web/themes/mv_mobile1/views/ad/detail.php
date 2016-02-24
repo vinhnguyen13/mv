@@ -43,16 +43,16 @@ use yii\helpers\Url;
 	</div>
 	<?php endif; ?>
 	<div class="infor-listing">
-		<ul class="pull-right icons-detail">
-			<li><a href="#" class="icon icon-fave" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>"></a></li>
-			<li><a href="#" class="icon save-item"></a></li>
-		</ul>
 		<p class="infor-by-up">
 			<?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?> bởi <a href="#">Môi Giới</a>
 		</p>
 
 		<div class="address-listing">
-			<p><span class="icon address-icon"></span><?= $product->getAddress(true) ?></p>
+			<ul class="pull-right icons-detail">
+				<li><a href="#" class="icon icon-fave" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>"></a></li>
+				<li><a href="#" class="icon save-item"></a></li>
+			</ul>
+			<p><?= $product->getAddress(true) ?></p>
 		</div>
 		<!-- <p class="attr-home">
 			<?= $product->adProductAdditionInfo->room_no ? $product->adProductAdditionInfo->room_no . ' <span class="icon icon-bed"></span> | ' : '' ?>
@@ -85,12 +85,12 @@ use yii\helpers\Url;
         <div class="panel panel-default">
             <div class="panel-heading" role="tab" id="headingOne">
                 <h4 class="panel-title">
-                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                         Diễn tả chi tiết<span class="icon"></span>
                     </a>
                 </h4>
             </div>
-            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                 <div class="panel-body" name="about" contenteditable="true" placeholder="Vui lòng chia sẻ tiểu sử">
                     <p><?= $product->content ?></p>
                 </div>
