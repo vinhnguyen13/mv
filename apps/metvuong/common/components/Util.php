@@ -64,7 +64,7 @@ class Util extends Component
      * Enter description here ...
      * @param unknown_type $length
      */
-    public static function generateString($length = 8) {
+    public function generateString($length = 8) {
         $salt = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         $len = strlen ( $salt );
         $makepass = '';
@@ -88,7 +88,7 @@ class Util extends Component
      * @param mixed $string
      * @return string
      */
-    public static function encrypt($string) {
+    public function encrypt($string) {
 
         $key = 'BaI123vUI!@#';
         $result = '';
@@ -106,7 +106,7 @@ class Util extends Component
      *
      * @param string $string
      */
-    public static function decrypt($string) {
+    public function decrypt($string) {
         $key = 'BaI123vUI!@#';
         $result = '';
 
@@ -131,7 +131,7 @@ class Util extends Component
      * This function generates 11 digit (pseudo)unique ids
      * @return string
      */
-    public static function getUniqueId() {
+    public function getUniqueId() {
         $id = uniqid ();
         // $alpha = "bcdfghjklmnopqrstvwxyz0123456789";
         $alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -155,7 +155,7 @@ class Util extends Component
      * Random number
      * @param $length
      */
-    public static function randomDigits($length){
+    public function randomDigits($length){
         $numbers = range(0,9);
         shuffle($numbers);
         $digits = '';
@@ -164,131 +164,9 @@ class Util extends Component
         }
         return $digits;
     }
-    /**
-     * get session
-     * @return Zend_Session_Namespace
-     */
-    public static function getSession() {
-        try {
-            $session = Yii::app ()->session;
-            if (! $session->isStarted) {
-                $session->open ();
-            }
-            return $session;
-        } catch ( Exception $e ) {
-            return null;
-        }
-    }
-    /**
-     * generate a token
-     *
-     * @param mixed $generate
-     * @return string
-     */
-    public static function accessToken($generate = false, $value) {
-        try {
-            $session = self::getSession ();
-            $session->setTimeout ( 900 );
-            if ($generate) {
-                $ts = $value;
-                $session->add ( 'access_token', $ts );
-            } else {
-                $ts = $session->get ( 'access_token' );
-                if (! $ts) {
-                    $ts = $value;
-                    $session->add ( 'access_token', $ts );
-                }
-            }
-            return $ts;
-        } catch ( Exception $e ) {
-            return '';
-        }
-    }
-    /**
-     * clear current token
-     *
-     * @param mixed $generate
-     * @return string
-     */
-    public static function clearToken() {
-        $session = self::getSession ();
-        $session->remove ( 'access_token' );
-    }
-    /**
-     * Write cookie
-     */
-    public static function writeCookie($data, $cookietimeout = -1) {
-        $value = json_encode ( $data ['value'] );
-        $value = self::encrypt ( $value ) . '|' . time () . '|' . md5 ( $value . time () );
-        if(empty($data ['valueDefault'])){
-            $data ['valueDefault'] = array();
-        }
-        $Cookie = new CHttpCookie ( $data ['name'], $data ['valueDefault'] );
-        $Cookie->value = $value;
 
-        //set cookietimeout
-        if($cookietimeout == -1)
-            $Cookie->expire = time () + Yii::app ()->params->cookie ['expire'];
-        else
-            $Cookie->expire = time () + $cookietimeout;
 
-        $Cookie->path = Yii::app ()->params->cookie ['path'];
-        $Cookie->domain = Yii::app ()->params->cookie ['domain'];
-        Yii::app ()->request->cookies [$data ['name']] = $Cookie;
-        return $Cookie;
-    }
-
-    public static function writeCookieNoEncrypt($data, $cookietimeout = -1) {
-        $value = $data ['value'];
-        $Cookie = new CHttpCookie ( $data ['name'], $data ['valueDefault'] );
-        $Cookie->value = $value;
-
-        //set cookietimeout
-        if($cookietimeout == -1)
-            $Cookie->expire = time () + Yii::app ()->params->cookie ['expire'];
-        else
-            $Cookie->expire = time () + $cookietimeout;
-
-        $Cookie->path = Yii::app ()->params->cookie ['path'];
-        $Cookie->domain = Yii::app ()->params->cookie ['domain'];
-        Yii::app ()->request->cookies [$data ['name']] = $Cookie;
-        return $Cookie;
-    }
-
-    public static function getCookie($name) {
-        $cookie = Yii::app ()->request->cookies [$name];
-        if(!empty($cookie)){
-            $cookie = explode('|', $cookie->value);
-            $cookie = self::decrypt($cookie[0]);
-
-            return json_decode($cookie, true);
-        }
-        return false;
-    }
-
-    public static function clearCookie($name) {
-        return setcookie ($name, "", time() - 3600, Yii::app ()->params->cookie ['path'], Yii::app ()->params->cookie ['domain']);
-    }
-
-    public static function skipNotifyUpdate(){
-        $session = self::getSession ();
-        $session->setTimeout ( 900 );
-        $session->add ( 'skip_update', true);
-        return true;
-    }
-
-    public static function notifyUpdate($user){
-        return false;
-        $session = self::getSession ();
-        $skip = $session->get ( 'skip_update' );
-        $pfAttributes = $user->profile->attributes;
-        if(empty($pfAttributes['cmnd']) && empty($pfAttributes['address']) && empty($pfAttributes['country']) && empty($pfAttributes['state']) && empty($skip)){
-            return true;
-        }
-        return false;
-    }
-
-    public static function unescapeHtml($data){
+    public function unescapeHtml($data){
         $data = str_replace("&amp;", "&", $data);
         $data = str_replace("&quot;", '"', $data);
         $data = str_replace("&#39;", "'", $data);
@@ -297,12 +175,12 @@ class Util extends Component
         return $data;
     }
 
-    public static function utf8Urldecode($str) {
+    public function utf8Urldecode($str) {
         $str = preg_replace("/%u([0-9a-f]{3,4})/i","&#x\\1;",urldecode($str));
         return html_entity_decode($str,null,'UTF-8');;
     }
 
-    public static function getCurrentUrl($no_query = true){
+    public function getCurrentUrl($no_query = true){
         $myUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && !in_array(strtolower($_SERVER['HTTPS']),array('off','no'))) ? 'https' : 'http';
         // Get domain portion
         $myUrl .= '://'.$_SERVER['HTTP_HOST'];
@@ -316,19 +194,14 @@ class Util extends Component
         return $myUrl;
     }
 
-    public static function getCurrentDomain(){
+    public function getCurrentDomain(){
         $myUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] && !in_array(strtolower($_SERVER['HTTPS']),array('off','no'))) ? 'https' : 'http';
         // Get domain portion
         $myUrl .= '://'.$_SERVER['HTTP_HOST'];
         return $myUrl;
     }
 
-    public static function setMessage($title, $content){
-        $data = array('value'=> array('title' => $title, 'content' => $content), 'valueDefault'=>serialize('message'), 'name'=>'message');
-        Util::writeCookie($data, 86400);
-    }
-
-    public static function getElapsedTime($timestamp) {
+    public function getElapsedTime($timestamp) {
         $time = (time () - $timestamp > 0) ? time () - $timestamp : 1;
         $tokens = array (
             'year' => 31536000,
@@ -365,7 +238,7 @@ class Util extends Component
         }
     }
 
-    public static function partString($str, $start, $length = 10, $encoding = 'UTF-8'){
+    public function partString($str, $start, $length = 10, $encoding = 'UTF-8'){
         $result = '';
         $strlen = mb_strlen($str, 'UTF-8');
         if($strlen > $length){
@@ -381,7 +254,7 @@ class Util extends Component
         return $result;
     }
 
-    public static function remoteFileExists($url) {
+    public function remoteFileExists($url) {
         $curl = curl_init($url);
 
         //don't fetch the actual page, you only want to check the connection is ok
@@ -407,7 +280,7 @@ class Util extends Component
         return $ret;
     }
 
-    public static function trimUrl($url){
+    public function trimUrl($url){
         $tmp = $url;
 
         if (strpos($tmp, "/") !== false && strpos($tmp, "/") == 0)
@@ -419,24 +292,24 @@ class Util extends Component
         return $tmp;
     }
 
-    public static function mcrypt_encrypt($string, $key='abc123ABC'){
+    public function mcrypt_encrypt($string, $key='abc123ABC'){
         $encrypted = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($key), $string, MCRYPT_MODE_CBC, md5(md5($key))));
         $encrypted = str_replace ( array('+','/','='),array('-','_',''),  $encrypted );
         return $encrypted;
     }
 
-    public static function mcrypt_decrypt($encrypted, $key='abc123ABC'){
+    public function mcrypt_decrypt($encrypted, $key='abc123ABC'){
         $encrypted = str_replace(array('-','_'),array('+','/'),$encrypted);
         $decrypted = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($key), base64_decode($encrypted), MCRYPT_MODE_CBC, md5(md5($key))), "\0");
         return $decrypted;
     }
 
-    public static function encryptRandCode($string){
+    public function encryptRandCode($string){
         $string = $string.'_____'.time();
         return self::mcrypt_encrypt($string);
     }
 
-    public static function decryptRandCode($encrypted){
+    public function decryptRandCode($encrypted){
         $decrypted = self::mcrypt_decrypt($encrypted);
         $arr = explode('_____', $decrypted);
         return $arr[0];
@@ -446,21 +319,21 @@ class Util extends Component
      * trim string : "this is the     trim ", to : "this is the trim"
      * @param unknown_type $text
      */
-    public static function trimString($text){
+    public function trimString($text){
         $text = trim($text);
         $text = preg_replace('/\s+/',' ',$text);
         return $text;
     }
 
-    public static function trimArray($array){
+    public function trimArray($array){
         foreach ($array as $key => $item){
-            $array[$key] = Util::trimString($item);
+            $array[$key] = $this->trimString($item);
         }
 
         return $array;
     }
 
-    private static function seems_utf8($str)
+    private function seems_utf8($str)
     {
         $length = strlen($str);
         for ($i=0; $i < $length; $i++) {
@@ -480,12 +353,12 @@ class Util extends Component
         return true;
     }
 
-    public static function removeUnicode($string)
+    public function removeUnicode($string)
     {
         if ( !preg_match('/[\x80-\xff]/', $string) )
             return $string;
 
-        if (Util::seems_utf8($string)) {
+        if ($this->seems_utf8($string)) {
 
             $string = preg_replace("/(ä|à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/", 'a', $string);
             $string = str_replace("ç","c",$string);
@@ -630,23 +503,23 @@ class Util extends Component
         return $string;
     }
 
-    public static function getSlug($text){
-        $text = Util::trimString($text);
-        $text = Util::removeUnicode($text);
+    public function getSlug($text){
+        $text = $this->trimString($text);
+        $text = $this->removeUnicode($text);
         $text = strtolower($text);
         $text = str_replace(' ', '-', $text);
         return $text;
     }
 
-    public static function getUsername($text){
-        $text = Util::trimString($text);
-        $text = Util::removeUnicode($text);
+    public function getUsername($text){
+        $text = $this->trimString($text);
+        $text = $this->removeUnicode($text);
         $text = strtolower($text);
         $text = str_replace(' ', '', $text);
         return $text;
     }
 
-    public static function valid_date($date, $format = 'DD-MM-YYYY'){
+    public function valid_date($date, $format = 'DD-MM-YYYY'){
         if(strlen($date) >= 8 && strlen($date) <= 10){
             $separator_only = str_replace(array('M','D','Y'),'', $format);
             $separator = $separator_only[0];
@@ -672,18 +545,18 @@ class Util extends Component
         return false;
     }
 
-    public static function url_exists($url) {
+    public function url_exists($url) {
         if (!$fp = curl_init($url)) return false;
         return true;
     }
 
-    public static function chat_domain_to_id($domain){
+    public function chat_domain_to_id($domain){
         if(isset($domain)){
             return str_replace('.', '-', $domain);
         }
     }
 
-    public static function getAge($birthday) {
+    public function getAge($birthday) {
         list($day,$month,$year) = explode("/",$birthday);
         $year_diff  = date("Y") - $year;
         $month_diff = date("m") - $month;
@@ -693,22 +566,22 @@ class Util extends Component
         return $year_diff;
     }
 
-    public static function domain_exists($email, $record = 'MX'){
+    public function domain_exists($email, $record = 'MX'){
         list($user, $domain) = explode('@', $email);
         return checkdnsrr($domain, $record);
     }
 
-    public static function vimeoInfo($vid){
+    public function vimeoInfo($vid){
         $url = "http://vimeo.com/api/v2/video/$vid.xml";
         $out = Yii::app()->curl->run($url);
-        $xml = new SimpleXMLElement($out);
+        $xml = new \SimpleXMLElement($out);
         if(!empty($xml)){
             return $xml;
         }
         return false;
     }
 
-    public static function get_domain($url)
+    public function get_domain($url)
     {
         $pieces = parse_url($url);
         $domain = isset($pieces['host']) ? $pieces['host'] : '';
@@ -716,5 +589,14 @@ class Util extends Component
             return $regs['domain'];
         }
         return false;
+    }
+
+    public function getDsnAttribute($name, $dsn)
+    {
+        if (preg_match('/' . $name . '=([^;]*)/', $dsn, $match)) {
+            return $match[1];
+        } else {
+            return null;
+        }
     }
 }

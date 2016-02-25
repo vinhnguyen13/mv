@@ -115,7 +115,7 @@
             var _time = formatTime(timestamp);
             var chatBoxExist = $('.chat-history');
             var template = Handlebars.compile($("#chat-receive-template").html());
-            var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(this.from)+'/avatar', time: _time, fromName: params.fromName, chatUrl: '/chat/'+chatUI.usrFromJid(this.from), from: chatUI.usrFromJid(this.from)});
+            var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(this.from)+'/avatar', time: _time, fromName: params.fromName, chatUrl: '/chat/with/'+chatUI.usrFromJid(this.from), from: chatUI.usrFromJid(this.from)});
             if($(".item[chat-with='" + chatUI.usrFromJid(this.to) + "']")){
                 $(".item[chat-with='" + chatUI.usrFromJid(this.to) + "']").remove();
             }

@@ -7,6 +7,7 @@
  */
 
 namespace frontend\models;
+use common\components\Util;
 use vsoft\chat\models\TigUsers;
 use Yii;
 use yii\base\Component;
@@ -61,4 +62,33 @@ class Chat extends Component
         }
         return false;
     }
+
+    public function searchUserFromConversation($userOnlined, $userFind)
+    {
+        if(strlen(trim($userFind)) <= 0){
+            return false;
+        }
+        $dbNameChat = Util::me()->getDsnAttribute('dbname', Yii::$app->get('dbChat')->dsn);
+        $dbNamePri = Util::me()->getDsnAttribute('dbname', Yii::$app->get('db')->dsn);
+        $jidUserOnlined = $this->getJid($userOnlined);
+
+        $sqlFindJidFromUserFind = "SELECT tmj.jid_id FROM `".$dbNamePri."`.`profile` p, `".$dbNamePri."`.`user` u, `$dbNameChat`.`tig_ma_jids` tmj WHERE `name` LIKE '%".$userFind."%' AND p.user_id=u.id AND CONCAT(u.username,'@".self::DOMAIN."') = tmj.jid";
+        $sqlFindJidFromUserOnline = "SELECT jid_id FROM `$dbNameChat`.`tig_ma_jids` tmj WHERE jid = '".$jidUserOnlined."'";
+        $sql1 = "SELECT tbl.* FROM (SELECT IF(direction = 0, owner_id, buddy_id) AS withuser FROM `$dbNameChat`.`tig_ma_msgs` tmm WHERE (owner_id IN (".$sqlFindJidFromUserFind.") AND buddy_id IN (".$sqlFindJidFromUserOnline.")) OR (buddy_id IN (".$sqlFindJidFromUserFind.") AND owner_id IN (".$sqlFindJidFromUserOnline."))" .
+            " ORDER BY ts DESC) tbl GROUP BY withuser ";
+        $existConversation = Yii::$app->get('dbChat')->createCommand($sql1)->queryAll();
+        echo "<pre>";
+        print_r($existConversation);
+        echo "</pre>";
+        exit;
+        if(!empty($existConversation)){
+            $sql = "SELECT username, name FROM `".$dbNamePri."`.`profile` p INNER JOIN `user` u ON p.user_id=u.id WHERE `name` LIKE '%".$userFind."%'";
+            $return = Yii::$app->get('db')->createCommand($sql)->queryAll();
+            if(!empty($return)){
+                return $return;
+            }
+        }
+        return false;
+    }
+
 }

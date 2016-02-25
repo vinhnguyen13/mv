@@ -60,13 +60,13 @@ $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 <script>
 	$(document).ready(function () {
 		var timer = 0;
+		clearTimeout(timer);
 		timer = setTimeout(function() {
 			/*
 			 First: Chat.mucJoin('chatroom2@muc.metvuong.com', chatUI.genJid(xmpp_jid), xmpp_key);
 			 Next typing: Chat.sendMessage('chatroom2@muc.metvuong.com' , msg,"groupchat");
 			 */
 			var onlines = chatUI.onlineList();
-			clearTimeout(timer);
 		}, 5000);
 		chatUI.showBoxChat(xmpp_jid, '<?=$to;?>');
 		$(document).on('keyup', '.chat-group #typingMsg', function (e) {
@@ -82,9 +82,6 @@ $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 				chatBoxExist.find('#typingMsg').val('');
 			}else{
 				Chat.sendChatState(to_jid, 'composing');
-				clearTimeout(timer);
-				timer = setTimeout(function() {
-				}, 100);
 			}
 			return false;
 		});

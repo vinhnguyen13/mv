@@ -2,6 +2,8 @@
 
 namespace frontend\controllers;
 use frontend\components\Controller;
+use frontend\models\Chat;
+use frontend\models\Profile;
 use Yii;
 use yii\base\Event;
 use yii\base\ViewEvent;
@@ -39,5 +41,13 @@ class ChatController extends Controller
             $this->redirect(Url::to(['/chat/index']));
         }
         return $this->render('with', ['username'=>$username]);
+    }
+
+    public function actionConversation(){
+        if(Yii::$app->request->isAjax && Yii::$app->request->isPost){
+            $word = Yii::$app->request->post('word');
+            Yii::$app->response->format = 'json';
+            return Chat::find()->searchUserFromConversation(Yii::$app->user->identity->username, $word);
+        }
     }
 }

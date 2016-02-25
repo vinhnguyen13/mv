@@ -12,8 +12,11 @@ if(!empty($jid_id)){
 }
 ?>
 <div class="chat-history">
-	<div class="title-top">Chat history</div>
+	<div class="title-top">
+		<span>Chat history</span>
+	</div>
 	<div class="chat-list clearfix">
+		<input type="text" id="findConversation" class="form-control" style="margin-bottom: 12px; width: 320px" placeholder="Filter">
 		<?php
 		if(!empty($msgs)) {
 			foreach($msgs as $msg){
@@ -55,4 +58,38 @@ if(!empty($jid_id)){
 			</div>
 		</a>
 	</div>
+</script>
+
+<script>
+	$(document).ready(function () {
+		var timer = 0;
+		/*$(document).on('keyup', '#findConversation', function (e) {
+			var word = $(this).val();
+			clearTimeout(timer);
+			timer = setTimeout(function() {
+				console.log(word);
+				$.ajax({
+					type: "post",
+					dataType: 'json',
+					url: '<?=Url::to(['/chat/conversation'])?>',
+					data: {word: word},
+					success: function (data) {
+						console.log(data);
+					}
+				});
+			}, 1000);
+		});*/
+		var row = $('.chat-list');
+		$('#findConversation').keyup(function(){
+			var key = $(this).val().toLowerCase();
+			row.find('.item').each(function(){
+				var self = $(this);
+				if(self.text().toLowerCase().indexOf(key) == -1) {
+					self.hide();
+				} else {
+					self.show();
+				}
+			});
+		});
+	});
 </script>
