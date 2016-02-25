@@ -64,9 +64,9 @@ class AdBuildingProjectBase extends \yii\db\ActiveRecord
         return [
             [['city_id', 'district_id', 'created_at', 'updated_at', 'status'], 'integer'],
             [['name', 'slug', 'created_at'], 'required'],
-            [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video', 'progress'], 'string'],
+            [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video', 'progress', 'description', 'name', 'logo', 'slug'], 'string'],
             [['lng', 'lat'], 'number'],
-            [['name', 'logo', 'land_area', 'apartment_no', 'floor_no', 'start_time', 'estimate_finished', 'hotline', 'slug'], 'string', 'max' => 32],
+            [['land_area', 'apartment_no', 'floor_no', 'start_time', 'estimate_finished', 'hotline'], 'string', 'max' => 32],
             [['location', 'investment_type', 'commercial_leasing_area', 'owner_type', 'facilities', 'website'], 'string', 'max' => 255]
         ];
     }

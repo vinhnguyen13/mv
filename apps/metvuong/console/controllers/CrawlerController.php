@@ -81,6 +81,14 @@ class CrawlerController extends Controller
         BatdongsanV2::find()->importProjects();
     }
 
+    // Get Contractor
+    public function actionContractorbds(){
+        BatdongsanV2::find()->getContractors();
+    }
+    public function actionImportcontractorbds(){
+//        BatdongsanV2::find()->importProjects();
+    }
+
     // Muaban.net
     public function actionMuaban()
     {

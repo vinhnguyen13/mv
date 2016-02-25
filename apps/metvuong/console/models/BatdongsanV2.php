@@ -11,7 +11,6 @@ use Collator;
 use DOMDocument;
 use DOMXPath;
 use keltstr\simplehtmldom\SimpleHTMLDom;
-use linslin\yii2\curl\Curl;
 use vsoft\ad\models\AdCity;
 use vsoft\ad\models\AdContactInfo;
 use vsoft\ad\models\AdDistrict;
@@ -21,9 +20,10 @@ use vsoft\ad\models\AdProductAdditionInfo;
 use vsoft\ad\models\AdStreet;
 use vsoft\ad\models\AdWard;
 use vsoft\craw\models\AdAgent;
+use vsoft\craw\models\AdContractor;
+use vsoft\craw\models\AdInvestor;
 use Yii;
 use yii\base\Component;
-use yii\base\ErrorException;
 
 class BatdongsanV2 extends Component
 {
@@ -956,7 +956,7 @@ class BatdongsanV2 extends Component
                             }
                             $bds_import_log["last_type_index"] = $key_type;
                             $this->writeLog($bds_import_log, $path_folder."import/", $bds_import_filename);
-                            print_r("\nADD: {$type} DONE!\n");
+                            print_r("\nADD TYPE: {$type} DONE!\n");
                         }
                     }
                 }
@@ -1932,17 +1932,302 @@ class BatdongsanV2 extends Component
     }
 
     public function importProjects(){
-        $path = Yii::getAlias('@console') . "/data/bds_html/projects/import";
+        $start = time();
+        $path = Yii::getAlias('@console') . "/data/bds_html/projects/";
         $file_log = "import_project_log.json";
-        $log_import = $this->loadLog($path, $file_log);
+        $project_log_import = $this->loadLog($path."import/", $file_log);
+        if(empty($project_log_import["type"]))
+            $project_log_import["type"] = array();
         $types = $this->projects;
-//        $break_type = false; // detect next type if it is false
-        $current_type = empty($log_import["current_type"]) ? 0 : $log_import["current_type"]+1;
-        foreach($types as $key_type => $type){
-            if($key_type >= $current_type){
+        $break_type = false; // detect next type if it is false
+        $current_type = empty($project_log_import["current_type"]) ? 0 : $project_log_import["current_type"]+1;
+        $count_file = 1;
 
+        $columnContractor = ['name', 'address', 'phone', 'fax', 'website', 'email', 'logo', 'status', 'created_at'];
+        $bulkInsertContractor = array();
+
+        $columnNameArray = ['city_id', 'district_id', 'name', 'logo',
+            'location', 'description', 'investment_type', 'hotline', 'website',
+            'lng', 'lat', 'slug', 'status', 'created_at'];
+        $bulkInsertArray = array();
+
+        $listContractorProject = [];
+
+        $cityData = \vsoft\craw\models\AdCity::find()->all();
+        $districtData = \vsoft\craw\models\AdDistrict::find()->all();
+        $contractorData = \vsoft\craw\models\AdInvestor::find()->all();
+
+        foreach($types as $key_type => $type){
+            if($key_type >= $current_type && !$break_type){
+                if (is_dir($path.$type)) {
+                    $log_import = $this->loadLog($path."import/", $type.".json");
+                    if (empty($log_import["files"]))
+                        $log_import["files"] = array();
+
+                    $files = scandir($path.$type."/files", 1);
+                    $counter = count($files) - 2;
+                    $last_file_index = $counter - 1;
+                    if ($counter > 0) {
+                        $filename = null;
+                        for ($i = 0; $i <= $last_file_index; $i++) {
+                            if ($count_file > 300) {
+                                $break_type = true;
+                                break;
+                            }
+                            $filename = $files[$i];
+                            if (in_array($filename, $log_import["files"])) {
+                                continue;
+                            } else {
+                                $filePath = $path . $type. "/files/" . $filename;
+                                if (file_exists($filePath)) {
+                                    print_r("\n" . $count_file . " {$type}: {$filename}");
+                                    $value = $this->parseProjectDetail($path . $type. "/files/" , $filename);
+                                    if (empty($value)) {
+                                        print_r(" Error: no content\n");
+                                        continue;
+                                    }
+                                    $city_id = $this->getCityId($value[$filename]["city"], $cityData);
+                                    $district_id = $this->getDistrictId($value[$filename]["district"], $districtData, $city_id);
+
+                                    $record = [
+                                        'city_id' => $city_id,
+                                        'district_id' => $district_id,
+                                        'name' => $value[$filename]["name"],
+                                        'logo' => $value[$filename]["logo"],
+                                        'location' => $value[$filename]["location"],
+                                        'description' => $value[$filename]["description"],
+                                        'investment_type' => $value[$filename]["investment_type"],
+                                        'hotline' => $value[$filename]["hotline"],
+                                        'website' => $value[$filename]["website"],
+                                        'lng' => $value[$filename]["lng"],
+                                        'lat' => $value[$filename]["lat"],
+                                        'slug' => $value[$filename]["slug"],
+                                        'status' => $value[$filename]["status"],
+                                        'created_at' => $value[$filename]["created_at"]
+                                    ];
+                                    $bulkInsertArray[] = $record;
+
+                                    $contractor = $value[$filename]["contractor"];
+                                    // Check duplicate contractor :D
+                                    if(count($contractor) > 0) {
+                                        $checkContractorExists = $this->contractorExists($contractor["name"], $listContractorProject);
+                                        $contractor_old_id = $this->getIdExists($contractor["name"], $contractorData);
+                                        if($checkContractorExists == false && $contractor_old_id == null) {
+                                            $recordContractor = [
+                                                'name' => $contractor["name"],
+                                                'address' => $contractor["address"],
+                                                'phone' => $contractor["phone"],
+                                                'fax' => $contractor["fax"],
+                                                'website' => $contractor["website"],
+                                                'email' => $contractor["email"],
+                                                'logo' => $contractor["logo"],
+                                                'status' => 1,
+                                                'created_at' => time()
+                                            ];
+                                            $bulkInsertContractor[] = $recordContractor;
+                                        }
+                                        $listContractorProject[$value[$filename]["name"]] = $contractor["name"];
+                                    }
+
+                                    print_r(" Added.\n");
+                                    array_push($log_import["files"], $filename);
+                                    $log_import["import_total"] = count($log_import["files"]);
+                                    $log_import["import_time"] = date("d-m-Y H:i");
+                                    $count_file++;
+                                }
+                            }
+                        } // end file loop
+
+                        $this->writeLog($log_import, $path."import/", $type.".json");
+                        if ($break_type == false && count($bulkInsertArray) > 0) {
+                            if (!in_array($type, $project_log_import["type"])) {
+                                array_push($project_log_import["type"], $type);
+                            }
+                            $project_log_import["current_type"] = $key_type;
+                            $this->writeLog($project_log_import, $path."import/", $file_log);
+                            print_r("\nADD TYPE: {$type} DONE!\n");
+                        }
+                    }
+                } else {
+                    print_r("\nCannot find ".$path.$type."\n");
+                }
             }
         }
+
+        $insertCountContractor = 0;
+        if (count($bulkInsertContractor) > 0) {
+            print_r("\nInsert INVESTOR data ...");
+            // below line insert all your record and return number of rows inserted
+            $insertCountContractor = \vsoft\craw\models\AdInvestor::getDb()->createCommand()
+                ->batchInsert(\vsoft\craw\models\AdInvestor::tableName(), $columnContractor, $bulkInsertContractor)->execute();
+            print_r(" DONE!");
+        }
+
+        $insertCount = 0;
+        if (count($bulkInsertArray) > 0) {
+            print_r("\nInsert BUILDING PROJECT data...");
+            // below line insert all your record and return number of rows inserted
+            $insertCount = \vsoft\craw\models\AdBuildingProject::getDb()->createCommand()
+                ->batchInsert(\vsoft\craw\models\AdBuildingProject::tableName(), $columnNameArray, $bulkInsertArray)->execute();
+            print_r(" DONE!");
+        }
+
+        if(count($listContractorProject) > 0 && $insertCount > 0 && $insertCountContractor > 0){
+            $columnContractorProject = ['building_project_id', 'investor_id'];
+            $bulkInsertContractorProject = array();
+            $buildingProjectData = \vsoft\craw\models\AdBuildingProject::find()->all();
+            $contractorDataNew = AdInvestor::find()->all();
+            foreach($listContractorProject as $k => $v){
+                $buildingProject_id = $this->getIdExists($k, $buildingProjectData);
+                $contractor_id = $this->getIdExists($v, $contractorDataNew);
+                $recordContractorProject = [
+                    'building_project_id' => $buildingProject_id,
+                    'investor_id' => $contractor_id
+                ];
+                $bulkInsertContractorProject[] = $recordContractorProject;
+            }
+
+            print_r("\nMaps INVESTOR with BUILDING PROJECT data...");
+            $insertCountContractorProject = \vsoft\craw\models\AdInvestorBuildingProject::getDb()->createCommand()
+                ->batchInsert(\vsoft\craw\models\AdInvestorBuildingProject::tableName(), $columnContractorProject, $bulkInsertContractorProject)->execute();
+            if($insertCountContractorProject > 0)
+                print_r(" DONE!");
+        }
+
+        $end_time = time();
+        print_r("\n"."Time: ");
+        print_r($end_time-$start);
+        print_r("s");
+
+    }
+
+    function getIdExists($name, $data)
+    {
+        foreach ($data as $obj) {
+            $c = new Collator('vi_VN');
+            $check = $c->compare(trim($name), trim($obj->name));
+            if ($check == 0) {
+                return (int)$obj->id;
+            }
+        }
+        return null;
+    }
+
+    function contractorExists($name, $list)
+    {
+        foreach ($list as $obj) {
+            $c = new Collator('vi_VN');
+            $check = $c->compare(trim($name), trim($obj));
+            if ($check == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public function parseProjectDetail($path_folder, $filename){
+        $json = array();
+        $page = file_get_contents($path_folder . $filename);
+        if(empty($page))
+            return null;
+        $detail = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
+        if (!empty($detail)) {
+            $name = trim($detail->find('h1', 0)->innertext);
+            $lat = $detail->find('#hdLat', 0)->value;
+            $long = $detail->find('#hdLong', 0)->value;
+            $address = $detail->find('#hdAddress', 0)->value;
+            $city = $detail->find('#divCityOptions .current', 0)->innertext;
+            $district = $detail->find('#divDistrictOptions .current', 0)->innertext;
+            $logo = $detail->find('.prjava img', 0)->src;
+            $inv_type = $detail->find('#divCatagoryOptions .current', 0)->innertext;
+
+            $hotline = $detail->find('.prjinfo li', 2)->innertext;
+            $hotline = trim(strip_tags($hotline));
+            $hotline = substr($hotline, strpos($hotline, "Số điện thoại: "), strpos($hotline, "|"));
+            $hotline = trim(str_replace("Số điện thoại:", "", $hotline));
+
+            $website = $detail->find('.prjinfo li', 3)->innertext;
+            $website = trim(strip_tags($website));
+            $website = trim(str_replace("Website:", "", $website));
+
+            $slug = $detail->find('link[rel=canonical]', 0)->href;
+            $slug = substr($slug, 1, strpos($slug, "-pj")-1);
+
+            $description = $detail->find('#detail .a1', 0)->innertext;
+            $description = trim(strip_tags($description,'<br>'));
+            $description = str_replace('<br/>', PHP_EOL, $description);
+            $description = trim($description);
+
+            $contractor_name = trim($detail->find('#enterpriseInfo h3', 0)->plaintext);
+            $contractor = array();
+            if($contractor_name){
+                $contractor["name"] = $contractor_name;
+                $contractor_desc = $detail->find('.info .d11 img', 0)->src;
+                $contractor["logo"] = strpos($contractor_desc, "no-photo") == true ? null : $contractor_desc;
+                $contractor_info = $detail->find('.info .d12 ul li');
+                if(count($contractor_info) > 0){
+                    if(!empty($contractor_info[0])) {
+                        $contractor_address = trim($contractor_info[0]->plaintext);
+                        $contractor_address = trim(str_replace("Địa chỉ :", "", $contractor_address));
+                        $contractor_address = $contractor_address == "Đang cập nhật" ? null : $contractor_address;
+                        $contractor["address"] = $contractor_address;
+                    }
+
+                    if(!empty($contractor_info[1])) {
+                        $contractor_phone_fax = trim($contractor_info[1]->plaintext);
+                        $contractor_phone_fax = trim(str_replace("Điện thoại :", "", $contractor_phone_fax));
+
+                        $contractor_phone = trim(substr($contractor_phone_fax, 0, strpos($contractor_phone_fax, "|")));
+                        $contractor_phone = $contractor_phone == "Đang cập nhật" ? null : $contractor_phone;
+                        $contractor["phone"] = $contractor_phone;
+
+                        $contractor_fax = trim(substr($contractor_phone_fax, strpos($contractor_phone_fax, "Fax"), strlen($contractor_phone_fax)-1));
+                        $contractor_fax = trim(str_replace("Fax :", "", $contractor_fax));
+                        $contractor_fax = $contractor_fax == "Đang cập nhật" ? null : $contractor_fax;
+                        $contractor["fax"] = $contractor_fax;
+                    }
+
+                    if(!empty($contractor_info[2])) {
+                        $contractor_web = trim($contractor_info[2]->plaintext);
+                        $contractor_web = trim(str_replace("Website :", "", $contractor_web));
+                        $contractor_web = $contractor_web == "Đang cập nhật" ? null : $contractor_web;
+                        $contractor["website"] = $contractor_web;
+                    }
+
+                    if(!empty($contractor_info[3])) {
+                        $str_email = trim($contractor_info[3]->innertext);
+                        $email = substr($str_email, strpos($str_email, "var attr = '"));
+                        $email = str_replace("var attr = '", "", $email);
+                        $email = substr($email, 0, strpos($email, "var txt ="));
+                        $email = str_replace("';", "", $email);
+                        $email = trim(html_entity_decode($email));
+                        $contractor["email"] = $email;
+                    }
+                }
+            }
+
+            $json[$filename] = [
+                'city' => $city,
+                'district' => $district,
+                'name' => $name,
+                'logo' => $logo,
+                'location' => $address,
+                'description' => $description,
+                'investment_type' => $inv_type,
+                'hotline' => $hotline == "Đang cập nhật" ? null : $hotline,
+                'website' => $website == "Đang cập nhật" ? null : $website,
+                'lng' => $long,
+                'lat' => $lat,
+                'slug' => $slug,
+                'status' => 1,
+                'created_at' => time(),
+                'contractor' => $contractor
+            ];
+
+            return $json;
+        }
+        return null;
     }
 
 }
