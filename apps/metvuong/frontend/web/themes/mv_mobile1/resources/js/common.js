@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     $('.hFullScreen').css({
-        height: screen.height - 50
+        height: $('#hScreen').outerHeight() - 50
     });
     $('.page-home').css('visibility','visible');
 

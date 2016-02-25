@@ -7,6 +7,7 @@
             Đưa bạn đến ngôi nhà yêu thích<br>
             Tìm hiểu &amp; giao dịch bất động sản dễ dàng
         </div> -->
+        <div id="hScreen"></div>
         <div class="search-wrap-home">
             <div class="text-center logo-search-box wrap-img">
                 <img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/logo.png' ?>" alt="">
@@ -28,15 +29,10 @@
                 </form>
             </div>
         </div>
-    </section>
-    <section class="search-home">
-        <div class="txt-intro">
-            <h2>Chúng tôi sẽ giúp bạn tìm được ngôi nhà mà mình mong muốn trong chốc lát</h2>
-            <p>Mét Vuông cung cấp lên đến hàng chục ngàn các căn hộ cao cấp, nhà riêng và biệt thự cho thuê hoặc đang rao bán tại hầu hết các tỉnh thành trên cả nước. Thông qua những mô tả chi tiết và hình ảnh chân thật, chúng tôi cam kết giúp khách hàng tìm được sản phẩm phù hợp nhất, một cách nhanh chóng và hiệu quả.</p>
-        </div>
+        <span class="arrow-down"></span>
     </section>
 
-    <section class="box-item">
+    <section class="box-item box-feature-item">
         <div class="title-sub">Featured properties</div>
         <div class="wrap-item">
             <div class="item">
@@ -165,6 +161,13 @@
                     </span>
                 </a>
             </div>
+        </div>
+    </section>
+
+    <section class="search-home">
+        <div class="txt-intro">
+            <h2>Chúng tôi sẽ giúp bạn tìm được ngôi nhà mà mình mong muốn trong chốc lát</h2>
+            <p>Mét Vuông cung cấp lên đến hàng chục ngàn các căn hộ cao cấp, nhà riêng và biệt thự cho thuê hoặc đang rao bán tại hầu hết các tỉnh thành trên cả nước. Thông qua những mô tả chi tiết và hình ảnh chân thật, chúng tôi cam kết giúp khách hàng tìm được sản phẩm phù hợp nhất, một cách nhanh chóng và hiệu quả.</p>
         </div>
     </section>
 </div>
