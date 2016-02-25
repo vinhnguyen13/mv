@@ -2,6 +2,7 @@
 	use yii\helpers\Url;
 ?>
 <div class="page-home">
+
     <section class="search-box hFullScreen">
         <!-- <div class="text-center sologan">
             Đưa bạn đến ngôi nhà yêu thích<br>
@@ -37,92 +38,86 @@
         <div class="wrap-item">
             <div class="item">
                 <a href="#" class="pic-intro">
-                    <div class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg' ?>" alt=""></div>
-                    <span class="address-feat">
-                        <strong>Lancaster x</strong>
-                        21 Nguyễn Trung Ngạn, P.Bến Nghé, Q1
-                    </span>
+                    <div class="wrap-img"><img src="/frontend/web/themes/mv_mobile1/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg" alt=""></div>
                     
+                    <div class="title-item">Cho thuê</div>
                 </a>
                 <div class="info-item">
-                    <ul class="clearfix list-tienich-intro">
-                        <li>
-                            <span class="wrap-icon"><span class="icon icon-dt"></span></span>Diện tích
-                            <strong class="pull-right color-30a868">52m2</strong>
-                        </li>
-                        <li>
-                            <span class="wrap-icon"><span class="icon icon-pt"></span></span>Phòng tắm
-                            <strong class="pull-right color-30a868">02</strong>
-                        </li>
-                        <li>
-                            <span class="wrap-icon"><span class="icon icon-bed"></span></span>Phòng ngủ
-                            <strong class="pull-right color-30a868">02</strong>
-                        </li>
-                        <li class="price-line">
-                            <span class="price">2.8 tỷ</span>
-                            <a href="#" class="pull-right">Chi tiết</a>
-                        </li>
-                    </ul>
+                    <div class="address-feat">
+                        <strong>Lancaster x</strong>
+                        21 Nguyễn Trung Ngạn, P.Bến Nghé, Q1
+                        <ul class="clearfix list-attr-td">
+                            <li>
+                                <span class="icon icon-dt icon-dt-small"></span>80m2
+                            </li>
+                            <li>
+                                <span class="icon icon-bed icon-bed-small"></span> 02
+                            </li>
+                            <li>
+                                <span class="icon icon-pt icon-pt-small"></span> 02
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bottom-feat-box clearfix">
+                        <a href="#" class="pull-right">Chi tiết</a>
+                        <p>Giá thuê <strong>4 tỷ đồng</strong></p>
+                    </div>
                 </div>
             </div>
             <div class="item">
                 <a href="#" class="pic-intro">
-                    <div class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg' ?>" alt=""></div>
-                    <span class="address-feat">
-                        <strong>Lancaster x</strong>
-                        21 Nguyễn Trung Ngạn, P.Bến Nghé, Q1
-                    </span>
+                    <div class="wrap-img"><img src="/frontend/web/themes/mv_mobile1/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg" alt=""></div>
                     
+                    <div class="title-item">Bán</div>
                 </a>
                 <div class="info-item">
-                    <ul class="clearfix list-tienich-intro">
-                        <li>
-                            <span class="wrap-icon"><span class="icon icon-dt"></span></span>Diện tích
-                            <strong class="pull-right color-30a868">52m2</strong>
-                        </li>
-                        <li>
-                            <span class="wrap-icon"><span class="icon icon-pt"></span></span>Phòng tắm
-                            <strong class="pull-right color-30a868">02</strong>
-                        </li>
-                        <li>
-                            <span class="wrap-icon"><span class="icon icon-bed"></span></span>Phòng ngủ
-                            <strong class="pull-right color-30a868">02</strong>
-                        </li>
-                        <li class="price-line">
-                            <span class="price">2.8 tỷ</span>
-                            <a href="#" class="pull-right">Chi tiết</a>
-                        </li>
-                    </ul>
+                    <div class="address-feat">
+                        <strong>Lancaster x</strong>
+                        21 Nguyễn Trung Ngạn, P.Bến Nghé, Q1
+                        <ul class="clearfix list-attr-td">
+                            <li>
+                                <span class="icon icon-dt icon-dt-small"></span>80m2
+                            </li>
+                            <li>
+                                <span class="icon icon-bed icon-bed-small"></span> 02
+                            </li>
+                            <li>
+                                <span class="icon icon-pt icon-pt-small"></span> 02
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bottom-feat-box clearfix">
+                        <a href="#" class="pull-right">Chi tiết</a>
+                        <p>Giá thuê <strong>4 tỷ đồng</strong></p>
+                    </div>
                 </div>
             </div>
             <div class="item">
                 <a href="#" class="pic-intro">
-                    <div class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg' ?>" alt=""></div>
-                    <span class="address-feat">
-                        <strong>Lancaster x</strong>
-                        21 Nguyễn Trung Ngạn, P.Bến Nghé, Q1
-                    </span>
+                    <div class="wrap-img"><img src="/frontend/web/themes/mv_mobile1/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg" alt=""></div>
                     
+                    <div class="title-item">Cho thuê</div>
                 </a>
                 <div class="info-item">
-                    <ul class="clearfix list-tienich-intro">
-                        <li>
-                            <span class="wrap-icon"><span class="icon icon-dt"></span></span>Diện tích
-                            <strong class="pull-right color-30a868">52m2</strong>
-                        </li>
-                        <li>
-                            <span class="wrap-icon"><span class="icon icon-pt"></span></span>Phòng tắm
-                            <strong class="pull-right color-30a868">02</strong>
-                        </li>
-                        <li>
-                            <span class="wrap-icon"><span class="icon icon-bed"></span></span>Phòng ngủ
-                            <strong class="pull-right color-30a868">02</strong>
-                        </li>
-                        <li class="price-line">
-                            <span class="price">2.8 tỷ</span>
-                            <a href="#" class="pull-right">Chi tiết</a>
-                        </li>
-                    </ul>
+                    <div class="address-feat">
+                        <strong>Lancaster x</strong>
+                        21 Nguyễn Trung Ngạn, P.Bến Nghé, Q1
+                        <ul class="clearfix list-attr-td">
+                            <li>
+                                <span class="icon icon-dt icon-dt-small"></span>80m2
+                            </li>
+                            <li>
+                                <span class="icon icon-bed icon-bed-small"></span> 02
+                            </li>
+                            <li>
+                                <span class="icon icon-pt icon-pt-small"></span> 02
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bottom-feat-box clearfix">
+                        <a href="#" class="pull-right">Chi tiết</a>
+                        <p>Giá thuê <strong>4 tỷ đồng</strong></p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -168,6 +163,7 @@
         <div class="txt-intro">
             <h2>Chúng tôi sẽ giúp bạn tìm được ngôi nhà mà mình mong muốn trong chốc lát</h2>
             <p>Mét Vuông cung cấp lên đến hàng chục ngàn các căn hộ cao cấp, nhà riêng và biệt thự cho thuê hoặc đang rao bán tại hầu hết các tỉnh thành trên cả nước. Thông qua những mô tả chi tiết và hình ảnh chân thật, chúng tôi cam kết giúp khách hàng tìm được sản phẩm phù hợp nhất, một cách nhanh chóng và hiệu quả.</p>
+            <div class="text-center pdT-25"><a href="#" class="btn-common">Tìm hiểu thêm</a></div>
         </div>
     </section>
 </div>
