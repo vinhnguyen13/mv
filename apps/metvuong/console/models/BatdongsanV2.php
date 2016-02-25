@@ -853,10 +853,10 @@ class BatdongsanV2 extends Component
         $infoArray = array();
         $contactArray = array();
 
-        $cityData = AdCity::find()->all();
-        $districtData = AdDistrict::find()->all();
-        $wardData = AdWard::find()->all();
-        $streetData = AdStreet::find()->all();
+        $cityData = \vsoft\craw\models\AdCity::find()->all();
+        $districtData = \vsoft\craw\models\AdDistrict::find()->all();
+        $wardData = \vsoft\craw\models\AdWard::find()->all();
+        $streetData = \vsoft\craw\models\AdStreet::find()->all();
         $tableName = \vsoft\craw\models\AdProduct::tableName();
         $break_type = false; // detect next type if it is false
         foreach ($types as $key_type => $type) {

@@ -126,36 +126,20 @@
     <section class="box-item news-item">
         <div class="title-sub">news</div>
         <div class="wrap-item">
+            <?php
+                foreach($news as $n){
+            ?>
             <div class="item clearfix">
                 <a href="#">
-                    <div class="wrap-img bgcover" style="background-image:url(<?= Yii::$app->view->theme->baseUrl . '/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg' ?>);"></div>
+                    <div class="wrap-img bgcover" style="background-image:url(<?=Url::to('/store/news/show/' . $n['banner']) ?>);"></div>
                     <span class="txt-short-news">
-                        <span class="title-news color-30a868">Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>
-                        <span class="date-news">12/02/2016, 14:30</span>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+                        <span class="title-news color-30a868"><?=$n['title']?></span>
+                        <span class="date-news"><?=date('d/m/Y, H:i', $n['updated_at'])?></span>
+                        <?=$n['brief']?>
                     </span>
                 </a>
             </div>
-            <div class="item clearfix">
-                <a href="#">
-                    <div class="wrap-img bgcover" style="background-image:url(<?= Yii::$app->view->theme->baseUrl . '/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg' ?>);"></div>
-                    <span class="txt-short-news">
-                        <span class="title-news color-30a868">Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>
-                        <span class="date-news">12/02/2016, 14:30</span>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
-                    </span>
-                </a>
-            </div>
-            <div class="item clearfix">
-                <a href="#">
-                    <div class="wrap-img bgcover" style="background-image:url(<?= Yii::$app->view->theme->baseUrl . '/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg' ?>);"></div>
-                    <span class="txt-short-news">
-                        <span class="title-news color-30a868">Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>
-                        <span class="date-news">12/02/2016, 14:30</span>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
-                    </span>
-                </a>
-            </div>
+            <?php } ?>
         </div>
     </section>
 

@@ -113,7 +113,7 @@ class CmsShow extends \funson86\cms\models\CmsShow
     }
 
     public static function getShowForHomepage(){
-        $query = CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief','cms_show.catalog_id', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
+        $query = CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief', 'cms_show.updated_at','cms_show.catalog_id', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
             ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
             ->where('cms_show.catalog_id = :id', [':id' => Yii::$app->params['homepageCatID']])
             ->andWhere('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
@@ -122,7 +122,7 @@ class CmsShow extends \funson86\cms\models\CmsShow
     }
 
     public static function getShowForMetvuong(){
-        $query = CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief','cms_show.catalog_id', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
+        $query = CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief', 'cms_show.updated_at','cms_show.catalog_id', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
             ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
             ->where('cms_catalog.title = :title', [':title' => 'Metvuong'])
             ->andWhere('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
