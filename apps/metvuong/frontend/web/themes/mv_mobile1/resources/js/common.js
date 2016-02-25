@@ -1,5 +1,10 @@
 $(document).ready(function() {
 
+    $('.hFullScreen').css({
+        height: screen.height - 50
+    });
+    $('.page-home').css('visibility','visible');
+
     $('.wrap-lazy img').lazyload({
         threshold : 200
     });
