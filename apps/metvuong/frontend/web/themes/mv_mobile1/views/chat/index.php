@@ -14,9 +14,12 @@ if(!empty($jid_id)){
 <div class="chat-history">
 	<div class="title-top">
 		<span>Chat history</span>
+		<div class="search-history">
+			<input type="text" id="findConversation" class="form-control" placeholder="Filter">
+			<a href="#"><span class="icon icon-search-white"></span></a>
+		</div>
 	</div>
 	<div class="chat-list clearfix">
-		<input type="text" id="findConversation" class="form-control" style="margin-bottom: 12px; width: 320px" placeholder="Filter">
 		<?php
 		if(!empty($msgs)) {
 			foreach($msgs as $msg){
@@ -90,6 +93,12 @@ if(!empty($jid_id)){
 					self.show();
 				}
 			});
+		});
+
+		$('.search-history a').on('click', function (e) {
+			e.preventDefault();
+			var _this = $(this);
+			_this.parent().addClass('focus');
 		});
 	});
 </script>

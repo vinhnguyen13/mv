@@ -28,7 +28,7 @@ a:link {
 }
 .icon {
     background: url(../images/icon.png) no-repeat top left;
-    background-size: 33px 1000px;
+    background-size: 33px 1200px;
     display: inline-block;
 }
 header {
@@ -2202,7 +2202,7 @@ footer {
     -moz-box-shadow: 0 1px 0 0 rgba(211, 211, 211, 0.5);
     -ms-box-shadow: 0 1px 0 0 rgba(211, 211, 211, 0.5);
     margin-bottom: 25px;
-    padding: 20px 10px 10px;
+    padding: 15px 10px 0;
 }
 .wrap-list-duan li:last-child {
     border-bottom: none;
@@ -2380,12 +2380,12 @@ footer {
     padding: 43px 0 0 30px;
 }
 .list-noti {
-    border-left: 1px solid #777777;
+    border-left: 1.5px dashed #777777;
     padding: 10px 0 50px 30px;
 }
 .list-noti .item {
-    padding: 15px 0;
-    border-bottom: 1px solid #A7A7A7;
+    padding: 22px 0;
+    border-bottom: 1px solid #969696;
 }
 .list-noti .item:last-child {
     border: none;
@@ -2403,7 +2403,7 @@ footer {
     text-transform: capitalize;
     font-weight: 600;
     color: #000;
-    font-size: 15px;
+    font-size: 16px;
 }
 .list-noti .user-get p {
     color: #777777;
@@ -2424,6 +2424,11 @@ footer {
     width: 32%;
     height: auto;
     padding: 0 5px;
+}
+.list-noti .post-get {
+    margin-bottom: 10px;
+    float: left;
+    width: 100%;
 }
 .list-noti .post-get a {
     display: block;
@@ -3511,4 +3516,82 @@ input[type=text]:focus {
     padding: 5px 20px;
     display: block;
     margin-top: 10px;
+}
+.list-noti .post-get .img-show {
+    float: left;
+    width: 40%;
+    margin-right: 10px;
+}
+.icon-message {
+    background-position: 0 -995px;
+    width: 32px;
+    height: 29px;
+}
+.list-noti .user-get .icon {
+    position: absolute;
+    top: -14px;
+    right: 15px;
+}
+.save-item-1 {
+    background-position: 0 -1024px;
+    width: 30px;
+    height: 28px;
+}
+.search-history {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.search-history input {
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    z-index: 1;
+    -webkit-backface-visibility: none;
+    -moz-backface-visibility: none;
+    -ms-backface-visibility: none;
+    backface-visibility: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    -webkit-transition: left 0;
+    -moz-transition: left 0;
+    -ms-transition: left 0;
+    -o-transition: left 0;
+    transition: left 0;
+    padding-right: 50px;
+}
+.icon-search-white {
+    width: 33px;
+    height: 33px;
+    background-position: 0 -1053px;
+}
+.search-history a {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 2px 9px 0;
+    z-index: 2;
+    background: #00a769;
+}
+.search-history a span {
+    margin-top: 2px;
+}
+.search-history.focus input {
+    left: 0;
+    -webkit-transition: left 0.3s;
+    -moz-transition: left 0.3s;
+    -ms-transition: left 0.3s;
+    -o-transition: left 0.3s;
+    transition: left 0.3s;
 }
