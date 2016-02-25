@@ -37,6 +37,7 @@ $categories = array_values($categories);
                     max: <?=!empty(count($categories)) ? count($categories) - 1 : 0?>
                 },
                 yAxis: {
+                    allowDecimals: false,
                     title: {
                         text: 'Người tìm kiếm'
                     },

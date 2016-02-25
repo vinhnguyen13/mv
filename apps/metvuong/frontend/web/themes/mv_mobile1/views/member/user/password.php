@@ -33,7 +33,7 @@ use yii\helpers\Url;
                     <?= $form->field($model, 'new_password')->textInput(['class' => 'form-control', 'type' => 'password']) ?>
                     <div class="form-group">
                         <div class="col-lg-offset-3 col-lg-12">
-                            <?= Html::submitButton(Yii::t('user', 'Change password'), ['class' => 'btn btn-block btn-success reset']) ?>
+                            <?= Html::submitButton(Yii::t('user', 'Change password'), ['class' => 'btn btn-block reset', 'style' => ['background-color' => '#00a769', 'color' => '#fff']]) ?>
                         </div>
                     </div>
 <!--                    <a class="showPopup" href="#" data-toggle="modal" data-target="#frmForgot">Quên mật khẩu ?</a>-->
