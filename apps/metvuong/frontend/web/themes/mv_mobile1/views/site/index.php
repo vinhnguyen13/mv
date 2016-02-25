@@ -123,7 +123,7 @@
         </div>
     </section>
 
-    <?if(count($news)>0){?>
+    <?php if(count($news) > 0) {?>
     <section class="box-item news-item">
         <div class="title-sub">news</div>
         <div class="wrap-item">
@@ -143,7 +143,7 @@
             <?php } ?>
         </div>
     </section>
-    <?php }?>
+    <?php } ?>
 
     <section class="search-home">
         <div class="txt-intro">
