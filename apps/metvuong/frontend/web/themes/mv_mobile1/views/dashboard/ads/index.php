@@ -12,23 +12,34 @@ use yii\helpers\Url;
 			<li>
 				<div class="img-show">
 					<div>
-						<a href="<?=Url::to(['/dashboard/statistics', 'id' => $product->id])?>"><img src="<?= $product->getImage() ?>"></a>
+						<a href="<?=Url::to(['/dashboard/statistics', 'id' => $product->id])?>"><img src="<?= $product->getImage() ?>">
+							<div class="name-address-duan">
+								<?php if($product->projectBuilding): ?>
+								<p class="name-duan"><?= $product->projectBuilding->name ?></p>
+								<?php endif; ?>
+								<p class="loca-duan"><?= $product->address ?></p>
+							</div>
+						</a>
 					</div>
+					<a href="#" class="edit-duan"><span class="icon-edit-small icon"></span></a>
 				</div>
 				<div class="intro-detail">
-					<a href="#" class="icon-edit-small icon"></a>
-					<?php if($product->projectBuilding): ?>
-					<p class="name-duan"><a href="<?=Url::to(['/dashboard/statistics', 'id' => $product->id])?>"><?= $product->projectBuilding->name ?></a></p>
-					<?php endif; ?>
-					<p class="date-post">Ngày đăng tin: <?= date("d/m/Y", $product->created_at) ?></p>
-					<?php if($product->end_date < time()): ?>
-					<div><div><span class="icon icon-inactive-pro"></span></div><strong>Inactive Project</strong></div>
-					<?php else: ?>
-					<div><div><span class="icon icon-active-pro"></span></div><strong>Active Project</strong></div>
-					<?php endif; ?>
-					<div><div><span class="icon icon-view-small"></span></div><strong>1000</strong> Lượt xem</div>
-					<div><div><span class="icon icon-per-small"></span></div><strong>300</strong> Visitor</div>
-					<div><div><span class="icon icon-heart-small"></span></div><strong>100</strong> Thích</div>
+					<div class="status-duan clearfix">
+						<?php if($product->end_date < time()): ?>
+						<div class="pull-right wrap-icon"><div><span class="icon icon-inactive-pro"></span></div><strong>Inactive Project</strong></div>
+						<?php else: ?>
+						<div class="pull-right wrap-icon"><div><span class="icon icon-active-pro"></span></div><strong>Active Project</strong></div>
+						<?php endif; ?>
+
+						<p class="date-post">Ngày đăng tin: <span><?= date("d/m/Y", $product->created_at) ?></span></p>
+						<p>ID dự án <span>#985</span></p>
+					</div>
+					<div class="pull-right push-price">
+						<p>Tin còn <strong>15 ngày</strong></p>
+						<a href="#">Nâng cấp</a>
+					</div>
+					<div class="wrap-icon"><div><span class="icon icon-view-small"></span></div><strong>1000</strong> Lượt xem</div><div class="wrap-icon"><div><span class="icon icon-per-small"></span></div><strong>300</strong> Visitor</div>
+					<div class="wrap-icon"><div><span class="icon icon-heart-small"></span></div><strong>100</strong> Thích</div>
 				</div>
 			</li>
 			<?php endforeach; ?>

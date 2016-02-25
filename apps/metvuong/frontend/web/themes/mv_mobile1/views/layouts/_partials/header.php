@@ -46,10 +46,11 @@ use yii\helpers\Url;
                 </a>
             </li>
             <!-- <li><a href="<?= Url::to(['/ad/post']) ?>"><em class="icon-plus"></em>Đăng tin mới</a></li> -->
-            <li><a href="<?=Url::to(['/dashboard/notification'])?>" id="wrapNotifyOther"><em class="icon-bell"></em>Thông báo<!--<span id="notifyOther">5</span>--></a></li>
-            <li><a href="<?=Url::to(['/dashboard/ads'])?>"><em class="icon-docs"></em>Listings</a></li>
-            <li><a href="<?=Url::to(['/chat'])?>" id="wrapNotifyChat"><em class="icon-bubbles"></em>Chat<!--<span id="notifyChat">5</span>--></a></li>
-            <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><em class="icon-power"></em>Đăng xuất</a></li>
+            <li><a href="<?=Url::to(['/dashboard/notification'])?>" id="wrapNotifyOther"><span class="icon icon-alert"></span>Thông báo</a></li>
+            <li><a href="<?=Url::to(['/dashboard/ads'])?>"><span class="icon icon-listings"></span>Listings</a></li>
+            <li><a href="<?=Url::to(['/chat'])?>" id="wrapNotifyChat"><span class="icon icon-chat"></span>Chat</a></li>
+            <li><a href="#"><span class="icon icon-tags"></span>Các gói giá</a></li>
+            <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><span class="icon icon-logout"></span>Đăng xuất</a></li>
         </ul>
         <?php } ?>
     </div>

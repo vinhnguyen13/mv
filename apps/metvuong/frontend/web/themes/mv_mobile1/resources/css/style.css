@@ -28,7 +28,7 @@ a:link {
 }
 .icon {
     background: url(../images/icon.png) no-repeat top left;
-    background-size: 33px 833px;
+    background-size: 33px 1000px;
     display: inline-block;
 }
 header {
@@ -242,7 +242,7 @@ header {
     color: #333743;
     text-transform: uppercase;
     font-weight: 600;
-    font-size: 1.1em;
+    font-size: 17px;
     display: block;
     padding: 10px 0;
 }
@@ -2028,20 +2028,24 @@ label {
 #settings-user li a {
     display: block;
     padding: 15px 0;
-    border-bottom: 1px solid #333;
-    color: #333;
-    font-size: 1em;
+    border-bottom: solid 1px #969696;
+    color: #3c3c3c;
+    font-size: 17px;
     text-transform: uppercase;
     float: left;
     width: 100%;
     font-weight: 600;
     position: relative;
 }
+#settings-user li:last-child a {
+    border: none;
+}
 #settings-user li.user-edit a {
     color: #009544;
+    font-size: 15px;
 }
 #avatar-user span,
-#settings-user li a span {
+#settings-user li a .notifi {
     position: absolute;
     top: 7px;
     left: 13px;
@@ -2102,12 +2106,22 @@ label {
 #settings-user .mm-panels {
     width: 100%;
 }
-#settings-user li a em {
+#settings-user li a span.icon {
     margin-right: 20px;
     font-size: 1.6em;
     color: #009544;
     position: relative;
-    top: 3px;
+    top: 0;
+    left: 0;
+    padding: 0;
+    background-color: inherit;
+    min-width: inherit;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    display: inline-block;
+    vertical-align: middle;
 }
 #avatar-user span {
     top: 6px;
@@ -2199,20 +2213,7 @@ footer {
 }
 .wrap-list-duan .intro-detail {
     position: relative;
-    width: 60%;
-    float: left;
-    padding-left: 10px;
-    margin-top: -5px;
     color: #3c3c3c;
-}
-.wrap-list-duan .intro-detail > div {
-    font-size: 14px;
-    margin-bottom: 5px;
-}
-.wrap-list-duan .intro-detail > div div {
-    display: inline-block;
-    width: 30px;
-    vertical-align: middle;
 }
 .wrap-list-duan .img-intro > a {
     display: inline-block;
@@ -2239,24 +2240,21 @@ footer {
     display: block;
     padding-right: 22px;
 }
-.wrap-list-duan .name a {
+.wrap-list-duan .name-duan {
     text-transform: uppercase;
-    color: #009745;
-    font-size: 1.2em;
-}
-.wrap-list-duan p {
-    
+    font-size: 15px;
 }
 .wrap-list-duan .loca-duan {
     font-weight: 400;
+    font-size: 14px;
 }
 .wrap-list-duan .loca-duan em {
     margin-right: 5px;
 }
-.wrap-list-duan .intro-detail .date-post {
-    font-size: 13px;
-    margin-bottom: 10px;
-    font-weight: 700;
+.wrap-list-duan .intro-detail .date-post span {
+    font-size: inherit;
+    font-weight: 400;
+    color: #3c3c3c;
 }
 @media screen and (min-width: 375px) {
     .wrap-list-duan .date-post {
@@ -3075,6 +3073,10 @@ input[type=text]:focus {
     right: 0;
     bottom: 0;
 }
+.img-show > div a {
+    display: block;
+    height: 100%;
+}
 .img-show > div img {
     position: absolute;
     left: 50%;
@@ -3296,8 +3298,7 @@ input[type=text]:focus {
     width: 100%;
 }
 .wrap-list-duan li .img-show {
-    float: left;
-    width: 40%;
+    position: relative;
 }
 .icon-inactive-pro {
     background-position: 0 -710px;
@@ -3324,11 +3325,12 @@ input[type=text]:focus {
     width: 20px;
     height: 21px;
 }
-.wrap-list-duan .intro-detail .icon-edit-small {
+.edit-duan {
     position: absolute;
-    top: -5px;
+    top: 0;
     right: 0;
-    background-color: #f5f5f5;
+    padding: 6px 20px;
+    background: rgba(0, 0, 0, 0.74);
 }
 .icon-active-pro {
     background-position: 0 -734px;
@@ -3433,4 +3435,70 @@ input[type=text]:focus {
     font-size: 14px;
     line-height: 1.8;
     font-weight: 600;
+}
+.icon-alert {
+    background-position: 0 -920px;
+    width: 29px;
+    height: 35px;
+}
+.icon-listings {
+    background-position: 0 -955px;
+    width: 32px;
+    height: 38px;
+}
+.icon-chat {
+    background-position: 0 -817px;
+    width: 33px;
+    height: 32px;
+}
+.icon-tags {
+    background-position: 0 -851px;
+    width: 33px;
+    height: 33px;
+}
+.icon-logout {
+    background-position: 0 -887px;
+    width: 31px;
+    height: 33px;
+}
+.name-address-duan {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 8px 15px;
+}
+.wrap-icon div {
+    display: inline-block;
+    vertical-align: middle;
+    width: 30px;
+}
+.wrap-list-duan .intro-detail > div {
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+.wrap-list-duan .intro-detail .status-duan {
+    border-bottom: solid 0.5px #969696;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #3c3c3c;
+}
+.status-duan p span {
+    font-size: 16px;   
+    color: #00a769;
+}
+.push-price {
+    text-align: center;
+    font-size: 13px;
+}
+.push-price a {
+    border: solid 1px #00a769;
+    color: #00a769;
+    padding: 5px 20px;
+    display: block;
+    margin-top: 10px;
 }
