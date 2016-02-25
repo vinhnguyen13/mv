@@ -328,7 +328,7 @@ use yii\helpers\Url;
 /**
  * notification
  */
-if(!empty($owner->username)){
+if(!empty($owner->username) && !Yii::$app->user->isGuest){
 	$userVisit = Yii::$app->user->identity;
 	$userTo = $owner;
 
