@@ -2347,6 +2347,9 @@ footer {
     margin-bottom: 10px;
     letter-spacing: 2px;
 }
+.statis .title-sub {
+    padding: 10px 20px;
+}
 .list-duan-stats li {
     float: left;
     width: 100%;
@@ -2701,6 +2704,7 @@ input[type=text]:focus {
 }
 .statis {
     padding-bottom: 50px;
+    padding-top: 43px;
 }
 .infor-address a {
     color: #fff;
