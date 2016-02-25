@@ -70,6 +70,11 @@ if(!empty($data)) {
                         point: {
                             events: {
                                 click: function () {
+                                    for (var i = 0; i < this.series.data.length; i++) {
+                                        this.series.data[i].update({ color: '#909090' }, true, false);
+                                    }
+                                    this.update({ color: '#00a769' }, true, false);
+                                    
                                     $('#frmListVisit .wrap-modal').html('');
                                     var timer = 0;
                                     var _this = this;

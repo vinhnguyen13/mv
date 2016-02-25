@@ -22,7 +22,7 @@ use yii\web\NotFoundHttpException;
 
 class Chart extends Component
 {
-    const DATE_FORMAT = 'd-m-Y';
+    const DATE_FORMAT = 'M d';
     const TYPE_VISITOR = 1;
     const TYPE_FINDER = 2;
     const TYPE_SAVED = 3;
@@ -159,6 +159,10 @@ class Chart extends Component
                 $tmpDataByPid[$key]['data'][$kDate]['y']++;
                 $tmpDataByPid[$key]['data'][$kDate]['url'] = Url::to(['/user-management/chart', 'view'=>'_partials/listContact', 'date'=>$day, 'pid'=>$key, 'type'=>$type]);
                 $tmpDataByPid[$key]['name'] = $product->getAddress();
+                if($k == (count($adProductSaveds)-1))
+                    $tmpDataByPid[$key]['data'][$kDate]['color'] = '#00a769';
+                else
+                    $tmpDataByPid[$key]['data'][$kDate]['color'] = '#909090';
             }
             return ['dataChart'=>$tmpDataByPid, 'categories'=>$dateRange];
         }
