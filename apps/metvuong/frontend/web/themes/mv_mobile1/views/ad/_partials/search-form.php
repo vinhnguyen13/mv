@@ -11,7 +11,7 @@ use yii\helpers\Url;
 	<input type="hidden" name="sort" id="sort" class="value_selected" value="<?= ($sort = Yii::$app->request->get('sort')) ? $sort : 'created_at' ?>" />
 	<div class="search-subpage clearfix">
 		<div class="advande-search">
-			<div class="toggle-search hide-dropdown">
+			<div class="toggle-search">
 				<div class="frm-item">
 					<div class="box-dropdown dropdown-common">
 						<div class="val-selected style-click">
@@ -146,7 +146,7 @@ use yii\helpers\Url;
 				</div> -->
 			</div>
 			
-			<button class="btn-submit btn-common" data-flag="true">Tìm kiếm</button>
+			<button class="btn-submit btn-common active" data-flag="true">Tìm kiếm</button>
 		</div>
 	</div>
 </form>
