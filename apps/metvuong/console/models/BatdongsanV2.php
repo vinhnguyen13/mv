@@ -914,6 +914,7 @@ class BatdongsanV2 extends Component
                                             $content = str_replace('Tìm kiếm theo từ khóa', '', $content);
                                         }
                                         $content = str_replace('<br/>', PHP_EOL, $content);
+                                        $content = str_replace('<br />', PHP_EOL, $content);
                                         $content = trim($content);
                                     }
 
