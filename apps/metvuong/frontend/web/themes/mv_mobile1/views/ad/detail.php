@@ -153,8 +153,8 @@ use yii\helpers\Url;
                 </h4>
             </div>
             <div id="collapseEght" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven">
-                <div class="panel-body">
-                    <div class="infor-agent clearfix">
+                <div class="panel-body text-center">
+            	    <div class="infor-agent clearfix">
 			            <?php if(!empty($owner->username)) { ?>
 						<a href="<?=\yii\helpers\Url::to(['member/profile','username' => $owner->username])?>" class="wrap-img">
 			                <img src="<?= $avatar ?>" alt="" /></a>
@@ -220,6 +220,7 @@ use yii\helpers\Url;
 					<?php if(!empty($owner->username)) { ?>
 					<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small pull-right">Chat</a>
 					<?php }?>
+					
                 </div>
             </div>
 
