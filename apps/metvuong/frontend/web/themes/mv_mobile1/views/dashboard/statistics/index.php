@@ -4,21 +4,25 @@ use yii\helpers\Url;
 
 Yii::$app->getView()->registerJsFile('http://code.highcharts.com/highcharts.js', ['position' => View::POS_BEGIN]);
 Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporting.js', ['position' => View::POS_BEGIN]);
+
+$id = $product->id;
 ?>
 
 <div class="statis">
-	<div class="title-top">Statistics</div>
+	<div class="title-top">Thống kê</div>
 	<section>
+        <b><?=$product->getAddress()?></b>
+        Từ ngày <span class="fromDate">19/02/2016</span> - đến ngày
 		<div id="sandbox-container">
-			<input type="text" class="form-control picker" placeholder="Ngày">
+			<input type="text" class="form-control toDate" placeholder="Ngày">
 			<span class="icon arrowDown"></span>
 		</div>
 		<div class="summary clearfix">
 			SUMMARY
 			<span class="pull-right views-stats"><em class="fa fa-square-o"></em>
                 <select class="chart_stats">
-                    <option class="tab" value="visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $from, 'to' => $to])?>">Visitor</option>
-                    <option class="tab" value="finder" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $from, 'to' => $to])?>">Finder</option>
+                    <option class="tab" value="finder" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $from, 'to' => $to])?>">Search</option>
+                    <option class="tab" value="visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $from, 'to' => $to])?>">Click</option>
                     <option class="tab" value="favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'id' => $id, 'from' => $from, 'to' => $to])?>">Favourite</option>
                 </select>
             </span>
@@ -39,7 +43,7 @@ Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporti
 			<div class="panel-heading title-sub" role="tab" id="headingOne">
 				<h4 class="panel-title">
 					<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-					<em class="icon-eye"></em> views
+					<em class="icon-eye"></em> Search
 					<span class="pull-right icon"></span>
 					</a>
 				</h4>
@@ -65,7 +69,7 @@ Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporti
 			<div class="panel-heading title-sub" role="tab" id="headingTwo">
 				<h4 class="panel-title">
 					<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-					<em class="icon-user"></em> visitors
+					<em class="icon-user"></em> Click
 					<span class="pull-right icon"></span>
 					</a>
 				</h4>
@@ -91,7 +95,7 @@ Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporti
 			<div class="panel-heading title-sub" role="tab" id="headingThree">
 				<h4 class="panel-title">
 					<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-					<em class="icon-heart"></em> favourites
+					<em class="icon-heart"></em> favourite
 					<span class="pull-right icon"></span>
 					</a>
 				</h4>
@@ -163,7 +167,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
         if(params["date"] !== undefined){
             var arrDate = params["date"].split("-");
             var useDate = arrDate[2]+"/"+arrDate[1]+"/"+arrDate[0];
-            $('.picker').attr('placeholder', ""+useDate);
+            $('.toDate').attr('placeholder', ""+useDate);
         }
     });
 

@@ -20,6 +20,7 @@ use vsoft\ad\models\AdProductAdditionInfo;
 use vsoft\ad\models\AdStreet;
 use vsoft\ad\models\AdWard;
 use vsoft\craw\models\AdAgent;
+use vsoft\craw\models\AdBuildingProject;
 use vsoft\craw\models\AdContractor;
 use vsoft\craw\models\AdInvestor;
 use Yii;
@@ -844,7 +845,7 @@ class BatdongsanV2 extends Component
 
         $last_type_import = empty($bds_import_log["last_type_index"]) ? 0 : ($bds_import_log["last_type_index"] + 1);
 
-        $columnNameArray = ['category_id', 'user_id', 'home_no',
+        $columnNameArray = ['category_id', 'project_building_id', 'user_id', 'home_no',
             'city_id', 'district_id', 'ward_id', 'street_id',
             'type', 'content', 'area', 'price', 'price_type', 'lat', 'lng',
             'start_date', 'end_date', 'verified', 'created_at', 'source'];
@@ -853,6 +854,7 @@ class BatdongsanV2 extends Component
         $infoArray = array();
         $contactArray = array();
 
+        $projectData = AdBuildingProject::find()->all();
         $cityData = \vsoft\craw\models\AdCity::find()->all();
         $districtData = \vsoft\craw\models\AdDistrict::find()->all();
         $wardData = \vsoft\craw\models\AdWard::find()->all();
@@ -895,11 +897,11 @@ class BatdongsanV2 extends Component
                                     $infoArray[$count_file] = $value[$filename]["info"];
                                     $contactArray[$count_file] = $value[$filename]["contact"];
 
+                                    $project_id = $this->getIdExists($value[$filename]["project"], $projectData);
                                     $city_id = $this->getCityId($value[$filename]["city"], $cityData);
                                     $district_id = $this->getDistrictId($value[$filename]["district"], $districtData, $city_id);
                                     $ward_id = $this->getWardId($value[$filename]["ward"], $wardData, $district_id);
                                     $street_id = $this->getStreetId($value[$filename]["street"], $streetData, $district_id);
-
 
                                     $area = $value[$filename]["dientich"];
                                     $price = $value[$filename]["price"];
@@ -914,12 +916,12 @@ class BatdongsanV2 extends Component
                                             $content = str_replace('Tìm kiếm theo từ khóa', '', $content);
                                         }
                                         $content = str_replace('<br/>', PHP_EOL, $content);
-                                        $content = str_replace('<br />', PHP_EOL, $content);
                                         $content = trim($content);
                                     }
 
                                     $record = [
                                         'category_id' => $value[$filename]["loai_tai_san"],
+                                        'project_building_id' => $project_id,
                                         'user_id' => null,
                                         'home_no' => $value[$filename]["home_no"],
                                         'city_id' => $city_id,
@@ -1045,21 +1047,21 @@ class BatdongsanV2 extends Component
                         ->batchInsert(\vsoft\craw\models\AdImages::tableName(), $ad_image_columns, $bulkImage)
                         ->execute();
                     if ($imageCount > 0)
-                        print_r("\nInser image done");
+                        print_r("\nInsert image done");
                 }
                 if (count($bulkInfo) > 0) {
                     $infoCount = \vsoft\craw\models\AdProductAdditionInfo::getDb()->createCommand()
                         ->batchInsert(\vsoft\craw\models\AdProductAdditionInfo::tableName(), $ad_info_columns, $bulkInfo)
                         ->execute();
                     if ($infoCount > 0)
-                        print_r("\nInser addition info done");
+                        print_r("\nInsert addition info done");
                 }
                 if (count($bulkContact) > 0) {
                     $contactCount = \vsoft\craw\models\AdContactInfo::getDb()->createCommand()
                         ->batchInsert(\vsoft\craw\models\AdContactInfo::tableName(), $ad_contact_columns, $bulkContact)
                         ->execute();
                     if ($contactCount > 0)
-                        print_r("\nInser contact info done");
+                        print_r("\nInsert contact info done");
                 }
             } else {
                 print_r("\nCannot insert ad_product!!");
@@ -1089,6 +1091,9 @@ class BatdongsanV2 extends Component
         if (!empty($detail)) {
 //            $title = $detail->find('h1', 0)->innertext;
 //            $href = $detail->find('#form1', 0)->action;
+            $project = $detail->find('#divProject .current', 0);
+            $project = empty($project) ? null : $project->innertext;
+
             $lat = $detail->find('#hdLat', 0)->value;
             $long = $detail->find('#hdLong', 0)->value;
 
@@ -1212,7 +1217,6 @@ class BatdongsanV2 extends Component
                         $arr_contact["Email"] = $email;
                     }
 
-
                 } else {
                     return null;
                 }
@@ -1238,67 +1242,38 @@ class BatdongsanV2 extends Component
             }
 
             if (count($arr_info) > 0) {
-                // set address with link emailregister
-                $emailregister = trim($detail->find('#emailregister', 0)->href);
-                if(!empty($emailregister)) {
-                    $emailregister = substr($emailregister, strpos($emailregister, "cityCode="), strlen($emailregister) - 1);
-//                    print_r($emailregister);
-                    $address = explode("&amp;", $emailregister);
-                    if (count($address) > 8) {
-                        $divCityOptions = $detail->find('#divCityOptions ul li');
-                        $divDistrictOptions = $detail->find('#divDistrictOptions ul li');
-                        $divWardOptions = $detail->find('#divWardOptions ul li');
-                        $divStreetOptions = $detail->find('#divStreetOptions ul li');
+                $city = $detail->find('#divCityOptions .current', 0);
+                $city = empty($city) ? null : $city->innertext;
 
-                        foreach ($address as $val) {
-                            if ($this->beginWith($val, "cityCode=")) {
-                                $cityCode = str_replace("cityCode=", "", $val);
-                                if(!empty($cityCode)) {
-                                    foreach ($divCityOptions as $cityValue) {
-                                        if ($cityCode == $cityValue->vl) {
-                                            $city = $cityValue->plaintext;
-                                            break;
-                                        }
-                                    }
-                                }
-                            } elseif ($this->beginWith($val, "distId=")) {
-                                $d_id = (string)str_replace("distId=", "", $val);
-                                if($d_id != "0") {
-                                    foreach ($divDistrictOptions as $districtValue) {
-                                        if ($d_id == $districtValue->vl) {
-                                            $district = $districtValue->plaintext;
-                                            break;
-                                        }
-                                    }
-                                }
-                            } elseif ($this->beginWith($val, "wardId=")) {
-                                $w_id = (string)str_replace("wardId=", "", $val);
-                                if($w_id != "0") {
-                                    foreach ($divWardOptions as $wardValue) {
-                                        if ($w_id == $wardValue->vl) {
-                                            $ward = $wardValue->plaintext;
-                                            break;
-                                        }
-                                    }
-                                }
-                            } elseif ($this->beginWith($val, "streetId=")) {
-                                $s_id = (string)str_replace("streetId=", "", $val);
-                                if($s_id != "0") {
-                                    foreach ($divStreetOptions as $streetValue) {
-                                        if ($s_id === $streetValue->vl) {
-                                            $street = $streetValue->plaintext;
-                                            break;
-                                        }
-                                    }
-                                }
-                            }  elseif ($this->beginWith($val, "direction=")) {
-                                $direction_id = (int)str_replace("direction=", "", $val);
-                                $arr_info["direction"] = $direction_id;
-                            }
-                        } // end for address
-                    }
-                }
+                $district = $detail->find('#divDistrictOptions .current', 0);
+                $district = empty($district) ? null : $district->innertext;
+
+                $ward = $detail->find('#divWardOptions .current', 0);
+                $ward = empty($ward) ? null : $ward->innertext;
+
+                $street = $detail->find('#divDistrictOptions .current', 0);
+                $street = empty($street) ? null : $street->innertext;
+
+                $direction = $detail->find('#divHomeDirectionOptions .current', 0);
+                $arr_info["direction"] = empty($direction) ? null : $direction->vl;
+
+//                // set address with link emailregister
+//                $emailregister = trim($detail->find('#emailregister', 0)->href);
+//                if(!empty($emailregister)) {
+//                    $emailregister = substr($emailregister, strpos($emailregister, "cityCode="), strlen($emailregister) - 1);
+////                    print_r($emailregister);
+//                    $address = explode("&amp;", $emailregister);
+//                    if (count($address) > 8) {
+//                        foreach ($address as $val) {
+//                            if ($this->beginWith($val, "direction=")) {
+//                                $direction_id = (int)str_replace("direction=", "", $val);
+//                                $arr_info["direction"] = $direction_id;
+//                            }
+//                        } // end for address
+//                    }
+//                }
                 // truong hop ko co city hoac district
+
                 if(empty($city) || empty($district)){
                     if (!empty($arr_info["Địa chỉ"])) {
                         $address = mb_split(',', $arr_info["Địa chỉ"]);
@@ -1367,6 +1342,7 @@ class BatdongsanV2 extends Component
                 'dientich' => $dt,
                 'start_date' => $startdate,
                 'end_date' => $endate,
+                'project' => $project
 //                'link' => self::DOMAIN . $href
             ];
         }
@@ -2157,7 +2133,7 @@ class BatdongsanV2 extends Component
 
             $description = $detail->find('#detail .a1', 0)->innertext;
             $description = trim(strip_tags($description,'<br>'));
-            $description = str_replace('<br/>', PHP_EOL, $description);
+            $description = str_replace('<br />', PHP_EOL, $description);
             $description = trim($description);
 
             $contractor_name = trim($detail->find('#enterpriseInfo h3', 0)->plaintext);

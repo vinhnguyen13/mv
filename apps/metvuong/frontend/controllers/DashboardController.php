@@ -50,7 +50,7 @@ class DashboardController extends Controller
 //            var_dump($ck);
 //        }
         $id = (int)Yii::$app->request->get("id");
-
+        $product = AdProduct::findOne($id);
         $date = Yii::$app->request->get("date");
         if ($date) {
             $useDate = new \DateTime($date);
@@ -65,11 +65,11 @@ class DashboardController extends Controller
             $favourites = Tracking::find()->getFavourites($id, $from, $to);
 
             return $this->render('statistics/index', [
-                'id' => $id,
+                'product' => $product,
                 'visitors' => $visitors,
                 'finders' => $finders,
                 'favourites' => $favourites,
-                'view' => '_partials/visitor',
+                'view' => '_partials/finder',
                 'from' => $from,
                 'to' => $to
             ]);
@@ -91,8 +91,8 @@ class DashboardController extends Controller
             'visitors' => $visitors,
             'finders' => $finders,
             'favourites' => $favourites,
-            'view' => '_partials/visitor',
-            'id' => $id,
+            'view' => '_partials/finder',
+            'product' => $product,
             'from' => $from,
             'to' => $to
         ]);

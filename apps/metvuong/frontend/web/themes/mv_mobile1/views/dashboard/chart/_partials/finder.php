@@ -20,7 +20,9 @@ $categories = array_values($categories);
             $('#chartAds').highcharts({
                 chart: {
                     type: 'column'
-//                type: 'area',
+                },
+                legend: {
+                    enable: false
                 },
                 title: {
                     text: 'Lượt người tìm kiếm',

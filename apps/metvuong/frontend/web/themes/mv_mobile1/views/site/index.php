@@ -1,5 +1,6 @@
-<?php 
-	use yii\helpers\Url;
+<?php
+use yii\helpers\StringHelper;
+use yii\helpers\Url;
 ?>
 <div class="page-home">
 
@@ -136,7 +137,7 @@
                     <span class="txt-short-news">
                         <span class="title-news color-30a868"><?=$n['title']?></span>
                         <span class="date-news"><?=date('d/m/Y, H:i', $n['updated_at'])?></span>
-                        <?=$n['brief']?>
+                        <?=StringHelper::truncate($n['brief'], 120)?>
                     </span>
                 </a>
             </div>

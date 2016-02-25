@@ -3,6 +3,7 @@ use yii\helpers\Url;
 use frontend\models\Chart;
 
 $data = Chart::find()->getDataVisitor($id, $from, $to);
+
 if(!empty($data)) {
     $dataChart = $data['dataChart'];
     $categories = $data['categories'];
@@ -18,8 +19,10 @@ if(!empty($data)) {
         $(function () {
             $('#chartAds').highcharts({
                 chart: {
-                    type: 'column',
-//                type: 'area',
+                    type: 'column'
+                },
+                legend: {
+                    enabled: false
                 },
                 title: {
                     text: 'Lượt người theo dõi',
@@ -90,15 +93,6 @@ if(!empty($data)) {
                         }
                     }
                 },
-                /*chart: {
-                 events: {
-                 click: function(event) {
-                 alert ('x: '+ event.xAxis[0].value +', y: '+
-                 event.yAxis[0].value);
-                 }
-                 }
-                 },*/
-
                 series: <?=json_encode($dataChart);?>,
                 credits: {
                     enabled: false

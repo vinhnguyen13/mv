@@ -20,7 +20,9 @@ if(!empty($data)) {
             $('#chartAds').highcharts({
                 chart: {
                     type: 'column'
-//                type: 'area',
+                },
+                legend: {
+                    enable: false
                 },
                 title: {
                     text: 'Lượt người thích',
