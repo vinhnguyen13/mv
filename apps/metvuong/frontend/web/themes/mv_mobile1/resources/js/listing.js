@@ -51,11 +51,13 @@ $(document).ready(function(){
 	searchForm.submit(function(e){
 		e.preventDefault();
 
-		if ( $(this).find('button.btn-submit').data('flag') ) {
-			$(this).find('button.btn-submit').data('flag', false);
+		var btnSubmit = $(this).find('button.btn-submit');
+
+		if ( btnSubmit.data('flag') ) {
+			btnSubmit.data('flag', false);
 			return;
 		}else {
-			$(this).find('button.btn-submit').data('flag', true);
+			btnSubmit.data('flag', true);
 		}
 
 		$(window).off('scroll', next);

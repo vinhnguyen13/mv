@@ -48,7 +48,7 @@ $(document).ready(function() {
 
     var hWin = screen.height,
         flagScroll = false,
-        elScroll = $('<a href="#" id="scroll-top"><em class="fa fa-arrow-up"></em></a>');
+        elScroll = $('<a href="#" id="scroll-top"><span class="icon arrowUp"></span></a>');
     $(document).on('scroll', function () {
         var _this = $(this),
             val = _this.scrollTop();
@@ -345,6 +345,10 @@ $.fn.toggleShowMobi = function (options) {
 
         function toggleShow (e) {
             var _this = $(this);
+
+            if ( _this.hasClass('active') && _this.data('flag') ) {
+                _this.data('flag', false);
+            }
 
             if ( _this.hasClass('active') ) {
                 _this.removeClass('active');

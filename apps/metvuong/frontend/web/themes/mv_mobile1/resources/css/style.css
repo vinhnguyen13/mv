@@ -2928,6 +2928,12 @@ input[type=text]:focus {
 .val-selected.active .arrowDown {
     background-position: 0 -470px;
 }
+.arrowUp {
+    background-position: 0 -470px;
+    display: inline-block;
+    width: 21px;
+    height: 11px;
+}
 .frm-item .error {
     border: 1px solid #C11111;
 }
