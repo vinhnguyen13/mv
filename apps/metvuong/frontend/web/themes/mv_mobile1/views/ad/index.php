@@ -60,6 +60,7 @@ $types = AdProduct::getAdTypes ();
 					<p class="address-listing">
 						<span class="icon address-icon"></span><a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"><?= $product->getAddress(true) ?></a>
 					</p>
+					<p class="id-duan">ID tin đăng:<span>985</span></p>
 					<!-- <p class="attr-home">
 						<?= $product->adProductAdditionInfo->room_no ? $product->adProductAdditionInfo->room_no . ' <span class="icon icon-bed"></span> | ' : ''?>
 						<?= $product->adProductAdditionInfo->toilet_no ? $product->adProductAdditionInfo->toilet_no . ' <span class="icon icon-bath"></span> | ' : ''?>
