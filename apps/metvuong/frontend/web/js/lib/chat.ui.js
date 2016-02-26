@@ -142,7 +142,7 @@
         },
         findObjectNotify: function (parent, child) {
             if($('#'+parent).find('#'+child).length == 0){
-                $('#'+parent).append($('<span id="'+child+'"></span>'));
+                $('#'+parent).append($('<span class="notifi" id="'+child+'"></span>'));
             }
             return $('#'+parent).find('#'+child);
         },
