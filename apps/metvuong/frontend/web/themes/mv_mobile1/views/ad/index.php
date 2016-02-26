@@ -38,9 +38,9 @@ $types = AdProduct::getAdTypes ();
 				<?php foreach ($products as $product): ?>
 				<div class="item-listing">
 					<?php
-					if ($image = AdImages::find ()->where ( [ 
+					if ($image = AdImages::find ()->where ( [
 							'order' => 0,
-							'product_id' => $product->id 
+							'product_id' => $product->id
 					] )->one ()) {
 						$imgUrl = $image->imageMedium;
 					} else {
@@ -50,12 +50,11 @@ $types = AdProduct::getAdTypes ();
 
 					<div class="bgcover img-intro">
 						<div>
-							<a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \yii\helpers\Inflector::slug($product->getAddress())]) ?>"><img src="" data-original="<?= $imgUrl ?>"></a>
+							<a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>"><img src="" data-original="<?= $imgUrl ?>"></a>
 						</div>
 					</div>
 					<p class="infor-by-up">
-						<?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?> bởi <a
-							href="#">Môi Giới</a>
+						<?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?> bởi <a href="#">Môi Giới</a>
 					</p>
 					<p class="address-listing">
 						<span class="icon address-icon"></span><a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"><?= $product->getAddress(true) ?></a>
@@ -78,7 +77,7 @@ $types = AdProduct::getAdTypes ();
 						</li>
 					</ul>
 					<span class="price"><?= StringHelper::formatCurrency($product->price) ?></span>
-					<a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>" class="pull-right view-more">Chi tiết</a>
+					<a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pull-right view-more">Chi tiết</a>
 				</div>
 				<?php endforeach; ?>
 			</div>

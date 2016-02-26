@@ -54,7 +54,7 @@ use frontend\models\Ad;
             }
             ?>
             <div class="item">
-                <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \yii\helpers\Inflector::slug($product->getAddress())]) ?>" class="pic-intro">
+                <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pic-intro">
                     <div class="wrap-img"><img src="<?= $imgUrl ?>" alt=""></div>
                     <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?></div>
                 </a>
@@ -76,7 +76,7 @@ use frontend\models\Ad;
                         </ul>
                     </div>
                     <div class="bottom-feat-box clearfix">
-                        <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \yii\helpers\Inflector::slug($product->getAddress())]) ?>" class="pull-right">Chi tiết</a>
+                        <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pull-right">Chi tiết</a>
                         <p>Giá <strong>4 tỷ đồng</strong></p>
                     </div>
                 </div>
