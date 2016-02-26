@@ -2202,7 +2202,6 @@ footer {
     -moz-box-shadow: 0 1px 0 0 rgba(211, 211, 211, 0.5);
     -ms-box-shadow: 0 1px 0 0 rgba(211, 211, 211, 0.5);
     margin-bottom: 25px;
-    padding: 15px 10px 0;
 }
 .wrap-list-duan li:last-child {
     border-bottom: none;
@@ -2214,6 +2213,7 @@ footer {
 .wrap-list-duan .intro-detail {
     position: relative;
     color: #3c3c3c;
+    padding: 15px 15px 0;
 }
 .wrap-list-duan .img-intro > a {
     display: inline-block;
@@ -3497,7 +3497,6 @@ input[type=text]:focus {
     border-bottom: solid 0.5px #969696;
     padding-bottom: 10px;
     margin-bottom: 10px;
-    padding-top: 10px;
     font-size: 13.5px;
     font-weight: 700;
     color: #3c3c3c;
@@ -3576,15 +3575,16 @@ input[type=text]:focus {
     height: 33px;
     background-position: 0 -1053px;
 }
-.search-history a {
+.btn-search-hist {
     position: absolute;
     top: 0;
     right: 0;
     padding: 2px 9px 0;
     z-index: 2;
     background: #00a769;
+    border: none;
 }
-.search-history a span {
+.btn-search-hist span {
     margin-top: 2px;
 }
 .search-history.focus input {
@@ -3594,4 +3594,7 @@ input[type=text]:focus {
     -ms-transition: left 0.3s;
     -o-transition: left 0.3s;
     transition: left 0.3s;
+}
+.chat-history {
+    position: relative;
 }

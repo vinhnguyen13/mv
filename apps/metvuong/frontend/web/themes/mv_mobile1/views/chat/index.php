@@ -16,7 +16,7 @@ if(!empty($jid_id)){
 		<span>Chat history</span>
 		<div class="search-history">
 			<input type="text" id="findConversation" class="form-control" placeholder="Filter">
-			<a href="#"><span class="icon icon-search-white"></span></a>
+			<button class="btn-search-hist" href="#"><span class="icon icon-search-white"></span></button>
 		</div>
 	</div>
 	<div class="chat-list clearfix">
@@ -95,10 +95,11 @@ if(!empty($jid_id)){
 			});
 		});
 
-		$('.search-history a').on('click', function (e) {
+		$('.btn-search-hist').on('click', function (e) {
 			e.preventDefault();
 			var _this = $(this);
 			_this.parent().addClass('focus');
+			_this.toggleClass('btn-submit-filter');
 		});
 	});
 </script>
