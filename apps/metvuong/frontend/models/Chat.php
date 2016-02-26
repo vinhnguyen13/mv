@@ -90,10 +90,6 @@ class Chat extends Component
         $sql1 = "SELECT tbl.* FROM (SELECT IF(direction = 0, owner_id, buddy_id) AS withuser FROM `$dbNameChat`.`tig_ma_msgs` tmm WHERE (owner_id IN (".$sqlFindJidFromUserFind.") AND buddy_id IN (".$sqlFindJidFromUserOnline.")) OR (buddy_id IN (".$sqlFindJidFromUserFind.") AND owner_id IN (".$sqlFindJidFromUserOnline."))" .
             " ORDER BY ts DESC) tbl GROUP BY withuser ";
         $existConversation = Yii::$app->get('dbChat')->createCommand($sql1)->queryAll();
-        echo "<pre>";
-        print_r($existConversation);
-        echo "</pre>";
-        exit;
         if(!empty($existConversation)){
             $sql = "SELECT username, name FROM `".$dbNamePri."`.`profile` p INNER JOIN `user` u ON p.user_id=u.id WHERE `name` LIKE '%".$userFind."%'";
             $return = Yii::$app->get('db')->createCommand($sql)->queryAll();
