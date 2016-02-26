@@ -18,9 +18,9 @@ use yii\helpers\Url;
         <div class="wrap-menu">
             <a href="#" id="hide-menu" class="icon"></a>
             <ul class="clearfix">
-                <li><a href="<?= Url::to(['/ad/index']) ?>">mua</a></li>
-                <li><a href="#">thuê</a></li>
-                <li><a href="<?= Url::to(['/ad/post']) ?>">bán / cho thuê</a></li>
+                <li><a href="<?= Url::to(['/ad/index']) ?>">cần mua</a></li>
+                <li><a href="#">cần thuê</a></li>
+                <li><a href="<?= Url::to(['/ad/post']) ?>">đăng bán / cho thuê</a></li>
                 <li><a href="<?=Url::to(['building-project/index']);?>">dự án mới</a></li>
                 <li><a href="#">Tin tức</a></li>
             </ul>
