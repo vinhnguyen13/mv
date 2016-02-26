@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 use common\components\Util;
 use dektrium\user\Mailer;
+use frontend\models\Chart;
 use frontend\models\Tracking;
 use frontend\models\User;
 use frontend\models\ProfileForm;
@@ -51,51 +52,57 @@ class DashboardController extends Controller
 //        }
         $id = (int)Yii::$app->request->get("id");
         $product = AdProduct::findOne($id);
+
         $date = Yii::$app->request->get("date");
-        if ($date) {
-            $useDate = new \DateTime($date);
-            $from = strtotime('-7 days', $useDate->getTimestamp());
+        if($date)
+            $date = new \DateTime();
 
-            $t = date_format($useDate, 'Y-m-d 23:59:59');
-            $dateTo = new \DateTime($t);
-            $to = $dateTo->getTimestamp();
-
-            $visitors = Tracking::find()->getVisitors($id, $from, $to);
-            $finders = Tracking::find()->getFinders($id, $from, $to);
-            $favourites = Tracking::find()->getFavourites($id, $from, $to);
-
-            return $this->render('statistics/index', [
-                'product' => $product,
-                'visitors' => $visitors,
-                'finders' => $finders,
-                'favourites' => $favourites,
-                'view' => '_partials/finder',
-                'from' => $from,
-                'to' => $to
-            ]);
-        }
-
-
-        $useDate = new \DateTime(date('Y-m-d'));
-        $from = strtotime('-7 days', $useDate->getTimestamp());
+        $useDate = new \DateTime($date);
+        $f = date_format($useDate, 'Y-m-d 00:00:00');
+        $dateFrom = new \DateTime($f);
+        $from = strtotime('-7 days', $dateFrom->getTimestamp());
 
         $t = date_format($useDate, 'Y-m-d 23:59:59');
         $dateTo = new \DateTime($t);
         $to = $dateTo->getTimestamp();
 
-        $visitors = Tracking::find()->getVisitors($id, $from, $to);
-        $finders = Tracking::find()->getFinders($id, $from, $to);
-        $favourites = Tracking::find()->getFavourites($id, $from, $to);
+        $data = Chart::find()->getDataFinder($id, $from, $to);
+        $infoData = empty($data) ? null : $data["infoData"];
+        $finders = empty($infoData["finders"]) ? null : $infoData["finders"];
+        $visitors = empty($infoData["visitors"]) ? null : $infoData["visitors"];
+        $favourites = empty($infoData["saved"]) ? null : $infoData["saved"];
 
         return $this->render('statistics/index', [
+            'product' => $product,
             'visitors' => $visitors,
             'finders' => $finders,
             'favourites' => $favourites,
             'view' => '_partials/finder',
-            'product' => $product,
             'from' => $from,
             'to' => $to
         ]);
+
+
+//        $useDate = new \DateTime(date('Y-m-d'));
+//        $from = strtotime('-7 days', $useDate->getTimestamp());
+//
+//        $t = date_format($useDate, 'Y-m-d 23:59:59');
+//        $dateTo = new \DateTime($t);
+//        $to = $dateTo->getTimestamp();
+//
+//        $visitors = Tracking::find()->getVisitors($id, $from, $to);
+//        $finders = Tracking::find()->getFinders($id, $from, $to);
+//        $favourites = Tracking::find()->getFavourites($id, $from, $to);
+//
+//        return $this->render('statistics/index', [
+//            'visitors' => $visitors,
+//            'finders' => $finders,
+//            'favourites' => $favourites,
+//            'view' => '_partials/finder',
+//            'product' => $product,
+//            'from' => $from,
+//            'to' => $to
+//        ]);
 
     }
 
@@ -149,22 +156,11 @@ class DashboardController extends Controller
     public function actionChart()
     {
         if(Yii::$app->request->isAjax) {
-            $view = Yii::$app->request->get('view', 'index');
-            $id = Yii::$app->request->get('id');
-            $from = Yii::$app->request->get('from');
-            $to = Yii::$app->request->get('to');
+            $view = Yii::$app->request->get('view', '_partials/finder');
+            $id = (int)Yii::$app->request->get('id');
+            $from = (int)Yii::$app->request->get('from');
+            $to = (int)Yii::$app->request->get('to');
 
-            switch($view){
-                case '_partials/visitor';
-
-                    break;
-                case '_partials/finder';
-
-                    break;
-                case '_partials/listContact';
-
-                    break;
-            }
             if(!empty($view)){
                 return $this->renderAjax('chart/'.$view, ['id' => $id, 'from' => $from, 'to' => $to]);
             }

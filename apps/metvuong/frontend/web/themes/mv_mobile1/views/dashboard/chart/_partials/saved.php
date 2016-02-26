@@ -74,45 +74,11 @@ if(!empty($data)) {
                                         this.series.data[i].update({ color: '#909090' }, true, false);
                                     }
                                     this.update({ color: '#00a769' }, true, false);
-                                    
-                                    $('#frmListVisit .wrap-modal').html('');
-                                    var timer = 0;
-                                    var _this = this;
-                                    clearTimeout(timer);
-                                    timer = setTimeout(function () {
-                                        $.ajax({
-                                            type: "get",
-                                            dataType: 'html',
-                                            url: _this.url,
-                                            success: function (data) {
-                                                $('#frmListVisit .wrap-modal').html($(data));
-                                                //$('#frmListVisit').find('h3').html('Thống kê');
-                                                $('#frmListVisit').find('.total').html(_this.y);
-                                                $('#frmListVisit').find('.totalNext').html(_this.y - 3);
-                                                $('#frmListVisit').find('.desTotal').html('Danh sách người lưu tin: <b>' + _this.series.name + '</b>');
-                                            }
-                                        });
-                                    }, 500);
-                                    $('#frmListVisit').modal();
                                 }
                             }
                         }
                     }
                 },
-                /*chart: {
-                 events: {
-                 click: function(event) {
-                 alert ('x: '+ event.xAxis[0].value +', y: '+
-                 event.yAxis[0].value);
-                 }
-                 }
-                 },
-                legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'middle',
-                    borderWidth: 0
-                },*/
                 series: <?=json_encode($dataChart);?>,
                 credits: {
                     enabled: false

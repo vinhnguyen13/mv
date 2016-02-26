@@ -3,7 +3,6 @@ use yii\helpers\Url;
 use frontend\models\Chart;
 
 $data = Chart::find()->getDataVisitor($id, $from, $to);
-
 if(!empty($data)) {
     $dataChart = $data['dataChart'];
     $categories = $data['categories'];
@@ -75,25 +74,6 @@ if(!empty($data)) {
                                     }
                                     this.update({ color: '#00a769' }, true, false);
 
-                                    $('#frmListVisit .wrap-modal').html('');
-                                    var timer = 0;
-                                    var _this = this;
-                                    clearTimeout(timer);
-                                    timer = setTimeout(function () {
-                                        $.ajax({
-                                            type: "get",
-                                            dataType: 'html',
-                                            url: _this.url,
-                                            success: function (data) {
-                                                $('#frmListVisit .wrap-modal').html($(data));
-                                                //$('#frmListVisit').find('h3').html('Thống kê');
-                                                $('#frmListVisit').find('.total').html(_this.y);
-                                                $('#frmListVisit').find('.totalNext').html(_this.y - 3);
-                                                $('#frmListVisit').find('.desTotal').html('Danh sách người theo dõi tin: <b>' + _this.series.name + '</b>');
-                                            }
-                                        });
-                                    }, 500);
-                                    $('#frmListVisit').modal();
                                 }
                             }
                         }
@@ -105,6 +85,7 @@ if(!empty($data)) {
                 }
             });
         });
+
     </script>
     <?php
 }else {

@@ -3,6 +3,7 @@ use yii\helpers\Url;
 use frontend\models\Chart;
 
 $data = Chart::find()->getDataFinder($id, $from, $to);
+
 if(!empty($data)) {
 $dataChart = $data['dataChart'];
 $categories = $data['categories'];
@@ -11,7 +12,6 @@ ksort($dataChart);
 $dataChart = array_values($dataChart);
 ksort($categories);
 $categories = array_values($categories);
-
 
 ?>
     <div id="chartAds" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
@@ -69,31 +69,11 @@ $categories = array_values($categories);
                         cursor: 'pointer',
                         point: {
                             events: {
-                                click: function() {//alert ('Category: '+ this.category +', value: '+ this.y);
+                                click: function() {
                                     for (var i = 0; i < this.series.data.length; i++) {
                                         this.series.data[i].update({ color: '#909090' }, true, false);
                                     }
                                     this.update({ color: '#00a769' }, true, false);
-
-                                   $('#frmListVisit .wrap-modal').html('');
-                                    var timer = 0;
-                                    var _this = this;
-                                    clearTimeout(timer);
-                                    timer = setTimeout(function () {
-                                        $.ajax({
-                                            type: "get",
-                                            dataType: 'html',
-                                            url: _this.url,
-                                            success: function (data) {
-                                                $('#frmListVisit .wrap-modal').html($(data));
-                                                //$('#frmListVisit').find('h3').html('Thống kê');
-                                                $('#frmListVisit').find('.total').html(_this.y);
-                                                $('#frmListVisit').find('.totalNext').html(_this.y - 3);
-                                                $('#frmListVisit').find('.desTotal').html('Danh sách người tìm kiếm tin: <b>'+_this.series.name+'</b>');
-                                            }
-                                        });
-                                    }, 500);
-                                    $('#frmListVisit').modal();
                                 }
                             }
                         }
@@ -107,7 +87,7 @@ $categories = array_values($categories);
         });
     </script>
     <?php
-}else {
+} else {
     ?>
     <div class="alert alert-warning">
         <p class="text-center">Chưa có người nào tìm kiếm tin của bạn, bạn hãy <a href="">làm mới</a> tin của mình</p>
