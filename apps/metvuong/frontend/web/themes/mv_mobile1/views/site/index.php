@@ -41,7 +41,7 @@ use frontend\models\Ad;
     ?>
     <section class="box-item box-feature-item">
         <div class="title-sub">Featured properties</div>
-        <div class="wrap-item">
+        <div class="wrap-item wrap-lazy">
             <?php foreach ($products as $product): ?>
             <?php
             if ($image = \vsoft\ad\models\AdImages::find ()->where ( [
@@ -55,14 +55,16 @@ use frontend\models\Ad;
             ?>
             <div class="item">
                 <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pic-intro">
-                    <div class="wrap-img"><img src="<?= $imgUrl ?>" alt=""></div>
+                    <div class="img-show">
+                        <div><img src="" data-original="<?= $imgUrl ?>"></div>
+                    </div>
                     <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?></div>
                 </a>
                 <div class="info-item">
                     <div class="address-feat">
 <!--                        <strong>Lancaster x</strong>-->
-                        <?= $product->getAddress(true) ?>
-                        <p class="id-duan">ID:<span><?=$product->id;?></span></p>
+                        <span class="icon address-icon"></span><?= $product->getAddress(true) ?>
+                        <p class="id-duan">ID tin đăng:<span><?=$product->id;?></span></p>
                         <ul class="clearfix list-attr-td">
                             <li>
                                 <span class="icon icon-dt icon-dt-small"></span>80m2

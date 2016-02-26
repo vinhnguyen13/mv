@@ -484,7 +484,8 @@ header {
     height: 100%;
 }
 .icons-detail {
-    margin-top: 12px;
+    
+margin-top: 12px;
 }
 .icons-detail li {
     float: left;
@@ -2746,6 +2747,13 @@ input[type=text]:focus {
     margin-bottom: 40px;
     background: #ffffff;
 }
+.box-feature-item .wrap-item .item {
+    border: solid 0.5px #969696;
+    /* border-top: none; */
+}
+.box-item .wrap-item .item .wrap-img {
+    text-align: center;
+}
 .box-item .wrap-item .item:last-child {
     margin-bottom: 0;
 }
@@ -2760,16 +2768,23 @@ input[type=text]:focus {
 .box-item .pic-intro {
     display: block;
     position: relative;
+    margin: -1px -1px 0;
 }
 .box-item .info-item {
-    border: solid 0.5px #969696;
+    /* border: solid 0.5px #969696; */
     border-top: none;
 }
 .box-item .address-feat {
     display: block;
     padding: 15px;
     color: #3c3c3c;
-    font-size: 14px;
+    font-size: 15px;
+    font-weight: 700;
+}
+.box-item .address-feat .address-icon {
+    position: relative;
+    top: 2px;
+    margin-right: 5px;
 }
 .box-item .address-feat strong {
     display: block;
@@ -2877,8 +2892,9 @@ input[type=text]:focus {
 .news-item .item .wrap-img {
     float: left;
     width: 40%;
-    height: 110px;
+    height: 150px;
     margin-right: 15px;
+    background-position: 50% bottom;
 }
 .news-item .item .txt-short-news {
     overflow: hidden;
@@ -3673,4 +3689,14 @@ input[type=text]:focus {
 }
 .item-packege .content-pac a {
     margin-top: 25px;
+}
+.box-item .info-item .id-duan {
+    color: #AFAFAF;
+    font-weight: 400;
+    font-size: 15px;
+    margin: 3px 0 0 0;
+}
+.box-item .info-item .id-duan span {
+    font-weight: 700;
+    font-size: 15px;
 }

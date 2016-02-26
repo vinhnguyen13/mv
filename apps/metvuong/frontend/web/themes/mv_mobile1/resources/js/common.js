@@ -743,7 +743,10 @@ $.fn.pupop = function (options) {
 
     return this.each(function() {
         var defaults = {
-
+            styleShow: "slideUp", // fadeIn
+            duration: 200,
+            positionEl: "top", // top, center
+            
         },
         sc = {},
         el = $(this);
