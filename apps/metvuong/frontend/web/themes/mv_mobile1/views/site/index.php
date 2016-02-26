@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
+use frontend\models\Ad;
 ?>
 <div class="page-home">
 
@@ -33,20 +34,35 @@ use yii\helpers\Url;
         </div>
         <span class="arrow-down"></span>
     </section>
-
+    <?php
+    $categories = \vsoft\ad\models\AdCategory::find ()->indexBy ( 'id' )->asArray ( true )->all ();
+    $types = \vsoft\ad\models\AdProduct::getAdTypes ();
+    $products = Ad::find()->homePageRandom();
+    ?>
     <section class="box-item box-feature-item">
         <div class="title-sub">Featured properties</div>
         <div class="wrap-item">
+            <?php foreach ($products as $product): ?>
+            <?php
+            if ($image = \vsoft\ad\models\AdImages::find ()->where ( [
+                'order' => 0,
+                'product_id' => $product->id
+            ] )->one ()) {
+                $imgUrl = $image->imageMedium;
+            } else {
+                $imgUrl = '/themes/metvuong2/resources/images/default-ads.jpg';
+            }
+            ?>
             <div class="item">
-                <a href="#" class="pic-intro">
-                    <div class="wrap-img"><img src="/frontend/web/themes/mv_mobile1/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg" alt=""></div>
-                    
-                    <div class="title-item">Cho thuê</div>
+                <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \yii\helpers\Inflector::slug($product->getAddress())]) ?>" class="pic-intro">
+                    <div class="wrap-img"><img src="<?= $imgUrl ?>" alt=""></div>
+                    <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?></div>
                 </a>
                 <div class="info-item">
                     <div class="address-feat">
-                        <strong>Lancaster x</strong>
-                        21 Nguyễn Trung Ngạn, P.Bến Nghé, Q1
+<!--                        <strong>Lancaster x</strong>-->
+                        <?= $product->getAddress(true) ?>
+                        <p class="id-duan">ID:<span><?=$product->id;?></span></p>
                         <ul class="clearfix list-attr-td">
                             <li>
                                 <span class="icon icon-dt icon-dt-small"></span>80m2
@@ -60,67 +76,14 @@ use yii\helpers\Url;
                         </ul>
                     </div>
                     <div class="bottom-feat-box clearfix">
-                        <a href="#" class="pull-right">Chi tiết</a>
-                        <p>Giá thuê <strong>4 tỷ đồng</strong></p>
+                        <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \yii\helpers\Inflector::slug($product->getAddress())]) ?>" class="pull-right">Chi tiết</a>
+                        <p>Giá <strong>4 tỷ đồng</strong></p>
                     </div>
                 </div>
             </div>
-            <div class="item">
-                <a href="#" class="pic-intro">
-                    <div class="wrap-img"><img src="/frontend/web/themes/mv_mobile1/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg" alt=""></div>
-                    
-                    <div class="title-item">Bán</div>
-                </a>
-                <div class="info-item">
-                    <div class="address-feat">
-                        <strong>Lancaster x</strong>
-                        21 Nguyễn Trung Ngạn, P.Bến Nghé, Q1
-                        <ul class="clearfix list-attr-td">
-                            <li>
-                                <span class="icon icon-dt icon-dt-small"></span>80m2
-                            </li>
-                            <li>
-                                <span class="icon icon-bed icon-bed-small"></span> 02
-                            </li>
-                            <li>
-                                <span class="icon icon-pt icon-pt-small"></span> 02
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="bottom-feat-box clearfix">
-                        <a href="#" class="pull-right">Chi tiết</a>
-                        <p>Giá thuê <strong>4 tỷ đồng</strong></p>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <a href="#" class="pic-intro">
-                    <div class="wrap-img"><img src="/frontend/web/themes/mv_mobile1/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg" alt=""></div>
-                    
-                    <div class="title-item">Cho thuê</div>
-                </a>
-                <div class="info-item">
-                    <div class="address-feat">
-                        <strong>Lancaster x</strong>
-                        21 Nguyễn Trung Ngạn, P.Bến Nghé, Q1
-                        <ul class="clearfix list-attr-td">
-                            <li>
-                                <span class="icon icon-dt icon-dt-small"></span>80m2
-                            </li>
-                            <li>
-                                <span class="icon icon-bed icon-bed-small"></span> 02
-                            </li>
-                            <li>
-                                <span class="icon icon-pt icon-pt-small"></span> 02
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="bottom-feat-box clearfix">
-                        <a href="#" class="pull-right">Chi tiết</a>
-                        <p>Giá thuê <strong>4 tỷ đồng</strong></p>
-                    </div>
-                </div>
-            </div>
+            <?php
+            endforeach;
+            ?>
         </div>
     </section>
 

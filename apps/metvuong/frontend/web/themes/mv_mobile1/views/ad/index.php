@@ -50,7 +50,7 @@ $types = AdProduct::getAdTypes ();
 
 					<div class="bgcover img-intro">
 						<div>
-							<a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"><img src="" data-original="<?= $imgUrl ?>"></a>
+							<a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \yii\helpers\Inflector::slug($product->getAddress())]) ?>"><img src="" data-original="<?= $imgUrl ?>"></a>
 						</div>
 					</div>
 					<p class="infor-by-up">
