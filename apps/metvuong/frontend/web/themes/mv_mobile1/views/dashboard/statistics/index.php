@@ -11,8 +11,6 @@ $id = $product->id;
     <div class="statis">
     	<div class="title-top">Thống kê</div>
     	<section>
-            <b><?=$product->getAddress()?></b>
-            Từ ngày <span class="fromDate">19/02/2016</span> - đến ngày
     		<div id="sandbox-container">
     			<input type="text" class="form-control toDate" placeholder="Ngày">
     			<span class="icon arrowDown"></span>
@@ -39,7 +37,7 @@ $id = $product->id;
     		</div>
     	</section>
     	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    		<div class="panel panel-default">
+    		<div class="panel panel-default finder" style="display: block;">
     			<div class="panel-heading title-sub" role="tab" id="headingOne">
     				<h4 class="panel-title">
     					<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -54,7 +52,7 @@ $id = $product->id;
                             <?php if(!empty($finders) && count($finders)){
                             foreach($finders as $key => $finder){?>
     						<li>
-    							<em class="fa fa-circle"></em><a href="#"><?=$key?></a>
+    							<em class="fa fa-circle"></em><a href="<?="/".$key?>"><?=$key?></a>
     							<span class="pull-right"><?=$finder?></span>
     						</li>
                             <?php }
@@ -65,22 +63,22 @@ $id = $product->id;
     				</div>
     			</div>
     		</div>
-    		<div class="panel panel-default">
+    		<div class="panel panel-default visitor" style="display: none;">
     			<div class="panel-heading title-sub" role="tab" id="headingTwo">
     				<h4 class="panel-title">
-    					<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+    					<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
     					<em class="icon-user"></em> Click
     					<span class="pull-right icon"></span>
     					</a>
     				</h4>
     			</div>
-    			<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+    			<div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
     				<div class="panel-body">
     					<ul class="clearfix list-item">
                             <?php if(!empty($visitors) && count($visitors)){
                                 foreach($visitors as $key => $visitor){?>
                                     <li>
-                                        <em class="fa fa-circle"></em><a href="#"><?=$key?></a>
+                                        <em class="fa fa-circle"></em><a href="<?="/".$key?>"><?=$key?></a>
                                         <span class="pull-right"><?=$visitor?></span>
                                     </li>
                                 <?php }
@@ -91,22 +89,22 @@ $id = $product->id;
     				</div>
     			</div>
     		</div>
-    		<div class="panel panel-default">
+    		<div class="panel panel-default favourite" style="display: none;">
     			<div class="panel-heading title-sub" role="tab" id="headingThree">
     				<h4 class="panel-title">
-    					<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+    					<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
     					<em class="icon-heart"></em> favourite
     					<span class="pull-right icon"></span>
     					</a>
     				</h4>
     			</div>
-    			<div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+    			<div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
     				<div class="panel-body">
     					<ul class="clearfix list-item">
                             <?php if(!empty($favourites) && count($favourites)){
                                 foreach($favourites as $key => $favourite){?>
                                     <li>
-                                        <em class="fa fa-circle"></em><a href="#"><?=$key?></a>
+                                        <em class="fa fa-circle"></em><a href="<?="/".$key?>"><?=$key?></a>
                                     </li>
                                 <?php }
                             }  else { ?>
@@ -191,7 +189,9 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
         var timer = 0;
         clearTimeout(timer);
         var url = '';
+        var valueOption = '';
         $( "select option:selected" ).each(function() {
+            valueOption = $(this).attr('value');
             url = $(this).attr('data-url');
             $('.wrapChart').html('');
             $('.loading').show();
@@ -205,6 +205,21 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
                     success: function (data) {
                         $('.loading').hide();
                         $('.wrapChart').html(data);
+                        if(valueOption == 'finder'){
+                            $('.finder').show();
+                            $('.visitor').hide();
+                            $('.favourite').hide();
+                        }
+                        else if(valueOption == 'visitor'){
+                            $('.finder').hide();
+                            $('.visitor').show();
+                            $('.favourite').hide();
+                        }
+                        else if(valueOption == 'favourite'){
+                            $('.finder').hide();
+                            $('.visitor').hide();
+                            $('.favourite').show();
+                        }
                     }
                 });
             }, 500);

@@ -22,7 +22,7 @@ $categories = array_values($categories);
                     type: 'column'
                 },
                 legend: {
-                    enable: false
+                    enabled: false
                 },
                 title: {
                     text: 'Lượt người tìm kiếm',
@@ -38,8 +38,9 @@ $categories = array_values($categories);
                 },
                 yAxis: {
                     allowDecimals: false,
+                    opposite: true,
                     title: {
-                        text: 'Người tìm kiếm'
+                        text: null
                     },
                     plotLines: [{
                         value: 0,

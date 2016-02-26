@@ -37,8 +37,9 @@ if(!empty($data)) {
                 },
                 yAxis: {
                     allowDecimals: false,
+                    opposite: true,
                     title: {
-                        text: 'Người theo dõi'
+                        text: null
                     },
                     plotLines: [{
                         value: 0,

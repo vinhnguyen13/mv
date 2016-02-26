@@ -22,7 +22,7 @@ use yii\web\NotFoundHttpException;
 
 class Chart extends Component
 {
-    const DATE_FORMAT = 'Y-m-d';
+    const DATE_FORMAT = 'M d';
     const TYPE_VISITOR = 1;
     const TYPE_FINDER = 2;
     const TYPE_SAVED = 3;

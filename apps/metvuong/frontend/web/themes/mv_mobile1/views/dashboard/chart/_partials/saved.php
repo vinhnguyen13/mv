@@ -22,7 +22,7 @@ if(!empty($data)) {
                     type: 'column'
                 },
                 legend: {
-                    enable: false
+                    enabled: false
                 },
                 title: {
                     text: 'Lượt người thích',
@@ -38,8 +38,9 @@ if(!empty($data)) {
                 },
                 yAxis: {
                     allowDecimals: false,
+                    opposite: true,
                     title: {
-                        text: 'Người theo dõi'
+                        text: null
                     },
                     plotLines: [{
                         value: 0,

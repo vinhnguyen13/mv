@@ -54,10 +54,12 @@ class DashboardController extends Controller
         $product = AdProduct::findOne($id);
 
         $date = Yii::$app->request->get("date");
-        if($date)
-            $date = new \DateTime();
-
-        $useDate = new \DateTime($date);
+        if($date) // truong hop chon calendar
+            $useDate = new \DateTime($date);
+        else { // vao thong ke cua 1 tin dang
+            $finder = AdProductFinder::find()->where((['product_id' => $id]))->orderBy('time DESC')->one();
+            $useDate = new \DateTime(date('Y-m-d', $finder->time));
+        }
         $f = date_format($useDate, 'Y-m-d 00:00:00');
         $dateFrom = new \DateTime($f);
         $from = strtotime('-7 days', $dateFrom->getTimestamp());
@@ -81,28 +83,6 @@ class DashboardController extends Controller
             'from' => $from,
             'to' => $to
         ]);
-
-
-//        $useDate = new \DateTime(date('Y-m-d'));
-//        $from = strtotime('-7 days', $useDate->getTimestamp());
-//
-//        $t = date_format($useDate, 'Y-m-d 23:59:59');
-//        $dateTo = new \DateTime($t);
-//        $to = $dateTo->getTimestamp();
-//
-//        $visitors = Tracking::find()->getVisitors($id, $from, $to);
-//        $finders = Tracking::find()->getFinders($id, $from, $to);
-//        $favourites = Tracking::find()->getFavourites($id, $from, $to);
-//
-//        return $this->render('statistics/index', [
-//            'visitors' => $visitors,
-//            'finders' => $finders,
-//            'favourites' => $favourites,
-//            'view' => '_partials/finder',
-//            'product' => $product,
-//            'from' => $from,
-//            'to' => $to
-//        ]);
 
     }
 
