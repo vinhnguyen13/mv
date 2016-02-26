@@ -29,7 +29,7 @@ class ChatController extends Controller
     }
 
     public function actionIndex(){
-        Chat::find()->searchUserFromConversation(Yii::$app->user->identity->username, 'v');
+//        Chat::find()->searchUserFromConversation(Yii::$app->user->identity->username, 'v');
         return $this->render('index');
     }
 
