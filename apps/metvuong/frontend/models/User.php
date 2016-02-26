@@ -473,4 +473,12 @@ class User extends \dektrium\user\models\User
     {
         throw new NotSupportedException('Method "' . __CLASS__ . '::' . __METHOD__ . '" is not implemented.');
     }
+
+    public function isMe()
+    {
+        if(!Yii::$app->user->isGuest){
+            return ($this->id == Yii::$app->user->identity->id ) ? true : false;
+        }
+        return false;
+    }
 }

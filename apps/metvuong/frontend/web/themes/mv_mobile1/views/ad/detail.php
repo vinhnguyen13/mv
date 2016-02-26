@@ -49,6 +49,7 @@ use yii\helpers\Url;
 		<div class="address-listing">
 			<p><?= $product->getAddress(true) ?></p>
 		</div>
+		<p class="id-duan">ID tin đăng:<span><?=$product->id;?></span></p>
 		<!-- <p class="attr-home">
 			<?= $product->adProductAdditionInfo->room_no ? $product->adProductAdditionInfo->room_no . ' <span class="icon icon-bed"></span> | ' : '' ?>
 			<?= $product->adProductAdditionInfo->toilet_no ? $product->adProductAdditionInfo->toilet_no . ' <span class="icon icon-bath"></span> | ' : '' ?>
@@ -217,8 +218,8 @@ use yii\helpers\Url;
 						</div>
 					</div>
 					<button id="" class="email-btn btn-common btn-small pull-left">Email</button>
-					<?php if(!empty($owner->username)) { ?>
-					<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small pull-right">Chat</a>
+					<?php if(!Yii::$app->user->isGuest && !$owner->isMe()) { ?>
+						<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small pull-right">Chat</a>
 					<?php }?>
 					
                 </div>
@@ -328,7 +329,7 @@ use yii\helpers\Url;
 /**
  * notification
  */
-if(!empty($owner->username) && !Yii::$app->user->isGuest){
+if(!empty($owner->username) && !$owner->isMe()){
 	$userVisit = Yii::$app->user->identity;
 	$userTo = $owner;
 
