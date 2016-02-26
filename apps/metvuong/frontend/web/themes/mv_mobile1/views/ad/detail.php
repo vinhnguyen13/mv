@@ -218,7 +218,7 @@ use yii\helpers\Url;
 						</div>
 					</div>
 					<button id="" class="email-btn btn-common btn-small pull-left">Email</button>
-					<?php if(!Yii::$app->user->isGuest && !$owner->isMe()) { ?>
+					<?php if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) { ?>
 						<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small pull-right">Chat</a>
 					<?php }?>
 					
@@ -324,12 +324,11 @@ use yii\helpers\Url;
 	</div> -->
 </div>
 
-
 <?php
 /**
  * notification
  */
-if(!empty($owner->username) && !$owner->isMe()){
+if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 	$userVisit = Yii::$app->user->identity;
 	$userTo = $owner;
 
