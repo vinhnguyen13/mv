@@ -23,7 +23,7 @@
 		<div class="item-packege">
 			<div class="content-pac">
 				<h2>STARTER</h2>
-				<p class="title-pac">FREE</p>
+				<p class="title-pac">300.000VND<span>/ tháng</span></p>
 				<p>Limited to 3 Listings</p>
 				<p>Up to 30 Using Days</p>
 				<p>Lipsum dolor sit amet fusce sed metus</p>
@@ -34,7 +34,7 @@
 		<div class="item-packege">
 			<div class="content-pac">
 				<h2>STARTER</h2>
-				<p class="title-pac">FREE</p>
+				<p class="title-pac">400.000VND<span>/ tháng</span></p>
 				<p>Limited to 3 Listings</p>
 				<p>Up to 30 Using Days</p>
 				<p>Lipsum dolor sit amet fusce sed metus</p>

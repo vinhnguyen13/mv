@@ -712,7 +712,7 @@ $.fn.loading = function (options) {
         sc.settings = $.extend({}, defaults, options);
 
         if ( sc.settings.done ) {
-            $('body').find('.loading-proccess').fadeOut(300, function () {
+            el.find('.loading-proccess').fadeOut(300, function () {
                 $(this).remove();
             });
             return;
@@ -728,7 +728,7 @@ $.fn.loading = function (options) {
                 'z-index': 99999,
                 background: 'rgba(0, 0, 0, 0.51)'
             });
-            $('body').append($loading);
+            el.append($loading);
             return;
         }
 
@@ -739,8 +739,19 @@ $.fn.loading = function (options) {
     });
 }
 
-/*$(window).scroll(function () {
-    l(1);
-    var st = $(window).scrollTop();
-    l(st);
-});*/
+$.fn.pupop = function (options) {
+
+    return this.each(function() {
+        var defaults = {
+
+        },
+        sc = {},
+        el = $(this);
+
+        if ( el.length == 0 ) return el;
+
+        sc.settings = $.extend({}, defaults, options);
+
+        
+    });
+}

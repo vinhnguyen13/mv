@@ -16,6 +16,9 @@ a:visited,
 a:link {
     text-decoration: none;
 }
+a:active, a:visited, a:link {
+    /* color: red; */
+}
 .menu-header {
     position: fixed;
     top: 0px;
@@ -34,13 +37,16 @@ a:link {
 header {
     background: #fff;
     width: 100%;
-    height: 50px;
-    border-bottom: 1px solid #9b9b9b;
+    height: 40px;
     padding: 0;
     position: fixed;
     z-index: 9;
     top: 0px;
     left: 0px;
+    box-shadow: 0 1px 0 0 #e2e2e2;
+    -webkit-box-shadow: 0 1px 0 0 #e2e2e2;
+    -moz-box-shadow: 0 1px 0 0 #e2e2e2;
+    -ms-box-shadow: 0 1px 0 0 #e2e2e2;
 }
 .search-box {
     height: 200px;
@@ -59,13 +65,13 @@ header {
 .logo {
     text-align: center;
     height: 100%;
-    line-height: 50px;
+    line-height: 40px;
 }
 .logo a {
     color: #333743;
     text-transform: uppercase;
     font-weight: 600;
-    font-size: 1.2em;
+    font-size: 17px;
 }
 #menu-toggle span {
     display: inline-block;
@@ -75,10 +81,12 @@ header {
     background-position: 0 -24px;
 }
 #menu-toggle {
-    padding: 15px 15px 11px;
+    padding: 11px 15px 9px;
+    display: block;
+    line-height: 100%;
 }
 #wrapper {
-    padding-top: 50px;
+    padding-top: 41px;
 }
 .search-homepage {
     margin: 25px auto 0;
@@ -222,7 +230,7 @@ header {
 }
 #hide-settings,
 #hide-menu {
-    display: block;
+    display: none;
     width: 25px;
     height: 25px;
     background-position: -50px 0;
@@ -233,18 +241,23 @@ header {
 }
 .wrap-menu ul {
     width: 100%;
-    padding-top: 32px;
+    padding-top: 1px;
 }
 .wrap-menu ul li {
     padding: 0 15px;
 }
 .wrap-menu li a {
-    color: #333743;
+    padding: 15px 0;
+    border-bottom: solid 1px #969696;
+    color: #3c3c3c;
     text-transform: uppercase;
-    font-weight: 600;
+    /* font-weight: 600; */
     font-size: 17px;
     display: block;
-    padding: 10px 0;
+    letter-spacing: 1.2px;
+}
+.wrap-menu li:first-child a {
+    
 }
 .wrap-menu li a:hover {
     color: #00a769;
@@ -471,12 +484,11 @@ header {
     height: 100%;
 }
 .icons-detail {
-    
-margin-top: 21px;
+    margin-top: 12px;
 }
 .icons-detail li {
     float: left;
-    margin-right: 30px;
+    margin-right: 25px;
     line-height: 100%;
 }
 .icons-detail li:last-child {
@@ -490,7 +502,7 @@ margin-top: 21px;
     padding: 10px 20px;
     font-size: 1.1em;
     color: #717171;
-    border-bottom: solid 1px #a5a5a5;
+    /* border-bottom: solid 1px #a5a5a5; */
 }
 .infor-listing {
     font-size: 1.15em;
@@ -499,6 +511,7 @@ margin-top: 21px;
     color: #141915;
     line-height: 25px;
     position: relative;
+    margin-bottom: 15px;
 }
 .infor-listing a {
     color: #868686;
@@ -807,7 +820,7 @@ label {
     margin-bottom: 5px;
 }
 .post-listing {
-    padding: 83px 15px 50px;
+    padding: 34px 15px 50px;
     position: relative;
     width: 100%;
     overflow: hidden;
@@ -1043,18 +1056,19 @@ label {
     margin-top: 6px;
 }
 .title-top {
-    background: #00a769;
-    color: #fff;
+    color: #00a769;
     font-weight: 600;
     text-align: center;
-    padding: 8px 0;
-    font-size: 1.2em;
+    padding: 7px 0;
+    font-size: 15px;
     text-transform: uppercase;
     position: fixed;
-    top: 50px;
+    top: 39px;
     left: 0;
     width: 100%;
     z-index: 100;
+    border-bottom: solid 0.5px #969696;
+    background: #fff;
 }
 .list-img li {
     float: left;
@@ -1148,8 +1162,9 @@ label {
     position: fixed;
     width: 100%;
     z-index: 100;
-    top: 91px;
+    /* top: 75px; */
     left: 0;
+    bottom: 0;
     box-shadow: 0 1px 1px 0 rgba(169, 169, 169, 0.5);
     background: #fff;
 }
@@ -1406,7 +1421,7 @@ label {
     padding-top: 15px;
 }
 .section {
-    top: 160px;
+    top: 108px;
     left: 0;
     width: 100%;
     position: absolute;
@@ -1419,7 +1434,7 @@ label {
 }
 .select-type {
     padding-bottom: 15px;
-    top: 44px;
+    top: 33px;
 }
 @-webkit-keyframes slideouttoleft{
     from {
@@ -1632,6 +1647,9 @@ label {
     -ms-border-radius: 0;
     background: none;
     border-bottom: solid 1px #a5a5a5;
+}
+#headingOne {
+    border-top: solid 1px #a5a5a5;
 }
 .panel-heading a {
     display: block;
@@ -1954,17 +1972,19 @@ label {
 }
 .icon-share-td {
     display: inline-block;
-    background-position: 0 -338px;
-    width: 28px;
-    height: 27px;
+    background-position: 0 -507px;
+    background-size: 50px 1800px;
+    width: 24px;
+    height: 24px;
     position: relative;
     top: -2px;
 }
 .save-item {
     display: inline-block;
-    background-position: 0 -313px;
-    width: 28px;
-    height: 25px;
+    background-position: 0 -469px;
+    background-size: 50px 1800px;
+    width: 25px;
+    height: 23px;
 }
 .btn-common {
     border: none;
@@ -1976,9 +1996,9 @@ label {
     -moz-border-radius: 0;
     -ms-border-radius: 0;
     padding: 10px 30px;
-    /* text-transform: uppercase; */
-    font-size: 18px;
+    font-size: 15px;
     text-align: center;
+    font-weight: 600;
 }
 .btn-small {
     padding: 7px 30px;
@@ -1992,11 +2012,11 @@ label {
     float: right;
     position: relative;
     overflow: hidden;
-    padding: 7px 15px;
+    padding: 5px 12px;
 }
 #avatar-user img {
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
@@ -2019,7 +2039,7 @@ label {
     top: 7px;
 }
 #settings-user ul {
-    padding: 15px;
+    padding: 0 15px 0;
 }
 #settings-user li {
     float: left;
@@ -2034,7 +2054,7 @@ label {
     text-transform: uppercase;
     float: left;
     width: 100%;
-    font-weight: 600;
+    /* font-weight: 600; */
     position: relative;
 }
 #settings-user li:last-child a {
@@ -2079,10 +2099,10 @@ label {
 #settings-user .user-edit div {
     overflow: hidden;
     padding-left: 10px;
-    padding-top: 5px;
+    /* padding-top: 5px; */
     height: 40px;
-    display: -webkit-flex; /* Safari */
-    -webkit-align-items: center; /* Safari 7.0+ */
+    display: -webkit-flex;/* Safari */
+    -webkit-align-items: center;/* Safari 7.0+ */
     display: flex;
     align-items: center;
 }
@@ -3156,6 +3176,7 @@ input[type=text]:focus {
     font-size: 16px;
     display: block;
     font-weight: 700;
+    line-height: 100%;
 }
 .panel-default>.panel-heading+.panel-collapse>.panel-body {
     border: none;
@@ -3268,10 +3289,11 @@ input[type=text]:focus {
     margin-top: 5px;
 }
 .detail-listing .address-listing {
-    margin: 0 0 6px 0;
+    margin: 0 0 3px 0;
     font-weight: 700;
     font-size: 16px;
     color: #3c3c3c;
+    line-height: 20px;
 }
 .infor-agent {
     margin-bottom: 20px;
@@ -3293,9 +3315,10 @@ input[type=text]:focus {
     text-transform: capitalize;
 }
 .icon-map-loca {
-    background-position: 0 -662px;
-    width: 19px;
-    height: 26px;
+    background-position: 0px -994px;
+    background-size: 50px 1800px;
+    width: 18px;
+    height: 24px;
 }
 .form-control {
     padding-left: 8px;
@@ -3451,29 +3474,34 @@ input[type=text]:focus {
     font-weight: 600;
 }
 .icon-alert {
-    background-position: 0 -920px;
-    width: 29px;
-    height: 35px;
+    background-position: 0 -1310px;
+    background-size: 50px 1800px;
+    width: 22px;
+    height: 26px;
 }
 .icon-listings {
-    background-position: 0 -955px;
-    width: 32px;
-    height: 38px;
+    background-position: 0 -1337px;
+    background-size: 50px 1800px;
+    width: 24px;
+    height: 29px;
 }
 .icon-chat {
-    background-position: 0 -817px;
-    width: 33px;
-    height: 32px;
+    background-position: 0 -1226px;
+    background-size: 50px 1800px;
+    width: 30px;
+    height: 26px;
 }
 .icon-tags {
-    background-position: 0 -851px;
-    width: 33px;
-    height: 33px;
+    background-position: 0 -1255px;
+    background-size: 50px 1800px;
+    width: 26px;
+    height: 27px;
 }
 .icon-logout {
-    background-position: 0 -887px;
-    width: 31px;
-    height: 33px;
+    background-position: 0 -1283px;
+    background-size: 50px 1800px;
+    width: 24px;
+    height: 26px;
 }
 .name-address-duan {
     position: absolute;
@@ -3489,7 +3517,7 @@ input[type=text]:focus {
     width: 30px;
 }
 .wrap-list-duan .intro-detail > div {
-    margin-bottom: 8px;
+    margin-bottom: 3px;
     font-size: 15px;
 }
 .wrap-list-duan .intro-detail .status-duan {
@@ -3501,7 +3529,7 @@ input[type=text]:focus {
     color: #3c3c3c;
 }
 .id-duan {
-    margin-bottom: 7px;
+    margin-bottom: 6px;
     font-weight: 700;
     font-size: 15px;
 }
@@ -3585,6 +3613,7 @@ input[type=text]:focus {
 #listing-list .item-listing .id-duan {
     font-weight: 400;
     color: #929292;
+    margin-bottom: 7px;
 }
 #listing-list .item-listing .id-duan span {
     font-weight: 700;
@@ -3596,5 +3625,52 @@ input[type=text]:focus {
     background-position: 0px -1089px;
 }
 .title-fixed-wrap {
-    padding-top: 43px;
+    padding-top: 34px;
+}
+.all-packege {
+    background: #f5f5f5;
+    padding: 25px 20px;
+}
+.item-packege {
+    background-color: #ffffff;
+    box-shadow: 0 0 5px 1px rgba(131, 131, 131, 0.21);
+    -webkit-box-shadow: 0 0 5px 1px rgba(131, 131, 131, 0.21);
+    -moz-box-shadow: 0 0 5px 1px rgba(131, 131, 131, 0.21);
+    -ms-box-shadow: 0 0 5px 1px rgba(131, 131, 131, 0.21);
+    padding: 20px 0 35px 0;
+    margin-bottom: 30px;
+}
+.item-packege .content-pac {
+    width: 80%;
+    margin: 0 auto 0;
+    text-align: center;
+}
+.item-packege h2 {
+    margin: 0;
+    color: #3c3c3c;
+    font-size: 18px;
+    font-weight: 600;
+}
+.content-pac p {
+    margin-bottom: 5px;
+    letter-spacing: 0.7px;
+    color: #3c3c3c;
+    font-size: 14px;
+}
+.content-pac .title-pac {
+    color: #00a769;
+    font-weight: 400;
+    font-size: 29px;
+    border-top: solid 1.5px #00a769;
+    border-bottom: solid 1.5px #00a769;
+    padding: 15px 0;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    line-height: 20px;
+}
+.content-pac .title-pac span {
+    font-size: 20px;
+}
+.item-packege .content-pac a {
+    margin-top: 25px;
 }
