@@ -9,6 +9,7 @@
 namespace frontend\models;
 use common\components\Util;
 use vsoft\chat\models\TigUsers;
+use vsoft\user\models\UserJid;
 use Yii;
 use yii\base\Component;
 use yii\helpers\Url;
@@ -33,6 +34,18 @@ class Chat extends Component
                 $tigUser->sha1_user_id = sha1($user_id);
                 $tigUser->user_pw = $this->generateKey();
                 $tigUser->save();
+            }
+            if(($userJid = UserJid::findOne(['username'=>Yii::$app->user->identity->username])) === null){
+                $jid_id = Yii::$app->dbChat->createCommand('SELECT jid_id FROM tig_ma_jids tmj WHERE jid=:jid')->bindValues([':jid' => $tigUser->user_id])->queryOne();
+                if(!empty($jid_id['jid_id'])){
+                    $userJid = new UserJid();
+                    $userJid->user_id = Yii::$app->user->identity->id;
+                    $userJid->username = Yii::$app->user->identity->username;
+                    $userJid->jid = $tigUser->user_id;
+                    $userJid->jid_id = $jid_id['jid_id'];
+                    $userJid->validate();
+                    $userJid->save();
+                }
             }
             return $tigUser;
         }
@@ -72,8 +85,8 @@ class Chat extends Component
         $dbNamePri = Util::me()->getDsnAttribute('dbname', Yii::$app->get('db')->dsn);
         $jidUserOnlined = $this->getJid($userOnlined);
 
-        $sqlFindJidFromUserFind = "SELECT tmj.jid_id FROM `".$dbNamePri."`.`profile` p, `".$dbNamePri."`.`user` u, `$dbNameChat`.`tig_ma_jids` tmj WHERE `name` LIKE '%".$userFind."%' AND p.user_id=u.id AND CONCAT(u.username,'@".self::DOMAIN."') = tmj.jid";
-        $sqlFindJidFromUserOnline = "SELECT jid_id FROM `$dbNameChat`.`tig_ma_jids` tmj WHERE jid = '".$jidUserOnlined."'";
+        $sqlFindJidFromUserFind = "SELECT u.jid_id FROM `".$dbNamePri."`.`profile` p, `".$dbNamePri."`.`user_jid` u WHERE `name` LIKE '%".$userFind."%' AND p.user_id=u.user_id";
+        $sqlFindJidFromUserOnline = "SELECT jid_id FROM `".$dbNamePri."`.`user_jid` WHERE jid = '".$jidUserOnlined."'";
         $sql1 = "SELECT tbl.* FROM (SELECT IF(direction = 0, owner_id, buddy_id) AS withuser FROM `$dbNameChat`.`tig_ma_msgs` tmm WHERE (owner_id IN (".$sqlFindJidFromUserFind.") AND buddy_id IN (".$sqlFindJidFromUserOnline.")) OR (buddy_id IN (".$sqlFindJidFromUserFind.") AND owner_id IN (".$sqlFindJidFromUserOnline."))" .
             " ORDER BY ts DESC) tbl GROUP BY withuser ";
         $existConversation = Yii::$app->get('dbChat')->createCommand($sql1)->queryAll();
