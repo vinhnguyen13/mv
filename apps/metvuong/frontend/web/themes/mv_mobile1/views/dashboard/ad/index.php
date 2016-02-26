@@ -32,7 +32,7 @@ use yii\helpers\Url;
 							<?php endif; ?>
 
 							<p class="date-post">Ngày đăng tin: <span><?= date("d/m/Y", $product->created_at) ?></span></p>
-							<p class="id-duan">ID tin đăng:<span>985</span></p>
+							<p class="id-duan">ID:<span><?=$product->id;?></span></p>
 						</div>
 						<div class="pull-right push-price">
 							<p>Tin còn <strong>15 ngày</strong></p>
