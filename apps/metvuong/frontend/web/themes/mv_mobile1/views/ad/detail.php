@@ -49,7 +49,7 @@ use yii\helpers\Url;
 		<div class="address-listing">
 			<p><?= $product->getAddress(true) ?></p>
 		</div>
-		<p class="id-duan">ID tin đăng:<span><?=$product->id;?></span></p>
+		<p class="id-duan">ID:<span><?=$product->id;?></span></p>
 		<!-- <p class="attr-home">
 			<?= $product->adProductAdditionInfo->room_no ? $product->adProductAdditionInfo->room_no . ' <span class="icon icon-bed"></span> | ' : '' ?>
 			<?= $product->adProductAdditionInfo->toilet_no ? $product->adProductAdditionInfo->toilet_no . ' <span class="icon icon-bath"></span> | ' : '' ?>
