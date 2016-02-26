@@ -7,6 +7,9 @@ class m160225_020657_alter_building_project_dbCraw extends Migration
 {
     public function up()
     {
+        if(empty(Yii::$app->get('dbCraw'))){
+            return false;
+        }
         $this->execute("ALTER TABLE `db_mv_tool`.`ad_building_project` ADD COLUMN `description` TEXT NULL COMMENT '' AFTER `location`;");
         $this->execute("ALTER TABLE `db_mv_tool`.`ad_building_project`
                             CHANGE COLUMN `name` `name` VARCHAR(100) NOT NULL COMMENT '' ,
