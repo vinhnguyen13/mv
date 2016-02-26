@@ -11,45 +11,46 @@ if(!empty($jid_id)){
 	$msgs = Yii::$app->dbChat->createCommand($sql)->bindValues([':jid_id'=>$jid_id['jid_id']])->queryAll();
 }
 ?>
-<div class="chat-history">
-	<div class="title-top">
-		<span>Chat history</span>
-		<div class="search-history">
-			<input type="text" id="findConversation" class="form-control" placeholder="Filter">
-			<button class="btn-search-hist" href="#"><span class="icon icon-search-white"></span></button>
+<div class="title-fixed-wrap">
+	<div class="chat-history">
+		<div class="title-top">
+			<span>Chat history</span>
 		</div>
-	</div>
-	<div class="chat-list clearfix">
-		<?php
-		if(!empty($msgs)) {
-			foreach($msgs as $msg){
-				$jid_user = Yii::$app->get('dbChat')->cache(function ($db) use ($msg) {
-					return Yii::$app->get('dbChat')->createCommand('SELECT jid FROM tig_ma_jids tmj WHERE jid_id=:jid_id')->bindValues([':jid_id'=>$msg['withuser']])->queryOne();
-				});
-				if(!empty($jid_user['jid'])){
-					$username = Chat::find()->getUsername($jid_user['jid']);
-					$user = \frontend\models\User::find()->where(['username' => $username])->one();
-				}
-				if(!empty($user->profile)){
-			?>
-					<div class="item" chat-with="<?=$user->username;?>">
-						<a href="<?= Url::to(['/chat/with', 'username' => $user->username]) ?>">
-							<span class="wrap-img"><img src="<?=$user->profile->getAvatarUrl();?>" alt=""></span>
-							<div class="chat-detail">
-								<span class="pull-right time-chat"><?=date('H:i:s d-m-Y', strtotime($msg['ts']));?></span>
-								<span class="name"><?=$user->profile->getDisplayName();?></span>
-								<span><?=$msg['body'];?></span>
-							</div>
-						</a>
-					</div>
+		<div class="search-history">
+			<input type="text" id="findConversation" class="form-control" placeholder="Tìm theo tên...">
+			<button class="btn-search-hist" href="#"><span class="icon icon-search-small"></span></button>
+		</div>
+		<div class="chat-list clearfix">
 			<?php
+			if(!empty($msgs)) {
+				foreach($msgs as $msg){
+					$jid_user = Yii::$app->get('dbChat')->cache(function ($db) use ($msg) {
+						return Yii::$app->get('dbChat')->createCommand('SELECT jid FROM tig_ma_jids tmj WHERE jid_id=:jid_id')->bindValues([':jid_id'=>$msg['withuser']])->queryOne();
+					});
+					if(!empty($jid_user['jid'])){
+						$username = Chat::find()->getUsername($jid_user['jid']);
+						$user = \frontend\models\User::find()->where(['username' => $username])->one();
+					}
+					if(!empty($user->profile)){
+				?>
+						<div class="item" chat-with="<?=$user->username;?>">
+							<a href="<?= Url::to(['/chat/with', 'username' => $user->username]) ?>">
+								<span class="wrap-img"><img src="<?=$user->profile->getAvatarUrl();?>" alt=""></span>
+								<div class="chat-detail">
+									<span class="pull-right time-chat"><?=date('H:i:s d-m-Y', strtotime($msg['ts']));?></span>
+									<span class="name"><?=$user->profile->getDisplayName();?></span>
+									<span><?=$msg['body'];?></span>
+								</div>
+							</a>
+						</div>
+				<?php
+					}
 				}
 			}
-		}
-		?>
+			?>
+		</div>
 	</div>
 </div>
-
 <script id="chat-receive-template" type="text/x-handlebars-template">
 	<div class="item" chat-with="{{from}}">
 		<a href="{{chatUrl}}">
@@ -93,13 +94,6 @@ if(!empty($jid_id)){
 					self.show();
 				}
 			});
-		});
-
-		$('.btn-search-hist').on('click', function (e) {
-			e.preventDefault();
-			var _this = $(this);
-			_this.parent().addClass('focus');
-			_this.toggleClass('btn-submit-filter');
 		});
 	});
 </script>

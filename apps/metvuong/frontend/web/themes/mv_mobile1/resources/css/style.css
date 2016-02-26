@@ -2190,7 +2190,7 @@ footer {
     width: 100%;
 }
 .wrap-list-duan {
-    padding: 63px 15px 0;
+    padding: 25px 15px 0;
     margin-bottom: 30px;
 }
 .wrap-list-duan li {
@@ -2377,7 +2377,7 @@ footer {
     margin-bottom: 10px;
 }
 .wrap-noti {
-    padding: 43px 0 0 30px;
+    padding: 0 0 0 30px;
 }
 .list-noti {
     border-left: 1.5px dashed #777777;
@@ -2709,7 +2709,6 @@ input[type=text]:focus {
 }
 .statis {
     padding-bottom: 50px;
-    padding-top: 43px;
 }
 .infor-address a {
     color: #fff;
@@ -3543,12 +3542,8 @@ input[type=text]:focus {
     height: 28px;
 }
 .search-history {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+    position: relative;
+    height: 37px;
 }
 .search-history input {
     border-radius: 0;
@@ -3557,24 +3552,7 @@ input[type=text]:focus {
     -ms-border-radius: 0;
     height: 100%;
     width: 100%;
-    margin: 0;
-    position: absolute;
-    top: 0;
-    left: 100%;
-    z-index: 1;
-    -webkit-backface-visibility: none;
-    -moz-backface-visibility: none;
-    -ms-backface-visibility: none;
-    backface-visibility: none;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
-    -webkit-transition: left 0;
-    -moz-transition: left 0;
-    -ms-transition: left 0;
-    -o-transition: left 0;
-    transition: left 0;
-    padding-right: 50px;
+    padding-left: 39px;
 }
 .icon-search-white {
     width: 33px;
@@ -3583,12 +3561,12 @@ input[type=text]:focus {
 }
 .btn-search-hist {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 1px;
+    left: 0;
     padding: 2px 9px 0;
     z-index: 2;
-    background: #00a769;
     border: none;
+    background: none;
 }
 .btn-search-hist span {
     margin-top: 2px;
@@ -3611,4 +3589,12 @@ input[type=text]:focus {
 #listing-list .item-listing .id-duan span {
     font-weight: 700;
     font-size: 15px;
+}
+.icon-search-small {
+    width: 22px;
+    height: 23px;
+    background-position: 0px -1089px;
+}
+.title-fixed-wrap {
+    padding-top: 43px;
 }
