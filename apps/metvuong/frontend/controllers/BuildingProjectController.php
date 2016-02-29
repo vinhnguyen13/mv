@@ -6,6 +6,7 @@ use vsoft\buildingProject\models\BuildingProject;
 use yii\data\Pagination;
 use vsoft\ad\models\AdBuildingProject;
 use yii\web\NotFoundHttpException;
+use yii\helpers\Url;
 
 class BuildingProjectController extends Controller
 {
@@ -42,5 +43,15 @@ class BuildingProjectController extends Controller
 		} else {
 			throw new NotFoundHttpException('The requested page does not exist.');
 		}
+	}
+	
+	function actionDetail($id) {
+		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+		
+		$model = AdBuildingProject::find()->where('`id` = :id', [':id' => $id])->asArray(true)->one();
+	
+		$model['url'] = Url::to(['building-project/view', 'slug' => $model['slug']]);
+		
+		return $model;
 	}
 }

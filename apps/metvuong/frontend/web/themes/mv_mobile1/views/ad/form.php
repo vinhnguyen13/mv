@@ -3,14 +3,19 @@
 	use yii\helpers\Html;
 	use vsoft\ad\models\AdProduct;
 use yii\web\View;
+use vsoft\ad\models\AdBuildingProject;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
 	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/post-listing.js', ['position' => View::POS_END]);
+	$this->registerCss("#project-info {position: relative;} #project-info .loading-proccess span {border-top-color: #8C7777; border-left-color: #8C7777;} #project-info .loading-proccess {display: none;} #project-info.loading .loading-proccess {display: block;} #project-info.loading .result {display: none;}");
 ?>
 <div class="title-top">Đăng tin</div>
 <div class="post-listing">
 	<?php
 		$form = ActiveForm::begin ( [ 
 			'id' => 'listing-form',
+			'enableClientValidation' => false,
 			'options' => [ 
 				'autocomplete' => 'off',
 				'spellcheck' => 'false'
@@ -25,7 +30,7 @@ use yii\web\View;
 				<li><a data-active-section="tien-ich" href="#">4</a><span class="icon arrowLeft"></span></li>
 			</ul>
 		</div>
-		<div class="section select-type hide item-step">
+		<div id="step-1" class="section select-type hide item-step">
 			<p class="text-center step-txt">4 bước dễ dàng</p>
 		
 			<ul class="clearfix step-check">
@@ -68,27 +73,37 @@ use yii\web\View;
 			<?= $form->field($product, 'category_id')
 					->label(false)
 					->dropDownList([], ['prompt' => $product->getAttributeLabel('category_id'), 'data-default' => $product->category_id]) ?>
+					
+			<?= $form->field($product, 'project_building_id', ['options' => ['class' => 'form-group']])
+					->label(false)
+					->dropDownList(ArrayHelper::map(AdBuildingProject::find()->all(), 'id', 'name'), ['prompt' => $product->getAttributeLabel('project_building_id')]) ?>
+					
+			<div id="project-info" class="hide" data-url="<?= Url::to(['building-project/detail']) ?>">
+				<div class="loading-proccess"><span></span></div>
+				<div class="result">
+					<div>Vị trí: <span id="project-info-location"></span></div>
+					<a target="_blank" id="project-info-detail" href="#">Xem chi tiết dự án</a>
+				</div>
+			</div>
 		</div>
 
 		<div class="tt-chung item-step section hide">
 			<div class="title-step">Thông tin chung</div>
 			<div class="row">
+				<?= Html::activeHiddenInput($product, 'city_id') ?>
 				<div class="col-xs-6 form-group">
-					<select class="form-control" name="" id="">
-						<option value="" disabled="" selected="">Tỉnh / Thành</option>
-						<option value="">Hồ Chí Minh</option>
-						<option value="">Hà Nội</option>
-						<option value="">Đồng Nai</option>
+					<select id="city" class="form-control">
+						<option value=""><?= $product->getAttributeLabel('city_id') ?></option>
 					</select>
 				</div>
+				
+				<?= Html::activeHiddenInput($product, 'district_id') ?>
 				<div class="col-xs-6 form-group">
-					<select class="form-control" name="" id="">
-						<option value="" disabled="" selected="">Quận / Huyện</option>
-						<option value="">Hồ Chí Minh</option>
-						<option value="">Hà Nội</option>
-						<option value="">Đồng Nai</option>
+					<select id="district" class="form-control">
+						<option value=""><?= $product->getAttributeLabel('district_id') ?></option>
 					</select>
 				</div>
+				
 				<div class="col-xs-12 form-group">
 					<input type="text" class="form-control" id="" placeholder="Đường">
 				</div>
