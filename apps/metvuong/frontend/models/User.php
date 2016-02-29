@@ -496,8 +496,9 @@ class User extends \dektrium\user\models\User
     /**
      * @return string
      */
-    public function urlChat($username)
+    public function urlChat($username = null)
     {
+        $username = !empty($username) ? $username : $this->username;
         return Url::to(['/chat/with', 'username'=>$username]);
     }
 
