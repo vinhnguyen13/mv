@@ -1,5 +1,12 @@
 $(document).ready(function() {
 
+    $(".rippler").rippler({
+        effectClass      :  'rippler-effect',
+        effectSize      :  0,      // Default size (width & height)
+        addElement      :  'div',   // e.g. 'svg'(feature)
+        duration        :  400
+    });
+
     $('.hFullScreen').css({
         height: $('#hScreen').outerHeight() - 50
     });
@@ -739,22 +746,47 @@ $.fn.loading = function (options) {
     });
 }
 
-$.fn.pupop = function (options) {
+$.fn.popupMobi = function (options) {
 
     return this.each(function() {
         var defaults = {
             styleShow: "slideUp", // fadeIn
             duration: 200,
             positionEl: "top", // top, center
-            
+            btnClickShow: ""
         },
         sc = {},
         el = $(this);
 
-        if ( el.length == 0 ) return el;
+        if ( el.length == 0 || !checkMobile() ) return el;
 
         sc.settings = $.extend({}, defaults, options);
 
-        
+        $('body').append(el);
+
+        $(sc.settings.btnClickShow).on('click', function (e) {
+            e.preventDefault();
+            showPopup(el);
+        });
+
+        if ( $(sc.settings.btnClickShow).length == 0 || sc.settings.btnClickShow == "" ) {
+            showPopup(el);
+        }
+
+        function showPopup (popupItem) {
+            $('body').addClass('popup-mobi');
+            $('body').append('<div class="overflow-bg-popup"></div>')
+        }
+
+        function hide () {
+
+        }
     });
+}
+
+function checkMobile () {
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        return true;
+    }
+    return false;
 }

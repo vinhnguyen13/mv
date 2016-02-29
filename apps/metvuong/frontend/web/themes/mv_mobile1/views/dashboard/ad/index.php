@@ -36,7 +36,7 @@ use yii\helpers\Url;
 						</div>
 						<div class="pull-right push-price">
 							<p>Tin còn <strong>15 ngày</strong></p>
-							<a href="#">Nâng cấp</a>
+							<a href="#nang-cap" class="btn-nang-cap">Nâng cấp</a>
 						</div>
 						<div class="wrap-icon"><div><span class="icon icon-view-small"></span></div><strong>1000</strong> Lượt xem</div><div class="wrap-icon"><div><span class="icon icon-per-small"></span></div><strong>300</strong> Visitor</div>
 						<div class="wrap-icon"><div><span class="icon icon-heart-small"></span></div><strong>100</strong> Thích</div>
@@ -55,3 +55,17 @@ use yii\helpers\Url;
 		<?php endif; ?>
 	</div>
 </div>
+
+<div id="nang-cap" class="popup-custom hide">
+	<div class="wrap-popup">
+		
+	</div>
+</div>
+
+<script>
+	$(document).ready(function () {
+		$('#nang-cap').popupMobi({
+			btnClickShow: '.btn-nang-cap'
+		});
+	});
+</script>

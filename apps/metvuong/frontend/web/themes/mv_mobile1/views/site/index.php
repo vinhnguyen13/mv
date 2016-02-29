@@ -17,9 +17,9 @@ use frontend\models\Ad;
             </div>
             <div class="search-homepage">
                 <ul class="clearfix">
-                    <li><a href="<?= Url::to(['/ad/index']) ?>">Mua</a></li>
-                    <li><a href="#">Thuê</a></li>
-                    <li><a href="<?= Url::to(['/ad/post']) ?>">Bán / Cho Thuê</a></li>
+                    <li><a class="rippler rippler-default" href="<?= Url::to(['/ad/index']) ?>">Mua</a></li>
+                    <li><a class="rippler rippler-default" href="#">Thuê</a></li>
+                    <li><a class="rippler rippler-default" href="<?= Url::to(['/ad/post']) ?>">Bán / Cho Thuê</a></li>
                 </ul>
                 <form id="" action="">
                     <input autocomplete="off" data-url="<?= Url::to(['site/search']) ?>" id="search" type="text" placeholder="Tìm kiếm nhanh..." />
@@ -54,7 +54,7 @@ use frontend\models\Ad;
             }
             ?>
             <div class="item">
-                <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pic-intro">
+                <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pic-intro rippler rippler-default">
                     <div class="img-show">
                         <div><img src="" data-original="<?= $imgUrl ?>"></div>
                     </div>
@@ -97,7 +97,7 @@ use frontend\models\Ad;
                 foreach($news as $n){
             ?>
             <div class="item clearfix">
-                <a href="<?= \yii\helpers\Url::to(['news/view', 'id' => $n['id'], 'slug' => $n['slug'], 'cat_id' => $n['catalog_id'], 'cat_slug' => $n["cat_slug"]]) ?>">
+                <a class="rippler rippler-default" href="<?= \yii\helpers\Url::to(['news/view', 'id' => $n['id'], 'slug' => $n['slug'], 'cat_id' => $n['catalog_id'], 'cat_slug' => $n["cat_slug"]]) ?>">
                     <div class="wrap-img bgcover" style="background-image:url(<?=Url::to('/store/news/show/' . $n['banner']) ?>);"></div>
                     <span class="txt-short-news">
                         <span class="title-news color-30a868"><?=$n['title']?></span>
@@ -115,7 +115,7 @@ use frontend\models\Ad;
         <div class="txt-intro">
             <h2>Chúng tôi sẽ giúp bạn tìm được ngôi nhà mà mình mong muốn trong chốc lát</h2>
             <p>Mét Vuông cung cấp lên đến hàng chục ngàn các căn hộ cao cấp, nhà riêng và biệt thự cho thuê hoặc đang rao bán tại hầu hết các tỉnh thành trên cả nước. Thông qua những mô tả chi tiết và hình ảnh chân thật, chúng tôi cam kết giúp khách hàng tìm được sản phẩm phù hợp nhất, một cách nhanh chóng và hiệu quả.</p>
-            <div class="text-center pdT-25"><a href="#" class="btn-common">Tìm hiểu thêm</a></div>
+            <div class="text-center pdT-25"><a href="#" class="btn-common rippler rippler-default">Tìm hiểu thêm</a></div>
         </div>
     </section>
 </div>
