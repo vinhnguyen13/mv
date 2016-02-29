@@ -36,9 +36,6 @@ class MemberController extends Controller
     public function beforeAction($action)
     {
         $this->view->params['noFooter'] = true;
-        if(Yii::$app->user->isGuest){
-            $this->redirect(['/member/login']);
-        }
         return parent::beforeAction($action);
     }
 
@@ -253,10 +250,7 @@ class MemberController extends Controller
 
     public function actionProfile($username)
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
+        $this->checkAccess();
         $model = Yii::createObject([
             'class'    => ProfileForm::className(),
             'scenario' => 'updateprofile',
@@ -296,10 +290,7 @@ class MemberController extends Controller
 
     public function actionPassword()
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
+        $this->checkAccess();
         $model = Yii::createObject([
             'class'    => ProfileForm::className(),
             'scenario' => 'password',
