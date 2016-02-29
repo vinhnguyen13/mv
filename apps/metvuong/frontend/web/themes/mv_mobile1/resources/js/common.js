@@ -751,7 +751,8 @@ $.fn.popupMobi = function (options) {
             styleShow: "full", // "full" or "center"
             duration: 200,
             btnClickShow: "",
-            closeBtn: ""
+            closeBtn: "",
+            funCallBack: function () {}
         },
         sc = {},
         el = $(this);
@@ -763,6 +764,7 @@ $.fn.popupMobi = function (options) {
         $(sc.settings.btnClickShow).on('click', function (e) {
             e.preventDefault();
             showPopup(el);
+            sc.settings.funCallBack($(this));
         });
 
         $(sc.settings.closeBtn).on('click', function (e) {
