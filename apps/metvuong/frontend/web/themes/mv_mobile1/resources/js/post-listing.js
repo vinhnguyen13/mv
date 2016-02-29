@@ -1,6 +1,8 @@
 $(document).ready(function () {
+	var listingForm = $('#listing-form');
 	
-	var catEl = $('#adproduct-category_id');
+	var catId = 'adproduct-category_id';
+	var catEl = $('#' + catId);
 	var defaultCat = Number(catEl.data('default'));
 
 	for(var i in dataCategories) {
@@ -36,16 +38,15 @@ $(document).ready(function () {
 	$('.post-listing').slideSection({
 		active: 0,
 		validateFrm: function (step) {
-			if()
-			
-			console.log(step);
-			return validate[];
+			return validate['step' + step]();
 		}
 	});
 
 	var validate = {
 		step1: function() {
+			listingForm.yiiActiveForm('validateAttribute', catId);
 			
+			console.log(catEl.closest('.form-group').attr('class'));
 		},
 		step2: function() {
 			

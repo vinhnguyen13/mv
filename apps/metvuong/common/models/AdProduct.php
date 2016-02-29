@@ -38,6 +38,7 @@ use Yii;
  *
  * @property AdContactInfo $adContactInfo
  * @property AdImages[] $adImages
+ * @property AdBuildingProject $projectBuilding
  * @property AdCategory $category
  * @property AdCity $city
  * @property AdDistrict $district
@@ -126,6 +127,14 @@ class AdProduct extends \yii\db\ActiveRecord
     public function getAdImages()
     {
         return $this->hasMany(AdImages::className(), ['product_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProjectBuilding()
+    {
+        return $this->hasOne(AdBuildingProject::className(), ['id' => 'project_building_id']);
     }
 
     /**

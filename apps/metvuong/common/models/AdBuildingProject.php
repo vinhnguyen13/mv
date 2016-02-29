@@ -51,6 +51,7 @@ use Yii;
  * @property AdContractorBuildingProject[] $adContractorBuildingProjects
  * @property AdFacilityBuildingProject[] $adFacilityBuildingProjects
  * @property AdInvestorBuildingProject[] $adInvestorBuildingProjects
+ * @property AdProduct[] $adProducts
  */
 class AdBuildingProject extends \yii\db\ActiveRecord
 {
@@ -184,5 +185,13 @@ class AdBuildingProject extends \yii\db\ActiveRecord
     public function getAdInvestorBuildingProjects()
     {
         return $this->hasMany(AdInvestorBuildingProject::className(), ['building_project_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAdProducts()
+    {
+        return $this->hasMany(AdProduct::className(), ['project_building_id' => 'id']);
     }
 }
