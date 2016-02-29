@@ -618,7 +618,8 @@ $.fn.slideSection = function (options) {
             btnBack.addClass('disable');
         }
 
-        function next () {
+        function next (e) {
+            e.preventDefault();
             if ( $(this).hasClass('disable') ) return;
             if ( !sc.settings.validateFrm(current+1) ) return;
 
@@ -650,11 +651,10 @@ $.fn.slideSection = function (options) {
 
                 btnBack.removeClass('disable');
             }
-
-            return false;
         }
 
-        function back () {
+        function back (e) {
+            e.preventDefault();
             if ( $(this).hasClass('disable') ) return;
 
             el.find('.section').removeClass('in out');
@@ -681,8 +681,6 @@ $.fn.slideSection = function (options) {
             }else {
                 btnNext.removeClass('disable');
             }
-
-            return false;
         }
 
         function hWrapSection (current) {
@@ -750,9 +748,8 @@ $.fn.popupMobi = function (options) {
 
     return this.each(function() {
         var defaults = {
-            styleShow: "slideUp", // fadeIn
+            styleShow: "full", // "full" or "center"
             duration: 200,
-            positionEl: "top", // top, center
             btnClickShow: ""
         },
         sc = {},
@@ -775,7 +772,7 @@ $.fn.popupMobi = function (options) {
 
         function showPopup (popupItem) {
             $('body').addClass('popup-mobi');
-            $('body').append('<div class="overflow-bg-popup"></div>')
+            //popupItem.
         }
 
         function hide () {
