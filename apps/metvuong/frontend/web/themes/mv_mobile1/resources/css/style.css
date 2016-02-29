@@ -3821,6 +3821,19 @@ input[type=text]:focus {
     height: 100px;
     background-position: 50% bottom;
     margin-right: 10px;
+    position: relative;
+}
+.list-post li .bgcover div {
+    background: rgba(0, 167, 105, 0.58);
+    padding: 3px 10px;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 700;
+    position: absolute;
+    width: auto;
+    top: 0;
+    right: 0;
 }
 .list-post li .name-post {
     line-height: 18px;
@@ -3842,4 +3855,91 @@ input[type=text]:focus {
 .list-post li .price-post strong {
     font-weight: 700;
     font-size: 18px;
+}
+.popup-common {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    z-index: 999;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-top: 45px;
+    font-size: 14px;
+}
+.title-popup {
+    color: #00a769;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    border-bottom: solid 0.5px #969696;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    background: #fff;
+    height: 45px;
+    line-height: 45px;
+}
+.inner-popup {
+    padding: 15px 15px 50px;
+}
+.frm-email {
+    border-bottom: solid 0.5px #969696;
+}
+.frm-email span {
+    width: 20%;
+    display: inline-block;
+}
+.frm-email input[type=text],
+.frm-email input[type=email] {
+    height: 35px;
+    width: 78%;
+    border: none;
+}
+.frm-email textarea {
+    width: 100%;
+    height: 75px;
+    border: none;
+}
+.item-send {
+    margin: 15px 0;
+}
+.item-send .name {
+    color: #3c3c3c;
+    font-weight: 700;
+    font-size: 18px;
+    margin: 0 0 3px;
+}
+.item-send .address {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.item-send .send-by {
+    font-weight: 600;
+    margin-top: 10px;
+}
+.item-send .infor-send {
+    border: solid 0.7px #979797;
+    padding: 10px 15px 15px;
+}
+.inner-popup .btn-common {
+    text-transform: uppercase;
+    border: solid 1.5px #00a769;
+}
+.inner-popup .btn-cancel {
+    background: none;
+    color: #3c3c3c;
+    margin-right: 10px;
+}
+.title-popup .txt-cancel {
+    padding: 0 15px;
+    font-size: 14px;
+    color: #3B3B3B;
+    position: absolute;
+    top: 0;
+    left: 0;
 }

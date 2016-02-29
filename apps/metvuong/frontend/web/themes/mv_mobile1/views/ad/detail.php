@@ -224,6 +224,47 @@ use yii\helpers\Url;
     </div>
 </div>
 
+<div id="popup-email" class="popup-common">
+	<div class="wrap-popup">
+		<div class="title-popup clearfix">
+			<div class="text-center">SHARE VIA EMAIL</div>
+			<a href="#" class="txt-cancel pull-left">Cancel</a>
+		</div>
+		<div class="inner-popup">
+			<form action="">
+				<div class="frm-item frm-email">
+					<span>From</span>
+					<input type="email" placeholder="abc@gmail.com">
+				</div>
+				<div class="frm-item frm-email">
+					<span>To</span>
+					<input type="email" placeholder="abc@gmail.com">
+				</div>
+				<div class="frm-item frm-email">
+					<span>Subject</span>
+					<input type="text" placeholder="">
+				</div>
+				<div class="frm-item frm-email">
+					<textarea name="" id="" placeholder="Say something…"></textarea>
+				</div>
+				<div class="item-send">
+					<div class="img-show"><div><a href=""><img src="/store/ad/56cc10b5896a2.medium.jpg"></a></div></div>
+					<div class="infor-send">
+						<p class="name">LANCASTER X</p>
+						<p class="address">42 Bà Huyện Thanh Quan, Quận 1, HCM</p>
+						<p>Phasellus non eros tortor. Ut sodales purus a ipsum fringilla, et pharetra lacus consectetur. Cras interdum sapien ut faucibus ornare. Duis efficitur enim at augue semper, vitae eleifend augue elementum...</p>
+						<p class="send-by">BY METVUONG.COM</p>
+					</div>
+				</div>
+				<div class="text-right">
+					<button class="btn-common rippler rippler-default btn-cancel">Cancel</button>
+					<button class="btn-common rippler rippler-default">Send</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
 <?php
 /**
  * notification
@@ -250,3 +291,9 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 	<?php
 }
 ?>
+
+<script>
+	$(document).ready(function () {
+		popupMobi();
+	});
+</script>

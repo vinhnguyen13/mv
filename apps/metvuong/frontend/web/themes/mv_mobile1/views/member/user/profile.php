@@ -48,8 +48,7 @@ $user = $model->getUser();
             <ul class="clearfix list-post">
                 <li>
                     <a href="#" class="rippler rippler-default">
-                        <div class="bgcover pull-left" style="background-image: url(<?=Yii::$app->view->theme->baseUrl."/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg"?>);"></div>
-                        <div>Nhà riêng bán</div>
+                        <div class="bgcover pull-left" style="background-image: url(<?=Yii::$app->view->theme->baseUrl."/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg"?>);"><div>Nhà riêng bán</div></div>
                         <div class="overflow-all">
                             <p class="name-post">42/1/89 Ba Huyen Thanh Quan, Quận 1, HCM</p>
                             <ul class="clearfix list-attr-td">
@@ -69,8 +68,7 @@ $user = $model->getUser();
                 </li>
                 <li>
                     <a href="#" class="rippler rippler-default">
-                        <div class="bgcover pull-left" style="background-image: url(<?=Yii::$app->view->theme->baseUrl."/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg"?>);"></div>
-                        <div>Căn hộ bán</div>
+                        <div class="bgcover pull-left" style="background-image: url(<?=Yii::$app->view->theme->baseUrl."/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg"?>);"><div>Căn hộ bán</div></div>
                         <div class="overflow-all">
                             <p class="name-post">42/1/89 Ba Huyen Thanh Quan, Quận 1, HCM</p>
                             <ul class="clearfix list-attr-td">
@@ -90,8 +88,7 @@ $user = $model->getUser();
                 </li>
                 <li>
                     <a href="#" class="rippler rippler-default">
-                        <div class="bgcover pull-left" style="background-image: url(<?=Yii::$app->view->theme->baseUrl."/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg"?>);"></div>
-                        <div>Nhà riêng thuê</div>
+                        <div class="bgcover pull-left" style="background-image: url(<?=Yii::$app->view->theme->baseUrl."/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg"?>);"><div>Nhà riêng thuê</div></div>
                         <div class="overflow-all">
                             <p class="name-post">42/1/89 Ba Huyen Thanh Quan, Quận 1, HCM</p>
                             <ul class="clearfix list-attr-td">
