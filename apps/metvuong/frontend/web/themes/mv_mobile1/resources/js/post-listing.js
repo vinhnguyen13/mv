@@ -1,7 +1,8 @@
 $(document).ready(function () {
 	
 	var catEl = $('#adproduct-category_id');
-	var defaultCat = Number(catEl.data('detault'));
+	var defaultCat = Number(catEl.data('default'));
+
 	for(var i in dataCategories) {
 		var item = $('<option value="' + i + '">' + dataCategories[i].name + '</option>');
 		
@@ -11,6 +12,12 @@ $(document).ready(function () {
 		
 		catEl.append(item);
 	}
+	
+	
+	
+	
+	
+	
 	
 		/*$('.dropdown-select').dropdown({
 			hiddenFillValue: '#sort'

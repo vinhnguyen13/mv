@@ -64,7 +64,7 @@ use yii\web\View;
 					</a>
 				</li>
 			</ul>
-			<?php $product->category_id = 6 ?>
+			
 			<?= $form->field($product, 'category_id')
 					->label(false)
 					->dropDownList([], ['prompt' => $product->getAttributeLabel('category_id'), 'data-default' => $product->category_id]) ?>
