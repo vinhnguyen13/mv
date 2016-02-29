@@ -3805,3 +3805,41 @@ input[type=text]:focus {
     width: 22px;
     height: 17px;
 }
+.list-per-post {
+    padding: 20px;
+}
+.list-post li {
+    margin-bottom: 25px;
+}
+.list-post li a{
+    color: #3c3c3c;
+    font-weight: 600;
+    font-size: 15px;
+}
+.list-post li .bgcover {
+    width: 40%;
+    height: 100px;
+    background-position: 50% bottom;
+    margin-right: 10px;
+}
+.list-post li .name-post {
+    line-height: 18px;
+    margin-bottom: 7px;
+}
+.list-post li .list-attr-td li {
+    padding-right: 5px;
+    margin-right: 5px;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+.list-post li .list-attr-td li:last-child {
+    margin: 0;
+    padding: 0;
+}
+.list-post li .list-attr-td {
+    margin-bottom: 5px;
+}
+.list-post li .price-post strong {
+    font-weight: 700;
+    font-size: 18px;
+}

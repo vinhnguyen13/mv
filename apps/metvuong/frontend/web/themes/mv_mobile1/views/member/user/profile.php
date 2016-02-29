@@ -47,7 +47,47 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
             <ul class="clearfix list-post">
                 <li>
                     <a href="#" class="rippler rippler-default">
-                        <div class="bgcover pull-left" style="background-image: url();"></div>
+                        <div class="bgcover pull-left" style="background-image: url(<?=Yii::$app->view->theme->baseUrl."/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg"?>);"></div>
+                        <div class="overflow-all">
+                            <p class="name-post">42/1/89 Ba Huyen Thanh Quan, Quận 1, HCM</p>
+                            <ul class="clearfix list-attr-td">
+                                <li>
+                                    <span class="icon icon-dt icon-dt-small"></span>80m2
+                                </li>
+                                <li>
+                                    <span class="icon icon-bed icon-bed-small"></span> 02
+                                </li>
+                                <li>
+                                    <span class="icon icon-pt icon-pt-small"></span> 02
+                                </li>
+                            </ul>
+                            <p class="price-post">Giá bán <strong>4 tỷ đồng</strong></p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="rippler rippler-default">
+                        <div class="bgcover pull-left" style="background-image: url(<?=Yii::$app->view->theme->baseUrl."/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg"?>);"></div>
+                        <div class="overflow-all">
+                            <p class="name-post">42/1/89 Ba Huyen Thanh Quan, Quận 1, HCM</p>
+                            <ul class="clearfix list-attr-td">
+                                <li>
+                                    <span class="icon icon-dt icon-dt-small"></span>80m2
+                                </li>
+                                <li>
+                                    <span class="icon icon-bed icon-bed-small"></span> 02
+                                </li>
+                                <li>
+                                    <span class="icon icon-pt icon-pt-small"></span> 02
+                                </li>
+                            </ul>
+                            <p class="price-post">Giá bán <strong>4 tỷ đồng</strong></p>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="rippler rippler-default">
+                        <div class="bgcover pull-left" style="background-image: url(<?=Yii::$app->view->theme->baseUrl."/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg"?>);"></div>
                         <div class="overflow-all">
                             <p class="name-post">42/1/89 Ba Huyen Thanh Quan, Quận 1, HCM</p>
                             <ul class="clearfix list-attr-td">
