@@ -21,6 +21,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Query;
+use yii\helpers\Url;
 use yii\web\Application as WebApplication;
 use yii\web\IdentityInterface;
 
@@ -474,11 +475,22 @@ class User extends \dektrium\user\models\User
         throw new NotSupportedException('Method "' . __CLASS__ . '::' . __METHOD__ . '" is not implemented.');
     }
 
+    /**
+     * @return bool
+     */
     public function isMe()
     {
         if(!Yii::$app->user->isGuest){
             return ($this->id == Yii::$app->user->identity->id ) ? true : false;
         }
         return false;
+    }
+
+    /**
+     * @return string
+     */
+    public function urlProfile()
+    {
+        return Url::to(['member/profile', 'username'=>$this->username]);
     }
 }

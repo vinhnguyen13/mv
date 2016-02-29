@@ -15,6 +15,8 @@ use frontend\models\Token;
 use frontend\models\User;
 use Yii;
 use yii\base\Component;
+use yii\base\Exception;
+use yii\web\NotFoundHttpException;
 
 /**
  * Mailer.
@@ -216,19 +218,23 @@ class Mailer extends Component
      */
     protected function sendMessage($to, $subject, $view, $params = [])
     {
-        /** @var \yii\mail\BaseMailer $mailer */
-        $mailer = Yii::$app->mailer;
-        $mailer->viewPath = $this->viewPath;
-        $mailer->getView()->theme = Yii::$app->view->theme;
+        try {
+            /** @var \yii\mail\BaseMailer $mailer */
+            $mailer = Yii::$app->mailer;
+            $mailer->viewPath = $this->viewPath;
+            $mailer->getView()->theme = Yii::$app->view->theme;
 
-        if ($this->sender === null) {
-            $this->sender = isset(Yii::$app->params['adminEmail']) ? Yii::$app->params['adminEmail'] : 'no-reply@example.com';
+            if ($this->sender === null) {
+                $this->sender = isset(Yii::$app->params['adminEmail']) ? Yii::$app->params['adminEmail'] : 'no-reply@example.com';
+            }
+
+            return $mailer->compose(['html' => $view, 'text' => 'text/' . $view], $params)
+                ->setTo($to)
+                ->setFrom($this->sender)
+                ->setSubject($subject)
+                ->send();
+        }catch(Exception$ex){
+            throw new NotFoundHttpException('Service error.');
         }
-
-        return $mailer->compose(['html' => $view, 'text' => 'text/' . $view], $params)
-            ->setTo($to)
-            ->setFrom($this->sender)
-            ->setSubject($subject)
-            ->send();
     }
 }

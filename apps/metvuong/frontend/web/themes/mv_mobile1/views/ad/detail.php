@@ -148,7 +148,17 @@ use yii\helpers\Url;
 			                <a class="wrap-img"><img src="<?= $avatar ?>" alt="" /></a>
 			            <?php } ?>
 			            <div class="img-agent">
-				            <a href="#" class="name-agent"><?= $product->adContactInfo->name ?></a>
+							<?php
+							/**
+							 * auto register user
+							 */
+							$url = '#';
+							if($product->adContactInfo->email){
+								$user = $product->adContactInfo->getUserInfo();
+								$url = $user->urlProfile();
+							}
+							?>
+				            <a href="<?=$url;?>" class="name-agent"><?= $product->adContactInfo->name ?></a>
 							<div class="rating-start">
 								<fieldset class="rate">
 									<input type="radio" id="rating10" name="rating" value="10"> <label
@@ -292,7 +302,9 @@ use yii\helpers\Url;
 				<a href="tel:<?= $product->adContactInfo->mobile ?>"><?= $product->adContactInfo->mobile ?></a>
 			</div>
 			<?php endif; ?>
-			<?php if($product->adContactInfo->email): ?>
+			<?php if($product->adContactInfo->email):
+				$user = $product->adContactInfo->getUserInfo();
+			?>
 			<div class="email-agent">
 				<div>
 					<span class="icon"></span>

@@ -2,6 +2,7 @@
 
 namespace vsoft\ad\models;
 
+use dektrium\user\helpers\Password;
 use frontend\models\User;
 use Yii;
 use vsoft\ad\models\base\AdContactInfoBase;
@@ -44,21 +45,33 @@ class AdContactInfo extends AdContactInfoBase
 	}
 
 	/**
-	 * Auto register user for agent
+	 * get Url
 	 */
 	public function getUrl() {
 
 	}
-
-	public function autoRegister() {
-		if(!empty($this->email)){
+	/**
+	 * Auto register user for agent
+	 */
+	public function getUserInfo() {
+		if(($user = User::findOne(['email'=>$this->email])) != null) {
+			return $user;
+		}else{
 			$user = Yii::createObject(User::className());
 			$user->setScenario('register');
 			$user->email = $this->email;
-			if(empty($this->username)){
-				$this->username = $user->generateUsername();
+			$user->password = Password::generate(8);
+			if(empty($user->username)){
+				$user->username = $user->generateUsername();
 			}
 			$user->setAttributes($this->attributes);
+			$user->validate();
+			if (!$user->hasErrors()) {
+				$user->register();
+				return $user;
+			}else{
+				return $user->errors;
+			}
 		}
 	}
 }
