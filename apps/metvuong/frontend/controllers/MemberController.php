@@ -8,6 +8,7 @@ use frontend\models\RegistrationForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\Token;
 use frontend\models\User;
+use vsoft\ad\models\AdProduct;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\filters\AccessControl;
@@ -32,6 +33,15 @@ class MemberController extends Controller
     /**
      * @inheritdoc
      */
+    public function beforeAction($action)
+    {
+        $this->view->params['noFooter'] = true;
+        if(Yii::$app->user->isGuest){
+            $this->redirect(['/member/login']);
+        }
+        return parent::beforeAction($action);
+    }
+
     public function behaviors()
     {
         return [
@@ -253,8 +263,11 @@ class MemberController extends Controller
         ]);
 
         $model = $model->loadProfile($username);
-        if(!$model->avatar) {
-            $model->avatar  = 'default-avatar.jpg';
+        if($model) {
+            $products = AdProduct::find()->where('user_id = :uid', [':uid' => $model->user_id])->all();
+            if (!$model->avatar) {
+                $model->avatar = 'default-avatar.jpg';
+            }
         }
 
         if(Yii::$app->request->isAjax) {
@@ -273,11 +286,11 @@ class MemberController extends Controller
                 }
             }
             return $this->renderAjax('user/profile', [
-                'model' => $model, 'username'=>$username
+                'model' => $model, 'username'=>$username, 'products' => $products
             ]);
         }
         return $this->render('user/profile', [
-            'model' => $model, 'username'=>$username
+            'model' => $model, 'username'=>$username, 'products' => $products
         ]);
     }
 

@@ -35,6 +35,7 @@ $id = $product->id;
                     </div>
     			</div>
     		</div>
+            <div class="statistic"></div>
     	</section>
     	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     		<div class="panel panel-default finder" style="display: block;">

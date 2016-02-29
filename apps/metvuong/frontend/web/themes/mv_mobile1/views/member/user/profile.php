@@ -9,6 +9,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_SEPARATOR . $model->avatar;
+$user = $model->getUser();
 ?>
 <div class="title-fixed-wrap">
     <div class="profile-user">
@@ -17,28 +18,28 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
             <div class="avatar-user-pr">
                 <div class="wrap-img avatar"><img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="<?= file_exists($avatar) ? Url::to('/store/avatar/' . $model->avatar) : Yii::$app->view->theme->baseUrl."/resources/images/MV-Agent Photo.jpg"?>" alt="metvuong.com avatar" /></div>
                 <div class="name-user" name="name" contenteditable="true" placeholder="Vui lòng nhập tên"><?=$model->name?></div>
-                <div class="per-posi">Người Môi Giới</div>
+                <div class="per-posi">Agent ID TTG<?=str_pad($model->user_id, 3, '0', STR_PAD_LEFT)?></div>
                 <!-- <span class="icon address-icon"></span><div class="address-user" name="address" contenteditable="true" placeholder="Vui lòng nhập địa chỉ"><?=$model->address?></div> -->
-                <div class="text-center"><a href="#" class="btn-common btn-chat rippler rippler-default"><span class="icon icon-chat-1"></span></a></div>
+                <div class="text-center"><a href="<?=$user->urlChat();?>" class="btn-common btn-chat rippler rippler-default"><span class="icon icon-chat-1"></span></a></div>
             </div>
         </div>
 
         <div class="infor-person">
             <div class="title-text">Thông tin cá nhân</div>
-            <div class="wrap-txt">
-                Phasellus non eros tortor. Ut sodales purus a ipsum fringilla, et pharetra lacus consectetur. Cras interdum sapien ut faucibus ornare. Duis efficitur enim at augue semper, vitae eleifend augue elementum...
+            <div class="wrap-txt" name="about" contenteditable="true" placeholder="Vui lòng nhập thông tin cá nhân">
+                <?=$model->about?>
             </div>
         </div>
 
         <ul class="clearfix list-attr-per">
             <li>
-                <div class="circle"><span class="icon icon-map-loca-1"></span></div><div>TP. Ho Chi Minh, Viet Nam</div>
+                <div class="circle"><span class="icon icon-map-loca-1"></span></div><div name="address"><?=$model->address?></div>
             </li>
             <li>
-                <div class="circle"><span class="icon icon-phone-1"></span></div><div><a href="tel:0909789765">0909 789 765</a></div>
+                <div class="circle"><span class="icon icon-phone-1"></span></div><div name="mobile" contenteditable="true" placeholder="Vui lòng nhập số điện thoại"><?=$model->mobile?></div>
             </li>
             <li>
-                <div class="circle"><span class="icon icon-email-1"></span></div><div>huan.ta@gmail.com</div>
+                <div class="circle"><span class="icon icon-email-1"></span></div><div name="public_email" contenteditable="true" placeholder="Vui lòng nhập email"><?= $model->public_email ?></div>
             </li>
         </ul>
 
@@ -48,6 +49,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                 <li>
                     <a href="#" class="rippler rippler-default">
                         <div class="bgcover pull-left" style="background-image: url(<?=Yii::$app->view->theme->baseUrl."/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg"?>);"></div>
+                        <div>Nhà riêng bán</div>
                         <div class="overflow-all">
                             <p class="name-post">42/1/89 Ba Huyen Thanh Quan, Quận 1, HCM</p>
                             <ul class="clearfix list-attr-td">
@@ -68,6 +70,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                 <li>
                     <a href="#" class="rippler rippler-default">
                         <div class="bgcover pull-left" style="background-image: url(<?=Yii::$app->view->theme->baseUrl."/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg"?>);"></div>
+                        <div>Căn hộ bán</div>
                         <div class="overflow-all">
                             <p class="name-post">42/1/89 Ba Huyen Thanh Quan, Quận 1, HCM</p>
                             <ul class="clearfix list-attr-td">
@@ -88,6 +91,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                 <li>
                     <a href="#" class="rippler rippler-default">
                         <div class="bgcover pull-left" style="background-image: url(<?=Yii::$app->view->theme->baseUrl."/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg"?>);"></div>
+                        <div>Nhà riêng thuê</div>
                         <div class="overflow-all">
                             <p class="name-post">42/1/89 Ba Huyen Thanh Quan, Quận 1, HCM</p>
                             <ul class="clearfix list-attr-td">
@@ -119,7 +123,7 @@ $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_
                 </div>
                 <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                     <div class="panel-body" name="about" contenteditable="true" placeholder="Vui lòng chia sẻ tiểu sử">
-                        <?=$model->about?>
+
                     </div>
                 </div>
             </div>

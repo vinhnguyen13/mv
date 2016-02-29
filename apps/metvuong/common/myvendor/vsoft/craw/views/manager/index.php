@@ -16,6 +16,8 @@ use vsoft\craw\models\AdProductAdditionInfo;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $this->registerCss('.filter-col {margin-right: 12px;} .container {max-width: none; width: auto;} .summary {float: right;font-size: 20px;margin-top: 28px;} .title {float: left;} .min {width: 100px; display: inline-block;} table {white-space: nowrap;}');
 
+$bp = \vsoft\craw\models\AdBuildingProject::find()->innerJoinWith('t', 'ad_product.id = T.productId')->orderBy("name ASC")->all();
+
 $script = <<<EOD
 	$('.price').keyup(function(){
 		formatCurrency($(this));
@@ -155,7 +157,7 @@ $directionList = AdProductAdditionInfo::directionList();
 			['format' => 'raw', 'attribute' => 'content', 'value' => function($model) { return $model->content ? mb_substr($model->content, 0, 20, 'UTF-8') . '...' : '<span style="color: red; font-style: italic;">[null]</span>'; },
 				'filter' => Html::activeDropDownList($filterModel, 'content', ['1' => 'Có', '2' => 'Không'], ['class' => 'form-control', 'prompt' => 'Tất cả'])
 			],
-			['attribute' => 'project', 'value' => 'project.name'],
+			['attribute' => 'project', 'value' => 'project.name', 'filter' => Html::activeDropDownList($filterModel, 'project', ArrayHelper::map(\vsoft\craw\models\AdBuildingProject::find()->orderBy("name ASC")->all(), 'name', 'name'), ['class' => 'form-control', 'prompt' => 'Chọn loại tin'])],
     		['attribute' => 'home_no', 'value' => 'home_no', 'filter' => Html::activeDropDownList($filterModel, 'homeNoFilter', ['1' => 'Có', '2' => 'Không'], ['class' => 'form-control', 'prompt' => 'Tất cả'])],
     		['attribute' => 'ward', 'value' => 'ward.fullName', 'filter' =>
     			Html::activeTextInput($filterModel, 'ward', ['class' => 'form-control']) .

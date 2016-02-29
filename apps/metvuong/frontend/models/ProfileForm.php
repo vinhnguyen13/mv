@@ -170,7 +170,6 @@ class ProfileForm extends Model
         if($user){
             $profile = $user->profile;
         }
-
         $model = Yii::createObject([
             'class'    => ProfileForm::className(),
             'scenario' => 'updateprofile',
@@ -189,6 +188,7 @@ class ProfileForm extends Model
         $model->activity = $profile->activity;
         $model->experience = $profile->experience;
         $model->slug = $profile->slug;
+        $model->user = $user;
         return $model;
     }
 
@@ -199,6 +199,10 @@ class ProfileForm extends Model
             return $profile->save();
         }
         return false;
+    }
+
+    public function getUser(){
+        return !empty($this->user) ? $this->user : false;
     }
 
     public function compareToUpdate($data) {
