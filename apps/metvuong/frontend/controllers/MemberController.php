@@ -259,9 +259,6 @@ class MemberController extends Controller
         $model = $model->loadProfile($username);
         if($model) {
             $products = AdProduct::find()->where('user_id = :uid', [':uid' => $model->user_id])->all();
-            if (!$model->avatar) {
-                $model->avatar = 'default-avatar.jpg';
-            }
         }
 
         if(Yii::$app->request->isAjax) {

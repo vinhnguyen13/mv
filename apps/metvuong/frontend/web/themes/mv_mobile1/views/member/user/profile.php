@@ -16,7 +16,7 @@ $user = $model->getUser();
         <div class="title-top clearfix"><a href="#" class="icon icon-back-top pull-left"></a> Profile User<a href="#" class="icon icon-back-top pull-right"></a></div>
         <div class="infor-user clearfix">
             <div class="avatar-user-pr">
-                <div class="wrap-img avatar"><img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="<?= file_exists($avatar) ? Url::to('/store/avatar/' . $model->avatar) : Yii::$app->view->theme->baseUrl."/resources/images/MV-Agent Photo.jpg"?>" alt="metvuong.com avatar" /></div>
+                <div class="wrap-img avatar"><img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="<?=$model->avatar?>" alt="metvuong avatar" /></div>
                 <div class="name-user" name="name" contenteditable="true" placeholder="Vui lòng nhập tên"><?=$model->name?></div>
                 <div class="per-posi">Agent ID TTG<?=str_pad($model->user_id, 3, '0', STR_PAD_LEFT)?></div>
                 <!-- <span class="icon address-icon"></span><div class="address-user" name="address" contenteditable="true" placeholder="Vui lòng nhập địa chỉ"><?=$model->address?></div> -->

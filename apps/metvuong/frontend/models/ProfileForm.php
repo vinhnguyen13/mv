@@ -169,6 +169,7 @@ class ProfileForm extends Model
         $user = User::find()->where('username = :usrn', [':usrn' => $username])->one();
         if($user){
             $profile = $user->profile;
+            $profile->avatar = $profile->getAvatarUrl();
         }
         $model = Yii::createObject([
             'class'    => ProfileForm::className(),
