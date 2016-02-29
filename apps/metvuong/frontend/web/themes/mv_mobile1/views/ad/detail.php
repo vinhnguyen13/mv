@@ -152,7 +152,7 @@ use yii\helpers\Url;
 						}
 						?>
 			            <?php if(!empty($owner->username)) { ?>
-						<a href="<?=\yii\helpers\Url::to(['member/profile','username' => $owner->username])?>" class="wrap-img">
+						<a href="<?=$url;?>" class="wrap-img">
 			                <img src="<?= $avatar ?>" alt="" /></a>
 			            <?php } else { ?>
 			                <a class="wrap-img" href="<?=$url;?>"><img src="<?= $avatar ?>" alt="" /></a>
