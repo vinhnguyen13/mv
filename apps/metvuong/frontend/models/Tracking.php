@@ -54,6 +54,9 @@ class Tracking extends Component
         if(Yii::$app->user->isGuest){
             throw new NotFoundHttpException('You must login !');
         }
+        if(isset(Yii::$app->params['tracking']['all']) && Yii::$app->params['tracking']['all'] == false){
+            return false;
+        }
         return true;
     }
 
@@ -68,48 +71,52 @@ class Tracking extends Component
     }
 
     public function productVisitor($uid, $pid, $time = null, $return = false){
-        $this->checkAccess();
-        $time = !empty($time) ? $time : time();
-        $query = AdProductVisitor::find();
-        $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:01", $time)), strtotime(date("d-m-Y 23:59:59", $time))]);
-        $query->andWhere(['user_id' => $uid]);
-        $query->andWhere(['product_id' => (int)$pid]);
-        $query->orderBy('time DESC');
-        $adProductVisitor = $query->one();
-        if($adProductVisitor === null){
-            $adProductVisitor = new AdProductVisitor();
-            $adProductVisitor->user_id = $uid;
-            $adProductVisitor->product_id = (int)$pid;
-            $adProductVisitor->count = 1;
-        }else{
-            $adProductVisitor->count++;
+        if($this->checkAccess()) {
+            $time = !empty($time) ? $time : time();
+            $query = AdProductVisitor::find();
+            $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:01", $time)), strtotime(date("d-m-Y 23:59:59", $time))]);
+            $query->andWhere(['user_id' => $uid]);
+            $query->andWhere(['product_id' => (int)$pid]);
+            $query->orderBy('time DESC');
+            $adProductVisitor = $query->one();
+            if ($adProductVisitor === null) {
+                $adProductVisitor = new AdProductVisitor();
+                $adProductVisitor->user_id = $uid;
+                $adProductVisitor->product_id = (int)$pid;
+                $adProductVisitor->count = 1;
+            } else {
+                $adProductVisitor->count++;
+            }
+            $adProductVisitor->time = $time;
+            $adProductVisitor->device = $this->getMobileDetect();
+            $adProductVisitor->save();
+            return !empty($return) ? $adProductVisitor : true;
         }
-        $adProductVisitor->time = $time;
-        $adProductVisitor->device = $this->getMobileDetect();
-        $adProductVisitor->save();
-        return !empty($return) ? $adProductVisitor : true;
+        return false;
     }
 
     public function productFinder($uid, $pid, $time = null, $return = false){
-        $this->checkAccess();
-        $time = !empty($time) ? $time : time();
-        $query = AdProductFinder::find();
-        $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:01", $time)), strtotime(date("d-m-Y 23:59:59", $time))]);
-        $query->andWhere(['user_id' => $uid]);
-        $query->andWhere(['product_id' => $pid]);
-        $query->orderBy('time DESC');
-        if(($adProductFinder = $query->one())===null){
-            $adProductFinder = new AdProductFinder();
-            $adProductFinder->user_id = $uid;
-            $adProductFinder->product_id = $pid;
-            $adProductFinder->count = 1;
-        }else{
-            $adProductFinder->count++;
+        if($this->checkAccess()) {
+            $time = !empty($time) ? $time : time();
+            $query = AdProductFinder::find();
+            $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:01", $time)), strtotime(date("d-m-Y 23:59:59", $time))]);
+            $query->andWhere(['user_id' => $uid]);
+            $query->andWhere(['product_id' => $pid]);
+            $query->orderBy('time DESC');
+            if (($adProductFinder = $query->one()) === null) {
+                $adProductFinder = new AdProductFinder();
+                $adProductFinder->user_id = $uid;
+                $adProductFinder->product_id = $pid;
+                $adProductFinder->count = 1;
+            } else {
+                $adProductFinder->count++;
+            }
+            $adProductFinder->time = $time;
+            $adProductFinder->device = $this->getMobileDetect();
+            $adProductFinder->save();
+            return !empty($return) ? $adProductFinder : true;
         }
-        $adProductFinder->time = $time;
-        $adProductFinder->device = $this->getMobileDetect();
-        $adProductFinder->save();
-        return !empty($return) ? $adProductFinder : true;
+        return false;
     }
 
 

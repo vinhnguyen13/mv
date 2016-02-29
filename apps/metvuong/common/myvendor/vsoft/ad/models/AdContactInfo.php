@@ -2,6 +2,7 @@
 
 namespace vsoft\ad\models;
 
+use frontend\models\User;
 use Yii;
 use vsoft\ad\models\base\AdContactInfoBase;
 
@@ -40,5 +41,24 @@ class AdContactInfo extends AdContactInfoBase
 		}
 		
 		return parent::loadDefaultValues($skipIfSet);
+	}
+
+	/**
+	 * Auto register user for agent
+	 */
+	public function getUrl() {
+
+	}
+
+	public function autoRegister() {
+		if(!empty($this->email)){
+			$user = Yii::createObject(User::className());
+			$user->setScenario('register');
+			$user->email = $this->email;
+			if(empty($this->username)){
+				$this->username = $user->generateUsername();
+			}
+			$user->setAttributes($this->attributes);
+		}
 	}
 }
