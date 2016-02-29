@@ -261,7 +261,7 @@ use yii\helpers\Url;
 					<textarea id="content" name="content" placeholder="Say something…"></textarea>
 				</div>
 				<div class="item-send">
-					<div class="img-show"><div><a href=""><img src="<?= $images[0]->imageMedium ?>" alt="<?=$product->getAddress()?>"></a></div></div>
+					<div class="img-show"><div><a href=""><img src="<?= !empty($images[0]) ? $images[0]->imageMedium : '#' ?>" alt="<?=$product->getAddress()?>"></a></div></div>
 					<div class="infor-send">
 						<p class="name"><?=$product->getAddress()?></p>
 						<p class="address"><?= $product->adContactInfo->name ?></p>
