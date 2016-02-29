@@ -27,7 +27,7 @@ a:active, a:visited, a:link {
 }
 .icon {
     background: url(../images/icon.png) no-repeat top left;
-    background-size: 33px 1200px;
+    background-size: 33px 1300px;
     display: inline-block;
 }
 header {
@@ -1983,7 +1983,7 @@ label {
 .icon-share-td {
     display: inline-block;
     background-position: 0 -507px;
-    background-size: 50px 1800px;
+    background-size: 50px 1950px;
     width: 24px;
     height: 24px;
     position: relative;
@@ -1992,7 +1992,7 @@ label {
 .save-item {
     display: inline-block;
     background-position: 0 -469px;
-    background-size: 50px 1800px;
+    background-size: 50px 1950px;
     width: 25px;
     height: 23px;
 }
@@ -3341,7 +3341,7 @@ input[type=text]:focus {
 }
 .icon-map-loca {
     background-position: 0px -994px;
-    background-size: 50px 1800px;
+    background-size: 50px 1950px;
     width: 18px;
     height: 24px;
 }
@@ -3375,7 +3375,7 @@ input[type=text]:focus {
 .icon-per-small {
     background-position: 0 -689px;
     width: 21px;
-    height: 20px;
+    height: 21px;
 }
 .icon-heart-small {
     background-position: 0 -759px;
@@ -3500,19 +3500,19 @@ input[type=text]:focus {
 }
 .icon-alert {
     background-position: 0 -1310px;
-    background-size: 50px 1800px;
+    background-size: 50px 1950px;
     width: 22px;
     height: 26px;
 }
 .icon-listings {
     background-position: 0 -1337px;
-    background-size: 50px 1800px;
+    background-size: 50px 1950px;
     width: 24px;
     height: 29px;
 }
 .icon-chat {
     background-position: 0 -1226px;
-    background-size: 50px 1800px;
+    background-size: 50px 1950px;
     width: 30px;
     height: 26px;
 }
@@ -3523,13 +3523,13 @@ input[type=text]:focus {
 }
 .icon-tags {
     background-position: 0 -1255px;
-    background-size: 50px 1800px;
+    background-size: 50px 1950px;
     width: 26px;
     height: 27px;
 }
 .icon-logout {
     background-position: 0 -1283px;
-    background-size: 50px 1800px;
+    background-size: 50px 1950px;
     width: 24px;
     height: 26px;
 }
@@ -3869,6 +3869,12 @@ input[type=text]:focus {
     padding-top: 45px;
     font-size: 14px;
 }
+.no-title {
+    padding: 0;
+}
+.center-popup {
+    background: rgba(0, 0, 0, 0.4);
+}
 .title-popup {
     color: #00a769;
     text-align: center;
@@ -3884,8 +3890,28 @@ input[type=text]:focus {
     height: 45px;
     line-height: 45px;
 }
+.center-popup .wrap-popup {
+    position: absolute;
+    z-index: 1001;
+    bottom: 50%;
+    right: 50%;
+    width: 320px;
+    background-color: white;
+    box-shadow: 0 -2px 2px rgba(0,0,0,0.2);
+    border-radius: 2px;
+    -webkit-box-orient: vertical;
+    -webkit-box-flex: 0;
+    -webkit-flex: 0;
+    -ms-flex: 0;
+    flex: 0;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-transform: translate3d(50%,50%,0);
+}
 .inner-popup {
-    padding: 15px 15px 50px;
+    padding: 25px 15px 30px;
+    position: relative;
 }
 .frm-email {
     border-bottom: solid 0.5px #969696;
@@ -3929,11 +3955,15 @@ input[type=text]:focus {
 .inner-popup .btn-common {
     text-transform: uppercase;
     border: solid 1.5px #00a769;
+    padding: 8px 30px;
 }
 .inner-popup .btn-cancel {
     background: none;
     color: #3c3c3c;
     margin-right: 10px;
+}
+.btn-close.btn-cancel {
+    margin-right: 0;
 }
 .title-popup .txt-cancel {
     padding: 0 15px;
@@ -3945,4 +3975,47 @@ input[type=text]:focus {
 }
 .hide-popup {
     display: none;
+}
+#nang-cap .inner-popup {
+    text-align: center;
+}
+#nang-cap .inner-popup p {
+    margin-bottom: 15px;
+    line-height: 100%;
+    font-size: 16px;
+}
+#nang-cap .inner-popup .alert-num-date {
+    font-weight: 600;
+}
+#nang-cap .alert-num-date span {
+    color: #00a769;
+}
+.avatar-user-inter {
+    margin-right: 15px;
+}
+.name-user-inter {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+#popup-user-inter .btn-common {
+    display: block;
+    line-height: 100%;
+    float: left;
+    width: 45%;
+}
+#popup-user-inter .btn-chat {
+    margin-right: 15px;
+    padding: 3px 30px 2px;
+}
+.btn-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 8px 10px;
+}
+.icon-close {
+    background-position: 0px -1180px;
+    width: 21px;
+    height: 22px;
 }

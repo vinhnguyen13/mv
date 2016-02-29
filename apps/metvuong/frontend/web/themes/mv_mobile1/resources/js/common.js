@@ -750,7 +750,8 @@ $.fn.popupMobi = function (options) {
         var defaults = {
             styleShow: "full", // "full" or "center"
             duration: 200,
-            btnClickShow: ""
+            btnClickShow: "",
+            closeBtn: ""
         },
         sc = {},
         el = $(this);
@@ -758,8 +759,6 @@ $.fn.popupMobi = function (options) {
         if ( el.length == 0 || !checkMobile() ) return el;
 
         sc.settings = $.extend({}, defaults, options);
-
-        $('body').append(el);
 
         $(sc.settings.btnClickShow).on('click', function (e) {
             e.preventDefault();
@@ -770,6 +769,16 @@ $.fn.popupMobi = function (options) {
             e.preventDefault();
             hide(el);
         });
+
+        $('body').append(el);
+
+        if ( el.find('.title-popup').length == 0 ) {
+            el.addClass('no-title');
+        }
+
+        if ( sc.settings.styleShow == "center" ) {
+            el.addClass('center-popup');
+        }
 
         if ( $(sc.settings.btnClickShow).length == 0 || sc.settings.btnClickShow == "" ) {
             showPopup(el);
