@@ -493,4 +493,12 @@ class User extends \dektrium\user\models\User
     {
         return Url::to(['member/profile', 'username'=>$this->username]);
     }
+    /**
+     * @return string
+     */
+    public function urlChat($username)
+    {
+        return Url::to(['/chat/with', 'username'=>$username]);
+    }
+
 }
