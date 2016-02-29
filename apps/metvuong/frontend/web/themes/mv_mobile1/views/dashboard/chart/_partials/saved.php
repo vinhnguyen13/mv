@@ -34,7 +34,10 @@ if(!empty($data)) {
                 },
                 xAxis: {
                     categories: <?=json_encode($categories);?>,
-                    max: <?=!empty(count($categories)) ? count($categories) - 1 : 0?>
+                    max: <?=!empty(count($categories)) ? count($categories) - 1 : 0?>,
+                    type: 'datetime',
+                    dateTimeLabelFormats: { // don't display the dummy year
+                    month: '%b %e'
                 },
                 yAxis: {
                     allowDecimals: false,
@@ -75,6 +78,7 @@ if(!empty($data)) {
                                         this.series.data[i].update({ color: '#909090' }, true, false);
                                     }
                                     this.update({ color: '#00a769' }, true, false);
+                                    getDataSavedByClick(this.category);
                                 }
                             }
                         }
@@ -86,6 +90,23 @@ if(!empty($data)) {
                 }
             });
         });
+        function getDataSavedByClick(date){
+            var timer = 0;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                $.ajax({
+                    type: "get",
+                    dataType: 'html',
+                    url: '<?=Url::to(['/dashboard/clickchart','id' => $id])?>' + '&date=' + date + '&view=_partials/saved',
+                    success: function (data) {
+                        console.log(data);
+                        if(data){
+                            $('.saved .list-item').html(data);
+                        }
+                    }
+                });
+            }, 500);
+        }
     </script>
     <?php
 }else {

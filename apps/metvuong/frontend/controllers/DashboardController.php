@@ -54,6 +54,9 @@ class DashboardController extends Controller
         $product = AdProduct::findOne($id);
 
         $date = Yii::$app->request->get("date");
+        if($date == "undefined-undefined-")
+            $date = null;
+
         if($date) // truong hop chon calendar
             $useDate = new \DateTime($date);
         else { // vao thong ke cua 1 tin dang
@@ -62,7 +65,7 @@ class DashboardController extends Controller
         }
         $f = date_format($useDate, 'Y-m-d 00:00:00');
         $dateFrom = new \DateTime($f);
-        $from = strtotime('-7 days', $dateFrom->getTimestamp());
+        $from = strtotime('-6 days', $dateFrom->getTimestamp());
 
         $t = date_format($useDate, 'Y-m-d 23:59:59');
         $dateTo = new \DateTime($t);
@@ -84,6 +87,61 @@ class DashboardController extends Controller
             'to' => $to
         ]);
 
+    }
+
+    public function actionClickchart(){
+        if(Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_HTML;
+            $id = (int)Yii::$app->request->get("id");
+            $date = Yii::$app->request->get("date");
+            $view = Yii::$app->request->get('view', '_partials/finder');
+
+            $useDate = new \DateTime($date);
+
+            $f = date_format($useDate, 'Y-m-d 00:00:00');
+            $dateFrom = new \DateTime($f);
+            $from = $dateFrom->getTimestamp();
+
+            $t = date_format($useDate, 'Y-m-d 23:59:59');
+            $dateTo = new \DateTime($t);
+            $to = $dateTo->getTimestamp();
+
+            if($view == "_partials/finder") {
+                $data = Chart::find()->getDataFinder($id, $from, $to);
+                $infoData = empty($data) ? null : $data["infoData"];
+                $finders = empty($infoData["finders"]) ? null : $infoData["finders"];
+                $html = "";
+                foreach($finders as $key_finder => $finder) {
+                    $li = "<li><em class=\"fa fa-circle\"></em><a href=\"/".$key_finder."\">".$key_finder."</a><span class=\"pull-right\">".$finder."</span>";
+                    $li .= "</li>";
+                    $html .= $li;
+                }
+                return $html;
+            } else if ($view == "_partials/visitor"){
+                $data = Chart::find()->getDataVisitor($id, $from, $to);
+                $infoData = empty($data) ? null : $data["infoData"];
+                $visitors = empty($infoData["visitors"]) ? null : $infoData["visitors"];
+                $html = "";
+                foreach($visitors as $key => $val) {
+                    $li = "<li><em class=\"fa fa-circle\"></em><a href=\"/".$key."\">".$key."</a><span class=\"pull-right\">".$val."</span>";
+                    $li .= "</li>";
+                    $html .= $li;
+                }
+                return $html;
+            } else if ($view == "_partials/saved"){
+                $data = Chart::find()->getDataSaved($id, $from, $to);
+                $infoData = empty($data) ? null : $data["infoData"];
+                $favourites = empty($infoData["saved"]) ? null : $infoData["saved"];
+                $html = "";
+                foreach($favourites as $key => $val) {
+                    $li = "<li><em class=\"fa fa-circle\"></em><a href=\"/".$key."\">".$key."</a><span class=\"pull-right\">".$val."</span>";
+                    $li .= "</li>";
+                    $html .= $li;
+                }
+                return $html;
+            }
+        }
+        return false;
     }
 
     public function actionNotification()

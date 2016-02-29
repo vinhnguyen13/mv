@@ -54,6 +54,10 @@ class Tracking extends Component
         if(Yii::$app->user->isGuest){
             throw new NotFoundHttpException('You must login !');
         }
+
+        if(empty(Yii::$app->params['tracking']))
+            return false;
+
         return true;
     }
 

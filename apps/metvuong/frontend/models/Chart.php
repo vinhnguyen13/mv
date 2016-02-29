@@ -22,7 +22,7 @@ use yii\web\NotFoundHttpException;
 
 class Chart extends Component
 {
-    const DATE_FORMAT = 'M d';
+    const DATE_FORMAT = 'Y-m-d';
     const TYPE_VISITOR = 1;
     const TYPE_FINDER = 2;
     const TYPE_SAVED = 3;
@@ -110,12 +110,14 @@ class Chart extends Component
                 $infoVisitors[$username] = 1;
         }
 
+        $infoData["visitors"] = $infoVisitors;
+
         $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
         $defaultData = array_map(function ($key, $date) {
             return ['y' => 0,'url' => Url::to(['/dashboard/chart', 'view'=>'_partials/listContact', 'date'=>$date])];
         }, array_keys($dateRange), $dateRange);
         if(!empty($adProductVisitors)){
-            return $this->pushDataToChart($adProductVisitors, $defaultData, $dateRange, null);
+            return $this->pushDataToChart($adProductVisitors, $defaultData, $dateRange, $infoData);
         }
         return false;
     }
@@ -136,13 +138,13 @@ class Chart extends Component
             } else
                 $infoSaved[$username] = 1;
         }
-
+        $infoData["saved"] = $infoSaved;
         $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
         $defaultData = array_map(function ($key, $date) {
             return ['y' => 0,'url' => Url::to(['/dashboard/chart', 'view'=>'_partials/listContact', 'date'=>$date])];
         }, array_keys($dateRange), $dateRange);
         if(!empty($adProductSaveds)){
-            return $this->pushDataToChart($adProductSaveds, $defaultData, $dateRange, null);
+            return $this->pushDataToChart($adProductSaveds, $defaultData, $dateRange, $infoData);
         }
         return false;
     }

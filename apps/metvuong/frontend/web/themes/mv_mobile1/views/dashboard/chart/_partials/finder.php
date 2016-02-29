@@ -75,6 +75,7 @@ $categories = array_values($categories);
                                         this.series.data[i].update({ color: '#909090' }, true, false);
                                     }
                                     this.update({ color: '#00a769' }, true, false);
+                                    getDataByClick(this.category);
                                 }
                             }
                         }
@@ -86,6 +87,23 @@ $categories = array_values($categories);
                 }
             });
         });
+        function getDataByClick(date, categories){
+            var timer = 0;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                $.ajax({
+                    type: "get",
+                    dataType: 'html',
+                    url: '<?=Url::to(['/dashboard/clickchart','id' => $id])?>' + '&date=' + date + '&view=_partials/finder',
+                    success: function (data) {
+                        console.log(data);
+                        if(data){
+                            $('.finder .list-item').html(data);
+                        }
+                    }
+                });
+            }, 500);
+        }
     </script>
     <?php
 } else {
