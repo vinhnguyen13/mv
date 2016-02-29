@@ -329,7 +329,13 @@ class AdController extends Controller
     }
     
     public function postMobile() {
-    	return $this->render('post');
+    	if(Yii::$app->user->isGuest) {
+    		return $this->render('/_systems/require_login');
+    	}
+    	
+    	$product = new AdProduct();
+    	
+    	return $this->render('form', ['product' => $product]);
     }
     
     /**

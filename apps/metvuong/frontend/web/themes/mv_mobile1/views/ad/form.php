@@ -1,6 +1,19 @@
+<?php 
+	use yii\widgets\ActiveForm;
+	use yii\helpers\Html;
+use vsoft\ad\models\AdProduct;
+?>
 <div class="title-top">Đăng tin</div>
 <div class="post-listing">
-	<form action="">
+	<?php
+		$form = ActiveForm::begin ( [ 
+			'id' => 'listing-form',
+			'options' => [ 
+				'autocomplete' => 'off',
+				'spellcheck' => 'false'
+			]
+		]);
+	?>
 		<div class="step-link">
 			<ul class="clearfix">
 				<li><a data-active-section="tt-chung" class="active" href="#">1</a><span class="icon arrowLeft"></span></li>
@@ -15,26 +28,31 @@
 			<ul class="clearfix step-check">
 				<li>
 					<a class="frm-radio" href="#">
-						<span class="radio-ui icon"><input name="banchothue" type="radio" checked></span>
-						<span>Bán</span>
+						<span class="radio-ui icon">
+							<?php $typeName = Html::getInputName($product, 'type') ?>
+							<?= Html::radio($typeName, ($product->type == AdProduct::TYPE_FOR_SELL || !$product->type), ['value' => AdProduct::TYPE_FOR_SELL]) ?>
+						</span>
+						<span><?= Yii::t('ad', 'Bán') ?></span>
 					</a>
 				</li>
 				<li>
 					<a class="frm-radio" href="#">
-						<span class="radio-ui icon"><input name="banchothue" type="radio"></span>
-						<span>Cho Thuê</span>
+						<span class="radio-ui icon">
+							<?= Html::radio($typeName, ($product->type == AdProduct::TYPE_FOR_RENT), ['value' => AdProduct::TYPE_FOR_RENT]) ?>
+						</span>
+						<span><?= Yii::t('ad', 'Cho thuê') ?></span>
 					</a>
 				</li>
 				<li>
 					<a class="frm-radio" href="#">
 						<span class="radio-ui icon"><input data-flag="true" name="agent" type="radio" checked></span>
-						<span>Chủ nhà</span>
+						<span><?= Yii::t('ad', 'Chủ nhà') ?></span>
 					</a>
 				</li>
 				<li>
 					<a class="frm-radio" href="#">
 						<span class="radio-ui icon"><input data-flag="true" name="agent" type="radio"></span>
-						<span>Môi giới</span>
+						<span><?= Yii::t('ad', 'Môi giới') ?></span>
 					</a>
 				</li>
 			</ul>
@@ -67,9 +85,9 @@
 				<div class="col-xs-12 form-group">
 					<input type="text" class="form-control" id="" placeholder="Đường">
 				</div>
-				<div class="col-xs-12 form-group">
-					<input type="text" class="form-control" id="" placeholder="Số nhà">
-				</div>
+				<?= $form->field($product, 'home_no', ['options' => ['class' => 'col-xs-12 form-group']])
+						->label(false)
+						->textInput(['placeholder' => $product->getAttributeLabel('home_no')]) ?>
 				<div class="col-xs-12 form-group">
 					<select class="form-control" name="" id="">
 						<option value="" disabled="" selected="">Phường</option>
@@ -238,7 +256,7 @@
 				<button class="btn-post">Đăng tin</button>
 			</div>
 		</div>
-	</form>
+	<?php $form->end() ?>
 </div>
 
 <div class="fixed-prev-next">
