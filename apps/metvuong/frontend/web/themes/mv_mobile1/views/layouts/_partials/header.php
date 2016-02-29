@@ -23,7 +23,7 @@ use yii\helpers\Url;
                 <li><a href="<?= Url::to(['/ad/post']) ?>">đăng bán / cho thuê</a></li>
                 <li><a href="<?=Url::to(['building-project/index']);?>">dự án mới</a></li>
                 <li><a href="#">Tin tức</a></li>
-                <li><a href="<?=Url::to(['/payment/package', 'username'=> Yii::$app->user->identity->username])?>"><span class="icon icon-tags"></span>Các gói giá</a></li>
+                <li><a href="<?=Url::to(['/payment/package'])?>"><span class="icon icon-tags"></span>Các gói giá</a></li>
             </ul>
         </div>
     </div>

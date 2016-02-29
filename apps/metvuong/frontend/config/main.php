@@ -92,7 +92,7 @@ return [
                 '<username>/notification' => 'dashboard/notification',
                 '<username>/ad' => 'dashboard/ad',
                 '<username>/chat' => 'chat/index',
-                '<username>/payment' => 'payment/package',
+                'pricing/package' => 'payment/package',
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',
 //                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
 //                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
