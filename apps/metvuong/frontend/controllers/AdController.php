@@ -505,6 +505,10 @@ class AdController extends Controller
 		if(Yii::$app->request->isPost && Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
 			$post = Yii::$app->request->post();
+            echo "<pre>";
+            print_r($post);
+            echo "<pre>";
+            exit();
             $model = Yii::createObject([
                 'class'    => ShareForm::className(),
                 'scenario' => 'share',
@@ -512,6 +516,10 @@ class AdController extends Controller
             $model->load($post);
             $model->validate();
             if (!$model->hasErrors()) {
+                echo "<pre>";
+                print_r($model);
+                echo "<pre>";
+                exit();
                 // send to
                 Yii::$app->mailer->compose(['html' => '../mail/notifyReceivedEmail-html',], ['contact' => $model])
                     ->setFrom(Yii::$app->params['adminEmail'])

@@ -139,6 +139,21 @@ $id = $product->id;
     	</div>
     </div>
 </div>
+<div id="popup-user-inter" class="popup-common hide-popup">
+    <div class="wrap-popup">
+        <div class="inner-popup">
+            <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
+            <div class="pull-left circle avatar-user-inter">
+                <img src="/images/default-avatar.jpg" alt="" width="50" height="50">
+            </div>
+            <div class="overflow-all">
+                <p class="name-user-inter">James Bond</p>
+                <a href="#" class="btn-common btn-chat"><span class="icon icon-chat-1"></span></a>
+                <a href="#" class="btn-common btn-email"><span class="icon icon-email-1"></span></a>
+            </div>
+        </div>
+    </div>
+</div>
 <?php 
 $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/bootstrap-datepicker.min.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'datepicker');
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/bootstrap-datepicker.min.js', ['position'=>View::POS_BEGIN]);
@@ -148,6 +163,15 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 <script>
 
     $(document).ready(function () {
+        $('#popup-user-inter').popupMobi({
+            btnClickShow: '.statis .panel-body .list-item a',
+            styleShow: 'center',
+            closeBtn: '#popup-user-inter .btn-close',
+            funCallBack: function(item) {
+                l(item);
+            }
+        });
+
         var params = getUrlVars();
         if(params["date"] !== undefined){
             var arrDate = params["date"].split("-");

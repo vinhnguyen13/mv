@@ -9,6 +9,7 @@ class ShareForm extends Model
     /** @var string */
     public $recipient_email;
     public $your_email;
+    public $subject;
     public $content;
     public $address;
     public $detailUrl;
@@ -23,7 +24,7 @@ class ShareForm extends Model
     public function scenarios()
     {
         return [
-            'share' => ['recipient_email', 'your_email', 'content', 'address', 'detailUrl', 'domain'],
+            'share' => ['recipient_email', 'your_email', 'subject', 'content', 'address', 'detailUrl', 'domain'],
         ];
     }
 
@@ -40,7 +41,7 @@ class ShareForm extends Model
             [['recipient_email', 'your_email'], 'required'],
             [['recipient_email', 'your_email'], 'email'],
             [['recipient_email', 'your_email'], 'string', 'max' => 255],
-            [['address', 'content', 'detailUrl', 'domain'], 'string'],
+            [['address', 'content', 'detailUrl', 'domain', 'subject'], 'string'],
         ];
     }
 

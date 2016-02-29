@@ -2,10 +2,11 @@
 use vsoft\ad\models\AdCategory;
 use vsoft\ad\models\AdProduct;
 use vsoft\express\components\StringHelper;
+use yii\bootstrap\ActiveForm;
 use yii\web\View;
 use frontend\models\User;
 use yii\helpers\Url;
-	
+
 	$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=loaded', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/detail.js', ['position' => View::POS_END]);
 	$this->registerCss('.map-wrap {position: relative;} .map-wrap:after {display: block; content: ""; padding-top: 75%;} .map-inside {position: absolute; width: 100%; height: 100%;} #map {height: 100%;}');
@@ -33,7 +34,7 @@ use yii\helpers\Url;
 			<div class="swiper-slide">
 				<div class="img-show">
 					<div>
-						<img src="<?= $image->imageMedium ?>">
+						<img src="<?= $image->imageMedium ?>" alt="<?=$product->getAddress()?>">
 					</div>
 				</div>
 			</div>
@@ -231,36 +232,48 @@ use yii\helpers\Url;
 			<a href="#" class="txt-cancel pull-left btn-cancel">Cancel</a>
 		</div>
 		<div class="inner-popup">
-			<form action="">
+            <?php
+            $share_form = Yii::createObject([
+                'class'    => \frontend\models\ShareForm::className(),
+                'scenario' => 'share',
+            ]);
+
+            $f = ActiveForm::begin([
+                'id' => 'share_form',
+                'enableAjaxValidation' => false,
+                'enableClientValidation' => true,
+                'action' => Url::to(['/ad/sendmail'])
+            ]);
+            ?>
 				<div class="frm-item frm-email">
 					<span>From</span>
-					<input type="email" placeholder="abc@gmail.com">
+					<input type="email" name="your_email" placeholder="abc@gmail.com" value="<?= $product->adContactInfo->email ?>">
 				</div>
 				<div class="frm-item frm-email">
 					<span>To</span>
-					<input type="email" placeholder="abc@gmail.com">
+					<input type="email" name="recipient_email" placeholder="your_email@gmail.com">
 				</div>
 				<div class="frm-item frm-email">
 					<span>Subject</span>
-					<input type="text" placeholder="">
+					<input type="text" name="subject" placeholder="Write your subject...">
 				</div>
 				<div class="frm-item frm-email">
-					<textarea name="" id="" placeholder="Say something…"></textarea>
+					<textarea id="content" name="content" placeholder="Say something…"></textarea>
 				</div>
 				<div class="item-send">
-					<div class="img-show"><div><a href=""><img src="/store/ad/56cc10b5896a2.medium.jpg"></a></div></div>
+					<div class="img-show"><div><a href=""><img src="<?= $images[0]->imageMedium ?>" alt="<?=$product->getAddress()?>"></a></div></div>
 					<div class="infor-send">
-						<p class="name">LANCASTER X</p>
-						<p class="address">42 Bà Huyện Thanh Quan, Quận 1, HCM</p>
-						<p>Phasellus non eros tortor. Ut sodales purus a ipsum fringilla, et pharetra lacus consectetur. Cras interdum sapien ut faucibus ornare. Duis efficitur enim at augue semper, vitae eleifend augue elementum...</p>
+						<p class="name"><?=$product->getAddress()?></p>
+						<p class="address"><?= $product->adContactInfo->name ?></p>
+						<p><?=StringHelper::truncate($product->content, 150)?></p>
 						<p class="send-by">BY METVUONG.COM</p>
 					</div>
 				</div>
 				<div class="text-right">
 					<button class="btn-common rippler rippler-default btn-cancel">Cancel</button>
-					<button class="btn-common rippler rippler-default">Send</button>
+					<button class="btn-common rippler rippler-default send_mail">Send</button>
 				</div>
-			</form>
+            <?php $f->end(); ?>
 		</div>
 	</div>
 </div>
@@ -299,4 +312,48 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 			closeBtn: '#popup-email .btn-cancel'
 		});
 	});
+    $(document).on('click', '.send_mail', function(){
+        var timer = 0;
+        var recipient_email = $('#share_form .recipient_email').val();
+        var your_email = $('#share_form .your_email').val();
+        if(recipient_email != null && your_email != null) {
+            var content_mail = $('#share_form .content').val();
+//                alert(recipient_email+your_email+content_mail);
+//                $('#box-share').modal('hide');
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                console.log(789789);
+//                    $.ajax({
+//                        type: "post",
+//                        dataType: 'json',
+//                        url: $('#share_form').attr('action'),
+//                        data: $('#share_form').serializeArray(),
+//                        success: function (data) {
+//                            if(data.status == 200){
+////                                alert("success");
+//                            }
+//                            else {
+//                                var strMessage = '';
+//                                $.each(data.parameters, function(idx, val){
+//                                    var element = 'share_form_'+idx;
+//                                    strMessage += "\n" + val;
+//                                });
+//                                alert(strMessage+"\nTry again");
+//                            }
+//                            return true;
+//                        },
+//                        error: function () {
+//                            var strMessage = '';
+//                            $.each(data.parameters, function(idx, val){
+//                                var element = 'share_form_'+idx;
+//                                strMessage += "\n" + val;
+//                            });
+//                            alert(strMessage);
+//                            return false;
+//                        }
+//                    });
+            }, 1000);
+        }
+        return false;
+    });
 </script>

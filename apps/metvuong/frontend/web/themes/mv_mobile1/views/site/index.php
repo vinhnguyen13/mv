@@ -102,7 +102,7 @@ use frontend\models\Ad;
                     <span class="txt-short-news">
                         <span class="title-news color-30a868"><?=$n['title']?></span>
                         <span class="date-news"><?=date('d/m/Y, H:i', $n['updated_at'])?></span>
-                        <?=StringHelper::truncate($n['brief'], 120)?>
+                        <?=StringHelper::truncate($n['brief'], 130)?>
                     </span>
                 </a>
             </div>
