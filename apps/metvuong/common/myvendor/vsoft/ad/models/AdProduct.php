@@ -38,7 +38,7 @@ class AdProduct extends AP
 	{
 		return [
 			'id' => 'ID',
-			'category_id' => 'Category ID',
+			'category_id' => 'Loại BĐS',
 			'project_building_id' => 'Project Building ID',
             'home_no' => 'Số nhà',
 			'user_id' => 'User ID',

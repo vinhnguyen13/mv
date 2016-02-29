@@ -1,7 +1,10 @@
 <?php 
 	use yii\widgets\ActiveForm;
 	use yii\helpers\Html;
-use vsoft\ad\models\AdProduct;
+	use vsoft\ad\models\AdProduct;
+use yii\web\View;
+
+	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/post-listing.js', ['position' => View::POS_END]);
 ?>
 <div class="title-top">Đăng tin</div>
 <div class="post-listing">
@@ -61,11 +64,10 @@ use vsoft\ad\models\AdProduct;
 					</a>
 				</li>
 			</ul>
-			<div class="form-group">
-				<select class="form-control" name="" id="loai-bds-post">
-					<option value="" disabled="" selected="">Loại BĐS</option>
-				</select>
-			</div>
+			<?php $product->category_id = 6 ?>
+			<?= $form->field($product, 'category_id')
+					->label(false)
+					->dropDownList([], ['prompt' => $product->getAttributeLabel('category_id'), 'data-default' => $product->category_id]) ?>
 		</div>
 
 		<div class="tt-chung item-step section hide">
@@ -268,37 +270,3 @@ use vsoft\ad\models\AdProduct;
 	<a href="#" id="back-screen"><span class="icon arrowRight-1"></span>Trở lại</a>
 	<a href="#" id="next-screen" class=""><span class="icon arrowLeft-1"></span>Tiếp theo</a>
 </div>
-
-<script>
-	$(document).ready(function () {
-		/*$('.dropdown-select').dropdown({
-			hiddenFillValue: '#sort'
-		});*/
-
-		$('.frm-radio').radio({
-			done: function (item) {
-				/*if ( item.attr('name') == 'agent' ) {
-					setTimeout(function() {
-						$('#next-screen').trigger('click');
-					},250);
-				}*/
-			}
-		});
-
-		$('.post-listing').slideSection({
-			active: 0,
-			validateFrm: function () {
-				//return false => fill khong thoa yeu cau => khong next
-				//return true => fill thoa yeu cau => next screen
-				return true;
-			}
-		});
-
-		$('html').addClass('heightFull');
-
-		for ( var i in dataCategories ) {
-			var item = $('<option value="">'+dataCategories[i].name+'</option>');
-			$('#loai-bds-post').append(item);
-		}
-	});
-</script> 
