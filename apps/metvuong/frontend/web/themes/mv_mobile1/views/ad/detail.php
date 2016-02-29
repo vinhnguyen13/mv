@@ -224,7 +224,7 @@ use yii\helpers\Url;
     </div>
 </div>
 
-<div id="popup-email" class="popup-common">
+<div id="popup-email" class="popup-common hide-popup">
 	<div class="wrap-popup">
 		<div class="title-popup clearfix">
 			<div class="text-center">SHARE VIA EMAIL</div>
@@ -294,6 +294,8 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 
 <script>
 	$(document).ready(function () {
-		popupMobi();
+		$('#popup-email').popupMobi({
+			btnClickShow: ".email-btn"
+		});
 	});
 </script>

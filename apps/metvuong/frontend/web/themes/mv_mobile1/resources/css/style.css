@@ -3943,3 +3943,6 @@ input[type=text]:focus {
     top: 0;
     left: 0;
 }
+.hide-popup {
+    display: none;
+}
