@@ -140,8 +140,8 @@ $.fn.radio = function (options) {
             var _this = $(this),
                 nameGroup = _this.find('input').attr('name');
 
-            $('input[name='+nameGroup+']').prop("checked", false);
-            $('input[name='+nameGroup+']').parent().removeClass('active');
+            $('input[name="'+nameGroup+'"]').prop("checked", false);
+            $('input[name="'+nameGroup+'"]').parent().removeClass('active');
 
             if ( _this.find('input[type=radio]').prop("checked") ) {
                 _this.find('input[type=radio]').prop("checked", false);
