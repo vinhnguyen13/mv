@@ -620,7 +620,7 @@ $.fn.slideSection = function (options) {
 
         function next () {
             if ( $(this).hasClass('disable') ) return;
-            if ( !sc.settings.validateFrm() ) return;
+            if ( !sc.settings.validateFrm(current+1) ) return;
 
             sc.settings.funCallBack();
 

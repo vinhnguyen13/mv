@@ -19,29 +19,28 @@ $(document).ready(function () {
 	
 	
 	
-		/*$('.dropdown-select').dropdown({
-			hiddenFillValue: '#sort'
-		});*/
+	/*$('.dropdown-select').dropdown({
+		hiddenFillValue: '#sort'
+	});*/
 
-		$('.frm-radio').radio({
-			done: function (item) {
-				/*if ( item.attr('name') == 'agent' ) {
-					setTimeout(function() {
-						$('#next-screen').trigger('click');
-					},250);
-				}*/
-			}
-		});
+	$('.frm-radio').radio({
+		done: function (item) {
+			/*if ( item.attr('name') == 'agent' ) {
+				setTimeout(function() {
+					$('#next-screen').trigger('click');
+				},250);
+			}*/
+		}
+	});
 
-		$('.post-listing').slideSection({
-			active: 0,
-			validateFrm: function () {
-				//return false => fill khong thoa yeu cau => khong next
-				//return true => fill thoa yeu cau => next screen
-				return true;
-			}
-		});
-
-		$('html').addClass('heightFull');
+	$('.post-listing').slideSection({
+		active: 0,
+		validateFrm: function (step) {
+			//return false => fill khong thoa yeu cau => khong next
+			//return true => fill thoa yeu cau => next screen
+			l(step);
+			return true;
+		}
+	});
 
 });

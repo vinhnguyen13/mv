@@ -23,6 +23,7 @@ use yii\helpers\Url;
                 <li><a href="<?= Url::to(['/ad/post']) ?>">đăng bán / cho thuê</a></li>
                 <li><a href="<?=Url::to(['building-project/index']);?>">dự án mới</a></li>
                 <li><a href="#">Tin tức</a></li>
+                <li><a href="<?=Url::to(['/payment/package', 'username'=> Yii::$app->user->identity->username])?>"><span class="icon icon-tags"></span>Các gói giá</a></li>
             </ul>
         </div>
     </div>
@@ -49,7 +50,6 @@ use yii\helpers\Url;
             <li><a href="<?=Url::to(['/dashboard/notification', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyOther"><span class="icon icon-alert"></span>Thông báo</a></li>
             <li><a href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>"><span class="icon icon-listings"></span>Listings</a></li>
             <li><a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyChat"><span class="icon icon-chat"></span>Chat</a></li><!-- <span class="notifi">1</span> -->
-            <li><a href="<?=Url::to(['/payment/package', 'username'=> Yii::$app->user->identity->username])?>"><span class="icon icon-tags"></span>Các gói giá</a></li>
             <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><span class="icon icon-logout"></span>Đăng xuất</a></li>
         </ul>
         <?php } ?>
