@@ -766,17 +766,23 @@ $.fn.popupMobi = function (options) {
             showPopup(el);
         });
 
+        $(sc.settings.closeBtn).on('click', function (e) {
+            e.preventDefault();
+            hide(el);
+        });
+
         if ( $(sc.settings.btnClickShow).length == 0 || sc.settings.btnClickShow == "" ) {
             showPopup(el);
         }
 
         function showPopup (popupItem) {
             $('body').addClass('popup-mobi');
-            //popupItem.
+            popupItem.removeClass('hide-popup');
         }
 
-        function hide () {
-
+        function hide (popupItem) {
+            popupItem.addClass('hide-popup');
+            $('body').removeClass('popup-mobi');
         }
     });
 }

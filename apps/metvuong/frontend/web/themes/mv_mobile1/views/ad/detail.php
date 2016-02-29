@@ -228,7 +228,7 @@ use yii\helpers\Url;
 	<div class="wrap-popup">
 		<div class="title-popup clearfix">
 			<div class="text-center">SHARE VIA EMAIL</div>
-			<a href="#" class="txt-cancel pull-left">Cancel</a>
+			<a href="#" class="txt-cancel pull-left btn-cancel">Cancel</a>
 		</div>
 		<div class="inner-popup">
 			<form action="">
@@ -295,7 +295,8 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 <script>
 	$(document).ready(function () {
 		$('#popup-email').popupMobi({
-			btnClickShow: ".email-btn"
+			btnClickShow: ".email-btn",
+			closeBtn: '#popup-email .btn-cancel'
 		});
 	});
 </script>
