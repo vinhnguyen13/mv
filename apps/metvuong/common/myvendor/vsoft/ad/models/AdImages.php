@@ -3,11 +3,11 @@
 namespace vsoft\ad\models;
 
 use Yii;
-use vsoft\ad\models\base\AdImagesBase;
 use yii\helpers\Url;
 use vsoft\express\components\StringHelper;
+use common\models\AdImages as AI;
 
-class AdImages extends AdImagesBase
+class AdImages extends AI
 {
 	const SIZE_THUMB = 'thumb';
 	const SIZE_MEDIUM = 'medium';

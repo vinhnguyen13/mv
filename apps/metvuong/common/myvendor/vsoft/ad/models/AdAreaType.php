@@ -3,10 +3,10 @@
 namespace vsoft\ad\models;
 
 use Yii;
-use vsoft\ad\models\base\AdAreaTypeBase;
+use common\models\AdAreaType as AAT;
 
 
-class AdAreaType extends AdAreaTypeBase
+class AdAreaType extends AAT
 {
 	const TYPE_APARTMENT = 1;
 	const TYPE_TOWNHOUSE = 2;

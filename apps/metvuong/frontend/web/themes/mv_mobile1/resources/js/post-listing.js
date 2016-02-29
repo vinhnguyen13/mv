@@ -36,11 +36,40 @@ $(document).ready(function () {
 	$('.post-listing').slideSection({
 		active: 0,
 		validateFrm: function (step) {
-			//return false => fill khong thoa yeu cau => khong next
-			//return true => fill thoa yeu cau => next screen
-			l(step);
-			return true;
+			if()
+			
+			console.log(step);
+			return validate[];
 		}
 	});
 
+	var validate = {
+		step1: function() {
+			
+		},
+		step2: function() {
+			
+		},
+		step3: function() {
+			
+		},
+		step4: function() {
+			
+		}
+	};
+	
+	var success = {
+		step1: function() {
+			
+		},
+		step2: function() {
+			
+		},
+		step3: function() {
+			
+		},
+		step4: function() {
+			
+		}
+	};
 });

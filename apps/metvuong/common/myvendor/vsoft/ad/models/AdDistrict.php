@@ -3,7 +3,7 @@
 namespace vsoft\ad\models;
 
 use Yii;
-use vsoft\ad\models\base\AdDistrictBase;
+use common\models\AdDistrict as AD;
 
 /**
  * This is the model class for table "ad_district".
@@ -20,7 +20,7 @@ use vsoft\ad\models\base\AdDistrictBase;
  * @property AdStreet[] $adStreets
  * @property AdWard[] $adWards
  */
-class AdDistrict extends AdDistrictBase
+class AdDistrict extends AD
 {
 	public function getStreets()
 	{

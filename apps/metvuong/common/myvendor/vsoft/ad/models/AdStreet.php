@@ -3,7 +3,7 @@
 namespace vsoft\ad\models;
 
 use Yii;
-use vsoft\ad\models\base\AdStreetBase;
+use common\models\AdStreet as ASt;
 
 /**
  * This is the model class for table "ad_street".
@@ -18,7 +18,7 @@ use vsoft\ad\models\base\AdStreetBase;
  * @property AdProduct[] $adProducts
  * @property AdDistrict $district
  */
-class AdStreet extends AdStreetBase
+class AdStreet extends ASt
 {
 	
 }

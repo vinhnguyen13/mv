@@ -3,7 +3,7 @@
 namespace vsoft\ad\models;
 
 use Yii;
-use vsoft\ad\models\base\AdProductAdditionInfoBase;
+use common\models\AdProductAdditionInfo as APAI;
 
 /**
  * This is the model class for table "ad_product_addition_info".
@@ -20,7 +20,7 @@ use vsoft\ad\models\base\AdProductAdditionInfoBase;
  *
  * @property AdProduct $product
  */
-class AdProductAdditionInfo extends \vsoft\ad\models\base\AdProductAdditionInfoBase
+class AdProductAdditionInfo extends APAI
 {
 	public function rules()
     {

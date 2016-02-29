@@ -2,11 +2,11 @@
 
 namespace vsoft\ad\models;
 
-use vsoft\ad\models\base\AdArchitectBase;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
+use common\models\AdArchitect as AA;
 
 /**
  * This is the model class for table "ad_architect".
@@ -25,7 +25,7 @@ use yii\db\Expression;
  *
  * @property AdArchitectBuildingProject[] $adArchitectBuildingProjects
  */
-class AdArchitect extends AdArchitectBase
+class AdArchitect extends AA
 {
 
 }

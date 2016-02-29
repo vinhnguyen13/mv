@@ -2,15 +2,15 @@
 
 namespace vsoft\ad\models;
 
-use vsoft\ad\models\base\AdBuildingProjectBase;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\helpers\ArrayHelper;
+use common\models\AdBuildingProject as ABP;
 
 
-class AdBuildingProject extends AdBuildingProjectBase
+class AdBuildingProject extends ABP
 {
 	private static $areaTypes = [];
 	

@@ -2,8 +2,8 @@
 
 namespace vsoft\ad\models;
 
-use vsoft\ad\models\base\AdContractorBuildingProjectBase;
 use Yii;
+use common\models\AdContractorBuildingProject as ACBP;
 
 /**
  * This is the model class for table "ad_contractor_building_project".
@@ -14,7 +14,7 @@ use Yii;
  * @property AdBuildingProject $buildingProject
  * @property AdContractor $contractor
  */
-class AdContractorBuildingProject extends AdContractorBuildingProjectBase
+class AdContractorBuildingProject extends ACBP
 {
 
 }

@@ -3,8 +3,8 @@
 namespace vsoft\ad\models;
 
 use Yii;
-use vsoft\ad\models\base\AdInvestorBase;
 use yii\data\ActiveDataProvider;
+use common\models\AdInvestor as AI;
 
 /**
  * This is the model class for table "ad_investor".
@@ -19,7 +19,7 @@ use yii\data\ActiveDataProvider;
  *
  * @property AdInvestorBuildingProject[] $adInvestorBuildingProjects
  */
-class AdInvestor extends AdInvestorBase
+class AdInvestor extends AI
 {
 	const STATUS_ENABLED = 1;
 	const STATUS_DISABLED = 0;

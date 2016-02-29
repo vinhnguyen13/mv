@@ -2,11 +2,11 @@
 
 namespace vsoft\ad\models;
 
-use vsoft\ad\models\base\AdContractorBase;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
+use common\models\AdContractor as AC;
 
 /**
  * This is the model class for table "ad_contractor".
@@ -24,7 +24,7 @@ use yii\db\Expression;
  *
  * @property AdContractorBuildingProject[] $adContractorBuildingProjects
  */
-class AdContractor extends AdContractorBase
+class AdContractor extends AC
 {
 
 }

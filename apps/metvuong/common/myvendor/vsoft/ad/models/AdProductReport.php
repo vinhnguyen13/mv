@@ -3,10 +3,10 @@
 namespace vsoft\ad\models;
 
 use Yii;
-use vsoft\ad\models\base\AdProductReportBase;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
+use common\models\AdProductReport as APR;
 
 /**
  * This is the model class for table "ad_product_report".
@@ -22,7 +22,7 @@ use yii\db\Expression;
  * @property AdProduct $product
  * @property User $user
  */
-class AdProductReport extends AdProductReportBase
+class AdProductReport extends APR
 {
     public function behaviors()
     {

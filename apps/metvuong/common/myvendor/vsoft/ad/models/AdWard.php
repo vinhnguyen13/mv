@@ -3,7 +3,7 @@
 namespace vsoft\ad\models;
 
 use Yii;
-use vsoft\ad\models\base\AdWardBase;
+use common\models\AdWard as AW;
 
 /**
  * This is the model class for table "ad_ward".
@@ -18,7 +18,7 @@ use vsoft\ad\models\base\AdWardBase;
  * @property AdProduct[] $adProducts
  * @property AdDistrict $district
  */
-class AdWard extends AdWardBase
+class AdWard extends AW
 {
 	
 }

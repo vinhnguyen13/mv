@@ -3,7 +3,7 @@
 namespace vsoft\ad\models;
 
 use Yii;
-use vsoft\ad\models\base\AdProductRatingBase;
+use common\models\AdProductRating as APR;
 
 /**
  * This is the model class for table "ad_product_rating".
@@ -16,7 +16,7 @@ use vsoft\ad\models\base\AdProductRatingBase;
  * @property AdProduct $product
  * @property User $user
  */
-class AdProductRating extends AdProductRatingBase
+class AdProductRating extends AdProductRating
 {
     public $avgCore;
 

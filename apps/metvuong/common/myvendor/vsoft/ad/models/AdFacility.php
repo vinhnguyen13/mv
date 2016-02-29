@@ -2,12 +2,12 @@
 
 namespace vsoft\ad\models;
 
-use vsoft\ad\models\base\AdFacilityBase;
 use Yii;
 use yii\behaviors\AttributeBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
+use common\models\AdFacility as AF;
 
 /**
  * This is the model class for table "ad_facility".
@@ -21,7 +21,7 @@ use yii\db\Expression;
  * @property integer $updated_by
  * @property integer $status
  */
-class AdFacility extends AdFacilityBase
+class AdFacility extends AF
 {
     public function behaviors()
     {

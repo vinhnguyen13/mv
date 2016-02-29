@@ -5,7 +5,7 @@ namespace vsoft\ad\models;
 use dektrium\user\helpers\Password;
 use frontend\models\User;
 use Yii;
-use vsoft\ad\models\base\AdContactInfoBase;
+use common\models\AdContactInfo as ACI;
 
 /**
  * This is the model class for table "ad_contact_info".
@@ -19,7 +19,7 @@ use vsoft\ad\models\base\AdContactInfoBase;
  *
  * @property AdProduct $product
  */
-class AdContactInfo extends AdContactInfoBase
+class AdContactInfo extends ACI
 {
 
 	public function rules()
