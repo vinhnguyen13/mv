@@ -137,4 +137,12 @@ class AdProduct extends AP
 			return AdImages::defaultImage();
 		}
 	}
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getAdContactInfo()
+	{
+		return $this->hasOne(AdContactInfo::className(), ['product_id' => 'id']);
+	}
 }
