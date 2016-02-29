@@ -876,7 +876,7 @@ class BatdongsanV2 extends Component
                     if ($counter > 0) {
                         $filename = null;
                         for ($i = 0; $i <= $last_file_index; $i++) {
-                            if ($count_file > 1000) {
+                            if ($count_file > 500) {
                                 $break_type = true;
                                 break;
                             }
