@@ -19,7 +19,6 @@ $city->name = 'aaaa';
 				]]); ?>
 				
 <?= $form->field($city, 'name')->widget(FileUpload::className(), [
-				'inputFileName' => 's',
 				'fieldOptions' => [
 					'name' => 'ddd',
 				],
@@ -32,7 +31,7 @@ $city->name = 'aaaa';
 						'deleteType'    => 'DELETE'
 					]
 				],
-						'url' => Url::to(['upload-test-handle']),
+						'url' => Url::to(['upload']),
 						]) ?>		
 <?= FileUpload::widget([
 		'files' => [
@@ -44,8 +43,7 @@ $city->name = 'aaaa';
 						'deleteType'    => 'DELETE'
 					]
 				],
-				'inputFileName' => 'ss',
 	'name' => 'image',
-	'url' => Url::to(['upload-test-handle'])
+	'url' => Url::to(['upload'])
 ]) ?>
 <?php $form->end()?>

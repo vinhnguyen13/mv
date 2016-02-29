@@ -33,6 +33,8 @@ class AdController extends Controller
 {
     public $layout = '@app/views/layouts/layout';
 
+    
+    /* Test Test Test Test Test  */
     public function actionTest() {
     	return $this->render('test');
     }
@@ -59,7 +61,18 @@ class AdController extends Controller
     	
     	return ['files' => []];
     }
+    /* Test Test Test Test Test  */
     
+    
+    public function actionUpload() {
+    	if($_FILES) {
+    		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    		
+    		$image = UploadedFile::getInstanceByName('upload');
+    		
+    		var_dump($image);
+    	}
+    }
     /**
      * @return string
      */
@@ -408,28 +421,28 @@ class AdController extends Controller
 		return $this->render('post/index');
 	}
 
-    public function actionUpload() {
-    	$folder = 'ad';
-    	$response = Yii::$app->runAction('express/upload/image', ['folder' => $folder, 'resizeForAds' => true]);
+//     public function actionUpload() {
+//     	$folder = 'ad';
+//     	$response = Yii::$app->runAction('express/upload/image', ['folder' => $folder, 'resizeForAds' => true]);
     	
-    	if($response) {
-    		$path = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . $response['files'][0]['name'];
-    		$imageHelper = new ImageHelper($path);
-    		$imageHelper->makeMedium();
-    		$imageHelper->makeLarge(true);
+//     	if($response) {
+//     		$path = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . $response['files'][0]['name'];
+//     		$imageHelper = new ImageHelper($path);
+//     		$imageHelper->makeMedium();
+//     		$imageHelper->makeLarge(true);
     		
-    		$image = new AdImages();
-    		$image->file_name = $response['files'][0]['name'];
-    		$image->uploaded_at = time();
-    		$image->user_id = Yii::$app->user->id;
-    		$image->save(false);
+//     		$image = new AdImages();
+//     		$image->file_name = $response['files'][0]['name'];
+//     		$image->uploaded_at = time();
+//     		$image->user_id = Yii::$app->user->id;
+//     		$image->save(false);
     		
-    		$response['files'][0]['deleteUrl'] = Url::to(['delete-image', 'id' => $image->id]);
-    		$response['files'][0]['name'] = $image->id;
+//     		$response['files'][0]['deleteUrl'] = Url::to(['delete-image', 'id' => $image->id]);
+//     		$response['files'][0]['name'] = $image->id;
     		
-    		return $response;
-    	}
-    }
+//     		return $response;
+//     	}
+//     }
     
     public function actionDeleteImage($id) {
     	$image = AdImages::findOne($id);
