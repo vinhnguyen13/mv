@@ -50,7 +50,7 @@ $types = AdProduct::getAdTypes ();
 
 					<div class="bgcover img-intro">
 						<div>
-							<a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>"><img src="" data-original="<?= $imgUrl ?>"></a>
+							<a class="rippler rippler-default" href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>"><img src="" data-original="<?= $imgUrl ?>"></a>
 						</div>
 					</div>
 					<p class="infor-by-up">
