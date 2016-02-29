@@ -141,23 +141,23 @@ use yii\helpers\Url;
             <div id="collapseEght" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven">
                 <div class="panel-body text-center">
             	    <div class="infor-agent clearfix">
+						<?php
+						/**
+						 * auto register user
+						 */
+						$url = '#';
+						if($product->adContactInfo->email){
+							$user = $product->adContactInfo->getUserInfo();
+							$url = $user->urlProfile();
+						}
+						?>
 			            <?php if(!empty($owner->username)) { ?>
 						<a href="<?=\yii\helpers\Url::to(['member/profile','username' => $owner->username])?>" class="wrap-img">
 			                <img src="<?= $avatar ?>" alt="" /></a>
 			            <?php } else { ?>
-			                <a class="wrap-img"><img src="<?= $avatar ?>" alt="" /></a>
+			                <a class="wrap-img" href="<?=$url;?>"><img src="<?= $avatar ?>" alt="" /></a>
 			            <?php } ?>
 			            <div class="img-agent">
-							<?php
-							/**
-							 * auto register user
-							 */
-							$url = '#';
-							if($product->adContactInfo->email){
-								$user = $product->adContactInfo->getUserInfo();
-								$url = $user->urlProfile();
-							}
-							?>
 				            <a href="<?=$url;?>" class="name-agent"><?= $product->adContactInfo->name ?></a>
 							<div class="rating-start">
 								<fieldset class="rate">
