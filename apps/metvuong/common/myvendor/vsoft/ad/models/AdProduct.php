@@ -11,6 +11,9 @@ class AdProduct extends AP
 	const TYPE_FOR_SELL = 1;
 	const TYPE_FOR_RENT = 2;
 	
+	const OWNER_HOST = 1;
+	const OWNER_AGENT = 2;
+	
 	const STATUS_ACTIVE = 1;
 	const STATUS_INACTIVE = 0;
 	

@@ -45,13 +45,18 @@ use vsoft\ad\models\AdProduct;
 				</li>
 				<li>
 					<a class="frm-radio" href="#">
-						<span class="radio-ui icon"><input data-flag="true" name="agent" type="radio" checked></span>
+						<?php $ownerName = Html::getInputName($product, 'owner') ?>
+						<span class="radio-ui icon">
+							<?= Html::radio($ownerName, ($product->owner == AdProduct::OWNER_HOST || !$product->owner), ['value' => AdProduct::OWNER_HOST]) ?>
+						</span>
 						<span><?= Yii::t('ad', 'Chủ nhà') ?></span>
 					</a>
 				</li>
 				<li>
 					<a class="frm-radio" href="#">
-						<span class="radio-ui icon"><input data-flag="true" name="agent" type="radio"></span>
+						<span class="radio-ui icon">
+							<?= Html::radio($ownerName, ($product->owner == AdProduct::OWNER_AGENT), ['value' => AdProduct::OWNER_AGENT]) ?>
+						</span>
 						<span><?= Yii::t('ad', 'Môi giới') ?></span>
 					</a>
 				</li>
