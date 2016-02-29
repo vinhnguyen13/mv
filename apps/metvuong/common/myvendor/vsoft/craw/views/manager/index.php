@@ -16,7 +16,6 @@ use vsoft\craw\models\AdProductAdditionInfo;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $this->registerCss('.filter-col {margin-right: 12px;} .container {max-width: none; width: auto;} .summary {float: right;font-size: 20px;margin-top: 28px;} .title {float: left;} .min {width: 100px; display: inline-block;} table {white-space: nowrap;}');
 
-$bp = \vsoft\craw\models\AdBuildingProject::find()->innerJoinWith('t', 'ad_product.id = T.productId')->orderBy("name ASC")->all();
 
 $script = <<<EOD
 	$('.price').keyup(function(){
