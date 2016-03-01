@@ -1581,10 +1581,10 @@ label {
     padding: 5px;
 }
 .avatar-user-pr .avatar img {
-    border-radius: 100%;
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
-    -ms-border-radius: 100%;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
     width: 100%;
     height: 100%;
 }
@@ -3970,6 +3970,7 @@ input[type=text]:focus {
 .item-send .infor-send {
     border: solid 0.7px #979797;
     padding: 10px 15px 15px;
+    border-top: none;
 }
 .inner-popup .btn-common {
     text-transform: uppercase;
@@ -4084,4 +4085,55 @@ input[type=text]:focus {
 }
 #settings-user .mm-panels>.mm-panel {
     padding-top: 0
+}
+.wrap-detail-article img {
+    max-width: 100% !important;
+    height: auto !important;
+}
+.wrap-detail-article {
+    padding: 15px 20px;
+    color: #3c3c3c;
+    font-size: 14px;
+    line-height: 20px;
+}
+.wrap-detail-article .big-title {
+    font-size: 20px;
+    line-height: 25px;
+    font-weight: 600;
+    margin: 0 0 10px 0;
+}
+.wrap-detail-article .time-post {
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+.detail-content .box-content p {
+    margin-bottom: 15px;
+}
+#avatar .files li .preview {
+    width: 120px;
+    height: 120px;
+    padding: 0;
+    margin: 0;
+    background: none;
+}
+#avatar .preview a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    border: solid 1px #00a769;
+    overflow: hidden;
+    padding: 5px;
+}
+#avatar .preview a img {
+    display: block;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    width: 100%;
+    height: 100%;
 }

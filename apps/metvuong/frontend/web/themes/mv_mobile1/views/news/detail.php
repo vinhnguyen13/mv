@@ -50,52 +50,41 @@ Yii::$app->view->registerMetaTag([
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 </script>
-
-<div class="row">
-    <div class="col-sm-8 col-lg-9 col-right-home detail-news">
+<div class="title-fixed-wrap">
+    <div class="detail-news">
+        <div class="title-top">Tin tức</div>
         <div class="wrap-detail-article">
             <input id="current_id" type="hidden" value="<?=$news->id?>">
             <input id="current_slug" type="hidden" value="<?=$news->slug?>">
             <input id="current_title" type="hidden" value="<?=$news->title?>">
             <input id="cat_id" type="hidden" value="<?=$news->catalog_id?>">
             <article>
-                <div class="time-post">
-                    <a class="color-title-link"><?=$catalog->title?></a>
-                    <span class="">&nbsp;&nbsp;<?=date("d/m/Y g:i a",$news->created_at)?></span>
-                </div>
                 <h1 class="big-title"><?=$news->title?></h1>
-                <div class="row">
-                    <div class="col-xs-3 tg-post pdR-5">
-                        <div>Tác giả</div>
-                        <div class="mgT-10"><a href="" class="color-title-link"><?=$author->name?></a></div>
-                        <div class="mgT-10">
-                            <img src="<?=$author->getAvatarUrl()?>" title="<?=$author->name?>" style="max-width:100%;">
-                        </div>
-                    </div>
-                    <div class="col-xs-9 detail-content pdL-5">
-                        <div class="box-content">
-                            <div><?=$news->content?></div>
-                            <div id="social<?=$news->id?>" class="share-social mgT-10 wrap-img">
-                                <div class="fb-like" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug, 'cat_id' => $news->catalog_id, 'cat_slug' => $catalog->slug]) ?>" data-layout="button_count" style="margin-right: 10px;"></div>
-                                <div class="fb-send" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug, 'cat_id' => $news->catalog_id, 'cat_slug' => $catalog->slug]) ?>" data-show-faces="false" style="margin-right: 10px;"></div>
-                                <div class="fb-share-button" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug, 'cat_id' => $news->catalog_id, 'cat_slug' => $catalog->slug]) ?>" data-layout="button_count"></div><br>
-                                <div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl(['news/view', 'id' => $news->id, 'slug' => $news->slug, 'cat_id' => $news->catalog_id, 'cat_slug' => $catalog->slug])?>" data-width="100%" data-numposts="3"></div>
-                            </div>
-
+                <div class="time-post">
+                    <!-- <a class="color-title-link"><?=$catalog->title?></a> -->
+                    <span class=""><?=date("d/m/Y g:i a",$news->created_at)?></span>
+                </div>
+                <div class="detail-content pdL-5">
+                    <div class="box-content">
+                        <div><?=$news->content?></div>
+                        <div id="social<?=$news->id?>" class="share-social mgT-10 wrap-img">
+                            <div class="fb-like" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug, 'cat_id' => $news->catalog_id, 'cat_slug' => $catalog->slug]) ?>" data-layout="button_count" style="margin-right: 10px;"></div>
+                            <div class="fb-send" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug, 'cat_id' => $news->catalog_id, 'cat_slug' => $catalog->slug]) ?>" data-show-faces="false" style="margin-right: 10px;"></div>
+                            <div class="fb-share-button" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug, 'cat_id' => $news->catalog_id, 'cat_slug' => $catalog->slug]) ?>" data-layout="button_count"></div><br>
+                            <div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl(['news/view', 'id' => $news->id, 'slug' => $news->slug, 'cat_id' => $news->catalog_id, 'cat_slug' => $catalog->slug])?>" data-width="100%" data-numposts="3"></div>
                         </div>
                     </div>
                 </div>
             </article>
         </div>
         <!-- <div class="toHeight" style="height: 10px;"></div> -->
-        <div class="load-more-article pull-right col-xs-9">
-            <div class="loading text-center pull-right col-xs-9" >
-                <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/loading-listing.gif" alt="Loading..." title="<?=$news->title?>" />
+        <div class="load-more-article">
+            <div class="loading text-center" >
+                <img src="<?=Yii::$app->view->theme->baseUrl."/resources/images/loading-listing.gif"?>" alt="Loading..." title="<?=$news->title?>" />
             </div>
         </div>
     </div>
 </div>
-
 <style>
     .loading { display: none; margin-bottom: 20px;}
     .animated, .box-content img {
@@ -174,20 +163,11 @@ Yii::$app->view->registerMetaTag([
                                     window.history.pushState(data.slug, data.title, data.id + "-" + data.slug);
                                     $('.wrap-detail-article').append(
                                         '<article>' +
-                                        '<div class="time-post">' +
-                                        '<a href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + data.catalog_id + '-' + data.cat_slug + '"  class="color-title-link">' + data.catalog_name + '</a>' +
-                                        '<span>&nbsp;&nbsp;' + time + '</span>' +
-                                        '</div>' +
                                         '<h1 class="big-title">' + data.title + '</h1>' +
-                                        '<div class="row">' +
-                                        '<div class="col-xs-3 tg-post pdR-5">' +
-                                        '<div>Tác giả</div>' +
-                                        '<div class="mgT-10"><a href="" class="color-title-link">' + data.author_name + '</a></div>' +
-                                        '<div class="mgT-10">' +
-                                        '<img src="/store/avatar/' + data.avatar + '" title="" style="max-width:100%;">' +
+                                        '<div class="time-post">' +
+                                        '<span>' + time + '</span>' +
                                         '</div>' +
-                                        '</div>' +
-                                        '<div class="col-xs-9 detail-content pdL-5">' +
+                                        '<div class="detail-content pdL-5">' +
                                         '<div class="box-content">' +
                                         '<div>' + data.content + '</div>' +
                                         '<div id="social' + data.id + '" class="share-social mgT-10 wrap-img">' +
@@ -195,7 +175,6 @@ Yii::$app->view->registerMetaTag([
                                         '<div class="fb-send" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + data.catalog_id + '-' + data.cat_slug + '/' + data.id + '-' + data.slug + '" data-show-faces="false" style="margin-right: 10px;"></div>' +
                                         '<div class="fb-share-button" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + data.catalog_id + '-' + data.cat_slug + '/' + data.id + '-' + data.slug + '" data-layout="button_count"></div><br>' +
                                         '<div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + data.catalog_id + '-' + data.cat_slug + '/' + data.id + '-' + data.slug + '" data-width="600" data-numposts="3" ></div>' +
-                                        '</div>' +
                                         '</div>' +
                                         '</div>' +
                                         '</div>' +
