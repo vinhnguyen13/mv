@@ -16,15 +16,22 @@ use yii\helpers\Url;
 	
 	$owner = User::findOne($product->user_id);
 
+	$url = '#';
 	if($owner && $owner->profile) {
 		$avatar = $owner->profile->getAvatarUrl();
 	} else {
+		/**
+		 * auto register user
+		 */
+		if($product->adContactInfo->email){
+			$user = $product->adContactInfo->getUserInfo();
+			$url = $user->urlProfile();
+		}
 		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
 	}
 
     $address = $product->getAddress();
 ?>
-
 <div class="detail-listing">
 	<?php 
 		$images = $product->adImages;
@@ -144,16 +151,6 @@ use yii\helpers\Url;
             <div id="collapseEght" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven">
                 <div class="panel-body text-center">
             	    <div class="infor-agent clearfix">
-						<?php
-						/**
-						 * auto register user
-						 */
-						$url = '#';
-						if($product->adContactInfo->email){
-							$user = $product->adContactInfo->getUserInfo();
-							$url = $user->urlProfile();
-						}
-						?>
 			            <?php if(!empty($owner->username)) { ?>
 						<a href="<?=$url;?>" class="wrap-img">
 			                <img src="<?= $avatar ?>" alt="" /></a>

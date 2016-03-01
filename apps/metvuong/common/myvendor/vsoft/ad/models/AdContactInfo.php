@@ -34,7 +34,12 @@ class AdContactInfo extends ACI
 			[['product_id'], 'unique']
 		];
 	}
-	
+
+	public function getProduct()
+	{
+		return $this->hasOne(AdProduct::className(), ['id' => 'product_id']);
+	}
+
 	public function loadDefaultValues($skipIfSet = true) {
 		if(!Yii::$app->user->isGuest) {
 			$this->name = Yii::$app->user->identity->profile->name;
@@ -68,7 +73,11 @@ class AdContactInfo extends ACI
 			$user->validate();
 			if (!$user->hasErrors()) {
 				$user->register();
-				return $user;
+				if(!empty($user->id)){
+					$this->product->user_id = $user->id;
+					$this->product->save();
+					return $user;
+				}
 			}else{
 				return $user->errors;
 			}
