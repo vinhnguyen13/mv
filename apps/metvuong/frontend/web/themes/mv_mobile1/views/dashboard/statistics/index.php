@@ -9,31 +9,37 @@ $id = $product->id;
 ?>
 <div class="title-fixed-wrap">
     <div class="statis">
-    	<div class="title-top">Thống kê</div>
+    	<div class="title-top">
+            Thống kê
+            <a href="#" id="prev-page"><span class="icon arrowRight-1"></span></a>
+        </div>
     	<section>
     		<div id="sandbox-container">
     			<input type="text" class="form-control toDate" placeholder="Ngày">
     			<span class="icon arrowDown"></span>
     		</div>
     		<div class="summary clearfix">
-    			SUMMARY
-    			<span class="pull-right views-stats"><em class="fa fa-square-o"></em>
-                    <select class="chart_stats">
-                        <option class="tab" value="finder" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $from, 'to' => $to])?>">Search</option>
-                        <option class="tab" value="visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $from, 'to' => $to])?>">Click</option>
-                        <option class="tab" value="favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'id' => $id, 'from' => $from, 'to' => $to])?>">Favourite</option>
-                    </select>
-                </span>
-    			<div class="wrap-chart">
+                <div class="clearfix">
+        			<span class="pull-right views-stats"><em class="fa fa-square-o"></em>
+                        <select class="chart_stats">
+                            <option class="tab" value="finder" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $from, 'to' => $to])?>">Search</option>
+                            <option class="tab" value="visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $from, 'to' => $to])?>">Click</option>
+                            <option class="tab" value="favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'id' => $id, 'from' => $from, 'to' => $to])?>">Favourite</option>
+                        </select>
+                    </span>
+                </div>
+    			<div class="wrap-chart clearfix">
     				<div class="wrap-img">
                         <div class="wrapChart">
                             <?=$this->render('/dashboard/chart/'.$view, ['id' => $id, 'from' => $from, 'to' => $to]);?>
+                            <p class="name-post"><span class="icon address-icon"></span>42/1/89 Ba Huyen Thanh Quan, Quận 1, HCM</p>
                         </div>
                         <div class="loading text-center" style="display: none;" >
                             <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/loading-listing.gif" alt="Loading..." />
                         </div>
                     </div>
     			</div>
+                <p class="date-filter-chart">Thống kê từ <span>21/01/2016</span> - <span>27/01/2016</span></p>
     		</div>
             <div class="statistic"></div>
     	</section>
