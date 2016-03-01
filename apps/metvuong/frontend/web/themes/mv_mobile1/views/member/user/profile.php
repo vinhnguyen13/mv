@@ -59,63 +59,60 @@ $user = $model->getUser();
             <ul class="clearfix list-post">
                 <li>
                     <a href="#" class="rippler rippler-default">
-                        <div class="bgcover pull-left" style="background-image: url(<?=Yii::$app->view->theme->baseUrl."/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg"?>);"><div>Nhà riêng bán</div></div>
-                        <div class="overflow-all">
-                            <p class="name-post">42/1/89 Ba Huyen Thanh Quan, Quận 1, HCM</p>
-                            <ul class="clearfix list-attr-td">
-                                <li>
-                                    <span class="icon icon-dt icon-dt-small"></span>80m2
-                                </li>
-                                <li>
-                                    <span class="icon icon-bed icon-bed-small"></span> 02
-                                </li>
-                                <li>
-                                    <span class="icon icon-pt icon-pt-small"></span> 02
-                                </li>
-                            </ul>
-                            <p class="price-post">Giá bán <strong>4 tỷ đồng</strong></p>
-                        </div>
+                        <div class="img-show"><div><img src="<?=Yii::$app->view->theme->baseUrl."/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg"?>"></div></div>
+                        <div class="title-item">Nhà riêng bán</div>
                     </a>
+                    <p class="name-post"><span class="icon address-icon"></span>42/1/89 Ba Huyen Thanh Quan, Quận 1, HCM</p>
+                    <ul class="clearfix list-attr-td">
+                        <li>
+                            <span class="icon icon-dt icon-dt-small"></span>80m2
+                        </li>
+                        <li>
+                            <span class="icon icon-bed icon-bed-small"></span> 02
+                        </li>
+                        <li>
+                            <span class="icon icon-pt icon-pt-small"></span> 02
+                        </li>
+                    </ul>
+                    <p class="price-post">Giá bán <strong>4 tỷ đồng</strong></p>
                 </li>
                 <li>
                     <a href="#" class="rippler rippler-default">
-                        <div class="bgcover pull-left" style="background-image: url(<?=Yii::$app->view->theme->baseUrl."/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg"?>);"><div>Căn hộ bán</div></div>
-                        <div class="overflow-all">
-                            <p class="name-post">42/1/89 Ba Huyen Thanh Quan, Quận 1, HCM</p>
-                            <ul class="clearfix list-attr-td">
-                                <li>
-                                    <span class="icon icon-dt icon-dt-small"></span>80m2
-                                </li>
-                                <li>
-                                    <span class="icon icon-bed icon-bed-small"></span> 02
-                                </li>
-                                <li>
-                                    <span class="icon icon-pt icon-pt-small"></span> 02
-                                </li>
-                            </ul>
-                            <p class="price-post">Giá bán <strong>4 tỷ đồng</strong></p>
-                        </div>
+                        <div class="img-show"><div><img src="<?=Yii::$app->view->theme->baseUrl."/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg"?>"></div></div>
+                        <div class="title-item">Nhà riêng bán</div>
                     </a>
+                    <p class="name-post"><span class="icon address-icon"></span>42/1/89 Ba Huyen Thanh Quan, Quận 1, HCM</p>
+                    <ul class="clearfix list-attr-td">
+                        <li>
+                            <span class="icon icon-dt icon-dt-small"></span>80m2
+                        </li>
+                        <li>
+                            <span class="icon icon-bed icon-bed-small"></span> 02
+                        </li>
+                        <li>
+                            <span class="icon icon-pt icon-pt-small"></span> 02
+                        </li>
+                    </ul>
+                    <p class="price-post">Giá bán <strong>4 tỷ đồng</strong></p>
                 </li>
                 <li>
                     <a href="#" class="rippler rippler-default">
-                        <div class="bgcover pull-left" style="background-image: url(<?=Yii::$app->view->theme->baseUrl."/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg"?>);"><div>Nhà riêng thuê</div></div>
-                        <div class="overflow-all">
-                            <p class="name-post">42/1/89 Ba Huyen Thanh Quan, Quận 1, HCM</p>
-                            <ul class="clearfix list-attr-td">
-                                <li>
-                                    <span class="icon icon-dt icon-dt-small"></span>80m2
-                                </li>
-                                <li>
-                                    <span class="icon icon-bed icon-bed-small"></span> 02
-                                </li>
-                                <li>
-                                    <span class="icon icon-pt icon-pt-small"></span> 02
-                                </li>
-                            </ul>
-                            <p class="price-post">Giá bán <strong>4 tỷ đồng</strong></p>
-                        </div>
+                        <div class="img-show"><div><img src="<?=Yii::$app->view->theme->baseUrl."/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg"?>"></div></div>
+                        <div class="title-item">Nhà riêng bán</div>
                     </a>
+                    <p class="name-post"><span class="icon address-icon"></span>42/1/89 Ba Huyen Thanh Quan, Quận 1, HCM</p>
+                    <ul class="clearfix list-attr-td">
+                        <li>
+                            <span class="icon icon-dt icon-dt-small"></span>80m2
+                        </li>
+                        <li>
+                            <span class="icon icon-bed icon-bed-small"></span> 02
+                        </li>
+                        <li>
+                            <span class="icon icon-pt icon-pt-small"></span> 02
+                        </li>
+                    </ul>
+                    <p class="price-post">Giá bán <strong>4 tỷ đồng</strong></p>
                 </li>
             </ul>
         </div>
