@@ -37,7 +37,7 @@ class AdController extends Controller
     public $layout = '@app/views/layouts/layout';
     
     public function actionUpload() {
-    	if($_FILES) {
+        if($_FILES) {
     		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     		
     		$image = UploadedFile::getInstanceByName('upload');

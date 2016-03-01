@@ -750,6 +750,7 @@ $.fn.popupMobi = function (options) {
         var defaults = {
             styleShow: "full", // "full" or "center"
             duration: 200,
+            effectShow: "slideDownUp", // show/hide or slideDownUp
             btnClickShow: "",
             closeBtn: "",
             funCallBack: function () {}
@@ -789,6 +790,15 @@ $.fn.popupMobi = function (options) {
         function showPopup (popupItem) {
             $('body').addClass('popup-mobi');
             popupItem.removeClass('hide-popup');
+
+            if ( sc.settings.effectShow == "slideDownUp" ) {
+                popupItem.find('.wrap-popup').css({
+                    transition: "bottom 250ms ease 0ms",
+                    bottom: '50%'
+                });
+            }else if ( sc.settings.effectShow == "show-hide" ) {
+
+            }
         }
 
         function hide (popupItem) {

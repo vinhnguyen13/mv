@@ -177,10 +177,10 @@ use common\widgets\fileupload\FileUpload;
 					'name' => 'images', 
 					'url' => Url::to(['upload']),
 					'clientOptions' => [
-						'previewMinWidth' => 152,
-						'previewMinHeight' => 114,
-						'previewMaxWidth' => 152,
-						'previewMaxHeight' => 114,
+						'previewMinWidth' => 130,
+						'previewMinHeight' => 98,
+						'previewMaxWidth' => 130,
+						'previewMaxHeight' => 98,
 						'previewCrop' => true,
 					],
 					'clientEvents' => [

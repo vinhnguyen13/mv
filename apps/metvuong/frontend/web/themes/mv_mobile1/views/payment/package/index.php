@@ -7,8 +7,8 @@
  */
 ?>
 <div class="title-fixed-wrap">
+	<div class="title-top">CÁC GÓI GIÁ</div>
 	<div class="all-packege">
-		<div class="title-top">CÁC GÓI GIÁ</div>
 		<div class="item-packege">
 			<div class="content-pac">
 				<h2>STARTER</h2>
