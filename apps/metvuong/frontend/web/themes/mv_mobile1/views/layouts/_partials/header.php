@@ -8,7 +8,9 @@ use yii\helpers\Url;
             <img src="/images/default-avatar.jpg" alt="">
         <?php } else{?>
             <img id="headAvatar" src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="">
-<!--            <span id="notifyTotal"></span>-->
+            <?php if(Yii::$app->session->get("notifyOther")){?>
+                <span id="notifyOther"><?=Yii::$app->session->get("notifyOther");?></span>
+            <?php }?>
         <?php }?>
     </a>
     <div class="logo">
