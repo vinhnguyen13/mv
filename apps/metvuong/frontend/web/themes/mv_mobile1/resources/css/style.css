@@ -3950,7 +3950,7 @@ input[type=text]:focus {
     vertical-align: middle;
 }
 .frm-email > div {
-    width: 78%;
+    width: 100%;
     margin: 0;
     display: inline-block;
     vertical-align: middle;
@@ -4300,4 +4300,16 @@ input[type=text]:focus {
 }
 .hinh-anh .fileinput-button {
     margin-top: 15px;
+}
+#share_form ::-webkit-input-placeholder {
+   font-style: italic;
+}
+#share_form :-moz-placeholder { /* Firefox 18- */
+   font-style: italic;
+}
+#share_form ::-moz-placeholder {  /* Firefox 19+ */
+   font-style: italic;
+}
+#share_form :-ms-input-placeholder {  
+   font-style: italic;
 }

@@ -245,16 +245,13 @@ use yii\helpers\Url;
             ]);
             ?>
 				<div class="frm-item frm-email clearfix">
-					<span>From</span>
-                    <?= $f->field($share_form, 'your_email')->textInput(['class'=>'your_email', 'placeholder'=>Yii::t('your_email', 'Email của bạn...')])->label(false) ?>
+					<?= $f->field($share_form, 'your_email')->textInput(['class'=>'your_email', 'placeholder'=>Yii::t('your_email', 'Email của bạn...')])->label(false) ?>
 				</div>
 				<div class="frm-item frm-email clearfix">
-					<span>To</span>
-                    <?= $f->field($share_form, 'recipient_email')->textInput(['class'=>'recipient_email', 'placeholder'=>Yii::t('recipient_email', 'Email người nhận...')])->label(false) ?>
+					<?= $f->field($share_form, 'recipient_email')->textInput(['class'=>'recipient_email', 'placeholder'=>Yii::t('recipient_email', 'Email người nhận...')])->label(false) ?>
                 </div>
 				<div class="frm-item frm-email clearfix">
-					<span>Subject</span>
-                    <?= $f->field($share_form, 'subject')->textInput(['class'=>'subject2', 'placeholder'=>Yii::t('subject', 'Tiêu đề...')])->label(false)?>
+					<?= $f->field($share_form, 'subject')->textInput(['class'=>'subject2', 'placeholder'=>Yii::t('subject', 'Tiêu đề...')])->label(false)?>
 				</div>
 				<div class="frm-item frm-email clearfix frm-textarea">
                     <?= $f->field($share_form, 'content')->textarea(['class'=>'content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('content', 'Nội dung...')])->label(false) ?>
