@@ -33,13 +33,24 @@ $user = $model->getUser();
 
         <ul class="clearfix list-attr-per">
             <li>
-                <div class="circle"><span class="icon icon-map-loca-1"></span></div><div name="address"><?=$model->address?></div>
+                <div class="circle"><div><span class="icon icon-map-loca-1"></span></div></div><div class="txt-infor-right" name="address">
+                <div><?=$model->address?></div></div>
             </li>
             <li>
-                <div class="circle"><span class="icon icon-phone-1"></span></div><div name="mobile" contenteditable="true" placeholder="Vui lòng nhập số điện thoại"><?=$model->mobile?></div>
+                <div class="circle"><div><span class="icon icon-phone-1"></span></div></div>
+                <div class="txt-infor-right" name="mobile" contenteditable="true" placeholder="Vui lòng nhập số điện thoại">
+                    <div>
+                        <?=$model->mobile?>
+                    </div>
+                </div>
             </li>
             <li>
-                <div class="circle"><span class="icon icon-email-1"></span></div><div name="public_email" contenteditable="true" placeholder="Vui lòng nhập email"><?= $model->public_email ?></div>
+                <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
+                <div class="txt-infor-right" name="public_email" contenteditable="true" placeholder="Vui lòng nhập email">
+                    <div>
+                        <?= $model->public_email ?>
+                    </div>
+                </div>
             </li>
         </ul>
 

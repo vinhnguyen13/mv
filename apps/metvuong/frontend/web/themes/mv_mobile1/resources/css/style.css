@@ -1575,8 +1575,8 @@ label {
     -ms-border-radius: 100%;
     overflow: hidden;
     border: solid 1px #00a769;
-    width: 120px;
-    height: 120px;
+    width: 90px;
+    height: 90px;
     margin: 0 auto 10px;
     padding: 5px;
 }
@@ -3756,11 +3756,14 @@ input[type=text]:focus {
 }
 .list-attr-per li {
     border-top: solid 0.5px #969696;
-    padding: 7px 20px;
-    vertical-align: middle;
+    padding: 6px 20px;
     color: #3c3c3c;
     font-weight: 600;
     font-size: 15px;
+    position: relative;
+    vertical-align: middle;
+    float: left;
+    width: 100%;
 }
 .list-attr-per li:last-child {
     border-bottom: solid 0.5px #969696;
@@ -3768,24 +3771,39 @@ input[type=text]:focus {
 .list-attr-per li a {
     color: #3c3c3c;
 }
-.circle {
+.circle div {
     border-radius: 50%;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     -ms-border-radius: 50%;
     display: inline-block;
-}
-.list-attr-per li div {
-    display: table-cell;
-    vertical-align: middle;    
-    text-align: center;
-    padding-left: 10px;
-}
-.list-attr-per li .circle {
     background-color: #00a769;
     width: 40px;
     height: 40px;
-    padding: 0;
+    text-align: center;
+    display: -webkit-flex; /* Safari */
+	-webkit-align-items: center; /* Safari 7.0+ */
+	display: flex;
+}
+.list-attr-per li .circle {
+    width: 15%;
+    float: left;
+}
+.list-attr-per li .txt-infor-right {
+    float: left;
+    width: 85%;
+    height: 40px;
+    display: -webkit-flex; /* Safari */
+	-webkit-align-items: center; /* Safari 7.0+ */
+	display: flex;
+	align-items: center;
+	padding-left: 15px;
+}
+.list-attr-per li .txt-infor-right div {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .icon-map-loca-1 {
     background-position: 0 -1113px;
@@ -3794,6 +3812,7 @@ input[type=text]:focus {
 }
 .list-attr-per li span {
     vertical-align: middle;
+    margin: 0 auto 0;
 }
 .icon-phone-1 {
     background-position: 0 -957px;
