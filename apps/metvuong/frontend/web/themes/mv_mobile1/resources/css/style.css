@@ -4243,8 +4243,9 @@ input[type=text]:focus {
 }
 #listing-form .hinh-anh .files {
     /* margin: 0 -5px; */
-    float: left;
-    width: 100%;
+    /* float: left; */
+    /* width: 100%; */
+    display: inline-block;
 }
 #listing-form .files li {
     position: relative;
@@ -4290,4 +4291,13 @@ input[type=text]:focus {
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     -ms-border-radius: 0;
+}
+.hinh-anh #w0-fileupload {
+    /* display: inline-block; */
+}
+.hinh-anh {
+    text-align: center;
+}
+.hinh-anh .fileinput-button {
+    margin-top: 15px;
 }
