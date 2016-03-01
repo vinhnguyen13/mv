@@ -1,10 +1,11 @@
 <?php
 use yii\web\View;
 use yii\helpers\Url;
+
 ?>
 <div class="title-fixed-wrap">
 	<div class="u-allduan">
-		<div class="title-top">Tất cả dự án</div>
+		<div class="title-top">Tất cả tin</div>
 		<?php if($products): ?>
 		<div class="wrap-list-duan">
 			<ul class="clearfix">
@@ -35,11 +36,25 @@ use yii\helpers\Url;
 							<p class="id-duan">ID:<span><?=$product->id;?></span></p>
 						</div>
 						<div class="pull-right push-price">
-							<p>Tin còn <strong>15 ngày</strong></p>
+							<?php if($product->end_date > time()){
+                                $d = $product->end_date - time() ?>
+                                <p>Tin còn <strong><?=floor($d/(60*60*24))?> ngày</strong></p>
+                            <?php } ?>
 							<a href="#nang-cap" class="btn-nang-cap">Nâng cấp</a>
 						</div>
-						<div class="wrap-icon"><div><span class="icon icon-view-small"></span></div><strong>1000</strong> Lượt xem</div><div class="wrap-icon"><div><span class="icon icon-per-small"></span></div><strong>300</strong> Visitor</div>
-						<div class="wrap-icon"><div><span class="icon icon-heart-small"></span></div><strong>100</strong> Thích</div>
+                        <?php
+                        $search = \frontend\models\Tracking::find()->countFinders($product->id);
+                        $click = \frontend\models\Tracking::find()->countVisitors($product->id);
+                        $fav = \frontend\models\Tracking::find()->countFavourites($product->id);
+                        if($search) { ?>
+						<div class="wrap-icon"><div><span class="icon icon-view-small"></span></div><strong><?=$search?></strong> Search</div>
+                        <?php }
+                        if($click > 0){ ?>
+                        <div class="wrap-icon"><div><span class="icon icon-per-small"></span></div><strong><?=$click?></strong> Click</div>
+                        <?php }
+                        if($fav > 0){ ?>
+						<div class="wrap-icon"><div><span class="icon icon-heart-small"></span></div><strong><?=$fav?></strong> Favourite</div>
+                        <?php } ?>
 					</div>
 				</li>
 				<?php endforeach; ?>
@@ -64,20 +79,23 @@ use yii\helpers\Url;
 			<p>Nâng cấp tin đăng thêm 30 ngày?  </p>
 			<div class="text-center">
 				<a href="#" class="btn-common btn-cancel">Từ chối</a>
-				<a href="#" class="btn-common">Đồng ý</a>
+				<a href="#" class="btn-common btn-ok">Đồng ý</a>
 			</div>
 		</div>
 	</div>
 </div>
-
-
 
 <script>
 	$(document).ready(function () {
 		$('#nang-cap').popupMobi({
 			btnClickShow: '.btn-nang-cap',
 			styleShow: 'center',
-			closeBtn: '#nang-cap .btn-cancel'
+			closeBtn: '#nang-cap .btn-cancel',
+		});
+        $('#nang-cap').popupMobi({
+			btnClickShow: '.btn-nang-cap',
+			styleShow: 'center',
+			closeBtn: '#nang-cap .btn-ok',
 		});
     });
 </script>

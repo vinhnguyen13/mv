@@ -509,6 +509,9 @@ class AdController extends Controller
 		if(Yii::$app->request->isPost && Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
 			$post = Yii::$app->request->post();
+            if(count($post) <= 0)
+                return ['status' => 404, 'parameters' => 'Post variable not found'];
+
             $model = Yii::createObject([
                 'class'    => ShareForm::className(),
                 'scenario' => 'share',

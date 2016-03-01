@@ -162,4 +162,20 @@ class Tracking extends Component
         }
     }
 
+    public function countVisitors($pid){
+
+        $query = AdProductVisitor::find()->where(['product_id' => (int)$pid])->count();
+        return $query;
+    }
+
+    public function countFinders($pid){
+        $query = AdProductFinder::find()->where(['product_id' => (int)$pid])->count();
+        return $query;
+    }
+
+    public function countFavourites($pid){
+        $query = (int)AdProductSaved::find()->where(['product_id' => (int)$pid])->count();
+        return $query;
+    }
+
 }

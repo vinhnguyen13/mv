@@ -153,7 +153,6 @@ class DashboardController extends Controller
     public function actionAd()
     {
     	$products = AdProduct::find()->where(['user_id' => Yii::$app->user->id])->with('projectBuilding')->orderBy('`created_at` DESC')->all();
-    	
         return $this->render('ad/index', ['products' => $products]);
     }
 
