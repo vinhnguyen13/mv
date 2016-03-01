@@ -1059,7 +1059,7 @@ label {
     padding: 7px 0;
     font-size: 15px;
     text-transform: uppercase;
-    /* position: fixed; */
+    position: relative;
     /* top: 39px; */
     /* left: 0; */
     width: 100%;
@@ -4162,7 +4162,7 @@ input[type=text]:focus {
 }
 #prev-page {
     position: absolute;
-    top: 0;
+    top: -2px;
     left: 0;
     height: 100%;
     padding: 6px 15px;
