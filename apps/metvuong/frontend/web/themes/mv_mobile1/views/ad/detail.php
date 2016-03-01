@@ -21,6 +21,8 @@ use yii\helpers\Url;
 	} else {
 		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
 	}
+
+    $address = $product->getAddress();
 ?>
 
 <div class="detail-listing">
@@ -34,7 +36,7 @@ use yii\helpers\Url;
 			<div class="swiper-slide">
 				<div class="img-show">
 					<div>
-						<img src="<?= $image->imageMedium ?>" alt="<?=$product->getAddress()?>">
+						<img src="<?= $image->imageMedium ?>" alt="<?=$address?>">
 					</div>
 				</div>
 			</div>
@@ -247,27 +249,30 @@ use yii\helpers\Url;
             ?>
 				<div class="frm-item frm-email">
 					<span>From</span>
-					<input type="email" name="your_email" placeholder="abc@gmail.com" value="<?= $product->adContactInfo->email ?>">
+                    <?= $f->field($share_form, 'your_email')->textInput(['class'=>'your_email', 'placeholder'=>Yii::t('your_email', 'Email của bạn...')])->label(false) ?>
 				</div>
 				<div class="frm-item frm-email">
 					<span>To</span>
-					<input type="email" name="recipient_email" placeholder="your_email@gmail.com">
-				</div>
+                    <?= $f->field($share_form, 'recipient_email')->textInput(['class'=>'recipient_email', 'placeholder'=>Yii::t('recipient_email', 'Email người nhận...')])->label(false) ?>
+                </div>
 				<div class="frm-item frm-email">
 					<span>Subject</span>
-					<input type="text" name="subject" placeholder="Write your subject...">
+                    <?= $f->field($share_form, 'subject')->textInput(['class'=>'subject2', 'placeholder'=>Yii::t('subject', 'Tiêu đề...')])->label(false)?>
 				</div>
 				<div class="frm-item frm-email">
-					<textarea id="content" name="content" placeholder="Say something…"></textarea>
+                    <?= $f->field($share_form, 'content')->textarea(['class'=>'content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('content', 'Nội dung...')])->label(false) ?>
 				</div>
 				<div class="item-send">
-					<div class="img-show"><div><a href=""><img src="<?= !empty($images[0]) ? $images[0]->imageMedium : '#' ?>" alt="<?=$product->getAddress()?>"></a></div></div>
+					<div class="img-show"><div><a href=""><img src="<?= !empty($images[0]) ? $images[0]->imageMedium : '#' ?>" alt="<?=$address?>"></a></div></div>
 					<div class="infor-send">
-						<p class="name"><?=$product->getAddress()?></p>
+						<p class="name"><?=$address?></p>
 						<p class="address"><?= $product->adContactInfo->name ?></p>
 						<p><?=StringHelper::truncate($product->content, 150)?></p>
 						<p class="send-by">BY METVUONG.COM</p>
 					</div>
+                    <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=> $address])->label(false) ?>
+                    <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> Yii::$app->request->absoluteUrl])->label(false) ?>
+                    <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
 				</div>
 				<div class="text-right">
 					<button class="btn-common rippler rippler-default btn-cancel">Cancel</button>
@@ -318,41 +323,40 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
         var your_email = $('#share_form .your_email').val();
         if(recipient_email != null && your_email != null) {
             var content_mail = $('#share_form .content').val();
-//                alert(recipient_email+your_email+content_mail);
-//                $('#box-share').modal('hide');
             clearTimeout(timer);
             timer = setTimeout(function () {
-                console.log(789789);
-//                    $.ajax({
-//                        type: "post",
-//                        dataType: 'json',
-//                        url: $('#share_form').attr('action'),
-//                        data: $('#share_form').serializeArray(),
-//                        success: function (data) {
-//                            if(data.status == 200){
-////                                alert("success");
-//                            }
-//                            else {
-//                                var strMessage = '';
-//                                $.each(data.parameters, function(idx, val){
-//                                    var element = 'share_form_'+idx;
-//                                    strMessage += "\n" + val;
-//                                });
-//                                alert(strMessage+"\nTry again");
-//                            }
-//                            return true;
-//                        },
-//                        error: function () {
-//                            var strMessage = '';
-//                            $.each(data.parameters, function(idx, val){
-//                                var element = 'share_form_'+idx;
-//                                strMessage += "\n" + val;
-//                            });
-//                            alert(strMessage);
-//                            return false;
-//                        }
-//                    });
-            }, 1000);
+                $('#popup-email').addClass('hide-popup');
+                $.ajax({
+                    type: "post",
+                    dataType: 'json',
+                    url: $('#share_form').attr('action'),
+                    data: $('#share_form').serializeArray(),
+                    success: function (data) {
+                        if(data.status == 200){
+//                                alert("success");
+                        }
+                        else {
+                            var strMessage = '';
+                            $.each(data.parameters, function(idx, val){
+                                var element = 'share_form_'+idx;
+                                strMessage += "\n" + val;
+                            });
+                            alert(strMessage+"\nTry again");
+                            $('#share_form .recipient_email').focus();
+                        }
+                        return true;
+                    },
+                    error: function (data) {
+                        var strMessage = '';
+                        $.each(data.parameters, function(idx, val){
+                            var element = 'share_form_'+idx;
+                            strMessage += "\n" + val;
+                        });
+                        alert(strMessage);
+                        return false;
+                    }
+                });
+            }, 500);
         }
         return false;
     });
