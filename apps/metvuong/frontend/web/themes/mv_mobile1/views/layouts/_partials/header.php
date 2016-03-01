@@ -18,12 +18,12 @@ use yii\helpers\Url;
         <div class="wrap-menu">
             <a href="#" id="hide-menu" class="icon"></a>
             <ul class="clearfix">
-                <li><a href="<?= Url::to(['/ad/index']) ?>">cần mua</a></li>
-                <li><a href="#">cần thuê</a></li>
-                <li><a href="<?= Url::to(['/ad/post']) ?>">đăng bán / cho thuê</a></li>
-                <li><a href="<?=Url::to(['building-project/index']);?>">dự án mới</a></li>
-                <li><a href="#">Tin tức</a></li>
-                <li><a href="<?=Url::to(['/payment/package'])?>"><span class="icon icon-tags"></span>Các gói giá</a></li>
+                <li><a href="<?= Url::to(['/ad/index']) ?>"><div><span class="icon icon-search"></span></div>cần mua</a></li>
+                <li><a href="#"><div><span class="icon icon-search"></span></div>cần thuê</a></li>
+                <li><a href="<?= Url::to(['/ad/post']) ?>"><div><span class="icon icon-key"></span></div>đăng bán / cho thuê</a></li>
+                <li><a href="<?=Url::to(['building-project/index']);?>"><div><span class="icon icon-home"></span></div>dự án mới</a></li>
+                <li><a href="#"><div><span class="icon icon-news"></span></div>Tin tức</a></li>
+                <li><a href="<?=Url::to(['/payment/package'])?>"><div><span class="icon icon-tags"></span></div>Các gói giá</a></li>
             </ul>
         </div>
     </div>
@@ -47,10 +47,10 @@ use yii\helpers\Url;
                 </a>
             </li>
             <!-- <li><a href="<?= Url::to(['/ad/post']) ?>"><em class="icon-plus"></em>Đăng tin mới</a></li> -->
-            <li><a href="<?=Url::to(['/dashboard/notification', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyOther"><span class="icon icon-alert"></span>Thông báo</a></li>
-            <li><a href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>"><span class="icon icon-listings"></span>Listings</a></li>
-            <li><a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyChat"><span class="icon icon-chat"></span>Chat</a></li><!-- <span class="notifi">1</span> -->
-            <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><span class="icon icon-logout"></span>Đăng xuất</a></li>
+            <li><a href="<?=Url::to(['/dashboard/notification', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyOther"><div><span class="icon icon-alert"></span></div>Thông báo</a></li>
+            <li><a href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>"><div><span class="icon icon-listings"></span></div>Listings</a></li>
+            <li><a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyChat"><div><span class="icon icon-chat"></span></div>Chat</a></li><!-- <span class="notifi">1</span> -->
+            <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><div><span class="icon icon-logout"></span></div>Đăng xuất</a></li>
         </ul>
         <?php } ?>
     </div>

@@ -217,7 +217,7 @@ header {
     position: relative;
     z-index: 5;
     background: #fff;
-    padding: 0px 0 20px 0;
+    padding: 10px 0 20px 0;
     /* width: 80%; */
     height: 100%;
     overflow: visible;
@@ -243,7 +243,7 @@ header {
     padding: 0 15px;
 }
 .wrap-menu li a {
-    padding: 15px 0;
+    padding: 14px 0;
     border-bottom: solid 1px #969696;
     color: #3c3c3c;
     text-transform: uppercase;
@@ -2038,7 +2038,7 @@ label {
     top: 0;
     right: 0;
     background: #fff;
-    width: 70%;
+    width: 80%;
     min-width: inherit;
     max-width: inherit;
     display: none;
@@ -2476,12 +2476,12 @@ footer {
     margin-right: 15px;
 }
 html.mm-right.mm-opening .mm-slideout {
-    -webkit-transform: translate3d(-70%,0,0);
-    transform: translate3d(-70%,0,0);
+    -webkit-transform: translate3d(-80%,0,0);
+    transform: translate3d(-80%,0,0);
 }
 html.mm-opening .mm-slideout {
-    -webkit-transform: translate3d(70%,0,0);
-    transform: translate3d(70%,0,0);
+    -webkit-transform: translate3d(80%,0,0);
+    transform: translate3d(80%,0,0);
 }
 .chat-list {
     padding: 48px 15px 15px;
@@ -4048,4 +4048,40 @@ input[type=text]:focus {
     margin-right: 5px;
     position: relative;
     top: 1px;
+}
+.icon-search {
+    width: 26px;
+    height: 26px;
+    background-position: 0 -1820px;
+    background-size: 50px 1950px;
+}
+.icon-key {
+    background-position: 0 -1771px;
+    width: 28px;
+    height: 23px;
+    background-size: 50px 1950px;
+}
+.icon-home {
+    background-position: 0 -1795px;
+    width: 29px;
+    height: 24px;
+    background-size: 50px 1950px;
+}
+.icon-news {
+    background-position: 0 -1744px;
+    width: 28px;
+    height: 25px;
+    background-size: 50px 1950px;
+}
+#settings-user li a > div,
+.wrap-menu li a > div {
+    display: inline-block;
+    vertical-align: middle;
+    width: 40px;
+}
+#settings-user .user-edit a > div {
+    width: auto;
+}
+#settings-user .mm-panels>.mm-panel {
+    padding-top: 0
 }
