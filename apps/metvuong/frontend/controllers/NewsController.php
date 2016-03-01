@@ -15,6 +15,12 @@ class NewsController extends Controller
 {
     public $layout = 'news';
 
+    public function beforeAction($action)
+    {
+        $this->view->params['noFooter'] = true;
+        return parent::beforeAction($action);
+    }
+
     public function actions()
     {
         return [
