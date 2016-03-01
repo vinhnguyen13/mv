@@ -58,7 +58,7 @@ use frontend\models\Ad;
                     <div class="img-show">
                         <div><img src="" data-original="<?= $imgUrl ?>"></div>
                     </div>
-                    <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?></div>
+                    <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></div>
                 </a>
                 <div class="info-item">
                     <div class="address-feat">

@@ -296,18 +296,22 @@ class AdController extends Controller
     }
     
     public function actionDetail($id) {
-		try{
-			Tracking::find()->productVisitor(Yii::$app->user->id, $id, time());
-		} catch(Exception $ex){
 
-		}
     	$product = AdProduct::findOne($id);
+        try{
+            if(Yii::$app->user->id != $product->user_id) {
+                Tracking::find()->productVisitor(Yii::$app->user->id, $id, time());
+            }
+        } catch(Exception $ex){
+
+        }
 		if(Yii::$app->request->isAjax){
 			return $this->renderAjax('_partials/detail', ['product' => $product]);
 		}else{
 			$this->layout = '@app/views/layouts/layoutFull';
 			return $this->render('detail', ['product' => $product]);
 		}
+
     }
 
     /**

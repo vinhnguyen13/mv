@@ -162,45 +162,4 @@ class Tracking extends Component
         }
     }
 
-    public function getVisitors($pid, $from, $to){
-
-        $query = AdProductVisitor::find()->where(['between', 'time', $from, $to])->andWhere(['product_id' => (int)$pid])->all();
-
-        $visitors = array();
-        foreach($query as $k => $q){
-            $username = User::findIdentity($q->user_id)->username;
-            if(array_key_exists($username, $visitors)){
-                $visitors[$username]++;
-            } else
-                $visitors[$username] = 1;
-        }
-        return $visitors;
-    }
-
-    public function getFinders($pid, $from, $to){
-        $query = AdProductFinder::find()->where(['between', 'time', $from, $to])->andWhere(['product_id' => (int)$pid])->all();
-        $finders = array();
-        foreach($query as $k => $q){
-            $username = User::findIdentity($q->user_id)->username;
-            if(array_key_exists($username, $finders)){
-                $finders[$username]++;
-            } else
-                $finders[$username] = 1;
-        }
-        return $finders;
-    }
-
-    public function getFavourites($pid, $from, $to){
-        $query = AdProductSaved::find()->where(['between', 'saved_at', $from, $to])->andWhere(['product_id' => (int)$pid])->all();
-        $favourites = array();
-        foreach($query as $k => $q){
-            $username = User::findIdentity($q->user_id)->username;
-            if(array_key_exists($username, $favourites)){
-                $favourites[$username]++;
-            } else
-                $favourites[$username] = 1;
-        }
-        return $favourites;
-    }
-
 }

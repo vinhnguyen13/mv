@@ -46,7 +46,7 @@ use yii\helpers\Url;
 	</div>
 	<?php endif; ?>
 	<p class="infor-by-up">
-		<?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?> bởi <a href="#">Môi Giới</a>
+		<?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?> bởi <a href="#">Môi Giới</a>
 	</p>
 	<div class="infor-listing">
 		<div class="address-listing">
@@ -263,10 +263,10 @@ use yii\helpers\Url;
                     <?= $f->field($share_form, 'content')->textarea(['class'=>'content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('content', 'Nội dung...')])->label(false) ?>
 				</div>
 				<div class="item-send">
-					<div class="img-show"><div><a href=""><img src="<?= !empty($images[0]) ? $images[0]->imageMedium : '#' ?>" alt="<?=$address?>"></a></div></div>
+					<div class="img-show"><div><a href="<?=Yii::$app->request->absoluteUrl?>"><img src="<?= !empty($images[0]) ? $images[0]->imageMedium : '#' ?>" alt="<?=$address?>"></a></div></div>
 					<div class="infor-send">
 						<p class="name"><?=$address?></p>
-						<p class="address"><?= $product->adContactInfo->name ?></p>
+						<p class="address"></p>
 						<p><?=StringHelper::truncate($product->content, 150)?></p>
 						<p class="send-by">BY METVUONG.COM</p>
 					</div>
