@@ -49,8 +49,8 @@ class AdController extends Controller
     		
     		if($image->extension != "jpg" && $image->extension != "png" && $image->extension != "jpeg") {
     			$response['error'] = \Yii::t('ad', 'Sorry, only JPG, JPEG, PNG & GIF files are allowed.');
-    		} else if($image->size > 2097152) {
-    			$response['error'] = \Yii::t('ad', 'File too large. File must be less than 2 megabytes.');
+    		} else if($image->size > 4194304) {
+    			$response['error'] = \Yii::t('ad', 'File too large. File must be less than 4 megabytes.');
     		} else {
     			$helper = new AdImageHelper();
     			
