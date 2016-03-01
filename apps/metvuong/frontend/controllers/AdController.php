@@ -28,41 +28,13 @@ use vsoft\ad\models\AdProductSaved;
 use vsoft\ad\models\AdCity;
 use vsoft\ad\models\AdWard;
 use yii\helpers\ArrayHelper;
+use yii\web\UploadedFile;
+use yii\web\Session;
+use vsoft\express\components\AdImageHelper;
 
 class AdController extends Controller
 {
     public $layout = '@app/views/layouts/layout';
-
-    
-    /* Test Test Test Test Test  */
-    public function actionTest() {
-    	return $this->render('test');
-    }
-    public function actionUploadTest() {
-    	return $this->render('upload');
-    }
-    public function actionUploadTestHandle() {
-    	
-    	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    	
-    	
-    	return ['files' => [
-    	[
-	    	'url'           => 'https://cdn.photographylife.com/wp-content/uploads/2014/06/Nikon-D810-Image-Sample-6.jpg',
-	    	'thumbnailUrl'  => 'https://cdn.photographylife.com/wp-content/uploads/2014/06/Nikon-D810-Image-Sample-6.jpg',
-	    	'name'          => 'abc',
-	    	'deleteUrl'     => Url::to(['/ad/delete-img']),
-	    	'deleteType'    => 'DELETE'
-		]
-    	]];
-    }
-    public function actionDeleteImg() {
-    	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    	
-    	return ['files' => []];
-    }
-    /* Test Test Test Test Test  */
-    
     
     public function actionUpload() {
     	if($_FILES) {
@@ -70,9 +42,59 @@ class AdController extends Controller
     		
     		$image = UploadedFile::getInstanceByName('upload');
     		
-    		var_dump($image);
+    		$response = [
+				'thumbnailUrl' => 'http://support.xbox.com/Content/Images/ECLT_Exclamation_40x40.png',
+				'name' => $image->name
+    		];
+    		
+    		if($image->extension != "jpg" && $image->extension != "png" && $image->extension != "jpeg") {
+    			$response['error'] = \Yii::t('ad', 'Sorry, only JPG, JPEG, PNG & GIF files are allowed.');
+    		} else if($image->size > 2097152) {
+    			$response['error'] = \Yii::t('ad', 'File too large. File must be less than 2 megabytes.');
+    		} else {
+    			$helper = new AdImageHelper();
+    			
+    			$sessionFolder = Yii::createObject(Session::className())->getId();
+    			$tempFolder = $helper->getTempFolderPath($sessionFolder);
+    			
+    			if(!file_exists($tempFolder)) {
+    				mkdir($tempFolder, 0777);
+    				$helper->makeFolderSizes($tempFolder);
+    			}
+    			
+    			$fileName = uniqid() . '.' . $image->extension;
+    			$filePath = $tempFolder . DIRECTORY_SEPARATOR . $fileName;
+    			
+    			$image->saveAs($filePath);
+    			$helper->resize($filePath);
+    			
+    			$tempUrl = "/store/{$helper->tempFolderName}/{$helper->adFolderName}/$sessionFolder/";
+    			
+    			$response['name'] = $fileName;
+    			$response['url'] = Url::to($tempUrl . $fileName);
+    			$response['thumbnailUrl'] = Url::to($tempUrl . $helper->makeFolderName($helper->sizes['thumb']) . '/' . $fileName);
+    			$response['deleteUrl'] = Url::to(['delete-temp-file', 'file' => $fileName]);
+    			$response['deleteType'] = 'DELETE';
+    		}
+    		
+    		return ['files' => [$response]];
     	}
     }
+    
+    public function actionDeleteTempFile($file) {
+    	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    	
+    	$helper = new AdImageHelper();
+    	
+    	$sessionFolder = Yii::createObject(Session::className())->getId();
+    	 
+    	$tempFolder = $helper->getTempFolderPath($sessionFolder);
+    	
+    	$helper->removeTempFile($tempFolder, $file);
+    	
+    	return ['files' => []];
+    }
+    
     /**
      * @return string
      */
@@ -339,7 +361,9 @@ class AdController extends Controller
     	
     	$product = new AdProduct();
     	
-    	return $this->render('form', ['product' => $product]);
+    	$additionInfo = new AdProductAdditionInfo();
+    	
+    	return $this->render('form', ['product' => $product, 'additionInfo' => $additionInfo]);
     }
     
     /**
@@ -430,29 +454,6 @@ class AdController extends Controller
 		$this->layout = '@app/views/layouts/layoutFull';
 		return $this->render('post/index');
 	}
-
-//     public function actionUpload() {
-//     	$folder = 'ad';
-//     	$response = Yii::$app->runAction('express/upload/image', ['folder' => $folder, 'resizeForAds' => true]);
-    	
-//     	if($response) {
-//     		$path = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR . $response['files'][0]['name'];
-//     		$imageHelper = new ImageHelper($path);
-//     		$imageHelper->makeMedium();
-//     		$imageHelper->makeLarge(true);
-    		
-//     		$image = new AdImages();
-//     		$image->file_name = $response['files'][0]['name'];
-//     		$image->uploaded_at = time();
-//     		$image->user_id = Yii::$app->user->id;
-//     		$image->save(false);
-    		
-//     		$response['files'][0]['deleteUrl'] = Url::to(['delete-image', 'id' => $image->id]);
-//     		$response['files'][0]['name'] = $image->id;
-    		
-//     		return $response;
-//     	}
-//     }
     
     public function actionDeleteImage($id) {
     	$image = AdImages::findOne($id);

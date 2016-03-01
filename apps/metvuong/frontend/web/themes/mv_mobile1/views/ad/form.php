@@ -6,6 +6,8 @@ use yii\web\View;
 use vsoft\ad\models\AdBuildingProject;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use vsoft\ad\models\AdProductAdditionInfo;
+use common\widgets\fileupload\FileUpload;
 
 	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/post-listing.js', ['position' => View::POS_END]);
 	$this->registerCss("#project-info {position: relative;} #project-info .loading-proccess span {border-top-color: #8C7777; border-left-color: #8C7777;} #project-info .loading-proccess {display: none;} #project-info.loading .loading-proccess {display: block;} #project-info.loading .result {display: none;}");
@@ -87,7 +89,7 @@ use yii\helpers\Url;
 			</div>
 		</div>
 
-		<div class="tt-chung item-step section hide">
+		<div id="step-2" class="tt-chung item-step section hide">
 			<div class="title-step">Thông tin chung</div>
 			<div class="row">
 				<?= Html::activeHiddenInput($product, 'city_id') ?>
@@ -95,6 +97,7 @@ use yii\helpers\Url;
 					<select id="city" class="form-control">
 						<option value=""><?= $product->getAttributeLabel('city_id') ?></option>
 					</select>
+					<div class="help-block"></div>
 				</div>
 				
 				<?= Html::activeHiddenInput($product, 'district_id') ?>
@@ -102,155 +105,82 @@ use yii\helpers\Url;
 					<select id="district" class="form-control">
 						<option value=""><?= $product->getAttributeLabel('district_id') ?></option>
 					</select>
+					<div class="help-block"></div>
 				</div>
 				
-				<div class="col-xs-12 form-group">
-					<input type="text" class="form-control" id="" placeholder="Đường">
-				</div>
+				<?= $form->field($product, 'ward_id', ['options' => ['class' => 'col-xs-12 form-group']])
+					->label(false)
+					->dropDownList([], ['prompt' => $product->getAttributeLabel('ward_id'), 'data-default' => $product->ward_id]) ?>
+					
+				<?= $form->field($product, 'street_id', ['options' => ['class' => 'col-xs-12 form-group']])
+					->label(false)
+					->dropDownList([], ['prompt' => $product->getAttributeLabel('street_id'), 'data-default' => $product->street_id]) ?>
+				
 				<?= $form->field($product, 'home_no', ['options' => ['class' => 'col-xs-12 form-group']])
 						->label(false)
 						->textInput(['placeholder' => $product->getAttributeLabel('home_no')]) ?>
-				<div class="col-xs-12 form-group">
-					<select class="form-control" name="" id="">
-						<option value="" disabled="" selected="">Phường</option>
-						<option value="">Hồ Chí Minh</option>
-						<option value="">Hà Nội</option>
-						<option value="">Đồng Nai</option>
-					</select>
-				</div>
-				<div class="col-xs-12 form-group txt-unit">
-					<input type="text" class="form-control" id="" placeholder="Số nhà">
-					<span>m2</span>
-				</div>
-				<div class="col-xs-12 form-group txt-unit">
-					<input type="text" class="form-control" id="" placeholder="Giá">
-					<span>VNĐ</span>
-				</div>
-				<div class="col-xs-6 form-group">
-					<select class="form-control" name="" id="">
-						<option value="" disabled="" selected="">Phòng ngủ</option>
-						<option value="">Hồ Chí Minh</option>
-						<option value="">Hà Nội</option>
-						<option value="">Đồng Nai</option>
-					</select>
-				</div>
-				<div class="col-xs-6 form-group">
-					<select class="form-control" name="" id="">
-						<option value="" disabled="" selected="">Phòng tắm</option>
-						<option value="">Hồ Chí Minh</option>
-						<option value="">Hà Nội</option>
-						<option value="">Đồng Nai</option>
-					</select>
-				</div>
+			
+				<?= $form->field($product, 'area', ['options' => ['class' => 'col-xs-12 form-group']])
+						->label(false)
+						->textInput(['placeholder' => $product->getAttributeLabel('area')]) ?>
+				
+				<?= $form->field($product, 'price', ['options' => ['class' => 'col-xs-12 form-group']])
+						->label(false)
+						->textInput(['placeholder' => $product->getAttributeLabel('price')]) ?>
+				
+				<?= $form->field($additionInfo, 'room_no', ['options' => ['class' => 'col-xs-6 form-group']])
+						->label(false)
+						->textInput(['placeholder' => $additionInfo->getAttributeLabel('room_no')]) ?>
+						
+				<?= $form->field($additionInfo, 'toilet_no', ['options' => ['class' => 'col-xs-6 form-group']])
+						->label(false)
+						->textInput(['placeholder' => $additionInfo->getAttributeLabel('toilet_no')]) ?>
 			</div>
 		</div>
 
-		<div class="tt-chitiet item-step section hide">
+		<div id="step-3" class="tt-chitiet item-step section hide">
 			<div class="title-step">Thông tin chi tiết</div>
 			<div class="row">
-				<div class="col-xs-12 form-group">
-					<input type="text" class="form-control" id="" placeholder="Mặt tiền (m)">
-				</div>
-				<div class="col-xs-12 form-group">
-					<input type="text" class="form-control" id="" placeholder="Đường vào (m)">
-				</div>
-				<div class="col-xs-6 form-group">
-					<select class="form-control" name="" id="">
-						<option value="" disabled="" selected="">Tầng cao</option>
-						<option value="">Hồ Chí Minh</option>
-						<option value="">Hà Nội</option>
-						<option value="">Đồng Nai</option>
-					</select>
-				</div>
-				<div class="col-xs-6 form-group">
-					<select class="form-control" name="" id="">
-						<option value="" disabled="" selected="">Thang máy</option>
-						<option value="">Hồ Chí Minh</option>
-						<option value="">Hà Nội</option>
-						<option value="">Đồng Nai</option>
-					</select>
-				</div>
-				<div class="col-xs-12 form-group">
-					<input type="text" class="form-control" id="" placeholder="Chủ đầu tư">
-				</div>
-				<div class="col-xs-12 form-group">
-					<input type="text" class="form-control" id="" placeholder="Nhà thầu xây dựng">
-				</div>
-				<div class="col-xs-6 form-group">
-					<select class="form-control" name="" id="">
-						<option value="" disabled="" selected="">Ngày khởi công</option>
-						<option value="">Hồ Chí Minh</option>
-						<option value="">Hà Nội</option>
-						<option value="">Đồng Nai</option>
-					</select>
-				</div>
-				<div class="col-xs-6 form-group">
-					<select class="form-control" name="" id="">
-						<option value="" disabled="" selected="">Ngày hoàn thiện</option>
-						<option value="">Hồ Chí Minh</option>
-						<option value="">Hà Nội</option>
-						<option value="">Đồng Nai</option>
-					</select>
-				</div>
-				<div class="col-xs-12 form-group txt-unit">
-					<input type="text" class="form-control" id="" placeholder="Phí đậu xe gắn máy">
-					<span>VNĐ</span>
-				</div>
-				<div class="col-xs-12 form-group txt-unit">
-					<input type="text" class="form-control" id="" placeholder="Phí đậu xe hơi">
-					<span>VNĐ</span>
-				</div>
-				<div class="col-xs-6 form-group">
-					<select class="form-control" name="" id="">
-						<option value="" disabled="" selected="">Phòng ngủ</option>
-						<option value="">Hồ Chí Minh</option>
-						<option value="">Hà Nội</option>
-						<option value="">Đồng Nai</option>
-					</select>
-				</div>
-				<div class="col-xs-6 form-group">
-					<select class="form-control" name="" id="">
-						<option value="" disabled="" selected="">Phòng tắm</option>
-						<option value="">Hồ Chí Minh</option>
-						<option value="">Hà Nội</option>
-						<option value="">Đồng Nai</option>
-					</select>
-				</div>
-				<div class="col-xs-12 form-group">
-					<textarea class="form-control" rows="3" placeholder="Chính sách ưu đãi (dưới 200 chữ)"></textarea>
-				</div>
-				<div class="col-xs-12 form-group">
-					<textarea class="form-control" rows="3" placeholder="Mô tả dự án (dưới 200 chữ)"></textarea>
-				</div>
-			</div>
-			<div class="tien-ich item-step hide">
-				<div class="title-step">Tiện ích</div>
-				<ul class="clearfix list-tienich">
-					<li>
-						<a href="#"><span class="icon"></span><span>24/7 Security</span></a>
-					</li>
-					<li>
-						<a href="#"><span class="icon"></span><span>Mailbox</span></a>
-					</li>
-					<li>
-						<a href="#"><span class="icon"></span><span>24/7 Security</span></a>
-					</li>
-					<li>
-						<a href="#"><span class="icon"></span><span>Swimming Pool</span></a>
-					</li>
-					<li>
-						<a href="#"><span class="icon"></span><span>Gym</span></a>
-					</li>
-					<li>
-						<a href="#"><span class="icon"></span><span>BBQ Area</span></a>
-					</li>
-				</ul>
+				<?= $form->field($product, 'content', ['options' => ['class' => 'col-xs-12 form-group']])
+						->label(false)
+						->textArea(['placeholder' => $product->getAttributeLabel('content')]) ?>
+				
+				<?= $form->field($additionInfo, 'facade_width', ['options' => ['class' => 'col-xs-6 form-group']])
+						->label(false)
+						->textInput(['placeholder' => $additionInfo->getAttributeLabel('facade_width')]) ?>
+						
+				<?= $form->field($additionInfo, 'land_width', ['options' => ['class' => 'col-xs-6 form-group']])
+						->label(false)
+						->textInput(['placeholder' => $additionInfo->getAttributeLabel('land_width')]) ?>
+				
+				
+				<?= $form->field($additionInfo, 'home_direction', ['options' => ['class' => 'col-xs-12 form-group']])
+						->label(false)
+						->dropDownList(AdProductAdditionInfo::directionList(), ['prompt' => $additionInfo->getAttributeLabel('home_direction'), 'data-default' => $additionInfo->home_direction]) ?>
+				
+				<?= $form->field($additionInfo, 'facade_direction', ['options' => ['class' => 'col-xs-12 form-group']])
+						->label(false)
+						->dropDownList(AdProductAdditionInfo::directionList(), ['prompt' => $additionInfo->getAttributeLabel('facade_direction'), 'data-default' => $additionInfo->facade_direction]) ?>
+						
+				<?= $form->field($additionInfo, 'floor_no', ['options' => ['class' => 'col-xs-12 form-group']])
+						->label(false)
+						->textInput(['placeholder' => $additionInfo->getAttributeLabel('floor_no')]) ?>
+						
+				<?= $form->field($additionInfo, 'interior', ['options' => ['class' => 'col-xs-12 form-group']])
+						->label(false)
+						->textArea(['placeholder' => $additionInfo->getAttributeLabel('interior')]) ?>
 			</div>
 		</div>
 
-		<div class="hinh-anh item-step section hide">
-			<div class="title-step">Hình ảnh</div>
-			
+		<div id="step-4" class="hinh-anh item-step section hide">
+			<?= FileUpload::widget([
+					'name' => 'images', 
+					'url' => Url::to(['upload']),
+					'clientEvents' => [
+						'fileuploadadded' => 'function(e, data) {upload.fileuploadadded(e, data, this);}',
+						'fileuploadcompleted' => 'function(e, data) {upload.fileuploadcompleted(e, data, this);}'
+					]
+				]) ?>
 		</div>
 
 		<div class="tt-lienhe item-step section hide">

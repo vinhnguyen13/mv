@@ -9,7 +9,7 @@
                 {% } %}
             </span>
             {% if (file.error) { %}
-                <div><span class="label label-danger"><?= Yii::t('fileupload', 'Error') ?></span> {%=file.error%}</div>
+                <div><span class="label label-danger"><?= Yii::t('fileupload', 'Error') ?></span> {%=file.name%}: {%=file.error%}</div>
             {% } %}
         
             {% if (file.deleteUrl) { %}

@@ -36,13 +36,13 @@ class AdProductAdditionInfo extends APAI
     {
         return [
             'product_id' => 'Product ID',
-            'facade_width' => 'Facade Width',
-            'land_width' => 'Land Width',
-            'home_direction' => 'Home Direction',
-            'facade_direction' => 'Facade Direction',
-            'floor_no' => 'Floor No',
-            'room_no' => 'Room No',
-            'toilet_no' => 'Toilet No',
+            'facade_width' => 'Mặt tiền',
+            'land_width' => 'Đường vào',
+            'home_direction' => 'Hướng nhà',
+            'facade_direction' => 'Hướng ban công',
+            'floor_no' => 'Số tầng',
+            'room_no' => 'Phòng ngủ',
+            'toilet_no' => 'Toilet',
             'interior' => 'Nội thất',
         ];
     }
