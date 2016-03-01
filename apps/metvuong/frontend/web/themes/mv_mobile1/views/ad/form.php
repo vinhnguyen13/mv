@@ -176,6 +176,13 @@ use common\widgets\fileupload\FileUpload;
 			<?= FileUpload::widget([
 					'name' => 'images', 
 					'url' => Url::to(['upload']),
+					'clientOptions' => [
+						'previewMinWidth' => 152,
+						'previewMinHeight' => 114,
+						'previewMaxWidth' => 152,
+						'previewMaxHeight' => 114,
+						'previewCrop' => true,
+					],
 					'clientEvents' => [
 						'fileuploadadded' => 'function(e, data) {upload.fileuploadadded(e, data, this);}',
 						'fileuploadcompleted' => 'function(e, data) {upload.fileuploadcompleted(e, data, this);}'
