@@ -8,10 +8,6 @@ $userTo = \frontend\models\User::find()->where(['username' => $to])->one();
 $nameUserTo = $userTo->profile->getDisplayName();
 $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 
-//echo "<pre>";
-//print_r(date('h:i:s d-m-Y', 1456280961));
-//echo "</pre>";
-//exit;
 ?>
 <div id="chat-container">
 

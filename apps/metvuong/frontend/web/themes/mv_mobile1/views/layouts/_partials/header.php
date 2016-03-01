@@ -8,8 +8,8 @@ use yii\helpers\Url;
             <img src="/images/default-avatar.jpg" alt="">
         <?php } else{?>
             <img id="headAvatar" src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="">
-            <?php if(Yii::$app->session->get("notifyOther")){?>
-                <span id="notifyOther"><?=Yii::$app->session->get("notifyOther");?></span>
+            <?php if(!empty($this->params['notify_total'])){?>
+                <span id="notifyTotal"><?=$this->params['notify_total'];?></span>
             <?php }?>
         <?php }?>
     </a>
@@ -49,9 +49,17 @@ use yii\helpers\Url;
                 </a>
             </li>
             <!-- <li><a href="<?= Url::to(['/ad/post']) ?>"><em class="icon-plus"></em>Đăng tin mới</a></li> -->
-            <li><a href="<?=Url::to(['/dashboard/notification', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyOther"><div><span class="icon icon-alert"></span></div>Thông báo</a></li>
+            <li><a href="<?=Url::to(['/dashboard/notification', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyOther"><div><span class="icon icon-alert"></span></div>Thông báo
+                    <?php if(!empty($this->params['notify_other'])){?>
+                        <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
+                    <?php }?>
+                </a></li>
             <li><a href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>"><div><span class="icon icon-listings"></span></div>Listings</a></li>
-            <li><a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyChat"><div><span class="icon icon-chat"></span></div>Chat</a></li><!-- <span class="notifi">1</span> -->
+            <li><a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyChat"><div><span class="icon icon-chat"></span></div>Chat
+                    <?php if(!empty($this->params['notify_chat'])){?>
+                        <span id="notifyChat" class="notifi"><?=$this->params['notify_chat'];?></span>
+                    <?php }?>
+            </a></li>
             <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><div><span class="icon icon-logout"></span></div>Đăng xuất</a></li>
         </ul>
         <?php } ?>
