@@ -6,6 +6,7 @@ use frontend\components\Controller;
 use frontend\models\Profile;
 use vsoft\news\models\CmsCatalog;
 use vsoft\news\models\CmsShow;
+use vsoft\news\models\Status;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\helpers\Url;
@@ -32,7 +33,8 @@ class NewsController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+        $news = CmsShow::getLastestNews();
+        return $this->render('index',['news' => $news]);
     }
 
     public function actionView($id)

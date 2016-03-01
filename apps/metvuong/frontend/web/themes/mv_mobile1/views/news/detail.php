@@ -7,6 +7,8 @@
  * @var $author get data from dektrium\user\models\Profile
  */
 
+use yii\helpers\Url;
+
 Yii::$app->view->registerMetaTag([
     'name' => 'keywords',
     'content' => $news->title
@@ -52,7 +54,8 @@ Yii::$app->view->registerMetaTag([
 </script>
 <div class="title-fixed-wrap">
     <div class="detail-news">
-        <div class="title-top">Tin tức</div>
+        <div class="title-top">Tin tức<a href="<?=Url::to(['news/index'])?>" id="prev-page"><span class="icon arrowRight-1"></span></a></div>
+
         <div class="wrap-detail-article">
             <input id="current_id" type="hidden" value="<?=$news->id?>">
             <input id="current_slug" type="hidden" value="<?=$news->slug?>">
@@ -61,16 +64,15 @@ Yii::$app->view->registerMetaTag([
             <article>
                 <h1 class="big-title"><?=$news->title?></h1>
                 <div class="time-post">
-                    <!-- <a class="color-title-link"><?=$catalog->title?></a> -->
                     <span class=""><?=date("d/m/Y g:i a",$news->created_at)?></span>
                 </div>
                 <div class="detail-content pdL-5">
                     <div class="box-content">
                         <div><?=$news->content?></div>
                         <div id="social<?=$news->id?>" class="share-social mgT-10 wrap-img">
-                            <div class="fb-like" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug, 'cat_id' => $news->catalog_id, 'cat_slug' => $catalog->slug]) ?>" data-layout="button_count" style="margin-right: 10px;"></div>
-                            <div class="fb-send" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug, 'cat_id' => $news->catalog_id, 'cat_slug' => $catalog->slug]) ?>" data-show-faces="false" style="margin-right: 10px;"></div>
-                            <div class="fb-share-button" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug, 'cat_id' => $news->catalog_id, 'cat_slug' => $catalog->slug]) ?>" data-layout="button_count"></div><br>
+                            <div class="fb-like" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug, 'cat_id' => $news->catalog_id, 'cat_slug' => $catalog->slug], true) ?>" data-layout="button_count" style="margin-right: 10px;"></div>
+                            <div class="fb-send" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug, 'cat_id' => $news->catalog_id, 'cat_slug' => $catalog->slug], true) ?>" data-show-faces="false" style="margin-right: 10px;"></div>
+                            <div class="fb-share-button" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug, 'cat_id' => $news->catalog_id, 'cat_slug' => $catalog->slug], true) ?>" data-layout="button_count"></div><br>
                             <div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl(['news/view', 'id' => $news->id, 'slug' => $news->slug, 'cat_id' => $news->catalog_id, 'cat_slug' => $catalog->slug])?>" data-width="100%" data-numposts="3"></div>
                         </div>
                     </div>
