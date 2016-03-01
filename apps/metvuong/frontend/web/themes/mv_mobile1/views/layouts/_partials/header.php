@@ -22,7 +22,7 @@ use yii\helpers\Url;
                 <li><a href="#"><div><span class="icon icon-search"></span></div>cần thuê</a></li>
                 <li><a href="<?= Url::to(['/ad/post']) ?>"><div><span class="icon icon-key"></span></div>đăng bán / cho thuê</a></li>
                 <li><a href="<?=Url::to(['building-project/index']);?>"><div><span class="icon icon-home"></span></div>dự án mới</a></li>
-                <li><a href="#"><div><span class="icon icon-news"></span></div>Tin tức</a></li>
+                <li><a href="<?=Url::to(['news/index']);?>"><div><span class="icon icon-news"></span></div>Tin tức</a></li>
                 <li><a href="<?=Url::to(['/payment/package'])?>"><div><span class="icon icon-tags"></span></div>Các gói giá</a></li>
             </ul>
         </div>
