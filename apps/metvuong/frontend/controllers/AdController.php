@@ -360,8 +360,8 @@ class AdController extends Controller
     	$f1 = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $helper->tempFolderName . DIRECTORY_SEPARATOR . $helper->adFolderName . DIRECTORY_SEPARATOR . 'abc' . DIRECTORY_SEPARATOR . 'def';
     	$f2 = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $helper->adFolderName . DIRECTORY_SEPARATOR . 'abc' . DIRECTORY_SEPARATOR . 'def';
     	
-    	mkdir($f1, 777, true);
-    	mkdir($f2, 777, true);
+    	mkdir(\Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $helper->tempFolderName . DIRECTORY_SEPARATOR . $helper->adFolderName . DIRECTORY_SEPARATOR . 'abc', 777);
+    	mkdir($f1, 777);
     	
     	echo $f1;
     	echo "<br />";
