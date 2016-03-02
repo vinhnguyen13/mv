@@ -45,7 +45,7 @@ use yii\helpers\Html;
 											<a href="<?=$product->urlDetail()?>" class="clearfix">
 												<div class="img-show">
 													<div>
-														<img src="<?= $product->getImage()?>">
+														<img src="<?= $product->getRepresentImage()?>">
 													</div>
 												</div>
 												<span><?= $product->getAddress()?></span>
