@@ -204,8 +204,8 @@ use common\widgets\fileupload\FileUpload;
 						->textInput(['placeholder' => $contactInfo->getAttributeLabel('email')]) ?>
 			</div>
 			<div class="text-center">
-				<button class="preview">Preview</button>
-				<button class="btn-post">Đăng tin</button>
+				<button type="button" class="preview">Preview</button>
+				<button type="button" class="btn-post">Đăng tin</button>
 			</div>
 		</div>
 	<?php $form->end() ?>
