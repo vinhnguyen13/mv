@@ -355,20 +355,6 @@ class AdController extends Controller
     }
     
     public function postMobile() {
-    	error_reporting( E_ALL );
-    	$now = time();
-    	$helper = new AdImageHelper();
-    	$newFolderAbsolute = $helper->getAbsoluteUploadFolderPath($now);
-    	$newFolder = $helper->getUploadFolderPath($newFolderAbsolute);
-
-    	$newFolderAbsoluteUrl = str_replace(DIRECTORY_SEPARATOR, '/', $newFolderAbsolute);
-    	
-    	if(!file_exists($newFolder)) {
-    		mkdir('/var/www/ttgweb/apps/metvuong/store/ad/abc/def', 777);
-    	}
-    	
-    	exit();
-    	
     	if(Yii::$app->user->isGuest) {
     		return $this->render('/_systems/require_login');
     	}
