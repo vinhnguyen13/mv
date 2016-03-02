@@ -14,7 +14,7 @@ class AdImageHelper {
 	];
 	
 	public function getTempFolderPath($tempFolder) {
-		return \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $this->tempFolderName . DIRECTORY_SEPARATOR . $this->adFolderName . DIRECTORY_SEPARATOR . $tempFolder;
+		return \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $this->adFolderName . DIRECTORY_SEPARATOR . $tempFolder;
 	}
 	
 	public function getAbsoluteUploadFolderPath($time) {
