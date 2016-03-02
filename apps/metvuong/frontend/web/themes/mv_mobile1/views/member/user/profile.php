@@ -17,7 +17,7 @@ $user = $model->getUser();
         <div class="infor-user clearfix">
             <div class="avatar-user-pr">
                 <div class="wrap-img avatar"><img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="<?=$model->avatar?>" alt="metvuong avatar" /></div>
-                <div class="name-user" ><?= empty($model->name) ? Yii::$app->user->username : $model->name ?></div>
+                <div class="name-user" ><?= $model->name ?></div>
                 <div class="per-posi">Agent ID TTG<?=str_pad($model->user_id, 3, '0', STR_PAD_LEFT)?></div>
                 <div class="text-center">
                     <a href="<?=$user->urlChat();?>" class="btn-common btn-chat rippler rippler-default"><span class="icon icon-chat-1"></span></a>
@@ -70,11 +70,12 @@ $user = $model->getUser();
             <div class="title-text">Danh sách tin đã đăng</div>
             <ul class="clearfix list-post">
                 <?php foreach ($products as $product) {
-                    if ($image = \vsoft\ad\models\AdImages::find ()->where ( [
+                    $image = \vsoft\ad\models\AdImages::find ()->where ( [
                         'order' => 0,
                         'product_id' => $product->id
-                    ] )->one ()) {
-                        $imgUrl = $image->imageMedium;
+                    ] )->one ();
+                    if ($image) {
+                        $imgUrl = $image->file_name;
                     } else {
                         $imgUrl = '/themes/metvuong2/resources/images/default-ads.jpg';
                     }

@@ -3,8 +3,7 @@ use yii\helpers\Url;
 use frontend\models\Chart;
 
 $data = Chart::find()->getDataFinder($id, $from, $to);
-
-if(!empty($data)) {
+if(!empty($data) && count($data) > 0) {
 $dataChart = $data['dataChart'];
 $categories = $data['categories'];
 
@@ -96,9 +95,9 @@ $categories = array_values($categories);
                     dataType: 'html',
                     url: '<?=Url::to(['/dashboard/clickchart','id' => $id])?>' + '&date=' + date + '&view=_partials/finder',
                     success: function (data) {
-                        console.log(data);
                         if(data){
                             $('.finder .list-item').html(data);
+                            $('.date-filter-chart').html('Thống kê trong ngày <span>'+date+'</span>');
                         }
                     }
                 });

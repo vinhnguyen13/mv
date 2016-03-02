@@ -10,12 +10,39 @@ Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporti
 $id = $product->id;
 $address = $product->getAddress();
 $user = Yii::$app->user->identity;
+$backUrl = empty($user) ? "#" : Url::to([$user->username."/ad"]);
+$yourEmail = empty($user) ? "" : $user->profile->public_email;
+
+$fb_appId = '680097282132293'; // stage.metvuong.com
+if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
+    $fb_appId = '736950189771012';
+else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
+    $fb_appId = '891967050918314';
+
 ?>
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : <?=$fb_appId?>,
+            xfbml      : true,
+            version    : 'v2.5'
+        });
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.async=true;
+        js.src = "//connect.facebook.net/vi_VN/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
 <div class="title-fixed-wrap">
     <div class="statis">
     	<div class="title-top">
             Thống kê
-            <a href="<?=Url::to([$user->username."/ad"])?>" id="prev-page"><span class="icon arrowRight-1"></span></a>
+            <a href="<?=$backUrl?>" id="prev-page"><span class="icon arrowRight-1"></span></a>
         </div>
     	<section>
     		<div id="sandbox-container">
@@ -60,11 +87,11 @@ $user = Yii::$app->user->identity;
     			<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
     				<div class="panel-body">
     					<ul class="clearfix list-item">
-                            <?php if(!empty($finders) && count($finders)){
+                            <?php if(!empty($finders) && count($finders) > 0){
                             foreach($finders as $key => $finder){?>
     						<li>
-    							<img id="" src="/store/avatar/u_1_56c439623018a.thumb.png" alt=""><a href="<?="/".$key?>"><?=$key?></a>
-    							<span class="pull-right"><?=$finder?></span>
+    							<img src="<?=$finder['avatar']?>" alt="<?=$key?>"><a href="<?="/".$key?>"><?=$key?></a>
+    							<span class="pull-right"><?=$finder['count']?></span>
     						</li>
                             <?php }
                             } else { ?>
@@ -86,11 +113,11 @@ $user = Yii::$app->user->identity;
     			<div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
     				<div class="panel-body">
     					<ul class="clearfix list-item">
-                            <?php if(!empty($visitors) && count($visitors)){
+                            <?php if(!empty($visitors) && count($visitors) > 0){
                                 foreach($visitors as $key => $visitor){?>
                                     <li>
-                                        <em class="fa fa-circle"></em><a href="<?="/".$key?>"><?=$key?></a>
-                                        <span class="pull-right"><?=$visitor?></span>
+                                        <img src="<?=$visitor['avatar']?>" alt="<?=$key?>"><a href="<?="/".$key?>"><?=$key?></a>
+                                        <span class="pull-right"><?=$visitor['count']?></span>
                                     </li>
                                 <?php }
                             }  else { ?>
@@ -112,14 +139,14 @@ $user = Yii::$app->user->identity;
     			<div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
     				<div class="panel-body">
     					<ul class="clearfix list-item">
-                            <?php if(!empty($favourites) && count($favourites)){
+                            <?php if(!empty($favourites) && count($favourites) > 0){
                                 foreach($favourites as $key => $favourite){?>
                                     <li>
-                                        <em class="fa fa-circle"></em><a href="<?="/".$key?>"><?=$key?></a>
+                                        <img src="<?=$favourite['avatar']?>" alt="<?=$key?>"><a href="<?="/".$key?>"><?=$key?></a>
                                     </li>
                                 <?php }
                             }  else { ?>
-                                <li>Không có tin đăng được thích </li>
+                                <li>Không có lưu lại</li>
                             <?php } ?>
 
     					</ul>
@@ -131,13 +158,13 @@ $user = Yii::$app->user->identity;
     	<div class="title-sub">Property's info</div>
     	<div class="share-social">
             <ul class="clearfix list-attr-per">
-                <li>
+                <li class="share-email-btn">
                     <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
                     <div class="txt-infor-right">
                         <div>Share With Email</div>
                     </div>
                 </li>
-                <li>
+                <li class="share-facebook">
                     <div class="circle"><div><span class="icon icon-face"></span></div></div>
                     <div class="txt-infor-right">
                         <div>Share With Facebook</div>
@@ -157,7 +184,7 @@ $user = Yii::$app->user->identity;
             <div class="overflow-all">
                 <p class="name-user-inter">James Bond</p>
                 <a href="#" class="btn-common btn-chat"><span class="icon icon-chat-1"></span></a>
-                <a href="#" class="btn-common btn-email"><span class="icon icon-email-1"></span></a>
+                <a href="#" class="btn-common btn-email share-email-btn"><span class="icon icon-email-1"></span></a>
             </div>
         </div>
     </div>
@@ -185,15 +212,9 @@ $user = Yii::$app->user->identity;
             ]);
             ?>
             <div class="frm-item frm-email">
-                <span>From</span>
-                <?= $f->field($share_form, 'your_email')->textInput(['class'=>'your_email', 'placeholder'=>Yii::t('your_email', 'Email của bạn...')])->label(false) ?>
-            </div>
-            <div class="frm-item frm-email">
-                <span>To</span>
                 <?= $f->field($share_form, 'recipient_email')->textInput(['class'=>'recipient_email', 'placeholder'=>Yii::t('recipient_email', 'Email người nhận...')])->label(false) ?>
             </div>
             <div class="frm-item frm-email">
-                <span>Subject</span>
                 <?= $f->field($share_form, 'subject')->textInput(['class'=>'subject2', 'placeholder'=>Yii::t('subject', 'Tiêu đề...')])->label(false)?>
             </div>
             <div class="frm-item frm-email">
@@ -207,7 +228,8 @@ $user = Yii::$app->user->identity;
                     <p><?=StringHelper::truncate($product->content, 150)?></p>
                     <p class="send-by">BY METVUONG.COM</p>
                 </div>
-                <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=> $address])->label(false) ?>
+                <?= $f->field($share_form, 'your_email')->hiddenInput(['class'=>'your_email', 'value'=>$yourEmail])->label(false) ?>
+                <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=>$address])->label(false) ?>
                 <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($address)], true)])->label(false) ?>
                 <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
             </div>
@@ -241,10 +263,6 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 
         $('#popup-email').popupMobi({
             btnClickShow: ".share-email-btn",
-            closeBtn: '#popup-email .btn-cancel'
-        });
-        $('#popup-email').popupMobi({
-            btnClickShow: ".btn-email",
             closeBtn: '#popup-email .btn-cancel'
         });
 
@@ -369,6 +387,16 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
             }, 500);
         }
         return false;
+    });
+
+    $(document).on('click', '.share-social .share-facebook', function() {
+        var detailUrl = $('#share_form ._detailUrl').val();
+        if(detailUrl == null || detailUrl == '' )
+            detailUrl = $('#share_form ._domain').val();
+        FB.ui({
+            method: 'share',
+            href: detailUrl
+        }, function(response){});
     });
 
 </script>

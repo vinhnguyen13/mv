@@ -42,11 +42,21 @@ class Chart extends Component
         $adProductFinders = $query->orderBy('time DESC')->limit(7)->all();
         $infoFinder = array();
         foreach($adProductFinders as $k => $q){
-            $username = User::findIdentity($q->user_id)->username;
+            $user = User::findIdentity($q->user_id);
+            $username = $user->username;
+            $avatar = $user->profile->getAvatarUrl();
             if(array_key_exists($username, $infoFinder)){
-                $infoFinder[$username]++;
+                $c = $infoFinder[$username]['count'];
+                $c = $c+1;
+                $infoFinder[$username] = [
+                    'count' => $c,
+                    'avatar' => $avatar
+                ];
             } else
-                $infoFinder[$username] = 1;
+                $infoFinder[$username] = [
+                    'count' => 1,
+                    'avatar' => $avatar
+                ];
         }
         // visitor
         $query = AdProductVisitor::find();
@@ -57,11 +67,21 @@ class Chart extends Component
         $adProductVisitor = $query->orderBy('time DESC')->limit(7)->all();
         $infoVisitors = array();
         foreach($adProductVisitor as $k => $q){
-            $username = User::findIdentity($q->user_id)->username;
+            $user = User::findIdentity($q->user_id);
+            $username = $user->username;
+            $avatar = $user->profile->getAvatarUrl();
             if(array_key_exists($username, $infoVisitors)){
-                $infoVisitors[$username]++;
+                $c = $infoVisitors[$username]['count'];
+                $c = $c+1;
+                $infoVisitors[$username] = [
+                    'count' => $c,
+                    'avatar' => $avatar
+                ];
             } else
-                $infoVisitors[$username] = 1;
+                $infoVisitors[$username] = [
+                    'count' => 1,
+                    'avatar' => $avatar
+                ];
         }
         // saved
         $query = AdProductSaved::find();
@@ -69,14 +89,25 @@ class Chart extends Component
         if(!empty($pids)){
             $query->andWhere(['product_id' => $pid]);
         }
+        $query->andWhere('saved_at > :sa',[':sa' => 0]);
         $adProductSaved = $query->all();
         $infoSaved = array();
         foreach($adProductSaved as $k => $q){
-            $username = User::findIdentity($q->user_id)->username;
+            $user = User::findIdentity($q->user_id);
+            $username = $user->username;
+            $avatar = $user->profile->getAvatarUrl();
             if(array_key_exists($username, $infoSaved)){
-                $infoSaved[$username]++;
+                $c = $infoSaved[$username]['count'];
+                $c = $c+1;
+                $infoSaved[$username] = [
+                    'count' => $c,
+                    'avatar' => $avatar
+                ];
             } else
-                $infoSaved[$username] = 1;
+                $infoSaved[$username] = [
+                    'count' => 1,
+                    'avatar' => $avatar
+                ];
         }
 
         $infoData["finders"] = $infoFinder;
@@ -103,11 +134,21 @@ class Chart extends Component
         $adProductVisitors = $query->orderBy('time DESC')->limit(7)->all();
         $infoVisitors = array();
         foreach($adProductVisitors as $k => $q){
-            $username = User::findIdentity($q->user_id)->username;
+            $user = User::findIdentity($q->user_id);
+            $username = $user->username;
+            $avatar = $user->profile->getAvatarUrl();
             if(array_key_exists($username, $infoVisitors)){
-                $infoVisitors[$username]++;
+                $c =  $infoVisitors[$username]['count'];
+                $c = $c+1;
+                $infoVisitors[$username] = [
+                    'count' => $c,
+                    'avatar' => $avatar
+                ];
             } else
-                $infoVisitors[$username] = 1;
+                $infoVisitors[$username] = [
+                    'count' => 1,
+                    'avatar' => $avatar
+                ];
         }
 
         $infoData["visitors"] = $infoVisitors;
@@ -131,13 +172,24 @@ class Chart extends Component
         }
         $query->andWhere('saved_at > :sa',[':sa' => 0]);
         $adProductSaveds = $query->all();
+
         $infoSaved = array();
         foreach($adProductSaveds as $k => $q){
-            $username = User::findIdentity($q->user_id)->username;
+            $user = User::findIdentity($q->user_id);
+            $username = $user->username;
+            $avatar = $user->profile->getAvatarUrl();
             if(array_key_exists($username, $infoSaved)){
-                $infoSaved[$username]++;
+                $c =  $infoSaved[$username]['count'];
+                $c = $c+1;
+                $infoSaved[$username] = [
+                    'count' => $c,
+                    'avatar' => $avatar
+                ];
             } else
-                $infoSaved[$username] = 1;
+                $infoSaved[$username] = [
+                    'count' => 1,
+                    'avatar' => $avatar
+                ];
         }
         $infoData["saved"] = $infoSaved;
         $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);

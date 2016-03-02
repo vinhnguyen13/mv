@@ -3,16 +3,15 @@ use yii\helpers\Url;
 use frontend\models\Chart;
 
 $data = Chart::find()->getDataSaved($id, $from, $to);
-if(!empty($data)) {
+if(!empty($data) && count($data) > 0) {
     $dataChart = $data['dataChart'];
     $categories = $data['categories'];
 
     ksort($dataChart);
     $dataChart = array_values($dataChart);
+
     ksort($categories);
     $categories = array_values($categories);
-
-
     ?>
     <div id="chartAds" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     <script>
@@ -25,7 +24,7 @@ if(!empty($data)) {
                     enabled: false
                 },
                 title: {
-                    text: 'Lượt người thích',
+                    text: 'Lượt người lưu tin',
                     x: -20 //center
                 },
                 subtitle: {
@@ -34,10 +33,7 @@ if(!empty($data)) {
                 },
                 xAxis: {
                     categories: <?=json_encode($categories);?>,
-                    max: <?=!empty(count($categories)) ? count($categories) - 1 : 0?>,
-                    type: 'datetime',
-                    dateTimeLabelFormats: { // don't display the dummy year
-                    month: '%b %e'
+                    max: <?=!empty(count($categories)) ? count($categories) - 1 : 0?>
                 },
                 yAxis: {
                     allowDecimals: false,
@@ -52,17 +48,17 @@ if(!empty($data)) {
                     }]
                 },
                 tooltip: {
-                    useHTML: true,
+                    useHTML:true,
                     formatter: function() {
-                     var tooltip;
-                     if (this.key == 'last') {
-                     tooltip = '<b>Final result is </b> ' + this.y;
-                     }
-                     else {
-                     tooltip =  '<b>' + this.y + ' người lưu</b><br/>';
-                     }
-                     return tooltip;
-                     }
+                        var tooltip;
+                        if (this.key == 'last') {
+                            tooltip = '<b>Final result is </b> ' + this.y;
+                        }
+                        else {
+                            tooltip = '<b>' + this.y + ' người lưu</b><br/>';
+                        }
+                        return tooltip;
+                    }
                 },
                 plotOptions: {
                     column: {
@@ -73,12 +69,12 @@ if(!empty($data)) {
                         cursor: 'pointer',
                         point: {
                             events: {
-                                click: function () {
+                                click: function() {
                                     for (var i = 0; i < this.series.data.length; i++) {
                                         this.series.data[i].update({ color: '#909090' }, true, false);
                                     }
                                     this.update({ color: '#00a769' }, true, false);
-                                    getDataSavedByClick(this.category);
+//                                    getDataByClick(this.category);
                                 }
                             }
                         }
@@ -90,7 +86,7 @@ if(!empty($data)) {
                 }
             });
         });
-        function getDataSavedByClick(date){
+        function getDataByClick(date, categories){
             var timer = 0;
             clearTimeout(timer);
             timer = setTimeout(function () {
@@ -99,9 +95,9 @@ if(!empty($data)) {
                     dataType: 'html',
                     url: '<?=Url::to(['/dashboard/clickchart','id' => $id])?>' + '&date=' + date + '&view=_partials/saved',
                     success: function (data) {
-                        console.log(data);
                         if(data){
-                            $('.saved .list-item').html(data);
+                            $('.favourite .list-item').html(data);
+                            $('.date-filter-chart').html('Thống kê trong ngày <span>'+date+'</span>');
                         }
                     }
                 });

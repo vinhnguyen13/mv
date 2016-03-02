@@ -111,32 +111,36 @@ class DashboardController extends Controller
                 $infoData = empty($data) ? null : $data["infoData"];
                 $finders = empty($infoData["finders"]) ? null : $infoData["finders"];
                 $html = "";
-                foreach($finders as $key_finder => $finder) {
-                    $li = "<li><em class=\"fa fa-circle\"></em><a href=\"/".$key_finder."\">".$key_finder."</a><span class=\"pull-right\">".$finder."</span>";
-                    $li .= "</li>";
-                    $html .= $li;
-                }
+                if(count($finders) > 0)
+                    foreach($finders as $key_finder => $finder) {
+                        $li = "<li><img src=\"".$finder['avatar']."\" alt=\"".$key_finder."\"><a href=\"/".$key_finder."\">".$key_finder."</a><span class=\"pull-right\">".$finder['count']."</span>";
+                        $li .= "</li>";
+                        $html .= $li;
+                    }
                 return $html;
             } else if ($view == "_partials/visitor"){
                 $data = Chart::find()->getDataVisitor($id, $from, $to);
                 $infoData = empty($data) ? null : $data["infoData"];
                 $visitors = empty($infoData["visitors"]) ? null : $infoData["visitors"];
                 $html = "";
-                foreach($visitors as $key => $val) {
-                    $li = "<li><em class=\"fa fa-circle\"></em><a href=\"/".$key."\">".$key."</a><span class=\"pull-right\">".$val."</span>";
-                    $li .= "</li>";
-                    $html .= $li;
-                }
+                if(count($visitors) > 0)
+                    foreach ($visitors as $key_visitor => $val_visitor) {
+                        $li = "<li><img src=\"" . $val_visitor['avatar'] . "\" alt=\"" . $key_visitor . "\"><a href=\"/" . $key_visitor . "\">" . $key_visitor . "</a><span class=\"pull-right\">" . $val_visitor['count'] . "</span>";
+                        $li .= "</li>";
+                        $html .= $li;
+                    }
                 return $html;
             } else if ($view == "_partials/saved"){
                 $data = Chart::find()->getDataSaved($id, $from, $to);
                 $infoData = empty($data) ? null : $data["infoData"];
                 $favourites = empty($infoData["saved"]) ? null : $infoData["saved"];
                 $html = "";
-                foreach($favourites as $key => $val) {
-                    $li = "<li><em class=\"fa fa-circle\"></em><a href=\"/".$key."\">".$key."</a><span class=\"pull-right\">".$val."</span>";
-                    $li .= "</li>";
-                    $html .= $li;
+                if(count($favourites) > 0) {
+                    foreach ($favourites as $key => $val) {
+                        $li = "<li><img src=\"".$val['avatar']."\" alt=\"" . $key . "\"><a href=\"/" . $key . "\">" . $key . "</a><span class=\"pull-right\">" . $val['count'] . "</span>";
+                        $li .= "</li>";
+                        $html .= $li;
+                    }
                 }
                 return $html;
             }
@@ -198,10 +202,7 @@ class DashboardController extends Controller
             $from = (int)Yii::$app->request->get('from');
             $to = (int)Yii::$app->request->get('to');
 
-            if(!empty($view)){
-                return $this->renderAjax('chart/'.$view, ['id' => $id, 'from' => $from, 'to' => $to]);
-            }
-            return false;
+            return $this->renderAjax('chart/'.$view, ['id' => $id, 'from' => $from, 'to' => $to]);
         }
         return false;
     }
