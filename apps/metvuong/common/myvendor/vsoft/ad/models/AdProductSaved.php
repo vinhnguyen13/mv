@@ -36,4 +36,9 @@ class AdProductSaved extends APS
             ],*/
         ];
     }
+
+    public function getProduct()
+    {
+        return $this->hasOne(AdProduct::className(), ['id' => 'product_id']);
+    }
 }

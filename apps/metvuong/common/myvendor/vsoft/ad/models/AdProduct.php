@@ -2,6 +2,7 @@
 
 namespace vsoft\ad\models;
 
+use frontend\models\User;
 use Yii;
 use common\models\AdProduct as AP;
 
@@ -144,5 +145,10 @@ class AdProduct extends AP
 	public function getAdContactInfo()
 	{
 		return $this->hasOne(AdContactInfo::className(), ['product_id' => 'id']);
+	}
+
+	public function getOwner()
+	{
+		return $this->hasOne(User::className(), ['id' => 'user_id']);
 	}
 }

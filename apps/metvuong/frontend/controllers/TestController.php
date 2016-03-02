@@ -6,6 +6,7 @@ use dektrium\user\Mailer;
 use Elasticsearch\ClientBuilder;
 use frontend\models\Elastic;
 use frontend\models\Tracking;
+use frontend\models\UserActivity;
 use GuzzleHttp\Ring\Client\CurlHandler;
 use vsoft\tracking\models\base\AdProductVisitor;
 use vsoft\user\models\User;
@@ -166,5 +167,13 @@ class TestController extends \yii\web\Controller
     public function actionDevice(){
         echo 'Mobile: '.Yii::$app->mobileDetect->isMobile();
         echo 'Tablet: '.Yii::$app->mobileDetect->isTablet();
+    }
+
+    public function actionActivity(){
+        UserActivity::find()->saveActivity(UserActivity::ACTION_AD_FAVORITE, "{user} favorite {product} of {product_owner}", [
+            'user'=>Yii::$app->user->identity->username,
+            'product'=>5071,
+            'product_owner'=>Yii::$app->user->identity->username
+        ], 5071);
     }
 }

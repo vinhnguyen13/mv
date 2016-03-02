@@ -10,6 +10,7 @@ namespace frontend\models;
 use vsoft\ad\models\AdProduct;
 use vsoft\ad\models\AdProductRating;
 use vsoft\ad\models\AdProductSaved;
+use frontend\models\UserActivity;
 use Yii;
 use yii\base\Component;
 use yii\helpers\ArrayHelper;
@@ -108,6 +109,11 @@ class Ad extends Component
                 $adSaved->validate();
                 if(!$adSaved->hasErrors()){
                     $adSaved->save();
+                    UserActivity::me()->saveActivity(UserActivity::ACTION_AD_FAVORITE, "{user} favorite {product} of {product_owner}", [
+                        'user'=>Yii::$app->user->id,
+                        'product'=>$adSaved->product_id,
+                        'product_owner'=>$adSaved->product->user_id
+                    ], $adSaved->product_id);
                 }
                 return ['statusCode'=>200, 'parameters'=>['msg'=>'']];
             }
