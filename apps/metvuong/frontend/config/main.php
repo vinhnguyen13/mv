@@ -43,6 +43,7 @@ return [
         'user' => [
             'identityClass' => 'frontend\models\User',
             'enableAutoLogin' => true,
+            'on afterLogin' => ['frontend\components\Login', 'handleAfterLogin'],
         ],
         'request' => [
             'baseUrl' => $baseUrl,

@@ -8,7 +8,6 @@
 namespace frontend\models;
 use vsoft\ad\models\AdProduct;
 use yii\helpers\Json;
-use yii\mongodb\ActiveRecord;
 use Yii;
 
 class UserActivity extends \vsoft\user\models\base\UserActivity
@@ -40,17 +39,23 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
             $this->object_id = $object_id;
             $object = $this->findObject();
             if(!empty($object)) {
-                $this->buddy_id = $object->buddy_id;
-                $this->buddy_username = $object->buddy_username;
+                $this->buddy_id = $object['buddy_id'];
+                $this->buddy_username = $object['buddy_username'];
             }
             $this->parent_id = 0;
             $this->status = 1;
             $this->created = time();
             $this->updated = 0;
             $this->read_status = self::READ_NO;
-            $this->read_time = Yii::$app->user->id;
+            $this->read_time = 0;
             $this->validate();
-            return $this->save();
+            if(!$this->hasErrors()){
+                if($this->save()){
+                    if(!empty($object['user'])) {
+                        $this->setUserData($object['user']);
+                    }
+                }
+            }
         }
         return false;
     }
@@ -60,10 +65,9 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
             switch($this->action){
                 case self::ACTION_AD_FAVORITE;
                     if(($product = AdProduct::findOne(['id'=>$this->object_id])) !== null){
-                        $object = new \stdClass();
-                        $owner = User::findOne($product->user_id);
-                        $object->buddy_id = $product->user_id;
-                        $object->buddy_username = $owner->username;
+                        $object['user'] = User::findOne($product->user_id);
+                        $object['buddy_id'] = $product->user_id;
+                        $object['buddy_username'] = $object['user']->username;
                         return $object;
                     }
                     break;
@@ -85,7 +89,14 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
         return false;
     }
 
-    public function setRead($action){
+    public function read(){
+        return $this->updateAttributes(['read_status'=>self::READ_YES, 'read_time' => time()]);
+    }
 
+    public function setUserData($user){
+        $id = (string) $this->_id ;
+        if(!empty($id)){
+            return UserData::me()->saveAlert($user, UserData::ALERT_OTHER, [$id]);
+        }
     }
 }

@@ -7,6 +7,7 @@
  */
 
 namespace frontend\components;
+use frontend\models\UserData;
 use Yii;
 use yii\helpers\Url;
 
@@ -17,6 +18,10 @@ class Controller extends \yii\web\Controller
         if(Yii::$app->user->isGuest && !in_array($action->id, ['login', 'register', 'error', 'map-image']) && !Yii::$app->request->isAjax){
             Yii::$app->getUser()->setReturnUrl(Url::current());
         }
+        /*echo "<pre>";
+        print_r(Yii::$app->getUser());
+        echo "</pre>";
+        exit;*/
         if(!Yii::$app->user->isGuest){
             $parseUrl = Yii::$app->urlManager->parseRequest(Yii::$app->request);
             $urlBase = !empty($parseUrl[0]) ? $parseUrl[0] : '';
@@ -26,21 +31,15 @@ class Controller extends \yii\web\Controller
                  */
                 switch($urlBase){
                     case 'dashboard/notification':
+                        UserData::me()->removeAlert(Yii::$app->user->id, UserData::ALERT_OTHER);
                         Yii::$app->session->remove("notifyOther");
                         break;
                     case 'chat/index':
                     case 'chat/with':
+                        UserData::me()->removeAlert(Yii::$app->user->id, UserData::ALERT_CHAT);
                         Yii::$app->session->remove("notifyChat");
                         break;
                 }
-            }
-            /**
-             * test
-             * @todo: remove if done
-             */
-            if($urlBase == 'site/index'){
-                Yii::$app->session->set("notifyOther",rand(1, 20));
-                Yii::$app->session->set("notifyChat",rand(1, 20));
             }
             /**
              * set value notify to view
