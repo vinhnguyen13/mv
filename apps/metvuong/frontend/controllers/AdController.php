@@ -355,6 +355,7 @@ class AdController extends Controller
     }
     
     public function postMobile() {
+    	error_reporting( E_ALL );
     	$now = time();
     	$helper = new AdImageHelper();
     	$newFolderAbsolute = $helper->getAbsoluteUploadFolderPath($now);
