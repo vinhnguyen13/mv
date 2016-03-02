@@ -364,9 +364,7 @@ class AdController extends Controller
     	$newFolderAbsoluteUrl = str_replace(DIRECTORY_SEPARATOR, '/', $newFolderAbsolute);
     	
     	if(!file_exists($newFolder)) {
-    		mkdir('/var/www/ttgweb/apps/metvuong/store/ad/2016', 777);
     		mkdir('/var/www/ttgweb/apps/metvuong/store/ad/2016/03', 777);
-    		mkdir('/var/www/ttgweb/apps/metvuong/store/ad/2016/03/02', 777);
     		$helper->makeFolderSizes($newFolder);
     	}
     	
