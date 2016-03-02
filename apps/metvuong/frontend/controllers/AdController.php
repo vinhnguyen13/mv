@@ -355,6 +355,24 @@ class AdController extends Controller
     }
     
     public function postMobile() {
+    	
+    	$f1 = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $this->tempFolderName . DIRECTORY_SEPARATOR . $this->adFolderName . DIRECTORY_SEPARATOR . 'abc' . DIRECTORY_SEPARATOR . 'def';
+    	$f2 = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $this->adFolderName . DIRECTORY_SEPARATOR . 'abc' . DIRECTORY_SEPARATOR . 'def';
+    	
+    	mkdir($f1);
+    	mkdir($f2);
+    	
+    	echo $f1;
+    	echo "<br />";
+    	echo $f1;
+    	
+    	
+    	
+    	
+    	
+    	
+    	exit();
+    	
     	if(Yii::$app->user->isGuest) {
     		return $this->render('/_systems/require_login');
     	}
