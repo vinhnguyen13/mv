@@ -291,6 +291,7 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 	<script>
 		$(document).ready(function () {
 			$(document).on('click', '.save-item', function (e) {
+				$(this).toggleClass('active');
 				var timer = 0;
 				clearTimeout(timer);
 				var _id = $(this).attr('data-id');
