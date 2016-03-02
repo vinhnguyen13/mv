@@ -26,33 +26,38 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
     }
 
     public function saveActivity($action, $message, $params, $object_id){
-        if(!isset(Yii::$app->params['activity']['enable']) || Yii::$app->params['activity']['enable'] == false){
+        $app = Yii::$app;
+        if(!isset($app->params['activity']['enable']) || $app->params['activity']['enable'] == false){
             return false;
         }
-        if(!Yii::$app->user->isGuest){
-            $this->owner_id = Yii::$app->user->id;
-            $this->owner_username = Yii::$app->user->identity->username;
-            $this->action = $action;
-            $this->message = $message;
-            $this->params = Json::encode($params);
-            $this->ip = Yii::$app->getRequest()->getUserIP();
-            $this->object_id = $object_id;
-            $object = $this->findObject();
+        if(!$app->user->isGuest){
+            $activity = $this;
+            if(($activityExist = self::findOne(['action'=>self::ACTION_AD_FAVORITE, 'owner_id'=>$app->user->id, 'object_id'=>$object_id])) !== null){
+                $activity = $activityExist;
+            };
+            $activity->owner_id = $app->user->id;
+            $activity->owner_username = $app->user->identity->username;
+            $activity->action = $action;
+            $activity->message = $message;
+            $activity->params = Json::encode($params);
+            $activity->ip = $app->getRequest()->getUserIP();
+            $activity->object_id = $object_id;
+            $object = $activity->findObject();
             if(!empty($object)) {
-                $this->buddy_id = $object['buddy_id'];
-                $this->buddy_username = $object['buddy_username'];
+                $activity->buddy_id = $object['buddy_id'];
+                $activity->buddy_username = $object['buddy_username'];
             }
-            $this->parent_id = 0;
-            $this->status = 1;
-            $this->created = time();
-            $this->updated = 0;
-            $this->read_status = self::READ_NO;
-            $this->read_time = 0;
-            $this->validate();
-            if(!$this->hasErrors()){
-                if($this->save()){
+            $activity->parent_id = 0;
+            $activity->status = 1;
+            $activity->created = time();
+            $activity->updated = 0;
+            $activity->read_status = self::READ_NO;
+            $activity->read_time = 0;
+            $activity->validate();
+            if(!$activity->hasErrors()){
+                if($activity->save()){
                     if(!empty($object['user'])) {
-                        return $this->setUserData($object['user']);
+                        return $activity->setUserData($object['user']);
                     }
                 }
             }
@@ -96,7 +101,7 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
     public function setUserData($user){
         $id = (string) $this->_id ;
         if(!empty($id)){
-            return UserData::me()->saveAlert($user, UserData::ALERT_OTHER, [$id]);
+            return UserData::me()->saveAlert($user, UserData::ALERT_OTHER, [trim($id)]);
         }
     }
 }

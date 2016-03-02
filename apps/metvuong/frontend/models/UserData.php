@@ -30,7 +30,11 @@ class UserData extends \vsoft\user\models\base\UserData
         };
 
         $oldAlert = !empty($userData->alert) ? Json::decode($userData->alert) : [];
-        $alert[$type] = !empty($oldAlert[$type]) ? ArrayHelper::merge($oldAlert[$type], $data) : $data;
+        if($oldAlert[$type]){
+            $array_diff = array_diff($data, $oldAlert[$type]);
+            $alert[$type] = ArrayHelper::merge($oldAlert[$type], $array_diff);
+        }
+
         /*if($type == self::ALERT_OTHER){
 
         }elseif($type == self::ALERT_CHAT){

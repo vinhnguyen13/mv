@@ -78,7 +78,7 @@ use yii\helpers\Url;
 		</ul>
 		<ul class="pull-right icons-detail">
 			<li><a href="#" class="icon icon-share-td"></a></li>
-			<li><a href="#" class="icon save-item" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>"></a></li>
+			<li><a href="#" class="icon save-item <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>"></a></li>
 			<li><a href="#" class="icon icon-map-loca"></a></li>
 		</ul>
 		<p class="price-td">
