@@ -31,17 +31,17 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
             return false;
         }
         if(!Yii::$app->user->isGuest){
-            $this->user_id = Yii::$app->user->id;
-            $this->username = Yii::$app->user->identity->username;
+            $this->owner_id = Yii::$app->user->id;
+            $this->owner_username = Yii::$app->user->identity->username;
             $this->action = $action;
             $this->message = $message;
             $this->params = Json::encode($params);
             $this->ip = Yii::$app->getRequest()->getUserIP();
-            $object = $this->findObject($action, $object_id);
+            $this->object_id = $object_id;
+            $object = $this->findObject();
             if(!empty($object)) {
-                $this->object_id = $object_id;
-                $this->object_owner_id = $object->object_owner_id;
-                $this->object_owner_username = $object->object_owner_username;
+                $this->buddy_id = $object->buddy_id;
+                $this->buddy_username = $object->buddy_username;
             }
             $this->parent_id = 0;
             $this->status = 1;
@@ -55,16 +55,15 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
         return false;
     }
 
-    public function findObject($action, $object_id){
-        if(!empty($action)){
-            switch($action){
+    public function findObject(){
+        if(!empty($this->action)){
+            switch($this->action){
                 case self::ACTION_AD_FAVORITE;
-                    if(($product = AdProduct::findOne(['id'=>$object_id])) !== null){
+                    if(($product = AdProduct::findOne(['id'=>$this->object_id])) !== null){
                         $object = new \stdClass();
-                        $object->object_id = $object_id;
                         $owner = User::findOne($product->user_id);
-                        $object->object_owner_id = $product->user_id;
-                        $object->object_owner_username = $owner->username;
+                        $object->buddy_id = $product->user_id;
+                        $object->buddy_username = $owner->username;
                         return $object;
                     }
                     break;
@@ -72,12 +71,28 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
         }
     }
 
+    public function getOwner(){
+        if(($owner = User::findOne($this->owner_id)) !== null) {
+            return $owner;
+        }
+        return false;
+    }
+
+    public function getBuddy(){
+        if(($buddy = User::findOne($this->buddy_id)) !== null) {
+            return $buddy;
+        }
+        return false;
+    }
+
     public function getMessage(){
         if(!empty($this->action)) {
             switch ($this->action) {
                 case self::ACTION_AD_FAVORITE;
                     $params = Json::decode($this->params);
+                    $params['user'] = '';
                     $params['product'] = (($product = AdProduct::findOne(['id'=>$params['product']])) !== null) ? $product->getAddress() : '';
+                    $params['product_owner'] = $this->getBuddy()->profile->getDisplayName();
                     $message = Yii::t('activity', $this->message, $params);
                     return $message;
                     break;

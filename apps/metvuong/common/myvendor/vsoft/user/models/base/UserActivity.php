@@ -23,8 +23,8 @@ class UserActivity extends ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'username', 'object_owner_id', 'object_owner_username'], 'required'],
-            [['user_id', 'object_id', 'object_owner_id'], 'integer'],
+            [['owner_id', 'owner_username', 'buddy_id', 'buddy_username'], 'required'],
+            [['owner_id', 'object_id', 'buddy_id'], 'integer'],
         ];
     }
     /**
@@ -32,7 +32,7 @@ class UserActivity extends ActiveRecord
      */
     public function attributes()
     {
-        return ['_id', 'user_id', 'username', 'action', 'message', 'params', 'ip', 'object_id', 'object_owner_id', 'object_owner_username', 'parent_id', 'status', 'created', 'updated', 'read_status', 'read_time'];
+        return ['_id', 'owner_id', 'owner_username', 'action', 'message', 'params', 'ip', 'object_id', 'buddy_id', 'buddy_username', 'parent_id', 'status', 'created', 'updated', 'read_status', 'read_time'];
     }
 
 }

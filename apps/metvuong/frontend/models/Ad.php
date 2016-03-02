@@ -111,7 +111,7 @@ class Ad extends Component
                 $adSaved->validate();
                 if(!$adSaved->hasErrors()){
                     $adSaved->save();
-                    UserActivity::me()->saveActivity(UserActivity::ACTION_AD_FAVORITE, "{user} favorite {product} of {product_owner}", [
+                    UserActivity::me()->saveActivity(UserActivity::ACTION_AD_FAVORITE, Yii::t("activity", "{user} favorite {product} of {product_owner}"), [
                         'user'=>Yii::$app->user->id,
                         'product'=>$adSaved->product_id,
                         'product_owner'=>$adSaved->product->user_id
