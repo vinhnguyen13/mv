@@ -3792,13 +3792,13 @@ input[type=text]:focus {
     -moz-border-radius: 50%;
     -ms-border-radius: 50%;
     display: inline-block;
-    background-color: #00a769;
+    background-color: #009745;
     width: 40px;
     height: 40px;
     text-align: center;
-    display: -webkit-flex; /* Safari */
-	-webkit-align-items: center; /* Safari 7.0+ */
-	display: flex;
+    display: -webkit-flex;/* Safari */
+    -webkit-align-items: center;/* Safari 7.0+ */
+    display: flex;
 }
 .list-attr-per li .circle {
     width: 15%;
@@ -4051,12 +4051,6 @@ input[type=text]:focus {
 #popup-user-inter .btn-chat {
     margin-right: 15px;
     padding: 3px 30px 2px;
-}
-.btn-close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 8px 10px;
 }
 .icon-close {
     background-position: 0px -1141px;
@@ -4525,4 +4519,30 @@ input[type=text]:focus {
 .wrap-duan-moi .tien-ich-duan .icon-ti {
     display: block;
     margin: 0 auto 5px;
+}
+#popup-share-social .wrap-popup {
+    background-color: #f5f5f5;
+}
+.btn-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+}
+#popup-share-social .inner-popup ul {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+#popup-share-social .inner-popup ul li {
+    float: left;
+    margin-right: 15px;
+}
+#popup-share-social .inner-popup .icon {
+    margin: 0 auto 0;
+}
+#popup-share-social .inner-popup {
+    padding: 30px 15px;
+    font-weight: 600;
+    font-size: 14px;
 }
