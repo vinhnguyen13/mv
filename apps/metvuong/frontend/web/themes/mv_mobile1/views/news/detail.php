@@ -34,11 +34,18 @@ Yii::$app->view->registerMetaTag([
     'property' => 'og:image',
     'content' => Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'. $news->banner)
 ]);
+
+$fb_appId = '680097282132293'; // stage.metvuong.com
+if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
+    $fb_appId = '736950189771012';
+else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
+    $fb_appId = '891967050918314';
+
 ?>
 <script>
     window.fbAsyncInit = function() {
         FB.init({
-            appId      : '680097282132293',
+            appId      : <?=$fb_appId?>,
             xfbml      : true,
             version    : 'v2.5'
         });
@@ -48,6 +55,7 @@ Yii::$app->view->registerMetaTag([
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) {return;}
         js = d.createElement(s); js.id = id;
+        js.async=true;
         js.src = "//connect.facebook.net/vi_VN/sdk.js";
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
