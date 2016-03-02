@@ -2562,7 +2562,7 @@ html.mm-opening .mm-slideout {
     border: none;
     border: 1px solid #B3B3B3;
     background: #fff;
-    padding: 0 10px;
+    padding: 8px 10px;
 }
 .chat-real {
     height: 100%;
@@ -4346,4 +4346,10 @@ input[type=text]:focus {
 }
 .list-post li .id-duan {
     margin: 0 0 5px 0;
+}
+.icon-chat-sub{
+    background-position: 0 -529px;
+    background-size: 50px 1950px;
+    width: 17px;
+    height: 16px;
 }
