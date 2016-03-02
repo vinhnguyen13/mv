@@ -13,7 +13,7 @@ use yii\helpers\Url;
 				<li>
 					<div class="img-show">
 						<div>
-							<a href="<?=Url::to(['/dashboard/statistics', 'id' => $product->id])?>"><img src="<?= $product->getImage() ?>">
+							<a href="<?=Url::to(['/dashboard/statistics', 'id' => $product->id])?>"><img src="<?= $product->representImage ?>">
 								<div class="name-address-duan">
 									<?php if($product->projectBuilding): ?>
 									<p class="name-duan"><?= $product->projectBuilding->name ?></p>
