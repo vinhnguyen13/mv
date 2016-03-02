@@ -4435,6 +4435,7 @@ input[type=text]:focus {
     margin-bottom: 5px;
     font-size: 17px;
 }
+.wrap-duan-moi .infor-address-duan .address-icon,
 .wrap-infor-duan .address-feat .address-icon {
     position: relative;
     top: 1px;
@@ -4448,4 +4449,80 @@ input[type=text]:focus {
 }
 .wrap-infor-duan .bottom-feat-box a {
     
+}
+.wrap-duan-moi {
+    padding: 25px 20px;
+}
+.wrap-duan-moi .item {
+    border-bottom: solid 0.5px #969696;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    font-size: 15px;
+    position: relative;
+}
+.wrap-duan-moi .infor-address-duan {
+    font-weight: 600;
+}
+.wrap-duan-moi .infor-address-duan p {
+    font-weight: 600;
+    margin-bottom: 1px;
+}
+.wrap-duan-moi .gallery-detail {
+    margin-bottom: 5px;
+}
+.wrap-duan-moi .infor-address-duan strong {
+    letter-spacing: .5px;
+    color: #00a769;
+    text-transform: uppercase;
+    font-size: 17px;
+    display: block;
+    margin-bottom: 2px;
+}
+.wrap-duan-moi .icons-detail {
+    position: absolute;
+    top: 3px;
+    right: 0;
+}
+.wrap-duan-moi .title-attr-duan {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.wrap-duan-moi .infor-attr li {
+    float: left;
+    width: 50%;
+    margin-bottom: 7px;
+}
+.wrap-duan-moi .infor-attr li strong {
+    padding-right: 5px;
+}
+.icon-ti {
+    display: inline-block;
+    background: url(../images/icon-ti.png) no-repeat top left;
+    background-size: 33px 200px;
+}
+.icon-sport {
+    background-position: 0 0;
+    width: 33px;
+    height: 33px;
+}
+.wrap-duan-moi .tien-ich-duan ul {
+    margin: 0 -5px;
+}
+.wrap-duan-moi .tien-ich-duan li {
+    float: left;
+    width: 33.333%;
+    padding: 0 5px;
+    margin-bottom: 10px;
+}
+.wrap-duan-moi .tien-ich-duan li > div {
+    background-color: #f0f0f0;
+    padding: 25px 0;
+    text-align: center;
+    color: #00a769;
+    font-size: 17px;
+}
+.wrap-duan-moi .tien-ich-duan .icon-ti {
+    display: block;
+    margin: 0 auto 5px;
 }
