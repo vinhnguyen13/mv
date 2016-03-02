@@ -839,11 +839,15 @@ class BatdongsanV2 extends Component
         $count_file = 1;
 
         $bds_import_log = $this->loadLog($path_folder."import/", $bds_import_filename);
-        if (empty($bds_import_log["type"])) {
+        if (isset($bds_import_log["type"]) == false) {
             $bds_import_log["type"] = array();
         }
 
-        $last_type_import = empty($bds_import_log["last_type_index"]) ? 0 : ($bds_import_log["last_type_index"] + 1);
+        $last_type_import = isset($bds_import_log["last_type_index"]) ? ($bds_import_log["last_type_index"] + 1) : 0;
+        $count_types = count($types)-1;
+        if($last_type_import > $count_types) {
+            $last_type_import = 0;
+        }
 
         $columnNameArray = ['category_id', 'project_building_id', 'user_id', 'home_no',
             'city_id', 'district_id', 'ward_id', 'street_id',
@@ -1913,11 +1917,14 @@ class BatdongsanV2 extends Component
         $path = Yii::getAlias('@console') . "/data/bds_html/projects/";
         $file_log = "import_project_log.json";
         $project_log_import = $this->loadLog($path."import/", $file_log);
-        if(empty($project_log_import["type"]))
+        if(isset($project_log_import["type"]))
             $project_log_import["type"] = array();
         $types = $this->projects;
         $break_type = false; // detect next type if it is false
         $current_type = empty($project_log_import["current_type"]) ? 0 : $project_log_import["current_type"]+1;
+//        $count_types = count($types)-1;
+//        if($current_type > $count_types)
+//            $current_type = 0;
         $count_file = 1;
 
         $columnContractor = ['name', 'address', 'phone', 'fax', 'website', 'email', 'logo', 'status', 'created_at'];
