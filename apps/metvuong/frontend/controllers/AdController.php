@@ -355,6 +355,20 @@ class AdController extends Controller
     }
     
     public function postMobile() {
+    	$now = time();
+    	$helper = new AdImageHelper();
+    	$newFolderAbsolute = $helper->getAbsoluteUploadFolderPath($now);
+    	$newFolder = $helper->getUploadFolderPath($newFolderAbsolute);
+    	
+    	$newFolderAbsoluteUrl = str_replace(DIRECTORY_SEPARATOR, '/', $newFolderAbsolute);
+    	
+    	if(!file_exists($newFolder)) {
+    		mkdir($newFolder, 777, true);
+    		$helper->makeFolderSizes($newFolder);
+    	}
+    	
+    	exit();
+    	
     	if(Yii::$app->user->isGuest) {
     		return $this->render('/_systems/require_login');
     	}
