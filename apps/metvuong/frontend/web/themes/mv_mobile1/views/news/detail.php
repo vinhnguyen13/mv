@@ -54,7 +54,7 @@ Yii::$app->view->registerMetaTag([
 </script>
 <div class="title-fixed-wrap">
     <div class="detail-news">
-        <div class="title-top">Tin tức<a href="javascript:history.back()" id="prev-page"><span class="icon arrowRight-1"></span></a></div>
+        <div class="title-top"><a style="color: #00a769;" href="<?=Url::to(['news/index'], true)?>">Tin tức</a><a href="javascript:history.back()" id="prev-page"><span class="icon arrowRight-1"></span></a></div>
 
         <div class="wrap-detail-article">
             <input id="current_id" type="hidden" value="<?=$news->id?>">
@@ -88,6 +88,7 @@ Yii::$app->view->registerMetaTag([
     </div>
 </div>
 <style>
+    iframe { max-width: 100% !important;}
     .loading { display: none; margin-bottom: 20px;}
     .animated, .box-content img {
         -webkit-animation-duration: 2s;
