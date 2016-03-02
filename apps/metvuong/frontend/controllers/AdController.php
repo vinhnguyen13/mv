@@ -355,9 +355,10 @@ class AdController extends Controller
     }
     
     public function postMobile() {
+    	$helper = new AdImageHelper();
     	
-    	$f1 = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $this->tempFolderName . DIRECTORY_SEPARATOR . $this->adFolderName . DIRECTORY_SEPARATOR . 'abc' . DIRECTORY_SEPARATOR . 'def';
-    	$f2 = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $this->adFolderName . DIRECTORY_SEPARATOR . 'abc' . DIRECTORY_SEPARATOR . 'def';
+    	$f1 = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $helper->tempFolderName . DIRECTORY_SEPARATOR . $helper->adFolderName . DIRECTORY_SEPARATOR . 'abc' . DIRECTORY_SEPARATOR . 'def';
+    	$f2 = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $helper->adFolderName . DIRECTORY_SEPARATOR . 'abc' . DIRECTORY_SEPARATOR . 'def';
     	
     	mkdir($f1);
     	mkdir($f2);
