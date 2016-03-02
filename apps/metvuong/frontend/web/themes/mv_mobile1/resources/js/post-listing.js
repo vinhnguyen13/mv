@@ -345,7 +345,7 @@ $(document).ready(function () {
 			return isValid;
 		},
 		step4: function() {
-			
+			return true;
 		}
 	};
 	
@@ -368,7 +368,9 @@ $(document).ready(function () {
 			
 		},
 		step4: function() {
-			
+			if($('#owner-host').prop('checked')) {
+				
+			}
 		}
 	};
 	

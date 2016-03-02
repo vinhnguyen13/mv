@@ -57,7 +57,7 @@ use common\widgets\fileupload\FileUpload;
 					<a class="frm-radio" href="#">
 						<?php $ownerName = Html::getInputName($product, 'owner') ?>
 						<span class="radio-ui icon">
-							<?= Html::radio($ownerName, ($product->owner == AdProduct::OWNER_HOST || !$product->owner), ['value' => AdProduct::OWNER_HOST]) ?>
+							<?= Html::radio($ownerName, ($product->owner == AdProduct::OWNER_HOST || !$product->owner), ['value' => AdProduct::OWNER_HOST, 'id' => 'owner-host']) ?>
 						</span>
 						<span><?= Yii::t('ad', 'Chủ nhà') ?></span>
 					</a>
