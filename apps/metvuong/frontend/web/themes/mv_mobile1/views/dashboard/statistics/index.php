@@ -134,19 +134,19 @@ $user = Yii::$app->user->identity;
                 <li>
                     <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
                     <div class="txt-infor-right">
-                        Share With Email
+                        <div>Share With Email</div>
                     </div>
                 </li>
                 <li>
                     <div class="circle"><div><span class="icon icon-face"></span></div></div>
                     <div class="txt-infor-right">
-                        Share With Facebook
+                        <div>Share With Facebook</div>
                     </div>
                 </li>
                 <li>
                     <div class="circle"><div><span class="icon icon-twi"></span></div></div>
                     <div class="txt-infor-right">
-                        Share With Twitter
+                        <div>Share With Twitter</div>
                     </div>
                 </li>
             </ul>

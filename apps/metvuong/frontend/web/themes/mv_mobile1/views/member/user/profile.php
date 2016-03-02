@@ -35,19 +35,25 @@ $user = $model->getUser();
             <li>
                 <div class="circle"><div><span class="icon icon-map-loca-1"></span></div></div>
                 <div class="txt-infor-right">
-                    <?= empty($model->address) ? "Đang cập nhật" : $model->address ?>
+                    <div>
+                        <?= empty($model->address) ? "Đang cập nhật" : $model->address ?>
+                    </div>
                 </div>
             </li>
             <li>
-                <a href="tel:<?=$model->mobile ?>"><div class="circle"><div><span class="icon icon-phone-1"></span></div></div></a>
-                <div class="txt-infor-right"><a href="tel:<?=$model->mobile ?>">
-                    <?= empty($model->mobile) ? "Đang cập nhật" : $model->mobile ?></a>
+                <div class="circle"><div><span class="icon icon-phone-1"></span></div></div>
+                <div class="txt-infor-right">
+                    <div>
+                        <a href="tel:<?=$model->mobile ?>"><?= empty($model->mobile) ? "Đang cập nhật" : $model->mobile ?></a>
+                    </div>
                 </div>
             </li>
             <li>
                 <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
                 <div class="txt-infor-right">
-                    <?= empty($model->public_email) ? "Đang cập nhật" : $model->public_email ?>
+                    <div>
+                        <?= empty($model->public_email) ? "Đang cập nhật" : $model->public_email ?>
+                    </div>
                 </div>
             </li>
         </ul>
@@ -77,6 +83,7 @@ $user = $model->getUser();
                         <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></div>
                     </a>
                     <p class="name-post"><span class="icon address-icon"></span><?=$product->getAddress()?></p>
+                    <p class="id-duan">ID tin đăng:<span>345</span></p>
                     <ul class="clearfix list-attr-td">
                         <li>
                             <span class="icon icon-dt icon-dt-small"></span>80m2
