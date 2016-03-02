@@ -6,6 +6,7 @@ use frontend\models\User;
 use Yii;
 use yii\helpers\Url;
 use common\models\AdProduct as AP;
+use vsoft\express\components\AdImageHelper;
 
 
 class AdProduct extends AP
@@ -152,10 +153,10 @@ class AdProduct extends AP
 		$image = AdImages::find()->where(['product_id' => $this->id])->one();
 		
 		if($image) {
-			if(!$size) {
-				$size = AdImages::SIZE_THUMB;
-			}
-			return AdImages::getImageUrl($image->file_name, $size);
+			$size = $size ? $size : AdImages::SIZE_MEDIUM;
+			$folder = AdImageHelper::makeFolderName(AdImageHelper::$sizes[$size]);
+			
+			return '/store/' . $image->folder . '/' . $folder . '/' . $image->file_name;
 		} else {
 			return AdImages::defaultImage();
 		}

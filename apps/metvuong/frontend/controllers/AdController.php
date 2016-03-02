@@ -72,7 +72,7 @@ class AdController extends Controller
     			
     			$response['name'] = $fileName;
     			$response['url'] = Url::to($tempUrl . $fileName);
-    			$response['thumbnailUrl'] = Url::to($tempUrl . $helper->makeFolderName($helper->sizes['thumb']) . '/' . $fileName);
+    			$response['thumbnailUrl'] = Url::to($tempUrl . $helper->makeFolderName(AdImageHelper::$sizes['thumb']) . '/' . $fileName);
     			$response['deleteUrl'] = Url::to(['delete-temp-file', 'file' => $fileName]);
     			$response['deleteType'] = 'DELETE';
     		}

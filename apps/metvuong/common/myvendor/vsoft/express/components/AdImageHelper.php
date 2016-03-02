@@ -7,7 +7,7 @@ class AdImageHelper {
 	public $tempFolderName = 'temp';
 	public $adFolderName = 'ad';
 	
-	public $sizes = [
+	public static $sizes = [
 		'large' => [960, 720],
 		'medium' => [480, 360],
 		'thumb' => [240, 180]
@@ -26,7 +26,7 @@ class AdImageHelper {
 	}
 
 	public function makeFolderSizes($parentFolder) {
-		foreach($this->sizes as $size) {
+		foreach(self::$sizes as $size) {
 			$folder = $parentFolder . DIRECTORY_SEPARATOR . self::makeFolderName($size);
 			mkdir($folder, 0777);
 		}
@@ -36,7 +36,7 @@ class AdImageHelper {
 		$pathInfo = pathinfo($orginal);
 		$resource = \Yii::$app->image->load($orginal);
 		
-		foreach($this->sizes as $k => $size) {
+		foreach(self::$sizes as $k => $size) {
 			$path = $pathInfo['dirname'] . DIRECTORY_SEPARATOR . self::makeFolderName($size) . DIRECTORY_SEPARATOR . $pathInfo['basename'];
 			
 			if($k == 'large') {
@@ -52,7 +52,7 @@ class AdImageHelper {
 		$original = $tempFolder . DIRECTORY_SEPARATOR . $file;
 		if(file_exists($original)) {
 			unlink($original);
-			foreach($this->sizes as $size) {
+			foreach(self::$sizes as $size) {
 				unlink($tempFolder . DIRECTORY_SEPARATOR . self::makeFolderName($size) . DIRECTORY_SEPARATOR . $file);
 			}
 		}
@@ -62,7 +62,7 @@ class AdImageHelper {
 		$original = $tempFolder . DIRECTORY_SEPARATOR . $file;
 		if(file_exists($original)) {
 			rename($original, $newFolder . DIRECTORY_SEPARATOR . $file);
-			foreach($this->sizes as $size) {
+			foreach(self::$sizes as $size) {
 				$oldname = $tempFolder . DIRECTORY_SEPARATOR . self::makeFolderName($size) . DIRECTORY_SEPARATOR . $file;
 				$newname = $newFolder . DIRECTORY_SEPARATOR . self::makeFolderName($size) . DIRECTORY_SEPARATOR . $file;
 				rename($oldname, $newname);

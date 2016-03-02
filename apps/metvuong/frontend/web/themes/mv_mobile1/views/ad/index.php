@@ -37,20 +37,9 @@ $types = AdProduct::getAdTypes ();
 			<div id="listing-list" class="wrap-lazy">
 				<?php foreach ($products as $product): ?>
 				<div class="item-listing">
-					<?php
-					if ($image = AdImages::find ()->where ( [
-							'order' => 0,
-							'product_id' => $product->id
-					] )->one ()) {
-						$imgUrl = $image->imageMedium;
-					} else {
-						$imgUrl = '/themes/metvuong2/resources/images/default-ads.jpg';
-					}
-					?>
-
 					<div class="bgcover img-intro">
 						<div>
-							<a class="rippler rippler-default" href="<?= $product->urlDetail(); ?>"><img src="" data-original="<?= $imgUrl ?>"></a>
+							<a class="rippler rippler-default" href="<?= $product->urlDetail(); ?>"><img src="" data-original="<?= $product->image ?>"></a>
 						</div>
 					</div>
 					<p class="infor-by-up">
