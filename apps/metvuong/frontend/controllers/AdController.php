@@ -355,25 +355,6 @@ class AdController extends Controller
     }
     
     public function postMobile() {
-    	$helper = new AdImageHelper();
-    	
-    	$f1 = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $helper->tempFolderName . DIRECTORY_SEPARATOR . $helper->adFolderName . DIRECTORY_SEPARATOR . 'abc' . DIRECTORY_SEPARATOR . 'def';
-    	$f2 = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $helper->adFolderName . DIRECTORY_SEPARATOR . 'abc' . DIRECTORY_SEPARATOR . 'def';
-    	
-    	mkdir(\Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $helper->tempFolderName . DIRECTORY_SEPARATOR . $helper->adFolderName . DIRECTORY_SEPARATOR . 'abc', 777);
-    	mkdir($f1, 777);
-    	
-    	echo $f1;
-    	echo "<br />";
-    	echo $f2;
-    	
-    	
-    	
-    	
-    	
-    	
-    	exit();
-    	
     	if(Yii::$app->user->isGuest) {
     		return $this->render('/_systems/require_login');
     	}
@@ -419,7 +400,7 @@ class AdController extends Controller
     				$newFolderAbsoluteUrl = str_replace(DIRECTORY_SEPARATOR, '/', $newFolderAbsolute);
     				
     				if(!file_exists($newFolder)) {
-    					mkdir($newFolder, 777, true);
+    					mkdir($newFolder, 0777, true);
     					$helper->makeFolderSizes($newFolder);
     				}
     				
