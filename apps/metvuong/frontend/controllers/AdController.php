@@ -400,9 +400,7 @@ class AdController extends Controller
     				$newFolderAbsoluteUrl = str_replace(DIRECTORY_SEPARATOR, '/', $newFolderAbsolute);
     				
     				if(!file_exists($newFolder)) {
-    					mkdir($newFolder, 777);
-    					mkdir($helper->getUploadFolderPath($helper->getAbsoluteUploadFolderPath1($now)), 777);
-    					mkdir($helper->getUploadFolderPath($helper->getAbsoluteUploadFolderPath2($now)), 777);
+    					mkdir($newFolder, 777, true);
     					$helper->makeFolderSizes($newFolder);
     				}
     				
