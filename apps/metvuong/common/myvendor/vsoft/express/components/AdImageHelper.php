@@ -5,7 +5,7 @@ use yii\image\drivers\Image;
 
 class AdImageHelper {
 	public $tempFolderName = 'temp';
-	public $adFolderName = 'ads';
+	public $adFolderName = 'ad';
 	
 	public static $sizes = [
 		'large' => [960, 720],
@@ -18,7 +18,7 @@ class AdImageHelper {
 	}
 	
 	public function getAbsoluteUploadFolderPath($time) {
-		return $this->adFolderName . DIRECTORY_SEPARATOR . date('Y', $time) . DIRECTORY_SEPARATOR . date('m', $time) . DIRECTORY_SEPARATOR . date('d', $time);
+		return 'ad' . DIRECTORY_SEPARATOR . date('Y', $time) . DIRECTORY_SEPARATOR . date('m', $time) . DIRECTORY_SEPARATOR . date('d', $time);
 	}
 	
 	public function getUploadFolderPath($absolutePath) {
