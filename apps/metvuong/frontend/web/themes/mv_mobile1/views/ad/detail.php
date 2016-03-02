@@ -280,6 +280,15 @@ use yii\helpers\Url;
 	</div>
 </div>
 
+<div id="popup-map" class="popup-common hide-popup">
+	<div class="wrap-popup">
+		<div class="inner-popup">
+			<a href="#" class="btn-close-map">trở lại</a>
+        	<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJT7lZ30cvdTER8skpPrOuvGs&key=AIzaSyDgukAnWQNq0fitebULUbottG5gvK64OCQ" allowfullscreen></iframe>
+		</div>
+	</div>
+</div>
+
 <?php
 /**
  * notification
@@ -328,6 +337,11 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 		$('#popup-email').popupMobi({
 			btnClickShow: ".email-btn",
 			closeBtn: '#popup-email .btn-cancel'
+		});
+
+		$('#popup-map').popupMobi({
+			btnClickShow: ".infor-listing .icon-map-loca",
+			closeBtn: "#popup-map .btn-close-map"
 		});
 	});
     $(document).on('click', '.send_mail', function(){

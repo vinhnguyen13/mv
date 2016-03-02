@@ -19,8 +19,10 @@ $user = $model->getUser();
                 <div class="wrap-img avatar"><img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="<?=$model->avatar?>" alt="metvuong avatar" /></div>
                 <div class="name-user" ><?= empty($model->name) ? Yii::$app->user->username : $model->name ?></div>
                 <div class="per-posi">Agent ID TTG<?=str_pad($model->user_id, 3, '0', STR_PAD_LEFT)?></div>
-                <!-- <span class="icon address-icon"></span><div class="address-user" name="address" contenteditable="true" placeholder="Vui lòng nhập địa chỉ"><?=$model->address?></div> -->
-                <div class="text-center"><a href="<?=$user->urlChat();?>" class="btn-common btn-chat rippler rippler-default"><span class="icon icon-chat-1"></span></a></div>
+                <div class="text-center">
+                    <a href="<?=$user->urlChat();?>" class="btn-common btn-chat rippler rippler-default"><span class="icon icon-chat-1"></span></a>
+                    <a href="tel:<?= $model->mobile ?>" class="btn-common rippler rippler-default"><span class="icon icon-phone"></span></a>
+                </div>
             </div>
         </div>
 
