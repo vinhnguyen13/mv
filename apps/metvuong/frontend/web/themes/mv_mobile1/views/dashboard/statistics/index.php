@@ -132,21 +132,21 @@ $user = Yii::$app->user->identity;
     	<div class="share-social">
             <ul class="clearfix list-attr-per">
                 <li>
-                    <div class="circle"><div><span class="icon icon-map-loca-1"></span></div></div>
-                    <div class="txt-infor-right">
-                        Đang cập nhật                
-                    </div>
-                </li>
-                <li>
-                    <a href="tel:123456789"><div class="circle"><div><span class="icon icon-phone-1"></span></div></div></a>
-                    <div class="txt-infor-right"><a href="tel:123456789">
-                        123456789</a>
-                    </div>
-                </li>
-                <li>
                     <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
                     <div class="txt-infor-right">
-                        dien.truong@trungthuygroup.vn                
+                        Share With Email
+                    </div>
+                </li>
+                <li>
+                    <div class="circle"><div><span class="icon icon-face"></span></div></div>
+                    <div class="txt-infor-right">
+                        Share With Facebook
+                    </div>
+                </li>
+                <li>
+                    <div class="circle"><div><span class="icon icon-twi"></span></div></div>
+                    <div class="txt-infor-right">
+                        Share With Twitter
                     </div>
                 </li>
             </ul>
