@@ -1982,7 +1982,7 @@ label {
 }
 .icon-share-td {
     display: inline-block;
-    background-position: 0 -507px;
+    background-position: 0 -480px;
     background-size: 50px 1950px;
     width: 24px;
     height: 24px;
@@ -1991,13 +1991,14 @@ label {
 }
 .save-item {
     display: inline-block;
-    background-position: 0 -469px;
+    background-position: 0 -455px;
     background-size: 50px 1950px;
     width: 25px;
     height: 23px;
 }
 .save-item.active {
-    
+    background-position: 0px -505px;
+    background-size: 50px 1950px;
 }
 .btn-common {
     border: none;
