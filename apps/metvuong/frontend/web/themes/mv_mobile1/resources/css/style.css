@@ -1996,6 +1996,9 @@ label {
     width: 25px;
     height: 23px;
 }
+.save-item.active {
+    
+}
 .btn-common {
     border: none;
     background: #00a769;
@@ -2687,7 +2690,7 @@ input[type=text]:focus {
     top: 4px;
 }
 .statis .panel-body .list-item {
-    padding: 0 20px;
+    
 }
 .statis .panel-body .list-item em {
     color: #d8d8d8;
@@ -4246,10 +4249,20 @@ input[type=text]:focus {
     margin-bottom: 0;
 }
 #listing-form .hinh-anh .files {
-    /* margin: 0 -5px; */
-    /* float: left; */
-    /* width: 100%; */
-    display: inline-block;
+    margin: 0 -5px;
+}
+#listing-form .hinh-anh .files:before {
+    content: '.';
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+#listing-form .hinh-anh .files:after {
+    content: '.';
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
 }
 #listing-form .files li {
     position: relative;
@@ -4257,6 +4270,7 @@ input[type=text]:focus {
     float: left;
     line-height: 100%;
     margin: 0 5px 10px 5px;
+    height: 98px;
 }
 #listing-form .files li .delete {
     position: absolute;
@@ -4297,13 +4311,16 @@ input[type=text]:focus {
     -ms-border-radius: 0;
 }
 .hinh-anh #w0-fileupload {
-    /* display: inline-block; */
+    padding-bottom: 50px;
 }
 .hinh-anh {
     text-align: center;
 }
 .hinh-anh .fileinput-button {
     margin-top: 15px;
+    background-color: #00a769;
+    /* float: left; */
+    /* width: 100%; */
 }
 #share_form ::-webkit-input-placeholder {
    font-style: italic;
@@ -4316,4 +4333,16 @@ input[type=text]:focus {
 }
 #share_form :-ms-input-placeholder {  
    font-style: italic;
+}
+.icon-per {
+    display: inline-block;
+    background-position: 0 -1847px;
+    background-size: 50px 1950px;
+    width: 26px;
+    height: 26px;
+}
+.statis .list-item li img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
 }

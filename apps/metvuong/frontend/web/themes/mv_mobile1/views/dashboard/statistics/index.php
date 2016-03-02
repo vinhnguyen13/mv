@@ -63,7 +63,7 @@ $user = Yii::$app->user->identity;
                             <?php if(!empty($finders) && count($finders)){
                             foreach($finders as $key => $finder){?>
     						<li>
-    							<em class="fa fa-circle"></em><a href="<?="/".$key?>"><?=$key?></a>
+    							<img id="" src="/store/avatar/u_1_56c439623018a.thumb.png" alt=""><a href="<?="/".$key?>"><?=$key?></a>
     							<span class="pull-right"><?=$finder?></span>
     						</li>
                             <?php }
@@ -130,22 +130,42 @@ $user = Yii::$app->user->identity;
 
     	<div class="title-sub">Property's info</div>
     	<div class="share-social">
-    		<ul class="clearfix">
-    			<li>
-    				<a href="#" class="share-email-btn">
-    					<span class="wrap-around"><em class="icon-envelope"></em></span>
-    					Share With Email
-    					<span class="pull-right icon arrow-left"></span>
-    				</a>
-    			</li>
-    			<li>
-    				<a href="#">
-    					<span class="wrap-around"><em class="fa fa-facebook"></em></span>
-    					Share With Facebook
-    					<span class="pull-right icon arrow-left"></span>
-    				</a>
-    			</li>
-    		</ul>
+            <ul class="clearfix list-attr-per">
+                <li>
+                    <div class="circle"><div><span class="icon icon-map-loca-1"></span></div></div>
+                    <div class="txt-infor-right">
+                        Đang cập nhật                
+                    </div>
+                </li>
+                <li>
+                    <a href="tel:123456789"><div class="circle"><div><span class="icon icon-phone-1"></span></div></div></a>
+                    <div class="txt-infor-right"><a href="tel:123456789">
+                        123456789</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
+                    <div class="txt-infor-right">
+                        dien.truong@trungthuygroup.vn                
+                    </div>
+                </li>
+            </ul>
+    		<!-- <ul class="clearfix">
+                <li>
+                    <a href="#" class="share-email-btn">
+                        <span class="wrap-around"><em class="icon-envelope"></em></span>
+                        Share With Email
+                        <span class="pull-right icon arrow-left"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="wrap-around"><em class="fa fa-facebook"></em></span>
+                        Share With Facebook
+                        <span class="pull-right icon arrow-left"></span>
+                    </a>
+                </li>
+            </ul> -->
     	</div>
     </div>
 </div>
