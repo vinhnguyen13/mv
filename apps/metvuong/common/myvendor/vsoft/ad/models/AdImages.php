@@ -25,12 +25,26 @@ class AdImages extends AI
     }
     
     public function getUrl($size = self::SIZE_MEDIUM) {
-    	$sizeFolder = AdImageHelper::makeFolderName(AdImageHelper::$sizes[$size]);
-    	
-    	return "/store/{$this->folder}/$sizeFolder/{$this->file_name}";
+    	if($this->folder) {
+    		$sizeFolder = AdImageHelper::makeFolderName(AdImageHelper::$sizes[$size]);
+    		 
+    		return "/store/{$this->folder}/$sizeFolder/{$this->file_name}";
+    	} else {
+    		$defaultSize = '745x510';
+    		
+    		if($size == 'thumb') {
+    			$s = '350x280';
+    		} else {
+    			$s = $defaultSize;
+    		}
+    		
+    		return str_replace($defaultSize, $s, $this->file_name);
+    	}
     }
     
     public static function defaultImage() {
     	return '/themes/metvuong2/resources/images/default-ads.jpg';
     }
 }
+
+
