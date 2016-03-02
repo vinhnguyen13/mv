@@ -43,20 +43,10 @@ use frontend\models\Ad;
         <div class="title-sub">Featured properties</div>
         <div class="wrap-item wrap-lazy">
             <?php foreach ($products as $product): ?>
-            <?php
-            if ($image = \vsoft\ad\models\AdImages::find ()->where ( [
-                'order' => 0,
-                'product_id' => $product->id
-            ] )->one ()) {
-                $imgUrl = $image->imageMedium;
-            } else {
-                $imgUrl = '/themes/metvuong2/resources/images/default-ads.jpg';
-            }
-            ?>
             <div class="item">
                 <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pic-intro rippler rippler-default">
                     <div class="img-show">
-                        <div><img src="" data-original="<?= $imgUrl ?>"></div>
+                        <div><img src="" data-original="<?= $product->representImage ?>"></div>
                     </div>
                     <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></div>
                 </a>
