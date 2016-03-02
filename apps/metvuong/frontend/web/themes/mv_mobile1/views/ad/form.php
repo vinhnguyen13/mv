@@ -193,22 +193,15 @@ use common\widgets\fileupload\FileUpload;
 		<div class="tt-lienhe item-step section hide">
 			<div class="title-step">Thông tin liên hệ</div>
 			<div class="row">
-				<div class="col-xs-12 form-group">
-					<input type="text" class="form-control" id="" placeholder="Họ / Tên">
-				</div>
-				<div class="col-xs-12 form-group">
-					<input type="text" class="form-control" id="" placeholder="Điện thoại di động">
-				</div>
-				<div class="col-xs-12 form-group">
-					<input type="text" class="form-control" id="" placeholder="E-mail">
-				</div>
-				<div class="col-xs-12 form-group">
-					<input type="text" class="form-control" id="" placeholder="Công ty môi giới">
-				</div>
-			</div>
-			<div class="agent-avatar">
-				<div class="wrap-img"><img src="images/MV-Agent Photo.jpg" alt="" /></div>
-				<button class="upload-avatar">Tải hình đại diện khác</button>
+				<?= $form->field($contactInfo, 'name', ['options' => ['class' => 'col-xs-12 form-group']])
+						->label(false)
+						->textInput(['placeholder' => $contactInfo->getAttributeLabel('name')]) ?>
+				<?= $form->field($contactInfo, 'mobile', ['options' => ['class' => 'col-xs-12 form-group']])
+						->label(false)
+						->textInput(['placeholder' => $contactInfo->getAttributeLabel('mobile')]) ?>
+				<?= $form->field($contactInfo, 'email', ['options' => ['class' => 'col-xs-12 form-group']])
+						->label(false)
+						->textInput(['placeholder' => $contactInfo->getAttributeLabel('email')]) ?>
 			</div>
 			<div class="text-center">
 				<button class="preview">Preview</button>

@@ -20,6 +20,14 @@ $(document).ready(function () {
 	var catEl = $('#adproduct-category_id');
 	var catElContainer = catEl.closest('.form-group');
 	var defaultCat = Number(catEl.data('default'));
+	
+//	listingForm.submit(function(e){
+//		e.preventDefault();
+//		
+//		$.post(listingForm.attr('action'), listingForm.serialize(), function(){
+//			
+//		});
+//	});
 
 	for(var i in dataCities) {
 		cityDropdown.append('<option value="' + i +'">' + dataCities[i].name + '</option>');

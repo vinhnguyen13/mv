@@ -362,8 +362,9 @@ class AdController extends Controller
     	$product = new AdProduct();
     	
     	$additionInfo = new AdProductAdditionInfo();
+    	$contactInfo = new AdContactInfo();
     	
-    	return $this->render('form', ['product' => $product, 'additionInfo' => $additionInfo]);
+    	return $this->render('form', ['product' => $product, 'additionInfo' => $additionInfo, 'contactInfo' => $contactInfo]);
     }
     
     /**
