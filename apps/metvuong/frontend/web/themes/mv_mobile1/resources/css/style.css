@@ -4365,3 +4365,8 @@ input[type=text]:focus {
     width: 21px;
     height: 18px;
 }
+.chart_stats {
+    font-size: 14px;
+    font-weight: 400;
+    padding: 4px 10px 5px;
+}
