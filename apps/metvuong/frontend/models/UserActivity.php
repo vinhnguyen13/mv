@@ -85,21 +85,6 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
         return false;
     }
 
-    public function getMessage(){
-        if(!empty($this->action)) {
-            switch ($this->action) {
-                case self::ACTION_AD_FAVORITE;
-                    $params = Json::decode($this->params);
-                    $params['user'] = '';
-                    $params['product'] = (($product = AdProduct::findOne(['id'=>$params['product']])) !== null) ? $product->getAddress() : '';
-                    $params['product_owner'] = $this->getBuddy()->profile->getDisplayName();
-                    $message = Yii::t('activity', $this->message, $params);
-                    return $message;
-                    break;
-            }
-        }
-    }
-
     public function setRead($action){
 
     }

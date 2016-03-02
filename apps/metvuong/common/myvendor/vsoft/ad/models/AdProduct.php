@@ -4,6 +4,7 @@ namespace vsoft\ad\models;
 
 use frontend\models\User;
 use Yii;
+use yii\helpers\Url;
 use common\models\AdProduct as AP;
 
 
@@ -124,6 +125,18 @@ class AdProduct extends AP
 	{
 		return $this->hasMany(AdImages::className(), ['product_id' => 'id'])->orderBy(['order' => SORT_ASC]);
 	}
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getAdContactInfo()
+	{
+		return $this->hasOne(AdContactInfo::className(), ['product_id' => 'id']);
+	}
+
+	public function getOwner()
+	{
+		return $this->hasOne(User::className(), ['id' => 'user_id']);
+	}
 	
 	public function getImage($size = false) {
 		$image = AdImages::find()->where(['product_id' => $this->id])->one();
@@ -139,16 +152,8 @@ class AdProduct extends AP
 		}
 	}
 
-	/**
-	 * @return \yii\db\ActiveQuery
-	 */
-	public function getAdContactInfo()
+	public function urlDetail()
 	{
-		return $this->hasOne(AdContactInfo::className(), ['product_id' => 'id']);
-	}
-
-	public function getOwner()
-	{
-		return $this->hasOne(User::className(), ['id' => 'user_id']);
+		return Url::to(['/ad/detail', 'id' => $this->id, 'slug' => \common\components\Slug::me()->slugify($this->getAddress())]);
 	}
 }

@@ -1,6 +1,10 @@
 <?php
 use yii\web\View;
 use yii\helpers\Url;
+use yii\helpers\Json;
+use vsoft\ad\models\AdProduct;
+use frontend\models\UserActivity;
+use yii\helpers\Html;
 ?>
 <div class="title-fixed-wrap">
 	<div class="noti-alert">
@@ -23,10 +27,15 @@ use yii\helpers\Url;
 								<span class="icon save-item-1"></span>
 								<div class="avatar"><a href="<?=$owner->urlProfile();?>"><img src="<?=Url::to(['member/avatar', 'usrn'=>$owner->username])?>" alt="" width="40" height="40"></a></div>
 								<a href="#" class="name"><?=$owner->profile->getDisplayName();?></a>
-								<p class="date-type"><span><?=date('H:i:s d-m-Y', $activity->created);?>.</span> <?=$activity->getMessage();?></p>
 								<?php
-								if($activity->action == \frontend\models\UserActivity::ACTION_AD_FAVORITE) {
+								$params = Json::decode($activity->params);
+								if($activity->action == UserActivity::ACTION_AD_FAVORITE) {
+									$params['user'] = '';
+									$params['product'] = (($product = AdProduct::findOne(['id'=>$params['product']])) !== null) ? Html::a(Yii::t('activity', 'post'), $product->urlDetail()) : '';
+									$params['product_owner'] = Html::a($activity->getBuddy()->profile->getDisplayName(), $activity->getBuddy()->urlProfile());
+									$message = Yii::t('activity', $activity->message, $params);
 								?>
+									<p class="date-type"><span><?=date('H:i:s d-m-Y', $activity->created);?>.</span> <?=$message;?></p>
 									<div class="post-get">
 										<a href="#" class="clearfix">
 											<div class="img-show">
