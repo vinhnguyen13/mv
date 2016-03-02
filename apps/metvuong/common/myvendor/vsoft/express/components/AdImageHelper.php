@@ -18,7 +18,7 @@ class AdImageHelper {
 	}
 	
 	public function getAbsoluteUploadFolderPath($time) {
-		return 'ad' . DIRECTORY_SEPARATOR . date('Y', $time) . DIRECTORY_SEPARATOR . date('m', $time) . DIRECTORY_SEPARATOR . date('d', $time);
+		return $this->adFolderName . DIRECTORY_SEPARATOR . date('Y', $time) . DIRECTORY_SEPARATOR . date('m', $time) . DIRECTORY_SEPARATOR . date('d', $time);
 	}
 	
 	public function getUploadFolderPath($absolutePath) {
