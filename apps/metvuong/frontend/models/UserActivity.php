@@ -84,4 +84,8 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
             }
         }
     }
+
+    public function setRead($action){
+
+    }
 }

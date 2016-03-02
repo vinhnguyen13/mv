@@ -291,6 +291,20 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 	<script>
 		$(document).ready(function () {
 			$(document).on('click', '.save-item', function (e) {
+				var timer = 0;
+				clearTimeout(timer);
+				var _id = $(this).attr('data-id');
+				var _url = $(this).attr('data-url');
+				timer = setTimeout(function () {
+					$.ajax({
+						type: "post",
+						url: _url,
+						data: {id: _id},
+						success: function (data) {
+
+						}
+					});
+				}, 500);
 				var to_jid = chatUI.genJid('<?=$userTo->username?>');
 				Chat.sendMessage(to_jid , 'save product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>'});
 			});
@@ -310,22 +324,6 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 			btnClickShow: ".email-btn",
 			closeBtn: '#popup-email .btn-cancel'
 		});
-	});
-	$(document).on('click', '.save-item', function(){
-		var timer = 0;
-		clearTimeout(timer);
-		var _id = $(this).attr('data-id');
-		var _url = $(this).attr('data-url');
-		timer = setTimeout(function () {
-			$.ajax({
-				type: "post",
-				url: _url,
-				data: {id: _id},
-				success: function (data) {
-
-				}
-			});
-		}, 500);
 	});
     $(document).on('click', '.send_mail', function(){
         var timer = 0;
