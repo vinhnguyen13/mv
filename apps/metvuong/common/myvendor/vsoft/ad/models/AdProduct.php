@@ -19,19 +19,25 @@ class AdProduct extends AP
 	const STATUS_ACTIVE = 1;
 	const STATUS_INACTIVE = 0;
 	
-// 	public function rules()
-// 	{
-// 		return [
-// 			[['category_id', 'home_no', 'city_id', 'district_id', 'type', 'content', 'start_date', 'end_date', 'created_at', 'price', 'area'], 'required'],
-// 			[['category_id', 'project_building_id', 'user_id', 'city_id', 'district_id', 'ward_id', 'street_id', 'type', 'price', 'price_type', 'start_date', 'end_date', 'score', 'view', 'verified', 'created_at', 'updated_at', 'status'], 'integer'],
-// 			[['price_input', 'lng', 'lat'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/'],
-// 			[['area'], 'number', 'max' => $this->category->limit_area, 'when' => function ($model) {
-//         		return $model->category->limit_area;
-//     		}],
-// 			[['home_no'], 'string', 'max' => 32],
-// 			[['content'], 'string', 'max' => 3200]
-// 		];
-// 	}
+	const EXPIRED = 86400;
+	
+	public function rules()
+	{
+		return [
+			[['category_id', 'home_no', 'city_id', 'district_id', 'type', 'content', 'price', 'area'], 'required'],
+			[['category_id', 'project_building_id', 'user_id', 'city_id', 'district_id', 'ward_id', 'street_id', 'type', 'price', 'price_type', 'start_date', 'end_date', 'score', 'view', 'verified', 'created_at', 'updated_at', 'status'], 'integer'],
+			[['price_input', 'lng', 'lat'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/'],
+			[['area'], 'limitArea'],
+			[['home_no'], 'string', 'max' => 32],
+			[['content'], 'string', 'max' => 3200]
+		];
+	}
+	
+	public function limitArea($attribute, $params) {
+		if($this->category->limit_area && $this->$attribute > $this->category->limit_area) {
+			$this->addError($attribute, Yii::t('ad', sprintf('Diện tích không được lớn hơn %s.', $this->category->limit_area)));
+		}
+	}
 	
 	/**
 	 * @inheritdoc
@@ -68,7 +74,11 @@ class AdProduct extends AP
 	
 	public function beforeSave($insert) {
 		if($insert) {
-			$this->created_at = time();
+			$now = time();
+			
+			$this->created_at = $this->created_at ? $this->created_at : $now;
+			$this->start_date = $this->start_date ? $this->start_date : $now;
+			$this->end_date = $now + self::EXPIRED;
 		} else {
 			$this->updated_at = time();
 		}

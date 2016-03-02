@@ -16,6 +16,14 @@ class AdImageHelper {
 	public function getTempFolderPath($tempFolder) {
 		return \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $this->tempFolderName . DIRECTORY_SEPARATOR . $this->adFolderName . DIRECTORY_SEPARATOR . $tempFolder;
 	}
+	
+	public function getAbsoluteUploadFolderPath($time) {
+		return $this->adFolderName . DIRECTORY_SEPARATOR . date('Y', $time) . DIRECTORY_SEPARATOR . date('m', $time) . DIRECTORY_SEPARATOR . date('d', $time);
+	}
+	
+	public function getUploadFolderPath($absolutePath) {
+		return \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $absolutePath;
+	}
 
 	public function makeFolderSizes($parentFolder) {
 		foreach($this->sizes as $size) {
@@ -46,6 +54,18 @@ class AdImageHelper {
 			unlink($original);
 			foreach($this->sizes as $size) {
 				unlink($tempFolder . DIRECTORY_SEPARATOR . self::makeFolderName($size) . DIRECTORY_SEPARATOR . $file);
+			}
+		}
+	}
+	
+	public function moveTempFile($tempFolder, $newFolder, $file) {
+		$original = $tempFolder . DIRECTORY_SEPARATOR . $file;
+		if(file_exists($original)) {
+			rename($original, $newFolder . DIRECTORY_SEPARATOR . $file);
+			foreach($this->sizes as $size) {
+				$oldname = $tempFolder . DIRECTORY_SEPARATOR . self::makeFolderName($size) . DIRECTORY_SEPARATOR . $file;
+				$newname = $newFolder . DIRECTORY_SEPARATOR . self::makeFolderName($size) . DIRECTORY_SEPARATOR . $file;
+				rename($oldname, $newname);
 			}
 		}
 	}

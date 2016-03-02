@@ -13,6 +13,7 @@ use Yii;
  * @property string $file_name
  * @property integer $uploaded_at
  * @property integer $order
+ * @property string $folder
  *
  * @property AdProduct $product
  */
@@ -33,8 +34,8 @@ class AdImages extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'product_id', 'uploaded_at', 'order'], 'integer'],
-            [['file_name', 'uploaded_at'], 'required'],
-            [['file_name'], 'string', 'max' => 255]
+            [['file_name', 'uploaded_at', 'folder'], 'required'],
+            [['file_name', 'folder'], 'string', 'max' => 255]
         ];
     }
 
@@ -50,6 +51,7 @@ class AdImages extends \yii\db\ActiveRecord
             'file_name' => 'File Name',
             'uploaded_at' => 'Uploaded At',
             'order' => 'Order',
+            'folder' => 'Folder',
         ];
     }
 

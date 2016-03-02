@@ -195,13 +195,13 @@ use common\widgets\fileupload\FileUpload;
 			<div class="row">
 				<?= $form->field($contactInfo, 'name', ['options' => ['class' => 'col-xs-12 form-group']])
 						->label(false)
-						->textInput(['placeholder' => $contactInfo->getAttributeLabel('name')]) ?>
+						->textInput(['placeholder' => $contactInfo->getAttributeLabel('name'), 'value' => Yii::$app->user->identity->profile->name]) ?>
 				<?= $form->field($contactInfo, 'mobile', ['options' => ['class' => 'col-xs-12 form-group']])
 						->label(false)
-						->textInput(['placeholder' => $contactInfo->getAttributeLabel('mobile')]) ?>
+						->textInput(['placeholder' => $contactInfo->getAttributeLabel('mobile'), 'value' => Yii::$app->user->identity->profile->mobile]) ?>
 				<?= $form->field($contactInfo, 'email', ['options' => ['class' => 'col-xs-12 form-group']])
 						->label(false)
-						->textInput(['placeholder' => $contactInfo->getAttributeLabel('email')]) ?>
+						->textInput(['placeholder' => $contactInfo->getAttributeLabel('email'), 'value' => Yii::$app->user->identity->profile->public_email]) ?>
 			</div>
 			<div class="text-center">
 				<button type="button" class="preview">Preview</button>

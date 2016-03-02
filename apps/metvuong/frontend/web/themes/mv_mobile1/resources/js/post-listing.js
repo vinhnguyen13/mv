@@ -22,10 +22,49 @@ $(document).ready(function () {
 	var defaultCat = Number(catEl.data('default'));
 	
 	$('.btn-post').click(function(){
-		$.post(listingForm.attr('action'), listingForm.serialize(), function(){
-			
-		});
+		var isValid = true;
+		var mobileEl = $('#adcontactinfo-mobile');
+		var mobileVal = mobileEl.val();
+		var emailEl = $('#adcontactinfo-email');
+		var emailVal = emailEl.val();
+		
+		if(mobileVal) {
+			if(!/^\d+$/.test(mobileVal)) {
+				showError(mobileEl, 'Số điện thoại không hợp lệ');
+				isValid = false;
+			} else if(mobileVal.length < 7 || mobileVal.length > 11) {
+				showError(mobileEl, 'Số di động không được ít hơn 7 hoặc nhiều hơn 11 số.');
+				isValid = false;
+			} else {
+				hideError(mobileEl);
+			}
+		} else {
+			showError(mobileEl, 'Vui lòng nhập SĐT');
+			isValid = false;
+		}
+		
+		if(emailVal && !validateEmail(emailVal)) {
+			showError(emailEl, 'Địa chỉ email không hợp lệ');
+			isValid = false;
+		} else {
+			hideError(emailEl);
+		}
+		
+		if(isValid) {
+			$.post(listingForm.attr('action'), listingForm.serialize(), function(r){
+				if(r.success) {
+					
+				} else {
+					alert('có lỗi xảy ra !');
+				}
+			});
+		}
 	});
+	
+	function validateEmail(email) { 
+		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return re.test(email);
+	}
 
 	for(var i in dataCities) {
 		cityDropdown.append('<option value="' + i +'">' + dataCities[i].name + '</option>');

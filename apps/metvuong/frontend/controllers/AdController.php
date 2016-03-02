@@ -364,6 +364,71 @@ class AdController extends Controller
     	$additionInfo = new AdProductAdditionInfo();
     	$contactInfo = new AdContactInfo();
     	
+    	if(Yii::$app->request->isPost) {
+    		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    		
+    		$post = Yii::$app->request->post();
+    		
+    		$product->load($post);
+    		$additionInfo->load($post);
+    		$contactInfo->load($post);
+    		
+    		$result = ['success' => true];
+    		
+    		if($product->validate() && $additionInfo->validate() && $contactInfo->validate()) {
+    			$product->user_id = Yii::$app->user->id;
+    			$product->save(false);
+    			
+    			$additionInfo->product_id = $product->id;
+    			$additionInfo->save(false);
+    				
+    			$contactInfo->product_id = $product->id;
+    			$contactInfo->save(false);
+    			
+    			$profileForm = new ProfileForm();
+    			$profileForm->compareToUpdate($post['AdContactInfo']);
+    			
+    			if(!empty($post['images'])) {
+    				$helper = new AdImageHelper();
+    				$tempFolder = $helper->getTempFolderPath(Yii::createObject(Session::className())->getId());
+    				
+    				$now = time();
+    				
+    				$newFolderAbsolute = $helper->getAbsoluteUploadFolderPath($now);
+    				$newFolder = $helper->getUploadFolderPath($newFolderAbsolute);
+    				
+    				$newFolderAbsoluteUrl = str_replace(DIRECTORY_SEPARATOR, '/', $newFolderAbsolute);
+    				
+    				if(!file_exists($newFolder)) {
+    					mkdir($newFolder, 777, true);
+    					$helper->makeFolderSizes($newFolder);
+    				}
+    				
+    				foreach($post['images'] as $k => $image) {
+    					$helper->moveTempFile($tempFolder, $newFolder, $image);
+    					
+    					$adImage = new AdImages();
+    					$adImage->user_id = Yii::$app->user->id;
+    					$adImage->product_id = $product->id;
+    					$adImage->file_name = $image;
+    					$adImage->uploaded_at = $now;
+    					$adImage->order = $k;
+    					$adImage->folder = $newFolderAbsoluteUrl;
+    					$adImage->save(false);
+    				}
+    			}
+    		} else {
+    			$result['success'] = false;
+    			$result['errors'] = [
+					'product' => $product->getErrors(),
+					'additionInfo' => $additionInfo->getErrors(),
+					'contactInfo' => $contactInfo->getErrors()
+				];
+    		}
+    		
+    		return $result;
+    	}
+    	
     	return $this->render('form', ['product' => $product, 'additionInfo' => $additionInfo, 'contactInfo' => $contactInfo]);
     }
     
