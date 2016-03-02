@@ -143,29 +143,7 @@ $user = Yii::$app->user->identity;
                         <div>Share With Facebook</div>
                     </div>
                 </li>
-                <li>
-                    <div class="circle"><div><span class="icon icon-twi"></span></div></div>
-                    <div class="txt-infor-right">
-                        <div>Share With Twitter</div>
-                    </div>
-                </li>
             </ul>
-    		<!-- <ul class="clearfix">
-                <li>
-                    <a href="#" class="share-email-btn">
-                        <span class="wrap-around"><em class="icon-envelope"></em></span>
-                        Share With Email
-                        <span class="pull-right icon arrow-left"></span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="wrap-around"><em class="fa fa-facebook"></em></span>
-                        Share With Facebook
-                        <span class="pull-right icon arrow-left"></span>
-                    </a>
-                </li>
-            </ul> -->
     	</div>
     </div>
 </div>

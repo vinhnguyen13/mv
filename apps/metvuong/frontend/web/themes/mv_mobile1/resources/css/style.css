@@ -4353,3 +4353,15 @@ input[type=text]:focus {
     width: 17px;
     height: 16px;
 }
+.icon-face {
+    background-position: 0 -1914px;
+    background-size: 50px 1950px;
+    width: 11px;
+    height: 24px;
+}
+.icon-email-2 {
+    background-position: 0 -1895px;
+    background-size: 50px 1950px;
+    width: 21px;
+    height: 18px;
+}
