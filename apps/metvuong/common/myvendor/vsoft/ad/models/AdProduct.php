@@ -161,6 +161,16 @@ class AdProduct extends AP
 			return AdImages::defaultImage();
 		}
 	}
+	
+	public function getRepresentImage() {
+		$image = AdImages::find()->orderBy('`order` ASC')->where(['product_id' => $this->id])->one();
+		
+		if($image) {
+			return $image->url;
+		} else {
+			return AdImages::defaultImage();
+		}
+	}
 
 	public function urlDetail()
 	{

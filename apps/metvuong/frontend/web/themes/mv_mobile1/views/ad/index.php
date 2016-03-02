@@ -39,7 +39,7 @@ $types = AdProduct::getAdTypes ();
 				<div class="item-listing">
 					<div class="bgcover img-intro">
 						<div>
-							<a class="rippler rippler-default" href="<?= $product->urlDetail(); ?>"><img src="" data-original="<?= $product->image ?>"></a>
+							<a class="rippler rippler-default" href="<?= $product->urlDetail(); ?>"><img src="" data-original="<?= $product->representImage ?>"></a>
 						</div>
 					</div>
 					<p class="infor-by-up">

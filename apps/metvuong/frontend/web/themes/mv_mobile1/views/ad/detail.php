@@ -43,7 +43,7 @@ use yii\helpers\Url;
 			<div class="swiper-slide">
 				<div class="img-show">
 					<div>
-						<img src="<?= $image->imageMedium ?>" alt="<?=$address?>">
+						<img src="<?= $image->url ?>" alt="<?=$address?>">
 					</div>
 				</div>
 			</div>
@@ -259,7 +259,7 @@ use yii\helpers\Url;
                     <?= $f->field($share_form, 'content')->textarea(['class'=>'content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('content', 'Nội dung...')])->label(false) ?>
 				</div>
 				<div class="item-send">
-					<div class="img-show"><div><a href="<?=Yii::$app->request->absoluteUrl?>"><img src="<?= !empty($images[0]) ? $images[0]->imageMedium : '#' ?>" alt="<?=$address?>"></a></div></div>
+					<div class="img-show"><div><a href="<?=Yii::$app->request->absoluteUrl?>"><img src="<?= !empty($images[0]) ? $images[0]->url : '#' ?>" alt="<?=$address?>"></a></div></div>
 					<div class="infor-send">
 						<p class="name"><?=$address?></p>
 						<p class="address"></p>

@@ -6,6 +6,7 @@ use Yii;
 use yii\helpers\Url;
 use vsoft\express\components\StringHelper;
 use common\models\AdImages as AI;
+use vsoft\express\components\AdImageHelper;
 
 class AdImages extends AI
 {
@@ -23,36 +24,13 @@ class AdImages extends AI
         ];
     }
     
-    public static function getImageUrl($fileName, $size = 'thumb') {
-    	if(StringHelper::startsWith($fileName, 'http')) {
-    		$defaultSize = '745x510';
-    		
-    		if($size == 'thumb') {
-    			$s = '350x280';
-    		} else {
-    			$s = $defaultSize;
-    		}
-    		
-    		return str_replace($defaultSize, $s, $fileName);
-    	} else {
-    		$pathinfo = pathinfo($fileName);
-    		return Url::to('/store/ad/' . $pathinfo['filename'] . '.' . $size . '.' . $pathinfo['extension']);
-    	}
+    public function getUrl($size = self::SIZE_MEDIUM) {
+    	$sizeFolder = AdImageHelper::makeFolderName(AdImageHelper::$sizes[$size]);
+    	
+    	return "/store/{$this->folder}/$sizeFolder/{$this->file_name}";
     }
     
     public static function defaultImage() {
     	return '/themes/metvuong2/resources/images/default-ads.jpg';
-    }
-    
-    public function getImageThumb() {
-    	return self::getImageUrl($this->file_name);
-    }
-    
-    public function getImageMedium() {
-    	return self::getImageUrl($this->file_name, 'medium');
-    }
-    
-    public function getImageLarge() {
-    	return self::getImageUrl($this->file_name, 'large');
     }
 }
