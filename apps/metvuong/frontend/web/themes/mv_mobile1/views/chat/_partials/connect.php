@@ -29,7 +29,7 @@ if(!Yii::$app->user->isGuest) {
                 chatUI.setConservation(params.from, params.to);
                 if(params.type == 'chat'){
                     if(params.chatType != chatUI.MSG_SEND_ME){
-                        chatUI.notify(chatUI.NOTIFY_CHAT);
+                        chatUI.notify(chatUI.NOTIFY_CHAT, 2);
                     }
                     if ('<?=$urlBase?>' == 'chat/with') {
                         chatUI.loadMessageToBox(msg, params);
@@ -37,7 +37,7 @@ if(!Yii::$app->user->isGuest) {
                         chatUI.loadMessageToList(msg, params);
                     }
                 }else if(params.type == 'notify'){
-                    chatUI.notify(chatUI.NOTIFY_OTHER);
+                    chatUI.notify(chatUI.NOTIFY_OTHER, params.total);
                 }
             });
             $(document).bind('chat/readNotify', function (event, type) {

@@ -73,7 +73,7 @@
                 chatBoxExist.find('.wrap-chat').append(chatList);
             }
             $('.container-chat').scrollTop($('.wrap-chat').height());
-            $('body').loading({done:true})
+            $('body').loading({done:true});
         },
         buildMessageToBox: function (username, msg, type, params) {
             msg = chatUI.decodeEntities(msg);
@@ -125,14 +125,14 @@
             chatBoxExist.find('.chat-list').prepend(html);
             $(document).trigger('chat/readNotify', [chatUI.NOTIFY_CHAT]);
         },
-        notify: function (type) {
+        notify: function (type, total) {
             var sumChat = 0, sumOther = 0, sumTotal = 0;
             if(type == chatUI.NOTIFY_CHAT){
-                sumChat = (($('#notifyChat').length > 0) ? parseInt($('#notifyChat').html()) : 0) + 1;
+                sumChat = ((parseInt(total) > 0) ? parseInt(total) : 0);
                 var objNotifyChat = this.findObjectNotify('wrapNotifyChat', 'notifyChat');
                 objNotifyChat.html(sumChat);
             }else if(type == chatUI.NOTIFY_OTHER){
-                sumOther = (($('#notifyOther').length > 0) ? parseInt($('#notifyOther').html()) : 0) + 1;
+                sumOther = ((parseInt(total) > 0) ? parseInt(total) : 0);
                 var objNotifyOther = this.findObjectNotify('wrapNotifyOther', 'notifyOther');
                 objNotifyOther.html(sumOther);
             }

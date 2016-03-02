@@ -315,12 +315,14 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 						url: _url,
 						data: {id: _id, stt: _stt},
 						success: function (data) {
-
+							if(data.statusCode == 200){
+								var to_jid = chatUI.genJid('<?=$userTo->username?>');
+								Chat.sendMessage(to_jid , 'save product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: data.parameters.msg});
+							}
 						}
 					});
 				}, 500);
-				var to_jid = chatUI.genJid('<?=$userTo->username?>');
-				Chat.sendMessage(to_jid , 'save product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>'});
+
 			});
 			$(document).bind('chat/afterConnect', function (event, data) {
 				var to_jid = chatUI.genJid('<?=$userTo->username?>');

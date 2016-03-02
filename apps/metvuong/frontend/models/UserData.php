@@ -39,9 +39,11 @@ class UserData extends \vsoft\user\models\base\UserData
         $userData->user_id = $for_user->id;
         $userData->username = $for_user->username;
         $userData->alert = Json::encode($alert);
+        $userData->lasttime_alert = time();
         $userData->validate();
         if(!$userData->hasErrors()){
             $userData->save();
+            Yii::$app->view->params['notify_other'] = !empty($alert[$type]) ? count($alert[$type]) : 0;
         }
     }
     public function removeAlert($user_id, $type){

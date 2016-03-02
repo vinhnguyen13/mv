@@ -32,6 +32,7 @@ $model = Yii::createObject(LoginForm::className());
     $(document).ready(function () {
         var timer1 = 0;
         $(document).on('click', '.signin #btn-login', function () {
+            $('body').loading();
             var _this = $(this);
             clearTimeout(timer1);
             timer1 = setTimeout(function () {
@@ -56,6 +57,7 @@ $model = Yii::createObject(LoginForm::className());
                         } else {
                             _this.html('Try again !');
                         }
+                        $('body').loading({done:true});
                     }
                 });
             }, 500);
@@ -70,6 +72,7 @@ $model = Yii::createObject(LoginForm::className());
 
         var timer2 = 0;
         $(document).on('click', '.signup #btn-register', function(){
+            $('body').loading();
             clearTimeout(timer2);
             timer2 = setTimeout(function() {
                 $.ajax({
@@ -94,6 +97,7 @@ $model = Yii::createObject(LoginForm::className());
                         } else {
                             _this.html('Try again !');
                         }
+                        $('body').loading({done:true});
                     }
                 });
             }, 500);

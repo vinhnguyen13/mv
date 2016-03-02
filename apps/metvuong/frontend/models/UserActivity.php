@@ -52,7 +52,7 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
             if(!$this->hasErrors()){
                 if($this->save()){
                     if(!empty($object['user'])) {
-                        $this->setUserData($object['user']);
+                        return $this->setUserData($object['user']);
                     }
                 }
             }

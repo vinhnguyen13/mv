@@ -32,7 +32,7 @@ class UserData extends ActiveRecord
      */
     public function attributes()
     {
-        return ['_id', 'user_id', 'username', 'alert', 'search'];
+        return ['_id', 'user_id', 'username', 'alert', 'lasttime_alert', 'search'];
     }
 
 }

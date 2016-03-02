@@ -117,7 +117,7 @@ class Ad extends Component
                         'product_owner'=>$adSaved->product->user_id
                     ], $adSaved->product_id);
                 }
-                return ['statusCode'=>200, 'parameters'=>['msg'=>'']];
+                return ['statusCode'=>200, 'parameters'=>['msg'=>Yii::$app->view->params['notify_other']]];
             }
         }
         return ['statusCode'=>404, 'parameters'=>['msg'=>'']];
