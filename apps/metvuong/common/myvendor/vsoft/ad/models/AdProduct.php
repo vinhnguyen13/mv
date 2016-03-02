@@ -145,7 +145,6 @@ class AdProduct extends AP
 			if(!$size) {
 				$size = AdImages::SIZE_THUMB;
 			}
-			
 			return AdImages::getImageUrl($image->file_name, $size);
 		} else {
 			return AdImages::defaultImage();

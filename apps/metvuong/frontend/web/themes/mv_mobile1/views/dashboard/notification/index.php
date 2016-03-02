@@ -30,24 +30,26 @@ use yii\helpers\Html;
 								<?php
 								$params = Json::decode($activity->params);
 								if($activity->action == UserActivity::ACTION_AD_FAVORITE) {
-									$params['user'] = '';
-									$params['product'] = (($product = AdProduct::findOne(['id'=>$params['product']])) !== null) ? Html::a(Yii::t('activity', 'post'), $product->urlDetail()) : '';
-									$params['product_owner'] = Html::a($activity->getBuddy()->profile->getDisplayName(), $activity->getBuddy()->urlProfile());
-									$message = Yii::t('activity', $activity->message, $params);
-								?>
-									<p class="date-type"><span><?=date('H:i:s d-m-Y', $activity->created);?>.</span> <?=$message;?></p>
-									<div class="post-get">
-										<a href="#" class="clearfix">
-											<div class="img-show">
-												<div>
-													<a href=""><img
-															src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/bg2-1448820766-.jpg' ?>"></a>
+									$product = AdProduct::findOne(['id'=>$params['product']]);
+									if(!empty($product)) {
+										$params['user'] = '';
+										$params['product'] = Html::a(Yii::t('activity', 'post'), $product->urlDetail());
+										$params['product_owner'] = Html::a($activity->getBuddy()->profile->getDisplayName(), $activity->getBuddy()->urlProfile());
+										$message = Yii::t('activity', $activity->message, $params);
+										?>
+										<p class="date-type"><span><?= date('H:i:s d-m-Y', $activity->created); ?>.</span> <?= $message; ?></p>
+										<div class="post-get">
+											<a href="<?=$product->urlDetail()?>" class="clearfix">
+												<div class="img-show">
+													<div>
+														<img src="<?= $product->getImage()?>">
+													</div>
 												</div>
-											</div>
-											<span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</span>
-										</a>
-									</div>
-								<?php
+												<span><?= $product->getAddress()?></span>
+											</a>
+										</div>
+										<?php
+									}
 								}else{
 								?>
 									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
