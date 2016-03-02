@@ -296,11 +296,12 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 				clearTimeout(timer);
 				var _id = $(this).attr('data-id');
 				var _url = $(this).attr('data-url');
+				var _stt = ($(this).hasClass('active')) ? 1 : 0;
 				timer = setTimeout(function () {
 					$.ajax({
 						type: "post",
 						url: _url,
-						data: {id: _id},
+						data: {id: _id, stt: _stt},
 						success: function (data) {
 
 						}
