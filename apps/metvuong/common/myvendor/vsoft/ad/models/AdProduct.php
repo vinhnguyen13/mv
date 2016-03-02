@@ -149,19 +149,6 @@ class AdProduct extends AP
 		return $this->hasOne(User::className(), ['id' => 'user_id']);
 	}
 	
-	public function getImage($size = false) {
-		$image = AdImages::find()->where(['product_id' => $this->id])->one();
-		
-		if($image) {
-			$size = $size ? $size : AdImages::SIZE_MEDIUM;
-			$folder = AdImageHelper::makeFolderName(AdImageHelper::$sizes[$size]);
-			
-			return '/store/' . $image->folder . '/' . $folder . '/' . $image->file_name;
-		} else {
-			return AdImages::defaultImage();
-		}
-	}
-	
 	public function getRepresentImage() {
 		$image = AdImages::find()->orderBy('`order` ASC')->where(['product_id' => $this->id])->one();
 		
