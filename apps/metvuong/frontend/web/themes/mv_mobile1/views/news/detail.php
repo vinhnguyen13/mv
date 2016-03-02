@@ -54,7 +54,7 @@ Yii::$app->view->registerMetaTag([
 </script>
 <div class="title-fixed-wrap">
     <div class="detail-news">
-        <div class="title-top">Tin tức<a href="<?=Url::to(['news/index'])?>" id="prev-page"><span class="icon arrowRight-1"></span></a></div>
+        <div class="title-top">Tin tức<a href="javascript:history.back()" id="prev-page"><span class="icon arrowRight-1"></span></a></div>
 
         <div class="wrap-detail-article">
             <input id="current_id" type="hidden" value="<?=$news->id?>">
