@@ -401,8 +401,8 @@ class AdController extends Controller
     				
     				if(!file_exists($newFolder)) {
     					mkdir($newFolder, 777);
-    					mkdir($helper->getUploadFolderPath1($newFolderAbsolute), 777);
-    					mkdir($helper->getUploadFolderPath2($newFolderAbsolute), 777);
+    					mkdir($helper->getUploadFolderPath($helper->getAbsoluteUploadFolderPath1($now)), 777);
+    					mkdir($helper->getUploadFolderPath($helper->getAbsoluteUploadFolderPath2($now)), 777);
     					$helper->makeFolderSizes($newFolder);
     				}
     				
