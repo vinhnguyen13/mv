@@ -88,7 +88,6 @@ Yii::$app->view->registerMetaTag([
     </div>
 </div>
 <style>
-    iframe { max-width: 100% !important;}
     .loading { display: none; margin-bottom: 20px;}
     .animated, .box-content img {
         -webkit-animation-duration: 2s;

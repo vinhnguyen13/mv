@@ -9,5 +9,5 @@ use yii\helpers\Html;
     <p><a href="<?= $contact->domain ?>" target="_blank"><b>Metvuong.com </b></a><br><br>
         <a href="<?= $contact->detailUrl ?>" target="_blank"><?= $contact->address ?></a></p>
     <p><br> <?= Html::encode($contact->content)?></p>
-    <p>Thank you!</p>
+    <p>Thanks for read mail!</p>
 </div>

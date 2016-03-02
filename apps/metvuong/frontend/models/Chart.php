@@ -129,6 +129,7 @@ class Chart extends Component
         if(!empty($pids)){
             $query->andWhere(['product_id' => $pid]);
         }
+        $query->andWhere('saved_at > :sa',[':sa' => 0]);
         $adProductSaveds = $query->all();
         $infoSaved = array();
         foreach($adProductSaveds as $k => $q){

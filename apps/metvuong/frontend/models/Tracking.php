@@ -174,7 +174,7 @@ class Tracking extends Component
     }
 
     public function countFavourites($pid){
-        $query = (int)AdProductSaved::find()->where(['product_id' => (int)$pid])->count();
+        $query = (int)AdProductSaved::find()->where(['product_id' => (int)$pid])->andWhere('saved_at > :sa',[':sa' => 0])->count();
         return $query;
     }
 

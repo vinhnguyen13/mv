@@ -243,15 +243,17 @@ use yii\helpers\Url;
                 'enableClientValidation' => true,
                 'action' => Url::to(['/ad/sendmail'])
             ]);
+
+            if(!Yii::$app->user->isGuest){
             ?>
-				<div class="frm-item frm-email clearfix">
-					<?= $f->field($share_form, 'your_email')->textInput(['class'=>'your_email', 'placeholder'=>Yii::t('your_email', 'Email của bạn...')])->label(false) ?>
+            <?= $f->field($share_form, 'your_email')->hiddenInput(['class'=>'your_email', 'value' => Yii::$app->user->identity->profile->public_email])->label(false) ?>
+            <?php } else { ?>
+				<div class="frm-item frm-email">
+                    <?= $f->field($share_form, 'your_email')->textInput(['class'=>'your_email', 'placeholder'=>Yii::t('subject', 'Email của bạn...')])->label(false) ?>
 				</div>
-				<div class="frm-item frm-email clearfix">
-					<?= $f->field($share_form, 'recipient_email')->textInput(['class'=>'recipient_email', 'placeholder'=>Yii::t('recipient_email', 'Email người nhận...')])->label(false) ?>
-                </div>
-				<div class="frm-item frm-email clearfix">
-					<?= $f->field($share_form, 'subject')->textInput(['class'=>'subject2', 'placeholder'=>Yii::t('subject', 'Tiêu đề...')])->label(false)?>
+            <?php } ?>
+                <div class="frm-item frm-email clearfix">
+					<?= $f->field($share_form, 'subject')->textInput(['class'=>'subject', 'placeholder'=>Yii::t('subject', 'Tiêu đề...')])->label(false)?>
 				</div>
 				<div class="frm-item frm-email clearfix frm-textarea">
                     <?= $f->field($share_form, 'content')->textarea(['class'=>'content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('content', 'Nội dung...')])->label(false) ?>
@@ -264,6 +266,7 @@ use yii\helpers\Url;
 						<p><?=StringHelper::truncate($product->content, 150)?></p>
 						<p class="send-by">BY METVUONG.COM</p>
 					</div>
+                    <?= $f->field($share_form, 'recipient_email')->hiddenInput(['class'=>'recipient_email', 'value'=> $product->adContactInfo->email])->label(false) ?>
                     <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=> $address])->label(false) ?>
                     <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> Yii::$app->request->absoluteUrl])->label(false) ?>
                     <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
