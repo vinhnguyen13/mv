@@ -68,7 +68,7 @@ class AdController extends Controller
     			$image->saveAs($filePath);
     			$helper->resize($filePath);
     			
-    			$tempUrl = "/store/{$helper->tempFolderName}/{$helper->adFolderName}/$sessionFolder/";
+    			$tempUrl = "/store/ad/$sessionFolder/";
     			
     			$response['name'] = $fileName;
     			$response['url'] = Url::to($tempUrl . $fileName);
