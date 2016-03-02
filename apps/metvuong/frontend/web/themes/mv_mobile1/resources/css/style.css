@@ -4109,6 +4109,10 @@ input[type=text]:focus {
 #settings-user .mm-panels>.mm-panel {
     padding-top: 0
 }
+.wrap-detail-article {
+    overflow: hidden;
+}
+.wrap-detail-article iframe,
 .wrap-detail-article img {
     max-width: 100% !important;
     height: auto !important;
