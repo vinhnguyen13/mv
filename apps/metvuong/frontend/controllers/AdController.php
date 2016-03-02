@@ -360,7 +360,7 @@ class AdController extends Controller
     	$helper = new AdImageHelper();
     	$newFolderAbsolute = $helper->getAbsoluteUploadFolderPath($now);
     	$newFolder = $helper->getUploadFolderPath($newFolderAbsolute);
-    	
+    	echo $newFolder;exit();
     	$newFolderAbsoluteUrl = str_replace(DIRECTORY_SEPARATOR, '/', $newFolderAbsolute);
     	
     	if(!file_exists($newFolder)) {
