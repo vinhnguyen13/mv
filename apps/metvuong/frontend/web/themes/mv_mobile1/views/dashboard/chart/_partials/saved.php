@@ -105,7 +105,7 @@ if(!empty($data) && count($data) > 0) {
         }
     </script>
     <?php
-}else {
+} else {
     ?>
     <div class="alert alert-warning">
         <p class="text-center">Chưa có người nào lưu tin của bạn, bạn hãy <a href="">làm mới</a> tin của mình</p>

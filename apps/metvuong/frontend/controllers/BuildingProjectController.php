@@ -37,9 +37,8 @@ class BuildingProjectController extends Controller
 	
 	function actionView($slug) {
 		$model = AdBuildingProject::find()->where('`slug` = :slug', [':slug' => $slug])->one();
-		
 		if($model) {
-			return $this->render('view', ['model' => $model,]);
+			return $this->render('view', ['model' => $model]);
 		} else {
 			throw new NotFoundHttpException('The requested page does not exist.');
 		}

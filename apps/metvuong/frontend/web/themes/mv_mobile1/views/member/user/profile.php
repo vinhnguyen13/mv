@@ -85,7 +85,7 @@ $user = $model->getUser();
                         <div class="img-show"><div><img src="<?=$imgUrl?>"></div></div>
                         <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></div>
                     </a>
-                    <p class="name-post"><span class="icon address-icon"></span><?=$product->getAddress()?></p>
+                    <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>"><p class="name-post"><span class="icon address-icon"></span><?=$product->getAddress()?></p></a>
                     <p class="id-duan">ID tin đăng:<span>345</span></p>
                     <ul class="clearfix list-attr-td">
                         <li>
