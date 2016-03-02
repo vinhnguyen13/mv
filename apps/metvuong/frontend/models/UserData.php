@@ -33,6 +33,8 @@ class UserData extends \vsoft\user\models\base\UserData
         if($oldAlert[$type]){
             $array_diff = array_diff($data, $oldAlert[$type]);
             $alert[$type] = ArrayHelper::merge($oldAlert[$type], $array_diff);
+        }else{
+            $alert[$type] = $data;
         }
 
         /*if($type == self::ALERT_OTHER){
