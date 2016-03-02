@@ -9,14 +9,16 @@ use yii\helpers\Html;
 <div class="title-fixed-wrap">
 	<div class="noti-alert">
 		<div class="title-top">Thông báo</div>
-		<div class="wrap-noti">
+		<?php
+		$query = \frontend\models\UserActivity::find();
+		$query->andWhere(['buddy_id' => Yii::$app->user->id]);
+		$query->orderBy('created,updated DESC');
+		$activities = $query->all();
+		if(!empty($activities)) {
+			?>
+			<div class="wrap-noti">
 			<div class="list-noti clearfix">
 				<?php
-				$query = \frontend\models\UserActivity::find();
-				$query->andWhere(['buddy_id' => Yii::$app->user->id]);
-				$query->orderBy('created,updated DESC');
-				$activities = $query->all();
-				if(!empty($activities)) {
 					foreach($activities as $activity) {
 						$owner = $activity->getOwner();
 						$buddy = $activity->getBuddy();
@@ -50,7 +52,7 @@ use yii\helpers\Html;
 										</div>
 										<?php
 									}
-								}else{
+								}elseif($activity->action == UserActivity::ACTION_AD_CLICK) {
 								?>
 									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
 								<?php
@@ -60,9 +62,17 @@ use yii\helpers\Html;
 						</div>
 						<?php
 					}
-				}
 				?>
 			</div>
 		</div>
+		<?php
+		}else{
+			?>
+			<div class="alert alert-info">
+				<p><?=Yii::t('common', '{object} no data', ['object' => Yii::t('activity', 'Notification')])?></p>
+			</div>
+			<?php
+		}
+		?>
 	</div>
 </div>
