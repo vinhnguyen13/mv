@@ -377,6 +377,11 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
             closeBtn: ".btn-close",
             styleShow: "center"
         });
+
+		$(document).on('click', '#popup-share-social .icon-email-1', function (e) {
+			$('#popup-share-social').addClass('hide-popup');
+			$('.email-btn').trigger('click');
+		});
 	});
     $(document).on('click', '.send_mail', function(){
         var timer = 0;
