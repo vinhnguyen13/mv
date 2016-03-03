@@ -1,7 +1,7 @@
 <?php 
 use vsoft\ad\models\AdCategory;
 use vsoft\ad\models\AdProduct;
-use yii\helpers\StringHelper;
+use vsoft\express\components\StringHelper;
 use yii\bootstrap\ActiveForm;
 use yii\web\View;
 use frontend\models\User;
@@ -264,7 +264,7 @@ use yii\helpers\Url;
 					<div class="infor-send">
 						<p class="name"><?=$address?></p>
 						<p class="address"></p>
-						<p><?=StringHelper::truncate($product->content, 150)?></p>
+						<p><?=\yii\helpers\StringHelper::truncate($product->content, 150)?></p>
 						<p class="send-by">BY METVUONG.COM</p>
 					</div>
                     <?= $f->field($share_form, 'recipient_email')->hiddenInput(['class'=>'recipient_email', 'value'=> $product->adContactInfo->email])->label(false) ?>
