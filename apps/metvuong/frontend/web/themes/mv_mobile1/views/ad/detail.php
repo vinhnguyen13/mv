@@ -60,21 +60,10 @@ use yii\helpers\Url;
 			<p><?= $product->getAddress(true) ?></p>
 		</div>
 		<p class="id-duan">ID:<span><?=$product->id;?></span></p>
-		<!-- <p class="attr-home">
-			<?= $product->adProductAdditionInfo->room_no ? $product->adProductAdditionInfo->room_no . ' <span class="icon icon-bed"></span> | ' : '' ?>
-			<?= $product->adProductAdditionInfo->toilet_no ? $product->adProductAdditionInfo->toilet_no . ' <span class="icon icon-bath"></span> | ' : '' ?>
-			<span class="price"><?= StringHelper::formatCurrency($product->price) ?></span>
-		</p> -->
 		<ul class="clearfix list-attr-td">
-			<li>
-				<span class="icon icon-dt-1"></span>80m2
-			</li>
-			<li>
-				<span class="icon icon-bed-1"></span> 02
-			</li>
-			<li>
-				<span class="icon icon-pt-1"></span> 02
-			</li>
+			<?= $product->area ? '<li> <span class="icon icon-dt icon-dt-small"></span>' . $product->area . 'm2 </li>' : '' ?>
+			<?= $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
+			<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
 		</ul>
 		<ul class="pull-right icons-detail">
 			<li><a href="#" class="icon icon-share-td"></a></li>

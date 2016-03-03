@@ -12,6 +12,11 @@ use common\widgets\fileupload\FileUpload;
 	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/string-helper.js', ['position' => View::POS_END]);
 	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/post-listing.js', ['position' => View::POS_END]);
 	$this->registerCss("#project-info {position: relative;} #project-info .loading-proccess span {border-top-color: #8C7777; border-left-color: #8C7777;} #project-info .loading-proccess {display: none;} #project-info.loading .loading-proccess {display: block;} #project-info.loading .result {display: none;}");
+
+	$listRoom = [];
+	for($i = 1; $i <= 10; $i++) {
+		$listRoom[$i] = $i;
+	}	
 ?>
 <div class="title-top">Đăng tin</div>
 <div class="post-listing">
@@ -132,12 +137,12 @@ use common\widgets\fileupload\FileUpload;
 						->textInput(['placeholder' => $product->getAttributeLabel('price')]) ?>
 				
 				<?= $form->field($additionInfo, 'room_no', ['options' => ['class' => 'col-xs-6 form-group']])
-						->label(false)
-						->textInput(['placeholder' => $additionInfo->getAttributeLabel('room_no')]) ?>
-						
+					->label(false)
+					->dropDownList($listRoom, ['prompt' => $additionInfo->getAttributeLabel('room_no')]) ?>
+				
 				<?= $form->field($additionInfo, 'toilet_no', ['options' => ['class' => 'col-xs-6 form-group']])
-						->label(false)
-						->textInput(['placeholder' => $additionInfo->getAttributeLabel('toilet_no')]) ?>
+					->label(false)
+					->dropDownList($listRoom, ['prompt' => $additionInfo->getAttributeLabel('toilet_no')]) ?>
 			</div>
 		</div>
 
@@ -152,14 +157,14 @@ use common\widgets\fileupload\FileUpload;
 					<?= $form->field($additionInfo, 'facade_width')
 						->label(false)
 						->textInput(['placeholder' => $additionInfo->getAttributeLabel('facade_width')]) ?>
-					<span class="unit-dt">m2</span>
+					<span class="unit-dt">m</span>
 				</div>
 				
 				<div class="col-xs-6 form-group">		
 				<?= $form->field($additionInfo, 'land_width')
 						->label(false)
 						->textInput(['placeholder' => $additionInfo->getAttributeLabel('land_width')]) ?>
-					<span class="unit-dt">m2</span>
+					<span class="unit-dt">m</span>
 				</div>
 				
 				<?= $form->field($additionInfo, 'home_direction', ['options' => ['class' => 'col-xs-12 form-group']])

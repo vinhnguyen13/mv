@@ -129,6 +129,11 @@ $types = AdProduct::getAdTypes ();
 										<li><a href="#">3</a></li>
 										<li><a href="#">4</a></li>
 										<li><a href="#">5</a></li>
+										<li><a href="#">6</a></li>
+										<li><a href="#">7</a></li>
+										<li><a href="#">8</a></li>
+										<li><a href="#">9</a></li>
+										<li><a href="#">10</a></li>
 									</ul>
 									<input type="hidden" id="val-bed" class="value_selected" name="roomNo" value="<?= Yii::$app->request->get('roomNo') ?>" />
 								</div>
@@ -144,6 +149,11 @@ $types = AdProduct::getAdTypes ();
 										<li><a href="#">3</a></li>
 										<li><a href="#">4</a></li>
 										<li><a href="#">5</a></li>
+										<li><a href="#">6</a></li>
+										<li><a href="#">7</a></li>
+										<li><a href="#">8</a></li>
+										<li><a href="#">9</a></li>
+										<li><a href="#">10</a></li>
 									</ul>
 									<input type="hidden" id="val-bath" class="value_selected" name="toiletNo" value="<?= Yii::$app->request->get('toiletNo') ?>" />
 								</div>
@@ -196,21 +206,10 @@ $types = AdProduct::getAdTypes ();
 						<span class="icon address-icon"></span><a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"><?= $product->getAddress(true) ?></a>
 					</p>
 					<p class="id-duan">ID tin đăng:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
-					<!-- <p class="attr-home">
-						<?= $product->adProductAdditionInfo->room_no ? $product->adProductAdditionInfo->room_no . ' <span class="icon icon-bed"></span> | ' : ''?>
-						<?= $product->adProductAdditionInfo->toilet_no ? $product->adProductAdditionInfo->toilet_no . ' <span class="icon icon-bath"></span> | ' : ''?>
-						<span class="price"><?= StringHelper::formatCurrency($product->price) ?></span>
-					</p> -->
 					<ul class="clearfix list-attr-td">
-						<li>
-							<span class="icon icon-dt icon-dt-small"></span>80m2
-						</li>
-						<li>
-							<span class="icon icon-bed icon-bed-small"></span> 02
-						</li>
-						<li>
-							<span class="icon icon-pt icon-pt-small"></span> 02
-						</li>
+						<?= $product->area ? '<li> <span class="icon icon-dt icon-dt-small"></span>' . $product->area . 'm2 </li>' : '' ?>
+						<?= $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
+						<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
 					</ul>
 					<span class="price"><?= StringHelper::formatCurrency($product->price) ?></span>
 					<a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pull-right view-more">Chi tiết</a>
