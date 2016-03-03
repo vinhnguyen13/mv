@@ -35,13 +35,14 @@ use Yii;
  * @property integer $source
  * @property string $rating
  * @property integer $owner
+ * @property integer $show_home_no
  *
  * @property AdContactInfo $adContactInfo
  * @property AdImages[] $adImages
- * @property AdBuildingProject $projectBuilding
  * @property AdCategory $category
  * @property AdCity $city
  * @property AdDistrict $district
+ * @property AdBuildingProject $projectBuilding
  * @property AdStreet $street
  * @property AdWard $ward
  * @property AdProductAdditionInfo $adProductAdditionInfo
@@ -68,8 +69,8 @@ class AdProduct extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['category_id', 'home_no', 'city_id', 'district_id', 'type', 'start_date', 'end_date', 'created_at', 'rating'], 'required'],
-            [['category_id', 'project_building_id', 'user_id', 'city_id', 'district_id', 'ward_id', 'street_id', 'type', 'price', 'price_type', 'start_date', 'end_date', 'score', 'view', 'verified', 'created_at', 'updated_at', 'status', 'source', 'owner'], 'integer'],
+            [['category_id', 'home_no', 'city_id', 'district_id', 'type', 'start_date', 'end_date', 'created_at', 'rating', 'show_home_no'], 'required'],
+            [['category_id', 'project_building_id', 'user_id', 'city_id', 'district_id', 'ward_id', 'street_id', 'type', 'price', 'price_type', 'start_date', 'end_date', 'score', 'view', 'verified', 'created_at', 'updated_at', 'status', 'source', 'owner', 'show_home_no'], 'integer'],
             [['area', 'price_input', 'lng', 'lat', 'rating'], 'number'],
             [['home_no'], 'string', 'max' => 32],
             [['content'], 'string', 'max' => 3200]
@@ -110,6 +111,7 @@ class AdProduct extends \yii\db\ActiveRecord
             'source' => 'Source',
             'rating' => 'Rating',
             'owner' => 'Owner',
+            'show_home_no' => 'Show Home No',
         ];
     }
 
@@ -127,14 +129,6 @@ class AdProduct extends \yii\db\ActiveRecord
     public function getAdImages()
     {
         return $this->hasMany(AdImages::className(), ['product_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getProjectBuilding()
-    {
-        return $this->hasOne(AdBuildingProject::className(), ['id' => 'project_building_id']);
     }
 
     /**
@@ -159,6 +153,14 @@ class AdProduct extends \yii\db\ActiveRecord
     public function getDistrict()
     {
         return $this->hasOne(AdDistrict::className(), ['id' => 'district_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProjectBuilding()
+    {
+        return $this->hasOne(AdBuildingProject::className(), ['id' => 'project_building_id']);
     }
 
     /**

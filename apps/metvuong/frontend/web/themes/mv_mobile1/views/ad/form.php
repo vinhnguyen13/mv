@@ -125,6 +125,9 @@ use common\widgets\fileupload\FileUpload;
 				<?= $form->field($product, 'home_no', ['options' => ['class' => 'col-xs-12 form-group']])
 						->label(false)
 						->textInput(['placeholder' => $product->getAttributeLabel('home_no')]) ?>
+						
+				<?= $form->field($product, 'show_home_no', ['options' => ['class' => 'col-xs-12 form-group']])->label(false)->checkbox() ?>
+				
 				<div class="col-xs-12 form-group">
 					<?= $form->field($product, 'area', ['options' => ['class' => '']])
 						->label(false)

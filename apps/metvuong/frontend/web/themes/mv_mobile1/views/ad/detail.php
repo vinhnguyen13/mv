@@ -30,7 +30,7 @@ use yii\helpers\Url;
 		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
 	}
 
-    $address = $product->getAddress();
+    $address = $product->getAddress($product->show_home_no);
 ?>
 <div class="detail-listing">
 	<?php 
@@ -57,7 +57,7 @@ use yii\helpers\Url;
 	</p>
 	<div class="infor-listing">
 		<div class="address-listing">
-			<p><?= $product->getAddress(true) ?></p>
+			<p><?= $address ?></p>
 		</div>
 		<p class="id-duan">ID:<span><?=$product->id;?></span></p>
 		<ul class="clearfix list-attr-td">

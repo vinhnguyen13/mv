@@ -417,6 +417,12 @@ $(document).ready(function () {
 			} else {
 				homeNoEl.closest('.form-group').show();
 			}
+			
+			if($('#owner-host').prop('checked')) {
+				$('#adproduct-show_home_no').prop('checked', true);
+			} else {
+				$('#adproduct-show_home_no').prop('checked', false);
+			}
 		},
 		step2: function() {
 			if(catEl.val() == '6') {

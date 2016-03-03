@@ -26,7 +26,7 @@ class AdProduct extends AP
 	{
 		return [
 			[['category_id', 'city_id', 'district_id', 'type', 'content', 'price', 'area'], 'required'],
-			[['category_id', 'project_building_id', 'user_id', 'city_id', 'district_id', 'ward_id', 'street_id', 'type', 'price', 'price_type', 'start_date', 'end_date', 'score', 'view', 'verified', 'created_at', 'updated_at', 'status'], 'integer'],
+			[['category_id', 'project_building_id', 'user_id', 'city_id', 'district_id', 'ward_id', 'street_id', 'type', 'price', 'price_type', 'start_date', 'end_date', 'score', 'view', 'verified', 'created_at', 'updated_at', 'status', 'show_home_no'], 'integer'],
 			[['price_input', 'lng', 'lat'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/'],
 			[['area'], 'limitArea'],
 			[['home_no'], 'string', 'max' => 32],
@@ -70,6 +70,7 @@ class AdProduct extends AP
 			'created_at' => 'Created At',
 			'updated_at' => 'Updated At',
 			'status' => 'Status',
+            'show_home_no' => 'Hiển thị số nhà đến người xem',
 		];
 	}
 	
@@ -91,32 +92,30 @@ class AdProduct extends AP
 		return parent::beforeSave($insert);
 	}
 
-	public function getAddress($withoutCity = false) {
-		$address = '';
-		$street = AdStreet::findOne($this->street_id);
-		$ward = AdWard::findOne($this->ward_id);
-		$district = AdDistrict::findOne($this->district_id);
-		$city = AdCity::findOne($this->city_id);
-		if($this->home_no) {
-			$address .= "{$this->home_no}, ";
-		}
-		if($street) {
-			$address .= "{$street->pre} {$street->name}, ";
-		}
-		if($ward) {
-			$address .= "{$ward->pre} {$ward->name}, ";
-		}
-		if($address) {
-			$address .= "{$district->pre} {$district->name}";
-		} else {
-			$address = "{$district->pre} {$district->name}";
+	public function getAddress($showHomeNo = true, $showCity = true) {
+		$address = [];
+		
+		if(($showHomeNo && $this->home_no)) {
+			$address[] = $this->home_no;
 		}
 		
-		if(!$withoutCity) {
-			$address .= ", {$city->name}";
+		if($this->street_id && ($street = AdStreet::findOne($this->street_id))) {
+			$address[] = "{$street->pre} {$street->name}";
 		}
 		
-		return $address;
+		if(($this->ward_id && ($ward = AdWard::findOne($this->ward_id)))) {
+			$address[] = "{$ward->pre} {$ward->name}";
+		}
+		
+		if($district = AdDistrict::findOne($this->district_id)) {
+			$address[] = trim("{$district->pre} {$district->name}");
+		}
+		
+		if($showCity && ($city = AdCity::findOne($this->city_id))) {
+			$address[] = $city->name;
+		}
+		
+		return implode(", ", $address);
 	}
 
 	public function getProductSaved() {
