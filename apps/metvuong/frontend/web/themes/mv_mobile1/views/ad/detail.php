@@ -326,7 +326,7 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 			});
 			$(document).bind('chat/afterConnect', function (event, data) {
 				var to_jid = chatUI.genJid('<?=$userTo->username?>');
-				Chat.sendMessage(to_jid , 'view product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>'});
+//				Chat.sendMessage(to_jid , 'view product', 'notify', {fromName: '<?//=$nameUserFrom;?>//', toName: '<?//=$nameUserTo;?>//'});
 			});
 		});
 	</script>
