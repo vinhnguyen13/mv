@@ -8,7 +8,7 @@ $(document).ready(function() {
     });
 
     $('.hFullScreen').css({
-        height: $('#hScreen').outerHeight() - 50
+        height: $('#hScreen').outerHeight() - 40
     });
     $('.page-home').css('visibility','visible');
 
