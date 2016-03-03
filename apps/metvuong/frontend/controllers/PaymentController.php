@@ -22,6 +22,10 @@ class PaymentController extends Controller
         return parent::beforeAction($action);
     }
 
+    public function actionIndex(){
+        return $this->render('index');
+    }
+
     public function actionPackage(){
         return $this->render('package/index');
     }
