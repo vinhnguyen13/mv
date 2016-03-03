@@ -212,11 +212,12 @@ use yii\helpers\Url;
 							</div>
 						</div>
 					</div>
-					<button id="" class="email-btn btn-common btn-small pull-left">Email</button>
-					<?php if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) { ?>
-						<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small pull-right">Chat</a>
-					<?php }?>
-					
+					<div class="text-center">
+						<button id="" class="email-btn btn-common btn-small">Email</button>
+						<?php if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) { ?>
+							<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small">Chat</a>
+						<?php }?>
+					</div>
                 </div>
             </div>
 

@@ -246,7 +246,7 @@ header {
 }
 .wrap-menu li a {
     padding: 14px 0;
-    border-bottom: solid 1px #969696;
+    border-bottom: solid 1px #ededed;
     color: #3c3c3c;
     text-transform: uppercase;
     /* font-weight: 600; */
@@ -1072,7 +1072,7 @@ label {
     /* left: 0; */
     width: 100%;
     z-index: 100;
-    border-bottom: solid 0.5px #969696;
+    border-bottom: solid 0.5px #ededed;
     background: #fff;
 }
 .list-img li {
@@ -1386,7 +1386,7 @@ label {
 }
 .item-listing {
     padding: 25px 20px;
-    border-bottom: 1px solid #979797;
+    border-bottom: 1px solid #ededed;
 }
 .item-listing:last-child {
     border-bottom: none;
@@ -1430,7 +1430,7 @@ label {
     left: 0;
     width: 100%;
     position: absolute;
-    padding: 0 20px 50px;
+    padding: 0 15px 50px;
     background: #fff;
     margin-bottom: 0;
 }
@@ -2779,7 +2779,7 @@ input[type=text]:focus {
     background: #ffffff;
 }
 .box-feature-item .wrap-item .item {
-    border: solid 0.5px #969696;
+    border: solid 0.5px #ededed;
     /* border-top: none; */
 }
 .box-item .wrap-item .item .wrap-img {
@@ -2789,7 +2789,7 @@ input[type=text]:focus {
     margin-bottom: 0;
 }
 .news-item .wrap-item .item {
-    border-bottom: solid 0.5px #969696;
+    border-bottom: solid 0.5px #ededed;
     margin: 0 0 25px 0;
     padding: 0 0 25px 0;
 }
@@ -3401,6 +3401,11 @@ input[type=text]:focus {
     width: 24px;
     height: 17px;
 }
+.icon-view {
+    background-position: 0 -799px;
+    width: 24px;
+    height: 17px;
+}
 .icon-per-small {
     background-position: 0 -689px;
     width: 21px;
@@ -3507,7 +3512,7 @@ input[type=text]:focus {
 }
 .bottom-feat-box {
     padding: 12px 20px;
-    border-top: solid 0.5px #969696;
+    border-top: solid 0.5px #ededed;
 }
 .bottom-feat-box strong {
     color: #00a769;
@@ -3580,7 +3585,7 @@ input[type=text]:focus {
     font-size: 15px;
 }
 .wrap-list-duan .intro-detail .status-duan {
-    border-bottom: solid 0.5px #969696;
+    border-bottom: solid 0.5px #ededed;
     padding-bottom: 10px;
     margin-bottom: 10px;
     font-size: 13.5px;
@@ -3777,7 +3782,7 @@ input[type=text]:focus {
     margin-bottom: 10px;
 }
 .list-attr-per li {
-    border-top: solid 0.5px #969696;
+    border-top: solid 0.5px #ededed;
     padding: 6px 20px;
     color: #3c3c3c;
     font-weight: 600;
@@ -3788,7 +3793,7 @@ input[type=text]:focus {
     width: 100%;
 }
 .list-attr-per li:last-child {
-    border-bottom: solid 0.5px #969696;
+    border-bottom: solid 0.5px #ededed;
 }
 .list-attr-per li a {
     color: #3c3c3c;
@@ -4372,13 +4377,6 @@ input[type=text]:focus {
     font-weight: 400;
     padding: 4px 10px 5px;
 }
-.avatar-user-pr .btn-common {
-    padding: 5px 50px 1px;
-}
-.avatar-user-pr .btn-chat {
-    padding-top: 4px;
-    margin-right: 10px;
-}
 #popup-map .inner-popup {
     padding: 0;
 }
@@ -4412,7 +4410,7 @@ input[type=text]:focus {
 .wrap-infor-duan .item {
     background-color: #fff;
     margin-bottom: 30px;
-    border: solid 0.5px #969696;
+    border: solid 0.5px #ededed;
 }
 .wrap-infor-duan .item .img-show {
     margin-bottom: 5px;
@@ -4456,7 +4454,7 @@ input[type=text]:focus {
     padding: 25px 20px;
 }
 .wrap-duan-moi .item {
-    border-bottom: solid 0.5px #969696;
+    border-bottom: solid 0.5px #ededed;
     padding-bottom: 15px;
     margin-bottom: 15px;
     font-size: 15px;
@@ -4610,4 +4608,38 @@ input[type=text]:focus {
     top: 6px;
     right: 20px;
     font-size: 14px;
+}
+.list-noti .avatar a {
+    display: block;
+}
+.list-noti .avatar img {
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+}
+.send-noti a {
+    width: 25%;
+    text-align: center;
+    padding: 5px 0 1px;
+    margin: 0 2px;
+}
+.send-noti .btn-chat {
+    padding: 3px 0 1px;
+}
+.unread {
+    background: rgba(237,239,245,.98);
+    border-bottom: 1px solid  #d8deea;
+}
+.list-noti {
+    padding-left: 25px;
+}
+.list-noti .avatar {
+    position: absolute;
+    left: -55px;
+    top: 0;
+}
+.list-noti .user-get .message {
+    padding: 5px 0 5px;
+    text-transform: capitalize;
 }

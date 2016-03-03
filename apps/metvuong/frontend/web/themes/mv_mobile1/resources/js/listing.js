@@ -1,7 +1,5 @@
 $(document).ready(function(){
 	
-	
-	
 	$('.tinh-thanh').html('');
 	$('.loai-bds').html('');
 	for ( var i in dataCities) {
@@ -20,6 +18,7 @@ $(document).ready(function(){
 			var selectedCityList = $('<li data-value="'+item.data('value')+'" data-order="'+item.data('order')+'">'+item.text()+'<span class="icon arrow-left arrow-small"></span></li>');
 
 			if ( item.closest('.tinh-thanh').length > 0 ) {
+				
 				var idTT = item.data('value');
 				$('.quan-huyen').html('');
 				var txtDefault = $('.quan-huyen').closest('.box-dropdown').find('.val-selected').data('placeholder');
@@ -44,13 +43,6 @@ $(document).ready(function(){
         btnEvent: '.btn-submit',
         itemToggle: '.toggle-search'
     });
-	
-	
-	
-	
-	
-	
-	
 	
 	var searchForm = $('#search-form');
 	var page = 1;

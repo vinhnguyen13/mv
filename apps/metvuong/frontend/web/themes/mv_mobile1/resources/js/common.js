@@ -212,7 +212,8 @@ $.fn.dropdown = function (options) {
         },
         sc = {},
         el = $(this),
-        wrapBoxEffect = $('<div class="dropdown-up-style hide"></div>');
+        wrapBoxEffect = $('<div class="dropdown-up-style hide"></div>'),
+        itemList = el.parent().find('.item-dropdown li a');
 
         if ( el.length == 0 ) return el;
 
@@ -231,6 +232,7 @@ $.fn.dropdown = function (options) {
 
         function showSortLoad () {
             if ( $(el.find('input[type=hidden]')).val() != '' && $(el.find('input[type=hidden]')).length > 0 ) {
+                
                 valGet = $(el.find('input[type=hidden]')).val();
                 itemList.each(function () {
                     var dataGet = $(this).data('value');
@@ -238,6 +240,10 @@ $.fn.dropdown = function (options) {
                         el.find('.val-selected .selected').text($(this).text());
                     }
                 });
+
+                if ( $(el.find('input[type=hidden]')).is('#tinh-thanh') ) {
+                    sc.settings.funCallBack();
+                }
             }
         }
 
