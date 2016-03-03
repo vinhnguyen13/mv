@@ -28,7 +28,7 @@ use yii\helpers\Html;
 						<div class="item <?=(!empty($activity->read_status) && $activity->read_status == UserActivity::READ_YES) ? 'read' : 'unread';?>" data-id="<?=$id?>">
 							<div class="user-get clearfix">
 <!--								<span class="icon icon-message"></span>-->
-								<span class="icon save-item-1"></span>
+								<span class="icon icon-heart-small"></span>
 								<div class="avatar"><a href="<?=$owner->urlProfile();?>"><img src="<?=Url::to(['member/avatar', 'usrn'=>$owner->username])?>" alt="" width="40" height="40"></a></div>
 								<a href="#" class="name"><?=$owner->profile->getDisplayName();?></a>
 								<?php
