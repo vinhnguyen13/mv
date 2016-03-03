@@ -26,8 +26,7 @@ return [
         'translatemanager' => [
             'class' => 'lajax\translatemanager\Module',
             'tmpDir' => '@frontend/runtime',
-            'roles' => ['@'],
-            'allowedIPs' => ['*'] /**deploy not allow `*`**/
+            'roles' => ['@']
         ],
     ],
     'components' => [
