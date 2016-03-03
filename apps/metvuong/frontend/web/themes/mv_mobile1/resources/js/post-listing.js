@@ -440,10 +440,14 @@ $(document).ready(function () {
 	};
 	
 	upload.fileuploadcompleted = function(e, data, el) {
-		fixHeightStep(4);
+		if($('#step-4').hasClass('in')) {
+			fixHeightStep(4);
+		}
 	};
 	upload.fileuploadadded = function(e, data, el) {
-		fixHeightStep(4);
+		if($('#step-4').hasClass('in')) {
+			fixHeightStep(4);
+		}
 	};
 	
 	function showError(el, error) {
