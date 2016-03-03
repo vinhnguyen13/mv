@@ -324,10 +324,10 @@ class AdController extends Controller
         try{
             if(Yii::$app->user->id != $product->user_id) {
                 Tracking::find()->productVisitor(Yii::$app->user->id, $id, time());
-				UserActivity::me()->saveActivity(UserActivity::ACTION_AD_CLICK, "{user} view {product} of {product_owner}", [
-					'user' => Yii::$app->user->id,
+				UserActivity::me()->saveActivity(UserActivity::ACTION_AD_CLICK, "{owner} view {product} of {buddy}", [
+					'owner' => Yii::$app->user->id,
 					'product' => $product->id,
-					'product_owner' => $product->user_id
+					'buddy' => $product->user_id
 				], $product->id);
             }
         } catch(Exception $ex){

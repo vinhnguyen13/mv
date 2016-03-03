@@ -35,9 +35,9 @@ use yii\helpers\Html;
 								if($activity->action == UserActivity::ACTION_AD_FAVORITE) {
 									$product = AdProduct::findOne(['id'=>$params['product']]);
 									if(!empty($product)) {
-										$params['user'] = '';
+										$params['owner'] = '';
 										$params['product'] = Html::a(Yii::t('activity', 'post'), $product->urlDetail());
-										$params['product_owner'] = Html::a($activity->getBuddy()->profile->getDisplayName(), $activity->getBuddy()->urlProfile());
+										$params['buddy'] = Html::a($activity->getBuddy()->profile->getDisplayName(), $activity->getBuddy()->urlProfile());
 										$message = Yii::t('activity', $activity->message, $params);
 										?>
 										<p class="date-type"><span><?= date('H:i:s d-m-Y', $activity->created); ?>.</span> <?= $message; ?></p>
@@ -56,9 +56,9 @@ use yii\helpers\Html;
 								}elseif($activity->action == UserActivity::ACTION_AD_CLICK) {
 									$product = AdProduct::findOne(['id'=>$params['product']]);
 									if(!empty($product)) {
-										$params['user'] = '';
+										$params['owner'] = '';
 										$params['product'] = Html::a(Yii::t('activity', 'post'), $product->urlDetail());
-										$params['product_owner'] = Html::a($activity->getBuddy()->profile->getDisplayName(), $activity->getBuddy()->urlProfile());
+										$params['buddy'] = Html::a($activity->getBuddy()->profile->getDisplayName(), $activity->getBuddy()->urlProfile());
 										$message = Yii::t('activity', $activity->message, $params);
 										?>
 										<p class="date-type"><span><?= date('H:i:s d-m-Y', $activity->created); ?>
