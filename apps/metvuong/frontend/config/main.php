@@ -78,8 +78,9 @@ return [
             'rules' => [
                 '/' => 'site/index',
 //                'site/signup' => 'user/registration/register',
-                '<cat_id:\d+>-<cat_slug>/<id:\d+>-<slug>' => 'news/view',
-                '<cat_id:\d+>-<slug>' => 'news/list',
+                'news' => 'news/index',
+                'news/<cat_id:\d+>-<cat_slug>' => 'news/list',
+//                'news/<cat_id:\d+>-<cat_slug>/<id:\d+>-<slug>' => 'news/view',
                 'building' => 'building-project/index',
                 'building/<slug>' => 'building-project/view',
                 'real-estate/result' => 'ad/index',

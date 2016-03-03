@@ -1,38 +1,22 @@
+<?php
+    $newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatID"] : 0;
+    $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID]);
+?>
 <div class="title-fixed-wrap">
 	<div class="page-news">
 		<div class="title-top">
 			<div class="list-menu-news swiper-container">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        <a class="active" href="#">all</a>
+                        <a class="active" href="<?=Url::to(['news/index'])?>">all</a>
                     </div>
-                    <div class="swiper-slide">
-                        <a href="#">dự án</a>
-                    </div>
-                    <div class="swiper-slide">
-                        <a href="#">luật</a>
-                    </div>
-                    <div class="swiper-slide">
-                        <a href="#">kinh tế</a>
-                    </div>
-                    <div class="swiper-slide">
-                        <a href="#">ngân hàng</a>
-                    </div>
-                    <div class="swiper-slide">
-                        <a href="#">nhà đất</a>
-                    </div>
-                    <div class="swiper-slide">
-                        <a href="#">chứng khoán</a>
-                    </div>
-                    <div class="swiper-slide">
-                        <a href="#">doanh nghiệp</a>
-                    </div>
-                    <div class="swiper-slide">
-                        <a href="#">kinh doanh</a>
-                    </div>
-                    <div class="swiper-slide">
-                        <a href="#">tài chính - kế toán</a>
-                    </div>
+                    <?php if(!empty($catalogs)){?>
+                    <?php foreach($catalogs as $catalog){?>
+                            <div class="swiper-slide">
+                                <a href="<?=\yii\helpers\Url::to(['news/list', 'cat_id'=>$catalog->id, 'cat_slug'=>$catalog->slug])?>"><?=$catalog->title?></a>
+                            </div>
+                    <?php }?>
+                    <?php }?>
                 </div>
             </div>
 		</div>

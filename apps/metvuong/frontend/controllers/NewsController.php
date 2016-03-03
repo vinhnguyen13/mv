@@ -60,15 +60,13 @@ class NewsController extends Controller
 
     public function actionList($cat_id)
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => CmsShow::find()->where('catalog_id = :cat_id', [':cat_id' => $cat_id])
-                ->orderBy('id DESC'),
-            'pagination' => [
-                'pageSize' => Yii::$app->params["news"]["limit"],
-            ],
-        ]);
+        $news = CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief', 'cms_show.created_at','cms_show.catalog_id', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
+            ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
+            ->where('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
+            ->andWhere(['IN', 'cms_show.catalog_id', [$cat_id]])
+            ->asArray()->orderBy('cms_show.created_at DESC')->all();
         $this->view->title = CmsCatalog::findOne($cat_id)->title;
-        return $this->render('list', ['dataProvider' => $dataProvider, 'cat_id' => $cat_id]);
+        return $this->render('list', ['news' => $news, 'cat_id'=>$cat_id]);
     }
 
     public function actionGetone()

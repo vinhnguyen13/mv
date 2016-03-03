@@ -1,105 +1,57 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Nhut Tran
- * Date: 10/9/2015 10:17 AM
- *
- * @var $list_news by $cat_id catalog
- */
-use yii\widgets\ListView;
-use yii\widgets\Pjax;
-
+use yii\helpers\Url;
+$newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatID"] : 0;
+$catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID]);
 ?>
-<script src="<?= Yii::$app->view->theme->baseUrl ?>/resources/js/jquery.bxslider.js"></script>
-<script>
-    $(document).ready(function() {
-        $('.bxslider').bxSlider({
-            mode: 'fade',
-            auto: true,
-            autoHover: true
+<div class="title-fixed-wrap">
+    <div class="page-news">
+        <div class="title-top">
+            <div class="list-menu-news swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <a href="<?=Url::to(['news/index'])?>">all</a>
+                    </div>
+                    <?php if(!empty($catalogs)){?>
+                        <?php foreach($catalogs as $catalog){?>
+                            <div class="swiper-slide">
+                                <a <?=($cat_id == $catalog->id) ? 'class="active"' : '';?> href="<?=Url::to(['news/list', 'cat_id'=>$catalog->id, 'cat_slug'=>$catalog->slug])?>"><?=$catalog->title?></a>
+                            </div>
+                        <?php }?>
+                    <?php }?>
+                </div>
+            </div>
+        </div>
+        <?php if(count($news)){?>
+            <div class="wrap-news">
+                <ul class="clearfix">
+                    <?php foreach($news as $n) {
+                        $banner = "/store/news/show/".$n["banner"];
+                        $checkBanner = file_exists(Yii::getAlias('@store')."/news/show/".$n["banner"]);
+                        if($checkBanner == false)
+                            $banner = '/themes/metvuong2/resources/images/default-ads.jpg';
+                        ?>
+                        <li>
+                            <a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n["id"], 'slug' => $n["slug"], 'cat_id' => $n["catalog_id"], 'cat_slug' => $n["cat_slug"]], true)?>" class="rippler rippler-default">
+                                <div class="img-show"><div><img src="<?=$banner?>" alt="<?=$n["title"]?>"></div></div>
+                            </a>
+                            <p class="name-news"><a href="#"><?=$n["title"]?></a></p>
+                            <p class="date-post"><?=date('d/m/Y, H:i', $n["created_at"])?></p>
+                            <p class="short-txt">
+                                <?=\yii\helpers\StringHelper::truncate($n["brief"], 200)?>
+                            </p>
+                        </li>
+                    <?php } ?>
+                </ul>
+            </div>
+        <?php } ?>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var swiper = new Swiper('.list-menu-news', {
+            paginationClickable: true,
+            spaceBetween: 0,
+            slidesPerView: 'auto'
         });
     });
 </script>
-<div class="row">
-    <div class="col-sm-8 col-lg-9 col-right-home lists-page">
-        <div class="news-hot box-danb-slide bxslider">
-            <div class="">
-                <div class="wrap-img bgcover" style="background-image: url(<?= Yii::$app->view->theme->baseUrl ?>/resources/images/galaxy9.jpg);"><a href="#"></a></div>
-                <div class="content-news-hot">
-                    <h2>9 dự án đang và sẽ thay đổi diện mạo Quận 4 1</h2>
-                    <p>ngày đầu tiên là tên một mới được bổ nhiệm vào vị trí  mới được bổ nhiệm vào vị trí  mới được bổ nhiệm vào vị trí  mới được bổ nhiệm vào vị trí  mới được bổ nhiệm vào vị trí...</p>
-                </div>
-            </div>
-            <div class="">
-                <div class="wrap-img bgcover" style="background-image: url(<?= Yii::$app->view->theme->baseUrl ?>/resources/images/2013080515PDR.jpg);"><a href="#"></a></div>
-                <div class="content-news-hot">
-                    <h2>9 dự án đang và sẽ thay đổi diện mạo Quận 4 2</h2>
-                    <p>ngày đầu tiên là tên một trong bổ nhiệm vào vị trí  mới được bổ nhiệm vào vị trí  mới được bổ nhiệm vào vị trí  mới được bổ nhiệm vào vị trí...</p>
-                </div>
-            </div>
-            <div class="">
-                <div class="wrap-img bgcover" style="background-image: url(<?= Yii::$app->view->theme->baseUrl ?>/resources/images/87bbds2.jpg);"><a href="#"></a></div>
-                <div class="content-news-hot">
-                    <h2>9 dự án đang và sẽ thay đổi diện mạo Quận 4 3</h2>
-                    <p>ngày đầu tiên là tên một trong những cuốn sách trên bàn làm việc của Nguyễn Trung Tín, mới được bổ nhiệm vào vị trí  mới được vị trí...</p>
-                </div>
-            </div>
-            <div class="">
-                <div class="wrap-img bgcover" style="background-image: url(<?= Yii::$app->view->theme->baseUrl ?>/resources/images/galaxy9.jpg);"><a href="#"></a></div>
-                <div class="content-news-hot">
-                    <h2>9 dự án đang và sẽ thay đổi diện mạo Quận 4 4</h2>
-                    <p>ngày đầu tiên là tên một trong những cuốn sách trên bàn làm việc của Nguyễn Trung Tín, mới được bổ nhiệm vào vị trí  mới được bổ nhiệm ...</p>
-                </div>
-            </div>
-        </div>
-
-        <?php
-        Pjax::begin();
-        echo ListView::widget([
-            'dataProvider' => $dataProvider,
-            'options' => [
-                'tag' => 'div',
-                'class' => 'row',
-                'id' => 'list-wrapper',
-            ],
-            'summary' => '',
-            'itemOptions' => [
-                'tag' => false,
-            ],
-            'itemView' => 'list_item',
-            'pager' => [
-                'firstPageLabel' => false,
-                'lastPageLabel' => false,
-                'nextPageLabel' => '<em class="fa fa-chevron-right"></em>',
-                'prevPageLabel' => '<em class="fa fa-chevron-left"></em>',
-                'maxButtonCount' => 10,
-                'options' => ['class' => 'pagination text-center'],
-            ],
-        ]);
-        Pjax::end();
-        ?>
-    </div>
-    <div class="col-sm-4 col-lg-3 col-left-home">
-        <?= \vsoft\news\widgets\NewsWidget::widget(['view' => 'hotnews'])?>
-        <div class="siderbar widget-ads clearfix">
-            <a class="wrap-img" href="http://www.dreamplex.co/"><img src="http://www.reic.info/Content/themes/v1/Images/banner/Dreamplex-300x250.jpg" alt="dreamplex"></a>
-        </div>
-        <?= \vsoft\news\widgets\NewsWidget::widget(['view' => 'important'])?>
-    </div>
-</div>
-<!-- <div class="social-share">
-    <ul>
-        <li><a href="#"><em class="fa fa-facebook"></em></a></li>
-        <li><a href="#"><em class="fa fa-twitter"></em></a></li>
-        <li><a href="#"><em class="fa fa-instagram"></em></a></li>
-        <li><a href="#"><em class="fa fa-google-plus"></em></a></li>
-        <li><a href="#"><em class="fa fa-youtube-play"></em></a></li>
-        <li><a href="#"><em class="fa fa-pinterest"></em></a></li>
-        <li><a href="#"><em class="fa fa-linkedin"></em></a></li>
-    </ul>
-</div> -->
-
-
-
-
-
