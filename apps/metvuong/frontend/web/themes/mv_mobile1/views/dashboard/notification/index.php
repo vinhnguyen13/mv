@@ -32,47 +32,22 @@ use yii\helpers\Html;
 								<a href="#" class="name"><?=$owner->profile->getDisplayName();?></a>
 								<?php
 								$params = Json::decode($activity->params);
-								if($activity->action == UserActivity::ACTION_AD_FAVORITE) {
+								if($activity->action == UserActivity::ACTION_AD_FAVORITE || $activity->action == UserActivity::ACTION_AD_CLICK) {
 									$product = AdProduct::findOne(['id'=>$params['product']]);
 									if(!empty($product)) {
 										$params['owner'] = '';
-										$params['product'] = Html::a(Yii::t('activity', 'post'), $product->urlDetail());
-										$params['buddy'] = Html::a($activity->getBuddy()->profile->getDisplayName(), $activity->getBuddy()->urlProfile());
+										$params['product'] = Html::a($product->getAddress(), $product->urlDetail());
+										$params['buddy'] = '';Html::a($activity->getBuddy()->profile->getDisplayName(), $activity->getBuddy()->urlProfile());
 										$message = Yii::t('activity', $activity->message, $params);
 										?>
-										<p class="date-type"><span><?= date('H:i:s d-m-Y', $activity->created); ?>.</span> <?= $message; ?></p>
-										<div class="post-get">
+
+										<div class="post-get" style="display: none;">
 											<a href="<?=$product->urlDetail()?>" class="clearfix">
-												<div class="img-show">
-													<div>
-														<img src="<?= $product->getRepresentImage()?>">
-													</div>
-												</div>
 												<span><?= $product->getAddress()?></span>
 											</a>
 										</div>
-										<?php
-									}
-								}elseif($activity->action == UserActivity::ACTION_AD_CLICK) {
-									$product = AdProduct::findOne(['id'=>$params['product']]);
-									if(!empty($product)) {
-										$params['owner'] = '';
-										$params['product'] = Html::a(Yii::t('activity', 'post'), $product->urlDetail());
-										$params['buddy'] = Html::a($activity->getBuddy()->profile->getDisplayName(), $activity->getBuddy()->urlProfile());
-										$message = Yii::t('activity', $activity->message, $params);
-										?>
-										<p class="date-type"><span><?= date('H:i:s d-m-Y', $activity->created); ?>
-												.</span> <?= $message; ?></p>
-										<div class="post-get">
-											<a href="<?= $product->urlDetail() ?>" class="clearfix">
-												<div class="img-show">
-													<div>
-														<img src="<?= $product->getRepresentImage() ?>">
-													</div>
-												</div>
-												<span><?= $product->getAddress() ?></span>
-											</a>
-										</div>
+										<p><?= $message; ?></p>
+										 <p class="date-type"><span><?= date('H:i:s d-m-Y', $activity->created); ?>.</span></p>
 										<?php
 									}
 								}
