@@ -3,7 +3,10 @@ $(document).ready(function(){
 	$('.tinh-thanh').html('');
 	$('.loai-bds').html('');
 	for ( var i in dataCities) {
-		var item = $('<li><a href="#" data-value="'+i+'" data-order="1">'+dataCities[i].name+'</a></li>');
+		var item = $('<li><a href="#" data-value="'+i+'" data-order="1" class="disable">'+dataCities[i].name+'</a></li>');
+		if ( i == "1" ) {
+			item.find('a').removeClass('disable');
+		}
 		$('.tinh-thanh').append(item);
 	}
 	for ( var i in dataCategories) {

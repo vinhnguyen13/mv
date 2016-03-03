@@ -280,6 +280,7 @@ $.fn.dropdown = function (options) {
         function selectItem (item, itemValueClick) {
             item.unbind('click');
             item.on('click', function () {
+                if ( $(this).hasClass('disable') ) return;
                 var txt = $(this).text(),
                 dataValue = $(this).data('value') != undefined ? $(this).data('value') : txt;
 

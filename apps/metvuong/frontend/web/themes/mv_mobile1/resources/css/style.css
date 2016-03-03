@@ -1374,6 +1374,10 @@ label {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+.item-dropdown li a.disable {
+    color: #C7C7C7;
+    cursor: default;
+}
 .top-listing {
     line-height: 25px;
     padding: 0 20px;
@@ -2537,6 +2541,7 @@ html.mm-opening .mm-slideout {
 }
 .mm-slideout {
     background: #fff;
+    overflow: hidden;
 }
 .mm-menu.mm-offcanvas.mm-current {
     display: block !important;
@@ -2943,7 +2948,7 @@ input[type=text]:focus {
     display: block;
     content: "";
     width: 100%;
-    padding-top: 65%;
+    padding-top: 55%;
 }
 .item-listing .img-intro > div {
     position: absolute;
@@ -3146,7 +3151,7 @@ input[type=text]:focus {
 	display: block;
 	content: "";
 	width: 100%;
-	padding-top: 65%;
+	padding-top: 55%;
 }
 .img-show > div {
     position: absolute;
@@ -3571,9 +3576,15 @@ input[type=text]:focus {
     position: absolute;
     bottom: 0;
     width: 100%;
-    background: rgba(0, 0, 0, 0.6);
+    /* background: rgba(0, 0, 0, 0.35); */
     color: #fff;
-    padding: 8px 15px;
+    padding: 8px 15px 5px;
+    background: -moz-linear-gradient(top, rgba(31, 41, 51, 0) 10%, rgba(0, 0, 0, 0.79) 60%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #1f2933), color-stop(60%, rgba(0, 0, 0, 0.79)));
+    background: -webkit-linear-gradient(top, rgba(31, 41, 51, 0) 10%, rgba(36, 36, 36, 0.77) 60%);
+    background: -o-linear-gradient(top, rgba(31, 41, 51, 0) 10%, rgba(36, 36, 36, 0.77) 60%);
+    background: -ms-linear-gradient(top, rgba(31, 41, 51, 0) 10%, rgba(36, 36, 36, 0.77) 60%);
+    background: linear-gradient(to bottom, rgba(31, 41, 51, 0) 10%, rgba(0, 0, 0, 0.73) 60%);
 }
 .wrap-icon div {
     display: inline-block;
