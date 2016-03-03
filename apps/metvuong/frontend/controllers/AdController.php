@@ -594,12 +594,12 @@ class AdController extends Controller
             $model->load($post);
             $model->validate();
             if (!$model->hasErrors()) {
-                // send from
-                Yii::$app->mailer->compose(['html' => '../mail/notifyReceivedEmail-html',], ['contact' => $model])
-                    ->setFrom(Yii::$app->params['adminEmail'])
-                    ->setTo([$model->your_email])
-                    ->setSubject($model->subject." - Thanks for sharing a listing with ".$model->your_email)
-                    ->send();
+//                // send from
+//                Yii::$app->mailer->compose(['html' => '../mail/notifyReceivedEmail-html',], ['contact' => $model])
+//                    ->setFrom(Yii::$app->params['adminEmail'])
+//                    ->setTo([$model->your_email])
+//                    ->setSubject($model->subject." - Thanks for sharing a listing with ".$model->your_email)
+//                    ->send();
 
                 // send to
                 Yii::$app->mailer->compose(['html' => '../mail/notifyReceivedEmail-html',], ['contact' => $model])

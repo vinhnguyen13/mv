@@ -4,6 +4,7 @@
  * User: Nhut Tran
  * Date: 2/2/2016 10:19 AM
  */
+use vsoft\express\components\StringHelper;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -69,36 +70,26 @@ $user = $model->getUser();
         <div class="list-per-post">
             <div class="title-text">Danh sách tin đã đăng</div>
             <ul class="clearfix list-post">
-                <?php foreach ($products as $product) {
-                    $image = \vsoft\ad\models\AdImages::find ()->where ( [
-                        'order' => 0,
-                        'product_id' => $product->id
-                    ] )->one ();
-                    if ($image) {
-                        $imgUrl = $image->file_name;
-                    } else {
-                        $imgUrl = '/themes/metvuong2/resources/images/default-ads.jpg';
-                    }
-                ?>
+                <?php foreach ($products as $product) { ?>
                 <li>
-                    <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="rippler rippler-default">
-                        <div class="img-show"><div><img src="<?=$imgUrl?>"></div></div>
+                    <a href="<?= $product->urlDetail() ?>" class="rippler rippler-default">
+                        <div class="img-show"><div><img src="<?=$product->representImage ?>"></div></div>
                         <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></div>
                     </a>
-                    <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>"><p class="name-post"><span class="icon address-icon"></span><?=$product->getAddress()?></p></a>
-                    <p class="id-duan">ID tin đăng:<span>345</span></p>
+                    <a href="<?= $product->urlDetail() ?>"><p class="name-post"><span class="icon address-icon"></span><?=$product->getAddress()?></p></a>
+                    <p class="id-duan">ID tin đăng:<span><?=$product->id?></span></p>
                     <ul class="clearfix list-attr-td">
                         <li>
-                            <span class="icon icon-dt icon-dt-small"></span>80m2
+                            <span class="icon icon-dt icon-dt-small"></span><?= $product->area ?>
                         </li>
                         <li>
-                            <span class="icon icon-bed icon-bed-small"></span> 02
+                            <span class="icon icon-bed icon-bed-small"></span><?= $product->adProductAdditionInfo->room_no ?>
                         </li>
                         <li>
-                            <span class="icon icon-pt icon-pt-small"></span> 02
+                            <span class="icon icon-pt icon-pt-small"></span><?= $product->adProductAdditionInfo->toilet_no ?>
                         </li>
                     </ul>
-                    <p class="price-post">Giá bán <strong>4 tỷ đồng</strong></p>
+                    <p class="price-post">Giá bán <strong><?= StringHelper::formatCurrency($product->price) ?> đồng</strong></p>
                 </li>
                 <?php } ?>
             </ul>
