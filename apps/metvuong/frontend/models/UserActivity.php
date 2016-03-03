@@ -64,7 +64,11 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
             $activity->read_time = 0;
             $activity->validate();
             if(!$activity->hasErrors()){
-                ($activity->isNewRecord) ? $activity->created = time() : $activity->updated = time();
+                if($activity->isNewRecord){
+                    $activity->created = $activity->updated = time();
+                }else{
+                    $activity->updated = time();
+                }
                 if($activity->save()){
                     if(!empty($object['user'])) {
                         return $activity->setUserData($object['user']);
