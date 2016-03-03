@@ -12,7 +12,7 @@ use yii\helpers\Html;
 		<?php
 		$query = \frontend\models\UserActivity::find();
 		$query->andWhere(['buddy_id' => Yii::$app->user->id]);
-		$query->orderBy('created,updated DESC');
+		$query->orderBy('created DESC');
 		$query->limit(100);
 		$activities = $query->all();
 		if(!empty($activities)) {
