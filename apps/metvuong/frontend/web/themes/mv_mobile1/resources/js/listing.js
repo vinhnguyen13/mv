@@ -17,9 +17,9 @@ $(document).ready(function(){
 		funCallBack: function (item) {
 			var selectedCityList = $('<li data-value="'+item.data('value')+'" data-order="'+item.data('order')+'">'+item.text()+'<span class="icon arrow-left arrow-small"></span></li>');
 
-			if ( item.closest('.tinh-thanh').length > 0 ) {
-				
-				var idTT = item.data('value');
+			if ( item.closest('.tinh-thanh').length > 0 || item.is('input[type=hidden]') ) {
+				var idTT = item.data('value') == undefined ? item.val() : item.data('value');
+
 				$('.quan-huyen').html('');
 				var txtDefault = $('.quan-huyen').closest('.box-dropdown').find('.val-selected').data('placeholder');
 				$('.quan-huyen').closest('.box-dropdown').find('.val-selected').text(txtDefault);

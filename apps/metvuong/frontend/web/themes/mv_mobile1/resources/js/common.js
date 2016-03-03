@@ -232,18 +232,16 @@ $.fn.dropdown = function (options) {
 
         function showSortLoad () {
             if ( $(el.find('input[type=hidden]')).val() != '' && $(el.find('input[type=hidden]')).length > 0 ) {
-                
                 valGet = $(el.find('input[type=hidden]')).val();
+                if ( $(el.find('input[type=hidden]')).is('#tinh-thanh') ) {
+                    sc.settings.funCallBack($(el.find('input[type=hidden]')));
+                }
                 itemList.each(function () {
                     var dataGet = $(this).data('value');
                     if ( dataGet == valGet ) {
                         el.find('.val-selected .selected').text($(this).text());
                     }
                 });
-
-                if ( $(el.find('input[type=hidden]')).is('#tinh-thanh') ) {
-                    sc.settings.funCallBack();
-                }
             }
         }
 
