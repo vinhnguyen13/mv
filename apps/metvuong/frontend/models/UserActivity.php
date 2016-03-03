@@ -36,19 +36,16 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
                 if(($activityExist = self::findOne(['action'=>$action, 'owner_id'=>$app->user->id, 'object_id'=>$object_id])) !== null){
                     $activity = $activityExist;
                     $activity->action = self::ACTION_AD_FAVORITE;
-                    $activity->updated = time();
                 }
             }elseif($action == self::ACTION_AD_CLICK){
                 if(($activityExist = self::findOne(['action'=>$action, 'owner_id'=>$app->user->id, 'object_id'=>$object_id])) !== null){
                     $activity = $activityExist;
                     $activity->action = self::ACTION_AD_CLICK;
-                    $activity->updated = time();
                 }
             }
 
             if(empty($activityExist)){
                 $activity->action = $action;
-                $activity->created = time();
             }
             $activity->owner_id = $app->user->id;
             $activity->owner_username = $app->user->identity->username;
@@ -67,6 +64,7 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
             $activity->read_time = 0;
             $activity->validate();
             if(!$activity->hasErrors()){
+                ($activity->isNewRecord) ? $activity->created = time() : $activity->updated = time();
                 if($activity->save()){
                     if(!empty($object['user'])) {
                         return $activity->setUserData($object['user']);
