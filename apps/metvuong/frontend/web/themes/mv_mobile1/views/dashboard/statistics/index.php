@@ -87,8 +87,23 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     			<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
     				<div class="panel-body">
     					<ul class="clearfix list-item">
-                            <?php if(!empty($finders) && count($finders) > 0){
-                            foreach($finders as $key => $finder){?>
+                            <?php if(!empty($finders) && count($finders) > 0){?>
+                                <div id="popup-user-inter" class="popup-common hide-popup">
+                                    <div class="wrap-popup">
+                                        <div class="inner-popup">
+                                            <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
+                                            <div class="pull-left circle avatar-user-inter">
+                                                <img src="/images/default-avatar.jpg" alt="" width="50" height="50">
+                                            </div>
+                                            <div class="overflow-all">
+                                                <p class="name-user-inter">James Bond</p>
+                                                <a href="#" class="btn-common btn-chat"><span class="icon icon-chat-1"></span></a>
+                                                <a href="#" class="btn-common btn-email share-email-btn"><span class="icon icon-email-1"></span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php foreach($finders as $key => $finder){?>
     						<li>
     							<img src="<?=$finder['avatar']?>" alt="<?=$key?>"><a href="<?="/".$key?>"><?=$key?></a>
     							<span class="pull-right"><?=$finder['count']?></span>
@@ -172,21 +187,6 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                 </li>
             </ul>
     	</div>
-    </div>
-</div>
-<div id="popup-user-inter" class="popup-common hide-popup">
-    <div class="wrap-popup">
-        <div class="inner-popup">
-            <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
-            <div class="pull-left circle avatar-user-inter">
-                <img src="/images/default-avatar.jpg" alt="" width="50" height="50">
-            </div>
-            <div class="overflow-all">
-                <p class="name-user-inter">James Bond</p>
-                <a href="#" class="btn-common btn-chat"><span class="icon icon-chat-1"></span></a>
-                <a href="#" class="btn-common btn-email share-email-btn"><span class="icon icon-email-1"></span></a>
-            </div>
-        </div>
     </div>
 </div>
 
