@@ -4554,8 +4554,14 @@ input[type=text]:focus {
 .list-menu-news a.active {
     border-bottom: 2px solid #333;
 }
+.page-news {
+    padding-top: 34px;*/;
+}
 .page-news .title-top {
     padding: 0;
+    position: fixed;
+    top: 39px;
+    left: 0;
 }
 .list-menu-news .swiper-slide {
     width: auto;
