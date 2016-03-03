@@ -18,10 +18,13 @@ class Controller extends \yii\web\Controller
         if(Yii::$app->user->isGuest && !in_array($action->id, ['login', 'register', 'error', 'map-image']) && !Yii::$app->request->isAjax){
             Yii::$app->getUser()->setReturnUrl(Url::current());
         }
-        /*echo "<pre>";
-        print_r(Yii::$app->getUser());
-        echo "</pre>";
-        exit;*/
+        if(in_array($action->id, ['login'])){
+            $redirect_url = Yii::$app->request->get('redirect_url');
+            if(!empty($redirect_url)){
+                Yii::$app->getUser()->setReturnUrl(Url::to($redirect_url));
+            }
+
+        }
         if(!Yii::$app->user->isGuest){
             $parseUrl = Yii::$app->urlManager->parseRequest(Yii::$app->request);
             $urlBase = !empty($parseUrl[0]) ? $parseUrl[0] : '';

@@ -159,8 +159,8 @@ class AdProduct extends AP
 		}
 	}
 
-	public function urlDetail()
+	public function urlDetail($scheme = false)
 	{
-		return Url::to(['/ad/detail', 'id' => $this->id, 'slug' => \common\components\Slug::me()->slugify($this->getAddress())]);
+		return Url::to(['/ad/detail', 'id' => $this->id, 'slug' => \common\components\Slug::me()->slugify($this->getAddress())], $scheme);
 	}
 }

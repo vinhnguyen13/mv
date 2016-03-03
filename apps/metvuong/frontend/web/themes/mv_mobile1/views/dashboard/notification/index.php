@@ -13,7 +13,7 @@ use yii\helpers\Html;
 		$query = \frontend\models\UserActivity::find();
 		$query->andWhere(['buddy_id' => Yii::$app->user->id]);
 		$query->orderBy('updated DESC');
-		$query->limit(100);
+		$query->limit(1);
 		$activities = $query->all();
 		if(!empty($activities)) {
 			?>
@@ -24,7 +24,7 @@ use yii\helpers\Html;
 						$owner = $activity->getOwner();
 						$buddy = $activity->getBuddy();
 						?>
-						<div class="item">
+						<div class="item <?=($activities->read_status == UserActivity::READ_YES) ? 'read' : 'unread';?>">
 							<div class="user-get clearfix">
 <!--								<span class="icon icon-message"></span>-->
 								<span class="icon save-item-1"></span>
@@ -80,6 +80,7 @@ use yii\helpers\Html;
 							</div>
 						</div>
 						<?php
+						$activity->read();
 					}
 				?>
 			</div>

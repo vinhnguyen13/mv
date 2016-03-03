@@ -18,7 +18,7 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
     const ACTION_AD_CHAT       = 4;
 
     const READ_YES      = 1;
-    const READ_NO       = 2;
+    const READ_NO       = 0;
 
     public static function me()
     {
