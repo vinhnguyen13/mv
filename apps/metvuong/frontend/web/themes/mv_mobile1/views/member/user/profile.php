@@ -71,10 +71,18 @@ $user = $model->getUser();
         <div class="list-per-post">
             <div class="title-text">Danh sách tin đã đăng</div>
             <ul class="clearfix list-post">
-                <?php foreach ($products as $product) { ?>
+                <?php foreach ($products as $product) {
+                    if(!empty($product->source)){
+                        $image = $product->representImage;
+                    } else {
+                        $image = "/store/ad/". $product->representImage;
+                    }
+                    ?>
                 <li>
                     <a href="<?= $product->urlDetail() ?>" class="rippler rippler-default">
-                        <div class="img-show"><div><img src="<?=$product->representImage ?>"></div></div>
+                        <div class="img-show"><div><img src="<?=$image ?>">
+                                <input type="hidden" value="<?=$image?>">
+                            </div></div>
                         <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></div>
                     </a>
                     <a href="<?= $product->urlDetail() ?>"><p class="name-post"><span class="icon address-icon"></span><?=$product->getAddress()?></p></a>

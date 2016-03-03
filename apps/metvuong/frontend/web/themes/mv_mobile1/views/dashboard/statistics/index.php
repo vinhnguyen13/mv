@@ -202,7 +202,11 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
         </div>
         <div class="inner-popup">
             <?php
-            $images = $product->adImages;
+            if(!empty($product->source)){
+                $image = $product->representImage;
+            } else {
+                $image = "/store/ad/". $product->representImage;
+            }
             $share_form = Yii::createObject([
                 'class'    => \frontend\models\ShareForm::className(),
                 'scenario' => 'share',
@@ -225,7 +229,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                 <?= $f->field($share_form, 'content')->textarea(['class'=>'content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('content', 'Nội dung...')])->label(false) ?>
             </div>
             <div class="item-send">
-                <div class="img-show"><div><a href="<?= $product->re ?>"><img src="<?= $product->getRepresentImage()?>" alt="<?=$address?>"></a></div></div>
+                <div class="img-show"><div><a href="<?= $product->urlDetail() ?>"><img src="<?= $image?>" alt="<?=$address?>"></a></div></div>
                 <div class="infor-send">
                     <p class="name"><?=$address?></p>
                     <p class="address"></p>
@@ -234,7 +238,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                 </div>
                 <?= $f->field($share_form, 'your_email')->hiddenInput(['class'=>'your_email', 'value'=>$yourEmail])->label(false) ?>
                 <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=>$address])->label(false) ?>
-                <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($address)], true)])->label(false) ?>
+                <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> $product->urlDetail() ])->label(false) ?>
                 <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
             </div>
             <div class="text-right">
