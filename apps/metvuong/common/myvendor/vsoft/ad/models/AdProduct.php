@@ -144,7 +144,7 @@ class AdProduct extends AP
 		return $this->hasOne(AdContactInfo::className(), ['product_id' => 'id']);
 	}
 
-	public function getOwner()
+	public function getCreatedBy()
 	{
 		return $this->hasOne(User::className(), ['id' => 'user_id']);
 	}
