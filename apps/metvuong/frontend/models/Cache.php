@@ -18,7 +18,8 @@ use yii\web\NotFoundHttpException;
 
 class Cache extends Component
 {
-    const NOTIFICATION = 'NOTIFICATION';
+    const PRE_NOTIFICATION = 'NOTIFICATION';
+    const PRE_LISTINGS = 'LISTINGS';
     public static function me()
     {
         return Yii::createObject(self::className());

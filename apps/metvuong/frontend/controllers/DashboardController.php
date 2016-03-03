@@ -162,11 +162,11 @@ class DashboardController extends Controller
                 }
             }
         }else {
-            if($output = Cache::me()->get(Cache::NOTIFICATION.Yii::$app->user->id)){
+            if($output = Cache::me()->get(Cache::PRE_NOTIFICATION.Yii::$app->user->id)){
                 return $output;
             }else{
                 $output = $this->render('notification/index', []);
-                Cache::me()->set(Cache::NOTIFICATION.Yii::$app->user->id, $output);
+                Cache::me()->set(Cache::PRE_NOTIFICATION.Yii::$app->user->id, $output);
                 return $output;
             }
         }
