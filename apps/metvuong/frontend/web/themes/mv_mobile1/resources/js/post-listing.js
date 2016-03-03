@@ -396,7 +396,13 @@ $(document).ready(function () {
 	
 	var success = {
 		step1: function() {
+			var homeNoEl = $('#adproduct-home_no');
 			
+			if($('#adproduct-project_building_id').val()) {
+				homeNoEl.closest('.form-group').hide();
+			} else {
+				homeNoEl.closest('.form-group').show();
+			}
 		},
 		step2: function() {
 			if(catEl.val() == '6') {
