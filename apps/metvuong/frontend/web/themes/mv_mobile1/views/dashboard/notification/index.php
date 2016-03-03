@@ -24,7 +24,7 @@ use yii\helpers\Html;
 						$owner = $activity->getOwner();
 						$buddy = $activity->getBuddy();
 						?>
-						<div class="item <?=($activities->read_status == UserActivity::READ_YES) ? 'read' : 'unread';?>">
+						<div class="item <?=(!empty($activities->read_status) && $activities->read_status == UserActivity::READ_YES) ? 'read' : 'unread';?>">
 							<div class="user-get clearfix">
 <!--								<span class="icon icon-message"></span>-->
 								<span class="icon save-item-1"></span>
