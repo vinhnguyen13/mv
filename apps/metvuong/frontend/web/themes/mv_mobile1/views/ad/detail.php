@@ -59,7 +59,7 @@ use yii\helpers\Url;
 		<div class="address-listing">
 			<p><?= $address ?></p>
 		</div>
-		<p class="id-duan">ID:<span><?=$product->id;?></span></p>
+		<p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
 		<ul class="clearfix list-attr-td">
 			<?= $product->area ? '<li> <span class="icon icon-dt icon-dt-small"></span>' . $product->area . 'm2 </li>' : '' ?>
 			<?= $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
