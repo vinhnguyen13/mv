@@ -49,6 +49,7 @@ class UserData extends \vsoft\user\models\base\UserData
         if(!$userData->hasErrors()){
             $userData->save();
             Yii::$app->view->params['notify_other'] = !empty($alert[$type]) ? count($alert[$type]) : 0;
+            Cache::me()->delete(Cache::NOTIFICATION.$for_user->id);
         }
     }
     public function removeAlert($user_id, $type){

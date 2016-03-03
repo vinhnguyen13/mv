@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 use common\components\Util;
 use dektrium\user\Mailer;
+use frontend\models\Cache;
 use frontend\models\Chart;
 use frontend\models\Tracking;
 use frontend\models\User;
@@ -161,8 +162,13 @@ class DashboardController extends Controller
                 }
             }
         }else {
-            return $this->render('notification/index', [
-            ]);
+            if($output = Cache::me()->get(Cache::NOTIFICATION.Yii::$app->user->id)){
+                return $output;
+            }else{
+                $output = $this->render('notification/index', []);
+                Cache::me()->set(Cache::NOTIFICATION.Yii::$app->user->id, $output);
+                return $output;
+            }
         }
     }
 
