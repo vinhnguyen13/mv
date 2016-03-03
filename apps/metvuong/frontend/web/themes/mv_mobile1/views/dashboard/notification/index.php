@@ -54,9 +54,27 @@ use yii\helpers\Html;
 										<?php
 									}
 								}elseif($activity->action == UserActivity::ACTION_AD_CLICK) {
-								?>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
-								<?php
+									$product = AdProduct::findOne(['id'=>$params['product']]);
+									if(!empty($product)) {
+										$params['user'] = '';
+										$params['product'] = Html::a(Yii::t('activity', 'post'), $product->urlDetail());
+										$params['product_owner'] = Html::a($activity->getBuddy()->profile->getDisplayName(), $activity->getBuddy()->urlProfile());
+										$message = Yii::t('activity', $activity->message, $params);
+										?>
+										<p class="date-type"><span><?= date('H:i:s d-m-Y', $activity->created); ?>
+												.</span> <?= $message; ?></p>
+										<div class="post-get">
+											<a href="<?= $product->urlDetail() ?>" class="clearfix">
+												<div class="img-show">
+													<div>
+														<img src="<?= $product->getRepresentImage() ?>">
+													</div>
+												</div>
+												<span><?= $product->getAddress() ?></span>
+											</a>
+										</div>
+										<?php
+									}
 								}
 								?>
 							</div>

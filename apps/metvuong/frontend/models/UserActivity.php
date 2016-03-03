@@ -32,12 +32,26 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
         }
         if(!$app->user->isGuest){
             $activity = $this;
-            if(($activityExist = self::findOne(['action'=>self::ACTION_AD_FAVORITE, 'owner_id'=>$app->user->id, 'object_id'=>$object_id])) !== null){
-                $activity = $activityExist;
-            };
+            if($action == self::ACTION_AD_FAVORITE){
+                if(($activityExist = self::findOne(['action'=>$action, 'owner_id'=>$app->user->id, 'object_id'=>$object_id])) !== null){
+                    $activity = $activityExist;
+                    $activity->action = self::ACTION_AD_FAVORITE;
+                    $activity->updated = time();
+                }
+            }elseif($action == self::ACTION_AD_CLICK){
+                if(($activityExist = self::findOne(['action'=>$action, 'owner_id'=>$app->user->id, 'object_id'=>$object_id])) !== null){
+                    $activity = $activityExist;
+                    $activity->action = self::ACTION_AD_CLICK;
+                    $activity->updated = time();
+                }
+            }
+
+            if(empty($activityExist)){
+                $activity->action = $action;
+                $activity->created = time();
+            }
             $activity->owner_id = $app->user->id;
             $activity->owner_username = $app->user->identity->username;
-            $activity->action = $action;
             $activity->message = $message;
             $activity->params = Json::encode($params);
             $activity->ip = $app->getRequest()->getUserIP();
@@ -49,8 +63,6 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
             }
             $activity->parent_id = 0;
             $activity->status = 1;
-            $activity->created = time();
-            $activity->updated = 0;
             $activity->read_status = self::READ_NO;
             $activity->read_time = 0;
             $activity->validate();
@@ -69,6 +81,7 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
         if(!empty($this->action)){
             switch($this->action){
                 case self::ACTION_AD_FAVORITE;
+                case self::ACTION_AD_CLICK;
                     if(($product = AdProduct::findOne(['id'=>$this->object_id])) !== null){
                         $object['user'] = User::findOne($product->user_id);
                         $object['buddy_id'] = $product->user_id;

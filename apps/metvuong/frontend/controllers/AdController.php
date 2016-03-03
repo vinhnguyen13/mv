@@ -5,6 +5,7 @@ use frontend\components\Controller;
 use frontend\models\Ad;
 use frontend\models\ShareForm;
 use frontend\models\Tracking;
+use frontend\models\UserActivity;
 use vsoft\ad\models\AdCategory;
 use vsoft\ad\models\AdContactInfo;
 use vsoft\ad\models\AdDistrict;
@@ -323,6 +324,11 @@ class AdController extends Controller
         try{
             if(Yii::$app->user->id != $product->user_id) {
                 Tracking::find()->productVisitor(Yii::$app->user->id, $id, time());
+				UserActivity::me()->saveActivity(UserActivity::ACTION_AD_CLICK, "{user} view {product} of {product_owner}", [
+					'user' => Yii::$app->user->id,
+					'product' => $product->id,
+					'product_owner' => $product->user_id
+				], $product->id);
             }
         } catch(Exception $ex){
 

@@ -111,11 +111,13 @@ class Ad extends Component
                 $adSaved->validate();
                 if(!$adSaved->hasErrors()){
                     $adSaved->save();
-                    UserActivity::me()->saveActivity(UserActivity::ACTION_AD_FAVORITE, "{user} favorite {product} of {product_owner}", [
-                        'user'=>Yii::$app->user->id,
-                        'product'=>$adSaved->product_id,
-                        'product_owner'=>$adSaved->product->user_id
-                    ], $adSaved->product_id);
+                    if(Yii::$app->user->id != $adSaved->product->user_id) {
+                        UserActivity::me()->saveActivity(UserActivity::ACTION_AD_FAVORITE, "{user} favorite {product} of {product_owner}", [
+                            'user' => Yii::$app->user->id,
+                            'product' => $adSaved->product_id,
+                            'product_owner' => $adSaved->product->user_id
+                        ], $adSaved->product_id);
+                    }
                 }
                 return ['statusCode'=>200, 'parameters'=>['msg'=>Yii::$app->view->params['notify_other']]];
             }
