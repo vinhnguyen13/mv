@@ -53,7 +53,10 @@ $(document).ready(function () {
 		if(isValid) {
 			$.post(listingForm.attr('action'), listingForm.serialize(), function(r){
 				if(r.success) {
-					
+					$('#popup-share-social').popupMobi({
+			            closeBtn: ".btn-close",
+			            styleShow: "center"
+			        });
 				} else {
 					alert('có lỗi xảy ra !');
 				}

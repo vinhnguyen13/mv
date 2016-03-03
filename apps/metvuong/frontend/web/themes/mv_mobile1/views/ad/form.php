@@ -209,6 +209,18 @@ use common\widgets\fileupload\FileUpload;
 			</div>
 		</div>
 	<?php $form->end() ?>
+	<div id="popup-share-social" class="popup-common hide-popup">
+	    <div class="wrap-popup">
+	        <div class="inner-popup">
+	            <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
+	            <div class="wrap-body-popup">
+	                <div style="font-weight: bold; font-size: 20px; color: #514AB3; margin: -8px 0 22px 0;">Đăng tin thành công !</div>
+					<div style="font-size: 14px; margin-bottom: 32px;">Tin của bạn đang chờ xét duyệt và sẽ được hiển thị đến người mua sớm nhất.<br /><br />Cảm ơn đã sử dụng dịch vụ của MetVuong</div>
+					<a href="<?= Url::current() ?>" style="font-size: 16px; text-transform: uppercase;">Tiếp tục đăng tin</a>
+	            </div>
+	        </div>
+	    </div>
+	</div>
 </div>
 
 <div class="fixed-prev-next">
