@@ -1,4 +1,5 @@
 <?php
+use yii\helpers\Url;
     $newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatID"] : 0;
     $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID]);
 ?>
