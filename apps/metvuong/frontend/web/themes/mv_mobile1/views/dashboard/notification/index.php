@@ -46,7 +46,7 @@ use yii\helpers\Html;
 												<span><?= $product->getAddress()?></span>
 											</a>
 										</div>
-										<p><?= $message; ?></p>
+										<p class="message"><?= $message; ?></p>
 										 <p class="date-type"><span><?= date('H:i:s d-m-Y', $activity->created); ?>.</span></p>
 										<?php
 									}
