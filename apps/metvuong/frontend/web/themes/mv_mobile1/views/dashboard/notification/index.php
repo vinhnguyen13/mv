@@ -80,7 +80,7 @@ use yii\helpers\Html;
 							</div>
 						</div>
 						<?php
-						$activity->read();
+//						$activity->read();
 					}
 				?>
 			</div>

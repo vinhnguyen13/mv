@@ -84,7 +84,7 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
             switch($this->action){
                 case self::ACTION_AD_FAVORITE;
                 case self::ACTION_AD_CLICK;
-                    if(($product = AdProduct::findOne(['id'=>$this->object_id])) !== null){
+                    if(($product = AdProduct::findOne(['id'=>$this->object_id])) !== null && !empty($product->user_id)){
                         $object['user'] = User::findOne($product->user_id);
                         $object['buddy_id'] = $product->user_id;
                         $object['buddy_username'] = $object['user']->username;
