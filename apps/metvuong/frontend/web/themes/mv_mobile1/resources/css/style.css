@@ -834,7 +834,7 @@ label {
 }
 .post-listing .step-txt {
     font-weight: 400;
-    font-size: 18px;
+    font-size: 15px;
     padding: 15px 0;
     color: #3c3c3c;
 }
@@ -4662,4 +4662,19 @@ input[type=text]:focus {
 }
 .list-noti .user-get .message a {
     color: #00a769;
+}
+.list-detail-listing li {
+    float: left;
+    width: 50%;
+    margin-bottom: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.list-detail-listing li strong {
+    padding-right: 5px;
+}
+.detail-listing .panel-body {
+    font-size: 14px;
+    line-height: 24px;
 }

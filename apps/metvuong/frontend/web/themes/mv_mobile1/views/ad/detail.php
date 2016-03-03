@@ -110,19 +110,21 @@ use yii\helpers\Url;
                 </h4>
             </div>
             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                <div class="panel-body" name="activity" contenteditable="true" placeholder="Vui lòng chia sẻ hoạt động">
-                    <?php if($product->area): ?>
-					<p>Diện tích: <?= $product->area ?>m<sup>2</sup></p>
-					<?php endif; ?>
-					<?php if($product->adProductAdditionInfo->facade_width): ?>
-					<p>Mặt tiền: <?= $product->adProductAdditionInfo->facade_width ?>m</p>
-					<?php endif; ?>
-					<?php if($product->adProductAdditionInfo->land_width): ?>
-					<p>Đường vào: <?= $product->adProductAdditionInfo->land_width ?>m</p>
-					<?php endif; ?>
-					<?php if($product->adProductAdditionInfo->floor_no): ?>
-					<p>Tầng cao: <?= $product->adProductAdditionInfo->floor_no ?>  Tầng</p>
-					<?php endif; ?>
+                <div class="panel-body" name="activity" contenteditable="true">
+                	<ul class="clearfix">
+	                    <?php if($product->area): ?>
+						<li><strong>Diện tích:</strong> <?= $product->area ?>m2</li>
+						<?php endif; ?>
+						<?php if($product->adProductAdditionInfo->facade_width): ?>
+						<li><strong>Mặt tiền:</strong> <?= $product->adProductAdditionInfo->facade_width ?>m</li>
+						<?php endif; ?>
+						<?php if($product->adProductAdditionInfo->land_width): ?>
+						<li><strong>Đường vào:</strong> <?= $product->adProductAdditionInfo->land_width ?>m</li>
+						<?php endif; ?>
+						<?php if($product->adProductAdditionInfo->floor_no): ?>
+						<li><strong>Tầng cao:</strong> <?= $product->adProductAdditionInfo->floor_no ?>  Tầng</li>
+						<?php endif; ?>
+					</ul>
                 </div>
             </div>
         </div>
