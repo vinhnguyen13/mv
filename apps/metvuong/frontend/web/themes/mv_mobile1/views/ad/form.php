@@ -147,14 +147,19 @@ use common\widgets\fileupload\FileUpload;
 						->label(false)
 						->textArea(['placeholder' => $product->getAttributeLabel('content')]) ?>
 				
-				<?= $form->field($additionInfo, 'facade_width', ['options' => ['class' => 'col-xs-6 form-group']])
+				<div class="col-xs-6 form-group">
+					<?= $form->field($additionInfo, 'facade_width')
 						->label(false)
 						->textInput(['placeholder' => $additionInfo->getAttributeLabel('facade_width')]) ?>
-						
-				<?= $form->field($additionInfo, 'land_width', ['options' => ['class' => 'col-xs-6 form-group']])
+					<span class="unit-dt">m2</span>
+				</div>
+				
+				<div class="col-xs-6 form-group">		
+				<?= $form->field($additionInfo, 'land_width')
 						->label(false)
 						->textInput(['placeholder' => $additionInfo->getAttributeLabel('land_width')]) ?>
-				
+					<span class="unit-dt">m2</span>
+				</div>
 				
 				<?= $form->field($additionInfo, 'home_direction', ['options' => ['class' => 'col-xs-12 form-group']])
 						->label(false)
