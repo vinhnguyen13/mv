@@ -35,7 +35,7 @@ use yii\helpers\Url;
 
                         <div class="info-item">
                             <div class="address-feat">
-                                <p><?= !empty($model->categories[0]->name) ? ucfirst($model->categories[0]->name) : "Chung cư cao cấp" ?></p>
+                                <p><?= !empty($model->categories[0]->name) ? \vsoft\ad\models\AdBuildingProject::mb_ucfirst($model->categories[0]->name,'UTF-8') : "Chung cư cao cấp" ?></p>
                                 <a href="<?= Url::to(["building/$model->slug"]); ?>"><strong><?= mb_strtoupper($model->name) ?></strong></a>
                                 <span class="icon address-icon"></span><?= empty($model->location) ? "Đang cập nhật" : $model->location ?>
                             </div>

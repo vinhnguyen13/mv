@@ -1,85 +1,81 @@
 <div class="title-fixed-wrap">
     <div class="detail-duan-moi">
-        <div class="title-top">DEUSTCH HOUSE </div>
+        <div class="title-top"><?= strtoupper($model->name)?></div>
         <div class="wrap-duan-moi">
             <div class="gallery-detail swiper-container">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="img-show">
-                            <div>
-                                <img src="http://file4.batdongsan.com.vn/resize/745x510/2016/01/21/20160121155233-cbe9.jpg" alt="Đường Trần Khắc Chân, Phường Tân Định,  Quận 1, Hồ Chí Minh">
+                    <?php
+                    $gallery = explode(',', $model->gallery);
+                    if(!empty($gallery[0])) {
+                        foreach ($gallery as $image) {
+                            ?>
+                            <div class="swiper-slide">
+                                <div class="img-show">
+                                    <div>
+                                        <img src="<?= \yii\helpers\Url::to('/store/building-project-images/' . $image) ?>" alt="<?=$model->location?>">
+                                    </div>
+                                </div>
+                            </div>
+                        <?php }
+                    } else { ?>
+                        <div class="swiper-slide">
+                            <div class="img-show">
+                                <div>
+                                    <img src="<<?= Yii::$app->view->theme->baseUrl."/resources/images/img-duan-demo.jpg" ?>" alt="<?=$model->location?>">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-show">
-                            <div>
-                                <img src="http://file4.batdongsan.com.vn/resize/745x510/2016/01/21/20160121155233-cbe9.jpg" alt="Đường Trần Khắc Chân, Phường Tân Định,  Quận 1, Hồ Chí Minh">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-show">
-                            <div>
-                                <img src="http://file4.batdongsan.com.vn/resize/745x510/2016/01/21/20160121155233-cbe9.jpg" alt="Đường Trần Khắc Chân, Phường Tân Định,  Quận 1, Hồ Chí Minh">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="img-show">
-                            <div>
-                                <img src="http://file4.batdongsan.com.vn/resize/745x510/2016/01/21/20160121155233-cbe9.jpg" alt="Đường Trần Khắc Chân, Phường Tân Định,  Quận 1, Hồ Chí Minh">
-                            </div>
-                        </div>
-                    </div>
+                    <?php }  ?>
                 </div>
                 <div class="swiper-pagination"></div>
             </div>
             <div class="item infor-address-duan">
-                <p>Chung cư cao cấp</p>
-                <strong>Lancaster x</strong>
-                <span class="icon address-icon"></span>21 Nguyễn Trung Ngạn, P. Bến Nghé, Q1
+                <p><?= !empty($model->categories[0]->name) ? \vsoft\ad\models\AdBuildingProject::mb_ucfirst($model->categories[0]->name,'UTF-8') : "Chung cư cao cấp" ?></p>
+                <strong><?= strtoupper($model->name)?></strong>
+                <span class="icon address-icon"></span><?= empty($model->location) ? "Đang cập nhật" : $model->location ?>
                 <ul class="pull-right icons-detail">
                     <li><a href="#" class="icon icon-share-td"></a></li>
-                    <li><a href="#" class="icon save-item" data-id="4115" data-url="/ad/favorite"></a></li>
+<!--                    <li><a href="#" class="icon save-item" data-id="4115" data-url="/ad/favorite"></a></li>-->
                     <li><a href="#" class="icon icon-map-loca"></a></li>
                 </ul>
             </div>
             <div class="item infor-time">
-                <p><strong>Chủ đầu tư:</strong> ABC COMPANY</p>
-                <p><strong>Kiến trúc sư:</strong> XYZ ARCHITECT</p>
-                <p><strong>Nhà thầu thi công:</strong> DEF CONSTRUCTION CO</p>
-                <p><strong>Ngày khởi công:</strong> 27/02/2016</p>
-                <p><strong>Ngày dự kiến hoàn thành:</strong> 27/09/2018</p>
+                <p><strong>Chủ đầu tư:</strong> <?= empty($model->investors[0]->name) ? "Đang cập nhật" : $model->investors[0]->name ?></p>
+                <p><strong>Kiến trúc sư:</strong> <?=empty($model->architects[0]->name) ? "Đang cập nhật" : $model->architects[0]->name ?></p>
+                <p><strong>Nhà thầu thi công:</strong> <?=empty($model->contractors[0]->name) ? "Đang cập nhật" : $model->contractors[0]->name ?></p>
+                <p><strong>Ngày khởi công:</strong> <?=empty($model->start_date) ? "Đang cập nhật" : date('d/m/Y', $model->start_date) ?></p>
+                <p><strong>Dự kiến hoàn thành:</strong> <?=empty($model->estimate_finished) ? "Đang cập nhật" : $model->estimate_finished ?></p>
             </div>
             <div class="item detail-infor">
                 <p class="title-attr-duan">Diễn tả chi tiết</p>
-                <p>Mauris non tempor quam, et lacinia sapien. Mauris accumsan eros eget libero posuere vulputate. Etiam elit elit, elementum sed varius at, adipiscing vitae est. Sed nec felis pellentesque, lacinia dui sed, ultricies sapien. Pellentesque orci lectus, consectetur vel posuere posuere.</p>
+                <p><?=$model->description ?></p>
             </div>
             <div class="item infor-attr">
                 <p class="title-attr-duan">Thông tin dự án</p>
                 <ul class="clearfix">
-                    <li><strong>Mặt tiền:</strong>10m</li>
-                    <li><strong>Tầng cao:</strong>19 Tầng</li>
-                    <li><strong>Thang máy:</strong>4</li>
+                    <li><strong>Mặt tiền:</strong><?=$model->facade_width?></li>
+                    <li><strong>Tầng cao:</strong><?=$model->floor_no?> Tầng</li>
+                    <li><strong>Thang máy:</strong><?=$model->lift?></li>
                 </ul>
             </div>
             <div class="item tien-ich-duan">
                 <p class="title-attr-duan">Tiện ích</p>
+                <?php
+                $facilityListId = explode(",", $model->facilities);
+                $facilities = \vsoft\ad\models\AdFacility::find()->where(['id' => $facilityListId])->all();
+                $count_facilities = count($facilities);
+                if($count_facilities > 0){
+                ?>
                 <ul class="clearfix">
+                    <?php foreach($facilities as $facility){ ?>
                     <li>
-                        <div><p><span class="icon-ti icon-sport"></span>Sports</p></div>
+                        <div><p><span class="icon-ti icon-sport"></span><?= $facility->name ?></p></div>
                     </li>
-                    <li>
-                        <div><p><span class="icon-ti icon-sport"></span>Sports</p></div>
-                    </li>
-                    <li>
-                        <div><p><span class="icon-ti icon-sport"></span>Sports</p></div>
-                    </li>
-                    <li>
-                        <div><p><span class="icon-ti icon-sport"></span>Sports</p></div>
-                    </li>
+                    <?php } ?>
                 </ul>
+                <?php } else {?>
+                <p>Đang cập nhật</p>
+                <?php }?>
             </div>
         </div>
     </div>

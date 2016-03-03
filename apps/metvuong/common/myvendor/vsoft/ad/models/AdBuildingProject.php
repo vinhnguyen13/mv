@@ -215,7 +215,7 @@ class AdBuildingProject extends ABP
 		}
 	}
 
-    public static function mb_ucfirst($string, $encoding)
+    public static function mb_ucfirst($string, $encoding='UTF-8')
     {
         $strlen = mb_strlen($string, $encoding);
         $firstChar = mb_substr($string, 0, 1, $encoding);
