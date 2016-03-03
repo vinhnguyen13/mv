@@ -4482,8 +4482,9 @@ input[type=text]:focus {
     border-bottom: solid 0.5px #ededed;
     padding-bottom: 15px;
     margin-bottom: 15px;
-    font-size: 15px;
+    font-size: 14px;
     position: relative;
+    line-height: 23px;
 }
 .wrap-duan-moi .infor-address-duan {
     font-weight: 600;
@@ -4516,7 +4517,7 @@ input[type=text]:focus {
 .wrap-duan-moi .infor-attr li {
     float: left;
     width: 50%;
-    margin-bottom: 7px;
+    margin-bottom: 4px;
 }
 .wrap-duan-moi .infor-attr li strong {
     padding-right: 5px;

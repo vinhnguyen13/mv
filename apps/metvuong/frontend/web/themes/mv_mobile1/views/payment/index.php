@@ -9,7 +9,7 @@
 <div class="title-fixed-wrap">
 	<div class="edit-user-tt">
 		<div class="title-top">
-			<a href="#">CHỈNH SỬA THÔNG TIN</a>
+			<a href="#">TÀI KHOẢN CỦA BẠN</a>
 			<a href="javascript:history.back()" id="prev-page"><span class="icon arrowRight-1"></span></a>
 			<a href="#" id="done-page"><span class="icon icon-done"></span></a>
 		</div>
