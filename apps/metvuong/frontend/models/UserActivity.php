@@ -132,4 +132,11 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
             return UserData::me()->saveAlert($user, UserData::ALERT_OTHER, [trim($id)]);
         }
     }
+
+    public function isAction($action){
+        if(!empty($this->action) && $this->action == $action){
+            return true;
+        }
+        return false;
+    }
 }
