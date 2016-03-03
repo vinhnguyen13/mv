@@ -63,7 +63,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     				<div class="wrap-img">
                         <div class="wrapChart">
                             <?=$this->render('/dashboard/chart/'.$view, ['id' => $id, 'from' => $from, 'to' => $to]);?>
-                            <p class="name-post"><span class="icon address-icon"></span><?=$address?></p>
+                            <a href="<?=$product->urlDetail()?>"><p class="name-post"><span class="icon address-icon"></span><?=$address?></p></a>
                         </div>
                         <div class="loading text-center" style="display: none;" >
                             <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/loading-listing.gif" alt="Loading..." />
@@ -202,11 +202,6 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
         </div>
         <div class="inner-popup">
             <?php
-            if(!empty($product->source)){
-                $image = $product->representImage;
-            } else {
-                $image = "/store/ad/". $product->representImage;
-            }
             $share_form = Yii::createObject([
                 'class'    => \frontend\models\ShareForm::className(),
                 'scenario' => 'share',
@@ -229,7 +224,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                 <?= $f->field($share_form, 'content')->textarea(['class'=>'content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('content', 'Nội dung...')])->label(false) ?>
             </div>
             <div class="item-send">
-                <div class="img-show"><div><a href="<?= $product->urlDetail() ?>"><img src="<?= $image?>" alt="<?=$address?>"></a></div></div>
+                <div class="img-show"><div><a href="<?= $product->urlDetail() ?>"><img src="<?= $product->representImage ?>" alt="<?=$address?>"></a></div></div>
                 <div class="infor-send">
                     <p class="name"><?=$address?></p>
                     <p class="address"></p>
