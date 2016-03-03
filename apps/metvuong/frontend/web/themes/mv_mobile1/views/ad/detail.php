@@ -260,7 +260,7 @@ use yii\helpers\Url;
                     <?= $f->field($share_form, 'content')->textarea(['class'=>'content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('content', 'Nội dung...')])->label(false) ?>
 				</div>
 				<div class="item-send">
-					<div class="img-show"><div><a href="<?=$product->urlDetail()?>"><img src="<?= $images[0]->url ?>" alt="<?=$address?>"></a></div></div>
+					<div class="img-show"><div><a href="<?=$product->urlDetail()?>"><img src="<?= $product->representImage ?>" alt="<?=$address?>"></a></div></div>
 					<div class="infor-send">
 						<p class="name"><?=$address?></p>
 						<p class="address"></p>
