@@ -1,7 +1,7 @@
 <?php 
 use vsoft\ad\models\AdCategory;
 use vsoft\ad\models\AdProduct;
-use vsoft\express\components\StringHelper;
+use yii\helpers\StringHelper;
 use yii\bootstrap\ActiveForm;
 use yii\web\View;
 use frontend\models\User;
