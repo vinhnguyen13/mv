@@ -44,18 +44,21 @@ class Chart extends Component
         foreach($adProductFinders as $k => $q){
             $user = User::findIdentity($q->user_id);
             $username = $user->username;
+            $email = $user->profile->public_email;
             $avatar = $user->profile->getAvatarUrl();
             if(array_key_exists($username, $infoFinder)){
                 $c = $infoFinder[$username]['count'];
                 $c = $c+1;
                 $infoFinder[$username] = [
                     'count' => $c,
-                    'avatar' => $avatar
+                    'avatar' => $avatar,
+                    'email' => $email
                 ];
             } else
                 $infoFinder[$username] = [
                     'count' => 1,
-                    'avatar' => $avatar
+                    'avatar' => $avatar,
+                    'email' => $email
                 ];
         }
         // visitor
@@ -69,18 +72,21 @@ class Chart extends Component
         foreach($adProductVisitor as $k => $q){
             $user = User::findIdentity($q->user_id);
             $username = $user->username;
+            $email = $user->profile->public_email;
             $avatar = $user->profile->getAvatarUrl();
             if(array_key_exists($username, $infoVisitors)){
                 $c = $infoVisitors[$username]['count'];
                 $c = $c+1;
                 $infoVisitors[$username] = [
                     'count' => $c,
-                    'avatar' => $avatar
+                    'avatar' => $avatar,
+                    'email' => $email
                 ];
             } else
                 $infoVisitors[$username] = [
                     'count' => 1,
-                    'avatar' => $avatar
+                    'avatar' => $avatar,
+                    'email' => $email
                 ];
         }
         // saved
@@ -95,18 +101,21 @@ class Chart extends Component
         foreach($adProductSaved as $k => $q){
             $user = User::findIdentity($q->user_id);
             $username = $user->username;
+            $email = $user->profile->public_email;
             $avatar = $user->profile->getAvatarUrl();
             if(array_key_exists($username, $infoSaved)){
                 $c = $infoSaved[$username]['count'];
                 $c = $c+1;
                 $infoSaved[$username] = [
                     'count' => $c,
-                    'avatar' => $avatar
+                    'avatar' => $avatar,
+                    'email' => $email
                 ];
             } else
                 $infoSaved[$username] = [
                     'count' => 1,
-                    'avatar' => $avatar
+                    'avatar' => $avatar,
+                    'email' => $email
                 ];
         }
 
@@ -136,18 +145,21 @@ class Chart extends Component
         foreach($adProductVisitors as $k => $q){
             $user = User::findIdentity($q->user_id);
             $username = $user->username;
+            $email = $user->profile->public_email;
             $avatar = $user->profile->getAvatarUrl();
             if(array_key_exists($username, $infoVisitors)){
                 $c =  $infoVisitors[$username]['count'];
                 $c = $c+1;
                 $infoVisitors[$username] = [
                     'count' => $c,
-                    'avatar' => $avatar
+                    'avatar' => $avatar,
+                    'email' => $email
                 ];
             } else
                 $infoVisitors[$username] = [
                     'count' => 1,
-                    'avatar' => $avatar
+                    'avatar' => $avatar,
+                    'email' => $email
                 ];
         }
 
@@ -177,18 +189,21 @@ class Chart extends Component
         foreach($adProductSaveds as $k => $q){
             $user = User::findIdentity($q->user_id);
             $username = $user->username;
+            $email = $user->profile->public_email;
             $avatar = $user->profile->getAvatarUrl();
             if(array_key_exists($username, $infoSaved)){
                 $c =  $infoSaved[$username]['count'];
                 $c = $c+1;
                 $infoSaved[$username] = [
                     'count' => $c,
-                    'avatar' => $avatar
+                    'avatar' => $avatar,
+                    'email' => $email
                 ];
             } else
                 $infoSaved[$username] = [
                     'count' => 1,
-                    'avatar' => $avatar
+                    'avatar' => $avatar,
+                    'email' => $email
                 ];
         }
         $infoData["saved"] = $infoSaved;
