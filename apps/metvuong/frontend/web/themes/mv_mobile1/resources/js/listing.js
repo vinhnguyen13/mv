@@ -1,4 +1,57 @@
 $(document).ready(function(){
+	
+	
+	
+	$('.tinh-thanh').html('');
+	$('.loai-bds').html('');
+	for ( var i in dataCities) {
+		var item = $('<li><a href="#" data-value="'+i+'" data-order="1">'+dataCities[i].name+'</a></li>');
+		$('.tinh-thanh').append(item);
+	}
+	for ( var i in dataCategories) {
+		var item = $('<li><a href="#" data-value="'+i+'" data-order="3">'+dataCategories[i].name+'</a></li>');
+		$('.loai-bds').append(item);
+	}
+
+	$('.dropdown-common').dropdown({
+		txtAdd: true,
+		styleShow: 0,
+		funCallBack: function (item) {
+			var selectedCityList = $('<li data-value="'+item.data('value')+'" data-order="'+item.data('order')+'">'+item.text()+'<span class="icon arrow-left arrow-small"></span></li>');
+
+			if ( item.closest('.tinh-thanh').length > 0 ) {
+				var idTT = item.data('value');
+				$('.quan-huyen').html('');
+				var txtDefault = $('.quan-huyen').closest('.box-dropdown').find('.val-selected').data('placeholder');
+				$('.quan-huyen').closest('.box-dropdown').find('.val-selected').text(txtDefault);
+
+				for ( var i in dataCities) {
+					if ( i == idTT ) {
+						for ( var j in dataCities[i].districts ) {
+							var item = $('<li><a href="#" data-value="'+j+'" data-order="2">'+dataCities[i].districts[j].name+'</a></li>');
+							$('.quan-huyen').append(item);
+						}
+						break;
+					}
+				}
+			}
+		}
+	});
+
+	$('.choice_price_dt').price_dt();
+
+	$('.advande-search').toggleShowMobi({
+        btnEvent: '.btn-submit',
+        itemToggle: '.toggle-search'
+    });
+	
+	
+	
+	
+	
+	
+	
+	
 	var searchForm = $('#search-form');
 	var page = 1;
 	var listingListId = '#listing-list';

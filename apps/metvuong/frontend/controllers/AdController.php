@@ -118,10 +118,12 @@ class AdController extends Controller
     	
     	$where = ['ad_product.status' => 1];
     	
-    	if($districtId = Yii::$app->request->get('district')) {
+    	$cityId = ($cityId = Yii::$app->request->get('city')) ? $cityId : 1;
+    	$districtId = ($districtId = Yii::$app->request->get('district')) ? $districtId : 10;
+    	
+    	if($districtId) {
     		$where['ad_product.district_id'] = $districtId;
     	} else {
-    		$cityId = Yii::$app->request->get('city') ? Yii::$app->request->get('city') : 1;
     		$where['ad_product.city_id'] = $cityId;
     	}
     	 
@@ -180,7 +182,7 @@ class AdController extends Controller
             }
         }
     	
-    	return $this->render('index', ['products' => $products, 'pages' => $pages]);
+    	return $this->render('index', ['products' => $products, 'pages' => $pages, 'districtId' => $districtId, 'cityId' => $cityId]);
     }
     
     public function listing()
