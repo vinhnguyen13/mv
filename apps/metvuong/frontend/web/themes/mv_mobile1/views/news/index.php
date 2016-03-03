@@ -4,7 +4,7 @@
 			<div class="list-menu-news swiper-container">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        <a href="#">all</a>
+                        <a class="active" href="#">all</a>
                     </div>
                     <div class="swiper-slide">
                         <a href="#">dự án</a>

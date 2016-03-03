@@ -4548,12 +4548,21 @@ input[type=text]:focus {
 }
 .list-menu-news a {
     display: block;
-    padding: 7px 20px;
+    padding: 7px 10px;
     color: #3F3F3F;
+}
+.list-menu-news a.active {
+    border-bottom: 2px solid #333;
 }
 .page-news .title-top {
     padding: 0;
 }
 .list-menu-news .swiper-slide {
     width: auto;
+}
+.list-menu-news .swiper-wrapper {
+    padding: 0;
+}
+.list-menu-news {
+    padding: 0 20px;
 }
