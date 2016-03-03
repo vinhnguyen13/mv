@@ -25,7 +25,7 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
         return Yii::createObject(self::className());
     }
 
-    public function saveActivity($action, $message, $params, $object_id){
+    public function saveActivity($action, $params, $object_id){
         $app = Yii::$app;
         if(!isset($app->params['activity']['enable']) || $app->params['activity']['enable'] == false){
             return false;
@@ -49,7 +49,7 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
             }
             $activity->owner_id = $app->user->id;
             $activity->owner_username = $app->user->identity->username;
-            $activity->message = $message;
+            $activity->message = $this->getMessage();
             $activity->params = Json::encode($params);
             $activity->ip = $app->getRequest()->getUserIP();
             $activity->object_id = $object_id;
@@ -77,6 +77,19 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
             }
         }
         return false;
+    }
+
+    public function getMessage(){
+        if(!empty($this->action)){
+            switch($this->action){
+                case self::ACTION_AD_FAVORITE;
+                    return "{owner} favorite {product}";
+                    break;
+                case self::ACTION_AD_CLICK;
+                    return "{owner} view {product}";
+                    break;
+            }
+        }
     }
 
     public function findObject(){

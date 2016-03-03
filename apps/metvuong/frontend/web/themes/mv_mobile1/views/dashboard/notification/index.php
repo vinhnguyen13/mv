@@ -71,3 +71,11 @@ use yii\helpers\Html;
 		?>
 	</div>
 </div>
+<script>
+	$(document).ready(function () {
+		$(document).on('click', '.item.unread', function(){
+			alert(55);
+			return false;
+		});
+	});
+</script>
