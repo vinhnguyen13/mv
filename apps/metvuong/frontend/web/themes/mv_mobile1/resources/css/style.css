@@ -4546,3 +4546,14 @@ input[type=text]:focus {
     font-weight: 600;
     font-size: 14px;
 }
+.list-menu-news a {
+    display: block;
+    padding: 7px 20px;
+    color: #3F3F3F;
+}
+.page-news .title-top {
+    padding: 0;
+}
+.list-menu-news .swiper-slide {
+    width: auto;
+}

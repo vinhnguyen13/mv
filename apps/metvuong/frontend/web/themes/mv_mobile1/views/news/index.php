@@ -1,6 +1,41 @@
 <div class="title-fixed-wrap">
 	<div class="page-news">
-		<div class="title-top">TIN TỨC</div>
+		<div class="title-top">
+			<div class="list-menu-news swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <a href="#">all</a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="#">dự án</a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="#">luật</a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="#">kinh tế</a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="#">ngân hàng</a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="#">nhà đất</a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="#">chứng khoán</a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="#">doanh nghiệp</a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="#">kinh doanh</a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a href="#">tài chính - kế toán</a>
+                    </div>
+                </div>
+            </div>
+		</div>
         <?php if(count($news)){?>
 		<div class="wrap-news">
 			<ul class="clearfix">
@@ -26,3 +61,12 @@
         <?php } ?>
 	</div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var swiper = new Swiper('.list-menu-news', {
+            paginationClickable: true,
+            spaceBetween: 0,
+            slidesPerView: 'auto'
+        });
+    });
+</script>
