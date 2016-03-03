@@ -74,7 +74,7 @@ if(!empty($data) && count($data) > 0) {
                                         this.series.data[i].update({ color: '#909090' }, true, false);
                                     }
                                     this.update({ color: '#00a769' }, true, false);
-//                                    getDataByClick(this.category);
+                                    getDataByClick(this.category);
                                 }
                             }
                         }
@@ -96,7 +96,7 @@ if(!empty($data) && count($data) > 0) {
                     url: '<?=Url::to(['/dashboard/clickchart','id' => $id])?>' + '&date=' + date + '&view=_partials/saved',
                     success: function (data) {
                         if(data){
-                            $('.favourite .list-item').html(data);
+//                            $('.favourite .list-item').html(data);
                             $('.date-filter-chart').html('Thống kê trong ngày <span>'+date+'</span>');
                         }
                     }

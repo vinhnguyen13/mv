@@ -86,7 +86,7 @@ class Chart extends Component
         // saved
         $query = AdProductSaved::find();
         $query->andFilterWhere(['between', 'saved_at', $from, $to]);
-        if(!empty($pids)){
+        if(!empty($pid)){
             $query->andWhere(['product_id' => $pid]);
         }
         $query->andWhere('saved_at > :sa',[':sa' => 0]);
@@ -167,7 +167,7 @@ class Chart extends Component
         // saved
         $query = AdProductSaved::find();
         $query->andFilterWhere(['between', 'saved_at', $from, $to]);
-        if(!empty($pids)){
+        if(!empty($pid)){
             $query->andWhere(['product_id' => $pid]);
         }
         $query->andWhere('saved_at > :sa',[':sa' => 0]);
