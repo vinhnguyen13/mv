@@ -21,7 +21,7 @@
                         <div class="swiper-slide">
                             <div class="img-show">
                                 <div>
-                                    <img src="<<?= Yii::$app->view->theme->baseUrl."/resources/images/img-duan-demo.jpg" ?>" alt="<?=$model->location?>">
+                                    <img src="/themes/metvuong2/resources/images/default-ads.jpg" alt="<?=$model->location?>">
                                 </div>
                             </div>
                         </div>
