@@ -225,7 +225,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                 <?= $f->field($share_form, 'content')->textarea(['class'=>'content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('content', 'Nội dung...')])->label(false) ?>
             </div>
             <div class="item-send">
-                <div class="img-show"><div><a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($address)]) ?>"><img src="<?= !empty($images[0]) ? $images[0]->file_name : '#' ?>" alt="<?=$address?>"></a></div></div>
+                <div class="img-show"><div><a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($address)]) ?>"><img src="<?= $product->getRepresentImage()?>" alt="<?=$address?>"></a></div></div>
                 <div class="infor-send">
                     <p class="name"><?=$address?></p>
                     <p class="address"></p>
@@ -260,7 +260,8 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
             styleShow: 'center',
             closeBtn: '#popup-user-inter .btn-close',
             funCallBack: function(item) {
-                $('#popup-user-inter .name-user-inter').html(item[0].innerText);
+                l(item);
+                $('#popup-user-inter .name-user-inter').html('<a href="/'+item[0].innerText+'">'+item[0].innerText+'</a>');
                 $('#popup-user-inter .btn-chat').attr('href','/chat/with/'+item[0].innerText);
             }
         });
