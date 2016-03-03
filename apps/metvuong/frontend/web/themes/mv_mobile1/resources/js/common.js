@@ -132,7 +132,7 @@ $.fn.radio = function (options) {
         el.on('click', toggleCheck);
 
         if ( el.find('input').attr('checked') ) {
-            el.find('.radio-ui').addClass('active');
+            el.addClass('active');
         }
 
         function toggleCheck (e) {
@@ -141,7 +141,7 @@ $.fn.radio = function (options) {
                 nameGroup = _this.find('input').attr('name');
 
             $('input[name="'+nameGroup+'"]').prop("checked", false);
-            $('input[name="'+nameGroup+'"]').parent().removeClass('active');
+            $('input[name="'+nameGroup+'"]').closest('.frm-radio').removeClass('active');
 
             if ( _this.find('input[type=radio]').prop("checked") ) {
                 _this.find('input[type=radio]').prop("checked", false);
@@ -155,9 +155,9 @@ $.fn.radio = function (options) {
         }
         function checkedItem (item, flagChecked) {
             if ( flagChecked ) {
-                item.find('.radio-ui').addClass('active');
+                item.addClass('active');
             }else {
-                item.find('.radio-ui').removeClass('active');
+                item.removeClass('active');
             }
         }
 

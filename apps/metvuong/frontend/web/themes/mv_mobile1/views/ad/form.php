@@ -38,7 +38,7 @@ use common\widgets\fileupload\FileUpload;
 			<ul class="clearfix step-check">
 				<li>
 					<a class="frm-radio" href="#">
-						<span class="radio-ui icon">
+						<span class="radio-ui icon-postlisting icon-ban-post">
 							<?php $typeName = Html::getInputName($product, 'type') ?>
 							<?= Html::radio($typeName, ($product->type == AdProduct::TYPE_FOR_SELL || !$product->type), ['value' => AdProduct::TYPE_FOR_SELL]) ?>
 						</span>
@@ -47,7 +47,7 @@ use common\widgets\fileupload\FileUpload;
 				</li>
 				<li>
 					<a class="frm-radio" href="#">
-						<span class="radio-ui icon">
+						<span class="radio-ui icon-postlisting icon-chothue">
 							<?= Html::radio($typeName, ($product->type == AdProduct::TYPE_FOR_RENT), ['value' => AdProduct::TYPE_FOR_RENT]) ?>
 						</span>
 						<span><?= Yii::t('ad', 'Cho thuê') ?></span>
@@ -56,7 +56,7 @@ use common\widgets\fileupload\FileUpload;
 				<li>
 					<a class="frm-radio" href="#">
 						<?php $ownerName = Html::getInputName($product, 'owner') ?>
-						<span class="radio-ui icon">
+						<span class="radio-ui icon-postlisting icon-chunha">
 							<?= Html::radio($ownerName, ($product->owner == AdProduct::OWNER_HOST || !$product->owner), ['value' => AdProduct::OWNER_HOST, 'id' => 'owner-host']) ?>
 						</span>
 						<span><?= Yii::t('ad', 'Chủ nhà') ?></span>
@@ -64,7 +64,7 @@ use common\widgets\fileupload\FileUpload;
 				</li>
 				<li>
 					<a class="frm-radio" href="#">
-						<span class="radio-ui icon">
+						<span class="radio-ui icon-postlisting icon-mogioi">
 							<?= Html::radio($ownerName, ($product->owner == AdProduct::OWNER_AGENT), ['value' => AdProduct::OWNER_AGENT]) ?>
 						</span>
 						<span><?= Yii::t('ad', 'Môi giới') ?></span>
@@ -119,10 +119,12 @@ use common\widgets\fileupload\FileUpload;
 				<?= $form->field($product, 'home_no', ['options' => ['class' => 'col-xs-12 form-group']])
 						->label(false)
 						->textInput(['placeholder' => $product->getAttributeLabel('home_no')]) ?>
-			
-				<?= $form->field($product, 'area', ['options' => ['class' => 'col-xs-12 form-group']])
+				<div class="col-xs-12 form-group">
+					<?= $form->field($product, 'area', ['options' => ['class' => '']])
 						->label(false)
 						->textInput(['placeholder' => $product->getAttributeLabel('area')]) ?>
+					<span class="unit-dt">m2</span>
+				</div>
 				
 				<?= $form->field($product, 'price', ['options' => ['class' => 'col-xs-12 form-group']])
 						->label(false)

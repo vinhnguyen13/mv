@@ -844,9 +844,15 @@ label {
     display: block;
     background: #ebeff2;
     text-align: center;
-    padding: 40px 0;
+    padding: 20px 0 15px;
     color: #171616;
-    font-size: 17px;
+    font-size: 18px;
+    height: 145px;
+    overflow: hidden;
+}
+.step-check li a.active {
+    background-color: #ffffff;
+    border: solid 2.5px #00a769;
 }
 .step-check li span {
     display: block;
@@ -1026,7 +1032,7 @@ label {
     background-position: 0 -137px;
 }
 .radio-ui.active {
-    background-position: 0 -171px;
+    /* background-position: 0 -171px; */
 }
 .radio-ui input {
     display: none;
@@ -4239,6 +4245,7 @@ input[type=text]:focus {
 }
 #listing-form .form-group {
     margin-bottom: 0;
+    position: relative;
 }
 #listing-form .hinh-anh .files {
     margin: 0 -5px;
@@ -4571,4 +4578,35 @@ input[type=text]:focus {
 }
 .list-menu-news {
     padding: 0 20px;
+}
+.icon-postlisting {
+    background: url(../images/icon-type-postlisting.png) no-repeat top left;
+    display: inline-block;
+    background-size: 100px 333.3333px;
+}
+.icon-ban-post {
+    background-position: 0 -73px;
+    width: 69px;
+    height: 75px;
+}
+.icon-chothue {
+    background-position: 0 -1px;
+    width: 85px;
+    height: 71px;
+}
+.icon-chunha {
+    background-position: 0 -229px;
+    width: 72px;
+    height: 73px;
+}
+.icon-mogioi {
+    background-position: 0 -150px;
+    width: 72px;
+    height: 79px;
+}
+.unit-dt {
+    position: absolute;
+    top: 6px;
+    right: 20px;
+    font-size: 14px;
 }
