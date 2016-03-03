@@ -230,11 +230,11 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
             styleShow: 'center',
             closeBtn: '#popup-user-inter .btn-close',
             funCallBack: function(item) {
-                $('#popup-user-inter .avatar-user-inter img').attr('src', item[0].attributes["data-ava"].value);
-                $('#popup-user-inter .avatar-user-inter a').attr('href', '/'+item[0].innerText);
-                $('#popup-user-inter .name-user-inter').html('Bạn có thể Chat và Email với tài khoản: <a href="/'+item[0].innerText+'">'+item[0].innerText+'</a>');
-                $('#popup-user-inter .btn-chat').attr('href','/chat/with/'+item[0].innerText);
-                $('.recipient_email').attr('value', item[0].attributes["data-email"].value)
+                $('#popup-user-inter .avatar-user-inter img').attr('src', item[0].attributes["data-ava"].value.trim());
+                $('#popup-user-inter .avatar-user-inter a').attr('href', '/'+item[0].innerText.trim());
+                $('#popup-user-inter .name-user-inter').html('Bạn có thể Chat và Email với tài khoản: <a href="/'+item[0].innerText.trim()+'">'+item[0].innerText.trim()+'</a>');
+                $('#popup-user-inter .btn-chat').attr('href','/chat/with/'+item[0].innerText.trim());
+                $('.recipient_email').attr('value', item[0].attributes["data-email"].value.trim())
             }
         });
 
