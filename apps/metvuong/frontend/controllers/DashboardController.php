@@ -57,8 +57,10 @@ class DashboardController extends Controller
         if($date == "undefined-undefined-")
             $date = null;
 
-        if($date) // truong hop chon calendar
+        if(empty($date)) { // truong hop chon calendar
+            $date = date('d/m/Y', time());
             $useDate = new \DateTime($date);
+        }
         else { // vao thong ke cua 1 tin dang
             $finder = AdProductFinder::find()->where((['product_id' => $id]))->orderBy('time DESC')->one();
             $useDate = new \DateTime(date('Y-m-d', $finder->time));
