@@ -7,6 +7,7 @@ use frontend\models\Chart;
 use frontend\models\Tracking;
 use frontend\models\User;
 use frontend\models\ProfileForm;
+use frontend\models\UserActivity;
 use vsoft\express\components\ImageHelper;
 use vsoft\tracking\models\base\AdProductFinder;
 use vsoft\tracking\models\base\AdProductVisitor;
@@ -152,8 +153,17 @@ class DashboardController extends Controller
 
     public function actionNotification()
     {
-        return $this->render('notification/index', [
-        ]);
+        if(Yii::$app->request->isAjax){
+            if(Yii::$app->request->isPost){
+                $_id = Yii::$app->request->post('id');
+                if(($userActivity = UserActivity::findOne(['_id'=>$_id])) !== null){
+                    $userActivity->read();
+                }
+            }
+        }else {
+            return $this->render('notification/index', [
+            ]);
+        }
     }
 
     public function actionAd()

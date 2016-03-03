@@ -21,10 +21,11 @@ use yii\helpers\Html;
 			<div class="list-noti clearfix">
 				<?php
 					foreach($activities as $activity) {
+						$id = (string) $activity->_id ;
 						$owner = $activity->getOwner();
 						$buddy = $activity->getBuddy();
 						?>
-						<div class="item <?=(!empty($activities->read_status) && $activities->read_status == UserActivity::READ_YES) ? 'read' : 'unread';?>">
+						<div class="item <?=(!empty($activity->read_status) && $activity->read_status == UserActivity::READ_YES) ? 'read' : 'unread';?>" data-id="<?=$id?>">
 							<div class="user-get clearfix">
 <!--								<span class="icon icon-message"></span>-->
 								<span class="icon save-item-1"></span>
@@ -74,7 +75,22 @@ use yii\helpers\Html;
 <script>
 	$(document).ready(function () {
 		$(document).on('click', '.item.unread', function(){
-			alert(55);
+			var _id = $(this).attr('data-id');
+			var timer = 0;
+			clearTimeout(timer);
+			timer = setTimeout(function () {
+				$.ajax({
+					type: "post",
+					url: "<?=Url::to(['/dashboard/notification', 'username'=> Yii::$app->user->identity->username])?>",
+					data: {id: _id, stt: 'read'},
+					success: function (data) {
+						if(data.statusCode == 200){
+
+						}
+					}
+				});
+			}, 500);
+			$(this).removeClass('unread').addClass('read');
 			return false;
 		});
 	});
