@@ -43,7 +43,7 @@ use yii\helpers\Url;
 			<div class="swiper-slide">
 				<div class="img-show">
 					<div>
-						<img src="<?= $image->url ?>" alt="<?=$address?>">
+						<img src="<?= !empty($product->source) ? $image->url : "/store/ad/".$image->url ?>" alt="<?=$address?>">
 					</div>
 				</div>
 			</div>
@@ -245,6 +245,12 @@ use yii\helpers\Url;
                 'action' => Url::to(['/ad/sendmail'])
             ]);
 
+            if(!empty($product->source)){
+                $image = $images[0];
+            } else {
+                $image = "/store/ad/". $product->representImage;
+            }
+
             if(!Yii::$app->user->isGuest){
             ?>
             <?= $f->field($share_form, 'your_email')->hiddenInput(['class'=>'your_email', 'value' => Yii::$app->user->identity->profile->public_email])->label(false) ?>
@@ -260,7 +266,7 @@ use yii\helpers\Url;
                     <?= $f->field($share_form, 'content')->textarea(['class'=>'content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('content', 'Nội dung...')])->label(false) ?>
 				</div>
 				<div class="item-send">
-					<div class="img-show"><div><a href="<?=Yii::$app->request->absoluteUrl?>"><img src="<?= !empty($images[0]) ? $images[0]->url : '#' ?>" alt="<?=$address?>"></a></div></div>
+					<div class="img-show"><div><a href="<?=Yii::$app->request->absoluteUrl?>"><img src="<?= $image ?>" alt="<?=$address?>"></a></div></div>
 					<div class="infor-send">
 						<p class="name"><?=$address?></p>
 						<p class="address"></p>
