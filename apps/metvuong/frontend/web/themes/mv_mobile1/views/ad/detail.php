@@ -289,6 +289,29 @@ use yii\helpers\Url;
 	</div>
 </div>
 
+<div id="popup-share-social" class="popup-common hide-popup">
+    <div class="wrap-popup">
+        <div class="inner-popup">
+            <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
+            <div class="wrap-body-popup">
+                <span>Share on Social Network</span>
+                <ul class="clearfix">
+                    <li>
+                        <a href="#">
+                            <div class="circle"><div><span class="icon icon-face"></span></div></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php
 /**
  * notification
@@ -345,6 +368,12 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 			btnClickShow: ".infor-listing .icon-map-loca",
 			closeBtn: "#popup-map .btn-close-map"
 		});
+
+		$('#popup-share-social').popupMobi({
+            btnClickShow: ".icons-detail .icon-share-td",
+            closeBtn: ".btn-close",
+            styleShow: "center"
+        });
 	});
     $(document).on('click', '.send_mail', function(){
         var timer = 0;
