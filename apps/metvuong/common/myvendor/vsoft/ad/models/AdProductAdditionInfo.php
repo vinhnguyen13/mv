@@ -42,7 +42,7 @@ class AdProductAdditionInfo extends APAI
             'facade_direction' => 'Hướng ban công',
             'floor_no' => 'Số tầng',
             'room_no' => 'Phòng ngủ',
-            'toilet_no' => 'Toilet',
+            'toilet_no' => 'Phòng tắm',
             'interior' => 'Nội thất',
         ];
     }
