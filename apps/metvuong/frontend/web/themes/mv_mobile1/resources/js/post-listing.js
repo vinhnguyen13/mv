@@ -21,6 +21,17 @@ $(document).ready(function () {
 	var catElContainer = catEl.closest('.form-group');
 	var defaultCat = Number(catEl.data('default'));
 	
+	var priceEl = $('#adproduct-price');
+	var priceFormat = $('<span style="display: none;" id="price-format"></span>');
+	priceEl.after(priceFormat);
+	priceEl.keyup(function(){
+		if(/^\d+$/.test(priceEl.val())) {
+			priceFormat.show().text(formatPrice(priceEl.val()) + ' VNĐ');
+		} else {
+			priceFormat.hide();
+		}
+	});
+	
 	$('.btn-post').click(function(){
 		var isValid = true;
 		var mobileEl = $('#adcontactinfo-mobile');
