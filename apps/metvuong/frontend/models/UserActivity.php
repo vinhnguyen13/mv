@@ -35,21 +35,17 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
             if($action == self::ACTION_AD_FAVORITE){
                 if(($activityExist = self::findOne(['action'=>$action, 'owner_id'=>$app->user->id, 'object_id'=>$object_id])) !== null){
                     $activity = $activityExist;
-                    $activity->action = self::ACTION_AD_FAVORITE;
                 }
             }elseif($action == self::ACTION_AD_CLICK){
                 if(($activityExist = self::findOne(['action'=>$action, 'owner_id'=>$app->user->id, 'object_id'=>$object_id])) !== null){
                     $activity = $activityExist;
-                    $activity->action = self::ACTION_AD_CLICK;
                 }
             }
 
-            if(empty($activityExist)){
-                $activity->action = $action;
-            }
+            $activity->action = $action;
             $activity->owner_id = $app->user->id;
             $activity->owner_username = $app->user->identity->username;
-            $activity->message = $this->getMessage();
+            $activity->message = $activity->getMessage();
             $activity->params = Json::encode($params);
             $activity->ip = $app->getRequest()->getUserIP();
             $activity->object_id = $object_id;

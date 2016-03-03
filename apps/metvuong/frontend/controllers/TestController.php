@@ -181,4 +181,8 @@ class TestController extends \yii\web\Controller
         Yii::t('activity', '{user} view {product} of {product_owner}');
         Yii::t('activity', '{user} view {product} of {product_owner}');
     }
+
+    public function actionClearCache(){
+        Yii::$app->cache->flush();
+    }
 }
