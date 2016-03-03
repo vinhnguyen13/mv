@@ -18,8 +18,8 @@ use yii\helpers\Html;
 		if(!empty($activities)) {
 			?>
 			<div class="wrap-noti">
-			<div class="list-noti clearfix">
-				<?php
+				<div class="list-noti clearfix">
+					<?php
 					foreach($activities as $activity) {
 						$id = (string) $activity->_id ;
 						$owner = $activity->getOwner();
@@ -27,13 +27,17 @@ use yii\helpers\Html;
 						?>
 						<div class="item <?=(!empty($activity->read_status) && $activity->read_status == UserActivity::READ_YES) ? 'read' : 'unread';?>" data-id="<?=$id?>">
 							<div class="user-get clearfix">
-<!--								<span class="icon icon-message"></span>-->
-								<span class="icon icon-heart-small"></span>
+								<!--								<span class="icon icon-message"></span>-->
+								<?php if($activity->isAction(UserActivity::ACTION_AD_CLICK)){?>
+									<span class="icon icon-view-small"></span>
+								<?php }elseif($activity->isAction(UserActivity::ACTION_AD_FAVORITE)){?>
+									<span class="icon icon-heart-small"></span>
+								<?php }?>
 								<div class="avatar"><a href="<?=$owner->urlProfile();?>"><img src="<?=Url::to(['member/avatar', 'usrn'=>$owner->username])?>" alt="" width="40" height="40"></a></div>
 								<a href="#" class="name"><?=$owner->profile->getDisplayName();?></a>
 								<?php
 								$params = Json::decode($activity->params);
-								if($activity->action == UserActivity::ACTION_AD_FAVORITE || $activity->action == UserActivity::ACTION_AD_CLICK) {
+								if($activity->isAction(UserActivity::ACTION_AD_FAVORITE) || $activity->isAction(UserActivity::ACTION_AD_CLICK)) {
 									$product = AdProduct::findOne(['id'=>$params['product']]);
 									if(!empty($product)) {
 										$params['owner'] = '';
@@ -48,7 +52,7 @@ use yii\helpers\Html;
 											</a>
 										</div>
 										<p class="message"><?= $message; ?></p>
-										 <p class="date-type"><span><?= date('H:i:s d-m-Y', $activity->created); ?>.</span></p>
+										<p class="date-type"><span><?= date('H:i:s d-m-Y', $activity->created); ?>.</span></p>
 										<?php
 									}
 								}
@@ -58,10 +62,10 @@ use yii\helpers\Html;
 						<?php
 //						$activity->read();
 					}
-				?>
+					?>
+				</div>
 			</div>
-		</div>
-		<?php
+			<?php
 		}else{
 			?>
 			<div class="alert alert-info">
