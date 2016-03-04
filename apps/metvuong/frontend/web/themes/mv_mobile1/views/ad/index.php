@@ -19,8 +19,6 @@ $types = AdProduct::getAdTypes ();
 			<ul class="clearfix"></ul>
 			<em class="icon-pencil"></em>
 		</div> -->
-	
-		<input type="hidden" name="sort" id="sort" class="value_selected" value="<?= ($sort = Yii::$app->request->get('sort')) ? $sort : 'created_at' ?>" />
 		<div class="search-subpage clearfix">
 			<div class="advande-search">
 				<div class="toggle-search">
@@ -183,8 +181,6 @@ $types = AdProduct::getAdTypes ();
 				<button class="btn-submit btn-common active" data-flag="true">Tìm kiếm</button>
 			</div>
 		</div>
-	</form>
-	<div class="wrap-listing clearfix">
 		<div class="dropdown-select option-show-listing">
 			<div class="val-selected style-click clearfix">
 				Hiển thị theo <span class="selected">Tin mới nhất</span>
@@ -197,8 +193,11 @@ $types = AdProduct::getAdTypes ();
 					<li><a data-value="price" href="#">Giá tăng dần</a></li>
 					<li><a data-value="score" href="#">Điểm cao nhất</a></li>
 				</ul>
+				<input type="hidden" name="sort" id="sort" class="value_selected" value="<?= ($sort = Yii::$app->request->get('sort')) ? $sort : 'created_at' ?>" />
 			</div>
 		</div>
+	</form>
+	<div class="wrap-listing clearfix">
 		<div id="content-holder">
 			<?php if(count($products) > 0): ?>
 			<div class="top-listing clearfix">
