@@ -198,7 +198,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 
 <div id="popup-user-inter" class="popup-common hide-popup">
     <div class="wrap-popup">
-        <div class="inner-popup" style="padding-top: 30px;">
+        <div class="inner-popup">
             <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
             <div class="pull-left circle avatar-user-inter">
                 <a href="#">
