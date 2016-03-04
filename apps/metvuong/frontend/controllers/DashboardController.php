@@ -173,8 +173,6 @@ class DashboardController extends Controller
                 if(count($favourites) > 0) {
                     foreach ($favourites as $key => $val) {
                         $classPopupUser = 'popup_enable';
-                        if($key == Yii::$app->user->identity->username)
-                            $classPopupUser = '';
                         $li = '<li><a class="'.$classPopupUser.'" href="javascript:void(0);" data-email="'.$val["email"].'" data-ava="'.Url::to($val['avatar'], true).'">'.
                             '<img src="'.$val['avatar'].'">'.$key.'</a>'.
                             '<span class="pull-right">'.$val['count'].'</span></li>';

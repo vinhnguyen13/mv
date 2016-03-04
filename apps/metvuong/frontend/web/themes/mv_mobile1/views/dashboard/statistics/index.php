@@ -154,13 +154,12 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     					<ul class="clearfix list-item">
                             <?php if(!empty($favourites) && count($favourites) > 0){
                                 foreach($favourites as $key => $favourite){
-                                    $classPopupUser = 'popup_enable';
-                                    if($key != $user->username)
-                                        $classPopupUser = '';
                                     ?>
                                     <li>
-                                        <a class="<?=$classPopupUser?>" href="javascript:void(0);" data-ava="<?=Url::to($favourite['avatar'], true)?>">
-                                        <img src="<?=$favourite['avatar']?>" alt="<?=$key?>"><?=$key?></a>
+                                        <a class="popup_enable" href="javascript:void(0);" data-email="<?=$favourite['email']?>"  data-ava="<?=Url::to($favourite['avatar'], true)?>">
+                                            <img src="<?=$favourite['avatar']?>" alt="<?=$key?>">
+                                            <?=$key?>
+                                        </a>
                                     </li>
                                 <?php }
                             }  else { ?>
@@ -231,7 +230,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
                 $('#popup-user-inter .avatar-user-inter a').attr('href', '/'+item[0].innerText.trim());
                 $('#popup-user-inter .name-user-inter').html('Bạn có thể Chat và Email với tài khoản: <a href="/'+item[0].innerText.trim()+'">'+item[0].innerText.trim()+'</a>');
                 $('#popup-user-inter .btn-chat').attr('href','/chat/with/'+item[0].innerText.trim());
-                $('.recipient_email').attr('value', item[0].attributes["data-email"].value.trim())
+                $('.recipient_email').attr('value', item[0].attributes["data-email"].value)
             }
         });
 

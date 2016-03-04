@@ -112,7 +112,7 @@ class Chart extends Component
 
                 $user = User::findIdentity($item->user_id);
                 $username = $user->username;
-                $email = $user->profile->public_email;
+                $email = empty($user->profile->public_email) ? $user->email : $user->profile->public_email;
                 $avatar = $user->profile->getAvatarUrl();
                 if(array_key_exists($username, $infoSaved)){
                     $c =  $infoSaved[$username]['count'];
