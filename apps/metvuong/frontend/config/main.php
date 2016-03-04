@@ -37,6 +37,15 @@ return [
                 'security' => 'frontend\controllers\SecurityController',
                 'registration' => 'frontend\controllers\RegistrationController',
             ],
+            'urlRules' => [
+                '<id:\d+>'                               => 'profile/show',
+                '<action:(login|logout)>'                => 'security/<action>',
+                '<action:(register|resend)>'             => 'registration/<action>',
+                'confirm/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'registration/confirm',
+                'forgot'                                 => 'recovery/request',
+                'recover/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'recovery/reset',
+                'settings/<action:\w+>'                  => 'settings/<action>'
+            ]
         ],
     ],
     'components' => [
@@ -44,6 +53,7 @@ return [
             'identityClass' => 'frontend\models\User',
             'enableAutoLogin' => true,
             'on afterLogin' => ['frontend\components\Login', 'handleAfterLogin'],
+            'loginUrl' => ['member/login'],
         ],
         'request' => [
             'baseUrl' => $baseUrl,
