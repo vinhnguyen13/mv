@@ -1099,10 +1099,16 @@ label {
     border-bottom: solid 0.5px #ededed;
     background: #fff;
 }
+.noti-alert .title-top,
+.detail-news .title-top,
 .edit-user-tt .title-top {
     position: fixed;
-    top: 39px;
+    top: 41px;
     left: 0;
+}
+.noti-alert,
+.detail-news {
+    padding-top: 40px;
 }
 .title-top a {
     color: #00a769;
@@ -2463,12 +2469,16 @@ footer {
     padding: 0 0 0 30px;
 }
 .list-noti {
-    border-left: 1.5px dashed #777777;
     padding: 10px 0 50px 30px;
 }
 .list-noti .item {
-    padding: 10px 10px;
+    padding: 5px 10px;
     /* border-bottom: 1px solid #969696; */
+	border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    margin-bottom: 15px;
 }
 .list-noti .item:last-child {
     border: none;
@@ -2486,7 +2496,7 @@ footer {
     text-transform: capitalize;
     font-weight: 600;
     color: #000;
-    font-size: 16px;
+    font-size: 14px;
 }
 .list-noti .user-get p {
     color: #777777;
@@ -3671,7 +3681,7 @@ input[type=text]:focus {
 }
 .list-noti .user-get .icon {
     position: absolute;
-    top: -3px;
+    top: 1px;
     right: 0;
 }
 .save-item-1 {
@@ -4699,7 +4709,6 @@ input[type=text]:focus {
 }
 .unread {
     background: rgba(237,239,245,.98);
-    border-bottom: 1px solid  #d8deea;
 }
 .list-noti {
     padding-left: 25px;
@@ -4710,7 +4719,7 @@ input[type=text]:focus {
     top: 0;
 }
 .list-noti .user-get .message {
-    padding: 5px 0 5px;
+    padding: 2px 0 2px;
     text-transform: capitalize;
 }
 .list-noti .user-get .message a {
@@ -4871,4 +4880,11 @@ input[type=text]:focus {
 }
 .edit-user-tt {
     padding-top: 40px;
+}
+.line-noti {
+    position: fixed;
+    top: 0;
+    left: 30px;
+    border-left: 1.5px dashed #777777;
+    height: 100%;
 }
