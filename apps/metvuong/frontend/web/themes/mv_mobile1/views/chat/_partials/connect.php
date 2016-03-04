@@ -3,7 +3,12 @@ use yii\web\View;
 use yii\helpers\Url;
 use frontend\models\Chat;
 if(!Yii::$app->user->isGuest) {
-    $script = "var xmpp_jid = '" . Yii::$app->user->identity->username . "';var xmpp_dm = '" . Chat::find()->getDomain() . "';var xmpp_key = '" . Chat::find()->getKey() . "';";
+    $debug = !empty(Yii::$app->params['chat']['debug']) ? ( 'true') :  ( 'false');
+    $script = "var xmpp_jid = '" . Yii::$app->user->identity->username . "';" .
+        "var xmpp_dm = '" . Chat::find()->getDomain() . "';" .
+        "var xmpp_key = '" . Chat::find()->getKey() . "';" .
+        "var xmpp_debug = ".$debug.";";
+
     Yii::$app->getView()->registerJs($script, View::POS_HEAD);
 
     Yii::$app->getView()->registerJsFile('https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js', ['position' => View::POS_BEGIN]);

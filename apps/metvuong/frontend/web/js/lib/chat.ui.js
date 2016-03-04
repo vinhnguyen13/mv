@@ -6,7 +6,7 @@
         MSG_SEND_YOU: 2,
         BOSH_SERVICE: 'http://metvuong.com:5280/wating',
         connect: function() {
-            Chat.connect(chatUI.genJid(xmpp_jid), xmpp_key, chatUI.BOSH_SERVICE, true);
+            Chat.connect(chatUI.genJid(xmpp_jid), xmpp_key, chatUI.BOSH_SERVICE, xmpp_debug);
         },
         genJid: function(jid) {
             return jid+'@'+xmpp_dm;
