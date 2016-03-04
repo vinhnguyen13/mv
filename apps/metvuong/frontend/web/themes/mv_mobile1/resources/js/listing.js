@@ -76,6 +76,7 @@ $(document).ready(function(){
 	var searchForm = $('#search-form');
 	var page = 1;
 	var listingListId = '#listing-list';
+	var listingListWrap = '#listing-list > ul';
 	var itemLoadingId = '#item-loading';
 	
 	if(!$(itemLoadingId).hasClass('hide')) {
@@ -97,7 +98,11 @@ $(document).ready(function(){
 				inputPage.remove();
 				
 				var items = r.find('.item-listing');
-				$(listingListId).append(items);
+				items.each(function() {
+					var item = $('<li></li>');
+					item.append($(this));
+					$(listingListWrap).append(item);
+				});
 				
 				var countTo = $('#count-to');
 				countTo.text(Number(countTo.text()) + items.length);
@@ -115,7 +120,6 @@ $(document).ready(function(){
 	}
 	
 	$('.dropdown-select').dropdown({
-		hiddenFillValue: '#sort',
 		ajaxSubmit: function () {
 			$('button.btn-submit').data('flag',false);
 			searchForm.submit();
