@@ -115,7 +115,8 @@ class Ad extends Component
                         UserActivity::me()->saveActivity(UserActivity::ACTION_AD_FAVORITE, [
                             'owner' => Yii::$app->user->id,
                             'product' => $adSaved->product_id,
-                            'buddy' => $adSaved->product->user_id
+                            'buddy' => $adSaved->product->user_id,
+                            'saved_at' => $adSaved->saved_at,
                         ], $adSaved->product_id);
                     }
                 }
