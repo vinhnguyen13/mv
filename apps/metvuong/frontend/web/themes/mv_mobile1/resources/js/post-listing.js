@@ -61,13 +61,14 @@ $(document).ready(function () {
 			hideError(emailEl);
 		}
 		
+		$('body').loading();
+		
 		if(isValid) {
 			$.post(listingForm.attr('action'), listingForm.serialize(), function(r){
 				if(r.success) {
-					$('#popup-share-social').popupMobi({
-			            closeBtn: ".btn-close",
-			            styleShow: "center"
-			        });
+					listingForm.hide();
+					$('#popup-share-social').removeClass('hide-popup');
+					$('body').loading({done: true});
 				} else {
 					alert('có lỗi xảy ra !');
 				}
