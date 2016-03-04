@@ -3850,6 +3850,8 @@ input[type=text]:focus {
 }
 .list-attr-per li a {
     color: #3c3c3c;
+    font-size: 15px;
+    padding: 0;
 }
 .circle div {
     border-radius: 50%;
@@ -3996,15 +3998,16 @@ input[type=text]:focus {
     position: absolute;
     z-index: 1001;
     bottom: 50%;
-    right: 50%;
+    left: 50%;
     width: 320px;
     background-color: white;
     box-shadow: 0 -2px 2px rgba(0,0,0,0.2);
     border-radius: 2px;
-    -webkit-transform: translate3d(50%,50%,0);
+    margin: 0 auto 0;
+    margin-left: -160px;
 }
 .inner-popup {
-    padding: 0 15px 30px;
+    padding: 15px 15px 15px;
     position: relative;
 }
 .frm-email {
