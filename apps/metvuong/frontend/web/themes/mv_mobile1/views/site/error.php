@@ -1,7 +1,24 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vinhnguyen
- * Date: 3/4/2016
- * Time: 2:13 PM
- */
+
+/* @var $this yii\web\View */
+/* @var $name string */
+/* @var $message string */
+/* @var $exception Exception */
+
+use yii\helpers\Html;
+
+$this->title = $name;
+?>
+<div class="site-error">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+
+    <div class="alert alert-danger">
+        <?= nl2br(Html::encode($message)) ?>
+    </div>
+
+    <p>
+        Please contact us if you think this is a server error. Thank you.
+    </p>
+
+</div>

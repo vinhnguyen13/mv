@@ -23,8 +23,7 @@ class UserActivity extends ActiveRecord
     public function rules()
     {
         return [
-            [['owner_id', 'owner_username', 'buddy_id', 'buddy_username'], 'required'],
-            [['owner_id', 'object_id', 'buddy_id'], 'integer'],
+            [['owner_id', 'owner_username'], 'required'],
         ];
     }
     /**

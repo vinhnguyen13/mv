@@ -46,13 +46,15 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
             $activity->owner_id = $app->user->id;
             $activity->owner_username = $app->user->identity->username;
             $activity->message = $activity->getMessage();
-            $activity->params = Json::encode($params);
+            $activity->params = $params;
             $activity->ip = $app->getRequest()->getUserIP();
             $activity->object_id = $object_id;
             $object = $activity->findObject();
-            if(!empty($object)) {
-                $activity->buddy_id = $object['buddy_id'];
-                $activity->buddy_username = $object['buddy_username'];
+            if(!empty($object['user'])) {
+                $activity->buddy_id = $object['user']->id;
+                $activity->buddy_username = $object['user']->username;
+            }else{
+                return false;
             }
             $activity->parent_id = 0;
             $activity->status = 1;
@@ -95,8 +97,6 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
                 case self::ACTION_AD_CLICK;
                     if(($product = AdProduct::findOne(['id'=>$this->object_id])) !== null && !empty($product->user_id)){
                         $object['user'] = User::findOne($product->user_id);
-                        $object['buddy_id'] = $product->user_id;
-                        $object['buddy_username'] = $object['user']->username;
                         return $object;
                     }
                     break;

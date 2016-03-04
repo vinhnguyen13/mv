@@ -11,6 +11,8 @@ use yii\helpers\Html;
 		<div class="title-top">Thông báo</div>
 		<?php
 		$query = \frontend\models\UserActivity::find();
+//		$query->andWhere(['params.owner'=>[1]]);
+//		$query->andWhere(['NOT IN', 'objects', [5070]]);
 		$query->andWhere(['buddy_id' => Yii::$app->user->id]);
 		$query->orderBy('updated DESC');
 		$query->limit(100);
@@ -36,7 +38,7 @@ use yii\helpers\Html;
 								<div class="avatar"><a href="<?=$owner->urlProfile();?>"><img src="<?=Url::to(['member/avatar', 'usrn'=>$owner->username])?>" alt="" width="40" height="40"></a></div>
 								<a href="#" class="name"><?=$owner->profile->getDisplayName();?></a>
 								<?php
-								$params = Json::decode($activity->params);
+								$params = $activity->params;
 								if($activity->isAction(UserActivity::ACTION_AD_FAVORITE) || $activity->isAction(UserActivity::ACTION_AD_CLICK)) {
 									$product = AdProduct::findOne(['id'=>$params['product']]);
 									if(!empty($product)) {
