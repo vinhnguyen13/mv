@@ -36,13 +36,22 @@ if(!Yii::$app->user->isGuest) {
                     if(params.chatType != chatUI.MSG_SEND_ME){
                         chatUI.notify(chatUI.NOTIFY_CHAT, 1);
                     }
-                    if ('<?=$urlBase?>' == 'chat/with') {
+                    if ('<?=$urlBase?>' == 'chat/with' || '<?=$urlBase?>' == 'chat/index') {
                         chatUI.loadMessageToBox(msg, params);
-                    } else if ('<?=$urlBase?>' == 'chat/index') {
-                        chatUI.loadMessageToList(msg, params);
                     }
                 }else if(params.type == 'notify'){
                     chatUI.notify(chatUI.NOTIFY_OTHER, params.total);
+                    var timer = 0;
+                    timer = setTimeout(function () {
+                        $.ajax({
+                            type: "post",
+                            url: "<?=Url::to(['/notification/update', 'username'=> Yii::$app->user->identity->username])?>",
+                            data: {id: true},
+                            success: function (data) {
+
+                            }
+                        });
+                    }, 500);
                 }
             });
             $(document).bind('chat/readNotify', function (event, type) {

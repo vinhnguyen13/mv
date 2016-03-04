@@ -119,7 +119,7 @@ class Ad extends Component
                         ], $adSaved->product_id);
                     }
                 }
-                return ['statusCode'=>200, 'parameters'=>['msg'=>Yii::$app->view->params['notify_other']]];
+                return ['statusCode'=>200, 'parameters'=>['msg'=>Yii::$app->session->getFlash('notify_other')]];
             }
         }
         return ['statusCode'=>404, 'parameters'=>['msg'=>'']];

@@ -9,6 +9,7 @@ use frontend\models\Tracking;
 use frontend\models\User;
 use frontend\models\ProfileForm;
 use frontend\models\UserActivity;
+use frontend\models\UserData;
 use vsoft\express\components\ImageHelper;
 use vsoft\tracking\models\base\AdProductFinder;
 use vsoft\tracking\models\base\AdProductVisitor;
@@ -53,5 +54,21 @@ class NotificationController extends Controller
                 return $output;
             }
         }
+    }
+
+    public function actionUpdate()
+    {
+        if(!Yii::$app->user->isGuest){
+            if(($userData = UserData::findOne(['user_id'=>Yii::$app->user->identity->id])) !== null){
+                $alert = $userData->alert;
+                if(!empty($alert[UserData::ALERT_OTHER])){
+                    Yii::$app->session->set("notifyOther",count($alert[UserData::ALERT_OTHER]));
+                }
+                if(!empty($alert[UserData::ALERT_CHAT])){
+                    Yii::$app->session->set("notifyChat",count($alert[UserData::ALERT_CHAT]));
+                }
+            }
+        }
+        return true;
     }
 }

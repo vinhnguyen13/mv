@@ -24,7 +24,7 @@ class Login extends Component
          * @todo: remove if done
          */
         if(($userData = UserData::findOne(['user_id'=>$event->identity->id])) !== null){
-            $alert = Json::decode($userData->alert);
+            $alert = $userData->alert;
             if(!empty($alert[UserData::ALERT_OTHER])){
                 Yii::$app->session->set("notifyOther",count($alert[UserData::ALERT_OTHER]));
             }

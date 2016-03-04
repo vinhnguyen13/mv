@@ -20,8 +20,8 @@
         from: null,
         to: null,
         setConservation: function(from, to){
-            chatUI.from = from;
-            chatUI.to = to;
+            this.from = from;
+            this.to = to;
         },
         showBoxChat: function (from, to) {
             var from = chatUI.usrFromJid(from);

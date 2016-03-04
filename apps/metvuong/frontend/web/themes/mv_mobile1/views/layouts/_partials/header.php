@@ -49,7 +49,7 @@ use yii\helpers\Url;
                 </a>
             </li>
             <!-- <li><a href="<?= Url::to(['/ad/post']) ?>"><em class="icon-plus"></em>Đăng tin mới</a></li> -->
-            <li><a href="<?=Url::to(['/dashboard/notification', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyOther"><div><span class="icon icon-alert"></span></div>Thông báo
+            <li><a href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyOther"><div><span class="icon icon-alert"></span></div>Thông báo
                     <?php if(!empty($this->params['notify_other'])){?>
                         <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
                     <?php }?>

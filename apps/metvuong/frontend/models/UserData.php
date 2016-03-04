@@ -29,7 +29,7 @@ class UserData extends \vsoft\user\models\base\UserData
             $userData = $userDataExist;
         };
 
-        $oldAlert = !empty($userData->alert) ? Json::decode($userData->alert) : [];
+        $oldAlert = !empty($userData->alert) ? $userData->alert : [];
         if(!empty($oldAlert[$type])){
             $array_diff = array_diff($data, $oldAlert[$type]);
             $alert[$type] = ArrayHelper::merge($oldAlert[$type], $array_diff);
@@ -43,22 +43,23 @@ class UserData extends \vsoft\user\models\base\UserData
         }*/
         $userData->user_id = $for_user->id;
         $userData->username = $for_user->username;
-        $userData->alert = Json::encode($alert);
+        $userData->alert = $alert;
         $userData->lasttime_alert = time();
         $userData->validate();
         if(!$userData->hasErrors()){
             $userData->save();
-            Yii::$app->view->params['notify_other'] = !empty($alert[$type]) ? count($alert[$type]) : 0;
+//            Yii::$app->view->params['notify_other'] = !empty($alert[$type]) ? count($alert[$type]) : 0;
+            Yii::$app->session->setFlash('notify_other',count($alert[$type]));
             Cache::me()->delete(Cache::PRE_NOTIFICATION.$for_user->id);
         }
     }
     public function removeAlert($user_id, $type){
         if(($userData = self::findOne(['user_id'=>$user_id])) !== null){
-            $oldAlert = !empty($userData->alert) ? Json::decode($userData->alert) : [];
+            $oldAlert = !empty($userData->alert) ? $userData->alert : [];
             if(!empty($oldAlert[$type])){
                 unset($oldAlert[$type]);
             }
-            $userData->alert = Json::encode($oldAlert);
+            $userData->alert = $oldAlert;
             $userData->save();
         };
     }

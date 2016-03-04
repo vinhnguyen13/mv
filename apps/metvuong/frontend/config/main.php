@@ -101,6 +101,7 @@ return [
                 '<username>' => 'member/profile',
                 '<username>/update' => 'member/update-profile',
                 '<username>/notification' => 'notification/index',
+                '<username>/notification/update' => 'notification/update',
                 '<username>/ad' => 'dashboard/ad',
                 '<username>/chat' => 'chat/index',
                 'pricing/package' => 'payment/package',
