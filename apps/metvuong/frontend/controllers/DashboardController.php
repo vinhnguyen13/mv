@@ -187,26 +187,6 @@ class DashboardController extends Controller
         return false;
     }
 
-    public function actionNotification()
-    {
-        if(Yii::$app->request->isAjax){
-            if(Yii::$app->request->isPost){
-                $_id = Yii::$app->request->post('id');
-                if(($userActivity = UserActivity::findOne(['_id'=>$_id])) !== null){
-                    $userActivity->read();
-                }
-            }
-        }else {
-            if($output = Cache::me()->get(Cache::PRE_NOTIFICATION.Yii::$app->user->id)){
-                return $output;
-            }else{
-                $output = $this->render('notification/index', []);
-                Cache::me()->set(Cache::PRE_NOTIFICATION.Yii::$app->user->id, $output);
-                return $output;
-            }
-        }
-    }
-
     public function actionAd()
     {
         if (Yii::$app->user->isGuest) {

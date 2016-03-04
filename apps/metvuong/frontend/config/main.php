@@ -100,7 +100,7 @@ return [
                 'chat/with/<username>' => 'chat/with',
                 '<username>' => 'member/profile',
                 '<username>/update' => 'member/update-profile',
-                '<username>/notification' => 'dashboard/notification',
+                '<username>/notification' => 'notification/index',
                 '<username>/ad' => 'dashboard/ad',
                 '<username>/chat' => 'chat/index',
                 'pricing/package' => 'payment/package',
