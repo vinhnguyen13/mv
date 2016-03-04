@@ -311,7 +311,9 @@ class AdController extends Controller
     	$product = AdProduct::findOne($id);
         try{
             if(Yii::$app->user->id != $product->user_id) {
-                Tracking::find()->productVisitor(Yii::$app->user->id, $id, time());
+                if(isset(Yii::$app->params['tracking']['all']) && Yii::$app->params['tracking']['all'] == true) {
+                    Tracking::find()->productVisitor(Yii::$app->user->id, $id, time());
+                }
 				UserActivity::me()->saveActivity(UserActivity::ACTION_AD_CLICK, [
 					'owner' => Yii::$app->user->id,
 					'product' => $product->id,

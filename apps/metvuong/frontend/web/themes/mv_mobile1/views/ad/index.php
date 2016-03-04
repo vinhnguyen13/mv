@@ -216,7 +216,7 @@ $types = AdProduct::getAdTypes ();
 					<a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pull-right view-more">Chi tiết</a>
                     <?php
                     // tracking finder
-                    if($product->user_id != Yii::$app->user->id) {
+                    if($product->user_id != Yii::$app->user->id && isset(Yii::$app->params['tracking']['all']) && Yii::$app->params['tracking']['all'] == true) {
                         Tracking::find()->productFinder(Yii::$app->user->id, (int)$product->id, time());
                     }
                     ?>

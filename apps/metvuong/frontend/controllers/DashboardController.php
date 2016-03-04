@@ -64,8 +64,12 @@ class DashboardController extends Controller
         }
         else { // vao thong ke cua 1 tin dang
             $finder = AdProductFinder::find()->where((['product_id' => $id]))->orderBy('time DESC')->one();
-            $useDate = new \DateTime(date('Y-m-d', $finder->time));
+            if(count($finder) > 0)
+                $useDate = new \DateTime(date('Y-m-d', $finder->time));
+            else
+                $useDate = new \DateTime(date('Y-m-d', time()));
         }
+
         $f = date_format($useDate, 'Y-m-d 00:00:00');
         $dateFrom = new \DateTime($f);
         $from = strtotime('-6 days', $dateFrom->getTimestamp());
@@ -89,7 +93,6 @@ class DashboardController extends Controller
             'from' => $from,
             'to' => $to
         ]);
-
     }
 
     public function actionClickchart(){

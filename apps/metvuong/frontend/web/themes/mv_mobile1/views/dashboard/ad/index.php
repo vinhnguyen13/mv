@@ -51,8 +51,9 @@ use yii\helpers\Url;
                         <?php }
                         if($click > 0){ ?>
                         <div class="wrap-icon"><div><span class="icon icon-per-small"></span></div><strong><?=$click?></strong> Click</div>
+                        <?php } if($fav > 0){ ?>
+						<div class="wrap-icon"><div><span class="icon icon-heart-small"></span></div><strong><?=$fav?></strong> Favourite</div>
                         <?php } ?>
-						<div class="wrap-icon"><div><span class="icon icon-heart-small"></span></div><strong><?=$fav > 0 ? $fav : "?"?></strong> Favourite</div>
 					</div>
 				</li>
 				<?php endforeach; ?>
