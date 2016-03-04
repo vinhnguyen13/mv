@@ -60,7 +60,7 @@ use yii\helpers\Url;
                         <span id="notifyChat" class="notifi"><?=$this->params['notify_chat'];?></span>
                     <?php }?>
             </a></li>
-            <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon icon-per"></span></div>Cài đặt</a></li>
+            <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon icon-per"></span></div>TÀI KHOẢN</a></li>
             <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><div><span class="icon icon-logout"></span></div>Đăng xuất</a></li>
         </ul>
         <?php } ?>
