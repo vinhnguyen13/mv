@@ -802,10 +802,7 @@ $.fn.popupMobi = function (options) {
             popupItem.removeClass('hide-popup');
 
             if ( sc.settings.effectShow == "slideDownUp" ) {
-                popupItem.find('.wrap-popup').css({
-                    transition: "bottom 250ms ease 0ms",
-                    bottom: '50%'
-                });
+                
             }else if ( sc.settings.effectShow == "show-hide" ) {
 
             }

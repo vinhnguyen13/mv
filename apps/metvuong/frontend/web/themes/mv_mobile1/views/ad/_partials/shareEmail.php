@@ -13,7 +13,8 @@ use yii\helpers\Url;
     <div class="wrap-popup">
         <div class="title-popup clearfix">
             <div class="text-center">SHARE VIA EMAIL</div>
-            <a href="#" class="txt-cancel pull-left btn-cancel">Cancel</a>
+            <button class="txt-done btn-cancel">Cancel</button>
+            <button class="txt-done btn-done">Send</button>
         </div>
         <div class="inner-popup">
             <?php
@@ -66,10 +67,6 @@ use yii\helpers\Url;
                 <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=>$address])->label(false) ?>
                 <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> $product->urlDetail() ])->label(false) ?>
                 <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
-            </div>
-            <div class="text-right">
-                <button class="btn-common rippler rippler-default btn-cancel">Cancel</button>
-                <button class="btn-common rippler rippler-default send_mail">Send</button>
             </div>
             <?php $f->end(); ?>
         </div>
