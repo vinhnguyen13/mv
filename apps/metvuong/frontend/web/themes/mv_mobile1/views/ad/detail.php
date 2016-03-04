@@ -304,6 +304,19 @@ use yii\helpers\Url;
     </div>
 </div>
 
+<div id="popup-sent" class="popup-common hide-popup">
+    <div class="wrap-popup">
+        <div class="inner-popup">
+            <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
+            <div class="overflow-all">
+                <p>Thanks for send mail to <span class="user_name"></span></p>
+                <br />
+                <div><a href="<?=Url::home()?>" class="">Return homepage</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php
 /**
  * notification
@@ -367,6 +380,12 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
             styleShow: "center"
         });
 
+        $('#popup-sent').popupMobi({
+            btnClickShow: '#share_form .send_mail',
+            styleShow: 'center',
+            closeBtn: '#popup-sent .btn-close'
+        });
+
 		$(document).on('click', '#popup-share-social .icon-email-1', function (e) {
 			$('#popup-share-social').addClass('hide-popup');
 			$('.email-btn').trigger('click');
@@ -377,7 +396,7 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
         var recipient_email = $('#share_form .recipient_email').val();
         var your_email = $('#share_form .your_email').val();
         if(recipient_email != null && your_email != null) {
-            var content_mail = $('#share_form .content').val();
+            $('#popup-sent .user_name').html(recipient_email);
             clearTimeout(timer);
             timer = setTimeout(function () {
                 $('#popup-email').addClass('hide-popup');
