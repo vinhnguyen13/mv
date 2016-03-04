@@ -4826,3 +4826,6 @@ input[type=text]:focus {
     text-align: left;
     font-size: 14px;
 }
+.wrap-edit-tt .avatar-user-pr {
+    margin-bottom: 25px;
+}

@@ -14,6 +14,11 @@
 			<a href="#" id="done-page"><span class="icon icon-done"></span></a>
 		</div>
 		<div class="wrap-edit-tt">
+			<div class="avatar-user-pr">
+                <div class="wrap-img avatar">
+                	<img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="/images/default-avatar.jpg" alt="metvuong avatar">
+                </div>
+            </div>
 			<section class="ttcn">
 				<div class="title-update-tt">
 					THÔNG TIN CÁ NHÂN
