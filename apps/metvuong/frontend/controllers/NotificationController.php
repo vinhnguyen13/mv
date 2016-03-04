@@ -48,7 +48,7 @@ class NotificationController extends Controller
             if($output = Cache::me()->get(Cache::PRE_NOTIFICATION.Yii::$app->user->id)){
                 return $output;
             }else{
-                $output = $this->render('notification/index', []);
+                $output = $this->render('index', []);
                 Cache::me()->set(Cache::PRE_NOTIFICATION.Yii::$app->user->id, $output);
                 return $output;
             }
