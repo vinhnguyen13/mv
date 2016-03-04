@@ -52,8 +52,15 @@ class DashboardController extends Controller
 //            $ck = Tracking::find()->productVisitor($uid, $pid, $time);
 //            var_dump($ck);
 //        }
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Url::to(['member/login']));
+        }
+
         $id = (int)Yii::$app->request->get("id");
         $product = AdProduct::findOne($id);
+
+        if(Yii::$app->user->id != $product->user_id)
+            $this->goHome();
 
         $date = Yii::$app->request->get("date");
         if($date == "undefined-undefined-")
@@ -185,6 +192,16 @@ class DashboardController extends Controller
 
     public function actionAd()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Url::to(['member/login']));
+        }
+
+        $requestUrl = Yii::$app->request->absoluteUrl;
+        $username = Yii::$app->user->identity->username;
+        $checkUsername = strpos($requestUrl, $username);
+        if($checkUsername == false)
+            return $this->goHome();
+
     	$products = AdProduct::find()->where(['user_id' => Yii::$app->user->id])->with('projectBuilding')->orderBy('`created_at` DESC')->all();
         return $this->render('ad/index', ['products' => $products]);
     }
