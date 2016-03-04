@@ -138,12 +138,9 @@ class DashboardController extends Controller
                         $classPopupUser = 'popup_enable';
                         if($key_finder == Yii::$app->user->identity->username)
                             $classPopupUser = '';
-                        $li = '<li><a class="'.$classPopupUser.'" href="javascript:void(0);" data-email="'.$finder["email"].'" data-ava="'.Url::to($finder['avatar'], true).'">'.
+                        $li = '<li><a class="'.$classPopupUser.'" href="#popup-user-inter" data-email="'.$finder["email"].'" data-ava="'.Url::to($finder['avatar'], true).'">'.
                                     '<img src="'.$finder['avatar'].'">'.$key_finder.'</a>'.
                                     '<span class="pull-right">'.$finder['count'].'</span></li>';
-
-//                        $li = "<li><img src=\"".$finder['avatar']."\" alt=\"".$key_finder."\"><a href=\"/".$key_finder."\">".$key_finder."</a><span class=\"pull-right\">".$finder['count']."</span>";
-//                        $li .= "</li>";
                         $html .= $li;
                     }
                 return $html;
@@ -157,11 +154,9 @@ class DashboardController extends Controller
                         $classPopupUser = 'popup_enable';
                         if($key_visitor == Yii::$app->user->identity->username)
                             $classPopupUser = '';
-                        $li = '<li><a class="'.$classPopupUser.'" href="javascript:void(0);" data-email="'.$val_visitor["email"].'" data-ava="'.Url::to($val_visitor['avatar'], true).'">'.
+                        $li = '<li><a class="'.$classPopupUser.'" href="#popup-user-inter" data-email="'.$val_visitor["email"].'" data-ava="'.Url::to($val_visitor['avatar'], true).'">'.
                             '<img src="'.$val_visitor['avatar'].'">'.$key_visitor.'</a>'.
                             '<span class="pull-right">'.$val_visitor['count'].'</span></li>';
-//                        $li = "<li><img src=\"" . $val_visitor['avatar'] . "\" alt=\"" . $key_visitor . "\"><a href=\"/" . $key_visitor . "\">" . $key_visitor . "</a><span class=\"pull-right\">" . $val_visitor['count'] . "</span>";
-//                        $li .= "</li>";
                         $html .= $li;
                     }
                 return $html;
@@ -173,11 +168,9 @@ class DashboardController extends Controller
                 if(count($favourites) > 0) {
                     foreach ($favourites as $key => $val) {
                         $classPopupUser = 'popup_enable';
-                        $li = '<li><a class="'.$classPopupUser.'" href="javascript:void(0);" data-email="'.$val["email"].'" data-ava="'.Url::to($val['avatar'], true).'">'.
+                        $li = '<li><a class="'.$classPopupUser.'" href="#popup-user-inter" data-email="'.$val["email"].'" data-ava="'.Url::to($val['avatar'], true).'">'.
                             '<img src="'.$val['avatar'].'">'.$key.'</a>'.
                             '<span class="pull-right">'.$val['count'].'</span></li>';
-//                        $li = "<li><img src=\"".$val['avatar']."\" alt=\"" . $key . "\"><a href=\"/" . $key . "\">" . $key . "</a><span class=\"pull-right\">" . $val['count'] . "</span>";
-//                        $li .= "</li>";
                         $html .= $li;
                     }
                 }

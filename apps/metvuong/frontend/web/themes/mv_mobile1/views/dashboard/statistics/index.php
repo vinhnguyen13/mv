@@ -93,7 +93,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                                         $classPopupUser = '';
                                 ?>
     						<li>
-                                <a class="<?=$classPopupUser?>" href="javascript:void(0);" data-email="<?=$finder['email']?>" data-ava="<?=Url::to($finder['avatar'], true)?>">
+                                <a class="<?=$classPopupUser?>" href="#popup-user-inter" data-email="<?=$finder['email']?>" data-ava="<?=Url::to($finder['avatar'], true)?>">
                                     <img src="<?=Url::to($finder['avatar'], true)?>" alt="<?=$key?>">
                                     <?=$key?>
                                 </a>
@@ -126,7 +126,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                                         $classPopupUser = '';
                                     ?>
                                     <li>
-                                        <a class="<?=$classPopupUser?>" href="javascript:void(0);" data-email="<?=$visitor['email']?>" data-ava="<?=Url::to($visitor['avatar'], true)?>">
+                                        <a class="<?=$classPopupUser?>" href="#popup-user-inter" data-email="<?=$visitor['email']?>" data-ava="<?=Url::to($visitor['avatar'], true)?>">
                                             <img src="<?=$visitor['avatar']?>" alt="<?=$key?>">
                                             <?=$key?>
                                         </a>
@@ -156,7 +156,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                                 foreach($favourites as $key => $favourite){
                                     ?>
                                     <li>
-                                        <a class="popup_enable" href="javascript:void(0);" data-email="<?=$favourite['email']?>"  data-ava="<?=Url::to($favourite['avatar'], true)?>">
+                                        <a class="popup_enable" href="#popup-user-inter" data-email="<?=$favourite['email']?>"  data-ava="<?=Url::to($favourite['avatar'], true)?>">
                                             <img src="<?=$favourite['avatar']?>" alt="<?=$key?>">
                                             <?=$key?>
                                         </a>
@@ -194,7 +194,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 
 <div id="popup-user-inter" class="popup-common hide-popup">
     <div class="wrap-popup">
-        <div class="inner-popup">
+        <div class="inner-popup" style="padding-top: 30px;">
             <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
             <div class="pull-left circle avatar-user-inter">
                 <a href="#">
@@ -204,7 +204,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
             <div class="overflow-all">
                 <p class="name-user-inter">James Bond</p>
                 <a href="#" class="btn-common btn-chat"><span class="icon icon-chat-1"></span></a>
-                <a href="#" class="btn-common btn-email share-email-btn"><span class="icon icon-email-1"></span></a>
+                <a href="#popup-email" class="btn-common btn-email share-email-btn"><span class="icon icon-email-1"></span></a>
             </div>
         </div>
     </div>
@@ -224,7 +224,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
         $('#popup-user-inter').popupMobi({
             btnClickShow: '.statis .panel-body .list-item a.popup_enable',
             styleShow: 'center',
-            closeBtn: '#popup-user-inter .btn-close, #popup-user-inter .btn-chat, #popup-user-inter .share-email-btn',
+            closeBtn: '#popup-user-inter .btn-close, #popup-user-inter .share-email-btn',
             funCallBack: function(item) {
                 $('#popup-user-inter .avatar-user-inter img').attr('src', item[0].attributes["data-ava"].value.trim());
                 $('#popup-user-inter .avatar-user-inter a').attr('href', '/'+item[0].innerText.trim());
