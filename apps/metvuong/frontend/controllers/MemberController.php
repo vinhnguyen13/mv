@@ -285,6 +285,11 @@ class MemberController extends Controller
         ]);
     }
 
+    public function actionUpdateProfile($username)
+    {
+        return $this->render('user/updateProfile', []);
+    }
+
     public function actionPassword()
     {
         $this->checkAccess();

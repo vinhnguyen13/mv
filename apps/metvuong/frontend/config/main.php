@@ -99,6 +99,7 @@ return [
                 'member/<usrn>/avatar' => 'member/avatar',
                 'chat/with/<username>' => 'chat/with',
                 '<username>' => 'member/profile',
+                '<username>/update' => 'member/update-profile',
                 '<username>/notification' => 'dashboard/notification',
                 '<username>/ad' => 'dashboard/ad',
                 '<username>/chat' => 'chat/index',
