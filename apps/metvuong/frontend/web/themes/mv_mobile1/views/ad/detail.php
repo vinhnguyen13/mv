@@ -66,9 +66,9 @@ use yii\helpers\Url;
 			<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
 		</ul>
 		<ul class="pull-right icons-detail">
-			<li><a href="#" class="icon icon-share-td"></a></li>
+			<li><a href="#popup-share-social" class="icon icon-share-td"></a></li>
 			<li><a href="#" class="icon save-item <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>"></a></li>
-			<li><a href="#" class="icon icon-map-loca"></a></li>
+			<li><a href="#popup-map" class="icon icon-map-loca"></a></li>
 		</ul>
 		<p class="price-td">
 			<span>Giá</span>
@@ -204,7 +204,7 @@ use yii\helpers\Url;
 						</div>
 					</div>
 					<div class="text-center">
-						<button id="" class="email-btn btn-common btn-small">Email</button>
+						<a href="#popup-email" id="" class="email-btn btn-common btn-small">Email</a>
 						<?php if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) { ?>
 							<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small">Chat</a>
 						<?php }?>
@@ -220,7 +220,8 @@ use yii\helpers\Url;
 	<div class="wrap-popup">
 		<div class="title-popup clearfix">
 			<div class="text-center">SHARE VIA EMAIL</div>
-			<a href="#" class="txt-cancel pull-left btn-cancel">Cancel</a>
+			<a href="#" class="txt-cancel btn-cancel">Cancel</a>
+			<button class="txt-done btn-done">Send</button>
 		</div>
 		<div class="inner-popup">
             <?php
@@ -263,11 +264,7 @@ use yii\helpers\Url;
                     <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> Yii::$app->request->absoluteUrl])->label(false) ?>
                     <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
 				</div>
-				<div class="text-right">
-					<button class="btn-common rippler rippler-default btn-cancel">Cancel</button>
-					<button class="btn-common rippler rippler-default send_mail">Send</button>
-				</div>
-            <?php $f->end(); ?>
+			<?php $f->end(); ?>
 		</div>
 	</div>
 </div>
@@ -383,7 +380,7 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
         });
 
         $('#popup-sent').popupMobi({
-            btnClickShow: '#share_form .send_mail',
+            btnClickShow: '.btn-done',
             styleShow: 'center',
             closeBtn: '#popup-sent .btn-close'
         });
