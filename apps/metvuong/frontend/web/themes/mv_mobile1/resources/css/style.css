@@ -15,6 +15,22 @@ a:link {
 a:active, a:visited, a:link {
     /* color: red; */
 }
+input {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+}
+input[type=text],
+input[type=email],
+input[type=tel],
+input[type=url],
+input[type=search] {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+}
 .menu-header {
     position: fixed;
     top: 0px;
@@ -1083,6 +1099,11 @@ label {
     border-bottom: solid 0.5px #ededed;
     background: #fff;
 }
+.edit-user-tt .title-top {
+    position: fixed;
+    top: 39px;
+    left: 0;
+}
 .title-top a {
     color: #00a769;
 }
@@ -2129,6 +2150,12 @@ label {
 }
 #settings-user li .wrap-img {
     float: left;
+}
+#settings-user li .wrap-img img {
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
 }
 #settings-user .user-edit div {
     overflow: hidden;
@@ -3952,7 +3979,7 @@ input[type=text]:focus {
 .title-popup {
     color: #00a769;
     text-align: center;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     border-bottom: solid 0.5px #969696;
     position: fixed;
@@ -3977,7 +4004,7 @@ input[type=text]:focus {
     -webkit-transform: translate3d(50%,50%,0);
 }
 .inner-popup {
-    padding: 15px 15px 30px;
+    padding: 0 15px 30px;
     position: relative;
 }
 .frm-email {
@@ -3994,7 +4021,7 @@ input[type=text]:focus {
     margin: 0;
     display: inline-block;
     vertical-align: middle;
-    padding: 10px 0 0;
+    padding: 0 0 0;
 }
 .frm-textarea > div {
     width: 100%;
@@ -4051,12 +4078,14 @@ input[type=text]:focus {
 .title-popup .txt-done,
 .title-popup .txt-cancel {
     padding: 0 15px;
-    font-size: 13px;
+    font-size: 14px;
     color: #3B3B3B;
     position: absolute;
     top: 0;
     left: 0;
     text-transform: capitalize;
+    background: none;
+    border: none;
 }
 .title-popup .txt-done {
     right: 0;
@@ -4707,7 +4736,7 @@ input[type=text]:focus {
     height: 17px;
 }
 .wrap-edit-tt {
-    padding: 25px 0;
+    padding: 20px 0;
 }
 .wrap-edit-tt .title-update-tt {
     position: relative;
@@ -4828,4 +4857,11 @@ input[type=text]:focus {
 }
 .wrap-edit-tt .avatar-user-pr {
     margin-bottom: 25px;
+}
+#share_form .frm-item textarea,
+#share_form .frm-item input {
+    padding: 7px 0;
+}
+.edit-user-tt {
+    padding-top: 40px;
 }
