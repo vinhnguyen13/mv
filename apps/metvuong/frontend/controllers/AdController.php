@@ -172,15 +172,6 @@ class AdController extends Controller
     	}
     	
     	$products = $query->offset($pages->offset)->limit($pages->limit)->orderBy("$sort $doa")->all();
-        if(count($products) > 0) {
-            foreach ($products as $product) {
-                try {
-                    Tracking::find()->productFinder(Yii::$app->user->id, (int)$product->id, time());
-                } catch (Exception $ex) {
-
-                }
-            }
-        }
     	
     	return $this->render('index', ['products' => $products, 'pages' => $pages, 'districtId' => $districtId, 'cityId' => $cityId]);
     }
@@ -260,11 +251,6 @@ class AdController extends Controller
         	foreach ($rawProducts as $k => $product) {
         		$products[$k] = $product;
         		$products[$k]['previous_time'] = StringHelper::previousTime($product['created_at']);
-                try {
-                    Tracking::find()->productFinder(Yii::$app->user->id, $product['id'], time());
-                } catch (Exception $ex) {
-
-                }
         	}
         	return $products;
         } else {

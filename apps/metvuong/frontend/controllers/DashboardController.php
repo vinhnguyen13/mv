@@ -59,8 +59,7 @@ class DashboardController extends Controller
         if($date == "undefined-undefined-")
             $date = null;
 
-        if(empty($date)) { // truong hop chon calendar
-            $date = date('d/m/Y', time());
+        if($date) { // truong hop chon calendar
             $useDate = new \DateTime($date);
         }
         else { // vao thong ke cua 1 tin dang

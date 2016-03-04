@@ -1,4 +1,5 @@
 <?php
+use frontend\models\Tracking;
 use vsoft\ad\models\AdImages;
 use vsoft\express\components\StringHelper;
 use vsoft\ad\models\AdCategory;
@@ -213,6 +214,12 @@ $types = AdProduct::getAdTypes ();
 					</ul>
 					<span class="price"><?= StringHelper::formatCurrency($product->price) ?></span>
 					<a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pull-right view-more">Chi tiết</a>
+                    <?php
+                    // tracking finder
+                    if($product->user_id != Yii::$app->user->id) {
+                        Tracking::find()->productFinder(Yii::$app->user->id, (int)$product->id, time());
+                    }
+                    ?>
 				</div>
 				<?php endforeach; ?>
 			</div>
