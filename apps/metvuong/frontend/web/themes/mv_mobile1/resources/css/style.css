@@ -182,7 +182,7 @@ header {
 }
 .box-item.box-feature-item {
     background: #f5f5f5;
-    padding: 35px 20px 50px;
+    padding: 35px 20px 30px;
     margin-bottom: 0;
     /* background: red; */
 }
@@ -380,7 +380,7 @@ header {
 }
 .help-block {
     color: red;
-    font-size: .9em;
+    font-size: 13px;
 }
 ::-webkit-input-placeholder {
    color: #4e4e4e !important;
@@ -2550,7 +2550,7 @@ html.mm-opening .mm-slideout {
 }
 .mm-slideout {
     background: #fff;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 .mm-menu.mm-offcanvas.mm-current {
     display: block !important;
@@ -4743,4 +4743,20 @@ input[type=text]:focus {
     right: 0;
     top: 0;
     padding: 7px 20px;
+}
+.toggle-num-home {
+    font-size: 12px;
+}
+.toggle-num-home label {
+    font-weight: 400;
+    line-height: 100%;
+}
+.toggle-num-home label input {
+    display: inline-block;
+    position: relative;
+    top: 2px;
+}
+#listing-form .toggle-num-home {
+    margin-top: -8px;
+    margin-bottom: 0;
 }
