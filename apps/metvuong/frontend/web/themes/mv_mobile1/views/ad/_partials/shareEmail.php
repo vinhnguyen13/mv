@@ -81,6 +81,7 @@ use yii\helpers\Url;
             <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
             <div class="overflow-all">
                 <p>Thanks for send mail to <span class="user_name"></span></p>
+                <br />
                 <div><a href="<?=Url::home()?>" class="">Return homepage</a></div>
             </div>
         </div>
