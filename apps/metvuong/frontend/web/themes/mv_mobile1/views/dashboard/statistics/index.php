@@ -175,17 +175,21 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     	<div class="title-sub">Property's info</div>
     	<div class="share-social">
             <ul class="clearfix list-attr-per">
-                <li class="share-email-btn">
-                    <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
-                    <div class="txt-infor-right">
-                        <div>Share With Email</div>
-                    </div>
+                <li>
+                    <a class="share-email-btn" href="#popup-email">
+                        <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
+                        <div class="txt-infor-right">
+                            <div>Share With Email</div>
+                        </div>
+                    </a>
                 </li>
                 <li class="share-facebook">
-                    <div class="circle"><div><span class="icon icon-face"></span></div></div>
-                    <div class="txt-infor-right">
-                        <div>Share With Facebook</div>
-                    </div>
+                    <a href="#">
+                        <div class="circle"><div><span class="icon icon-face"></span></div></div>
+                        <div class="txt-infor-right">
+                            <div>Share With Facebook</div>
+                        </div>
+                    </a>
                 </li>
             </ul>
     	</div>
