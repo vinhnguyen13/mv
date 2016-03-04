@@ -27,6 +27,7 @@ use vsoft\ad\models\AdCategory;
 use vsoft\news\models\CmsCatalog;
 use yii\helpers\StringHelper;
 use frontend\models\Elastic;
+use vsoft\ad\models\AdProduct;
 
 /**
  * Site controller
@@ -286,36 +287,48 @@ class SiteController extends Controller
     }
     
     public function actionSearch() {
-    	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    	
     	$v = \Yii::$app->request->get('v');
-    	$v = Elastic::transform($v);
     	
-    	$params = [
-			'query' => [
-				'match_phrase_prefix' => ['search_field' => [
-					'query' => $v,
-					'max_expansions' => 100
-    			]],
-			],
-			'sort' => ['total' => ['order' => 'desc']],
-			'_source' => ['full_name', 'total']
-		];
-    			
-    	$ch = curl_init(Yii::$app->params['elastic']['config']['hosts'][0] . '/term/_search');
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET"); 
-    	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
-    	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    	
-    	$result = json_decode(curl_exec($ch), true);
-    	$response = [];
-    	
-    	foreach ($result['hits']['hits'] as $k => $hit) {
-			$response[$k] = $hit['_source'];
-			$response[$k]['url'] = Url::to(['/ad/index', $hit['_type'] => $hit['_id']]);
-		}
-		
-    	return $response;
+    	if(Yii::$app->request->isAjax) {
+    		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    		
+    		$v = Elastic::transform($v);
+    		 
+    		$params = [
+    		'query' => [
+    		'match_phrase_prefix' => ['search_field' => [
+    		'query' => $v,
+    		'max_expansions' => 100
+    		]],
+    		],
+    		'sort' => ['total' => ['order' => 'desc']],
+    		'_source' => ['full_name', 'total']
+    		];
+    		 
+    		$ch = curl_init(Yii::$app->params['elastic']['config']['hosts'][0] . '/term/_search');
+    		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+    		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
+    		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    		 
+    		$result = json_decode(curl_exec($ch), true);
+    		$response = [];
+    		 
+    		foreach ($result['hits']['hits'] as $k => $hit) {
+    			$response[$k] = $hit['_source'];
+    			$response[$k]['url'] = Url::to(['/ad/index', $hit['_type'] => $hit['_id']]);
+    		}
+    		
+    		return $response;
+    	} else {
+    		$id = str_replace('mv', '', strtolower($v));
+    		$product = AdProduct::findOne($id);
+    		
+    		if($product) {
+    			return $this->redirect($product->urlDetail());
+    		} else {
+    			return $this->redirect(Url::to(['/ad/index']));
+    		}
+    	}
     }
     
 	public function actionTest() {

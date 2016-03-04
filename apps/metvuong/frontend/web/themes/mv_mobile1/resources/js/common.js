@@ -76,10 +76,11 @@ $(document).ready(function() {
         }
     });
 
+    var searchForm = $('#search-form');
     $('#search').keyup(function() {
     	var self = $(this);
     	var val = self.val().trim();
-    	var url = self.data('url');
+    	var url = searchForm.attr('action');
     	var ss = $('.suggest-search');
     	
     	if(val.length > 2) {
@@ -90,7 +91,7 @@ $(document).ready(function() {
     				$.data(this, 'ajax').abort();
     			}
     			
-    			$.data(this, 'ajax', $.get(url, {v: val}, function(response){
+    			$.data(this, 'ajax', $.get(url, searchForm.serialize(), function(response){
             		var cs = $('.content-suggest ul');
             		
             		if(response.length > 0) {

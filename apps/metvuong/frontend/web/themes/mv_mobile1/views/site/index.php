@@ -21,8 +21,8 @@ use frontend\models\Ad;
                     <li><a class="rippler rippler-default" href="#">Thuê</a></li>
                     <li><a class="rippler rippler-default" href="<?= Url::to(['/ad/post']) ?>">Bán / Cho Thuê</a></li>
                 </ul>
-                <form id="" action="">
-                    <input autocomplete="off" data-url="<?= Url::to(['site/search']) ?>" id="search" type="text" placeholder="Tìm kiếm nhanh..." />
+                <form id="search-form" action="<?= Url::to(['site/search']) ?>">
+                    <input autocomplete="off" id="search" name="v" type="text" placeholder="Tìm kiếm nhanh..." />
                     <button type="submit" id="btn-search"><span class="icon"></span></button>
                     <div class="suggest-search hide">
                         <div class="content-suggest">
