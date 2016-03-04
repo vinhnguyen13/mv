@@ -533,6 +533,9 @@ margin-top: 3px;
     font-size: 15px;
     margin: 10px 0 2px;
 }
+#listing-list .item-listing .address-listing {
+    margin-top: 5px;
+}
 .item-listing .address-listing span {
     margin-right: 5px;
     position: relative;
@@ -749,7 +752,7 @@ label {
     padding: 0;
 }
 #listing-list .list-attr-td {
-    margin-bottom: 20px;
+    
 }
 .infor-duan .address-listing,
 .name-duan {
@@ -1389,6 +1392,7 @@ label {
 .top-listing {
     line-height: 25px;
     padding: 0 20px;
+    margin-bottom: 10px;
 }
 .item-listing .img-intro {
     /* height: 225px; */
@@ -1397,11 +1401,7 @@ label {
     background: #DEDEDE;
 }
 .item-listing {
-    padding: 25px 20px;
-    border-bottom: 1px solid #ededed;
-}
-.item-listing:last-child {
-    border-bottom: none;
+    /* padding: 25px 20px; */
 }
 .infor-by-up a {
     font-weight: 700;
@@ -2783,7 +2783,8 @@ input[type=text]:focus {
     padding: 0 20px;
     margin-bottom: 20px;
 }
-.box-item .wrap-item {
+.box-item .wrap-item >ul>li {
+    margin-bottom: 25px;
 }
 .news-item .wrap-item {
     border-bottom: none;
@@ -3153,7 +3154,7 @@ input[type=text]:focus {
 }
 .img-show {
 	position: relative;
-	background: #DEDEDE;
+	background: #ededed;
 	overflow: hidden;
 }
 .img-show:before {
@@ -4759,4 +4760,40 @@ input[type=text]:focus {
 #listing-form .toggle-num-home {
     margin-top: -8px;
     margin-bottom: 0;
+}
+#listing-list > ul > li {
+    border-bottom: 1px solid #ededed;
+    padding: 25px 20px; */
+}
+@media (min-width: 640px) {
+    #listing-list > ul > li,
+    .box-feature-item .wrap-item > ul > li {
+        width: 50%;
+        float: left;
+        padding: 0 10px;
+        margin-bottom: 25px;
+    }
+    .box-feature-item .address-feat {
+        height: 125px;
+    }
+    #listing-list > ul {
+        padding: 0 10px;
+    }
+    #listing-list > ul > li {
+        border: none;
+    }
+    #listing-list .item-listing {
+        border: 1px solid #ededed;
+    }
+    .box-item .wrap-item > ul {
+        margin: 0 -10px;
+    }
+    #listing-list .wrap-attr-item {
+        height: 120px;
+        overflow: hidden;
+        padding: 0 15px;
+    }
+    #listing-list .wrap-attr-bottom {
+        padding: 10px 15px;
+    }
 }
