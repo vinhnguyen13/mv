@@ -211,7 +211,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     </div>
 </div>
 
-<?=$this->renderAjax('/ad/_partials/shareEmail',[ 'product' => $product, 'yourEmail' => $user->profile->public_email, 'recipientEmail' => '', 'params' => ['your_email' => false, 'setValueToEmail' => true] ])?>
+<?=$this->renderAjax('/ad/_partials/shareEmail',[ 'product' => $product, 'yourEmail' => empty($user->profile->public_email) ? $user->email : $user->profile->public_email, 'recipientEmail' => '', 'params' => ['your_email' => false, 'setValueToEmail' => true] ])?>
 
 <?php 
 $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/bootstrap-datepicker.min.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'datepicker');
@@ -225,7 +225,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
         $('#popup-user-inter').popupMobi({
             btnClickShow: '.statis .panel-body .list-item a.popup_enable',
             styleShow: 'center',
-            closeBtn: '#popup-user-inter .btn-close',
+            closeBtn: '#popup-user-inter .btn-close, #popup-user-inter .btn-chat, #popup-user-inter .share-email-btn',
             funCallBack: function(item) {
                 $('#popup-user-inter .avatar-user-inter img').attr('src', item[0].attributes["data-ava"].value.trim());
                 $('#popup-user-inter .avatar-user-inter a').attr('href', '/'+item[0].innerText.trim());

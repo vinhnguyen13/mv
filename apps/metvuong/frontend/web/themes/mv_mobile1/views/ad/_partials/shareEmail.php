@@ -75,12 +75,26 @@ use yii\helpers\Url;
         </div>
     </div>
 </div>
+<div id="popup-sent" class="popup-common hide-popup">
+    <div class="wrap-popup">
+        <div class="inner-popup">
+            <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
+            <div class="overflow-all">
+                <p>Thanks for send mail to <span class="user_name"></span></p>
+                <div><a href="<?=Url::home()?>" class="">Return homepage</a></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+
     $(document).on('click', '.send_mail', function(){
         var timer = 0;
         var recipient_email = $('#share_form .recipient_email').val();
         var your_email = $('#share_form .your_email').val();
         if(recipient_email != null && your_email != null) {
+            $('#popup-sent .user_name').html(recipient_email);
             clearTimeout(timer);
             timer = setTimeout(function () {
                 $('#popup-email').addClass('hide-popup');
@@ -91,7 +105,7 @@ use yii\helpers\Url;
                     data: $('#share_form').serializeArray(),
                     success: function (data) {
                         if(data.status == 200){
-//                                alert("success");
+
                         }
                         else {
                             var strMessage = '';
@@ -118,4 +132,11 @@ use yii\helpers\Url;
         }
         return false;
     });
+
+    $('#popup-sent').popupMobi({
+        btnClickShow: '.send_mail',
+        styleShow: 'center',
+        closeBtn: '#popup-sent .btn-close'
+    });
+
 </script>
