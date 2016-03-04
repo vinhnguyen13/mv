@@ -193,35 +193,43 @@ $types = AdProduct::getAdTypes ();
 				<p><?= $pages->offset + 1 ?> - <span id="count-to"><?= $pages->offset + count($products) ?></span> Tin từ <?= $pages->totalCount ?> Tin</p>
 			</div>
 			<div id="listing-list" class="wrap-lazy">
-				<?php foreach ($products as $product): ?>
-				<div class="item-listing">
-					<div class="bgcover img-intro">
-						<div>
-							<a class="rippler rippler-default" href="<?= $product->urlDetail(); ?>"><img src="" data-original="<?= $product->representImage ?>"></a>
+				<ul class="clearfix">
+					<?php foreach ($products as $product): ?>
+					<li>
+						<div class="item-listing">
+							<div class="bgcover img-intro">
+								<div>
+									<a class="rippler rippler-default" href="<?= $product->urlDetail(); ?>"><img src="" data-original="<?= $product->representImage ?>"></a>
+								</div>
+							</div>
+							<div class="wrap-attr-item">
+								<p class="infor-by-up">
+									<?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?> bởi <a href="#">Môi Giới</a>
+								</p>
+								<p class="address-listing">
+									<span class="icon address-icon"></span><a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"><?= $product->getAddress($product->show_home_no) ?></a>
+								</p>
+								<p class="id-duan">ID tin đăng:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
+								<ul class="clearfix list-attr-td">
+									<?= $product->area ? '<li> <span class="icon icon-dt icon-dt-small"></span>' . $product->area . 'm2 </li>' : '' ?>
+									<?= $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
+									<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
+								</ul>
+							</div>
+							<div class="wrap-attr-bottom">
+								<span class="price"><?= StringHelper::formatCurrency($product->price) ?></span>
+								<a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pull-right view-more">Chi tiết</a>
+		                    </div>
+		                    <?php
+		                    // tracking finder
+		                    if($product->user_id != Yii::$app->user->id && isset(Yii::$app->params['tracking']['all']) && Yii::$app->params['tracking']['all'] == true) {
+		                        Tracking::find()->productFinder(Yii::$app->user->id, (int)$product->id, time());
+		                    }
+		                    ?>
 						</div>
-					</div>
-					<p class="infor-by-up">
-						<?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?> bởi <a href="#">Môi Giới</a>
-					</p>
-					<p class="address-listing">
-						<span class="icon address-icon"></span><a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"><?= $product->getAddress($product->show_home_no) ?></a>
-					</p>
-					<p class="id-duan">ID tin đăng:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
-					<ul class="clearfix list-attr-td">
-						<?= $product->area ? '<li> <span class="icon icon-dt icon-dt-small"></span>' . $product->area . 'm2 </li>' : '' ?>
-						<?= $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
-						<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
-					</ul>
-					<span class="price"><?= StringHelper::formatCurrency($product->price) ?></span>
-					<a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pull-right view-more">Chi tiết</a>
-                    <?php
-                    // tracking finder
-                    if($product->user_id != Yii::$app->user->id && isset(Yii::$app->params['tracking']['all']) && Yii::$app->params['tracking']['all'] == true) {
-                        Tracking::find()->productFinder(Yii::$app->user->id, (int)$product->id, time());
-                    }
-                    ?>
-				</div>
-				<?php endforeach; ?>
+					</li>
+					<?php endforeach; ?>
+				</ul>
 			</div>
 			<?php else: ?>
 			<div id="no-result">Chưa có tin đăng theo tìm kiếm của bạn, <a href="#">đăng ký nhận thông báo khi có tin đăng phù hợp</a>.</div>

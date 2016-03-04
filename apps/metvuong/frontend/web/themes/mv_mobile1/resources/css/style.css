@@ -4792,6 +4792,7 @@ input[type=text]:focus {
         height: 120px;
         overflow: hidden;
         padding: 0 15px;
+        border-bottom: 1px solid #ededed;
     }
     #listing-list .wrap-attr-bottom {
         padding: 10px 15px;

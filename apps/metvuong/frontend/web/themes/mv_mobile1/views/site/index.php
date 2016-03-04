@@ -42,40 +42,44 @@ use frontend\models\Ad;
     <section class="box-item box-feature-item">
         <div class="title-sub">Featured properties</div>
         <div class="wrap-item wrap-lazy">
-            <?php foreach ($products as $product): ?>
-            <div class="item">
-                <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pic-intro rippler rippler-default">
-                    <div class="img-show">
-                        <div><img src="" data-original="<?= $product->representImage ?>"></div>
+            <ul class="clearfix">
+                <?php foreach ($products as $product): ?>
+                <li>
+                    <div class="item">
+                        <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pic-intro rippler rippler-default">
+                            <div class="img-show">
+                                <div><img src="" data-original="<?= $product->representImage ?>"></div>
+                            </div>
+                            <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></div>
+                        </a>
+                        <div class="info-item">
+                            <div class="address-feat">
+        <!--                        <strong>Lancaster x</strong>-->
+                                <span class="icon address-icon"></span><?= $product->getAddress(true) ?>
+                                <p class="id-duan">ID tin đăng:<span><?=$product->id;?></span></p>
+                                <ul class="clearfix list-attr-td">
+                                    <li>
+                                        <span class="icon icon-dt icon-dt-small"></span>80m2
+                                    </li>
+                                    <li>
+                                        <span class="icon icon-bed icon-bed-small"></span> 02
+                                    </li>
+                                    <li>
+                                        <span class="icon icon-pt icon-pt-small"></span> 02
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="bottom-feat-box clearfix">
+                                <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pull-right">Chi tiết</a>
+                                <p>Giá <strong>4 tỷ đồng</strong></p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></div>
-                </a>
-                <div class="info-item">
-                    <div class="address-feat">
-<!--                        <strong>Lancaster x</strong>-->
-                        <span class="icon address-icon"></span><?= $product->getAddress(true) ?>
-                        <p class="id-duan">ID tin đăng:<span><?=$product->id;?></span></p>
-                        <ul class="clearfix list-attr-td">
-                            <li>
-                                <span class="icon icon-dt icon-dt-small"></span>80m2
-                            </li>
-                            <li>
-                                <span class="icon icon-bed icon-bed-small"></span> 02
-                            </li>
-                            <li>
-                                <span class="icon icon-pt icon-pt-small"></span> 02
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="bottom-feat-box clearfix">
-                        <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pull-right">Chi tiết</a>
-                        <p>Giá <strong>4 tỷ đồng</strong></p>
-                    </div>
-                </div>
-            </div>
-            <?php
-            endforeach;
-            ?>
+                </li>
+                <?php
+                endforeach;
+                ?>
+            </ul>
         </div>
     </section>
 
