@@ -193,7 +193,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     </div>
 </div>
 <?php
-    if($finder || $visitor || $favourite){?>
+    if($finders || $visitors || $favourites){?>
         <div id="popup-user-inter" class="popup-common hide-popup">
             <div class="wrap-popup">
                 <div class="inner-popup">
