@@ -770,8 +770,12 @@ $.fn.popupMobi = function (options) {
 
         $(sc.settings.btnClickShow).on('click', function (e) {
             e.preventDefault();
-            showPopup(el);
-            sc.settings.funCallBack($(this));
+            var _this = $(this),
+                popupItem = _this.attr('href');
+
+            sc.settings.funCallBack(_this, $(popupItem));
+
+            showPopup($(popupItem));
         });
 
         $(sc.settings.closeBtn).on('click', function (e) {
