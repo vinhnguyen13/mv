@@ -192,27 +192,24 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     	</div>
     </div>
 </div>
-<?php
-    if($finders || $visitors || $favourites){?>
-        <div id="popup-user-inter" class="popup-common hide-popup">
-            <div class="wrap-popup">
-                <div class="inner-popup">
-                    <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
-                    <div class="pull-left circle avatar-user-inter">
-                        <a href="#">
-                        <img src="/images/default-avatar.jpg" alt="" width="50" height="50">
-                        </a>
-                    </div>
-                    <div class="overflow-all">
-                        <p class="name-user-inter">James Bond</p>
-                        <a href="#" class="btn-common btn-chat"><span class="icon icon-chat-1"></span></a>
-                        <a href="#" class="btn-common btn-email share-email-btn"><span class="icon icon-email-1"></span></a>
-                    </div>
-                </div>
+
+<div id="popup-user-inter" class="popup-common hide-popup">
+    <div class="wrap-popup">
+        <div class="inner-popup">
+            <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
+            <div class="pull-left circle avatar-user-inter">
+                <a href="#">
+                <img src="/images/default-avatar.jpg" alt="" width="50" height="50">
+                </a>
+            </div>
+            <div class="overflow-all">
+                <p class="name-user-inter">James Bond</p>
+                <a href="#" class="btn-common btn-chat"><span class="icon icon-chat-1"></span></a>
+                <a href="#" class="btn-common btn-email share-email-btn"><span class="icon icon-email-1"></span></a>
             </div>
         </div>
-    <?php }
-?>
+    </div>
+</div>
 
 <?=$this->renderAjax('/ad/_partials/shareEmail',[ 'product' => $product, 'yourEmail' => $user->profile->public_email, 'recipientEmail' => '', 'params' => ['your_email' => false, 'setValueToEmail' => true] ])?>
 

@@ -78,11 +78,17 @@ class DashboardController extends Controller
         $dateTo = new \DateTime($t);
         $to = $dateTo->getTimestamp();
 
-        $data = Chart::find()->getDataFinder($id, $from, $to);
-        $infoData = empty($data) ? null : $data["infoData"];
-        $finders = empty($infoData["finders"]) ? null : $infoData["finders"];
-        $visitors = empty($infoData["visitors"]) ? null : $infoData["visitors"];
-        $favourites = empty($infoData["saved"]) ? null : $infoData["saved"];
+        $dataFinders = Chart::find()->getDataFinder($id, $from, $to);
+        $infoDataFinders = empty($dataFinders) ? null : $dataFinders["infoData"];
+        $finders = empty($infoDataFinders["finders"]) ? null : $infoDataFinders["finders"];
+
+        $dataVisitors = Chart::find()->getDataVisitor($id, $from, $to);
+        $infoDataVisitors = empty($dataVisitors) ? null : $dataVisitors["infoData"];
+        $visitors = empty($infoDataVisitors["visitors"]) ? null : $infoDataVisitors["visitors"];
+
+        $dataSaved = Chart::find()->getDataSaved($id, $from, $to);
+        $infoDataFavourites = empty($dataSaved) ? null : $dataSaved["infoData"];
+        $favourites = empty($infoDataFavourites["saved"]) ? null : $infoDataFavourites["saved"];
 
         return $this->render('statistics/index', [
             'product' => $product,
@@ -98,8 +104,11 @@ class DashboardController extends Controller
     public function actionClickchart(){
         if(Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_HTML;
+
             $id = (int)Yii::$app->request->get("id");
-            $date = Yii::$app->request->get("date");
+            $dateParam = Yii::$app->request->get("date");
+            $dateArr = explode('/', $dateParam);
+            $date = $dateArr[2]."-".$dateArr[1]."-".$dateArr[0];
             $view = Yii::$app->request->get('view', '_partials/finder');
 
             $useDate = new \DateTime($date);

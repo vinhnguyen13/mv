@@ -4,15 +4,16 @@ use frontend\models\Chart;
 
 $data = Chart::find()->getDataFinder($id, $from, $to);
 if(!empty($data) && count($data) > 0) {
-$dataChart = $data['dataChart'];
-$categories = $data['categories'];
 
-ksort($dataChart);
-$dataChart = array_values($dataChart);
-ksort($categories);
-$categories = array_values($categories);
+    $dataChart = $data['dataChart'];
+    $categories = $data['categories'];
 
-?>
+    ksort($dataChart);
+    $dataChart = array_values($dataChart);
+    ksort($categories);
+    $categories = array_values($categories);
+
+    ?>
     <div id="chartAds" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     <script>
         $(function () {
@@ -48,8 +49,8 @@ $categories = array_values($categories);
                     }]
                 },
                 tooltip: {
-                    useHTML:true,
-                    formatter: function() {
+                    useHTML: true,
+                    formatter: function () {
                         var tooltip;
                         if (this.key == 'last') {
                             tooltip = '<b>Final result is </b> ' + this.y;
@@ -69,11 +70,11 @@ $categories = array_values($categories);
                         cursor: 'pointer',
                         point: {
                             events: {
-                                click: function() {
+                                click: function () {
                                     for (var i = 0; i < this.series.data.length; i++) {
-                                        this.series.data[i].update({ color: '#909090' }, true, false);
+                                        this.series.data[i].update({color: '#909090'}, true, false);
                                     }
-                                    this.update({ color: '#00a769' }, true, false);
+                                    this.update({color: '#00a769'}, true, false);
                                     getDataByClick(this.category);
                                 }
                             }
@@ -86,7 +87,7 @@ $categories = array_values($categories);
                 }
             });
         });
-        function getDataByClick(date, categories){
+        function getDataByClick(date, categories) {
             var timer = 0;
             clearTimeout(timer);
             timer = setTimeout(function () {
@@ -95,9 +96,9 @@ $categories = array_values($categories);
                     dataType: 'html',
                     url: '<?=Url::to(['/dashboard/clickchart','id' => $id])?>' + '&date=' + date + '&view=_partials/finder',
                     success: function (data) {
-                        if(data){
+                        if (data) {
                             $('.finder .list-item').html(data);
-                            $('.date-filter-chart').html('Thống kê trong ngày <span>'+date+'</span>');
+                            $('.date-filter-chart').html('Thống kê trong ngày <span>' + date + '</span>');
                         }
                     }
                 });
