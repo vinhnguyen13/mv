@@ -29,7 +29,7 @@ if(!Yii::$app->user->isGuest) {
                 chatUI.setConservation(params.from, params.to);
                 if(params.type == 'chat'){
                     if(params.chatType != chatUI.MSG_SEND_ME){
-                        chatUI.notify(chatUI.NOTIFY_CHAT, 2);
+                        chatUI.notify(chatUI.NOTIFY_CHAT, 1);
                     }
                     if ('<?=$urlBase?>' == 'chat/with') {
                         chatUI.loadMessageToBox(msg, params);
