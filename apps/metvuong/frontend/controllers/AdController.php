@@ -121,10 +121,14 @@ class AdController extends Controller
     	$cityId = ($cityId = Yii::$app->request->get('city')) ? $cityId : 1;
     	$districtId = ($districtId = Yii::$app->request->get('district')) ? $districtId : 10;
     	
-    	if($districtId) {
-    		$where['ad_product.district_id'] = $districtId;
+    	if($projectId = Yii::$app->request->get('project_building')) {
+    		$where['ad_product.project_building_id'] = $projectId;
     	} else {
-    		$where['ad_product.city_id'] = $cityId;
+    		if($districtId) {
+    			$where['ad_product.district_id'] = $districtId;
+    		} else {
+    			$where['ad_product.city_id'] = $cityId;
+    		}
     	}
     	 
     	if($categoryId = Yii::$app->request->get('category')) {

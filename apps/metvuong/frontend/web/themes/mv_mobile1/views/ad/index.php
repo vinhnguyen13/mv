@@ -60,6 +60,18 @@ $types = AdProduct::getAdTypes ();
 							</div>
 						</div>
 					</div>
+					<div id="du-an-select" class="frm-item <?= Yii::$app->request->get('project_building') ? '' : 'hide' ?>">
+						<div class="box-dropdown dropdown-common">
+							<div class="val-selected style-click">
+								<span class="selected" data-placeholder="Dự án bạn đang tìm?">Dự án bạn đang tìm?</span>
+								<span class="pull-right icon arrowDown"></span>
+							</div>
+							<div class="item-dropdown hide-dropdown">
+								<ul class="clearfix du-an"></ul>
+								<input name="project_building" type="hidden" id="du-an" class="" value="<?= Yii::$app->request->get('project_building') ?>">
+							</div>
+						</div>
+					</div>
 					<div class="frm-item choice_price_dt" data-item-minmax="prices">
 						<div class="box-dropdown">
 							<div class="val-selected style-click price-search">
