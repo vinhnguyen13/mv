@@ -38,13 +38,13 @@ return [
                 'registration' => 'frontend\controllers\RegistrationController',
             ],
             'urlRules' => [
-                '<id:\d+>'                               => 'profile/show',
-                '<action:(login|logout)>'                => 'security/<action>',
-                '<action:(register|resend)>'             => 'registration/<action>',
-                'confirm/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'registration/confirm',
-                'forgot'                                 => 'recovery/request',
-                'recover/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'recovery/reset',
-                'settings/<action:\w+>'                  => 'settings/<action>'
+//                '<id:\d+>'                               => 'profile/show',
+//                '<action:(login|logout)>'                => 'security/<action>',
+//                '<action:(register|resend)>'             => 'registration/<action>',
+//                'confirm/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'registration/confirm',
+//                'forgot'                                 => 'recovery/request',
+//                'recover/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'recovery/reset',
+//                'settings/<action:\w+>'                  => 'settings/<action>'
             ]
         ],
     ],
@@ -87,10 +87,8 @@ return [
             'enableStrictParsing' => false,
             'rules' => [
                 '/' => 'site/index',
-//                'site/signup' => 'user/registration/register',
                 'news' => 'news/index',
                 'news/<cat_id:\d+>-<cat_slug>' => 'news/list',
-//                'news/<cat_id:\d+>-<cat_slug>/<id:\d+>-<slug>' => 'news/view',
                 'building' => 'building-project/index',
                 'building/<slug>' => 'building-project/view',
                 'real-estate/result' => 'ad/index',
@@ -105,6 +103,10 @@ return [
                 '<username>/ad' => 'dashboard/ad',
                 '<username>/chat' => 'chat/index',
                 'pricing/package' => 'payment/package',
+
+                'mvuser/protect/<action>' => 'user/security/<action>',
+                'mvuser/join/<action>' => 'user/registration/<action>',
+                'mvuser/forgot/<action>' => 'user/recovery/<action>',
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',
 //                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
 //                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
