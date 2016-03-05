@@ -13,8 +13,8 @@ use yii\helpers\Url;
     <div class="wrap-popup">
         <div class="title-popup clearfix">
             <div class="text-center">SHARE VIA EMAIL</div>
-            <button class="txt-done btn-cancel">Cancel</button>
-            <button class="txt-done btn-done">Send</button>
+            <a href="#" class="txt-cancel btn-cancel">Cancel</a>
+            <button class="txt-done btn-done send_mail">Send</button>
         </div>
         <div class="inner-popup">
             <?php
@@ -32,15 +32,15 @@ use yii\helpers\Url;
                 'action' => Url::to(['/ad/sendmail'])
             ]);
 
-            if(isset($params['your_email']) && $params['your_email'] == false) {
+            if(isset($params['your_email']) && $params['your_email'] == false && !empty($yourEmail)) {
                 echo $f->field($share_form, 'your_email')->hiddenInput(['class'=>'your_email', 'value'=> $yourEmail])->label(false);
             } else { ?>
             <div class="frm-item frm-email">
-                <?= $f->field($share_form, 'your_email')->textInput(['class'=>'your_email', 'placeholder'=>Yii::t('your_email', 'Email của bạn...')])->label(false) ?>
+                <?= $f->field($share_form, 'your_email')->textInput(['class'=>'your_email', 'value' => isset($params['setValueFromEmail']) ? $yourEmail : "", 'placeholder'=>Yii::t('your_email', 'Email của bạn...')])->label(false) ?>
             </div>
             <?php }
 
-            if(isset($params['recipient_email']) && $params['recipient_email'] == false) {
+            if(isset($params['recipient_email']) && $params['recipient_email'] == false && !empty($recipientEmail)) {
                 echo $f->field($share_form, 'recipient_email')->hiddenInput(['class'=>'recipient_email', 'value'=> $recipientEmail])->label(false);
             } else {
             ?>
@@ -103,7 +103,6 @@ use yii\helpers\Url;
                     data: $('#share_form').serializeArray(),
                     success: function (data) {
                         if(data.status == 200){
-
                         }
                         else {
                             var strMessage = '';
@@ -132,7 +131,7 @@ use yii\helpers\Url;
     });
 
     $('#popup-sent').popupMobi({
-        btnClickShow: '.send_mail',
+        btnClickShow: '#popup-email .send_mail',
         styleShow: 'center',
         closeBtn: '#popup-sent .btn-close'
     });

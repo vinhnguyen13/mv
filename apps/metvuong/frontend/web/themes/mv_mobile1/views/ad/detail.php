@@ -10,7 +10,8 @@ use yii\helpers\Url;
 	$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=loaded', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/detail.js', ['position' => View::POS_END]);
 	$this->registerCss('.map-wrap {position: relative;} .map-wrap:after {display: block; content: ""; padding-top: 75%;} .map-inside {position: absolute; width: 100%; height: 100%;} #map {height: 100%;}');
-	
+
+    $user = Yii::$app->user->identity;
 	$categories = AdCategory::find()->indexBy('id')->asArray(true)->all();
 	$types = AdProduct::getAdTypes();
 	
@@ -216,58 +217,12 @@ use yii\helpers\Url;
     </div>
 </div>
 
-<div id="popup-email" class="popup-common hide-popup">
-	<div class="wrap-popup">
-		<div class="title-popup clearfix">
-			<div class="text-center">SHARE VIA EMAIL</div>
-			<a href="#" class="txt-cancel btn-cancel">Cancel</a>
-			<button class="txt-done btn-done">Send</button>
-		</div>
-		<div class="inner-popup">
-            <?php
-            $share_form = Yii::createObject([
-                'class'    => \frontend\models\ShareForm::className(),
-                'scenario' => 'share',
-            ]);
+<?=$this->renderAjax('/ad/_partials/shareEmail',[
+    'product' => $product,
+    'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
+    'recipientEmail' => $product->adContactInfo->email,
+    'params' => ['your_email' => false, 'recipient_email' => false] ])?>
 
-            $f = ActiveForm::begin([
-                'id' => 'share_form',
-                'enableAjaxValidation' => false,
-                'enableClientValidation' => true,
-                'action' => Url::to(['/ad/sendmail'])
-            ]);
-
-            if(!Yii::$app->user->isGuest){
-            ?>
-            <?= $f->field($share_form, 'your_email')->hiddenInput(['class'=>'your_email', 'value' => Yii::$app->user->identity->profile->public_email])->label(false) ?>
-            <?php } else { ?>
-				<div class="frm-item frm-email">
-                    <?= $f->field($share_form, 'your_email')->textInput(['class'=>'your_email', 'placeholder'=>Yii::t('subject', 'Email của bạn...')])->label(false) ?>
-				</div>
-            <?php } ?>
-                <div class="frm-item frm-email clearfix">
-					<?= $f->field($share_form, 'subject')->textInput(['class'=>'subject', 'placeholder'=>Yii::t('subject', 'Tiêu đề...')])->label(false)?>
-				</div>
-				<div class="frm-item frm-email clearfix frm-textarea">
-                    <?= $f->field($share_form, 'content')->textarea(['class'=>'content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('content', 'Nội dung...')])->label(false) ?>
-				</div>
-				<div class="item-send">
-					<div class="img-show"><div><a href="<?=$product->urlDetail()?>"><img src="<?= $product->representImage ?>" alt="<?=$address?>"></a></div></div>
-					<div class="infor-send">
-						<p class="name"><?=$address?></p>
-						<p class="address"></p>
-						<p><?=\yii\helpers\StringHelper::truncate($product->content, 150)?></p>
-						<p class="send-by">BY METVUONG.COM</p>
-					</div>
-                    <?= $f->field($share_form, 'recipient_email')->hiddenInput(['class'=>'recipient_email', 'value'=> $product->adContactInfo->email])->label(false) ?>
-                    <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=> $address])->label(false) ?>
-                    <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> Yii::$app->request->absoluteUrl])->label(false) ?>
-                    <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
-				</div>
-			<?php $f->end(); ?>
-		</div>
-	</div>
-</div>
 
 <div id="popup-map" class="popup-common hide-popup">
 	<div class="wrap-popup">
@@ -296,19 +251,6 @@ use yii\helpers\Url;
                         </a>
                     </li>
                 </ul>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="popup-sent" class="popup-common hide-popup">
-    <div class="wrap-popup">
-        <div class="inner-popup">
-            <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
-            <div class="overflow-all">
-                <p>Thanks for send mail to <span class="user_name"></span></p>
-                <br />
-                <div><a href="<?=Url::home()?>" class="">Return homepage</a></div>
             </div>
         </div>
     </div>
@@ -379,58 +321,10 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
             styleShow: "center"
         });
 
-        $('#popup-sent').popupMobi({
-            btnClickShow: '.btn-done',
-            styleShow: 'center',
-            closeBtn: '#popup-sent .btn-close'
-        });
-
 		$(document).on('click', '#popup-share-social .icon-email-1', function (e) {
 			$('#popup-share-social').addClass('hide-popup');
 			$('.email-btn').trigger('click');
 		});
 	});
-    $(document).on('click', '.send_mail', function(){
-        var timer = 0;
-        var recipient_email = $('#share_form .recipient_email').val();
-        var your_email = $('#share_form .your_email').val();
-        if(recipient_email != null && your_email != null) {
-            $('#popup-sent .user_name').html(recipient_email);
-            clearTimeout(timer);
-            timer = setTimeout(function () {
-                $('#popup-email').addClass('hide-popup');
-                $.ajax({
-                    type: "post",
-                    dataType: 'json',
-                    url: $('#share_form').attr('action'),
-                    data: $('#share_form').serializeArray(),
-                    success: function (data) {
-                        if(data.status == 200){
-//                                alert("success");
-                        }
-                        else {
-                            var strMessage = '';
-                            $.each(data.parameters, function(idx, val){
-                                var element = 'share_form_'+idx;
-                                strMessage += "\n" + val;
-                            });
-                            alert(strMessage+"\nTry again");
-                            $('#share_form .recipient_email').focus();
-                        }
-                        return true;
-                    },
-                    error: function (data) {
-                        var strMessage = '';
-                        $.each(data.parameters, function(idx, val){
-                            var element = 'share_form_'+idx;
-                            strMessage += "\n" + val;
-                        });
-                        alert(strMessage);
-                        return false;
-                    }
-                });
-            }, 500);
-        }
-        return false;
-    });
+
 </script>
