@@ -287,7 +287,34 @@ class MemberController extends Controller
 
     public function actionUpdateProfile($username)
     {
-        return $this->render('user/updateProfile', []);
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Url::to(['member/login']));
+        }
+
+        if($username == Yii::$app->user->identity->username) {
+            $model = Yii::createObject([
+                'class'    => ProfileForm::className(),
+                'scenario' => 'updateprofile',
+            ]);
+            $model = $model->loadProfile($username);
+            if(Yii::$app->request->isAjax){
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                $post = Yii::$app->request->post();
+                if($post){
+                    $model->load($post);
+                    $model->validate();
+                    if (!$model->hasErrors() ) {
+                        $model->updateProfile();
+                        return ['statusCode'=>200, 'modelResult'=>$model];
+                    }else{
+                        return ['statusCode'=>400, 'parameters' => $model->errors, 'user'=> 'error'];
+                    }
+                }
+            }
+            return $this->render('user/updateProfile',['model'=> $model]);
+        }
+
+        return $this->redirect(Url::to(['member/login']));
     }
 
     public function actionPassword()
@@ -305,10 +332,10 @@ class MemberController extends Controller
                 $model->load($post);
                 $model->validate();
                 if (!$model->hasErrors()) {
-                    $res = $model->resetPass();
-                    return ['statusCode'=>$res];
+                    $model->resetPass();
+                    return ['statusCode'=>200];
                 }else{
-                    return ['statusCode'=> false, 'parameters' => $model->errors];
+                    return ['statusCode'=> 400, 'parameters' => $model->errors];
                 }
             }
             return $this->renderAjax('user/password', [

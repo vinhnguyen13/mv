@@ -11,7 +11,6 @@ use frontend\models\Profile;
 use frontend\models\User;
 use yii\base\Model;
 use Yii;
-use Zelenin\Slugifier\Slugifier;
 use Zelenin\yii\behaviors\Slug;
 
 class ProfileForm extends Model
@@ -30,6 +29,9 @@ class ProfileForm extends Model
     public $activity;
     public $experience;
     public $slug;
+    public $first_name;
+    public $last_name;
+    public $owner;
 
     /** @var string */
     public $old_password;
@@ -60,7 +62,7 @@ class ProfileForm extends Model
     public function scenarios()
     {
         return [
-            'updateprofile' => ['user_id', 'name', 'public_email', 'phone', 'mobile', 'address', 'about', 'activity', 'experience', 'slug'],
+            'updateprofile' => ['user_id', 'name', 'public_email', 'phone', 'mobile', 'address', 'about', 'slug', 'first_name', 'last_name', 'owner'],
             'password' => ['old_password', 'new_password'],
             'updateavatar' => ['avatar', 'created_at', 'bio'],
         ];
@@ -137,14 +139,15 @@ class ProfileForm extends Model
         $profile = Yii::$app->user->identity->profile;
         if(!empty($profile)) {
             $profile->user_id = $this->user_id;
-            $profile->name = $this->name;
+            $profile->name = $this->last_name . " " . $this->first_name;
             $profile->public_email = $this->public_email;
             $profile->phone = $this->phone;
             $profile->mobile = $this->mobile;
             $profile->address = $this->address;
             $profile->about = $this->about;
-            $profile->activity = $this->activity;
-            $profile->experience = $this->experience;
+            $profile->first_name = $this->first_name;
+            $profile->last_name = $this->last_name;
+            $profile->owner = $this->owner;
             if(!empty($profile->slug)) {
                 $user = User::findIdentity(Yii::$app->user->id);
                 $profile->slug = $user->username;
@@ -189,6 +192,9 @@ class ProfileForm extends Model
         $model->activity = $profile->activity;
         $model->experience = $profile->experience;
         $model->slug = $profile->slug;
+        $model->first_name = $profile->first_name;
+        $model->last_name = $profile->last_name;
+        $model->owner = $profile->owner;
         $model->user = $user;
         return $model;
     }

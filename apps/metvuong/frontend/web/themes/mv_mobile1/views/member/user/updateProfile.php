@@ -5,6 +5,9 @@
  * Date: 2/26/2016
  * Time: 9:51 AM
  */
+use yii\bootstrap\ActiveForm;
+use yii\helpers\Url;
+
 ?>
 <div class="title-fixed-wrap">
 	<div class="edit-user-tt">
@@ -16,7 +19,7 @@
 		<div class="wrap-edit-tt">
 			<div class="avatar-user-pr">
                 <div class="wrap-img avatar">
-                	<img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="/images/default-avatar.jpg" alt="metvuong avatar">
+                    <img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="<?=$model->avatar?>" alt="metvuong avatar" />
                 </div>
             </div>
 			<section class="ttcn">
@@ -27,19 +30,19 @@
 				<div class="list-tt-user wrap-attr-detail">
 					<ul class="clearfix">
 						<li>
-							<span class="attr-right pull-right last-name">Huan</span>
+							<span class="attr-right pull-right first-name"><?=empty($model->first_name) ? $model->name : $model->first_name ?></span>
 							<span>Tên</span>
 						</li>
 						<li>
-							<span class="attr-right pull-right first-name">Ta</span>
+							<span class="attr-right pull-right last-name"><?=$model->last_name?></span>
 							<span>Họ</span>
 						</li>
 						<li>
-							<span class="attr-right pull-right phone-num">090 3 80 124124</span>
-							<span>Phone Number</span>
+							<span class="attr-right pull-right phone-num"><?=$model->mobile?></span>
+							<span>Số điện thoại</span>
 						</li>
 						<li>
-							<span class="attr-right pull-right im" data-im="1">Người môi giới</span>
+							<span class="attr-right pull-right im" data-im="1"><?=$model->owner == 2 ? "Người môi giới" : "Chủ nhà"?></span>
 							<span>Tôi là</span>
 						</li>
 					</ul>
@@ -53,7 +56,7 @@
 				</div>
 				<div class="wrap-attr-detail">
 					<div class="txt-wrap">
-						<p class="txt-mota">Phasellus non eros tortor. Ut sodales purus a ipsum fringilla, et pharetra lacus consectetur. Cras interdum sapien ut faucibus ornare. Duis efficitur enim at augue semper, vitae eleifend augue elementum...</p>		
+						<p class="txt-mota"><?=$model->about?></p>
 					</div>
 				</div>
 			</section>
@@ -85,6 +88,18 @@
 
 <div id="edit-ttcn" class="popup-common hide-popup">
 	<div class="wrap-popup">
+        <?php
+        $profile_form = Yii::createObject([
+            'class'    => \frontend\models\ProfileForm::className(),
+            'scenario' => 'updateprofile',
+        ]);
+        $f = ActiveForm::begin([
+            'id' => 'form-edit-ttcn',
+            'enableAjaxValidation' => false,
+            'enableClientValidation' => true,
+            'action' => Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])
+        ]);
+        ?>
 		<div class="title-popup clearfix text-center">
 			Thông tin cá nhân
 			<a href="#" class="txt-cancel btn-cancel">Cancel</a>
@@ -95,31 +110,45 @@
 				<ul class="clearfix">
 					<li>
 						<span>Tên</span>
-						<input type="text" class="attr-right last-name" value="" />
+                        <?= $f->field($profile_form, 'first_name')->textInput(['class'=>'attr-right first-name', 'value' => empty($model->first_name) ? $model->name : $model->first_name ])->label(false)?>
 					</li>
 					<li>
 						<span>Họ</span>
-						<input type="text" class="attr-right first-name" value="" />
+                        <?= $f->field($profile_form, 'last_name')->textInput(['class'=>'attr-right last-name', 'value' => $model->last_name ])->label(false)?>
 					</li>
 					<li>
-						<span>Phone Number</span>
-						<input class="attr-right phone-num" type="text" value="" />
+						<span>Số điện thoại</span>
+                        <?= $f->field($profile_form, 'mobile')->textInput(['class'=>'attr-right phone-num', 'value' => $model->mobile ])->label(false)?>
 					</li>
 					<li>
 						<span>Tôi là</span>
-						<select class="attr-right im">
-							<option value="1" selected>Người môi giới</option>
-							<option value="2">Chủ nhà</option>
-						</select>
+                        <?= $f->field($profile_form, 'owner')->dropDownList([1 => 'Chủ nhà', 2 => 'Người môi giới'], [
+                            'options' => [$model->owner => ['Selected ' => true]],
+                            'class' => 'attr-right im'
+                        ])->label(false)?>
 					</li>
 				</ul>
+
 			</div>
 		</div>
+        <?php $f->end(); ?>
 	</div>
 </div>
 
 <div id="edit-mtbt" class="popup-common hide-popup">
 	<div class="wrap-popup">
+        <?php
+        $profile_form = Yii::createObject([
+            'class'    => \frontend\models\ProfileForm::className(),
+            'scenario' => 'updateprofile',
+        ]);
+        $f = ActiveForm::begin([
+            'id' => 'form-edit-mtbt',
+            'enableAjaxValidation' => false,
+            'enableClientValidation' => true,
+            'action' => Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])
+        ]);
+        ?>
 		<div class="title-popup clearfix text-center">
 			MÔ TẢ BẢN THÂN
 			<a href="#" class="txt-cancel btn-cancel">Cancel</a>
@@ -127,17 +156,30 @@
 		</div>
 		<div class="inner-popup">
             <div class="list-tt-user wrap-attr-detail">
-				<textarea class="txt-mota"></textarea>
+                <?= $f->field($profile_form, 'about')->textarea(['class'=>'txt-mota', 'value' => $model->about ])->label(false)?>
 			</div>
 		</div>
+        <?php $f->end(); ?>
 	</div>
 </div>
 
 <div id="edit-changepass" class="popup-common hide-popup">
 	<div class="wrap-popup">
+        <?php
+        $profile_form = Yii::createObject([
+            'class'    => \frontend\models\ProfileForm::className(),
+            'scenario' => 'password',
+        ]);
+        $f = ActiveForm::begin([
+            'id' => 'form-edit-changepass',
+            'enableAjaxValidation' => false,
+            'enableClientValidation' => true,
+            'action' => Url::to(['member/password'])
+        ]);
+        ?>
 		<div class="title-popup clearfix text-center">
 			MẬT KHẨU
-			<a href="#" class="txt-cancel btn-cancel">Cancel</a>
+			<a href="#" class="txt-cancel btn-cancel">Back</a>
 			<a href="#" class="txt-done btn-done">Done</a>
 		</div>
 		<div class="inner-popup">
@@ -145,19 +187,23 @@
 				<ul class="clearfix">
 					<li>
 						<span>Password cũ</span>
-						<input type="password" class="attr-right" value="" placeholder="Nhập...">
+                        <?= $f->field($model, 'old_password')->textInput(['class' => 'attr-right old_password', 'type' => 'password', 'placeholder' => 'Nhập...'])->label(false) ?>
 					</li>
 					<li>
 						<span>Password mới</span>
-						<input type="password" class="attr-right" value="" placeholder="Nhập...">
+                        <?= $f->field($model, 'new_password')->textInput(['class' => 'attr-right new_password', 'type' => 'password', 'placeholder' => 'Nhập...'])->label(false) ?>
 					</li>
 					<li>
 						<span>Gõ lại Password mới</span>
-						<input type="password" class="attr-right" value="" placeholder="Nhập...">
+						<input type="password" class="attr-right re-type-pass" value="" placeholder="Nhập...">
+					</li>
+                    <li>
+						<div class="error hide" style="font-weight: bold;"></div>
 					</li>
 				</ul>
 			</div>
 		</div>
+        <?php $f->end(); ?>
 	</div>
 </div>
 
@@ -167,8 +213,119 @@
 			btnClickShow: ".edit-tt",
 			closeBtn: '.btn-cancel',
 			funCallBack: function (itemClick, popupItem) {
-				
 			}
 		});
-	});
+
+        $('#edit-ttcn .btn-done').click(function(){
+            var timer = 0;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                $.ajax({
+                    type: 'post',
+                    dataType: 'json',
+                    url: $('#form-edit-ttcn').attr('action'),
+                    data: $('#form-edit-ttcn').serializeArray(),
+                    success: function (data) {
+                        if(data.statusCode == 200){
+                            $('#edit-ttcn').addClass('hide-popup');
+                            $('.ttcn .first-name').html(data.modelResult.first_name);
+                            $('.ttcn .last-name').html(data.modelResult.last_name);
+                            $('.ttcn .phone-num').html(data.modelResult.mobile);
+                            if(data.modelResult.owner == 1)
+                                $('.ttcn .im').html('Chủ nhà');
+                            else
+                                $('.ttcn .im').html('Môi giới');
+                        }
+                        return true;
+                    },
+                    error: function (data) {
+    //                    var strMessage = '';
+    //                    $.each(data.parameters, function(idx, val){
+    //                        var element = 'form-edit-ttcn_'+idx;
+    //                        strMessage += "\n" + val;
+    //                    });
+    //                    alert(strMessage);
+                        return false;
+                    }
+                });
+            }, 500);
+        });
+
+        $('#edit-mtbt .btn-done').click(function(){
+            var timer = 0;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                $.ajax({
+                    type: 'post',
+                    dataType: 'json',
+                    url: $('#form-edit-mtbt').attr('action'),
+                    data: $('#form-edit-mtbt').serializeArray(),
+                    success: function (data) {
+                        if(data.statusCode == 200){
+                            $('#edit-mtbt').addClass('hide-popup');
+                            $('.mtbt .txt-mota').html(data.modelResult.about);
+                        }
+                        return true;
+                    },
+                    error: function (data) {
+                        //                    var strMessage = '';
+                        //                    $.each(data.parameters, function(idx, val){
+                        //                        var element = 'form-edit-ttcn_'+idx;
+                        //                        strMessage += "\n" + val;
+                        //                    });
+                        //                    alert(strMessage);
+                        return false;
+                    }
+                });
+            }, 500);
+        });
+
+        $('#edit-changepass .btn-done').click(function(){
+            $('#edit-changepass .error').addClass('hide');
+            var new_password = $('.new_password').val();
+            var rePass = $('.re-type-pass').val();
+            if(new_password !== rePass){
+                $('#edit-changepass .error').html('<br>Confirm password not match.');
+                $('#edit-changepass .error').removeClass('hide');
+                $('.re-type-pass').focus();
+                return false;
+            }
+
+            var timer = 0;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                $.ajax({
+                    type: 'post',
+                    dataType: 'json',
+                    url: $('#form-edit-changepass').attr('action'),
+                    data: $('#form-edit-changepass').serializeArray(),
+                    success: function (data) {
+                        if(data.statusCode == 200){
+                            $('#edit-changepass .error').html('<br> Reset password success.');
+                            $('#edit-changepass .error').removeClass('hide');
+                        } else {
+                            $('#edit-changepass .error').removeClass('hide');
+                            var strMessage = '';
+                            $.each(data.parameters, function(idx, val){
+                                var element = 'form-edit-changepass_'+idx;
+                                strMessage += "<br/>" + val;
+                            });
+                            $('#edit-changepass .error').html(strMessage);
+                        }
+                        return true;
+                    },
+                    error: function (data) {
+                        var strMessage = '';
+                        $.each(data.parameters, function(idx, val){
+                            var element = 'form-edit-changepass_'+idx;
+                            strMessage += "\n" + val;
+                        });
+                        $('#edit-changepass .error').html(strMessage);
+                        return false;
+                    }
+                });
+            }, 500);
+        });
+
+    });
 </script>
