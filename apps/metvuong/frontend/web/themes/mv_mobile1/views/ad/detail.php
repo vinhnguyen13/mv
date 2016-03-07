@@ -6,6 +6,7 @@ use yii\bootstrap\ActiveForm;
 use yii\web\View;
 use frontend\models\User;
 use yii\helpers\Url;
+use vsoft\ad\models\AdProductAdditionInfo;
 
 	$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=loaded', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/detail.js', ['position' => View::POS_END]);
@@ -32,6 +33,8 @@ use yii\helpers\Url;
 	}
 
     $address = $product->getAddress($product->show_home_no);
+    
+    $directionList = AdProductAdditionInfo::directionList();
 ?>
 <div class="detail-listing">
 	<?php 
@@ -114,6 +117,15 @@ use yii\helpers\Url;
 						<?php if($product->adProductAdditionInfo->floor_no): ?>
 						<li><strong>Tầng cao:</strong> <?= $product->adProductAdditionInfo->floor_no ?>  Tầng</li>
 						<?php endif; ?>
+						<?php if($product->adProductAdditionInfo->home_direction): ?>
+						<li><strong>Hướng nhà:</strong> <?= $directionList[$product->adProductAdditionInfo->home_direction] ?></li>
+						<?php endif; ?>
+						<?php if($product->adProductAdditionInfo->facade_direction): ?>
+						<li><strong>Hướng ban công:</strong> <?= $directionList[$product->adProductAdditionInfo->facade_direction] ?></li>
+						<?php endif; ?>
+						<?php if($product->adProductAdditionInfo->interior): ?>
+						<li><strong>Nội thất:</strong> <?= $product->adProductAdditionInfo->interior ?></li>
+						<?php endif; ?>
 					</ul>
                 </div>
             </div>
@@ -173,12 +185,6 @@ use yii\helpers\Url;
 										name="rating" value="1"> <label for="rating1" class="half"
 										title="1 stars"> </label>
 								</fieldset>
-							</div>
-							<div class="item-agent">
-								<div>
-									<span class="icon icon-person"></span>
-								</div>
-								Người Môi Giới
 							</div>
 							<?php if($product->adContactInfo->mobile): ?>
 							<div class="item-agent">
