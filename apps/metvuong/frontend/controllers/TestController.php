@@ -185,4 +185,11 @@ class TestController extends \yii\web\Controller
     public function actionClearCache(){
         Yii::$app->cache->flush();
     }
+
+    public function actionInfo(){
+        echo "<pre>";
+        print_r(phpinfo());
+        echo "</pre>";
+        exit;
+    }
 }
