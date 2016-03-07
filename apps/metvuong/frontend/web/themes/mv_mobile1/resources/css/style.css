@@ -1031,6 +1031,7 @@ label {
     font-weight: 600;
     width: 200px;
 }
+.back-form,
 .btn-post,
 .preview {
     margin: 0 5px;
@@ -4901,4 +4902,7 @@ input[type=text]:focus {
     float: left;
     width: 50%;
     margin-bottom: 5px;
+}
+#signup-form label {
+    font-size: 13px;
 }

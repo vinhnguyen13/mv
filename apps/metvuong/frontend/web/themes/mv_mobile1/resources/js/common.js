@@ -802,7 +802,12 @@ $.fn.popupMobi = function (options) {
             popupItem.removeClass('hide-popup');
 
             if ( sc.settings.effectShow == "slideDownUp" ) {
-                
+                popupItem.find('.wrap-popup').css({
+                    bottom: "50%",
+                    "transition-duration": "initial",
+                    "transition-timing-function": "initial",
+                    "transition-delay": "initial"
+                });
             }else if ( sc.settings.effectShow == "show-hide" ) {
 
             }

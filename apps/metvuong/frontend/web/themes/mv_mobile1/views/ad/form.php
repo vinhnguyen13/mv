@@ -412,8 +412,8 @@
         </div>
     </div>
 	<div class="text-center">
-		<button type="button" class="back-form">Trở lại</button>
-		<button type="button" class="btn-post">Đăng tin</button>
+		<button type="button" class="back-form btn-common">Trở lại</button>
+		<button type="button" class="btn-post btn-common">Đăng tin</button>
 	</div>
 </div>
 
