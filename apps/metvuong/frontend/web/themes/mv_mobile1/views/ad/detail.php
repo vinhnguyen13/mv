@@ -314,12 +314,14 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 	$(document).ready(function () {
 		$('#popup-email').popupMobi({
 			btnClickShow: ".email-btn",
-			closeBtn: '#popup-email .btn-cancel'
+			closeBtn: '#popup-email .btn-cancel',
+			styleShow: "full"
 		});
 
 		$('#popup-map').popupMobi({
 			btnClickShow: ".infor-listing .icon-map-loca",
 			closeBtn: "#popup-map .btn-close-map",
+			effectShow: "show-hide",
 			funCallBack: function() {
 				var mapEl = $('#map');
 				var latLng = {lat: Number(mapEl.data('lat')), lng:  Number(mapEl.data('lng'))};
