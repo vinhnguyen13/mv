@@ -768,7 +768,7 @@ $.fn.popupMobi = function (options) {
 
         sc.settings = $.extend({}, defaults, options);
 
-        $(sc.settings.btnClickShow).on('click', function (e) {
+        $(document).on('click', sc.settings.btnClickShow, function (e) {
             e.preventDefault();
             var _this = $(this),
                 popupItem = _this.attr('href');

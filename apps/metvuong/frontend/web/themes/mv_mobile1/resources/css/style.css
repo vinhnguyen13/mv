@@ -16,7 +16,7 @@ a:active, a:visited, a:link {
     /* color: red; */
 }
 input {
-    -webkit-appearance: none;
+    /* -webkit-appearance: none; */
     -webkit-border-radius: 0;
 }
 input[type=text],
@@ -3668,6 +3668,12 @@ input[type=text]:focus {
     padding: 5px 20px;
     display: block;
     /* margin-top: 10px; */
+}
+.push-price p {
+    margin-bottom: 5px;
+}
+.push-price p strong {
+    color: #E10000;
 }
 .list-noti .post-get .img-show {
     float: left;
