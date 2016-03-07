@@ -502,16 +502,4 @@ class User extends \dektrium\user\models\User
         return Url::to(['/chat/with', 'username'=>$username]);
     }
 
-    public function login(IdentityInterface $identity, $duration = 0) {
-        echo "<pre>";
-        print_r(5);
-        echo "</pre>";
-        exit;
-        if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
-        } else {
-            return false;
-        }
-    }
-
 }
