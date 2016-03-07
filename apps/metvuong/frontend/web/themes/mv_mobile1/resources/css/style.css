@@ -4888,3 +4888,8 @@ input[type=text]:focus {
     border-left: 1.5px dashed #777777;
     height: 100%;
 }
+.icon-sms {
+    background-position: 0 -1333px;
+    width: 26px;
+    height: 25px;
+}
