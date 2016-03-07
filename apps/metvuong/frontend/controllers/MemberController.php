@@ -338,6 +338,8 @@ class MemberController extends Controller
                 if (!$model->hasErrors() ) {
                     $model->save(false);
                     return ['statusCode' => 200, 'model' => $model];
+                } else {
+                    return ['statusCode' => 400, 'parameters' => $model->errors];
                 }
             }
         }

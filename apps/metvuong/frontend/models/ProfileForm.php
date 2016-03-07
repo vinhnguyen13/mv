@@ -174,7 +174,7 @@ class ProfileForm extends Model
 
         $model->user_id = $profile->user_id;
         $model->name = $profile->name;
-        $model->public_email = $profile->public_email;
+        $model->public_email = empty($profile->public_email) ? $user->email : $profile->public_email;
         $model->phone = $profile->phone;
         $model->mobile = $profile->mobile;
         $model->address = $profile->address;
@@ -225,4 +225,5 @@ class ProfileForm extends Model
     		$profile->save();
     	}
     }
+
 }
