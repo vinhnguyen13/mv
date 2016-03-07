@@ -21,7 +21,7 @@ $user = $model->getUser();
                 <div class="text-center send-noti">
                     <a href="<?=$user->urlChat();?>" class="btn-common btn-chat rippler rippler-default"><span class="icon icon-chat-1"></span></a>
                     <a href="tel:<?= $model->mobile ?>" class="btn-common rippler rippler-default"><span class="icon icon-phone-1"></span></a>
-                    <a href="sms:<?= $model->mobile ?>" class="btn-common rippler rippler-default"><span class="icon icon-phone-1"></span></a>
+                    <a href="sms:<?= $model->mobile ?>" class="btn-common rippler rippler-default"><span class="icon icon-sms"></span></a>
                 </div>
             </div>
         </div>
