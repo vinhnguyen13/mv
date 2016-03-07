@@ -48,6 +48,7 @@ var form = {
 		form.projectWrapEl = $('#project-info-wrap');
 		form.projectEl = $('#adproduct-project_building_id');
 		form.projectInfoEl = $('#project-info');
+		form.projectDetailEl = $('#project-info-detail');
 		form.homeWrapEl = $('#home-wrap');
 		form.homeEl = $('#adproduct-home_no');
 		form.roomEl = $('#adproductadditioninfo-room_no');
@@ -59,6 +60,7 @@ var form = {
 		form.streetEl = $('#adproduct-street_id');
 		form.areaEl = $('#adproduct-area');
 		form.priceEl = $('#adproduct-price');
+		form.priceFormatEl = $('#price-format');
 		form.contentEl = $('#adproduct-content');
 		form.facadeWiEl = $('#adproductadditioninfo-facade_width');
 		form.landWiEl = $('#adproductadditioninfo-land_width');
@@ -69,6 +71,7 @@ var form = {
 		form.nameEl = $('#adcontactinfo-name');
 		form.mobileEl = $('#adcontactinfo-mobile');
 		form.emailEl = $('#adcontactinfo-email');
+		form.addressEl = $('#adcontactinfo-address');
 		
 		form.filterCategories();
 	},
@@ -119,7 +122,7 @@ var form = {
 					form.projectInfoEl.removeClass('loading');
 					
 					$('#project-info-location').text(r.location);
-					$('#project-info-detail').attr('href', r.url);
+					form.projectDetailEl.attr('href', r.url);
 
 					form.fixHeight(2);
 				});
@@ -129,18 +132,21 @@ var form = {
 		});
 		
 		form.priceEl.keyup(function(){
-			var priceFormat = $('#price-format');
 			var val = form.priceEl.val();
 			
 			if(/^\d+$/.test(val)) {
 				val = parseInt(val) + '';
-				priceFormat.show().text(formatPrice(val) + ' VNĐ');
+				form.priceFormatEl.show().text(formatPrice(val) + ' VNĐ');
 			} else {
-				priceFormat.hide();
+				form.priceFormatEl.hide();
 			}
 		}).trigger('keyup');
 		
+		var detailListing = $('.detail-listing');
+		
 		$('.btn-post').click(function(){
+			form.require(form.nameEl, 'Nhập họ tên');
+			
 			if(form.require(form.mobileEl, 'Nhập số di động')) {
 				if(!form.isDigit(form.mobileEl.val())) {
 					form.showError(form.mobileEl, 'Số điện thoại không hợp lệ');
@@ -165,6 +171,7 @@ var form = {
 				$.post(listingForm.attr('action'), listingForm.serialize(), function(r){
 					if(r.success) {
 						listingForm.hide();
+						detailListing.hide();
 						$('#popup-share-social').removeClass('hide-popup');
 						$('body').loading({done: true});
 					} else {
@@ -174,8 +181,142 @@ var form = {
 			}
 		});
 		
+		var formView = $('.post-listing, .fixed-prev-next');
+		var swiperContainer = detailListing.find('.swiper-container');
+		var swiperWrap = swiperContainer.find('.swiper-wrapper');
+		var swiper;
+		
 		$('.preview').click(function(){
+			detailListing.show();
+			formView.hide();
 			
+			swiperWrap.html('');
+			var imgs = $('.files').children();
+			if(imgs.length) {
+				swiperContainer.show();
+				imgs.each(function(){
+					swiperWrap.append('<div class="swiper-slide"> <div class="img-show"> <div> <img src="' + $(this).find('a').attr('href') + '"> </div> </div> </div>');
+				});
+				swiper = new Swiper('.swiper-container', {
+					pagination: '.swiper-pagination',
+					paginationClickable: true,
+			        spaceBetween: 30
+			    });
+			} else {
+				swiperContainer.hide();
+			}
+			
+			var type = $("input[name='AdProduct[type]']:checked").parent().next().text();
+			var owner = $("input[name='AdProduct[owner]']:checked").parent().next().text();
+			
+			$('.infor-by-up').html(capitalizeFirstLetter(form.getSelectedCat().text()) + ' ' + type + ' bởi <a href="#">' + owner + '</a>');
+			
+			var address = '';
+			
+			if(form.showHomeEl.prop('checked') && form.catEl.val() != form.DNDU && form.homeEl.val()) {
+				address += form.homeEl.val() + ', ';
+			}
+			
+			address = address + ' ' + form.streetEl.find('option').filter(':selected').text() + ', '
+					+ form.wardEl.find('option').filter(':selected').text() + ', '
+					+ form.districtEl.find('option').filter(':selected').text() + ', '
+					+ form.cityEl.find('option').filter(':selected').text();
+			
+			$('.address-listing p').text(address);
+			
+			if(form.catEl.val() == form.DNDU) {
+				$('.icon-bed').hide();
+				$('.icon-pt').hide();
+			} else {
+				$('.icon-bed').show();
+				$('.icon-pt').show();
+			}
+			
+			$('.area-show').text(form.areaEl.val());
+			$('.bed-show').text(form.roomEl.val());
+			$('.toilet-show').text(form.toiletEl.val());
+			
+			$('.price-show').text(form.priceFormatEl.text());
+			$('.content-show').html(form.contentEl.val().replace(/\n/g, "<br />"));
+			
+			if(form.projectEl.val()) {
+				$('.project-item').show();
+				$('.project-show').html('<a href="' + form.projectDetailEl.attr('href') + '">' + form.projectEl.find('option').filter(':selected').text() + '</a>');
+			} else {
+				$('.project-item').hide();
+			}
+			
+			if(form.facadeWiEl.val()) {
+				$('.facade-width-item').show();
+				$('.facade-width-show').text(form.facadeWiEl.val());
+			} else {
+				$('.facade-width-item').hide();
+			}
+			
+			if(form.landWiEl.val()) {
+				$('.land-width-item').show();
+				$('.land-width-show').text(form.landWiEl.val());
+			} else {
+				$('.land-width-item').hide();
+			}
+			
+			if(form.floorEl.val()) {
+				$('.floor-no-item').show().find('strong').text(form.floorEl.attr('placeholder') + ':');
+				$('.floor-no-show').text(form.floorEl.val());
+			} else {
+				$('.floor-no-item').hide();
+			}
+			
+			if(form.homeDiEl.val()) {
+				$('.home-di-item').show();
+				$('.home-di-show').text(form.homeDiEl.find('option').filter(':selected').text());
+			} else {
+				$('.home-di-item').hide();
+			}
+			
+			if(form.facadeDiEl.val()) {
+				$('.facade-di-item').show();
+				$('.facade-di-show').text(form.facadeDiEl.find('option').filter(':selected').text());
+			} else {
+				$('.facade-di-item').hide();
+			}
+			
+			if(form.interiorEl.val()) {
+				$('.interior-item').show();
+				$('.interior-show').text(form.interiorEl.val());
+			} else {
+				$('.interior-item').hide();
+			}
+			
+			$('.name-agent').text(form.nameEl.val());
+			
+			if(form.mobileEl.val()) {
+				$('.icon-phone-item').show();
+				$('.phone-show').text(form.mobileEl.val());
+			} else {
+				$('.icon-phone-item').hide();
+			}
+			
+			if(form.emailEl.val()) {
+				$('.icon-email-item').show();
+				$('.email-show').text(form.emailEl.val());
+			} else {
+				$('.icon-email-item').hide();
+			}
+			
+			if(form.addressEl.val()) {
+				$('.address-icon-item').show();
+				$('.address-show').text(form.addressEl.val());
+			} else {
+				$('.address-icon-item').hide();
+			}
+		});
+		
+		$('.back-form').click(function(){
+			detailListing.hide();
+			formView.show();
+			
+			swiper.destroy(false, true);
 		});
 	},
 	appendProjectDropdown: function(projects) {
@@ -363,3 +504,7 @@ form.upload = {
 		}
 	}
 };
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}

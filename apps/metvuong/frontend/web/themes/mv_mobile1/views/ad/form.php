@@ -12,7 +12,7 @@
 	use vsoft\ad\models\AdDistrict;
 	use vsoft\ad\models\AdWard;
 	use vsoft\ad\models\AdStreet;
-use vsoft\ad\models\AdCategory;
+	use vsoft\ad\models\AdCategory;
 
 	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/string-helper.js', ['position' => View::POS_END]);
 	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/post-listing.js', ['position' => View::POS_END]);
@@ -21,6 +21,13 @@ use vsoft\ad\models\AdCategory;
 	$listRoom = [];
 	for($i = 1; $i <= 10; $i++) {
 		$listRoom[$i] = $i;
+	}
+	
+	$owner =  Yii::$app->user->identity;
+	if($owner && $owner->profile) {
+		$avatar = $owner->profile->getAvatarUrl();
+	} else {
+		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
 	}
 ?>
 <div class="title-top">Đăng tin</div>
@@ -230,6 +237,9 @@ use vsoft\ad\models\AdCategory;
 				<?= $form->field($contactInfo, 'email', ['options' => ['class' => 'col-xs-12 form-group']])
 						->label(false)
 						->textInput(['placeholder' => $contactInfo->getAttributeLabel('email')]) ?>
+				<?= $form->field($contactInfo, 'address', ['options' => ['class' => 'col-xs-12 form-group']])
+						->label(false)
+						->textInput(['placeholder' => $contactInfo->getAttributeLabel('address')]) ?>
 			</div>
 			<div class="text-center pdT-25">
 				<button type="button" class="preview btn-common">Preview</button>
@@ -237,6 +247,8 @@ use vsoft\ad\models\AdCategory;
 			</div>
 		</div>
 	<?php $form->end() ?>
+</div>
+
 	<div id="popup-share-social" class="popup-common hide-popup">
 	    <div class="inner-popup">
             <div class="wrap-body-popup">
@@ -245,6 +257,163 @@ use vsoft\ad\models\AdCategory;
 				<a href="<?= Url::current() ?>" style="font-size: 16px; text-transform: uppercase;">Tiếp tục đăng tin</a>
             </div>
         </div>
+	</div>
+	
+<div class="detail-listing" style="display: none;">
+	<div class="gallery-detail swiper-container">
+		<div class="swiper-wrapper"></div>
+		<div class="swiper-pagination"></div>
+	</div>
+	
+	<p class="infor-by-up"></p>
+	
+	<div class="infor-listing">
+		<div class="address-listing">
+			<p></p>
+		</div>
+		<p class="id-duan">ID:<span>MV000</span></p>
+		<ul class="clearfix list-attr-td">
+			<li> <span class="icon icon-dt icon-dt-small"></span><span class="area-show"></span>m2 </li>
+			<li> <span class="icon icon-bed icon-bed-small"></span> <span class="bed-show"></span> </li>
+			<li> <span class="icon icon-pt icon-pt-small"></span> <span class="toilet-show"></span> </li>
+		</ul>
+		<ul class="pull-right icons-detail">
+			<li><a href="#popup-share-social" class="icon icon-share-td"></a></li>
+			<li><a href="#" class="icon save-item"></a></li>
+			<li><a href="#popup-map" class="icon icon-map-loca"></a></li>
+		</ul>
+		<p class="price-td">
+			<span>Giá</span>
+			<span class="price-show"></span>
+		</p>
+	</div>
+	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        Diễn tả chi tiết<span class="icon"></span>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body" name="about" placeholder="Vui lòng chia sẻ tiểu sử">
+                    <p class="content-show"></p>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Thông tin chi tiết<span class="icon"></span>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body" name="activity">
+                	<ul class="clearfix">
+						<li class="project-item"><strong>Thuộc dự án:</strong> <span class="project-show"></span></li>
+						<li class="facade-width-item"><strong>Mặt tiền:</strong> <span class="facade-width-show"></span>m</li>
+						<li class="land-width-item"><strong>Đường vào:</strong> <span class="land-width-show"></span>m</li>
+						<li class="floor-no-item"><strong>Tầng cao:</strong> <span class="floor-no-show"></span></li>
+						<li class="home-di-item"><strong>Hướng nhà:</strong> <span class="home-di-show"></span></li>
+						<li class="facade-di-item"><strong>Hướng ban công:</strong> <span class="facade-di-show"></span></li>
+						<li class="interior-item"><strong>Nội thất:</strong> <span class="interior-show"></span></li>
+                	</ul>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingFour">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Tiện ích<span class="icon"></span>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                <div class="panel-body" name="experience" placeholder="Vui lòng nhập chia sẻ kinh nghiệm">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingSeven">
+                <h4 class="panel-title">
+                    <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEght" aria-expanded="false" aria-controls="collapseSeven">
+                        Liên hệ<span class="icon"></span>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseEght" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven">
+                <div class="panel-body text-center">
+            	    <div class="infor-agent clearfix">
+			            <?php if(!empty($owner->username)) { ?>
+						<a href="#" class="wrap-img">
+			                <img src="<?= $avatar ?>" alt="" /></a>
+			            <?php } else { ?>
+			                <a class="wrap-img" href=""><img src="<?= $avatar ?>" alt="" /></a>
+			            <?php } ?>
+			            <div class="img-agent">
+				            <a href="" class="name-agent"></a>
+							<div class="rating-start">
+								<fieldset class="rate">
+									<input type="radio" id="rating10" name="rating" value="10"> <label
+										for="rating10" title="5 stars"> </label> <input type="radio"
+										id="rating9" name="rating" value="9"> <label for="rating9"
+										class="half" title="5 stars"> </label> <input type="radio"
+										id="rating8" name="rating" value="8"> <label for="rating8"
+										title="4 stars"> </label> <input type="radio" id="rating7"
+										name="rating" value="7"> <label for="rating7" class="half"
+										title="4 stars"> </label> <input type="radio" id="rating6"
+										name="rating" value="6"> <label for="rating6" title="3 stars"> </label>
+									<input type="radio" id="rating5" name="rating" value="5"> <label
+										for="rating5" class="half" title="3 stars"> </label> <input
+										type="radio" id="rating4" name="rating" value="4"> <label
+										for="rating4" title="2 stars"> </label> <input type="radio"
+										id="rating3" name="rating" value="3"> <label for="rating3"
+										class="half" title="2 stars"> </label> <input type="radio"
+										id="rating2" name="rating" value="2"> <label for="rating2"
+										title="1 stars"> </label> <input type="radio" id="rating1"
+										name="rating" value="1"> <label for="rating1" class="half"
+										title="1 stars"> </label>
+								</fieldset>
+							</div>
+							<div class="item-agent icon-phone-item">
+								<div>
+									<span class="icon icon-phone"></span>
+								</div>
+								<a class="phone-show" href="tel:"></a>
+							</div>
+							<div class="item-agent icon-email-item">
+								<div>
+									<span class="icon icon-email"></span>
+								</div>
+								<span class="email-show"></span>
+							</div>
+							<div class="item-agent address-icon-item">
+								<div>
+									<span class="icon address-icon"></span>
+								</div>
+								<span class="address-show"></span>
+							</div>
+						</div>
+					</div>
+					<div class="text-center">
+						<a href="#popup-email" id="" class="email-btn btn-common btn-small">Email</a>
+						<?php if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) { ?>
+							<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small">Chat</a>
+						<?php }?>
+					</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+	<div class="text-center">
+		<button type="button" class="back-form">Trở lại</button>
+		<button type="button" class="btn-post">Đăng tin</button>
 	</div>
 </div>
 

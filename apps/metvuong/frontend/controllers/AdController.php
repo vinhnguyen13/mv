@@ -434,6 +434,7 @@ class AdController extends Controller
     		$contactInfo->name = Yii::$app->user->identity->profile->name;
     		$contactInfo->mobile = Yii::$app->user->identity->profile->mobile;
     		$contactInfo->email = Yii::$app->user->identity->profile->public_email;
+    		$contactInfo->address = Yii::$app->user->identity->profile->address;
     	}
     	
     	return $this->render('form', ['product' => $product, 'additionInfo' => $additionInfo, 'contactInfo' => $contactInfo]);

@@ -47,10 +47,10 @@ class AdContactInfo extends \yii\db\ActiveRecord
     {
         return [
             'product_id' => 'Product ID',
-            'name' => 'Name',
-            'address' => 'Address',
+            'name' => 'Họ tên',
+            'address' => 'Địa chỉ',
             'phone' => 'Phone',
-            'mobile' => 'Mobile',
+            'mobile' => 'Số di động',
             'email' => 'Email',
         ];
     }
