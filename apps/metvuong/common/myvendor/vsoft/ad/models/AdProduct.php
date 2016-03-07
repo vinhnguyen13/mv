@@ -22,6 +22,9 @@ class AdProduct extends AP
 	
 	const EXPIRED = 86400;
 	
+	const DEFAULT_CITY = 1;
+	const DEFAULT_DISTRICT = 10;
+	
 	public function rules()
 	{
 		return [

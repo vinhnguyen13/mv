@@ -20,5 +20,17 @@ use common\models\AdWard as AW;
  */
 class AdWard extends AW
 {
+	public static function getListByDistrict($districtId) {
+		$items = [];
 	
+		if($districtId) {
+			$wards = self::find()->where('`district_id` = :district_id', [':district_id' => $districtId])->all();
+				
+			foreach($wards as $ward) {
+				$items[$ward['id']] = "{$ward['pre']} {$ward['name']}";
+			}
+		}
+	
+		return $items;
+	}
 }

@@ -32,6 +32,8 @@ use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 use yii\web\Session;
 use vsoft\express\components\AdImageHelper;
+use vsoft\ad\models\AdStreet;
+use vsoft\ad\models\AdBuildingProject;
 
 class AdController extends Controller
 {
@@ -360,7 +362,6 @@ class AdController extends Controller
     	}
     	
     	$product = new AdProduct();
-    	
     	$additionInfo = new AdProductAdditionInfo();
     	$contactInfo = new AdContactInfo();
     	
@@ -427,6 +428,12 @@ class AdController extends Controller
     		}
     		
     		return $result;
+    	} else {
+    		$product->loadDefaultValues();
+    		
+    		$contactInfo->name = Yii::$app->user->identity->profile->name;
+    		$contactInfo->mobile = Yii::$app->user->identity->profile->mobile;
+    		$contactInfo->email = Yii::$app->user->identity->profile->public_email;
     	}
     	
     	return $this->render('form', ['product' => $product, 'additionInfo' => $additionInfo, 'contactInfo' => $contactInfo]);
@@ -639,5 +646,23 @@ class AdController extends Controller
 			
 			return $this->render('geocode');
 		}
+	}
+	
+	public function actionListDistrict($cityId) {
+		Yii::$app->response->format = Response::FORMAT_JSON;
+		
+		return AdDistrict::getListByCity($cityId);
+	}
+	
+	public function actionListSwp($districtId) {
+		Yii::$app->response->format = Response::FORMAT_JSON;
+		
+		$response = [];
+		
+		$response['wards'] = AdWard::getListByDistrict($districtId);
+		$response['streets'] = AdStreet::getListByDistrict($districtId);
+		$response['projects'] = AdBuildingProject::getListByDistrict($districtId);
+		
+		return $response;
 	}
 }

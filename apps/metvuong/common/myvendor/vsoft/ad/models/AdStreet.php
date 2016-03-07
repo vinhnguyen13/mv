@@ -20,5 +20,17 @@ use common\models\AdStreet as ASt;
  */
 class AdStreet extends ASt
 {
+	public static function getListByDistrict($districtId) {
+		$items = [];
 	
+		if($districtId) {
+			$streets = self::find()->where('`district_id` = :district_id', [':district_id' => $districtId])->all();
+	
+			foreach($streets as $street) {
+				$items[$street['id']] = "{$street['pre']} {$street['name']}";
+			}
+		}
+	
+		return $items;
+	}
 }

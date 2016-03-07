@@ -32,4 +32,18 @@ class AdDistrict extends AD
 	{
 		return $this->hasMany(AdWard::className(), ['district_id' => 'id']);
 	}
+	
+	public static function getListByCity($cityId) {
+		$items = [];
+		
+		if($cityId) {
+			$districts = self::find()->where('`city_id` = :city_id', [':city_id' => $cityId])->all();
+			
+			foreach($districts as $district) {
+				$items[$district['id']] = $district['pre'] ? "{$district['pre']} {$district['name']}" : $district['name'];
+			}
+		}
+		
+		return $items;
+	}
 }

@@ -222,4 +222,18 @@ class AdBuildingProject extends ABP
         $then = mb_substr($string, 1, $strlen - 1, $encoding);
         return mb_strtoupper($firstChar, $encoding) . $then;
     }
+    
+    public static function getListByDistrict($districtId) {
+    	$items = [];
+    
+    	if($districtId) {
+    		$projects = self::find()->where('`district_id` = :district_id', [':district_id' => $districtId])->all();
+    
+    		foreach($projects as $project) {
+    			$items[$project['id']] = $project['name'];
+    		}
+    	}
+    
+    	return $items;
+    }
 }

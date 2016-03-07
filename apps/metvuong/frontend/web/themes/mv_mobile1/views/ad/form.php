@@ -2,12 +2,17 @@
 	use yii\widgets\ActiveForm;
 	use yii\helpers\Html;
 	use vsoft\ad\models\AdProduct;
-use yii\web\View;
-use vsoft\ad\models\AdBuildingProject;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Url;
-use vsoft\ad\models\AdProductAdditionInfo;
-use common\widgets\fileupload\FileUpload;
+	use yii\web\View;
+	use vsoft\ad\models\AdBuildingProject;
+	use yii\helpers\ArrayHelper;
+	use yii\helpers\Url;
+	use vsoft\ad\models\AdProductAdditionInfo;
+	use common\widgets\fileupload\FileUpload;
+	use vsoft\ad\models\AdCity;
+	use vsoft\ad\models\AdDistrict;
+	use vsoft\ad\models\AdWard;
+	use vsoft\ad\models\AdStreet;
+use vsoft\ad\models\AdCategory;
 
 	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/string-helper.js', ['position' => View::POS_END]);
 	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/post-listing.js', ['position' => View::POS_END]);
@@ -16,7 +21,7 @@ use common\widgets\fileupload\FileUpload;
 	$listRoom = [];
 	for($i = 1; $i <= 10; $i++) {
 		$listRoom[$i] = $i;
-	}	
+	}
 ?>
 <div class="title-top">Đăng tin</div>
 <div class="post-listing">
@@ -38,7 +43,7 @@ use common\widgets\fileupload\FileUpload;
 				<li><a data-active-section="tien-ich" href="#">4</a><span class="icon arrowLeft"></span></li>
 			</ul>
 		</div>
-		<div id="step-1" class="section select-type hide item-step">
+		<div id="step1" class="section select-type hide item-step">
 			<p class="text-center step-txt">4 bước dễ dàng</p>
 		
 			<ul class="clearfix step-check">
@@ -78,55 +83,45 @@ use common\widgets\fileupload\FileUpload;
 				</li>
 			</ul>
 			
-			<?= $form->field($product, 'category_id')
-					->label(false)
-					->dropDownList([], ['prompt' => $product->getAttributeLabel('category_id'), 'data-default' => $product->category_id]) ?>
+			<?php
+				$categories = AdCategory::find()->where('`status` = 1')->all();
+				$categoriesDropdown = ArrayHelper::map($categories, 'id', 'name');
+				$categoriesOptions = ArrayHelper::map($categories, 'id', function($category){ return ['data-type' => $category->apply_to_type, 'data-limit' => $category->limit_area]; });
 					
-			<?= $form->field($product, 'project_building_id', ['options' => ['class' => 'form-group']])
-					->label(false)
-					->dropDownList(ArrayHelper::map(AdBuildingProject::find()->all(), 'id', 'name'), ['prompt' => $product->getAttributeLabel('project_building_id')]) ?>
-					
-			<div id="project-info" class="hide" data-url="<?= Url::to(['building-project/detail']) ?>">
-				<div class="loading-proccess"><span></span></div>
-				<div class="result">
-					<div>Vị trí: <span id="project-info-location"></span></div>
-					<a target="_blank" id="project-info-detail" href="#">Xem chi tiết dự án</a>
-				</div>
-			</div>
+				echo $form->field($product, 'category_id')
+						 ->label(false)
+						 ->dropDownList($categoriesDropdown, ['prompt' => $product->getAttributeLabel('category_id'), 'options' => $categoriesOptions])
+			?>
 		</div>
 
-		<div id="step-2" class="tt-chung item-step section hide">
+		<div id="step2" class="tt-chung item-step section hide">
 			<div class="title-step">Thông tin chung</div>
 			<div class="row">
-				<?= Html::activeHiddenInput($product, 'city_id') ?>
-				<div class="col-xs-6 form-group">
-					<select id="city" class="form-control">
-						<option value=""><?= $product->getAttributeLabel('city_id') ?></option>
-					</select>
-					<div class="help-block"></div>
-				</div>
-				
-				<?= Html::activeHiddenInput($product, 'district_id') ?>
-				<div class="col-xs-6 form-group">
-					<select id="district" class="form-control">
-						<option value=""><?= $product->getAttributeLabel('district_id') ?></option>
-					</select>
-					<div class="help-block"></div>
-				</div>
+				<?php
+					$cities = AdCity::find()->all();
+					$citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
+					$citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != AdProduct::DEFAULT_CITY)]; });
+					echo $form->field($product, 'city_id', ['options' => ['class' => 'col-xs-6 form-group']])
+							  ->label(false)
+							  ->dropDownList($citiesDropdown, ['prompt' => $product->getAttributeLabel('city_id'), 'options' => $citiesOptions])
+				?>
+				<?= $form->field($product, 'district_id', ['options' => ['class' => 'col-xs-6 form-group']])
+						 ->label(false)
+						 ->dropDownList(AdDistrict::getListByCity($product->city_id), ['prompt' => $product->getAttributeLabel('district_id')]) ?>
 				
 				<?= $form->field($product, 'ward_id', ['options' => ['class' => 'col-xs-12 form-group']])
 					->label(false)
-					->dropDownList([], ['prompt' => $product->getAttributeLabel('ward_id'), 'data-default' => $product->ward_id]) ?>
+					->dropDownList(AdWard::getListByDistrict($product->district_id), ['prompt' => $product->getAttributeLabel('ward_id')]) ?>
 					
 				<?= $form->field($product, 'street_id', ['options' => ['class' => 'col-xs-12 form-group']])
 					->label(false)
-					->dropDownList([], ['prompt' => $product->getAttributeLabel('street_id'), 'data-default' => $product->street_id]) ?>
+					->dropDownList(AdStreet::getListByDistrict($product->district_id), ['prompt' => $product->getAttributeLabel('street_id')]) ?>
 				
 				<?= $form->field($product, 'home_no', ['options' => ['class' => 'col-xs-12 form-group']])
 						->label(false)
 						->textInput(['placeholder' => $product->getAttributeLabel('home_no')]) ?>
 						
-				<?= $form->field($product, 'show_home_no', ['options' => ['class' => 'col-xs-12 form-group toggle-num-home']])->label(false)->checkbox() ?>
+				<?= $form->field($product, 'show_home_no', ['options' => ['class' => 'col-xs-12 form-group toggle-num-home']])->label(false)->checkbox(['data-set' => $product->isNewRecord ? '0' : '1']) ?>
 				
 				<div class="col-xs-12 form-group">
 					<?= $form->field($product, 'area', ['options' => ['class' => '']])
@@ -135,8 +130,7 @@ use common\widgets\fileupload\FileUpload;
 					<span class="unit-dt">m2</span>
 				</div>
 				
-				<?= $form->field($product, 'price', ['options' => ['class' => 'col-xs-12 form-group']])
-						->label(false)
+				<?= $form->field($product, 'price', ['options' => ['class' => 'col-xs-12 form-group'], 'template' => '{input}<span style="display: none;" id="price-format"></span>{error}'])
 						->textInput(['placeholder' => $product->getAttributeLabel('price')]) ?>
 				
 				<?= $form->field($additionInfo, 'room_no', ['options' => ['class' => 'col-xs-6 form-group']])
@@ -146,10 +140,26 @@ use common\widgets\fileupload\FileUpload;
 				<?= $form->field($additionInfo, 'toilet_no', ['options' => ['class' => 'col-xs-6 form-group']])
 					->label(false)
 					->dropDownList($listRoom, ['prompt' => $additionInfo->getAttributeLabel('toilet_no')]) ?>
+					
+				<div id="project-info-wrap" class="col-xs-12">
+					<?php
+						$projects = $product->district_id ? AdBuildingProject::find()->where('district_id = :district_id', [':district_id' => $product->district_id])->all() : [];
+						echo $form->field($product, 'project_building_id', ['options' => ['class' => 'form-group']])
+							 ->label(false)
+							 ->dropDownList(ArrayHelper::map($projects, 'id', 'name'), ['prompt' => $product->getAttributeLabel('project_building_id')])
+					?>
+					<div id="project-info" style="display: none;" data-url="<?= Url::to(['building-project/detail']) ?>">
+						<div class="loading-proccess"><span></span></div>
+						<div class="result">
+							<div>Vị trí: <span id="project-info-location"></span></div>
+							<a target="_blank" id="project-info-detail" href="#">Xem chi tiết dự án</a>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 
-		<div id="step-3" class="tt-chitiet item-step section hide">
+		<div id="step3" class="tt-chitiet item-step section hide">
 			<div class="title-step">Thông tin chi tiết</div>
 			<div class="row">
 				<?= $form->field($product, 'content', ['options' => ['class' => 'col-xs-12 form-group']])
@@ -188,7 +198,7 @@ use common\widgets\fileupload\FileUpload;
 			</div>
 		</div>
 
-		<div id="step-4" class="hinh-anh item-step section hide">
+		<div id="step4" class="hinh-anh item-step section hide">
 			<?= FileUpload::widget([
 					'name' => 'images', 
 					'url' => Url::to(['upload']),
@@ -211,13 +221,13 @@ use common\widgets\fileupload\FileUpload;
 			<div class="row">
 				<?= $form->field($contactInfo, 'name', ['options' => ['class' => 'col-xs-12 form-group']])
 						->label(false)
-						->textInput(['placeholder' => $contactInfo->getAttributeLabel('name'), 'value' => Yii::$app->user->identity->profile->name]) ?>
+						->textInput(['placeholder' => $contactInfo->getAttributeLabel('name')]) ?>
 				<?= $form->field($contactInfo, 'mobile', ['options' => ['class' => 'col-xs-12 form-group']])
 						->label(false)
-						->textInput(['placeholder' => $contactInfo->getAttributeLabel('mobile'), 'value' => Yii::$app->user->identity->profile->mobile]) ?>
+						->textInput(['placeholder' => $contactInfo->getAttributeLabel('mobile')]) ?>
 				<?= $form->field($contactInfo, 'email', ['options' => ['class' => 'col-xs-12 form-group']])
 						->label(false)
-						->textInput(['placeholder' => $contactInfo->getAttributeLabel('email'), 'value' => Yii::$app->user->identity->profile->public_email]) ?>
+						->textInput(['placeholder' => $contactInfo->getAttributeLabel('email')]) ?>
 			</div>
 			<div class="text-center">
 				<button type="button" class="preview">Preview</button>
