@@ -5,16 +5,23 @@
  * Date: 2/26/2016
  * Time: 9:51 AM
  */
+use vsoft\ad\models\AdCity;
+use vsoft\ad\models\AdDistrict;
+use vsoft\ad\models\AdWard;
+use vsoft\ad\models\AdStreet;
 use yii\bootstrap\ActiveForm;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+$user = $model->getUser();
 ?>
 <div class="title-fixed-wrap">
 	<div class="edit-user-tt">
 		<div class="title-top">
 			<a href="#">TÀI KHOẢN CỦA BẠN</a>
 			<a href="javascript:history.back()" id="prev-page"><span class="icon arrowRight-1"></span></a>
+            <a href="#" id="done-page"><span class="icon icon-done"></span></a>
 		</div>
 		<div class="wrap-edit-tt">
 			<div class="avatar-user-pr">
@@ -30,20 +37,12 @@ use yii\helpers\Url;
 				<div class="list-tt-user wrap-attr-detail">
 					<ul class="clearfix">
 						<li>
-							<span class="attr-right pull-right first-name"><?=empty($model->first_name) ? $model->name : $model->first_name ?></span>
+							<span class="attr-right pull-right name"><?=$model->name ?></span>
 							<span>Tên</span>
-						</li>
-						<li>
-							<span class="attr-right pull-right last-name"><?=$model->last_name?></span>
-							<span>Họ</span>
 						</li>
 						<li>
 							<span class="attr-right pull-right phone-num"><?=$model->mobile?></span>
 							<span>Số điện thoại</span>
-						</li>
-						<li>
-							<span class="attr-right pull-right im" data-im="1"><?=$model->owner == 2 ? "Người môi giới" : "Chủ nhà"?></span>
-							<span>Tôi là</span>
 						</li>
 					</ul>
 				</div>
@@ -67,12 +66,54 @@ use yii\helpers\Url;
 					<!-- <a href="#" class="edit-tt"><span class="icon icon-edit-small-1"></span></a> -->
 				</div>
 				<div class="list-tt-user wrap-attr-detail">
+                    <?php
+                    $user_location_form = Yii::createObject([
+                        'class'    => \frontend\models\UserLocation::className()
+                    ]);
+                    $form = ActiveForm::begin ( [
+                        'id' => 'user-location-form',
+                        'enableClientValidation' => false,
+                        'options' => [
+                            'autocomplete' => 'off',
+                            'spellcheck' => 'false'
+                        ],
+                        'action' => Url::to(['member/update-user-location'])
+                    ]);
+                    ?>
 					<ul class="clearfix">
 						<li>
-							<span class="attr-right pull-right">VietNam</span>
-							<span>Country</span>
+                            <?php
+                            $cities = AdCity::find()->all();
+                            $citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
+//                            $citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != \frontend\models\UserLocation::DEFAULT_CITY)]; });
+                            echo $form->field($user_location_form, 'city_id', ['options' => ['class' => 'attr-right pull-right city']])
+                                ->dropDownList($citiesDropdown, ['prompt' => 'Chọn...'])
+                                ->label(false);
+
+                            echo $form->field($user_location_form, 'user_id')->hiddenInput(['value'=>Yii::$app->user->id])->label(false);
+                            ?>
+							<span>Thành phố/Tỉnh</span>
+						</li>
+                        <li>
+                            <?= $form->field($user_location_form, 'district_id', ['options' => ['class' => 'attr-right pull-right district']])
+                                ->dropDownList([],['prompt' => 'Chọn...'])
+                                ->label(false)?>
+							<span>Quận/Huyện</span>
+						</li>
+                        <li>
+                            <?= $form->field($user_location_form, 'ward_id', ['options' => ['class' => 'attr-right pull-right ward']])
+                                ->dropDownList([],['prompt' => 'Chọn...'])
+                                ->label(false)?>
+							<span>Phường/Xã</span>
+						</li>
+                        <li>
+                            <?= $form->field($user_location_form, 'street_id', ['options' => ['class' => 'attr-right pull-right street']])
+                                ->dropDownList([],['prompt' => 'Chọn...'])
+                                ->label(false)?>
+							<span>Đường</span>
 						</li>
 					</ul>
+                    <?php $form->end(); ?>
 				</div>
 			</section>
 
@@ -158,22 +199,11 @@ use yii\helpers\Url;
 				<ul class="clearfix">
 					<li>
 						<span>Tên</span>
-                        <?= $f->field($profile_form, 'first_name')->textInput(['class'=>'attr-right first-name', 'value' => empty($model->first_name) ? $model->name : $model->first_name ])->label(false)?>
-					</li>
-					<li>
-						<span>Họ</span>
-                        <?= $f->field($profile_form, 'last_name')->textInput(['class'=>'attr-right last-name', 'value' => $model->last_name ])->label(false)?>
+                        <?= $f->field($profile_form, 'name')->textInput(['class'=>'attr-right name', 'value' => $model->name ])->label(false)?>
 					</li>
 					<li>
 						<span>Số điện thoại</span>
                         <?= $f->field($profile_form, 'mobile')->textInput(['class'=>'attr-right phone-num', 'value' => $model->mobile ])->label(false)?>
-					</li>
-					<li>
-						<span>Tôi là</span>
-                        <?= $f->field($profile_form, 'owner')->dropDownList([1 => 'Chủ nhà', 2 => 'Người môi giới'], [
-                            'options' => [$model->owner => ['Selected ' => true]],
-                            'class' => 'attr-right im'
-                        ])->label(false)?>
 					</li>
 				</ul>
 
@@ -234,15 +264,15 @@ use yii\helpers\Url;
             <div class="list-tt-user wrap-attr-detail">
 				<ul class="clearfix">
 					<li>
-						<span>Password cũ</span>
+						<span>Mật khẩu cũ</span>
                         <?= $f->field($model, 'old_password')->textInput(['class' => 'attr-right old_password', 'type' => 'password', 'placeholder' => 'Nhập...'])->label(false) ?>
 					</li>
 					<li>
-						<span>Password mới</span>
+						<span>Mật khẩu mới</span>
                         <?= $f->field($model, 'new_password')->textInput(['class' => 'attr-right new_password', 'type' => 'password', 'placeholder' => 'Nhập...'])->label(false) ?>
 					</li>
 					<li>
-						<span>Gõ lại Password mới</span>
+						<span>Gõ lại mật khẩu mới</span>
 						<input type="password" class="attr-right re-type-pass" value="" placeholder="Nhập...">
 					</li>
                     <li>
@@ -266,7 +296,6 @@ use yii\helpers\Url;
 
         $('#avatar').on('hidden.bs.modal', function () {
             var url = $('.files .name a').attr("href");
-            console.log(url);
             if(url == null || url == '')
                 url = '/store/avatar/default-avatar.jpg';
             $('#headAvatar').attr("src", url);
@@ -286,8 +315,7 @@ use yii\helpers\Url;
                     success: function (data) {
                         if(data.statusCode == 200){
                             $('#edit-ttcn').addClass('hide-popup');
-                            $('.ttcn .first-name').html(data.modelResult.first_name);
-                            $('.ttcn .last-name').html(data.modelResult.last_name);
+                            $('.ttcn .name').html(data.modelResult.name);
                             $('.ttcn .phone-num').html(data.modelResult.mobile);
                             if(data.modelResult.owner == 1)
                                 $('.ttcn .im').html('Chủ nhà');
@@ -383,6 +411,58 @@ use yii\helpers\Url;
                     }
                 });
             }, 500);
+        });
+
+        $('#userlocation-city_id').change(function(){
+            var city_id = 0;
+            $('#userlocation-district_id').html('<option>Chọn...</option>');
+            $('#userlocation-city_id option:selected').each(function() {
+                city_id = $(this).attr('value');
+            });
+            $.get('/ad/list-district', {cityId: city_id}, function(districts){
+                $.each(districts, function(idx, val){
+                    $('#userlocation-district_id').append('<option value="'+idx+'">'+val+'</option>');
+                });
+            });
+        });
+
+        $('#userlocation-district_id').change(function(){
+            var _id = 0;
+            $('#userlocation-ward_id').html('<option>Chọn...</option>');
+            $('#userlocation-street_id').html('<option>Chọn...</option>');
+            $("#userlocation-district_id option:selected").each(function() {
+                _id = $(this).attr('value');
+            });
+            $.get('/ad/list-swp', {districtId: _id}, function(response){
+                $.each(response.wards, function(idx, val){
+                    $('#userlocation-ward_id').append('<option value="'+idx+'">'+val+'</option>');
+                });
+                $.each(response.streets, function(idx, val){
+                    $('#userlocation-street_id').append('<option value="'+idx+'">'+val+'</option>');
+                });
+            });
+        });
+
+        $('#done-page').click(function(){
+            var timer = 0;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                $.ajax({
+                    type: 'post',
+                    dataType: 'json',
+                    url: $('#user-location-form').attr('action'),
+                    data: $('#user-location-form').serializeArray(),
+                    success: function (data) {
+                        if(data.statusCode == 200){
+                            console.log(data);
+                        }
+                        return true;
+                    },
+                    error: function (data) {
+                        return false;
+                    }
+                });
+            }, 5);
         });
 
     });

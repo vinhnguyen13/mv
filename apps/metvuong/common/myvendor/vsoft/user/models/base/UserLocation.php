@@ -40,11 +40,11 @@ class UserLocation extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'user_id' => Yii::t('user_location', 'User ID'),
-            'city_id' => Yii::t('user_location', 'City ID'),
-            'district_id' => Yii::t('user_location', 'District ID'),
-            'ward_id' => Yii::t('user_location', 'Ward ID'),
-            'street_id' => Yii::t('user_location', 'Street ID'),
+            'user_id' => Yii::t('user_location', 'User'),
+            'city_id' => Yii::t('user_location', 'City'),
+            'district_id' => Yii::t('user_location', 'District'),
+            'ward_id' => Yii::t('user_location', 'Ward'),
+            'street_id' => Yii::t('user_location', 'Street'),
         ];
     }
 }

@@ -8,6 +8,7 @@ use frontend\models\RegistrationForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\Token;
 use frontend\models\User;
+use frontend\models\UserLocation;
 use vsoft\ad\models\AdProduct;
 use Yii;
 use yii\base\InvalidParamException;
@@ -315,6 +316,37 @@ class MemberController extends Controller
         }
 
         return $this->redirect(Url::to(['member/login']));
+    }
+
+    public function actionUpdateUserLocation()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(Url::to(['member/login']));
+        }
+
+        $model = Yii::createObject([
+            'class' => UserLocation::className()
+        ]);
+
+        if(Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $post = Yii::$app->request->post();
+            if(isset($post["UserLocation"])) {
+                $model->load($post);
+                $model->validate();
+                if (!$model->hasErrors()) {
+                    echo "<pre>";
+                    print_r($model);
+                    echo "<pre>";
+                    exit();
+                    return ['statusCode' => 200];
+                } else {
+                    return ['statusCode' => 400, 'parameters' => $model->errors];
+                }
+            }
+        }
+
+        return ['statusCode' => 400];
     }
 
     public function actionPassword()

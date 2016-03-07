@@ -123,6 +123,14 @@ class User extends \dektrium\user\models\User
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLocation()
+    {
+        return $this->hasOne(UserLocation::className(), ['user_id' => 'id']);
+    }
+
+    /**
      * @return Account[] Connected accounts ($provider => $account)
      */
     public function getAccounts()
