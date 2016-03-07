@@ -62,7 +62,7 @@ class ProfileForm extends Model
     public function scenarios()
     {
         return [
-            'updateprofile' => ['user_id', 'name', 'public_email', 'phone', 'mobile', 'address', 'about', 'slug', 'first_name', 'last_name', 'owner'],
+            'updateprofile' => ['user_id', 'name', 'public_email', 'phone', 'mobile', 'address', 'about', 'slug'],
             'password' => ['old_password', 'new_password'],
             'updateavatar' => ['avatar', 'created_at', 'bio'],
         ];
