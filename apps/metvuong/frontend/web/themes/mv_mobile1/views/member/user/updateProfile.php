@@ -64,6 +64,9 @@ $user = $model->getUser();
                     <?php
 
                     $user_location_form = \frontend\models\UserLocation::find()->where(['user_id' => Yii::$app->user->id])->one();
+                    if(empty($user_location_form))
+                        $user_location_form = new \frontend\models\UserLocation();
+
                     $form = ActiveForm::begin ( [
                         'id' => 'user-location-form',
                         'enableClientValidation' => false,
