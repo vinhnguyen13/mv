@@ -89,8 +89,8 @@ use vsoft\ad\models\AdProductAdditionInfo;
                 </h4>
             </div>
             <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                <div class="panel-body" name="about" contenteditable="true" placeholder="Vui lòng chia sẻ tiểu sử">
-                    <p><?= $product->content ?></p>
+                <div class="panel-body" name="about" placeholder="Vui lòng chia sẻ tiểu sử">
+                    <p><?= str_replace("\n", "<br />", htmlspecialchars($product->content)) ?></p>
                 </div>
             </div>
         </div>
@@ -139,7 +139,7 @@ use vsoft\ad\models\AdProductAdditionInfo;
                 </h4>
             </div>
             <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-                <div class="panel-body" name="experience" contenteditable="true" placeholder="Vui lòng nhập chia sẻ kinh nghiệm">
+                <div class="panel-body" name="experience" placeholder="Vui lòng nhập chia sẻ kinh nghiệm">
                     
                 </div>
             </div>
