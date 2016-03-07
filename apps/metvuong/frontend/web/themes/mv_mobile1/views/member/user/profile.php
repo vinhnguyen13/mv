@@ -38,7 +38,11 @@ $user = $model->getUser();
                 <div class="circle"><div><span class="icon icon-map-loca-1"></span></div></div>
                 <div class="txt-infor-right">
                     <div>
-                        <?= empty($model->address) ? "Đang cập nhật" : $model->address ?>
+                        <?php
+                        if(!empty($user->location))
+                            $city = \vsoft\ad\models\AdCity::find()->where(['id' => $user->location->city_id])->one();
+                        ?>
+                        <?= empty($city) ? "Đang cập nhật" : $city->name ?>
                     </div>
                 </div>
             </li>
@@ -97,7 +101,5 @@ $user = $model->getUser();
             </ul>
         </div>
         <?php } ?>
-
-
     </div>
 </div>

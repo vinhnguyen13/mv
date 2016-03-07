@@ -182,8 +182,11 @@ $user = $model->getUser();
 					</li>
 					<li>
 						<span>Số điện thoại</span>
-                        <?= $f->field($profile_form, 'mobile')->textInput(['class'=>'attr-right phone-num', 'value' => $model->mobile ])->label(false)?>
+                        <?= $f->field($profile_form, 'mobile')->textInput(['class'=>'attr-right phone-num', 'maxlength' => 11, 'value' => $model->mobile ])->label(false)?>
 					</li>
+                    <li>
+                        <div class="error hide" style="font-weight: bold;"></div>
+                    </li>
 				</ul>
 
 			</div>
@@ -284,6 +287,7 @@ $user = $model->getUser();
         });
 
         $('#edit-ttcn .btn-done').click(function(){
+            $('#edit-ttcn .error').addClass('hide');
             var timer = 0;
             clearTimeout(timer);
             timer = setTimeout(function () {
@@ -297,16 +301,25 @@ $user = $model->getUser();
                             $('#edit-ttcn').addClass('hide-popup');
                             $('.ttcn .name').html(data.modelResult.name);
                             $('.ttcn .phone-num').html(data.modelResult.mobile);
+                        } else {
+                            $('#edit-ttcn .error').removeClass('hide');
+                            var strMessage = '';
+                            $.each(data.parameters, function(idx, val){
+                                var element = 'form-edit-ttcn'+idx;
+                                strMessage += "<br/>" + val;
+                            });
+                            $('#edit-ttcn .error').html(strMessage);
                         }
                         return true;
                     },
                     error: function (data) {
-    //                    var strMessage = '';
-    //                    $.each(data.parameters, function(idx, val){
-    //                        var element = 'form-edit-ttcn_'+idx;
-    //                        strMessage += "\n" + val;
-    //                    });
-    //                    alert(strMessage);
+                        $('#edit-ttcn .error').removeClass('hide');
+                        var strMessage = '';
+                        $.each(data.parameters, function(idx, val){
+                            var element = 'form-edit-ttcn'+idx;
+                            strMessage += "<br/>" + val;
+                        });
+                        $('#edit-ttcn .error').html(strMessage);
                         return false;
                     }
                 });
@@ -314,6 +327,7 @@ $user = $model->getUser();
         });
 
         $('#edit-mtbt .btn-done').click(function(){
+            $('#edit-mtbt .error').addClass('hide');
             var timer = 0;
             clearTimeout(timer);
             timer = setTimeout(function () {
@@ -326,17 +340,25 @@ $user = $model->getUser();
                         if(data.statusCode == 200){
                             $('#edit-mtbt').addClass('hide-popup');
                             $('.mtbt .txt-mota').html(data.modelResult.bio);
+                        } else {
+                            $('#edit-mtbt .error').removeClass('hide');
+                            var strMessage = '';
+                            $.each(data.parameters, function(idx, val){
+                                var element = 'form-edit-mtbt'+idx;
+                                strMessage += "<br/>" + val;
+                            });
+                            $('#edit-mtbt .error').html(strMessage);
                         }
                         return true;
                     },
                     error: function (data) {
-                        //                    var strMessage = '';
-                        //                    $.each(data.parameters, function(idx, val){
-                        //                        var element = 'form-edit-ttcn_'+idx;
-                        //                        strMessage += "\n" + val;
-                        //                    });
-                        //                    alert(strMessage);
-                        return false;
+                        $('#edit-mtbt .error').removeClass('hide');
+                        var strMessage = '';
+                        $.each(data.parameters, function(idx, val){
+                            var element = 'form-edit-mtbt'+idx;
+                            strMessage += "<br/>" + val;
+                        });
+                        $('#edit-mtbt .error').html(strMessage);
                     }
                 });
             }, 500);
