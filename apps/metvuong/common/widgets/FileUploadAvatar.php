@@ -107,7 +107,7 @@ class FileUploadAvatar extends FU {
 			$files = [];
 			foreach ($values as $value) {
 				$pathInfo = pathinfo($value);
-				$thumb = $pathInfo['filename'] .  '.thumb.' . $pathInfo['extension'];
+				$thumb = $pathInfo['filename'] . '.' . $pathInfo['extension'];
 				$files[] = [
 					'url'           => Url::to("/store/$folder/" . $value),
 					'thumbnailUrl'  => Url::to("/store/$folder/" . $thumb),

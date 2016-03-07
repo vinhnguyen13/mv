@@ -6,10 +6,8 @@
  */
 use vsoft\express\components\StringHelper;
 use yii\bootstrap\ActiveForm;
-use yii\helpers\Html;
 use yii\helpers\Url;
 
-$avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_SEPARATOR . $model->avatar;
 $user = $model->getUser();
 ?>
 <div class="title-fixed-wrap">
@@ -100,59 +98,6 @@ $user = $model->getUser();
         </div>
         <?php } ?>
 
-        <div class="modal fade" id="avatar" tabindex="-1" role="dialog" aria-labelledby="myModalAvatar">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true" class="icon"></span>
-                        </button>
-                        <h3>Thay đổi hình đại diện</h3>
-                    </div>
-                    <div class="modal-body">
-                        <div class="wrap-modal clearfix">
-                            <div class="avatar" style="margin-bottom: 50px;">
-                                <?php $form = ActiveForm::begin([
-                                    'id' => 'change-avatar-form',
-                                    'enableAjaxValidation' => false,
-                                    'enableClientValidation' => true,
-                                    'layout' => 'horizontal',
-                                    'fieldConfig' => [
-                                        'horizontalCssClasses' => [
-                                            'wrapper' => 'col-sm-9',
-                                        ],
-                                    ],
-                                ]); ?>
-                                <?=Html::hiddenInput('deleteLater', '', ['id' => 'delete-later']);?>
-                                <?= $form->field($model, 'avatar')->widget(\common\widgets\FileUploadAvatar::className(), [
-                                    'url' => Url::to(['/user-management/avatar', 'folder' => 'avatar']),
-                                    'clientOptions' => [
-                                        'maxNumberOfFiles' => 1,
-                                        'imageMaxWidth' => 800,
-                                        'imageMaxHeight' => 800,
-                                        'disableImageResize' => false,
-                                        'imageCrop' => true,
-                                        'noAvatar' => file_exists($avatar) ? true : false,
-                                    ],
-                                    'fieldOptions' => ['folder' => 'avatar'],
-                                ])->label(false) ?>
-                                <?php ActiveForm::end(); ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
 </div>
-<script>
-    $(document).ready(function () {
-        $('#avatar').on('hidden.bs.modal', function () {
-            var url = $('.files .name a').attr("href");
-            if(url == null || url == '')
-                url = '/store/avatar/default-avatar.jpg';
-            $('#headAvatar').attr("src", url);
-            $('.avatar img').attr("src", url);
-            $('.user-edit img').attr("src", url);
-        });
-</script>
