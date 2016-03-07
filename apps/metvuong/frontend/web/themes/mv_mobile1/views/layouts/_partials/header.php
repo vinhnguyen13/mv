@@ -44,7 +44,7 @@ use yii\helpers\Url;
                     <span class="wrap-img"><img src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="" width="40" height="40"></span>
                     <div>
                         <p><span class="name-user"><?=Yii::$app->user->identity->profile->getDisplayName();?></span>
-                        <span class="address"><?=Yii::$app->user->identity->location->city?></span></p>
+                        <span class="address"><?=empty(Yii::$app->user->identity->location) ? "" : Yii::$app->user->identity->location->city?></span></p>
                     </div>
                 </a>
             </li>
