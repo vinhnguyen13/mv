@@ -808,7 +808,10 @@ $.fn.popupMobi = function (options) {
                     setTimeout(function() {
                         popupItem.css({
                             "top": "0",
-                            "transition": "top "+sc.settings.duration+"ms ease"
+                            "transition": "top "+sc.settings.duration+"ms ease",
+                            "-webkit-transition": "top "+sc.settings.duration+"ms ease",
+                            "-moz-transition": "top "+sc.settings.duration+"ms ease",
+                            "-ms-transition": "top "+sc.settings.duration+"ms ease"
                         });
                     },150);
                     return;
@@ -816,7 +819,10 @@ $.fn.popupMobi = function (options) {
                     setTimeout(function() {
                         popupItem.find('.wrap-popup').css({
                             "bottom": "50%",
-                            "transition": "bottom "+sc.settings.duration+"ms ease"
+                            "transition": "bottom "+sc.settings.duration+"ms ease",
+                            "-webkit-transition": "bottom "+sc.settings.duration+"ms ease",
+                            "-moz-transition": "bottom "+sc.settings.duration+"ms ease",
+                            "-ms-transition": "bottom "+sc.settings.duration+"ms ease"
                         });
                     },150);
                 }
@@ -828,17 +834,16 @@ $.fn.popupMobi = function (options) {
         }
 
         function hide (popupItem) {
-            var hPopup = popupItem.find('.wrap-popup').outerHeight();
             if ( sc.settings.effectShow == "slideDownUp" ) {
                 if ( sc.settings.styleShow == "full" ) {
+                    var hPopup = popupItem.outerHeight();
                     popupItem.css({
-                        "top": hPopup+"px",
-                        "transition": "top "+sc.settings.duration+"ms ease"
+                        "top": hPopup+"px"
                     });
                 }else {
+                    var hPopup = popupItem.find('.wrap-popup').outerHeight();
                     popupItem.find('.wrap-popup').css({
-                        "bottom": "-"+hPopup+"px",
-                        "transition": "bottom "+sc.settings.duration+"ms ease"
+                        "bottom": "-"+hPopup+"px"
                     });
                 }
                 
