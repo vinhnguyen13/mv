@@ -269,6 +269,7 @@ $user = $model->getUser();
 		$('#edit-ttcn, #edit-mtbt, #edit-changepass').popupMobi({
 			btnClickShow: ".edit-tt",
 			closeBtn: '.btn-cancel',
+            styleShow: 'full',
 			funCallBack: function (itemClick, popupItem) {
 			}
 		});

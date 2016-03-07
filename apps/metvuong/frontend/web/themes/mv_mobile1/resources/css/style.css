@@ -617,6 +617,7 @@ margin-top: 3px;
     color: #3c3c3c;
     font-size: 14px;
     text-align: left;
+    line-height: 18px;
 }
 .infor-agent .wrap-img {
     display: block;
@@ -3977,16 +3978,20 @@ input[type=text]:focus {
     height: 100%;
     background: #fff;
     z-index: 999;
-    overflow-x: hidden;
-    overflow-y: auto;
     padding-top: 45px;
     font-size: 14px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+.popup-common .wrap-popup {
+    position: relative;
 }
 .no-title {
     padding: 0;
 }
 .center-popup {
     background: rgba(0, 0, 0, 0.4);
+    top: 0;
 }
 .title-popup {
     color: #00a769;
@@ -4007,14 +4012,17 @@ input[type=text]:focus {
 .center-popup .wrap-popup {
     position: absolute;
     z-index: 1001;
-    bottom: 50%;
-    left: 50%;
+    bottom: -131px;
+    right: 50%;
     width: 320px;
     background-color: white;
     box-shadow: 0 -2px 2px rgba(0,0,0,0.2);
     border-radius: 2px;
     margin: 0 auto 0;
-    margin-left: -160px;
+    -webkit-transform: translate(50%,50%);
+    -moz-transform: translate(50%,50%);
+    -ms-transform: translate(50%,50%);
+    transform: translate(50%,50%);
 }
 .inner-popup {
     padding: 15px 15px 15px;
@@ -4371,6 +4379,7 @@ input[type=text]:focus {
     -ms-border-radius: 0px;
     display: block;
     width: auto;
+    margin: 0;
 }
 #listing-form .files li .preview img {
     max-width: 100%;
@@ -4481,6 +4490,7 @@ input[type=text]:focus {
     -webkit-border-radius: 4px
     -moz-border-radius: 4px;
     color: #fff;
+    text-transform: capitalize;
 }
 .wrap-infor-duan {
     background-color: #f5f5f5;

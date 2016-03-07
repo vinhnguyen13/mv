@@ -34,9 +34,9 @@
                 <strong><?= strtoupper($model->name)?></strong>
                 <span class="icon address-icon"></span><?= empty($model->location) ? "Đang cập nhật" : $model->location ?>
                 <ul class="pull-right icons-detail">
-                    <li><a href="#" class="icon icon-share-td"></a></li>
+                    <li><a href="#popup-share-social" class="icon icon-share-td"></a></li>
 <!--                    <li><a href="#" class="icon save-item" data-id="4115" data-url="/ad/favorite"></a></li>-->
-                    <li><a href="#" class="icon icon-map-loca"></a></li>
+                    <li><a href="#popup-map" class="icon icon-map-loca"></a></li>
                 </ul>
             </div>
             <div class="item infor-time">
@@ -123,7 +123,8 @@
 
         $('#popup-map').popupMobi({
             btnClickShow: ".icon-map-loca",
-            closeBtn: "#popup-map .btn-close-map"
+            closeBtn: "#popup-map .btn-close-map",
+            effectShow: "show-hide"
         });
 
         $('#popup-share-social').popupMobi({

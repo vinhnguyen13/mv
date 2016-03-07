@@ -240,7 +240,8 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 
         $('#popup-email').popupMobi({
             btnClickShow: ".share-email-btn",
-            closeBtn: '#popup-email .btn-cancel'
+            closeBtn: '#popup-email .btn-cancel',
+            styleShow: 'full'
         });
 
         var params = getUrlVars();
