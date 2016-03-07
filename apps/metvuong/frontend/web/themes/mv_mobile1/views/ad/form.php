@@ -231,9 +231,9 @@ use vsoft\ad\models\AdCategory;
 						->label(false)
 						->textInput(['placeholder' => $contactInfo->getAttributeLabel('email')]) ?>
 			</div>
-			<div class="text-center">
-				<button type="button" class="preview">Preview</button>
-				<button type="button" class="btn-post">Đăng tin</button>
+			<div class="text-center pdT-25">
+				<button type="button" class="preview btn-common">Preview</button>
+				<button type="button" class="btn-post btn-common">Đăng tin</button>
 			</div>
 		</div>
 	<?php $form->end() ?>

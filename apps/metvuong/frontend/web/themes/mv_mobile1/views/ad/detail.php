@@ -101,7 +101,7 @@ use yii\helpers\Url;
             </div>
             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                 <div class="panel-body" name="activity" contenteditable="true">
-                	<ul class="clearfix">
+                	<ul class="clearfix list-tienich-detail">
 	                    <?php if($product->area): ?>
 						<li><strong>Diện tích:</strong> <?= $product->area ?>m2</li>
 						<?php endif; ?>
@@ -270,6 +270,7 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 	<script>
 		$(document).ready(function () {
 			$(document).on('click', '.save-item', function (e) {
+				e.preventDefault();
 				$(this).toggleClass('active');
 				var timer = 0;
 				clearTimeout(timer);

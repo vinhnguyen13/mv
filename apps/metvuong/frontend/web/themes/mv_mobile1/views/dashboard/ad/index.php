@@ -33,7 +33,7 @@ use yii\helpers\Url;
 							<?php endif; ?>
 
 							<p class="date-post">Ngày đăng tin: <span><?= date("d/m/Y", $product->created_at) ?></span></p>
-							<p class="id-duan">ID:<span><?=$product->id;?></span></p>
+							<p class="id-duan">ID tin đăng:<span><?=$product->id;?></span></p>
 						</div>
 						<div class="pull-right push-price">
 							<?php if($product->end_date > time()){
@@ -53,8 +53,8 @@ use yii\helpers\Url;
 							$fav = 0;
 						}
                         ?>
-						<div class="wrap-icon"><div><span class="icon icon-view-small"></span></div><strong><?=$search?></strong> Search</div>
-                        <div class="wrap-icon"><div><span class="icon icon-per-small"></span></div><strong><?=$click?></strong> Click</div>
+						<div class="wrap-icon"><div><span class="icon icon-search-small-1"></span></div><strong><?=$search?></strong> Search</div>
+                        <div class="wrap-icon"><div><span class="icon icon-view-small"></span></div><strong><?=$click?></strong> Click</div>
 						<div class="wrap-icon"><div><span class="icon icon-heart-small"></span></div><strong><?=$fav?></strong> Favourite</div>
 					</div>
 				</li>
