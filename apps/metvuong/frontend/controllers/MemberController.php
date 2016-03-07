@@ -325,6 +325,9 @@ class MemberController extends Controller
         }
 
         $model = UserLocation::find()->where(['user_id' => Yii::$app->user->id])->one();
+        if(empty($model))
+            $model = new UserLocation();
+
         if(Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             $post = Yii::$app->request->post();
