@@ -8,7 +8,7 @@ use frontend\models\User;
 use yii\helpers\Url;
 use vsoft\ad\models\AdProductAdditionInfo;
 
-	$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=loaded', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
+	$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/detail.js', ['position' => View::POS_END]);
 	$this->registerCss('.map-wrap {position: relative;} .map-wrap:after {display: block; content: ""; padding-top: 75%;} .map-inside {position: absolute; width: 100%; height: 100%;} #map {height: 100%;}');
 
@@ -234,7 +234,7 @@ use vsoft\ad\models\AdProductAdditionInfo;
 	<div class="wrap-popup">
 		<div class="inner-popup">
 			<a href="#" class="btn-close-map">trở lại</a>
-        	<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJT7lZ30cvdTER8skpPrOuvGs&key=AIzaSyDgukAnWQNq0fitebULUbottG5gvK64OCQ" allowfullscreen></iframe>
+        	<div id="map" data-lat="<?= $product->lat ?>" data-lng="<?= $product->lng ?>"></div>
 		</div>
 	</div>
 </div>
@@ -319,7 +319,23 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 
 		$('#popup-map').popupMobi({
 			btnClickShow: ".infor-listing .icon-map-loca",
-			closeBtn: "#popup-map .btn-close-map"
+			closeBtn: "#popup-map .btn-close-map",
+			funCallBack: function() {
+				var mapEl = $('#map');
+				var latLng = {lat: Number(mapEl.data('lat')), lng:  Number(mapEl.data('lng'))};
+				var map = new google.maps.Map(mapEl.get(0), {
+					center: latLng,
+				    zoom: 16,
+				    mapTypeControl: false,
+				    zoomControl: false,
+				    streetViewControl: false
+				});
+				
+				var marker = new google.maps.Marker({
+				    position: latLng,
+				    map: map
+				});
+			}
 		});
 
 		$('#popup-share-social').popupMobi({

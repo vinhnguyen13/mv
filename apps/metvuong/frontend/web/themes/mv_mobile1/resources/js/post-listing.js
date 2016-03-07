@@ -72,6 +72,8 @@ var form = {
 		form.mobileEl = $('#adcontactinfo-mobile');
 		form.emailEl = $('#adcontactinfo-email');
 		form.addressEl = $('#adcontactinfo-address');
+		form.latEl = $('#adproduct-lat');
+		form.lngEl = $('#adproduct-lng');
 		
 		form.filterCategories();
 	},
@@ -124,6 +126,9 @@ var form = {
 					$('#project-info-location').text(r.location);
 					form.projectDetailEl.attr('href', r.url);
 
+					form.latEl.val(r.lat);
+					form.lngEl.val(r.lng);
+					
 					form.fixHeight(2);
 				});
 			} else {
@@ -211,18 +216,7 @@ var form = {
 			
 			$('.infor-by-up').html(capitalizeFirstLetter(form.getSelectedCat().text()) + ' ' + type + ' bởi <a href="#">' + owner + '</a>');
 			
-			var address = '';
-			
-			if(form.showHomeEl.prop('checked') && form.catEl.val() != form.DNDU && form.homeEl.val()) {
-				address += form.homeEl.val() + ', ';
-			}
-			
-			address = address + ' ' + form.streetEl.find('option').filter(':selected').text() + ', '
-					+ form.wardEl.find('option').filter(':selected').text() + ', '
-					+ form.districtEl.find('option').filter(':selected').text() + ', '
-					+ form.cityEl.find('option').filter(':selected').text();
-			
-			$('.address-listing p').text(address);
+			$('.address-listing p').text(form.buildAddress());
 			
 			if(form.catEl.val() == form.DNDU) {
 				$('.icon-bed').hide();
@@ -385,6 +379,25 @@ var form = {
 	validateEmail: function (email) { 
 		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		return re.test(email);
+	},
+	buildAddress: function() {
+		var address = '';
+		
+		if(form.showHomeEl.prop('checked') && form.catEl.val() != form.DNDU && form.homeEl.val()) {
+			address += form.homeEl.val() + ', ';
+		}
+		
+		address = address + ' ' + form.streetEl.find('option').filter(':selected').text() + ', '
+				+ form.wardEl.find('option').filter(':selected').text() + ', '
+				+ form.districtEl.find('option').filter(':selected').text() + ', '
+				+ form.cityEl.find('option').filter(':selected').text();
+		
+		return address;
+	},
+	setLatLng: function(results) {
+		var r = results[0];
+		form.latEl.val(r.geometry.location.lat());
+		form.lngEl.val(r.geometry.location.lng());
 	}
 };
 
@@ -488,6 +501,14 @@ form.success = {
 		
 		if(form.showHomeEl.data('set') == '0') {
 			form.showHomeEl.prop('checked', form.ownerHostEl.prop('checked'));
+		}
+	},
+	step2: function() {
+		if(!form.projectEl.val()) {
+			var geoCode = new google.maps.Geocoder;
+			geoCode.geocode({address: form.buildAddress()}, function(results) {
+				form.setLatLng(results);
+			});
 		}
 	}
 };
