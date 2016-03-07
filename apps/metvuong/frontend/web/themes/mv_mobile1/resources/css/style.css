@@ -2533,7 +2533,7 @@ html.mm-opening .mm-slideout {
     transform: translate3d(80%,0,0);
 }
 .chat-list {
-    padding: 48px 15px 15px;
+    padding: 37px 15px 15px;
 }
 .chat-list .wrap-img {
     float: left;
@@ -2597,6 +2597,9 @@ html.mm-opening .mm-slideout {
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     -ms-border-radius: 0px;
+    border: 1px solid #B3B3B3;
+    border-left: none;
+    border-right: none;
 }
 .type-input-chat .sm-chat {
     position: absolute;
@@ -2617,7 +2620,7 @@ html.mm-opening .mm-slideout {
     top: 0;
     bottom: 0;
     left: 0;
-    padding: 86px 0 35px 0;
+    padding: 77px 0 35px 0;
     width: 100%;
 }
 .wrap-chat-item .container-chat {
@@ -3682,8 +3685,11 @@ input[type=text]:focus {
     height: 28px;
 }
 .search-history {
-    position: relative;
+    position: fixed;
     height: 37px;
+    width: 100%;
+    top: 77px;
+    left: 0;
 }
 .search-history input {
     border-radius: 0;
@@ -3721,6 +3727,7 @@ input[type=text]:focus {
 }
 .chat-history {
     position: relative;
+    padding-top: 36px;
 }
 .item-listing .id-duan {
     font-weight: 400;

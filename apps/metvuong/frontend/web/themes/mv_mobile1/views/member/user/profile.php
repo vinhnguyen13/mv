@@ -91,7 +91,7 @@ $user = $model->getUser();
                             <span class="icon icon-pt icon-pt-small"></span><?= $product->adProductAdditionInfo->toilet_no ?>
                         </li>
                     </ul>
-                    <p class="price-post">Giá bán <strong><?= StringHelper::formatCurrency($product->price) ?> đồng</strong></p>
+                    <p class="price-post">Giá <strong><?= StringHelper::formatCurrency($product->price) ?> đồng</strong></p>
                 </li>
                 <?php } ?>
             </ul>
