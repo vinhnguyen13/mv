@@ -773,7 +773,7 @@ $.fn.popupMobi = function (options) {
             var _this = $(this),
                 popupItem = _this.attr('href');
 
-            showPopup($(popupItem));
+            showPopup(_this, $(popupItem));
         });
 
         $(sc.settings.closeBtn).on('click', function (e) {
