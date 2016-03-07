@@ -19,4 +19,9 @@ class UserLocation extends \vsoft\user\models\base\UserLocation
         return $this->hasOne($this->module->modelMap['User'], ['id' => 'user_id']);
     }
 
+    public function getCity(){
+        $city = \vsoft\ad\models\AdCity::find()->where(['id' => $this->city_id])->one();
+        return empty($city) ? "Đang cập nhật" : $city->name;
+    }
+
 }
