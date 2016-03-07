@@ -43,17 +43,19 @@ use yii\helpers\Url;
 							<a href="#nang-cap" class="btn-nang-cap">Nâng cấp</a>
 						</div>
                         <?php
-                        $search = \frontend\models\Tracking::find()->countFinders($product->id);
-                        $click = \frontend\models\Tracking::find()->countVisitors($product->id);
-                        $fav = \frontend\models\Tracking::find()->countFavourites($product->id);
-                        if($search) { ?>
+                        if(($search = \frontend\models\Tracking::find()->countFinders($product->id)) === null){
+							$search = 0;
+						}
+						if(($click = \frontend\models\Tracking::find()->countVisitors($product->id)) === null){
+							$click = 0;
+						}
+						if(($fav = \frontend\models\Tracking::find()->countFavourites($product->id)) === null){
+							$fav = 0;
+						}
+                        ?>
 						<div class="wrap-icon"><div><span class="icon icon-view-small"></span></div><strong><?=$search?></strong> Search</div>
-                        <?php }
-                        if($click > 0){ ?>
                         <div class="wrap-icon"><div><span class="icon icon-per-small"></span></div><strong><?=$click?></strong> Click</div>
-                        <?php } if($fav > 0){ ?>
 						<div class="wrap-icon"><div><span class="icon icon-heart-small"></span></div><strong><?=$fav?></strong> Favourite</div>
-                        <?php } ?>
 					</div>
 				</li>
 				<?php endforeach; ?>
