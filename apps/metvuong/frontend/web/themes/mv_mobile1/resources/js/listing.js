@@ -115,6 +115,13 @@ $(document).ready(function(){
 				$('.wrap-listing img').lazyload({
 					threshold : 200
 				});
+
+				$(".rippler").rippler({
+			        effectClass      :  'rippler-effect',
+			        effectSize      :  0,      // Default size (width & height)
+			        addElement      :  'div',   // e.g. 'svg'(feature)
+			        duration        :  400
+			    });
 			});
 		}
 	}

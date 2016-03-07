@@ -20,6 +20,7 @@ use yii\helpers\Html;
 		if(!empty($activities)) {
 			?>
 			<div class="wrap-noti">
+				<div class="line-noti"></div>
 				<div class="list-noti clearfix">
 					<?php
 					foreach($activities as $activity) {
