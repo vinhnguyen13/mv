@@ -117,11 +117,13 @@ use vsoft\ad\models\AdCategory;
 					->label(false)
 					->dropDownList(AdStreet::getListByDistrict($product->district_id), ['prompt' => $product->getAttributeLabel('street_id')]) ?>
 				
-				<?= $form->field($product, 'home_no', ['options' => ['class' => 'col-xs-12 form-group']])
-						->label(false)
-						->textInput(['placeholder' => $product->getAttributeLabel('home_no')]) ?>
+				<div id="home-wrap">
+					<?= $form->field($product, 'home_no', ['options' => ['class' => 'col-xs-12 form-group']])
+							->label(false)
+							->textInput(['placeholder' => $product->getAttributeLabel('home_no')]) ?>
 						
-				<?= $form->field($product, 'show_home_no', ['options' => ['class' => 'col-xs-12 form-group toggle-num-home']])->label(false)->checkbox(['data-set' => $product->isNewRecord ? '0' : '1']) ?>
+					<?= $form->field($product, 'show_home_no', ['options' => ['class' => 'col-xs-12 form-group toggle-num-home']])->label(false)->checkbox(['data-set' => $product->isNewRecord ? '0' : '1']) ?>
+				</div>
 				
 				<div class="col-xs-12 form-group">
 					<?= $form->field($product, 'area', ['options' => ['class' => '']])
@@ -210,13 +212,13 @@ use vsoft\ad\models\AdCategory;
 						'previewCrop' => true,
 					],
 					'clientEvents' => [
-						'fileuploadadded' => 'function(e, data) {upload.fileuploadadded(e, data, this);}',
-						'fileuploadcompleted' => 'function(e, data) {upload.fileuploadcompleted(e, data, this);}'
+						'fileuploadadded' => 'function(e, data) {form.upload.fileuploadadded(e, data, this);}',
+						'fileuploadcompleted' => 'function(e, data) {form.upload.fileuploadcompleted(e, data, this);}'
 					]
 				]) ?>
 		</div>
 
-		<div class="tt-lienhe item-step section hide">
+		<div id="step5" class="tt-lienhe item-step section hide">
 			<div class="title-step">Thông tin liên hệ</div>
 			<div class="row">
 				<?= $form->field($contactInfo, 'name', ['options' => ['class' => 'col-xs-12 form-group']])

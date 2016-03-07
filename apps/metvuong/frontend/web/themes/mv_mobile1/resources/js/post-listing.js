@@ -14,14 +14,19 @@ $(document).ready(function(){
 		validateFrm: function (step) {
 			var s = 'step' + step;
 			
-			form.validate[s]();
+			if(form.validate[s]) {
+				form.validate[s]();
+			}
 
 			form.fixHeight(step);
 			
 			if($('#' + s).find('.has-error').length) {
 				return false;
 			} else {
-				form.success['step' + step]();
+				if(form.success['step' + step]) {
+					form.success['step' + step]();
+				}
+				
 				return true;
 			}
 		}
@@ -43,6 +48,7 @@ var form = {
 		form.projectWrapEl = $('#project-info-wrap');
 		form.projectEl = $('#adproduct-project_building_id');
 		form.projectInfoEl = $('#project-info');
+		form.homeWrapEl = $('#home-wrap');
 		form.homeEl = $('#adproduct-home_no');
 		form.roomEl = $('#adproductadditioninfo-room_no');
 		form.toiletEl = $('#adproductadditioninfo-toilet_no');
@@ -52,6 +58,17 @@ var form = {
 		form.wardEl = $('#adproduct-ward_id');
 		form.streetEl = $('#adproduct-street_id');
 		form.areaEl = $('#adproduct-area');
+		form.priceEl = $('#adproduct-price');
+		form.contentEl = $('#adproduct-content');
+		form.facadeWiEl = $('#adproductadditioninfo-facade_width');
+		form.landWiEl = $('#adproductadditioninfo-land_width');
+		form.homeDiEl = $('#adproductadditioninfo-home_direction');
+		form.facadeDiEl = $('#adproductadditioninfo-facade_direction');
+		form.floorEl = $('#adproductadditioninfo-floor_no');
+		form.interiorEl = $('#adproductadditioninfo-interior');
+		form.nameEl = $('#adcontactinfo-name');
+		form.mobileEl = $('#adcontactinfo-mobile');
+		form.emailEl = $('#adcontactinfo-email');
 		
 		form.filterCategories();
 	},
@@ -110,6 +127,56 @@ var form = {
 				form.projectInfoEl.hide();
 			}
 		});
+		
+		form.priceEl.keyup(function(){
+			var priceFormat = $('#price-format');
+			var val = form.priceEl.val();
+			
+			if(/^\d+$/.test(val)) {
+				val = parseInt(val) + '';
+				priceFormat.show().text(formatPrice(val) + ' VNĐ');
+			} else {
+				priceFormat.hide();
+			}
+		}).trigger('keyup');
+		
+		$('.btn-post').click(function(){
+			if(form.require(form.mobileEl, 'Nhập số di động')) {
+				if(!form.isDigit(form.mobileEl.val())) {
+					form.showError(form.mobileEl, 'Số điện thoại không hợp lệ');
+				} else if(form.mobileEl.val().length < 7 || form.mobileEl.val().length > 11) {
+					form.showError(form.mobileEl, 'Số điện thoại không được ít hơn 7 hoặc nhiều hơn 11 số.');
+				} else {
+					form.hideError(form.mobileEl);
+				}
+			}
+			
+			if(!form.validateEmail(form.emailEl.val())) {
+				form.showError(form.emailEl, 'Địa chỉ email không hợp lệ');
+			} else {
+				form.hideError(form.emailEl);
+			}
+
+			if(!$('#step5').find('.has-error').length) {
+				var listingForm = $('#listing-form');
+				
+				$('body').loading();
+				
+				$.post(listingForm.attr('action'), listingForm.serialize(), function(r){
+					if(r.success) {
+						listingForm.hide();
+						$('#popup-share-social').removeClass('hide-popup');
+						$('body').loading({done: true});
+					} else {
+						alert('có lỗi xảy ra !');
+					}
+				});
+			}
+		});
+		
+		$('.preview').click(function(){
+			
+		});
 	},
 	appendProjectDropdown: function(projects) {
 		form.projectInfoEl.hide();
@@ -163,71 +230,86 @@ var form = {
 		return number.replace('.', 'A').replace(',', '.');
 	},
 	fixHeight: function(step) {
-		$('.post-listing').height($('#step' + step).outerHeight());
+		$('.post-listing').height($('#step' + step).outerHeight() + 120);
+	},
+	require: function(el, m) {
+		if(!el.val()) {
+			form.showError(el, m);
+			return false;
+		} else {
+			form.hideError(el);
+			return true;
+		}
+	},
+	validateEmail: function (email) { 
+		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		return re.test(email);
 	}
-}; 
+};
 
 form.validate = {
 	step1: function() {
-		if(!form.catEl.val()) {
-			form.showError(form.catEl, 'Chọn loại BĐS');
-		} else {
-			form.hideError(form.catEl);
-		}
+		form.require(form.catEl, 'Chọn loại BĐS');
 	},
 	step2: function() {
-		if(!form.cityEl.val()) {
-			form.showError(form.cityEl, 'Chọn Tỉnh/Thành Phố');
-		} else {
-			form.hideError(form.cityEl);
-		}
+		form.require(form.cityEl, 'Chọn Tỉnh/Thành Phố');
+		form.require(form.districtEl, 'Chọn Quận/Huyện');
+		form.require(form.wardEl, 'Chọn Phường/Xã');
+		form.require(form.streetEl, 'Chọn Đường');
 		
-		if(!form.districtEl.val()) {
-			form.showError(form.districtEl, 'Chọn Quận/Huyện');
-		} else {
-			form.hideError(form.districtEl);
-		}
-		
-		if(!form.wardEl.val()) {
-			form.showError(form.wardEl, 'Chọn Phường/Xã');
-		} else {
-			form.hideError(form.wardEl);
-		}
-		
-		if(!form.streetEl.val()) {
-			form.showError(form.streetEl, 'Chọn Đường');
-		} else {
-			form.hideError(form.streetEl);
-		}
-		
-		var selectedCat = form.getSelectedCat();
-		var limit = Number(selectedCat.data('limit'));
+		if(form.require(form.areaEl, 'Nhập diện tích')) {
+			var selectedCat = form.getSelectedCat();
+			var limit = Number(selectedCat.data('limit'));
 
-		if(!form.areaEl.val()) {
-			form.showError(form.areaEl, 'Nhập diện tích');
-		} else if(!form.isNumber(form.areaEl.val()) || form.areaEl.val() < 0) {
-			form.showError(form.areaEl, 'Diện tích không hợp lệ');
-		} else if(limit < (formatArea = form.formatNumber(form.areaEl.val()))) {
-			form.showError(form.areaEl, 'Diện tích không được lớn hơn ' + limit);
-		} else {
-			form.areaEl.val(parseFloat(formatArea).toString().replace('.', ','));
-			form.hideError(form.areaEl);
+			if(!form.isNumber(form.areaEl.val()) || form.areaEl.val() < 0) {
+				form.showError(form.areaEl, 'Diện tích không hợp lệ');
+			} else if(limit < (formatArea = form.formatNumber(form.areaEl.val()))) {
+				form.showError(form.areaEl, 'Diện tích không được lớn hơn ' + limit);
+			} else {
+				form.areaEl.val(parseFloat(formatArea).toString().replace('.', ','));
+				form.hideError(form.areaEl);
+			}
+		}
+		
+		if(form.require(form.priceEl, 'Nhập giá')) {
+			if(!form.isDigit(form.priceEl.val())) {
+				form.showError(form.priceEl, 'Giá không hợp lệ');
+			} else {
+				form.priceEl.val(parseInt(form.priceEl.val()));
+				form.hideError(form.priceEl);
+			}
 		}
 		
 		if(form.catEl.val() == form.DNDU) {
 			form.hideError(form.roomEl);
 			form.hideError(form.toiletEl);
 		} else {
-			if(!form.roomEl.val()) {
-				form.showError(form.roomEl, 'Chọn số phòng ngủ');
+			form.require(form.roomEl, 'Chọn số phòng ngủ');
+			form.require(form.toiletEl, 'Chọn số phòng tắm');
+		}
+	},
+	step3: function() {
+		form.require(form.contentEl, 'Nhập nội dung');
+		
+		if(form.facadeWiEl.val() && !form.isDigit(form.facadeWiEl.val())) {
+			form.showError(form.facadeWiEl, 'Mặt tiền nhập không hợp lệ');
+		} else {
+			form.hideError(form.facadeWiEl);
+		}
+		
+		if(form.landWiEl.val() && !form.isDigit(form.landWiEl.val())) {
+			form.showError(form.landWiEl, 'Đường vào nhập không hợp lệ');
+		} else {
+			form.hideError(form.landWiEl);
+		}
+		
+		if(form.catEl.val() == form.DNDU) {
+			form.hideError(form.floorEl);
+		} else {
+			if(form.floorEl.val() && !form.isDigit(form.floorEl.val())) {
+				form.showError(form.floorEl, form.floorEl.attr('placeholder') + ' nhập không hợp lệ');
 			} else {
-				form.hideError(form.roomEl);
-			}
-			
-			if(!form.toiletEl.val()) {
-				form.showError(form.toiletEl, 'Chọn số phòng tắm');
-			} else {
-				form.hideError(form.toiletEl);
+				form.hideError(form.floorEl);
 			}
 		}
 	}
@@ -236,481 +318,48 @@ form.validate = {
 form.success = {
 	step1: function() {
 		form.projectWrapEl.hide();
-	
-		form.showEl(form.homeEl);
+    	form.floorEl.attr('placeholder', 'Số tầng');
+		
+		form.homeWrapEl.show();
     	form.showEl(form.roomEl);
     	form.showEl(form.toiletEl);
+    	form.showEl(form.homeDiEl);
+    	form.showEl(form.facadeDiEl);
+    	form.showEl(form.floorEl);
+    	form.showEl(form.interiorEl);
     	
 		switch(form.catEl.val()) {
 	    	case form.CHCK:
 	    		form.projectWrapEl.show();
+	        	form.floorEl.attr('placeholder', 'Tầng cao');
 	    		break;
 	    	case form.DNDU:
-	        	form.hideEl(form.homeEl);
+	        	form.homeWrapEl.hide();
 	        	form.hideEl(form.roomEl);
 	        	form.hideEl(form.toiletEl);
+	        	form.hideEl(form.homeDiEl);
+	        	form.hideEl(form.facadeDiEl);
+	        	form.hideEl(form.floorEl);
+	        	form.hideEl(form.interiorEl);
+	        	
 	        	break;
 		}
 		
 		if(form.showHomeEl.data('set') == '0') {
 			form.showHomeEl.prop('checked', form.ownerHostEl.prop('checked'));
 		}
-	},
-	step2: function() {
-		
 	}
 };
-//var upload = {};
-//
-//$(document).ready(function () {
-//	var listingForm = $('#listing-form');
-//	var buildingEl = $('#adproduct-project_building_id');
-//	var buildingElContainer = buildingEl.closest('.form-group');
-//	var projectInfoEl = $('#project-info');
-//	var cityEl = $();
-//	var districtEl = $();
-//	var wardEl = $();
-//	var streetEl = $();
-//	var roomEl = $('#adproductadditioninfo-room_no');
-//	var toiletEl = $('#adproductadditioninfo-toilet_no');
-//	var facadeWidthEl = $('#adproductadditioninfo-facade_width');
-//	var landWidthEl = $('#adproductadditioninfo-land_width');
-//	var floorNoEl = $('#adproductadditioninfo-floor_no');
-//	var cityDropdown = $('#city');
-//	var districtDropdown = $('#district');
-//	
-//	var catEl = $('#adproduct-category_id');
-//	var catElContainer = catEl.closest('.form-group');
-//	var defaultCat = Number(catEl.data('default'));
-//	
-//	var priceEl = $('#adproduct-price');
-//	
-////	priceEl.after(priceFormat);
-//	priceEl.keyup(function(){
-//		var priceFormat = $('#price-format');
-//		
-//		if(/^\d+$/.test(priceEl.val())) {
-//			priceFormat.show().text(formatPrice(priceEl.val()) + ' VNĐ');
-//		} else {
-//			priceFormat.hide();
-//		}
-//	}).trigger('keyup');
-//	
-//	$('.btn-post').click(function(){
-//		var isValid = true;
-//		var mobileEl = $('#adcontactinfo-mobile');
-//		var mobileVal = mobileEl.val();
-//		var emailEl = $('#adcontactinfo-email');
-//		var emailVal = emailEl.val();
-//		
-//		if(mobileVal) {
-//			if(!/^\d+$/.test(mobileVal)) {
-//				showError(mobileEl, 'Số điện thoại không hợp lệ');
-//				isValid = false;
-//			} else if(mobileVal.length < 7 || mobileVal.length > 11) {
-//				showError(mobileEl, 'Số di động không được ít hơn 7 hoặc nhiều hơn 11 số.');
-//				isValid = false;
-//			} else {
-//				hideError(mobileEl);
-//			}
-//		} else {
-//			showError(mobileEl, 'Vui lòng nhập SĐT');
-//			isValid = false;
-//		}
-//		
-//		if(emailVal && !validateEmail(emailVal)) {
-//			showError(emailEl, 'Địa chỉ email không hợp lệ');
-//			isValid = false;
-//		} else {
-//			hideError(emailEl);
-//		}
-//		
-//		$('body').loading();
-//		
-//		if(isValid) {
-//			$.post(listingForm.attr('action'), listingForm.serialize(), function(r){
-//				if(r.success) {
-//					listingForm.hide();
-//					$('#popup-share-social').removeClass('hide-popup');
-//					$('body').loading({done: true});
-//				} else {
-//					alert('có lỗi xảy ra !');
-//				}
-//			});
-//		}
-//	});
-//	
-//	function validateEmail(email) { 
-//		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-//		return re.test(email);
-//	}
-//
-////	for(var i in dataCities) {
-////		cityDropdown.append('<option value="' + i +'">' + dataCities[i].name + '</option>');
-////	}
-//	
-//	for(var i in dataCategories) {
-//		var item = $('<option value="' + i + '">' + dataCategories[i].name + '</option>');
-//		
-//		if(i == defaultCat) {
-//			item.prop('selected', true);
-//		}
-//		
-//		catEl.append(item);
-//	}
-//	
-//	
-//	if(catEl.val() != '6') {
-//		buildingElContainer.addClass('hide');
-//	}
-//	
-//	catEl.change(function(){
-//		var catId = catEl.val();
-//		buildingElContainer.addClass('hide');
-//		buildingEl.val('');
-//		projectInfoEl.addClass('hide')
-//		
-//		cityEl.val('');
-//		districtEl.val('');
-//		cityDropdown.show();
-//		districtDropdown.show();
-//		
-//		roomEl.closest('.form-group').show();
-//		toiletEl.closest('.form-group').show();
-//		
-//		if(catId != '') {
-//			if(catId == '6') {
-//				buildingElContainer.removeClass('hide');
-//			} else {
-//				if(catId == '10') {
-//					roomEl.closest('.form-group').hide();
-//					toiletEl.closest('.form-group').hide();
-//				}
-//				
-//				$('#next-screen').trigger('click');
-//			}
-//
-//			catElContainer.removeClass('has-error');
-//			catElContainer.find('.help-block').text('');
-//		}
-//		
-//		fixHeightStep();
-//	});
-//	
-//	buildingEl.change(function(){
-//		var val = buildingEl.val();
-//
-//		cityDropdown.show();
-//		districtDropdown.show();
-//		
-//		if(val != '') {
-//			projectInfoEl.removeClass('hide').addClass('loading');
-//			fixHeightStep();
-//			
-//			cityDropdown.hide();
-//			districtDropdown.hide();
-//			cityEl.val('');
-//			districtEl.val('');
-//			
-//			$.get(projectInfoEl.data('url'), {id: val}, function(r){
-//				projectInfoEl.removeClass('loading');
-//				$('#project-info-location').text(r.location);
-//				$('#project-info-detail').attr('href', r.url);
-//				
-//				cityEl.val(r.city_id);
-//				districtEl.val(r.district_id);
-//				
-//				filterWard(r.city_id, r.district_id);
-//				filterStreet(r.city_id, r.district_id)
-//				
-//				fixHeightStep();
-//			});
-//		} else {
-//			projectInfoEl.addClass('hide');
-//			fixHeightStep();
-//		}
-//	});
-//	
-//	cityDropdown.change(function(){
-//		var cityId = $(this).val();
-//		cityEl.val(cityId);
-//		filterDistrict(Number(cityId));
-//	});
-//	
-//	districtDropdown.change(function(){
-//		var districtId = $(this).val();
-//		districtEl.val(districtId);
-//		filterWard(cityEl.val(), districtId);
-//		filterStreet(cityEl.val(), districtId);
-//	});
-//	
-//	$('select').change(function(){
-//		hideError($(this));
-//	});
-//	
-//	$('input, textarea').keyup(function(){
-//		hideError($(this));
-//	});
-//	
-//	function fixHeightStep(step) {
-//		if(!step) {
-//			step = 1;
-//		}
-//		$('.post-listing').height($('#step-' + step).outerHeight());
-//	}
-//	
-//	function filterDistrict(cityId) {
-//		districtEl.val('');
-//		wardEl.html('').append('<option value="">Phường/Xã</option>');
-//		streetEl.html('').append('<option value="">Đường</option>');
-//		
-//		var districts = dataCities[cityId]['districts'];
-//		districtDropdown.html('').append('<option value="">Quận/Huyện</option>');
-//		for(did in districts) {
-//			districtDropdown.append('<option value="' + did + '">' + districts[did].pre + ' ' + districts[did].name + '</option>');
-//		}
-//	}
-//	
-//	function filterWard(cityId, districtId) {
-//		var wards = dataCities[cityId]['districts'][districtId]['wards'];
-//		wardEl.html('').append('<option value="">Phường/Xã</option>');
-//		for(wid in wards) {
-//			wardEl.append('<option value="' + wid + '">' + wards[wid].pre + ' ' + wards[wid].name + '</option>');
-//		}
-//	}
-//	
-//	function filterStreet(cityId, districtId) {
-//		var streets = dataCities[cityId]['districts'][districtId]['streets'];
-//		streetEl.html('').append('<option value="">Đường</option>');
-//		for(sid in streets) {
-//			streetEl.append('<option value="' + sid + '">' + streets[sid].pre + ' ' + streets[sid].name + '</option>');
-//		}
-//	}
-//	
-//	/*$('.dropdown-select').dropdown({
-//		hiddenFillValue: '#sort'
-//	});*/
-//
 
-//
-
-//
-//	var validate = {
-//		step1: function() {
-//			var catHint = catElContainer.find('.help-block');
-//			
-//			if(catEl.val() == '') {
-//				catElContainer.addClass('has-error');
-//				catHint.text('Vui lòng chọn loại BĐS');
-//				return false;
-//			} else {
-//				catElContainer.removeClass('has-error');
-//				catHint.text('');
-//				return true;
-//			}
-//		},
-//		step2: function() {
-////			var isValid = true;
-////			
-////			if(!cityEl.val()) {
-////				showError(cityDropdown, 'Vui lòng chọn Tỉnh/Thành Phố');
-////				isValid = false;
-////			} else {
-////				hideError(cityDropdown);
-////			}
-////			
-////			if(!districtEl.val()) {
-////				showError(districtDropdown, 'Vui lòng chọn Quận/Huyện');
-////				isValid = false;
-////			} else {
-////				hideError(districtDropdown);
-////			}
-////			
-////			if(!wardEl.val()) {
-////				showError(wardEl, 'Vui lòng chọn Phường/Xã');
-////				isValid = false;
-////			} else {
-////				hideError(wardEl);
-////			}
-////
-////			if(!streetEl.val()) {
-////				showError(streetEl, 'Vui lòng chọn Đường');
-////				isValid = false;
-////			} else {
-////				hideError(streetEl);
-////			}
-////			
-////			var areaEl = $('#adproduct-area');
-////			var areaVal = areaEl.val();
-////			var priceEl = $('#adproduct-price');
-////			var priceVal = priceEl.val();
-////			var roomEl = $('#adproductadditioninfo-room_no');
-////			var roomVal = roomEl.val();
-////			var toiletEl = $('#adproductadditioninfo-toilet_no');
-////			var toiletVal = toiletEl.val();
-////			
-////			if(areaVal) {
-////				var format = areaVal.replace('.', 'A').replace(',', '.');
-////				if(isNaN(format) || format < 0) {
-////					showError(areaEl, 'Diện tích nhập không hợp lệ');
-////					isValid = false;
-////				} else if(catEl.val() != '10' && format > 200) {
-////					showError(areaEl, 'Diện tích không được lớn hơn 200');
-////					isValid = false;
-////				} else {
-////					areaEl.val(parseFloat(format).toString().replace('.', ','));
-////					hideError(areaEl);
-////				}
-////			} else {
-////				showError(areaEl, 'Vui lòng nhập diện tích');
-////				isValid = false;
-////			}
-////			
-////			if(priceVal) {
-////				if(/^\d+$/.test(priceVal)) {
-////					priceEl.val(parseInt(priceVal, 10));
-////					hideError(priceEl);
-////				} else {
-////					showError(priceEl, 'Giá nhập không hợp lệ');
-////				}
-////			} else {
-////				showError(priceEl, 'Vui lòng nhập giá');
-////				isValid = false;
-////			}
-////			
-////			if(catEl.val() != '10') {
-////				if(roomVal) {
-////					if(/^\d+$/.test(roomVal)) {
-////						roomEl.val(parseInt(roomVal, 10));
-////						hideError(roomEl);
-////					} else {
-////						showError(roomEl, 'Số phòng ngủ nhập không hợp lệ');
-////					}
-////				} else {
-////					showError(roomEl, 'Vui lòng nhập số phòng ngủ');
-////					isValid = false;
-////				}
-////				
-////				if(toiletVal) {
-////					if(/^\d+$/.test(toiletVal)) {
-////						toiletEl.val(parseInt(toiletVal, 10));
-////						hideError(toiletEl);
-////					} else {
-////						showError(toiletEl, 'Số toilet nhập không hợp lệ');
-////					}
-////				} else {
-////					showError(toiletEl, 'Vui lòng nhập số toilet');
-////					isValid = false;
-////				}
-////			}
-////			
-////			fixHeightStep(2);
-//			
-////			return isValid;
-//			return true;
-//		},
-//		step3: function() {
-//			var isValid = true;
-//			var contentEl = $('#adproduct-content');
-//			
-//			if(contentEl.val()) {
-//				hideError(contentEl);
-//			} else {
-//				showError(contentEl, 'Vui lòng nhập số nội dung tin đăng');
-//				isValid = false;
-//			}
-//			
-//			var floorNoEl = $('#adproductadditioninfo-floor_no');
-//			var floorNoVal = floorNoEl.val();
-//			
-//			if(floorNoVal && !/^\d+$/.test(floorNoVal)) {
-//				showError(floorNoEl, 'Số tầng nhập không hợp lệ');
-//				isValid = false;
-//			} else {
-//				hideError(floorNoEl);
-//			}
-//			
-//			if(catEl.val() != '6') {
-//				var facadeWidthVal = facadeWidthEl.val();
-//				var landWidthVal = landWidthEl.val();
-//				
-//				if(facadeWidthVal && !/^\d+$/.test(facadeWidthVal)) {
-//					showError(facadeWidthEl, 'Mặt tiền phải là số');
-//					isValid = false;
-//				} else {
-//					hideError(facadeWidthEl);
-//				}
-//				
-//				if(landWidthVal && !/^\d+$/.test(landWidthVal)) {
-//					showError(landWidthEl, 'Đường vào phải là số');
-//					isValid = false;
-//				} else {
-//					hideError(landWidthEl);
-//				}
-//			}
-//			
-//			return isValid;
-//		},
-//		step4: function() {
-//			return true;
-//		}
-//	};
-//	
-//	var success = {
-//		step1: function() {
-//			var homeNoEl = $('#adproduct-home_no');
-//			
-//			if($('#adproduct-project_building_id').val()) {
-//				homeNoEl.closest('.form-group').hide();
-//			} else {
-//				homeNoEl.closest('.form-group').show();
-//			}
-//			
-////			if($('#owner-host').prop('checked')) {
-////				$('#adproduct-show_home_no').prop('checked', true);
-////			} else {
-////				$('#adproduct-show_home_no').prop('checked', false);
-////			}
-//		},
-//		step2: function() {
-//			if(catEl.val() == '6') {
-//				facadeWidthEl.closest('.form-group').hide();
-//				landWidthEl.closest('.form-group').hide();
-//				floorNoEl.attr('placeholder', 'Tầng cao');
-//			} else {
-//				facadeWidthEl.closest('.form-group').show();
-//				landWidthEl.closest('.form-group').show();
-//				floorNoEl.attr('placeholder', 'Số tầng');
-//			}
-//		},
-//		step3: function() {
-//			
-//		},
-//		step4: function() {
-//			if($('#owner-host').prop('checked')) {
-//				
-//			}
-//		}
-//	};
-//	
-//	upload.fileuploadcompleted = function(e, data, el) {
-//		if($('#step-4').hasClass('in')) {
-//			fixHeightStep(4);
-//		}
-//	};
-//	upload.fileuploadadded = function(e, data, el) {
-//		if($('#step-4').hasClass('in')) {
-//			fixHeightStep(4);
-//		}
-//	};
-//	
-//	function showError(el, error) {
-//		var container = el.closest('.form-group');
-//		container.addClass('has-error');
-//		container.find('.help-block').text(error);
-//	}
-//	
-//	function hideError(el) {
-
-//	}
-//});
+form.upload = {
+	fileuploadcompleted: function(e, data, el) {
+		if($('#step4').hasClass('in')) {
+			form.fixHeight(4);
+		}
+	},
+	fileuploadadded: function(e, data, el) {
+		if($('#step4').hasClass('in')) {
+			form.fixHeight(4);
+		}
+	}
+};
