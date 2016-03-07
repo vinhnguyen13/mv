@@ -798,9 +798,11 @@ $.fn.popupMobi = function (options) {
             showPopup(el);
         }
 
-        function showPopup (popupItem) {
+        function showPopup (itemClick, popupItem) {
             $('body').addClass('popup-mobi');
             popupItem.removeClass('hide-popup');
+
+            sc.settings.funCallBack(itemClick, popupItem);
 
             if ( sc.settings.effectShow == "slideDownUp" ) {
                 if ( sc.settings.styleShow == "full" ) {
@@ -829,8 +831,6 @@ $.fn.popupMobi = function (options) {
             }else if ( sc.settings.effectShow == "show-hide" ) {
 
             }
-
-            sc.settings.funCallBack($(popupItem));
         }
 
         function hide (popupItem) {
@@ -849,13 +849,12 @@ $.fn.popupMobi = function (options) {
                 
                 setTimeout(function() {
                     popupItem.addClass('hide-popup');
-                    sc.settings.funCallBack($(popupItem));
                 },sc.settings.duration + 20);
             }else {
                 popupItem.addClass('hide-popup');
-                sc.settings.funCallBack($(popupItem));
             }
             $('body').removeClass('popup-mobi');
+            sc.settings.funCallBack("", popupItem);
         }
     });
 }
