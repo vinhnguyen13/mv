@@ -145,9 +145,6 @@ class ProfileForm extends Model
             $profile->mobile = $this->mobile;
             $profile->address = $this->address;
             $profile->about = $this->about;
-            $profile->first_name = $this->first_name;
-            $profile->last_name = $this->last_name;
-            $profile->owner = $this->owner;
             if(!empty($profile->slug)) {
                 $user = User::findIdentity(Yii::$app->user->id);
                 $profile->slug = $user->username;
@@ -192,9 +189,6 @@ class ProfileForm extends Model
         $model->activity = $profile->activity;
         $model->experience = $profile->experience;
         $model->slug = $profile->slug;
-        $model->first_name = $profile->first_name;
-        $model->last_name = $profile->last_name;
-        $model->owner = $profile->owner;
         $model->user = $user;
         return $model;
     }
