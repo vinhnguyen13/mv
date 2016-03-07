@@ -96,6 +96,7 @@ return [
                 'real-estate/post' => 'ad/post',
                 'real-estate/post-listing' => 'ad/post-listing',
                 'real-estate/detail/<id:\d+>-<slug>' => 'ad/detail',
+                'real-estate/update/<id:\d+>' => 'ad/update',
                 'member/<usrn>/avatar' => 'member/avatar',
                 'chat/with/<username>' => 'chat/with',
                 '<username>' => 'member/profile',

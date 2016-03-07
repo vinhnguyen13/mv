@@ -22,7 +22,7 @@ use yii\helpers\Url;
 								</div>
 							</a>
 						</div>
-						<a href="#" class="edit-duan"><span class="icon-edit-small icon"></span></a>
+						<a href="<?= Url::to(['/ad/update', 'id' => $product->id]) ?>" class="edit-duan"><span class="icon-edit-small icon"></span></a>
 					</div>
 					<div class="intro-detail">
 						<div class="status-duan clearfix">
@@ -33,7 +33,7 @@ use yii\helpers\Url;
 							<?php endif; ?>
 
 							<p class="date-post">Ngày đăng tin: <span><?= date("d/m/Y", $product->created_at) ?></span></p>
-							<p class="id-duan">ID tin đăng:<span><?=$product->id;?></span></p>
+							<p class="id-duan">ID tin đăng:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
 						</div>
 						<div class="pull-right push-price">
 							<?php if($product->end_date > time()){

@@ -13,6 +13,7 @@
 	use vsoft\ad\models\AdWard;
 	use vsoft\ad\models\AdStreet;
 	use vsoft\ad\models\AdCategory;
+use vsoft\ad\models\AdImages;
 
 	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/string-helper.js', ['position' => View::POS_END]);
 	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/post-listing.js', ['position' => View::POS_END]);
@@ -31,7 +32,7 @@
 		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
 	}
 ?>
-<div class="title-top">Đăng tin</div>
+<div class="title-top"><?= $product->isNewRecord ? 'Đăng tin' : 'Cập nhật MV' . $product->id ?></div>
 <div class="post-listing">
 	<?php
 		$form = ActiveForm::begin ( [ 
@@ -52,8 +53,9 @@
 			</ul>
 		</div>
 		<div id="step1" class="section select-type hide item-step">
+		<?php if($product->isNewRecord) :?>
 			<p class="text-center step-txt">4 bước dễ dàng</p>
-		
+		<?php endif; ?>
 			<ul class="clearfix step-check">
 				<li>
 					<a class="frm-radio" href="#">
@@ -212,7 +214,20 @@
 		</div>
 
 		<div id="step4" class="hinh-anh item-step section hide">
+			<?php
+				$files = [];
+				foreach ($product->adImages as $image) {
+					$files[] = [
+						'deleteType' => "DELETE",
+						'deleteUrl'	=> Url::to(['/ad/delete-file', 'file' => $image->file_name]),
+						'thumbnailUrl' => $image->getUrl(AdImages::SIZE_THUMB),
+						'name' => $image->file_name,
+						'url' => $image->getUrl(AdImages::SIZE_LARGE)
+					];
+				}
+			?>
 			<?= FileUpload::widget([
+					'files' => $files,
 					'name' => 'images', 
 					'url' => Url::to(['upload']),
 					'clientOptions' => [
@@ -247,12 +262,12 @@
 			</div>
 			<div class="text-center pdT-25">
 				<button type="button" class="preview btn-common">Preview</button>
-				<button type="button" class="btn-post btn-common">Đăng tin</button>
+				<button type="button" class="btn-post btn-common"><?= $product->isNewRecord ? 'Đăng tin' : 'Cập nhật' ?></button>
 			</div>
 		</div>
 	<?php $form->end() ?>
 </div>
-
+<?php if($product->isNewRecord): ?>
 	<div id="popup-share-social" class="popup-common hide-popup">
 	    <div class="inner-popup">
             <div class="wrap-body-popup">
@@ -262,6 +277,17 @@
             </div>
         </div>
 	</div>
+<?php else: ?>
+	<div id="popup-share-social" class="popup-common hide-popup">
+	    <div class="inner-popup">
+            <div class="wrap-body-popup">
+                <div style="font-weight: bold; font-size: 20px; color: #514AB3; margin: -8px 0 22px 0;">Cập nhật thành công !</div>
+				<div style="font-size: 14px; margin-bottom: 32px;">Tin của bạn sẽ chờ xét duyệt lại trước khi hiển thị đến người xem.<br /><br />Cảm ơn đã sử dụng dịch vụ của MetVuong</div>
+				<a href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>" style="font-size: 16px; text-transform: uppercase;">Quay trở về dashboard</a>
+            </div>
+        </div>
+	</div>
+<?php endif; ?>
 	
 <div class="detail-listing" style="display: none;">
 	<div class="gallery-detail swiper-container">
@@ -417,7 +443,7 @@
     </div>
 	<div class="text-center">
 		<button type="button" class="back-form btn-common">Trở lại</button>
-		<button type="button" class="btn-post btn-common">Đăng tin</button>
+		<button type="button" class="btn-post btn-common"><?= $product->isNewRecord ? 'Đăng tin' : 'Cập nhật' ?></button>
 	</div>
 </div>
 

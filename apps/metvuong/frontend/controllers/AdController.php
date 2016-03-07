@@ -97,7 +97,12 @@ class AdController extends Controller
     	
     	return ['files' => []];
     }
-    
+
+    public function actionDeleteFile($file) {
+    	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    	
+    	return ['files' => []];
+    }
     /**
      * @return string
      */
@@ -353,6 +358,47 @@ class AdController extends Controller
     		return $this->postMobile();
     	} else {
     		return $this->post();
+    	}
+    }
+    
+    public function actionUpdate($id) {
+    	if(Yii::$app->user->isGuest) {
+    		return $this->render('/_systems/require_login');
+    	}
+    	
+    	$product = AdProduct::find()->where('id = :id AND user_id = :uid', [':id' => $id, ':uid' => Yii::$app->user->identity->id])->one();
+    	
+    	if($product) {
+    		$additionInfo = $product->adProductAdditionInfo;
+    		$contactInfo = $product->adContactInfo;
+    		
+    		if(Yii::$app->request->isPost) {
+    			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    			$post = Yii::$app->request->post();
+    			
+    			$product->load($post);
+    			$additionInfo->load($post);
+    			$contactInfo->load($post);
+    			
+    			$result = ['success' => true];
+    			
+    			if($product->validate() && $additionInfo->validate() && $contactInfo->validate()) {
+    				$product->save(false);
+    				$additionInfo->save(false);
+    				$contactInfo->save(false);
+    			} else {
+    				$result['success'] = false;
+    				$result['errors'] = [
+	    				'product' => $product->getErrors(),
+	    				'additionInfo' => $additionInfo->getErrors(),
+	    				'contactInfo' => $contactInfo->getErrors()
+    				];
+    			}
+    			
+    			return $result;
+    		}
+    		 
+    		return $this->render('form', ['product' => $product, 'additionInfo' => $additionInfo, 'contactInfo' => $contactInfo]);
     	}
     }
     
