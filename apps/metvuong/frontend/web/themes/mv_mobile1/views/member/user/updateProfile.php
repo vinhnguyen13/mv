@@ -6,9 +6,6 @@
  * Time: 9:51 AM
  */
 use vsoft\ad\models\AdCity;
-use vsoft\ad\models\AdDistrict;
-use vsoft\ad\models\AdWard;
-use vsoft\ad\models\AdStreet;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -20,8 +17,6 @@ $user = $model->getUser();
 	<div class="edit-user-tt">
 		<div class="title-top">
 			<a href="#">TÀI KHOẢN CỦA BẠN</a>
-			<a href="javascript:history.back()" id="prev-page"><span class="icon arrowRight-1"></span></a>
-            <a href="#" id="done-page"><span class="icon icon-done"></span></a>
 		</div>
 		<div class="wrap-edit-tt">
 			<div class="avatar-user-pr">
@@ -55,7 +50,7 @@ $user = $model->getUser();
 				</div>
 				<div class="wrap-attr-detail">
 					<div class="txt-wrap">
-						<p class="txt-mota"><?=$model->about?></p>
+						<p class="txt-mota"><?=$model->bio?></p>
 					</div>
 				</div>
 			</section>
@@ -67,9 +62,8 @@ $user = $model->getUser();
 				</div>
 				<div class="list-tt-user wrap-attr-detail">
                     <?php
-                    $user_location_form = Yii::createObject([
-                        'class'    => \frontend\models\UserLocation::className()
-                    ]);
+
+                    $user_location_form = \frontend\models\UserLocation::find()->where(['user_id' => Yii::$app->user->id])->one();
                     $form = ActiveForm::begin ( [
                         'id' => 'user-location-form',
                         'enableClientValidation' => false,
@@ -87,30 +81,12 @@ $user = $model->getUser();
                             $citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
 //                            $citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != \frontend\models\UserLocation::DEFAULT_CITY)]; });
                             echo $form->field($user_location_form, 'city_id', ['options' => ['class' => 'attr-right pull-right city']])
-                                ->dropDownList($citiesDropdown, ['prompt' => 'Chọn...'])
+                                ->dropDownList($citiesDropdown, ['prompt' => 'Chọn...', 'options' => [empty($user_location_form) ? 1 : $user_location_form->city_id => ['Selected ' => true]]])
                                 ->label(false);
 
                             echo $form->field($user_location_form, 'user_id')->hiddenInput(['value'=>Yii::$app->user->id])->label(false);
                             ?>
-							<span>Thành phố/Tỉnh</span>
-						</li>
-                        <li>
-                            <?= $form->field($user_location_form, 'district_id', ['options' => ['class' => 'attr-right pull-right district']])
-                                ->dropDownList([],['prompt' => 'Chọn...'])
-                                ->label(false)?>
-							<span>Quận/Huyện</span>
-						</li>
-                        <li>
-                            <?= $form->field($user_location_form, 'ward_id', ['options' => ['class' => 'attr-right pull-right ward']])
-                                ->dropDownList([],['prompt' => 'Chọn...'])
-                                ->label(false)?>
-							<span>Phường/Xã</span>
-						</li>
-                        <li>
-                            <?= $form->field($user_location_form, 'street_id', ['options' => ['class' => 'attr-right pull-right street']])
-                                ->dropDownList([],['prompt' => 'Chọn...'])
-                                ->label(false)?>
-							<span>Đường</span>
+							<span>Tỉnh/Thành phố</span>
 						</li>
 					</ul>
                     <?php $form->end(); ?>
@@ -234,7 +210,7 @@ $user = $model->getUser();
 		</div>
 		<div class="inner-popup">
             <div class="list-tt-user wrap-attr-detail">
-                <?= $f->field($profile_form, 'about')->textarea(['class'=>'txt-mota', 'value' => $model->about ])->label(false)?>
+                <?= $f->field($profile_form, 'bio')->textarea(['class'=>'txt-mota', 'value' => $model->bio ])->label(false)?>
 			</div>
 		</div>
         <?php $f->end(); ?>
@@ -317,10 +293,6 @@ $user = $model->getUser();
                             $('#edit-ttcn').addClass('hide-popup');
                             $('.ttcn .name').html(data.modelResult.name);
                             $('.ttcn .phone-num').html(data.modelResult.mobile);
-                            if(data.modelResult.owner == 1)
-                                $('.ttcn .im').html('Chủ nhà');
-                            else
-                                $('.ttcn .im').html('Môi giới');
                         }
                         return true;
                     },
@@ -349,7 +321,7 @@ $user = $model->getUser();
                     success: function (data) {
                         if(data.statusCode == 200){
                             $('#edit-mtbt').addClass('hide-popup');
-                            $('.mtbt .txt-mota').html(data.modelResult.about);
+                            $('.mtbt .txt-mota').html(data.modelResult.bio);
                         }
                         return true;
                     },
@@ -414,36 +386,6 @@ $user = $model->getUser();
         });
 
         $('#userlocation-city_id').change(function(){
-            var city_id = 0;
-            $('#userlocation-district_id').html('<option>Chọn...</option>');
-            $('#userlocation-city_id option:selected').each(function() {
-                city_id = $(this).attr('value');
-            });
-            $.get('/ad/list-district', {cityId: city_id}, function(districts){
-                $.each(districts, function(idx, val){
-                    $('#userlocation-district_id').append('<option value="'+idx+'">'+val+'</option>');
-                });
-            });
-        });
-
-        $('#userlocation-district_id').change(function(){
-            var _id = 0;
-            $('#userlocation-ward_id').html('<option>Chọn...</option>');
-            $('#userlocation-street_id').html('<option>Chọn...</option>');
-            $("#userlocation-district_id option:selected").each(function() {
-                _id = $(this).attr('value');
-            });
-            $.get('/ad/list-swp', {districtId: _id}, function(response){
-                $.each(response.wards, function(idx, val){
-                    $('#userlocation-ward_id').append('<option value="'+idx+'">'+val+'</option>');
-                });
-                $.each(response.streets, function(idx, val){
-                    $('#userlocation-street_id').append('<option value="'+idx+'">'+val+'</option>');
-                });
-            });
-        });
-
-        $('#done-page').click(function(){
             var timer = 0;
             clearTimeout(timer);
             timer = setTimeout(function () {
@@ -462,8 +404,7 @@ $user = $model->getUser();
                         return false;
                     }
                 });
-            }, 5);
+            }, 500);
         });
-
     });
 </script>

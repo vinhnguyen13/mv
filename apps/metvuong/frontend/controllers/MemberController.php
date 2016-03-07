@@ -324,28 +324,20 @@ class MemberController extends Controller
             return $this->redirect(Url::to(['member/login']));
         }
 
-        $model = Yii::createObject([
-            'class' => UserLocation::className()
-        ]);
-
+        $model = UserLocation::find()->where(['user_id' => Yii::$app->user->id])->one();
         if(Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             $post = Yii::$app->request->post();
-            if(isset($post["UserLocation"])) {
-                $model->load($post);
+            if($post) {
+                $model->user_id = Yii::$app->user->id;
+                $model->city_id = isset($post["UserLocation"]["city_id"]) ? (int)$post["UserLocation"]["city_id"] : null;
                 $model->validate();
-                if (!$model->hasErrors()) {
-                    echo "<pre>";
-                    print_r($model);
-                    echo "<pre>";
-                    exit();
-                    return ['statusCode' => 200];
-                } else {
-                    return ['statusCode' => 400, 'parameters' => $model->errors];
+                if (!$model->hasErrors() ) {
+                    $model->save(false);
+                    return ['statusCode' => 200, 'model' => $model];
                 }
             }
         }
-
         return ['statusCode' => 400];
     }
 

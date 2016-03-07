@@ -62,7 +62,7 @@ class ProfileForm extends Model
     public function scenarios()
     {
         return [
-            'updateprofile' => ['user_id', 'name', 'public_email', 'phone', 'mobile', 'address', 'about', 'slug'],
+            'updateprofile' => ['user_id', 'name', 'public_email', 'phone', 'mobile', 'address', 'bio'],
             'password' => ['old_password', 'new_password'],
             'updateavatar' => ['avatar', 'created_at', 'bio'],
         ];
@@ -139,16 +139,12 @@ class ProfileForm extends Model
         $profile = Yii::$app->user->identity->profile;
         if(!empty($profile)) {
             $profile->user_id = $this->user_id;
-            $profile->name = $this->last_name . " " . $this->first_name;
+            $profile->name = $this->name;
             $profile->public_email = $this->public_email;
             $profile->phone = $this->phone;
             $profile->mobile = $this->mobile;
             $profile->address = $this->address;
-            $profile->about = $this->about;
-            if(!empty($profile->slug)) {
-                $user = User::findIdentity(Yii::$app->user->id);
-                $profile->slug = $user->username;
-            }
+            $profile->bio = $this->bio;
             return $profile->save();
         }
         return false;
@@ -185,10 +181,6 @@ class ProfileForm extends Model
         $model->avatar = $profile->avatar;
         $model->bio = $profile->bio;
         $model->created_at = Yii::$app->user->id;
-        $model->about = $profile->about;
-        $model->activity = $profile->activity;
-        $model->experience = $profile->experience;
-        $model->slug = $profile->slug;
         $model->user = $user;
         return $model;
     }
