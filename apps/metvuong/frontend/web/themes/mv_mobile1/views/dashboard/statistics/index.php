@@ -248,8 +248,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
             styleShow: 'center',
             closeBtn: '#popup-user-inter .btn-close, #popup-user-inter .share-email-btn',
             funCallBack: function(item) {
-                l(item);
-                $('#popup-user-inter .avatar-user-inter img').attr('src', item[0].attributes["data-ava"].value.trim());
+                $('#popup-user-inter .avatar-user-inter img').attr('src', item.data('ava'));
                 $('#popup-user-inter .avatar-user-inter a').attr('href', '/'+item[0].innerText.trim());
                 $('#popup-user-inter .name-user-inter').html('Bạn có thể Chat và Email với tài khoản: <a href="/'+item[0].innerText.trim()+'">'+item[0].innerText.trim()+'</a>');
                 $('#popup-user-inter .btn-chat').attr('href','/chat/with/'+item[0].innerText.trim());
@@ -269,88 +268,90 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
             var useDate = arrDate[2]+"/"+arrDate[1]+"/"+arrDate[0];
             $('.toDate').attr('placeholder', ""+useDate);
         }
-    });
 
-	$('#sandbox-container input').datepicker({
-	    language: "vi",
-        autoclose: true,
-        onSelect: function() {
-            return $(this).trigger('change');
-        }
-	});
-
-    $('#sandbox-container input').change(function(){
-        var theDate = $(this).datepicker().val();
-        var arrDate = theDate.split("/");
-        var useDate = arrDate[2]+"-"+arrDate[1]+"-"+arrDate[0];
-        if(useDate) {
-            window.location = '<?=Url::to(['/dashboard/statistics','id' => $id])?>' + '&date=' + useDate;
-        }
-    });
-
-    function getUrlVars()
-    {
-        var vars = [], hash;
-        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-        for(var i = 0; i < hashes.length; i++)
-        {
-            hash = hashes[i].split('=');
-            vars.push(hash[0]);
-            vars[hash[0]] = hash[1];
-        }
-        return vars;
-    }
-
-    $('.chart_stats').change(function () {
-        var timer = 0;
-        clearTimeout(timer);
-        var url = '';
-        var valueOption = '';
-        $( "select option:selected" ).each(function() {
-            valueOption = $(this).attr('value');
-            url = $(this).attr('data-url');
-            $('.wrapChart').html('');
-            $('.loading').show();
+        $('#sandbox-container input').datepicker({
+            language: "vi",
+            autoclose: true,
+            onSelect: function() {
+                return $(this).trigger('change');
+            }
         });
-        if(url != '') {
-            timer = setTimeout(function () {
-                $.ajax({
-                    type: "get",
-                    dataType: 'html',
-                    url: url,
-                    success: function (data) {
-                        $('.loading').hide();
-                        $('.wrapChart').html(data);
-                        if(valueOption == 'finder'){
-                            $('.finder').show();
-                            $('.visitor').hide();
-                            $('.favourite').hide();
-                        }
-                        else if(valueOption == 'visitor'){
-                            $('.finder').hide();
-                            $('.visitor').show();
-                            $('.favourite').hide();
-                        }
-                        else if(valueOption == 'favourite'){
-                            $('.finder').hide();
-                            $('.visitor').hide();
-                            $('.favourite').show();
-                        }
-                    }
-                });
-            }, 500);
+
+        $('#sandbox-container input').change(function(){
+            var theDate = $(this).datepicker().val();
+            var arrDate = theDate.split("/");
+            var useDate = arrDate[2]+"-"+arrDate[1]+"-"+arrDate[0];
+            if(useDate) {
+                window.location = '<?=Url::to(['/dashboard/statistics','id' => $id])?>' + '&date=' + useDate;
+            }
+        });
+
+        function getUrlVars()
+        {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for(var i = 0; i < hashes.length; i++)
+            {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
         }
-        return false;
+
+        $('.chart_stats').change(function () {
+            var timer = 0;
+            clearTimeout(timer);
+            var url = '';
+            var valueOption = '';
+            $( "select option:selected" ).each(function() {
+                valueOption = $(this).attr('value');
+                url = $(this).attr('data-url');
+                $('.wrapChart').html('');
+                $('.loading').show();
+            });
+            if(url != '') {
+                timer = setTimeout(function () {
+                    $.ajax({
+                        type: "get",
+                        dataType: 'html',
+                        url: url,
+                        success: function (data) {
+                            $('.loading').hide();
+                            $('.wrapChart').html(data);
+                            if(valueOption == 'finder'){
+                                $('.finder').show();
+                                $('.visitor').hide();
+                                $('.favourite').hide();
+                            }
+                            else if(valueOption == 'visitor'){
+                                $('.finder').hide();
+                                $('.visitor').show();
+                                $('.favourite').hide();
+                            }
+                            else if(valueOption == 'favourite'){
+                                $('.finder').hide();
+                                $('.visitor').hide();
+                                $('.favourite').show();
+                            }
+                        }
+                    });
+                }, 500);
+            }
+            return false;
+        });
+
+        $(document).on('click', '.share-social .share-facebook', function() {
+            var detailUrl = $('#share_form ._detailUrl').val();
+            if(detailUrl == null || detailUrl == '' )
+                detailUrl = $('#share_form ._domain').val();
+            FB.ui({
+                method: 'share',
+                href: detailUrl
+            }, function(response){});
+        });
     });
 
-    $(document).on('click', '.share-social .share-facebook', function() {
-        var detailUrl = $('#share_form ._detailUrl').val();
-        if(detailUrl == null || detailUrl == '' )
-            detailUrl = $('#share_form ._domain').val();
-        FB.ui({
-            method: 'share',
-            href: detailUrl
-        }, function(response){});
-    });
+
 
 </script>
