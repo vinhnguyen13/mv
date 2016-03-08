@@ -56,16 +56,16 @@ use yii\helpers\Url;
                 <?= $f->field($share_form, 'content')->textarea(['class'=>'content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('content', 'Nội dung...')])->label(false) ?>
             </div>
             <div class="item-send">
-                <div class="img-show"><div><a href="<?= $product->urlDetail() ?>"><img src="<?= $product->representImage ?>" alt="<?=$address?>"></a></div></div>
+                <div class="img-show"><div><a href="<?= $product->urlDetail(true) ?>"><img src="<?= $product->representImage ?>" alt="<?=$address?>"></a></div></div>
                 <div class="infor-send">
-                    <p class="name"><a href="<?= $product->urlDetail() ?>"><?=$address?></a></p>
+                    <p class="name"><a href="<?= $product->urlDetail(true) ?>"><?=$address?></a></p>
                     <p class="address"></p>
                     <p><?=StringHelper::truncate($product->content, 150)?></p>
                     <p class="send-by">BY METVUONG.COM</p>
                 </div>
 
                 <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=>$address])->label(false) ?>
-                <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> $product->urlDetail() ])->label(false) ?>
+                <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> $product->urlDetail(true) ])->label(false) ?>
                 <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
             </div>
             <?php $f->end(); ?>

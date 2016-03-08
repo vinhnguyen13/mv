@@ -32,7 +32,6 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
         var js, fjs = d.getElementsByTagName(s)[0];
         if (d.getElementById(id)) {return;}
         js = d.createElement(s); js.id = id;
-        js.async=true;
         js.src = "//connect.facebook.net/vi_VN/sdk.js";
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
@@ -230,6 +229,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
             styleShow: 'center',
             closeBtn: '#popup-user-inter .btn-close, #popup-user-inter .share-email-btn',
             funCallBack: function(item) {
+                l(item);
                 $('#popup-user-inter .avatar-user-inter img').attr('src', item[0].attributes["data-ava"].value.trim());
                 $('#popup-user-inter .avatar-user-inter a').attr('href', '/'+item[0].innerText.trim());
                 $('#popup-user-inter .name-user-inter').html('Bạn có thể Chat và Email với tài khoản: <a href="/'+item[0].innerText.trim()+'">'+item[0].innerText.trim()+'</a>');

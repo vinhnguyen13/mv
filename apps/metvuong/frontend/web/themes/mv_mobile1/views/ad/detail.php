@@ -247,7 +247,7 @@ use vsoft\ad\models\AdProductAdditionInfo;
                 <span>Share on Social Network</span>
                 <ul class="clearfix">
                     <li>
-                        <a href="#">
+                        <a href="#" class="share-facebook">
                             <div class="circle"><div><span class="icon icon-face"></span></div></div>
                         </a>
                     </li>
@@ -350,6 +350,38 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 			$('#popup-share-social').addClass('hide-popup');
 			$('.email-btn').trigger('click');
 		});
+
+        $(document).on('click', '.share-facebook', function() {
+            FB.ui({
+                method: 'share',
+                href: '<?=Yii::$app->request->absoluteUrl?>'
+            }, function(response){});
+        });
+
 	});
 
+</script>
+<?php
+$fb_appId = '680097282132293'; // stage.metvuong.com
+if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
+    $fb_appId = '736950189771012';
+else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
+    $fb_appId = '891967050918314';
+?>
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : <?=$fb_appId?>,
+            xfbml      : true,
+            version    : 'v2.5'
+        });
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/vi_VN/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
 </script>
