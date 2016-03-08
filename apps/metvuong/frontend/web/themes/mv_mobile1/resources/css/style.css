@@ -4111,6 +4111,7 @@ input[type=text]:focus {
 .title-popup .txt-done {
     right: 0;
     left: initial;
+    height: 44px;
 }
 .hide-popup {
     display: none;
@@ -4915,4 +4916,13 @@ input[type=text]:focus {
 }
 #signup-form label {
     font-size: 13px;
+}
+.title-popup .txt-done .loading-proccess {
+    background: #fff;
+}
+.title-popup .txt-done .loading-proccess span {
+    border-top-color: #333;
+    border-left-color: #333;
+    margin-top: -10px;
+    margin-left: -10px;
 }

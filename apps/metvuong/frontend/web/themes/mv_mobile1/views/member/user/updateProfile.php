@@ -239,7 +239,7 @@ $user = $model->getUser();
         ?>
 		<div class="title-popup clearfix text-center">
 			MẬT KHẨU
-			<a href="#" class="txt-cancel btn-cancel">Back</a>
+			<a href="#" class="txt-cancel btn-cancel">Cancel</a>
 			<a href="#" class="txt-done btn-done">Done</a>
 		</div>
 		<div class="inner-popup">
@@ -269,162 +269,151 @@ $user = $model->getUser();
 
 <script>
 	$(document).ready(function () {
-		$('#edit-ttcn').popupMobi({
-			btnClickShow: ".ttcn .edit-tt",
-			closeBtn: '#edit-ttcn .btn-cancel, #edit-ttcn .btn-done',
+		$('#edit-ttcn, #edit-mtbt, #edit-changepass').popupMobi({
+			btnClickShow: ".edit-tt",
+			closeBtn: '.btn-cancel',
             styleShow: 'full',
 			funCallBack: function (itemClick, popupItem) {
                 
-            },
-            done: function (popupItem) {
-                $('#edit-ttcn .btn-done').click(function(){
-                    $('#edit-ttcn .error').addClass('hide');
-                    var timer = 0;
-                    clearTimeout(timer);
-                    timer = setTimeout(function () {
-                        $.ajax({
-                            type: 'post',
-                            dataType: 'json',
-                            url: $('#form-edit-ttcn').attr('action'),
-                            data: $('#form-edit-ttcn').serializeArray(),
-                            success: function (data) {
-                                if(data.statusCode == 200){
-                                    $('.ttcn .name').html(data.modelResult.name);
-                                    $('.ttcn .phone-num').html(data.modelResult.mobile);
-                                } else {
-                                    $('#edit-ttcn .error').removeClass('hide');
-                                    var strMessage = '';
-                                    $.each(data.parameters, function(idx, val){
-                                        var element = 'form-edit-ttcn'+idx;
-                                        strMessage += "<br/>" + val;
-                                    });
-                                    $('#edit-ttcn .error').html(strMessage);
-                                }
-                                return true;
-                            },
-                            error: function (data) {
-                                $('#edit-ttcn .error').removeClass('hide');
-                                var strMessage = '';
-                                $.each(data.parameters, function(idx, val){
-                                    var element = 'form-edit-ttcn'+idx;
-                                    strMessage += "<br/>" + val;
-                                });
-                                $('#edit-ttcn .error').html(strMessage);
-                                return false;
-                            }
-                        });
-                    }, 500);
-                });
             }
 		});
-        $('#edit-mtbt').popupMobi({
-            btnClickShow: ".mtbt .edit-tt",
-            closeBtn: '#edit-mtbt .btn-cancel, #edit-mtbt .btn-done',
-            styleShow: 'full',
-            funCallBack: function (itemClick, popupItem) {
-                
-            },
-            done: function (popupItem) {
-                //$('#edit-mtbt .btn-done').unbind('click');
-                $('#edit-mtbt .btn-done').on('click', function(){
-                    $('#edit-mtbt .error').addClass('hide');
-                    var timer = 0;
-                    clearTimeout(timer);
 
-                    /*$(this).loading({
-                        
-                    });*/
-                    timer = setTimeout(function () {
-                        $.ajax({
-                            type: 'post',
-                            dataType: 'json',
-                            url: $('#form-edit-mtbt').attr('action'),
-                            data: $('#form-edit-mtbt').serializeArray(),
-                            success: function (data) {
-                                if(data.statusCode == 200){
-                                    $('#edit-mtbt').addClass('hide-popup');
-                                    $('.mtbt .txt-mota').html(data.modelResult.bio);
-                                } else {
-                                    $('#edit-mtbt .error').removeClass('hide');
-                                    var strMessage = '';
-                                    $.each(data.parameters, function(idx, val){
-                                        var element = 'form-edit-mtbt'+idx;
-                                        strMessage += "<br/>" + val;
-                                    });
-                                    $('#edit-mtbt .error').html(strMessage);
-                                }
-                                return true;
-                            },
-                            error: function (data) {
-                                $('#edit-mtbt .error').removeClass('hide');
-                                var strMessage = '';
-                                $.each(data.parameters, function(idx, val){
-                                    var element = 'form-edit-mtbt'+idx;
-                                    strMessage += "<br/>" + val;
-                                });
-                                $('#edit-mtbt .error').html(strMessage);
-                            }
+        $('#edit-ttcn .btn-done').on('click', function(e){
+            e.preventDefault();
+            var _this = $(this);
+            _this.loading({
+                full: false
+            });
+            $('#edit-ttcn .error').addClass('hide');
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: $('#form-edit-ttcn').attr('action'),
+                data: $('#form-edit-ttcn').serializeArray(),
+                success: function (data) {
+                    
+                    _this.loading({done: true});
+                    
+                    if(data.statusCode == 200){
+                        $('.btn-cancel').trigger('click');
+                        $('.ttcn .name').html(data.modelResult.name);
+                        $('.ttcn .phone-num').html(data.modelResult.mobile);
+                    } else {
+                        $('#edit-ttcn .error').removeClass('hide');
+                        var strMessage = '';
+                        $.each(data.parameters, function(idx, val){
+                            var element = 'form-edit-ttcn'+idx;
+                            strMessage += "<br/>" + val;
                         });
-                    }, 500);
-                });
-            }
+                        $('#edit-ttcn .error').html(strMessage);
+                    }
+                    return true;
+                },
+                error: function (data) {
+                    $('#edit-ttcn .error').removeClass('hide');
+                    var strMessage = '';
+                    $.each(data.parameters, function(idx, val){
+                        var element = 'form-edit-ttcn'+idx;
+                        strMessage += "<br/>" + val;
+                    });
+                    $('#edit-ttcn .error').html(strMessage);
+                    return false;
+                }
+            });
         });
 
-        $('#edit-changepass').popupMobi({
-            btnClickShow: ".matkhau .edit-tt",
-            closeBtn: '#edit-changepass .btn-cancel, #edit-changepass .btn-done',
-            styleShow: 'full',
-            funCallBack: function (itemClick, popupItem) {
-                
-            },
-            done: function () {
-                $('#edit-changepass .btn-done').click(function(){
-                    $('#edit-changepass .error').addClass('hide');
-                    var new_password = $('.new_password').val();
-                    var rePass = $('.re-type-pass').val();
-                    if(new_password !== rePass){
-                        $('#edit-changepass .error').html('<br>Confirm password not match.');
-                        $('#edit-changepass .error').removeClass('hide');
-                        $('.re-type-pass').focus();
-                        return false;
-                    }
+        $('#edit-mtbt .btn-done').on('click', function(){
+            var _this = $(this);
+            _this.loading({
+                full: false
+            });
+            $('#edit-mtbt .error').addClass('hide');
+            
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: $('#form-edit-mtbt').attr('action'),
+                data: $('#form-edit-mtbt').serializeArray(),
+                success: function (data) {
 
-                    var timer = 0;
-                    clearTimeout(timer);
-                    timer = setTimeout(function () {
-                        $.ajax({
-                            type: 'post',
-                            dataType: 'json',
-                            url: $('#form-edit-changepass').attr('action'),
-                            data: $('#form-edit-changepass').serializeArray(),
-                            success: function (data) {
-                                if(data.statusCode == 200){
-                                    $('#edit-changepass .error').html('<br> Reset password success.');
-                                    $('#edit-changepass .error').removeClass('hide');
-                                } else {
-                                    $('#edit-changepass .error').removeClass('hide');
-                                    var strMessage = '';
-                                    $.each(data.parameters, function(idx, val){
-                                        var element = 'form-edit-changepass_'+idx;
-                                        strMessage += "<br/>" + val;
-                                    });
-                                    $('#edit-changepass .error').html(strMessage);
-                                }
-                                return true;
-                            },
-                            error: function (data) {
-                                var strMessage = '';
-                                $.each(data.parameters, function(idx, val){
-                                    var element = 'form-edit-changepass_'+idx;
-                                    strMessage += "\n" + val;
-                                });
-                                $('#edit-changepass .error').html(strMessage);
-                                return false;
-                            }
+                    _this.loading({done: true});
+                    
+                    if(data.statusCode == 200){
+                        $('.btn-cancel').trigger('click');
+                        $('.mtbt .txt-mota').html(data.modelResult.bio);
+                    } else {
+                        $('#edit-mtbt .error').removeClass('hide');
+                        var strMessage = '';
+                        $.each(data.parameters, function(idx, val){
+                            var element = 'form-edit-mtbt'+idx;
+                            strMessage += "<br/>" + val;
                         });
-                    }, 500);
-                });
+                        $('#edit-mtbt .error').html(strMessage);
+                    }
+                    return true;
+                },
+                error: function (data) {
+                    $('#edit-mtbt .error').removeClass('hide');
+                    var strMessage = '';
+                    $.each(data.parameters, function(idx, val){
+                        var element = 'form-edit-mtbt'+idx;
+                        strMessage += "<br/>" + val;
+                    });
+                    $('#edit-mtbt .error').html(strMessage);
+                }
+            });
+        });
+
+        $('#edit-changepass .btn-done').on('click', function(){
+            var _this = $(this);
+            _this.loading({
+                full: false
+            });
+            $('#edit-changepass .error').addClass('hide');
+            var new_password = $('.new_password').val();
+            var rePass = $('.re-type-pass').val();
+            if(new_password !== rePass){
+                $('#edit-changepass .error').html('<br>Confirm password not match.');
+                $('#edit-changepass .error').removeClass('hide');
+                $('.re-type-pass').focus();
+                return false;
             }
+
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: $('#form-edit-changepass').attr('action'),
+                data: $('#form-edit-changepass').serializeArray(),
+                success: function (data) {
+
+                    _this.loading({done: true});
+                    
+                    if(data.statusCode == 200){
+                        $('.btn-cancel').trigger('click');
+                        $('#edit-changepass .error').html('<br> Reset password success.');
+                        $('#edit-changepass .error').removeClass('hide');
+                    } else {
+                        $('#edit-changepass .error').removeClass('hide');
+                        var strMessage = '';
+                        $.each(data.parameters, function(idx, val){
+                            var element = 'form-edit-changepass_'+idx;
+                            strMessage += "<br/>" + val;
+                        });
+                        $('#edit-changepass .error').html(strMessage);
+                    }
+                    return true;
+                },
+                error: function (data) {
+                    var strMessage = '';
+                    $.each(data.parameters, function(idx, val){
+                        var element = 'form-edit-changepass_'+idx;
+                        strMessage += "\n" + val;
+                    });
+                    $('#edit-changepass .error').html(strMessage);
+                    return false;
+                }
+            });
+
         });
 
         $('#avatar').on('hidden.bs.modal', function () {
