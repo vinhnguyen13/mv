@@ -4779,11 +4779,13 @@ input[type=text]:focus {
 .wrap-attr-detail li {
     float: left;
     width: 100%;
-    border-bottom: solid 0.5px #ededed;
+    /* border-bottom: solid 0.5px #ededed; */
     padding: 0 20px;
+    margin-bottom: 15px;
 }
 .wrap-attr-detail li:last-child {
     border: none;
+    margin-bottom: 0;
 }
 .wrap-attr-detail li span {
     vertical-align: middle;
@@ -4792,12 +4794,12 @@ input[type=text]:focus {
     font-size: 14px;
 }
 .wrap-attr-detail li .attr-right {
-    padding: 10px 0;
+    padding: 8px 10px;
     display: inline-block;
     font-weight: 600;
-    border: none;
     text-align: right;
     font-size: 15px;
+    border: none;
 }
 .wrap-attr-detail .txt-wrap {
     padding: 15px 20px;
@@ -4871,9 +4873,14 @@ input[type=text]:focus {
     text-align: left;
     width: 40%;
 }
-.inner-popup .wrap-attr-detail li .attr-right {
+.inner-popup .wrap-attr-detail li > div {
     width: 60%;
+    float: left;
+}
+.inner-popup .wrap-attr-detail li > div input {
     text-align: left;
+    width: 100%;
+    border: solid 0.5px #ededed;
 }
 #edit-mtbt textarea {
     padding: 10px;
@@ -4925,4 +4932,8 @@ input[type=text]:focus {
     border-left-color: #333;
     margin-top: -10px;
     margin-left: -10px;
+}
+.wrap-attr-detail li .form-group,
+.wrap-attr-detail li .help-block {
+    margin: 0;
 }
