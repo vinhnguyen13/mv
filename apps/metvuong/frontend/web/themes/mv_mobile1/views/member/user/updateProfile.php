@@ -247,7 +247,7 @@ $user = $model->getUser();
         ?>
 		<div class="title-popup clearfix text-center">
 			MẬT KHẨU
-			<a href="#" class="txt-cancel btn-cancel">Cancel</a>
+			<a href="#" class="txt-cancel btn-cancel">Back</a>
 			<a href="#" class="txt-done btn-done">Change</a>
 		</div>
 		<div class="inner-popup">
@@ -391,8 +391,8 @@ $user = $model->getUser();
                     _this.loading({done: true});
                     
                     if(data.statusCode == 200){
-                        $('.btn-cancel').trigger('click');
-                        $('#edit-changepass .error').html('<br> <span style="color:green;">Reset password success.</span>');
+//                        $('.btn-cancel').trigger('click');
+                        $('#edit-changepass .error').html('<br><span style="color:green;">Reset password success.</span>');
                         $('#edit-changepass .error').removeClass('hide');
                     } else {
                         $('#edit-changepass .error').removeClass('hide');
