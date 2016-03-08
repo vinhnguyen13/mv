@@ -710,7 +710,6 @@ $.fn.loading = function (options) {
     return this.each(function() {
         var defaults = {
             inside: false,
-            insideElement: '#demo',
             full: true,
             done: false
         },
@@ -741,6 +740,25 @@ $.fn.loading = function (options) {
             });
             el.append($loading);
             return;
+        }else {
+            $loading.css({
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                'z-index': 99999,
+                background: 'rgba(0, 0, 0, 0.51)'
+            });
+            el.append($loading);
+
+            if ( sc.settings.inside ) {
+
+            }else {
+                
+            }
+
+            return;
         }
 
         if ( sc.settings.inside ) {
@@ -759,7 +777,8 @@ $.fn.popupMobi = function (options) {
             effectShow: "slideDownUp", // show/hide or slideDownUp
             btnClickShow: "",
             closeBtn: "",
-            funCallBack: function () {}
+            funCallBack: function () {},
+            done: function () {}
         },
         sc = {},
         el = $(this);
@@ -779,7 +798,6 @@ $.fn.popupMobi = function (options) {
         $(sc.settings.closeBtn).on('click', function (e) {
             e.preventDefault();
             hide(el);
-            l(el);
         });
 
         $('body').append(el);
@@ -854,7 +872,8 @@ $.fn.popupMobi = function (options) {
                 popupItem.addClass('hide-popup');
             }
             $('body').removeClass('popup-mobi');
-            sc.settings.funCallBack("", popupItem);
+
+            sc.settings.done(popupItem);
         }
     });
 }
