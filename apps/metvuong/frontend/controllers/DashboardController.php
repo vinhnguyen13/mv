@@ -121,7 +121,7 @@ class DashboardController extends Controller
                         if($key_finder == Yii::$app->user->identity->username)
                             $classPopupUser = '';
                         $li = '<li><a class="'.$classPopupUser.'" href="#popup-user-inter" data-email="'.$finder["email"].'" data-ava="'.Url::to($finder['avatar'], true).'">'.
-                                    '<img src="'.$finder['avatar'].'">'.$key_finder.'</a>'.
+                                    '<img src="'.$finder['avatar'].'"> '.$key_finder.'</a>'.
                                     '<span class="pull-right">'.$finder['count'].'</span></li>';
                         $html .= $li;
                     }
@@ -137,7 +137,7 @@ class DashboardController extends Controller
                         if($key_visitor == Yii::$app->user->identity->username)
                             $classPopupUser = '';
                         $li = '<li><a class="'.$classPopupUser.'" href="#popup-user-inter" data-email="'.$val_visitor["email"].'" data-ava="'.Url::to($val_visitor['avatar'], true).'">'.
-                            '<img src="'.$val_visitor['avatar'].'">'.$key_visitor.'</a>'.
+                            '<img src="'.$val_visitor['avatar'].'"> '.$key_visitor.'</a>'.
                             '<span class="pull-right">'.$val_visitor['count'].'</span></li>';
                         $html .= $li;
                     }
@@ -151,7 +151,7 @@ class DashboardController extends Controller
                     foreach ($favourites as $key => $val) {
                         $classPopupUser = 'popup_enable';
                         $li = '<li><a class="'.$classPopupUser.'" href="#popup-user-inter" data-email="'.$val["email"].'" data-ava="'.Url::to($val['avatar'], true).'">'.
-                            '<img src="'.$val['avatar'].'">'.$key.'</a>'.
+                            '<img src="'.$val['avatar'].'"> '.$key.'</a>'.
                             '<span class="pull-right">'.$val['count'].'</span></li>';
                         $html .= $li;
                     }
