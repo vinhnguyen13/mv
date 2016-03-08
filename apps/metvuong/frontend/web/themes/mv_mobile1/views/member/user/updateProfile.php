@@ -32,12 +32,16 @@ $user = $model->getUser();
 				<div class="list-tt-user wrap-attr-detail">
 					<ul class="clearfix">
 						<li>
-							<span class="attr-right pull-right name"><?=$model->name ?></span>
+							<span class="attr-right pull-right name"><?=empty($model->name) ? $user->username : $model->name  ?></span>
 							<span>Tên</span>
 						</li>
 						<li>
-							<span class="attr-right pull-right phone-num"><?=$model->mobile?></span>
+							<span class="attr-right pull-right phone-num"><?=empty($model->mobile) ? "Đang cập nhật" : $model->mobile ?></span>
 							<span>Số điện thoại</span>
+						</li>
+						<li>
+							<span class="attr-right pull-right public_email"><?=empty($model->public_email) ? $user->email : $model->public_email ?></span>
+							<span>Email</span>
 						</li>
 					</ul>
 				</div>
@@ -50,7 +54,7 @@ $user = $model->getUser();
 				</div>
 				<div class="wrap-attr-detail">
 					<div class="txt-wrap">
-						<p class="txt-mota"><?=$model->bio?></p>
+						<p class="txt-mota"><?=empty($model->bio) ? "Đang cập nhật" : $model->bio ?></p>
 					</div>
 				</div>
 			</section>
@@ -178,11 +182,15 @@ $user = $model->getUser();
 				<ul class="clearfix">
 					<li>
 						<span>Tên</span>
-                        <?= $f->field($profile_form, 'name')->textInput(['class'=>'attr-right name', 'value' => $model->name ])->label(false)?>
+                        <?= $f->field($profile_form, 'name')->textInput(['class'=>'attr-right name', 'value' => empty($model->name) ? $user->username : $model->name ])->label(false)?>
 					</li>
 					<li>
 						<span>Số điện thoại</span>
                         <?= $f->field($profile_form, 'mobile')->textInput(['class'=>'attr-right phone-num', 'maxlength' => 11, 'value' => $model->mobile ])->label(false)?>
+					</li>
+					<li>
+						<span>Email</span>
+                        <?= $f->field($profile_form, 'public_email')->textInput(['class'=>'attr-right public_email', 'value' => empty($model->public_email) ? $user->email : $model->public_email ])->label(false)?>
 					</li>
                     <li>
                         <div class="error hide" style="font-weight: bold;"></div>
@@ -298,25 +306,20 @@ $user = $model->getUser();
                         $('.btn-cancel').trigger('click');
                         $('.ttcn .name').html(data.modelResult.name);
                         $('.ttcn .phone-num').html(data.modelResult.mobile);
+                        $('.ttcn .public_email').html(data.modelResult.public_email);
                     } else {
-                        $('#edit-ttcn .error').removeClass('hide');
-                        var strMessage = '';
-                        $.each(data.parameters, function(idx, val){
-                            var element = 'form-edit-ttcn'+idx;
-                            strMessage += "<br/>" + val;
-                        });
-                        $('#edit-ttcn .error').html(strMessage);
+                        return false;
+//                        $('#edit-ttcn .error').removeClass('hide');
+//                        var strMessage = '';
+//                        $.each(data.parameters, function(idx, val){
+//                            var element = 'form-edit-ttcn'+idx;
+//                            strMessage += "<br/>" + val;
+//                        });
+//                        $('#edit-ttcn .error').html(strMessage);
                     }
                     return true;
                 },
                 error: function (data) {
-                    $('#edit-ttcn .error').removeClass('hide');
-                    var strMessage = '';
-                    $.each(data.parameters, function(idx, val){
-                        var element = 'form-edit-ttcn'+idx;
-                        strMessage += "<br/>" + val;
-                    });
-                    $('#edit-ttcn .error').html(strMessage);
                     return false;
                 }
             });
@@ -353,13 +356,7 @@ $user = $model->getUser();
                     return true;
                 },
                 error: function (data) {
-                    $('#edit-mtbt .error').removeClass('hide');
-                    var strMessage = '';
-                    $.each(data.parameters, function(idx, val){
-                        var element = 'form-edit-mtbt'+idx;
-                        strMessage += "<br/>" + val;
-                    });
-                    $('#edit-mtbt .error').html(strMessage);
+                   return false;
                 }
             });
         });
@@ -436,7 +433,7 @@ $user = $model->getUser();
                     data: $('#user-location-form').serializeArray(),
                     success: function (data) {
                         if(data.statusCode == 200){
-                            console.log(data);
+//                            console.log(data);
                         }
                         return true;
                     },

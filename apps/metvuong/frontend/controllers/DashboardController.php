@@ -58,6 +58,9 @@ class DashboardController extends Controller
 
         $id = (int)Yii::$app->request->get("id");
         $product = AdProduct::findOne($id);
+        $finders = null;
+        $visitors = null;
+        $favourites = null;
 
         if(Yii::$app->user->id != $product->user_id)
             $this->goHome();
@@ -70,41 +73,20 @@ class DashboardController extends Controller
             $useDate = new \DateTime($date);
         }
         else { // vao thong ke cua 1 tin dang
-            $finder = AdProductFinder::find()->where((['product_id' => $id]))->orderBy('time DESC')->one();
-            if(count($finder) > 0)
-                $useDate = new \DateTime(date('Y-m-d', $finder->time));
-            else
-                $useDate = new \DateTime(date('Y-m-d', time()));
+            $finders = Chart::find()->getFinderWithLastTime($id);
+            $visitors = Chart::find()->getVisitorWithLastTime($id);
+            $favourites = Chart::find()->getSavedWithLastTime($id);
         }
 
-        $f = date_format($useDate, 'Y-m-d 00:00:00');
-        $dateFrom = new \DateTime($f);
-        $from = strtotime('-6 days', $dateFrom->getTimestamp());
 
-        $t = date_format($useDate, 'Y-m-d 23:59:59');
-        $dateTo = new \DateTime($t);
-        $to = $dateTo->getTimestamp();
 
-        $dataFinders = Chart::find()->getDataFinder($id, $from, $to);
-        $infoDataFinders = empty($dataFinders) ? null : $dataFinders["infoData"];
-        $finders = empty($infoDataFinders["finders"]) ? null : $infoDataFinders["finders"];
-
-        $dataVisitors = Chart::find()->getDataVisitor($id, $from, $to);
-        $infoDataVisitors = empty($dataVisitors) ? null : $dataVisitors["infoData"];
-        $visitors = empty($infoDataVisitors["visitors"]) ? null : $infoDataVisitors["visitors"];
-
-        $dataSaved = Chart::find()->getDataSaved($id, $from, $to);
-        $infoDataFavourites = empty($dataSaved) ? null : $dataSaved["infoData"];
-        $favourites = empty($infoDataFavourites["saved"]) ? null : $infoDataFavourites["saved"];
 
         return $this->render('statistics/index', [
             'product' => $product,
             'visitors' => $visitors,
             'finders' => $finders,
             'favourites' => $favourites,
-            'view' => '_partials/finder',
-            'from' => $from,
-            'to' => $to
+            'view' => '_partials/finder'
         ]);
     }
 

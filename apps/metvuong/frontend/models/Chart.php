@@ -180,5 +180,76 @@ class Chart extends Component
 
     }
 
+    public function getFinderWithLastTime($id){
+        $finder = AdProductFinder::find()->where((['product_id' => $id]))->orderBy('time DESC')->one();
+        if(count($finder) > 0)
+            $useDate = new \DateTime(date('Y-m-d', $finder->time));
+        else
+            $useDate = new \DateTime(date('Y-m-d', time()));
 
+        $f = date_format($useDate, 'Y-m-d 00:00:00');
+        $dateFrom = new \DateTime($f);
+        $from = strtotime('-6 days', $dateFrom->getTimestamp());
+
+        $t = date_format($useDate, 'Y-m-d 23:59:59');
+        $dateTo = new \DateTime($t);
+        $to = $dateTo->getTimestamp();
+
+        $dataFinders = $this->getDataFinder($id, $from, $to);
+        $infoDataFinders = empty($dataFinders) ? null : $dataFinders["infoData"];
+        if(isset($infoDataFinders["finders"])){
+            $infoDataFinders["from"] = $from;
+            $infoDataFinders["to"] = $to;
+        }
+        return $infoDataFinders;
+    }
+
+    public function getVisitorWithLastTime($id){
+        $visitor = AdProductVisitor::find()->where((['product_id' => $id]))->orderBy('time DESC')->one();
+        if(count($visitor) > 0)
+            $useDate = new \DateTime(date('Y-m-d', $visitor->time));
+        else
+            $useDate = new \DateTime(date('Y-m-d', time()));
+
+        $f = date_format($useDate, 'Y-m-d 00:00:00');
+        $dateFrom = new \DateTime($f);
+        $from = strtotime('-6 days', $dateFrom->getTimestamp());
+
+        $t = date_format($useDate, 'Y-m-d 23:59:59');
+        $dateTo = new \DateTime($t);
+        $to = $dateTo->getTimestamp();
+
+        $dataVisitors = $this->getDataVisitor($id, $from, $to);
+        $infoDataVisitors = empty($dataVisitors) ? null : $dataVisitors["infoData"];
+        if(isset($infoDataVisitors["visitors"])){
+            $infoDataVisitors["from"] = $from;
+            $infoDataVisitors["to"] = $to;
+        }
+        return $infoDataVisitors;
+    }
+
+    public function getSavedWithLastTime($id)
+    {
+        $saved = AdProductSaved::find()->where((['product_id' => $id]))->orderBy('saved_at DESC')->one();
+        if (count($saved) > 0)
+            $useDate = new \DateTime(date('Y-m-d', $saved->saved_at));
+        else
+            $useDate = new \DateTime(date('Y-m-d', time()));
+
+        $f = date_format($useDate, 'Y-m-d 00:00:00');
+        $dateFrom = new \DateTime($f);
+        $from = strtotime('-6 days', $dateFrom->getTimestamp());
+
+        $t = date_format($useDate, 'Y-m-d 23:59:59');
+        $dateTo = new \DateTime($t);
+        $to = $dateTo->getTimestamp();
+
+        $dataSaved = Chart::find()->getDataSaved($id, $from, $to);
+        $infoDataFavourites = empty($dataSaved) ? null : $dataSaved["infoData"];
+        if(isset($infoDataFavourites["saved"])){
+            $infoDataFavourites["from"] = $from;
+            $infoDataFavourites["to"] = $to;
+        }
+        return $infoDataFavourites;
+    }
 }

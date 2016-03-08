@@ -72,6 +72,8 @@ class ProfileForm extends Model
     public function rules()
     {
         return [
+            'nameRequired' => ['name', 'required'],
+
             'emailTrim' => ['public_email', 'filter', 'filter' => 'trim'],
             'emailRequired' => ['public_email', 'required'],
             'emailPattern' => ['public_email', 'email'],
@@ -93,7 +95,7 @@ class ProfileForm extends Model
 
 //            'phoneValidate' => ['phone', 'integer'],
             'mobileValidate' => ['mobile', 'integer'],
-            'mobileLength' => ['mobile', 'integer', 'min' => 11],
+            'mobileRequired' => ['mobile', 'required'],
 
             'oldPasswordRequired' => ['old_password', 'required'],
             'oldPasswordLength' => ['old_password', 'string', 'min' => 6],

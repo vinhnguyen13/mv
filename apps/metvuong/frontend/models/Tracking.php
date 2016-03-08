@@ -162,6 +162,7 @@ class Tracking extends Component
         }
     }
 
+    // count all visitor to show in Listings page of user
     public function countVisitors($pid){
     	if($this->checkAccess()) {
 	        $query = AdProductVisitor::find()->where(['product_id' => (int)$pid])->count();

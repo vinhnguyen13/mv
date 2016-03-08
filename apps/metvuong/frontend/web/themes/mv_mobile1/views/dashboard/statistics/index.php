@@ -12,6 +12,25 @@ $address = $product->getAddress();
 $user = Yii::$app->user->identity;
 $backUrl = empty($user) ? "#" : Url::to([$user->username."/ad"]);
 
+$finderFrom = isset($finders["from"]) ? $finders["from"] : strtotime('-6 days', time());;
+$finderTo = isset($finders["to"]) ? $finders["to"] : time();
+
+$visitorFrom = isset($visitors["from"]) ? $visitors["from"] : strtotime('-6 days', time());;
+$visitorTo = isset($visitors["to"]) ? $visitors["to"] : time();
+
+$favouriteFrom = isset($favourites["from"]) ? $favourites["from"] : strtotime('-6 days', time());;
+$favouriteTo = isset($favourites["to"]) ? $favourites["to"] : time();
+
+//echo "<pre>";
+//var_dump(date('Y-m-d H:i:s',$finderFrom));
+//var_dump(date('Y-m-d H:i:s',$finderTo));
+//var_dump(date('Y-m-d H:i:s',$visitorFrom));
+//var_dump(date('Y-m-d H:i:s',$visitorTo));
+//var_dump(date('Y-m-d H:i:s',$favouriteFrom));
+//var_dump(date('Y-m-d H:i:s',$favouriteTo));
+//echo "<pre>";
+//exit();
+
 $fb_appId = '680097282132293'; // stage.metvuong.com
 if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
     $fb_appId = '736950189771012';
@@ -51,16 +70,16 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                 <div class="clearfix">
         			<span class="pull-right views-stats"><em class="fa fa-square-o"></em>
                         <select class="chart_stats">
-                            <option class="tab" value="finder" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $from, 'to' => $to])?>">Search</option>
-                            <option class="tab" value="visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $from, 'to' => $to])?>">Click</option>
-                            <option class="tab" value="favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'id' => $id, 'from' => $from, 'to' => $to])?>">Favourite</option>
+                            <option class="tab" value="finder" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $finderFrom, 'to' => $finderTo])?>">Search</option>
+                            <option class="tab" value="visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $visitorFrom, 'to' => $visitorTo])?>">Click</option>
+                            <option class="tab" value="favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'id' => $id, 'from' => $favouriteFrom, 'to' => $favouriteTo])?>">Favourite</option>
                         </select>
                     </span>
                 </div>
     			<div class="wrap-chart clearfix">
     				<div class="wrap-img">
                         <div class="wrapChart">
-                            <?=$this->render('/dashboard/chart/'.$view, ['id' => $id, 'from' => $from, 'to' => $to]);?>
+                            <?=$this->render('/dashboard/chart/'.$view, ['id' => $id, 'from' => $finderFrom, 'to' => $finderTo]);?>
                             <a href="<?=$product->urlDetail()?>"><p class="name-post"><span class="icon address-icon"></span><?=$address?></p></a>
                         </div>
                         <div class="loading text-center" style="display: none;" >
@@ -68,7 +87,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                         </div>
                     </div>
     			</div>
-                <p class="date-filter-chart">Thống kê từ <span><?=date('d/m/Y', $from)?></span> - <span><?=date('d/m/Y', $to)?></span></p>
+                <p class="date-filter-chart">Thống kê từ <span><?=date('d/m/Y', $finderFrom)?></span> - <span><?=date('d/m/Y', $finderTo)?></span></p>
     		</div>
             <div class="statistic"></div>
     	</section>
@@ -85,8 +104,8 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     			<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
     				<div class="panel-body">
     					<ul class="clearfix list-item">
-                            <?php if(!empty($finders) && count($finders) > 0){?>
-                            <?php foreach($finders as $key => $finder){
+                            <?php if(isset($finders["finders"]) && count($finders["finders"]) > 0){?>
+                            <?php foreach($finders["finders"] as $key => $finder){
                                     $classPopupUser = 'popup_enable';
                                     if($key == $user->username)
                                         $classPopupUser = '';
@@ -118,8 +137,8 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     			<div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
     				<div class="panel-body">
     					<ul class="clearfix list-item">
-                            <?php if(!empty($visitors) && count($visitors) > 0){
-                                foreach($visitors as $key => $visitor){
+                            <?php if(isset($visitors["visitors"]) && count($visitors["visitors"]) > 0){
+                                foreach($visitors["visitors"] as $key => $visitor){
                                     $classPopupUser = 'popup_enable';
                                     if($key == $user->username)
                                         $classPopupUser = '';
@@ -151,8 +170,8 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     			<div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
     				<div class="panel-body">
     					<ul class="clearfix list-item">
-                            <?php if(!empty($favourites) && count($favourites) > 0){
-                                foreach($favourites as $key => $favourite){
+                            <?php if(isset($favourites["saved"]) && count($favourites["saved"]) > 0){
+                                foreach($favourites["saved"] as $key => $favourite){
                                     ?>
                                     <li>
                                         <a class="popup_enable" href="#popup-user-inter" data-email="<?=$favourite['email']?>"  data-ava="<?=Url::to($favourite['avatar'], true)?>">
