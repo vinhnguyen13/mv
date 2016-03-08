@@ -248,7 +248,7 @@ $user = $model->getUser();
 		<div class="title-popup clearfix text-center">
 			MẬT KHẨU
 			<a href="#" class="txt-cancel btn-cancel">Cancel</a>
-			<a href="#" class="txt-done btn-done">Done</a>
+			<a href="#" class="txt-done btn-done">Change</a>
 		</div>
 		<div class="inner-popup">
             <div class="list-tt-user wrap-attr-detail">
@@ -263,10 +263,13 @@ $user = $model->getUser();
 					</li>
 					<li>
 						<span>Gõ lại mật khẩu mới</span>
-						<input type="password" class="attr-right re-type-pass" value="" placeholder="Nhập...">
+                        <div class="form-group field-profile-form-new_password required">
+                            <input type="password" class="attr-right re-type-pass" value="" placeholder="Nhập...">
+                            <p class="help-block help-block-error"></p>
+                        </div>
 					</li>
                     <li>
-						<div class="error hide" style="font-weight: bold;"></div>
+						<div class="error hide" style="width: 100%; color: red;"></div>
 					</li>
 				</ul>
 			</div>
@@ -352,8 +355,9 @@ $user = $model->getUser();
                             strMessage += "<br/>" + val;
                         });
                         $('#edit-mtbt .error').html(strMessage);
+                        return false;
                     }
-                    return true;
+                    return false;
                 },
                 error: function (data) {
                    return false;
@@ -372,6 +376,7 @@ $user = $model->getUser();
             if(new_password !== rePass){
                 $('#edit-changepass .error').html('<br>Confirm password not match.');
                 $('#edit-changepass .error').removeClass('hide');
+                $('#edit-changepass .loading-proccess').remove();
                 $('.re-type-pass').focus();
                 return false;
             }
@@ -387,7 +392,7 @@ $user = $model->getUser();
                     
                     if(data.statusCode == 200){
                         $('.btn-cancel').trigger('click');
-                        $('#edit-changepass .error').html('<br> Reset password success.');
+                        $('#edit-changepass .error').html('<br> <span style="color:green;">Reset password success.</span>');
                         $('#edit-changepass .error').removeClass('hide');
                     } else {
                         $('#edit-changepass .error').removeClass('hide');
@@ -397,6 +402,8 @@ $user = $model->getUser();
                             strMessage += "<br/>" + val;
                         });
                         $('#edit-changepass .error').html(strMessage);
+                        $('#edit-changepass .loading-proccess').remove();
+                        return false;
                     }
                     return true;
                 },
