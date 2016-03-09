@@ -54,6 +54,10 @@ class Tracking extends Component
         if(Yii::$app->user->isGuest){
             throw new NotFoundHttpException('You must login !');
         }
+        return ($this->isEnable()) ? true : false;
+    }
+
+    private function isEnable(){
         if(isset(Yii::$app->params['tracking']['all']) && Yii::$app->params['tracking']['all'] == false){
             return false;
         }
@@ -164,21 +168,21 @@ class Tracking extends Component
 
     // count all visitor to show in Listings page of user
     public function countVisitors($pid){
-    	if($this->checkAccess()) {
+    	if($this->isEnable()) {
 	        $query = AdProductVisitor::find()->where(['product_id' => (int)$pid])->count();
 	        return $query;
     	}
     }
 
     public function countFinders($pid){
-    	if($this->checkAccess()) {
+    	if($this->isEnable()) {
 	        $query = AdProductFinder::find()->where(['product_id' => (int)$pid])->count();
 	        return $query;
     	}
     }
 
     public function countFavourites($pid){
-    	if($this->checkAccess()) {
+    	if($this->isEnable()) {
 	        $query = (int)AdProductSaved::find()->where(['product_id' => (int)$pid])->andWhere('saved_at > :sa',[':sa' => 0])->count();
 	        return $query;
     	}
