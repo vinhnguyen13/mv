@@ -82,9 +82,6 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                         <div class="wrapChart">
                             <?=$this->render('/dashboard/chart/'.$view, ['id' => $id, 'from' => $finderFrom, 'to' => $finderTo, 'address' => $address, 'urlDetail' => $urlDetail]);?>
                         </div>
-                        <div class="loading text-center" style="display: none;" >
-                            <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/loading-listing.gif" alt="Loading..." />
-                        </div>
                     </div>
     			</div>
     		</div>
@@ -261,7 +258,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
         });
 
         var params = getUrlParams();
-        if(params["date"] !== undefined){
+        if(params["date"] !== undefined && params["date"] !== 'undefined-undefined-'){
             var arrDate = params["date"].split("-");
             var useDate = arrDate[2]+"/"+arrDate[1]+"/"+arrDate[0];
             $('.toDate').attr('placeholder', ""+useDate);
@@ -276,6 +273,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
         });
 
         $('#sandbox-container input').change(function(){
+            $('body').loading();
             var theDate = $(this).datepicker().val();
             var arrDate = theDate.split("/");
             var useDate = arrDate[2]+"-"+arrDate[1]+"-"+arrDate[0];
@@ -298,43 +296,41 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
         }
 
         $('.chart_stats').change(function () {
-            var timer = 0;
-            clearTimeout(timer);
+//            var timer = 0;
+//            clearTimeout(timer);
             var url = '';
             var valueOption = '';
             $( "select option:selected" ).each(function() {
                 valueOption = $(this).attr('value');
                 url = $(this).attr('data-url');
-                $('.wrapChart').html('');
-                $('.loading').show();
             });
             if(url != '') {
-                timer = setTimeout(function () {
-                    $.ajax({
-                        type: "get",
-                        dataType: 'html',
-                        url: url,
-                        success: function (data) {
-                            $('.loading').hide();
-                            $('.wrapChart').html(data);
-                            if(valueOption == 'finder'){
-                                $('.finder').show();
-                                $('.visitor').hide();
-                                $('.favourite').hide();
-                            }
-                            else if(valueOption == 'visitor'){
-                                $('.finder').hide();
-                                $('.visitor').show();
-                                $('.favourite').hide();
-                            }
-                            else if(valueOption == 'favourite'){
-                                $('.finder').hide();
-                                $('.visitor').hide();
-                                $('.favourite').show();
-                            }
+                $('.wrapChart').html('');
+                $('body').loading();
+                $.ajax({
+                    type: "get",
+                    dataType: 'html',
+                    url: url,
+                    success: function (data) {
+                        $('body').loading({done: true});
+                        $('.wrapChart').html(data);
+                        if(valueOption == 'finder'){
+                            $('.finder').show();
+                            $('.visitor').hide();
+                            $('.favourite').hide();
                         }
-                    });
-                }, 500);
+                        else if(valueOption == 'visitor'){
+                            $('.finder').hide();
+                            $('.visitor').show();
+                            $('.favourite').hide();
+                        }
+                        else if(valueOption == 'favourite'){
+                            $('.finder').hide();
+                            $('.visitor').hide();
+                            $('.favourite').show();
+                        }
+                    }
+                });
             }
             return false;
         });
