@@ -20,8 +20,8 @@
         from: null,
         to: null,
         setConservation: function(from, to){
-            this.from = from;
-            this.to = to;
+            this.from = chatUI.usrFromJid(from);
+            this.to = chatUI.usrFromJid(to);
         },
         showBoxChat: function (from, to) {
             var from = chatUI.usrFromJid(from);
@@ -74,6 +74,7 @@
             }
             $('.container-chat').scrollTop($('.wrap-chat').height());
             $('body').loading({done:true});
+            $('.chat-group').find('#typingMsg').focus();
         },
         buildMessageToBox: function (username, msg, type, params) {
             msg = chatUI.decodeEntities(msg);
@@ -94,6 +95,7 @@
             if(!chatBoxExist){
                 return false;
             }
+            console.log(chatBoxExist);
             if(type == chatUI.MSG_SEND_ME){
                 var html = chatUI.buildMessageToBox(chatUI.usrFromJid(this.to), msg, type, params);
             }else if(type == chatUI.MSG_SEND_YOU){

@@ -36,8 +36,10 @@ if(!Yii::$app->user->isGuest) {
                     if(params.chatType != chatUI.MSG_SEND_ME){
                         chatUI.notify(chatUI.NOTIFY_CHAT, 1);
                     }
-                    if ('<?=$urlBase?>' == 'chat/with' || '<?=$urlBase?>' == 'chat/index') {
+                    if ('<?=$urlBase?>' == 'chat/with') {
                         chatUI.loadMessageToBox(msg, params);
+                    } else if ('<?=$urlBase?>' == 'chat/index') {
+                        chatUI.loadMessageToList(msg, params);
                     }
                 }else if(params.type == 'notify'){
                     chatUI.notify(chatUI.NOTIFY_OTHER, params.total);
