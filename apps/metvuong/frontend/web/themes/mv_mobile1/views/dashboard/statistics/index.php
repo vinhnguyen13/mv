@@ -126,7 +126,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     		<div class="panel panel-default visitor" style="display: none;">
     			<div class="panel-heading title-sub" role="tab" id="headingTwo">
     				<h4 class="panel-title">
-    					<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+    					<a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
     					<em class="icon-user"></em> Click
     					<span class="pull-right icon"></span>
     					</a>
@@ -159,7 +159,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     		<div class="panel panel-default favourite" style="display: none;">
     			<div class="panel-heading title-sub" role="tab" id="headingThree">
     				<h4 class="panel-title">
-    					<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+    					<a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
     					<em class="icon-heart"></em> favourite
     					<span class="pull-right icon"></span>
     					</a>
