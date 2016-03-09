@@ -1087,6 +1087,7 @@ label {
     border-bottom: solid 0.5px #ededed;
     background: #fff;
 }
+.chat-history .title-top,
 .noti-alert .title-top,
 .detail-news .title-top,
 .edit-user-tt .title-top {
@@ -3729,7 +3730,7 @@ input[type=text]:focus {
 }
 .chat-history {
     position: relative;
-    /*padding-top: 36px;*/
+    padding-top: 36px;
 }
 .item-listing .id-duan {
     font-weight: 400;
