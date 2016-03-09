@@ -11,6 +11,12 @@ use yii\helpers\Url;
     <div class="infor-duan">
         <div class="title-top">DỰ ÁN MỚI</div>
         <div class="wrap-infor-duan">
+            <div class="search-duan">
+                <form action="" class="">
+                    <input name="" type="text" placeholder="Gõ tên dự án cần tìm…">
+                    <button type="submit" id="btn-search-duan"><span class="icon icon-search-small-1"></span></button>
+                </form>
+            </div>
             <?php if(count($models) > 0) {
                 foreach ($models as $model) {
                     $image = '/themes/metvuong2/resources/images/default-ads.jpg';

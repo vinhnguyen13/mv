@@ -184,8 +184,6 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     			</div>
     		</div>
     	</div>
-
-    	<div class="title-sub">Property's info</div>
     	<div class="share-social">
             <ul class="clearfix list-attr-per">
                 <li>
