@@ -51,10 +51,13 @@ class Tracking extends Component
     }
 
     private function checkAccess(){
-        if(Yii::$app->user->isGuest){
-            throw new NotFoundHttpException('You must login !');
+        if($this->isEnable()) {
+            if (Yii::$app->user->isGuest) {
+                return false;
+            }
+            return true;
         }
-        return ($this->isEnable()) ? true : false;
+        return false;
     }
 
     private function isEnable(){
