@@ -69,17 +69,9 @@ class DashboardController extends Controller
         if($date == "undefined-undefined-")
             $date = null;
 
-        if($date) { // truong hop chon calendar
-            $useDate = new \DateTime($date);
-        }
-        else { // vao thong ke cua 1 tin dang
-            $finders = Chart::find()->getFinderWithLastTime($id);
-            $visitors = Chart::find()->getVisitorWithLastTime($id);
-            $favourites = Chart::find()->getSavedWithLastTime($id);
-        }
-
-
-
+        $finders = Chart::find()->getFinderWithLastTime($id, $date);
+        $visitors = Chart::find()->getVisitorWithLastTime($id, $date);
+        $favourites = Chart::find()->getSavedWithLastTime($id, $date);
 
         return $this->render('statistics/index', [
             'product' => $product,
@@ -219,8 +211,10 @@ class DashboardController extends Controller
             $id = (int)Yii::$app->request->get('id');
             $from = (int)Yii::$app->request->get('from');
             $to = (int)Yii::$app->request->get('to');
+            $address = Yii::$app->request->get('address');
+            $urlDetail = Yii::$app->request->get('urlDetail');
 
-            return $this->renderAjax('chart/'.$view, ['id' => $id, 'from' => $from, 'to' => $to]);
+            return $this->renderAjax('chart/'.$view, ['id' => $id, 'from' => $from, 'to' => $to, 'address' => $address, 'urlDetail' => $urlDetail]);
         }
         return false;
     }

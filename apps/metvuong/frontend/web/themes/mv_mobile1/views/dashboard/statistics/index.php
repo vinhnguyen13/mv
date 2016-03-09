@@ -5,10 +5,11 @@ use yii\web\View;
 use yii\helpers\Url;
 
 Yii::$app->getView()->registerJsFile('http://code.highcharts.com/highcharts.js', ['position' => View::POS_BEGIN]);
-Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporting.js', ['position' => View::POS_BEGIN]);
+//Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporting.js', ['position' => View::POS_BEGIN]);
 
 $id = $product->id;
 $address = $product->getAddress();
+$urlDetail = $product->urlDetail(true);
 $user = Yii::$app->user->identity;
 $backUrl = empty($user) ? "#" : Url::to([$user->username."/ad"]);
 
@@ -70,26 +71,23 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                 <div class="clearfix">
         			<span class="pull-right views-stats"><em class="fa fa-square-o"></em>
                         <select class="chart_stats">
-                            <option class="tab" value="finder" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $finderFrom, 'to' => $finderTo])?>">Search</option>
-                            <option class="tab" value="visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $visitorFrom, 'to' => $visitorTo])?>">Click</option>
-                            <option class="tab" value="favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'id' => $id, 'from' => $favouriteFrom, 'to' => $favouriteTo])?>">Favourite</option>
+                            <option class="tab" value="finder" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $finderFrom, 'to' => $finderTo, 'address' => $address, 'urlDetail' => $urlDetail])?>">Search</option>
+                            <option class="tab" value="visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $visitorFrom, 'to' => $visitorTo, 'address' => $address, 'urlDetail' => $urlDetail])?>">Click</option>
+                            <option class="tab" value="favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'id' => $id, 'from' => $favouriteFrom, 'to' => $favouriteTo, 'address' => $address, 'urlDetail' => $urlDetail])?>">Favourite</option>
                         </select>
                     </span>
                 </div>
     			<div class="wrap-chart clearfix">
     				<div class="wrap-img">
                         <div class="wrapChart">
-                            <?=$this->render('/dashboard/chart/'.$view, ['id' => $id, 'from' => $finderFrom, 'to' => $finderTo]);?>
-                            <a href="<?=$product->urlDetail()?>"><p class="name-post"><span class="icon address-icon"></span><?=$address?></p></a>
+                            <?=$this->render('/dashboard/chart/'.$view, ['id' => $id, 'from' => $finderFrom, 'to' => $finderTo, 'address' => $address, 'urlDetail' => $urlDetail]);?>
                         </div>
                         <div class="loading text-center" style="display: none;" >
                             <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/loading-listing.gif" alt="Loading..." />
                         </div>
                     </div>
     			</div>
-                <p class="date-filter-chart">Thống kê từ <span><?=date('d/m/Y', $finderFrom)?></span> - <span><?=date('d/m/Y', $finderTo)?></span></p>
     		</div>
-            <div class="statistic"></div>
     	</section>
     	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     		<div class="panel panel-default finder" style="display: block;">
@@ -262,7 +260,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
             styleShow: 'full'
         });
 
-        var params = getUrlVars();
+        var params = getUrlParams();
         if(params["date"] !== undefined){
             var arrDate = params["date"].split("-");
             var useDate = arrDate[2]+"/"+arrDate[1]+"/"+arrDate[0];
@@ -286,7 +284,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
             }
         });
 
-        function getUrlVars()
+        function getUrlParams()
         {
             var vars = [], hash;
             var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');

@@ -180,12 +180,16 @@ class Chart extends Component
 
     }
 
-    public function getFinderWithLastTime($id){
-        $finder = AdProductFinder::find()->where((['product_id' => $id]))->orderBy('time DESC')->one();
-        if(count($finder) > 0)
-            $useDate = new \DateTime(date('Y-m-d', $finder->time));
-        else
-            $useDate = new \DateTime(date('Y-m-d', time()));
+    public function getFinderWithLastTime($id, $useDate){
+        if(empty($useDate)) {
+            $finder = AdProductFinder::find()->where((['product_id' => $id]))->orderBy('time DESC')->one();
+            if (count($finder) > 0)
+                $useDate = new \DateTime(date('Y-m-d', $finder->time));
+            else
+                $useDate = new \DateTime(date('Y-m-d', time()));
+        } else {
+            $useDate = new \DateTime($useDate);
+        }
 
         $f = date_format($useDate, 'Y-m-d 00:00:00');
         $dateFrom = new \DateTime($f);
@@ -204,12 +208,16 @@ class Chart extends Component
         return $infoDataFinders;
     }
 
-    public function getVisitorWithLastTime($id){
-        $visitor = AdProductVisitor::find()->where((['product_id' => $id]))->orderBy('time DESC')->one();
-        if(count($visitor) > 0)
-            $useDate = new \DateTime(date('Y-m-d', $visitor->time));
-        else
-            $useDate = new \DateTime(date('Y-m-d', time()));
+    public function getVisitorWithLastTime($id, $useDate){
+        if(empty($useDate)) {
+            $visitor = AdProductVisitor::find()->where((['product_id' => $id]))->orderBy('time DESC')->one();
+            if (count($visitor) > 0)
+                $useDate = new \DateTime(date('Y-m-d', $visitor->time));
+            else
+                $useDate = new \DateTime(date('Y-m-d', time()));
+        } else {
+            $useDate = new \DateTime($useDate);
+        }
 
         $f = date_format($useDate, 'Y-m-d 00:00:00');
         $dateFrom = new \DateTime($f);
@@ -228,13 +236,17 @@ class Chart extends Component
         return $infoDataVisitors;
     }
 
-    public function getSavedWithLastTime($id)
+    public function getSavedWithLastTime($id, $useDate)
     {
-        $saved = AdProductSaved::find()->where((['product_id' => $id]))->orderBy('saved_at DESC')->one();
-        if (count($saved) > 0)
-            $useDate = new \DateTime(date('Y-m-d', $saved->saved_at));
-        else
-            $useDate = new \DateTime(date('Y-m-d', time()));
+        if(empty($useDate)) {
+            $saved = AdProductSaved::find()->where((['product_id' => $id]))->orderBy('saved_at DESC')->one();
+            if (count($saved) > 0)
+                $useDate = new \DateTime(date('Y-m-d', $saved->saved_at));
+            else
+                $useDate = new \DateTime(date('Y-m-d', time()));
+        } else {
+            $useDate = new \DateTime($useDate);
+        }
 
         $f = date_format($useDate, 'Y-m-d 00:00:00');
         $dateFrom = new \DateTime($f);
