@@ -69,19 +69,11 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     		</div>
     		<div class="summary clearfix">
                 <ul class="option-view-stats">
-                    <li><a href="#">Favourite</a></li>
-                    <li><a href="#">Click</a></li>
-                    <li><a href="#">Search</a></li>
+                    <li><a href="#" class="btn-finder" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $finderFrom, 'to' => $finderTo, 'address' => $address, 'urlDetail' => $urlDetail])?>">Search</a></li>
+                    <li><a href="#" class="btn-visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $visitorFrom, 'to' => $visitorTo, 'address' => $address, 'urlDetail' => $urlDetail])?>">Click</a></li>
+                    <li><a href="#" class="btn-favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'id' => $id, 'from' => $favouriteFrom, 'to' => $favouriteTo, 'address' => $address, 'urlDetail' => $urlDetail])?>">Favourite</a></li>
                 </ul>
-                <!-- <div class="clearfix">
-                                    <span class="pull-right views-stats"><em class="fa fa-square-o"></em>
-                        <select class="chart_stats">
-                            <option class="tab" value="finder" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $finderFrom, 'to' => $finderTo, 'address' => $address, 'urlDetail' => $urlDetail])?>">Search</option>
-                            <option class="tab" value="visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $visitorFrom, 'to' => $visitorTo, 'address' => $address, 'urlDetail' => $urlDetail])?>">Click</option>
-                            <option class="tab" value="favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'id' => $id, 'from' => $favouriteFrom, 'to' => $favouriteTo, 'address' => $address, 'urlDetail' => $urlDetail])?>">Favourite</option>
-                        </select>
-                    </span>
-                </div> -->
+
     			<div class="wrap-chart clearfix">
     				<div class="wrap-img">
                         <div class="wrapChart">
@@ -239,7 +231,6 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 ?>
 
 <script>
-
     $(document).ready(function () {
         $('#popup-user-inter').popupMobi({
             btnClickShow: '.statis .panel-body .list-item a.popup_enable',
@@ -298,15 +289,8 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
             return vars;
         }
 
-        $('.chart_stats').change(function () {
-//            var timer = 0;
-//            clearTimeout(timer);
-            var url = '';
-            var valueOption = '';
-            $( "select option:selected" ).each(function() {
-                valueOption = $(this).attr('value');
-                url = $(this).attr('data-url');
-            });
+        $(document).on('click', '.btn-finder', function() {
+            var url = $(this).attr('data-url');
             if(url != '') {
                 $('.wrapChart').html('');
                 $('body').loading();
@@ -317,21 +301,51 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
                     success: function (data) {
                         $('body').loading({done: true});
                         $('.wrapChart').html(data);
-                        if(valueOption == 'finder'){
-                            $('.finder').show();
-                            $('.visitor').hide();
-                            $('.favourite').hide();
-                        }
-                        else if(valueOption == 'visitor'){
-                            $('.finder').hide();
-                            $('.visitor').show();
-                            $('.favourite').hide();
-                        }
-                        else if(valueOption == 'favourite'){
-                            $('.finder').hide();
-                            $('.visitor').hide();
-                            $('.favourite').show();
-                        }
+                        $('.finder').show();
+                        $('.visitor').hide();
+                        $('.favourite').hide();
+                    }
+                });
+            }
+            return false;
+        });
+
+        $(document).on('click', '.btn-visitor', function() {
+            var url = $(this).attr('data-url');
+            if(url != '') {
+                $('.wrapChart').html('');
+                $('body').loading();
+                $.ajax({
+                    type: "get",
+                    dataType: 'html',
+                    url: url,
+                    success: function (data) {
+                        $('body').loading({done: true});
+                        $('.wrapChart').html(data);
+                        $('.finder').hide();
+                        $('.visitor').show();
+                        $('.favourite').hide();
+                    }
+                });
+            }
+            return false;
+        });
+
+        $(document).on('click', '.btn-favourite', function() {
+            var url = $(this).attr('data-url');
+            if(url != '') {
+                $('.wrapChart').html('');
+                $('body').loading();
+                $.ajax({
+                    type: "get",
+                    dataType: 'html',
+                    url: url,
+                    success: function (data) {
+                        $('body').loading({done: true});
+                        $('.wrapChart').html(data);
+                        $('.finder').hide();
+                        $('.visitor').hide();
+                        $('.favourite').show();
                     }
                 });
             }
@@ -348,7 +362,4 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
             }, function(response){});
         });
     });
-
-
-
 </script>
