@@ -1,3 +1,33 @@
+<?php
+
+$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
+//$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/detail.js', ['position' => View::POS_END]);
+$this->registerCss('.map-wrap {position: relative;} .map-wrap:after {display: block; content: ""; padding-top: 75%;} .map-inside {position: absolute; width: 100%; height: 100%;} #map {height: 100%;}');
+
+
+$fb_appId = '680097282132293'; // stage.metvuong.com
+if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
+    $fb_appId = '736950189771012';
+else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
+    $fb_appId = '891967050918314';
+?>
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : <?=$fb_appId?>,
+            xfbml      : true,
+            version    : 'v2.5'
+        });
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/vi_VN/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
 <div class="title-fixed-wrap">
     <div class="detail-duan-moi">
         <div class="title-top"><?= strtoupper($model->name)?></div>
@@ -85,7 +115,7 @@
     <div class="wrap-popup">
         <div class="inner-popup">
             <a href="#" class="btn-close-map">trở lại</a>
-            <iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJT7lZ30cvdTER8skpPrOuvGs&key=AIzaSyDgukAnWQNq0fitebULUbottG5gvK64OCQ" allowfullscreen></iframe>
+            <div id="map" data-lat="<?= $model->lat ?>" data-lng="<?= $model->lng ?>"></div>
         </div>
     </div>
 </div>
@@ -98,12 +128,12 @@
                 <span>Share on Social Network</span>
                 <ul class="clearfix">
                     <li>
-                        <a href="#">
+                        <a href="#" class="share-facebook">
                             <div class="circle"><div><span class="icon icon-face"></span></div></div>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#popup-email" class="email-btn">
                             <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
                         </a>
                     </li>
@@ -112,6 +142,8 @@
         </div>
     </div>
 </div>
+
+<?=$this->renderAjax('/ad/_partials/shareEmail',[ 'project' => $model, 'yourEmail' => Yii::$app->user->isGuest ? '' : Yii::$app->user->identity->email, 'recipientEmail' => '', 'params' => ['your_email' => false, 'setValueToEmail' => false] ])?>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -124,13 +156,43 @@
         $('#popup-map').popupMobi({
             btnClickShow: ".icon-map-loca",
             closeBtn: "#popup-map .btn-close-map",
-            effectShow: "show-hide"
+            effectShow: "show-hide",
+            funCallBack: function() {
+                var mapEl = $('#map');
+                var latLng = {lat: Number(mapEl.data('lat')), lng:  Number(mapEl.data('lng'))};
+                var map = new google.maps.Map(mapEl.get(0), {
+                    center: latLng,
+                    zoom: 16,
+                    mapTypeControl: false,
+                    zoomControl: true,
+                    streetViewControl: false
+                });
+
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    map: map
+                });
+            }
         });
 
         $('#popup-share-social').popupMobi({
             btnClickShow: ".icons-detail .icon-share-td",
-            closeBtn: ".btn-close",
+            closeBtn: ".btn-close, .email-btn, .share-facebook",
             styleShow: "center"
         });
+
+        $('#popup-email').popupMobi({
+            btnClickShow: ".email-btn",
+            closeBtn: '#popup-email .btn-cancel',
+            styleShow: "full"
+        });
+
+        $(document).on('click', '.share-facebook', function() {
+            FB.ui({
+                method: 'share',
+                href: '<?=Yii::$app->request->absoluteUrl?>'
+            }, function(response){});
+        });
+
     });
 </script>

@@ -14,12 +14,10 @@ use yii\helpers\Url;
         <div class="title-popup clearfix">
             <div class="text-center">SHARE VIA EMAIL</div>
             <a href="#" class="txt-cancel btn-cancel">Cancel</a>
-            <button class="txt-done btn-done send_mail">Send</button>
+            <a href="#popup-sent" class="txt-done btn-done send_mail">Send</a>
         </div>
         <div class="inner-popup">
             <?php
-            $address = $product->getAddress();
-
             $share_form = Yii::createObject([
                 'class'    => \frontend\models\ShareForm::className(),
                 'scenario' => 'share',
@@ -27,7 +25,7 @@ use yii\helpers\Url;
 
             $f = ActiveForm::begin([
                 'id' => 'share_form',
-                'enableAjaxValidation' => false,
+                'enableAjaxValidation' => true,
                 'enableClientValidation' => true,
                 'action' => Url::to(['/ad/sendmail'])
             ]);
@@ -56,6 +54,10 @@ use yii\helpers\Url;
                 <?= $f->field($share_form, 'content')->textarea(['class'=>'content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('content', 'Nội dung...')])->label(false) ?>
             </div>
             <div class="item-send">
+                <?php
+                if(isset($product) && !empty($product)){
+                    $address = $product->getAddress();
+                ?>
                 <div class="img-show"><div><a href="<?= $product->urlDetail(true) ?>"><img src="<?= $product->representImage ?>" alt="<?=$address?>"></a></div></div>
                 <div class="infor-send">
                     <p class="name"><a href="<?= $product->urlDetail(true) ?>"><?=$address?></a></p>
@@ -67,26 +69,50 @@ use yii\helpers\Url;
                 <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=>$address])->label(false) ?>
                 <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> $product->urlDetail(true) ])->label(false) ?>
                 <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
+                <?php }
+                else if(isset($project) && !empty($project)){
+                    $image = '/themes/metvuong2/resources/images/default-ads.jpg';
+                    $gallery = array();
+                    if($project->gallery)
+                        $gallery = explode(',', $project->gallery);
+                    if (count($gallery) > 0) {
+                        $imageUrl = Yii::getAlias('@store')."/building-project-images/". $gallery[0];
+                        if(file_exists($imageUrl)){
+                            $image = Url::to('/store/building-project-images/' . $gallery[0]);
+                        }
+                    }
+                    ?>
+                    <div class="img-show"><div><a href="<?= Url::to(["building/$project->slug"],true) ?>"><img src="<?= $image ?>" alt="<?=Url::to(["building/$project->slug"],true)?>"></a></div></div>
+                    <div class="infor-send">
+                        <p class="name"><a href="<?= Url::to(["building/$project->slug"],true) ?>"><?=mb_strtoupper($project->name)?></a></p>
+                        <p class="address"></p>
+                        <p><?=StringHelper::truncate($project->description, 150)?></p>
+                        <p class="send-by">BY METVUONG.COM</p>
+                    </div>
+                    <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=> Url::to(["building/$project->slug"],true) ])->label(false) ?>
+                    <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> Url::to(["building/$project->slug"],true) ])->label(false) ?>
+                    <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
+                <?php }?>
             </div>
             <?php $f->end(); ?>
         </div>
     </div>
 </div>
+
 <div id="popup-sent" class="popup-common hide-popup">
     <div class="wrap-popup">
         <div class="inner-popup">
             <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
             <div class="overflow-all">
-                <p>Thanks for send mail to <span class="user_name"></span></p>
+                <p>Thanks for send mail to <b class="user_name"></b></p>
                 <br />
-                <div><a href="<?=Url::home()?>" class="">Return homepage</a></div>
+                <div><a style="color: #00a769;" href="<?=Url::home()?>" class="">Return homepage</a></div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-
     $(document).on('click', '.send_mail', function(){
         var timer = 0;
         var recipient_email = $('#share_form .recipient_email').val();

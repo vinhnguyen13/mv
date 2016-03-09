@@ -71,7 +71,9 @@ use vsoft\ad\models\AdProductAdditionInfo;
 		</ul>
 		<ul class="pull-right icons-detail">
 			<li><a href="#popup-share-social" class="icon icon-share-td"></a></li>
+            <?php if($product->user_id != Yii::$app->user->id){ ?>
 			<li><a href="#" class="icon save-item <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>"></a></li>
+            <?php } ?>
 			<li><a href="#popup-map" class="icon icon-map-loca"></a></li>
 		</ul>
 		<p class="price-td">
