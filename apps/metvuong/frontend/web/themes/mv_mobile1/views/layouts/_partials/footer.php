@@ -1,15 +1,18 @@
+<?php
+use yii\helpers\Url;
+?>
 <footer>
 	<div class="clearfix">
 		<div class="pull-left col-xs-6">
 			<ul>
-				<li><a href="#">Về Chúng Tôi</a></li>
-				<li><a href="#">Câu Hỏi Thường Gặp</a></li>
+				<li><a href="<?=Url::to(['site/page', 'view'=>'about'])?>">Về Chúng Tôi</a></li>
+				<li><a href="<?=Url::to(['site/page', 'view'=>'faq'])?>">Câu Hỏi Thường Gặp</a></li>
 			</ul>
 		</div>
 		<div class="pull-right col-xs-6">
 			<ul>
-				<li><a href="#">Liên Hệ</a></li>
-				<li><a href="#">Điều Khoản & Điều Kiện</a></li>
+				<li><a href="<?=Url::to(['site/contact'])?>">Liên Hệ</a></li>
+				<li><a href="<?=Url::to(['site/page', 'view'=>'terms'])?>">Điều Khoản & Điều Kiện</a></li>
 			</ul>
 		</div>
 	</div>
