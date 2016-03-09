@@ -68,15 +68,20 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     			<span class="icon arrowDown"></span>
     		</div>
     		<div class="summary clearfix">
-                <div class="clearfix">
-        			<span class="pull-right views-stats"><em class="fa fa-square-o"></em>
+                <ul class="option-view-stats">
+                    <li><a href="#">Favourite</a></li>
+                    <li><a href="#">Click</a></li>
+                    <li><a href="#">Search</a></li>
+                </ul>
+                <!-- <div class="clearfix">
+                                    <span class="pull-right views-stats"><em class="fa fa-square-o"></em>
                         <select class="chart_stats">
                             <option class="tab" value="finder" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $finderFrom, 'to' => $finderTo, 'address' => $address, 'urlDetail' => $urlDetail])?>">Search</option>
                             <option class="tab" value="visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $visitorFrom, 'to' => $visitorTo, 'address' => $address, 'urlDetail' => $urlDetail])?>">Click</option>
                             <option class="tab" value="favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'id' => $id, 'from' => $favouriteFrom, 'to' => $favouriteTo, 'address' => $address, 'urlDetail' => $urlDetail])?>">Favourite</option>
                         </select>
                     </span>
-                </div>
+                </div> -->
     			<div class="wrap-chart clearfix">
     				<div class="wrap-img">
                         <div class="wrapChart">

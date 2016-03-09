@@ -5049,3 +5049,27 @@ input[type=text]:focus {
     line-height: 35px;
     padding: 0 45px 0 10px;
 }
+.option-view-stats {
+    text-align: center;
+}
+.option-view-stats li {
+    display: inline-block;
+    width: 30%;
+    margin-right: 3.25%;
+}
+.option-view-stats li:last-child {
+    margin-right: 0;
+}
+.option-view-stats li a {
+    display: block;
+    background-color: #f0f0f0;
+    color: #3c3c3c;
+    font-weight: 600;
+    text-transform: capitalize;
+    padding: 6px 14px 8px;
+    font-size: 15px;
+}
+.option-view-stats li a.active {
+    background-color: #00a769;
+    color: #fff;
+}
