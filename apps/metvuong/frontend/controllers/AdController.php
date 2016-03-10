@@ -113,6 +113,7 @@ class AdController extends Controller
     }
     
     public function actionIndex() {
+		return $this->listingMobile();
     	if(Yii::$app->mobileDetect->isMobile()) {
     		return $this->listingMobile();
     	} else {
