@@ -34,17 +34,17 @@ class Chart extends Component
 
     // finder
     public function getDataFinder($pid, $from, $to){
-        $query = AdProductFinder::find();
-        $query->andFilterWhere(['between', 'time', $from, $to]);
-        if(!empty($pid)){
-            $query->andWhere(['product_id' => (int)$pid]);
-        }
-        $adProductFinders = $query->orderBy('time DESC')->all();
+//        echo "<pre>";
+//        print_r(date('d-m-Y H:i:s', $from));
+//        print_r(date('d-m-Y H:i:s', $to));
+//        echo "<pre>";
+//        exit();
+        $adProductFinders = AdProductFinder::find()->where(['between', 'time', $from, $to])->andWhere(['product_id' => (int)$pid])->orderBy('time DESC')->all();
         $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
         $defaultData = array_map(function ($key, $date) {
             return ['y' => 0];
         }, array_keys($dateRange), $dateRange);
-        if(!empty($adProductFinders)){
+        if(count($adProductFinders) > 0){
             return $this->pushDataToChart($adProductFinders, $defaultData, $dateRange, 'finders');
         }
         return false;
@@ -52,17 +52,12 @@ class Chart extends Component
 
     // visitor
     public function getDataVisitor($pid, $from, $to){
-        $query = AdProductVisitor::find();
-        $query->andFilterWhere(['between', 'time', $from, $to]);
-        if(!empty($pid)){
-            $query->andWhere(['product_id' => (int)$pid]);
-        }
-        $adProductVisitors = $query->orderBy('time DESC')->all();
+        $adProductVisitors = AdProductVisitor::find()->where(['between', 'time', $from, $to])->andWhere(['product_id' => (int)$pid])->orderBy('time DESC')->all();
         $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
         $defaultData = array_map(function ($key, $date) {
             return ['y' => 0];
         }, array_keys($dateRange), $dateRange);
-        if(!empty($adProductVisitors)){
+        if(count($adProductVisitors) > 0){
             return $this->pushDataToChart($adProductVisitors, $defaultData, $dateRange, 'visitors');
         }
         return false;
@@ -70,19 +65,16 @@ class Chart extends Component
 
     // saved
     public function getDataSaved($pid, $from, $to){
-        $query = AdProductSaved::find();
-        $query->andFilterWhere(['between', 'saved_at', $from, $to]);
-        if(!empty($pid)){
-            $query->andWhere(['product_id' => $pid]);
-        }
-        $query->andWhere('saved_at > :sa',[':sa' => 0]);
-        $adProductSaveds = $query->orderBy('saved_at DESC')->all();
+        $adProductSaveds = AdProductSaved::find()->where(['between', 'saved_at', $from, $to])
+            ->andWhere(['product_id' => $pid])
+            ->andWhere('saved_at > :sa',[':sa' => 0])
+            ->orderBy('saved_at DESC')->all();
 
         $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
         $defaultData = array_map(function ($key, $date) {
             return ['y' => 0];
         }, array_keys($dateRange), $dateRange);
-        if(!empty($adProductSaveds)){
+        if(count($adProductSaveds) > 0){
             return $this->pushDataToChart($adProductSaveds, $defaultData, $dateRange, 'saved');
         }
         return false;
@@ -200,12 +192,15 @@ class Chart extends Component
         $to = $dateTo->getTimestamp();
 
         $dataFinders = $this->getDataFinder($id, $from, $to);
-        $infoDataFinders = empty($dataFinders) ? null : $dataFinders["infoData"];
-        if(isset($infoDataFinders["finders"])){
-            $infoDataFinders["from"] = $from;
-            $infoDataFinders["to"] = $to;
+        if($dataFinders != false) {
+            $infoDataFinders = empty($dataFinders) ? null : $dataFinders["infoData"];
+            if (!empty($infoDataFinders) && isset($infoDataFinders["finders"])) {
+                $infoDataFinders["from"] = $from;
+                $infoDataFinders["to"] = $to;
+            }
+            return $infoDataFinders;
         }
-        return $infoDataFinders;
+        return null;
     }
 
     public function getVisitorWithLastTime($id, $useDate){
@@ -229,7 +224,7 @@ class Chart extends Component
 
         $dataVisitors = $this->getDataVisitor($id, $from, $to);
         $infoDataVisitors = empty($dataVisitors) ? null : $dataVisitors["infoData"];
-        if(isset($infoDataVisitors["visitors"])){
+        if(!empty($infoDataVisitors) && isset($infoDataVisitors["visitors"])){
             $infoDataVisitors["from"] = $from;
             $infoDataVisitors["to"] = $to;
         }
@@ -258,7 +253,7 @@ class Chart extends Component
 
         $dataSaved = Chart::find()->getDataSaved($id, $from, $to);
         $infoDataFavourites = empty($dataSaved) ? null : $dataSaved["infoData"];
-        if(isset($infoDataFavourites["saved"])){
+        if(!empty($infoDataFavourites) && isset($infoDataFavourites["saved"])){
             $infoDataFavourites["from"] = $from;
             $infoDataFavourites["to"] = $to;
         }

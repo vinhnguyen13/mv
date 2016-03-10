@@ -2,7 +2,9 @@
 use yii\helpers\Url;
 use frontend\models\Chart;
 
-$data = Chart::find()->getDataVisitor($id, $from, $to);
+$data = null;
+if($from > 0 && $to > 0)
+    $data = Chart::find()->getDataVisitor($id, $from, $to);
 if(!empty($data) && count($data) > 0) {
     $dataChart = $data['dataChart'];
     $categories = $data['categories'];
@@ -33,7 +35,13 @@ if(!empty($data) && count($data) > 0) {
                 },
                 xAxis: {
                     categories: <?=json_encode($categories);?>,
-                    max: <?=!empty(count($categories)) ? count($categories) - 1 : 0?>
+                    max: <?=!empty(count($categories)) ? count($categories) - 1 : 0?>,
+                    labels: {
+                        formatter: function () {
+                            var d = this.value.split("/");
+                            return d[0] + "/" + d[1];
+                        }
+                    }
                 },
                 yAxis: {
                     allowDecimals: false,
@@ -114,6 +122,8 @@ if(!empty($data) && count($data) > 0) {
 }?>
 <div class="statistic-info">
     <a href="<?=$urlDetail?>" style="color: black;"><p class="name-post"><span class="icon address-icon"></span><?=$address?></p></a>
+    <?php if($from > 0 && $to > 0) {?>
     <p class="date-filter-chart text-center mgT-15">Thống kê từ <span class="from"><?=date('d/m/Y', $from)?></span> - <span class="to"><?=date('d/m/Y', $to)?></span></p>
+    <?php } ?>
 </div>
 

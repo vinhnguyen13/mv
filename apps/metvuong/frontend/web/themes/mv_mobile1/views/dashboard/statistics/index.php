@@ -13,14 +13,14 @@ $urlDetail = $product->urlDetail(true);
 $user = Yii::$app->user->identity;
 $backUrl = empty($user) ? "#" : Url::to([$user->username."/ad"]);
 
-$finderFrom = isset($finders["from"]) ? $finders["from"] : strtotime('-6 days', time());;
-$finderTo = isset($finders["to"]) ? $finders["to"] : time();
+$finderFrom = (!empty($finders) && isset($finders["from"])) ? $finders["from"] : 0;
+$finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
 
-$visitorFrom = isset($visitors["from"]) ? $visitors["from"] : strtotime('-6 days', time());;
-$visitorTo = isset($visitors["to"]) ? $visitors["to"] : time();
+$visitorFrom = (!empty($visitors) && isset($visitors["from"])) ? $visitors["from"] : 0;
+$visitorTo = (!empty($visitors) && isset($visitors["to"])) ? $visitors["to"] : 0;
 
-$favouriteFrom = isset($favourites["from"]) ? $favourites["from"] : strtotime('-6 days', time());;
-$favouriteTo = isset($favourites["to"]) ? $favourites["to"] : time();
+$favouriteFrom = (!empty($favourites) && isset($favourites["from"])) ? $favourites["from"] : 0;
+$favouriteTo = (!empty($favourites) && isset($favourites["to"])) ? $favourites["to"] : 0;
 
 //echo "<pre>";
 //var_dump(date('Y-m-d H:i:s',$finderFrom));
