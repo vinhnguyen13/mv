@@ -72,11 +72,11 @@ return [
         ],
         'view' => [
             'theme' => [
-                'basePath' => '@webroot/themes/metvuong2',
-                'baseUrl' => '/frontend/web/themes/metvuong2',
+                'basePath' => '@webroot/themes/mv_desktop1',
+                'baseUrl' => '/frontend/web/themes/mv_desktop1',
                 'pathMap' => [
-                    '@app/views' => '@webroot/themes/metvuong2/views',
-                    '@dektrium/user/views' => '@webroot/themes/metvuong2/views',
+                    '@app/views' => '@webroot/themes/mv_desktop1/views',
+                    '@dektrium/user/views' => '@webroot/themes/mv_desktop1/views',
                 ],
             ],
         ],

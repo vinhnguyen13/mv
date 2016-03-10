@@ -1,0 +1,119 @@
+<?php
+use yii\helpers\Url;
+use frontend\models\Chart;
+
+$data = Chart::find()->getDataVisitor($id, $from, $to);
+if(!empty($data) && count($data) > 0) {
+    $dataChart = $data['dataChart'];
+    $categories = $data['categories'];
+
+    ksort($dataChart);
+    $dataChart = array_values($dataChart);
+    ksort($categories);
+    $categories = array_values($categories);
+
+    ?>
+    <div id="chartAds" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <script>
+        $(function () {
+            $('#chartAds').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                legend: {
+                    enabled: false
+                },
+                title: {
+                    text: 'Lượt người theo dõi',
+                    x: -20 //center
+                },
+                subtitle: {
+                    text: 'Nguồn: MetVuong.com',
+                    x: -20
+                },
+                xAxis: {
+                    categories: <?=json_encode($categories);?>,
+                    max: <?=!empty(count($categories)) ? count($categories) - 1 : 0?>
+                },
+                yAxis: {
+                    allowDecimals: false,
+                    opposite: true,
+                    title: {
+                        text: null
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                tooltip: {
+                    useHTML: true,
+                    formatter: function() {
+                     var tooltip;
+                     if (this.key == 'last') {
+                     tooltip = '<b>Final result is </b> ' + this.y;
+                     }
+                     else {
+                     tooltip = '<b>' + this.y + ' người xem</b><br/>';
+                     }
+                     return tooltip;
+                     }
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0,
+                        borderWidth: 0
+                    },
+                    series: {
+                        cursor: 'pointer',
+                        point: {
+                            events: {
+                                click: function () {
+                                    for (var i = 0; i < this.series.data.length; i++) {
+                                        this.series.data[i].update({ color: '#909090' }, true, false);
+                                    }
+                                    this.update({ color: '#00a769' }, true, false);
+                                    getDataVisitorByClick(this.category);
+                                }
+                            }
+                        }
+                    }
+                },
+                series: <?=json_encode($dataChart);?>,
+                credits: {
+                    enabled: false
+                }
+            });
+        });
+        function getDataVisitorByClick(date){
+            var timer = 0;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                $.ajax({
+                    type: "get",
+                    dataType: 'html',
+                    url: '<?=Url::to(['/dashboard/clickchart','id' => $id])?>' + '&date=' + date + '&view=_partials/visitor',
+                    success: function (data) {
+                        if(data){
+                            $('.visitor .list-item').html(data);
+                            $('.date-filter-chart').html('Thống kê trong ngày <span>'+date+'</span>');
+                        }
+                    }
+                });
+            }, 500);
+        }
+    </script>
+    <?php
+}else {
+    ?>
+    <div class="alert alert-warning">
+        <p class="text-center">Chưa có người nào xem tin của bạn, bạn hãy <a href="">làm mới</a> tin của mình</p>
+    </div>
+    <?php
+}?>
+<div class="statistic-info">
+    <a href="<?=$urlDetail?>" style="color: black;"><p class="name-post"><span class="icon address-icon"></span><?=$address?></p></a>
+    <p class="date-filter-chart text-center mgT-15">Thống kê từ <span class="from"><?=date('d/m/Y', $from)?></span> - <span class="to"><?=date('d/m/Y', $to)?></span></p>
+</div>
+
