@@ -4294,7 +4294,7 @@ input[type=text]:focus {
     margin-right: 5px;
 }
 .statis .panel-group {
-    margin-top: 20px;
+    /*margin-top: 20px;*/
 }
 .statis .panel-group .title-sub {
     margin: 0;

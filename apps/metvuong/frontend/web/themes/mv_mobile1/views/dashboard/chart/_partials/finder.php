@@ -125,6 +125,6 @@ if(!empty($data) && count($data) > 0) {
 <div class="statistic-info">
     <a href="<?=$urlDetail?>" style="color: black;"><p class="name-post"><span class="icon address-icon"></span><?=$address?></p></a>
     <?php if($from > 0 && $to > 0) {?>
-    <p class="date-filter-chart text-center mgT-15">Thống kê từ <span class="from"><?=date('d/m/Y', $from)?></span> - <span class="to"><?=date('d/m/Y', $to)?></span></p>
+    <p class="date-filter-chart text-center mgT-15">Thống kê lượt <b>tìm kiếm</b> từ <span class="from"><?=date('d/m/Y', $from)?></span> - <span class="to"><?=date('d/m/Y', $to)?></span></p>
     <?php } ?>
 </div>
