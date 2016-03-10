@@ -1091,17 +1091,14 @@ label {
 .page-faqs .title-top,
 .page-terms .title-top,
 .chat-history .title-top,
-.noti-alert .title-top,
-.detail-news .title-top,
-.edit-user-tt .title-top {
+.noti-alert .title-top {
     position: fixed;
     top: 41px;
     left: 0;
 }
 .page-faqs,
 .page-terms,
-.noti-alert,
-.detail-news {
+.noti-alert {
     padding-top: 40px;
 }
 .title-top a {
@@ -4906,7 +4903,7 @@ input[type=text]:focus {
     padding: 7px 0;
 }
 .edit-user-tt {
-    padding-top: 40px;
+    /* padding-top: 40px; */
 }
 .line-noti {
     position: fixed;
