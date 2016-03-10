@@ -119,13 +119,18 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
     }
 
     public function read(){
-        return $this->updateAttributes(['read_status'=>self::READ_YES, 'read_time' => time()]);
+        if($this->updateAttributes(['read_status'=>self::READ_YES, 'read_time' => time()])){
+            Cache::me()->delete(Cache::PRE_NOTIFICATION.$this->buddy_id);
+            return true;
+        }
     }
 
     public function setUserData($user){
         $id = (string) $this->_id ;
         if(!empty($id)){
-            return UserData::me()->saveAlert($user, UserData::ALERT_OTHER, [trim($id)]);
+            if(UserData::me()->saveAlert($user, UserData::ALERT_OTHER, [trim($id)])){
+                return true;
+            }
         }
     }
 

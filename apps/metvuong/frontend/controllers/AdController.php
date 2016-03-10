@@ -190,8 +190,6 @@ class AdController extends Controller
     
     public function listing()
     {
-        $this->layout = '@app/views/layouts/search';
-        
         if(Yii::$app->request->isAjax) {
         	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         	
@@ -338,7 +336,6 @@ class AdController extends Controller
 		if(Yii::$app->request->isAjax){
 			return $this->renderAjax('_partials/detail', ['product' => $product]);
 		}else{
-			$this->layout = '@app/views/layouts/layoutFull';
 			return $this->render('detail', ['product' => $product]);
 		}
 
@@ -617,7 +614,6 @@ class AdController extends Controller
 
 	public function actionPostListing()
 	{
-		$this->layout = '@app/views/layouts/layoutFull';
 		return $this->render('post/index');
 	}
     

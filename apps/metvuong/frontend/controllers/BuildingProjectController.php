@@ -12,7 +12,7 @@ use yii\web\Response;
 
 class BuildingProjectController extends Controller
 {
-	public $layout = '@app/views/layouts/layoutFull';
+	public $layout = '@app/views/layouts/layout';
 	
 	function actionIndex() {
         $models = AdBuildingProject::find()->where('`status` = ' . AdBuildingProject::STATUS_ENABLED)->all();

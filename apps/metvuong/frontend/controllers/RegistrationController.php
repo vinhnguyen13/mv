@@ -31,7 +31,7 @@ use yii\web\NotFoundHttpException;
  */
 class RegistrationController extends Controller
 {
-    public $layout = '@app/views/layouts/news';
+    public $layout = '@app/views/layouts/layout';
     use AjaxValidationTrait;
 
     /** @var Finder */

@@ -43,6 +43,7 @@ class NotificationController extends Controller
                 $_id = Yii::$app->request->post('id');
                 if(($userActivity = UserActivity::findOne(['_id'=>$_id])) !== null){
                     $userActivity->read();
+                    return true;
                 }
             }
         }else {

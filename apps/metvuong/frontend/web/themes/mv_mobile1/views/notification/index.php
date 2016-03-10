@@ -81,24 +81,26 @@ use yii\helpers\Html;
 </div>
 <script>
 	$(document).ready(function () {
-		$(document).on('click', '.item.unread', function(){
-			var _id = $(this).attr('data-id');
-			var timer = 0;
-			clearTimeout(timer);
-			timer = setTimeout(function () {
-				$.ajax({
-					type: "post",
-					url: "<?=Url::to(['/dashboard/notification', 'username'=> Yii::$app->user->identity->username])?>",
-					data: {id: _id, stt: 'read'},
-					success: function (data) {
-						if(data.statusCode == 200){
-
+		$(document).on('click', '.item a', function(){
+			var _itemObj = $(this).closest('.item');
+			if(_itemObj.hasClass('unread')){
+				var _id = $(this).closest('.item').attr('data-id');
+				var timer = 0;
+				var href = $(this).attr('href');
+				clearTimeout(timer);
+				timer = setTimeout(function () {
+					$.ajax({
+						type: "post",
+						url: "<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>",
+						data: {id: _id, stt: 'read'},
+						success: function (data) {
+							location.href = href;
 						}
-					}
-				});
-			}, 500);
-			$(this).removeClass('unread').addClass('read');
-			return false;
+					});
+				}, 500);
+				$(this).removeClass('unread').addClass('read');
+				return false;
+			}
 		});
 	});
 </script>
