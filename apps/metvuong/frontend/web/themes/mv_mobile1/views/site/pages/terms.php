@@ -1,21 +1,21 @@
 <div class="title-fixed-wrap">
 	<div class="page-terms">
 		<div class="title-top"><a href="#" id="prev-page" class="hide"><span class="icon arrowRight-1"></span></a>ĐIỀU KHOẢN & ĐIỀU KIỆN</div>
-		<div class="inner-page">
+		<div class="inner-page slidePopupStyle">
 			<div class="pd-20">
-				<p>Trước hết, chúng tôi xin chân thành cám ơn các bạn đã quan tâm và có mong muốn sử dụng dịch vụ của chúng tôi. Trước khi bắt đầu tham quan <a href="/"><strong>Metvuong.com</strong></a> cũng như sử dụng các dịch vụ trên trang website, xin vui lòng đọc cẩn thận và ghi nhớ Điều khoản Thoả thuận này. Việc sử dụng hoặc truy cập vào website <a href="/"><strong>Metvuong.com</strong></a> sẽ được hiểu là sự chấp nhận và đồng ý ràng buộc vào Điều khoản Thoả thuận.</p>
-				<p>Điều khoản Thoả thuận này được ký kết bởi và giữa <a href="/"><strong>Metvuong.com</strong></a> với bất kỳ một cá nhân tổ chức hoặc một thực thể nào khác, những người truy cập hoặc sử dụng website <a href="/"><strong>Metvuong.com</strong></a> (được gọi chung là "Người sử dụng” hoặc "bạn").</p>
+				<p class="mgB-20">Trước hết, chúng tôi xin chân thành cám ơn các bạn đã quan tâm và có mong muốn sử dụng dịch vụ của chúng tôi. Trước khi bắt đầu tham quan <a href="/"><strong>Metvuong.com</strong></a> cũng như sử dụng các dịch vụ trên trang website, xin vui lòng đọc cẩn thận và ghi nhớ Điều khoản Thoả thuận này. Việc sử dụng hoặc truy cập vào website <a href="/"><strong>Metvuong.com</strong></a> sẽ được hiểu là sự chấp nhận và đồng ý ràng buộc vào Điều khoản Thoả thuận.</p>
+				<p class="mgB-20">Điều khoản Thoả thuận này được ký kết bởi và giữa <a href="/"><strong>Metvuong.com</strong></a> với bất kỳ một cá nhân tổ chức hoặc một thực thể nào khác, những người truy cập hoặc sử dụng website <a href="/"><strong>Metvuong.com</strong></a> (được gọi chung là "Người sử dụng” hoặc "bạn").</p>
 				<p><a href="/"><strong>Metvuong.com</strong></a> là website được thiết kế cho phép thông tin về bất động sản và các lĩnh vực liên quan, bao gồm cả việc những người sử dụng đăng thông tin quảng cáo nhu cầu mua/bán/thuê/cho thuê bất động sản do những người sử dụng khác đăng lên, hoặc tương tác với những người sử dụng đó. <a href="/"><strong>Metvuong.com</strong></a> chứa hoặc có thể chứa các thông tin, tin tức, các ý kiến, văn bản, đồ hoạ, các liên kết, sản phẩm nghệ thuật điện tử, hình ảnh động, âm thanh, video, phần mềm, tranh ảnh, âm nhạc, tiếng động và các nội dung, dữ liệu khác (gọi chung là "nội dung") được định dạng, tổ chức và thu thập dưới nhiều hình thức khác nhau mà người sử dụng có thể truy cập tới được, gồm thông tin trên website của <a href="/"><strong>Metvuong.com</strong></a> mà người sử dụng có thể thay đổi được, chẳng hạn như đăng thông tin quảng cáo mua/bán/thuê/cho thuê bất động sản, tải lên các tập tin đa phương tiện. </p>
 			</div>
 			<ul class="clearfix list-phuluc">
 				<li>
-					<a href="#">1. Quyền hạn và trách nhiệm của người sử dụng <span class="pull-right icon arrowLeft"></span></a>
-					<div class="wrap-slide-show">
-						<div class="slide-show hide">
+					<a class="link-show" href="#terms-1">1. Quyền hạn và trách nhiệm của người sử dụng <span class="pull-right icon arrowLeft"></span></a>
+					<div id="terms-1" class="wrap-slide-show hide">
+						<div class="slide-show">
 							<div class="title-phuluc">1. Quyền hạn và trách nhiệm của người sử dụng</div>
-							<strong>A. Truy cập tới website <a href="/"><strong>Metvuong.com</strong></a></strong>
-							<p>Bạn có trách nhiệm tự cung cấp tất cả phần cứng, phần mềm, số điện thoại hoặc các thiết bị liên lạc khác và/hoặc dịch vụ kết nối tới Internet và truy cập tới <a href="/"><strong>Metvuong.com</strong></a>. đồng thời có trách nhiệm trả mọi khoản phí truy cập Internet, phí điện thoại hoặc các khoản phí khác phát sinh trong quá trình kết nối Internet và truy cập tới website <a href="/"><strong>Metvuong.com</strong></a>.</p>
-							<strong>B. Đạo đức người sử dụng</strong>
+							<p class="mgB-10"><strong>A. Truy cập tới website <a href="/"><strong>Metvuong.com</strong></a></strong></p>
+							<p class="mgB-20">Bạn có trách nhiệm tự cung cấp tất cả phần cứng, phần mềm, số điện thoại hoặc các thiết bị liên lạc khác và/hoặc dịch vụ kết nối tới Internet và truy cập tới <a href="/"><strong>Metvuong.com</strong></a>. đồng thời có trách nhiệm trả mọi khoản phí truy cập Internet, phí điện thoại hoặc các khoản phí khác phát sinh trong quá trình kết nối Internet và truy cập tới website <a href="/"><strong>Metvuong.com</strong></a>.</p>
+							<p class="mgB-10"><strong>B. Đạo đức người sử dụng</strong></p>
 							<p class="mgB-10">Bạn đồng ý chỉ truy cập và dùng <a href="/"><strong>Metvuong.com</strong></a> với các mục đích hợp pháp. Bạn có trách nhiệm tuân thủ mọi điều luật, các quy chế, quy tắc và các quy định gắn liền với việc bạn sử dụng <a href="/"><strong>Metvuong.com</strong></a>. Truy cập tới website <a href="/"><strong>Metvuong.com</strong></a>, bạn đồng ý sẽ không:</p>
 							<p class="mgB-10 pdL-15">- Hạn chế hoặc ngăn cản người sử dụng khác sử dụng và hưởng các tính năng tương tác.</p>
 							<p class="mgB-10 pdL-15">- Gửi hoặc chuyển các thông tin bất hợp pháp, đe doạ, lạm dụng, bôi nhọ, nói xấu, khiêu dâm, phi thẩm mỹ, xúc phạm hoặc bất kỳ loại thông tin không đúng đắn, bao gồm truyền bá tin tức góp phần hay khuyến khích hành vi phạm tội, gây ra trách nhiệm pháp lý dân sự hoặc vi phạm luật bất kỳ của một địa phương, quốc gia hay luật quốc tế nào.</p>
@@ -28,8 +28,8 @@
 					</div>
 				</li>
 				<li>
-					<a href="#">2. Các quyền sở hữu trí tuệ <span class="pull-right icon arrowLeft"></span></a>
-					<div class="wrap-slide-show hide">
+					<a class="link-show" href="#terms-2">2. Các quyền sở hữu trí tuệ <span class="pull-right icon arrowLeft"></span></a>
+					<div id="terms-2" class="wrap-slide-show hide">
 						<div class="slide-show">
 							<div class="title-phuluc">2. Các quyền sở hữu trí tuệ</div>
 							<p class="mgB-10">- Bạn thừa nhận Nội dung trên <a href="/"><strong>Metvuong.com</strong></a> nói chung do <a href="/"><strong>Metvuong.com</strong></a>, các phóng viên, cộng tác viên về nội dung ("Cộng tác viên"), người được cấp phép thứ ba, và/hoặc những người sử dụng khác cung cấp. Bạn thừa nhận website <a href="/"><strong>Metvuong.com</strong></a> cho phép truy cập tới Nội dung được bảo vệ bản quyền, tên thương mại và các quyền sở hữu khác (kể cả quyền sở hữu trí tuệ) ("Quyền Sở hữu Trí tuệ"), và thừa nhận các quyền sở hữu trí tuệ đó là hợp lệ và được bảo vệ trên mọi phương tiện truyền thông hiện có và sau này, trừ những điểm nêu rõ ràng dưới đây, việc sử dụng nội dung của bạn sẽ được quản lý theo các luật bản quyền và các luật sở hữu trí tuệ hiện hành khác.</p>
@@ -41,8 +41,8 @@
 					</div>
 				</li>
 				<li>
-					<a href="#">3. Các vùng tương tác <span class="pull-right icon arrowLeft"></span></a>
-					<div class="wrap-slide-show hide">
+					<a class="link-show" href="#terms-3">3. Các vùng tương tác <span class="pull-right icon arrowLeft"></span></a>
+					<div id="terms-3" class="wrap-slide-show hide">
 						<div class="slide-show">
 							<div class="title-phuluc">3. Các vùng tương tác</div>
 							<p class="mgB-10">Bạn thừa nhận, <a href="/"><strong>Metvuong.com</strong></a> có thể chứa các vùng tương tác khác nhau. Những vùng tương tác này cho phép phản hồi tới <a href="/"><strong>Metvuong.com</strong></a> và tương tác thời gian thực giữa những người sử dụng. Bạn cũng hiểu rằng, <a href="/"><strong>Metvuong.com</strong></a> không kiểm soát các thông báo, thông tin hoặc các tập tin được phân phối tới các vùng tương tác như vậy và rằng, <a href="/"><strong>Metvuong.com</strong></a> có thể cho bạn và những người sử dụng khác khả năng tạo và quản lý một vùng tương tác.</p>
@@ -52,8 +52,8 @@
 					</div>
 				</li>
 				<li>
-					<a href="#">4. Chấm dứt <span class="pull-right icon arrowLeft"></span></a>
-					<div class="wrap-slide-show hide">
+					<a class="link-show" href="#terms-4">4. Chấm dứt <span class="pull-right icon arrowLeft"></span></a>
+					<div id="terms-4" class="wrap-slide-show hide">
 						<div class="slide-show">
 							<div class="title-phuluc">4. Chấm dứt</div>
 							<p class="mgB-10">Quyền duy nhất của bạn khi không thỏa mãn với mọi chính sách, nguyên tắc chỉ đạo hay hành động thực tiễn của <a href="/"><strong>Metvuong.com</strong></a> trong điều hành trang web, hoặc mọi thay đổi về nội dung là dừng sự truy cập tới website <a href="/"><strong>Metvuong.com</strong></a>. <a href="/"><strong>Metvuong.com</strong></a> có thể chấm dứt hoặc tạm thời ngưng sự truy cập của bạn đến tất cả hay phần bất kỳ của website <a href="/"><strong>Metvuong.com</strong></a> mà không thông báo với các hành động khi <a href="/"><strong>Metvuong.com</strong></a> tin là vi phạm “Điều khoản thỏa thuận” này hoặc vi phạm mọi chính sách hay nguyên tắc chỉ đạo mà <a href="/"><strong>Metvuong.com</strong></a> đã đưa ra, hoặc với các hành động khác mà chúng tôi tin là có hại đến <a href="/"><strong>Metvuong.com</strong></a> và những người sử dụng khác.</p>
@@ -62,8 +62,8 @@
 					</div>
 				</li>
 				<li>
-					<a href="#">5. Các liên kết <span class="pull-right icon arrowLeft"></span></a>
-					<div class="wrap-slide-show hide">
+					<a class="link-show" href="#terms-5">5. Các liên kết <span class="pull-right icon arrowLeft"></span></a>
+					<div id="terms-5" class="wrap-slide-show hide">
 						<div class="slide-show">
 							<div class="title-phuluc">5. Các liên kết</div>
 							<p class="mgB-10">Bạn hiểu rằng trừ phần nội dung, các sản phẩm và dịch vụ có trên <a href="/"><strong>Metvuong.com</strong></a>, <a href="/"><strong>Metvuong.com</strong></a>, công ty mẹ, hoặc các chi nhánh, cũng như các giám đốc, nhân viên, người làm công và các đại lý tương ứng kiểm soát, cung cấp không chịu trách nhiệm với nội dung, hàng hóa hoặc các dịch vụ của các sites khác trên Internet được kết nối tới hoặc từ <a href="/"><strong>Metvuong.com</strong></a>. Tất cả nội dung, hàng hóa và các dịch vụ đó đều có thể truy cập được trên Internet bởi bên thứ ba độc lập và không phải là một phần của <a href="/"><strong>Metvuong.com</strong></a> hoặc được kiểm soát bởi Ban biên tập. <a href="/"><strong>Metvuong.com</strong></a> không xác nhận và cũng không chịu trách nhiệm về tính chính xác, tính đầy đủ, tính hữu dụng, chất lượng và tính sẵn sàng của mọi nội dung, hàng hóa hay các dịch vụ có trên các site được kết nối tới hoặc từ <a href="/"><strong>Metvuong.com</strong></a> mà đó là trách nhiệm duy nhất của bên thứ ba độc lập đó, và do vậy việc sử dụng của bạn là sự mạo hiểm riêng của bạn.</p>
@@ -72,8 +72,8 @@
 					</div>
 				</li>
 				<li>
-					<a href="#">6. Bồi thường <span class="pull-right icon arrowLeft"></span></a>
-					<div class="wrap-slide-show hide">
+					<a class="link-show" href="#terms-6">6. Bồi thường <span class="pull-right icon arrowLeft"></span></a>
+					<div id="terms-6" class="wrap-slide-show hide">
 						<div class="slide-show">
 							<div class="title-phuluc">6. Bồi thường</div>
 							<p class="mgB-10">Bạn đồng ý trả tiền và miễn cho website <a href="/"><strong>Metvuong.com</strong></a>, công ty mẹ và các chi nhánh, các giám đốc, nhân viên, những người làm công và các đại lý tương ứng tất cả các trách nhiệm pháp lý, các quyền được đòi hỏi và các phí tổn, kể cả các phí hợp lý cho luật sư, nảy sinh từ sự vi phạm Điều khoản thỏa thuận” này, từ chính sách bất kỳ khác, từ việc sử dụng hay truy cập của bạn tới <a href="/"><strong>Metvuong.com</strong></a> hoặc site internet đựơc kết nối đến hoặc từ website <a href="/"><strong>Metvuong.com</strong></a>, hoặc về việc truyền nội dung bất kỳ trên <a href="/"><strong>Metvuong.com</strong></a>.</p>
@@ -81,8 +81,8 @@
 					</div>
 				</li>
 				<li>
-					<a href="#">7. Các vấn đề khác <span class="pull-right icon arrowLeft"></span></a>
-					<div class="wrap-slide-show hide">
+					<a class="link-show" href="#terms-7">7. Các vấn đề khác <span class="pull-right icon arrowLeft"></span></a>
+					<div id="terms-7" class="wrap-slide-show hide">
 						<div class="slide-show">
 							<div class="title-phuluc">7. Các vấn đề khác</div>
 							<p class="mgB-10">Điều khoản Thoả thuận này bao gồm toàn bộ sự thoả thuận giữa website <a href="/"><strong>Metvuong.com</strong></a> và bạn, và thay thế mọi thoả thuận trước đây về chủ đề này. Website <a href="/"><strong>Metvuong.com</strong></a> có thể xét lại Điều khoản Thoả thuận này hoặc mọi chính sách khác vào bất cứ lúc nào và đôi khi, sự xem xét lại này sẽ có hiệu lực trong 2 ngày nhờ gửi thông báo về sự xem xét lại đó ở nơi dễ thấy trên website <a href="/"><strong>Metvuong.com</strong></a>. Bạn đồng ý xem xét lại Điều khoản Thoả thuận này định kỳ để hiểu về những điều đã được sửa lại đó. Nếu bạn không chấp nhận các sửa đổi này, bạn phải thôi truy cập tới website <a href="/"><strong>Metvuong.com</strong></a> . Sự tiếp tục truy cập của bạn và việc sử dụng website <a href="/"><strong>Metvuong.com</strong></a> sau thông báo về mọi sửa đổi như vậy sẽ được coi chắc chắn là sự chấp nhận tất cả các sửa đổi như vậy.</p>
@@ -96,3 +96,15 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function () {
+		$('.wrap-slide-show').popupMobi({
+            btnClickShow: ".link-show",
+            closeBtn: '#prev-page',
+            styleShow: 'full',
+            effectShow: 'slide-right-left',
+            forEffectSlideWrap: '.page-terms .inner-page'
+        });
+	});
+</script>
