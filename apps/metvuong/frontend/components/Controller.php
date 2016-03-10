@@ -33,7 +33,7 @@ class Controller extends \yii\web\Controller
                  * remove notify if is read
                  */
                 switch($urlBase){
-                    case 'dashboard/notification':
+                    case 'notification/index':
                         UserData::me()->removeAlert(Yii::$app->user->id, UserData::ALERT_OTHER);
                         Yii::$app->session->remove("notifyOther");
                         break;
