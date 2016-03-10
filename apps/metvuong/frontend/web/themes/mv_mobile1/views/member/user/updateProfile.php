@@ -272,7 +272,6 @@ $user = $model->getUser();
 						<div class="error hide" style="width: 100%; color: red;"></div>
 					</li>
 				</ul>
-                <div><a href="<?=Url::to(['member/forgot'])?>" style="padding-right: 20px;" class="pull-right">Quên mật khẩu</a></div>
 			</div>
 		</div>
         <?php $f->end(); ?>
