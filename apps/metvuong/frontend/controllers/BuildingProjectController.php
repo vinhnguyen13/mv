@@ -60,14 +60,12 @@ class BuildingProjectController extends Controller
         if(Yii::$app->request->isAjax) {
             \Yii::$app->response->format = \yii\web\Response::FORMAT_HTML;
             $post = \Yii::$app->request->post();
-            $name = (isset($post["project_name"]) && !empty($post["project_name"])) ? $post["project_name"] : null;
-            if(!empty($name)) {
-                $models = AdBuildingProject::find()->where('name LIKE :query')
-                    ->addParams([':query' => '%' . $name . '%'])
-                    ->all();
+            $name = (isset($post["project_name"]) && !empty($post["project_name"])) ? $post["project_name"] : '';
+            $models = AdBuildingProject::find()->where('name LIKE :query')
+                ->addParams([':query' => '%' . $name . '%'])
+                ->all();
 
-                return $this->renderAjax('_partials/result', ['models' => $models]);
-            }
+            return $this->renderAjax('_partials/result', ['models' => $models]);
         }
         return false;
     }
