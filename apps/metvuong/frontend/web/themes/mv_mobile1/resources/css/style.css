@@ -2361,7 +2361,10 @@ footer {
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     -ms-border-radius: 0;
-    background-color: #f5f5f5;
+    position: relative;
+    z-index: 2;
+    background: none;
+    font-weight: bold;
 }
 .arrowDown {
     display: inline-block;

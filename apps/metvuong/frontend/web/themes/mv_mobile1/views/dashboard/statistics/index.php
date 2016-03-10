@@ -64,7 +64,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
         </div>
     	<section>
     		<div id="sandbox-container">
-    			<input type="text" class="form-control toDate" placeholder="Ngày">
+    			<input type="text" class="form-control toDate" readonly placeholder="Ngày">
     			<span class="icon arrowDown"></span>
     		</div>
     		<div class="summary clearfix">

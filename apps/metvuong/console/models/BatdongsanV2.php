@@ -852,7 +852,7 @@ class BatdongsanV2 extends Component
         $columnNameArray = ['category_id', 'project_building_id', 'user_id', 'home_no',
             'city_id', 'district_id', 'ward_id', 'street_id',
             'type', 'content', 'area', 'price', 'price_type', 'lat', 'lng',
-            'start_date', 'end_date', 'verified', 'created_at', 'source'];
+            'start_date', 'end_date', 'verified', 'created_at', 'source', 'file_name'];
         $bulkInsertArray = array();
         $imageArray = array();
         $infoArray = array();
@@ -943,7 +943,7 @@ class BatdongsanV2 extends Component
                                         'end_date' => $value[$filename]["end_date"],
                                         'verified' => 1,
                                         'created_at' => $value[$filename]["start_date"],
-                                        'source' => 1
+                                        'source' => 1, 'file_name' => $filename
                                     ];
                                     // source = 1 for Batdongsan.com.vn
                                     $bulkInsertArray[] = $record;
