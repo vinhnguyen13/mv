@@ -4658,7 +4658,7 @@ input[type=text]:focus {
     border-bottom: 2px solid #333;
 }
 .page-news {
-    padding-top: 34px;*/;
+    padding-top: 34px;
 }
 .page-news .title-top {
     padding: 0;
@@ -4837,7 +4837,7 @@ input[type=text]:focus {
 }
 #listing-list > ul > li {
     border-bottom: 1px solid #ededed;
-    padding: 25px 20px; */
+    padding: 25px 20px;
 }
 @media (min-width: 640px) {
     #listing-list > ul > li,
