@@ -810,7 +810,7 @@ $.fn.popupMobi = function (options) {
         }
 
         if ( $(sc.settings.btnClickShow).length == 0 || sc.settings.btnClickShow == "" ) {
-            showPopup(el);
+            //showPopup(el);
         }
 
         function showPopup (itemClick, popupItem) {
