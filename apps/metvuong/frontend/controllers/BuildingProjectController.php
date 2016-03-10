@@ -3,10 +3,12 @@ namespace frontend\controllers;
 
 use frontend\components\Controller;
 use vsoft\buildingProject\models\BuildingProject;
+use Yii;
 use yii\data\Pagination;
 use vsoft\ad\models\AdBuildingProject;
 use yii\web\NotFoundHttpException;
 use yii\helpers\Url;
+use yii\web\Response;
 
 class BuildingProjectController extends Controller
 {
@@ -53,4 +55,20 @@ class BuildingProjectController extends Controller
 		
 		return $model;
 	}
+
+    function actionFind() {
+        if(Yii::$app->request->isAjax) {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_HTML;
+            $post = \Yii::$app->request->post();
+            $name = (isset($post["project_name"]) && !empty($post["project_name"])) ? $post["project_name"] : null;
+            if(!empty($name)) {
+                $models = AdBuildingProject::find()->where('name LIKE :query')
+                    ->addParams([':query' => '%' . $name . '%'])
+                    ->all();
+
+                return $this->renderAjax('_partials/result', ['models' => $models]);
+            }
+        }
+        return false;
+    }
 }
