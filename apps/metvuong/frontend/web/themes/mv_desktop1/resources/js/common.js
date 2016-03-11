@@ -10,6 +10,7 @@ $(document).ready(function() {
     $('.hFullScreen').css({
         height: $('#hScreen').outerHeight() - 40
     });
+    
     $('.page-home').css('visibility','visible');
 
     $('.wrap-lazy img').lazyload({
@@ -112,6 +113,12 @@ $(document).ready(function() {
     		$.data(this, 'v', '');
     		ss.addClass('hide');
     	}
+    });
+
+    $(window).resize(function () {
+        $('.hFullScreen').css({
+            height: $('#hScreen').outerHeight() - 40
+        });
     });
 });
 

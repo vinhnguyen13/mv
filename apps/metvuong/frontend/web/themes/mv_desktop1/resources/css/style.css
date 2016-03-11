@@ -75,6 +75,7 @@ header {
 .search-box {
     height: 200px;
     position: relative;
+    padding: 0 20px;
 }
 .search-box:before  {
     content: '';
@@ -2211,7 +2212,7 @@ label {
     right: 7px;
 }
 footer {
-    padding: 5px 10px 10px 10px;
+    padding: 0;
     background: #00a769;
     color: #fff;
 }
@@ -2225,13 +2226,6 @@ footer {
 }
 .infor-address p {
     margin-bottom: 5px;
-}
-footer li a {
-    color: #fff;
-    font-weight: 700;
-    padding: 10px 0;
-    display: block;
-    font-size: 12px;
 }
 footer .col-xs-6 {
     padding: 0 10px;
@@ -5083,12 +5077,6 @@ input[type=text]:focus {
     background-color: #00a769;
     color: #fff;
 }
-@media (min-width: 768px) {
-    .container {
-        width: auto;
-        padding: 0 20px;
-    }
-}
 @media (min-width: 960px) {
     .search-homepage > ul,
     #menu-header,
@@ -5109,6 +5097,7 @@ input[type=text]:focus {
     }
     .search-box {
         width: 70%;
+        max-width: 750px;
         margin: 0 auto 0;
         padding: 0;
     }
@@ -5132,8 +5121,19 @@ input[type=text]:focus {
     .m-header, .search-home {
         display: block;
     }
+    .dt-footer,
     .dt-header {
         display: none;
+    }
+    footer {
+        padding: 10px 10px;
+    }
+    .container {
+        width: auto;
+        padding: 0 20px;
+    }
+    .wrap-header {
+        padding: 0;
     }
 }
 .user-login {
@@ -5212,6 +5212,9 @@ input[type=text]:focus {
     margin-right: 20px;
     vertical-align: middle;
 }
+.txt-location li p {
+    overflow: hidden;
+}
 .txt-location ul {
     margin-bottom: 15px;
 }
@@ -5239,5 +5242,85 @@ input[type=text]:focus {
     }
     .map-location .img-show:before {
         padding-top: 65%
+    }
+    .m-footer {
+        display: none;
+    }
+    footer li:last-child {
+        border: none;
+    }
+    footer {
+        padding: 30px 0;
+    }
+}
+.dt-footer {
+    font-size: 15px;
+    font-weight: 600;
+}
+.dt-footer div {
+    margin-top: 10px;
+}
+.dt-footer p {
+    text-align: right;
+}
+.dt-footer ul {
+    margin-bottom: 5px;
+}
+.dt-footer li {
+    float: left;
+}
+.dt-footer li a {
+    border-right: 1px solid #fff;
+    padding: 0 10px;
+    font-size: 15px;
+}
+.dt-footer li:last-child a {
+    border: none;
+    padding-right: 0;
+}
+.logo-footer {
+    width: 200px;
+}
+footer li a {
+    color: #fff;
+    font-weight: 700;
+    padding: 10px 0;
+    display: block;
+    font-size: 12px;
+}
+@media (min-width: 320px) and (max-width: 460px) {
+    .txt-location form input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .txt-location form button {
+        width: 100%;
+    }
+}
+@media (min-width: 460px) {
+    .infor-address,
+    footer li a {
+        font-size: 14px;
+    }
+}
+@media (min-width: 768px) {
+    .container {
+        width: auto;
+    }
+}
+@media (min-width: 959px) and (max-width: 1200px) {
+    .container {
+        width: 960px;
+    }
+}
+@media (min-width: 1200px) {
+    .container {
+        width: 1200px;
+    }
+    #listing-list > ul > li, .box-feature-item .wrap-item > ul > li {
+        width: 33.333%;
+        float: left;
+        padding: 0 10px;
+        margin-bottom: 25px;
     }
 }

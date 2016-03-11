@@ -5,7 +5,7 @@ use frontend\models\Ad;
 ?>
 <div class="page-home">
 
-    <section class="search-box hFullScreen container">
+    <section class="search-box hFullScreen">
         <!-- <div class="text-center sologan">
             Đưa bạn đến ngôi nhà yêu thích<br>
             Tìm hiểu &amp; giao dịch bất động sản dễ dàng
