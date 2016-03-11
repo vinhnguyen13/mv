@@ -118,7 +118,7 @@ class ElasticController extends Controller {
 		$term[] = [
 			'name'	=> $name,
 			'full_name' => $fullName,
-			'search_field' => Elastic::transform($name),
+			'search_field' => Elastic::transform($fullName),
 			'total' => $total
 		];
 		

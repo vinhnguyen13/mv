@@ -297,14 +297,12 @@ class SiteController extends Controller
     		$v = Elastic::transform($v);
     		 
     		$params = [
-    		'query' => [
-    		'match_phrase_prefix' => ['search_field' => [
-    		'query' => $v,
-    		'max_expansions' => 100
-    		]],
-    		],
-    		'sort' => ['total' => ['order' => 'desc']],
-    		'_source' => ['full_name', 'total']
+				'query' => [
+					'match' => [
+						'search_field' => $v
+					],
+    			],
+    			'_source' => ['full_name', 'total']
     		];
     		 
     		$ch = curl_init(Yii::$app->params['elastic']['config']['hosts'][0] . '/term/_search');
