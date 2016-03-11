@@ -39,7 +39,7 @@ $(document).ready(function() {
             position: "right"
         }
     });
-
+    
     var API_MENU = $("#menu-header").data("mmenu");
     var API_USER = $("#settings-user").data("mmenu");
 

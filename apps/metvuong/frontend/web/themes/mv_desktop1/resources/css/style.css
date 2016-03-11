@@ -7,6 +7,9 @@ ul,li{list-style:none;padding:0;margin:0}
     overflow: hidden !important;
 }
 p{margin:0;padding:0;}
+a {
+    color: #3c3c3c;
+}
 a:active,
 a:visited,
 a:link {
@@ -18,6 +21,15 @@ a:active, a:visited, a:link {
 input {
     /* -webkit-appearance: none; */
     -webkit-border-radius: 0;
+}
+.color-cd {
+    color: #00a769 !important;   
+}
+.container {
+    padding: 0 20px;
+}
+.wrap-header {
+    padding: 0;
 }
 input[type=text],
 input[type=email],
@@ -62,7 +74,6 @@ header {
 }
 .search-box {
     height: 200px;
-    padding: 0 20px;
     position: relative;
 }
 .search-box:before  {
@@ -194,12 +205,12 @@ header {
     margin-top: 0px;
 }
 .search-home {
-    padding: 30px 20px 80px;
+    padding: 30px 0 80px;
     background: #f5f5f5;
 }
 .box-item.box-feature-item {
     background: #f5f5f5;
-    padding: 35px 20px 30px;
+    padding: 35px 0 30px;
     margin-bottom: 0;
     /* background: red; */
 }
@@ -3166,10 +3177,11 @@ input[type=text]:focus {
 }
 .logo-search-box img {
     width: 49%;
+    max-width: 240px;
 }
 .news-item {
     margin-bottom: 0;
-    padding: 20px;
+    padding: 0;
 }
 .avatar-user-pr em {
     margin-right: 5px;
@@ -3489,53 +3501,53 @@ input[type=text]:focus {
 }
 @-webkit-keyframes sliderArrow{
     0% {
-        bottom: 20px;
+        bottom: 30px;
         opacity: 0;
     }
     30% {
         opacity: 1;
     }
     100% {
-        bottom: 0px;
+        bottom: 10px;
         opacity: 0;
     }
 }
 @-moz-keyframes sliderArrow{
     0% {
-        bottom: 20px;
+        bottom: 30px;
         opacity: 0;
     }
     30% {
         opacity: 1;
     }
     100% {
-        bottom: 0px;
+        bottom: 10px;
         opacity: 0;
     }
 }
 @-ms-keyframes sliderArrow{
     0% {
-        bottom: 20px;
+        bottom: 30px;
         opacity: 0;
     }
     30% {
         opacity: 1;
     }
     100% {
-        bottom: 0px;
+        bottom: 10px;
         opacity: 0;
     }
 }
 @keyframes sliderArrow{
     0% {
-        bottom: 20px;
+        bottom: 30px;
         opacity: 0;
     }
     30% {
         opacity: 1;
     }
     100% {
-        bottom: 0px;
+        bottom: 10px;
         opacity: 0;
     }
 }
@@ -3570,7 +3582,7 @@ input[type=text]:focus {
 }
 .bottom-feat-box strong {
     color: #00a769;
-    font-size: 19px;
+    font-size: 17px;
     padding-left: 3px;
     font-weight: 600;
 }
@@ -5072,4 +5084,90 @@ input[type=text]:focus {
 .option-view-stats li a.active {
     background-color: #00a769;
     color: #fff;
+}
+@media (min-width: 768px) {
+    .container {
+        width: auto;
+        padding: 0 20px;
+    }
+}
+@media (min-width: 960px) {
+    .search-homepage > ul,
+    #menu-header,
+    #settings-user,
+    .m-header,
+    .search-home {
+        display: none;
+    }
+    header {
+        box-shadow: 0 1px 0 0 #DEDEDE;
+        -webkit-box-shadow: 0 1px 0 0 #DEDEDE;
+        -moz-box-shadow: 0 1px 0 0 #DEDEDE;
+        -ms-box-shadow: 0 1px 0 0 #DEDEDE;
+        height: 64px;
+        border-bottom: solid 0.5px #b1b1b1;
+    }
+    #wrapper {
+        padding-top: 63px;
+    }
+    .search-box {
+        width: 70%;
+        margin: 0 auto 0;
+        padding: 0;
+    }
+    .box-item.box-feature-item {
+    }
+    .id-duan {
+        float: right;
+        margin-top: 7px;
+    }
+    .box-item .address-feat .list-attr-td {
+        float: left;
+    }
+    .box-feature-item .address-feat {
+        height: 105px;
+    }
+    .wrap-header {
+        padding: 0 20px;
+    }
+}
+@media (max-width: 960px) {
+    .m-header, .search-home {
+        display: block;
+    }
+    .dt-header {
+        display: none;
+    }
+}
+.user-login {
+    height: 100%;
+    padding: 21px 0;
+}
+.user-login a:hover {
+    text-decoration: underline;
+}
+.list-menu {
+    padding: 10px 0;
+    float: left;
+}
+.list-menu li {
+    float: left;
+}
+.list-menu li:first-child {
+    margin-right: 20px;
+}
+.list-menu li:last-child {
+
+}
+.list-menu li a {
+    font-size: 15px;
+    padding: 10px 20px;
+    display: block;
+}
+.list-menu li.dt-logo a {
+    width: 115px;
+    padding: 0;
+}
+.list-menu li a:hover {
+    text-decoration: underline;
 }
