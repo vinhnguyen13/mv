@@ -163,6 +163,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                             type: 'POST',
                             success: function (data) {
                                 if (data) {
+                                    console.log(data);
                                     $(".loading").hide();
                                     $('#current_id').val(data.id);
                                     $('#current_slug').val(data.slug);
@@ -170,7 +171,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                                     document.title = data.title;
                                     var time = timeConverter(data.created_at);
                                     var cat_id = data.catalog_id;
-                                    window.history.pushState(data.slug, data.title, data.id + "-" + data.slug);
+                                    window.history.pushState(data.slug, data.title, 'view?id='+data.id + '&slug=' + data.slug + '&cat_id=' + data.catalog_id + '&cat_slug=' + data.cat_slug);
                                     $('.wrap-detail-article').append(
                                         '<article>' +
                                         '<h1 class="big-title">' + data.title + '</h1>' +
@@ -181,10 +182,10 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                                         '<div class="box-content">' +
                                         '<div>' + data.content + '</div>' +
                                         '<div id="social' + data.id + '" class="share-social mgT-10 wrap-img">' +
-                                        '<div class="fb-like" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + data.catalog_id + '-' + data.cat_slug + '/' + data.id + '-' + data.slug + '" data-layout="button_count" style="margin-right: 10px;"></div>' +
-                                        '<div class="fb-send" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + data.catalog_id + '-' + data.cat_slug + '/' + data.id + '-' + data.slug + '" data-show-faces="false" style="margin-right: 10px;"></div>' +
-                                        '<div class="fb-share-button" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + data.catalog_id + '-' + data.cat_slug + '/' + data.id + '-' + data.slug + '" data-layout="button_count"></div><br>' +
-                                        '<div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + data.catalog_id + '-' + data.cat_slug + '/' + data.id + '-' + data.slug + '" data-width="600" data-numposts="3" ></div>' +
+                                        '<div class="fb-like" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + 'view?id='+data.id + '&slug=' + data.slug + '&cat_id=' + data.slug + '&cat_slug=' + data.slug + '" data-layout="button_count" style="margin-right: 10px;"></div>' +
+                                        '<div class="fb-send" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + 'view?id='+data.id + '&slug=' + data.slug + '&cat_id=' + data.slug + '&cat_slug=' + data.slug+ '" data-show-faces="false" style="margin-right: 10px;"></div>' +
+                                        '<div class="fb-share-button" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + 'view?id='+data.id + '&slug=' + data.slug + '&cat_id=' + data.slug + '&cat_slug=' + data.slug + '" data-layout="button_count"></div><br>' +
+                                        '<div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + 'view?id='+data.id + '&slug=' + data.slug + '&cat_id=' + data.slug + '&cat_slug=' + data.slug + '" data-width="600" data-numposts="3" ></div>' +
                                         '</div>' +
                                         '</div>' +
                                         '</div>' +

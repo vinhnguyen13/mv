@@ -14,7 +14,7 @@ use yii\web\Response;
 
 class NewsController extends Controller
 {
-    public $layout = 'news';
+    public $layout = '@app/views/layouts/layout';
 
     public function beforeAction($action)
     {
