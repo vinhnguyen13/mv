@@ -352,11 +352,12 @@ class AdController extends Controller
 
     
     public function actionPost() {
-    	if(Yii::$app->mobileDetect->isMobile()) {
-    		return $this->postMobile();
-    	} else {
-    		return $this->post();
-    	}
+//     	if(Yii::$app->mobileDetect->isMobile()) {
+//     		return $this->postMobile();
+//     	} else {
+//     		return $this->post();
+//     	}
+    	return $this->postMobile();
     }
     
     public function actionUpdate($id) {
