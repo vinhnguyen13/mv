@@ -8,26 +8,26 @@ use vsoft\ad\models\AdProduct;
 
 class ElasticController extends Controller {
 	public function actionBuildIndex() {
-		$ELASTIC = NEW ELASTIC();
-		$ELASTIC->CONNECT();
+		$elastic = new Elastic();
+		$elastic->connect();
 		
-		$CITIES = $THIS->GETTERMFROMDB('AD_CITY');
+		$cities = $this->getTermFromDb('ad_city');
 		
-		FOREACH($CITIES AS $CITY) {
-			$CITYTERM = $THIS->BUILDTERM('CITY', $CITY['ID'], $CITY['ID'], $CITY['NAME'], $CITY['NAME'], INTVAL($THIS->COUNTPRODUCTS(['CITY_ID' => $CITY['ID']])));
-			$ELASTIC->INDEX($CITYTERM);
+		foreach($cities as $city) {
+			$cityTerm = $this->buildTerm('city', $city['id'], $city['id'], $city['name'], $city['name'], intval($this->countProducts(['city_id' => $city['id']])));
+			$elastic->index($cityTerm);
 			
-			$DISTRICTS = $THIS->GETTERMFROMDB('AD_DISTRICT', ['CITY_ID' => $CITY['ID']]);
+			$districts = $this->getTermFromDb('ad_district', ['city_id' => $city['id']]);
 			
-			FOREACH ($DISTRICTS AS $DISTRICT) {
-				$DISTRICTNAME = $DISTRICT['PRE'] ? $DISTRICT['PRE'] . ' ' . $DISTRICT['NAME'] : $DISTRICT['NAME'];
-				$DISTRICTFULLNAME = $DISTRICTNAME . ', ' . $CITY['NAME'];
-				$DISTRICTTERM = $THIS->BUILDTERM('DISTRICT', $DISTRICT['ID'], $CITY['ID'], $DISTRICTNAME, $DISTRICTFULLNAME, INTVAL($THIS->COUNTPRODUCTS(['DISTRICT_ID' => $DISTRICT['ID']])));
-				$ELASTIC->INDEX($DISTRICTTERM);
+			foreach ($districts as $district) {
+				$districtName = $district['pre'] ? $district['pre'] . ' ' . $district['name'] : $district['name'];
+				$districtFullName = $districtName . ', ' . $city['name'];
+				$districtTerm = $this->buildTerm('district', $district['id'], $city['id'], $districtName, $districtFullName, intval($this->countProducts(['district_id' => $district['id']])));
+				$elastic->index($districtTerm);
 				
-				$THIS->BUILDTERMSBELONGDISTRICT('AD_WARD', 'WARD', $CITY['ID'], $DISTRICT['ID'], $DISTRICTFULLNAME);
-				$THIS->BUILDTERMSBELONGDISTRICT('AD_STREET', 'STREET', $CITY['ID'], $DISTRICT['ID'], $DISTRICTFULLNAME);
-				$THIS->BUILDTERMSBELONGDISTRICT('AD_BUILDING_PROJECT', 'PROJECT_BUILDING', $CITY['ID'], $DISTRICT['ID'], $DISTRICTFULLNAME, FALSE);
+				$this->buildTermsBelongDistrict('ad_ward', 'ward', $city['id'], $district['id'], $districtFullName);
+				$this->buildTermsBelongDistrict('ad_street', 'street', $city['id'], $district['id'], $districtFullName);
+				$this->buildTermsBelongDistrict('ad_building_project', 'project_building', $city['id'], $district['id'], $districtFullName, false);
 			}
 		}
 	}
