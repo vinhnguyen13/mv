@@ -342,7 +342,7 @@ use vsoft\ad\models\AdImages;
             </div>
             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                 <div class="panel-body" name="activity">
-                	<ul class="clearfix">
+                	<ul class="clearfix list-tienich-detail">
 						<li class="project-item"><strong>Thuộc dự án:</strong> <span class="project-show"></span></li>
 						<li class="facade-width-item"><strong>Mặt tiền:</strong> <span class="facade-width-show"></span>m</li>
 						<li class="land-width-item"><strong>Đường vào:</strong> <span class="land-width-show"></span>m</li>

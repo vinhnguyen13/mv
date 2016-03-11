@@ -165,4 +165,14 @@ class AdProduct extends AP
 	{
 		return Url::to(['/ad/detail', 'id' => $this->id, 'slug' => \common\components\Slug::me()->slugify($this->getAddress())], $scheme);
 	}
+	
+	public function afterSave($insert, $changedAttributes) {
+		if($insert) {
+			
+		} else {
+			
+		}
+		
+		parent::afterSave($insert, $changedAttributes);
+	}
 }
