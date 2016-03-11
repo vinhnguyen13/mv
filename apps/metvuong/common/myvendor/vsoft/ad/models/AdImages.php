@@ -45,6 +45,15 @@ class AdImages extends AI
     public static function defaultImage() {
     	return '/themes/metvuong2/resources/images/default-ads.jpg';
     }
+    
+    public function afterDelete() {
+    	$original = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $this->folder . DIRECTORY_SEPARATOR . $this->file_name;
+    	unlink($original);
+    	
+    	foreach(AdImageHelper::$sizes as $size) {
+    		unlink(\Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $this->folder . DIRECTORY_SEPARATOR . AdImageHelper::makeFolderName($size) . DIRECTORY_SEPARATOR . $this->file_name);
+    	}
+    }
 }
 
 

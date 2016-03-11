@@ -142,7 +142,7 @@ class AdProduct extends AP
 	
 	public function getAdImages()
 	{
-		return $this->hasMany(AdImages::className(), ['product_id' => 'id'])->orderBy(['order' => SORT_ASC]);
+		return $this->hasMany(AdImages::className(), ['product_id' => 'id'])->orderBy(['order' => SORT_ASC])->indexBy('id');
 	}
 	/**
 	 * @return \yii\db\ActiveQuery

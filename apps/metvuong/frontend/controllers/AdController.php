@@ -386,49 +386,57 @@ class AdController extends Controller
     				$additionInfo->save(false);
     				$contactInfo->save(false);
     				
+    				$oldImages = ArrayHelper::map($product->adImages, 'file_name', 'id');
+    				
     				if(isset($post['images'])) {
-    					$oldImages = ArrayHelper::map($product->adImages, 'id', 'file_name');
-    					$newImages = $post['images'];
+    					$addImages = [];
     					
-    					$deleteImages = array_diff($oldImages, $newImages);
-    					$addImages = array_diff($newImages, $oldImages);
-    					
-    					if($deleteImages) {
-    						$adImages = ArrayHelper::index($product->adImages, 'id');
-	    					foreach ($deleteImages as $k => $image) {
-	    						$adImages[$k]->delete();
-	    					}
+    					foreach ($post['images'] as $order => $name) {
+    						if(isset($oldImages[$name])) {
+    							$image = $product->adImages[$oldImages[$name]];
+    							if($image->order != $order) {
+    								$image->order = $order;
+    								$image->save(false);
+    							}
+    							unset($oldImages[$name]);
+    						} else {
+    							$addImages[$order] = $name;
+    						}
     					}
     					
     					if($addImages) {
-	    					$helper = new AdImageHelper();
-		    				$tempFolder = $helper->getTempFolderPath(Yii::createObject(Session::className())->getId());
-		    				
-		    				$now = time();
-		    				
-		    				$newFolderAbsolute = $helper->getAbsoluteUploadFolderPath($now);
-		    				$newFolder = $helper->getUploadFolderPath($newFolderAbsolute);
-		    				
-		    				$newFolderAbsoluteUrl = str_replace(DIRECTORY_SEPARATOR, '/', $newFolderAbsolute);
-		    				
-		    				if(!file_exists($newFolder)) {
-		    					mkdir($newFolder, 0777, true);
-		    					$helper->makeFolderSizes($newFolder);
-		    				}
-		    				
-		    				foreach($addImages as $k => $image) {
-		    					$helper->moveTempFile($tempFolder, $newFolder, $image);
-		    					
-		    					$adImage = new AdImages();
-		    					$adImage->user_id = Yii::$app->user->id;
-		    					$adImage->product_id = $product->id;
-		    					$adImage->file_name = $image;
-		    					$adImage->uploaded_at = $now;
-		    					$adImage->order = $k;
-		    					$adImage->folder = $newFolderAbsoluteUrl;
-		    					$adImage->save(false);
-		    				}
+    						$helper = new AdImageHelper();
+    						$tempFolder = $helper->getTempFolderPath(Yii::createObject(Session::className())->getId());
+    						
+    						$now = time();
+    						
+    						$newFolderAbsolute = $helper->getAbsoluteUploadFolderPath($now);
+    						$newFolder = $helper->getUploadFolderPath($newFolderAbsolute);
+    						
+    						$newFolderAbsoluteUrl = str_replace(DIRECTORY_SEPARATOR, '/', $newFolderAbsolute);
+    						
+    						if(!file_exists($newFolder)) {
+    							mkdir($newFolder, 0777, true);
+    							$helper->makeFolderSizes($newFolder);
+    						}
+    						
+    						foreach($addImages as $k => $image) {
+    							$helper->moveTempFile($tempFolder, $newFolder, $image);
+    							 
+    							$adImage = new AdImages();
+    							$adImage->user_id = Yii::$app->user->id;
+    							$adImage->product_id = $product->id;
+    							$adImage->file_name = $image;
+    							$adImage->uploaded_at = $now;
+    							$adImage->order = $k;
+    							$adImage->folder = $newFolderAbsoluteUrl;
+    							$adImage->save(false);
+    						}
     					}
+    				}
+
+    				foreach ($oldImages as $id) {
+    					$product->adImages[$id]->delete();
     				}
     			} else {
     				$result['success'] = false;
