@@ -91,7 +91,7 @@ use frontend\models\Ad;
                 foreach($news as $n){
             ?>
             <div class="item clearfix">
-                <a class="rippler rippler-default" href="<?= \yii\helpers\Url::to(['news/view', 'id' => $n['id'], 'slug' => $n['slug'], 'cat_id' => $n['catalog_id'], 'cat_slug' => $n["cat_slug"]], true) ?>">
+                <a class="rippler rippler-default" href="<?= \yii\helpers\Url::to(['news/view', 'id' => $n['id'], 'slug' => $n['slug']], true) ?>">
                     <div class="wrap-img bgcover" style="background-image:url(<?=Url::to('/store/news/show/' . $n['banner']) ?>);"></div>
                     <span class="txt-short-news">
                         <span class="title-news color-30a868"><?=$n['title']?></span>
