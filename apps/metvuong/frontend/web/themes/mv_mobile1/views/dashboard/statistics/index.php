@@ -69,7 +69,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     		</div>
     		<div class="summary clearfix">
                 <ul class="option-view-stats">
-                    <li><a href="#" class="btn-finder" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $finderFrom, 'to' => $finderTo, 'address' => $address, 'urlDetail' => $urlDetail])?>">Search</a></li>
+                    <li><a href="#" class="btn-finder active" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $finderFrom, 'to' => $finderTo, 'address' => $address, 'urlDetail' => $urlDetail])?>">Search</a></li>
                     <li><a href="#" class="btn-visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $visitorFrom, 'to' => $visitorTo, 'address' => $address, 'urlDetail' => $urlDetail])?>">Click</a></li>
                     <li><a href="#" class="btn-favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'id' => $id, 'from' => $favouriteFrom, 'to' => $favouriteTo, 'address' => $address, 'urlDetail' => $urlDetail])?>">Favourite</a></li>
                 </ul>
@@ -300,6 +300,8 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
                     url: url,
                     success: function (data) {
                         $('body').loading({done: true});
+                        $('.option-view-stats li a').removeClass("active");
+                        $('.btn-finder').addClass("active");
                         $('.wrapChart').html(data);
                         $('.finder').show();
                         $('.visitor').hide();
@@ -321,6 +323,8 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
                     url: url,
                     success: function (data) {
                         $('body').loading({done: true});
+                        $('.option-view-stats li a').removeClass("active");
+                        $('.btn-visitor').addClass("active");
                         $('.wrapChart').html(data);
                         $('.finder').hide();
                         $('.visitor').show();
@@ -342,6 +346,8 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
                     url: url,
                     success: function (data) {
                         $('body').loading({done: true});
+                        $('.option-view-stats li a').removeClass("active");
+                        $('.btn-favourite').addClass("active");
                         $('.wrapChart').html(data);
                         $('.finder').hide();
                         $('.visitor').hide();
