@@ -25,6 +25,9 @@ class AdProduct extends AP
 	const DEFAULT_CITY = 1;
 	const DEFAULT_DISTRICT = 10;
 	
+	private $oldAttr = [];
+	private static $elasticUpdateFields = ['city', 'district', 'ward', 'street', 'project_building'];
+	
 	public function rules()
 	{
 		return [
@@ -91,6 +94,9 @@ class AdProduct extends AP
 		if($this->area) {
 			$this->area = str_replace(',', '.', $this->area);
 		}
+		
+		// Cast to int to detect changedAttribute in afterSave EVENT
+		$this->oldAttr = $this->oldAttributes;
 		
 		return parent::beforeSave($insert);
 	}
@@ -168,11 +174,34 @@ class AdProduct extends AP
 	
 	public function afterSave($insert, $changedAttributes) {
 		if($insert) {
-			
+			foreach(self::$elasticUpdateFields as $field) {
+				$attr = $field . '_id';
+				if($this->attributes[$attr]) {
+					$this->updateElasticCounter($field, $this->attributes[$attr]);
+				}
+			}
 		} else {
-			
+			foreach(self::$elasticUpdateFields as $field) {
+				$attr = $field . '_id';
+				if($this->oldAttr[$attr] != $this->attributes[$attr]) {
+					$this->updateElasticCounter($field, $this->attributes[$attr]);
+					$this->updateElasticCounter($field, $this->oldAttr[$attr], false);
+				}
+			}
 		}
 		
 		parent::afterSave($insert, $changedAttributes);
+	}
+	
+	public function updateElasticCounter($type, $id, $increase = true) {
+		$sign = $increase ? '+' : '-';
+		$script = '{"script" : "ctx._source.total' . $sign . '=1"}';
+		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/term/$type/$id/_update");
+			
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $script);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_exec($ch);
+		curl_close($ch);
 	}
 }

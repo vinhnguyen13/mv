@@ -77,19 +77,22 @@ class ElasticController extends Controller {
 		
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $bulk);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_exec($ch);
+		curl_close($ch);
 	}
 	
 	public function indexExist($indexName) {
 		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/' . $indexName);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "HEAD");
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_HEADER, true);
 		
 		curl_exec($ch);
 		
 		$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		
+		curl_close($ch);
 		
 		return $httpcode == 200;
 	}
@@ -98,12 +101,14 @@ class ElasticController extends Controller {
 		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/' . $indexName . '?pretty');
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
 		curl_exec($ch);
+		curl_close($ch);
 	}
 	
 	public function deleteIndex($indexName) {
 		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/' . $indexName . '?pretty');
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
 		curl_exec($ch);
+		curl_close($ch);
 	}
 	
 	private function buildTerm($id, $name, $fullName, $total) {
