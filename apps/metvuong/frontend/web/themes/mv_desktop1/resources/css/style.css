@@ -55,7 +55,7 @@ input[type=search] {
 }
 .icon {
     background: url(../images/icon.png) no-repeat top left;
-    background-size: 33px 1400px;
+    background-size: 33px 1600px;
     display: inline-block;
 }
 header {
@@ -229,16 +229,6 @@ header {
     letter-spacing: 0.5px;
     font-size: 16px;
     text-transform: uppercase;
-}
-.regis-home p,
-.search-home p {
-    font-size: 13px;
-    color: #3c3c3c;
-    line-height: 1.7;
-}
-.regis-home a,
-.search-home a {
-    
 }
 .overflow-bg {
     background: rgba(0, 0, 0, 0.41);
@@ -2035,7 +2025,7 @@ label {
 .icon-share-td {
     display: inline-block;
     background-position: 0 -480px;
-    background-size: 50px 2100px;
+    background-size: 50px 2400px;
     width: 24px;
     height: 24px;
     position: relative;
@@ -2044,7 +2034,7 @@ label {
 .save-item {
     display: inline-block;
     background-position: 0 -455px;
-    background-size: 50px 2100px;
+    background-size: 50px 2400px;
     width: 25px;
     height: 23px;
 }
@@ -2842,9 +2832,6 @@ input[type=text]:focus {
     border: solid 1px #DEDEDE;
     /* border-top: none; */
 }
-.box-item .wrap-item .item .wrap-img {
-    text-align: center;
-}
 .box-item .wrap-item .item:last-child {
     margin-bottom: 0;
 }
@@ -2981,15 +2968,13 @@ input[type=text]:focus {
     color: #3c3c3c;
     font-size: 13px;
 }
-.news-item .item .wrap-img {
-    float: left;
-    width: 40%;
-    height: 150px;
-    margin-right: 15px;
-    background-position: 50% bottom;
+.news-item .item .date-news {
+    color: #B9B9B9;
+    font-style: italic;
 }
 .news-item .item .txt-short-news {
     overflow: hidden;
+    margin-top: 10px;
 }
 .news-item .item .title-news {
     margin-bottom: 8px;
@@ -2997,7 +2982,7 @@ input[type=text]:focus {
     line-height: 1.3;
     letter-spacing: 0.5px;
     color: #3c3c3c;
-    font-size: 14px;
+    font-size: 15px;
 }
 .item-listing .img-intro:before {
     display: block;
@@ -3181,7 +3166,7 @@ input[type=text]:focus {
 }
 .news-item {
     margin-bottom: 0;
-    padding: 0;
+    padding: 35px 0 30px 0;
 }
 .avatar-user-pr em {
     margin-right: 5px;
@@ -3431,7 +3416,7 @@ input[type=text]:focus {
 }
 .icon-map-loca {
     background-position: 0px -994px;
-    background-size: 50px 2100px;
+    background-size: 50px 2400px;
     width: 18px;
     height: 24px;
 }
@@ -3600,19 +3585,19 @@ input[type=text]:focus {
 }
 .icon-alert {
     background-position: 0 -1310px;
-    background-size: 50px 2100px;
+    background-size: 50px 2400px;
     width: 22px;
     height: 26px;
 }
 .icon-listings {
     background-position: 0 -1337px;
-    background-size: 50px 2100px;
+    background-size: 50px 2400px;
     width: 24px;
     height: 29px;
 }
 .icon-chat {
     background-position: 0 -1226px;
-    background-size: 50px 2100px;
+    background-size: 50px 2400px;
     width: 30px;
     height: 26px;
 }
@@ -3623,13 +3608,13 @@ input[type=text]:focus {
 }
 .icon-tags {
     background-position: 0 -1255px;
-    background-size: 50px 2100px;
+    background-size: 50px 2400px;
     width: 26px;
     height: 27px;
 }
 .icon-logout {
     background-position: 0 -1283px;
-    background-size: 50px 2100px;
+    background-size: 50px 2400px;
     width: 24px;
     height: 26px;
 }
@@ -4186,25 +4171,25 @@ input[type=text]:focus {
     width: 26px;
     height: 26px;
     background-position: 0 -1820px;
-    background-size: 50px 2100px;
+    background-size: 50px 2400px;
 }
 .icon-key {
     background-position: 0 -1771px;
     width: 28px;
     height: 23px;
-    background-size: 50px 2100px;
+    background-size: 50px 2400px;
 }
 .icon-home {
     background-position: 0 -1795px;
     width: 29px;
     height: 24px;
-    background-size: 50px 2100px;
+    background-size: 50px 2400px;
 }
 .icon-news {
     background-position: 0 -1744px;
     width: 28px;
     height: 25px;
-    background-size: 50px 2100px;
+    background-size: 50px 2400px;
 }
 #settings-user li a > div,
 .wrap-menu li a > div {
@@ -4445,7 +4430,7 @@ input[type=text]:focus {
 .icon-per {
     display: inline-block;
     background-position: 0 -1847px;
-    background-size: 50px 2100px;
+    background-size: 50px 2400px;
     width: 27px;
     height: 26px;
 }
@@ -4463,19 +4448,19 @@ input[type=text]:focus {
 }
 .icon-chat-sub{
     background-position: 0 -529px;
-    background-size: 50px 2100px;
+    background-size: 50px 2400px;
     width: 17px;
     height: 16px;
 }
 .icon-face {
     background-position: 0 -1914px;
-    background-size: 50px 2100px;
+    background-size: 50px 2400px;
     width: 11px;
     height: 24px;
 }
 .icon-email-2 {
     background-position: 0 -1895px;
-    background-size: 50px 2100px;
+    background-size: 50px 2400px;
     width: 21px;
     height: 18px;
 }
@@ -4883,6 +4868,19 @@ input[type=text]:focus {
     #listing-list .wrap-attr-bottom {
         padding: 10px 15px;
     }
+    .news-item .wrap-item {
+        margin: 0 -10px;
+        overflow: hidden;
+    }
+    .news-item .wrap-item .item {
+        width: 50%;
+        float: left;
+        border: none;
+        padding: 0 10px;
+    }
+    .news-item .item .txt-short-news {
+        height: 125px;
+    }
 }
 #edit-changepass .inner-popup,
 #edit-ttcn .inner-popup {
@@ -5095,8 +5093,7 @@ input[type=text]:focus {
     .search-homepage > ul,
     #menu-header,
     #settings-user,
-    .m-header,
-    .search-home {
+    .m-header{
         display: none;
     }
     header {
@@ -5170,4 +5167,77 @@ input[type=text]:focus {
 }
 .list-menu li a:hover {
     text-decoration: underline;
+}
+.icon-phone-2 {
+    background-position: 0px -2071px;
+    background-size: 50px 2400px;
+    width: 21px;
+    height: 23px;
+}
+.icon-email-3 {
+    background-position: 0px -2096px;
+    background-size: 50px 2400px;
+    width: 22px;
+    height: 15px;
+}
+.map-location iframe {
+    position: absolute;
+    top:  0;
+    left: 0;
+}
+.map-location {
+    margin-bottom: 20px;
+}
+.txt-location {
+    font-size: 14px;
+    font-weight: 600;
+    text-shadow: 1px 1px 1px #fff;
+    -webkit-text-shadow: 1px 1px 1px #fff;
+    -moz-text-shadow: 1px 1px 1px #fff;
+    -ms-text-shadow: 1px 1px 1px #fff;
+}
+.txt-location .name-cty {
+    font-weight: 600;
+    font-size: 17px;
+    margin-bottom: 10px;
+}
+.txt-location li {
+    border-bottom: solid 1px #dcdcdc;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    float: left;
+    width: 100%;
+}
+.txt-location li span {
+    margin-right: 20px;
+    vertical-align: middle;
+}
+.txt-location ul {
+    margin-bottom: 15px;
+}
+.txt-location .get-email {
+    margin-bottom: 5px;
+    font-size: 17px;
+}
+.txt-location form input {
+    border: solid 1px #dedede;
+    height: 43px;
+    display: inline-block;
+    margin-right: 15px;
+    padding: 0 15px;
+    min-width: 60%;
+}
+@media (min-width: 960px) {
+    .txt-location,
+    .map-location {
+        float: left;
+        width: 50%;
+        margin-bottom: 0;
+    }
+    .txt-location {
+        padding-left: 20px;
+    }
+    .map-location .img-show:before {
+        padding-top: 65%
+    }
 }

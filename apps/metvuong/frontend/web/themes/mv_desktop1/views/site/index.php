@@ -5,7 +5,7 @@ use frontend\models\Ad;
 ?>
 <div class="page-home">
 
-    <section class="search-box hFullScreen">
+    <section class="search-box hFullScreen container">
         <!-- <div class="text-center sologan">
             Đưa bạn đến ngôi nhà yêu thích<br>
             Tìm hiểu &amp; giao dịch bất động sản dễ dàng
@@ -88,14 +88,14 @@ use frontend\models\Ad;
     <?php if(count($news) > 0) {?>
     <section class="box-item news-item">
         <div class="container">
-            <div class="title-sub">news</div>
+            <div class="title-sub">TIN TỨC</div>
             <div class="wrap-item">
                 <?php
                     foreach($news as $n){
                 ?>
                 <div class="item clearfix">
                     <a class="rippler rippler-default" href="<?= \yii\helpers\Url::to(['news/view', 'id' => $n['id'], 'slug' => $n['slug']], true) ?>">
-                        <div class="wrap-img bgcover" style="background-image:url(<?=Url::to('/store/news/show/' . $n['banner']) ?>);"></div>
+                        <div class="img-show"><div><img src="<?=Url::to('/store/news/show/' . $n['banner']) ?>"></div></div>
                         <span class="txt-short-news">
                             <span class="title-news color-30a868"><?=$n['title']?></span>
                             <span class="date-news"><?=date('d/m/Y, H:i', $n['created_at'])?></span>
@@ -111,10 +111,33 @@ use frontend\models\Ad;
 
     <section class="search-home">
         <div class="container">
-            <div class="txt-intro">
-                <h2>Chúng tôi sẽ giúp bạn tìm được ngôi nhà mà mình mong muốn trong chốc lát</h2>
-                <p>Mét Vuông cung cấp lên đến hàng chục ngàn các căn hộ cao cấp, nhà riêng và biệt thự cho thuê hoặc đang rao bán tại hầu hết các tỉnh thành trên cả nước. Thông qua những mô tả chi tiết và hình ảnh chân thật, chúng tôi cam kết giúp khách hàng tìm được sản phẩm phù hợp nhất, một cách nhanh chóng và hiệu quả.</p>
-                <div class="text-center pdT-25"><a href="#" class="btn-common rippler rippler-default">Tìm hiểu thêm</a></div>
+            <div class="title-sub">LIÊN HỆ</div>
+            <div class="clearfix">
+                <div class="wrap-img map-location">
+                    <div class="img-show"><iframe width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:EksyMSBOZ3V54buFbiBUcnVuZyBOZ-G6oW4sIELhur9uIE5naMOpLCBRdeG6rW4gMSwgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0&key=AIzaSyDgukAnWQNq0fitebULUbottG5gvK64OCQ" allowfullscreen></iframe></div>
+                </div>
+                <div class="txt-location">
+                    <p class="name-cty color-cd">METVUONG TEAM</p>
+                    <ul class="clearfix">
+                        <li>
+                            <span class="icon icon-map-loca pull-left"></span>
+                            <p>Lầu 12 Tòa nhà Miss Aodai <br> 21 Nguyễn Trung Ngạn, Quận 1, thành phố Hồ Chí Minh.</p>
+                        </li>
+                        <li>
+                            <span class="icon icon-phone-2 pull-left"></span>
+                            <p>08. 345 678 - 0908 123 456</p>
+                        </li>
+                        <li>
+                            <span class="icon icon-email-3 pull-left"></span>
+                            <p>contact@metvuong.com</p>
+                        </li>
+                    </ul>
+                    <p class="color-cd get-email">SUBSCRIBED OUR NEWSLETTER</p>
+                    <form action="">
+                        <input type="text" placeholder="Your Email" />
+                        <button type="submit" class="btn-common">Subscribe</button>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
