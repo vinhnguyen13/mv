@@ -33,7 +33,13 @@ if(!empty($data) && count($data) > 0) {
                 },
                 xAxis: {
                     categories: <?=json_encode($categories);?>,
-                    max: <?=!empty(count($categories)) ? count($categories) - 1 : 0?>
+                    max: <?=!empty(count($categories)) ? count($categories) - 1 : 0?>,
+                    labels: {
+                        formatter: function () {
+                            var d = this.value.split("/");
+                            return d[0] + "/" + d[1];
+                        }
+                    }
                 },
                 yAxis: {
                     allowDecimals: false,
@@ -114,6 +120,8 @@ if(!empty($data) && count($data) > 0) {
 }?>
 <div class="statistic-info">
     <a href="<?=$urlDetail?>" style="color: black;"><p class="name-post"><span class="icon address-icon"></span><?=$address?></p></a>
-    <p class="date-filter-chart text-center mgT-15">Thống kê từ <span class="from"><?=date('d/m/Y', $from)?></span> - <span class="to"><?=date('d/m/Y', $to)?></span></p>
+    <?php if($from > 0 && $to > 0) {?>
+    <p class="date-filter-chart text-center mgT-15">Thống kê lượt <b>yêu thích</b> từ <span class="from"><?=date('d/m/Y', $from)?></span> - <span class="to"><?=date('d/m/Y', $to)?></span></p>
+    <?php } ?>
 </div>
 

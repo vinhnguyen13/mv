@@ -78,7 +78,7 @@ use yii\helpers\Url;
 		<div class="no-duan">
 			<div>
 				<p>Hiện tại, bạn không có<br>dự án nào.</p>
-				<a href="<?= Url::to(['/ad/post']) ?>" class="btn-000">Đăng Dự Án</a>
+				<a href="#" class="btn-000">Đăng Dự Án</a>
 			</div>
 		</div>
 		<?php endif; ?>
