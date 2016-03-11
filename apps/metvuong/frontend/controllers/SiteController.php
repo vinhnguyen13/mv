@@ -268,27 +268,28 @@ class SiteController extends Controller
     	}
     	
 
-    	$catalogs = CmsCatalog::find()->indexBy('id')->select('id, title')->where(['parent_id'=>Yii::$app->params['newsCatID'], 'status'=>Status::STATUS_ACTIVE])->asArray(true)->all();
-    	 
-    	foreach ($catalogs as $k => &$catalog) {
-    		unset($catalog['id']);
-    	}
-
-        $news = [
-            1=>['title'=>Yii::t('cms', 'Tin Tức')],
-            2=>['title'=>Yii::t('cms', 'Dự Án')],
-        ];
-
-		$content = 'var dataCities = ' . json_encode($cities, JSON_UNESCAPED_UNICODE) . ';' .
-					'var dataCategories = ' . json_encode($categories, JSON_UNESCAPED_UNICODE) . ';' .
-					'var newsCatalogs = ' . json_encode($catalogs, JSON_UNESCAPED_UNICODE) . ';'.
-					'var news = ' . json_encode($news, JSON_UNESCAPED_UNICODE) . ';';
-    	$file = fopen(Yii::getAlias('@store') . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . "data.js", "w");
-    	fwrite($file, $content);
-		fclose($file);
-    }
-    
-    public function actionSearch() {
+    	$catalogs = CmsCatalog::find()->indexBy('id')->select('id, title')->where(['parent_id'=>Yii::$app->params['newsCatID'], 'status'=>Status::STATUS_ACTIVE 
+		] )->asArray ( true )->all ();
+		
+		foreach ( $catalogs as $k => &$catalog ) {
+			unset ( $catalog ['id'] );
+		}
+		
+		$news = [ 
+				1 => [ 
+						'title' => Yii::t ( 'cms', 'Tin Tức' ) 
+				],
+				2 => [ 
+						'title' => Yii::t ( 'cms', 'Dự Án' ) 
+				] 
+		];
+		
+		$content = 'var dataCities = ' . json_encode ( $cities, JSON_UNESCAPED_UNICODE ) . ';' . 'var dataCategories = ' . json_encode ( $categories, JSON_UNESCAPED_UNICODE ) . ';' . 'var newsCatalogs = ' . json_encode ( $catalogs, JSON_UNESCAPED_UNICODE ) . ';' . 'var news = ' . json_encode ( $news, JSON_UNESCAPED_UNICODE ) . ';';
+		$file = fopen ( Yii::getAlias ( '@store' ) . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . "data.js", "w" );
+		fwrite ( $file, $content );
+		fclose ( $file );
+	}
+	public function actionSearch() {
     	$v = \Yii::$app->request->get('v');
     	
     	if(Yii::$app->request->isAjax) {
@@ -298,10 +299,18 @@ class SiteController extends Controller
     		 
     		$params = [
 				'query' => [
-					'match' => [
-						'search_field' => $v
+					'match_phrase_prefix' => [
+						'search_field' => [
+    						'query' => $v,
+    						'max_expansions' => 100
+    					]
 					],
     			],
+    			'sort' => [
+    				'total' => [
+    					'order' => 'desc'
+					]
+				],
     			'_source' => ['full_name', 'total']
     		];
     		 
