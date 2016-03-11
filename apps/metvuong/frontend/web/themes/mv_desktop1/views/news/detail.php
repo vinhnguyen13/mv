@@ -78,10 +78,10 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                     <div class="box-content">
                         <div><?=$news->content?></div>
                         <div id="social<?=$news->id?>" class="share-social mgT-10 wrap-img">
-                            <div class="fb-like" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug, 'cat_id' => $news->catalog_id, 'cat_slug' => $catalog->slug], true) ?>" data-layout="button_count" style="margin-right: 10px;"></div>
-                            <div class="fb-send" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug, 'cat_id' => $news->catalog_id, 'cat_slug' => $catalog->slug], true) ?>" data-show-faces="false" style="margin-right: 10px;"></div>
-                            <div class="fb-share-button" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug, 'cat_id' => $news->catalog_id, 'cat_slug' => $catalog->slug], true) ?>" data-layout="button_count"></div><br>
-                            <div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl(['news/view', 'id' => $news->id, 'slug' => $news->slug, 'cat_id' => $news->catalog_id, 'cat_slug' => $catalog->slug])?>" data-width="100%" data-numposts="3"></div>
+                            <div class="fb-like" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug], true) ?>" data-layout="button_count" style="margin-right: 10px;"></div>
+                            <div class="fb-send" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug], true) ?>" data-show-faces="false" style="margin-right: 10px;"></div>
+                            <div class="fb-share-button" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug], true) ?>" data-layout="button_count"></div><br>
+                            <div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl(['news/view', 'id' => $news->id, 'slug' => $news->slug])?>" data-width="100%" data-numposts="3"></div>
                         </div>
                     </div>
                 </div>
@@ -138,18 +138,10 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 </style>
 <script type="text/javascript">
     $(document).ready(function(){
-//        var offset=350; // At what pixels show Back to Top Button
-
-
-//        $('.detail-news').bind('contextmenu',function(e){return false;});
         var timer;
         $(window).scroll(function () {
             var currentID = parseInt($('#current_id').val());
             var catID = parseInt($('#cat_id').val());
-
-//            var divHeight = $(".toHeight").position().top;
-//            var h = $(document).height() - $(window).height();
-
             var hArticle = $('.wrap-detail-article').outerHeight() + $('header').outerHeight();
 
             $(window).scrollTop(function() {
@@ -163,6 +155,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                             type: 'POST',
                             success: function (data) {
                                 if (data) {
+//                                    console.log(data);
                                     $(".loading").hide();
                                     $('#current_id').val(data.id);
                                     $('#current_slug').val(data.slug);
@@ -170,7 +163,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                                     document.title = data.title;
                                     var time = timeConverter(data.created_at);
                                     var cat_id = data.catalog_id;
-                                    window.history.pushState(data.slug, data.title, data.id + "-" + data.slug);
+                                    window.history.pushState(data.slug, data.title, data.id + '-' + data.slug );
                                     $('.wrap-detail-article').append(
                                         '<article>' +
                                         '<h1 class="big-title">' + data.title + '</h1>' +
@@ -181,10 +174,10 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                                         '<div class="box-content">' +
                                         '<div>' + data.content + '</div>' +
                                         '<div id="social' + data.id + '" class="share-social mgT-10 wrap-img">' +
-                                        '<div class="fb-like" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + data.catalog_id + '-' + data.cat_slug + '/' + data.id + '-' + data.slug + '" data-layout="button_count" style="margin-right: 10px;"></div>' +
-                                        '<div class="fb-send" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + data.catalog_id + '-' + data.cat_slug + '/' + data.id + '-' + data.slug + '" data-show-faces="false" style="margin-right: 10px;"></div>' +
-                                        '<div class="fb-share-button" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + data.catalog_id + '-' + data.cat_slug + '/' + data.id + '-' + data.slug + '" data-layout="button_count"></div><br>' +
-                                        '<div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/' + data.catalog_id + '-' + data.cat_slug + '/' + data.id + '-' + data.slug + '" data-width="600" data-numposts="3" ></div>' +
+                                        '<div class="fb-like" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/view/' +  data.id + '-' + data.slug + '" data-layout="button_count" style="margin-right: 10px;"></div>' +
+                                        '<div class="fb-send" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/view/' +  data.id + '-' + data.slug + '" data-show-faces="false" style="margin-right: 10px;"></div>' +
+                                        '<div class="fb-share-button" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>view/' +  data.id + '-' + data.slug + '" data-layout="button_count"></div><br>' +
+                                        '<div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl('news')?>/view/' +  data.id + '-' + data.slug+ '" data-width="600" data-numposts="3" ></div>' +
                                         '</div>' +
                                         '</div>' +
                                         '</div>' +
