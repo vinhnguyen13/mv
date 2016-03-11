@@ -31,7 +31,7 @@ use yii\helpers\Url;
                         $banner = '/themes/metvuong2/resources/images/default-ads.jpg';
                 ?>
 				<li>
-					<a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n["id"], 'slug' => $n["slug"], 'cat_id' => $n["catalog_id"], 'cat_slug' => $n["cat_slug"]], true)?>" class="rippler rippler-default">
+					<a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n["id"], 'slug' => $n["slug"]], true)?>" class="rippler rippler-default">
 						<div class="img-show"><div><img src="<?=$banner?>" alt="<?=$n["title"]?>"></div></div>
 					</a>
 					<p class="name-news"><a href="#"><?=$n["title"]?></a></p>

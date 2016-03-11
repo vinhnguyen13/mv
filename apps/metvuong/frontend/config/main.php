@@ -89,6 +89,7 @@ return [
                 '/' => 'site/index',
                 'news' => 'news/index',
                 'news/<cat_id:\d+>-<cat_slug>' => 'news/list',
+                'news/view/<id:\d+>-<slug>' => 'news/view',
                 'building' => 'building-project/index',
                 'building/<slug>' => 'building-project/view',
                 'real-estate/result' => 'ad/index',

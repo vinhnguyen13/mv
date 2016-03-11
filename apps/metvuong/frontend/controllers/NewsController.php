@@ -39,18 +39,22 @@ class NewsController extends Controller
 
     public function actionView($id)
     {
-        $detail = CmsShow::findOne($id);
-        $user_id = $detail->created_by;
-        $author = Profile::findOne($user_id);
-        $catalog = CmsCatalog::findOne($detail->catalog_id);
-
+//        $detail = CmsShow::findOne($id);
+//        $user_id = $detail->created_by;
+//        $author = Profile::findOne($user_id);
+//        $catalog = CmsCatalog::findOne($detail->catalog_id);
+        $detail = CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief', 'cms_show.content', 'cms_show.created_at','cms_show.catalog_id', 'cms_show.click', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
+            ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
+            ->where('cms_show.id = :id', [':id' => $id])
+            ->andWhere('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
+            ->orderBy('cms_show.created_at DESC')->one();
         // add 1 for each click news link
         $click = $detail->click;
         $detail->click = $click + 1;
         $detail->update();
 
         $this->view->title = $detail->title;
-        return $this->render('detail', ['news' => $detail, 'author' => $author, 'catalog' => $catalog]);
+        return $this->render('detail', ['news' => $detail]);
     }
 
     public function actionFindnotfound()

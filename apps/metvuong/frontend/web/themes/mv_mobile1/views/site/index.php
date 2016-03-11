@@ -85,13 +85,13 @@ use frontend\models\Ad;
 
     <?php if(count($news) > 0) {?>
     <section class="box-item news-item">
-        <div class="title-sub">news</div>
+        <div class="title-sub"><a href="<?=Url::to(['news/index'])?>" class="title-sub">news</a></div>
         <div class="wrap-item">
             <?php
                 foreach($news as $n){
             ?>
             <div class="item clearfix">
-                <a class="rippler rippler-default" href="<?= \yii\helpers\Url::to(['news/view', 'id' => $n['id'], 'slug' => $n['slug'], 'cat_id' => $n['catalog_id'], 'cat_slug' => $n["cat_slug"]], true) ?>">
+                <a class="rippler rippler-default" href="<?= \yii\helpers\Url::to(['news/view', 'id' => $n['id'], 'slug' => $n['slug']], true) ?>">
                     <div class="wrap-img bgcover" style="background-image:url(<?=Url::to('/store/news/show/' . $n['banner']) ?>);"></div>
                     <span class="txt-short-news">
                         <span class="title-news color-30a868"><?=$n['title']?></span>
