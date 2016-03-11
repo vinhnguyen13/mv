@@ -113,11 +113,12 @@ class CmsShow extends \funson86\cms\models\CmsShow
     }
 
     public static function getShowForHomepage(){
+        $limit = Yii::$app->mobileDetect->isMobile() ? 3 : 4;
         $query = CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief', 'cms_show.created_at','cms_show.catalog_id', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
             ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
             ->where('cms_show.catalog_id = :id', [':id' => Yii::$app->params['homepageCatID']])
             ->andWhere('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
-            ->asArray()->orderBy(['cms_show.created_at' => SORT_DESC])->limit(3)->all();
+            ->asArray()->orderBy(['cms_show.created_at' => SORT_DESC])->limit($limit)->all();
         return $query;
     }
 
