@@ -550,7 +550,10 @@ margin-top: 3px;
 .item-listing .address-listing {
     font-weight: 700;
     font-size: 15px;
-    margin: 10px 0 2px;
+    margin: 10px 0 5px;
+    max-height: 42px;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 #listing-list .item-listing .address-listing {
     margin-top: 5px;
@@ -1304,6 +1307,10 @@ label {
     position: relative;
     font-size: 13px;
     -webkit-tap-highlight-color: rgba(0, 167, 105, 0.23);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
 }
 .val-selected .selected {
     display: inline-block;
@@ -1365,10 +1372,10 @@ label {
     float: left;
 }
 .style-click:hover {
-    box-shadow: 0px 0px 1px red;
-    -webkit-box-shadow: 0px 0px 1px red;
-    -moz-box-shadow: 0px 0px 1px red;
-    -ms-box-shadow: 0px 0px 1px red;
+    box-shadow: 0px 0px 2px #00A769;
+    -webkit-box-shadow: 0px 0px 2px #00A769;
+    -moz-box-shadow: 0px 0px 2px #00A769;
+    -ms-box-shadow: 0px 0px 2px #00A769;
 }
 .advande-search-btn.active span {
     -webkit-transform: rotate3d(0,0,1,45deg);
@@ -1924,9 +1931,11 @@ label {
     padding: 4px 15px;
     color: #333;
     text-align: center;
+    cursor: pointer;
 }
 .filter-minmax li a:hover {
     color: #33AB6B;
+    text-decoration: none;
 }
 .filter-minmax ul {
     padding: 5px 0;
@@ -2364,7 +2373,7 @@ footer {
 .arrowDown {
     display: inline-block;
     width: 21px;
-    height: 11px;
+    height: 12px;
     background-position: 0 -459px;
     background-color: #F0F0F0;
 }
@@ -3729,8 +3738,10 @@ input[type=text]:focus {
 }
 .item-listing .id-duan {
     font-weight: 400;
-    color: #929292;
-    margin-bottom: 7px;
+    /* color: #929292; */
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 3px;
 }
 #listing-list .item-listing .id-duan span {
     font-weight: 700;
@@ -3792,7 +3803,7 @@ input[type=text]:focus {
     margin-top: 25px;
 }
 .id-duan {
-    color: #AFAFAF;
+    /* color: #AFAFAF; */
     font-weight: 400;
     font-size: 15px;
 }
@@ -4326,7 +4337,6 @@ input[type=text]:focus {
     margin-bottom: 0;
 }
 .date-post {
-    margin-bottom: 5px;
 }
 #listing-form .form-group {
     margin-bottom: 0;
@@ -4852,7 +4862,7 @@ input[type=text]:focus {
         margin: 0 -10px;
     }
     #listing-list .wrap-attr-item {
-        height: 120px;
+        height: 135px;
         overflow: hidden;
         padding: 0 15px;
         border-bottom: 1px solid #ededed;
@@ -5327,9 +5337,13 @@ footer li a {
         width: 25%;
     }
 }
-.address-feat > div {
+.address-feat > a {
     color: #00a769;
     margin-bottom: 10px;
+    display: block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .ad-listing header .container {
     width: 100%;
@@ -5368,9 +5382,11 @@ footer li a {
     .select-loaibds {
         width: 230px;
     }
-    .select-dt,
     .select-price {
-        width: 170px;
+        width: 185px;
+    }
+    .select-dt {
+        width: 220px;
     }
     .ad-listing .num-phongngu,
     .ad-listing .num-phongtam {
@@ -5385,7 +5401,7 @@ footer li a {
         position: fixed;
         top: 0;
         right: 0;
-        width: 30%;
+        width: 35%;
         background: #fff;
         z-index: 10;
         padding-top: 124px;
@@ -5393,7 +5409,7 @@ footer li a {
     }
     .wrap-map-listing {
         position: fixed;
-        width: 70%;
+        width: 65%;
         height: 100%;
         top: 0;
         left: 0;
@@ -5405,5 +5421,172 @@ footer li a {
     }
     .wrap-listing-item .inner-wrap {
         height: 100%;
+        position: relative;
     }
+    #listing-list > ul > li {
+        width: 100%;
+        padding: 0 15px 15px 15px;
+        margin: 0 0 15px 0;
+        border-bottom: solid 1px #dcdcdc;
+    }
+    .item-listing .img-intro {
+        width: 170px;
+        float: left;
+        margin: 0 15px 0 0;
+    }
+    .item-listing .img-intro:before {
+        padding-top: 77%;
+    }
+    #listing-list .item-listing {
+        border: none;
+        overflow: hidden;
+    }
+    #listing-list .wrap-attr-bottom,
+    #listing-list .wrap-attr-item {
+        height: auto;
+        border: none;
+        padding: 0;
+        margin: 0;
+    }
+    .attrs-item {
+        overflow: hidden;
+    }
+    .item-listing .infor-by-up {
+        display: none;
+    }
+    #listing-list .wrap-attr-item {
+        position: relative;
+        top: -8px;
+    }
+    #listing-list .list-attr-td {
+        margin: 0;
+    }
+    #listing-list .item-listing .address-listing {
+    }
+    #listing-list .wrap-attr-bottom {
+        margin-top: 5px;
+    }
+    #listing-list > ul {
+        padding: 0;
+    }
+    .top-listing,
+    #search-form {
+        position: absolute;
+        width: 100%;
+        padding: 0;
+        top: 0;
+        left: 0;
+        z-index: 10;
+    }
+    .option-show-listing {
+        padding: 0;
+        margin: 0;
+    }
+    #content-holder,
+    .wrap-listing,
+    #listing-list {
+        height: 100%;
+        padding: 0;
+    }
+    #listing-list {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    #content-holder {
+        padding: 85px 0 0 0;
+    }
+    #search-form {
+        top: 0;
+        z-index: 11;
+    }
+    .top-listing {
+        top: 50px;
+        padding: 0 15px;
+        font-size: 14px;
+    }
+    .option-show-listing.dropdown-select .val-selected {
+        padding: 0;
+        background: none;
+        border-bottom: solid 1px #dcdcdc;
+        text-align: center;
+    }
+    .option-show-listing .selected {
+        float: none;
+        margin-right: 10px;
+        padding-left: 5px;
+    }
+    .option-show-listing.dropdown-select .arrowDown {
+        position: static;
+        float: none !important;
+        display: inline-block;
+        background-color: inherit;
+    }
+    .item-dropdown {
+        background: #fff;
+        border: none;
+        box-shadow: 0 3px 0 0 #DEDEDE;
+        -webkit-box-shadow: 0 3px 0 0 #00A769;
+        -moz-box-shadow: 0 3px 0 0 #DEDEDE;
+        -ms-box-shadow: 0 3px 0 0 #DEDEDE;
+    }
+    .item-dropdown li a:hover {
+        background: #E8E8E8;
+    }
+    .box-dropdown .val-selected,
+    .dropdown-select .val-selected {
+        cursor: pointer;
+    }
+    .choice_price_dt .item-dropdown,
+    .select-quan-huyen .item-dropdown,
+    .select-tinh-thanh .item-dropdown {
+        width: 400px;
+    }
+    .select-loaibds .item-dropdown {
+        width: 400px;
+    }
+    .dropdown-up-style {
+        top: 51px;
+    }
+    .box-dropdown .dropdown-up-style .item-dropdown {
+        border-top: none;
+        border-radius: 0 0 3px 3px;
+    }
+    .box-dropdown .val-selected.active {
+        box-shadow: 0px 0px 2px #00A769;
+        -webkit-box-shadow: 0px 0px 2px #00A769;
+        -moz-box-shadow: 0px 0px 2px #00A769;
+        -ms-box-shadow: 0px 0px 2px #00A769;
+    }
+    .choice_price_dt .dropdown-up-style .item-dropdown {
+        height: 200px;
+        max-height: inherit;
+    }
+}
+.date-post {
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 3px;
+}
+.date-post strong {
+    font-size: inherit;
+    font-weight: 600;
+}
+.box-feature-item .address-feat .date-post strong {
+    font-size: 13px;
+    color: inherit;
+    display: inline;
+    font-weight: 600;
+}
+.wrap-attr-item .date-post {
+    float: left;
+    margin-bottom: 10px;
+}
+.wrap-item .address-feat > a {
+    margin-bottom: 10px;
+}
+.wrap-item .address-feat .id-duan {
+    margin-bottom: 7px;
+}
+.item-listing .id-duan {
+    
 }

@@ -55,8 +55,8 @@ use frontend\models\Ad;
                             </a>
                             <div class="info-item">
                                 <div class="address-feat">
-            <!--                        <strong>Lancaster x</strong>-->
-                                    <div><?= $product->getAddress(true) ?></div>
+                                    <p class="date-post">Ngày đăng tin: <strong>12/2/2016, 8:30AM</strong></p>
+                                    <a title="<?= $product->getAddress(true) ?>" href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>"><?= $product->getAddress(true) ?></a>
                                     <p class="id-duan">ID:<span><?=$product->id;?></span></p>
                                     <ul class="clearfix list-attr-td">
                                         <li>
