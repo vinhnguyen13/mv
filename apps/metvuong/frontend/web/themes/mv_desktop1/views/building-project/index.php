@@ -12,47 +12,38 @@ use yii\helpers\Url;
         <div class="title-top">DỰ ÁN MỚI</div>
         <div class="wrap-infor-duan">
             <div class="search-duan">
-                <form action="" class="">
-                    <input name="" type="text" placeholder="Gõ tên dự án cần tìm…">
+                <form id="search-duan-form" action="<?= \yii\helpers\Url::to(['building-project/find'], true) ?>" method="post" onsubmit="javascript: return false;">
+                    <input name="project_name" class="project_name" type="text" placeholder="Gõ tên dự án cần tìm…">
                     <button type="submit" id="btn-search-duan"><span class="icon icon-search-small-1"></span></button>
                 </form>
             </div>
-            <?php if(count($models) > 0) {
-                foreach ($models as $model) {
-                    $image = '/themes/metvuong2/resources/images/default-ads.jpg';
-                    $gallery = array();
-                    if($model->gallery)
-                        $gallery = explode(',', $model->gallery);
-                    if (count($gallery) > 0) {
-                        $imageUrl = Yii::getAlias('@store')."/building-project-images/". $gallery[0];
-                        if(file_exists($imageUrl)){
-                            $image = Url::to('/store/building-project-images/' . $gallery[0]);
-                        }
-                    }
-                    ?>
-                    <div class="item">
-                        <a href="<?= Url::to(["building/$model->slug"]); ?>" class="pic-intro rippler rippler-default">
-                            <div class="img-show">
-                                <div><img src="<?=$image?>"
-                                        data-original="<?=$image?>"
-                                        style="display: block;"></div>
-                            </div>
-                        </a>
-
-                        <div class="info-item">
-                            <div class="address-feat">
-                                <p><?= !empty($model->categories[0]->name) ? \vsoft\ad\models\AdBuildingProject::mb_ucfirst($model->categories[0]->name,'UTF-8') : "Chung cư cao cấp" ?></p>
-                                <a href="<?= Url::to(["building/$model->slug"]); ?>"><strong><?= mb_strtoupper($model->name) ?></strong></a>
-                                <span class="icon address-icon"></span><?= empty($model->location) ? "Đang cập nhật" : $model->location ?>
-                            </div>
-                            <div class="bottom-feat-box clearfix">
-                                <p><?=\yii\helpers\StringHelper::truncate($model->description, 180)?></p>
-                                <a href="<?= Url::to(["building/$model->slug"]); ?>" class="pull-right">Chi tiết</a>
-                            </div>
-                        </div>
-                    </div>
-                <?php }
-            } ?>
+            <div class="list-duan">
+                <?= $this->render('_partials/result', ['models' => $models]) ?>
+            </div>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('#btn-search-duan').click(function(){
+            var textSearch = $('.project_name').val();
+            if(textSearch !== '') {
+                $('body').loading();
+                $.ajax({
+                    type: "post",
+                    dataType: 'html',
+                    url: $('#search-duan-form').attr('action'),
+                    data: $('#search-duan-form').serializeArray(),
+                    success: function (data) {
+                        if (data) {
+                            $('.list-duan').html('');
+                            $('.list-duan').html(data);
+                            $('body').loading({done: true});
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+    });
+</script>
