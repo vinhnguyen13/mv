@@ -12,15 +12,15 @@ $model = Yii::createObject(RegistrationForm::className());
 ]); ?>
     <div class="form-group">
         <input type="password" style="display:none">
-        <?= $form->field($model, 'email')->textInput(['class' => 'form-control', 'placeholder' => Yii::t('user', 'Email')])->label(false) ?>
+        <?= $form->field($model, 'email')->textInput(['class' => 'form-control', 'placeholder' => Yii::t('Member', 'Email')])->label(false) ?>
     </div>
     <div class="form-group forgot-pass">
-        <?= $form->field($model, 'password')->passwordInput(['class' => 'form-control', 'placeholder' => Yii::t('user', 'Password')])->label(false) ?>
+        <?= $form->field($model, 'password')->passwordInput(['class' => 'form-control', 'placeholder' => Yii::t('Member', 'Password')])->label(false) ?>
     </div>
     <div class="checkbox"><label> <input type="checkbox"> Chấp nhận <a href="#">điều khoản</a> sử dụng của <a href="#">metvuong.com</a></label>
     </div>
     <div class="footer-modal clearfix">
-        <button type="button" class="btn btn-primary btn-common btn-login" id="btn-register">Đăng ký</button>
+        <button type="button" class="btn btn-primary btn-common btn-login" id="btn-register"><?=Yii::t('Member', 'Sign In')?></button>
     </div>
 <?php ActiveForm::end(); ?>
 <?= \vsoft\user\widgets\Connect::widget([

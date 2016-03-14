@@ -14,15 +14,15 @@ $model = Yii::createObject(LoginForm::className());
 ]); ?>
 <div class="form-group">
     <input type="password" style="display:none">
-    <?= $form->field($model, 'login')->textInput(['class' => 'form-control', 'placeholder' => Yii::t('user', 'Email')])->label(false) ?>
+    <?= $form->field($model, 'login')->textInput(['class' => 'form-control', 'placeholder' => Yii::t('Member', 'Email')])->label(false) ?>
 </div>
 <div class="form-group forgot-pass">
-    <?= $form->field($model, 'password')->passwordInput(['class' => 'form-control', 'placeholder' => Yii::t('user', 'Password')])->label(false) ?>
-    <a class="showPopup" href="<?=Url::to(['/member/forgot'])?>">Forgot?</a>
+    <?= $form->field($model, 'password')->passwordInput(['class' => 'form-control', 'placeholder' => Yii::t('Member', 'Password')])->label(false) ?>
+    <a class="showPopup" href="<?=Url::to(['/member/forgot'])?>"><?=Yii::t('Member', 'Forgot ?')?></a>
 </div>
 <div class="checkbox"> <?= $form->field($model, 'rememberMe')->checkbox() ?> </div>
 <div class="footer-modal clearfix">
-    <button type="button" class="btn btn-primary btn-common btn-login" id="btn-login">Đăng nhập</button>
+    <button type="button" class="btn btn-primary btn-common btn-login" id="btn-login"><?=Yii::t('Member', 'Sign In')?></button>
 </div>
 <?php ActiveForm::end(); ?>
 
