@@ -11,7 +11,7 @@ $model = Yii::createObject([
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Lấy lại mật khẩu</h3>
+                <h3><?=Yii::t('user', 'Forgot password')?></h3>
             </div>
             <div class="modal-body">
                 <div class="wrap-modal clearfix">
@@ -26,7 +26,7 @@ $model = Yii::createObject([
                             <?= $form->field($model, 'email')->textInput(['class'=>'form-control', 'placeholder'=>Yii::t('user', 'Email')])->label(false) ?>
                         </div>
                         <div class="footer-modal clearfix">
-                            <button type="button" class="btn btn-primary btn-common btn-reset-password">Send</button>
+                            <button type="button" class="btn btn-primary btn-common btn-reset-password"><?=Yii::t('user', 'Send')?></button>
                         </div>
                     <?php ActiveForm::end(); ?>
 <!--                    <div class="regis-login-link">-->

@@ -36,8 +36,8 @@ use yii\helpers\Url;
                 <a href="#" id="hide-settings" class="icon"></a>
                 <?php if(Yii::$app->user->isGuest){?>
                     <ul class="clearfix">
-                        <li><a href="<?=Url::to(['member/login'])?>">Đăng nhập</a></li>
-                        <li><a href="<?=Url::to(['member/signup'])?>">Đăng ký</a></li>
+                        <li><a href="<?=Url::to(['member/login'])?>"><?=Yii::t('user', 'Sign In')?></a></li>
+                        <li><a href="<?=Url::to(['member/signup'])?>"><?=Yii::t('user', 'Sign Up')?></a></li>
                     </ul>
                 <?php } else{?>
                 <ul class="clearfix">
@@ -51,19 +51,19 @@ use yii\helpers\Url;
                         </a>
                     </li>
                     <!-- <li><a href="<?= Url::to(['/ad/post']) ?>"><em class="icon-plus"></em>Đăng tin mới</a></li> -->
-                    <li><a href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyOther"><div><span class="icon icon-alert"></span></div>Thông báo
+                    <li><a href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyOther"><div><span class="icon icon-alert"></span></div><?=Yii::t('Notification', 'Notifications')?>
                             <?php if(!empty($this->params['notify_other'])){?>
                                 <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
                             <?php }?>
                         </a></li>
                     <li><a href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>"><div><span class="icon icon-listings"></span></div>Listings</a></li>
-                    <li><a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyChat"><div><span class="icon icon-chat"></span></div>Chat
+                    <li><a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyChat"><div><span class="icon icon-chat"></span></div><?=Yii::t('chat', 'Chat')?>
                             <?php if(!empty($this->params['notify_chat'])){?>
                                 <span id="notifyChat" class="notifi"><?=$this->params['notify_chat'];?></span>
                             <?php }?>
                     </a></li>
-                    <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon icon-per"></span></div>TÀI KHOẢN</a></li>
-                    <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><div><span class="icon icon-logout"></span></div>Đăng xuất</a></li>
+                    <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon icon-per"></span></div><?=Yii::t('user', 'Account')?></a></li>
+                    <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><div><span class="icon icon-logout"></span></div><?=Yii::t('user', 'Log Out')?></a></li>
                 </ul>
                 <?php } ?>
             </div>
@@ -71,7 +71,7 @@ use yii\helpers\Url;
 
         <div class="dt-header clearfix">
             <div class="user-login pull-right">
-                <a href="#">Đăng nhập</a> <span>/</span> <a href="#">Đăng ký</a>
+                <a href="#"><?=Yii::t('user', 'Sign In')?></a> <span>/</span> <a href="#"><?=Yii::t('user', 'Sign Up')?></a>
             </div>
             <ul class="clearfix list-menu">
                 <li class="dt-logo"><a href="/" class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/logo.png' ?>" alt=""></a></li>
