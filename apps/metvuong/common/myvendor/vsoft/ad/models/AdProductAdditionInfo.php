@@ -36,14 +36,14 @@ class AdProductAdditionInfo extends APAI
     {
         return [
             'product_id' => 'Product ID',
-            'facade_width' => 'Mặt tiền',
-            'land_width' => 'Đường vào',
-            'home_direction' => 'Hướng nhà',
-            'facade_direction' => 'Hướng ban công',
-            'floor_no' => 'Số tầng',
-            'room_no' => 'Phòng ngủ',
-            'toilet_no' => 'Phòng tắm',
-            'interior' => 'Nội thất',
+            'facade_width' => Yii::t('ad', 'Facade'),
+            'land_width' => Yii::t('ad', 'Entry width'),
+            'home_direction' => Yii::t('ad', 'House direction'),
+            'facade_direction' => Yii::t('ad', 'Balcony direction'),
+            'floor_no' => Yii::t('ad', 'Number of storeys'),
+            'room_no' => Yii::t('ad', 'Beds'),
+            'toilet_no' => Yii::t('ad', 'Baths'),
+            'interior' => Yii::t('ad', 'Furniture'),
         ];
     }
     

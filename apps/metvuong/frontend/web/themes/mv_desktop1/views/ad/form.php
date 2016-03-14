@@ -32,7 +32,7 @@ use vsoft\ad\models\AdImages;
 		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
 	}
 ?>
-<div class="title-top"><?= $product->isNewRecord ? 'Đăng tin' : 'Cập nhật MV' . $product->id ?></div>
+<div class="title-top"><?= $product->isNewRecord ? Yii::t('ad', 'Post Listing') : sprintf(Yii::t('ad', 'Update Listing MV%s'), $product->id) ?></div>
 <div class="post-listing">
 	<?php
 		$form = ActiveForm::begin ( [ 
@@ -54,7 +54,7 @@ use vsoft\ad\models\AdImages;
 		</div>
 		<div id="step1" class="section select-type hide item-step">
 		<?php if($product->isNewRecord) :?>
-			<p class="text-center step-txt">4 bước dễ dàng</p>
+			<p class="text-center step-txt"><?= Yii::t('ad', '4 basic steps') ?></p>
 		<?php endif; ?>
 			<ul class="clearfix step-check">
 				<li>
@@ -63,7 +63,7 @@ use vsoft\ad\models\AdImages;
 							<?php $typeName = Html::getInputName($product, 'type') ?>
 							<?= Html::radio($typeName, ($product->type == AdProduct::TYPE_FOR_SELL || !$product->type), ['value' => AdProduct::TYPE_FOR_SELL]) ?>
 						</span>
-						<span><?= Yii::t('ad', 'Bán') ?></span>
+						<span><?= Yii::t('ad', 'Sell') ?></span>
 					</a>
 				</li>
 				<li>
@@ -71,7 +71,7 @@ use vsoft\ad\models\AdImages;
 						<span class="radio-ui icon-postlisting icon-chothue">
 							<?= Html::radio($typeName, ($product->type == AdProduct::TYPE_FOR_RENT), ['value' => AdProduct::TYPE_FOR_RENT]) ?>
 						</span>
-						<span><?= Yii::t('ad', 'Cho thuê') ?></span>
+						<span><?= Yii::t('ad', 'Rent') ?></span>
 					</a>
 				</li>
 				<li>
@@ -80,7 +80,7 @@ use vsoft\ad\models\AdImages;
 						<span class="radio-ui icon-postlisting icon-chunha">
 							<?= Html::radio($ownerName, ($product->owner == AdProduct::OWNER_HOST || !$product->owner), ['value' => AdProduct::OWNER_HOST, 'id' => 'owner-host']) ?>
 						</span>
-						<span><?= Yii::t('ad', 'Chủ nhà') ?></span>
+						<span><?= Yii::t('ad', 'Owner') ?></span>
 					</a>
 				</li>
 				<li>
@@ -88,7 +88,7 @@ use vsoft\ad\models\AdImages;
 						<span class="radio-ui icon-postlisting icon-mogioi">
 							<?= Html::radio($ownerName, ($product->owner == AdProduct::OWNER_AGENT), ['value' => AdProduct::OWNER_AGENT]) ?>
 						</span>
-						<span><?= Yii::t('ad', 'Môi giới') ?></span>
+						<span><?= Yii::t('ad', 'Agent') ?></span>
 					</a>
 				</li>
 			</ul>
@@ -245,7 +245,7 @@ use vsoft\ad\models\AdImages;
 		</div>
 
 		<div id="step5" class="tt-lienhe item-step section hide">
-			<div class="title-step">Thông tin liên hệ</div>
+			<div class="title-step"><?= Yii::t('ad', 'Contact Information') ?></div>
 			<div class="row">
 				<?= $form->field($contactInfo, 'name', ['options' => ['class' => 'col-xs-12 form-group']])
 						->label(false)
@@ -262,7 +262,7 @@ use vsoft\ad\models\AdImages;
 			</div>
 			<div class="text-center pdT-25">
 				<button type="button" class="preview btn-common">Preview</button>
-				<button type="button" class="btn-post btn-common"><?= $product->isNewRecord ? 'Đăng tin' : 'Cập nhật' ?></button>
+				<button type="button" class="btn-post btn-common"><?= $product->isNewRecord ? Yii::t('ad', 'Post') : Yii::t('ad', 'Update') ?></button>
 			</div>
 		</div>
 	<?php $form->end() ?>
@@ -313,7 +313,7 @@ use vsoft\ad\models\AdImages;
 			<li><a href="#popup-map" class="icon icon-map-loca"></a></li>
 		</ul>
 		<p class="price-td">
-			<span>Giá</span>
+			<span><?= Yii::t('ad', 'Price') ?></span>
 			<span class="price-show"></span>
 		</p>
 	</div>
@@ -322,7 +322,7 @@ use vsoft\ad\models\AdImages;
             <div class="panel-heading" role="tab" id="headingOne">
                 <h4 class="panel-title">
                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                        Diễn tả chi tiết<span class="icon"></span>
+                        <?= Yii::t('ad', 'Content') ?><span class="icon"></span>
                     </a>
                 </h4>
             </div>
@@ -336,20 +336,20 @@ use vsoft\ad\models\AdImages;
             <div class="panel-heading" role="tab" id="headingTwo">
                 <h4 class="panel-title">
                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        Thông tin chi tiết<span class="icon"></span>
+                        <?= Yii::t('ad', 'Detail Information') ?><span class="icon"></span>
                     </a>
                 </h4>
             </div>
             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                 <div class="panel-body" name="activity">
                 	<ul class="clearfix list-tienich-detail">
-						<li class="project-item"><strong>Thuộc dự án:</strong> <span class="project-show"></span></li>
-						<li class="facade-width-item"><strong>Mặt tiền:</strong> <span class="facade-width-show"></span>m</li>
-						<li class="land-width-item"><strong>Đường vào:</strong> <span class="land-width-show"></span>m</li>
-						<li class="floor-no-item"><strong>Tầng cao:</strong> <span class="floor-no-show"></span></li>
-						<li class="home-di-item"><strong>Hướng nhà:</strong> <span class="home-di-show"></span></li>
-						<li class="facade-di-item"><strong>Hướng ban công:</strong> <span class="facade-di-show"></span></li>
-						<li class="interior-item"><strong>Nội thất:</strong> <span class="interior-show"></span></li>
+						<li class="project-item"><strong><?= Yii::t('ad', 'Project') ?>:</strong> <span class="project-show"></span></li>
+						<li class="facade-width-item"><strong><?= Yii::t('ad', 'Facade') ?>:</strong> <span class="facade-width-show"></span>m</li>
+						<li class="land-width-item"><strong><?= Yii::t('ad', 'Entry width') ?>:</strong> <span class="land-width-show"></span>m</li>
+						<li class="floor-no-item"><strong><span id="floor-no-text"></span>:</strong> <span class="floor-no-show"></span></li>
+						<li class="home-di-item"><strong><?= Yii::t('ad', 'House direction') ?>:</strong> <span class="home-di-show"></span></li>
+						<li class="facade-di-item"><strong><?= Yii::t('ad', 'Balcony direction') ?>:</strong> <span class="facade-di-show"></span></li>
+						<li class="interior-item"><strong><?= Yii::t('ad', 'Furniture') ?>:</strong> <span class="interior-show"></span></li>
                 	</ul>
                 </div>
             </div>
@@ -358,7 +358,7 @@ use vsoft\ad\models\AdImages;
             <div class="panel-heading" role="tab" id="headingFour">
                 <h4 class="panel-title">
                     <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                        Tiện ích<span class="icon"></span>
+                        <?= Yii::t('ad', 'Facilities') ?><span class="icon"></span>
                     </a>
                 </h4>
             </div>
@@ -372,7 +372,7 @@ use vsoft\ad\models\AdImages;
             <div class="panel-heading" role="tab" id="headingSeven">
                 <h4 class="panel-title">
                     <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEght" aria-expanded="false" aria-controls="collapseSeven">
-                        Liên hệ<span class="icon"></span>
+                        <?= Yii::t('ad', 'Contact') ?><span class="icon"></span>
                     </a>
                 </h4>
             </div>
@@ -442,12 +442,12 @@ use vsoft\ad\models\AdImages;
         </div>
     </div>
 	<div class="text-center">
-		<button type="button" class="back-form btn-common">Trở lại</button>
-		<button type="button" class="btn-post btn-common"><?= $product->isNewRecord ? 'Đăng tin' : 'Cập nhật' ?></button>
+		<button type="button" class="back-form btn-common"><?= Yii::t('ad', 'Back') ?></button>
+		<button type="button" class="btn-post btn-common"><?= $product->isNewRecord ? Yii::t('ad', 'Post') : Yii::t('ad', 'Update') ?></button>
 	</div>
 </div>
 
 <div class="fixed-prev-next">
-	<a href="#" id="back-screen"><span class="icon arrowRight-1"></span>Trở lại</a>
-	<a href="#" id="next-screen" class=""><span class="icon arrowLeft-1"></span>Tiếp theo</a>
+	<a href="#" id="back-screen"><span class="icon arrowRight-1"></span><?= Yii::t('ad', 'Back') ?></a>
+	<a href="#" id="next-screen" class=""><span class="icon arrowLeft-1"></span><?= Yii::t('ad', 'Next') ?></a>
 </div>

@@ -53,18 +53,18 @@ class AdProduct extends AP
 	{
 		return [
 			'id' => 'ID',
-			'category_id' => 'Loại BĐS',
-			'project_building_id' => 'Dự án',
-            'home_no' => 'Số nhà',
+			'category_id' => Yii::t('ad', 'Property Types'),
+			'project_building_id' => \Yii::t('ad', 'Project'),
+            'home_no' => Yii::t('ad', 'Address'),
 			'user_id' => 'User ID',
-			'city_id' => 'Tỉnh/Thành Phố',
-			'district_id' => 'Quận/Huyện',
-			'ward_id' => 'Phường/Xã',
-			'street_id' => 'Đường',
-			'type' => 'Hình thức',
-			'content' => 'Nội dung tin đăng',
-			'area' => 'Diện tích',
-			'price' => 'Giá',
+			'city_id' => Yii::t('ad', 'City'),
+			'district_id' => Yii::t('ad', 'District'),
+			'ward_id' => Yii::t('ad', 'Ward'),
+			'street_id' => Yii::t('ad', 'Street'),
+			'type' => Yii::t('ad', 'Type of transaction'),
+			'content' => Yii::t('ad', 'Content'),
+			'area' => Yii::t('ad', 'Home size'),
+			'price' => Yii::t('ad', 'Price'),
 			'price_type' => 'Price Type',
 			'lng' => 'Lng',
 			'lat' => 'Lat',
@@ -76,7 +76,7 @@ class AdProduct extends AP
 			'created_at' => 'Created At',
 			'updated_at' => 'Updated At',
 			'status' => 'Status',
-            'show_home_no' => 'Hiển thị số nhà đến người xem',
+            'show_home_no' => Yii::t('ad', 'Show address to viewers'),
 		];
 	}
 	

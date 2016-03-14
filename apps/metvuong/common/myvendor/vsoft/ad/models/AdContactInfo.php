@@ -34,6 +34,18 @@ class AdContactInfo extends ACI
 			[['product_id'], 'unique']
 		];
 	}
+	
+	public function attributeLabels()
+	{
+		return [
+			'product_id' => 'Product ID',
+			'name' => Yii::t('ad', 'Name'),
+			'address' => Yii::t('ad', 'Address'),
+			'phone' => Yii::t('ad', 'Phone'),
+			'mobile' => Yii::t('ad', 'Mobile'),
+			'email' => Yii::t('ad', 'Email'),
+		];
+	}
 
 	public function getProduct()
 	{

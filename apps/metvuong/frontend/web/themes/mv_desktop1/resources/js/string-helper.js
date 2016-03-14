@@ -4,10 +4,10 @@ function formatPrice(price) {
 	
 	if(price.length > 9) {
 		priceFormated = (priceNum / 1000000000) + '';
-		priceFormated = formatNumber(priceFormated.replace('.', ',')) + ' tỷ';
+		priceFormated = formatNumber(priceFormated.replace('.', ',')) + ' ' + lajax.t('billion');
 	} else if(price.length > 6) {
 		priceFormated = (priceNum / 1000000) + '';
-		priceFormated = priceFormated.replace('.', ',') + ' triệu';
+		priceFormated = priceFormated.replace('.', ',') + ' ' + lajax.t('million');
 	}
 	
 	return priceFormated;

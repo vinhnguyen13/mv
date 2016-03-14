@@ -141,7 +141,7 @@ var form = {
 			
 			if(/^\d+$/.test(val)) {
 				val = parseInt(val) + '';
-				form.priceFormatEl.show().text(formatPrice(val) + ' VNĐ');
+				form.priceFormatEl.show().text(formatPrice(val) + ' ' + lajax.t('VND'));
 			} else {
 				form.priceFormatEl.hide();
 			}
@@ -221,7 +221,10 @@ var form = {
 			if(form.catEl.val() == form.DNDU) {
 				$('.icon-bed').hide();
 				$('.icon-pt').hide();
+			} else if(form.catEl.val() == form.CHCK) {
+				$('#floor-no-text').text('Floor plan');
 			} else {
+				$('#floor-no-text').text('Number of storeys');
 				$('.icon-bed').show();
 				$('.icon-pt').show();
 			}
@@ -403,31 +406,31 @@ var form = {
 
 form.validate = {
 	step1: function() {
-		form.require(form.catEl, 'Chọn loại BĐS');
+		form.require(form.catEl, lajax.t('Choose property types'));
 	},
 	step2: function() {
-		form.require(form.cityEl, 'Chọn Tỉnh/Thành Phố');
-		form.require(form.districtEl, 'Chọn Quận/Huyện');
-		form.require(form.wardEl, 'Chọn Phường/Xã');
-		form.require(form.streetEl, 'Chọn Đường');
+		form.require(form.cityEl, lajax.t('Choose city'));
+		form.require(form.districtEl, lajax.t('Choose district'));
+		form.require(form.wardEl, lajax.t('Choose ward'));
+		form.require(form.streetEl, lajax.t('Choose street'));
 		
-		if(form.require(form.areaEl, 'Nhập diện tích')) {
+		if(form.require(form.areaEl, lajax.t('Enter home size'))) {
 			var selectedCat = form.getSelectedCat();
 			var limit = Number(selectedCat.data('limit'));
 
 			if(!form.isNumber(form.areaEl.val()) || form.areaEl.val() < 0) {
-				form.showError(form.areaEl, 'Diện tích không hợp lệ');
+				form.showError(form.areaEl, lajax.t('Home size is invalid'));
 			} else if(limit < (formatArea = form.formatNumber(form.areaEl.val()))) {
-				form.showError(form.areaEl, 'Diện tích không được lớn hơn ' + limit);
+				form.showError(form.areaEl, lajax.t('Home size must be not greater %s').replace('%s', limit));
 			} else {
 				form.areaEl.val(parseFloat(formatArea).toString().replace('.', ','));
 				form.hideError(form.areaEl);
 			}
 		}
 		
-		if(form.require(form.priceEl, 'Nhập giá')) {
+		if(form.require(form.priceEl, lajax.t('Enter price'))) {
 			if(!form.isDigit(form.priceEl.val())) {
-				form.showError(form.priceEl, 'Giá không hợp lệ');
+				form.showError(form.priceEl, lajax.t('Price is invalid'));
 			} else {
 				form.priceEl.val(parseInt(form.priceEl.val()));
 				form.hideError(form.priceEl);
@@ -438,21 +441,21 @@ form.validate = {
 			form.hideError(form.roomEl);
 			form.hideError(form.toiletEl);
 		} else {
-			form.require(form.roomEl, 'Chọn số phòng ngủ');
-			form.require(form.toiletEl, 'Chọn số phòng tắm');
+			form.require(form.roomEl, lajax.t('Enter no of bedrooms'));
+			form.require(form.toiletEl, lajax.t('Enter no of bathrooms'));
 		}
 	},
 	step3: function() {
-		form.require(form.contentEl, 'Nhập nội dung');
+		form.require(form.contentEl, lajax.t('Enter content'));
 		
 		if(form.facadeWiEl.val() && !form.isDigit(form.facadeWiEl.val())) {
-			form.showError(form.facadeWiEl, 'Mặt tiền nhập không hợp lệ');
+			form.showError(form.facadeWiEl, lajax.t('Facade is invalid'));
 		} else {
 			form.hideError(form.facadeWiEl);
 		}
 		
 		if(form.landWiEl.val() && !form.isDigit(form.landWiEl.val())) {
-			form.showError(form.landWiEl, 'Đường vào nhập không hợp lệ');
+			form.showError(form.landWiEl, lajax.t('Entry width is invalid'));
 		} else {
 			form.hideError(form.landWiEl);
 		}
@@ -461,7 +464,7 @@ form.validate = {
 			form.hideError(form.floorEl);
 		} else {
 			if(form.floorEl.val() && !form.isDigit(form.floorEl.val())) {
-				form.showError(form.floorEl, form.floorEl.attr('placeholder') + ' nhập không hợp lệ');
+				form.showError(form.floorEl, lajax.t('%s is invalid').replace('%s', form.floorEl.attr('placeholder')));
 			} else {
 				form.hideError(form.floorEl);
 			}
@@ -472,7 +475,7 @@ form.validate = {
 form.success = {
 	step1: function() {
 		form.projectWrapEl.hide();
-    	form.floorEl.attr('placeholder', 'Số tầng');
+    	form.floorEl.attr('placeholder', lajax.t('Number of storeys'));
 		
 		form.homeWrapEl.show();
     	form.showEl(form.roomEl);
@@ -485,7 +488,7 @@ form.success = {
 		switch(form.catEl.val()) {
 	    	case form.CHCK:
 	    		form.projectWrapEl.show();
-	        	form.floorEl.attr('placeholder', 'Tầng cao');
+	        	form.floorEl.attr('placeholder', lajax.t('Floor plan'));
 	    		break;
 	    	case form.DNDU:
 	        	form.homeWrapEl.hide();

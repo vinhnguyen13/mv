@@ -39,6 +39,11 @@ class AdController extends Controller
 {
     public $layout = '@app/views/layouts/layout';
     
+    public function init() {
+    	\lajax\translatemanager\helpers\Language::registerAssets();
+    	parent::init();
+    }
+    
     public function actionUpload() {
         if($_FILES) {
     		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
