@@ -215,24 +215,28 @@ $types = AdProduct::getAdTypes ();
 											<a class="rippler rippler-default" href="<?= $product->urlDetail(); ?>"><img src="" data-original="<?= $product->representImage ?>"></a>
 										</div>
 									</div>
-									<div class="wrap-attr-item">
-										<p class="infor-by-up">
-											<?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?> bởi <a href="#">Môi Giới</a>
-										</p>
-										<p class="address-listing">
-											<span class="icon address-icon"></span><a href="<?= $product->urlDetail(); ?>"><?= $product->getAddress($product->show_home_no) ?></a>
-										</p>
-										<p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
-										<ul class="clearfix list-attr-td">
-											<?= $product->area ? '<li> <span class="icon icon-dt icon-dt-small"></span>' . $product->area . 'm2 </li>' : '' ?>
-											<?= $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
-											<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
-										</ul>
-									</div>
-									<div class="wrap-attr-bottom">
-										<span class="price"><?= StringHelper::formatCurrency($product->price) ?></span>
-										<a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pull-right view-more">Chi tiết</a>
-				                    </div>
+									<div class="attrs-item">
+										<div class="wrap-attr-item">
+											<p class="infor-by-up">
+												<?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?> bởi <a href="#">Môi Giới</a>
+											</p>
+											<p class="address-listing">
+												<a href="<?= $product->urlDetail(); ?>" title="<?= $product->getAddress($product->show_home_no) ?>"><?= $product->getAddress($product->show_home_no) ?></a>
+											</p>
+											<p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
+											<p class="date-post"><strong>12/2/2016, 8:30AM</strong></p>
+											<div class="clearfix"></div>
+											<ul class="clearfix list-attr-td">
+												<?= $product->area ? '<li> <span class="icon icon-dt icon-dt-small"></span>' . $product->area . 'm2 </li>' : '' ?>
+												<?= $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
+												<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
+											</ul>
+										</div>
+										<div class="wrap-attr-bottom">
+											<span class="price"><?= StringHelper::formatCurrency($product->price) ?></span>
+											<a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pull-right view-more">Chi tiết</a>
+					                    </div>
+					                </div>
 				                    <?php
 				                    // tracking finder
 				                    if($product->user_id != Yii::$app->user->id && isset(Yii::$app->params['tracking']['all']) && Yii::$app->params['tracking']['all'] == true) {

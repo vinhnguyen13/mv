@@ -80,25 +80,14 @@ $(document).ready(function(){
 	var itemLoadingId = '#item-loading';
 	
 	if(!$(itemLoadingId).hasClass('hide')) {
-		if ( checkMobile() ) {
-			$(window).on('scroll', next);		
-		}else {
-			$('#listing-list').on('scroll', next);
-		}
+		$(window).on('scroll', next);
 	}
 	
 	function next() {
-		var self = $(this),
-			hScroll;
-
-		if ( this.nodeName == undefined ) {
-			hScroll = document.body.scrollHeight;
-		}else if ( this.nodeName == "DIV" ) {
-			//hScroll = 
-		}
+		var self = $(this);
 		
-		if(self.scrollTop() >= (hScroll - 260 - self.height())) {
-			self.off('scroll', next);
+		if(self.scrollTop() >= (document.body.scrollHeight - 260 - self.height())) {
+			$(window).off('scroll', next);
 			
 			var inputPage = $('<input type="hidden" name="page" value="' + (++page) + '" />');
 			searchForm.append(inputPage);
