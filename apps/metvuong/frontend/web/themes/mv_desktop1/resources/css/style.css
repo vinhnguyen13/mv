@@ -3480,7 +3480,7 @@ input[type=text]:focus {
 }
 @-webkit-keyframes sliderArrow{
     0% {
-        bottom: 30px;
+        bottom: 60px;
         opacity: 0;
     }
     30% {
@@ -3493,7 +3493,7 @@ input[type=text]:focus {
 }
 @-moz-keyframes sliderArrow{
     0% {
-        bottom: 30px;
+        bottom: 60px;
         opacity: 0;
     }
     30% {
@@ -3506,7 +3506,7 @@ input[type=text]:focus {
 }
 @-ms-keyframes sliderArrow{
     0% {
-        bottom: 30px;
+        bottom: 60px;
         opacity: 0;
     }
     30% {
@@ -3519,7 +3519,7 @@ input[type=text]:focus {
 }
 @keyframes sliderArrow{
     0% {
-        bottom: 30px;
+        bottom: 60px;
         opacity: 0;
     }
     30% {
@@ -5075,7 +5075,7 @@ input[type=text]:focus {
     background-color: #00a769;
     color: #fff;
 }
-@media (min-width: 960px) {
+@media (min-width: 985px) {
     .search-homepage > ul,
     #menu-header,
     #settings-user,
@@ -5113,8 +5113,11 @@ input[type=text]:focus {
     .wrap-header {
         padding: 0 20px;
     }
+    .search-wrap-home {
+        margin-top: -125px;
+    }
 }
-@media (max-width: 960px) {
+@media (max-width: 985px) {
     .m-header, .search-home {
         display: block;
     }
@@ -5135,7 +5138,7 @@ input[type=text]:focus {
 }
 .user-login {
     height: 100%;
-    padding: 21px 0;
+    padding: 18px 0 21px;
 }
 .user-login a:hover {
     text-decoration: underline;
@@ -5227,7 +5230,7 @@ input[type=text]:focus {
     padding: 0 15px;
     min-width: 60%;
 }
-@media (min-width: 960px) {
+@media (min-width: 985px) {
     .txt-location,
     .map-location {
         float: left;
@@ -5305,11 +5308,6 @@ footer li a {
         width: auto;
     }
 }
-@media (min-width: 959px) and (max-width: 1200px) {
-    .container {
-        width: 960px;
-    }
-}
 @media (min-width: 1200px) {
     .container {
         width: 1200px;
@@ -5332,4 +5330,80 @@ footer li a {
 .address-feat > div {
     color: #00a769;
     margin-bottom: 10px;
+}
+.ad-listing header .container {
+    width: 100%;
+    padding-left: 10px;
+}
+@media (min-width: 985px) {
+    .search-subpage {
+        position: fixed;
+        top: 63px;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        z-index: 10;
+        padding: 0;
+        margin: 0;
+    }
+    .search-subpage .frm-item {
+        float: left;
+        margin-right: 15px;
+        margin-bottom: 0;
+    }
+    .advande-search {
+        padding: 10px 10px;
+    }
+    .advande-search .toggle-search {
+        float: left;
+    }
+    .btn-submit {
+        float: left;
+        width: auto;
+    }
+    .select-quan-huyen,
+    .select-tinh-thanh {
+        width: 150px;
+    }
+    .select-loaibds {
+        width: 230px;
+    }
+    .select-dt,
+    .select-price {
+        width: 170px;
+    }
+    .ad-listing .num-phongngu,
+    .ad-listing .num-phongtam {
+        width: 150px;
+        margin: 0;
+        padding: 0;
+    }
+    .ad-listing .num-phongngu {
+        margin-right: 15px;
+    }
+    .wrap-listing-item {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 30%;
+        background: #fff;
+        z-index: 10;
+        padding-top: 124px;
+        height: 100%;
+    }
+    .wrap-map-listing {
+        position: fixed;
+        width: 70%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        padding-top: 124px;
+        padding-bottom: 0;
+    }
+    .wrap-map-listing .inner-wrap {
+        height: 100%;
+    }
+    .wrap-listing-item .inner-wrap {
+        height: 100%;
+    }
 }
