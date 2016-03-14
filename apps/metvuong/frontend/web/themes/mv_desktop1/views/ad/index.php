@@ -220,7 +220,7 @@ $types = AdProduct::getAdTypes ();
 											<?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?> bởi <a href="#">Môi Giới</a>
 										</p>
 										<p class="address-listing">
-											<span class="icon address-icon"></span><a href="<?= Url::to(['/ad/detail', 'id' => $product->id]) ?>"><?= $product->getAddress($product->show_home_no) ?></a>
+											<span class="icon address-icon"></span><a href="<?= $product->urlDetail(); ?>"><?= $product->getAddress($product->show_home_no) ?></a>
 										</p>
 										<p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
 										<ul class="clearfix list-attr-td">
