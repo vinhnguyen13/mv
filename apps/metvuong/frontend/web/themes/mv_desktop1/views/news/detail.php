@@ -62,7 +62,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 </script>
 <div class="title-fixed-wrap">
     <div class="detail-news">
-        <div class="title-top"><a style="color: #00a769;" href="<?=Url::to(['news/index'], true)?>">Tin tức</a><a href="javascript:history.back()" id="prev-page"><span class="icon arrowRight-1"></span></a></div>
+        <div class="title-top"><a style="color: #00a769;" href="<?=Url::to(['news/index'], true)?>"><?=Yii::t('news','NEWS')?></a></div>
 
         <div class="wrap-detail-article">
             <input id="current_id" type="hidden" value="<?=$news->id?>">
@@ -192,7 +192,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                                 $(".loading").remove();
                                 var last_news = $('.wrap-detail-article').find(".last_news");
                                 if(!last_news[0])
-                                    $('.wrap-detail-article').append('<div class="last_news">This is last news</div>');
+                                    $('.wrap-detail-article').append('<div class="last_news">This is last news in this categories</div>');
                             }
                         }); // end ajax
                     }, 800);

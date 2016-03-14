@@ -85,7 +85,7 @@ use frontend\models\Ad;
 
     <?php if(count($news) > 0) {?>
     <section class="box-item news-item">
-        <div class="title-sub"><a href="<?=Url::to(['news/index'])?>" class="title-sub">news</a></div>
+        <div class="title-sub"><a href="<?=Url::to(['news/index'])?>" class="title-sub"><?=Yii::t('news','News')?></a></div>
         <div class="wrap-item">
             <?php
                 foreach($news as $n){
