@@ -28,6 +28,8 @@ use yii\helpers\Url;
                         <li><a href="<?=Url::to(['building-project/index']);?>"><div><span class="icon icon-home"></span></div>dự án mới</a></li>
                         <li><a href="<?=Url::to(['news/index']);?>"><div><span class="icon icon-news"></span></div>Tin tức</a></li>
                         <li><a href="<?=Url::to(['/payment/package'])?>"><div><span class="icon icon-tags"></span></div>Các gói giá</a></li>
+<!--                        <li><a href="/site/index?language-change=en-US">US</a></li>-->
+<!--                        <li><a href="/site/index?language-change=vi-VN">VN</a></li>-->
                     </ul>
                 </div>
             </div>

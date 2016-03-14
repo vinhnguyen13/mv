@@ -8,11 +8,17 @@
 
 namespace frontend\components;
 use frontend\models\UserData;
+use lajax\translatemanager\helpers\Language;
 use Yii;
 use yii\helpers\Url;
 
 class Controller extends \yii\web\Controller
 {
+    public function init() {
+        Language::registerAssets();
+        parent::init();
+    }
+
     public function beforeAction($action)
     {
         if(Yii::$app->user->isGuest && !in_array($action->id, ['login', 'register', 'error', 'map-image']) && !Yii::$app->request->isAjax){
