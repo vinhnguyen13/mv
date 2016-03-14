@@ -8,7 +8,7 @@ use yii\helpers\Html;
 ?>
 <div class="title-fixed-wrap">
 	<div class="noti-alert">
-		<div class="title-top">Thông báo</div>
+		<div class="title-top"><?=Yii::t('Notification', 'Notifications')?></div>
 		<?php
 		$query = \frontend\models\UserActivity::find();
 //		$query->andWhere(['params.owner'=>[1]]);
