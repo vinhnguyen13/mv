@@ -7,21 +7,21 @@ $model = Yii::createObject(LoginForm::className());
 ?>
 <div class="signin-signup">
     <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#tab-signin" aria-controls="tab-signin" role="tab" data-toggle="tab"><?=Yii::t('Member', 'Sign In')?></a><span class="line-center"></span></li>
-        <li role="presentation"><a href="#tab-signup" aria-controls="tab-signup" role="tab" data-toggle="tab"><?=Yii::t('Member', 'Sign Up')?></a></li>
+        <li role="presentation" class="active"><a href="#tab-signin" aria-controls="tab-signin" role="tab" data-toggle="tab"><?=Yii::t('user', 'Sign In')?></a><span class="line-center"></span></li>
+        <li role="presentation"><a href="#tab-signup" aria-controls="tab-signup" role="tab" data-toggle="tab"><?=Yii::t('user', 'Sign Up')?></a></li>
     </ul>
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="tab-signin">
             <div class="signin">
                 <?= $this->render('/member/_partials/login'); ?>
-                <p class="pdT-10"><?=Yii::t('Member', 'Already have an account ?')?> <a class="cl000 text-deco link-regis"> <?=Yii::t('Member', 'Sign up now !')?></a></p>
+                <p class="pdT-10"><?=Yii::t('user', 'Already have an account ?')?> <a class="cl000 text-deco link-regis"> <?=Yii::t('user', 'Sign up now !')?></a></p>
 
             </div>
         </div>
         <div role="tabpanel" class="tab-pane fade" id="tab-signup">
             <div class="signup">
                 <?= $this->render('/member/_partials/signup'); ?>
-                <p class="pdT-10"><?=Yii::t('Member', 'Already have an account ?')?> <a class="cl000 text-deco link-login" href="#"> <?=Yii::t('Member', 'Sign in now')?></a></p>
+                <p class="pdT-10"><?=Yii::t('user', 'Already have an account ?')?> <a class="cl000 text-deco link-login" href="#"> <?=Yii::t('user', 'Sign in now')?></a></p>
             </div>
         </div>
     </div>
