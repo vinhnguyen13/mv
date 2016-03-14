@@ -599,4 +599,15 @@ class Util extends Component
             return null;
         }
     }
+
+    public function arrayToHtmlAttributes($attr)
+    {
+        if(!empty($attr) && is_array($attr)){
+            return implode(' ', array_map(
+                function ($k, $v) { return $k .'="'. htmlspecialchars($v) .'"'; },
+                array_keys($attr), $attr
+            ));
+        }
+        return '';
+    }
 }

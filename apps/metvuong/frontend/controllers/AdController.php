@@ -109,6 +109,9 @@ class AdController extends Controller
     public function beforeAction($action)
     {
     	$this->view->params['noFooter'] = true;
+		$this->view->params['body'] = [
+			'class' => 'ad-listing'
+		];
     	return parent::beforeAction($action);
     }
     

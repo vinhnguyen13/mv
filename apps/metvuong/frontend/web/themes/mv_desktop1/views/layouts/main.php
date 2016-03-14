@@ -22,7 +22,7 @@ AppAsset::register($this);
     <title><?= Yii::$app->name . (!empty($this->title) ? ' - '.Html::encode($this->title) : '') ?></title>
     <?php $this->head() ?>
 </head>
-<body>
+<body <?=!empty($this->params['body']) ? \common\components\Util::me()->arrayToHtmlAttributes($this->params['body']) : ''?>>
     <?php $this->beginBody() ?>
         <?= $content ?>
     <?php $this->endBody() ?>
