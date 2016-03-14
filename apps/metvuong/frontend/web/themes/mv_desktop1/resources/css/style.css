@@ -574,7 +574,7 @@ margin-top: 3px;
     margin-bottom: 5px;
 }
 .address-listing a {
-    color: #333;
+    color: #00a769;
 }
 .attr-home .price {
     font-weight: bold;
@@ -2850,8 +2850,8 @@ input[type=text]:focus {
     display: block;
     padding: 15px;
     color: #3c3c3c;
-    font-size: 15px;
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 600;
 }
 .box-item .address-feat .address-icon {
     position: relative;
@@ -3552,7 +3552,6 @@ input[type=text]:focus {
     z-index: -1;
 }
 .box-item .address-feat .list-attr-td {
-    margin-top: 8px;
     margin-bottom: 0;
 }
 .bottom-feat-box {
@@ -3796,7 +3795,6 @@ input[type=text]:focus {
     color: #AFAFAF;
     font-weight: 400;
     font-size: 15px;
-    margin: 3px 0 3px 0;
 }
 .id-duan span {
     font-weight: 700;
@@ -5105,7 +5103,6 @@ input[type=text]:focus {
     }
     .id-duan {
         float: right;
-        margin-top: 7px;
     }
     .box-item .address-feat .list-attr-td {
         float: left;
@@ -5323,4 +5320,16 @@ footer li a {
         padding: 0 10px;
         margin-bottom: 25px;
     }
+}
+@media (min-width: 1366px) {
+    .container {
+        width: 1280px;
+    }
+    .news-item .wrap-item .item {
+        width: 25%;
+    }
+}
+.address-feat > div {
+    color: #00a769;
+    margin-bottom: 10px;
 }

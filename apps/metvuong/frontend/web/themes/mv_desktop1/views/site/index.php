@@ -56,8 +56,8 @@ use frontend\models\Ad;
                             <div class="info-item">
                                 <div class="address-feat">
             <!--                        <strong>Lancaster x</strong>-->
-                                    <span class="icon address-icon"></span><?= $product->getAddress(true) ?>
-                                    <p class="id-duan">ID tin đăng:<span><?=$product->id;?></span></p>
+                                    <div><?= $product->getAddress(true) ?></div>
+                                    <p class="id-duan">ID:<span><?=$product->id;?></span></p>
                                     <ul class="clearfix list-attr-td">
                                         <li>
                                             <span class="icon icon-dt icon-dt-small"></span>80m2
@@ -125,7 +125,7 @@ use frontend\models\Ad;
                         </li>
                         <li>
                             <span class="icon icon-phone-2 pull-left"></span>
-                            <p>08. 345 678 - 0908 123 456</p>
+                            <p><a href="tel:08345678">08. 345 678</a> - <a href="tel:0908123456">0908 123 456</a></p>
                         </li>
                         <li>
                             <span class="icon icon-email-3 pull-left"></span>

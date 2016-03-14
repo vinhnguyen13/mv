@@ -75,11 +75,11 @@ use yii\helpers\Url;
             </div>
             <ul class="clearfix list-menu">
                 <li class="dt-logo"><a href="/" class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/logo.png' ?>" alt=""></a></li>
-                <li><a href="#">CẦN MUA</a></li>
+                <li><a href="<?= Url::to(['/ad/index']) ?>">CẦN MUA</a></li>
                 <li><a href="#">CẦN THUÊ</a></li>
-                <li><a href="#">BÁN/CHO THUÊ</a></li>
-                <li><a href="#">DỰ ÁN MỚI</a></li>
-                <li><a href="#">TIN TỨC</a></li>
+                <li><a href="<?= Url::to(['/ad/post']) ?>">ĐĂNG BÁN/CHO THUÊ</a></li>
+                <li><a href="<?=Url::to(['building-project/index']);?>">DỰ ÁN MỚI</a></li>
+                <li><a href="<?=Url::to(['news/index']);?>">TIN TỨC</a></li>
             </ul>
         </div>
     </div>
