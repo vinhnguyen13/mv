@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Url;
     $newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatID"] : 0;
-    $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID]);
+    $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID, 'status' => \vsoft\news\models\Status::STATUS_ACTIVE]);
 ?>
 <div class="title-fixed-wrap">
 	<div class="page-news">
@@ -9,12 +9,12 @@ use yii\helpers\Url;
 			<div class="list-menu-news swiper-container">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        <a class="active" href="<?=Url::to(['news/index'])?>">all</a>
+                        <a class="active" href="<?=Url::to(['news/index'])?>"><?=Yii::t('news','All')?></a>
                     </div>
                     <?php if(!empty($catalogs)){?>
                     <?php foreach($catalogs as $catalog){?>
                             <div class="swiper-slide">
-                                <a href="<?=\yii\helpers\Url::to(['news/list', 'cat_id'=>$catalog->id, 'cat_slug'=>$catalog->slug])?>"><?=$catalog->title?></a>
+                                <a href="<?=\yii\helpers\Url::to(['news/list', 'cat_id'=>$catalog->id, 'cat_slug'=>$catalog->slug])?>"><?=Yii::t('news', $catalog->title)?></a>
                             </div>
                     <?php }?>
                     <?php }?>
