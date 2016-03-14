@@ -16,6 +16,7 @@ $types = AdProduct::getAdTypes ();
 <div class="result-listing clearfix">
 	<div class="wrap-listing-item">
 		<div class="inner-wrap">
+			<a href="#" class="toggle-listing">open</a>
 			<form id="search-form" action="<?= Url::to(['/ad/index']) ?>" method="get">
 				<!-- <div class="list-choice-city" data-prev-section="true">
 					<ul class="clearfix"></ul>
@@ -51,7 +52,7 @@ $types = AdProduct::getAdTypes ();
 							<div class="frm-item select-loaibds">
 								<div class="box-dropdown dropdown-common">
 									<div class="val-selected style-click">
-										<span class="selected" data-placeholder="Bất động sản bạn đang tìm?">Bất động sản bạn đang tìm?</span>
+										<span class="selected" data-placeholder="Loại bất động sản?">Loại bất động sản?</span>
 										<span class="pull-right icon arrowDown"></span>
 									</div>
 									<div class="item-dropdown hide-dropdown">
@@ -218,7 +219,7 @@ $types = AdProduct::getAdTypes ();
 									<div class="attrs-item">
 										<div class="wrap-attr-item">
 											<p class="infor-by-up">
-												<?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?> bởi <a href="#">Môi Giới</a>
+												<strong><?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?></strong> bởi Môi Giới
 											</p>
 											<p class="address-listing">
 												<a href="<?= $product->urlDetail(); ?>" title="<?= $product->getAddress($product->show_home_no) ?>"><?= $product->getAddress($product->show_home_no) ?></a>

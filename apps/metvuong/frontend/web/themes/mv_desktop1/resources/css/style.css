@@ -2064,6 +2064,9 @@ label {
     font-size: 15px;
     text-align: center;
     font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .btn-small {
     padding: 7px 30px;
@@ -3217,6 +3220,7 @@ input[type=text]:focus {
     -webkit-transform: translate(-50%,-50%);
     -ms-transform: translate(-50%,-50%);
     transform: translate(-50%,-50%);
+    background: url(../images/loading-listing.gif) no-repeat center;
 }
 .icon-dt-1 {
     background-position: 0 -242px;
@@ -3744,8 +3748,8 @@ input[type=text]:focus {
     margin-bottom: 3px;
 }
 #listing-list .item-listing .id-duan span {
-    font-weight: 700;
-    font-size: 15px;
+    font-weight: 600;
+    font-size: 14px;
 }
 .icon-search-small {
     width: 22px;
@@ -3811,7 +3815,7 @@ input[type=text]:focus {
     font-weight: 700;
     font-size: 15px;
     /* vertical-align: middle; */
-    color: #00a769;
+    /* color: #00a769; */
     padding-left: 5px;
 }
 .overflow-bg-popup {
@@ -5369,33 +5373,39 @@ footer li a {
         padding: 10px 10px;
     }
     .advande-search .toggle-search {
-        float: left;
     }
     .btn-submit {
-        float: left;
         width: auto;
     }
     .select-quan-huyen,
     .select-tinh-thanh {
-        width: 150px;
+        /* width: 150px; */
+        width: 7%;
     }
     .select-loaibds {
-        width: 230px;
+        /* width: 230px; */
+        width: 10%;
     }
     .select-price {
-        width: 185px;
+        /* width: 185px; */
+        width: 12%;
     }
     .select-dt {
-        width: 220px;
+        /* width: 220px; */
+        width: 13%;
     }
     .ad-listing .num-phongngu,
     .ad-listing .num-phongtam {
-        width: 150px;
+        /* width: 150px; */
         margin: 0;
         padding: 0;
+        width: 48%;
+    }
+    #du-an-select {
+        width: 11%;
     }
     .ad-listing .num-phongngu {
-        margin-right: 15px;
+        margin-right: 4%;
     }
     .wrap-listing-item {
         position: fixed;
@@ -5406,6 +5416,8 @@ footer li a {
         z-index: 10;
         padding-top: 124px;
         height: 100%;
+        transition-delay: 5s;
+        transition: right 1s ease;
     }
     .wrap-map-listing {
         position: fixed;
@@ -5452,16 +5464,17 @@ footer li a {
         overflow: hidden;
     }
     .item-listing .infor-by-up {
-        display: none;
+        /* display: none; */
     }
     #listing-list .wrap-attr-item {
         position: relative;
-        top: -8px;
+        top: -3px;
     }
     #listing-list .list-attr-td {
         margin: 0;
     }
     #listing-list .item-listing .address-listing {
+    font-weight: 600;
     }
     #listing-list .wrap-attr-bottom {
         margin-top: 5px;
@@ -5561,6 +5574,16 @@ footer li a {
         height: 200px;
         max-height: inherit;
     }
+    .select-bed-bath {
+        width: 20%;
+    }
+    .search-subpage button {
+        padding-left: 0;
+        padding-right: 0;
+        width: 7%;
+        max-width: 130px;
+        font-size: 14px;
+    }
 }
 .date-post {
     font-size: 14px;
@@ -5587,6 +5610,46 @@ footer li a {
 .wrap-item .address-feat .id-duan {
     margin-bottom: 7px;
 }
-.item-listing .id-duan {
-    
+@media ( min-width: 985px ) and ( max-width: 1366px ) {
+    .select-quan-huyen, .select-tinh-thanh {
+        width: 10%;
+    }
+    .select-bed-bath {
+        width: 25%;
+    }
+    .select-loaibds {
+        width: 12%;
+    }
+}
+@media ( min-width: 985px ) and ( max-width: 1280px ) {
+    .wrap-listing-item {
+        width: 50%;
+        right: -50%;
+    }
+    .wrap-map-listing {
+        width: 100%;
+    }
+    .toggle-listing {
+        display: block;
+        position: absolute;
+        top: 22px;
+        left: -52px;
+        background: #fff;
+        padding: 5px 15px;
+        transform: rotate(-90deg);
+        border-radius: 5px 5px 0 0;
+        -webkit-border-radius: 5px 5px 0 0;
+        -moz-border-radius: 5px 5px 0 0;
+        -ms-border-radius: 5px 5px 0 0;
+        text-transform: uppercase;
+    }
+    .toggle-listing:hover {
+        background: #00A769;
+        color: #fff;
+    }
+}
+@media ( min-width: 1280px ) {
+    .toggle-listing {
+        display: none;
+    }
 }

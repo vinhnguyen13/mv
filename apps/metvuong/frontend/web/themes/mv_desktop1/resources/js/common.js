@@ -778,7 +778,7 @@ $.fn.popupMobi = function (options) {
         sc = {},
         el = $(this);
 
-        if ( el.length == 0 || !checkMobile() ) return el;
+        if ( el.length == 0 ) return el; // || !checkMobile()
 
         sc.settings = $.extend({}, defaults, options);
 
