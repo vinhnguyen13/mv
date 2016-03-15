@@ -2,14 +2,14 @@
 
 namespace frontend\controllers;
 use common\components\Util;
-use dektrium\user\Mailer;
+use frontend\components\Mailer;
 use Elasticsearch\ClientBuilder;
 use frontend\models\Elastic;
 use frontend\models\Tracking;
 use frontend\models\UserActivity;
 use GuzzleHttp\Ring\Client\CurlHandler;
 use vsoft\tracking\models\base\AdProductVisitor;
-use vsoft\user\models\User;
+use frontend\models\User;
 use Yii;
 use yii\db\mssql\PDO;
 use yii\helpers\Url;
