@@ -43,6 +43,15 @@ class AdController extends Controller
     	\lajax\translatemanager\helpers\Language::registerAssets();
     	parent::init();
     }
+
+	/**
+	 * @return string
+	 */
+	public function beforeAction($action)
+	{
+		$this->view->params['noFooter'] = true;
+		return parent::beforeAction($action);
+	}
     
     public function actionUpload() {
         if($_FILES) {
@@ -108,19 +117,11 @@ class AdController extends Controller
     	
     	return ['files' => []];
     }
-    /**
-     * @return string
-     */
-    public function beforeAction($action)
-    {
-    	$this->view->params['noFooter'] = true;
+
+    public function actionIndex() {
 		$this->view->params['body'] = [
 			'class' => 'ad-listing'
 		];
-    	return parent::beforeAction($action);
-    }
-    
-    public function actionIndex() {
 		return $this->listingMobile();
     	if(Yii::$app->mobileDetect->isMobile()) {
     		return $this->listingMobile();
