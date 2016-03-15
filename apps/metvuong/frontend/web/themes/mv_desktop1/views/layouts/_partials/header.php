@@ -86,6 +86,16 @@ use yii\helpers\Url;
         </div>
     </div>
 </header>
+<div id="popup-login" class="popup-common hide-popup">
+    <div class="wrap-popup">
+        <div class="inner-popup">
+            <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
+            <div class="wrap-body-popup">
+                
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $(document).ready(function () {
 
@@ -96,12 +106,19 @@ use yii\helpers\Url;
             }else {
                 // is desktop
                 e.preventDefault();
+                $('body').loading();
                 $.ajax({
                     type: "get",
                     url: "<?=Url::to(['/member/login'])?>",
                     data: {id: true},
                     success: function (data) {
-                        l(data);
+                        $('body').loading({done: true});
+                        $('#popup-login .wrap-body-popup').html(data);
+                        $('#popup-login').popupMobi({
+                            styleShow: 'center',
+                            duration: 500,
+                            closeBtn: '#popup-login .btn-close'
+                        });
                     }
                 });
             }

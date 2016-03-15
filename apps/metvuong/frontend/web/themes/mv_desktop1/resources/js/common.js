@@ -784,7 +784,7 @@ $.fn.popupMobi = function (options) {
 
         sc.settings = $.extend({}, defaults, options);
 
-        $(document).on('click', sc.settings.btnClickShow, function (e) {
+        $(sc.settings.btnClickShow).on('click', function (e) {
             e.preventDefault();
             var _this = $(this),
                 popupItem = _this.attr('href');
@@ -810,10 +810,11 @@ $.fn.popupMobi = function (options) {
         }
 
         if ( $(sc.settings.btnClickShow).length == 0 || sc.settings.btnClickShow == "" ) {
-            showPopup(el);
+            showPopup("", el);
         }
 
         function showPopup (itemClick, popupItem) {
+            l(1);
             $('body').addClass('popup-mobi');
             popupItem.removeClass('hide-popup');
 
@@ -849,6 +850,7 @@ $.fn.popupMobi = function (options) {
         }
 
         function hide (popupItem) {
+            $(sc.settings.closeBtn).unbind('click');
             if ( sc.settings.effectShow == "slideDownUp" ) {
                 if ( sc.settings.styleShow == "full" ) {
                     var hPopup = popupItem.outerHeight();
@@ -868,7 +870,9 @@ $.fn.popupMobi = function (options) {
             }else {
                 popupItem.addClass('hide-popup');
             }
+            
             $('body').removeClass('popup-mobi');
+            l(2);
         }
     });
 }

@@ -3993,7 +3993,7 @@ input[type=text]:focus {
     padding-top: 45px;
     font-size: 14px;
     overflow: hidden;
-    overflow-y: auto;
+    /* overflow-y: auto; */
 }
 .popup-common .wrap-popup {
     position: relative;

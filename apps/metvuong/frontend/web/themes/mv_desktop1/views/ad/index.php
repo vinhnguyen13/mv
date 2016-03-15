@@ -131,11 +131,11 @@ $types = AdProduct::getAdTypes ();
 									</div>
 								</div>
 							</div>
-							<div class="frm-item clearfix select-bed-bath">
+							<!-- <div class="frm-item clearfix select-bed-bath">
 								<div class="col-xs-6 num-phongngu">
 									<div class="box-dropdown dropdown-common">
 										<div class="val-selected style-click" data-text-add="Phòng ngủ trở lên"><span class="selected">Phòng ngủ</span><span class="pull-right icon arrowDown"></span></div>
-			
+										
 										<div class="item-dropdown item-bed-bath hide-dropdown">
 											<ul class="clearfix">
 												<li><a href="#">1</a></li>
@@ -170,6 +170,56 @@ $types = AdProduct::getAdTypes ();
 												<li><a href="#">10</a></li>
 											</ul>
 											<input type="hidden" id="val-bath" class="value_selected" name="toiletNo" value="<?= Yii::$app->request->get('toiletNo') ?>" />
+										</div>
+									</div>
+								</div>
+							</div> -->
+							<div class="frm-item select-others">
+								<div class="box-dropdown dropdown-common">
+									<div class="val-selected style-click">
+										<span class="selected" data-placeholder="Loại bất động sản?">Nâng Cao</span>
+										<span class="pull-right icon arrowDown"></span>
+									</div>
+									<div class="item-dropdown hide-dropdown">
+										<div class="form-group">
+											<label for="" class="col-sm-4 control-label">Người đăng</label>
+											<div class="col-sm-8">
+												<select class="form-control">
+													<option>Tất cả</option>
+													<option>Nhà môi giới</option>
+													<option>Chính chủ</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="" class="col-sm-4 control-label">Ngày đăng</label>
+											<div class="col-sm-8">
+												<select class="form-control">
+													<option>Tất cả</option>
+													<option>1 ngày</option>
+													<option>1 tuần</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="" class="col-sm-4 control-label">Phòng ngủ</label>
+											<div class="col-sm-8">
+												<select class="form-control">
+													<option>Tất cả</option>
+													<option>1</option>
+													<option>2</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="" class="col-sm-4 control-label">Phòng tắm</label>
+											<div class="col-sm-8">
+												<select class="form-control">
+													<option>Tất cả</option>
+													<option>1</option>
+													<option>2</option>
+												</select>
+											</div>
 										</div>
 									</div>
 								</div>
