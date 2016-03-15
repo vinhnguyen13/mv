@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    checkMobile();
+    $(window).on('resize', checkMobile);
 
     $(".rippler").rippler({
         effectClass      :  'rippler-effect',
@@ -876,27 +876,8 @@ $.fn.popupMobi = function (options) {
 function checkMobile () {
     var wWindow = $(window).outerWidth();
 
-    $(window).on('resize', function () {
-            wWindow = $(window).outerWidth();
-    });
-
-    $(document).on('click', '[data-detect-layout]', function (e) {
-        var _this = $(this),
-            ajaxLink = _this.data('detectLayout');
-
-        if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || wWindow <= 985 ) {
-            // is mobile
-            
-        }else {
-            // is desktop
-            e.preventDefault();
-            $.ajax({
-                url: ajaxLink,
-                type: "GET",
-                success: function (res) {
-                    
-                }
-            });
-        }
-    });
+    if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || wWindow <= 985 ) {
+        return true;
+    }
+    return false;
 }

@@ -3054,7 +3054,8 @@ input[type=text]:focus {
 }
 .value-selected.active .arrowDown,
 .val-selected.active .arrowDown {
-    background-position: 0 -470px;
+    background-position: 0 -2122px;
+    background-size: 50px 2400px;
 }
 .arrowUp {
     background-position: 0 -470px;

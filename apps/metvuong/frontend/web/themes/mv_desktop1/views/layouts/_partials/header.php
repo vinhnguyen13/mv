@@ -38,7 +38,7 @@ use yii\helpers\Url;
                 <a href="#" id="hide-settings" class="icon"></a>
                 <?php if(Yii::$app->user->isGuest){?>
                     <ul class="clearfix">
-                        <li><a href="<?=Url::to(['member/login'])?>"><?=Yii::t('user', 'Sign In')?></a></li>
+                        <li><a href="<?=Url::to(['member/login'])?>" class="user-login-link"><?=Yii::t('user', 'Sign In')?></a></li>
                         <li><a href="<?=Url::to(['member/signup'])?>"><?=Yii::t('user', 'Sign Up')?></a></li>
                     </ul>
                 <?php } else{?>
@@ -73,7 +73,7 @@ use yii\helpers\Url;
 
         <div class="dt-header clearfix">
             <div class="user-login pull-right">
-                <a href="#" class="user-login"><?=Yii::t('user', 'Sign In')?></a> <span>/</span> <a href="#"><?=Yii::t('user', 'Sign Up')?></a>
+                <a href="#" class="user-login-link"><?=Yii::t('user', 'Sign In')?></a> <span>/</span> <a href="#"><?=Yii::t('user', 'Sign Up')?></a>
             </div>
             <ul class="clearfix list-menu">
                 <li class="dt-logo"><a href="/" class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/logo.png' ?>" alt=""></a></li>
@@ -88,20 +88,24 @@ use yii\helpers\Url;
 </header>
 <script>
     $(document).ready(function () {
-        $(document).on('click', '.user-login', function (e) {
-            var timer = 0;
-            clearTimeout(timer);
-            timer = setTimeout(function() {
+
+        $(document).on('click', '.user-login-link', function (e) {
+            if ( checkMobile() ) {
+                // is mobile
+
+            }else {
+                // is desktop
+                e.preventDefault();
                 $.ajax({
                     type: "get",
                     url: "<?=Url::to(['/member/login'])?>",
                     data: {id: true},
                     success: function (data) {
-
+                        l(data);
                     }
                 });
-            }, 500);
-            return false;
+            }
         });
+
     });
 </script>
