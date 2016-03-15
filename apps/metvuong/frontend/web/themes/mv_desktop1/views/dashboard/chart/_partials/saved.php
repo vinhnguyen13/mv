@@ -24,11 +24,11 @@ if(!empty($data) && count($data) > 0) {
                     enabled: false
                 },
                 title: {
-                    text: 'Lượt người lưu tin',
+                    text: '<?=Yii::t('chart', 'The favourite user')?>',
                     x: -20 //center
                 },
                 subtitle: {
-                    text: 'Nguồn: MetVuong.com',
+                    text: '<?=Yii::t('chart','Source')?>: MetVuong.com',
                     x: -20
                 },
                 xAxis: {
@@ -61,7 +61,7 @@ if(!empty($data) && count($data) > 0) {
                             tooltip = '<b>Final result is </b> ' + this.y;
                         }
                         else {
-                            tooltip = '<b>' + this.y + ' người lưu</b><br/>';
+                            tooltip = '<b>' + this.y + ' <?=Yii::t('chart','user')?></b><br/>';
                         }
                         return tooltip;
                     }
@@ -103,7 +103,7 @@ if(!empty($data) && count($data) > 0) {
                     success: function (data) {
                         if(data){
                             $('.favourite .list-item').html(data);
-                            $('.date-filter-chart').html('Thống kê trong ngày <span>'+date+'</span>');
+                            $('.date-filter-chart').html('<?=Yii::t('chart', 'Statistical favourite on')?> <span>'+date+'</span>');
                         }
                     }
                 });
@@ -114,14 +114,14 @@ if(!empty($data) && count($data) > 0) {
 } else {
     ?>
     <div class="alert alert-warning">
-        <p class="text-center">Chưa có người nào lưu tin của bạn, bạn hãy <a href="">làm mới</a> tin của mình</p>
+        <p class="text-center"><?=Yii::t('chart','No one favourite this listing')?>, <?=Yii::t('chart','please refresh')?> <a href="<?=$urlDetail?>"><?=Yii::t('chart','your listing')?></a>.</p>
     </div>
     <?php
 }?>
 <div class="statistic-info">
     <a href="<?=$urlDetail?>" style="color: black;"><p class="name-post"><span class="icon address-icon"></span><?=$address?></p></a>
     <?php if($from > 0 && $to > 0) {?>
-    <p class="date-filter-chart text-center mgT-15">Thống kê lượt <b>yêu thích</b> từ <span class="from"><?=date('d/m/Y', $from)?></span> - <span class="to"><?=date('d/m/Y', $to)?></span></p>
+    <p class="date-filter-chart text-center mgT-15"><?=Yii::t('chart', 'Statistical favourite from')?> <span class="from"><?=date('d/m/Y', $from)?></span> - <span class="to"><?=date('d/m/Y', $to)?></span></p>
     <?php } ?>
 </div>
 

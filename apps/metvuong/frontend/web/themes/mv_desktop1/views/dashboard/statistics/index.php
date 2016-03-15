@@ -59,19 +59,19 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 <div class="title-fixed-wrap">
     <div class="statis">
     	<div class="title-top">
-            Thống kê
+            <?=Yii::t('statistic','Statistic')?>
             <a href="<?=$backUrl?>" id="prev-page"><span class="icon arrowRight-1"></span></a>
         </div>
     	<section>
     		<div id="sandbox-container">
-    			<input type="text" class="form-control toDate" readonly placeholder="Ngày">
+    			<input type="text" class="form-control toDate" readonly placeholder="<?=Yii::t('statistic','Date')?>">
     			<span class="icon arrowDown"></span>
     		</div>
     		<div class="summary clearfix">
                 <ul class="option-view-stats">
-                    <li><a href="#" class="btn-finder active" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $finderFrom, 'to' => $finderTo, 'address' => $address, 'urlDetail' => $urlDetail])?>">Search</a></li>
-                    <li><a href="#" class="btn-visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $visitorFrom, 'to' => $visitorTo, 'address' => $address, 'urlDetail' => $urlDetail])?>">Click</a></li>
-                    <li><a href="#" class="btn-favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'id' => $id, 'from' => $favouriteFrom, 'to' => $favouriteTo, 'address' => $address, 'urlDetail' => $urlDetail])?>">Favourite</a></li>
+                    <li><a href="#" class="btn-finder active" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $finderFrom, 'to' => $finderTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><?=Yii::t('statistic','Search')?></a></li>
+                    <li><a href="#" class="btn-visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $visitorFrom, 'to' => $visitorTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><?=Yii::t('statistic','Click')?></a></li>
+                    <li><a href="#" class="btn-favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'id' => $id, 'from' => $favouriteFrom, 'to' => $favouriteTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><?=Yii::t('statistic','Favourite')?></a></li>
                 </ul>
 
     			<div class="wrap-chart clearfix">
@@ -88,7 +88,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     			<div class="panel-heading title-sub" role="tab" id="headingOne">
     				<h4 class="panel-title">
     					<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-    					<em class="icon-eye"></em> Search
+    					<em class="icon-eye"></em> <?=Yii::t('statistic','Search')?>
     					<span class="pull-right icon"></span>
     					</a>
     				</h4>
@@ -111,7 +111,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     						</li>
                             <?php }
                             } else { ?>
-                            <li>Không có người tìm kiếm</li>
+                            <li><?=Yii::t('statistic','Not found user')?></li>
                             <?php }?>
     					</ul>
     				</div>
@@ -121,7 +121,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     			<div class="panel-heading title-sub" role="tab" id="headingTwo">
     				<h4 class="panel-title">
     					<a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-    					<em class="icon-user"></em> Click
+    					<em class="icon-user"></em> <?=Yii::t('statistic','Click')?>
     					<span class="pull-right icon"></span>
     					</a>
     				</h4>
@@ -144,7 +144,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                                     </li>
                                 <?php }
                             }  else { ?>
-                                <li>Không có người ghé thăm</li>
+                                <li><?=Yii::t('statistic','Not click user')?></li>
                             <?php }?>
     					</ul>
     				</div>
@@ -154,7 +154,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     			<div class="panel-heading title-sub" role="tab" id="headingThree">
     				<h4 class="panel-title">
     					<a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-    					<em class="icon-heart"></em> favourite
+    					<em class="icon-heart"></em> <?=Yii::t('statistic','favourite')?>
     					<span class="pull-right icon"></span>
     					</a>
     				</h4>
@@ -173,7 +173,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                                     </li>
                                 <?php }
                             }  else { ?>
-                                <li>Không có lưu lại</li>
+                                <li><?=Yii::t('statistic','Not favourite user')?></li>
                             <?php } ?>
 
     					</ul>
@@ -187,7 +187,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                     <a class="share-email-btn" href="#popup-email">
                         <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
                         <div class="txt-infor-right">
-                            <div>Share With Email</div>
+                            <div><?=Yii::t('statistic','Share With Email')?></div>
                         </div>
                     </a>
                 </li>
@@ -195,7 +195,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                     <a href="#">
                         <div class="circle"><div><span class="icon icon-face"></span></div></div>
                         <div class="txt-infor-right">
-                            <div>Share With Facebook</div>
+                            <div><?=Yii::t('statistic','Share With Facebook')?></div>
                         </div>
                     </a>
                 </li>
@@ -237,11 +237,15 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
             styleShow: 'center',
             closeBtn: '#popup-user-inter .btn-close, #popup-user-inter .share-email-btn',
             funCallBack: function(item) {
-                $('#popup-user-inter .avatar-user-inter img').attr('src', item.data('ava'));
-                $('#popup-user-inter .avatar-user-inter a').attr('href', '/'+item[0].innerText.trim());
-                $('#popup-user-inter .name-user-inter').html('Bạn có thể Chat và Email với tài khoản: <a href="/'+item[0].innerText.trim()+'">'+item[0].innerText.trim()+'</a>');
-                $('#popup-user-inter .btn-chat').attr('href','/chat/with/'+item[0].innerText.trim());
-                $('.recipient_email').attr('value', item[0].attributes["data-email"].value)
+                if(item == '') {
+                    $('#popup-user-inter').addClass('hide-popup');
+                } else {
+                    $('#popup-user-inter .avatar-user-inter img').attr('src', item.data('ava'));
+                    $('#popup-user-inter .avatar-user-inter a').attr('href', '/' + item[0].innerText.trim());
+                    $('#popup-user-inter .name-user-inter').html('Bạn có thể Chat và Email với tài khoản: <a href="/' + item[0].innerText.trim() + '">' + item[0].innerText.trim() + '</a>');
+                    $('#popup-user-inter .btn-chat').attr('href', '/chat/with/' + item[0].innerText.trim());
+                    $('.recipient_email').attr('value', item[0].attributes["data-email"].value);
+                }
             }
         });
 

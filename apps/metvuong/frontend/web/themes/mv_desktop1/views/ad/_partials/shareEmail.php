@@ -12,9 +12,9 @@ use yii\helpers\Url;
 <div id="popup-email" class="popup-common hide-popup">
     <div class="wrap-popup">
         <div class="title-popup clearfix">
-            <div class="text-center">SHARE VIA EMAIL</div>
-            <a href="#" class="txt-cancel btn-cancel">Cancel</a>
-            <a href="#popup-sent" class="txt-done btn-done send_mail">Send</a>
+            <div class="text-center"><?=Yii::t('send_email','SHARE VIA EMAIL')?></div>
+            <a href="#" class="txt-cancel btn-cancel"><?=Yii::t('send_email','Cancel')?></a>
+            <a href="#popup-sent" class="txt-done btn-done send_mail"><?=Yii::t('send_email','Send')?></a>
         </div>
         <div class="inner-popup">
             <?php
@@ -104,9 +104,9 @@ use yii\helpers\Url;
         <div class="inner-popup">
             <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
             <div class="overflow-all">
-                <p>Thanks for send mail to <b class="user_name"></b></p>
+                <p><?=Yii::t('send_email','Thanks for send mail to')?> <b class="user_name"></b></p>
                 <br />
-                <div><a style="color: #00a769;" href="<?=Url::home()?>" class="">Return homepage</a></div>
+                <div><a style="color: #00a769;" href="<?=Url::home()?>" class=""><?=Yii::t('send_email','Return homepage')?></a></div>
             </div>
         </div>
     </div>

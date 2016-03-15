@@ -28,11 +28,11 @@ if(!empty($data) && count($data) > 0) {
                     enabled: false
                 },
                 title: {
-                    text: 'Lượt người tìm kiếm',
+                    text: '<?=Yii::t('chart', 'The searching user')?>',
                     x: -20 //center
                 },
                 subtitle: {
-                    text: 'Nguồn: MetVuong.com',
+                    text: '<?=Yii::t('chart','Source')?>: MetVuong.com',
                     x: -20
                 },
                 xAxis: {
@@ -65,7 +65,7 @@ if(!empty($data) && count($data) > 0) {
                             tooltip = '<b>Final result is </b> ' + this.y;
                         }
                         else {
-                            tooltip = '<b>' + this.y + ' người tìm</b><br/>';
+                            tooltip = '<b>' + this.y + ' <?=Yii::t('chart','user')?></b><br/>';
                         }
                         return tooltip;
                     }
@@ -107,7 +107,7 @@ if(!empty($data) && count($data) > 0) {
                     success: function (data) {
                         if (data) {
                             $('.finder .list-item').html(data);
-                            $('.date-filter-chart').html('Thống kê trong ngày <span>' + date + '</span>');
+                            $('.date-filter-chart').html('<?=Yii::t('chart', 'Statistic searching on')?>  <span>' + date + '</span>');
                         }
                     }
                 });
@@ -118,13 +118,13 @@ if(!empty($data) && count($data) > 0) {
 } else {
     ?>
     <div class="alert alert-warning">
-        <p class="text-center">Chưa có người nào tìm kiếm tin của bạn, bạn hãy <a href="">làm mới</a> tin của mình</p>
+        <p class="text-center"><?=Yii::t('chart','No one search this listing')?>, <?=Yii::t('chart','please refresh')?> <a href="<?=$urlDetail?>"><?=Yii::t('chart','your listing')?></a>.</p>
     </div>
     <?php
 }?>
 <div class="statistic-info">
     <a href="<?=$urlDetail?>" style="color: black;"><p class="name-post"><span class="icon address-icon"></span><?=$address?></p></a>
     <?php if($from > 0 && $to > 0) {?>
-    <p class="date-filter-chart text-center mgT-15">Thống kê lượt <b>tìm kiếm</b> từ <span class="from"><?=date('d/m/Y', $from)?></span> - <span class="to"><?=date('d/m/Y', $to)?></span></p>
+    <p class="date-filter-chart text-center mgT-15"><?=Yii::t('chart', 'Statistic searching from')?> <span class="from"><?=date('d/m/Y', $from)?></span> - <span class="to"><?=date('d/m/Y', $to)?></span></p>
     <?php } ?>
 </div>
