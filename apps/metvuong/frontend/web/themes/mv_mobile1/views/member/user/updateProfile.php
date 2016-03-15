@@ -46,7 +46,7 @@ $user = $model->getUser();
 					</ul>
 				</div>
 			</section>
-			
+
 			<section class="mtbt">
 				<div class="title-update-tt">
 					MÔ TẢ BẢN THÂN
@@ -285,7 +285,7 @@ $user = $model->getUser();
 			closeBtn: '.btn-cancel',
             styleShow: 'full',
 			funCallBack: function (itemClick, popupItem) {
-                
+
             }
 		});
 
@@ -302,9 +302,9 @@ $user = $model->getUser();
                 url: $('#form-edit-ttcn').attr('action'),
                 data: $('#form-edit-ttcn').serializeArray(),
                 success: function (data) {
-                    
+
                     _this.loading({done: true});
-                    
+
                     if(data.statusCode == 200){
                         $('.btn-cancel').trigger('click');
                         $('.ttcn .name').html(data.modelResult.name);
@@ -334,7 +334,7 @@ $user = $model->getUser();
                 full: false
             });
             $('#edit-mtbt .error').addClass('hide');
-            
+
             $.ajax({
                 type: 'post',
                 dataType: 'json',
@@ -343,7 +343,7 @@ $user = $model->getUser();
                 success: function (data) {
 
                     _this.loading({done: true});
-                    
+
                     if(data.statusCode == 200){
                         $('.btn-cancel').trigger('click');
                         $('.mtbt .txt-mota').html(data.modelResult.bio);
@@ -389,7 +389,7 @@ $user = $model->getUser();
                 success: function (data) {
 
                     _this.loading({done: true});
-                    
+
                     if(data.statusCode == 200){
 //                        $('.btn-cancel').trigger('click');
                         $('#edit-changepass .error').html('<br><span style="color:green;">Reset password success.</span>');
@@ -428,7 +428,7 @@ $user = $model->getUser();
             $('.avatar img').attr("src", url);
             $('.user-edit img').attr("src", url);
         });
-        
+
         $('#userlocation-city_id').change(function(){
             var timer = 0;
             clearTimeout(timer);

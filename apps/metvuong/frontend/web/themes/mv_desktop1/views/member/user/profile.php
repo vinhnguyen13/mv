@@ -12,12 +12,12 @@ $user = $model->getUser();
 ?>
 <div class="title-fixed-wrap">
     <div class="profile-user">
-        <div class="title-top clearfix"><a href="#" class="icon icon-back-top pull-left"></a> Profile User<a href="#" class="icon icon-back-top pull-right"></a></div>
+        <div class="title-top clearfix"><a href="#" class="icon icon-back-top pull-left"></a> <?=Yii::t('profile', 'Profile User');?><a href="#" class="icon icon-back-top pull-right"></a></div>
         <div class="infor-user clearfix">
             <div class="avatar-user-pr">
                 <div class="wrap-img avatar"><img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="<?=$model->avatar?>" alt="metvuong avatar" /></div>
                 <div class="name-user" ><?= $model->name ?></div>
-                <div class="per-posi">Agent ID TTG<?=str_pad($model->user_id, 3, '0', STR_PAD_LEFT)?></div>
+                <div class="per-posi"><?=Yii::t('profile', 'Agent ID')?> TTG<?=str_pad($model->user_id, 3, '0', STR_PAD_LEFT)?></div>
                 <div class="text-center send-noti">
                     <a href="<?=$user->urlChat();?>" class="btn-common btn-chat rippler rippler-default"><span class="icon icon-chat-1"></span></a>
                     <a href="tel:<?= $model->mobile ?>" class="btn-common rippler rippler-default"><span class="icon icon-phone-1"></span></a>
@@ -27,7 +27,7 @@ $user = $model->getUser();
         </div>
 
         <div class="infor-person">
-            <div class="title-text">Thông tin cá nhân</div>
+            <div class="title-text"><?=Yii::t('profile', 'Personal Information')?></div>
             <div class="wrap-txt">
                 <?= empty($model->bio) ? "Đang cập nhật" : $model->bio ?>
             </div>
@@ -67,7 +67,7 @@ $user = $model->getUser();
         ?>
 
         <div class="list-per-post">
-            <div class="title-text">Danh sách tin đã đăng</div>
+            <div class="title-text"><?=Yii::t('profile', 'Posted by Agent')?></div>
             <ul class="clearfix list-post">
                 <?php foreach ($products as $product) {
                     ?>

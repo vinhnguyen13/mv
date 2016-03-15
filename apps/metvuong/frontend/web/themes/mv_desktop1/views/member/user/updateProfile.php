@@ -16,7 +16,7 @@ $user = $model->getUser();
 <div class="title-fixed-wrap">
 	<div class="edit-user-tt">
 		<div class="title-top">
-			<a href="#">TÀI KHOẢN CỦA BẠN</a>
+			<a href="#"><?=Yii::t('profile', 'Update Profile')?></a>
 		</div>
 		<div class="wrap-edit-tt">
 			<div class="avatar-user-pr">
@@ -26,22 +26,22 @@ $user = $model->getUser();
             </div>
 			<section class="ttcn">
 				<div class="title-update-tt">
-					THÔNG TIN CÁ NHÂN
+                    <?=Yii::t('profile', 'Personal Information')?>
 					<a href="#edit-ttcn" class="edit-tt"><span class="icon icon-edit-small-1"></span></a>
 				</div>
 				<div class="list-tt-user wrap-attr-detail">
 					<ul class="clearfix">
 						<li>
 							<span class="attr-right pull-right name"><?=empty($model->name) ? $user->username : $model->name  ?></span>
-							<span>Tên</span>
+							<span><?=Yii::t('profile', 'Name')?></span>
 						</li>
 						<li>
-							<span class="attr-right pull-right phone-num"><?=empty($model->mobile) ? "Đang cập nhật" : $model->mobile ?></span>
-							<span>Số điện thoại</span>
+							<span class="attr-right pull-right phone-num"><?=empty($model->mobile) ? Yii::t('profile','updating...') : $model->mobile ?></span>
+							<span><?=Yii::t('profile', 'Phone')?></span>
 						</li>
 						<li>
 							<span class="attr-right pull-right public_email"><?=empty($model->public_email) ? $user->email : $model->public_email ?></span>
-							<span>Email</span>
+							<span><?=Yii::t('profile', 'Email')?></span>
 						</li>
 					</ul>
 				</div>
@@ -49,19 +49,19 @@ $user = $model->getUser();
 			
 			<section class="mtbt">
 				<div class="title-update-tt">
-					MÔ TẢ BẢN THÂN
+					<?=Yii::t('profile', 'Decscription')?>
 					<a href="#edit-mtbt" class="edit-tt"><span class="icon icon-edit-small-1"></span></a>
 				</div>
 				<div class="wrap-attr-detail">
 					<div class="txt-wrap">
-						<p class="txt-mota"><?=empty($model->bio) ? "Đang cập nhật" : $model->bio ?></p>
+						<p class="txt-mota"><?=empty($model->bio) ? Yii::t('profile','updating...') : $model->bio ?></p>
 					</div>
 				</div>
 			</section>
 
 			<section class="diadiem">
 				<div class="title-update-tt">
-					ĐỊA ĐIỂM
+                    <?=Yii::t('profile', 'Address')?>
 					<!-- <a href="#" class="edit-tt"><span class="icon icon-edit-small-1"></span></a> -->
 				</div>
 				<div class="list-tt-user wrap-attr-detail">
@@ -88,12 +88,12 @@ $user = $model->getUser();
                             $citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
 //                            $citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != \frontend\models\UserLocation::DEFAULT_CITY)]; });
                             echo $form->field($user_location_form, 'city_id', ['options' => ['class' => 'attr-right pull-right city']])
-                                ->dropDownList($citiesDropdown, ['prompt' => 'Chọn...', 'options' => [empty($user_location_form) ? 1 : $user_location_form->city_id => ['Selected ' => true]]])
+                                ->dropDownList($citiesDropdown, ['prompt' => Yii::t('profile','Select...'), 'options' => [empty($user_location_form) ? 1 : $user_location_form->city_id => ['Selected ' => true]]])
                                 ->label(false);
 
                             echo $form->field($user_location_form, 'user_id')->hiddenInput(['value'=>Yii::$app->user->id])->label(false);
                             ?>
-							<span>Tỉnh/Thành phố</span>
+							<span><?=Yii::t('profile', 'City')?></span>
 						</li>
 					</ul>
                     <?php $form->end(); ?>
@@ -102,7 +102,7 @@ $user = $model->getUser();
 
 			<section class="matkhau">
 				<div class="title-update-tt">
-					THAY MẬT KHẨU
+                    <?=Yii::t('profile', 'Change password')?>
 					<a href="#edit-changepass" class="edit-tt"><span class="icon icon-edit-small-1"></span></a>
 				</div>
 			</section>
@@ -117,7 +117,7 @@ $user = $model->getUser();
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true" class="icon"></span>
                 </button>
-                <h3>Thay đổi hình đại diện</h3>
+                <h3><?=Yii::t('profile', 'Change avatar')?></h3>
             </div>
             <div class="modal-body">
                 <div class="wrap-modal clearfix">
@@ -173,7 +173,7 @@ $user = $model->getUser();
         ]);
         ?>
 		<div class="title-popup clearfix text-center">
-			Thông tin cá nhân
+            <?=Yii::t('profile', 'Personal Information')?>
 			<a href="#" class="txt-cancel btn-cancel">Cancel</a>
 			<a href="#" class="txt-done btn-done">Done</a>
 		</div>
@@ -181,15 +181,15 @@ $user = $model->getUser();
             <div class="list-tt-user wrap-attr-detail">
 				<ul class="clearfix">
 					<li>
-						<span>Tên</span>
+						<span><?=Yii::t('profile', 'Name')?></span>
                         <?= $f->field($profile_form, 'name')->textInput(['class'=>'attr-right name', 'value' => empty($model->name) ? $user->username : $model->name ])->label(false)?>
 					</li>
 					<li>
-						<span>Số điện thoại</span>
+						<span><?=Yii::t('profile', 'Phone')?></span>
                         <?= $f->field($profile_form, 'mobile')->textInput(['class'=>'attr-right phone-num', 'maxlength' => 11, 'value' => $model->mobile ])->label(false)?>
 					</li>
 					<li>
-						<span>Email</span>
+						<span><?=Yii::t('profile', 'Email')?></span>
                         <?= $f->field($profile_form, 'public_email')->textInput(['class'=>'attr-right public_email', 'value' => empty($model->public_email) ? $user->email : $model->public_email ])->label(false)?>
 					</li>
                     <li>
@@ -218,7 +218,7 @@ $user = $model->getUser();
         ]);
         ?>
 		<div class="title-popup clearfix text-center">
-			MÔ TẢ BẢN THÂN
+            <?=Yii::t('profile', 'Description')?>
 			<a href="#" class="txt-cancel btn-cancel">Cancel</a>
 			<a href="#" class="txt-done btn-done">Done</a>
 		</div>
@@ -246,7 +246,7 @@ $user = $model->getUser();
         ]);
         ?>
 		<div class="title-popup clearfix text-center">
-			MẬT KHẨU
+            <?=Yii::t('profile', 'Password')?>
 			<a href="#" class="txt-cancel btn-cancel">Back</a>
 			<a href="#" class="txt-done btn-done">Change</a>
 		</div>
@@ -254,17 +254,17 @@ $user = $model->getUser();
             <div class="list-tt-user wrap-attr-detail">
 				<ul class="clearfix">
 					<li>
-						<span>Mật khẩu cũ</span>
-                        <?= $f->field($model, 'old_password')->textInput(['class' => 'attr-right old_password', 'type' => 'password', 'placeholder' => 'Nhập...'])->label(false) ?>
+						<span><?=Yii::t('profile', 'Old password')?></span>
+                        <?= $f->field($model, 'old_password')->textInput(['class' => 'attr-right old_password', 'type' => 'password', 'placeholder' => Yii::t('profile','Input...')])->label(false) ?>
 					</li>
 					<li>
-						<span>Mật khẩu mới</span>
-                        <?= $f->field($model, 'new_password')->textInput(['class' => 'attr-right new_password', 'type' => 'password', 'placeholder' => 'Nhập...'])->label(false) ?>
+						<span><?=Yii::t('profile', 'New password')?></span>
+                        <?= $f->field($model, 'new_password')->textInput(['class' => 'attr-right new_password', 'type' => 'password', 'placeholder' => Yii::t('profile','Input...')])->label(false) ?>
 					</li>
 					<li>
-						<span>Gõ lại mật khẩu mới</span>
+						<span><?=Yii::t('profile', 'Confirm password')?></span>
                         <div class="form-group field-profile-form-new_password required">
-                            <input type="password" class="attr-right re-type-pass" value="" placeholder="Nhập...">
+                            <input type="password" class="attr-right re-type-pass" value="" placeholder="<?=Yii::t('profile','Input...')?>">
                             <p class="help-block help-block-error"></p>
                         </div>
 					</li>
