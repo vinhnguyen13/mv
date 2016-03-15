@@ -9,7 +9,7 @@ $context = $this->context;
 	<div class="fileinput-button-wrap">
 	    <span class="btn btn-success fileinput-button">
 			<i class="glyphicon glyphicon-plus"></i>
-			<span><?= Yii::t('fileupload', 'Add files') ?>...</span>
+			<span><?= Yii::t('ad', 'Add images') ?>...</span>
 			<?php
 				$options = $context->fieldOptions;
 			

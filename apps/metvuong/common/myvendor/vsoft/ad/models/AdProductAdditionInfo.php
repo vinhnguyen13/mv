@@ -49,15 +49,15 @@ class AdProductAdditionInfo extends APAI
     
     public static function directionList() {
     	return [
-			0 => 'KXĐ',
-			1 => 'Đông',
-			2 => 'Tây',
-			3 => 'Nam',
-			4 => 'Bắc',
-			5 => 'Đông-Bắc',
-			6 => 'Tây-Bắc',
-			7 => 'Đông-Nam',
-			8 => 'Tây-Nam'
+			0 => Yii::t('ad', 'NA'),
+			1 => Yii::t('ad', 'East'),
+			2 => Yii::t('ad', 'West'),
+			3 => Yii::t('ad', 'South'),
+			4 => Yii::t('ad', 'North'),
+			5 => Yii::t('ad', 'East-North'),
+			6 => Yii::t('ad', 'West-North'),
+			7 => Yii::t('ad', 'East-South'),
+			8 => Yii::t('ad', 'West-South')
     	];
     }
     
