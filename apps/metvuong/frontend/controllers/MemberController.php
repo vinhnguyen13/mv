@@ -95,12 +95,16 @@ class MemberController extends Controller
             return $this->goHome();
         }
         if(Yii::$app->request->isAjax){
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            $model = Yii::createObject(LoginForm::className());
-            if ($model->load(Yii::$app->getRequest()->post()) && $model->login()) {
-                return ['statusCode'=>200, 'parameters'=>['username'=>!empty(Yii::$app->user->identity->profile->name) ? Yii::$app->user->identity->profile->name : Yii::$app->user->identity->email]];
-            } else {
-                return ['statusCode'=>404, 'parameters'=>$model->errors];
+            if(Yii::$app->request->isPost) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                $model = Yii::createObject(LoginForm::className());
+                if ($model->load(Yii::$app->getRequest()->post()) && $model->login()) {
+                    return ['statusCode' => 200, 'parameters' => ['username' => !empty(Yii::$app->user->identity->profile->name) ? Yii::$app->user->identity->profile->name : Yii::$app->user->identity->email]];
+                } else {
+                    return ['statusCode' => 404, 'parameters' => $model->errors];
+                }
+            }else{
+                return $this->renderAjax('login');
             }
         }
         return $this->render('login');

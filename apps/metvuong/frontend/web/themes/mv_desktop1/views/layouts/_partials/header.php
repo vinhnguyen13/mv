@@ -73,7 +73,7 @@ use yii\helpers\Url;
 
         <div class="dt-header clearfix">
             <div class="user-login pull-right">
-                <a href="#"><?=Yii::t('user', 'Sign In')?></a> <span>/</span> <a href="#"><?=Yii::t('user', 'Sign Up')?></a>
+                <a href="#" class="user-login"><?=Yii::t('user', 'Sign In')?></a> <span>/</span> <a href="#"><?=Yii::t('user', 'Sign Up')?></a>
             </div>
             <ul class="clearfix list-menu">
                 <li class="dt-logo"><a href="/" class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/logo.png' ?>" alt=""></a></li>
@@ -86,3 +86,22 @@ use yii\helpers\Url;
         </div>
     </div>
 </header>
+<script>
+    $(document).ready(function () {
+        $(document).on('click', '.user-login', function (e) {
+            var timer = 0;
+            clearTimeout(timer);
+            timer = setTimeout(function() {
+                $.ajax({
+                    type: "get",
+                    url: "<?=Url::to(['/member/login'])?>",
+                    data: {id: true},
+                    success: function (data) {
+
+                    }
+                });
+            }, 500);
+            return false;
+        });
+    });
+</script>
