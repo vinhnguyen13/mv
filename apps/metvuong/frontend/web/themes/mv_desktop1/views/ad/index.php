@@ -275,7 +275,7 @@ $types = AdProduct::getAdTypes ();
 												<a href="<?= $product->urlDetail(); ?>" title="<?= $product->getAddress($product->show_home_no) ?>"><?= $product->getAddress($product->show_home_no) ?></a>
 											</p>
 											<p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
-											<p class="date-post"><strong>12/2/2016, 8:30AM</strong></p>
+											<p class="date-post"><strong><?= date("d/m/Y H:i", $product->created_at) ?></strong></p>
 											<div class="clearfix"></div>
 											<ul class="clearfix list-attr-td">
 												<?= $product->area ? '<li> <span class="icon icon-dt icon-dt-small"></span>' . $product->area . 'm2 </li>' : '' ?>
