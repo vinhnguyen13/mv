@@ -73,7 +73,7 @@ use yii\helpers\Url;
 
         <div class="dt-header clearfix">
             <div class="user-login pull-right">
-                <a href="#" class="user-login-link"><?=Yii::t('user', 'Sign In')?></a> <span>/</span> <a href="#"><?=Yii::t('user', 'Sign Up')?></a>
+                <a href="#" class="user-login-link"><?=Yii::t('user', 'Sign In')?></a> <span>/</span> <a href="#" class="user-signup-link"><?=Yii::t('user', 'Sign Up')?></a>
             </div>
             <ul class="clearfix list-menu">
                 <li class="dt-logo"><a href="/" class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/logo.png' ?>" alt=""></a></li>
@@ -96,9 +96,18 @@ use yii\helpers\Url;
         </div>
     </div>
 </div>
+<div id="popup-signup" class="popup-common hide-popup">
+    <div class="wrap-popup">
+        <div class="inner-popup">
+            <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
+            <div class="wrap-body-popup">
+
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $(document).ready(function () {
-
         $(document).on('click', '.user-login-link', function (e) {
             if ( checkMobile() ) {
                 // is mobile
@@ -110,7 +119,6 @@ use yii\helpers\Url;
                 $.ajax({
                     type: "get",
                     url: "<?=Url::to(['/member/login'])?>",
-                    data: {id: true},
                     success: function (data) {
                         $('body').loading({done: true});
                         $('#popup-login .wrap-body-popup').html(data);
@@ -118,6 +126,29 @@ use yii\helpers\Url;
                             styleShow: 'center',
                             duration: 500,
                             closeBtn: '#popup-login .btn-close'
+                        });
+                    }
+                });
+            }
+        });
+        $(document).on('click', '.user-signup-link', function (e) {
+            if ( checkMobile() ) {
+                // is mobile
+
+            }else {
+                // is desktop
+                e.preventDefault();
+                $('body').loading();
+                $.ajax({
+                    type: "get",
+                    url: "<?=Url::to(['/member/signup'])?>",
+                    success: function (data) {
+                        $('body').loading({done: true});
+                        $('#popup-signup .wrap-body-popup').html(data);
+                        $('#popup-signup').popupMobi({
+                            styleShow: 'center',
+                            duration: 500,
+                            closeBtn: '#popup-signup .btn-close'
                         });
                     }
                 });

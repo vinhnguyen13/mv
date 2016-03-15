@@ -134,17 +134,21 @@ class MemberController extends Controller
             return $this->goHome();
         }
         if(Yii::$app->request->isAjax){
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            $model = Yii::createObject(RegistrationForm::className());
-            $model->load(Yii::$app->request->post());
-            $model->validate();
-            if (!$model->hasErrors()) {
-                $user = $model->register();
-                if (!empty($user) && Yii::$app->getUser()->login($user, $this->_module->rememberFor)) {
-                    return ['statusCode'=>200, 'parameters'=>['username'=>!empty(Yii::$app->user->identity->profile->name) ? Yii::$app->user->identity->profile->name : Yii::$app->user->identity->email]];
+            if(Yii::$app->request->isPost) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                $model = Yii::createObject(RegistrationForm::className());
+                $model->load(Yii::$app->request->post());
+                $model->validate();
+                if (!$model->hasErrors()) {
+                    $user = $model->register();
+                    if (!empty($user) && Yii::$app->getUser()->login($user, $this->_module->rememberFor)) {
+                        return ['statusCode' => 200, 'parameters' => ['username' => !empty(Yii::$app->user->identity->profile->name) ? Yii::$app->user->identity->profile->name : Yii::$app->user->identity->email]];
+                    }
+                } else {
+                    return ['statusCode' => 404, 'parameters' => $model->errors];
                 }
-            } else {
-                return ['statusCode'=>404, 'parameters'=>$model->errors];
+            }else{
+                return $this->renderAjax('signup');
             }
         }
         return $this->render('signup');
