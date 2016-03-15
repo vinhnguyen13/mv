@@ -5558,7 +5558,7 @@ footer li a {
         width: 400px;
     }
     .dropdown-up-style {
-        top: 51px;
+        top: 50px;
     }
     .box-dropdown .dropdown-up-style .item-dropdown {
         border-top: none;
@@ -5648,7 +5648,7 @@ footer li a {
         color: #fff;
     }
 }
-@media ( min-width: 1280px ) {
+@media ( max-width: 985px ) {
     .toggle-listing {
         display: none;
     }
