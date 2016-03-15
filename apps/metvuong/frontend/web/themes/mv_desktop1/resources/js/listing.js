@@ -1,5 +1,36 @@
 $(document).ready(function(){
 	
+	var map = {
+			
+	};
+	
+	var desktop = {
+		isEnabled: false,
+		enable: function() {
+			this.isEnabled = true;
+			
+			m2Map.initial(function(gmap) {
+				var options = {center: {lat: 10.783068, lng: 106.704825}, zoom: 15};
+				var gmap = new google.maps.Map(document.getElementById('map'), options);
+			});
+		},
+		disable: function() {
+			this.isEnabled = false;
+		}
+	};
+
+	$(window).resize(function(){
+		if($('.m-header').css('display') == 'none') {
+			if(!desktop.isEnabled) {
+				desktop.enable();
+			}
+		} else {
+			if(desktop.isEnabled) {
+				desktop.disable();
+			}
+		}
+	}).trigger('resize');
+	
 	$('.tinh-thanh').html('');
 	$('.loai-bds').html('');
 	for ( var i in dataCities) {

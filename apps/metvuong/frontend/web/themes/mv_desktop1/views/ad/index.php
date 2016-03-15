@@ -7,6 +7,8 @@ use yii\helpers\Url;
 use vsoft\ad\models\AdProduct;
 use yii\web\View;
 
+$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/gmap-v2.js', ['position' => View::POS_END]);
+$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=m2Map.loaded', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
 $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/listing.js', ['position' => View::POS_END]);
 
 $categories = AdCategory::find ()->indexBy ( 'id' )->asArray ( true )->all ();
@@ -310,8 +312,6 @@ $types = AdProduct::getAdTypes ();
 		</div>
 	</div>
 	<div class="wrap-map-listing">
-		<div class="inner-wrap">
-			<iframe width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:EksyMSBOZ3V54buFbiBUcnVuZyBOZ-G6oW4sIELhur9uIE5naMOpLCBRdeG6rW4gMSwgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0&key=AIzaSyDgukAnWQNq0fitebULUbottG5gvK64OCQ" allowfullscreen></iframe>
-		</div>
+		<div id="map" class="inner-wrap"></div>
 	</div>
 </div>
