@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    checkMobile();
+
     $(".rippler").rippler({
         effectClass      :  'rippler-effect',
         effectSize      :  0,      // Default size (width & height)
@@ -778,7 +780,7 @@ $.fn.popupMobi = function (options) {
         sc = {},
         el = $(this);
 
-        if ( el.length == 0 ) return el; // || !checkMobile()
+        if ( el.length == 0 ) return el;
 
         sc.settings = $.extend({}, defaults, options);
 
@@ -872,8 +874,29 @@ $.fn.popupMobi = function (options) {
 }
 
 function checkMobile () {
-    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-        return true;
-    }
-    return false;
+    var wWindow = $(window).outerWidth();
+
+    $(window).on('resize', function () {
+            wWindow = $(window).outerWidth();
+    });
+
+    $(document).on('click', '[data-detect-layout]', function (e) {
+        var _this = $(this),
+            ajaxLink = _this.data('detectLayout');
+
+        if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || wWindow <= 985 ) {
+            // is mobile
+            
+        }else {
+            // is desktop
+            e.preventDefault();
+            $.ajax({
+                url: ajaxLink,
+                type: "GET",
+                success: function (res) {
+                    
+                }
+            });
+        }
+    });
 }

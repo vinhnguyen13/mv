@@ -2375,9 +2375,10 @@ footer {
 }
 .arrowDown {
     display: inline-block;
-    width: 21px;
-    height: 12px;
-    background-position: 0 -459px;
+    width: 17px;
+    height: 9px;
+    background-position: 0 -2113px;
+    background-size: 50px 2400px;
     background-color: #F0F0F0;
 }
 #sandbox-container {
@@ -5621,6 +5622,9 @@ footer li a {
         width: 12%;
     }
 }
+.toggle-listing {
+    display: none;
+}
 @media ( min-width: 985px ) and ( max-width: 1280px ) {
     .wrap-listing-item {
         width: 50%;
@@ -5646,10 +5650,5 @@ footer li a {
     .toggle-listing:hover {
         background: #00A769;
         color: #fff;
-    }
-}
-@media ( max-width: 985px ) {
-    .toggle-listing {
-        display: none;
     }
 }
