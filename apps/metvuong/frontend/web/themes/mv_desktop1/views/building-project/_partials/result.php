@@ -21,24 +21,26 @@ use yii\helpers\Url;
             }
         }
         ?>
-        <div class="item">
-            <a href="<?= Url::to(["building/$model->slug"]); ?>" class="pic-intro rippler rippler-default">
-                <div class="img-show">
-                    <div><img src="<?=$image?>"
-                              data-original="<?=$image?>"
-                              style="display: block;"></div>
-                </div>
-            </a>
+        <div class="wrap-item">
+            <div class="item">
+                <a href="<?= Url::to(["building/$model->slug"]); ?>" class="pic-intro rippler rippler-default">
+                    <div class="img-show">
+                        <div><img src="<?=$image?>"
+                                  data-original="<?=$image?>"
+                                  style="display: block;"></div>
+                    </div>
+                </a>
 
-            <div class="info-item">
-                <div class="address-feat">
-                    <p><?= !empty($model->categories[0]->name) ? \vsoft\ad\models\AdBuildingProject::mb_ucfirst($model->categories[0]->name,'UTF-8') : "Chung cư cao cấp" ?></p>
-                    <a href="<?= Url::to(["building/$model->slug"]); ?>"><strong><?= mb_strtoupper($model->name) ?></strong></a>
-                    <span class="icon address-icon"></span><?= empty($model->location) ? "Đang cập nhật" : $model->location ?>
-                </div>
-                <div class="bottom-feat-box clearfix">
-                    <p><?=\yii\helpers\StringHelper::truncate($model->description, 180)?></p>
-                    <a href="<?= Url::to(["building/$model->slug"]); ?>" class="pull-right">Chi tiết</a>
+                <div class="info-item">
+                    <div class="address-feat">
+                        <p><?= !empty($model->categories[0]->name) ? \vsoft\ad\models\AdBuildingProject::mb_ucfirst($model->categories[0]->name,'UTF-8') : "Chung cư cao cấp" ?></p>
+                        <a href="<?= Url::to(["building/$model->slug"]); ?>"><strong><?= mb_strtoupper($model->name) ?></strong></a>
+                        <span class="icon address-icon"></span><?= empty($model->location) ? "Đang cập nhật" : $model->location ?>
+                    </div>
+                    <div class="bottom-feat-box clearfix">
+                        <p><?=\yii\helpers\StringHelper::truncate($model->description, 180)?></p>
+                        <a href="<?= Url::to(["building/$model->slug"]); ?>" class="pull-right">Chi tiết</a>
+                    </div>
                 </div>
             </div>
         </div>

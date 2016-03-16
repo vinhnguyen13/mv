@@ -5988,9 +5988,15 @@ footer li a {
     .wrap-infor-duan {
         background: none;
     }
-    .wrap-infor-duan .item {
-        width: 25%;
+    .wrap-infor-duan .wrap-item {
+        width: 33.3333%;
         float: left;
         padding: 0 15px;
+    }
+    .list-duan {
+        margin: 0 -15px;
+    }
+    .wrap-infor-duan .info-item .address-feat {
+        height: 135px;
     }
 }

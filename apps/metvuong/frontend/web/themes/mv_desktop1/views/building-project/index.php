@@ -18,7 +18,7 @@ use yii\helpers\Url;
                         <button type="submit" id="btn-search-duan"><span class="icon icon-search-small-1"></span></button>
                     </form>
                 </div>
-                <div class="list-duan">
+                <div class="list-duan clearfix">
                     <?= $this->render('_partials/result', ['models' => $models]) ?>
                 </div>
             </div>

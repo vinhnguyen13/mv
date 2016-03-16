@@ -14,100 +14,102 @@ use yii\helpers\Url;
 $user = $model->getUser();
 ?>
 <div class="title-fixed-wrap">
-	<div class="edit-user-tt">
-		<div class="title-top">
-			<a href="#"><?=Yii::t('profile', 'Update Profile')?></a>
-		</div>
-		<div class="wrap-edit-tt">
-			<div class="avatar-user-pr">
-                <div class="wrap-img avatar">
-                    <img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="<?=$model->avatar?>" alt="metvuong avatar" />
+    <div class="container">
+    	<div class="edit-user-tt">
+    		<div class="title-top">
+    			<a href="#"><?=Yii::t('profile', 'Update Profile')?></a>
+    		</div>
+    		<div class="wrap-edit-tt">
+    			<div class="avatar-user-pr">
+                    <div class="wrap-img avatar">
+                        <img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="<?=$model->avatar?>" alt="metvuong avatar" />
+                    </div>
                 </div>
-            </div>
-			<section class="ttcn">
-				<div class="title-update-tt">
-                    <?=Yii::t('profile', 'Personal Information')?>
-					<a href="#edit-ttcn" class="edit-tt"><span class="icon icon-edit-small-1"></span></a>
-				</div>
-				<div class="list-tt-user wrap-attr-detail">
-					<ul class="clearfix">
-						<li>
-							<span class="attr-right pull-right name"><?=empty($model->name) ? $user->username : $model->name  ?></span>
-							<span><?=Yii::t('profile', 'Name')?></span>
-						</li>
-						<li>
-							<span class="attr-right pull-right phone-num"><?=empty($model->mobile) ? "<i style=\"font-weight: normal;\">".Yii::t('profile','updating')."</i>" : $model->mobile ?></span>
-							<span><?=Yii::t('profile', 'Mobile')?></span>
-						</li>
-						<li>
-							<span class="attr-right pull-right public_email"><?=empty($model->public_email) ? $user->email : $model->public_email ?></span>
-							<span><?=Yii::t('profile', 'Email')?></span>
-						</li>
-					</ul>
-				</div>
-			</section>
-			
-			<section class="mtbt">
-				<div class="title-update-tt">
-					<?=Yii::t('profile', 'Decscription')?>
-					<a href="#edit-mtbt" class="edit-tt"><span class="icon icon-edit-small-1"></span></a>
-				</div>
-				<div class="wrap-attr-detail">
-					<div class="txt-wrap">
-						<p class="txt-mota"><?=empty($model->bio) ? "<i style=\"font-weight: normal;\">".Yii::t('profile','updating')."</i>" : $model->bio ?></p>
-					</div>
-				</div>
-			</section>
+    			<section class="ttcn">
+    				<div class="title-update-tt">
+                        <?=Yii::t('profile', 'Personal Information')?>
+    					<a href="#edit-ttcn" class="edit-tt"><span class="icon icon-edit-small-1"></span></a>
+    				</div>
+    				<div class="list-tt-user wrap-attr-detail">
+    					<ul class="clearfix">
+    						<li>
+    							<span class="attr-right pull-right name"><?=empty($model->name) ? $user->username : $model->name  ?></span>
+    							<span><?=Yii::t('profile', 'Name')?></span>
+    						</li>
+    						<li>
+    							<span class="attr-right pull-right phone-num"><?=empty($model->mobile) ? "<i style=\"font-weight: normal;\">".Yii::t('profile','updating')."</i>" : $model->mobile ?></span>
+    							<span><?=Yii::t('profile', 'Mobile')?></span>
+    						</li>
+    						<li>
+    							<span class="attr-right pull-right public_email"><?=empty($model->public_email) ? $user->email : $model->public_email ?></span>
+    							<span><?=Yii::t('profile', 'Email')?></span>
+    						</li>
+    					</ul>
+    				</div>
+    			</section>
+    			
+    			<section class="mtbt">
+    				<div class="title-update-tt">
+    					<?=Yii::t('profile', 'Decscription')?>
+    					<a href="#edit-mtbt" class="edit-tt"><span class="icon icon-edit-small-1"></span></a>
+    				</div>
+    				<div class="wrap-attr-detail">
+    					<div class="txt-wrap">
+    						<p class="txt-mota"><?=empty($model->bio) ? "<i style=\"font-weight: normal;\">".Yii::t('profile','updating')."</i>" : $model->bio ?></p>
+    					</div>
+    				</div>
+    			</section>
 
-			<section class="diadiem">
-				<div class="title-update-tt">
-                    <?=Yii::t('profile', 'Address')?>
-					<!-- <a href="#" class="edit-tt"><span class="icon icon-edit-small-1"></span></a> -->
-				</div>
-				<div class="list-tt-user wrap-attr-detail">
-                    <?php
+    			<section class="diadiem">
+    				<div class="title-update-tt">
+                        <?=Yii::t('profile', 'Address')?>
+    					<!-- <a href="#" class="edit-tt"><span class="icon icon-edit-small-1"></span></a> -->
+    				</div>
+    				<div class="list-tt-user wrap-attr-detail">
+                        <?php
 
-                    $user_location_form = \frontend\models\UserLocation::find()->where(['user_id' => Yii::$app->user->id])->one();
-                    if(empty($user_location_form))
-                        $user_location_form = new \frontend\models\UserLocation();
+                        $user_location_form = \frontend\models\UserLocation::find()->where(['user_id' => Yii::$app->user->id])->one();
+                        if(empty($user_location_form))
+                            $user_location_form = new \frontend\models\UserLocation();
 
-                    $form = ActiveForm::begin ( [
-                        'id' => 'user-location-form',
-                        'enableClientValidation' => false,
-                        'options' => [
-                            'autocomplete' => 'off',
-                            'spellcheck' => 'false'
-                        ],
-                        'action' => Url::to(['member/update-user-location'])
-                    ]);
-                    ?>
-					<ul class="clearfix">
-						<li>
-                            <?php
-                            $cities = AdCity::find()->all();
-                            $citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
-//                            $citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != \frontend\models\UserLocation::DEFAULT_CITY)]; });
-                            echo $form->field($user_location_form, 'city_id', ['options' => ['class' => 'attr-right pull-right city']])
-                                ->dropDownList($citiesDropdown, ['prompt' => Yii::t('profile','Select...'), 'options' => [empty($user_location_form) ? 1 : $user_location_form->city_id => ['Selected ' => true]]])
-                                ->label(false);
+                        $form = ActiveForm::begin ( [
+                            'id' => 'user-location-form',
+                            'enableClientValidation' => false,
+                            'options' => [
+                                'autocomplete' => 'off',
+                                'spellcheck' => 'false'
+                            ],
+                            'action' => Url::to(['member/update-user-location'])
+                        ]);
+                        ?>
+    					<ul class="clearfix">
+    						<li>
+                                <?php
+                                $cities = AdCity::find()->all();
+                                $citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
+    //                            $citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != \frontend\models\UserLocation::DEFAULT_CITY)]; });
+                                echo $form->field($user_location_form, 'city_id', ['options' => ['class' => 'attr-right pull-right city']])
+                                    ->dropDownList($citiesDropdown, ['prompt' => Yii::t('profile','Select...'), 'options' => [empty($user_location_form) ? 1 : $user_location_form->city_id => ['Selected ' => true]]])
+                                    ->label(false);
 
-                            echo $form->field($user_location_form, 'user_id')->hiddenInput(['value'=>Yii::$app->user->id])->label(false);
-                            ?>
-							<span><?=Yii::t('profile', 'City')?></span>
-						</li>
-					</ul>
-                    <?php $form->end(); ?>
-				</div>
-			</section>
+                                echo $form->field($user_location_form, 'user_id')->hiddenInput(['value'=>Yii::$app->user->id])->label(false);
+                                ?>
+    							<span><?=Yii::t('profile', 'City')?></span>
+    						</li>
+    					</ul>
+                        <?php $form->end(); ?>
+    				</div>
+    			</section>
 
-			<section class="matkhau">
-				<div class="title-update-tt">
-                    <?=Yii::t('profile', 'Change password')?>
-					<a href="#edit-changepass" class="edit-tt"><span class="icon icon-edit-small-1"></span></a>
-				</div>
-			</section>
-		</div>
-	</div>
+    			<section class="matkhau">
+    				<div class="title-update-tt">
+                        <?=Yii::t('profile', 'Change password')?>
+    					<a href="#edit-changepass" class="edit-tt"><span class="icon icon-edit-small-1"></span></a>
+    				</div>
+    			</section>
+    		</div>
+    	</div>
+    </div>
 </div>
 
 <div class="modal fade" id="avatar" tabindex="-1" role="dialog" aria-labelledby="myModalAvatar">
