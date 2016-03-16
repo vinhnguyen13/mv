@@ -2,6 +2,14 @@ $(document).ready(function(){
 	
 	var map = {
 		gmap: null,
+		focus: 1,
+		focusLevel: {
+			CITY: 0,
+			DISTRICT: 1,
+			WARD: 2,
+			DETAIL: 3
+		},
+		zoom: [[0,11], [12,13], [14,15], [16,21]],
 		initMap: function() {
 			m2Map.initial(function(gmap) {
 				var options = {center: {lat: 10.783068, lng: 106.704825}, zoom: 15};
