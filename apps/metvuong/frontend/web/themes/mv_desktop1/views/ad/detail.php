@@ -35,6 +35,36 @@ use vsoft\ad\models\AdProductAdditionInfo;
     $address = $product->getAddress($product->show_home_no);
     
     $directionList = AdProductAdditionInfo::directionList();
+
+Yii::$app->view->registerMetaTag([
+    'name' => 'keywords',
+    'content' => $address
+]);
+Yii::$app->view->registerMetaTag([
+    'name' => 'description',
+    'content' => str_replace("\n", "<br />", htmlspecialchars($product->content))
+]);
+
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:title',
+    'content' => $address
+]);
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:description',
+    'content' => str_replace("\n", "<br />", htmlspecialchars($product->content))
+]);
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:type',
+    'content' => 'article'
+]);
+$ava_img = Url::home().'/frontend/web/themes/mv_desktop1/resources/images/logo.png';
+if(!empty($product->representImage)) {
+    $ava_img = $product->representImage;
+}
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:image',
+    'content' => $ava_img
+]);
 ?>
 <div class="detail-listing">
 	<div class="container">
