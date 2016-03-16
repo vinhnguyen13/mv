@@ -1,7 +1,12 @@
 $(document).ready(function(){
 	
 	var map = {
-			
+		initMap: function() {
+			m2Map.initial(function(gmap) {
+				var options = {center: {lat: 10.783068, lng: 106.704825}, zoom: 15};
+				var gmap = new google.maps.Map(document.getElementById('map'), options);
+			});
+		}
 	};
 	
 	var desktop = {
@@ -9,10 +14,7 @@ $(document).ready(function(){
 		enable: function() {
 			this.isEnabled = true;
 			
-			m2Map.initial(function(gmap) {
-				var options = {center: {lat: 10.783068, lng: 106.704825}, zoom: 15};
-				var gmap = new google.maps.Map(document.getElementById('map'), options);
-			});
+			map.initMap();
 		},
 		disable: function() {
 			this.isEnabled = false;
