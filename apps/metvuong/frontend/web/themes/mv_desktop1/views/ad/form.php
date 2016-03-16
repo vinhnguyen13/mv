@@ -225,6 +225,7 @@ use vsoft\ad\models\AdImages;
 				</div>
 
 				<div id="step4" class="hinh-anh item-step section">
+					<div class="title-step">TẢI HÌNH ẢNH</div>
 					<?php
 						$files = [];
 						foreach ($product->adImages as $image) {

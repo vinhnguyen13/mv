@@ -4428,6 +4428,9 @@ input[type=text]:focus {
 .hinh-anh {
     text-align: center;
 }
+.hinh-anh .title-step {
+    text-align: left;
+}
 .hinh-anh .fileinput-button {
     margin-top: 15px;
     background-color: #00a769;
@@ -5667,6 +5670,7 @@ footer li a {
         width: 100%;
     }
 }
+#popup-signup .wrap-popup,
 #popup-login .wrap-popup {
     width: 400px;
 }
@@ -5828,8 +5832,23 @@ footer li a {
         margin-left: -30px;
         display: none;
     }   
-    .step-link li:last-child span.icon,
+    .step-link li:last-child.active span.icon,
     .step-link li.active span {
         display: block;
+    }
+    .signin-signup {
+        width: 500px;
+        margin: 30px auto 0;
+    }
+    .signin-signup .tab-content {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .wrap-body-popup .signin-signup {
+        width: auto;
+        margin-top: 0;
+    }
+    .item-step #adproduct-content {
+        height: 100px;
     }
 }
