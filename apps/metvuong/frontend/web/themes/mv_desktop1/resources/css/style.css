@@ -2295,13 +2295,16 @@ footer {
 .wrap-list-duan li {
     float: left;
     width: 100%;
+    margin-bottom: 25px;
+    padding-bottom: 5px;
+}
+.wrap-list-duan li .item {
     background: #f5f5f5;
     box-shadow: 0 1px 0 0 rgba(211, 211, 211, 0.5);
     -webkit-box-shadow: 0 1px 0 0 rgba(211, 211, 211, 0.5);
     -moz-box-shadow: 0 1px 0 0 rgba(211, 211, 211, 0.5);
     -ms-box-shadow: 0 1px 0 0 rgba(211, 211, 211, 0.5);
-    margin-bottom: 25px;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
 }
 .wrap-list-duan li:last-child {
     border-bottom: none;
@@ -5688,6 +5691,9 @@ footer li a {
 .flag-vn a {
     background: url(../images/flag-vn.png);
 }
+.user-not-login {
+    padding: 21px 0;
+}
 @media (min-width: 985px) {
     .title-top {
         text-align: left;
@@ -5707,7 +5713,7 @@ footer li a {
     .post-listing .step-txt {
         display: none;
     }
-    .post-listing {
+    .title-fixed-wrap {
         margin-top: 70px;
     }
     .step-link {
@@ -5945,5 +5951,46 @@ footer li a {
     }
     .item-dropdown li.flag-us a:hover {
         background: url(../images/flag-en.png);
+    }
+    .wrap-list-duan {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .wrap-list-duan li {
+        width: 25%;
+        padding: 0 15px;
+    }
+    .wrap-list-duan ul {
+        margin: 0 -15px;
+    }
+    .page-faqs, .page-terms, .noti-alert, .detail-news {
+        padding: 0;
+    }
+    .page-faqs .title-top, .page-terms .title-top, .chat-history .title-top, .noti-alert .title-top, .detail-news .title-top, .edit-user-tt .title-top {
+        position: static;
+    }
+    .line-noti {
+        display: none;
+    }
+    .wrap-noti {
+        margin-top: 30px;
+    }
+    .search-history {
+        position: relative;
+        float: left;
+        width: auto;
+        top: 0;
+        left: inherit;
+        margin-top: 30px;
+        margin-bottom: 20px;
+        width: 300px;
+    }
+    .wrap-infor-duan {
+        background: none;
+    }
+    .wrap-infor-duan .item {
+        width: 25%;
+        float: left;
+        padding: 0 15px;
     }
 }

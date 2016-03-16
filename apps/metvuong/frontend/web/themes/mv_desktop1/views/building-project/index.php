@@ -8,17 +8,19 @@ use yii\helpers\Url;
 
 ?>
 <div class="title-fixed-wrap">
-    <div class="infor-duan">
-        <div class="title-top">DỰ ÁN MỚI</div>
-        <div class="wrap-infor-duan">
-            <div class="search-duan">
-                <form id="search-duan-form" action="<?= \yii\helpers\Url::to(['building-project/find'], true) ?>" method="post" onsubmit="javascript: return false;">
-                    <input name="project_name" class="project_name" type="text" placeholder="Gõ tên dự án cần tìm…">
-                    <button type="submit" id="btn-search-duan"><span class="icon icon-search-small-1"></span></button>
-                </form>
-            </div>
-            <div class="list-duan">
-                <?= $this->render('_partials/result', ['models' => $models]) ?>
+    <div class="container">
+        <div class="infor-duan">
+            <div class="title-top">DỰ ÁN MỚI</div>
+            <div class="wrap-infor-duan">
+                <div class="search-duan">
+                    <form id="search-duan-form" action="<?= \yii\helpers\Url::to(['building-project/find'], true) ?>" method="post" onsubmit="javascript: return false;">
+                        <input name="project_name" class="project_name" type="text" placeholder="Gõ tên dự án cần tìm…">
+                        <button type="submit" id="btn-search-duan"><span class="icon icon-search-small-1"></span></button>
+                    </form>
+                </div>
+                <div class="list-duan">
+                    <?= $this->render('_partials/result', ['models' => $models]) ?>
+                </div>
             </div>
         </div>
     </div>
