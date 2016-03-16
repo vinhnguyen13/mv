@@ -63,7 +63,8 @@ class ProfileForm extends Model
         return [
             'updateprofile' => ['user_id', 'name', 'public_email', 'phone', 'mobile', 'address', 'bio'],
             'password' => ['old_password', 'new_password'],
-            'updateavatar' => ['avatar', 'created_at', 'bio'],
+            'updateavatar' => ['avatar', 'created_at'],
+            'updatebio' => ['bio'],
         ];
     }
 
@@ -162,7 +163,7 @@ class ProfileForm extends Model
 //        return $slugifier->getSlug();
 //    }
 
-    public function loadProfile($username){
+    public function loadProfile($username, $scenario = 'updateprofile'){
         $profile = null;
         $user = User::find()->where('username = :usrn', [':usrn' => $username])->one();
         if($user){
@@ -171,7 +172,7 @@ class ProfileForm extends Model
         }
         $model = Yii::createObject([
             'class'    => ProfileForm::className(),
-            'scenario' => 'updateprofile',
+            'scenario' => $scenario,
         ]);
 
         $model->user_id = $profile->user_id;

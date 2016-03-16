@@ -36,8 +36,8 @@ $user = $model->getUser();
 							<span><?=Yii::t('profile', 'Name')?></span>
 						</li>
 						<li>
-							<span class="attr-right pull-right phone-num"><?=empty($model->mobile) ? Yii::t('profile','updating...') : $model->mobile ?></span>
-							<span><?=Yii::t('profile', 'Phone')?></span>
+							<span class="attr-right pull-right phone-num"><?=empty($model->mobile) ? "<i style=\"font-weight: normal;\">".Yii::t('profile','updating')."</i>" : $model->mobile ?></span>
+							<span><?=Yii::t('profile', 'Mobile')?></span>
 						</li>
 						<li>
 							<span class="attr-right pull-right public_email"><?=empty($model->public_email) ? $user->email : $model->public_email ?></span>
@@ -54,7 +54,7 @@ $user = $model->getUser();
 				</div>
 				<div class="wrap-attr-detail">
 					<div class="txt-wrap">
-						<p class="txt-mota"><?=empty($model->bio) ? Yii::t('profile','updating...') : $model->bio ?></p>
+						<p class="txt-mota"><?=empty($model->bio) ? "<i style=\"font-weight: normal;\">".Yii::t('profile','updating')."</i>" : $model->bio ?></p>
 					</div>
 				</div>
 			</section>
@@ -185,7 +185,7 @@ $user = $model->getUser();
                         <?= $f->field($profile_form, 'name')->textInput(['class'=>'attr-right name', 'value' => empty($model->name) ? $user->username : $model->name ])->label(false)?>
 					</li>
 					<li>
-						<span><?=Yii::t('profile', 'Phone')?></span>
+						<span><?=Yii::t('profile', 'Mobile')?></span>
                         <?= $f->field($profile_form, 'mobile')->textInput(['class'=>'attr-right phone-num', 'maxlength' => 11, 'value' => $model->mobile ])->label(false)?>
 					</li>
 					<li>
@@ -194,6 +194,7 @@ $user = $model->getUser();
 					</li>
                     <li>
                         <div class="error hide" style="font-weight: bold;"></div>
+                        <input type="hidden" name="scenario" value="updateprofile">
                     </li>
 				</ul>
 
@@ -208,7 +209,7 @@ $user = $model->getUser();
         <?php
         $profile_form = Yii::createObject([
             'class'    => \frontend\models\ProfileForm::className(),
-            'scenario' => 'updateprofile',
+            'scenario' => 'updatebio',
         ]);
         $f = ActiveForm::begin([
             'id' => 'form-edit-mtbt',
@@ -225,6 +226,7 @@ $user = $model->getUser();
 		<div class="inner-popup">
             <div class="list-tt-user wrap-attr-detail">
                 <?= $f->field($profile_form, 'bio')->textarea(['class'=>'txt-mota', 'value' => $model->bio ])->label(false)?>
+                <input type="hidden" name="scenario" value="updatebio">
 			</div>
 		</div>
         <?php $f->end(); ?>
@@ -310,15 +312,15 @@ $user = $model->getUser();
                         $('.ttcn .name').html(data.modelResult.name);
                         $('.ttcn .phone-num').html(data.modelResult.mobile);
                         $('.ttcn .public_email').html(data.modelResult.public_email);
+                    } else if (data.statusCode == 400) {
+                        var arr = [];
+                        $.each(data.parameters, function (idx, val) {
+                            var element = 'profile-form-' + idx;
+                            arr[element] = lajax.t(val);
+                        });
+                        $('#form-edit-ttcn').yiiActiveForm('updateMessages', arr, true);
                     } else {
-                        return false;
-//                        $('#edit-ttcn .error').removeClass('hide');
-//                        var strMessage = '';
-//                        $.each(data.parameters, function(idx, val){
-//                            var element = 'form-edit-ttcn'+idx;
-//                            strMessage += "<br/>" + val;
-//                        });
-//                        $('#edit-ttcn .error').html(strMessage);
+                        _this.html('Try again !');
                     }
                     return true;
                 },
@@ -348,13 +350,6 @@ $user = $model->getUser();
                         $('.btn-cancel').trigger('click');
                         $('.mtbt .txt-mota').html(data.modelResult.bio);
                     } else {
-                        $('#edit-mtbt .error').removeClass('hide');
-                        var strMessage = '';
-                        $.each(data.parameters, function(idx, val){
-                            var element = 'form-edit-mtbt'+idx;
-                            strMessage += "<br/>" + val;
-                        });
-                        $('#edit-mtbt .error').html(strMessage);
                         return false;
                     }
                     return false;
@@ -374,7 +369,7 @@ $user = $model->getUser();
             var new_password = $('.new_password').val();
             var rePass = $('.re-type-pass').val();
             if(new_password !== rePass){
-                $('#edit-changepass .error').html('<br>Confirm password not match.');
+                $('#edit-changepass .error').html('<br><?=Yii::t('profile','Confirm password not match.')?>');
                 $('#edit-changepass .error').removeClass('hide');
                 $('#edit-changepass .loading-proccess').remove();
                 $('.re-type-pass').focus();
@@ -392,14 +387,13 @@ $user = $model->getUser();
                     
                     if(data.statusCode == 200){
 //                        $('.btn-cancel').trigger('click');
-                        $('#edit-changepass .error').html('<br><span style="color:green;">Reset password success.</span>');
+                        $('#edit-changepass .error').html('<br><b style="color:#00a769;"><?=Yii::t('profile','Reset password success.')?></b>');
                         $('#edit-changepass .error').removeClass('hide');
                     } else {
                         $('#edit-changepass .error').removeClass('hide');
                         var strMessage = '';
                         $.each(data.parameters, function(idx, val){
-                            var element = 'form-edit-changepass_'+idx;
-                            strMessage += "<br/>" + val;
+                            strMessage += "<br/>" + lajax.t(val);
                         });
                         $('#edit-changepass .error').html(strMessage);
                         $('#edit-changepass .loading-proccess').remove();
@@ -410,10 +404,10 @@ $user = $model->getUser();
                 error: function (data) {
                     var strMessage = '';
                     $.each(data.parameters, function(idx, val){
-                        var element = 'form-edit-changepass_'+idx;
                         strMessage += "\n" + val;
                     });
                     $('#edit-changepass .error').html(strMessage);
+                    $('#edit-changepass .error').removeClass('hide');
                     return false;
                 }
             });

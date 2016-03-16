@@ -265,7 +265,7 @@ class MemberController extends Controller
             'scenario' => 'updateprofile',
         ]);
 
-        $model = $model->loadProfile($username);
+        $model = $model->loadProfile($username, 'updateprofile');
         if($model) {
             $products = AdProduct::find()->where('user_id = :uid', [':uid' => $model->user_id])->all();
         }
@@ -301,15 +301,17 @@ class MemberController extends Controller
         }
 
         if($username == Yii::$app->user->identity->username) {
-            $model = Yii::createObject([
-                'class'    => ProfileForm::className(),
-                'scenario' => 'updateprofile',
-            ]);
-            $model = $model->loadProfile($username);
+
             if(Yii::$app->request->isAjax){
                 Yii::$app->response->format = Response::FORMAT_JSON;
                 $post = Yii::$app->request->post();
                 if($post){
+                    $scenario = trim($post["scenario"]);
+                    $model = Yii::createObject([
+                        'class'    => ProfileForm::className(),
+                        'scenario' => $scenario,
+                    ]);
+                    $model = $model->loadProfile($username, $scenario);
                     $model->load($post);
                     $model->validate();
                     if (!$model->hasErrors() ) {
@@ -320,6 +322,12 @@ class MemberController extends Controller
                     }
                 }
             }
+
+            $model = Yii::createObject([
+                'class'    => ProfileForm::className(),
+                'scenario' => 'updateprofile',
+            ]);
+            $model = $model->loadProfile($username, 'updateprofile');
             return $this->render('user/updateProfile',['model'=> $model]);
         }
 

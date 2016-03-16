@@ -208,7 +208,7 @@ $user = $model->getUser();
         <?php
         $profile_form = Yii::createObject([
             'class'    => \frontend\models\ProfileForm::className(),
-            'scenario' => 'updateprofile',
+            'scenario' => 'updatebio',
         ]);
         $f = ActiveForm::begin([
             'id' => 'form-edit-mtbt',
