@@ -74,7 +74,7 @@ use yii\helpers\Url;
         <div class="dt-header clearfix">
             <div class="user-login pull-right">
                 <?php if(Yii::$app->user->isGuest){?>
-                <a href="#" class="user-login-link"><?=Yii::t('user', 'Sign In')?></a> <span>/</span> <a href="#" class="user-signup-link"><?=Yii::t('user', 'Sign Up')?></a>
+                <div class="user-not-login"><a href="#" class="user-login-link"><?=Yii::t('user', 'Sign In')?></a> <span>/</span> <a href="#" class="user-signup-link"><?=Yii::t('user', 'Sign Up')?></a></div>
                 <?php } else{?>
                     <div class="user-edit">
                         <a href="<?=Url::to(['member/profile', 'username'=>Yii::$app->user->identity->username])?>">
@@ -87,7 +87,7 @@ use yii\helpers\Url;
                     </div>
                     <div class="box-dropdown">
                         <a href="#" class="icon-settings val-selected"></a>
-                        <div class="item-dropdown hide">
+                        <div class="item-dropdown hide-dropdown">
                             <ul class="clearfix">
                                 <!-- <li><a href="<?= Url::to(['/ad/post']) ?>"><em class="icon-plus"></em>Đăng tin mới</a></li> -->
                                 <li><a href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyOther"><div><span class="icon icon-alert"></span></div><?=Yii::t('Notification', 'Notifications')?>
@@ -103,6 +103,8 @@ use yii\helpers\Url;
                                     </a></li>
                                 <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon icon-per"></span></div><?=Yii::t('user', 'Account')?></a></li>
                                 <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><div><span class="icon icon-logout"></span></div><?=Yii::t('user', 'Log Out')?></a></li>
+                                <li class="flag-us"><a href="<?=Url::current(['language-change'=>'en-US'])?>"></a></li>
+                                <li class="flag-vn"><a href="<?=Url::current(['language-change'=>'vi-VN'])?>"></a></li>
                             </ul>
                         </div>
                     </div>

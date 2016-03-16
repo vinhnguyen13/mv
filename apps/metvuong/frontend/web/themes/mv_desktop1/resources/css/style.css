@@ -5678,6 +5678,16 @@ footer li a {
 .section .dt-hide {
     display: none;
 }
+.flag-vn a,
+.flag-us a {
+    display: inline-block;
+    width: 19px;
+    height: 13px;
+    background: url(../images/flag-en.png);
+}
+.flag-vn a {
+    background: url(../images/flag-vn.png);
+}
 @media (min-width: 985px) {
     .title-top {
         text-align: left;
@@ -5916,5 +5926,24 @@ footer li a {
     }
     .user-login .item-dropdown a:hover {
         text-decoration: none;
+    }
+    .item-dropdown li.flag-vn a,
+    .item-dropdown li.flag-us a {
+        display: inline-block;
+    }
+    .item-dropdown li.flag-vn ,
+    .item-dropdown li.flag-us {
+        width: auto;
+        text-align: right;
+        float: right;
+    }
+    .item-dropdown li.flag-us {
+        margin-left: 10px;
+    }
+    .item-dropdown li.flag-vn a:hover {
+        background: url(../images/flag-vn.png);
+    }
+    .item-dropdown li.flag-us a:hover {
+        background: url(../images/flag-en.png);
     }
 }
