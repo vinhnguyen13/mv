@@ -32,5 +32,6 @@ class Login extends Component
                 Yii::$app->session->set("notifyChat",count($alert[UserData::ALERT_CHAT]));
             }
         }
+        return $event;
     }
 }
