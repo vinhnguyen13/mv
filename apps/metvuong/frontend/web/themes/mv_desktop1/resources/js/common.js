@@ -216,6 +216,7 @@ $.fn.dropdown = function (options) {
         var defaults = {
             styleShow: 1, // 1. relative, 0. absolute
             txtAdd: false,
+            selectedValue: true,
             ajaxSubmit: function () {},
             funCallBack: function () {},
             renderAddEvent: function () {}
@@ -288,6 +289,7 @@ $.fn.dropdown = function (options) {
         }
 
         function selectItem (item, itemValueClick) {
+            if (!sc.settings.selectedValue) return;
             item.unbind('click');
             item.on('click', function () {
                 if ( $(this).hasClass('disable') ) return;

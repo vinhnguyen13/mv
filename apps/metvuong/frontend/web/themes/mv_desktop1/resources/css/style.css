@@ -2140,7 +2140,7 @@ label {
 #settings-user li:last-child a {
     border: none;
 }
-#settings-user li.user-edit a {
+.user-edit a {
     color: #009544;
     font-size: 15px;
 }
@@ -2164,7 +2164,7 @@ label {
 #settings-user li span {
     display: block;
 }
-#settings-user .user-edit span {
+.user-edit span {
     position: static;
     background: none;
     color: inherit;
@@ -2182,7 +2182,7 @@ label {
     -moz-border-radius: 50%;
     -ms-border-radius: 50%;
 }
-#settings-user .user-edit div {
+.user-edit div {
     overflow: hidden;
     padding-left: 10px;
     /* padding-top: 5px; */
@@ -2192,17 +2192,17 @@ label {
     display: flex;
     align-items: center;
 }
-#settings-user .user-edit div p {
+.user-edit div p {
     width: 100%;
 }
-#settings-user .user-edit .name-user {
+.user-edit .name-user {
     font-weight: 700;
     width: 100%;
     white-space: nowrap; 
     overflow: hidden;
     text-overflow: ellipsis; 
 }
-#settings-user .user-edit .address {
+.user-edit .address {
     font-size: .7em;
     text-transform: capitalize;
 }
@@ -5168,7 +5168,8 @@ input[type=text]:focus {
 }
 .user-login {
     height: 100%;
-    padding: 18px 0 21px;
+    padding: 0;
+    position: relative;
 }
 .user-login a:hover {
     text-decoration: underline;
@@ -5850,5 +5851,70 @@ footer li a {
     }
     .item-step #adproduct-content {
         height: 100px;
+    }
+    .user-edit a {
+        display: block;
+    }
+    .user-edit .wrap-img {
+        float: left;
+    }
+    .user-edit .wrap-img img {
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+    }
+    .user-edit a > div {
+    }
+    .user-edit a > div span {
+        display: block;
+    }
+    .user-edit {
+        padding: 12px 0;
+        max-width: 200px;
+        float: left;
+        margin-right: 25px;
+    }
+    .user-login .box-dropdown {
+        float: left;
+        padding: 19px 0;
+    }
+    .icon-settings {
+        display: block;
+        width: 25px;
+        height: 25px;
+        background: url(../images/icon-setting.png) no-repeat top left;
+    }
+    .user-login .box-dropdown .dropdown-up-style {
+        top: 75px;
+        width: 200px;
+        left: inherit;
+        right: 0;
+    }
+    .user-login .dropdown-up-style .item-dropdown {
+        border: 1px solid #A7A7A7;
+        max-height: inherit;
+        box-shadow: 0px 0px 5px #ADADAD;
+        -webkit-box-shadow: 0px 0px 5px #ADADAD;
+        -moz-box-shadow: 0px 0px 5px #ADADAD;
+        -ms-box-shadow: 0px 0px 5px #ADADAD;
+        border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        -ms-border-radius: 3px;
+    }
+    .user-login .item-dropdown li {
+        width: 100%;
+    }
+    .user-login .item-dropdown a > div {
+        display: inline-block;
+        vertical-align: middle;
+        width: 45px;
+    }
+    .user-login .item-dropdown a {
+        text-transform: uppercase;
+    }
+    .user-login .item-dropdown a:hover {
+        text-decoration: none;
     }
 }
