@@ -12,6 +12,8 @@ use yii\widgets\Pjax;
 
 $this->title = Yii::t('app', 'Cms Shows');
 $this->params['breadcrumbs'][] = $this->title;
+
+$newsCatID = !empty(Yii::$app->params['newsCatID']) ? Yii::$app->params['newsCatID'] : 2;
 ?>
 <div class="cms-show-index">
 
@@ -60,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $model->getCatalog()->one()->title;
                     return '';
                 },
-                'filter' => Html::activeDropDownList($searchModel, 'catalog_id', ArrayHelper::map(\vsoft\news\models\CmsCatalog::find()->where(['not in', 'id', [!empty(Yii::$app->params['newsCatID']) ? Yii::$app->params['newsCatID'] : 2]])
+                'filter' => Html::activeDropDownList($searchModel, 'catalog_id', ArrayHelper::map(\vsoft\news\models\CmsCatalog::find()->where(['not in', 'id', [1, $newsCatID]])
                     ->andWhere('status = :status', [':status' => 1])->asArray()->all(), 'id', 'title'),['class'=>'form-control','prompt' => 'All']),
             ],
 
