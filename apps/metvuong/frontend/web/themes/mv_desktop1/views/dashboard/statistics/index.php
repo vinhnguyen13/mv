@@ -64,7 +64,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
         </div>
     	<section>
     		<div id="sandbox-container">
-    			<input type="text" class="form-control toDate" readonly placeholder="<?=Yii::t('statistic','Date')?>">
+    			<input type="text" class="form-control toDate" readonly placeholder="<?=Yii::t('statistic','Select date')?>">
     			<span class="icon arrowDown"></span>
     		</div>
     		<div class="summary clearfix">
@@ -276,7 +276,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
             var arrDate = theDate.split("/");
             var useDate = arrDate[2]+"-"+arrDate[1]+"-"+arrDate[0];
             if(useDate) {
-                window.location = '<?=Url::to(['/dashboard/statistics','id' => $id])?>' + '&date=' + useDate;
+                window.location = '<?=Url::to(['/dashboard/statistics','id' => $id], true)?>' + '&date=' + useDate;
             }
         });
 
