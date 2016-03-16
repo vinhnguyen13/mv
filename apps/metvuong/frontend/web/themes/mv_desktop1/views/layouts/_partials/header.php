@@ -22,14 +22,12 @@ use yii\helpers\Url;
                 <div class="wrap-menu">
                     <a href="#" id="hide-menu" class="icon"></a>
                     <ul class="clearfix">
-                        <li><a href="<?= Url::to(['/ad/index']) ?>"><div><span class="icon icon-search"></span></div>cần mua</a></li>
-                        <li><a href="#"><div><span class="icon icon-search"></span></div>cần thuê</a></li>
-                        <li><a href="<?= Url::to(['/ad/post']) ?>"><div><span class="icon icon-key"></span></div>đăng bán / cho thuê</a></li>
-                        <li><a href="<?=Url::to(['building-project/index']);?>"><div><span class="icon icon-home"></span></div>dự án mới</a></li>
-                        <li><a href="<?=Url::to(['news/index']);?>"><div><span class="icon icon-news"></span></div>Tin tức</a></li>
-                        <li><a href="<?=Url::to(['/payment/package'])?>"><div><span class="icon icon-tags"></span></div>Các gói giá</a></li>
-<!--                        <li><a href="/site/index?language-change=en-US">US</a></li>-->
-<!--                        <li><a href="/site/index?language-change=vi-VN">VN</a></li>-->
+                        <li><a href="<?= Url::to(['/ad/index']) ?>"><div><span class="icon icon-search"></span></div><?=Yii::t('general', 'Buy')?></a></li>
+                        <li><a href="#"><div><span class="icon icon-search"></span></div><?=Yii::t('general', 'Rent')?></a></li>
+                        <li><a href="<?= Url::to(['/ad/post']) ?>"><div><span class="icon icon-key"></span></div><?=Yii::t('general', 'Sell')?></a></li>
+                        <li><a href="<?=Url::to(['building-project/index']);?>"><div><span class="icon icon-home"></span></div><?=Yii::t('general', 'New Project')?></a></li>
+                        <li><a href="<?=Url::to(['news/index']);?>"><div><span class="icon icon-news"></span></div><?=Yii::t('general', 'News')?></a></li>
+                        <li><a href="<?=Url::to(['/payment/package'])?>"><div><span class="icon icon-tags"></span></div><?=Yii::t('general', 'Pricing')?></a></li>
                     </ul>
                 </div>
             </div>
@@ -112,11 +110,12 @@ use yii\helpers\Url;
             </div>
             <ul class="clearfix list-menu">
                 <li class="dt-logo"><a href="/" class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/logo.png' ?>" alt=""></a></li>
-                <li><a href="<?= Url::to(['/ad/index']) ?>">CẦN MUA</a></li>
-                <li><a href="#">CẦN THUÊ</a></li>
-                <li><a href="<?= Url::to(['/ad/post']) ?>">ĐĂNG BÁN/CHO THUÊ</a></li>
-                <li><a href="<?=Url::to(['building-project/index']);?>">DỰ ÁN MỚI</a></li>
-                <li><a href="<?=Url::to(['news/index']);?>">TIN TỨC</a></li>
+                <li><a href="<?= Url::to(['/ad/index']) ?>"><?=Yii::t('general', 'Buy')?></a></li>
+                <li><a href="#"><?=Yii::t('general', 'Rent')?></a></li>
+                <li><a href="<?= Url::to(['/ad/post']) ?>"><?=Yii::t('general', 'Sell')?></a></li>
+                <li><a href="<?=Url::to(['building-project/index']);?>"><?=Yii::t('general', 'New Project')?></a></li>
+                <li><a href="<?=Url::to(['news/index']);?>"><?=Yii::t('general', 'News')?></a></li>
+                <li><a href="<?=Url::to(['/payment/package'])?>"><?=Yii::t('general', 'Pricing')?></a></li>
             </ul>
         </div>
     </div>
