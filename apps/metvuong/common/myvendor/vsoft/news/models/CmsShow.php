@@ -50,7 +50,7 @@ class CmsShow extends \funson86\cms\models\CmsShow
     {
         return [
             'slug' => [
-                'class' => 'Zelenin\yii\behaviors\Slug',
+                'class' => 'common\components\Slug',
                 'slugAttribute' => 'slug',
                 'attribute' => 'title',
                 // optional params

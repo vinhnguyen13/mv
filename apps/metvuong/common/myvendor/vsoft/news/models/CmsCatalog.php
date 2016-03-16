@@ -28,7 +28,7 @@ class CmsCatalog extends \funson86\cms\models\CmsCatalog
     {
         return [
             'slug' => [
-                'class' => 'Zelenin\yii\behaviors\Slug',
+                'class' => 'common\components\Slug',
                 'slugAttribute' => 'slug',
                 'attribute' => 'title',
                 // optional params

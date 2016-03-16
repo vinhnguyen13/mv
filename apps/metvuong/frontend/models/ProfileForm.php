@@ -11,7 +11,6 @@ use frontend\models\Profile;
 use frontend\models\User;
 use yii\base\Model;
 use Yii;
-use Zelenin\yii\behaviors\Slug;
 
 class ProfileForm extends Model
 {

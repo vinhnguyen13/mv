@@ -93,7 +93,7 @@ class AdBuildingProject extends ABP
     {
     	return [
 	    	'slug' => [
-		    	'class' => 'Zelenin\yii\behaviors\Slug',
+		    	'class' => 'common\components\Slug',
 		    	'slugAttribute' => 'slug',
 		    	'attribute' => 'name',
 		    	// optional params
