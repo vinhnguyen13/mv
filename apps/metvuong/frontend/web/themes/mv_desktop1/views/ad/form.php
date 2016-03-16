@@ -32,240 +32,253 @@ use vsoft\ad\models\AdImages;
 		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
 	}
 ?>
-<div class="title-top"><?= $product->isNewRecord ? Yii::t('ad', 'Post Listing') : sprintf(Yii::t('ad', 'Update Listing MV%s'), $product->id) ?></div>
-<div class="post-listing">
-	<?php
-		$form = ActiveForm::begin ( [ 
-			'id' => 'listing-form',
-			'enableClientValidation' => false,
-			'options' => [ 
-				'autocomplete' => 'off',
-				'spellcheck' => 'false'
-			]
-		]);
-	?>
-		<div class="step-link">
-			<ul class="clearfix">
-				<li><a data-active-section="tt-chung" class="active" href="#">1</a><span class="icon arrowLeft"></span></li>
-				<li><a data-active-section="tt-chitiet" href="#">2</a><span class="icon arrowLeft"></span></li>
-				<li><a data-active-section="hinh-anh" href="#">3</a><span class="icon arrowLeft"></span></li>
-				<li><a data-active-section="tien-ich" href="#">4</a><span class="icon arrowLeft"></span></li>
-			</ul>
-		</div>
-		<div id="step1" class="section select-type hide item-step">
-		<?php if($product->isNewRecord) :?>
-			<p class="text-center step-txt"><?= Yii::t('ad', '4 basic steps') ?></p>
-		<?php endif; ?>
-			<ul class="clearfix step-check">
-				<li>
-					<a class="frm-radio" href="#">
-						<span class="radio-ui icon-postlisting icon-ban-post">
-							<?php $typeName = Html::getInputName($product, 'type') ?>
-							<?= Html::radio($typeName, ($product->type == AdProduct::TYPE_FOR_SELL || !$product->type), ['value' => AdProduct::TYPE_FOR_SELL]) ?>
-						</span>
-						<span><?= Yii::t('ad', 'Sell') ?></span>
-					</a>
-				</li>
-				<li>
-					<a class="frm-radio" href="#">
-						<span class="radio-ui icon-postlisting icon-chothue">
-							<?= Html::radio($typeName, ($product->type == AdProduct::TYPE_FOR_RENT), ['value' => AdProduct::TYPE_FOR_RENT]) ?>
-						</span>
-						<span><?= Yii::t('ad', 'Rent') ?></span>
-					</a>
-				</li>
-				<li>
-					<a class="frm-radio" href="#">
-						<?php $ownerName = Html::getInputName($product, 'owner') ?>
-						<span class="radio-ui icon-postlisting icon-chunha">
-							<?= Html::radio($ownerName, ($product->owner == AdProduct::OWNER_HOST || !$product->owner), ['value' => AdProduct::OWNER_HOST, 'id' => 'owner-host']) ?>
-						</span>
-						<span><?= Yii::t('ad', 'Owner') ?></span>
-					</a>
-				</li>
-				<li>
-					<a class="frm-radio" href="#">
-						<span class="radio-ui icon-postlisting icon-mogioi">
-							<?= Html::radio($ownerName, ($product->owner == AdProduct::OWNER_AGENT), ['value' => AdProduct::OWNER_AGENT]) ?>
-						</span>
-						<span><?= Yii::t('ad', 'Agent') ?></span>
-					</a>
-				</li>
-			</ul>
-			
+<div class="container">
+	<div class="post-listing">
+		<div class="title-top"><?= $product->isNewRecord ? Yii::t('ad', 'Post Listing') : sprintf(Yii::t('ad', 'Update Listing MV%s'), $product->id) ?></div>
+		<div class="wrap-frm-listing clearfix">
 			<?php
-				$categories = AdCategory::find()->where('`status` = 1')->all();
-				$categoriesDropdown = ArrayHelper::map($categories, 'id', 'name');
-				$categoriesOptions = ArrayHelper::map($categories, 'id', function($category){ return ['data-type' => $category->apply_to_type, 'data-limit' => $category->limit_area]; });
-					
-				echo $form->field($product, 'category_id')
-						 ->label(false)
-						 ->dropDownList($categoriesDropdown, ['prompt' => $product->getAttributeLabel('category_id'), 'options' => $categoriesOptions])
+				$form = ActiveForm::begin ( [ 
+					'id' => 'listing-form',
+					'enableClientValidation' => false,
+					'options' => [ 
+						'autocomplete' => 'off',
+						'spellcheck' => 'false'
+					]
+				]);
 			?>
-		</div>
-
-		<div id="step2" class="tt-chung item-step section hide">
-			<div class="title-step">Thông tin chung</div>
-			<div class="row">
-				<?php
-					$cities = AdCity::find()->all();
-					$citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
-					$citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != AdProduct::DEFAULT_CITY)]; });
-					echo $form->field($product, 'city_id', ['options' => ['class' => 'col-xs-6 form-group']])
-							  ->label(false)
-							  ->dropDownList($citiesDropdown, ['prompt' => $product->getAttributeLabel('city_id'), 'options' => $citiesOptions])
-				?>
-				<?= $form->field($product, 'district_id', ['options' => ['class' => 'col-xs-6 form-group']])
-						 ->label(false)
-						 ->dropDownList(AdDistrict::getListByCity($product->city_id), ['prompt' => $product->getAttributeLabel('district_id')]) ?>
-				
-				<?= $form->field($product, 'ward_id', ['options' => ['class' => 'col-xs-12 form-group']])
-					->label(false)
-					->dropDownList(AdWard::getListByDistrict($product->district_id), ['prompt' => $product->getAttributeLabel('ward_id')]) ?>
-					
-				<?= $form->field($product, 'street_id', ['options' => ['class' => 'col-xs-12 form-group']])
-					->label(false)
-					->dropDownList(AdStreet::getListByDistrict($product->district_id), ['prompt' => $product->getAttributeLabel('street_id')]) ?>
-				
-				<div id="home-wrap">
-					<?= $form->field($product, 'home_no', ['options' => ['class' => 'col-xs-12 form-group']])
-							->label(false)
-							->textInput(['placeholder' => $product->getAttributeLabel('home_no')]) ?>
+				<div class="step-link">
+					<ul class="clearfix">
+						<li><a data-active-section="tt-chung" class="active" href="#">1</a><span class="icon arrowLeft"></span></li>
+						<li><a data-active-section="tt-chitiet" href="#">2</a><span class="icon arrowLeft"></span></li>
+						<li><a data-active-section="hinh-anh" href="#">3</a><span class="icon arrowLeft"></span></li>
+						<li><a data-active-section="tien-ich" href="#">4</a><span class="icon arrowLeft"></span></li>
+					</ul>
+				</div>
+				<div id="step1" class="section select-type item-step clearfix">
+				<?php if($product->isNewRecord) :?>
+					<p class="text-center step-txt"><?= Yii::t('ad', '4 basic steps') ?></p>
+				<?php endif; ?>
+					<div class="dt-hide">
+						<ul class="clearfix">
+							<li>BẠN LÀ?</li>
+							<li>BẠN MUỐN?</li>
+							<li>LOẠI BĐS BẠN TÌM?</li>
+						</ul>
+					</div>
+					<div class="dt-show">
+						<ul class="clearfix step-check">
+							<li>
+								<a class="frm-radio" href="#">
+									<?php $ownerName = Html::getInputName($product, 'owner') ?>
+									<span class="radio-ui icon-postlisting icon-chunha">
+										<?= Html::radio($ownerName, ($product->owner == AdProduct::OWNER_HOST || !$product->owner), ['value' => AdProduct::OWNER_HOST, 'id' => 'owner-host']) ?>
+									</span>
+									<span class="txt-type-post"><?= Yii::t('ad', 'Owner') ?></span>
+								</a>
+							</li>
+							<li>
+								<a class="frm-radio" href="#">
+									<span class="radio-ui icon-postlisting icon-mogioi">
+										<?= Html::radio($ownerName, ($product->owner == AdProduct::OWNER_AGENT), ['value' => AdProduct::OWNER_AGENT]) ?>
+									</span>
+									<span class="txt-type-post"><?= Yii::t('ad', 'Agent') ?></span>
+								</a>
+							</li>
+							<li>
+								<a class="frm-radio" href="#">
+									<span class="radio-ui icon-postlisting icon-ban-post">
+										<?php $typeName = Html::getInputName($product, 'type') ?>
+										<?= Html::radio($typeName, ($product->type == AdProduct::TYPE_FOR_SELL || !$product->type), ['value' => AdProduct::TYPE_FOR_SELL]) ?>
+									</span>
+									<span class="txt-type-post"><?= Yii::t('ad', 'Sell') ?></span>
+								</a>
+							</li>
+							<li>
+								<a class="frm-radio" href="#">
+									<span class="radio-ui icon-postlisting icon-chothue">
+										<?= Html::radio($typeName, ($product->type == AdProduct::TYPE_FOR_RENT), ['value' => AdProduct::TYPE_FOR_RENT]) ?>
+									</span>
+									<span class="txt-type-post"><?= Yii::t('ad', 'Rent') ?></span>
+								</a>
+							</li>
+						</ul>
 						
-					<?= $form->field($product, 'show_home_no', ['options' => ['class' => 'col-xs-12 form-group toggle-num-home']])->label(false)->checkbox(['data-set' => $product->isNewRecord ? '0' : '1']) ?>
-				</div>
-				
-				<div class="col-xs-12 form-group">
-					<?= $form->field($product, 'area', ['options' => ['class' => '']])
-						->label(false)
-						->textInput(['placeholder' => $product->getAttributeLabel('area')]) ?>
-					<span class="unit-dt">m2</span>
-				</div>
-				
-				<?= $form->field($product, 'price', ['options' => ['class' => 'col-xs-12 form-group'], 'template' => '{input}<span style="display: none;" id="price-format"></span>{error}'])
-						->textInput(['placeholder' => $product->getAttributeLabel('price')]) ?>
-				
-				<?= $form->field($additionInfo, 'room_no', ['options' => ['class' => 'col-xs-6 form-group']])
-					->label(false)
-					->dropDownList($listRoom, ['prompt' => $additionInfo->getAttributeLabel('room_no')]) ?>
-				
-				<?= $form->field($additionInfo, 'toilet_no', ['options' => ['class' => 'col-xs-6 form-group']])
-					->label(false)
-					->dropDownList($listRoom, ['prompt' => $additionInfo->getAttributeLabel('toilet_no')]) ?>
-					
-				<div id="project-info-wrap" class="col-xs-12">
-					<?php
-						$projects = $product->district_id ? AdBuildingProject::find()->where('district_id = :district_id', [':district_id' => $product->district_id])->all() : [];
-						echo $form->field($product, 'project_building_id', ['options' => ['class' => 'form-group']])
-							 ->label(false)
-							 ->dropDownList(ArrayHelper::map($projects, 'id', 'name'), ['prompt' => $product->getAttributeLabel('project_building_id')])
-					?>
-					<div id="project-info" style="display: none;" data-url="<?= Url::to(['building-project/detail']) ?>">
-						<div class="loading-proccess"><span></span></div>
-						<div class="result">
-							<div>Vị trí: <span id="project-info-location"></span></div>
-							<a target="_blank" id="project-info-detail" href="#">Xem chi tiết dự án</a>
-						</div>
+						<?php
+							$categories = AdCategory::find()->where('`status` = 1')->all();
+							$categoriesDropdown = ArrayHelper::map($categories, 'id', 'name');
+							$categoriesOptions = ArrayHelper::map($categories, 'id', function($category){ return ['data-type' => $category->apply_to_type, 'data-limit' => $category->limit_area]; });
+								
+							echo $form->field($product, 'category_id')
+									 ->label(false)
+									 ->dropDownList($categoriesDropdown, ['prompt' => $product->getAttributeLabel('category_id'), 'options' => $categoriesOptions])
+						?>
 					</div>
 				</div>
-				
-				<?= Html::activeHiddenInput($product, 'lat') ?>
-				<?= Html::activeHiddenInput($product, 'lng') ?>
-			</div>
-		</div>
 
-		<div id="step3" class="tt-chitiet item-step section hide">
-			<div class="title-step">Thông tin chi tiết</div>
-			<div class="row">
-				<?= $form->field($product, 'content', ['options' => ['class' => 'col-xs-12 form-group']])
-						->label(false)
-						->textArea(['placeholder' => $product->getAttributeLabel('content')]) ?>
-				
-				<div class="col-xs-6 form-group">
-					<?= $form->field($additionInfo, 'facade_width')
-						->label(false)
-						->textInput(['placeholder' => $additionInfo->getAttributeLabel('facade_width')]) ?>
-					<span class="unit-dt">m</span>
-				</div>
-				
-				<div class="col-xs-6 form-group">		
-				<?= $form->field($additionInfo, 'land_width')
-						->label(false)
-						->textInput(['placeholder' => $additionInfo->getAttributeLabel('land_width')]) ?>
-					<span class="unit-dt">m</span>
-				</div>
-				
-				<?= $form->field($additionInfo, 'home_direction', ['options' => ['class' => 'col-xs-12 form-group']])
-						->label(false)
-						->dropDownList(AdProductAdditionInfo::directionList(), ['prompt' => $additionInfo->getAttributeLabel('home_direction'), 'data-default' => $additionInfo->home_direction]) ?>
-				
-				<?= $form->field($additionInfo, 'facade_direction', ['options' => ['class' => 'col-xs-12 form-group']])
-						->label(false)
-						->dropDownList(AdProductAdditionInfo::directionList(), ['prompt' => $additionInfo->getAttributeLabel('facade_direction'), 'data-default' => $additionInfo->facade_direction]) ?>
+				<div id="step2" class="tt-chung item-step section">
+					<div class="title-step">Thông tin chung</div>
+					<div class="row">
+						<?php
+							$cities = AdCity::find()->all();
+							$citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
+							$citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != AdProduct::DEFAULT_CITY)]; });
+							echo $form->field($product, 'city_id', ['options' => ['class' => 'col-xs-6 form-group']])
+									  ->label(false)
+									  ->dropDownList($citiesDropdown, ['prompt' => $product->getAttributeLabel('city_id'), 'options' => $citiesOptions])
+						?>
+						<?= $form->field($product, 'district_id', ['options' => ['class' => 'col-xs-6 form-group']])
+								 ->label(false)
+								 ->dropDownList(AdDistrict::getListByCity($product->city_id), ['prompt' => $product->getAttributeLabel('district_id')]) ?>
 						
-				<?= $form->field($additionInfo, 'floor_no', ['options' => ['class' => 'col-xs-12 form-group']])
-						->label(false)
-						->textInput(['placeholder' => $additionInfo->getAttributeLabel('floor_no')]) ?>
+						<?= $form->field($product, 'ward_id', ['options' => ['class' => 'col-xs-12 form-group']])
+							->label(false)
+							->dropDownList(AdWard::getListByDistrict($product->district_id), ['prompt' => $product->getAttributeLabel('ward_id')]) ?>
+							
+						<?= $form->field($product, 'street_id', ['options' => ['class' => 'col-xs-12 form-group']])
+							->label(false)
+							->dropDownList(AdStreet::getListByDistrict($product->district_id), ['prompt' => $product->getAttributeLabel('street_id')]) ?>
 						
-				<?= $form->field($additionInfo, 'interior', ['options' => ['class' => 'col-xs-12 form-group']])
-						->label(false)
-						->textArea(['placeholder' => $additionInfo->getAttributeLabel('interior')]) ?>
-			</div>
-		</div>
+						<div id="home-wrap">
+							<?= $form->field($product, 'home_no', ['options' => ['class' => 'col-xs-12 form-group']])
+									->label(false)
+									->textInput(['placeholder' => $product->getAttributeLabel('home_no')]) ?>
+								
+							<?= $form->field($product, 'show_home_no', ['options' => ['class' => 'col-xs-12 form-group toggle-num-home']])->label(false)->checkbox(['data-set' => $product->isNewRecord ? '0' : '1']) ?>
+						</div>
+						
+						<div class="col-xs-12 form-group dt-post">
+							<?= $form->field($product, 'area', ['options' => ['class' => '']])
+								->label(false)
+								->textInput(['placeholder' => $product->getAttributeLabel('area')]) ?>
+							<span class="unit-dt">m2</span>
+						</div>
+						
+						<?= $form->field($product, 'price', ['options' => ['class' => 'col-xs-12 form-group'], 'template' => '{input}<span style="display: none;" id="price-format"></span>{error}'])
+								->textInput(['placeholder' => $product->getAttributeLabel('price')]) ?>
+						
+						<?= $form->field($additionInfo, 'room_no', ['options' => ['class' => 'col-xs-6 form-group']])
+							->label(false)
+							->dropDownList($listRoom, ['prompt' => $additionInfo->getAttributeLabel('room_no')]) ?>
+						
+						<?= $form->field($additionInfo, 'toilet_no', ['options' => ['class' => 'col-xs-6 form-group']])
+							->label(false)
+							->dropDownList($listRoom, ['prompt' => $additionInfo->getAttributeLabel('toilet_no')]) ?>
+							
+						<div id="project-info-wrap" class="col-xs-12">
+							<?php
+								$projects = $product->district_id ? AdBuildingProject::find()->where('district_id = :district_id', [':district_id' => $product->district_id])->all() : [];
+								echo $form->field($product, 'project_building_id', ['options' => ['class' => 'form-group']])
+									 ->label(false)
+									 ->dropDownList(ArrayHelper::map($projects, 'id', 'name'), ['prompt' => $product->getAttributeLabel('project_building_id')])
+							?>
+							<div id="project-info" style="display: none;" data-url="<?= Url::to(['building-project/detail']) ?>">
+								<div class="loading-proccess"><span></span></div>
+								<div class="result">
+									<div>Vị trí: <span id="project-info-location"></span></div>
+									<a target="_blank" id="project-info-detail" href="#">Xem chi tiết dự án</a>
+								</div>
+							</div>
+						</div>
+						
+						<?= Html::activeHiddenInput($product, 'lat') ?>
+						<?= Html::activeHiddenInput($product, 'lng') ?>
+					</div>
+				</div>
 
-		<div id="step4" class="hinh-anh item-step section hide">
-			<?php
-				$files = [];
-				foreach ($product->adImages as $image) {
-					$files[] = [
-						'deleteType' => "DELETE",
-						'deleteUrl'	=> Url::to(['/ad/delete-file', 'file' => $image->file_name]),
-						'thumbnailUrl' => $image->getUrl(AdImages::SIZE_THUMB),
-						'name' => $image->file_name,
-						'url' => $image->getUrl(AdImages::SIZE_LARGE)
-					];
-				}
-			?>
-			<?= FileUpload::widget([
-					'files' => $files,
-					'name' => 'images', 
-					'url' => Url::to(['upload']),
-					'clientOptions' => [
-						'previewMinWidth' => 130,
-						'previewMinHeight' => 98,
-						'previewMaxWidth' => 130,
-						'previewMaxHeight' => 98,
-						'previewCrop' => true,
-					],
-					'clientEvents' => [
-						'fileuploadadded' => 'function(e, data) {form.upload.fileuploadadded(e, data, this);}',
-						'fileuploadcompleted' => 'function(e, data) {form.upload.fileuploadcompleted(e, data, this);}'
-					]
-				]) ?>
-		</div>
+				<div id="step3" class="tt-chitiet item-step section">
+					<div class="title-step">Thông tin chi tiết</div>
+					<div class="row">
+						<?= $form->field($product, 'content', ['options' => ['class' => 'col-xs-12 form-group']])
+								->label(false)
+								->textArea(['placeholder' => $product->getAttributeLabel('content')]) ?>
+						
+						<div class="col-xs-6 form-group">
+							<?= $form->field($additionInfo, 'facade_width')
+								->label(false)
+								->textInput(['placeholder' => $additionInfo->getAttributeLabel('facade_width')]) ?>
+							<span class="unit-dt">m</span>
+						</div>
+						
+						<div class="col-xs-6 form-group">		
+						<?= $form->field($additionInfo, 'land_width')
+								->label(false)
+								->textInput(['placeholder' => $additionInfo->getAttributeLabel('land_width')]) ?>
+							<span class="unit-dt">m</span>
+						</div>
+						
+						<?= $form->field($additionInfo, 'home_direction', ['options' => ['class' => 'col-xs-12 form-group']])
+								->label(false)
+								->dropDownList(AdProductAdditionInfo::directionList(), ['prompt' => $additionInfo->getAttributeLabel('home_direction'), 'data-default' => $additionInfo->home_direction]) ?>
+						
+						<?= $form->field($additionInfo, 'facade_direction', ['options' => ['class' => 'col-xs-12 form-group']])
+								->label(false)
+								->dropDownList(AdProductAdditionInfo::directionList(), ['prompt' => $additionInfo->getAttributeLabel('facade_direction'), 'data-default' => $additionInfo->facade_direction]) ?>
+								
+						<?= $form->field($additionInfo, 'floor_no', ['options' => ['class' => 'col-xs-12 form-group']])
+								->label(false)
+								->textInput(['placeholder' => $additionInfo->getAttributeLabel('floor_no')]) ?>
+								
+						<?= $form->field($additionInfo, 'interior', ['options' => ['class' => 'col-xs-12 form-group']])
+								->label(false)
+								->textArea(['placeholder' => $additionInfo->getAttributeLabel('interior')]) ?>
+					</div>
+				</div>
 
-		<div id="step5" class="tt-lienhe item-step section hide">
-			<div class="title-step"><?= Yii::t('ad', 'Contact Information') ?></div>
-			<div class="row">
-				<?= $form->field($contactInfo, 'name', ['options' => ['class' => 'col-xs-12 form-group']])
-						->label(false)
-						->textInput(['placeholder' => $contactInfo->getAttributeLabel('name')]) ?>
-				<?= $form->field($contactInfo, 'mobile', ['options' => ['class' => 'col-xs-12 form-group']])
-						->label(false)
-						->textInput(['placeholder' => $contactInfo->getAttributeLabel('mobile')]) ?>
-				<?= $form->field($contactInfo, 'email', ['options' => ['class' => 'col-xs-12 form-group']])
-						->label(false)
-						->textInput(['placeholder' => $contactInfo->getAttributeLabel('email')]) ?>
-				<?= $form->field($contactInfo, 'address', ['options' => ['class' => 'col-xs-12 form-group']])
-						->label(false)
-						->textInput(['placeholder' => $contactInfo->getAttributeLabel('address')]) ?>
-			</div>
-			<div class="text-center pdT-25">
-				<button type="button" class="preview btn-common">Preview</button>
-				<button type="button" class="btn-post btn-common"><?= $product->isNewRecord ? Yii::t('ad', 'Post') : Yii::t('ad', 'Update') ?></button>
-			</div>
+				<div id="step4" class="hinh-anh item-step section">
+					<?php
+						$files = [];
+						foreach ($product->adImages as $image) {
+							$files[] = [
+								'deleteType' => "DELETE",
+								'deleteUrl'	=> Url::to(['/ad/delete-file', 'file' => $image->file_name]),
+								'thumbnailUrl' => $image->getUrl(AdImages::SIZE_THUMB),
+								'name' => $image->file_name,
+								'url' => $image->getUrl(AdImages::SIZE_LARGE)
+							];
+						}
+					?>
+					<?= FileUpload::widget([
+							'files' => $files,
+							'name' => 'images', 
+							'url' => Url::to(['upload']),
+							'clientOptions' => [
+								'previewMinWidth' => 130,
+								'previewMinHeight' => 98,
+								'previewMaxWidth' => 130,
+								'previewMaxHeight' => 98,
+								'previewCrop' => true,
+							],
+							'clientEvents' => [
+								'fileuploadadded' => 'function(e, data) {form.upload.fileuploadadded(e, data, this);}',
+								'fileuploadcompleted' => 'function(e, data) {form.upload.fileuploadcompleted(e, data, this);}'
+							]
+						]) ?>
+				</div>
+
+				<div id="step5" class="tt-lienhe item-step section">
+					<div class="title-step"><?= Yii::t('ad', 'Contact Information') ?></div>
+					<div class="row">
+						<?= $form->field($contactInfo, 'name', ['options' => ['class' => 'col-xs-12 form-group']])
+								->label(false)
+								->textInput(['placeholder' => $contactInfo->getAttributeLabel('name')]) ?>
+						<?= $form->field($contactInfo, 'mobile', ['options' => ['class' => 'col-xs-12 form-group']])
+								->label(false)
+								->textInput(['placeholder' => $contactInfo->getAttributeLabel('mobile')]) ?>
+						<?= $form->field($contactInfo, 'email', ['options' => ['class' => 'col-xs-12 form-group']])
+								->label(false)
+								->textInput(['placeholder' => $contactInfo->getAttributeLabel('email')]) ?>
+						<?= $form->field($contactInfo, 'address', ['options' => ['class' => 'col-xs-12 form-group']])
+								->label(false)
+								->textInput(['placeholder' => $contactInfo->getAttributeLabel('address')]) ?>
+					</div>
+					<div class="text-center pdT-25">
+						<button type="button" class="preview btn-common">Preview</button>
+						<button type="button" class="btn-post btn-common"><?= $product->isNewRecord ? Yii::t('ad', 'Post') : Yii::t('ad', 'Update') ?></button>
+					</div>
+				</div>
+			<?php $form->end() ?>
 		</div>
-	<?php $form->end() ?>
+	</div>
 </div>
 <?php if($product->isNewRecord): ?>
 	<div id="popup-share-social" class="popup-common hide-popup">
@@ -448,6 +461,8 @@ use vsoft\ad\models\AdImages;
 </div>
 
 <div class="fixed-prev-next">
-	<a href="#" id="back-screen"><span class="icon arrowRight-1"></span><?= Yii::t('ad', 'Back') ?></a>
-	<a href="#" id="next-screen" class=""><span class="icon arrowLeft-1"></span><?= Yii::t('ad', 'Next') ?></a>
+	<div>
+		<a href="#" id="back-screen"><span class="icon arrowRight-1"></span><?= Yii::t('ad', 'Back') ?></a>
+		<a href="#" id="next-screen" class=""><span class="icon arrowLeft-1"></span><?= Yii::t('ad', 'Next') ?></a>		
+	</div>
 </div>

@@ -620,10 +620,11 @@ $.fn.slideSection = function (options) {
         $('[data-prev-section=true]').on('click', back);
 
         if ( countEl == 1 && sc.settings.navi ) {
-            $('#container').append(nextBack);
+            el.append(nextBack);
         }
         
-        el.find('.section').eq(sc.settings.active).removeClass('hide');
+        //el.find('.section').eq(sc.settings.active).removeClass('hide');
+        el.find('.section').eq(sc.settings.active).velocity("fadeIn", { duration: 500 });
 
         hWrapSection(sc.settings.active);
 
@@ -635,28 +636,35 @@ $.fn.slideSection = function (options) {
 
         function next (e) {
             e.preventDefault();
-            if ( $(this).hasClass('disable') ) return;
-            if ( !sc.settings.validateFrm(current+1) ) return;
 
-            sc.settings.funCallBack();
+            if ( $(this).hasClass('disable') ) return;
+
+            if ( !sc.settings.validateFrm(current+1) ) return;
 
             el.find('.section').eq(current).find('.val-selected').removeClass('error');
 
-            el.find('.section').removeClass('back-in back-out');
+            //el.find('.section').removeClass('back-in back-out');
+
             if ( current+1 < lenItem ) {
                 var oldItem = current;
 
-                el.find('.section').eq(oldItem).addClass('out').removeClass('in');
+                /*el.find('.section').eq(oldItem).addClass('out').removeClass('in');
 
                 setTimeout(function () {
                     el.find('.section').eq(oldItem).addClass('hide');
-                },350);
+                },350);*/
+
+                el.find('.section').hide();
 
                 current = current+1;
 
+                sc.settings.funCallBack(current);
+
                 pagi(current);
 
-                el.find('.section').eq(current).addClass('in').removeClass('hide');
+                //el.find('.section').eq(current).addClass('in').removeClass('hide');
+
+                el.find('.section').eq(current).velocity("fadeIn", { duration: 500 });
 
                 hWrapSection(current);
 
@@ -672,21 +680,27 @@ $.fn.slideSection = function (options) {
             e.preventDefault();
             if ( $(this).hasClass('disable') ) return;
 
-            el.find('.section').removeClass('in out');
+            //el.find('.section').removeClass('in out');
 
             var oldItem = current;
 
-            el.find('.section').eq(oldItem).removeClass('back-in').addClass('back-out');
+            el.find('.section').hide();
+
+            /*el.find('.section').eq(oldItem).removeClass('back-in').addClass('back-out');
 
             setTimeout(function () {
                 el.find('.section').eq(oldItem).addClass('hide');
-            },350);
+            },350);*/
 
             current = current - 1;
-            
+
+            sc.settings.funCallBack(current);
+
             pagi(current);
 
-            el.find('.section').eq(current).addClass('back-in').removeClass('out hide');
+            //el.find('.section').eq(current).addClass('back-in').removeClass('out hide');
+
+            el.find('.section').eq(current).velocity("fadeIn", { duration: 500 });
 
             hWrapSection(current);
             
@@ -699,16 +713,16 @@ $.fn.slideSection = function (options) {
         }
 
         function hWrapSection (current) {
-            var hActive = el.find('.section').eq(current).outerHeight();
+            /*var hActive = el.find('.section').eq(current).outerHeight();
             el.css({
                 height: hActive+120+'px'
-            });
+            });*/
         }
 
         function pagi (current) {
             if ( current == 0 ) return;
-            $(sc.settings.pagi).find('li a').removeClass('active');
-            $(sc.settings.pagi).find('li').eq(current-1).find('a').addClass('active');
+            $(sc.settings.pagi).find('li').removeClass('active');
+            $(sc.settings.pagi).find('li').eq(current-1).addClass('active');
         }
 
     });
@@ -814,7 +828,6 @@ $.fn.popupMobi = function (options) {
         }
 
         function showPopup (itemClick, popupItem) {
-            l(1);
             $('body').addClass('popup-mobi');
             popupItem.removeClass('hide-popup');
 
@@ -872,7 +885,6 @@ $.fn.popupMobi = function (options) {
             }
             
             $('body').removeClass('popup-mobi');
-            l(2);
         }
     });
 }

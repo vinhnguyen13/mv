@@ -9,7 +9,7 @@ $(document).ready(function(){
 			}
 		}
 	});
-	$('.post-listing').slideSection({
+	$('.wrap-frm-listing').slideSection({
 		active: 0,
 		validateFrm: function (step) {
 			var s = 'step' + step;
@@ -28,6 +28,13 @@ $(document).ready(function(){
 				}
 				
 				return true;
+			}
+		},
+		funCallBack: function (current) {
+			if ( current > 0 ) {
+				$('.step-link').show();
+			}else {
+				$('.step-link').hide();
 			}
 		}
 	});
@@ -368,7 +375,7 @@ var form = {
 		return number.replace('.', 'A').replace(',', '.');
 	},
 	fixHeight: function(step) {
-		$('.post-listing').height($('#step' + step).outerHeight() + 120);
+		//$('.post-listing').height($('#step' + step).outerHeight() + 120);
 	},
 	require: function(el, m) {
 		if(!el.val()) {
