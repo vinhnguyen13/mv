@@ -7,7 +7,7 @@ $this->registerJsFile(Yii::getAlias('@web') . '/js/masonry.pkgd.min.js', ['depen
 
 $javascript = <<<EOD
 	var row = $('.row');
-		
+
 	row.masonry({itemSelector: '.item', columnWidth: '.sizer'});
 	$('#search').keyup(function(){
 		var key = $(this).val().toLowerCase();
@@ -85,6 +85,7 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
 			      	<ol class="list-unstyled">
 	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['user/admin'])?>">User</a></li>
 	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['admin'])?>">User ACL</a></li>
+	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['site/clear-cache'])?>">Clear cache</a></li>
 	                </ol>
 			      </div>
 			    </div>
