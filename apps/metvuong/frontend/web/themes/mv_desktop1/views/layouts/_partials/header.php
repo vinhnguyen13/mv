@@ -73,7 +73,35 @@ use yii\helpers\Url;
 
         <div class="dt-header clearfix">
             <div class="user-login pull-right">
+                <?php if(Yii::$app->user->isGuest){?>
                 <a href="#" class="user-login-link"><?=Yii::t('user', 'Sign In')?></a> <span>/</span> <a href="#" class="user-signup-link"><?=Yii::t('user', 'Sign Up')?></a>
+                <?php } else{?>
+                    <ul class="clearfix">
+                        <li class="user-edit">
+                            <a href="<?=Url::to(['member/profile', 'username'=>Yii::$app->user->identity->username])?>">
+                                <span class="wrap-img"><img src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="" width="40" height="40"></span>
+                                <div>
+                                    <p><span class="name-user"><?=Yii::$app->user->identity->profile->getDisplayName();?></span>
+                                        <span class="address"><?=empty(Yii::$app->user->identity->location) ? "" : Yii::$app->user->identity->location->city?></span></p>
+                                </div>
+                            </a>
+                        </li>
+                        <!-- <li><a href="<?= Url::to(['/ad/post']) ?>"><em class="icon-plus"></em>Đăng tin mới</a></li> -->
+                        <li><a href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyOther"><div><span class="icon icon-alert"></span></div><?=Yii::t('Notification', 'Notifications')?>
+                                <?php if(!empty($this->params['notify_other'])){?>
+                                    <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
+                                <?php }?>
+                            </a></li>
+                        <li><a href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>"><div><span class="icon icon-listings"></span></div>Listings</a></li>
+                        <li><a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyChat"><div><span class="icon icon-chat"></span></div><?=Yii::t('chat', 'Chat')?>
+                                <?php if(!empty($this->params['notify_chat'])){?>
+                                    <span id="notifyChat" class="notifi"><?=$this->params['notify_chat'];?></span>
+                                <?php }?>
+                            </a></li>
+                        <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon icon-per"></span></div><?=Yii::t('user', 'Account')?></a></li>
+                        <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><div><span class="icon icon-logout"></span></div><?=Yii::t('user', 'Log Out')?></a></li>
+                    </ul>
+                <?php } ?>
             </div>
             <ul class="clearfix list-menu">
                 <li class="dt-logo"><a href="/" class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/logo.png' ?>" alt=""></a></li>
