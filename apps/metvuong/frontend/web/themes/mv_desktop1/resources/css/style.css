@@ -4339,6 +4339,7 @@ input[type=text]:focus {
     margin-bottom: 25px;
     padding-bottom: 25px;
     border-bottom: solid 0.5px #969696;
+    position: relative;
 }
 .wrap-news li a {
     display: block;
@@ -4676,8 +4677,10 @@ input[type=text]:focus {
     padding: 7px 10px;
     color: #3F3F3F;
 }
+.list-menu-news a:hover,
 .list-menu-news a.active {
-    border-bottom: 2px solid #333;
+    border-bottom: 2px solid #00a769;
+    color: #00a769;
 }
 .page-news {
     padding-top: 34px;*/;
@@ -6018,36 +6021,68 @@ footer li a {
         height: 135px;
     }
     .page-news .title-top {
-        top: 64px;
-        background: #fff;
+        position: static;
+        border: none;
     }
     .list-menu-news a {
-        font-size: 15px;
+        font-size: 18px;
+        padding: 1px 15px;
     }
     .wrap-news {
         padding-left: 0;
         padding-right: 0;
+        margin-top: 50px;
     }
     .list-menu-news .swiper-wrapper {
-        padding: 0 20px;
+        padding: 0;
+        width: auto;
+        margin: 0;
     }
     .page-news {
-        padding: 0;
+        padding: 0 0 50px 0;
     }
     .wrap-news ul {
-        margin: 0 -15px;
     }
     .wrap-news li {
-        width: 33.333%;
+        width: 100%;
         float: left;
-        padding: 0 15px;
-        border: none;
+        padding: 0 0 40px 0;
+        border-bottom: solid 0.5px #979797;
+        margin: 0 0 40px 0;
+    }
+    .wrap-news li > a {
+        float: left;
+        width: 50%;
+        margin-right: 4%;
+        margin-bottom: 0;
+    }
+    .name-news a {
+        font-size: 28px;
+        text-transform: uppercase;
+        line-height: 35px;
+    }
+    .wrap-news li > div {
+        overflow: hidden;
+    }
+    .wrap-news .view-more {
+        position: absolute;
+        bottom: 40px;
+        right: 0;
+        font-size: 17px;
+    }
+    .wrap-news .view-more .icon {
+        vertical-align: middle;
     }
     .name-news {
-        height: 36px;
+        margin-bottom: 10px;
+    }
+    .date-post {
+        font-size: 18px;
+        margin-bottom: 10px;
     }
     .wrap-news li .short-txt {
         height: 80px;
+        font-size: 15px;
     }
     .unit-dt {
         top: 10px;
@@ -6104,6 +6139,22 @@ footer li a {
     .type-input-chat .sm-chat {
         right: 40px;
     }
+    .list-menu-news {
+        padding: 0;
+        float: right;
+        width: 70%;
+    }
+    .list-menu-news > .container {
+        padding: 0;
+        width: 95%;
+        overflow: hidden;
+    }
+    .page-news .title-top h2 {
+        margin: 0;
+        padding: 0;
+        font-size: 28px;
+    }
+    
 }
 .select-others .dropdown-up-style .item-dropdown {
     max-height: inherit;
@@ -6116,4 +6167,64 @@ footer li a {
 .select-others .dropdown-up-style .item-dropdown label {
     font-weight: 400;
     font-size: 14px;
+}
+.wrap-news li .name-cate {
+    font-size: 15px;
+    font-weight: 600;
+    color: #00a769;
+    margin-bottom: 25px;
+}
+.arrowLeft-small-black {
+    background-position: 0 -2167px;
+    background-size: 50px 2400px;
+    width: 9px;
+    height: 17px;
+}
+.swiper-button-prev, .swiper-container-rtl .swiper-button-next,
+.swiper-button-next, .swiper-container-rtl .swiper-button-prev {
+    background: url(../images/icon.png) no-repeat top left;
+    background-size: 33px 1600px;
+}
+.swiper-button-prev, .swiper-container-rtl .swiper-button-next {
+    left: 0;
+    width: 11px;
+    height: 22px;
+    background-position: 0px -437px;
+    top: 3px;
+    right: inherit;
+    margin: 0;
+}
+.swiper-button-next {
+    width: 11px;
+    height: 22px;
+    background-position: 0 -413px;
+    top: 2px;
+    right: 0px;
+    margin-top: 0;
+}
+.pagination {
+    padding: 0;
+    margin: 0;
+}
+.pagination>li>a {
+    color: #00a769;
+    font-weight: 600;
+    background: none;
+    border: solid 1px #00a769;
+}
+.pagination>li {
+    margin: 0 10px;
+    display: inline-block;
+}
+.pagination>li:last-child>a, .pagination>li:last-child>span,
+.pagination>li:first-child>a, .pagination>li:first-child>span {
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+}
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover,
+.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover {
+    background: #00a769;
+    color: #fff;
+    border: solid 1px #00a769;
 }

@@ -6,7 +6,7 @@ use yii\helpers\Url;
 <div class="title-fixed-wrap">
     <div class="container">
     	<div class="page-news">
-    		<div class="title-top">
+    		<div class="title-top clearfix">
     			<div class="list-menu-news swiper-container">
                     <div class="container">
                         <div class="swiper-wrapper">
@@ -21,8 +21,11 @@ use yii\helpers\Url;
                             <?php }?>
                             <?php }?>
                         </div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
                     </div>
                 </div>
+                <h2>TIN TỨC</h2>
     		</div>
             <?php if(count($news)){?>
     		<div class="wrap-news">
@@ -34,28 +37,50 @@ use yii\helpers\Url;
                             $banner = '/themes/metvuong2/resources/images/default-ads.jpg';
                     ?>
     				<li>
+
     					<a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n["id"], 'slug' => $n["slug"]], true)?>" class="rippler rippler-default">
     						<div class="img-show"><div><img src="<?=$banner?>" alt="<?=$n["title"]?>"></div></div>
     					</a>
-    					<p class="name-news"><a href="#"><?=$n["title"]?></a></p>
-    					<p class="date-post"><?=date('d/m/Y, H:i', $n["created_at"])?></p>
-    					<p class="short-txt">
-    						<?=\yii\helpers\StringHelper::truncate($n["brief"], 200)?>
-    					</p>
+                        <div>
+                            <a href="#" class="name-cate">DOANH NGHIỆP</a>
+        					<p class="name-news"><a href="#"><?=$n["title"]?></a></p>
+        					<p class="date-post"><?=date('d/m/Y, H:i', $n["created_at"])?></p>
+        					<p class="short-txt">
+        						<?=\yii\helpers\StringHelper::truncate($n["brief"], 200)?>
+        					</p>
+                            <a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n["id"], 'slug' => $n["slug"]], true)?>" class="view-more">Xem thêm <span class="icon arrowLeft-small-black"></span></a>
+                        </div>
     				</li>
                     <?php } ?>
     			</ul>
-    		</div>
+            </div>
+            <nav class="text-center">
+                <ul class="pagination">
+                    <li>
+                        <a href="#" aria-label="Previous">Back</a>
+                    </li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li>
+                    <a href="#" aria-label="Next">Next</a>
+                    </li>
+                </ul>
+            </nav>
             <?php } ?>
     	</div>
     </div>
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        var swiper = new Swiper('.list-menu-news', {
+        var swiper = new Swiper('.list-menu-news > .container', {
             paginationClickable: true,
             spaceBetween: 0,
-            slidesPerView: 'auto'
+            slidesPerView: 'auto',
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev'
         });
     });
 </script>
