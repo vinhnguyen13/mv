@@ -104,7 +104,7 @@ class MemberController extends Controller
                     return ['statusCode' => 404, 'parameters' => $model->errors];
                 }
             }else{
-                return $this->renderAjax('login');
+                return $this->renderPartial('login');
             }
         }
         return $this->render('login');
@@ -148,7 +148,7 @@ class MemberController extends Controller
                     return ['statusCode' => 404, 'parameters' => $model->errors];
                 }
             }else{
-                return $this->renderAjax('signup');
+                return $this->renderPartial('signup');
             }
         }
         return $this->render('signup');
