@@ -270,7 +270,7 @@ unset($params[$pages->pageParam]);
 							</div> -->
 						</div>
 						
-						<button class="btn-submit btn-common <?= $params ? 'active' : '' ?>" data-flag="true">Tìm kiếm</button>
+						<button class="btn-submit btn-common <?= $params ? '' : 'active' ?>" data-flag="true">Tìm kiếm</button>
 					</div>
 				</div>
 				<div class="dropdown-select option-show-listing">
