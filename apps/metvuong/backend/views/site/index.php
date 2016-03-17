@@ -102,7 +102,8 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
 				</div>
 			</div>
 			<?php
-			if (Yii::$app->user->can('Admin')) {
+			$permissionName = !empty(Yii::$app->setting->get('aclAdmin')) ? Yii::$app->setting->get('aclAdmin') : 'Admin';
+			if (Yii::$app->user->can($permissionName)) {
 				?>
 				<div class="col-lg-3 item">
 					<div class="panel panel-primary">
