@@ -3779,17 +3779,16 @@ input[type=text]:focus {
     background: #f5f5f5;
     padding: 25px 20px;
 }
-.item-packege {
+.item-packege .content-pac {
     background-color: #ffffff;
     box-shadow: 0 0 5px 1px rgba(131, 131, 131, 0.21);
     -webkit-box-shadow: 0 0 5px 1px rgba(131, 131, 131, 0.21);
     -moz-box-shadow: 0 0 5px 1px rgba(131, 131, 131, 0.21);
     -ms-box-shadow: 0 0 5px 1px rgba(131, 131, 131, 0.21);
-    padding: 20px 0 35px 0;
+    padding: 30px;
     margin-bottom: 30px;
 }
 .item-packege .content-pac {
-    width: 80%;
     margin: 0 auto 0;
     text-align: center;
 }
@@ -6062,6 +6061,17 @@ footer li a {
     .select-others .item-dropdown .form-group {
         width: 100%;
         padding: 0;
+    }
+    .all-packege {
+        background: inherit;
+        padding: 35px 0;
+        margin: 0 -15px;
+    }
+    .item-packege{
+        padding: 0px 15px;
+    }
+    .list-post li {
+        
     }
 }
 .select-others .dropdown-up-style .item-dropdown {

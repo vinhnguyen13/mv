@@ -61,36 +61,38 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     }(document, 'script', 'facebook-jssdk'));
 </script>
 <div class="title-fixed-wrap">
-    <div class="detail-news">
-        <div class="title-top"><a style="color: #00a769;" href="<?=Url::to(['news/index'], true)?>"><?=Yii::t('news','NEWS')?></a></div>
+    <div class="container">
+        <div class="detail-news">
+            <div class="title-top"><a style="color: #00a769;" href="<?=Url::to(['news/index'], true)?>"><?=Yii::t('news','NEWS')?></a></div>
 
-        <div class="wrap-detail-article">
-            <input id="current_id" type="hidden" value="<?=$news->id?>">
-            <input id="current_slug" type="hidden" value="<?=$news->slug?>">
-            <input id="current_title" type="hidden" value="<?=$news->title?>">
-            <input id="cat_id" type="hidden" value="<?=$news->catalog_id?>">
-            <article>
-                <h1 class="big-title"><?=$news->title?></h1>
-                <div class="time-post">
-                    <span class=""><?=date("d/m/Y g:i a",$news->created_at)?></span>
-                </div>
-                <div class="detail-content pdL-5">
-                    <div class="box-content">
-                        <div><?=$news->content?></div>
-                        <div id="social<?=$news->id?>" class="share-social mgT-10 wrap-img">
-                            <div class="fb-like" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug], true) ?>" data-layout="button_count" style="margin-right: 10px;"></div>
-                            <div class="fb-send" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug], true) ?>" data-show-faces="false" style="margin-right: 10px;"></div>
-                            <div class="fb-share-button" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug], true) ?>" data-layout="button_count"></div><br>
-                            <div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl(['news/view', 'id' => $news->id, 'slug' => $news->slug])?>" data-width="100%" data-numposts="3"></div>
+            <div class="wrap-detail-article">
+                <input id="current_id" type="hidden" value="<?=$news->id?>">
+                <input id="current_slug" type="hidden" value="<?=$news->slug?>">
+                <input id="current_title" type="hidden" value="<?=$news->title?>">
+                <input id="cat_id" type="hidden" value="<?=$news->catalog_id?>">
+                <article>
+                    <h1 class="big-title"><?=$news->title?></h1>
+                    <div class="time-post">
+                        <span class=""><?=date("d/m/Y g:i a",$news->created_at)?></span>
+                    </div>
+                    <div class="detail-content pdL-5">
+                        <div class="box-content">
+                            <div><?=$news->content?></div>
+                            <div id="social<?=$news->id?>" class="share-social mgT-10 wrap-img">
+                                <div class="fb-like" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug], true) ?>" data-layout="button_count" style="margin-right: 10px;"></div>
+                                <div class="fb-send" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug], true) ?>" data-show-faces="false" style="margin-right: 10px;"></div>
+                                <div class="fb-share-button" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug], true) ?>" data-layout="button_count"></div><br>
+                                <div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl(['news/view', 'id' => $news->id, 'slug' => $news->slug])?>" data-width="100%" data-numposts="3"></div>
+                            </div>
                         </div>
                     </div>
+                </article>
+            </div>
+            <!-- <div class="toHeight" style="height: 10px;"></div> -->
+            <div class="load-more-article">
+                <div class="loading text-center" >
+                    <img src="<?=Yii::$app->view->theme->baseUrl."/resources/images/loading-listing.gif"?>" alt="Loading..." title="<?=$news->title?>" />
                 </div>
-            </article>
-        </div>
-        <!-- <div class="toHeight" style="height: 10px;"></div> -->
-        <div class="load-more-article">
-            <div class="loading text-center" >
-                <img src="<?=Yii::$app->view->theme->baseUrl."/resources/images/loading-listing.gif"?>" alt="Loading..." title="<?=$news->title?>" />
             </div>
         </div>
     </div>

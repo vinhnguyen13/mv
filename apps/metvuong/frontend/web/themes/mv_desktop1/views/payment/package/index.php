@@ -7,39 +7,41 @@
  */
 ?>
 <div class="title-fixed-wrap">
-	<div class="title-top">CÁC GÓI GIÁ</div>
-	<div class="all-packege">
-		<div class="item-packege">
-			<div class="content-pac">
-				<h2>STARTER</h2>
-				<p class="title-pac">FREE</p>
-				<p>Limited to 3 Listings</p>
-				<p>Up to 30 Using Days</p>
-				<p>Lipsum dolor sit amet fusce sed metus</p>
-				<p>Lipsum Dolosit Amet Fusce</p>
-				<a href="#" class="btn-common">Your Current Plan</a>
+	<div class="container">
+		<div class="title-top">CÁC GÓI GIÁ</div>
+		<div class="all-packege clearfix">
+			<div class="item-packege col-xs-12 col-sm-6 col-md-4">
+				<div class="content-pac">
+					<h2>STARTER</h2>
+					<p class="title-pac">FREE</p>
+					<p>Limited to 3 Listings</p>
+					<p>Up to 30 Using Days</p>
+					<p>Lipsum dolor sit amet fusce sed metus</p>
+					<p>Lipsum Dolosit Amet Fusce</p>
+					<a href="#" class="btn-common">Your Current Plan</a>
+				</div>
 			</div>
-		</div>
-		<div class="item-packege">
-			<div class="content-pac">
-				<h2>STARTER</h2>
-				<p class="title-pac">300.000VND<span>/ tháng</span></p>
-				<p>Limited to 3 Listings</p>
-				<p>Up to 30 Using Days</p>
-				<p>Lipsum dolor sit amet fusce sed metus</p>
-				<p>Lipsum Dolosit Amet Fusce</p>
-				<a href="#" class="btn-common">Your Current Plan</a>
+			<div class="item-packege col-xs-12 col-sm-6 col-md-4">
+				<div class="content-pac">
+					<h2>STARTER</h2>
+					<p class="title-pac">300.000VND<span>/ tháng</span></p>
+					<p>Limited to 3 Listings</p>
+					<p>Up to 30 Using Days</p>
+					<p>Lipsum dolor sit amet fusce sed metus</p>
+					<p>Lipsum Dolosit Amet Fusce</p>
+					<a href="#" class="btn-common">Your Current Plan</a>
+				</div>
 			</div>
-		</div>
-		<div class="item-packege">
-			<div class="content-pac">
-				<h2>STARTER</h2>
-				<p class="title-pac">400.000VND<span>/ tháng</span></p>
-				<p>Limited to 3 Listings</p>
-				<p>Up to 30 Using Days</p>
-				<p>Lipsum dolor sit amet fusce sed metus</p>
-				<p>Lipsum Dolosit Amet Fusce</p>
-				<a href="#" class="btn-common">Your Current Plan</a>
+			<div class="item-packege col-xs-12 col-sm-6 col-md-4">
+				<div class="content-pac">
+					<h2>STARTER</h2>
+					<p class="title-pac">400.000VND<span>/ tháng</span></p>
+					<p>Limited to 3 Listings</p>
+					<p>Up to 30 Using Days</p>
+					<p>Lipsum dolor sit amet fusce sed metus</p>
+					<p>Lipsum Dolosit Amet Fusce</p>
+					<a href="#" class="btn-common">Your Current Plan</a>
+				</div>
 			</div>
 		</div>
 	</div>
