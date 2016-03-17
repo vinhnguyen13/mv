@@ -182,10 +182,10 @@ $types = AdProduct::getAdTypes ();
 										<span class="selected" data-placeholder="Loại bất động sản?">Nâng Cao</span>
 										<span class="pull-right icon arrowDown"></span>
 									</div>
-									<div class="item-dropdown hide-dropdown">
-										<div class="form-group">
-											<label for="" class="col-sm-4 control-label">Người đăng</label>
-											<div class="col-sm-8">
+									<div class="item-dropdown hide-dropdown clearfix">
+										<div class="form-group col-xs-12 col-sm-6">
+											<label for="" class="col-xs-4 control-label">Người đăng</label>
+											<div class="col-xs-8">
 												<select class="form-control">
 													<option>Tất cả</option>
 													<option>Nhà môi giới</option>
@@ -193,9 +193,9 @@ $types = AdProduct::getAdTypes ();
 												</select>
 											</div>
 										</div>
-										<div class="form-group">
-											<label for="" class="col-sm-4 control-label">Ngày đăng</label>
-											<div class="col-sm-8">
+										<div class="form-group col-xs-12 col-sm-6">
+											<label for="" class="col-xs-4 control-label">Ngày đăng</label>
+											<div class="col-xs-8">
 												<select class="form-control">
 													<option>Tất cả</option>
 													<option>1 ngày</option>
@@ -203,9 +203,9 @@ $types = AdProduct::getAdTypes ();
 												</select>
 											</div>
 										</div>
-										<div class="form-group">
-											<label for="" class="col-sm-4 control-label">Phòng ngủ</label>
-											<div class="col-sm-8">
+										<div class="form-group col-xs-12 col-sm-6">
+											<label for="" class="col-xs-4 control-label">Phòng ngủ</label>
+											<div class="col-xs-8">
 												<select class="form-control">
 													<option>Tất cả</option>
 													<option>1</option>
@@ -213,9 +213,9 @@ $types = AdProduct::getAdTypes ();
 												</select>
 											</div>
 										</div>
-										<div class="form-group">
-											<label for="" class="col-sm-4 control-label">Phòng tắm</label>
-											<div class="col-sm-8">
+										<div class="form-group col-xs-12 col-sm-6">
+											<label for="" class="col-xs-4 control-label">Phòng tắm</label>
+											<div class="col-xs-8">
 												<select class="form-control">
 													<option>Tất cả</option>
 													<option>1</option>

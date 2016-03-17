@@ -368,6 +368,9 @@ $.fn.toggleShowMobi = function (options) {
         el.find(sc.settings.btnEvent).on('click', toggleShow);
 
         function toggleShow (e) {
+
+            if ( !checkMobile() ) { return; }
+
             var _this = $(this);
 
             if ( _this.hasClass('active') && _this.data('flag') ) {
@@ -865,7 +868,7 @@ $.fn.popupMobi = function (options) {
         }
 
         function hide (popupItem) {
-            $(sc.settings.closeBtn).unbind('click');
+            //$(sc.settings.closeBtn).unbind('click');
             if ( sc.settings.effectShow == "slideDownUp" ) {
                 if ( sc.settings.styleShow == "full" ) {
                     var hPopup = popupItem.outerHeight();

@@ -4902,6 +4902,7 @@ input[type=text]:focus {
         float: left;
         border: none;
         padding: 0 10px;
+        margin-bottom: 0;
     }
     .news-item .item .txt-short-news {
         height: 125px;
@@ -5132,10 +5133,17 @@ input[type=text]:focus {
         margin: 0 auto 0;
         padding: 0;
     }
+    .search-home,
+    .news-item,
     .box-item.box-feature-item {
+        padding-top: 50px;
+        padding-bottom: 50px;
     }
     .id-duan {
         float: right;
+    }
+    .status-duan .id-duan {
+        float: none;
     }
     .box-item .address-feat .list-attr-td {
         float: left;
@@ -5194,6 +5202,7 @@ input[type=text]:focus {
     font-size: 15px;
     padding: 10px 20px;
     display: block;
+    text-transform: uppercase;
 }
 .list-menu li.dt-logo a {
     width: 115px;
@@ -5394,11 +5403,13 @@ footer li a {
         float: left;
         margin-right: 15px;
         margin-bottom: 0;
+        width: 10%;
     }
     .advande-search {
         padding: 10px 10px;
     }
     .advande-search .toggle-search {
+        display: block !important;
     }
     .btn-submit {
         width: auto;
@@ -5737,9 +5748,9 @@ footer li a {
         text-align: center;
     }
     .step-check li {
-        width: 40%;
+        width: 50%;
         max-width: 200px;
-        height: 170px;
+        height: 230px;
     }
     .step-check li a {
         width: 100%;
@@ -5753,11 +5764,12 @@ footer li a {
         padding-top: 65px;
     }
     .step-check li {
-        padding: 0;
-        margin: 0 5% 60px;
+        padding: 0 15px 60px;
+        margin: 0 0 0 0;
+        max-width: inherit;
     }
     .step-check {
-        margin: 0px -5%;
+        margin: 0px -15px;
     }
     .select-type .dt-hide li {
         margin-bottom: 206px;
@@ -5816,6 +5828,10 @@ footer li a {
     .item-step select, .item-step textarea, .item-step input {
         background: none;
         border: solid 1px #979797;
+        height: 40px;
+    }
+    .toggle-num-home label input {
+        height: auto;
     }
     .field-adproduct-city_id {
         width: 100%;
@@ -5987,6 +6003,8 @@ footer li a {
     }
     .wrap-infor-duan {
         background: none;
+        padding-left: 0;
+        padding-right: 0;
     }
     .wrap-infor-duan .wrap-item {
         width: 33.3333%;
@@ -5999,4 +6017,62 @@ footer li a {
     .wrap-infor-duan .info-item .address-feat {
         height: 135px;
     }
+    .page-news .title-top {
+        top: 64px;
+        background: #fff;
+    }
+    .list-menu-news a {
+        font-size: 15px;
+    }
+    .wrap-news {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .list-menu-news .swiper-wrapper {
+        padding: 0 20px;
+    }
+    .page-news {
+        padding: 0;
+    }
+    .wrap-news ul {
+        margin: 0 -15px;
+    }
+    .wrap-news li {
+        width: 33.333%;
+        float: left;
+        padding: 0 15px;
+        border: none;
+    }
+    .name-news {
+        height: 36px;
+    }
+    .wrap-news li .short-txt {
+        height: 80px;
+    }
+    .unit-dt {
+        top: 10px;
+    }
+    .select-others .dropdown-up-style .item-dropdown {
+    }
+    .select-others .dropdown-up-style {
+        right: 0;
+        left: inherit;
+        width: 400px;
+    }
+    .select-others .item-dropdown .form-group {
+        width: 100%;
+        padding: 0;
+    }
+}
+.select-others .dropdown-up-style .item-dropdown {
+    max-height: inherit;
+    padding: 25px 5px;
+}
+.select-others .item-dropdown .form-group {
+    float: left;
+    /* width: 100%; */
+}
+.select-others .dropdown-up-style .item-dropdown label {
+    font-weight: 400;
+    font-size: 14px;
 }
