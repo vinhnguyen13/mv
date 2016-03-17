@@ -72,7 +72,8 @@ use yii\helpers\Url;
         <div class="dt-header clearfix">
             <div class="user-login pull-right">
                 <?php if(Yii::$app->user->isGuest){?>
-                <div class="user-not-login"><a href="#" class="user-login-link"><?=Yii::t('user', 'Sign In')?></a> <span>/</span> <a href="#" class="user-signup-link"><?=Yii::t('user', 'Sign Up')?></a></div>
+                <div class="user-not-login"><a href="<?=Url::to(['/member/login'])?>" class="user-login-link_"><?=Yii::t('user', 'Sign In')?></a> <span>/</span>
+                    <a href="<?=Url::to(['/member/signup'])?>" class="user-signup-link_"><?=Yii::t('user', 'Sign Up')?></a></div>
                 <?php } else{?>
                     <div class="user-edit">
                         <a href="<?=Url::to(['member/profile', 'username'=>Yii::$app->user->identity->username])?>">
