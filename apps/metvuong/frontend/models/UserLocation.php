@@ -21,7 +21,7 @@ class UserLocation extends \vsoft\user\models\base\UserLocation
 
     public function getCity(){
         $city = \vsoft\ad\models\AdCity::find()->where(['id' => $this->city_id])->one();
-        return empty($city) ? "Đang cập nhật" : $city->name;
+        return empty($city) ? "" : $city->name;
     }
 
 }

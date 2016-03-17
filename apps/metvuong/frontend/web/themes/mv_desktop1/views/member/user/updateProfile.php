@@ -50,7 +50,7 @@ $user = $model->getUser();
     			
     			<section class="mtbt">
     				<div class="title-update-tt">
-    					<?=Yii::t('profile', 'Decscription')?>
+    					<?=Yii::t('profile', 'Description')?>
     					<a href="#edit-mtbt" class="edit-tt"><span class="icon icon-edit-small-1"></span></a>
     				</div>
     				<div class="wrap-attr-detail">
@@ -188,14 +188,13 @@ $user = $model->getUser();
 					</li>
 					<li>
 						<span><?=Yii::t('profile', 'Mobile')?></span>
-                        <?= $f->field($profile_form, 'mobile')->textInput(['class'=>'attr-right phone-num', 'maxlength' => 11, 'value' => $model->mobile ])->label(false)?>
+                        <?= $f->field($profile_form, 'mobile')->textInput(['class'=>'attr-right phone-num', 'type'=>'number', 'maxlength' => 10, 'value' => $model->mobile ])->label(false)?>
 					</li>
 					<li>
 						<span><?=Yii::t('profile', 'Email')?></span>
                         <?= $f->field($profile_form, 'public_email')->textInput(['class'=>'attr-right public_email', 'value' => empty($model->public_email) ? $user->email : $model->public_email ])->label(false)?>
 					</li>
                     <li>
-                        <div class="error hide" style="font-weight: bold;"></div>
                         <input type="hidden" name="scenario" value="updateprofile">
                     </li>
 				</ul>
@@ -281,7 +280,13 @@ $user = $model->getUser();
         <?php $f->end(); ?>
 	</div>
 </div>
-
+<style>
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
 <script>
 	$(document).ready(function () {
 		$('#edit-ttcn, #edit-mtbt, #edit-changepass').popupMobi({
@@ -312,6 +317,7 @@ $user = $model->getUser();
                     if(data.statusCode == 200){
                         $('.btn-cancel').trigger('click');
                         $('.ttcn .name').html(data.modelResult.name);
+                        $('.user-edit .name-user').html(data.modelResult.name);
                         $('.ttcn .phone-num').html(data.modelResult.mobile);
                         $('.ttcn .public_email').html(data.modelResult.public_email);
                     } else if (data.statusCode == 400) {
@@ -436,7 +442,8 @@ $user = $model->getUser();
                     data: $('#user-location-form').serializeArray(),
                     success: function (data) {
                         if(data.statusCode == 200){
-//                            console.log(data);
+                            var addr = $('#userlocation-city_id option:selected').html();
+                            $('.user-edit .address').html(addr);
                         }
                         return true;
                     },
@@ -451,6 +458,9 @@ $user = $model->getUser();
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
                 return false;
             }
+            if (this.value.length > this.maxLength)
+                this.value = this.value.slice(0, this.maxLength);
         });
+
     });
 </script>

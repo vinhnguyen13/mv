@@ -30,7 +30,7 @@ $user = $model->getUser();
             <div class="infor-person">
                 <div class="title-text"><?=Yii::t('profile', 'Personal Information')?></div>
                 <div class="wrap-txt">
-                    <?= empty($model->bio) ? "Đang cập nhật" : $model->bio ?>
+                    <?= empty($model->bio) ?  "<i style=\"font-weight: normal;\">".Yii::t('profile','updating')."</i>" : $model->bio ?>
                 </div>
             </div>
 
@@ -39,7 +39,7 @@ $user = $model->getUser();
                     <div class="circle"><div><span class="icon icon-map-loca-1"></span></div></div>
                     <div class="txt-infor-right">
                         <div>
-                            <?= empty($user->location) ? "Đang cập nhật" : $user->location->city ?>
+                            <?= empty($user->location) ?  "<i style=\"font-weight: normal;\">".Yii::t('profile','updating')."</i>" : $user->location->city ?>
                         </div>
                     </div>
                 </li>
@@ -47,19 +47,30 @@ $user = $model->getUser();
                     <div class="circle"><div><span class="icon icon-phone-1"></span></div></div>
                     <div class="txt-infor-right">
                         <div>
-                            <a href="tel:<?=$model->mobile ?>"><?= empty($model->mobile) ? "Đang cập nhật" : $model->mobile ?></a>
+                            <?= empty($model->mobile) ?  "<a href='#'><i style=\"font-weight: normal;\">".Yii::t('profile','updating')."</i></a>" : "<a href='tel:".$model->mobile."'>".$model->mobile."</a>" ?>
                         </div>
                     </div>
                 </li>
                 <li>
-                    <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
+                    <div class="circle"><a href="#popup-email" class="email-btn"><div><span class="icon icon-email-1"></span></div></a></div>
                     <div class="txt-infor-right">
                         <div>
-                            <?= empty($model->public_email) ? "Đang cập nhật" : $model->public_email ?>
+                            <a href="#popup-email" class="email-btn"><?= empty($model->public_email) ?  "<i style=\"font-weight: normal;\">".Yii::t('profile','updating')."</i>" : $model->public_email ?></a>
                         </div>
                     </div>
                 </li>
             </ul>
+
+            <?php
+            if($user->id != Yii::$app->user->id) {
+                $userFrom = Yii::$app->user->identity;
+                $yourEmail = empty($userFrom->profile->public_email) ? $userFrom->email : $userFrom->profile->public_email;
+                echo $this->renderAjax('/ad/_partials/shareEmail',[
+                    'user' => $user,
+                    'yourEmail' => $yourEmail,
+                    'recipientEmail' => (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
+                    'params' => ['your_email' => false, 'recipient_email' => false] ]);
+            }?>
 
             <?php
             if(count($products) > 0) {
@@ -101,3 +112,12 @@ $user = $model->getUser();
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('#popup-email').popupMobi({
+            btnClickShow: ".email-btn",
+            closeBtn: '#popup-email .btn-cancel',
+            styleShow: 'center'
+        });
+    });
+</script>

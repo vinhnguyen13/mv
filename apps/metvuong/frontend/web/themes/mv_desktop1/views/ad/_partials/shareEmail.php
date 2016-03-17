@@ -34,7 +34,7 @@ use yii\helpers\Url;
                 echo $f->field($share_form, 'your_email')->hiddenInput(['class'=>'your_email', 'value'=> $yourEmail])->label(false);
             } else { ?>
             <div class="frm-item frm-email">
-                <?= $f->field($share_form, 'your_email')->textInput(['class'=>'your_email', 'value' => isset($params['setValueFromEmail']) ? $yourEmail : "", 'placeholder'=>Yii::t('your_email', 'Email của bạn...')])->label(false) ?>
+                <?= $f->field($share_form, 'your_email')->textInput(['class'=>'your_email', 'value' => isset($params['setValueFromEmail']) ? $yourEmail : "", 'placeholder'=>Yii::t('your_email', 'Your email...')])->label(false) ?>
             </div>
             <?php }
 
@@ -43,15 +43,15 @@ use yii\helpers\Url;
             } else {
             ?>
             <div class="frm-item frm-email">
-                <?= $f->field($share_form, 'recipient_email')->textInput(['class'=>'recipient_email', 'value' => isset($params['setValueToEmail']) ? $recipientEmail : "", 'placeholder'=>Yii::t('recipient_email', 'Email người nhận...')])->label(false) ?>
+                <?= $f->field($share_form, 'recipient_email')->textInput(['class'=>'recipient_email', 'value' => isset($params['setValueToEmail']) ? $recipientEmail : "", 'placeholder'=>Yii::t('recipient_email', 'Recipient email ...')])->label(false) ?>
             </div>
             <?php }  ?>
 
             <div class="frm-item frm-email">
-                <?= $f->field($share_form, 'subject')->textInput(['class'=>'subject2', 'placeholder'=>Yii::t('subject', 'Tiêu đề...')])->label(false)?>
+                <?= $f->field($share_form, 'subject')->textInput(['class'=>'subject2', 'placeholder'=>Yii::t('send_email', 'Subject...')])->label(false)?>
             </div>
             <div class="frm-item frm-email">
-                <?= $f->field($share_form, 'content')->textarea(['class'=>'content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('content', 'Nội dung...')])->label(false) ?>
+                <?= $f->field($share_form, 'content')->textarea(['class'=>'content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('send_email', 'Content...')])->label(false) ?>
             </div>
             <div class="item-send">
                 <?php
@@ -92,7 +92,21 @@ use yii\helpers\Url;
                     <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=> Url::to(["building/$project->slug"],true) ])->label(false) ?>
                     <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> Url::to(["building/$project->slug"],true) ])->label(false) ?>
                     <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
-                <?php }?>
+                <?php }
+                if(isset($user) && !empty($user)){
+                    $address = $user->location->city;
+                    ?>
+                    <div class="img-show"><div><a href=""><img src="<?=$user->profile->avatar ?>" alt="<?=$address?>"></a></div></div>
+                    <div class="infor-send">
+                        <p class="name"><a href=""><?=$user->profile->name ?></a></p>
+                        <p class="address"><?=$address ?></p>
+                        <p class="send-by">METVUONG.COM</p>
+                    </div>
+
+                    <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=>$address])->label(false) ?>
+                    <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> Yii::$app->request->absoluteUrl ])->label(false) ?>
+                    <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
+                <?php } ?>
             </div>
             <?php $f->end(); ?>
         </div>
@@ -117,6 +131,7 @@ use yii\helpers\Url;
         var timer = 0;
         var recipient_email = $('#share_form .recipient_email').val();
         var your_email = $('#share_form .your_email').val();
+        console.log(recipient_email);
         if(recipient_email != null && your_email != null) {
             $('#popup-sent .user_name').html(recipient_email);
             clearTimeout(timer);
