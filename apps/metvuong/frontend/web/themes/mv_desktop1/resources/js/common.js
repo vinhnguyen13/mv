@@ -4,7 +4,7 @@ $(document).ready(function() {
     });
     $(window).on('resize', function () {
         if ( !checkMobile() ) {
-            $('.wrap-lazy img').lazyload({
+            $('#content-holder .wrap-lazy img').lazyload({
                 threshold : 200,
                 container: $('#listing-list')
             });

@@ -9,7 +9,7 @@ $nameUserTo = $userTo->profile->getDisplayName();
 $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 
 ?>
-<div id="chat-container" class="container">
+<div id="chat-container" class="">
 	
 </div>
 <!--chat script-->
@@ -38,18 +38,20 @@ $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 	<div class="loading-chat">{{from}} is typing<span class="one">.</span><span class="two">.</span><span class="three">.</span></div>
 </script>
 <script id="chat-box-template" type="text/x-handlebars-template">
-	<div class="chat-real chat-group" chat-from="{{from}}" chat-to="{{to}}">
-		<div class="title-top"><?=$nameUserTo;?></div>
-		<div class="wrap-chat-item">
-			<div class="container-chat">
-				<div class="wrap-chat">
+	<div class="container">
+		<div class="chat-real chat-group" chat-from="{{from}}" chat-to="{{to}}">
+			<div class="title-top"><?=$nameUserTo;?></div>
+			<div class="wrap-chat-item container">
+				<div class="container-chat">
+					<div class="wrap-chat">
 
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="type-input-chat">
-			<input type="text" id="typingMsg" placeholder="<?=Yii::t('chat', 'Type a message...')?>">
-			<button class="sm-chat"><span class="icon icon-chat-sub"></span></button>
+			<div class="type-input-chat">
+				<input type="text" id="typingMsg" placeholder="<?=Yii::t('chat', 'Type a message...')?>">
+				<button class="sm-chat"><span class="icon icon-chat-sub"></span></button>
+			</div>
 		</div>
 	</div>
 </script>

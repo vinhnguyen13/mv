@@ -2614,7 +2614,7 @@ html.mm-opening .mm-slideout {
 .type-input-chat {
     position: fixed;
     bottom: 0;
-    left: 0;
+    /* left: 0; */
     width: 100%;
 }
 .type-input-chat input {
@@ -2644,14 +2644,15 @@ html.mm-opening .mm-slideout {
 .chat-real {
     height: 100%;
     padding-bottom: 40px;
+    position: relative;
 }
 .wrap-chat-item {
     position: fixed;
     top: 0;
     bottom: 0;
-    left: 0;
+    /* left: 0; */
     padding: 77px 0 35px 0;
-    width: 100%;
+    /* width: 100%; */
 }
 .wrap-chat-item .container-chat {
     height: 100%;
@@ -6087,6 +6088,21 @@ footer li a {
     }
     .full-style .title-popup{
         position: static;
+    }
+    .wrap-chat-item {
+        padding: 160px 40px 35px 0;
+    }
+    .chat-real {
+        padding-top: 20px;
+    }
+    .type-input-chat {
+        padding: 0 40px 0 0;
+    }
+    .type-input-chat input {
+        border-left: 1px solid #B3B3B3;
+    }
+    .type-input-chat .sm-chat {
+        right: 40px;
     }
 }
 .select-others .dropdown-up-style .item-dropdown {
