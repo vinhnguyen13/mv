@@ -6,6 +6,10 @@ use vsoft\ad\models\AdCategory;
 use yii\helpers\Url;
 use vsoft\ad\models\AdProduct;
 use yii\web\View;
+use yii\helpers\Html;
+use vsoft\ad\models\AdWard;
+use yii\helpers\ArrayHelper;
+use vsoft\ad\models\AdStreet;
 
 $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/gmap-v2.js', ['position' => View::POS_END]);
 $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=m2Map.loaded', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
@@ -13,6 +17,9 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/listing.j
 
 $categories = AdCategory::find ()->indexBy ( 'id' )->asArray ( true )->all ();
 $types = AdProduct::getAdTypes ();
+
+$products = $dataProvider->models;
+$pages = $dataProvider->pagination;
 ?>
 
 <div class="result-listing clearfix">
@@ -35,7 +42,7 @@ $types = AdProduct::getAdTypes ();
 									</div>
 									<div class="item-dropdown hide-dropdown">
 										<ul class="clearfix tinh-thanh"></ul>
-										<input name="city" type="hidden" id="tinh-thanh" class="" value="<?= $cityId ?>">
+										<?= Html::activeHiddenInput($searchModel, 'city_id', ['id' => 'tinh-thanh']); ?>
 									</div>
 								</div>
 							</div>
@@ -47,7 +54,7 @@ $types = AdProduct::getAdTypes ();
 									</div>
 									<div class="item-dropdown hide-dropdown">
 										<ul class="clearfix quan-huyen"></ul>
-										<input name="district" type="hidden" id="quan-huyen" class="" value="<?= $districtId ?>">
+										<?= Html::activeHiddenInput($searchModel, 'district_id', ['id' => 'quan-huyen']); ?>
 									</div>
 								</div>
 							</div>
@@ -59,7 +66,7 @@ $types = AdProduct::getAdTypes ();
 									</div>
 									<div class="item-dropdown hide-dropdown">
 										<ul class="clearfix loai-bds"></ul>
-										<input name="category" type="hidden" id="loai-bds" class="">
+										<?= Html::activeHiddenInput($searchModel, 'category_id', ['id' => 'loai-bds']); ?>
 									</div>
 								</div>
 							</div>
@@ -71,7 +78,7 @@ $types = AdProduct::getAdTypes ();
 									</div>
 									<div class="item-dropdown hide-dropdown">
 										<ul class="clearfix du-an"></ul>
-										<input name="project_building" type="hidden" id="du-an" class="" value="<?= Yii::$app->request->get('project_building') ?>">
+										<?= Html::activeHiddenInput($searchModel, 'project_building_id', ['id' => 'du-an']); ?>
 									</div>
 								</div>
 							</div>
@@ -94,8 +101,8 @@ $types = AdProduct::getAdTypes ();
 											<span class="txt-min min-max active min-val" data-value="">Thấp nhất</span>
 											<span class="text-center">Đến</span>
 											<span class="txt-max min-max max-val" data-value="">Cao nhất</span>
-											<input type="hidden" id="priceMin" name="costMin" value="<?= Yii::$app->request->get('costMin') ?>" />
-											<input type="hidden" id="priceMax" name="costMax" value="<?= Yii::$app->request->get('costMax') ?>" />
+											<?= Html::activeHiddenInput($searchModel, 'price_min', ['id' => 'priceMin']); ?>
+											<?= Html::activeHiddenInput($searchModel, 'price_max', ['id' => 'priceMax']); ?>
 										</div>
 										<div class="filter-minmax clearfix">
 											<ul data-wrap-minmax="min-val" class="wrap-minmax"></ul>
@@ -123,8 +130,8 @@ $types = AdProduct::getAdTypes ();
 											<span class="txt-min min-max active min-val" data-value="">Thấp nhất</span>
 											<span class="text-center">Đến</span>
 											<span class="txt-max min-max max-val" data-value="">Cao nhất</span>
-											<input type="hidden" id="dtMin" name="areaMin" value="<?= Yii::$app->request->get('areaMin') ?>" />
-											<input type="hidden" id="dtMax" name="areaMax" value="<?= Yii::$app->request->get('areaMax') ?>" />
+											<?= Html::activeHiddenInput($searchModel, 'size_min', ['id' => 'dtMin']); ?>
+											<?= Html::activeHiddenInput($searchModel, 'size_max', ['id' => 'dtMax']); ?>
 										</div>
 										<div class="filter-minmax clearfix">
 											<ul data-wrap-minmax="min-val" class="wrap-minmax"></ul>
@@ -182,45 +189,72 @@ $types = AdProduct::getAdTypes ();
 										<span class="selected" data-placeholder="Loại bất động sản?">Nâng Cao</span>
 										<span class="pull-right icon arrowDown"></span>
 									</div>
-									<div class="item-dropdown hide-dropdown clearfix">
-										<div class="form-group col-xs-12 col-sm-6">
-											<label for="" class="col-xs-4 control-label">Người đăng</label>
-											<div class="col-xs-8">
-												<select class="form-control">
-													<option>Tất cả</option>
-													<option>Nhà môi giới</option>
-													<option>Chính chủ</option>
-												</select>
+									<div class="item-dropdown hide-dropdown">
+										<div class="form-group">
+											<label for="" class="col-sm-4 control-label"><?= $searchModel->getAttributeLabel('ward_id') ?></label>
+											<div class="col-sm-8">
+												<?php 
+													$items = $searchModel->district_id ? ArrayHelper::map($searchModel->district->adWards, 'id', function ($model) { return $model->pre . ' ' . $model->name; }) : [];
+												?>
+												<?= Html::activeDropDownList($searchModel, 'ward_id', $items, ['prompt' => $searchModel->getAttributeLabel('ward_id'), 'class' => 'form-control']) ?>
 											</div>
 										</div>
-										<div class="form-group col-xs-12 col-sm-6">
-											<label for="" class="col-xs-4 control-label">Ngày đăng</label>
-											<div class="col-xs-8">
-												<select class="form-control">
-													<option>Tất cả</option>
-													<option>1 ngày</option>
-													<option>1 tuần</option>
-												</select>
+										<div class="form-group">
+											<label for="" class="col-sm-4 control-label"><?= $searchModel->getAttributeLabel('street_id') ?></label>
+											<div class="col-sm-8">
+												<?php 
+													$items = $searchModel->district_id ? ArrayHelper::map($searchModel->district->adStreets, 'id', function ($model) { return $model->pre . ' ' . $model->name; }) : [];
+												?>
+												<?= Html::activeDropDownList($searchModel, 'street_id', $items, ['prompt' => $searchModel->getAttributeLabel('street_id'), 'class' => 'form-control']) ?>
 											</div>
 										</div>
-										<div class="form-group col-xs-12 col-sm-6">
-											<label for="" class="col-xs-4 control-label">Phòng ngủ</label>
-											<div class="col-xs-8">
-												<select class="form-control">
-													<option>Tất cả</option>
-													<option>1</option>
-													<option>2</option>
-												</select>
+										<div class="form-group">
+											<label for="" class="col-sm-4 control-label">Người đăng</label>
+											<div class="col-sm-8">
+												<?php 
+													$items = [AdProduct::OWNER_HOST => Yii::t('ad', 'Owner'), AdProduct::OWNER_AGENT => Yii::t('ad', 'Agent')];
+												?>
+												<?= Html::activeDropDownList($searchModel, 'owner', $items, ['prompt' => Yii::t('ad', 'All'), 'class' => 'form-control']) ?>
 											</div>
 										</div>
-										<div class="form-group col-xs-12 col-sm-6">
-											<label for="" class="col-xs-4 control-label">Phòng tắm</label>
-											<div class="col-xs-8">
-												<select class="form-control">
-													<option>Tất cả</option>
-													<option>1</option>
-													<option>2</option>
-												</select>
+										<div class="form-group">
+											<label for="" class="col-sm-4 control-label">Ngày đăng</label>
+											<div class="col-sm-8">
+												<?php
+													$tDay = Yii::t('ad', 'day');
+													$tMonth = Yii::t('ad', 'month');
+													$items = [
+														"-1 day" => "1 " . $tDay,
+														"-7 day" => "7 " . $tDay,
+														"-14 day" => "14 " . $tDay,
+														"-30 day" => "30 " . $tDay,
+														"-60 day" => "60 " . $tDay,
+														"-90 day" => "90 " . $tDay,
+														"-6 month" => "6 " . $tMonth,
+														"-12 month" => "12 " . $tMonth,
+														"-24 month" => "24 " . $tMonth,
+														"-36 month" => "36 " . $tMonth,
+													];
+												?>
+												<?= Html::activeDropDownList($searchModel, 'created_before', $items, ['prompt' => Yii::t('ad', 'Any time'), 'class' => 'form-control']) ?>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="" class="col-sm-4 control-label">Phòng ngủ</label>
+											<div class="col-sm-8">
+												<?php
+													$items = [];
+													for ($i = 0; $i <= 10; $i++) {
+														$items[$i] = $i . '+';
+													}
+												?>
+												<?= Html::activeDropDownList($searchModel, 'room_no', $items, ['class' => 'form-control']) ?>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="" class="col-sm-4 control-label">Phòng tắm</label>
+											<div class="col-sm-8">
+												<?= Html::activeDropDownList($searchModel, 'toilet_no', $items, ['class' => 'form-control']) ?>
 											</div>
 										</div>
 									</div>
@@ -243,12 +277,12 @@ $types = AdProduct::getAdTypes ();
 					</div>
 					<div class="item-dropdown hide-dropdown">
 						<ul>
-							<li><a data-value="created_at" href="#">Tin mới nhất</a></li>
+							<li><a data-value="-created_at" href="#">Tin mới nhất</a></li>
 							<li><a data-value="-price" href="#">Giá giảm dần</a></li>
 							<li><a data-value="price" href="#">Giá tăng dần</a></li>
 							<li><a data-value="score" href="#">Điểm cao nhất</a></li>
 						</ul>
-						<input type="hidden" name="sort" id="sort" class="value_selected" value="<?= ($sort = Yii::$app->request->get('sort')) ? $sort : 'created_at' ?>" />
+						<?= Html::activeHiddenInput($searchModel, 'order_by', ['id' => 'sort', 'class' => 'value_selected']) ?>
 					</div>
 				</div>
 			</form>
