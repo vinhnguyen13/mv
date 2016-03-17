@@ -53,7 +53,9 @@ class Controller extends \yii\web\Controller
                  */
                 switch($urlBase){
                     case 'notification/index':
-                        Cache::me()->delete(Cache::PRE_NOTIFICATION.Yii::$app->user->id);
+                        if (!empty($_GET['language-change'])) {
+                            Cache::me()->delete(Cache::PRE_NOTIFICATION.Yii::$app->user->id);
+                        }
                         UserData::me()->removeAlert(Yii::$app->user->id, UserData::ALERT_OTHER);
                         Yii::$app->session->remove("notifyOther");
                         break;
