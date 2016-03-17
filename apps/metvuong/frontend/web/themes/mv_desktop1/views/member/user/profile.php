@@ -62,7 +62,7 @@ $user = $model->getUser();
             </ul>
 
             <?php
-            if($user->id != Yii::$app->user->id) {
+            if(!empty(Yii::$app->user->id) && $user->id != Yii::$app->user->id) {
                 $userFrom = Yii::$app->user->identity;
                 $yourEmail = empty($userFrom->profile->public_email) ? $userFrom->email : $userFrom->profile->public_email;
                 echo $this->renderAjax('/ad/_partials/shareEmail',[
