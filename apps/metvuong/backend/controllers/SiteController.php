@@ -85,7 +85,7 @@ class SiteController extends Controller
     public function actionClearCache(){
         Yii::$app->session->setFlash(
             'info',
-            Yii::t('user', 'Cache cleared !')
+            Yii::t('user', 'Your account has been created and a message with further instructions has been sent to your email')
         );
         Yii::$app->cache->flush();
         $this->redirect(Url::home());

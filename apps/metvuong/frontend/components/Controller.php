@@ -16,6 +16,18 @@ class Controller extends \yii\web\Controller
 {
     public function init() {
         Language::registerAssets();
+        Yii::$app->assetManager->bundles = [
+            'yii\bootstrap\BootstrapAsset' => [
+                'css' => [],
+            ],
+            'yii\bootstrap\BootstrapPluginAsset' => [
+                'js' => [],
+            ],
+            'yii\web\JqueryAsset' => [
+                'js'=>[],
+                'jsOptions' => ['position'=>\yii\web\View::POS_HEAD]
+            ],
+        ];
         parent::init();
     }
 

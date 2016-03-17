@@ -85,7 +85,6 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
 			      	<ol class="list-unstyled">
 	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['user/admin'])?>">User</a></li>
 	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['admin'])?>">User ACL</a></li>
-	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['site/clear-cache'])?>">Clear cache</a></li>
 	                </ol>
 			      </div>
 			    </div>
@@ -112,7 +111,6 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
 							<ol class="list-unstyled">
 								<li><a href="<?= Yii::$app->urlManager->createUrl(['gii']) ?>">Gii</a></li>
 								<li><a href="<?= Yii::$app->urlManager->createUrl(['setting']) ?>">Setting</a></li>
-								<li><a href="<?= Yii::$app->urlManager->createUrl(Yii::$app->request->hostInfo) ?>">Setting</a></li>
 							</ol>
 						</div>
 					</div>

@@ -169,7 +169,7 @@ return [
         'meta' =>[
             'class' => 'frontend\components\MetaExt',
         ],
-        'assetManager' => [
+        /*'assetManager' => [
             'bundles' => [
                 'yii\bootstrap\BootstrapAsset' => [
                     'css' => [],
@@ -182,7 +182,7 @@ return [
                     'jsOptions' => ['position'=>\yii\web\View::POS_HEAD]
                 ],
             ],
-        ],
+        ],*/
         'mobileDetect' => [
 //            'class' => dirname(dirname(__DIR__)) . '/common/myvendor/dkeeper/yii2-mobiledetect-master/Detect'
             'class' => 'dkeeper\mobiledetect\Detect'
