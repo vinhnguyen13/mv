@@ -32,7 +32,7 @@ class AdProduct extends AP
 	{
 		return [
 			[['category_id', 'city_id', 'district_id', 'type', 'content', 'price', 'area'], 'required'],
-			[['category_id', 'project_building_id', 'user_id', 'city_id', 'district_id', 'ward_id', 'street_id', 'type', 'price', 'price_type', 'start_date', 'end_date', 'score', 'view', 'verified', 'created_at', 'updated_at', 'status', 'show_home_no'], 'integer'],
+			[['category_id', 'project_building_id', 'user_id', 'city_id', 'district_id', 'ward_id', 'street_id', 'type', 'price', 'price_type', 'start_date', 'end_date', 'score', 'view', 'verified', 'created_at', 'updated_at', 'status', 'owner', 'show_home_no'], 'integer'],
 			[['price_input', 'lng', 'lat'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/'],
 			[['area'], 'limitArea'],
 			[['home_no'], 'string', 'max' => 32],

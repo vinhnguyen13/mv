@@ -34,6 +34,7 @@ use yii\web\Session;
 use vsoft\express\components\AdImageHelper;
 use vsoft\ad\models\AdStreet;
 use vsoft\ad\models\AdBuildingProject;
+use frontend\models\AdProductSearch;
 
 class AdController extends Controller
 {
@@ -123,111 +124,12 @@ class AdController extends Controller
 			'class' => 'ad-listing'
 		];
 		
-		$cityId = Yii::$app->request->get('city');
-		$districtId = Yii::$app->request->get('district', false);
-		$streetId = Yii::$app->request->get('street');
-		$wardId = Yii::$app->request->get('ward');
-		$projectId = Yii::$app->request->get('project_building');
-		 
-		if($districtId === false) {
-			if($streetId) {
-				$districtId = AdStreet::findOne($streetId)->district->id;
-			} else if($wardId) {
-				$districtId = AdWard::findOne($wardId)->district->id;
-			} else if($projectId) {
-				$districtId = AdBuildingProject::findOne($projectId)->district->id;
-			} else {
-				$districtId = 10;
-			}
-		}
-		 
-		if(!$cityId) {
-			if($districtId) {
-				$cityId = AdDistrict::findOne($districtId)->city->id;
-			} else {
-				$cityId = 1;
-			}
-		}
-		 
-		$query = AdProduct::find();
-		 
-		$where = ['ad_product.status' => 1];
-		 
-		if($streetId || $wardId || $projectId) {
-			if($streetId) {
-				$where['ad_product.street_id'] = $streetId;
-			}
+		$searchModel = new AdProductSearch();
+		$params = Yii::$app->request->get();
+		$params = isset($params[$searchModel->formName()]) ? $params : [$searchModel->formName() => $params];
+		$dataProvider = $searchModel->search($params);
 		
-			if($wardId) {
-				$where['ad_product.ward_id'] = $wardId;
-			}
-		
-			if($projectId) {
-				$where['ad_product.project_building_id'] = $projectId;
-			}
-		} else {
-			if($districtId) {
-				$where['ad_product.district_id'] = $districtId;
-			} else {
-				$where['ad_product.city_id'] = $cityId;
-			}
-		}
-		 
-		if($categoryId = Yii::$app->request->get('category')) {
-			$where['ad_product.category_id'] = intval($categoryId);
-		}
-		
-		$query->where($where);
-		 
-		if($priceMin = Yii::$app->request->get('costMin')) {
-			$query->andWhere(['>=', 'ad_product.price', $priceMin]);
-		}
-		 
-		if($priceMax = Yii::$app->request->get('costMax')) {
-			$query->andWhere(['<=', 'ad_product.price', $priceMax]);
-		}
-		
-		if($dtMin = Yii::$app->request->get('areaMin')) {
-			$query->andWhere(['>=', 'ad_product.area', $dtMin]);
-		}
-		
-		if($dtMax = Yii::$app->request->get('areaMax')) {
-			$query->andWhere(['<=', 'ad_product.area', $dtMax]);
-		}
-		
-		if($roomNo = Yii::$app->request->get('roomNo')) {
-			$query->andWhere(['>=', 'ad_product_addition_info.room_no', $roomNo]);
-		}
-		
-		if($toiletNo = Yii::$app->request->get('toiletNo')) {
-			$query->andWhere(['>=', 'ad_product_addition_info.toilet_no', $toiletNo]);
-		}
-		 
-		$query->leftJoin('ad_product_addition_info', '`ad_product_addition_info`.`product_id` = `ad_product`.`id`');
-		 
-		$countQuery = clone $query;
-		$pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 24]);
-		 
-		$query->with('adProductAdditionInfo');
-		 
-		$sort = Yii::$app->request->get('sort', 'created_at');
-		$doa = 'DESC';
-		if(StringHelper::startsWith($sort, '-')) {
-			$sort = str_replace('-', '', $sort);
-			$doa = 'ASC';
-		}
-		
-		$products = $query->offset($pages->offset)->limit($pages->limit)->orderBy("$sort $doa")->all();
-		
-		return $this->render('index', [
-			'products' => $products,
-			'pages' => $pages,
-			'cityId' => $cityId,
-			'districtId' => $districtId,
-			'street_id' => $streetId,
-			'wardId' => $wardId,
-			'projectId' =>$projectId
-		]);
+		return $this->render('index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider]);
 		
 // 		return $this->listingMobile();
 //     	if(Yii::$app->mobileDetect->isMobile()) {
@@ -235,73 +137,6 @@ class AdController extends Controller
 //     	} else {
 //     		return $this->listing();
 //     	}
-    }
-    
-    public function listingMobile() {
-    	$query = AdProduct::find();
-    	
-    	$where = ['ad_product.status' => 1];
-    	
-    	$cityId = ($cityId = Yii::$app->request->get('city')) ? $cityId : 1;
-    	$districtId = ($districtId = Yii::$app->request->get('district')) ? $districtId : 10;
-    	
-    	if($projectId = Yii::$app->request->get('project_building')) {
-    		$where['ad_product.project_building_id'] = $projectId;
-    	} else {
-    		if($districtId) {
-    			$where['ad_product.district_id'] = $districtId;
-    		} else {
-    			$where['ad_product.city_id'] = $cityId;
-    		}
-    	}
-    	 
-    	if($categoryId = Yii::$app->request->get('category')) {
-    		$where['ad_product.category_id'] = intval($categoryId);
-    	}
-    	
-    	$query->where($where);
-    	
-    	if($priceMin = Yii::$app->request->get('costMin')) {
-    		$query->andWhere(['>=', 'ad_product.price', $priceMin]);
-    	}
-    	 
-    	if($priceMax = Yii::$app->request->get('costMax')) {
-    		$query->andWhere(['<=', 'ad_product.price', $priceMax]);
-    	}
-    	
-    	if($dtMin = Yii::$app->request->get('areaMin')) {
-    		$query->andWhere(['>=', 'ad_product.area', $dtMin]);
-    	}
-    	
-    	if($dtMax = Yii::$app->request->get('areaMax')) {
-    		$query->andWhere(['<=', 'ad_product.area', $dtMax]);
-    	}
-    	
-    	if($roomNo = Yii::$app->request->get('roomNo')) {
-    		$query->andWhere(['>=', 'ad_product_addition_info.room_no', $roomNo]);
-    	}
-    	
-    	if($toiletNo = Yii::$app->request->get('toiletNo')) {
-    		$query->andWhere(['>=', 'ad_product_addition_info.toilet_no', $toiletNo]);
-    	}
-    	
-    	$query->leftJoin('ad_product_addition_info', '`ad_product_addition_info`.`product_id` = `ad_product`.`id`');
-    	
-    	$countQuery = clone $query;
-    	$pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 24]);
-    	
-    	$query->with('adProductAdditionInfo');
-    	
-    	$sort = Yii::$app->request->get('sort', 'created_at');
-    	$doa = 'DESC';
-    	if(StringHelper::startsWith($sort, '-')) {
-    		$sort = str_replace('-', '', $sort);
-    		$doa = 'ASC';
-    	}
-    	
-    	$products = $query->offset($pages->offset)->limit($pages->limit)->orderBy("$sort $doa")->all();
-    	
-    	return $this->render('index', ['products' => $products, 'pages' => $pages, 'districtId' => $districtId, 'cityId' => $cityId]);
     }
     
     public function listing()

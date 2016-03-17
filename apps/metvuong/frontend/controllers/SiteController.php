@@ -324,7 +324,7 @@ class SiteController extends Controller
     		 
     		foreach ($result['hits']['hits'] as $k => $hit) {
     			$response[$k] = $hit['_source'];
-    			$response[$k]['url'] = Url::to(['/ad/index', $hit['_type'] => $hit['_id']]);
+    			$response[$k]['url'] = Url::to(['/ad/index', $hit['_type'] . '_id' => $hit['_id']]);
     		}
     		
     		return $response;
