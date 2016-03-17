@@ -5293,7 +5293,7 @@ input[type=text]:focus {
         border: none;
     }
     footer {
-        padding: 30px 0;
+        padding: 20px 0;
     }
 }
 .dt-footer {
@@ -5301,7 +5301,7 @@ input[type=text]:focus {
     font-weight: 600;
 }
 .dt-footer div {
-    margin-top: 10px;
+    margin-top: 0;
 }
 .dt-footer p {
     text-align: right;
@@ -5322,11 +5322,11 @@ input[type=text]:focus {
     padding-right: 0;
 }
 .logo-footer {
-    width: 200px;
+    width: 150px;
 }
 footer li a {
     color: #fff;
-    font-weight: 700;
+    font-weight: 600;
     padding: 10px 0;
     display: block;
     font-size: 12px;
