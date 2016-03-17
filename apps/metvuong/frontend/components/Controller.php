@@ -7,6 +7,7 @@
  */
 
 namespace frontend\components;
+use frontend\models\Cache;
 use frontend\models\UserData;
 use lajax\translatemanager\helpers\Language;
 use Yii;
@@ -52,6 +53,7 @@ class Controller extends \yii\web\Controller
                  */
                 switch($urlBase){
                     case 'notification/index':
+                        Cache::me()->delete(Cache::PRE_NOTIFICATION.Yii::$app->user->id);
                         UserData::me()->removeAlert(Yii::$app->user->id, UserData::ALERT_OTHER);
                         Yii::$app->session->remove("notifyOther");
                         break;
