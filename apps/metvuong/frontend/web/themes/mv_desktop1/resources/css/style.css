@@ -5414,20 +5414,20 @@ footer li a {
     .btn-submit {
         width: auto;
     }
-    .select-quan-huyen,
-    .select-tinh-thanh {
+    .search-subpage .select-quan-huyen,
+    .search-subpage .select-tinh-thanh {
         /* width: 150px; */
         width: 7%;
     }
-    .select-loaibds {
+    .search-subpage .select-loaibds {
         /* width: 230px; */
         width: 10%;
     }
-    .select-price {
+    .search-subpage .select-price {
         /* width: 185px; */
         width: 12%;
     }
-    .select-dt {
+    .search-subpage .select-dt {
         /* width: 220px; */
         width: 13%;
     }

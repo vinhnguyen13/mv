@@ -154,9 +154,18 @@ $(document).ready(function(){
 				} else {
 					$(window).on('scroll', next);
 				}
-				$('.wrap-listing img').lazyload({
-					threshold : 200
-				});
+
+				if ( checkMobile() ) {
+					$('.wrap-lazy img').lazyload({
+						threshold : 200
+					});
+				}else {
+					$('.wrap-lazy img').lazyload({
+						threshold : 200,
+						container: $("#listing-list")
+					});
+				}
+				
 
 				$(".rippler").rippler({
 			        effectClass      :  'rippler-effect',
@@ -206,9 +215,17 @@ $(document).ready(function(){
 			} else {
 				$(window).on('scroll', next);
 			}
-			$('.wrap-listing img').lazyload({
-				threshold : 200
-			});
+			
+			if ( checkMobile() ) {
+				$('.wrap-lazy img').lazyload({
+					threshold : 200
+				});
+			}else {
+				$('.wrap-lazy img').lazyload({
+					threshold : 200,
+					container: $("#listing-list")
+				});
+			}
 		});
 	});
 });
