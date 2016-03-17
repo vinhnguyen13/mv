@@ -53,9 +53,6 @@ class Controller extends \yii\web\Controller
                  */
                 switch($urlBase){
                     case 'notification/index':
-                        if (!empty($_GET['language-change'])) {
-                            Cache::me()->delete(Cache::PRE_NOTIFICATION.Yii::$app->user->id);
-                        }
                         UserData::me()->removeAlert(Yii::$app->user->id, UserData::ALERT_OTHER);
                         Yii::$app->session->remove("notifyOther");
                         break;
@@ -72,6 +69,12 @@ class Controller extends \yii\web\Controller
             $this->view->params['notify_other'] = Yii::$app->session->get("notifyOther") ? Yii::$app->session->get("notifyOther") : 0;
             $this->view->params['notify_chat'] = Yii::$app->session->get("notifyChat") ? Yii::$app->session->get("notifyChat") : 0;
             $this->view->params['notify_total'] = $this->view->params['notify_other'] + $this->view->params['notify_chat'];
+            /**
+             * clear cache if change language
+             */
+            if (!empty($_GET['language-change'])) {
+                Cache::me()->delete(Cache::PRE_NOTIFICATION.Yii::$app->user->id);
+            }
         }
         return parent::beforeAction($action);
     }
