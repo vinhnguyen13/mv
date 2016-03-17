@@ -34,7 +34,7 @@ use yii\helpers\Url;
                 echo $f->field($share_form, 'your_email')->hiddenInput(['class'=>'your_email', 'value'=> $yourEmail])->label(false);
             } else { ?>
             <div class="frm-item frm-email">
-                <?= $f->field($share_form, 'your_email')->textInput(['class'=>'your_email', 'value' => isset($params['setValueFromEmail']) ? $yourEmail : "", 'placeholder'=>Yii::t('your_email', 'Your email...')])->label(false) ?>
+                <?= $f->field($share_form, 'your_email')->textInput(['class'=>'your_email', 'value' => isset($params['setValueFromEmail']) ? $yourEmail : "", 'placeholder'=>Yii::t('your_email', 'Your\'s email...')])->label(false) ?>
             </div>
             <?php }
 
@@ -43,7 +43,7 @@ use yii\helpers\Url;
             } else {
             ?>
             <div class="frm-item frm-email">
-                <?= $f->field($share_form, 'recipient_email')->textInput(['class'=>'recipient_email', 'value' => isset($params['setValueToEmail']) ? $recipientEmail : "", 'placeholder'=>Yii::t('recipient_email', 'Recipient email ...')])->label(false) ?>
+                <?= $f->field($share_form, 'recipient_email')->textInput(['class'=>'recipient_email', 'value' => isset($params['setValueToEmail']) ? $recipientEmail : "", 'placeholder'=>Yii::t('recipient_email', 'Recipient\'s email ...')])->label(false) ?>
             </div>
             <?php }  ?>
 
