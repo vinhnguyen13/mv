@@ -83,27 +83,29 @@ $user = $model->getUser();
                 <ul class="clearfix list-post">
                     <?php foreach ($products as $product) {
                         ?>
-                    <li>
-                        <a href="<?= $product->urlDetail() ?>" class="rippler rippler-default">
-                            <div class="img-show"><div><img src="<?= $product->representImage ?>">
-                                    <input type="hidden" value="<?= $product->representImage ?>">
-                                </div></div>
-                            <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></div>
-                        </a>
-                        <a href="<?= $product->urlDetail() ?>"><p class="name-post"><span class="icon address-icon"></span><?=$product->getAddress()?></p></a>
-                        <p class="id-duan">ID:<span><?=$product->id?></span></p>
-                        <ul class="clearfix list-attr-td">
-                            <li>
-                                <span class="icon icon-dt icon-dt-small"></span><?= $product->area ?>
-                            </li>
-                            <li>
-                                <span class="icon icon-bed icon-bed-small"></span><?= $product->adProductAdditionInfo->room_no ?>
-                            </li>
-                            <li>
-                                <span class="icon icon-pt icon-pt-small"></span><?= $product->adProductAdditionInfo->toilet_no ?>
-                            </li>
-                        </ul>
-                        <p class="price-post">Giá <strong><?= StringHelper::formatCurrency($product->price) ?> đồng</strong></p>
+                    <li class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="wrap-item-post">
+                            <a href="<?= $product->urlDetail() ?>" class="rippler rippler-default">
+                                <div class="img-show"><div><img src="<?= $product->representImage ?>">
+                                        <input type="hidden" value="<?= $product->representImage ?>">
+                                    </div></div>
+                                <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></div>
+                            </a>
+                            <a href="<?= $product->urlDetail() ?>"><p class="name-post"><span class="icon address-icon"></span><?=$product->getAddress()?></p></a>
+                            <p class="id-duan">ID:<span><?=$product->id?></span></p>
+                            <ul class="clearfix list-attr-td">
+                                <li>
+                                    <span class="icon icon-dt icon-dt-small"></span><?= $product->area ?>
+                                </li>
+                                <li>
+                                    <span class="icon icon-bed icon-bed-small"></span><?= $product->adProductAdditionInfo->room_no ?>
+                                </li>
+                                <li>
+                                    <span class="icon icon-pt icon-pt-small"></span><?= $product->adProductAdditionInfo->toilet_no ?>
+                                </li>
+                            </ul>
+                            <p class="price-post">Giá <strong><?= StringHelper::formatCurrency($product->price) ?> đồng</strong></p>
+                        </div>
                     </li>
                     <?php } ?>
                 </ul>

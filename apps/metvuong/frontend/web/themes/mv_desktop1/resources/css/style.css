@@ -6070,8 +6070,23 @@ footer li a {
     .item-packege{
         padding: 0px 15px;
     }
-    .list-post li {
-        
+    .list-post {
+        margin: 0 -15px;
+    }
+    .list-post li .name-post {
+        height: 45px;
+        overflow: hidden;
+    }
+    .full-style {
+        background: rgba(0, 0, 0, 0.38);
+    }
+    .full-style .wrap-popup {
+        width: 500px;
+        margin: 0 auto 0;
+        background: #fff;
+    }
+    .full-style .title-popup{
+        position: static;
     }
 }
 .select-others .dropdown-up-style .item-dropdown {

@@ -846,6 +846,9 @@ $.fn.popupMobi = function (options) {
             if ( sc.settings.effectShow == "slideDownUp" ) {
                 if ( sc.settings.styleShow == "full" ) {
                     popupItem.css('top','100%');
+                    popupItem.css({
+                        'overflow-y': 'auto'
+                    });
                     setTimeout(function() {
                         popupItem.css({
                             "top": "0",

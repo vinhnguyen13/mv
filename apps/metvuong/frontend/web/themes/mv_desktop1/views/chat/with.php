@@ -9,8 +9,8 @@ $nameUserTo = $userTo->profile->getDisplayName();
 $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 
 ?>
-<div id="chat-container">
-
+<div id="chat-container" class="container">
+	
 </div>
 <!--chat script-->
 <script id="chat-send-template" type="text/x-handlebars-template">
