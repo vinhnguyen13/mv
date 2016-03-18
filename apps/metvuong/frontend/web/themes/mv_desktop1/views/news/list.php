@@ -11,7 +11,7 @@ $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID]);
                     <div class="container">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <a href="<?=Url::to(['news/index'])?>">all</a>
+                                <a href="<?=Url::to(['news/index'])?>">Tất cả</a>
                             </div>
                             <?php if(!empty($catalogs)){?>
                                 <?php foreach($catalogs as $catalog){?>
@@ -59,10 +59,12 @@ $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID]);
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        var swiper = new Swiper('.list-menu-news', {
+        var swiper = new Swiper('.list-menu-news > .container', {
             paginationClickable: true,
             spaceBetween: 0,
-            slidesPerView: 'auto'
+            slidesPerView: 'auto',
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev'
         });
     });
 </script>

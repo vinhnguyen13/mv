@@ -63,7 +63,27 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 <div class="title-fixed-wrap">
     <div class="container">
         <div class="detail-news">
-            <div class="title-top"><a style="color: #00a769;" href="<?=Url::to(['news/index'], true)?>"><?=Yii::t('news','NEWS')?></a></div>
+            <div class="title-top clearfix">
+                <div class="list-menu-news swiper-container">
+                    <div class="container">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <a class="active" href="<?=Url::to(['news/index'])?>"><?=Yii::t('news','Tất cả')?></a>
+                            </div>
+                            <?php if(!empty($catalogs)){?>
+                            <?php foreach($catalogs as $catalog){?>
+                                    <div class="swiper-slide">
+                                        <a href="<?=\yii\helpers\Url::to(['news/list', 'cat_id'=>$catalog->id, 'cat_slug'=>$catalog->slug])?>"><?=Yii::t('news', $catalog->title)?></a>
+                                    </div>
+                            <?php }?>
+                            <?php }?>
+                        </div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+                <h2>TIN TỨC</h2>
+            </div>
 
             <div class="wrap-detail-article">
                 <input id="current_id" type="hidden" value="<?=$news->id?>">
@@ -140,6 +160,15 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 </style>
 <script type="text/javascript">
     $(document).ready(function(){
+
+        var swiper = new Swiper('.list-menu-news > .container', {
+            paginationClickable: true,
+            spaceBetween: 0,
+            slidesPerView: 'auto',
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev'
+        });
+
         var timer;
         $(window).scroll(function () {
             var currentID = parseInt($('#current_id').val());
