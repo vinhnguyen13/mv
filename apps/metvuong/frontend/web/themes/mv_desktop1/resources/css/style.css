@@ -1117,7 +1117,7 @@ label {
 .page-terms,
 .noti-alert,
 .detail-news {
-    padding-top: 40px;
+    padding-top: 34px;
 }
 .title-top a {
     color: #00a769;
@@ -3410,7 +3410,7 @@ input[type=text]:focus {
     letter-spacing: 0.3px;
     color: #3c3c3c;
     font-size: 15px;
-    margin-top: 5px;
+    margin-top: 15px;
 }
 .detail-listing .address-listing {
     margin: 0 0 3px 0;
@@ -4239,10 +4239,12 @@ input[type=text]:focus {
     color: #3c3c3c;
     font-size: 14px;
     line-height: 20px;
+    width: 850px;
+    margin: 30px auto 0;
 }
 .wrap-detail-article .big-title {
-    font-size: 20px;
-    line-height: 25px;
+    font-size: 25px;
+    line-height: 33px;
     font-weight: 600;
     margin: 0 0 10px 0;
 }
@@ -4341,18 +4343,40 @@ input[type=text]:focus {
     border-bottom: solid 0.5px #969696;
     position: relative;
 }
+.wrap-news li > div {
+    float: left;
+    width: 100%;
+    position: relative;
+}
+.wrap-news li > div > div {
+    height: 225px;
+    overflow: hidden;
+}
 .wrap-news li a {
     display: block;
     margin-bottom: 5px;
 }
+.wrap-news li div > a.view-more {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 17px;
+    float: none;
+    width: auto;
+    margin: 0;
+}
+.wrap-news .view-more .icon {
+    vertical-align: middle;
+}
 .name-news {
     margin-bottom: 6px;
+    text-transform: uppercase;
 }
 .name-news a {
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 600;
     color: #3c3c3c;
-    line-height: 18px;
+    line-height: 23px;
 }
 .wrap-news .name-news a {
     margin-bottom: 0;
@@ -6036,11 +6060,6 @@ footer li a {
         border-bottom: solid 0.5px #979797;
         margin: 0 0 40px 0;
     }
-    .wrap-news li > div {
-        float: left;
-        width: 100%;
-        position: relative;
-    }
     .wrap-news li div > a {
         float: left;
         width: 50%;
@@ -6048,24 +6067,11 @@ footer li a {
         margin-bottom: 0;
     }
     .name-news a {
-        font-size: 28px;
+        font-size: 20px;
         text-transform: uppercase;
-        line-height: 35px;
     }
     .wrap-news li div > div {
-        overflow: hidden;
-    }
-    .wrap-news li div > a.view-more {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        font-size: 17px;
-        float: none;
-        width: auto;
-        margin: 0;
-    }
-    .wrap-news .view-more .icon {
-        vertical-align: middle;
+        height: auto;
     }
     .name-news {
         margin-bottom: 10px;
@@ -6225,6 +6231,7 @@ footer li a {
     border: solid 1px #00a769;
 }
 @media ( max-width: 985px ) {
+    .detail-news .title-top h2,
     .page-news .title-top h2 {
         display: none;
     }
@@ -6254,4 +6261,20 @@ footer li a {
 .flag-lang li {
     float: right;
     margin-left: 15px;
+}
+@media ( max-width: 768px ) {
+    .wrap-news li > div > div {
+        height: auto;
+        padding-bottom: 50px;
+    }
+    .wrap-news li {
+        margin-bottom: 0;
+    }
+}
+@media ( max-width: 985px ) {
+    .wrap-detail-article {
+        width: auto;
+        padding-left: 0;
+        padding-right: 0;
+    }
 }

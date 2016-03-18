@@ -9,6 +9,9 @@
 
 use yii\helpers\Url;
 
+$newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatID"] : 0;
+$catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID]);
+
 Yii::$app->view->registerMetaTag([
     'name' => 'keywords',
     'content' => $news->title
@@ -62,7 +65,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 </script>
 <div class="title-fixed-wrap">
     <div class="container">
-        <div class="detail-news">
+        <div class="detail-news page-news">
             <div class="title-top clearfix">
                 <div class="list-menu-news swiper-container">
                     <div class="container">
