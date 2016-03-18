@@ -47,13 +47,12 @@ use yii\widgets\LinkPager;
                                         <div class="info-item">
                                             <div class="address-feat">
                                                 <p><?= !empty($model->categories[0]->name) ? \vsoft\ad\models\AdBuildingProject::mb_ucfirst($model->categories[0]->name,'UTF-8') : "Chung cư cao cấp" ?></p>
-                                                <a href="<?= Url::to(["building/$model->slug"]); ?>"><strong><?= mb_strtoupper($model->name) ?></strong></a>
-                                                <span class="icon address-icon"></span><?= empty($model->location) ? "Đang cập nhật" : $model->location ?>
-                                                <p class="date-post">17/03/2016, 05:05</p>
+                                                <a href="<?= Url::to(["building/$model->slug"]); ?>"><strong><?= mb_strtoupper($model->name, "UTF-8") ?></strong></a>
+                                                <span class="icon address-icon"></span><?= empty($model->location) ? Yii::t('profile','updating') : $model->location ?>
+                                                <p class="date-post"><?=date('d/m/Y, H:i', $model->created_at)?></p>
                                             </div>
                                             <div class="bottom-feat-box clearfix">
                                                 <p><?=\yii\helpers\StringHelper::truncate($model->description, 180)?></p>
-                                                <a href="<?= Url::to(["building/$model->slug"]); ?>" class="pull-right">Chi tiết</a>
                                             </div>
                                         </div>
                                     </div>
