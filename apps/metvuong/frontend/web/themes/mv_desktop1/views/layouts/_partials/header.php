@@ -102,11 +102,13 @@ use yii\helpers\Url;
                                     </a></li>
                                 <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon icon-per"></span></div><?=Yii::t('user', 'Account')?></a></li>
                                 <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><div><span class="icon icon-logout"></span></div><?=Yii::t('user', 'Log Out')?></a></li>
-                                <li class="flag-us"><a href="<?=Url::current(['language-change'=>'en-US'])?>"></a></li>
-                                <li class="flag-vn"><a href="<?=Url::current(['language-change'=>'vi-VN'])?>"></a></li>
                             </ul>
                         </div>
                     </div>
+                    <ul class="flag-lang">
+                        <li class="flag-us"><a href="<?=Url::current(['language-change'=>'en-US'])?>"></a></li>
+                        <li class="flag-vn"><a href="<?=Url::current(['language-change'=>'vi-VN'])?>"></a></li>
+                    </ul>
                 <?php } ?>
             </div>
             <ul class="clearfix list-menu">
