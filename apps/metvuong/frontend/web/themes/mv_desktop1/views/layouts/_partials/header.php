@@ -37,7 +37,7 @@ use yii\helpers\Url;
                 <?php if(Yii::$app->user->isGuest){?>
                     <ul class="clearfix">
                         <li><a href="<?=Url::to(['member/login'])?>" class="user-login-link"><?=Yii::t('user', 'Sign In')?></a></li>
-                        <li><a href="<?=Url::to(['member/signup'])?>"><?=Yii::t('user', 'Sign Up')?></a></li>
+                        <li><a href="<?=Url::to(['member/signup'])?>" class="user-signup-link"><?=Yii::t('user', 'Sign Up')?></a></li>
                     </ul>
                 <?php } else{?>
                 <ul class="clearfix">
@@ -150,46 +150,48 @@ use yii\helpers\Url;
                 // is mobile
 
             }else {
-                // is desktop
-                e.preventDefault();
-                $('body').loading();
-                $.ajax({
-                    type: "get",
-                    url: "<?=Url::to(['/member/login'])?>",
-                    success: function (data) {
-                        $('body').loading({done: true});
-                        $('#popup-login .wrap-body-popup').html(data);
-                        $('#popup-login').popupMobi({
-                            styleShow: 'center',
-                            duration: 500,
-                            closeBtn: '#popup-login .btn-close'
-                        });
-                    }
-                });
+
             }
+            // is desktop
+            e.preventDefault();
+            $('body').loading();
+            $.ajax({
+                type: "get",
+                url: "<?=Url::to(['/member/login'])?>",
+                success: function (data) {
+                    $('body').loading({done: true});
+                    $('#popup-login .wrap-body-popup').html(data);
+                    $('#popup-login').popupMobi({
+                        styleShow: 'center',
+                        duration: 500,
+                        closeBtn: '#popup-login .btn-close'
+                    });
+                }
+            });
+
         });
         $(document).on('click', '.user-signup-link', function (e) {
             if ( checkMobile() ) {
                 // is mobile
 
             }else {
-                // is desktop
-                e.preventDefault();
-                $('body').loading();
-                $.ajax({
-                    type: "get",
-                    url: "<?=Url::to(['/member/signup'])?>",
-                    success: function (data) {
-                        $('body').loading({done: true});
-                        $('#popup-signup .wrap-body-popup').html(data);
-                        $('#popup-signup').popupMobi({
-                            styleShow: 'center',
-                            duration: 500,
-                            closeBtn: '#popup-signup .btn-close'
-                        });
-                    }
-                });
             }
+            // is desktop
+            e.preventDefault();
+            $('body').loading();
+            $.ajax({
+                type: "get",
+                url: "<?=Url::to(['/member/signup'])?>",
+                success: function (data) {
+                    $('body').loading({done: true});
+                    $('#popup-signup .wrap-body-popup').html(data);
+                    $('#popup-signup').popupMobi({
+                        styleShow: 'center',
+                        duration: 500,
+                        closeBtn: '#popup-signup .btn-close'
+                    });
+                }
+            });
         });
 
         $('.user-login .box-dropdown').dropdown({
