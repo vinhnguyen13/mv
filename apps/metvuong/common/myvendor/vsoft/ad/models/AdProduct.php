@@ -25,6 +25,9 @@ class AdProduct extends AP
 	const DEFAULT_CITY = 1;
 	const DEFAULT_DISTRICT = 10;
 	
+	const TYPE_FOR_SELL_TOTAL = 'total_sell';
+	const TYPE_FOR_RENT_TOTAL = 'total_rent';
+	
 	private $oldAttr = [];
 	private static $elasticUpdateFields = ['city', 'district', 'ward', 'street', 'project_building'];
 	
@@ -173,19 +176,36 @@ class AdProduct extends AP
 	}
 	
 	public function afterSave($insert, $changedAttributes) {
+		$totalType = ($this->type == self::TYPE_FOR_SELL) ? self::TYPE_FOR_SELL_TOTAL : self::TYPE_FOR_RENT_TOTAL;
 		if($insert) {
 			foreach(self::$elasticUpdateFields as $field) {
 				$attr = $field . '_id';
 				if($this->attributes[$attr]) {
-					$this->updateElasticCounter($field, $this->attributes[$attr]);
+					$this->updateElasticCounter($field, $this->attributes[$attr], $totalType);
 				}
 			}
 		} else {
-			foreach(self::$elasticUpdateFields as $field) {
-				$attr = $field . '_id';
-				if($this->oldAttr[$attr] != $this->attributes[$attr]) {
-					$this->updateElasticCounter($field, $this->attributes[$attr]);
-					$this->updateElasticCounter($field, $this->oldAttr[$attr], false);
+			if($this->oldAttr['type'] != $this->attributes['type']) {
+				if($this->oldAttr['type'] == self::TYPE_FOR_SELL) {
+					$oldTotalType = self::TYPE_FOR_SELL_TOTAL;
+					$newTotalType = self::TYPE_FOR_RENT_TOTAL;
+				} else {
+					$oldTotalType = self::TYPE_FOR_RENT_TOTAL;
+					$newTotalType = self::TYPE_FOR_SELL_TOTAL;
+				}
+				
+				foreach(self::$elasticUpdateFields as $field) {
+					$attr = $field . '_id';
+					$this->updateElasticCounter($field, $this->oldAttr[$attr], $oldTotalType, false);
+					$this->updateElasticCounter($field, $this->attributes[$attr], $newTotalType);
+				}
+			} else {
+				foreach(self::$elasticUpdateFields as $field) {
+					$attr = $field . '_id';
+					if($this->oldAttr[$attr] != $this->attributes[$attr]) {
+						$this->updateElasticCounter($field, $this->attributes[$attr]);
+						$this->updateElasticCounter($field, $this->oldAttr[$attr], false);
+					}
 				}
 			}
 		}
@@ -193,9 +213,9 @@ class AdProduct extends AP
 		parent::afterSave($insert, $changedAttributes);
 	}
 	
-	public function updateElasticCounter($type, $id, $increase = true) {
+	public function updateElasticCounter($type, $id, $totalType, $increase = true) {
 		$sign = $increase ? '+' : '-';
-		$script = '{"script" : "ctx._source.total' . $sign . '=1"}';
+		$script = '{"script" : "ctx._source.' . $totalType . $sign . '=1"}';
 		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/term/$type/$id/_update");
 			
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");

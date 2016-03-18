@@ -317,7 +317,7 @@ class SiteController extends Controller
 					],
 				],
 				'size' => 6,
-    			'_source' => ['full_name', 'total_sell', 'total_rent']
+    			'_source' => ['full_name', AdProduct::TYPE_FOR_SELL_TOTAL, AdProduct::TYPE_FOR_RENT_TOTAL]
     		];
     		 
     		$ch = curl_init(Yii::$app->params['elastic']['config']['hosts'][0] . '/term/_search');
