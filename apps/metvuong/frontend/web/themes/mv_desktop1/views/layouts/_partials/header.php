@@ -105,11 +105,11 @@ use yii\helpers\Url;
                             </ul>
                         </div>
                     </div>
-                    <ul class="flag-lang">
-                        <li class="flag-us"><a href="<?=Url::current(['language-change'=>'en-US'])?>"></a></li>
-                        <li class="flag-vn"><a href="<?=Url::current(['language-change'=>'vi-VN'])?>"></a></li>
-                    </ul>
                 <?php } ?>
+                <ul class="flag-lang">
+                    <li class="flag-us"><a href="<?=Url::current(['language-change'=>'en-US'])?>"></a></li>
+                    <li class="flag-vn"><a href="<?=Url::current(['language-change'=>'vi-VN'])?>"></a></li>
+                </ul>
             </div>
             <ul class="clearfix list-menu">
                 <li class="dt-logo"><a href="/" class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/logo.png' ?>" alt=""></a></li>

@@ -5709,6 +5709,7 @@ footer li a {
 }
 .user-not-login {
     padding: 21px 0;
+    float: left;
 }
 @media (min-width: 985px) {
     .title-top {
