@@ -62,15 +62,13 @@ $user = $model->getUser();
             </ul>
 
             <?php
-            if(!empty(Yii::$app->user->id) && $user->id != Yii::$app->user->id) {
-                $userFrom = Yii::$app->user->identity;
-                $yourEmail = empty($userFrom->profile->public_email) ? $userFrom->email : $userFrom->profile->public_email;
-                echo $this->renderAjax('/ad/_partials/shareEmail',[
-                    'user' => $user,
-                    'yourEmail' => $yourEmail,
-                    'recipientEmail' => (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
-                    'params' => ['your_email' => false, 'recipient_email' => false] ]);
-            }?>
+            $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->profile->public_email) ? Yii::$app->user->identity->email : Yii::$app->user->identity->profile->public_email);
+            echo $this->renderAjax('/ad/_partials/shareEmail',[
+                'user' => $user,
+                'yourEmail' => $yourEmail,
+                'recipientEmail' => (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
+                'params' => ['your_email' => false, 'recipient_email' => false] ]);
+            ?>
 
             <?php
             if(count($products) > 0) {
@@ -119,7 +117,7 @@ $user = $model->getUser();
         $('#popup-email').popupMobi({
             btnClickShow: ".email-btn",
             closeBtn: '#popup-email .btn-cancel',
-            styleShow: 'center'
+            styleShow: 'full'
         });
     });
 </script>
