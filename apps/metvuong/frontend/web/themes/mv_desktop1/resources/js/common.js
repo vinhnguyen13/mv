@@ -107,7 +107,7 @@ $(document).ready(function() {
             			
             			var html = '';
             			for(var i in response) {
-            				html += '<li>' + response[i].full_name + ' <a href="' + response[i].url + '&type=1">' + lajax.t('Sale') + ' (' + response[i].total_sell + ')</a><a href="' + response[i].url + '&type=2">' + lajax.t('Rent') + ' (' + response[i].total_sell + ')</a></li>';
+            				html += '<li>' + response[i].full_name + ' <a href="' + response[i].url + '&type=1">' + lajax.t('Sale') + ' (' + response[i].total_sell + ')</a><a href="' + response[i].url + '&type=2">' + lajax.t('Rent') + ' (' + response[i].total_rent + ')</a></li>';
                       	}
             			
             			$('.content-suggest ul').html(html);
