@@ -4252,6 +4252,10 @@ input[type=text]:focus {
     margin-bottom: 10px;
     font-size: 15px;
 }
+.wrap-detail-article .time-post .name-cate {
+    padding-left: 10px;
+    font-size: 14px;
+}
 .detail-content .box-content p {
     margin-bottom: 15px;
 }
@@ -6168,13 +6172,16 @@ footer li a {
     font-weight: 400;
     font-size: 14px;
 }
-.wrap-news li div > a.name-cate {
+.name-cate {
     font-size: 15px;
     font-weight: 600;
     color: #00a769;
     float: none;
-    width: auto;
+}
+.wrap-news li div > a.name-cate {
+    float: none;
     margin: 0 0 25px 0;
+    width: auto;
 }
 .arrowLeft-small-black {
     background-position: 0 -2167px;

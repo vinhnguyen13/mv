@@ -43,7 +43,7 @@ use yii\helpers\Url;
         					</a>
                             <div>
                                 <a href="#" class="name-cate">DOANH NGHIỆP</a>
-            					<p class="name-news"><a href="#"><?=$n["title"]?></a></p>
+            					<p class="name-news"><a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n["id"], 'slug' => $n["slug"]], true)?>"><?=$n["title"]?></a></p>
             					<p class="date-post"><?=date('d/m/Y, H:i', $n["created_at"])?></p>
             					<p class="short-txt">
             						<?=\yii\helpers\StringHelper::truncate($n["brief"], 200)?>

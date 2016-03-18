@@ -96,7 +96,8 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                 <article>
                     <h1 class="big-title"><?=$news->title?></h1>
                     <div class="time-post">
-                        <span class=""><?=date("d/m/Y g:i a",$news->created_at)?></span>
+                        <span class=""><?=date("d/m/Y g:i a",$news->created_at)?></span>,
+                        <a href="#" class="name-cate">DOANH NGHIỆP</a>
                     </div>
                     <div class="detail-content pdL-5">
                         <div class="box-content">
