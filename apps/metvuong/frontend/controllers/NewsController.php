@@ -9,6 +9,7 @@ use vsoft\news\models\CmsShow;
 use vsoft\news\models\Status;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\data\Pagination;
 use yii\helpers\Url;
 use yii\web\Response;
 
@@ -33,8 +34,24 @@ class NewsController extends Controller
 
     public function actionIndex()
     {
-        $news = CmsShow::getLastestNews();
-        return $this->render('index',['news' => $news]);
+        // build a DB query to get all News with status = 1
+        $query = CmsShow::find()
+            ->where('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
+            ->andWhere(['NOT IN', 'cms_show.catalog_id', [1]])
+            ->orderBy('cms_show.created_at DESC');
+
+        // get the total number of News (but do not fetch the News data yet)
+        $count = $query->count();
+
+        // create a pagination object with the total count
+        $pagination = new Pagination(['totalCount' => $count]);
+        $pagination->defaultPageSize = 5;
+        // limit the query using the pagination and retrieve the articles
+        $news = $query->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+
+        return $this->render('index',['news' => $news, 'pagination' => $pagination]);
     }
 
     public function actionView($id)

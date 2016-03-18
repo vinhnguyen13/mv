@@ -1,6 +1,8 @@
 <?php
 use yii\helpers\Url;
-    $newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatID"] : 0;
+use yii\widgets\LinkPager;
+
+$newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatID"] : 0;
     $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID, 'status' => \vsoft\news\models\Status::STATUS_ACTIVE]);
 ?>
 <div class="title-fixed-wrap">
@@ -55,21 +57,16 @@ use yii\helpers\Url;
                     <?php } ?>
     			</ul>
             </div>
+
             <nav class="text-center">
-                <ul class="pagination">
-                    <li>
-                        <a href="#" aria-label="Previous">Back</a>
-                    </li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li>
-                    <a href="#" aria-label="Next">Next</a>
-                    </li>
-                </ul>
+            <?php
+                echo LinkPager::widget([
+                    'pagination' => $pagination,
+
+                ]);
+            ?>
             </nav>
+
             <?php } ?>
     	</div>
     </div>

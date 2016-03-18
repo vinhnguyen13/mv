@@ -633,7 +633,7 @@ class AdController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
 			$post = Yii::$app->request->post();
             if(count($post) <= 0)
-                return ['status' => 404, 'parameters' => 'Post variable not found'];
+                return ['status' => 400, 'parameters' => 'Post variable not found'];
 
             $model = Yii::createObject([
                 'class'    => ShareForm::className(),
@@ -650,16 +650,17 @@ class AdController extends Controller
 //                    ->send();
 
                 // send to
-                Yii::$app->mailer->compose(['html' => '../mail/notifyReceivedEmail-html',], ['contact' => $model])
+                $result = Yii::$app->mailer->compose(['html' => '../mail/notifyReceivedEmail-html',], ['contact' => $model])
                     ->setFrom(Yii::$app->params['adminEmail'])
                     ->setTo([$model->recipient_email])
-                    ->setSubject($model->your_email ." shared a listing on Metvuong.com to you - ".$model->subject)
+                    ->setSubject("Metvuong.com - ".$model->subject)
                     ->send();
-                return ['status' => 200];
+                return ['status' => 200, 'result' => $result];
             } else {
                 return ['status' => 404, 'parameters' => $model->errors];
             }
 		}
+        return ['status' => 400, 'parameters' => 'Send mail error. Please, try again later'];
 	}
 	
 	public function actionGeocode() {

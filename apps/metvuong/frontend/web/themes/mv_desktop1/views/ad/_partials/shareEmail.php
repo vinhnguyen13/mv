@@ -125,48 +125,50 @@ use yii\helpers\Url;
         </div>
     </div>
 </div>
+<div id="popup-error" class="popup-common hide-popup">
+    <div class="wrap-popup">
+        <div class="inner-popup">
+            <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
+            <div class="overflow-all">
+                <p>Send mail error. Please, try again later</p>
+                <br />
+                <div><a style="color: #00a769;" href="<?=Url::home()?>" class=""><?=Yii::t('send_email','Return homepage')?></a></div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     $(document).on('click', '.send_mail', function(){
-        var timer = 0;
         var recipient_email = $('#share_form .recipient_email').val();
         var your_email = $('#share_form .your_email').val();
-        console.log(recipient_email);
         if(recipient_email != null && your_email != null) {
+            $('body').loading();
             $('#popup-sent .user_name').html(recipient_email);
-            clearTimeout(timer);
-            timer = setTimeout(function () {
-                $('#popup-email').addClass('hide-popup');
-                $.ajax({
-                    type: "post",
-                    dataType: 'json',
-                    url: $('#share_form').attr('action'),
-                    data: $('#share_form').serializeArray(),
-                    success: function (data) {
-                        if(data.status == 200){
-                        }
-                        else {
-                            var strMessage = '';
-                            $.each(data.parameters, function(idx, val){
-                                var element = 'share_form_'+idx;
-                                strMessage += "\n" + val;
-                            });
-                            alert(strMessage+"\nTry again");
-                            $('#share_form .recipient_email').focus();
-                        }
-                        return true;
-                    },
-                    error: function (data) {
-                        var strMessage = '';
-                        $.each(data.parameters, function(idx, val){
-                            var element = 'share_form_'+idx;
-                            strMessage += "\n" + val;
-                        });
-                        alert(strMessage);
-                        return false;
+            $.ajax({
+                type: "post",
+                dataType: 'json',
+                url: $('#share_form').attr('action'),
+                data: $('#share_form').serializeArray(),
+                success: function (data) {
+                    $('body').loading({done:true});
+                    if(data.status == 200){
+                        $('.btn-cancel').trigger('click');
                     }
-                });
-            }, 500);
+                    else if(data.status == 404){
+                        var arr = [];
+                        $.each(data.parameters, function (idx, val) {
+                            var element = 'shareform-' + idx;
+                            arr[element] = lajax.t(val);
+                        });
+                        $('#share_form').yiiActiveForm('updateMessages', arr, true);
+                        $('#popup-sent .btn-close').trigger('click');
+                    } else {
+                        console.log(data);
+                    }
+                    return true;
+                }
+            });
         }
         return false;
     });
@@ -175,6 +177,12 @@ use yii\helpers\Url;
         btnClickShow: '#popup-email .send_mail',
         styleShow: 'center',
         closeBtn: '#popup-sent .btn-close'
+    });
+
+    $('#popup-error').popupMobi({
+        btnClickShow: '#popup-email .send_mail',
+        styleShow: 'center',
+        closeBtn: '#popup-error .btn-close'
     });
 
 </script>
