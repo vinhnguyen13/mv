@@ -101,6 +101,7 @@ class AdProductSearch extends AdProduct {
 		}
 		
 		$query->leftJoin('ad_product_addition_info', '`ad_product_addition_info`.`product_id` = `ad_product`.`id`');
+		$query->with(['city', 'district', 'ward', 'street']);
 		
 		return $dataProvider;
 	}

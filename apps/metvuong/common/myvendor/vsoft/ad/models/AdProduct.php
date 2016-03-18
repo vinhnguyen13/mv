@@ -108,20 +108,20 @@ class AdProduct extends AP
 			$address[] = $this->home_no;
 		}
 		
-		if($this->street_id && ($street = AdStreet::findOne($this->street_id))) {
-			$address[] = "{$street->pre} {$street->name}";
+		if($this->street) {
+			$address[] = "{$this->street->pre} {$this->street->name}";
 		}
 		
-		if(($this->ward_id && ($ward = AdWard::findOne($this->ward_id)))) {
-			$address[] = "{$ward->pre} {$ward->name}";
+		if($this->ward) {
+			$address[] = "{$this->ward->pre} {$this->ward->name}";
 		}
 		
-		if($district = AdDistrict::findOne($this->district_id)) {
-			$address[] = trim("{$district->pre} {$district->name}");
+		if($this->district) {
+			$address[] = trim("{$this->district->pre} {$this->district->name}");
 		}
 		
-		if($showCity && ($city = AdCity::findOne($this->city_id))) {
-			$address[] = $city->name;
+		if($showCity && $this->city) {
+			$address[] = $this->city->name;
 		}
 		
 		return implode(", ", $address);
