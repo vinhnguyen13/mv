@@ -95,8 +95,8 @@ class SiteController extends Controller
     {
         Yii::$app->meta->add(Yii::$app->request->absoluteUrl);
         $homepage_news = CmsShow::getShowForHomepage();
-        $metvuong_news = CmsShow::getShowForMetvuong();
-        return $this->render('index',['news' => $homepage_news, 'metvuong_news' => $metvuong_news]);
+//        $metvuong_news = CmsShow::getShowForMetvuong();
+        return $this->render('index',['news' => $homepage_news]);
     }
 
     /**

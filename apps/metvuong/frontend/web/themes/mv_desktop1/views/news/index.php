@@ -3,7 +3,8 @@ use yii\helpers\Url;
 use yii\widgets\LinkPager;
 
 $newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatID"] : 0;
-    $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID, 'status' => \vsoft\news\models\Status::STATUS_ACTIVE]);
+$catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID, 'status' => \vsoft\news\models\Status::STATUS_ACTIVE]);
+
 ?>
 <div class="title-fixed-wrap">
     <div class="container">
@@ -13,12 +14,12 @@ $newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatI
                     <div class="container">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <a class="active" href="<?=Url::to(['news/index'])?>"><?=Yii::t('news','Tất cả')?></a>
+                                <a class="active" href="<?=Url::to(['news/index'], true)?>"><?=Yii::t('news','All')?></a>
                             </div>
                             <?php if(!empty($catalogs)){?>
                             <?php foreach($catalogs as $catalog){?>
                                     <div class="swiper-slide">
-                                        <a href="<?=\yii\helpers\Url::to(['news/list', 'cat_id'=>$catalog->id, 'cat_slug'=>$catalog->slug])?>"><?=Yii::t('news', $catalog->title)?></a>
+                                        <a href="<?=\yii\helpers\Url::to(['news/list', 'cat_id'=>$catalog->id, 'cat_slug'=>$catalog->slug], true)?>"><?=Yii::t('news', '{cat_title}', ['cat_title' => $catalog->title])?></a>
                                     </div>
                             <?php }?>
                             <?php }?>
@@ -27,7 +28,7 @@ $newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatI
                         <div class="swiper-button-prev"></div>
                     </div>
                 </div>
-                <h2>TIN TỨC</h2>
+                <h2><?=Yii::t('news','NEWS')?></h2>
     		</div>
             <?php if(count($news)){?>
     		<div class="wrap-news">
@@ -44,13 +45,13 @@ $newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatI
         						<div class="img-show"><div><img src="<?=$banner?>" alt="<?=$n["title"]?>"></div></div>
         					</a>
                             <div>
-                                <a href="#" class="name-cate">DOANH NGHIỆP</a>
+                                <a href="<?=\yii\helpers\Url::to(['news/list', 'cat_id'=>$n["catalog_id"], 'cat_slug'=>$n["cat_slug"]], true)?>" class="name-cate"><?=mb_strtoupper($n["cat_title"], "UTF-8")?></a>
             					<p class="name-news"><a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n["id"], 'slug' => $n["slug"]], true)?>"><?=$n["title"]?></a></p>
             					<p class="date-post"><?=date('d/m/Y, H:i', $n["created_at"])?></p>
             					<p class="short-txt">
             						<?=\yii\helpers\StringHelper::truncate($n["brief"], 200)?>
             					</p>
-                                <a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n["id"], 'slug' => $n["slug"]], true)?>" class="view-more">Xem thêm <span class="icon arrowLeft-small-black"></span></a>
+                                <a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n["id"], 'slug' => $n["slug"]], true)?>" class="view-more"><?=Yii::t('news','Read more')?> <span class="icon arrowLeft-small-black"></span></a>
                             </div>
                         </div>
     				</li>
@@ -61,8 +62,7 @@ $newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatI
             <nav class="text-center">
             <?php
                 echo LinkPager::widget([
-                    'pagination' => $pagination,
-
+                    'pagination' => $pagination
                 ]);
             ?>
             </nav>

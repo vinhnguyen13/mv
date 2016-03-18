@@ -35,8 +35,10 @@ class NewsController extends Controller
     public function actionIndex()
     {
         // build a DB query to get all News with status = 1
-        $query = CmsShow::find()
+        $query = CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief', 'cms_show.created_at','cms_show.catalog_id', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
+            ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
             ->where('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
+            ->andWhere('cms_catalog.status = :status', [':status' => Status::STATUS_ACTIVE])
             ->andWhere(['NOT IN', 'cms_show.catalog_id', [1]])
             ->orderBy('cms_show.created_at DESC');
 
@@ -49,8 +51,8 @@ class NewsController extends Controller
         // limit the query using the pagination and retrieve the articles
         $news = $query->offset($pagination->offset)
             ->limit($pagination->limit)
-            ->all();
-
+            ->asArray()->all();
+        $this->view->title = Yii::t('news','News');
         return $this->render('index',['news' => $news, 'pagination' => $pagination]);
     }
 
@@ -81,13 +83,23 @@ class NewsController extends Controller
 
     public function actionList($cat_id)
     {
-        $news = CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief', 'cms_show.created_at','cms_show.catalog_id', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
+        $query = CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief', 'cms_show.created_at','cms_show.catalog_id', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
             ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
             ->where('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
+            ->andWhere('cms_catalog.status = :status', [':status' => Status::STATUS_ACTIVE])
             ->andWhere(['IN', 'cms_show.catalog_id', [$cat_id]])
-            ->asArray()->orderBy('cms_show.created_at DESC')->all();
-        $this->view->title = CmsCatalog::findOne($cat_id)->title;
-        return $this->render('list', ['news' => $news, 'cat_id'=>$cat_id]);
+            ->orderBy('cms_show.created_at DESC');
+        $count = $query->count();
+        $pagination = new Pagination(['totalCount' => $count]);
+        $pagination->defaultPageSize = 5;
+
+        $news = $query->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->asArray()->all();
+
+//        $catalog = CmsCatalog::findOne($cat_id);
+        $this->view->title = $news[0]["cat_title"];
+        return $this->render('list', ['news' => $news, 'cat_id'=>$cat_id, 'pagination' => $pagination]);
     }
 
     public function actionGetone()
@@ -102,6 +114,7 @@ class NewsController extends Controller
             ->andWhere('cms_show.catalog_id = :cat_id', [':cat_id' => $cat_id])
             ->andWhere('cms_show.id < :_id', [':_id' => $current_id])
             ->andWhere('cms_show.status = :status', [':status' => 1])
+            ->andWhere('cms_catalog.status = :status', [':status' => Status::STATUS_ACTIVE])
             ->orderBy(['cms_show.id' => SORT_DESC])
             ->one();
 

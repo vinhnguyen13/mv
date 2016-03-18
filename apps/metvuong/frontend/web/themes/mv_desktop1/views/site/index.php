@@ -88,7 +88,7 @@ use frontend\models\Ad;
     <?php if(count($news) > 0) {?>
     <section class="box-item news-item">
         <div class="container">
-            <div class="title-sub">TIN TỨC</div>
+            <div class="title-sub"><?=Yii::t('news','NEWS')?></div>
             <div class="wrap-item">
                 <?php
                     foreach($news as $n){

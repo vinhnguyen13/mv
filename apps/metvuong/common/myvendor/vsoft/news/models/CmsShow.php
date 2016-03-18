@@ -118,6 +118,7 @@ class CmsShow extends \funson86\cms\models\CmsShow
             ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
             ->where('cms_show.catalog_id = :id', [':id' => Yii::$app->params['homepageCatID']])
             ->andWhere('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
+            ->andWhere('cms_catalog.status = :status', [':status' => Status::STATUS_ACTIVE])
             ->asArray()->orderBy(['cms_show.created_at' => SORT_DESC])->limit(4)->all();
         return $query;
     }
@@ -127,11 +128,12 @@ class CmsShow extends \funson86\cms\models\CmsShow
             ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
             ->where('cms_catalog.title = :title', [':title' => 'Metvuong'])
             ->andWhere('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
+            ->andWhere('cms_catalog.status = :status', [':status' => Status::STATUS_ACTIVE])
             ->asArray()->limit(3)->all();
         return $query;
     }
 
-    public static function getLastestNews(){
+    public static function getLatestNews(){
         $newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatID"] : 0;
         $homepageCatID = isset(Yii::$app->params["homepageCatID"]) ? Yii::$app->params["homepageCatID"] : 0;
         $metvuongCatID = isset(Yii::$app->params["metvuongCatID"]) ? Yii::$app->params["metvuongCatID"] : 0;
@@ -139,6 +141,7 @@ class CmsShow extends \funson86\cms\models\CmsShow
         $news = CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief', 'cms_show.created_at','cms_show.catalog_id', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
             ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
             ->where('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
+            ->andWhere('cms_catalog.status = :status', [':status' => Status::STATUS_ACTIVE])
             ->andWhere(['NOT IN', 'cms_show.catalog_id', [1]])
             ->asArray()->orderBy('cms_show.created_at DESC')->all();
         return $news;
