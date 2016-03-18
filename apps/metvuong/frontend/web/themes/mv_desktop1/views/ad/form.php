@@ -117,7 +117,7 @@ use vsoft\ad\models\AdImages;
 					</div>
 
 					<div id="step2" class="tt-chung item-step section">
-						<div class="title-step">Thông tin chung</div>
+						<div class="title-step"><?= Yii::t('ad', 'General Information') ?></div>
 						<div class="row">
 							<?php
 								$cities = AdCity::find()->all();
@@ -187,7 +187,7 @@ use vsoft\ad\models\AdImages;
 					</div>
 
 					<div id="step3" class="tt-chitiet item-step section">
-						<div class="title-step">Thông tin chi tiết</div>
+						<div class="title-step"><?= Yii::t('ad', 'Detail Information') ?></div>
 						<div class="row">
 							<?= $form->field($product, 'content', ['options' => ['class' => 'col-xs-12 form-group']])
 									->label(false)
@@ -226,7 +226,7 @@ use vsoft\ad\models\AdImages;
 					</div>
 
 					<div id="step4" class="hinh-anh item-step section">
-						<div class="title-step">TẢI HÌNH ẢNH</div>
+						<div class="title-step"><?= Yii::t('ad', 'Upload Photo') ?></div>
 						<?php
 							$files = [];
 							foreach ($product->adImages as $image) {

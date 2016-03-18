@@ -307,11 +307,17 @@ class SiteController extends Controller
 					],
     			],
     			'sort' => [
-    				'total' => [
-    					'order' => 'desc'
-					]
+    				'total_sell' => [
+    					'order' => 'desc',
+    					'mode'	=> 'sum'
+					],
+    				'total_rent' => [
+    					'order' => 'desc',
+    					'mode'	=> 'sum'
+					],
 				],
-    			'_source' => ['full_name', 'total']
+				'size' => 6,
+    			'_source' => ['full_name', 'total_sell', 'total_rent']
     		];
     		 
     		$ch = curl_init(Yii::$app->params['elastic']['config']['hosts'][0] . '/term/_search');
