@@ -2042,6 +2042,16 @@ label {
 }
 .content-suggest li a {
     line-height: 23px;
+    line-height: 23px;
+    display: inline-block;
+    margin-left: 10px;
+    text-decoration: underline;
+    color: #009644;
+    font-weight: 600;
+    font-size: 14px;
+}
+.content-suggest li a:hover {
+    font-weight: 700;
 }
 .icon-share-td {
     display: inline-block;
