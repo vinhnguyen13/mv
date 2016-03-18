@@ -18,9 +18,26 @@ use yii\helpers\Url;
                         <button type="submit" id="btn-search-duan"><span class="icon icon-search-small-1"></span></button>
                     </form>
                 </div>
-                <div class="list-duan clearfix">
-                    <?= $this->render('_partials/result', ['models' => $models]) ?>
+                <div class="list-duan">
+                    <ul class="clearfix row">
+                        <?= $this->render('_partials/result', ['models' => $models]) ?>        
+                    </ul>
                 </div>
+                <nav class="text-center">
+                    <ul class="pagination">
+                        <li>
+                            <a href="#" aria-label="Previous">Back</a>
+                        </li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li>
+                        <a href="#" aria-label="Next">Next</a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

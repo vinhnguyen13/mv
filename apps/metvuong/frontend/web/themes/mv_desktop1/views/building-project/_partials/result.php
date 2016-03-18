@@ -21,8 +21,8 @@ use yii\helpers\Url;
             }
         }
         ?>
-        <div class="wrap-item">
-            <div class="item">
+        <li class="col-xs-12 col-sm-6 col-md-4">
+            <div class="wrap-item">
                 <a href="<?= Url::to(["building/$model->slug"]); ?>" class="pic-intro rippler rippler-default">
                     <div class="img-show">
                         <div><img src="<?=$image?>"
@@ -36,6 +36,7 @@ use yii\helpers\Url;
                         <p><?= !empty($model->categories[0]->name) ? \vsoft\ad\models\AdBuildingProject::mb_ucfirst($model->categories[0]->name,'UTF-8') : "Chung cư cao cấp" ?></p>
                         <a href="<?= Url::to(["building/$model->slug"]); ?>"><strong><?= mb_strtoupper($model->name) ?></strong></a>
                         <span class="icon address-icon"></span><?= empty($model->location) ? "Đang cập nhật" : $model->location ?>
+                        <p class="date-post">17/03/2016, 05:05</p>
                     </div>
                     <div class="bottom-feat-box clearfix">
                         <p><?=\yii\helpers\StringHelper::truncate($model->description, 180)?></p>
@@ -43,7 +44,7 @@ use yii\helpers\Url;
                     </div>
                 </div>
             </div>
-        </div>
+        </li>
     <?php }
 } else {?>
     <div>Không tìm thấy dự án <span class="found-name"></span></div>
