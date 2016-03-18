@@ -5723,8 +5723,8 @@ footer li a {
 }
 @media ( min-width: 985px ) and ( max-width: 1280px ) {
     .wrap-listing-item {
-        width: 50%;
-        right: -50%;
+        /* width: 50%; */
+        /* right: -50%; */
     }
     .wrap-map-listing {
         width: 100%;
@@ -6251,6 +6251,7 @@ footer li a {
 .pagination {
     padding: 0;
     margin: 0;
+    width: 100%;
 }
 .pagination>li>a {
     color: #00a769;
@@ -6304,10 +6305,6 @@ footer li a {
     .infor-duan {
         margin: 0 -20px;
     }
-    .wrap-infor-duan .bottom-feat-box p,
-    .wrap-infor-duan .info-item .address-feat {
-        height: auto;
-    }
 }
 .flag-lang {
     float: right;
@@ -6325,5 +6322,9 @@ footer li a {
     }
     .wrap-news li {
         margin-bottom: 0;
+    }
+    .wrap-infor-duan .bottom-feat-box p,
+    .wrap-infor-duan .info-item .address-feat {
+        height: auto;
     }
 }
