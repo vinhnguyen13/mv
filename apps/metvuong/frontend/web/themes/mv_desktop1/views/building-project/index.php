@@ -5,6 +5,7 @@
  * Date: 1/28/2016 10:15 AM
  */
 use yii\helpers\Url;
+use yii\widgets\LinkPager;
 
 ?>
 <div class="title-fixed-wrap">
@@ -24,19 +25,12 @@ use yii\helpers\Url;
                     </ul>
                 </div>
                 <nav class="text-center">
-                    <ul class="pagination">
-                        <li>
-                            <a href="#" aria-label="Previous">Back</a>
-                        </li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li>
-                        <a href="#" aria-label="Next">Next</a>
-                        </li>
-                    </ul>
+                    <?php
+                    echo LinkPager::widget([
+                        'pagination' => $pagination,
+
+                    ]);
+                    ?>
                 </nav>
             </div>
         </div>

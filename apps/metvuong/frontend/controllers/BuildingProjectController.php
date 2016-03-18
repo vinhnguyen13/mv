@@ -15,8 +15,19 @@ class BuildingProjectController extends Controller
 	public $layout = '@app/views/layouts/layout';
 	
 	function actionIndex() {
-        $models = AdBuildingProject::find()->where('`status` = ' . AdBuildingProject::STATUS_ENABLED)->all();
-        return $this->render('index', ['models' => $models]);
+        $models = AdBuildingProject::find()->where('`status` = ' . AdBuildingProject::STATUS_ENABLED)->orderBy('id DESC');
+
+        // get the total number of News (but do not fetch the News data yet)
+        $count = $models->count();
+
+        // create a pagination object with the total count
+        $pagination = new Pagination(['totalCount' => $count]);
+        $pagination->defaultPageSize = 12;
+        // limit the query using the pagination and retrieve the articles
+        $models = $models->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+        return $this->render('index', ['models' => $models, 'pagination' => $pagination]);
 
 //		$model = AdBuildingProject::find()->where('`status` = ' . AdBuildingProject::STATUS_ENABLED)->one();
 //		if($model) {

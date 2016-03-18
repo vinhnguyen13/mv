@@ -45,7 +45,7 @@ class NewsController extends Controller
 
         // create a pagination object with the total count
         $pagination = new Pagination(['totalCount' => $count]);
-        $pagination->defaultPageSize = 5;
+        $pagination->defaultPageSize = 12;
         // limit the query using the pagination and retrieve the articles
         $news = $query->offset($pagination->offset)
             ->limit($pagination->limit)
