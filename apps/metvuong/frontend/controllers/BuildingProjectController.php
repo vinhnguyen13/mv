@@ -16,14 +16,9 @@ class BuildingProjectController extends Controller
 	
 	function actionIndex() {
         $models = AdBuildingProject::find()->where('`status` = ' . AdBuildingProject::STATUS_ENABLED)->orderBy('id DESC');
-
-        // get the total number of News (but do not fetch the News data yet)
         $count = $models->count();
-
-        // create a pagination object with the total count
         $pagination = new Pagination(['totalCount' => $count]);
         $pagination->defaultPageSize = 12;
-        // limit the query using the pagination and retrieve the articles
         $models = $models->offset($pagination->offset)
             ->limit($pagination->limit)
             ->all();
@@ -68,16 +63,17 @@ class BuildingProjectController extends Controller
 	}
 
     function actionFind() {
-        if(Yii::$app->request->isAjax) {
-            \Yii::$app->response->format = \yii\web\Response::FORMAT_HTML;
-            $post = \Yii::$app->request->post();
-            $name = (isset($post["project_name"]) && !empty($post["project_name"])) ? $post["project_name"] : '';
-            $models = AdBuildingProject::find()->where('name LIKE :query')
-                ->addParams([':query' => '%' . $name . '%'])
-                ->all();
-
-            return $this->renderAjax('_partials/result', ['models' => $models]);
+        $name = \Yii::$app->request->get("project_name");
+        $models = AdBuildingProject::find()->where('`status` = ' . AdBuildingProject::STATUS_ENABLED)->orderBy('id DESC');
+        if(!empty($name)) {
+            $models = $models->where('name LIKE :query')->addParams([':query' => '%' . $name . '%']);
         }
-        return false;
+        $count = $models->count();
+        $pagination = new Pagination(['totalCount' => $count]);
+        $pagination->defaultPageSize = 12;
+        $models = $models->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+        return $this->render('index', ['models' => $models, 'project_name' => $name, 'pagination' => $pagination]);
     }
 }
