@@ -259,7 +259,7 @@ class MemberController extends Controller
 
     public function actionProfile($username)
     {
-        $this->checkAccess();
+//        $this->checkAccess();
         $model = Yii::createObject([
             'class'    => ProfileForm::className(),
             'scenario' => 'updateprofile',
