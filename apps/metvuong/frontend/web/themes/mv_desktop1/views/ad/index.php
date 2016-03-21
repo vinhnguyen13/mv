@@ -269,7 +269,7 @@ $isSearch = Yii::$app->request->get('s');
 							</div> -->
 						</div>
 						
-						<button class="btn-submit btn-common <?= $isSearch ? '' : 'active' ?>" data-flag="true">Tìm kiếm</button>
+						<button class="btn-submit btn-common <?= $isSearch ? '' : 'active' ?>">Tìm kiếm</button>
 					</div>
 				</div>
 				<div class="dropdown-select option-show-listing">

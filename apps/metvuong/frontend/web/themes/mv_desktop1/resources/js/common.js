@@ -378,14 +378,14 @@ $.fn.toggleShowMobi = function (options) {
 
             var _this = $(this);
 
-            if ( _this.hasClass('active') && _this.data('flag') ) {
+            /*if ( _this.hasClass('active') && _this.data('flag') ) {
                 _this.data('flag', false);
-            }
+            }*/
 
             if ( _this.hasClass('active') ) {
                 _this.removeClass('active');
                 if ( sc.settings.styleEffect == 'slide' ) {
-                    el.find(sc.settings.itemToggle).velocity("slideUp", { duration: 350 });
+                    //el.find(sc.settings.itemToggle).velocity("slideUp", { duration: 350 });
                 }else if ( sc.settings.styleEffect == 'slideDownUp' ) {
                     el.find('.dropdown-up-style').removeClass('active');
                     setTimeout(function() {

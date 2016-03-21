@@ -6342,3 +6342,15 @@ footer li a {
         height: auto;
     }
 }
+#project-info-detail {
+    color: #00A769;
+    font-weight: 600;
+    text-decoration: underline;
+}
+#project-info {
+    line-height: 25px;
+    font-size: 14px;
+}
+#project-info #project-info-location {
+    padding-left: 5px;
+}
