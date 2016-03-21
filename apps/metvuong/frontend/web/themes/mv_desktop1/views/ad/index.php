@@ -33,7 +33,6 @@ $isSearch = Yii::$app->request->get('s');
 					<ul class="clearfix"></ul>
 					<em class="icon-pencil"></em>
 				</div> -->
-				<?= Html::activeHiddenInput($searchModel, 'type'); ?>
 				<div class="search-subpage">
 					<div class="advande-search clearfix">
 						<div class="toggle-search"<?= $isSearch ? ' style="display: none"' : '' ?>>
@@ -201,7 +200,7 @@ $isSearch = Yii::$app->request->get('s');
 														AdProduct::TYPE_FOR_RENT => Yii::t('ad', 'Rent'),
 													];
 												?>
-												<?= Html::activeDropDownList($searchModel, 'ward_id', $items, ['prompt' => $searchModel->getAttributeLabel('type'), 'class' => 'form-control']) ?>
+												<?= Html::activeDropDownList($searchModel, 'type', $items, ['prompt' => $searchModel->getAttributeLabel('type'), 'class' => 'form-control']) ?>
 											</div>
 										</div>
 										<div class="form-group">
