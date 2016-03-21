@@ -1,9 +1,11 @@
 <?php
+use yii\helpers\Url;
 
 $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
 //$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/detail.js', ['position' => View::POS_END]);
 $this->registerCss('.map-wrap {position: relative;} .map-wrap:after {display: block; content: ""; padding-top: 75%;} .map-inside {position: absolute; width: 100%; height: 100%;} #map {height: 100%;}');
 
+$lbl_updating = Yii::t('general', 'Updating');
 
 $fb_appId = '680097282132293'; // stage.metvuong.com
 if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
@@ -63,7 +65,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                 <div class="item infor-address-duan">
                     <p><?= !empty($model->categories[0]->name) ? \vsoft\ad\models\AdBuildingProject::mb_ucfirst($model->categories[0]->name,'UTF-8') : "Chung cư cao cấp" ?></p>
                     <strong><?= strtoupper($model->name)?></strong>
-                    <span class="icon address-icon"></span><?= empty($model->location) ? "Đang cập nhật" : $model->location ?>
+                    <span class="icon address-icon"></span><?= empty($model->location) ? $lbl_updating : $model->location ?>
                     <ul class="pull-right icons-detail">
                         <li><a href="#popup-share-social" class="icon icon-share-td"></a></li>
     <!--                    <li><a href="#" class="icon save-item" data-id="4115" data-url="/ad/favorite"></a></li>-->
@@ -71,11 +73,11 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                     </ul>
                 </div>
                 <div class="item infor-time">
-                    <p><strong>Chủ đầu tư:</strong> <?= empty($model->investors[0]->name) ? "Đang cập nhật" : $model->investors[0]->name ?></p>
-                    <p><strong>Kiến trúc sư:</strong> <?=empty($model->architects[0]->name) ? "Đang cập nhật" : $model->architects[0]->name ?></p>
-                    <p><strong>Nhà thầu thi công:</strong> <?=empty($model->contractors[0]->name) ? "Đang cập nhật" : $model->contractors[0]->name ?></p>
-                    <p><strong>Ngày khởi công:</strong> <?=empty($model->start_date) ? "Đang cập nhật" : date('d/m/Y', $model->start_date) ?></p>
-                    <p><strong>Dự kiến hoàn thành:</strong> <?=empty($model->estimate_finished) ? "Đang cập nhật" : $model->estimate_finished ?></p>
+                    <p><strong>Chủ đầu tư:</strong> <?= empty($model->investors[0]->name) ? $lbl_updating : $model->investors[0]->name ?></p>
+                    <p><strong>Kiến trúc sư:</strong> <?=empty($model->architects[0]->name) ? $lbl_updating : $model->architects[0]->name ?></p>
+                    <p><strong>Nhà thầu thi công:</strong> <?=empty($model->contractors[0]->name) ? $lbl_updating : $model->contractors[0]->name ?></p>
+                    <p><strong>Ngày khởi công:</strong> <?=empty($model->start_date) ? $lbl_updating : date('d/m/Y', $model->start_date) ?></p>
+                    <p><strong>Dự kiến hoàn thành:</strong> <?=empty($model->estimate_finished) ? $lbl_updating : $model->estimate_finished ?></p>
                 </div>
                 <div class="item detail-infor">
                     <p class="title-attr-duan">Diễn tả chi tiết</p>
@@ -105,7 +107,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                         <?php } ?>
                     </ul>
                     <?php } else {?>
-                    <p>Đang cập nhật</p>
+                    <p><?=$lbl_updating;?></p>
                     <?php }?>
                 </div>
             </div>
