@@ -71,6 +71,11 @@ $(document).ready(function(){
 				if($('#loai-bds').val() == '6') {
 					loadProjects();
 				}
+				
+				$.get('/ad/list-swp', {districtId: $('#quan-huyen').val()}, function(response){
+					appendDropdown($('#adproductsearch-ward_id'), response.wards);
+					appendDropdown($('#adproductsearch-street_id'), response.streets);
+				});
 			}
 			
 			
@@ -95,6 +100,13 @@ $(document).ready(function(){
 			}
 		}
 	});
+	
+	function appendDropdown(el, items) {
+		el.find("option:not(:first-child)").remove();
+		for(var i in items) {
+			el.append('<option value="' + i + '">' + items[i] + '</option>');
+		}
+	}
 	
 	function loadProjects() {
 		var districtId = $('#quan-huyen').val();
