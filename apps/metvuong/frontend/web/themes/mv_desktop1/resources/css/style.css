@@ -5618,6 +5618,10 @@ footer li a {
         height: 100%;
         padding: 0;
     }
+    #content-holder #no-result {
+        width: auto;
+        text-align: center;
+    }
     #listing-list {
         overflow-x: hidden;
         overflow-y: auto;
