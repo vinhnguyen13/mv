@@ -411,9 +411,9 @@ $.fn.toggleShowMobi = function (options) {
             $(document).on('click', function (e) {
                 var container = el;
                 if ( !container.is(e.target) && container.has(e.target).length === 0 ){
-                    el.find(sc.settings.btnEvent).removeClass('active');
+                    //el.find(sc.settings.btnEvent).removeClass('active');
                     if ( sc.settings.styleEffect == 'slide' ) {
-                        el.find(sc.settings.itemToggle).velocity("slideUp", { duration: 0 });
+                        //el.find(sc.settings.itemToggle).velocity("slideUp", { duration: 0 });
                         //el.find(sc.settings.btnEvent).data('flag',true);
                     }else if ( sc.settings.styleEffect == 'slideDownUp' ) {
                         el.find('.dropdown-up-style').removeClass('active');

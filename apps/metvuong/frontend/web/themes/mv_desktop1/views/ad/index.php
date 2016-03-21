@@ -344,7 +344,7 @@ $isSearch = Yii::$app->request->get('s');
 						</ul>
 					</div>
 					<?php else: ?>
-					<div id="no-result">Chưa có tin đăng theo tìm kiếm của bạn, <a href="#">đăng ký nhận thông báo khi có tin đăng phù hợp</a>.</div>
+					<div class="container" id="no-result">Chưa có tin đăng theo tìm kiếm của bạn, <a href="#">đăng ký nhận thông báo khi có tin đăng phù hợp</a>.</div>
 					<?php endif; ?>
 				</div>
 				<div id="item-loading" style="text-align: center;" class="<?php if($pages->page >= $pages->pageCount - 1) echo 'hide' ?>">

@@ -3046,7 +3046,7 @@ input[type=text]:focus {
 .result-listing {
     position: relative;
     width: 100%;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 .result-listing .section {
     top: 0;
@@ -4932,7 +4932,7 @@ input[type=text]:focus {
         margin-bottom: 25px;
     }
     .box-feature-item .address-feat {
-        height: 125px;
+        height: 145px;
     }
     #listing-list > ul {
         padding: 0 10px;
@@ -5211,7 +5211,7 @@ input[type=text]:focus {
         float: left;
     }
     .box-feature-item .address-feat {
-        height: 105px;
+        height: 115px;
     }
     .wrap-header {
         padding: 0 20px;
@@ -5700,8 +5700,9 @@ footer li a {
     margin-bottom: 10px;
 }
 .wrap-item .address-feat > a {
-    margin-bottom: 5px;
-    color: inherit;
+    margin-bottom: 8px;
+    color: #00a769;
+    line-height: 20px;
 }
 .wrap-item .address-feat .id-duan {
     margin-bottom: 7px;
@@ -6353,4 +6354,8 @@ footer li a {
 }
 #project-info #project-info-location {
     padding-left: 5px;
+}
+.box-feature-item .date-post {
+    margin: 0 0 3px 0;
+    font-size: 14px;
 }
