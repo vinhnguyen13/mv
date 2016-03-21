@@ -80,7 +80,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                     <p><strong>Dự kiến hoàn thành:</strong> <?=empty($model->estimate_finished) ? $lbl_updating : $model->estimate_finished ?></p>
                 </div>
                 <div class="item detail-infor">
-                    <p class="title-attr-duan">Diễn tả chi tiết</p>
+                    <p class="title-attr-duan"><?=Yii::t('ad', 'Description')?></p>
                     <p><?=$model->description ?></p>
                 </div>
                 <div class="item infor-attr">

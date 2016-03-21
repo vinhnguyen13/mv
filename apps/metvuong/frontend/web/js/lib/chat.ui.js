@@ -139,14 +139,14 @@
                 objNotifyOther.html(sumOther);
             }
             sumTotal = (($('#notifyChat').length > 0) ? parseInt($('#notifyChat').html()) : 0) + (($('#notifyOther').length > 0) ? parseInt($('#notifyOther').html()) : 0);
-            var objNotifyTotal = this.findObjectNotify('avatar-user', 'notifyTotal');
+            var objNotifyTotal = this.findObjectNotify('wrapNotifyTotal', 'notifyTotal');
             objNotifyTotal.html(sumTotal);
         },
         findObjectNotify: function (parent, child) {
-            if($('#'+parent).find('#'+child).length == 0){
-                $('#'+parent).append($('<span class="notifi" id="'+child+'"></span>'));
+            if($('.'+parent).find('#'+child).length == 0){
+                $('.'+parent).append($('<span class="notifi" id="'+child+'"></span>'));
             }
-            return $('#'+parent).find('#'+child);
+            return $('.'+parent).find('#'+child);
         },
         typingMessage: function (from, close) {
             chatBoxExist = chatUI.getBoxChat(Chat.connection.jid, from);

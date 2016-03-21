@@ -86,7 +86,15 @@ if(!$model->isNewRecord) {
 	    			<input type="hidden" name="BuildingProject[district_id]" value="" />
 	    			<?= $form->field($model, 'district_id')->dropDownList($districtData, ['options' => $districtOptions, 'prompt' => '---', 'class' => 'select-2 form-control', 'disabled' => ($model->city_id) ? false : true]) ?>
 	  				<?= $form->field($model, 'categories')->dropDownList(ArrayHelper::map($categories, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
-                    <?= $form->field($model, 'description')->textarea(['rows' => 4])?>
+					<?= $form->field($model, 'description')->widget(CKEditor::className(), [
+						'editorOptions' => [
+							'preset' => 'basic',
+							'inline' => false,
+							'height' => 150,
+							'resize_enabled' => false,
+							'removePlugins' => '',
+						]
+					]) ?>
                     <?= $form->field($model, 'investors')->dropDownList(ArrayHelper::map($investors, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
                     <?= $form->field($model, 'architects')->dropDownList(ArrayHelper::map($architects, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
                     <?= $form->field($model, 'contractors')->dropDownList(ArrayHelper::map($contractors, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
