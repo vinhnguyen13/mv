@@ -22,8 +22,8 @@ $types = AdProduct::getAdTypes ();
 $hideSearchForm = Yii::$app->request->get('s') || (Yii::$app->request->get('page', 1) != 1);
 
 $lazyLoadJs = [
-	Yii::$app->view->theme->baseUrl . '/resources/js/gmap-v2.js',
 	Yii::$app->view->theme->baseUrl . '/resources/js/listing-map.js',
+	Yii::$app->view->theme->baseUrl . '/resources/js/gmap-v2.js',
 	'https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=m2Map.loaded',
 ];
 ?>
