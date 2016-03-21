@@ -7,6 +7,9 @@ use vsoft\ad\models\AdProduct;
 use yii\helpers\StringHelper;
 
 class AdProductSearch extends AdProduct {
+	const DEFAULT_CITY = 1;
+	const DEFAULT_DISTRICT = 10; 
+	
 	public $price_min;
 	public $price_max;
 	
@@ -60,6 +63,10 @@ class AdProductSearch extends AdProduct {
 		
 		if(count($where) == 1 && $this->city_id) {
 			$where['city_id'] = $this->city_id;
+		}
+
+		if($this->type) {
+			$where['type'] = $this->type;
 		}
 		
 		if($this->category_id) {
@@ -116,8 +123,6 @@ class AdProductSearch extends AdProduct {
 				if($this->projectBuilding->district) {
 					$this->district_id = $this->projectBuilding->district->id;
 				}
-			} else {
-				$this->district_id = 10;
 			}
 		}
 		

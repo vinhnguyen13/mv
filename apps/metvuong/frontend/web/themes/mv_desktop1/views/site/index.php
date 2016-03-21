@@ -2,6 +2,8 @@
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
 use frontend\models\Ad;
+use frontend\models\AdProductSearch;
+use vsoft\ad\models\AdProduct;
 ?>
 <div class="page-home">
 
@@ -17,8 +19,8 @@ use frontend\models\Ad;
             </div>
             <div class="search-homepage">
                 <ul class="clearfix">
-                    <li><a class="rippler rippler-default" href="<?= Url::to(['/ad/index']) ?>"><?=Yii::t('general', 'Buy')?></a></li>
-                    <li><a class="rippler rippler-default" href="#"><?=Yii::t('general', 'Rent')?></a></li>
+                    <li><a class="rippler rippler-default" href="<?= Url::to(['/ad/index', 'type' => AdProduct::TYPE_FOR_SELL, 'city_id' => AdProductSearch::DEFAULT_CITY, 'district_id' => AdProductSearch::DEFAULT_DISTRICT]) ?>"><?=Yii::t('general', 'Buy')?></a></li>
+                    <li><a class="rippler rippler-default" href="<?= Url::to(['/ad/index', 'type' => AdProduct::TYPE_FOR_RENT, 'city_id' => AdProductSearch::DEFAULT_CITY, 'district_id' => AdProductSearch::DEFAULT_DISTRICT]) ?>"><?=Yii::t('general', 'Rent')?></a></li>
                     <li><a class="rippler rippler-default" href="<?= Url::to(['/ad/post']) ?>"><?=Yii::t('general', 'Sell')?></a></li>
                 </ul>
                 <form id="search-form" action="<?= Url::to(['site/search']) ?>">

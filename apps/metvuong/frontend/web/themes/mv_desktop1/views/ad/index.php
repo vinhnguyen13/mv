@@ -21,8 +21,7 @@ $types = AdProduct::getAdTypes ();
 $products = $dataProvider->models;
 $pages = $dataProvider->pagination;
 
-$params = Yii::$app->request->get();
-unset($params[$pages->pageParam]);
+$isSearch = Yii::$app->request->get('s');
 ?>
 
 <div class="result-listing clearfix">
@@ -36,7 +35,7 @@ unset($params[$pages->pageParam]);
 				</div> -->
 				<div class="search-subpage">
 					<div class="advande-search clearfix">
-						<div class="toggle-search"<?= $params ? ' style="display: none"' : '' ?>>
+						<div class="toggle-search"<?= $isSearch ? ' style="display: none"' : '' ?>>
 							<div class="frm-item select-tinh-thanh">
 								<div class="box-dropdown dropdown-common">
 									<div class="val-selected style-click">
@@ -270,7 +269,7 @@ unset($params[$pages->pageParam]);
 							</div> -->
 						</div>
 						
-						<button class="btn-submit btn-common <?= $params ? '' : 'active' ?>" data-flag="true">Tìm kiếm</button>
+						<button class="btn-submit btn-common <?= $isSearch ? '' : 'active' ?>" data-flag="true">Tìm kiếm</button>
 					</div>
 				</div>
 				<div class="dropdown-select option-show-listing">

@@ -330,8 +330,8 @@ class SiteController extends Controller
     		 
     		foreach ($result['hits']['hits'] as $k => $hit) {
     			$response[$k] = $hit['_source'];
-    			$response[$k]['url_sale'] = Url::to(['/ad/index', $hit['_type'] . '_id' => $hit['_id'], 'type' => AdProduct::TYPE_FOR_SELL]);
-    			$response[$k]['url_rent'] = Url::to(['/ad/index', $hit['_type'] . '_id' => $hit['_id'], 'type' => AdProduct::TYPE_FOR_RENT]);
+    			$response[$k]['url_sale'] = Url::to(['/ad/index', $hit['_type'] . '_id' => $hit['_id'], 'type' => AdProduct::TYPE_FOR_SELL, 's' => 1]);
+    			$response[$k]['url_rent'] = Url::to(['/ad/index', $hit['_type'] . '_id' => $hit['_id'], 'type' => AdProduct::TYPE_FOR_RENT, 's' => 1]);
     		}
     		
     		return $response;
