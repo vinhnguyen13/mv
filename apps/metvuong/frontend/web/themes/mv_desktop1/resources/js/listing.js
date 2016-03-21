@@ -40,8 +40,7 @@ $(document).ready(function(){
 				for(var i = 0; i < src.length; i++) {
 					var resource = document.createElement('script'); 
 					resource.src = src[i];
-					var script = document.getElementsByTagName('script')[0];
-					script.parentNode.insertBefore(resource, script);
+					document.getElementsByTagName('head')[0].appendChild(resource);
 					
 					console.log('insert ' + src[i]);
 				}
