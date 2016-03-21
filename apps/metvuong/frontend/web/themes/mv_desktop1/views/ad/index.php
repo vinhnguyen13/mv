@@ -33,6 +33,7 @@ $isSearch = Yii::$app->request->get('s');
 					<ul class="clearfix"></ul>
 					<em class="icon-pencil"></em>
 				</div> -->
+				<?= Html::activeHiddenInput($searchModel, 'type'); ?>
 				<div class="search-subpage">
 					<div class="advande-search clearfix">
 						<div class="toggle-search"<?= $isSearch ? ' style="display: none"' : '' ?>>
@@ -246,17 +247,17 @@ $isSearch = Yii::$app->request->get('s');
 											<div class="col-sm-8">
 												<?php
 													$items = [];
-													for ($i = 0; $i <= 10; $i++) {
+													for ($i = 1; $i <= 10; $i++) {
 														$items[$i] = $i . '+';
 													}
 												?>
-												<?= Html::activeDropDownList($searchModel, 'room_no', $items, ['class' => 'form-control']) ?>
+												<?= Html::activeDropDownList($searchModel, 'room_no', $items, ['class' => 'form-control', 'prompt' => '0+']) ?>
 											</div>
 										</div>
 										<div class="form-group">
 											<label for="" class="col-sm-4 control-label">Phòng tắm</label>
 											<div class="col-sm-8">
-												<?= Html::activeDropDownList($searchModel, 'toilet_no', $items, ['class' => 'form-control']) ?>
+												<?= Html::activeDropDownList($searchModel, 'toilet_no', $items, ['class' => 'form-control', 'prompt' => '0+']) ?>
 											</div>
 										</div>
 									</div>

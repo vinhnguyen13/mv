@@ -125,9 +125,7 @@ class AdController extends Controller
 		];
 		
 		$searchModel = new AdProductSearch();
-		$params = Yii::$app->request->get();
-		$params = isset($params[$searchModel->formName()]) ? $params : [$searchModel->formName() => $params];
-		$dataProvider = $searchModel->search($params);
+		$dataProvider = $searchModel->search(Yii::$app->request->get());
 		
 		return $this->render('index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider]);
 		

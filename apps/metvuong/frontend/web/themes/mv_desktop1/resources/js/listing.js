@@ -197,47 +197,56 @@ $(document).ready(function(){
 	});
 	
 	searchForm.submit(function(e){
-		e.preventDefault();
-
-		var btnSubmit = $(this).find('button.btn-submit');
-
-		if ( btnSubmit.data('flag') ) {
-			btnSubmit.data('flag', false);
-			return;
-		}else {
-			btnSubmit.data('flag', true);
-		}
-
-		$(window).off('scroll', next);
-		
-		$(itemLoadingId).removeClass('hide');
-		
-		var id = '#content-holder';
-		var contentHolder = $(id).html('');
-		
-		page = 1;
-		
-		$.get(searchForm.attr('action'), searchForm.serialize(), function(r){
-			r = $(r);
+		searchForm.find('input, select').each(function(){
+			var self = $(this);
 			
-			contentHolder.html(r.find(id).html());
-			
-			if(r.find(itemLoadingId).hasClass('hide')) {
-				$(itemLoadingId).addClass('hide');
-			} else {
-				$(window).on('scroll', next);
-			}
-			
-			if ( checkMobile() ) {
-				$('.wrap-lazy img').lazyload({
-					threshold : 200
-				});
-			}else {
-				$('.wrap-lazy img').lazyload({
-					threshold : 200,
-					container: $("#listing-list")
-				});
+			if(self.val() === "") {
+				self.prop('disabled', true);
 			}
 		});
+
+		return true;
+//		e.preventDefault();
+//
+//		var btnSubmit = $(this).find('button.btn-submit');
+//
+//		if ( btnSubmit.data('flag') ) {
+//			btnSubmit.data('flag', false);
+//			return;
+//		}else {
+//			btnSubmit.data('flag', true);
+//		}
+//
+//		$(window).off('scroll', next);
+//		
+//		$(itemLoadingId).removeClass('hide');
+//		
+//		var id = '#content-holder';
+//		var contentHolder = $(id).html('');
+//		
+//		page = 1;
+//		
+//		$.get(searchForm.attr('action'), searchForm.serialize(), function(r){
+//			r = $(r);
+//			
+//			contentHolder.html(r.find(id).html());
+//			
+//			if(r.find(itemLoadingId).hasClass('hide')) {
+//				$(itemLoadingId).addClass('hide');
+//			} else {
+//				$(window).on('scroll', next);
+//			}
+//			
+//			if ( checkMobile() ) {
+//				$('.wrap-lazy img').lazyload({
+//					threshold : 200
+//				});
+//			}else {
+//				$('.wrap-lazy img').lazyload({
+//					threshold : 200,
+//					container: $("#listing-list")
+//				});
+//			}
+//		});
 	});
 });

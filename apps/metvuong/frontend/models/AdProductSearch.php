@@ -29,6 +29,10 @@ class AdProductSearch extends AdProduct {
 		]);
 	}
 	
+	function formName() {
+		return '';
+	}
+	
 	function search($params) {
 		$this->load($params);
 		$this->fetchValues();
