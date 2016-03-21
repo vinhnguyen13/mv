@@ -40,6 +40,8 @@ use frontend\models\AdProductSearch;
                     <ul class="clearfix">
                         <li><a href="<?=Url::to(['member/login'])?>" class="user-login-link"><?=Yii::t('user', 'Sign In')?></a></li>
                         <li><a href="<?=Url::to(['member/signup'])?>" class="user-signup-link"><?=Yii::t('user', 'Sign Up')?></a></li>
+                        <li class="flag-us"><a href="<?=Url::current(['language-change'=>'en-US'])?>"></a></li>
+                        <li class="flag-vn"><a href="<?=Url::current(['language-change'=>'vi-VN'])?>"></a></li>
                     </ul>
                 <?php } else{?>
                 <ul class="clearfix">
@@ -66,6 +68,8 @@ use frontend\models\AdProductSearch;
                     </a></li>
                     <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon icon-per"></span></div><?=Yii::t('user', 'Account')?></a></li>
                     <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><div><span class="icon icon-logout"></span></div><?=Yii::t('user', 'Log Out')?></a></li>
+                    <li class="flag-us"><a href="<?=Url::current(['language-change'=>'en-US'])?>"></a></li>
+                    <li class="flag-vn"><a href="<?=Url::current(['language-change'=>'vi-VN'])?>"></a></li>
                 </ul>
                 <?php } ?>
             </div>

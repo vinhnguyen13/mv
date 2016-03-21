@@ -2154,6 +2154,27 @@ label {
 #settings-user li:last-child a {
     border: none;
 }
+#settings-user li.flag-vn,
+#settings-user li.flag-us {
+    width: inherit;
+    padding: 15px 0;
+}
+#settings-user li.flag-us {
+    margin-right: 15px;
+}
+#settings-user li.flag-vn a,
+#settings-user li.flag-us a {
+    background-repeat: no-repeat;
+    border: none;
+    padding: 0;
+    display: inline-block;
+    width: 19px;
+    height: 13px;
+}
+#settings-user li.flag-vn a {
+    width: 22px;
+    height: 14px;
+}
 .user-edit a {
     color: #009544;
     font-size: 15px;
