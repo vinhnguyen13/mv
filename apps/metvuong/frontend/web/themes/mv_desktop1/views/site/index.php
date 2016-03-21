@@ -17,12 +17,12 @@ use frontend\models\Ad;
             </div>
             <div class="search-homepage">
                 <ul class="clearfix">
-                    <li><a class="rippler rippler-default" href="<?= Url::to(['/ad/index']) ?>">Mua</a></li>
-                    <li><a class="rippler rippler-default" href="#">Thuê</a></li>
-                    <li><a class="rippler rippler-default" href="<?= Url::to(['/ad/post']) ?>">Bán / Cho Thuê</a></li>
+                    <li><a class="rippler rippler-default" href="<?= Url::to(['/ad/index']) ?>"><?=Yii::t('general', 'Buy')?></a></li>
+                    <li><a class="rippler rippler-default" href="#"><?=Yii::t('general', 'Rent')?></a></li>
+                    <li><a class="rippler rippler-default" href="<?= Url::to(['/ad/post']) ?>"><?=Yii::t('general', 'Sell')?></a></li>
                 </ul>
                 <form id="search-form" action="<?= Url::to(['site/search']) ?>">
-                    <input autocomplete="off" id="search" name="v" type="text" placeholder="Tìm kiếm nhanh..." />
+                    <input autocomplete="off" id="search" name="v" type="text" placeholder="<?=Yii::t('general', 'Quick Search')?>" />
                     <button type="submit" id="btn-search"><span class="icon"></span></button>
                     <div class="suggest-search hide">
                         <div class="content-suggest">
