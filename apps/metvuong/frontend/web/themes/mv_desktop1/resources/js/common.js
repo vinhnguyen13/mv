@@ -457,7 +457,8 @@ $.fn.price_dt = function (options) {
                 if ( parseInt(i) < 0 ) {
                     continue;
                 }
-                var item = $('<li data-number="'+i+'"><a class="option">'+prices[sc.settings.hinhthuc][i]+'</a></li>');
+                //var item = $('<li data-number="'+i+'"><a class="option">'+prices[sc.settings.hinhthuc][i]+'</a></li>');
+                var item = $('<li data-number="'+i+'"><a class="option">'+formatPrice(i)+'</a></li>');
                 el.find('.wrap-minmax').append(item);
             }
         }else if ( el.data('itemMinmax') == 'area' ) {
