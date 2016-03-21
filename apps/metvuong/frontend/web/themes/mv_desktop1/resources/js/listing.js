@@ -141,7 +141,41 @@ $(document).ready(function(){
 		}
 	}
 
-	$('.choice_price_dt').price_dt();
+	$('.select-others #type').on('change', function () {
+
+		$('.select-price .val-selected div span').hide();
+		
+		$('.select-price .box-dropdown').price_dt({
+			rebuild: true
+		});
+
+		if ( $(this).val() == 1 ) {
+			$('.select-price .box-dropdown').price_dt({
+				hinhthuc: 'mua'
+			});
+		}else if ( $(this).val() == 2 ) {
+			$('.select-price .box-dropdown').price_dt({
+				hinhthuc: 'thue'
+			});
+		}else {
+			$('.select-price .box-dropdown').price_dt();
+		}
+	});
+
+	var typeGet = $('.select-others #type').val();
+	if ( typeGet == 1 ) {
+		$('.select-price .box-dropdown').price_dt({
+			hinhthuc: 'mua'
+		});
+	}else if ( typeGet == 2 ) {
+		$('.select-price .box-dropdown').price_dt({
+			hinhthuc: 'thue'
+		});
+	}else {
+		$('.select-price .box-dropdown').price_dt();
+	}
+
+	$('.select-dt .box-dropdown').price_dt();
 
 	$('.advande-search').toggleShowMobi({
         btnEvent: '.btn-submit',

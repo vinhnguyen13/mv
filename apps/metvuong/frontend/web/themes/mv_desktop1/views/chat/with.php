@@ -48,7 +48,7 @@ $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 					</div>
 				</div>
 			</div>
-			<div class="type-input-chat">
+			<div class="type-input-chat container">
 				<input type="text" id="typingMsg" placeholder="<?=Yii::t('chat', 'Type a message...')?>">
 				<button class="sm-chat"><span class="icon icon-chat-sub"></span></button>
 			</div>

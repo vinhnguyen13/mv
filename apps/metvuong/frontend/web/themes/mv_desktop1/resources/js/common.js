@@ -354,7 +354,8 @@ $.fn.toggleShowMobi = function (options) {
             //styleShow: 1, // 1 relative and 0 absolute
             styleEffect: 'slide', // slideDownUp -> absolute, slideDown and slideUp = slide -> relative
             btnEvent: '.advande-search-btn',
-            itemToggle: '.advande-search'
+            itemToggle: '.advande-search',
+            destroy: false
         },
         sc = {},
         el = $(this),
@@ -364,12 +365,20 @@ $.fn.toggleShowMobi = function (options) {
 
         sc.settings = $.extend({}, defaults, options);
 
+        if ( sc.settings.destroy ) {
+            var domFirst = el.find('.item-dropdown').removeClass('wrap-effect');
+            el.append(domFirst);
+            el.find('.dropdown-up-style').remove();
+            //return;
+        }
+
         if ( sc.settings.styleEffect == 'slideDownUp' ) {
             el.find(sc.settings.itemToggle).addClass('wrap-effect');
             wrapBoxEffect.insertBefore(el.find(sc.settings.itemToggle));
             wrapBoxEffect.append(el.find(sc.settings.itemToggle));
         }
 
+        el.find(sc.settings.btnEvent).unbind('click');
         el.find(sc.settings.btnEvent).on('click', toggleShow);
 
         function toggleShow (e) {
@@ -407,9 +416,9 @@ $.fn.toggleShowMobi = function (options) {
             $(document).on('click', function (e) {
                 var container = el;
                 if ( !container.is(e.target) && container.has(e.target).length === 0 ){
-                    //el.find(sc.settings.btnEvent).removeClass('active');
+                    el.find(sc.settings.btnEvent).removeClass('active');
                     if ( sc.settings.styleEffect == 'slide' ) {
-                        //el.find(sc.settings.itemToggle).velocity("slideUp", { duration: 0 });
+                        el.find(sc.settings.itemToggle).velocity("slideUp", { duration: 0 });
                         //el.find(sc.settings.btnEvent).data('flag',true);
                     }else if ( sc.settings.styleEffect == 'slideDownUp' ) {
                         el.find('.dropdown-up-style').removeClass('active');
@@ -432,8 +441,9 @@ $.fn.price_dt = function (options) {
         var defaults = {
             inputMin: '.input-min',
             inputMax: '.input-max',
-            hinhthuc: 'mua', // co 2 hinh thuc, (thue, cho thue) và (bán,)
-            numRenderMax: 11
+            hinhthuc: '',// mua or thue
+            numRenderMax: 11,
+            rebuild: false 
         },
         sc = {},
         el = $(this);
@@ -442,12 +452,27 @@ $.fn.price_dt = function (options) {
 
         sc.settings = $.extend({}, defaults, options);
 
-        el.toggleShowMobi({
-            styleEffect: 'slideDownUp',
-            btnEvent: '.val-selected',
-            itemToggle: '.wrap-min-max'
-        });
-
+        if ( sc.settings.rebuild ) {
+            el.toggleShowMobi({
+                destroy: true
+            });
+            el.find('.wrap-minmax').html('');
+            var txtMin = el.find('.box-input .min-val').data('text'),
+                txtMax = el.find('.box-input .max-val').data('text');
+            el.find('.box-input .min-val').text(txtMin);
+            el.find('.box-input .max-val').text(txtMax);
+            toggleMinMax ('max-val');
+            el.find('#priceMin').val('');
+            el.find('#priceMax').val('');
+            return;
+        }else {
+            el.toggleShowMobi({
+                styleEffect: 'slideDownUp',
+                btnEvent: '.val-selected',
+                itemToggle: '.wrap-min-max'
+            });
+        }
+        
         if ( el.data('itemMinmax') == 'prices' ) {
             for ( var i in prices[sc.settings.hinhthuc] ) {
                 if ( parseInt(i) < 0 ) {

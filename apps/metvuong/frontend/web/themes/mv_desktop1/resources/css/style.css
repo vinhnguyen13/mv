@@ -3100,7 +3100,7 @@ input[type=text]:focus {
     overflow-y: auto;
 }
 .box-dropdown .item-dropdown li {
-    width: 33.333%;
+    width: 50%;
     float: left;
 }
 .value-selected.active .arrowDown,
@@ -5368,7 +5368,7 @@ input[type=text]:focus {
         padding-left: 20px;
     }
     .map-location .img-show:before {
-        padding-top: 65%
+        padding-top: 47%;
     }
     .m-footer {
         display: none;
@@ -5497,7 +5497,7 @@ footer li a {
     .search-subpage .select-quan-huyen,
     .search-subpage .select-tinh-thanh {
         /* width: 150px; */
-        width: 7%;
+        width: 8%;
     }
     .search-subpage .select-loaibds {
         /* width: 230px; */
@@ -6129,7 +6129,7 @@ footer li a {
         margin-bottom: 10px;
     }
     .date-post {
-        font-size: 18px;
+        font-size: 13px;
         margin-bottom: 10px;
     }
     .wrap-news li .short-txt {

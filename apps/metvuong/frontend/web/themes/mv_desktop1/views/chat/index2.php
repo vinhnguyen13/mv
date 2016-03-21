@@ -63,7 +63,7 @@ Yii::$app->getView()->registerCssFile('/css/chat.css');
         <div class="title-chat clearfix"><em class="fa fa-close pull-right"></em><em class="fa fa-comments"></em>{{to}}</div>
         <div class="wrap-chat clearfix">
         </div>
-        <div class="type-input-chat"><input type="text" id="typingMsg" placeholder="Tin nhắn của bạn...">
+        <div class="type-input-chat container"><input type="text" id="typingMsg" placeholder="Tin nhắn của bạn...">
             <button class="sm-chat"><span class="icon icon-chat-sub"></span></button>
         </div>
     </div>
