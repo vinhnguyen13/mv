@@ -374,13 +374,9 @@ $.fn.toggleShowMobi = function (options) {
 
         function toggleShow (e) {
 
-            if ( !checkMobile() ) { return; }
+            if ( !checkMobile() && e.target.nodeName == "BUTTON" ) { return; }
 
             var _this = $(this);
-
-            /*if ( _this.hasClass('active') && _this.data('flag') ) {
-                _this.data('flag', false);
-            }*/
 
             if ( _this.hasClass('active') ) {
                 _this.removeClass('active');
