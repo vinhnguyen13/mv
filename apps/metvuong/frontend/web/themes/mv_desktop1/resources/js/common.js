@@ -374,7 +374,7 @@ $.fn.toggleShowMobi = function (options) {
 
         function toggleShow (e) {
 
-            //if ( !checkMobile() ) { return; }
+            if ( !checkMobile() ) { return; }
 
             var _this = $(this);
 

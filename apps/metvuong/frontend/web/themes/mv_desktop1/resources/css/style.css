@@ -6147,7 +6147,7 @@ footer li a {
     }
     .select-others .item-dropdown .form-group {
         width: 100%;
-        padding: 0;
+        /* padding: 0; */
     }
     .all-packege {
         background: inherit;
@@ -6379,4 +6379,10 @@ footer li a {
 .box-feature-item .date-post {
     margin: 0 0 3px 0;
     font-size: 14px;
+}
+.wrap-attr-detail li .public_email {
+    width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }

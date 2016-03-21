@@ -192,8 +192,8 @@ $isSearch = Yii::$app->request->get('s');
 										<span class="pull-right icon arrowDown"></span>
 									</div>
 									<div class="item-dropdown hide-dropdown">
-										<div class="form-group">
-											<div class="col-sm-8">
+										<div class="form-group col-xs-12 col-sm-6">
+											<div class="">
 												<?php 
 													$items = [
 														AdProduct::TYPE_FOR_SELL => Yii::t('ad', 'Sell'),
@@ -203,32 +203,32 @@ $isSearch = Yii::$app->request->get('s');
 												<?= Html::activeDropDownList($searchModel, 'type', $items, ['prompt' => $searchModel->getAttributeLabel('type'), 'class' => 'form-control']) ?>
 											</div>
 										</div>
-										<div class="form-group">
-											<div class="col-sm-8">
+										<div class="form-group col-xs-12 col-sm-6">
+											<div class="">
 												<?php 
 													$items = $searchModel->district_id ? ArrayHelper::map($searchModel->district->adWards, 'id', function ($model) { return $model->pre . ' ' . $model->name; }) : [];
 												?>
 												<?= Html::activeDropDownList($searchModel, 'ward_id', $items, ['prompt' => $searchModel->getAttributeLabel('ward_id'), 'class' => 'form-control']) ?>
 											</div>
 										</div>
-										<div class="form-group">
-											<div class="col-sm-8">
+										<div class="form-group col-xs-12 col-sm-6">
+											<div class="">
 												<?php 
 													$items = $searchModel->district_id ? ArrayHelper::map($searchModel->district->adStreets, 'id', function ($model) { return $model->pre . ' ' . $model->name; }) : [];
 												?>
 												<?= Html::activeDropDownList($searchModel, 'street_id', $items, ['prompt' => $searchModel->getAttributeLabel('street_id'), 'class' => 'form-control']) ?>
 											</div>
 										</div>
-										<div class="form-group">
-											<div class="col-sm-8">
+										<div class="form-group col-xs-12 col-sm-6">
+											<div class="">
 												<?php 
 													$items = [AdProduct::OWNER_HOST => Yii::t('ad', 'Owner'), AdProduct::OWNER_AGENT => Yii::t('ad', 'Agent')];
 												?>
 												<?= Html::activeDropDownList($searchModel, 'owner', $items, ['prompt' => Yii::t('ad', Yii::t('ad', 'Owner') . '/' . Yii::t('ad', 'Agent')), 'class' => 'form-control']) ?>
 											</div>
 										</div>
-										<div class="form-group">
-											<div class="col-sm-8">
+										<div class="form-group col-xs-12 col-sm-6">
+											<div class="">
 												<?php
 													$tDay = Yii::t('ad', 'day');
 													$tMonth = Yii::t('ad', 'month');
@@ -248,8 +248,8 @@ $isSearch = Yii::$app->request->get('s');
 												<?= Html::activeDropDownList($searchModel, 'created_before', $items, ['prompt' => Yii::t('ad', 'Any time'), 'class' => 'form-control']) ?>
 											</div>
 										</div>
-										<div class="form-group">
-											<div class="col-sm-8">
+										<div class="form-group col-xs-12 col-sm-6">
+											<div class="">
 												<?php
 													$items = [];
 													for ($i = 1; $i <= 10; $i++) {
@@ -259,8 +259,8 @@ $isSearch = Yii::$app->request->get('s');
 												<?= Html::activeDropDownList($searchModel, 'room_no', $items, ['class' => 'form-control', 'prompt' => Yii::t('ad', 'Beds')]) ?>
 											</div>
 										</div>
-										<div class="form-group">
-											<div class="col-sm-8">
+										<div class="form-group col-xs-12 col-sm-6">
+											<div class="">
 												<?= Html::activeDropDownList($searchModel, 'toilet_no', $items, ['class' => 'form-control', 'prompt' => Yii::t('ad', 'Baths')]) ?>
 											</div>
 										</div>
