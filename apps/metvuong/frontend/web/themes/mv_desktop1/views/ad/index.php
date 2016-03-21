@@ -10,9 +10,8 @@ use yii\helpers\Html;
 use vsoft\ad\models\AdWard;
 use yii\helpers\ArrayHelper;
 use vsoft\ad\models\AdStreet;
+use yii\widgets\LinkPager;
 
-$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/gmap-v2.js', ['position' => View::POS_END]);
-$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=m2Map.loaded', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
 $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/listing.js', ['position' => View::POS_END]);
 
 $categories = AdCategory::find ()->indexBy ( 'id' )->asArray ( true )->all ();
@@ -21,7 +20,13 @@ $types = AdProduct::getAdTypes ();
 $products = $dataProvider->models;
 $pages = $dataProvider->pagination;
 
-$isSearch = Yii::$app->request->get('s');
+$hideSearchForm = Yii::$app->request->get('s') || (Yii::$app->request->get('page', 1) != 1);
+
+$lazyLoadJs = [
+	Yii::$app->view->theme->baseUrl . '/resources/js/listing-map.js',
+	Yii::$app->view->theme->baseUrl . '/resources/js/gmap-v2.js',
+	'https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=m2Map.loaded',
+];
 ?>
 
 <div class="result-listing clearfix">
@@ -35,11 +40,11 @@ $isSearch = Yii::$app->request->get('s');
 				</div> -->
 				<div class="search-subpage">
 					<div class="advande-search clearfix">
-						<div class="toggle-search"<?= $isSearch ? ' style="display: none"' : '' ?>>
+						<div class="toggle-search"<?= $hideSearchForm ? ' style="display: none"' : '' ?>>
 							<div class="frm-item select-tinh-thanh">
 								<div class="box-dropdown dropdown-common">
 									<div class="val-selected style-click">
-										<span class="selected" data-placeholder="Bạn ở tỉnh/thành nào?">Bạn ở tỉnh/thành nào?</span>
+										<span class="selected" data-placeholder="<?= Yii::t('ad', 'City') ?>"><?= Yii::t('ad', 'City') ?></span>
 										<span class="pull-right icon arrowDown"></span>
 									</div>
 									<div class="item-dropdown hide-dropdown">
@@ -51,7 +56,7 @@ $isSearch = Yii::$app->request->get('s');
 							<div class="frm-item select-quan-huyen">
 								<div class="box-dropdown dropdown-common">
 									<div class="val-selected style-click">
-										<span class="selected" data-placeholder="Bạn ở quận/huyện nào?">Bạn ở quận/huyện nào?</span>
+										<span class="selected" data-placeholder="<?= Yii::t('ad', 'District') ?>"><?= Yii::t('ad', 'District') ?></span>
 										<span class="pull-right icon arrowDown"></span>
 									</div>
 									<div class="item-dropdown hide-dropdown">
@@ -63,7 +68,7 @@ $isSearch = Yii::$app->request->get('s');
 							<div class="frm-item select-loaibds">
 								<div class="box-dropdown dropdown-common">
 									<div class="val-selected style-click">
-										<span class="selected" data-placeholder="Loại bất động sản?">Loại bất động sản?</span>
+										<span class="selected" data-placeholder="<?= Yii::t('ad', 'Property Types') ?>"><?= Yii::t('ad', 'Property Types') ?></span>
 										<span class="pull-right icon arrowDown"></span>
 									</div>
 									<div class="item-dropdown hide-dropdown">
@@ -75,7 +80,7 @@ $isSearch = Yii::$app->request->get('s');
 							<div id="du-an-select" class="select-duan frm-item <?= Yii::$app->request->get('project_building') ? '' : 'hide' ?>">
 								<div class="box-dropdown dropdown-common">
 									<div class="val-selected style-click">
-										<span class="selected" data-placeholder="Dự án bạn đang tìm?">Dự án bạn đang tìm?</span>
+										<span class="selected" data-placeholder="<?= Yii::t('ad', 'Project') ?>"><?= Yii::t('ad', 'Project') ?></span>
 										<span class="pull-right icon arrowDown"></span>
 									</div>
 									<div class="item-dropdown hide-dropdown">
@@ -87,22 +92,22 @@ $isSearch = Yii::$app->request->get('s');
 							<div class="frm-item choice_price_dt select-price" data-item-minmax="prices">
 								<div class="box-dropdown">
 									<div class="val-selected style-click price-search">
-										Giá 
+										<?= Yii::t('ad', 'Price') ?> 
 										<div>
-											<span class="tu">từ</span>
-											<span class="wrap-min">1 tỷ</span>
-											<span class="trolen">trở lên</span>
-											<span class="den">đến</span>
-											<span class="wrap-max">4 tỷ</span>
-											<span class="troxuong">trở xuống</span>
+											<span class="tu"><?= Yii::t('ad', 'from') ?></span>
+											<span class="wrap-min"></span>
+											<span class="trolen"><?= Yii::t('ad', 'and above') ?></span>
+											<span class="den"><?= Yii::t('ad', 'to') ?></span>
+											<span class="wrap-max"></span>
+											<span class="troxuong"><?= Yii::t('ad', 'and below') ?></span>
 										</div>
 										<span class="pull-right icon arrowDown"></span>
 									</div>
 									<div class="item-dropdown hide-dropdown wrap-min-max">
 										<div class="box-input clearfix">
-											<span class="txt-min min-max active min-val" data-value="">Thấp nhất</span>
+											<span class="txt-min min-max active min-val" data-value=""><?= Yii::t('ad', 'Min') ?></span>
 											<span class="text-center">Đến</span>
-											<span class="txt-max min-max max-val" data-value="">Cao nhất</span>
+											<span class="txt-max min-max max-val" data-value=""><?= Yii::t('ad', 'Max') ?></span>
 											<?= Html::activeHiddenInput($searchModel, 'price_min', ['id' => 'priceMin']); ?>
 											<?= Html::activeHiddenInput($searchModel, 'price_max', ['id' => 'priceMax']); ?>
 										</div>
@@ -274,7 +279,7 @@ $isSearch = Yii::$app->request->get('s');
 							</div> -->
 						</div>
 						
-						<button class="btn-submit btn-common <?= $isSearch ? '' : 'active' ?>">Tìm kiếm</button>
+						<button class="btn-submit btn-common <?= $hideSearchForm ? '' : 'active' ?>">Tìm kiếm</button>
 					</div>
 				</div>
 				<div class="dropdown-select option-show-listing">
@@ -347,13 +352,18 @@ $isSearch = Yii::$app->request->get('s');
 					<div class="container" id="no-result">Chưa có tin đăng theo tìm kiếm của bạn, <a href="#">đăng ký nhận thông báo khi có tin đăng phù hợp</a>.</div>
 					<?php endif; ?>
 				</div>
-				<div id="item-loading" style="text-align: center;" class="<?php if($pages->page >= $pages->pageCount - 1) echo 'hide' ?>">
-					<img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/loading-listing.gif' ?>" />
-				</div>
+				<nav class="text-center">
+	            <?php
+	                echo LinkPager::widget([
+	                    'pagination' => $pages,
+						'maxButtonCount' => 5
+	                ]);
+	            ?>
+	            </nav>
 			</div>
 		</div>
 	</div>
 	<div class="wrap-map-listing">
-		<div id="map" class="inner-wrap"></div>
+		<div id="map" class="inner-wrap" data-url="<?= Url::to(['/ad/map']) ?>" data-src="<?= Html::encode(json_encode($lazyLoadJs)) ?>"></div>
 	</div>
 </div>
