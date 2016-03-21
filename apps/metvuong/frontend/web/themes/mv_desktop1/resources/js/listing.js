@@ -42,6 +42,8 @@ $(document).ready(function(){
 					resource.src = src[i];
 					var script = document.getElementsByTagName('script')[0];
 					script.parentNode.insertBefore(resource, script);
+					
+					console.log('insert ' + src[i]);
 				}
 			}
 		},
