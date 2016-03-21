@@ -194,7 +194,17 @@ $isSearch = Yii::$app->request->get('s');
 									</div>
 									<div class="item-dropdown hide-dropdown">
 										<div class="form-group">
-											<label for="" class="col-sm-4 control-label"><?= $searchModel->getAttributeLabel('ward_id') ?></label>
+											<div class="col-sm-8">
+												<?php 
+													$items = [
+														AdProduct::TYPE_FOR_SELL => Yii::t('ad', 'Sell'),
+														AdProduct::TYPE_FOR_RENT => Yii::t('ad', 'Rent'),
+													];
+												?>
+												<?= Html::activeDropDownList($searchModel, 'ward_id', $items, ['prompt' => $searchModel->getAttributeLabel('type'), 'class' => 'form-control']) ?>
+											</div>
+										</div>
+										<div class="form-group">
 											<div class="col-sm-8">
 												<?php 
 													$items = $searchModel->district_id ? ArrayHelper::map($searchModel->district->adWards, 'id', function ($model) { return $model->pre . ' ' . $model->name; }) : [];
@@ -203,7 +213,6 @@ $isSearch = Yii::$app->request->get('s');
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="" class="col-sm-4 control-label"><?= $searchModel->getAttributeLabel('street_id') ?></label>
 											<div class="col-sm-8">
 												<?php 
 													$items = $searchModel->district_id ? ArrayHelper::map($searchModel->district->adStreets, 'id', function ($model) { return $model->pre . ' ' . $model->name; }) : [];
@@ -212,16 +221,14 @@ $isSearch = Yii::$app->request->get('s');
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="" class="col-sm-4 control-label">Người đăng</label>
 											<div class="col-sm-8">
 												<?php 
 													$items = [AdProduct::OWNER_HOST => Yii::t('ad', 'Owner'), AdProduct::OWNER_AGENT => Yii::t('ad', 'Agent')];
 												?>
-												<?= Html::activeDropDownList($searchModel, 'owner', $items, ['prompt' => Yii::t('ad', 'All'), 'class' => 'form-control']) ?>
+												<?= Html::activeDropDownList($searchModel, 'owner', $items, ['prompt' => Yii::t('ad', Yii::t('ad', 'Owner') . '/' . Yii::t('ad', 'Agent')), 'class' => 'form-control']) ?>
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="" class="col-sm-4 control-label">Ngày đăng</label>
 											<div class="col-sm-8">
 												<?php
 													$tDay = Yii::t('ad', 'day');
@@ -243,7 +250,6 @@ $isSearch = Yii::$app->request->get('s');
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="" class="col-sm-4 control-label">Phòng ngủ</label>
 											<div class="col-sm-8">
 												<?php
 													$items = [];
@@ -251,13 +257,12 @@ $isSearch = Yii::$app->request->get('s');
 														$items[$i] = $i . '+';
 													}
 												?>
-												<?= Html::activeDropDownList($searchModel, 'room_no', $items, ['class' => 'form-control', 'prompt' => '0+']) ?>
+												<?= Html::activeDropDownList($searchModel, 'room_no', $items, ['class' => 'form-control', 'prompt' => Yii::t('ad', 'Beds')]) ?>
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="" class="col-sm-4 control-label">Phòng tắm</label>
 											<div class="col-sm-8">
-												<?= Html::activeDropDownList($searchModel, 'toilet_no', $items, ['class' => 'form-control', 'prompt' => '0+']) ?>
+												<?= Html::activeDropDownList($searchModel, 'toilet_no', $items, ['class' => 'form-control', 'prompt' => Yii::t('ad', 'Baths')]) ?>
 											</div>
 										</div>
 									</div>
@@ -288,6 +293,7 @@ $isSearch = Yii::$app->request->get('s');
 						<?= Html::activeHiddenInput($searchModel, 'order_by', ['id' => 'sort', 'class' => 'value_selected']) ?>
 					</div>
 				</div>
+				<input type="hidden" name="s" value="1" />
 			</form>
 			<div class="wrap-listing clearfix">
 				<div id="content-holder">
