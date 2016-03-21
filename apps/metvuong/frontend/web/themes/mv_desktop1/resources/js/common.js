@@ -903,7 +903,7 @@ $.fn.popupMobi = function (options) {
 function checkMobile () {
     var wWindow = $(window).outerWidth();
 
-    if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || wWindow <= 985 ) {
+    if ( wWindow <= 985 ) { ///Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
         return true;
     }
     return false;
