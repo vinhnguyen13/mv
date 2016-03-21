@@ -127,7 +127,18 @@ class AdController extends Controller
 		$searchModel = new AdProductSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->get());
 		
-		return $this->render('index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider]);
+		if(Yii::$app->request->isAjax) {
+			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+			
+			$dataProvider->pagination = false;
+			
+			return $dataProvider->models;
+		} else {
+			$searchModel->fetchValues();
+			
+			return $this->render('index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider]);
+		}
+		
 		
 // 		return $this->listingMobile();
 //     	if(Yii::$app->mobileDetect->isMobile()) {

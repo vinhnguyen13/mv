@@ -35,7 +35,6 @@ class AdProductSearch extends AdProduct {
 	
 	function search($params) {
 		$this->load($params);
-		$this->fetchValues();
 		
 		$sort = $this->order_by ? $this->order_by : '-created_at';
 		$doa = SORT_ASC;
