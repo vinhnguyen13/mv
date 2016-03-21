@@ -38,7 +38,10 @@ $(document).ready(function(){
 				var src = mapEl.data('src');
 
 				for(var i = 0; i < src.length; i++) {
-					$.getScript(src[i]);
+					var resource = document.createElement('script'); 
+					resource.src = src[i];
+					var script = document.getElementsByTagName('script')[0];
+					script.parentNode.insertBefore(resource, script);
 				}
 			}
 		},

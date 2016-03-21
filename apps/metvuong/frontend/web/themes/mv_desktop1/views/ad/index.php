@@ -11,20 +11,19 @@ use vsoft\ad\models\AdWard;
 use yii\helpers\ArrayHelper;
 use vsoft\ad\models\AdStreet;
 use yii\widgets\LinkPager;
+use common\models\AdCity;
+use vsoft\ad\models\AdDistrict;
 
 $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/listing.js', ['position' => View::POS_END]);
 
 $categories = AdCategory::find ()->indexBy ( 'id' )->asArray ( true )->all ();
 $types = AdProduct::getAdTypes ();
 
-$products = $dataProvider->models;
-$pages = $dataProvider->pagination;
-
 $hideSearchForm = Yii::$app->request->get('s') || (Yii::$app->request->get('page', 1) != 1);
 
 $lazyLoadJs = [
-	Yii::$app->view->theme->baseUrl . '/resources/js/listing-map.js',
 	Yii::$app->view->theme->baseUrl . '/resources/js/gmap-v2.js',
+	Yii::$app->view->theme->baseUrl . '/resources/js/listing-map.js',
 	'https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=m2Map.loaded',
 ];
 ?>
@@ -312,7 +311,7 @@ $lazyLoadJs = [
 								<div class="item-listing">
 									<div class="bgcover img-intro">
 										<div>
-											<a class="rippler rippler-default" href="<?= $product->urlDetail(); ?>"><img src="" data-original="<?= $product->representImage ?>"></a>
+											<a class="rippler rippler-default" href="<?= $product->urlDetail(); ?>"><img src="" data-original="<?= $product->image_file_name ? AdImages::getImageUrl($product->image_folder, $product->image_file_name) : AdImages::defaultImage() ?>"></a>
 										</div>
 									</div>
 									<div class="attrs-item">

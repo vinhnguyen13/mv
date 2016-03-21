@@ -31,6 +31,9 @@ class AdProduct extends AP
 	private $oldAttr = [];
 	private static $elasticUpdateFields = ['city', 'district', 'ward', 'street', 'project_building'];
 	
+	public $image_file_name;
+	public $image_folder;
+	
 	public function rules()
 	{
 		return [

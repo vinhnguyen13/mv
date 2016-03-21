@@ -25,10 +25,14 @@ class AdImages extends AI
     }
     
     public function getUrl($size = self::SIZE_MEDIUM) {
-    	if($this->folder) {
+    	return self::getImageUrl($this->folder, $this->file_name);
+    }
+    
+    public static function getImageUrl($folder, $fileName, $size = self::SIZE_MEDIUM) {
+    	if($folder) {
     		$sizeFolder = AdImageHelper::makeFolderName(AdImageHelper::$sizes[$size]);
     		 
-    		return "/store/{$this->folder}/$sizeFolder/{$this->file_name}";
+    		return "/store/$folder/$sizeFolder/$fileName";
     	} else {
     		$defaultSize = '745x510';
     		
@@ -38,7 +42,7 @@ class AdImages extends AI
     			$s = $defaultSize;
     		}
     		
-    		return str_replace($defaultSize, $s, $this->file_name);
+    		return str_replace($defaultSize, $s, $fileName);
     	}
     }
     

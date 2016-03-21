@@ -125,19 +125,42 @@ class AdController extends Controller
 		];
 		
 		$searchModel = new AdProductSearch();
-		$dataProvider = $searchModel->search(Yii::$app->request->get());
+		$searchQuery = $searchModel->search(Yii::$app->request->get());
 		
 		if(Yii::$app->request->isAjax) {
 			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 			
-			$dataProvider->pagination = false;
+			$products = $searchQuery->asArray(true)->all();
 			
-			return $dataProvider->models;
+			return $products;
 		} else {
 			$searchModel->fetchValues();
 			
-			return $this->render('index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider]);
+			$countQuery = clone $searchQuery;
+			$pages = new Pagination(['totalCount' => $countQuery->count()]);
+			$pages->setPageSize(24);
+			
+    		$products = $searchQuery->with(['city', 'district', 'ward', 'street'])->offset($pages->offset)->limit($pages->limit)->all();
+			
+			return $this->render('index', ['searchModel' => $searchModel, 'pages' => $pages, 'products' => $products]);
 		}
+		
+		
+		
+// 		$searchModel = new AdProductSearch();
+// 		$dataProvider = $searchModel->search(Yii::$app->request->get());
+		
+// 		if(Yii::$app->request->isAjax) {
+// 			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+			
+// 			$dataProvider->pagination = false;
+			
+// 			return $dataProvider->models;
+// 		} else {
+// 			$searchModel->fetchValues();
+			
+// 			return $this->render('index', ['searchModel' => $searchModel, 'dataProvider' => $dataProvider]);
+// 		}
 		
 		
 // 		return $this->listingMobile();
