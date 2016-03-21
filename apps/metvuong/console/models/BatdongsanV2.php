@@ -740,7 +740,7 @@ class BatdongsanV2 extends Component
                                             'user_id' => null,
                                             'product_id' => $i,
                                             'file_name' => $imageValue,
-                                            'upload_at' => time()
+                                            'uploaded_at' => time()
                                         ];
                                         $bulkImage[] = $imageRecord;
                                     }
@@ -997,7 +997,7 @@ class BatdongsanV2 extends Component
                                     'user_id' => null,
                                     'product_id' => $i,
                                     'file_name' => $imageValue,
-                                    'upload_at' => time()
+                                    'uploaded_at' => time()
                                 ];
                                 $bulkImage[] = $imageRecord;
                             }
