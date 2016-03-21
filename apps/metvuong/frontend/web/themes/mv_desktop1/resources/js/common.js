@@ -393,6 +393,7 @@ $.fn.toggleShowMobi = function (options) {
                     },250);
                 }
             }else {
+                e.preventDefault();
                 _this.addClass('active');
                 if ( sc.settings.styleEffect == 'slide' ) {
                     el.find(sc.settings.itemToggle).velocity("slideDown", { duration: 350 });
@@ -413,7 +414,7 @@ $.fn.toggleShowMobi = function (options) {
                     el.find(sc.settings.btnEvent).removeClass('active');
                     if ( sc.settings.styleEffect == 'slide' ) {
                         el.find(sc.settings.itemToggle).velocity("slideUp", { duration: 0 });
-                        el.find(sc.settings.btnEvent).data('flag',true);
+                        //el.find(sc.settings.btnEvent).data('flag',true);
                     }else if ( sc.settings.styleEffect == 'slideDownUp' ) {
                         el.find('.dropdown-up-style').removeClass('active');
                         setTimeout(function() {

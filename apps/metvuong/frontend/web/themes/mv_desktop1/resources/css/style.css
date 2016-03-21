@@ -526,7 +526,7 @@ margin-top: 3px;
 }
 .attr-detail,
 .infor-listing {
-    padding: 10px 20px;
+    padding: 10px 0;
     font-size: 1.1em;
     color: #717171;
     /* border-bottom: solid 1px #a5a5a5; */
@@ -756,7 +756,7 @@ label {
 .infor-by-up {
     font-weight: 400;
     font-size: 14px;
-    padding: 10px 20px;
+    padding: 10px 0;
     border-bottom: solid 1px #a5a5a5;
 }
 .item-listing .infor-by-up {
@@ -1728,7 +1728,7 @@ label {
 }
 .panel-heading a {
     display: block;
-    padding: 15px 20px;
+    padding: 15px 0;
 }
 .panel-group .panel {
     box-shadow: 0px 0px 0px;
@@ -1821,7 +1821,7 @@ label {
     background-position: 0 -580px;
     position: absolute;
     top: 21px;
-    right: 15px;
+    right: 0;
 }
 .panel-heading .panel-title a.collapsed span {
     background-position: 0 -556px;
@@ -2303,7 +2303,7 @@ footer {
     width: 100%;
 }
 .wrap-list-duan {
-    padding: 25px 15px 0;
+    padding: 25px 0 0;
     margin-bottom: 30px;
 }
 .wrap-list-duan li {
