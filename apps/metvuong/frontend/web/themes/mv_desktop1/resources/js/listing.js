@@ -10,6 +10,10 @@ function gmapV2Load() {
 	
 }
 
+var map = {
+	
+}
+
 $(document).ready(function(){
 	searchForm = $('#search-form');
 	submitButton = $('.btn-submit');
@@ -61,7 +65,7 @@ $(document).ready(function(){
 			}
 			
 			getListingLocation(function(result){
-				
+				console.log(result);
 			});
 		},
 		disable: function() {

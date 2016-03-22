@@ -35,6 +35,7 @@ class AdProductSearch extends AdProduct {
 	
 	function search($params) {
 		$this->load($params);
+		$this->fetchValues();
 		
 		$query = AdProduct::find();
 		$query->select('ad_product.id, ad_product.city_id, ad_product.district_id, ad_product.ward_id, ad_product.street_id, ad_product.lat, ad_product.lng,
@@ -64,10 +65,6 @@ class AdProductSearch extends AdProduct {
 		}
 		
 		if(count($where) == 1) {
-			if(!$this->city_id) {
-				$this->city_id = 1;
-			}
-			
 			$where['city_id'] = intval($this->city_id);
 		}
 
@@ -141,6 +138,8 @@ class AdProductSearch extends AdProduct {
 		if(!$this->city_id) {
 			if($this->district_id) {
 				$this->city_id = $this->district->city->id;
+			} else {
+				$this->city_id = self::DEFAULT_CITY;
 			}
 		}
 	}
