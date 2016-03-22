@@ -235,17 +235,7 @@ $this->registerJs($script, View::POS_BEGIN);
 										<span class="pull-right icon arrowDown"></span>
 									</div>
 									<div class="item-dropdown hide-dropdown">
-										<div class="form-group col-xs-12 col-sm-6">
-											<div class="">
-												<?php 
-													$items = [
-														AdProduct::TYPE_FOR_SELL => Yii::t('ad', 'Sell'),
-														AdProduct::TYPE_FOR_RENT => Yii::t('ad', 'Rent'),
-													];
-												?>
-												<?= Html::activeDropDownList($searchModel, 'type', $items, ['prompt' => $searchModel->getAttributeLabel('type'), 'class' => 'form-control']) ?>
-											</div>
-										</div>
+										<?= Html::activeHiddenInput($searchModel, 'type') ?>
 										<div class="form-group col-xs-12 col-sm-6">
 											<div class="">
 												<?php 

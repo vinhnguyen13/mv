@@ -68,9 +68,7 @@ class AdProductSearch extends AdProduct {
 			$where['city_id'] = intval($this->city_id);
 		}
 
-		if($this->type) {
-			$where['type'] = intval($this->type);
-		}
+		$where['type'] = intval($this->type);
 		
 		if($this->category_id) {
 			$where['category_id'] = intval($this->category_id);
@@ -141,6 +139,10 @@ class AdProductSearch extends AdProduct {
 			} else {
 				$this->city_id = self::DEFAULT_CITY;
 			}
+		}
+		
+		if(!$this->type) {
+			$this->type = AdProduct::TYPE_FOR_SELL;
 		}
 	}
 }
