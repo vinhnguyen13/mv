@@ -171,6 +171,7 @@ header {
     -moz-border-radius: 0;
     -ms-border-radius: 0;
     border: solid 1.5px #dedede;
+    box-shadow: 0px 0px 5px #EAEAEA;
 }
 .search-subpage .choice_price_dt input {
     padding-right: 0;
@@ -414,7 +415,7 @@ header {
     font-size: 13px;
 }
 ::-webkit-input-placeholder {
-   color: #4e4e4e !important;
+   color: #9c9c9c !important;
 }
 :-moz-placeholder { /* Firefox 18- */
    color: #4e4e4e !important;
@@ -3280,7 +3281,7 @@ input[type=text]:focus {
     background: url(../images/loading-listing.gif) no-repeat center;
 }
 .logo-search-box img {
-    width: 49%;
+    width: 25%;
     max-width: 240px;
 }
 .news-item {
@@ -6492,13 +6493,14 @@ footer li a {
 .info-wrap-single {
     position: relative;
     background: #fff;
-    width: 150px;
+    width: auto;
     box-shadow: 0 0 10px #333;
     text-align: center;
 }
 .info-wrap-single .infoContent {
     padding: 0 5px 5px;
     text-align: left;
+    width: 150px;
 }
 .info-wrap-multiple .img-show,
 .info-wrap-single .infoContent .img-show {
@@ -6526,7 +6528,6 @@ footer li a {
     margin-left: -10px;
 }
 .info-wrap-multiple {
-    width: 200px;
     overflow: hidden;
     margin: 0 auto 0;
 }
@@ -6534,10 +6535,11 @@ footer li a {
     margin-bottom: 15px;
 }
 .gm-style-iw > div {
-    width: auto !important;
+    width: 220px !important;
     max-width: inherit !important;
 }
 .gm-style .gm-style-iw {
-    left: 0 !important;
+    left: 25px !important;
     width: auto !important;
+    top: 22px !important;
 }
