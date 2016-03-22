@@ -389,6 +389,145 @@ $this->registerJs($script, View::POS_BEGIN);
 					<div class="container" id="no-result">Chưa có tin đăng theo tìm kiếm của bạn, <a href="#">đăng ký nhận thông báo khi có tin đăng phù hợp</a>.</div>
 					<?php endif; ?>
 				</div>
+
+				<div class="detail-listing-dt">
+					<div class="detail-listing">
+						<a href="#" class="btn-close"><span class="icon icon-close"></span></a>
+						<div class="container">
+							<div class="gallery-detail swiper-container">
+								<div class="swiper-wrapper">
+									<div class="swiper-slide">
+										<div class="img-show">
+											<div>
+												<img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/22311_Khai-truong-Pearl-Plaza-7.jpg' ?>" alt="">
+											</div>
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="img-show">
+											<div>
+												<img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/22311_Khai-truong-Pearl-Plaza-7.jpg' ?>" alt="">
+											</div>
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="img-show">
+											<div>
+												<img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/22311_Khai-truong-Pearl-Plaza-7.jpg' ?>" alt="">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="swiper-pagination"></div>
+							</div>
+
+							<p class="infor-by-up">Căn hộ chung cư Bán</p>
+							<div class="infor-listing">
+								<div class="address-listing">
+									<p>Quận 2, Hồ Chí Minh</p>
+								</div>
+								<p class="id-duan">ID:<span>MV3333</span></p>
+								<ul class="clearfix list-attr-td">
+									<li> <span class="icon icon-dt icon-dt-small"></span>97m2 
+									</li>											
+								</ul>
+								<ul class="pull-right icons-detail">
+									<li><a href="#popup-share-social" class="icon icon-share-td"></a></li>
+						            <li><a href="#" class="icon save-item " data-id="3333" data-url="/ad/favorite"></a></li>
+						            <li><a href="#popup-map" class="icon icon-map-loca"></a></li>
+								</ul>
+								<p class="price-td"><span>Giá</span>2,85 tỷ</p>
+							</div>
+							<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+						        <div class="panel panel-default">
+						            <div class="panel-heading" role="tab" id="headingOne">
+						                <h4 class="panel-title">
+						                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+						                        Diễn tả chi tiết<span class="icon"></span>
+						                    </a>
+						                </h4>
+						            </div>
+						            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+						                <div class="panel-body" name="about" placeholder="Vui lòng chia sẻ tiểu sử">
+						                    <p>- Do nhu cầu kinh doanh mở rộng, mình bán gấp Lexington 3PN, lầu thấp, tháp C.<br>DT 97m2, có bancolny, thiết kế 3 phòng ngủ rất hiện đại, view công viên, Vivo City, vòng xoay đài phun nước rất đẹp.<br><br>- Tháng 1/2016 nhận nhà ở liền.<br>Ở đây rất thích hợp gia đình ở, hoặc đầu tư cho thuê rất tốt (giá thuê đến 900 usd).<br><br>Nay mình dể lại giá: 2 tỷ 850tr, bao hết chi phí sang tên. (Giá này hiện tại thấp nhất thị trường).<br>Tiếp báo và trung gian. (phí giới thiệu 0,5 %).<br>Xin LH: 0933.982.856 gặp Anh Kiệt.</p>
+						                </div>
+						            </div>
+						        </div>
+						        <div class="panel panel-default">
+						            <div class="panel-heading" role="tab" id="headingTwo">
+						                <h4 class="panel-title">
+						                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+						                        Thông tin chi tiết<span class="icon"></span>
+						                    </a>
+						                </h4>
+						            </div>
+						            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+						                <div class="panel-body" name="activity" contenteditable="true">
+						                	<ul class="clearfix list-tienich-detail">
+							                	<li><strong>Diện tích:</strong> 97m2</li>
+											</ul>
+						                </div>
+						            </div>
+						        </div>
+						        <div class="panel panel-default">
+						            <div class="panel-heading" role="tab" id="headingFour">
+						                <h4 class="panel-title">
+						                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+						                        Tiện ích<span class="icon"></span>
+						                    </a>
+						                </h4>
+						            </div>
+						            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+						                <div class="panel-body" name="experience" placeholder="Vui lòng nhập chia sẻ kinh nghiệm">
+						                    
+						                </div>
+						            </div>
+						        </div>
+						        <div class="panel panel-default">
+						            <div class="panel-heading" role="tab" id="headingSeven">
+						                <h4 class="panel-title">
+						                    <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEght" aria-expanded="false" aria-controls="collapseSeven">
+						                        Liên hệ<span class="icon"></span>
+						                    </a>
+						                </h4>
+						            </div>
+						            <div id="collapseEght" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven">
+						                <div class="panel-body text-center">
+						            	    <div class="infor-agent clearfix">
+									        	<a class="wrap-img" href="#"><img src="/frontend/web/themes/mv_desktop1/resources/images/default-avatar.jpg" alt=""></a>
+									            				            <div class="img-agent">
+										            <a href="#" class="name-agent"></a>
+													<div class="rating-start">
+														<fieldset class="rate">
+															<input type="radio" id="rating10" name="rating" value="10"> <label for="rating10" title="5 stars"> </label> <input type="radio" id="rating9" name="rating" value="9"> <label for="rating9" class="half" title="5 stars"> </label> <input type="radio" id="rating8" name="rating" value="8"> <label for="rating8" title="4 stars"> </label> <input type="radio" id="rating7" name="rating" value="7"> <label for="rating7" class="half" title="4 stars"> </label> <input type="radio" id="rating6" name="rating" value="6"> <label for="rating6" title="3 stars"> </label>
+															<input type="radio" id="rating5" name="rating" value="5"> <label for="rating5" class="half" title="3 stars"> </label> <input type="radio" id="rating4" name="rating" value="4"> <label for="rating4" title="2 stars"> </label> <input type="radio" id="rating3" name="rating" value="3"> <label for="rating3" class="half" title="2 stars"> </label> <input type="radio" id="rating2" name="rating" value="2"> <label for="rating2" title="1 stars"> </label> <input type="radio" id="rating1" name="rating" value="1"> <label for="rating1" class="half" title="1 stars"> </label>
+														</fieldset>
+													</div>
+																					<div class="item-agent">
+														<div>
+															<span class="icon icon-phone"></span>
+														</div>
+														<a href="tel:0983939191">0983939191</a>
+													</div>
+																													<div class="item-agent">
+														<div>
+															<span class="icon address-icon"></span>
+														</div>
+														Ho Chi Minh City, Vietnam
+													</div>
+												</div>
+											</div>
+											<div class="text-center">
+												<a href="#popup-email" id="" class="email-btn btn-common btn-small">Email</a>
+																		</div>
+						                </div>
+						            </div>
+
+						        </div>
+						    </div>
+					    </div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -396,3 +535,13 @@ $this->registerJs($script, View::POS_BEGIN);
 		<div id="map" class="inner-wrap"></div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function () {
+		var swiper = new Swiper('.swiper-container', {
+			pagination: '.swiper-pagination',
+			paginationClickable: true,
+	        spaceBetween: 30
+	    });
+	});
+</script>

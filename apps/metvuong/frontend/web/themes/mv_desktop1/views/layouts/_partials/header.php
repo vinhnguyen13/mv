@@ -108,6 +108,9 @@ use frontend\models\AdProductSearch;
                             </div>
                         </a>
                     </div>
+                    <div class="noti-all">
+                        <a href="#"><span class="icon icon-alert"></span><span class="notifi">5</span></a>
+                    </div>
                     <div class="box-dropdown">
                         <a href="#" class="icon-settings val-selected"></a>
                         <div class="item-dropdown hide-dropdown">
