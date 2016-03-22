@@ -77,11 +77,6 @@ class NewsController extends Controller
         return $this->render('detail', ['news' => $detail]);
     }
 
-    public function actionFindnotfound()
-    {
-        return $this->render('404');
-    }
-
     public function actionList($cat_id)
     {
         $query = CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief', 'cms_show.created_at','cms_show.catalog_id', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])

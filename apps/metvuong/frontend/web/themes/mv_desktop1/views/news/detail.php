@@ -9,8 +9,7 @@
 
 use yii\helpers\Url;
 
-$newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatID"] : 0;
-$catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID]);
+
 
 Yii::$app->view->registerMetaTag([
     'name' => 'keywords',
@@ -66,28 +65,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 <div class="title-fixed-wrap">
     <div class="container">
         <div class="detail-news page-news">
-            <div class="title-top clearfix">
-                <div class="list-menu-news swiper-container">
-                    <div class="container">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <a class="active" href="<?=Url::to(['news/index'])?>"><?=Yii::t('news','All')?></a>
-                            </div>
-                            <?php if(!empty($catalogs)){?>
-                            <?php foreach($catalogs as $catalog){?>
-                                    <div class="swiper-slide">
-                                        <a href="<?=\yii\helpers\Url::to(['news/list', 'cat_id'=>$catalog->id, 'cat_slug'=>$catalog->slug])?>"><?=Yii::t('news', $catalog->title)?></a>
-                                    </div>
-                            <?php }?>
-                            <?php }?>
-                        </div>
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                    </div>
-                </div>
-                <h2>TIN TỨC</h2>
-            </div>
-
+            <?= $this->render('/news/_partials/menu', ['cat_id'=>$news->catalog_id]); ?>
             <div class="wrap-detail-article">
                 <input id="current_id" type="hidden" value="<?=$news->id?>">
                 <input id="current_slug" type="hidden" value="<?=$news->slug?>">

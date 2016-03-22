@@ -9,27 +9,7 @@ $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID, 'st
 <div class="title-fixed-wrap">
     <div class="container">
         <div class="page-news">
-            <div class="title-top clearfix">
-                <div class="list-menu-news swiper-container">
-                    <div class="container">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <a href="<?=Url::to(['news/index'])?>"><?=Yii::t('news','All')?></a>
-                            </div>
-                            <?php if(!empty($catalogs)){?>
-                                <?php foreach($catalogs as $catalog){?>
-                                    <div class="swiper-slide">
-                                        <a <?=($cat_id == $catalog->id) ? 'class="active"' : '';?> href="<?=Url::to(['news/list', 'cat_id'=>$catalog->id, 'cat_slug'=>$catalog->slug])?>"><?=$catalog->title?></a>
-                                    </div>
-                                <?php }?>
-                            <?php }?>
-                        </div>
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
-                    </div>
-                </div>
-                <h2><?=Yii::t('news','NEWS')?></h2>
-            </div>
+            <?= $this->render('/news/_partials/menu', ['cat_id'=>$cat_id]); ?>
             <?php if(count($news)){?>
                 <div class="wrap-news">
                     <ul class="clearfix row">
