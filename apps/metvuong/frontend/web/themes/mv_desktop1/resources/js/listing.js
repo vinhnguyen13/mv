@@ -514,12 +514,20 @@ $(document).ready(function(){
 						var marker = map.getMarker($(this).data('id'));
 						marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
 						marker.setIcon(map.icon(marker.get('ids').length, 1));
-						map.gmap.setCenter(marker.getPosition());
+						
+						var position = marker.getPosition();
+						
+						if(!map.gmap.getBounds().contains(position)) {
+							map.gmap.setCenter(position);
+						}
 					}
 				});
 				
 				listingList.on('mouseleave', 'a', function(e){
-					
+					if(map.currentState == 'detail') {
+						var marker = map.getMarker($(this).data('id'));
+						marker.setIcon(map.icon(marker.get('ids').length, 1));
+					}
 				});
 			}
 		},
