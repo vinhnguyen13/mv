@@ -80,7 +80,7 @@ use frontend\models\AdProductSearch;
                 <?php if(Yii::$app->user->isGuest){?>
                 <div class="box-dropdown guest-dropdown">
                     <a href="#" class="icon-guest val-selected wrap-img">
-                        <img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/MV-Agent Photo.jpg' ?>" alt="">
+                        <div><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/MV-Agent Photo.jpg' ?>" alt=""></div>
                         Guest
                         <span class="icon arrowDown"></span>
                     </a>
@@ -88,14 +88,19 @@ use frontend\models\AdProductSearch;
                         <ul class="clearfix">
                             <li><a href="<?=Url::to(['/member/login'])?>" class="user-login-link"><?=Yii::t('user', 'Sign In')?></a></li>
                             <li><a href="<?=Url::to(['/member/signup'])?>" class="user-signup-link"><?=Yii::t('user', 'Sign Up')?></a></li>
-                            <li class="flag-us"><a href="<?=Url::current(['language-change'=>'en-US'])?>"></a></li>
-                            <li class="flag-vn"><a href="<?=Url::current(['language-change'=>'vi-VN'])?>"></a></li>
+                            <li class="flag-lang">
+                                <div class="pull-right">
+                                    <a href="<?=Url::current(['language-change'=>'en-US'])?>"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/flag-en.png' ?>" alt=""></a>
+                                    <a href="<?=Url::current(['language-change'=>'vi-VN'])?>"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/flag-vn.png' ?>" alt=""></a>
+                                </div>
+                                Language
+                            </li>
                         </ul>
                     </div>
                 </div>
                 <?php } else{?>
                     <div class="user-edit">
-                        <a href="<?=Url::to(['member/profile', 'username'=>Yii::$app->user->identity->username])?>">
+                        <a href="<?=Url::to(['member/profile', 'username'=>Yii::$app->user->identity->username])?>" title="Trang cá nhân">
                             <span class="wrap-img"><img src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="" width="40" height="40"></span>
                             <div>
                                 <p><span class="name-user"><?=Yii::$app->user->identity->profile->getDisplayName();?></span>
@@ -103,24 +108,33 @@ use frontend\models\AdProductSearch;
                             </div>
                         </a>
                     </div>
+                    <div class="notifile">
+                        <a href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyOther"><div><span class="icon icon-alert"></span></div>
+                            <?php if(!empty($this->params['notify_other'])){?>
+                                <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
+                            <?php }?>
+                        </a>
+                    </div>
                     <div class="box-dropdown">
                         <a href="#" class="icon-settings val-selected"></a>
                         <div class="item-dropdown hide-dropdown">
                             <ul class="clearfix">
                                 <!-- <li><a href="<?= Url::to(['/ad/post']) ?>"><em class="icon-plus"></em>Đăng tin mới</a></li> -->
-                                <li><a href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyOther"><div><span class="icon icon-alert"></span></div><?=Yii::t('activity', 'Notification')?>
-                                        <?php if(!empty($this->params['notify_other'])){?>
-                                            <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
-                                        <?php }?>
-                                    </a></li>
                                 <li><a href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>"><div><span class="icon icon-listings"></span></div><?=Yii::t('ad', 'Listings')?></a></li>
                                 <li><a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyChat"><div><span class="icon icon-chat"></span></div><?=Yii::t('chat', 'Chat')?>
                                         <?php if(!empty($this->params['notify_chat'])){?>
                                             <span id="notifyChat" class="notifi"><?=$this->params['notify_chat'];?></span>
                                         <?php }?>
                                     </a></li>
-                                <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon icon-per"></span></div><?=Yii::t('user', 'Account')?></a></li>
+                                <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon icon-per"></span></div><?=Yii::t('user', 'Settings')?></a></li>
                                 <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><div><span class="icon icon-logout"></span></div><?=Yii::t('user', 'Log Out')?></a></li>
+                                <li class="flag-lang">
+                                    <div class="pull-right">
+                                        <a href="<?=Url::current(['language-change'=>'en-US'])?>"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/flag-en.png' ?>" alt=""></a>
+                                        <a href="<?=Url::current(['language-change'=>'vi-VN'])?>"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/flag-vn.png' ?>" alt=""></a>
+                                    </div>
+                                    Language
+                                </li>
                             </ul>
                         </div>
                     </div>

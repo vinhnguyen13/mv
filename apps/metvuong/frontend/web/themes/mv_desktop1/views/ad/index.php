@@ -350,19 +350,19 @@ $this->registerJs($script, View::POS_BEGIN);
 							</li>
 							<?php endforeach; ?>
 						</ul>
+						<nav class="text-center">
+				            <?php
+				                echo LinkPager::widget([
+				                    'pagination' => $pages,
+									'maxButtonCount' => 5
+				                ]);
+				            ?>
+			            </nav>
 					</div>
 					<?php else: ?>
 					<div class="container" id="no-result">Chưa có tin đăng theo tìm kiếm của bạn, <a href="#">đăng ký nhận thông báo khi có tin đăng phù hợp</a>.</div>
 					<?php endif; ?>
 				</div>
-				<nav class="text-center">
-	            <?php
-	                echo LinkPager::widget([
-	                    'pagination' => $pages,
-						'maxButtonCount' => 5
-	                ]);
-	            ?>
-	            </nav>
 			</div>
 		</div>
 	</div>
