@@ -96,6 +96,11 @@ class Connect extends AuthChoice
     {
         if ($text === null) {
             $text = Html::tag('span', $client->getTitle(), ['class' => 'auth-title']);
+            if($client->getName() == 'google'){
+                $text = Html::tag('span', $client->getTitle().Yii::t('user', 'Sign In with Google'), ['class' => 'auth-title']);
+            }elseif($client->getName() == 'facebook'){
+                $text = Html::tag('span', $client->getTitle().Yii::t('user', 'Sign In with Facebook'), ['class' => 'auth-title']);
+            }
         }
         if (!array_key_exists('class', $htmlOptions)) {
             $htmlOptions['class'] = 'btn btn-default ' . $client->getName();

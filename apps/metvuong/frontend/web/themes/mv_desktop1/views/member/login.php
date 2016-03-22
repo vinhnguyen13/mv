@@ -14,7 +14,7 @@ $model = Yii::createObject(LoginForm::className());
         <div role="tabpanel" class="tab-pane fade in active" id="tab-signin">
             <div class="signin">
                 <?= $this->render('/member/_partials/login'); ?>
-                <p class="pdT-10"><?=Yii::t('user', 'Already have an account ?')?> <a class="cl000 text-deco link-regis"> <?=Yii::t('user', 'Sign up now !')?></a></p>
+                <p class="pdT-10"><?=Yii::t('user', 'Already have an account ?')?> <a class="cl000 text-deco link-regis"> <?=Yii::t('user', 'Sign up now')?></a></p>
 
             </div>
         </div>
