@@ -18,7 +18,7 @@ if(!empty($jid_id)){
 				<span><?=Yii::t('chat', 'Chat history')?></span>
 			</div>
 			<div class="search-history">
-				<input type="text" id="findConversation" class="form-control" placeholder="<?=Yii::t('chat', 'Find by name...')?>">
+				<input type="text" id="findConversation" class="form-control" placeholder="<?=Yii::t('general', 'Find by name...')?>">
 				<button class="btn-search-hist" href="#"><span class="icon icon-search-small"></span></button>
 			</div>
 			<div class="chat-list clearfix">

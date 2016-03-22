@@ -15,7 +15,7 @@ use yii\widgets\LinkPager;
             <div class="wrap-infor-duan">
                 <div class="search-duan">
                     <form id="search-duan-form" action="<?= \yii\helpers\Url::to(['building-project/find'], true) ?>">
-                        <input name="project_name" class="project_name" type="text" placeholder="Gõ tên dự án cần tìm…">
+                        <input name="project_name" class="project_name" type="text" placeholder="<?=Yii::t('general', 'Find by name...')?>">
                         <button type="submit" id="btn-search-duan"><span class="icon icon-search-small-1"></span></button>
                     </form>
                 </div>
