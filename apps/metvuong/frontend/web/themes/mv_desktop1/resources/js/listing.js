@@ -510,23 +510,26 @@ $(document).ready(function(){
 				});
 				
 				listingList.on('mouseenter', 'a', function(e){
-					if(map.currentState == 'detail') {
-						var marker = map.getMarker($(this).data('id'));
-						marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
-						marker.setIcon(map.icon(marker.get('ids').length, 1));
-						
-						var position = marker.getPosition();
-						
-						if(!map.gmap.getBounds().contains(position)) {
-							map.gmap.setCenter(position);
+					var id = $(this).data('id');
+					
+					$.data(this, 'mouseenterTimer', setTimeout(function() {
+						if(map.currentState == 'detail') {
+							var marker = map.getMarker(id);
+							marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
+							marker.setIcon(map.icon(marker.get('ids').length, 1));
+							
+							var position = marker.getPosition();
+							
+							if(!map.gmap.getBounds().contains(position)) {
+								map.gmap.setCenter(position);
+							}
 						}
-					}
-				});
-				
-				listingList.on('mouseleave', 'a', function(e){
+				    }, 300));
+				}).on('mouseleave', 'a', function(e){
+					clearTimeout($.data(this, 'mouseenterTimer'));
 					if(map.currentState == 'detail') {
 						var marker = map.getMarker($(this).data('id'));
-						marker.setIcon(map.icon(marker.get('ids').length, 1));
+						marker.setIcon(map.icon(marker.get('ids').length, 0));
 					}
 				});
 			}
