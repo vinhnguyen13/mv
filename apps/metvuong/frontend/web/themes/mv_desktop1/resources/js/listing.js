@@ -103,9 +103,7 @@ var map = {
 		});
 	},
 	detail: function(id) {
-		$.get('/ad/detail', {id: id}, function(){
-			// show detail
-		});
+		// show detail
 	},
 	closeDetail: function() {
 		// close detail
