@@ -179,7 +179,7 @@ header {
     line-height: 30px;
 }
 .search-box .search-homepage #btn-search {
-    right: 0;
+    
 }
 .search-homepage form {
     position: relative;
@@ -187,10 +187,10 @@ header {
 #btn-search-duan,
 #btn-search {
     position: absolute;
-    top: 0;
-    right: 65px;
+    top: 1px;
+    right: 1px;
     width: 50px;
-    height: 45px;
+    height: 43px;
     /* border: 1px solid #979797; */
     border-left: none;
     background: none;
@@ -198,7 +198,11 @@ header {
 }
 #btn-search-duan:hover, 
 #btn-search:hover {
-    opacity: .7;
+    background-image: -webkit-linear-gradient(top, #F3F3F3, #F9F9F9);
+}
+#btn-search:active {
+    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset, 0 -1px 0 rgba(255, 255, 255, .1) inset;
+	top: 2px;
 }
 #search-header,
 #btn-search span {
@@ -6474,4 +6478,12 @@ footer li a {
 }
 .notifile a div {
     line-height: 100%;
+}
+.btn-common:hover {
+	background: #00a769;
+	background-image: -webkit-linear-gradient(top, #00a769, #00C77E);
+	background-image:-moz-linear-gradient(top, #3EACBA, #48C6D4);
+	background-image:-ms-linear-gradient(top, #3EACBA, #48C6D4);
+	background-image:-o-linear-gradient(top, #3EACBA, #48C6D4);
+	background-image:linear-gradient(top, #3EACBA, #48C6D4);
 }
