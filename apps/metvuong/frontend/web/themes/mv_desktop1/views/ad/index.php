@@ -57,7 +57,6 @@ $this->registerJs($script, View::POS_BEGIN);
 <div class="result-listing clearfix">
 	<div class="wrap-listing-item">
 		<div class="inner-wrap">
-			<a href="#" class="toggle-listing">open</a>
 			<form id="search-form" action="<?= Url::to(['/ad/index']) ?>" method="get">
 				<!-- <div class="list-choice-city" data-prev-section="true">
 					<ul class="clearfix"></ul>
