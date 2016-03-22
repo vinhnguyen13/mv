@@ -1,6 +1,7 @@
 var mapEl;
 var searchForm;
 var submitButton;
+var listingList;
 
 var map = {
 	data: null,
@@ -434,12 +435,23 @@ var map = {
 		address.push(city['name']);
 		
 		return address.join(', ');
+	},
+	getMarker: function(id) {
+		for(var i in map.markers) {
+			var marker = map.markers[i];
+			var ids = marker.get('ids');
+
+			if(ids.indexOf('' + id) != -1) {
+				return marker;
+			}
+		}
 	}
 }
 
 $(document).ready(function(){
 	searchForm = $('#search-form');
 	submitButton = $('.btn-submit');
+	listingList = $('#listing-list');
 //	var map = {
 //		gmap: null,
 //		focus: 1,
@@ -490,6 +502,25 @@ $(document).ready(function(){
 				gmapV2Script.src = srcGmapV2;
 				gmapV2Script.onload = map.gmapV2Loaded;
 				head.appendChild(gmapV2Script);
+				
+				listingList.on('click', 'a', function(e){
+					e.preventDefault();
+					
+					map.detail($(this).data('id'));
+				});
+				
+				listingList.on('mouseenter', 'a', function(e){
+					if(map.currentState == 'detail') {
+						var marker = map.getMarker($(this).data('id'));
+						marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
+						marker.setIcon(map.icon(marker.get('ids').length, 1));
+						map.gmap.setCenter(marker.getPosition());
+					}
+				});
+				
+				listingList.on('mouseleave', 'a', function(e){
+					
+				});
 			}
 		},
 		disable: function() {

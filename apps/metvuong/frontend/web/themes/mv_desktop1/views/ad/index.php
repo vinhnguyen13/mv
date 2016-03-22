@@ -348,7 +348,7 @@ $this->registerJs($script, View::POS_BEGIN);
 							<?php foreach ($products as $product): ?>
 							<li>
 								<div class="item-listing">
-									<a class="clearfix" href="<?= $product->urlDetail(); ?>" title="<?= $product->getAddress($product->show_home_no) ?>">
+									<a data-id="<?= $product->id ?>" class="clearfix" href="<?= $product->urlDetail(); ?>" title="<?= $product->getAddress($product->show_home_no) ?>">
 										<div class="bgcover img-intro">
 											<div>
 												<img src="" data-original="<?= $product->image_file_name ? AdImages::getImageUrl($product->image_folder, $product->image_file_name) : AdImages::defaultImage() ?>">
