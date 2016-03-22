@@ -13,7 +13,16 @@ use yii\web\Response;
 class BuildingProjectController extends Controller
 {
 	public $layout = '@app/views/layouts/layout';
-	
+
+    /**
+     * @return string
+     */
+    public function beforeAction($action)
+    {
+        $this->view->params['menuProject'] = true;
+        return parent::beforeAction($action);
+    }
+
 	function actionIndex() {
         $models = AdBuildingProject::find()->where('`status` = ' . AdBuildingProject::STATUS_ENABLED)->orderBy('id DESC');
         $count = $models->count();

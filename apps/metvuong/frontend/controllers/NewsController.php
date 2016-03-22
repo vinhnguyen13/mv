@@ -20,6 +20,7 @@ class NewsController extends Controller
     public function beforeAction($action)
     {
         $this->view->params['noFooter'] = true;
+        $this->view->params['menuNews'] = true;
         return parent::beforeAction($action);
     }
 

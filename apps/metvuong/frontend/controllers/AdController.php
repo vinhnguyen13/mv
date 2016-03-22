@@ -51,6 +51,9 @@ class AdController extends Controller
 	public function beforeAction($action)
 	{
 		$this->view->params['noFooter'] = true;
+		$this->view->params['menuBuy'] = true;
+		$this->view->params['menuRent'] = false;
+		$this->view->params['menuSell'] = false;
 		return parent::beforeAction($action);
 	}
     

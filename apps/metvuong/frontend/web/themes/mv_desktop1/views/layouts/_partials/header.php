@@ -24,12 +24,12 @@ use frontend\models\AdProductSearch;
                 <div class="wrap-menu">
                     <a href="#" id="hide-menu" class="icon"></a>
                     <ul class="clearfix">
-                        <li><a href="<?= Url::to(['/ad/index', 'type' => AdProduct::TYPE_FOR_SELL, 'city_id' => AdProductSearch::DEFAULT_CITY, 'district_id' => AdProductSearch::DEFAULT_DISTRICT]) ?>"><div><span class="icon icon-search"></span></div><?=Yii::t('general', 'Buy')?></a></li>
-                        <li><a href="<?= Url::to(['/ad/index', 'type' => AdProduct::TYPE_FOR_RENT, 'city_id' => AdProductSearch::DEFAULT_CITY, 'district_id' => AdProductSearch::DEFAULT_DISTRICT]) ?>"><div><span class="icon icon-search"></span></div><?=Yii::t('general', 'Rent')?></a></li>
-                        <li><a href="<?= Url::to(['/ad/post']) ?>"><div><span class="icon icon-key"></span></div><?=Yii::t('general', 'Sell')?></a></li>
-                        <li><a href="<?=Url::to(['building-project/index']);?>"><div><span class="icon icon-home"></span></div><?=Yii::t('general', 'New Project')?></a></li>
-                        <li><a href="<?=Url::to(['news/index']);?>"><div><span class="icon icon-news"></span></div><?=Yii::t('general', 'News')?></a></li>
-                        <li><a href="<?=Url::to(['/payment/package'])?>"><div><span class="icon icon-tags"></span></div><?=Yii::t('general', 'Pricing')?></a></li>
+                        <li class="<?=!empty($this->params['menuBuy']) ? 'acvite' : '' ;?>"><a href="<?= Url::to(['/ad/index', 'type' => AdProduct::TYPE_FOR_SELL, 'city_id' => AdProductSearch::DEFAULT_CITY, 'district_id' => AdProductSearch::DEFAULT_DISTRICT]) ?>"><div><span class="icon icon-search"></span></div><?=Yii::t('general', 'Buy')?></a></li>
+                        <li class="<?=!empty($this->params['menuRent']) ? 'acvite' : '' ;?>"><a href="<?= Url::to(['/ad/index', 'type' => AdProduct::TYPE_FOR_RENT, 'city_id' => AdProductSearch::DEFAULT_CITY, 'district_id' => AdProductSearch::DEFAULT_DISTRICT]) ?>"><div><span class="icon icon-search"></span></div><?=Yii::t('general', 'Rent')?></a></li>
+                        <li class="<?=!empty($this->params['menuSell']) ? 'acvite' : '' ;?>"><a href="<?= Url::to(['/ad/post']) ?>"><div><span class="icon icon-key"></span></div><?=Yii::t('general', 'Sell')?></a></li>
+                        <li class="<?=!empty($this->params['menuProject']) ? 'acvite' : '' ;?>"><a href="<?=Url::to(['building-project/index']);?>"><div><span class="icon icon-home"></span></div><?=Yii::t('general', 'New Project')?></a></li>
+                        <li class="<?=!empty($this->params['menuNews']) ? 'acvite' : '' ;?>"><a href="<?=Url::to(['news/index']);?>"><div><span class="icon icon-news"></span></div><?=Yii::t('general', 'News')?></a></li>
+                        <li class="<?=!empty($this->params['menuPricing']) ? 'acvite' : '' ;?>"><a href="<?=Url::to(['/payment/package'])?>"><div><span class="icon icon-tags"></span></div><?=Yii::t('general', 'Pricing')?></a></li>
                     </ul>
                 </div>
             </div>
@@ -123,12 +123,12 @@ use frontend\models\AdProductSearch;
             </div>
             <ul class="clearfix list-menu">
                 <li class="dt-logo"><a href="/" class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/logo.png' ?>" alt=""></a></li>
-                <li><a href="<?= Url::to(['/ad/index', 'type' => AdProduct::TYPE_FOR_SELL, 'city_id' => AdProductSearch::DEFAULT_CITY, 'district_id' => AdProductSearch::DEFAULT_DISTRICT]) ?>"><?=Yii::t('general', 'Buy')?></a></li>
-                <li><a href="<?= Url::to(['/ad/index', 'type' => AdProduct::TYPE_FOR_RENT, 'city_id' => AdProductSearch::DEFAULT_CITY, 'district_id' => AdProductSearch::DEFAULT_DISTRICT]) ?>"><?=Yii::t('general', 'Rent')?></a></li>
-                <li><a href="<?= Url::to(['/ad/post']) ?>"><?=Yii::t('general', 'Sell')?></a></li>
-                <li><a href="<?=Url::to(['building-project/index']);?>"><?=Yii::t('general', 'New Project')?></a></li>
-                <li><a href="<?=Url::to(['news/index']);?>"><?=Yii::t('general', 'News')?></a></li>
-                <li><a href="<?=Url::to(['/payment/package'])?>"><?=Yii::t('general', 'Pricing')?></a></li>
+                <li class="<?=!empty($this->params['menuBuy']) ? 'acvite' : '' ;?>"><a href="<?= Url::to(['/ad/index', 'type' => AdProduct::TYPE_FOR_SELL, 'city_id' => AdProductSearch::DEFAULT_CITY, 'district_id' => AdProductSearch::DEFAULT_DISTRICT]) ?>"><?=Yii::t('general', 'Buy')?></a></li>
+                <li class="<?=!empty($this->params['menuRent']) ? 'acvite' : '' ;?>"><a href="<?= Url::to(['/ad/index', 'type' => AdProduct::TYPE_FOR_RENT, 'city_id' => AdProductSearch::DEFAULT_CITY, 'district_id' => AdProductSearch::DEFAULT_DISTRICT]) ?>"><?=Yii::t('general', 'Rent')?></a></li>
+                <li class="<?=!empty($this->params['menuSell']) ? 'acvite' : '' ;?>"><a href="<?= Url::to(['/ad/post']) ?>"><?=Yii::t('general', 'Sell')?></a></li>
+                <li class="<?=!empty($this->params['menuProject']) ? 'acvite' : '' ;?>"><a href="<?=Url::to(['building-project/index']);?>"><?=Yii::t('general', 'New Project')?></a></li>
+                <li class="<?=!empty($this->params['menuNews']) ? 'acvite' : '' ;?>"><a href="<?=Url::to(['news/index']);?>"><?=Yii::t('general', 'News')?></a></li>
+                <li class="<?=!empty($this->params['menuPricing']) ? 'acvite' : '' ;?>"><a href="<?=Url::to(['/payment/package'])?>"><?=Yii::t('general', 'Pricing')?></a></li>
             </ul>
         </div>
     </div>
