@@ -280,7 +280,7 @@ var map = {
 		    icon: map.icon(number, 0)
 		});
 		
-		var name = area.pre ? area.pre + area.name : area.name;
+		var name = area.pre ? area.pre + ' ' + area.name : area.name;
 		
 		marker.addListener('mouseover', function(){
 			if(number > 999) {
