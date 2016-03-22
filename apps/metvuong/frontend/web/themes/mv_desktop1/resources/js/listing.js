@@ -104,9 +104,25 @@ var map = {
 	},
 	detail: function(id) {
 		// show detail
+		var wWrapList = $('.detail-listing-dt').outerWidth();
+		$(document).on('click', '#listing-list .item-listing a', function (e) {
+			e.preventDefault();
+			$('.detail-listing-dt').css({
+				left: -wWrapList +'px'
+			});
+		});
+		map.closeDetail();
 	},
 	closeDetail: function() {
 		// close detail
+		$('.detail-listing-dt .btn-close').unbind('click');
+		$('.detail-listing-dt .btn-close').on('click', function (e) {
+			l(1);
+			e.preventDefault();
+			$('.detail-listing-dt').css({
+				left: '0px'
+			});
+		});
 	},
 	initMap: function() {
 		map.currentState = map.focusState = map.getCurrentState(initialZoom);
