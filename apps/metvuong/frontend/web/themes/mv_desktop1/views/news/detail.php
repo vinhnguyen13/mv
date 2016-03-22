@@ -13,20 +13,20 @@ use yii\helpers\Url;
 
 Yii::$app->view->registerMetaTag([
     'name' => 'keywords',
-    'content' => $news->title
+    'content' => $news["title"]
 ]);
 Yii::$app->view->registerMetaTag([
     'name' => 'description',
-    'content' => $news->brief
+    'content' => $news["brief"]
 ]);
 
 Yii::$app->view->registerMetaTag([
     'property' => 'og:title',
-    'content' => $news->title
+    'content' => $news["title"]
 ]);
 Yii::$app->view->registerMetaTag([
     'property' => 'og:description',
-    'content' => $news->brief
+    'content' => $news["brief"]
 ]);
 Yii::$app->view->registerMetaTag([
     'property' => 'og:type',
@@ -34,7 +34,7 @@ Yii::$app->view->registerMetaTag([
 ]);
 Yii::$app->view->registerMetaTag([
     'property' => 'og:image',
-    'content' => Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'. $news->banner)
+    'content' => Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'. $news["banner"])
 ]);
 
 $fb_appId = '680097282132293'; // stage.metvuong.com
@@ -65,26 +65,26 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 <div class="title-fixed-wrap">
     <div class="container">
         <div class="detail-news page-news">
-            <?= $this->render('/news/_partials/menu', ['cat_id'=>$news->catalog_id]); ?>
+            <?= $this->render('/news/_partials/menu', ['cat_id'=>$news["catalog_id"]]); ?>
             <div class="wrap-detail-article">
-                <input id="current_id" type="hidden" value="<?=$news->id?>">
-                <input id="current_slug" type="hidden" value="<?=$news->slug?>">
-                <input id="current_title" type="hidden" value="<?=$news->title?>">
-                <input id="cat_id" type="hidden" value="<?=$news->catalog_id?>">
+                <input id="current_id" type="hidden" value="<?=$news["id"]?>">
+                <input id="current_slug" type="hidden" value="<?=$news["slug"]?>">
+                <input id="current_title" type="hidden" value="<?=$news["title"]?>">
+                <input id="cat_id" type="hidden" value="<?=$news["catalog_id"]?>">
                 <article>
-                    <h1 class="big-title"><?=$news->title?></h1>
+                    <h1 class="big-title"><?=$news["title"]?></h1>
                     <div class="time-post">
-                        <span class=""><?=date("d/m/Y g:i a",$news->created_at)?></span>,
-                        <a href="#" class="name-cate">DOANH NGHIỆP</a>
+                        <span class=""><?=date("d/m/Y g:i a",$news["created_at"])?></span>,
+                        <a href="#" class="name-cate"><?=$news["cat_title"]?></a>
                     </div>
                     <div class="detail-content pdL-5">
                         <div class="box-content">
-                            <div><?=$news->content?></div>
-                            <div id="social<?=$news->id?>" class="share-social mgT-10 wrap-img">
-                                <div class="fb-like" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug], true) ?>" data-layout="button_count" style="margin-right: 10px;"></div>
-                                <div class="fb-send" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug], true) ?>" data-show-faces="false" style="margin-right: 10px;"></div>
-                                <div class="fb-share-button" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news->id, 'slug' => $news->slug], true) ?>" data-layout="button_count"></div><br>
-                                <div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl(['news/view', 'id' => $news->id, 'slug' => $news->slug])?>" data-width="100%" data-numposts="3"></div>
+                            <div><?=$news["content"]?></div>
+                            <div id="social<?=$news["id"]?>" class="share-social mgT-10 wrap-img">
+                                <div class="fb-like" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>" data-layout="button_count" style="margin-right: 10px;"></div>
+                                <div class="fb-send" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>" data-show-faces="false" style="margin-right: 10px;"></div>
+                                <div class="fb-share-button" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>" data-layout="button_count"></div><br>
+                                <div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]])?>" data-width="100%" data-numposts="3"></div>
                             </div>
                         </div>
                     </div>
@@ -93,7 +93,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
             <!-- <div class="toHeight" style="height: 10px;"></div> -->
             <div class="load-more-article">
                 <div class="loading text-center" >
-                    <img src="<?=Yii::$app->view->theme->baseUrl."/resources/images/loading-listing.gif"?>" alt="Loading..." title="<?=$news->title?>" />
+                    <img src="<?=Yii::$app->view->theme->baseUrl."/resources/images/loading-listing.gif"?>" alt="Loading..." title="<?=$news["title"]?>" />
                 </div>
             </div>
         </div>
@@ -163,6 +163,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                     $(".loading").show();
                     if ( timer ) clearTimeout(timer);
                     timer = setTimeout(function() {
+                        console.log(currentID);
                         $.ajax({
                             url: '<?php echo Yii::$app->getUrlManager()->createUrl(["news/getone?current_id="]); ?>' + currentID + '&cat_id=' + catID,
                             type: 'POST',

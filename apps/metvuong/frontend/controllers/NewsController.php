@@ -59,7 +59,7 @@ class NewsController extends Controller
 
     public function actionView($id)
     {
-//        $detail = CmsShow::findOne($id);
+//        $cmsShow = CmsShow::findOne($id);
 //        $user_id = $detail->created_by;
 //        $author = Profile::findOne($user_id);
 //        $catalog = CmsCatalog::findOne($detail->catalog_id);
@@ -67,13 +67,9 @@ class NewsController extends Controller
             ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
             ->where('cms_show.id = :id', [':id' => $id])
             ->andWhere('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
-            ->orderBy('cms_show.created_at DESC')->one();
-        // add 1 for each click news link
-        $click = $detail->click;
-        $detail->click = $click + 1;
-        $detail->update();
+            ->asArray()->orderBy('cms_show.created_at DESC')->one();
 
-        $this->view->title = $detail->title;
+        $this->view->title = $detail["title"];
         return $this->render('detail', ['news' => $detail]);
     }
 
@@ -103,7 +99,8 @@ class NewsController extends Controller
         $current_id = Yii::$app->request->get('current_id');
         $cat_id = Yii::$app->request->get('cat_id');
         Yii::$app->response->format = Response::FORMAT_JSON;
-        $model = CmsShow::find()->asArray()
+        $model = CmsShow::find()
+            ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
 //            ->innerJoin('profile p', 'cms_show.created_by = p.user_id')
 //            ->select(['cms_show.*', 'p.name as author_name', 'p.avatar', 'p.bio'])
             ->where('cms_show.id NOT IN (:id)', [':id' => $current_id])
@@ -111,7 +108,7 @@ class NewsController extends Controller
             ->andWhere('cms_show.id < :_id', [':_id' => $current_id])
             ->andWhere('cms_show.status = :status', [':status' => 1])
             ->andWhere('cms_catalog.status = :status', [':status' => Status::STATUS_ACTIVE])
-            ->orderBy(['cms_show.id' => SORT_DESC])
+            ->asArray()->orderBy(['cms_show.id' => SORT_DESC])
             ->one();
 
         $catalog = CmsCatalog::find()->asArray()->select(['title as catalog_name', 'slug as cat_slug'])->where('id = :id', [':id' => $cat_id])->one();
