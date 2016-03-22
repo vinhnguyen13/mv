@@ -2208,12 +2208,15 @@ label {
     width: 22px;
     height: 14px;
 }
-.user-edit {
-}
+.user-edit {padding: 9px 0;margin-right: 5px;}
 .user-edit a {
     color: #009544;
     font-size: 15px;
-    padding: 14px 10px;
+    padding: 5px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
 }
 .icon-settings:hover,
 .notifile a:hover,
@@ -3000,7 +3003,7 @@ input[type=text]:focus {
     padding: 8px 15px;
     color: #fff;
     text-transform: uppercase;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
 }
 .list-tienich-intro {
@@ -3450,7 +3453,7 @@ input[type=text]:focus {
 .list-attr-td li {
     float: left;
     color: #3c3c3c;
-    font-size: 14px;
+    font-size: 13px;
     padding-right: 10px;
     margin-right: 10px;
     height: 20px;
@@ -3686,19 +3689,18 @@ input[type=text]:focus {
 }
 .bottom-feat-box strong {
     color: #00a769;
-    font-size: 17px;
     padding-left: 3px;
     font-weight: 600;
 }
 .bottom-feat-box p {
-    font-size: 14px;
+    font-size: 13px;
     color: #3c3c3c;
     font-weight: 600;
 }
 .bottom-feat-box a {
     letter-spacing: 0.5px;
     color: #3c3c3c;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.8;
     font-weight: 600;
 }
@@ -3919,7 +3921,7 @@ input[type=text]:focus {
 .id-duan {
     /* color: #AFAFAF; */
     font-weight: 400;
-    font-size: 14px;
+    font-size: 13px;
 }
 .id-duan span {
     font-weight: 700;
@@ -5006,7 +5008,7 @@ input[type=text]:focus {
         margin-bottom: 25px;
     }
     .box-feature-item .address-feat {
-        height: 145px;
+        height: 120px;
     }
     #listing-list > ul {
         padding: 0 10px;
@@ -5285,13 +5287,13 @@ input[type=text]:focus {
         float: left;
     }
     .box-feature-item .address-feat {
-        height: 115px;
+        height: 100px;
     }
     .wrap-header {
         padding: 0 20px;
     }
     .search-wrap-home {
-        margin-top: -125px;
+        margin-top: -190px;
     }
 }
 @media (max-width: 985px) {
@@ -5370,7 +5372,7 @@ input[type=text]:focus {
     margin-bottom: 20px;
 }
 .txt-location {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     text-shadow: 1px 1px 1px #fff;
     -webkit-text-shadow: 1px 1px 1px #fff;
@@ -5771,9 +5773,13 @@ footer li a {
     float: left;
 }
 .wrap-item .address-feat > a {
-    margin-bottom: 8px;
-    color: #00a769;
+    margin-bottom: 12px;
+    color: #3c3c3c;
     line-height: 20px;
+    font-size: 16px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .wrap-item .address-feat .id-duan {
     margin-bottom: 7px;
@@ -5996,24 +6002,27 @@ footer li a {
         display: block;
     }
     .user-edit {
-        padding: 0;
         max-width: 135px;
         float: left;
     }
     .user-login .box-dropdown {
         float: left;
-        padding: 0;
+        padding: 14px 0;
     }
     .icon-settings {
         display: block;
-        width: 40px;
-        height: 63px;
+        height: 35px;
+        width: 35px;
         background: url(../images/icon-setting.png) no-repeat center;
         padding: 0;
         line-height: 0;
+        border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        -ms-border-radius: 3px;
     }
     .user-login .box-dropdown .dropdown-up-style {
-        top: 64px;
+        top: 62px;
         width: 200px;
         left: inherit;
         right: 0;
@@ -6390,7 +6399,7 @@ footer li a {
     padding-left: 5px;
 }
 .box-feature-item .date-post {
-    margin: 0 0 3px 0;
+    margin: 0 0 8px 0;
     font-size: 14px;
 }
 .wrap-attr-detail li .public_email {
@@ -6427,7 +6436,15 @@ footer li a {
     margin-left: 10px;
 }
 .user-login .icon-guest {
-    padding: 14px 10px;
+    padding: 5px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    text-shadow: 1px 1px 1px #fff;
+    -webkit-text-shadow: 1px 1px 1px #fff;
+    -ms-text-shadow: 1px 1px 1px #fff;
+    -moz-text-shadow: 1px 1px 1px #fff;
 }
 .box-dropdown .val-selected.active,
 .user-login .icon-guest:hover {
@@ -6439,7 +6456,7 @@ footer li a {
     color: inherit;
 }
 .user-login .guest-dropdown {
-    padding: 0;
+    padding: 9px 0;
 }
 #listing-list .item-listing a {
     display: block;
@@ -6459,6 +6476,9 @@ footer li a {
     }
     #listing-list .item-listing a:hover {
         background: none;
+    }
+    .wrap-item .address-feat > a {
+        margin-bottom: 5px;
     }
 }
 @media ( max-width: 640px ) {
