@@ -103,8 +103,13 @@ var map = {
 		});
 	},
 	detail: function(id) {
-		console.log(id);
+		$.get('/ad/detail', {id: id}, function(){
+			// show detail
+		});
 	},
+	closeDetail: function() {
+		// close detail
+	}
 	initMap: function() {
 		map.currentState = map.focusState = map.getCurrentState(initialZoom);
 		

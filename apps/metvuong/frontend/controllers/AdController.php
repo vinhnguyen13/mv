@@ -326,11 +326,14 @@ class AdController extends Controller
         } catch(Exception $ex){
 
         }
-		if(Yii::$app->request->isAjax){
-			return $this->renderAjax('_partials/detail', ['product' => $product]);
-		}else{
-			return $this->render('detail', ['product' => $product]);
-		}
+        
+        return $this->render('detail', ['product' => $product]);
+        
+// 		if(Yii::$app->request->isAjax){
+// 			return $this->renderAjax('_partials/detail', ['product' => $product]);
+// 		}else{
+// 			return $this->render('detail', ['product' => $product]);
+// 		}
 
     }
 
