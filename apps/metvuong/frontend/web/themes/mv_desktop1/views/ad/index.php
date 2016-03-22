@@ -312,33 +312,34 @@ $this->registerJs($script, View::POS_BEGIN);
 							<?php foreach ($products as $product): ?>
 							<li>
 								<div class="item-listing">
-									<div class="bgcover img-intro">
-										<div>
-											<a class="rippler rippler-default" href="<?= $product->urlDetail(); ?>"><img src="" data-original="<?= $product->image_file_name ? AdImages::getImageUrl($product->image_folder, $product->image_file_name) : AdImages::defaultImage() ?>"></a>
+									<a class="clearfix" href="<?= $product->urlDetail(); ?>" title="<?= $product->getAddress($product->show_home_no) ?>">
+										<div class="bgcover img-intro">
+											<div>
+												<img src="" data-original="<?= $product->image_file_name ? AdImages::getImageUrl($product->image_folder, $product->image_file_name) : AdImages::defaultImage() ?>">
+											</div>
 										</div>
-									</div>
-									<div class="attrs-item">
-										<div class="wrap-attr-item">
-											<p class="infor-by-up">
-												<strong><?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?></strong> bởi Môi Giới
-											</p>
-											<p class="address-listing">
-												<a href="<?= $product->urlDetail(); ?>" title="<?= $product->getAddress($product->show_home_no) ?>"><?= $product->getAddress($product->show_home_no) ?></a>
-											</p>
-											<p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
-											<p class="date-post"><strong><?= date("d/m/Y H:i", $product->created_at) ?></strong></p>
-											<div class="clearfix"></div>
-											<ul class="clearfix list-attr-td">
-												<?= $product->area ? '<li> <span class="icon icon-dt icon-dt-small"></span>' . $product->area . 'm2 </li>' : '' ?>
-												<?= $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
-												<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
-											</ul>
-										</div>
-										<div class="wrap-attr-bottom">
-											<span class="price"><?= StringHelper::formatCurrency($product->price) ?></span>
-											<a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pull-right view-more">Chi tiết</a>
-					                    </div>
-					                </div>
+										<div class="attrs-item">
+											<div class="wrap-attr-item">
+												<p class="address-listing">
+													<?= $product->getAddress($product->show_home_no) ?>
+												</p>
+												<p class="infor-by-up">
+													<strong><?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?></strong>
+												</p>
+												<p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
+												<p class="date-post"><strong><?= date("d/m/Y H:i", $product->created_at) ?></strong></p>
+												<div class="clearfix"></div>
+												<ul class="clearfix list-attr-td">
+													<?= $product->area ? '<li> <span class="icon icon-dt icon-dt-small"></span>' . $product->area . 'm2 </li>' : '' ?>
+													<?= $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
+													<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
+												</ul>
+											</div>
+											<div class="wrap-attr-bottom">
+												<span class="price"><?= StringHelper::formatCurrency($product->price) ?></span>
+											</div>
+						                </div>
+									</a>
 				                    <?php
 				                    // tracking finder
 				                    if($product->user_id != Yii::$app->user->id && isset(Yii::$app->params['tracking']['all']) && Yii::$app->params['tracking']['all'] == true) {

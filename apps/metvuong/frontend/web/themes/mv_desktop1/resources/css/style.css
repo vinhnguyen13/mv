@@ -553,14 +553,18 @@ margin-top: 3px;
 }
 .item-listing .address-listing {
     font-weight: 700;
-    font-size: 15px;
+    font-size: 14px;
     margin: 10px 0 5px;
     max-height: 42px;
     text-overflow: ellipsis;
     overflow: hidden;
+    line-height: 19px;
+    overflow: hidden;
+    white-space: nowrap;
 }
 #listing-list .item-listing .address-listing {
-    margin-top: 5px;
+    margin: 0 0 3px 0;
+    color: #00a769;
 }
 .item-listing .address-listing span {
     margin-right: 5px;
@@ -754,17 +758,22 @@ label {
     color: #3c3c3c;
 }
 .infor-by-up {
-    font-weight: 400;
     font-size: 14px;
     padding: 10px 0;
     border-bottom: solid 1px #a5a5a5;
 }
+.infor-by-up strong {
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+}
 .item-listing .infor-by-up {
     border: none;
     padding: 0;
+    margin: 0 0 2px 0;
 }
 #listing-list .list-attr-td {
-    
+    margin: 5px 0 3px 0;
 }
 .infor-duan .address-listing,
 .name-duan {
@@ -3389,14 +3398,13 @@ input[type=text]:focus {
 .list-attr-td li {
     float: left;
     color: #3c3c3c;
-    font-size: 15px;
-    border-right: 2px solid #B5B5B5;
-    padding-right: 15px;
-    margin-right: 15px;
+    font-size: 14px;
+    padding-right: 10px;
+    margin-right: 10px;
     height: 20px;
     vertical-align: middle;
     line-height: 19px;
-    font-weight: 700;
+    font-weight: 600;
 }
 .list-attr-td li:last-child {
     padding-right: 0;
@@ -3795,14 +3803,12 @@ input[type=text]:focus {
 }
 .item-listing .id-duan {
     font-weight: 400;
-    /* color: #929292; */
     float: left;
     margin-right: 20px;
-    margin-bottom: 3px;
+    margin-bottom: 0px;
 }
 #listing-list .item-listing .id-duan span {
     font-weight: 600;
-    font-size: 14px;
 }
 .icon-search-small {
     width: 22px;
@@ -3861,11 +3867,10 @@ input[type=text]:focus {
 .id-duan {
     /* color: #AFAFAF; */
     font-weight: 400;
-    font-size: 15px;
+    font-size: 14px;
 }
 .id-duan span {
     font-weight: 700;
-    font-size: 15px;
     /* vertical-align: middle; */
     /* color: #00a769; */
     padding-left: 5px;
@@ -4421,8 +4426,6 @@ input[type=text]:focus {
 .wrap-news .name-news a {
     margin-bottom: 0;
 }
-.date-post {
-}
 #listing-form .form-group {
     margin-bottom: 0;
     position: relative;
@@ -4943,7 +4946,7 @@ input[type=text]:focus {
 }
 #listing-list > ul > li {
     border-bottom: 1px solid #ededed;
-    padding: 25px 20px; */
+    padding: 20px; */
 }
 @media (min-width: 640px) {
     #listing-list > ul > li,
@@ -4969,7 +4972,7 @@ input[type=text]:focus {
         margin: 0 -10px;
     }
     #listing-list .wrap-attr-item {
-        height: 135px;
+        height: 100px;
         overflow: hidden;
         padding: 0 15px;
         border-bottom: 1px solid #ededed;
@@ -5554,8 +5557,8 @@ footer li a {
     }
     #listing-list > ul > li {
         width: 100%;
-        padding: 0 15px 15px 15px;
-        margin: 0 0 15px 0;
+        padding: 0;
+        margin: 0;
         border-bottom: solid 1px #dcdcdc;
     }
     .item-listing .img-intro {
@@ -5586,12 +5589,6 @@ footer li a {
     #listing-list .wrap-attr-item {
         position: relative;
         top: -3px;
-    }
-    #listing-list .list-attr-td {
-        margin: 0;
-    }
-    #listing-list .item-listing .address-listing {
-    font-weight: 600;
     }
     #listing-list .wrap-attr-bottom {
         margin-top: 5px;
@@ -5707,13 +5704,13 @@ footer li a {
     }
 }
 .date-post {
-    font-size: 14px;
     font-weight: 400;
-    margin-bottom: 3px;
+    margin-bottom: 0px;
+    line-height: 100%;
 }
 .date-post strong {
-    font-size: inherit;
     font-weight: 600;
+    font-size: 13px;
 }
 .box-feature-item .address-feat .date-post strong {
     font-size: 13px;
@@ -5723,7 +5720,6 @@ footer li a {
 }
 .wrap-attr-item .date-post {
     float: left;
-    margin-bottom: 10px;
 }
 .wrap-item .address-feat > a {
     margin-bottom: 8px;
@@ -5789,12 +5785,6 @@ footer li a {
     background: url(../images/flag-vn.png);
     width: 22px;
     height: 14px;
-}
-.user-not-login {
-    padding: 21px 0;
-    float: left;
-}
-.list-duan {
 }
 
 @media (min-width: 985px) {
@@ -6132,10 +6122,6 @@ footer li a {
     .name-news {
         margin-bottom: 10px;
     }
-    .date-post {
-        font-size: 13px;
-        margin-bottom: 10px;
-    }
     .wrap-news li .short-txt {
         height: 80px;
         font-size: 15px;
@@ -6390,4 +6376,56 @@ footer li a {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+.icon-guest {
+    display: block;
+    background: none;
+    height: auto;
+    padding: 0;
+    line-height: inherit;
+    font-size: 14px;
+    padding: 5px;
+}
+.icon-guest img {
+    width: 30px;
+    height: 100%;
+    display: inline-block;
+    margin-right: 5px;
+}
+.guest-dropdown .arrowDown {
+    background-color: inherit;
+    position: static;
+    margin-left: 10px;
+}
+.user-login .icon-guest:hover {
+    text-decoration: none;
+    background: #EAEAEA;
+}
+.user-login .guest-dropdown {
+    padding: 12px 0;
+}
+#listing-list .item-listing a {
+    display: block;
+    padding: 10px;
+    transition: all .2s ease-out;
+    -webkit-transition: all .2s ease-out;
+    -moz-transition: all .2s ease-out;
+    -ms-transition: all .2s ease-out;
+}
+#listing-list .item-listing a:hover {
+    background: #F7F7F7;
+    color: inherit;
+}
+@media ( max-width: 985px ) {
+    #listing-list .item-listing a {
+        padding: 0;
+    }
+    #listing-list .item-listing a:hover {
+        background: none;
+    }
+}
+@media ( max-width: 640px ) {
+    #listing-list .list-attr-td {
+        margin: 5px 0 10px 0;
+    }
 }

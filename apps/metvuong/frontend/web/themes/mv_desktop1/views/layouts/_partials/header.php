@@ -7,7 +7,7 @@ use frontend\models\AdProductSearch;
     <div class="container wrap-header">
         <div class="m-header">
             <a href="#menu-header" id="menu-toggle" class="pull-left"><span class="icon"></span></a>
-            <a href="#settings-user" id="avatar-user" class="wrap-img wrapNotifyTotal">
+            <a href="#settings-user" id="avatar-user" class="wrap-img">
                 <?php if(Yii::$app->user->isGuest){?>
                     <img src="/images/default-avatar.jpg" alt="">
                 <?php } else{?>
@@ -55,13 +55,13 @@ use frontend\models\AdProductSearch;
                         </a>
                     </li>
                     <!-- <li><a href="<?= Url::to(['/ad/post']) ?>"><em class="icon-plus"></em>Đăng tin mới</a></li> -->
-                    <li><a href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" class="wrapNotifyOther"><div><span class="icon icon-alert"></span></div><?=Yii::t('activity', 'Notification')?>
+                    <li><a href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyOther"><div><span class="icon icon-alert"></span></div><?=Yii::t('activity', 'Notification')?>
                             <?php if(!empty($this->params['notify_other'])){?>
                                 <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
                             <?php }?>
                         </a></li>
                     <li><a href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>"><div><span class="icon icon-listings"></span></div><?=Yii::t('ad', 'Listings')?></a></li>
-                    <li><a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" class="wrapNotifyChat"><div><span class="icon icon-chat"></span></div><?=Yii::t('chat', 'Chat')?>
+                    <li><a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyChat"><div><span class="icon icon-chat"></span></div><?=Yii::t('chat', 'Chat')?>
                             <?php if(!empty($this->params['notify_chat'])){?>
                                 <span id="notifyChat" class="notifi"><?=$this->params['notify_chat'];?></span>
                             <?php }?>
@@ -78,8 +78,21 @@ use frontend\models\AdProductSearch;
         <div class="dt-header clearfix">
             <div class="user-login pull-right">
                 <?php if(Yii::$app->user->isGuest){?>
-                <div class="user-not-login"><a href="<?=Url::to(['/member/login'])?>" class="user-login-link"><?=Yii::t('user', 'Sign In')?></a> <span>/</span>
-                    <a href="<?=Url::to(['/member/signup'])?>" class="user-signup-link"><?=Yii::t('user', 'Sign Up')?></a></div>
+                <div class="box-dropdown guest-dropdown">
+                    <a href="#" class="icon-guest val-selected wrap-img">
+                        <img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/MV-Agent Photo.jpg' ?>" alt="">
+                        Guest
+                        <span class="icon arrowDown"></span>
+                    </a>
+                    <div class="item-dropdown hide-dropdown">
+                        <ul class="clearfix">
+                            <li><a href="<?=Url::to(['/member/login'])?>" class="user-login-link"><?=Yii::t('user', 'Sign In')?></a></li>
+                            <li><a href="<?=Url::to(['/member/signup'])?>" class="user-signup-link"><?=Yii::t('user', 'Sign Up')?></a></li>
+                            <li class="flag-us"><a href="<?=Url::current(['language-change'=>'en-US'])?>"></a></li>
+                            <li class="flag-vn"><a href="<?=Url::current(['language-change'=>'vi-VN'])?>"></a></li>
+                        </ul>
+                    </div>
+                </div>
                 <?php } else{?>
                     <div class="user-edit">
                         <a href="<?=Url::to(['member/profile', 'username'=>Yii::$app->user->identity->username])?>">
@@ -91,21 +104,17 @@ use frontend\models\AdProductSearch;
                         </a>
                     </div>
                     <div class="box-dropdown">
-                        <a href="#" class="icon-settings val-selected wrapNotifyTotal">
-                            <?php if(!empty($this->params['notify_total'])){?>
-                                <span id="notifyTotal"><?=$this->params['notify_total'];?></span>
-                            <?php }?>
-                        </a>
+                        <a href="#" class="icon-settings val-selected"></a>
                         <div class="item-dropdown hide-dropdown">
                             <ul class="clearfix">
                                 <!-- <li><a href="<?= Url::to(['/ad/post']) ?>"><em class="icon-plus"></em>Đăng tin mới</a></li> -->
-                                <li><a href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" class="wrapNotifyOther"><div><span class="icon icon-alert"></span></div><?=Yii::t('activity', 'Notification')?>
+                                <li><a href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyOther"><div><span class="icon icon-alert"></span></div><?=Yii::t('activity', 'Notification')?>
                                         <?php if(!empty($this->params['notify_other'])){?>
                                             <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
                                         <?php }?>
                                     </a></li>
                                 <li><a href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>"><div><span class="icon icon-listings"></span></div><?=Yii::t('ad', 'Listings')?></a></li>
-                                <li><a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" class="wrapNotifyChat"><div><span class="icon icon-chat"></span></div><?=Yii::t('chat', 'Chat')?>
+                                <li><a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" id="wrapNotifyChat"><div><span class="icon icon-chat"></span></div><?=Yii::t('chat', 'Chat')?>
                                         <?php if(!empty($this->params['notify_chat'])){?>
                                             <span id="notifyChat" class="notifi"><?=$this->params['notify_chat'];?></span>
                                         <?php }?>
@@ -116,10 +125,6 @@ use frontend\models\AdProductSearch;
                         </div>
                     </div>
                 <?php } ?>
-                <ul class="flag-lang">
-                    <li class="flag-us"><a href="<?=Url::current(['language-change'=>'en-US'])?>"></a></li>
-                    <li class="flag-vn"><a href="<?=Url::current(['language-change'=>'vi-VN'])?>"></a></li>
-                </ul>
             </div>
             <ul class="clearfix list-menu">
                 <li class="dt-logo"><a href="/" class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/logo.png' ?>" alt=""></a></li>
@@ -204,7 +209,7 @@ use frontend\models\AdProductSearch;
             });
         });
 
-        $('.user-login .box-dropdown').dropdown({
+        $('.user-login .box-dropdown, .guest-dropdown').dropdown({
             styleShow: 0,
             selectedValue: false
         });
