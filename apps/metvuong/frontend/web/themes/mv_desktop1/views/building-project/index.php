@@ -11,7 +11,7 @@ use yii\widgets\LinkPager;
 <div class="title-fixed-wrap">
     <div class="container">
         <div class="infor-duan">
-            <div class="title-top">DỰ ÁN MỚI</div>
+            <div class="title-top"><?=Yii::t('general', 'New Project')?></div>
             <div class="wrap-infor-duan">
                 <div class="search-duan">
                     <form id="search-duan-form" action="<?= \yii\helpers\Url::to(['building-project/find'], true) ?>">
