@@ -382,7 +382,7 @@ var map = {
 	getImageUrl: function(product) {
 		if(product.image_file_name) {
 			if(product.image_folder) {
-				return '/store/ad/' + filename.image_folder + '/480x360/' + product.image_file_name;
+				return '/store/ad/' + product.image_folder + '/480x360/' + product.image_file_name;
 			} else {
 				return product.image_file_name.replace('745x510', '350x280');
 			}
