@@ -114,7 +114,7 @@ class ManagerController extends Controller {
             $no = 1;
             $count = 1;
             for ($i = $fromID; $i < $total; $i++) {
-                if($count > 1000){
+                if($count > 500){
                     $fromID = $i;
                     break;
                 }
