@@ -51,9 +51,6 @@ class AdController extends Controller
 	public function beforeAction($action)
 	{
 		$this->view->params['noFooter'] = true;
-		$this->view->params['menuBuy'] = true;
-		$this->view->params['menuRent'] = false;
-		$this->view->params['menuSell'] = false;
 		return parent::beforeAction($action);
 	}
     
@@ -126,7 +123,11 @@ class AdController extends Controller
 		$this->view->params['body'] = [
 			'class' => 'ad-listing'
 		];
-		
+		if($type = Yii::$app->request->get('type')) {
+			$this->view->params['menuBuy'] = (!empty($type) && $type==1) ? true : false;
+			$this->view->params['menuRent'] = (!empty($type) && $type==2) ? true : false;
+		}
+
 		$searchModel = new AdProductSearch();
 		$searchQuery = $searchModel->search(Yii::$app->request->get());
 		
@@ -308,6 +309,10 @@ class AdController extends Controller
 
     	$product = AdProduct::findOne($id);
         try{
+			if($type = $product->type) {
+				$this->view->params['menuBuy'] = (!empty($type) && $type==1) ? true : false;
+				$this->view->params['menuRent'] = (!empty($type) && $type==2) ? true : false;
+			}
             if(Yii::$app->user->id != $product->user_id) {
                 if(isset(Yii::$app->params['tracking']['all']) && Yii::$app->params['tracking']['all'] == true) {
                     Tracking::find()->productVisitor(Yii::$app->user->id, $id, time());
@@ -340,6 +345,7 @@ class AdController extends Controller
 
     
     public function actionPost() {
+		$this->view->params['menuSell'] = true;
 //     	if(Yii::$app->mobileDetect->isMobile()) {
 //     		return $this->postMobile();
 //     	} else {
