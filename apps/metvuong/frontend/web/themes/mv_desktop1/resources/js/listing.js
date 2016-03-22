@@ -372,7 +372,7 @@ var map = {
 		var address = map.getAddress(product);
 		
 		var infoContent = '<div class="infoContent">' + 
-								'<div class="img-wrap bgcover" style="background-image:url('+img+')"></div><div>' +
+								'<div class="img-show"><div><img src="'+img+'"></div></div>' +
 								'<div class="address">' + address + '</div>' +
 								'<div class="price">' + price + '</div>' +
 								'<div class="addition">' + addition + '</div></div>' +

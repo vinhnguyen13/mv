@@ -162,7 +162,7 @@ header {
 .search-subpage input,
 .search-homepage input {
     width: 100%;
-    height: 45px;
+    height: 55px;
     line-height: 40px;
     padding: 0 50px 0 10px;
     font-weight: 400;
@@ -189,8 +189,8 @@ header {
     position: absolute;
     top: 1px;
     right: 1px;
-    width: 50px;
-    height: 43px;
+    width: 55px;
+    height: 53px;
     /* border: 1px solid #979797; */
     border-left: none;
     background: none;
@@ -6506,4 +6506,37 @@ footer li a {
 	background-image:-ms-linear-gradient(top, #3EACBA, #48C6D4);
 	background-image:-o-linear-gradient(top, #3EACBA, #48C6D4);
 	background-image:linear-gradient(top, #3EACBA, #48C6D4);
+}
+.info-wrap-single {
+    position: relative;
+    background: #fff;
+    width: 150px;
+    box-shadow: 0 0 10px #333;
+    text-align: center;
+}
+.info-wrap-single .infoContent {
+    padding: 0 5px 5px;
+    text-align: left;
+}
+.info-wrap-single .infoContent .img-show {
+    margin: 0 -5px 5px;
+}
+.info-wrap-single .infoContent .address {
+    color: #00A769;
+    font-weight: 600;
+}
+.info-wrap-single .infoContent .price {
+    font-weight: 600;
+    font-size: 12px;
+}
+.info-wrap-single .arrow {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    width: 0px;
+    height: 0px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 15px solid #fff;
+    margin-left: -10px;
 }
