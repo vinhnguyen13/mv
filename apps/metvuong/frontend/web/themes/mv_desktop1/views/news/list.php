@@ -14,7 +14,7 @@ $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID, 'st
                     <div class="container">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <a href="<?=Url::to(['news/index'])?>">Tất cả</a>
+                                <a href="<?=Url::to(['news/index'])?>"><?=Yii::t('news','All')?></a>
                             </div>
                             <?php if(!empty($catalogs)){?>
                                 <?php foreach($catalogs as $catalog){?>

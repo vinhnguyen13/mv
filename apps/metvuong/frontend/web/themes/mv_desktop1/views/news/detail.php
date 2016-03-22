@@ -71,7 +71,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                     <div class="container">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <a class="active" href="<?=Url::to(['news/index'])?>"><?=Yii::t('news','Tất cả')?></a>
+                                <a class="active" href="<?=Url::to(['news/index'])?>"><?=Yii::t('news','All')?></a>
                             </div>
                             <?php if(!empty($catalogs)){?>
                             <?php foreach($catalogs as $catalog){?>
