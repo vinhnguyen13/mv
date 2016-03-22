@@ -12,6 +12,7 @@ use vsoft\ad\models\AdProductAdditionInfo;
 use vsoft\craw\models\AdProductToolMap;
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\data\ActiveDataProvider;
 use vsoft\craw\models\AdProductSearch;
@@ -81,13 +82,13 @@ class ManagerController extends Controller {
         }
     }
 
-    public function actionImport($filter){
+    public function actionImport($fromID, $filter){
         $params = json_decode($filter, true);
         $adProduct = new AdProductSearch();
         $provider = $adProduct->search($params);
         $provider->setPagination(false);
-
-        if($provider->getTotalCount() > 0){
+        $total = $provider->getTotalCount();
+        if($total > 0){
             $adProductToolMapIDs = ArrayHelper::index(AdProductToolMap::find()->all(), 'product_tool_id');
             $models = $provider->getModels();
             $columnNameArray = ['category_id', 'project_building_id', 'user_id', 'home_no',
@@ -110,20 +111,27 @@ class ManagerController extends Controller {
             $bulkContact = array();
             $bulkProductToolMap = array();
 
-            foreach($models as $key => $model){
-                if(!array_key_exists($model->id, $adProductToolMapIDs)) {
-
+            $no = 1;
+            $count = 1;
+            for ($i = $fromID; $i < $total; $i++) {
+                if($count > 1000){
+                    $fromID = $i;
+                    break;
+                }
+                $model = $models[$i];
+                if(array_key_exists($model->id, $adProductToolMapIDs)) {
+                    $no++;
+                    continue;
+                }
+                else {
                     array_push($imageArray, $model->adImages);
-
                     if (count($model->adProductAdditionInfo) > 0) {
                         array_push($infoArray, $model->adProductAdditionInfo);
                     }
                     if (count($model->adContactInfo) > 0) {
                         array_push($contactArray, $model->adContactInfo);
                     }
-
                     array_push($productToolMaps, $model->id);
-
                     $record = [
                         'category_id' => $model->category_id,
                         'project_building_id' => $model->project_building_id,
@@ -147,107 +155,116 @@ class ManagerController extends Controller {
                         'source' => $model->source
                     ];
                     $bulkInsertArray[] = $record;
-                } else {
-                    $no = $key+1;
-                    print_r("<br>{$no}. Exists: ".mb_substr($model->content, 0, 100, 'UTF-8'). "...");
                 }
+                $count++;
             }
 
-            $insertCount = 0;
-            if(count($bulkInsertArray) > 0) {
+            print_r("<br>".($no-1)." product exists.");
+            $countBulkProduct = count($bulkInsertArray);
+//            $mod = $countBulkProduct % 1000;
+            if ($countBulkProduct > 0) {
                 $insertCount = AdProduct::getDb()->createCommand()->batchInsert(AdProduct::tableName(), $columnNameArray, $bulkInsertArray)->execute();
-            }
+                if ($insertCount > 0) {
+                    print_r("<br>Insert {$insertCount} products done");
+                    $fromProductId = (int)\vsoft\ad\models\AdProduct::getDb()->getLastInsertID();
+                    $toProductId = $fromProductId + ($insertCount - 1);
 
-            if($insertCount > 0){
-                print_r("\nInsert products done");
-                $fromProductId = (int)\vsoft\ad\models\AdProduct::getDb()->getLastInsertID();
-                $toProductId = $fromProductId + ($insertCount - 1);
-
-                $index = 0; // dung de lays nhieu image cho 1 product
-                for ($i = $fromProductId; $i <= $toProductId; $i++) {
-                    if (count($imageArray) > 0) {
-                        foreach ($imageArray[$index] as $image) {
-                            if (count($image) > 0 && !empty($image)) {
-                                $imageRecord = [
-                                    'user_id' => $image->user_id,
-                                    'product_id' => $i,
-                                    'file_name' => $image->file_name,
-                                    'uploaded_at' => $image->uploaded_at
-                                ];
-                                $bulkImage[] = $imageRecord;
+                    $index = 0; // dung de lay nhieu image cho 1 product hoat dong khi da insert vao db
+                    for ($i = $fromProductId; $i <= $toProductId; $i++) {
+                        if (count($imageArray) > 0 && isset($imageArray[$index])) {
+                            foreach ($imageArray[$index] as $image) {
+                                if (count($image) > 0 && !empty($image)) {
+                                    $imageRecord = [
+                                        'user_id' => $image->user_id,
+                                        'product_id' => $i,
+                                        'file_name' => $image->file_name,
+                                        'uploaded_at' => $image->uploaded_at
+                                    ];
+                                    $bulkImage[] = $imageRecord;
+                                }
                             }
                         }
+
+                        if (count($infoArray) > 0 && isset($infoArray[$index])) {
+                            $infoRecord = [
+                                'product_id' => $i,
+                                'facade_width' => $infoArray[$index]->facade_width,
+                                'land_width' => $infoArray[$index]->land_width,
+                                'home_direction' => $infoArray[$index]->home_direction,
+                                'facade_direction' => $infoArray[$index]->facade_direction,
+                                'floor_no' => $infoArray[$index]->floor_no,
+                                'room_no' => $infoArray[$index]->room_no,
+                                'toilet_no' => $infoArray[$index]->toilet_no,
+                                'interior' => $infoArray[$index]->interior
+                            ];
+                            $bulkInfo[] = $infoRecord;
+                        }
+
+                        if (count($contactArray) > 0 && isset($contactArray[$index])) {
+                            $contactRecord = [
+                                'product_id' => $i,
+                                'name' => $contactArray[$index]->name,
+                                'phone' => $contactArray[$index]->phone,
+                                'mobile' => $contactArray[$index]->mobile == null ? $contactArray[$index]->phone : $contactArray[$index]->mobile,
+                                'address' => $contactArray[$index]->address,
+                                'email' => $contactArray[$index]->email
+                            ];
+                            $bulkContact[] = $contactRecord;
+                        }
+
+                        if (count($productToolMaps) > 0 && isset($productToolMaps[$index])) {
+                            $ptmRecord = [
+                                'product_main_id' => $i,
+                                'product_tool_id' => $productToolMaps[$index]
+                            ];
+                            $bulkProductToolMap[] = $ptmRecord;
+                        }
+
+                        $index = $index + 1;
                     }
 
-                    if (count($infoArray) > 0) {
-                        $infoRecord = [
-                            'product_id' => $i,
-                            'facade_width' => $infoArray[$index]->facade_width,
-                            'land_width' => $infoArray[$index]->land_width,
-                            'home_direction' => $infoArray[$index]->home_direction,
-                            'facade_direction' => $infoArray[$index]->facade_direction,
-                            'floor_no' => $infoArray[$index]->floor_no,
-                            'room_no' => $infoArray[$index]->room_no,
-                            'toilet_no' => $infoArray[$index]->toilet_no,
-                            'interior' => $infoArray[$index]->interior
-                        ];
-                        $bulkInfo[] = $infoRecord;
+                    // execute image, info, contact
+                    if (count($bulkImage) > 0) {
+                        $imageCount = AdImages::getDb()->createCommand()
+                            ->batchInsert(AdImages::tableName(), $ad_image_columns, $bulkImage)
+                            ->execute();
+//                        if ($imageCount > 0) {
+//                            print_r("<br>Insert image done");
+//                        }
+                    }
+                    if (count($bulkInfo) > 0) {
+                        $infoCount = AdProductAdditionInfo::getDb()->createCommand()
+                            ->batchInsert(AdProductAdditionInfo::tableName(), $ad_info_columns, $bulkInfo)
+                            ->execute();
+//                        if ($infoCount > 0) {
+//                            print_r("<br>Insert addition info done");
+//                        }
+                    }
+                    if (count($bulkContact) > 0) {
+                        $contactCount = AdContactInfo::getDb()->createCommand()
+                            ->batchInsert(AdContactInfo::tableName(), $ad_contact_columns, $bulkContact)
+                            ->execute();
+//                        if ($contactCount > 0) {
+//                            print_r("<br>Insert contact info done");
+//                        }
                     }
 
-                    if (count($contactArray) > 0) {
-                        $contactRecord = [
-                            'product_id' => $i,
-                            'name' => $contactArray[$index]->name,
-                            'phone' => $contactArray[$index]->phone,
-                            'mobile' => $contactArray[$index]->mobile == null ? $contactArray[$index]->phone : $contactArray[$index]->mobile,
-                            'address' => $contactArray[$index]->address,
-                            'email' => $contactArray[$index]->email
-                        ];
-                        $bulkContact[] = $contactRecord;
+                    // update product tool map
+                    if (count($bulkProductToolMap) > 0) {
+                        $ptmCount = AdProductToolMap::getDb()->createCommand()
+                            ->batchInsert(AdProductToolMap::tableName(), $ad_product_tool_map_columns, $bulkProductToolMap)
+                            ->execute();
+//                        if ($ptmCount > 0) {
+//                            print_r("<br>Insert Product Tool Map done");
+//                        }
                     }
-
-                    if(count($productToolMaps) > 0 ){
-                        $ptmRecord = [
-                            'product_main_id' => $i,
-                            'product_tool_id' => $productToolMaps[$index]
-                        ];
-                        $bulkProductToolMap[] = $ptmRecord;
-                    }
-
-                    $index = $index + 1;
                 }
+            } // if bulkArray == 1000
 
-                // execute image, info, contact
-                if (count($bulkImage) > 0) {
-                    $imageCount = AdImages::getDb()->createCommand()
-                        ->batchInsert(AdImages::tableName(), $ad_image_columns, $bulkImage)
-                        ->execute();
-                    if ($imageCount > 0)
-                        print_r("<br>Insert image done");
-                }
-                if (count($bulkInfo) > 0) {
-                    $infoCount = AdProductAdditionInfo::getDb()->createCommand()
-                        ->batchInsert(AdProductAdditionInfo::tableName(), $ad_info_columns, $bulkInfo)
-                        ->execute();
-                    if ($infoCount > 0)
-                        print_r("<br>Insert addition info done");
-                }
-                if (count($bulkContact) > 0) {
-                    $contactCount = AdContactInfo::getDb()->createCommand()
-                        ->batchInsert(AdContactInfo::tableName(), $ad_contact_columns, $bulkContact)
-                        ->execute();
-                    if ($contactCount > 0)
-                        print_r("<br>Insert contact info done");
-                }
-
-                // update product maps in DbMain and DbCraw
-                $ptmCount = AdProductToolMap::getDb()->createCommand()
-                    ->batchInsert(AdProductToolMap::tableName(), $ad_product_tool_map_columns, $bulkProductToolMap)
-                    ->execute();
-                if ($ptmCount > 0)
-                    print_r("<br>Insert Product Tool Map done");
+            if(($no-1) < $total){
+                print_r("<br><br><a href=\"".Url::to(['/craw/manager/import', 'fromID' => $fromID, 'filter' => json_encode($params)], true)."\" style=\"font-size: 14pt; color: green;\">Continue to success.</a>");
             }
+            print_r("<br><br><a href=\"".Url::to(['/craw/manager'], true)."\" style=\"font-size: 14pt; color: black;\">Return Index</a>");
         }
-        print_r("<br><a href=\"javascript:history.back();\" style=\"font-size: 16pt;\">Back</a>");
     }
 }
