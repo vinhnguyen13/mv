@@ -206,7 +206,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                                 $(".loading").remove();
                                 var last_news = $('.wrap-detail-article').find(".last_news");
                                 if(!last_news[0])
-                                    $('.wrap-detail-article').append('<div class="last_news">This is last news in this categories</div>');
+                                    $('.wrap-detail-article').append('<div class="last_news"><?=Yii::t('news', 'This is last news in this categories')?></div>');
                             }
                         }); // end ajax
                     }, 800);
