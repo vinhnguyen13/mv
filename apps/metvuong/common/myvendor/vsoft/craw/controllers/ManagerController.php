@@ -85,6 +85,8 @@ class ManagerController extends Controller {
         $params = json_decode($filter, true);
         $adProduct = new AdProductSearch();
         $provider = $adProduct->search($params);
+        $provider->setPagination(false);
+
         if($provider->getTotalCount() > 0){
             $adProductToolMapIDs = ArrayHelper::index(AdProductToolMap::find()->all(), 'product_tool_id');
             $models = $provider->getModels();
@@ -108,7 +110,7 @@ class ManagerController extends Controller {
             $bulkContact = array();
             $bulkProductToolMap = array();
 
-            foreach($models as $model){
+            foreach($models as $key => $model){
                 if(!array_key_exists($model->id, $adProductToolMapIDs)) {
 
                     array_push($imageArray, $model->adImages);
@@ -146,7 +148,8 @@ class ManagerController extends Controller {
                     ];
                     $bulkInsertArray[] = $record;
                 } else {
-                    print_r("<br>Exists: ".mb_substr($model->content, 0, 50, 'UTF-8'). "...");
+                    $no = $key+1;
+                    print_r("<br>{$no}. Exists: ".mb_substr($model->content, 0, 100, 'UTF-8'). "...");
                 }
             }
 
@@ -245,5 +248,6 @@ class ManagerController extends Controller {
                     print_r("<br>Insert Product Tool Map done");
             }
         }
+        print_r("<br><a href=\"javascript:history.back();\" style=\"font-size: 16pt;\">Back</a>");
     }
 }
