@@ -136,8 +136,8 @@ class AdController extends Controller
 			$products = $searchQuery->indexBy('id')->asArray(true)->all();
 			
 			$city = AdCity::find()->indexBy('id')->select('center, geometry, name, id')->where(['id' => $searchModel->city_id])->one();
-			$districts = AdDistrict::find()->indexBy('id')->select('center, geometry, name, id')->where(['city_id' => $city->id])->all();
-			$wards = AdWard::find()->indexBy('id')->select('center, geometry, name, id')->where(['district_id' => ArrayHelper::getColumn($districts, 'id')])->all();
+			$districts = AdDistrict::find()->indexBy('id')->select('center, geometry, name, id, pre')->where(['city_id' => $city->id])->all();
+			$wards = AdWard::find()->indexBy('id')->select('center, geometry, name, id, pre, district_id')->where(['district_id' => ArrayHelper::getColumn($districts, 'id')])->all();
 			
 			return ['products' => $products, 'city' => $city, 'districts' => $districts, 'wards' => $wards];
 		} else {

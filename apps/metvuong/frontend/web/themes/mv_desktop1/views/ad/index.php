@@ -23,9 +23,32 @@ $hideSearchForm = Yii::$app->request->get('s') || (Yii::$app->request->get('page
 
 $srcGmapV2 = Yii::$app->view->theme->baseUrl . '/resources/js/gmap-v2.js';
 
+$params = Yii::$app->request->get();
+if(isset($params['street_id']) || isset($params['project_building_id'])) {
+	$initialZoom = 'zoomLevel.district.max';
+	$areaId = $searchModel->district_id;
+} else if(isset($params['ward_id'])) {
+	$initialZoom = 'zoomLevel.ward.max';
+	$areaId = $searchModel->ward_id;
+} else if(isset($params['district_id'])) {
+	$initialZoom = 'zoomLevel.district.max';
+	$areaId = $params['district_id'];
+} else {
+	$initialZoom = 'zoomLevel.city.max';
+	$areaId = $searchModel->city_id;
+}
+
 $script = <<<EOD
-	var srcApi = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=apiLoaded';
+	var zoomLevel = {
+		detail: {min: 17, max: 21},
+		ward: {min: 15, max: 16},
+		district: {min: 12, max: 14},
+		city: {min: 0, max: 11}
+	};
+	var srcApi = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=map.apiLoaded';
 	var srcGmapV2 = '$srcGmapV2';
+	var areaId = $areaId;
+	var initialZoom = $initialZoom;
 EOD;
 
 $this->registerJs($script, View::POS_BEGIN);

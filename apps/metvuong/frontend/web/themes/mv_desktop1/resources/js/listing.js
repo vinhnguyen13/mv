@@ -2,16 +2,439 @@ var mapEl;
 var searchForm;
 var submitButton;
 
-function apiLoaded() {
-	
-}
-
-function gmapV2Load() {
-	
-}
-
 var map = {
-	
+	data: null,
+	gmap: null,
+	status: 0,
+	currentState: null,
+	focusState: null,
+	infoWindow: null,
+	polygons: [],
+	markers: {},
+	groupMarkers: [],
+	gmapV2Loaded: function() {
+		map.status += 1;
+		map.allLoaded();
+	},
+	apiLoaded: function() {
+		map.status += 1;
+		map.allLoaded();
+	},
+	dataLoaded: function() {
+		map.status += 1;
+		map.allLoaded();
+	},
+	allLoaded: function() {
+		if(map.status == 3) {
+			m2Map.loaded();
+			map.initMap();
+
+			for(var i in map.data.products) {
+				var product = map.data.products[i];
+				var index = product.lat + '-' + product.lng;
+				var marker = map.markers[index];
+				
+				if(marker) {
+					var ids = marker.get('ids');
+					ids.push(product.id);
+					marker.set('ids', ids);
+					marker.setIcon(map.icon(ids.length, 0));
+				} else {
+					marker = new google.maps.Marker({
+						position: {lat: Number(product.lat), lng: Number(product.lng)},
+						map: null,
+					    icon: map.icon(1, 0)
+					});
+					
+					marker.set('ids', [product.id]);
+					marker.addListener('mouseover', map.markerOver);
+					marker.addListener('mouseout', map.markerOut);
+					marker.addListener('click', map.markerClick);
+					
+					map.markers[index] = marker;
+				}
+			}
+		}
+	},
+	markerOver: function() {
+
+		this.setZIndex(google.maps.Marker.MAX_ZINDEX++);
+		var ids = this.get('ids');
+		var id = ids[0];
+		
+		var product = map.data.products[id];
+		var infoContent = $('<div class="info-wrap-single">' + map.buildInfoContent(product) + '</div>');
+		
+//		if(ids.length > 1) {
+//			infoContent.append('<div class="more">...</div>');
+//		}
+		
+		infoContent.append('<div class="arrow"></div>');
+		
+		map.infoWindow.setContent(infoContent.get(0));
+		map.infoWindow.open(this);
+	},
+	markerOut: function() {
+		map.infoWindow.close();
+	},
+	markerClick: function() {
+		var ids = this.get('ids');
+		
+		if(ids.length == 1) {
+			map.detail(ids[0]);
+		} else {
+			var infoContentWrap = $('<div class="info-wrap-multiple"></div>');
+			for(i = 0; i < ids.length; i++) {
+				var id = ids[i];
+				var product = map.data.products[id];
+				var infoContent = $(map.buildInfoContent(product));
+				map.attachInfoItemClick(infoContent, id);
+				infoContentWrap.append(infoContent);
+			}
+			
+			map.infoWindowMore.setContent(infoContentWrap.get(0));
+			map.infoWindowMore.open(map.gmap, this);
+		}
+	},
+	attachInfoItemClick: function(item, id) {
+		item.click(function(){
+			map.detail(id);
+		});
+	},
+	detail: function(id) {
+		console.log(id);
+	},
+	initMap: function() {
+		map.currentState = map.focusState = map.getCurrentState(initialZoom);
+		
+		if(map.currentState == 'ward') {
+			var area = map.data.wards[areaId];
+		} else if(map.currentState == 'district') {
+			var area = map.data.districts[areaId];
+		} else {
+			var area = map.data.city;
+		}
+		
+		var center = JSON.parse(area.center);
+		
+		var options = {center: {lat: center[0], lng: center[1]}, zoom: initialZoom};
+		map.gmap = new google.maps.Map(document.getElementById('map'), options);
+		
+		map.infoWindow = new m2Map.InfoWindow({offsetTop: 40});
+
+		map.infoWindowMore = new google.maps.InfoWindow();
+		map.infoWindowMore.addListener('domready', function() {
+			map.infoWindow.close();
+			var marker = map.infoWindowMore.anchor;
+			google.maps.event.clearListeners(marker, 'mouseover');
+			
+			var infoWindowClick = google.maps.event.addListener(map.infoWindowMore, 'closeclick', detachEvent);
+			var infoWindowPositionChange = google.maps.event.addListener(map.infoWindowMore, 'position_changed', detachEvent);
+			
+			var mapClick = google.maps.event.addListener(map.gmap, 'mousedown', function(){
+				map.infoWindowMore.close();
+				detachEvent();
+			});
+			
+			function detachEvent() {
+				marker.addListener('mouseover', map.markerOver);
+				google.maps.event.removeListener(infoWindowClick);
+				google.maps.event.removeListener(infoWindowPositionChange);
+				google.maps.event.removeListener(mapClick);
+			}
+		});
+		
+		map.drawPolygon(area);
+		
+		var counters = map.getCounterByArea(map.currentState);
+		
+		if(area.center && typeof counters[area.id] !== 'undefined') {
+			map.drawPolygonMarker(area, counters[area.id]);
+		}
+		
+		map.gmap.addListener('zoom_changed', function(){
+			var state = map.getCurrentState(map.gmap.getZoom());
+			
+			if(map.currentState != state) {
+				map.currentState = state;
+				
+				if(map.currentState == 'detail') {
+					for(var i in map.markers) {
+						map.markers[i].setMap(map.gmap);
+					}
+					
+					map.removePolygons();
+					map.removeGroupMarkers();
+				} else {
+					map.removeDetailMarkers();
+					if(map.currentState == 'ward') {
+						
+						map.removePolygons();
+						map.removeGroupMarkers();
+						
+						var counters = map.getCounterByArea('ward');
+						
+						if(map.focusState == 'ward') {
+							var area = map.data.wards[areaId];
+							map.drawPolygon(area);
+							if(area.center && typeof counters[areaId] !== 'undefined') {
+								map.drawPolygonMarker(area, counters[areaId]);
+							}
+						} else {
+							var wards = {};
+							
+							if(map.focusState == 'district') {
+								for(var i in map.data.wards) {
+									if(map.data.wards[i]['district_id'] == areaId) {
+										wards[i] = map.data.wards[i];
+									}
+								}
+							} else {
+								wards = map.data.wards;
+							}
+
+							for(var i in wards) {
+								var area = map.data.wards[i];
+								if(area.geometry) {
+									map.drawPolygon(area);
+								}
+								if(area.center && typeof counters[i] !== 'undefined') {
+									map.drawPolygonMarker(area, counters[i]);
+								}
+							}
+						}
+					} else if(map.currentState == 'district' && map.focusState != 'ward') {
+						
+						map.removePolygons();
+						map.removeGroupMarkers();
+						
+						var counters = map.getCounterByArea('district');
+						
+						if(map.focusState == 'district') {
+							var area = map.data.districts[areaId];
+							map.drawPolygon(area);
+							if(area.center && typeof counters[areaId] !== 'undefined') {
+								map.drawPolygonMarker(area, counters[areaId]);
+							}
+						} else {
+							for(var i in map.data.districts) {
+								var area = map.data.districts[i];
+								if(area.geometry) {
+									map.drawPolygon(area);
+								}
+								if(area.center && typeof counters[i] !== 'undefined') {
+									map.drawPolygonMarker(area, counters[i]);
+								}
+							}
+						}
+						
+						
+					} else {
+						if(map.focusState != 'ward' && map.focusState != 'district') {
+							
+							map.removePolygons();
+							map.removeGroupMarkers();
+							
+							var counters = map.getCounterByArea('city');
+							map.drawPolygon(map.data.city);
+							
+							if(map.data.city.center && typeof counters[map.data.city.id] !== 'undefined') {
+								map.drawPolygonMarker(map.data.city, counters[map.data.city.id]);
+							}
+						}
+					}
+				}
+			}
+		});
+	},
+	getCounterByArea: function(area) {
+		var counters = {};
+		
+		for(var i in map.data.products) {
+			var product = map.data.products[i];
+			var areaId = product[area + '_id'];
+			
+			if(counters[areaId]) {
+				counters[areaId] = counters[areaId] + 1;
+			} else {
+				counters[areaId] = 1;
+			}
+		}
+		
+		return counters;
+	},
+	getCurrentState: function(zoom) {
+		for(var i in zoomLevel) {
+			if(zoom >= zoomLevel[i].min && zoom <= zoomLevel[i].max) {
+				return i;
+			}
+		}
+	},
+	drawPolygonMarker: function(area, number) {
+		var center = JSON.parse(area.center);
+		center = {lat: center[0], lng: center[1]};
+		
+		var marker = new google.maps.Marker({
+			position: center,
+			map: map.gmap,
+		    icon: map.icon(number, 0)
+		});
+		
+		var name = area.pre ? area.pre + area.name : area.name;
+		
+		marker.addListener('mouseover', function(){
+			if(number > 999) {
+				map.infoWindow.setOffsetTop(50);
+			}
+			
+			var infoContent = '<div class="info-wrap-single"><div style="padding: 6px 12px; font-weight: bold; font-size: 13px; white-space: nowrap">' + name + '</div><div class="arrow"></div></div>';
+			map.infoWindow.setContent(infoContent);
+			map.infoWindow.open(this);
+		});
+		
+		marker.addListener('mouseout', function(){
+			map.infoWindow.close();
+			map.infoWindow.setOffsetTop(40);
+		});
+
+		marker.addListener('click', function(){
+			
+			var state = map.getCurrentState(map.gmap.getZoom());
+
+			if(state == 'ward') {
+				map.gmap.setZoom(zoomLevel.detail.min);
+			} else if(state == 'district') {
+				map.gmap.setZoom(zoomLevel.ward.min);
+			} else {
+				map.gmap.setZoom(zoomLevel.district.min);
+			}
+			
+			map.gmap.setCenter(center);
+		});
+		
+		map.groupMarkers.push(marker);
+	},
+	drawPolygon: function(area) {
+		var color = '#FF0000';
+		var geometries = JSON.parse(area.geometry);
+		
+		for(var i = 0; i < geometries.length; i++) {
+			var triangleCoords = [];
+			var geometry = geometries[i];
+			
+			for(var j = 0; j < geometry.length; j++) {
+				triangleCoords.push(new google.maps.LatLng(geometry[j][0], geometry[j][1]));
+			}
+			var polygon = new google.maps.Polygon({
+			    paths: triangleCoords,
+			    strokeColor: color,
+			    strokeOpacity: 0.5,
+			    strokeWeight: 2,
+			    fillColor: color,
+			    fillOpacity: 0.2,
+			    clickable: false
+			});
+
+			polygon.setMap(map.gmap);
+			map.polygons.push(polygon);
+		}
+	},
+	removePolygons: function() {
+		for(var i = 0; i < map.polygons.length; i++) {
+			var polygon = map.polygons[i];
+			polygon.setMap(null);
+		}
+		
+		map.polygons = [];
+	},
+	removeGroupMarkers: function() {
+		for(var i = 0; i < map.groupMarkers.length; i++) {
+			var marker = map.groupMarkers[i];
+			marker.setMap(null);
+		}
+		
+		map.groupMarkers = [];
+	},
+	removeDetailMarkers: function() {
+		for(var i in map.markers) {
+			map.markers[i].setMap(null);
+		}
+	},
+	icon: function(counter, status) {
+		var base = (counter > 1) ? '/site/map-image?s={status}&t=' + counter : '/images/marker-{status}.png';
+		
+		return base.replace('{status}', status);
+	},
+	buildInfoContent: function(product) {
+		var img = map.getImageUrl(product);
+		var price = formatPrice(product.price);
+		var addition = map.getAdditionInfo(product);
+		var address = map.getAddress(product);
+		
+		var infoContent = '<div class="infoContent">' + 
+								'<div class="img-wrap bgcover" style="background-image:url('+img+')"></div><div>' +
+								'<div class="address">' + address + '</div>' +
+								'<div class="price">' + price + '</div>' +
+								'<div class="addition">' + addition + '</div></div>' +
+							'</div>';
+		return infoContent;
+	},
+	getImageUrl: function(product) {
+		if(product.image_file_name) {
+			if(product.image_folder) {
+				return '/store/ad/' + filename.image_folder + '/480x360/' + product.image_file_name;
+			} else {
+				return product.image_file_name.replace('745x510', '350x280');
+			}
+		} else {
+			return '/themes/metvuong2/resources/images/default-ads.jpg';
+		}
+	},
+	getAdditionInfo: function(product) {
+		var addition = [];
+		
+		addition.push(product.area + 'm<sup>2</sup>');
+		
+		if(product.floor_no && product.floor_no != '0') {
+			addition.push(product.floor_no + ' ' + lajax.t('storey'));
+		}
+		if(product.room_no && product.room_no != '0') {
+			addition.push(product.room_no + ' ' + lajax.t('beds'));
+		}
+		if(product.toilet_no && product.toilet_no != '0') {
+			addition.push(product.toilet_no + ' ' + lajax.t('baths'));
+		}
+
+		return addition.join(' • ');
+	},
+	getAddress: function(product) {
+		var city = dataCities[product.city_id];
+		var district = city['districts'][product.district_id];
+		var address = [];
+		var homeStreet = '';
+
+		if(product.home_no) {
+			homeStreet += product.home_no;
+		}
+
+		if(product.street_id) {
+			homeStreet = homeStreet ? homeStreet + ' ' : '';
+			homeStreet += district['streets'][product.street_id]['pre'] + ' ' + district['streets'][product.street_id]['name'];
+		}
+		
+		if(homeStreet) {
+			address.push(homeStreet);
+		}
+		
+		if(product.ward_id) {
+			address.push(district['wards'][product.ward_id]['pre'] + ' ' + district['wards'][product.ward_id]['name']);
+		}
+		
+		address.push(district['pre'] + ' ' + district['name']);
+		address.push(city['name']);
+		
+		return address.join(', ');
+	}
 }
 
 $(document).ready(function(){
@@ -52,6 +475,11 @@ $(document).ready(function(){
 			if(!this.isInit) {
 				this.isInit = true;
 				
+				getListingLocation(function(result){
+					map.data = result;
+					map.dataLoaded();
+				});
+				
 				var head = document.getElementsByTagName('head')[0];
 				
 				var apiScript = document.createElement('script');
@@ -60,13 +488,9 @@ $(document).ready(function(){
 				
 				var gmapV2Script = document.createElement('script');
 				gmapV2Script.src = srcGmapV2;
-				gmapV2Script.onload = gmapV2Load;
+				gmapV2Script.onload = map.gmapV2Loaded;
 				head.appendChild(gmapV2Script);
 			}
-			
-			getListingLocation(function(result){
-				console.log(result);
-			});
 		},
 		disable: function() {
 			this.isEnabled = false;
