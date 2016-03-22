@@ -462,8 +462,6 @@ $.fn.price_dt = function (options) {
             el.find('.box-input .min-val').text(txtMin);
             el.find('.box-input .max-val').text(txtMax);
             toggleMinMax ('max-val');
-            el.find('#priceMin').val('');
-            el.find('#priceMax').val('');
             return;
         }else {
             el.toggleShowMobi({
@@ -589,7 +587,9 @@ $.fn.price_dt = function (options) {
                 wrapTxt.find('.wrap-max').html(txt);
             }
 
-            wrapTxt.find('.tu').show();
+            //wrapTxt.find('.tu').show();
+
+            wrapTxt.find('.txt-holder-minmax').hide();
 
             if ( checkValMinMax() == 1 ) {// min, max rong
                 wrapTxt.find('.wrap-min, .trolen, .den, .wrap-max, .troxuong').hide();
@@ -603,6 +603,19 @@ $.fn.price_dt = function (options) {
                 wrapTxt.find('.trolen, .troxuong').hide();
                 wrapTxt.find('.den, .wrap-min, .wrap-max').show();
             }
+
+            /*if ( checkValMinMax() == 1 ) {// min, max rong
+                wrapTxt.find('.wrap-min, .trolen, .den, .wrap-max, .troxuong').hide();
+            }else if ( checkValMinMax() == 2 ) {// min rong
+                wrapTxt.find('.den, .wrap-min, .trolen').hide();
+                wrapTxt.find('.troxuong, .wrap-max').show();
+            }else if ( checkValMinMax() == 3 ) {// max rong
+                wrapTxt.find('.troxuong, .den, .wrap-max').hide();
+                wrapTxt.find('.trolen, .wrap-min').show();
+            }else {
+                wrapTxt.find('.trolen, .troxuong').hide();
+                wrapTxt.find('.den, .wrap-min, .wrap-max').show();
+            }*/
         }
 
         function priceUnit (num) {

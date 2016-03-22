@@ -1402,6 +1402,7 @@ label {
     border: 1px solid #979797;
     float: left;
 }
+.search-subpage .val-selected.active,
 .style-click:hover {
     box-shadow: 0px 0px 2px #00A769;
     -webkit-box-shadow: 0px 0px 2px #00A769;
@@ -1922,8 +1923,18 @@ label {
 .choice_price_dt .text-center {
     float: left;
     width: 16%;
-    height: 40px;
-    line-height: 40px;
+    height: 35px;
+    line-height: 36px;
+    position: relative;
+}
+.choice_price_dt .text-center span {
+    position: absolute;
+    width: 40%;
+    height: 1px;
+    background: #E2E2E2;
+    top: 50%;
+    left: 50%;
+    margin-left: -20%;
 }
 .choice_price_dt .txt-max,
 .choice_price_dt .txt-min {
@@ -1931,8 +1942,8 @@ label {
     display: block;
     float: left;
     border: 1px solid #B5B5B5;
-    height: 40px;
-    line-height: 40px;
+    height: 35px;
+    line-height: 33px;
     padding-left: 10px;
     cursor: pointer;
 }
@@ -1948,7 +1959,7 @@ label {
 .box-input {
     border-bottom: 1px solid  #B3B3B3;
     padding-bottom: 10px;
-    font-size: .85em;
+    font-size: 13px;
 }
 .box-input input {
     float: left;
@@ -1960,10 +1971,9 @@ label {
 }
 .filter-minmax  li a {
     display: block;
-    font-size: 1em;
-    padding: 4px 15px;
+    font-size: 14px;
+    padding: 4px 10px;
     color: #333;
-    text-align: center;
     cursor: pointer;
 }
 .filter-minmax li a:hover {
@@ -1973,6 +1983,12 @@ label {
 .filter-minmax ul {
     padding: 5px 0;
     display: none;
+}
+.filter-minmax ul[data-wrap-minmax=min-val] li {
+    text-align: left;
+}
+.filter-minmax ul[data-wrap-minmax=max-val] li {
+    text-align: right;
 }
 .filter-minmax ul.min-val {
     display: block;
@@ -3131,15 +3147,15 @@ input[type=text]:focus {
     top: 16px;
     right: 10px;
 }
+.search-subpage .arrowDown {
+    background-color: inherit;
+}
 .box-dropdown .dropdown-up-style .item-dropdown {
     border: 1px solid #A7A7A7;
-    max-height: 150px;
-    overflow-x: hidden;
-    overflow-y: auto;
 }
 .box-dropdown .item-dropdown li {
-    width: 50%;
-    float: left;
+    /* width: 50%; */
+    /* float: left; */
 }
 .value-selected.active .arrowDown,
 .val-selected.active .arrowDown {
@@ -5539,11 +5555,11 @@ footer li a {
     }
     .search-subpage .select-price {
         /* width: 185px; */
-        width: 12%;
+        width: 8.5%;
     }
     .search-subpage .select-dt {
         /* width: 220px; */
-        width: 13%;
+        width: 8%;
     }
     .ad-listing .num-phongngu,
     .ad-listing .num-phongtam {
@@ -5704,7 +5720,7 @@ footer li a {
     .choice_price_dt .item-dropdown,
     .select-quan-huyen .item-dropdown,
     .select-tinh-thanh .item-dropdown {
-        width: 400px;
+        width: 230px;
     }
     .select-loaibds .item-dropdown {
         width: 400px;
@@ -5720,8 +5736,6 @@ footer li a {
         background-color: #EAEAEA;
     }
     .choice_price_dt .dropdown-up-style .item-dropdown {
-        height: 200px;
-        max-height: inherit;
     }
     .select-bed-bath {
         width: 20%;
@@ -6434,6 +6448,9 @@ footer li a {
     text-decoration: none;
     background-color: #EAEAEA;
     color: #00a769;
+}
+.box-dropdown .val-selected.active {
+    color: inherit;
 }
 .user-login .guest-dropdown {
     padding: 0;

@@ -94,28 +94,35 @@ $this->registerJs($script, View::POS_BEGIN);
 							<div class="frm-item choice_price_dt select-price">
 								<div class="box-dropdown" data-item-minmax="prices">
 									<div class="val-selected style-click price-search">
-										<?= Yii::t('ad', 'Price') ?> 
-										<div>
+										<span class="txt-holder-minmax"><?= Yii::t('ad', 'Price') ?> </span>
+										<!-- <div>
 											<span class="tu"><?= Yii::t('ad', 'from') ?></span>
 											<span class="wrap-min"></span>
-											<span class="trolen"><?= Yii::t('ad', 'and above') ?></span>
+											<span class="trolen"><?= Yii::t('ad', 'above') ?></span>
 											<span class="den"><?= Yii::t('ad', 'to') ?></span>
 											<span class="wrap-max"></span>
-											<span class="troxuong"><?= Yii::t('ad', 'and below') ?></span>
+											<span class="troxuong"><?= Yii::t('ad', 'below') ?></span>
+										</div> -->
+										<div>
+											<span class="wrap-min"></span>
+											<span class="trolen">+</span>
+											<span class="den">-</span>
+											<span class="wrap-max"></span>
+											<span class="troxuong"><?= Yii::t('ad', 'below') ?></span>
 										</div>
 										<span class="pull-right icon arrowDown"></span>
 									</div>
 									<div class="item-dropdown hide-dropdown wrap-min-max">
 										<div class="box-input clearfix">
 											<span class="txt-min min-max active min-val" data-value="" data-text="Thấp nhất"><?= Yii::t('ad', 'Min') ?></span>
-											<span class="text-center">Đến</span>
+											<span class="text-center"><span></span></span>
 											<span class="txt-max min-max max-val" data-value="" data-text="Cao nhất"><?= Yii::t('ad', 'Max') ?></span>
 											<?= Html::activeHiddenInput($searchModel, 'price_min', ['id' => 'priceMin']); ?>
 											<?= Html::activeHiddenInput($searchModel, 'price_max', ['id' => 'priceMax']); ?>
 										</div>
 										<div class="filter-minmax clearfix">
-											<ul data-wrap-minmax="min-val" class="wrap-minmax"></ul>
-											<ul data-wrap-minmax="max-val" class="wrap-minmax"></ul>
+											<ul data-wrap-minmax="min-val" class="wrap-minmax clearfix"></ul>
+											<ul data-wrap-minmax="max-val" class="wrap-minmax clearfix"></ul>
 										</div>
 									</div>
 								</div>
@@ -123,21 +130,28 @@ $this->registerJs($script, View::POS_BEGIN);
 							<div class="frm-item choice_price_dt select-dt">
 								<div class="box-dropdown" data-item-minmax="area">
 									<div class="val-selected style-click dt-search">
-										Diện tích
-										<div>
+										<span class="txt-holder-minmax">Diện tích</span>
+										<!-- <div>
 											<span class="tu">từ</span>
 											<span class="wrap-min">1 tỷ</span>
 											<span class="trolen">trở lên</span>
 											<span class="den">đến</span>
 											<span class="wrap-max">4 tỷ</span>
 											<span class="troxuong">trở xuống</span>
+										</div> -->
+										<div>
+											<span class="wrap-min"></span>
+											<span class="trolen">+</span>
+											<span class="den">-</span>
+											<span class="wrap-max"></span>
+											<span class="troxuong"><?= Yii::t('ad', 'below') ?></span>
 										</div>
 										<span class="pull-right icon arrowDown"></span>
 									</div>
 									<div class="item-dropdown hide-dropdown wrap-min-max">
 										<div class="box-input clearfix">
 											<span class="txt-min min-max active min-val" data-value="">Thấp nhất</span>
-											<span class="text-center">Đến</span>
+											<span class="text-center"><span></span></span>
 											<span class="txt-max min-max max-val" data-value="">Cao nhất</span>
 											<?= Html::activeHiddenInput($searchModel, 'size_min', ['id' => 'dtMin']); ?>
 											<?= Html::activeHiddenInput($searchModel, 'size_max', ['id' => 'dtMax']); ?>
