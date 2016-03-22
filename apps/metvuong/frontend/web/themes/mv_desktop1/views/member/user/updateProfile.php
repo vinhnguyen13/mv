@@ -37,7 +37,7 @@ $user = $model->getUser();
     							<span><?=Yii::t('profile', 'Name')?></span>
     						</li>
     						<li>
-    							<span class="attr-right pull-right phone-num"><?=empty($model->mobile) ? "<i style=\"font-weight: normal;\">".Yii::t('profile','updating')."</i>" : $model->mobile ?></span>
+    							<span class="attr-right pull-right phone-num"><?=empty($model->mobile) ? "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->mobile ?></span>
     							<span><?=Yii::t('profile', 'Mobile')?></span>
     						</li>
     						<li>
@@ -55,7 +55,7 @@ $user = $model->getUser();
     				</div>
     				<div class="wrap-attr-detail">
     					<div class="txt-wrap">
-    						<p class="txt-mota"><?=empty($model->bio) ? "<i style=\"font-weight: normal;\">".Yii::t('profile','updating')."</i>" : $model->bio ?></p>
+    						<p class="txt-mota"><?=empty($model->bio) ? "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->bio ?></p>
     					</div>
     				</div>
     			</section>

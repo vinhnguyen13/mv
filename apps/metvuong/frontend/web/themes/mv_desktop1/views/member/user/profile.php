@@ -30,7 +30,7 @@ $user = $model->getUser();
             <div class="infor-person">
                 <div class="title-text"><?=Yii::t('profile', 'Personal Information')?></div>
                 <div class="wrap-txt">
-                    <?= empty($model->bio) ?  "<i style=\"font-weight: normal;\">".Yii::t('profile','updating')."</i>" : $model->bio ?>
+                    <?= empty($model->bio) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->bio ?>
                 </div>
             </div>
 
@@ -39,7 +39,7 @@ $user = $model->getUser();
                     <div class="circle"><div><span class="icon icon-map-loca-1"></span></div></div>
                     <div class="txt-infor-right">
                         <div>
-                            <?= empty($user->location) ?  "<i style=\"font-weight: normal;\">".Yii::t('profile','updating')."</i>" : $user->location->city ?>
+                            <?= empty($user->location) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $user->location->city ?>
                         </div>
                     </div>
                 </li>
@@ -47,7 +47,7 @@ $user = $model->getUser();
                     <div class="circle"><div><span class="icon icon-phone-1"></span></div></div>
                     <div class="txt-infor-right">
                         <div>
-                            <?= empty($model->mobile) ?  "<a href='#'><i style=\"font-weight: normal;\">".Yii::t('profile','updating')."</i></a>" : "<a href='tel:".$model->mobile."'>".$model->mobile."</a>" ?>
+                            <?= empty($model->mobile) ?  "<a href='#'><i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i></a>" : "<a href='tel:".$model->mobile."'>".$model->mobile."</a>" ?>
                         </div>
                     </div>
                 </li>
@@ -55,7 +55,7 @@ $user = $model->getUser();
                     <div class="circle"><a href="#popup-email" class="email-btn"><div><span class="icon icon-email-1"></span></div></a></div>
                     <div class="txt-infor-right">
                         <div>
-                            <a href="#popup-email" class="email-btn"><?= empty($model->public_email) ?  "<i style=\"font-weight: normal;\">".Yii::t('profile','updating')."</i>" : $model->public_email ?></a>
+                            <a href="#popup-email" class="email-btn"><?= empty($model->public_email) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->public_email ?></a>
                         </div>
                     </div>
                 </li>
