@@ -130,7 +130,7 @@ class AdController extends Controller
 		if(Yii::$app->request->isAjax) {
 			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 			
-			$products = $searchQuery->asArray(true)->all();
+			$products = $searchQuery->indexBy('id')->asArray(true)->all();
 			
 			return $products;
 		} else {

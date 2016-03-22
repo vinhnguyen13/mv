@@ -43,17 +43,7 @@ class AdProductSearch extends AdProduct {
 		$query->from('ad_product');
 		$query->innerJoin('ad_product_addition_info', 'ad_product_addition_info.product_id = ad_product.id');
 		$query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
-// 		$this->load($params);
-		
-// 		$sort = $this->order_by ? $this->order_by : '-created_at';
-// 		$doa = SORT_ASC;
-// 		if(StringHelper::startsWith($sort, '-')) {
-// 			$sort = str_replace('-', '', $sort);
-// 			$doa = SORT_DESC;
-// 		}
-		
-// 		$query = AdProduct::find();
-// 		$dataProvider = new ActiveDataProvider(['query' => $query, 'sort' => ['defaultOrder' => [$sort => $doa]]]);
+		$query->groupBy('ad_product.id');
 		
 		$where = ['status' => 1];
 		
@@ -73,7 +63,11 @@ class AdProductSearch extends AdProduct {
 			$where['district_id'] = intval($this->district_id);
 		}
 		
-		if(count($where) == 1 && $this->city_id) {
+		if(count($where) == 1) {
+			if(!$this->city_id) {
+				$this->city_id = 1;
+			}
+			
 			$where['city_id'] = intval($this->city_id);
 		}
 
@@ -129,14 +123,10 @@ class AdProductSearch extends AdProduct {
 		$query->orderBy("$sort $doa");
 		
 		return $query;
-// 		$query->leftJoin('ad_product_addition_info', '`ad_product_addition_info`.`product_id` = `ad_product`.`id`');
-// 		$query->with(['city', 'district', 'ward', 'street']);
-		
-// 		return $dataProvider;
 	}
 	
 	function fetchValues() {
-		if($this->district_id === null) {
+		if(!$this->district_id) {
 			if($this->street_id) {
 				$this->district_id = $this->street->district->id;
 			} else if($this->ward_id) {
@@ -151,8 +141,6 @@ class AdProductSearch extends AdProduct {
 		if(!$this->city_id) {
 			if($this->district_id) {
 				$this->city_id = $this->district->city->id;
-			} else {
-				$this->city_id = 1;
 			}
 		}
 	}

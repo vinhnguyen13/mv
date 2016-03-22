@@ -21,11 +21,14 @@ $types = AdProduct::getAdTypes ();
 
 $hideSearchForm = Yii::$app->request->get('s') || (Yii::$app->request->get('page', 1) != 1);
 
-$lazyLoadJs = [
-	Yii::$app->view->theme->baseUrl . '/resources/js/gmap-v2.js',
-	Yii::$app->view->theme->baseUrl . '/resources/js/listing-map.js',
-	'https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=m2Map.loaded',
-];
+$srcGmapV2 = Yii::$app->view->theme->baseUrl . '/resources/js/gmap-v2.js';
+
+$script = <<<EOD
+	var srcApi = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=apiLoaded';
+	var srcGmapV2 = '$srcGmapV2';
+EOD;
+
+$this->registerJs($script, View::POS_BEGIN);
 ?>
 
 <div class="result-listing clearfix">
@@ -363,6 +366,6 @@ $lazyLoadJs = [
 		</div>
 	</div>
 	<div class="wrap-map-listing">
-		<div id="map" class="inner-wrap" data-url="<?= Url::to(['/ad/map']) ?>" data-src="<?= Html::encode(json_encode($lazyLoadJs)) ?>"></div>
+		<div id="map" class="inner-wrap"></div>
 	</div>
 </div>

@@ -2,8 +2,17 @@ var mapEl;
 var searchForm;
 var submitButton;
 
-$(document).ready(function(){
+function apiLoaded() {
 	
+}
+
+function gmapV2Load() {
+	
+}
+
+$(document).ready(function(){
+	searchForm = $('#search-form');
+	submitButton = $('.btn-submit');
 //	var map = {
 //		gmap: null,
 //		focus: 1,
@@ -22,7 +31,13 @@ $(document).ready(function(){
 //		}
 //	};
 	
-	submitButton = $('.btn-submit');
+	
+	
+	function getListingLocation(callback) {
+		$.get(searchForm.attr('action'), searchForm.serialize(), function(r){
+			callback(r);
+		});
+	}
 	
 	var desktop = {
 		isInit: false,
@@ -33,18 +48,21 @@ $(document).ready(function(){
 			if(!this.isInit) {
 				this.isInit = true;
 				
-				mapEl = $('#map');
-
-				var src = mapEl.data('src');
-
-				for(var i = 0; i < src.length; i++) {
-					var resource = document.createElement('script'); 
-					resource.src = src[i];
-					document.getElementsByTagName('head')[0].appendChild(resource);
-					
-					console.log('insert ' + src[i]);
-				}
+				var head = document.getElementsByTagName('head')[0];
+				
+				var apiScript = document.createElement('script');
+				apiScript.src = srcApi;
+				head.appendChild(apiScript);
+				
+				var gmapV2Script = document.createElement('script');
+				gmapV2Script.src = srcGmapV2;
+				gmapV2Script.onload = gmapV2Load;
+				head.appendChild(gmapV2Script);
 			}
+			
+			getListingLocation(function(result){
+				
+			});
 		},
 		disable: function() {
 			this.isEnabled = false;
@@ -181,8 +199,6 @@ $(document).ready(function(){
         btnEvent: '.btn-submit',
         itemToggle: '.toggle-search'
     });
-	
-	searchForm = $('#search-form');
 //	var page = 1;
 //	var listingListId = '#listing-list';
 //	var listingListWrap = '#listing-list > ul';
