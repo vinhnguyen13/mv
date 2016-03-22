@@ -88,7 +88,7 @@ Yii::$app->view->registerMetaTag([
 		</div>
 		<?php endif; ?>
 		<p class="infor-by-up">
-			<?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?> bởi <a href="#">Môi Giới</a>
+			<?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?>
 		</p>
 		<div class="infor-listing">
 			<div class="address-listing">
