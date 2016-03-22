@@ -22,7 +22,10 @@ $user = $model->getUser();
     		<div class="wrap-edit-tt">
     			<div class="avatar-user-pr">
                     <div class="wrap-img avatar">
-                        <img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="<?=$model->avatar?>" alt="metvuong avatar" />
+                        <a href="#" data-toggle="modal" data-target="#avatar">
+                            <img id="profileAvatar" src="<?=$model->avatar?>" alt="metvuong avatar" />
+                            <span class="icon icon-edit-small-1"></span>
+                        </a>
                     </div>
                 </div>
     			<section class="ttcn">

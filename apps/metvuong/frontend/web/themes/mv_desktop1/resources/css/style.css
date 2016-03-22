@@ -1653,10 +1653,17 @@ label {
 }
 .avatar-user-pr .avatar {
     overflow: hidden;
-    width: 90px;
-    height: 90px;
+    width: 90px !important;
+    height: 90px !important;
     margin: 0 auto 10px;
     padding: 5px;
+    position: relative !important;;
+}
+.avatar-user-pr .avatar .icon {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    z-index: 2;
 }
 .avatar-user-pr .avatar img {
     width: 100%;
@@ -2233,6 +2240,9 @@ label {
 #settings-user li span {
     display: block;
 }
+.list-noti .avatar a,
+.chat-list .wrap-img,
+.avatar-user-pr .avatar,
 .user-edit .wrap-img {
     position: static;
     background: none;
@@ -2249,6 +2259,15 @@ label {
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
     width: 35px;
+    height: auto;
+}
+.list-noti .avatar a {
+    width: 40px;
+    height: 40px;
+}
+.list-noti .avatar a img {
+    width: 100%;
+    height: auto;
 }
 .user-edit span img {
     width: 100%;
