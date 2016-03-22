@@ -107,7 +107,7 @@ var map = {
 	},
 	closeDetail: function() {
 		// close detail
-	}
+	},
 	initMap: function() {
 		map.currentState = map.focusState = map.getCurrentState(initialZoom);
 		
