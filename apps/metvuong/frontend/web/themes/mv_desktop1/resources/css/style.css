@@ -644,16 +644,18 @@ margin-top: 3px;
 }
 .infor-agent .wrap-img {
     display: block;
-    border-radius: 100%;
-    -webkit-border-radius: 100%;
-    -moz-border-radius: 100%;
-    -ms-border-radius: 100%;
     overflow: hidden;
     width: 100px;
     height: 100px;
     float: left;
     margin-right: 25px;
-    border: 3px solid #d8d8d8;
+    padding: 3px;
+    background: #fff;
+    border: 1px solid #BFBFBF;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
 }
 .infor-agent .wrap-img img {
     width: 100%;
@@ -2224,7 +2226,7 @@ label {
     background-color: #EAEAEA;
     text-decoration: none;
 }
-.noti-all a .notifi,
+.user-login .val-selected .notifi,
 .item-dropdown li a .notifi,
 #avatar-user span,
 #settings-user li a .notifi {
@@ -2242,6 +2244,13 @@ label {
     -ms-border-radius: 3px;
     min-width: 16px;
     text-align: center;
+}
+.user-login .val-selected .notifi {
+    top: 0;
+    left: 19px;
+}
+.user-login .box-dropdown .val-selected {
+    position: relative;
 }
 #settings-user li span {
     display: block;
@@ -3416,6 +3425,7 @@ input[type=text]:focus {
     background-position: 0 -582px;
     width: 17px;
     height: 19px;
+    vertical-align: middle;
 }
 .icon-email {
     background-position: 0px -384px;
@@ -3428,7 +3438,7 @@ input[type=text]:focus {
     height: 16px;
 }
 .item-agent {
-    padding: 3px 0;
+    padding: 7px 0;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -5754,6 +5764,9 @@ footer li a {
     font-weight: 400;
     margin-bottom: 0px;
     line-height: 100%;
+}
+.wrap-news .date-post {
+    margin-bottom: 10px;
 }
 .date-post strong {
     font-weight: 600;

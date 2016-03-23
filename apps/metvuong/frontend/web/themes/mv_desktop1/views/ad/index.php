@@ -541,7 +541,7 @@ $this->registerJs($script, View::POS_BEGIN);
 		var swiper = new Swiper('.swiper-container', {
 			pagination: '.swiper-pagination',
 			paginationClickable: true,
-	        spaceBetween: 30
+	        spaceBetween: 0
 	    });
 	});
 </script>
