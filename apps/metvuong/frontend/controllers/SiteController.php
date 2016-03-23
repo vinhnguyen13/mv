@@ -155,10 +155,13 @@ class SiteController extends Controller
     }
     
     public function actionMapImage($t, $s) {
-    	if(ctype_digit($t) && $t < 10000 && $t > 1) {
+    	if(ctype_digit($t) && $t < 99000 && $t > 1) {
     		header('Content-Type: image/png');
-    		
-    		if(strlen($t) > 3) {
+    		if(strlen($t) > 4) {
+    			$imgSrcName = ($s == 0) ? 'mc-2' : 'mch-2';
+    			$offsetX = 21; // image width / 2
+    			$offsetY = 20; // image height / 2
+    		} else if(strlen($t) > 3) {
     			$imgSrcName = ($s == 0) ? 'mc-1' : 'mch-1';
     			$offsetX = 16; // image width / 2
     			$offsetY = 17; // image height / 2
