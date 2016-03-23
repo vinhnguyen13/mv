@@ -242,5 +242,7 @@ $directionList = AdProductAdditionInfo::directionList();
 			],
 		],
     ]); ?>
+    <?php if($import == 'true'){?>
     <a href="<?= Url::to(['/craw/manager/import', 'totalCount' => $dataProvider->totalCount, 'page' => 1, 'filter' => json_encode(Yii::$app->request->queryParams)]) ?>" class="btn btn-success">Import</a>
+    <?php } ?>
 </div>

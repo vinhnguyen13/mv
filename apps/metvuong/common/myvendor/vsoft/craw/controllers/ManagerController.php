@@ -20,12 +20,14 @@ use yii\widgets\LinkPager;
 
 class ManagerController extends Controller {
 	public function actionIndex() {
+        $import = Yii::$app->request->get("import");
 		$adProduct = new AdProductSearch();
 		$provider = $adProduct->search(\Yii::$app->request->queryParams);
-		
+
 		return $this->render('index', [
 			'filterModel' => $adProduct,
 			'dataProvider' => $provider,
+            'import' => $import
 		]);
 	}
 
