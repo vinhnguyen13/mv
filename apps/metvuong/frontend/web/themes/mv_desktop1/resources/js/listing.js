@@ -543,6 +543,8 @@ $(document).ready(function(){
 			
 			$('.btn-close').on('click', function(e){
 				e.preventDefault();
+				
+				map.closeDetail();
 			});
 		},
 		disable: function() {

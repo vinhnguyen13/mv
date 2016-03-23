@@ -192,7 +192,7 @@ $this->registerJs($script, View::POS_BEGIN);
 							<div class="frm-item choice_price_dt select-dt">
 								<div class="box-dropdown" data-item-minmax="area">
 									<div class="val-selected style-click dt-search">
-										<span class="txt-holder-minmax">Diện tích</span>
+										<span class="txt-holder-minmax"><?= Yii::t('ad', 'Size') ?></span>
 										<!-- <div>
 											<span class="tu">từ</span>
 											<span class="wrap-min">1 tỷ</span>
@@ -271,7 +271,7 @@ $this->registerJs($script, View::POS_BEGIN);
 							<div class="frm-item select-others">
 								<div class="box-dropdown dropdown-common">
 									<div class="val-selected style-click">
-										<span class="selected" data-placeholder="Loại bất động sản?">Nâng Cao</span>
+										<span class="selected" data-placeholder="Loại bất động sản?"><?= Yii::t('ad', 'More') ?></span>
 										<span class="pull-right icon arrowDown"></span>
 									</div>
 									<div class="item-dropdown hide-dropdown">
