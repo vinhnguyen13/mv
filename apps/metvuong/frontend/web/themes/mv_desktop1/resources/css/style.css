@@ -469,6 +469,22 @@ header {
     border: 1px solid #4e4e4e;
     font-size: 15px;
 }
+.list-social-login li a.facebook {
+    border: 1px solid #3a5795;
+    color: #3a5795;
+}
+.list-social-login li a.facebook:hover {
+    background: #3a5795;
+    color: #fff;
+}
+.list-social-login li a.google {
+    border: 1px solid #EA4335;
+    color: #EA4335;
+}
+.list-social-login li a.google:hover {
+    background: #EA4335;
+    color: #fff;
+}
 .list-social-login {
     display: block;
 }
@@ -2009,7 +2025,7 @@ label {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    z-index: 2;
+    z-index: 5;
     position: absolute;
     top: 45px;
     left: 0;
