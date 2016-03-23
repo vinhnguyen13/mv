@@ -7,7 +7,7 @@ use frontend\models\AdProductSearch;
     <div class="container wrap-header">
         <div class="m-header">
             <a href="#menu-header" id="menu-toggle" class="pull-left"><span class="icon"></span></a>
-            <a href="#settings-user" id="avatar-user" class="wrap-img">
+            <a href="#settings-user" id="avatar-user" class="wrap-img wrapNotifyTotal">
                 <?php if(Yii::$app->user->isGuest){?>
                     <img src="/images/default-avatar.jpg" alt="">
                 <?php } else{?>
@@ -109,7 +109,11 @@ use frontend\models\AdProductSearch;
                         </a>
                     </div>
                     <div class="box-dropdown">
-                        <a href="#" class="icon-settings val-selected"><span class="notifi">5</span></a>
+                        <a href="#" class="icon-settings val-selected wrapNotifyTotal">
+                            <?php if(!empty($this->params['notify_total'])){?>
+                                <span id="notifyTotal" class="notifi"><?=$this->params['notify_total'];?></span>
+                            <?php }?>
+                        </a>
                         <div class="item-dropdown hide-dropdown">
                             <ul class="clearfix">
                                 <!-- <li><a href="<?= Url::to(['/ad/post']) ?>"><em class="icon-plus"></em>Đăng tin mới</a></li> -->
