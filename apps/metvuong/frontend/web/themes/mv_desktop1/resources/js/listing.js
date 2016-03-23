@@ -345,7 +345,7 @@ var map = {
 		map.groupMarkers.push(marker);
 	},
 	drawPolygon: function(area) {
-		var color = '#2196F3';
+		var color = '#00a769';
 		var geometries = JSON.parse(area.geometry);
 		
 		for(var i = 0; i < geometries.length; i++) {
@@ -357,8 +357,8 @@ var map = {
 			}
 			var polygon = new google.maps.Polygon({
 			    paths: triangleCoords,
-			    strokeColor: '#0D47A1',
-			    strokeOpacity: 0.6,
+			    strokeColor: color,
+			    strokeOpacity: 0.8,
 			    strokeWeight: 1,
 			    fillColor: color,
 			    fillOpacity: 0.2,
