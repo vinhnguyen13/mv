@@ -108,6 +108,17 @@ var map = {
 		$('.detail-listing-dt').css({
 			left: -wWrapList +'px'
 		});
+		
+		$.get('/ad/detail', {id: id}, function(r){
+			
+			$('.detail-listing .container').html($(r).find('#wrapper').find('.detail-listing .container').html());
+
+			var swiper = new Swiper('.swiper-container', {
+				pagination: '.swiper-pagination',
+				paginationClickable: true,
+		        spaceBetween: 0
+		    });
+		});
 	},
 	closeDetail: function() {
 		$('.detail-listing-dt').css({
