@@ -16,6 +16,7 @@ use yii\helpers\Url;
 use yii\web\Controller;
 use yii\data\ActiveDataProvider;
 use vsoft\craw\models\AdProductSearch;
+use yii\widgets\LinkPager;
 
 class ManagerController extends Controller {
 	public function actionIndex() {
@@ -82,15 +83,19 @@ class ManagerController extends Controller {
         }
     }
 
-    public function actionImport($fromID, $filter){
+    public function actionImport($totalCount, $page, $filter){
         $params = json_decode($filter, true);
+        if(isset($params["page"]))
+            $params["page"] = $page;
+
         $adProduct = new AdProductSearch();
         $provider = $adProduct->search($params);
-        $provider->setPagination(false);
-        $total = $provider->getTotalCount();
-        if($total > 0){
+        $provider->pagination->pageSize = 1000;
+//        $provider->setPagination(false); // out of memory error if don't pagination
+        $models = $provider->getModels();
+        $totalPage = (int)floor($totalCount/1000)+1;
+        if(count($models) > 0 && $totalPage >= $page){
             $adProductToolMapIDs = ArrayHelper::index(AdProductToolMap::find()->all(), 'product_tool_id');
-            $models = $provider->getModels();
             $columnNameArray = ['category_id', 'project_building_id', 'user_id', 'home_no',
                 'city_id', 'district_id', 'ward_id', 'street_id',
                 'type', 'content', 'area', 'price', 'price_type', 'lat', 'lng',
@@ -111,14 +116,9 @@ class ManagerController extends Controller {
             $bulkContact = array();
             $bulkProductToolMap = array();
 
-            $no = 1;
-            $count = 1;
-            for ($i = $fromID; $i < $total; $i++) {
-                if($count > 500){
-                    $fromID = $i;
-                    break;
-                }
-                $model = $models[$i];
+            $no = 0;
+//            $count = 1;
+            foreach ($models as $model) {
                 if(array_key_exists($model->id, $adProductToolMapIDs)) {
                     $no++;
                     continue;
@@ -156,16 +156,16 @@ class ManagerController extends Controller {
                     ];
                     $bulkInsertArray[] = $record;
                 }
-                $count++;
+//                $count++;
             }
 
-            print_r("<br>".($no-1)." product exists.");
+            print_r("<br>".$no." products exists.");
             $countBulkProduct = count($bulkInsertArray);
 //            $mod = $countBulkProduct % 1000;
             if ($countBulkProduct > 0) {
                 $insertCount = AdProduct::getDb()->createCommand()->batchInsert(AdProduct::tableName(), $columnNameArray, $bulkInsertArray)->execute();
                 if ($insertCount > 0) {
-                    print_r("<br>Insert {$insertCount} products done");
+                    print_r("<br>Insert {$insertCount} products done in page {$page}.");
                     $fromProductId = (int)\vsoft\ad\models\AdProduct::getDb()->getLastInsertID();
                     $toProductId = $fromProductId + ($insertCount - 1);
 
@@ -259,12 +259,16 @@ class ManagerController extends Controller {
 //                        }
                     }
                 }
-            } // if bulkArray == 1000
-
-            if(($no-1) < $total){
-                print_r("<br><br><a href=\"".Url::to(['/craw/manager/import', 'fromID' => $fromID, 'filter' => json_encode($params)], true)."\" style=\"font-size: 14pt; color: green;\">Continue to success.</a>");
             }
-            print_r("<br><br><a href=\"".Url::to(['/craw/manager'], true)."\" style=\"font-size: 14pt; color: black;\">Return Index</a>");
+            $page = $page+1;
+            if($page > $totalPage ){
+                print_r("<br><br><span style=\"font-size: 14pt; color: green;\">Import Done.</span>");
+            }
+            else {
+                print_r("<br><br><a href=\"".Url::to(['/craw/manager/import', 'totalCount' => $totalCount, 'page' => $page, 'filter' => json_encode($params)], true)."\" style=\"font-size: 14pt; text-tran; color: blue;\">Continue import page {$page} in {$totalPage} pages.</a>");
+            }
         }
+
+        print_r("<br><br><a href=\"".Url::to(['/craw/manager'], true)."\" style=\"font-size: 14pt; color: black;\">Return Index</a>");
     }
 }
