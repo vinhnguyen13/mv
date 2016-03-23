@@ -15,18 +15,17 @@ use yii\helpers\Url;
 						<div class="item">
 							<div class="img-show">
 								<div>
-									<a href="<?=Url::to(['/dashboard/statistics', 'id' => $product->id])?>"><img src="<?= $product->representImage ?>">
-										<div class="name-address-duan">
-											<?php if($product->projectBuilding): ?>
-											<p class="name-duan"><?= $product->projectBuilding->name ?></p>
-											<?php endif; ?>
-											<p class="loca-duan"><?= $product->address ?></p>
-										</div>
-									</a>
+									<a href="<?=Url::to(['/dashboard/statistics', 'id' => $product->id])?>"><img src="<?= $product->representImage ?>"></a>
 								</div>
 								<a href="<?= Url::to(['/ad/update', 'id' => $product->id]) ?>" class="edit-duan"><span class="icon-edit-small icon"></span></a>
 							</div>
 							<div class="intro-detail">
+								<div class="name-address-duan">
+									<?php if($product->projectBuilding): ?>
+									<p class="name-duan"><?= $product->projectBuilding->name ?></p>
+									<?php endif; ?>
+									<p class="loca-duan"><?= $product->address ?></p>
+								</div>
 								<div class="status-duan clearfix">
 									<?php if($product->end_date < time()): ?>
 									<div class="pull-right wrap-icon"><div><span class="icon icon-inactive-pro"></span></div><strong><?=Yii::t('statistic','Inactive Project')?></strong></div>

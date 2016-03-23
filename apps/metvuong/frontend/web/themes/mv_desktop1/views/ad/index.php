@@ -388,6 +388,7 @@ $this->registerJs($script, View::POS_BEGIN);
 										</div>
 										<div class="attrs-item">
 											<div class="wrap-attr-item">
+												<p class="date-post"><strong><?= date("d/m/Y H:i", $product->created_at) ?></strong></p>
 												<p class="address-listing">
 													<?= $product->getAddress($product->show_home_no) ?>
 												</p>
@@ -395,8 +396,6 @@ $this->registerJs($script, View::POS_BEGIN);
 													<strong><?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?></strong>
 												</p>
 												<p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
-												<p class="date-post"><strong><?= date("d/m/Y H:i", $product->created_at) ?></strong></p>
-												<div class="clearfix"></div>
 												<ul class="clearfix list-attr-td">
 													<?= $product->area ? '<li> <span class="icon icon-dt icon-dt-small"></span>' . $product->area . 'm2 </li>' : '' ?>
 													<?= $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
@@ -404,7 +403,7 @@ $this->registerJs($script, View::POS_BEGIN);
 												</ul>
 											</div>
 											<div class="wrap-attr-bottom">
-												<span class="price"><?= StringHelper::formatCurrency($product->price) ?></span>
+												<span class="price"><span>Giá</span><?= StringHelper::formatCurrency($product->price) ?></span>
 											</div>
 						                </div>
 									</a>

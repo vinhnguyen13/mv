@@ -22,6 +22,11 @@ input {
     /* -webkit-appearance: none; */
     -webkit-border-radius: 0;
 }
+input[type=text]:active,
+input[type=text]:focus {
+    border: 1px solid #00a769;
+    outline: none;
+}
 .color-cd {
     color: #00a769 !important;   
 }
@@ -588,8 +593,8 @@ margin-top: 3px;
     white-space: nowrap;
 }
 #listing-list .item-listing .address-listing {
-    margin: 0 0 3px 0;
-    color: #00a769;
+    margin: 0 0 6px 0;
+    color: #3c3c3c;
 }
 .item-listing .address-listing span {
     margin-right: 5px;
@@ -798,10 +803,11 @@ label {
 .item-listing .infor-by-up {
     border: none;
     padding: 0;
-    margin: 0 0 2px 0;
+    margin: 0 0 10px 0;
+    line-height: 100%;
 }
 #listing-list .list-attr-td {
-    margin: 5px 0 3px 0;
+    margin: 0 0 0 0;
 }
 .infor-duan .address-listing,
 .name-duan {
@@ -876,7 +882,7 @@ label {
     margin-bottom: 5px;
 }
 .post-listing {
-    padding: 0 0 0;
+    padding: 0 0 200px 0;
     position: relative;
     width: 100%;
     /* overflow: hidden; */
@@ -1353,7 +1359,7 @@ label {
     /* border: 1px solid #F1F1F1; */
     background: #f0f0f0;
     height: 40px;
-    line-height: 37px;
+    line-height: 40px;
     padding-left: 10px;
     padding-right: 10px;
     position: relative;
@@ -1426,10 +1432,7 @@ label {
 }
 .search-subpage .val-selected.active,
 .style-click:hover {
-    box-shadow: 0px 0px 2px #00A769;
-    -webkit-box-shadow: 0px 0px 2px #00A769;
-    -moz-box-shadow: 0px 0px 2px #00A769;
-    -ms-box-shadow: 0px 0px 2px #00A769;
+    border: 1px solid #00a769;
 }
 .advande-search-btn.active span {
     -webkit-transform: rotate3d(0,0,1,45deg);
@@ -1457,13 +1460,13 @@ label {
     -webkit-border-radius: 0 0 4px 4px;
     -moz-border-radius: 0 0 4px 4px;
     -ms-border-radius: 0 0 4px 4px;
-    padding: 10px;
+    /* padding: 10px; */
 }
 .item-dropdown li a {
     color: #4a4a4a;
     display: block;
-    padding: 5px;
-    font-size: .85em;
+    padding: 5px 10px;
+    font-size: 14px;
     text-transform: capitalize;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1980,8 +1983,8 @@ label {
 }
 .box-input {
     border-bottom: 1px solid  #B3B3B3;
-    padding-bottom: 10px;
     font-size: 13px;
+    padding: 10px;
 }
 .box-input input {
     float: left;
@@ -2142,7 +2145,7 @@ label {
     -moz-border-radius: 0;
     -ms-border-radius: 0;
     padding: 10px 30px;
-    font-size: 15px;
+    font-size: 13px;
     text-align: center;
     font-weight: 600;
     white-space: nowrap;
@@ -2227,7 +2230,7 @@ label {
     width: 22px;
     height: 14px;
 }
-.user-edit {padding: 9px 0;margin-right: 0;}
+.user-edit {padding: 9px 0;margin-right: 5px;}
 .user-edit a {
     color: #009544;
     font-size: 15px;
@@ -2311,7 +2314,7 @@ label {
 }
 .user-edit div {
     overflow: hidden;
-    padding-left: 10px;
+    padding-left: 5px;
     /* padding-top: 5px; */
     height: 35px;
     display: -webkit-flex;/* Safari */
@@ -2573,7 +2576,7 @@ footer {
 .title-sub {
     padding: 10px 0;
     text-transform: uppercase;
-    font-weight: 600;
+    font-weight: 400;
     font-size: 18px;
     color: #00a769;
     margin-bottom: 10px;
@@ -2861,12 +2864,6 @@ html.mm-opening .mm-slideout {
 .filter-minmax {
     overflow-x: hidden;
     overflow-y: auto;
-}
-input[type=text]:active,
-input[type=text]:focus {
-    border: 1px solid #00873e;
-    box-shadow: none;
-    -webkit-box-shadow: none;
 }
 .wrap-list-duan .img-intro .active-pro {
     color: #009745;
@@ -3295,7 +3292,7 @@ input[type=text]:focus {
 .num-phongtam .box-dropdown li a,
 .num-phongngu .box-dropdown li a {
     border: none;
-    font-size: 1.2em;
+    font-size: 14px;
     padding: 5px 0;
 }
 .num-phongtam .box-dropdown .item-dropdown,
@@ -3521,13 +3518,16 @@ input[type=text]:focus {
     vertical-align: middle;
 }
 .item-listing .price {
-    border: solid 1.5px #00a769;
-    letter-spacing: 0.8px;
+    border: solid 1px #8e8e8e;
     color: #00a769;
-    font-weight: 700;
-    padding: 5px 35px;
+    font-weight: 600;
+    padding: 4px 20px;
     display: inline-block;
-    font-size: 16px;
+    font-size: 15px;
+}
+.item-listing .price span {
+    color: #3c3c3c;
+    padding-right: 5px;
 }
 .view-more {
     letter-spacing: 0.3px;
@@ -3764,18 +3764,7 @@ input[type=text]:focus {
     height: 26px;
 }
 .name-address-duan {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    /* background: rgba(0, 0, 0, 0.35); */
-    color: #fff;
-    padding: 8px 15px 5px;
-    background: -moz-linear-gradient(top, rgba(31, 41, 51, 0) 10%, rgba(0, 0, 0, 0.79) 60%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #1f2933), color-stop(60%, rgba(0, 0, 0, 0.79)));
-    background: -webkit-linear-gradient(top, rgba(31, 41, 51, 0) 10%, rgba(36, 36, 36, 0.77) 60%);
-    background: -o-linear-gradient(top, rgba(31, 41, 51, 0) 10%, rgba(36, 36, 36, 0.77) 60%);
-    background: -ms-linear-gradient(top, rgba(31, 41, 51, 0) 10%, rgba(36, 36, 36, 0.77) 60%);
-    background: linear-gradient(to bottom, rgba(31, 41, 51, 0) 10%, rgba(0, 0, 0, 0.73) 60%);
+    
 }
 .wrap-icon div {
     display: inline-block;
@@ -3881,9 +3870,10 @@ input[type=text]:focus {
 }
 .item-listing .id-duan {
     font-weight: 400;
-    float: left;
+    float: right;
     margin-right: 20px;
     margin-bottom: 1px;
+    margin-top: 0;
 }
 #listing-list .item-listing .id-duan span {
     font-weight: 600;
@@ -5047,7 +5037,7 @@ input[type=text]:focus {
         margin: 0 -10px;
     }
     #listing-list .wrap-attr-item {
-        height: 100px;
+        height: 120px;
         overflow: hidden;
         padding: 0 15px;
         border-bottom: 1px solid #ededed;
@@ -5295,11 +5285,13 @@ input[type=text]:focus {
         margin: 0 auto 0;
         padding: 0;
     }
-    .search-home,
     .news-item,
     .box-item.box-feature-item {
         padding-top: 50px;
         padding-bottom: 50px;
+    }
+    .search-home {
+        padding-bottom: 150px;
     }
     .id-duan {
         float: right;
@@ -5410,10 +5402,14 @@ input[type=text]:focus {
 }
 .txt-location li {
     border-bottom: solid 1px #dcdcdc;
+    border-top: 1px solid #fff;
     padding-bottom: 15px;
-    margin-bottom: 15px;
+    padding-top: 15px;
     float: left;
     width: 100%;
+}
+.txt-location li:first-child {
+    border-top: none;
 }
 .txt-location li span {
     margin-right: 20px;
@@ -5424,18 +5420,20 @@ input[type=text]:focus {
 }
 .txt-location ul {
     margin-bottom: 15px;
+    border-bottom: 1px solid #fff;
 }
 .txt-location .get-email {
     margin-bottom: 5px;
-    font-size: 17px;
+    font-size: 16px;
 }
 .txt-location form input {
     border: solid 1px #dedede;
-    height: 43px;
+    height: 41px;
     display: inline-block;
     margin-right: 15px;
     padding: 0 15px;
     min-width: 60%;
+    line-height: 37px;
 }
 @media (min-width: 985px) {
     .txt-location,
@@ -5445,7 +5443,7 @@ input[type=text]:focus {
         margin-bottom: 0;
     }
     .txt-location {
-        padding-left: 20px;
+        padding-left: 60px;
     }
     .map-location .img-show:before {
         padding-top: 47%;
@@ -5457,7 +5455,7 @@ input[type=text]:focus {
         border: none;
     }
     footer {
-        padding: 20px 0;
+        padding: 14px 0 13px;
     }
 }
 .dt-footer {
@@ -5466,6 +5464,7 @@ input[type=text]:focus {
 }
 .dt-footer div {
     margin-top: 0;
+    font-size: 13px;
 }
 .dt-footer p {
     text-align: right;
@@ -5479,14 +5478,15 @@ input[type=text]:focus {
 .dt-footer li a {
     border-right: 1px solid #fff;
     padding: 0 10px;
-    font-size: 15px;
+    font-size: 13px;
 }
+.dt-footer li a:hover {text-decoration: underline;color: #fff;}
 .dt-footer li:last-child a {
     border: none;
     padding-right: 0;
 }
 .logo-footer {
-    width: 150px;
+    width: 115px;
 }
 footer li a {
     color: #fff;
@@ -5576,24 +5576,16 @@ footer li a {
     }
     .search-subpage .select-quan-huyen,
     .search-subpage .select-tinh-thanh {
-        /* width: 150px; */
         width: 8%;
     }
     .search-subpage .select-loaibds {
-        /* width: 230px; */
-        width: 10%;
-    }
-    .search-subpage .num-phongtam,
-    .search-subpage .num-phongngu {
-        width: 6%;
+        width: 14%;
     }
     .search-subpage .select-price {
-        /* width: 185px; */
-        width: 9%;
+        width: 13%;
     }
     .search-subpage .select-dt {
-        /* width: 220px; */
-        width: 8%;
+        width: 10%;
     }
     #du-an-select {
         width: 11%;
@@ -5638,7 +5630,7 @@ footer li a {
         margin: 0 15px 0 0;
     }
     .item-listing .img-intro:before {
-        padding-top: 77%;
+        padding-top: 75%;
     }
     #listing-list .item-listing {
         border: none;
@@ -5655,7 +5647,6 @@ footer li a {
         overflow: hidden;
     }
     .item-listing .infor-by-up {
-        /* display: none; */
     }
     #listing-list .wrap-attr-item {
         position: relative;
@@ -5715,6 +5706,11 @@ footer li a {
         border-bottom: solid 1px #dcdcdc;
         text-align: center;
     }
+    .option-show-listing.dropdown-select .val-selected:hover {
+        border: none;
+        border-bottom: solid 1px #dcdcdc;
+        background: #dcdcdc;
+    }
     .option-show-listing .selected {
         float: none;
         margin-right: 10px;
@@ -5747,7 +5743,7 @@ footer li a {
         width: 230px;
     }
     .select-loaibds .item-dropdown {
-        width: 400px;
+        width: 200px;
     }
     .dropdown-up-style {
         top: 50px;
@@ -5791,7 +5787,7 @@ footer li a {
     font-weight: 600;
 }
 .wrap-attr-item .date-post {
-    float: left;
+    margin-bottom: 3px;
 }
 .wrap-item .address-feat > a {
     margin-bottom: 12px;
@@ -5835,12 +5831,13 @@ footer li a {
 @media (min-width: 985px) {
     .title-top {
         text-align: left;
-        padding: 0 0 20px 0;
-        font-size: 28px;
+        padding: 0 0 10px 0;
+        font-size: 21px;
         background: inherit;
         border-bottom: solid 1px #00a769;
         margin: 0 0 0 0;
-        font-weight: 400;
+        font-weight: 600;
+        line-height: 100%;
     }
     .select-type {
         padding: 0;
@@ -5852,7 +5849,7 @@ footer li a {
         display: none;
     }
     .title-fixed-wrap {
-        margin-top: 70px;
+        margin-top: 40px;
     }
     .step-link {
         position: absolute;
@@ -5889,6 +5886,7 @@ footer li a {
         height: 100%;
         position: relative;
         padding-top: 65px;
+        padding-bottom: 0;
     }
     .step-check li {
         padding: 0 15px 60px;
@@ -6043,25 +6041,29 @@ footer li a {
         -ms-border-radius: 3px;
     }
     .user-login .box-dropdown .dropdown-up-style {
-        top: 62px;
+        top: 65px;
         width: 200px;
         left: inherit;
         right: 0;
     }
     .user-login .dropdown-up-style .item-dropdown {
-        border: 1px solid #A7A7A7;
-        max-height: inherit;
-        box-shadow: 0px 0px 5px #ADADAD;
-        -webkit-box-shadow: 0px 0px 5px #ADADAD;
-        -moz-box-shadow: 0px 0px 5px #ADADAD;
-        -ms-box-shadow: 0px 0px 5px #ADADAD;
-        border-radius: 3px;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        -ms-border-radius: 3px;
+        border: none;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        -ms-box-shadow: none;
+        border-radius: 0;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        -ms-border-radius: 0;
     }
     .user-login .item-dropdown li {
         width: 100%;
+    }
+    .user-login .item-dropdown li.flag-lang {
+        padding: 10px;
+    }
+    .user-login .item-dropdown li.flag-lang a {
+        border: none;
     }
     .user-login .item-dropdown a > div {
         display: inline-block;
@@ -6070,6 +6072,8 @@ footer li a {
     }
     .user-login .item-dropdown a {
         text-transform: uppercase;
+        border-bottom: solid 1px #c8c8c8;
+        padding-top: 8px;
     }
     .user-login .item-dropdown a:hover {
         text-decoration: none;
@@ -6080,10 +6084,11 @@ footer li a {
     }
     .wrap-list-duan li {
         width: 33.3333%;
-        padding: 0 15px;
+        padding: 0 10px;
+        margin-bottom: 20px;
     }
     .wrap-list-duan ul {
-        margin: 0 -15px;
+        margin: 0 -10px;
     }
     .page-faqs, .page-terms, .noti-alert, .detail-news {
         padding: 0;
@@ -6122,13 +6127,13 @@ footer li a {
         border: none;
     }
     .list-menu-news a {
-        font-size: 18px;
+        font-size: 14px;
         padding: 1px 15px;
     }
     .wrap-news {
         padding-left: 0;
         padding-right: 0;
-        margin-top: 50px;
+        margin-top: 20px;
     }
     .list-menu-news .swiper-wrapper {
         padding: 0;
@@ -6156,18 +6161,18 @@ footer li a {
         margin-bottom: 0;
     }
     .name-news a {
-        font-size: 20px;
+        font-size: 18px;
         text-transform: uppercase;
     }
     .wrap-news li div > div {
         height: auto;
     }
     .name-news {
-        margin-bottom: 10px;
+        margin-bottom: 5px;
     }
     .wrap-news li .short-txt {
         height: 80px;
-        font-size: 15px;
+        font-size: 13px;
     }
     .unit-dt {
         top: 10px;
@@ -6177,7 +6182,7 @@ footer li a {
     .select-others .dropdown-up-style {
         right: 0;
         left: inherit;
-        width: 400px;
+        width: 300px;
     }
     .select-others .item-dropdown .form-group {
         width: 100%;
@@ -6237,7 +6242,7 @@ footer li a {
     .page-news .title-top h2 {
         margin: 0;
         padding: 0;
-        font-size: 28px;
+        font-size: 20px;
     }
     .wrap-infor-duan .wrap-item {
         border: none;
@@ -6280,14 +6285,14 @@ footer li a {
     font-size: 14px;
 }
 .name-cate {
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 600;
     color: #00a769;
     float: none;
 }
 .wrap-news li div > a.name-cate {
     float: none;
-    margin: 0 0 25px 0;
+    margin: 0 0 20px 0;
     width: auto;
 }
 .arrowLeft-small-black {
@@ -6481,7 +6486,7 @@ footer li a {
 }
 #listing-list .item-listing a {
     display: block;
-    padding: 10px;
+    padding: 18px 10px;
     transition: all .2s ease-out;
     -webkit-transition: all .2s ease-out;
     -moz-transition: all .2s ease-out;
@@ -6506,6 +6511,9 @@ footer li a {
     }
     .logo-search-box img {
         width: 45%;
+    }
+    .detail-listing-dt {
+        display: none;
     }
 }
 @media ( max-width: 640px ) {
@@ -6625,7 +6633,7 @@ footer li a {
     /* box-shadow: 0 5px 15px rgba(0,0,0,.5); */
     z-index: 1;
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: scroll;
     transition: left .3s ease-out;
     -webkit-transition: left .3s ease-out;
     -moz-transition: left .3s ease-out;
@@ -6661,4 +6669,54 @@ footer li a {
 .advande-search .val-selected .selected {
     text-transform: uppercase;
     color: #000;
+}
+@media ( min-width: 985px ) {
+    #listing-list .list-attr-td {
+        margin-bottom: 4px;
+    }
+}
+@media ( max-width: 1366px ) {
+    .item-listing .id-duan {
+        float: left;
+        width: 100%;
+        margin-bottom: 8px;
+        line-height: 100%;
+    }
+    .item-listing .infor-by-up {
+        margin-bottom: 8px;
+    }
+    #listing-list .list-attr-td {
+        margin-bottom: 0;
+    }
+}
+@media ( max-width: 1280px ) {
+    .wrap-listing-item {
+        width: 43%;
+    }
+    .wrap-map-listing {
+        width: 57%;
+    }
+}
+@media ( max-width: 985px ) {
+    .wrap-listing-item {
+        width: 100%;
+    }
+}
+@media ( max-width: 640px ) {
+    .wrap-attr-bottom {
+        margin-top: 8px;
+    }
+    .item-listing .id-duan {
+        float: right;
+        width: auto;
+        margin: 5px 0 0 0;
+    }
+}
+@media ( min-width: 985px ) and ( max-width: 1280px ) {
+    .search-subpage .num-phongngu {
+        width: 9%;
+    }
+    .search-subpage .select-loaibds {
+        width: 14%;
+    }
 }

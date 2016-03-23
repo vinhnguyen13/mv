@@ -135,7 +135,7 @@ use frontend\models\AdProductSearch;
                                             <?php }?>
                                         </div><?=Yii::t('chat', 'Chat')?>
                                     </a></li>
-                                <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon icon-per"></span></div><?=Yii::t('user', 'Settings')?></a></li>
+                                <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon icon-per"></span></div><?=Yii::t('user', 'Cá nhân')?></a></li>
                                 <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><div><span class="icon icon-logout"></span></div><?=Yii::t('user', 'Log Out')?></a></li>
                                 <li class="flag-lang">
                                     <div class="pull-right">
