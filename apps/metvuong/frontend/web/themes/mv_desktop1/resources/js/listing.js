@@ -628,6 +628,30 @@ $(document).ready(function(){
 		var item = $('<li><a href="#" data-value="'+i+'" data-order="3">'+dataCategories[i].name+'</a></li>');
 		$('.loai-bds').append(item);
 	}
+	
+	var duAn = $('.du-an');
+	
+	$('#city_id').change(function(){
+		$.get('/ad/list-district', {cityId: $(this).val()}, function(districts){
+			appendDropdown($('#district_id'), districts);
+			
+			appendDropdown($('#ward_id'), []);
+			appendDropdown($('#street_id'), []);
+			duAn.html('');
+		});
+	});
+	
+	$('#district_id').change(function(){
+		$.get('/ad/list-swp', {districtId: $(this).val()}, function(response){
+			appendDropdown($('#ward_id'), response.wards);
+			appendDropdown($('#street_id'), response.streets);
+			
+			for(projectId in response.projects) {
+				var item = $('<li><a href="#" data-value="'+projectId+'">'+response.projects[projectId]+'</a></li>');
+				duAn.append(item);
+			}
+		});
+	});
 
 	$('.dropdown-common').dropdown({
 		txtAdd: true,
@@ -636,19 +660,9 @@ $(document).ready(function(){
 			if(item.closest('ul').hasClass('loai-bds')) {
 				if(item.data('value') == '6') {
 					$('#du-an-select').removeClass('hide');
-					loadProjects();
 				} else {
 					$('#du-an-select').addClass('hide');
 				}
-			} else if(item.closest('ul').hasClass('quan-huyen')) {
-				if($('#loai-bds').val() == '6') {
-					loadProjects();
-				}
-				
-				$.get('/ad/list-swp', {districtId: $('#quan-huyen').val()}, function(response){
-					appendDropdown($('#adproductsearch-ward_id'), response.wards);
-					appendDropdown($('#adproductsearch-street_id'), response.streets);
-				});
 			}
 			
 			

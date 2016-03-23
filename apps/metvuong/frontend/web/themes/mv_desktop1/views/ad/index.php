@@ -279,6 +279,24 @@ $this->registerJs($script, View::POS_BEGIN);
 										<div class="form-group col-xs-12 col-sm-6">
 											<div class="">
 												<?php 
+													$cities = AdCity::find()->all();
+													$citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
+													$citiesOptions = [];
+												?>
+												<?= Html::activeDropDownList($searchModel, 'city_id', $citiesDropdown, ['class' => 'form-control', 'options' => $citiesOptions]) ?>
+											</div>
+										</div>
+										<div class="form-group col-xs-12 col-sm-6">
+											<div class="">
+												<?php 
+													$items = ArrayHelper::map($searchModel->city->adDistricts, 'id', function ($model) { return $model->pre . ' ' . $model->name; });
+												?>
+												<?= Html::activeDropDownList($searchModel, 'district_id', $items, ['prompt' => $searchModel->getAttributeLabel('district_id'), 'class' => 'form-control']) ?>
+											</div>
+										</div>
+										<div class="form-group col-xs-12 col-sm-6">
+											<div class="">
+												<?php 
 													$items = $searchModel->district_id ? ArrayHelper::map($searchModel->district->adWards, 'id', function ($model) { return $model->pre . ' ' . $model->name; }) : [];
 												?>
 												<?= Html::activeDropDownList($searchModel, 'ward_id', $items, ['prompt' => $searchModel->getAttributeLabel('ward_id'), 'class' => 'form-control']) ?>
@@ -319,22 +337,6 @@ $this->registerJs($script, View::POS_BEGIN);
 													];
 												?>
 												<?= Html::activeDropDownList($searchModel, 'created_before', $items, ['prompt' => Yii::t('ad', 'Any time'), 'class' => 'form-control']) ?>
-											</div>
-										</div>
-										<div class="form-group col-xs-12 col-sm-6">
-											<div class="">
-												<?php
-													$items = [];
-													for ($i = 1; $i <= 10; $i++) {
-														$items[$i] = $i . '+';
-													}
-												?>
-												<?= Html::activeDropDownList($searchModel, 'room_no', $items, ['class' => 'form-control', 'prompt' => Yii::t('ad', 'Beds')]) ?>
-											</div>
-										</div>
-										<div class="form-group col-xs-12 col-sm-6">
-											<div class="">
-												<?= Html::activeDropDownList($searchModel, 'toilet_no', $items, ['class' => 'form-control', 'prompt' => Yii::t('ad', 'Baths')]) ?>
 											</div>
 										</div>
 									</div>
