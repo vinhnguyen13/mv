@@ -2,10 +2,10 @@
 use yii\helpers\Url;
 $newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatID"] : 0;
 $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID]);
-//Yii::t('news', 'Real Estate');
-//Yii::t('news', 'Financial & Banking');
-//Yii::t('news', 'Business');
-//Yii::t('news', 'Economy');
+Yii::t('news', 'Real Estate');
+Yii::t('news', 'Financial & Banking');
+Yii::t('news', 'Business');
+Yii::t('news', 'Economy');
 ?>
 <div class="title-top clearfix">
     <div class="list-menu-news swiper-container">
