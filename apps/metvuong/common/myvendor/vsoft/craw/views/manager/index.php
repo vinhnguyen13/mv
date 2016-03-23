@@ -134,7 +134,7 @@ $script = <<<EOD
 EOD;
 $this->registerJs($script, View::POS_READY);
 
-$this->title = Yii::t('cms', 'Building Project');
+$this->title = Yii::t('cms', 'Listing Management');
 
 $type = [
 	AdProduct::TYPE_FOR_SELL => Yii::t ( 'ad', 'Nhà đất bán' ),
