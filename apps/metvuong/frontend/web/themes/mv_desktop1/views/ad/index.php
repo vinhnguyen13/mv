@@ -65,7 +65,47 @@ $this->registerJs($script, View::POS_BEGIN);
 				<div class="search-subpage">
 					<div class="advande-search clearfix">
 						<div class="toggle-search"<?= $hideSearchForm ? ' style="display: none"' : '' ?>>
-							<div class="frm-item select-tinh-thanh">
+							<div class="frm-item num-phongngu">
+								<div class="box-dropdown dropdown-common">
+									<div class="val-selected style-click" data-text-add="Beds"><span class="selected">0+ Beds</span><span class="pull-right icon arrowDown"></span></div>
+									<div class="item-dropdown item-bed-bath hide-dropdown">
+										<ul class="clearfix">
+											<li><a href="#" data-value="1">1+</a></li>
+											<li><a href="#" data-value="2">2+</a></li>
+											<li><a href="#" data-value="3">3+</a></li>
+											<li><a href="#" data-value="4">4+</a></li>
+											<li><a href="#" data-value="5">5+</a></li>
+											<li><a href="#" data-value="6">6+</a></li>
+											<li><a href="#" data-value="7">7+</a></li>
+											<li><a href="#" data-value="8">8+</a></li>
+											<li><a href="#" data-value="9">9+</a></li>
+											<li><a href="#" data-value="10">10+</a></li>
+										</ul>
+										<input type="hidden" id="" class="value_selected" name="roomNo" value="" />
+									</div>
+								</div>
+							</div>
+							<div class="frm-item num-phongtam">
+								<div class="box-dropdown dropdown-common">
+									<div class="val-selected style-click" data-text-add="Bath"><span class="selected">0+ Bath</span><span class="pull-right icon arrowDown"></span></div>
+									<div class="item-dropdown item-bed-bath hide-dropdown">
+										<ul class="clearfix">
+											<li><a href="#" data-value="1">1+</a></li>
+											<li><a href="#" data-value="2">2+</a></li>
+											<li><a href="#" data-value="3">3+</a></li>
+											<li><a href="#" data-value="4">4+</a></li>
+											<li><a href="#" data-value="5">5+</a></li>
+											<li><a href="#" data-value="6">6+</a></li>
+											<li><a href="#" data-value="7">7+</a></li>
+											<li><a href="#" data-value="8">8+</a></li>
+											<li><a href="#" data-value="9">9+</a></li>
+											<li><a href="#" data-value="10">10+</a></li>
+										</ul>
+										<input type="hidden" id="" class="value_selected" name="roomNo" value="" />
+									</div>
+								</div>
+							</div>
+							<!-- <div class="frm-item select-tinh-thanh">
 								<div class="box-dropdown dropdown-common">
 									<div class="val-selected style-click">
 										<span class="selected" data-placeholder="<?= Yii::t('ad', 'City') ?>"><?= Yii::t('ad', 'City') ?></span>
@@ -76,8 +116,8 @@ $this->registerJs($script, View::POS_BEGIN);
 										<?= Html::activeHiddenInput($searchModel, 'city_id', ['id' => 'tinh-thanh']); ?>
 									</div>
 								</div>
-							</div>
-							<div class="frm-item select-quan-huyen">
+							</div> -->
+							<!-- <div class="frm-item select-quan-huyen">
 								<div class="box-dropdown dropdown-common">
 									<div class="val-selected style-click">
 										<span class="selected" data-placeholder="<?= Yii::t('ad', 'District') ?>"><?= Yii::t('ad', 'District') ?></span>
@@ -88,7 +128,7 @@ $this->registerJs($script, View::POS_BEGIN);
 										<?= Html::activeHiddenInput($searchModel, 'district_id', ['id' => 'quan-huyen']); ?>
 									</div>
 								</div>
-							</div>
+							</div> -->
 							<div class="frm-item select-loaibds">
 								<div class="box-dropdown dropdown-common">
 									<div class="val-selected style-click">

@@ -1919,7 +1919,8 @@ label {
 }
 .wrap-min,
 .wrap-max {
-    font-weight: bold;
+    /* font-weight: bold; */
+    text-transform: uppercase;
 }
 .choice_price_dt .min-max {
     display: inline-block;
@@ -5566,26 +5567,20 @@ footer li a {
         /* width: 230px; */
         width: 10%;
     }
+    .search-subpage .num-phongtam,
+    .search-subpage .num-phongngu {
+        width: 6%;
+    }
     .search-subpage .select-price {
         /* width: 185px; */
-        width: 8.5%;
+        width: 9%;
     }
     .search-subpage .select-dt {
         /* width: 220px; */
         width: 8%;
     }
-    .ad-listing .num-phongngu,
-    .ad-listing .num-phongtam {
-        /* width: 150px; */
-        margin: 0;
-        padding: 0;
-        width: 48%;
-    }
     #du-an-select {
         width: 11%;
-    }
-    .ad-listing .num-phongngu {
-        margin-right: 4%;
     }
     .wrap-listing-item {
         position: fixed;
@@ -6645,4 +6640,9 @@ footer li a {
     opacity: 1;
     background: #EAEAEA;
     border-radius: 3px;
+}
+.advande-search .val-selected .txt-holder-minmax,
+.advande-search .val-selected .selected {
+    text-transform: uppercase;
+    color: #000;
 }
