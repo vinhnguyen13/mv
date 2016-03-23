@@ -265,10 +265,15 @@ var map = {
 			var areaId = product[area + '_id'];
 			
 			if(counters[areaId]) {
-				counters[areaId] = counters[areaId] + 1;
+				counters[areaId]['total'] = counters[areaId]['total'] + 1;
 			} else {
-				counters[areaId] = 1;
+				counters[areaId] = {
+					total: 1,
+					ids: []
+				};
 			}
+			
+			counters[areaId]['ids'].push(i);
 		}
 		
 		return counters;
@@ -280,20 +285,22 @@ var map = {
 			}
 		}
 	},
-	drawPolygonMarker: function(area, number) {
+	drawPolygonMarker: function(area, counters) {
 		var center = JSON.parse(area.center);
 		center = {lat: center[0], lng: center[1]};
 		
 		var marker = new google.maps.Marker({
 			position: center,
 			map: map.gmap,
-		    icon: map.icon(number, 0)
+		    icon: map.icon(counters['total'], 0)
 		});
+		
+		marker.set('ids', counters['ids']);
 		
 		var name = area.pre ? area.pre + ' ' + area.name : area.name;
 		
 		marker.addListener('mouseover', function(){
-			if(number > 999) {
+			if(counters['total'] > 999) {
 				map.infoWindow.setOffsetTop(50);
 			}
 			
@@ -454,6 +461,17 @@ var map = {
 				return marker;
 			}
 		}
+	},
+	getMarkerGroup: function(id) {
+		for(var i in map.groupMarkers) {
+			var marker = map.groupMarkers[i];
+			var ids = marker.get('ids');
+
+			if(ids.indexOf('' + id) != -1) {
+				return marker;
+			}
+		}
+		return false;
 	}
 }
 
@@ -531,6 +549,19 @@ $(document).ready(function(){
 						if(!map.gmap.getBounds().contains(position)) {
 							map.gmap.setCenter(position);
 						}
+					} else {
+						var marker = map.getMarkerGroup(id);
+						
+						if(marker) {
+							marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
+							marker.setIcon(map.icon(marker.get('ids').length, 1));
+							
+							var position = marker.getPosition();
+							
+							if(!map.gmap.getBounds().contains(position)) {
+								map.gmap.setCenter(position);
+							}
+						}
 					}
 			    }, 300));
 			}).on('mouseleave', '.item-listing a', function(e){
@@ -538,6 +569,12 @@ $(document).ready(function(){
 				if(map.currentState == 'detail') {
 					var marker = map.getMarker($(this).data('id'));
 					marker.setIcon(map.icon(marker.get('ids').length, 0));
+				} else {
+					var marker = map.getMarkerGroup($(this).data('id'));
+					
+					if(marker) {
+						marker.setIcon(map.icon(marker.get('ids').length, 0));
+					}
 				}
 			});
 			
