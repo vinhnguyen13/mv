@@ -311,8 +311,8 @@ var map = {
 		var name = area.pre ? area.pre + ' ' + area.name : area.name;
 		
 		marker.addListener('mouseover', function(){
-			if(counters['total'] > 99999) {
-				map.infoWindow.setOffsetTop(70);
+			if(counters['total'] > 9999) {
+				map.infoWindow.setOffsetTop(60);
 			} else if(counters['total'] > 999) {
 				map.infoWindow.setOffsetTop(50);
 			}
