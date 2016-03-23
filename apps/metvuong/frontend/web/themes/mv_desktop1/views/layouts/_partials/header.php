@@ -115,8 +115,8 @@ use frontend\models\AdProductSearch;
                                     <a href="<?=Url::to(['member/profile', 'username'=>Yii::$app->user->identity->username])?>">
                                         <div>
                                             <span class="icon icon-per"></span>
-                                        </div>  
-                                        Profile user
+                                        </div>
+                                        <?=Yii::t('user', 'Profile')?>
                                     </a>
                                 </li>
                                 <li>
@@ -125,7 +125,7 @@ use frontend\models\AdProductSearch;
                                         <?php if(!empty($this->params['notify_other'])){?>
                                             <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
                                         <?php }?>
-                                        </div>Thông báo
+                                        </div><?=Yii::t('activity', 'Notification')?>
                                     </a>
                                 </li>
                                 <li><a href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>"><div><span class="icon icon-listings"></span></div><?=Yii::t('ad', 'Listings')?></a></li>
@@ -137,14 +137,14 @@ use frontend\models\AdProductSearch;
                                             <?php }?>
                                         </div><?=Yii::t('chat', 'Chat')?>
                                     </a></li>
-                                <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon icon-settings"></span></div><?=Yii::t('user', 'Cài đặt')?></a></li>
+                                <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon icon-settings"></span></div><?=Yii::t('user', 'Setting')?></a></li>
                                 <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><div><span class="icon icon-logout"></span></div><?=Yii::t('user', 'Log Out')?></a></li>
                                 <li class="flag-lang">
                                     <div class="pull-right">
                                         <a href="<?=Url::current(['language-change'=>'en-US'])?>"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/flag-en.png' ?>" alt=""></a>
                                         <a href="<?=Url::current(['language-change'=>'vi-VN'])?>"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/flag-vn.png' ?>" alt=""></a>
                                     </div>
-                                    Language
+                                    <?=Yii::t('general', 'Language')?>
                                 </li>
                             </ul>
                         </div>
