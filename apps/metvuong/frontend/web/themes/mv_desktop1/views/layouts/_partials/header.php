@@ -82,7 +82,6 @@ use frontend\models\AdProductSearch;
                     <a href="#" class="icon-guest val-selected wrap-img">
                         <div><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg' ?>" alt=""></div>
                         Guest
-                        <span class="icon arrowDown"></span>
                     </a>
                     <div class="item-dropdown hide-dropdown">
                         <ul class="clearfix">
@@ -99,24 +98,27 @@ use frontend\models\AdProductSearch;
                     </div>
                 </div>
                 <?php } else{?>
-                    <div class="user-edit">
-                        <a href="<?=Url::to(['member/profile', 'username'=>Yii::$app->user->identity->username])?>" title="Trang cá nhân">
+                    <div class="user-edit box-dropdown">
+                        <a class="val-selected wrapNotifyTotal" href="#" title="Trang cá nhân">
                             <span class="wrap-img"><img src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="" width="40" height="40"></span>
                             <div>
                                 <p><span class="name-user"><?=Yii::$app->user->identity->profile->getDisplayName();?></span>
                                     <span class="address"><?=empty(Yii::$app->user->identity->location) ? "" : Yii::$app->user->identity->location->city?></span></p>
                             </div>
-                        </a>
-                    </div>
-                    <div class="box-dropdown">
-                        <a href="#" class="icon-settings val-selected wrapNotifyTotal">
                             <?php if(!empty($this->params['notify_total'])){?>
                                 <span id="notifyTotal" class="notifi"><?=$this->params['notify_total'];?></span>
                             <?php }?>
                         </a>
                         <div class="item-dropdown hide-dropdown">
                             <ul class="clearfix">
-                                <!-- <li><a href="<?= Url::to(['/ad/post']) ?>"><em class="icon-plus"></em>Đăng tin mới</a></li> -->
+                                <li>
+                                    <a href="<?=Url::to(['member/profile', 'username'=>Yii::$app->user->identity->username])?>">
+                                        <div>
+                                            <span class="icon icon-per"></span>
+                                        </div>  
+                                        Profile user
+                                    </a>
+                                </li>
                                 <li>
                                     <a href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" class="wrapNotifyOther">
                                         <div><span class="icon icon-alert"></span>
@@ -135,7 +137,7 @@ use frontend\models\AdProductSearch;
                                             <?php }?>
                                         </div><?=Yii::t('chat', 'Chat')?>
                                     </a></li>
-                                <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon icon-per"></span></div><?=Yii::t('user', 'Cá nhân')?></a></li>
+                                <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon icon-settings"></span></div><?=Yii::t('user', 'Cài đặt')?></a></li>
                                 <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><div><span class="icon icon-logout"></span></div><?=Yii::t('user', 'Log Out')?></a></li>
                                 <li class="flag-lang">
                                     <div class="pull-right">
