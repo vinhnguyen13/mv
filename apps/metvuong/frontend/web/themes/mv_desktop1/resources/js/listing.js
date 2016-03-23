@@ -312,7 +312,7 @@ var map = {
 		
 		marker.addListener('mouseover', function(){
 			if(counters['total'] > 99999) {
-				map.infoWindow.setOffsetTop(60);
+				map.infoWindow.setOffsetTop(70);
 			} else if(counters['total'] > 999) {
 				map.infoWindow.setOffsetTop(50);
 			}
