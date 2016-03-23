@@ -521,23 +521,12 @@ $(document).ready(function(){
 				gmapV2Script.src = srcGmapV2;
 				gmapV2Script.onload = map.gmapV2Loaded;
 				head.appendChild(gmapV2Script);
-<<<<<<< 800a731146d11429bb3321bf0fb68ca9a2dc0b76
 				
 				listingList.on('click', 'a', function(e){
 					e.preventDefault();
 					
 					map.detail($(this).data('id'));
 				});
-=======
-			}
-			
-			listingList.on('click', '.item-listing a', function(e){
-				e.preventDefault();
-				
-				map.detail($(this).data('id'));
-			}).on('mouseenter', '.item-listing a', function(e){
-				var id = $(this).data('id');
->>>>>>> 53ebb4c5273b9f5ccdce4cdfac4ad29792c31455
 				
 				listingList.on('mouseenter', 'a', function(e){
 					var id = $(this).data('id');
@@ -561,31 +550,11 @@ $(document).ready(function(){
 						var marker = map.getMarker($(this).data('id'));
 						marker.setIcon(map.icon(marker.get('ids').length, 0));
 					}
-			    }, 300));
-			}).on('mouseleave', '.item-listing a', function(e){
-				clearTimeout($.data(this, 'mouseenterTimer'));
-				if(map.currentState == 'detail') {
-					var marker = map.getMarker($(this).data('id'));
-					marker.setIcon(map.icon(marker.get('ids').length, 0));
-				}
-			});
-			
-			$('.btn-close').on('click', function(e){
-				e.preventDefault();
-				
-				map.closeDetail();
-			});
-			
-			$('.pagination a').on('click', function(e){
-				e.preventDefault();
-			});
+				});
+			}
 		},
 		disable: function() {
 			this.isEnabled = false;
-			
-			listingList.off('click', '.item-listing a').off('mouseenter', '.item-listing a').off('mouseleave', '.item-listing a');
-			
-			$('.pagination a').off('click');
 		}
 	};
 
