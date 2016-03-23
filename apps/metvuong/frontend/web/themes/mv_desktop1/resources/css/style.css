@@ -916,6 +916,7 @@ label {
 .step-link {
     margin: 0;
     padding: 20px 0;
+    display: none;
 }
 .step-link li {
     float: left;

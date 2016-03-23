@@ -109,7 +109,7 @@ use frontend\models\AdProductSearch;
                         </a>
                     </div>
                     <div class="box-dropdown">
-                        <a href="#" class="icon-settings val-selected"></a>
+                        <a href="#" class="icon-settings val-selected"><span class="notifi">5</span></a>
                         <div class="item-dropdown hide-dropdown">
                             <ul class="clearfix">
                                 <!-- <li><a href="<?= Url::to(['/ad/post']) ?>"><em class="icon-plus"></em>Đăng tin mới</a></li> -->
