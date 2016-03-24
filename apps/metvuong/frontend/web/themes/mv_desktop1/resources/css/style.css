@@ -1372,7 +1372,7 @@ label {
     text-overflow: ellipsis;
     width: 100%;
     text-transform: capitalize;
-    padding-right: 20px;
+    padding-right: 25px;
 }
 .value-selected {
     margin-bottom: 10px;
@@ -1928,7 +1928,7 @@ label {
 .price-search div {
     display: inline-block;
     width: 100%;
-    padding-right: 17px;
+    padding-right: 25px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -3189,9 +3189,6 @@ html.mm-opening .mm-slideout {
     position: absolute;
     top: 16px;
     right: 5px;
-}
-.search-subpage .arrowDown {
-    background-color: inherit;
 }
 .box-dropdown .dropdown-up-style .item-dropdown {
     border: 1px solid #A7A7A7;
@@ -5576,7 +5573,7 @@ footer li a {
         float: left;
         margin-right: 15px;
         margin-bottom: 0;
-        width: 10%;
+        /* width: 10%; */
     }
     .advande-search {
         padding: 10px 10px;
@@ -5592,13 +5589,13 @@ footer li a {
         width: 8%;
     }
     .search-subpage .select-loaibds {
-        width: 14%;
+        /* width: 14%; */
     }
     .search-subpage .select-price {
-        width: 13%;
+        /* width: 13%; */
     }
     .search-subpage .select-dt {
-        width: 10%;
+        /* width: 10%; */
     }
     .wrap-listing-item {
         position: fixed;
@@ -6198,7 +6195,6 @@ footer li a {
     .select-others .dropdown-up-style .item-dropdown {
     }
     .select-others .dropdown-up-style {
-        right: 0;
         left: inherit;
         width: 300px;
     }
@@ -6770,22 +6766,22 @@ footer li a {
     }
     .search-subpage .num-phongtam,
     .search-subpage .num-phongngu {
-        width: 8%;
+        /* width: 8%; */
     }
     .search-subpage .select-loaibds {
-        width: 13%;
+        /* width: 13%; */
     }
     .search-subpage .select-duan {
-        width: 12%;
+        /* width: 12%; */
     }
     .search-subpage .select-price {
-        width: 12.5%;
+        /* width: 12.5%; */
     }
     .search-subpage .select-dt {
-        width: 9%;
+        /* width: 9%; */
     }
     .search-subpage .select-others {
-        width: 8%;
+        /* width: 8%; */
     }
 }
 @media ( min-width: 640px ) and ( max-width: 985px ) {
@@ -6878,4 +6874,34 @@ footer li a {
 }
 .select-location .dropdown-up-style {
     width: 300px;
+}
+.advande-search .box-dropdown .val-selected:hover,
+.advande-search .box-dropdown .val-selected.active {
+    border: none;
+}
+.advande-search .box-dropdown .val-selected.active .selected,
+.advande-search .box-dropdown .val-selected:hover .txt-holder-minmax,
+.advande-search .box-dropdown .val-selected.active .txt-holder-minmax,
+.advande-search .box-dropdown .val-selected:hover .selected {
+    color: #00a769;
+}
+.arrowDownFillFull {
+    width: 0px;
+    height: 0px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #888;
+    position: absolute;
+    top: 17px;
+    right: 6px;
+}
+.advande-search .box-dropdown .val-selected.active .arrowDownFillFull,
+.advande-search .box-dropdown .val-selected:hover .arrowDownFillFull {
+    border-top: 5px solid #00a769;
+}
+.advande-search .box-dropdown .val-selected.active .arrowDownFillFull {
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid #00a769;
+    border-top: none;
 }

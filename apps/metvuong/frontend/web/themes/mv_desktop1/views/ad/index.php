@@ -67,7 +67,7 @@ $this->registerJs($script, View::POS_BEGIN);
 						<div class="toggle-search"<?= $hideSearchForm ? ' style="display: none"' : '' ?>>
 							<div class="frm-item select-location">
 								<div class="box-dropdown dropdown-common">
-									<div class="val-selected style-click" data-text-add="Locations"><span class="selected">Locations</span><span class="pull-right icon arrowDown"></span></div>
+									<div class="val-selected style-click" data-text-add="Locations"><span class="selected">Locations</span><span class="arrowDownFillFull"></span></div>
 									<div class="item-dropdown hide-dropdown">
 										<div class="form-group col-xs-12 col-sm-6">
 											<div class="">
@@ -108,7 +108,7 @@ $this->registerJs($script, View::POS_BEGIN);
 							</div>
 							<div class="frm-item num-phongngu">
 								<div class="box-dropdown dropdown-common">
-									<div class="val-selected style-click" data-text-add="Beds"><span class="selected">0+ Beds</span><span class="pull-right icon arrowDown"></span></div>
+									<div class="val-selected style-click" data-text-add="Beds"><span class="selected">0+ Beds</span><span class="arrowDownFillFull"></span></div>
 									<div class="item-dropdown item-bed-bath hide-dropdown">
 										<ul class="clearfix">
 											<li><a href="#" data-value="1">1+</a></li>
@@ -128,7 +128,7 @@ $this->registerJs($script, View::POS_BEGIN);
 							</div>
 							<div class="frm-item num-phongtam">
 								<div class="box-dropdown dropdown-common">
-									<div class="val-selected style-click" data-text-add="Bath"><span class="selected">0+ Bath</span><span class="pull-right icon arrowDown"></span></div>
+									<div class="val-selected style-click" data-text-add="Bath"><span class="selected">0+ Bath</span><span class="arrowDownFillFull"></span></div>
 									<div class="item-dropdown item-bed-bath hide-dropdown">
 										<ul class="clearfix">
 											<li><a href="#" data-value="1">1+</a></li>
@@ -174,7 +174,7 @@ $this->registerJs($script, View::POS_BEGIN);
 								<div class="box-dropdown dropdown-common">
 									<div class="val-selected style-click">
 										<span class="selected" data-placeholder="<?= Yii::t('ad', 'Property Types') ?>"><?= Yii::t('ad', 'Property Types') ?></span>
-										<span class="pull-right icon arrowDown"></span>
+										<span class="arrowDownFillFull"></span>
 									</div>
 									<div class="item-dropdown hide-dropdown">
 										<ul class="clearfix loai-bds"></ul>
@@ -186,7 +186,7 @@ $this->registerJs($script, View::POS_BEGIN);
 								<div class="box-dropdown dropdown-common">
 									<div class="val-selected style-click">
 										<span class="selected" data-placeholder="<?= Yii::t('ad', 'Project') ?>"><?= Yii::t('ad', 'Project') ?></span>
-										<span class="pull-right icon arrowDown"></span>
+										<span class="arrowDownFillFull"></span>
 									</div>
 									<div class="item-dropdown hide-dropdown">
 										<ul class="clearfix du-an"></ul>
@@ -213,7 +213,7 @@ $this->registerJs($script, View::POS_BEGIN);
 											<span class="wrap-max"></span>
 											<span class="troxuong"><?= Yii::t('ad', 'below') ?></span>
 										</div>
-										<span class="pull-right icon arrowDown"></span>
+										<span class="arrowDownFillFull"></span>
 									</div>
 									<div class="item-dropdown hide-dropdown wrap-min-max">
 										<div class="box-input clearfix">
@@ -249,7 +249,7 @@ $this->registerJs($script, View::POS_BEGIN);
 											<span class="wrap-max"></span>
 											<span class="troxuong"><?= Yii::t('ad', 'below') ?></span>
 										</div>
-										<span class="pull-right icon arrowDown"></span>
+										<span class="arrowDownFillFull"></span>
 									</div>
 									<div class="item-dropdown hide-dropdown wrap-min-max">
 										<div class="box-input clearfix">
@@ -313,7 +313,7 @@ $this->registerJs($script, View::POS_BEGIN);
 								<div class="box-dropdown dropdown-common">
 									<div class="val-selected style-click">
 										<span class="selected" data-placeholder="Loại bất động sản?"><?= Yii::t('ad', 'More') ?></span>
-										<span class="pull-right icon arrowDown"></span>
+										<span class="arrowDownFillFull"></span>
 									</div>
 									<div class="item-dropdown hide-dropdown">
 										<?= Html::activeHiddenInput($searchModel, 'type') ?>
