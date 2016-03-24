@@ -28,12 +28,12 @@ use yii\helpers\Url;
 								</div>
 								<div class="status-duan clearfix">
 									<?php if($product->end_date < time()): ?>
-									<div class="pull-right wrap-icon"><div><span class="icon icon-inactive-pro"></span></div><strong><?=Yii::t('statistic','Inactive Project')?></strong></div>
+									<div class="pull-right wrap-icon status-get-point"><div><span class="icon icon-inactive-pro"></span></div><strong><?=Yii::t('statistic','Inactive Project')?></strong></div>
 									<?php else: ?>
-									<div class="pull-right wrap-icon"><div><span class="icon icon-active-pro"></span></div><strong><?=Yii::t('statistic','Active Project')?></strong></div>
+									<div class="pull-right wrap-icon status-get-point"><div><span class="icon icon-active-pro"></span></div><strong><?=Yii::t('statistic','Active Project')?></strong></div>
 									<?php endif; ?>
 
-									<p class="date-post"><?=Yii::t('statistic','Date of posting')?>: <b><?= date("d/m/Y", $product->created_at) ?></b></p>
+									<p class="date-post"><span class="dt-date"><?=Yii::t('statistic','Date of posting')?>:</span> <b><?= date("d/m/Y", $product->created_at) ?></b></p>
 									<p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
 								</div>
 								<div class="pull-right push-price">

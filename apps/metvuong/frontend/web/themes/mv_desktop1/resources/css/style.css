@@ -2455,7 +2455,7 @@ footer {
 .wrap-list-duan .intro-detail {
     position: relative;
     color: #3c3c3c;
-    padding: 15px 15px 0;
+    padding: 10px 15px 0;
 }
 .wrap-list-duan .img-intro > a {
     display: inline-block;
@@ -2487,8 +2487,11 @@ footer {
     font-size: 15px;
 }
 .wrap-list-duan .loca-duan {
-    font-weight: 400;
-    font-size: 14px;
+    font-weight: 600;
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .wrap-list-duan .loca-duan em {
     margin-right: 5px;
@@ -2498,10 +2501,16 @@ footer {
     font-weight: 400;
     color: #3c3c3c;
 }
-@media screen and (min-width: 375px) {
-    .wrap-list-duan .date-post {
-        font-size: 14px;
-    }
+.wrap-list-duan .date-post {
+    font-size: 13px;
+    margin-bottom: 7px;
+}
+.status-get-point strong {
+    font-size: 13px;
+}
+.status-get-point.wrap-icon > div {
+    width: 25px;
+    line-height: 100%;
 }
 .wrap-list-duan .intro-detail > p {
     margin-bottom: 5px;
@@ -3594,9 +3603,10 @@ html.mm-opening .mm-slideout {
     position: relative;
 }
 .icon-inactive-pro {
-    background-position: 0 -710px;
-    width: 23px;
-    height: 24px;
+    background-position: 0px -1066px;
+    width: 20px;
+    height: 21px;
+    background-size: 50px 2400px;
 }
 .icon-view-small {
     background-position: 0 -799px;
@@ -3781,11 +3791,11 @@ html.mm-opening .mm-slideout {
     width: 30px;
 }
 .wrap-list-duan .intro-detail > div {
-    margin-bottom: 3px;
+    margin-bottom: 7px;
     font-size: 14px;
 }
 .wrap-list-duan .intro-detail .status-duan {
-    border-bottom: solid 0.5px #ededed;
+    border-bottom: solid 0.5px #c8c8c8;
     padding-bottom: 10px;
     margin-bottom: 10px;
     font-size: 13.5px;
@@ -5747,6 +5757,7 @@ footer li a {
     .select-quan-huyen .item-dropdown,
     .select-tinh-thanh .item-dropdown {
         width: 230px;
+        min-width: 100%;
     }
     .select-loaibds .item-dropdown {
         min-width: 100%;
@@ -6031,8 +6042,8 @@ footer li a {
     }
     .icon-settings {
         display: block;
-        height: 35px;
-        width: 35px;
+        height: 26px;
+        width: 26px;
         background: url(../images/icon-setting.png) no-repeat center;
         padding: 0;
         line-height: 0;
@@ -6713,6 +6724,13 @@ footer li a {
     .wrap-listing-item {
         width: 100%;
     }
+    .title-fixed-wrap > .container {
+        padding: 0;
+    }
+    .title-fixed-wrap .wrap-news,
+    .title-fixed-wrap .wrap-list-duan {
+        padding: 20px;
+    }
 }
 @media ( max-width: 640px ) {
     .wrap-attr-bottom {
@@ -6754,5 +6772,30 @@ footer li a {
     }
     .search-subpage .select-others {
         width: 8%;
+    }
+}
+@media ( min-width: 640px ) and ( max-width: 985px ) {
+    .wrap-list-duan li {
+        width: 50%;
+        padding: 0 10px;
+        margin-bottom: 20px;
+    }
+    .wrap-list-duan ul {
+        margin: 0 -10px;
+    }
+}
+@media ( max-width: 410px ) {
+    .wrap-list-duan .date-post .dt-date {
+        display: none;
+    }
+}
+@media ( max-width: 410px ) {
+    .wrap-list-duan .date-post .dt-date {
+        display: none;
+    }
+}
+@media ( min-width: 640px ) and ( max-width: 768px ) {
+    .wrap-list-duan .date-post .dt-date {
+        display: none;
     }
 }
