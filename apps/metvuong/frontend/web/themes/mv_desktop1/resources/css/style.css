@@ -1360,8 +1360,6 @@ label {
     position: relative;
     font-size: 13px;
     -webkit-tap-highlight-color: rgba(0, 167, 105, 0.23);
-    overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
     width: 100%;
 }
@@ -1369,10 +1367,7 @@ label {
     display: inline-block;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;
-    width: 100%;
-    text-transform: capitalize;
-    padding-right: 25px;
+    padding-right: 20px;
 }
 .value-selected {
     margin-bottom: 10px;
@@ -6288,6 +6283,7 @@ footer li a {
     }
     
 }
+.select-location .dropdown-up-style .item-dropdown,
 .select-others .dropdown-up-style .item-dropdown {
     max-height: inherit;
     padding: 25px 5px;
@@ -6893,7 +6889,7 @@ footer li a {
     border-top: 5px solid #888;
     position: absolute;
     top: 17px;
-    right: 6px;
+    right: 8px;
 }
 .advande-search .box-dropdown .val-selected.active .arrowDownFillFull,
 .advande-search .box-dropdown .val-selected:hover .arrowDownFillFull {
