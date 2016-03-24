@@ -80,6 +80,9 @@ class CrawlerController extends Controller
     public function actionImportprojectbds(){
         BatdongsanV2::find()->importProjects();
     }
+    public function actionUpdateProjectPrimary(){
+        BatdongsanV2::find()->updateProjects();
+    }
 
     // Get Contractor
     public function actionContractorbds(){

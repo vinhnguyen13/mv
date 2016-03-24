@@ -44,6 +44,16 @@ class BatdongsanV2 extends Component
 
     protected $projects=['khu-can-ho','cao-oc-van-phong','khu-do-thi-moi','khu-thuong-mai-dich-vu','khu-phuc-hop','khu-dan-cu','khu-du-lich-nghi-duong','khu-cong-nghiep','du-an-khac'];
 
+    public $tabProject = [
+        1 => 'tong-quan',
+        4 => 'vi-tri',
+        2 => 'ha-tang',
+        3 => 'thiet-ke',
+        8 => 'tien-do',
+        5 => 'ban-hang',
+        9 => 'ho-tro',
+    ];
+
     /**
      * @return mixed
      */
@@ -1932,7 +1942,7 @@ class BatdongsanV2 extends Component
 
         $columnNameArray = ['city_id', 'district_id', 'name', 'logo',
             'location', 'description', 'investment_type', 'hotline', 'website',
-            'lng', 'lat', 'slug', 'status', 'created_at'];
+            'lng', 'lat', 'slug', 'status', 'created_at', 'file_name', 'is_crawl', 'data_html'];
         $bulkInsertArray = array();
 
         $listContractorProject = [];
@@ -1954,14 +1964,15 @@ class BatdongsanV2 extends Component
                     if ($counter > 0) {
                         $filename = null;
                         for ($i = 0; $i <= $last_file_index; $i++) {
-                            if ($count_file > 300) {
+                            if ($count_file > 3) {
                                 $break_type = true;
                                 break;
                             }
                             $filename = $files[$i];
                             if (in_array($filename, $log_import["files"])) {
                                 continue;
-                            } else {
+                            }
+                            else {
                                 $filePath = $path . $type. "/files/" . $filename;
                                 if (file_exists($filePath)) {
                                     print_r("\n" . $count_file . " {$type}: {$filename}");
@@ -1987,7 +1998,10 @@ class BatdongsanV2 extends Component
                                         'lat' => $value[$filename]["lat"],
                                         'slug' => $value[$filename]["slug"],
                                         'status' => $value[$filename]["status"],
-                                        'created_at' => $value[$filename]["created_at"]
+                                        'created_at' => $value[$filename]["created_at"],
+                                        'file_name' => $type."/".$filename,
+                                        'is_crawl' => 1,
+                                        'data_html' => $value[$filename]["data_html"],
                                     ];
                                     $bulkInsertArray[] = $record;
 
@@ -2076,6 +2090,101 @@ class BatdongsanV2 extends Component
                 ->batchInsert(\vsoft\craw\models\AdInvestorBuildingProject::tableName(), $columnContractorProject, $bulkInsertContractorProject)->execute();
             if($insertCountContractorProject > 0)
                 print_r(" DONE!");
+        }
+
+        $end_time = time();
+        print_r("\n"."Time: ");
+        print_r($end_time-$start);
+        print_r("s");
+
+    }
+
+    public function updateProjects(){
+        $start = time();
+        $path = Yii::getAlias('@console') . "/data/bds_html/projects/";
+        $file_log = "update_project_log.json";
+        $project_log_import = $this->loadLog($path."update/", $file_log);
+        if(isset($project_log_import["type"]))
+            $project_log_import["type"] = array();
+        $types = $this->projects;
+        $break_type = false; // detect next type if it is false
+        $current_type = empty($project_log_import["current_type"]) ? 0 : $project_log_import["current_type"]+1;
+//        $count_types = count($types)-1;
+//        if($current_type > $count_types)
+//            $current_type = 0;
+        $count_file = 1;
+
+        $columnNameArray = ['city_id', 'district_id', 'name', 'logo',
+            'location', 'description', 'investment_type', 'hotline', 'website',
+            'lng', 'lat', 'slug', 'status', 'created_at', 'file_name', 'is_crawl', 'data_html'];
+        $bulkInsertArray = array();
+
+        $listContractorProject = [];
+
+        $cityData = \vsoft\craw\models\AdCity::find()->all();
+        $districtData = \vsoft\craw\models\AdDistrict::find()->all();
+        $contractorData = \vsoft\craw\models\AdInvestor::find()->all();
+
+        foreach($types as $key_type => $type){
+            if($key_type >= $current_type && !$break_type){
+                if (is_dir($path.$type)) {
+                    $log_import = $this->loadLog($path."update/", $type.".json");
+                    if (empty($log_import["files"]))
+                        $log_import["files"] = array();
+
+                    $files = scandir($path.$type."/files", 1);
+                    $counter = count($files) - 2;
+                    $last_file_index = $counter - 1;
+                    if ($counter > 0) {
+                        $filename = null;
+                        $from = isset($log_import["update_total"]) ? $log_import["update_total"] : 0;
+                        for ($i = $from; $i <= $last_file_index; $i++) {
+                            if ($count_file > 3) {
+                                $break_type = true;
+                                break;
+                            }
+                            $filename = $files[$i];
+                            $filePath = $path . $type. "/files/" . $filename;
+                            if (file_exists($filePath)) {
+                                $value = $this->parseProjectDetail($path . $type . "/files/", $filename);
+                                if (empty($value)) {
+                                    print_r(" Error: no content\n");
+                                    continue;
+                                }
+
+                                $recordUpdate = [
+                                    'file_name' => $type . "/" . $filename,
+                                    'is_crawl' => 1,
+                                    'data_html' => $value[$filename]["data_html"],
+                                ];
+                                $project = \vsoft\ad\models\AdBuildingProject::getProjectBySlug($value[$filename]["slug"]);
+                                if(!empty($project)) {
+                                    \vsoft\ad\models\AdBuildingProject::getDb()->createCommand()
+                                        ->update(\vsoft\ad\models\AdBuildingProject::tableName(), $recordUpdate, 'id=:id', [':id' => $project->id])
+                                        ->execute();
+
+                                    print_r("\n" . $count_file . " {$type}: {$filename} updated.");
+                                    array_push($log_import["files"], $filename);
+                                    $log_import["update_total"] = count($log_import["files"]);
+                                    $log_import["update_time"] = date("d-m-Y H:i");
+                                }
+                            }
+                            $count_file++;
+                        } // end file loop
+                        $this->writeLog($log_import, $path."update/", $type.".json");
+                        if ($break_type == false && count($bulkInsertArray) > 0) {
+                            if (!in_array($type, $project_log_import["type"])) {
+                                array_push($project_log_import["type"], $type);
+                            }
+                            $project_log_import["current_type"] = $key_type;
+                            $this->writeLog($project_log_import, $path."update/", $file_log);
+                            print_r("\nADD TYPE: {$type} DONE!\n");
+                        }
+                    }
+                } else {
+                    print_r("\nCannot find ".$path.$type."\n");
+                }
+            }
         }
 
         $end_time = time();
@@ -2191,6 +2300,19 @@ class BatdongsanV2 extends Component
                 }
             }
 
+            $data_html = array();
+            $editors = $detail->find('#detail .editor');
+            if(count($editors) > 0){
+                foreach($editors as $editor){
+                    if(!empty($editor->find('.a1', 0))) {
+                        $tabId = (int)$editor->find('input', 0)->value;
+                        $tabContent = trim($editor->find('.a1', 0)->innertext);
+                        $tabKey = $this->tabProject[$tabId];
+                        $data_html[$tabKey] = $tabContent;
+                    }
+                }
+            }
+
             $json[$filename] = [
                 'city' => $city,
                 'district' => $district,
@@ -2206,6 +2328,7 @@ class BatdongsanV2 extends Component
                 'slug' => $slug,
                 'status' => 1,
                 'created_at' => time(),
+                'data_html' => json_encode($data_html),
                 'contractor' => $contractor
             ];
 

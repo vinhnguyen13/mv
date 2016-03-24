@@ -236,4 +236,12 @@ class AdBuildingProject extends ABP
     
     	return $items;
     }
+
+    public static function getProjectBySlug($slug){
+        if($slug) {
+            $project = self::find()->where('`slug` = :slug', [':slug' => $slug])->one();
+            return $project;
+        }
+        return null;
+    }
 }

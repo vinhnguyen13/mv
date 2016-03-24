@@ -119,8 +119,12 @@ class ManagerController extends Controller {
             $bulkProductToolMap = array();
 
             $no = 0;
-//            $count = 1;
+            $count_price = 0;
             foreach ($models as $model) {
+                if(empty($model->price) || $model->price < 0){
+                    $count_price++;
+                    continue;
+                }
                 if(array_key_exists($model->id, $adProductToolMapIDs)) {
                     $no++;
                     continue;
@@ -158,16 +162,16 @@ class ManagerController extends Controller {
                     ];
                     $bulkInsertArray[] = $record;
                 }
-//                $count++;
             }
 
             print_r("<br>".$no." products exists.");
+            print_r("<br>".$count_price." products no price.");
             $countBulkProduct = count($bulkInsertArray);
 //            $mod = $countBulkProduct % 1000;
             if ($countBulkProduct > 0) {
                 $insertCount = AdProduct::getDb()->createCommand()->batchInsert(AdProduct::tableName(), $columnNameArray, $bulkInsertArray)->execute();
                 if ($insertCount > 0) {
-                    print_r("<br>Insert {$insertCount} products done in page {$page}.");
+                    print_r("<br>Inserted {$insertCount} products done in page {$page}.");
                     $fromProductId = (int)\vsoft\ad\models\AdProduct::getDb()->getLastInsertID();
                     $toProductId = $fromProductId + ($insertCount - 1);
 
