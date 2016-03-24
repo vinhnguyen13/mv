@@ -74,8 +74,6 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                 </div>
                 <div class="item infor-time">
                     <p><strong><?=Yii::t('project','Investor')?>: </strong> <?= empty($model->investors[0]->name) ? $lbl_updating : $model->investors[0]->name ?></p>
-<!--                    <p><strong>Kiến trúc sư:</strong> --><?//=empty($model->architects[0]->name) ? $lbl_updating : $model->architects[0]->name ?><!--</p>-->
-<!--                    <p><strong>Nhà thầu thi công:</strong> --><?//=empty($model->contractors[0]->name) ? $lbl_updating : $model->contractors[0]->name ?><!--</p>-->
                     <p><strong><?=Yii::t('project', 'Start date')?>: </strong> <?=empty($model->start_date) ? $lbl_updating : date('d/m/Y', $model->start_date) ?></p>
                     <p><strong><?=Yii::t('project', 'Finish time')?>:</strong> <?=empty($model->estimate_finished) ? $lbl_updating : $model->estimate_finished ?></p>
                 </div>
@@ -86,9 +84,9 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                 <div class="item infor-attr">
                     <p class="title-attr-duan"><?=Yii::t('project', 'Project information')?></p>
                     <ul class="clearfix">
-                        <li><strong><?=Yii::t('project', 'Facade width')?>:</strong><?=$model->facade_width?></li>
-                        <li><strong><?=Yii::t('project', 'Floor No.')?>:</strong><?=$model->floor_no?> Tầng</li>
-                        <li><strong><?=Yii::t('project', 'Lift')?>:</strong><?=$model->lift?></li>
+                        <li><strong><?=Yii::t('project', 'Facade width')?>:</strong><?=!empty($model->facade_width) ? $model->facade_width : Yii::t('profile','updating')?></li>
+                        <li><strong><?=Yii::t('project', 'Floor')?>:</strong><?=!empty($model->floor_no) ? $model->floor_no : Yii::t('profile','updating')?></li>
+                        <li><strong><?=Yii::t('project', 'Lift')?>:</strong><?=!empty($model->lift) ? $model->lift : Yii::t('profile','updating')?></li>
                     </ul>
                 </div>
                 <div class="item tien-ich-duan">

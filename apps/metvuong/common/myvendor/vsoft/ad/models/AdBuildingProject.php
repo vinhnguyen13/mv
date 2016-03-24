@@ -23,9 +23,10 @@ class AdBuildingProject extends ABP
     public function rules()
     {
         return [
-	        [['city_id', 'district_id', 'created_at', 'updated_at', 'status'], 'integer'],
+	        [['city_id', 'district_id', 'created_at', 'updated_at', 'status', 'is_crawl'], 'integer'],
 	        [['name'], 'required'],
-	        [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video', 'progress', 'name', 'description'], 'string'],
+	        [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video', 'progress',
+                'name', 'description', 'file_name', 'data_html'], 'string'],
             [['facade_width'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/', 'max' => 10000],
             [['lift'], 'integer', 'max' => 100],
 	        [['lng', 'lat'], 'number'],
