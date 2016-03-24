@@ -335,7 +335,7 @@ var form = {
 			var self = $(this);
 			var oType = self.data('type');
 			
-			(self.data('type') == type || oType == 3) ? self.removeClass('hide') : self.addClass('hide');
+			(oType == type || oType == APPLY_TO_TYPE_BOTH) ? self.removeClass('hide') : self.addClass('hide');
 		});
 	},
 	showError: function(el, m) {

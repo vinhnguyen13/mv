@@ -19,7 +19,8 @@ use vsoft\ad\models\AdImages;
 	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/post-listing.js', ['position' => View::POS_END]);
 	$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
 	$this->registerCss("#project-info {position: relative;} #project-info .loading-proccess span {border-top-color: #8C7777; border-left-color: #8C7777;} #project-info .loading-proccess {display: none;} #project-info.loading .loading-proccess {display: block;} #project-info.loading .result {display: none;}");
-
+	$this->registerJs("var APPLY_TO_TYPE_BOTH = " . AdCategory::APPLY_TO_TYPE_BOTH . ";", View::POS_HEAD);
+	
 	$listRoom = [];
 	for($i = 1; $i <= 10; $i++) {
 		$listRoom[$i] = $i;
@@ -105,7 +106,7 @@ use vsoft\ad\models\AdImages;
 							</ul>
 							
 							<?php
-								$categories = AdCategory::find()->where('`status` = 1')->all();
+								$categories = AdCategory::find()->all();
 								$categoriesDropdown = ArrayHelper::map($categories, 'id', 'name');
 								$categoriesOptions = ArrayHelper::map($categories, 'id', function($category){ return ['data-type' => $category->apply_to_type, 'data-limit' => $category->limit_area]; });
 									

@@ -177,7 +177,14 @@ $this->registerJs($script, View::POS_BEGIN);
 										<span class="arrowDownFillFull"></span>
 									</div>
 									<div class="item-dropdown hide-dropdown">
-										<ul class="clearfix loai-bds"></ul>
+										<ul class="clearfix loai-bds">
+											<?php
+												foreach ($categories as $categoryId => $category):
+													if($category['apply_to_type'] == $searchModel->type || $category['apply_to_type'] == AdCategory::APPLY_TO_TYPE_BOTH):
+											?>
+											<li><a href="#" data-value="<?= $categoryId ?>" data-order="3"><?= $category['name'] ?></a></li>
+											<?php endif; endforeach; ?>
+										</ul>
 										<?= Html::activeHiddenInput($searchModel, 'category_id', ['id' => 'loai-bds']); ?>
 									</div>
 								</div>
