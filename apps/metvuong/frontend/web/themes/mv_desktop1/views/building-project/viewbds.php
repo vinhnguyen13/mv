@@ -74,7 +74,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                         <?php }  ?>
                     </div>
                     <div class="swiper-pagination"></div>
-                </div>BDS
+                </div>
                 <div class="item infor-address-duan">
                 	<p><?= !empty($model->categories[0]->name) ? \vsoft\ad\models\AdBuildingProject::mb_ucfirst($model->categories[0]->name,'UTF-8') : "Chung cư cao cấp" ?></p>
                     <strong><?= strtoupper($model->name)?></strong>
