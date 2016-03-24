@@ -59,7 +59,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                             <div class="swiper-slide">
                                 <div class="img-show">
                                     <div>
-                                        <img src="<?=$model->logoUrl?>" alt="<?=$model->logoUrl?>">
+                                        <img src="<?=$model->logoUrl?>" alt="<?=$model->location?>">
                                     </div>
                                 </div>
                             </div>
