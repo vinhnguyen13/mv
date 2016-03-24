@@ -92,7 +92,7 @@ use frontend\models\AdProductSearch;
                                     <a href="<?=Url::current(['language-change'=>'en-US'])?>"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/flag-en.png' ?>" alt=""></a>
                                     <a href="<?=Url::current(['language-change'=>'vi-VN'])?>"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/flag-vn.png' ?>" alt=""></a>
                                 </div>
-                                Language
+                                <?=Yii::t('general', 'Language')?>
                             </li>
                         </ul>
                     </div>
