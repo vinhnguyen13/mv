@@ -6821,12 +6821,13 @@ footer li a {
     line-height: 100%;
 }
 .tabProject {
-    float: left;
+    /* float: left; */
     margin-bottom: 25px;
     border-bottom: 1px solid #CACACA;
+    position: relative;
+    padding-top: 50px;
 }
 .tabProject li {
-    cursor: pointer;
     float: left;
 }
 .tabProject li:last-child {
@@ -6848,6 +6849,10 @@ footer li a {
 }
 .editor {
     font-size: 13px;
+    /* position: absolute; */
+    top: 50px;
+    padding: 0 15px 0;
+    left: 0;
 }
 .infor-bds {
     min-height: 500px;

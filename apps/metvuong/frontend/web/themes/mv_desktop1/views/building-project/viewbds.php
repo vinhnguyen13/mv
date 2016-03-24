@@ -100,16 +100,20 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                         <?php
                         foreach($tabProject as $key => $tabValue){
                         ?>
-						<li value="1" class="tabActiveProject">
+						<li class="">
 							<a href="javascript:void(0)" rel="nofollow" style="white-space:nowrap;"><?=$tabKeys[$key]?></a>
-                            <div class="editor" style="display:none;clear: both">
-                                <div class="a1">
-                                    <?=$tabValue?>
-                                </div>
-                            </div>
 						</li>
                         <?php } ?>
 					</ul>
+					<?php
+                    foreach($tabProject as $key => $tabValue){
+                    ?>
+					<div class="editor" style="display:none;clear: both">
+                        <div class="a1">
+                            <?=$tabValue?>
+                        </div>
+                    </div>
+                    <?php } ?>
 			    </div>
                 <?php } ?>
             </div>
@@ -152,7 +156,9 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 <?=$this->renderAjax('/ad/_partials/shareEmail',[ 'project' => $model, 'yourEmail' => Yii::$app->user->isGuest ? '' : Yii::$app->user->identity->email, 'recipientEmail' => '', 'params' => ['your_email' => false, 'setValueToEmail' => false] ])?>
 
 <script type="text/javascript">
-    $(document).ready(function () {
+	$(document).ready(function () {
+		$('.tabProject li').eq(0).addClass('tabActiveProject');
+		$('.wrap-duan-moi .editor').eq(0).show();
     	$('.tabProject li a').on('click', function (e) {
     		e.preventDefault();
     		var _this = $(this),
