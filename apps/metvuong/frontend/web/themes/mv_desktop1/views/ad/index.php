@@ -65,6 +65,47 @@ $this->registerJs($script, View::POS_BEGIN);
 				<div class="search-subpage">
 					<div class="advande-search clearfix">
 						<div class="toggle-search"<?= $hideSearchForm ? ' style="display: none"' : '' ?>>
+							<div class="frm-item select-location">
+								<div class="box-dropdown dropdown-common">
+									<div class="val-selected style-click" data-text-add="Locations"><span class="selected">Locations</span><span class="pull-right icon arrowDown"></span></div>
+									<div class="item-dropdown hide-dropdown">
+										<div class="form-group col-xs-12 col-sm-6">
+											<div class="">
+												<?php 
+													$cities = AdCity::find()->all();
+													$citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
+													$citiesOptions = [];
+												?>
+												<?= Html::activeDropDownList($searchModel, 'city_id', $citiesDropdown, ['class' => 'form-control', 'options' => $citiesOptions]) ?>
+											</div>
+										</div>
+										<div class="form-group col-xs-12 col-sm-6">
+											<div class="">
+												<?php 
+													$items = ArrayHelper::map($searchModel->city->adDistricts, 'id', function ($model) { return $model->pre . ' ' . $model->name; });
+												?>
+												<?= Html::activeDropDownList($searchModel, 'district_id', $items, ['prompt' => $searchModel->getAttributeLabel('district_id'), 'class' => 'form-control']) ?>
+											</div>
+										</div>
+										<div class="form-group col-xs-12 col-sm-6">
+											<div class="">
+												<?php 
+													$items = $searchModel->district_id ? ArrayHelper::map($searchModel->district->adWards, 'id', function ($model) { return $model->pre . ' ' . $model->name; }) : [];
+												?>
+												<?= Html::activeDropDownList($searchModel, 'ward_id', $items, ['prompt' => $searchModel->getAttributeLabel('ward_id'), 'class' => 'form-control']) ?>
+											</div>
+										</div>
+										<div class="form-group col-xs-12 col-sm-6">
+											<div class="">
+												<?php 
+													$items = $searchModel->district_id ? ArrayHelper::map($searchModel->district->adStreets, 'id', function ($model) { return $model->pre . ' ' . $model->name; }) : [];
+												?>
+												<?= Html::activeDropDownList($searchModel, 'street_id', $items, ['prompt' => $searchModel->getAttributeLabel('street_id'), 'class' => 'form-control']) ?>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 							<div class="frm-item num-phongngu">
 								<div class="box-dropdown dropdown-common">
 									<div class="val-selected style-click" data-text-add="Beds"><span class="selected">0+ Beds</span><span class="pull-right icon arrowDown"></span></div>
@@ -276,40 +317,7 @@ $this->registerJs($script, View::POS_BEGIN);
 									</div>
 									<div class="item-dropdown hide-dropdown">
 										<?= Html::activeHiddenInput($searchModel, 'type') ?>
-										<div class="form-group col-xs-12 col-sm-6">
-											<div class="">
-												<?php 
-													$cities = AdCity::find()->all();
-													$citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
-													$citiesOptions = [];
-												?>
-												<?= Html::activeDropDownList($searchModel, 'city_id', $citiesDropdown, ['class' => 'form-control', 'options' => $citiesOptions]) ?>
-											</div>
-										</div>
-										<div class="form-group col-xs-12 col-sm-6">
-											<div class="">
-												<?php 
-													$items = ArrayHelper::map($searchModel->city->adDistricts, 'id', function ($model) { return $model->pre . ' ' . $model->name; });
-												?>
-												<?= Html::activeDropDownList($searchModel, 'district_id', $items, ['prompt' => $searchModel->getAttributeLabel('district_id'), 'class' => 'form-control']) ?>
-											</div>
-										</div>
-										<div class="form-group col-xs-12 col-sm-6">
-											<div class="">
-												<?php 
-													$items = $searchModel->district_id ? ArrayHelper::map($searchModel->district->adWards, 'id', function ($model) { return $model->pre . ' ' . $model->name; }) : [];
-												?>
-												<?= Html::activeDropDownList($searchModel, 'ward_id', $items, ['prompt' => $searchModel->getAttributeLabel('ward_id'), 'class' => 'form-control']) ?>
-											</div>
-										</div>
-										<div class="form-group col-xs-12 col-sm-6">
-											<div class="">
-												<?php 
-													$items = $searchModel->district_id ? ArrayHelper::map($searchModel->district->adStreets, 'id', function ($model) { return $model->pre . ' ' . $model->name; }) : [];
-												?>
-												<?= Html::activeDropDownList($searchModel, 'street_id', $items, ['prompt' => $searchModel->getAttributeLabel('street_id'), 'class' => 'form-control']) ?>
-											</div>
-										</div>
+										
 										<div class="form-group col-xs-12 col-sm-6">
 											<div class="">
 												<?php 
@@ -417,7 +425,7 @@ $this->registerJs($script, View::POS_BEGIN);
 							</li>
 							<?php endforeach; ?>
 						</ul>
-						<nav class="text-center">
+						<nav class="text-center dt-pagination">
 				            <?php
 				                echo LinkPager::widget([
 				                    'pagination' => $pages,
