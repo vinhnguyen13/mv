@@ -73,26 +73,26 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                     </ul>
                 </div>
                 <div class="item infor-time">
-                    <p><strong>Chủ đầu tư:</strong> <?= empty($model->investors[0]->name) ? $lbl_updating : $model->investors[0]->name ?></p>
-                    <p><strong>Kiến trúc sư:</strong> <?=empty($model->architects[0]->name) ? $lbl_updating : $model->architects[0]->name ?></p>
-                    <p><strong>Nhà thầu thi công:</strong> <?=empty($model->contractors[0]->name) ? $lbl_updating : $model->contractors[0]->name ?></p>
-                    <p><strong>Ngày khởi công:</strong> <?=empty($model->start_date) ? $lbl_updating : date('d/m/Y', $model->start_date) ?></p>
-                    <p><strong>Dự kiến hoàn thành:</strong> <?=empty($model->estimate_finished) ? $lbl_updating : $model->estimate_finished ?></p>
+                    <p><strong><?=Yii::t('project','Investor')?>: </strong> <?= empty($model->investors[0]->name) ? $lbl_updating : $model->investors[0]->name ?></p>
+<!--                    <p><strong>Kiến trúc sư:</strong> --><?//=empty($model->architects[0]->name) ? $lbl_updating : $model->architects[0]->name ?><!--</p>-->
+<!--                    <p><strong>Nhà thầu thi công:</strong> --><?//=empty($model->contractors[0]->name) ? $lbl_updating : $model->contractors[0]->name ?><!--</p>-->
+                    <p><strong><?=Yii::t('project', 'Start date')?>: </strong> <?=empty($model->start_date) ? $lbl_updating : date('d/m/Y', $model->start_date) ?></p>
+                    <p><strong><?=Yii::t('project', 'Finish time')?>:</strong> <?=empty($model->estimate_finished) ? $lbl_updating : $model->estimate_finished ?></p>
                 </div>
                 <div class="item detail-infor">
                     <p class="title-attr-duan"><?=Yii::t('ad', 'Description')?></p>
                     <p><?=$model->description ?></p>
                 </div>
                 <div class="item infor-attr">
-                    <p class="title-attr-duan">Thông tin dự án</p>
+                    <p class="title-attr-duan"><?=Yii::t('project', 'Project information')?></p>
                     <ul class="clearfix">
-                        <li><strong>Mặt tiền:</strong><?=$model->facade_width?></li>
-                        <li><strong>Tầng cao:</strong><?=$model->floor_no?> Tầng</li>
-                        <li><strong>Thang máy:</strong><?=$model->lift?></li>
+                        <li><strong><?=Yii::t('project', 'Facade width')?>:</strong><?=$model->facade_width?></li>
+                        <li><strong><?=Yii::t('project', 'Floor No.')?>:</strong><?=$model->floor_no?> Tầng</li>
+                        <li><strong><?=Yii::t('project', 'Lift')?>:</strong><?=$model->lift?></li>
                     </ul>
                 </div>
                 <div class="item tien-ich-duan">
-                    <p class="title-attr-duan">Tiện ích</p>
+                    <p class="title-attr-duan"><?=Yii::t('project', 'Facility')?></p>
                     <?php
                     $facilityListId = explode(",", $model->facilities);
                     $facilities = \vsoft\ad\models\AdFacility::find()->where(['id' => $facilityListId])->all();
@@ -118,7 +118,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 <div id="popup-map" class="popup-common hide-popup">
     <div class="wrap-popup">
         <div class="inner-popup">
-            <a href="#" class="btn-close-map">trở lại</a>
+            <a href="#" class="btn-close-map"><?=Yii::t('project', 'Back')?></a>
             <div id="map" data-lat="<?= $model->lat ?>" data-lng="<?= $model->lng ?>"></div>
         </div>
     </div>
@@ -129,7 +129,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
         <div class="inner-popup">
             <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
             <div class="wrap-body-popup">
-                <span>Share on Social Network</span>
+                <span><?=Yii::t('project', 'Share on Social Network')?></span>
                 <ul class="clearfix">
                     <li>
                         <a href="#" class="share-facebook">
