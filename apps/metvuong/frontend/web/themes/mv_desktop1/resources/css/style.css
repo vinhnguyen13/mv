@@ -464,27 +464,22 @@ header {
     -moz-border-radius: 0;
     -ms-border-radius: 0;
     border: none;
-    padding: 12px;
     font-weight: 600;
-    font-size: 1.2em;
 }
 .list-social-login li a.facebook, .list-social-login li a.google {
     background: #FFFFFF;
-    color: #4e4e4e;
-    border: 1px solid #4e4e4e;
     font-size: 15px;
+    padding: 10px 0;
 }
 .list-social-login li a.facebook {
-    border: 1px solid #3a5795;
-    color: #3a5795;
+    
 }
 .list-social-login li a.facebook:hover {
     background: #3a5795;
     color: #fff;
 }
 .list-social-login li a.google {
-    border: 1px solid #EA4335;
-    color: #EA4335;
+    
 }
 .list-social-login li a.google:hover {
     background: #EA4335;
@@ -4240,7 +4235,7 @@ html.mm-opening .mm-slideout {
 .inner-popup .btn-common {
     text-transform: uppercase;
     border: solid 1.5px #00a769;
-    padding: 8px 30px;
+    padding: 10px 30px;
 }
 .inner-popup .btn-cancel {
     background: none;
@@ -4360,7 +4355,7 @@ html.mm-opening .mm-slideout {
 .wrap-detail-article iframe,
 .wrap-detail-article img {
     max-width: 100% !important;
-    height: auto !important;
+    /* height: auto !important; */
 }
 .wrap-detail-article {
     padding: 15px 20px;
@@ -4398,20 +4393,12 @@ html.mm-opening .mm-slideout {
     display: block;
     width: 100%;
     height: 100%;
-    border-radius: 50%;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -ms-border-radius: 50%;
     border: solid 1px #00a769;
     overflow: hidden;
     padding: 5px;
 }
 #avatar .preview a img {
     display: block;
-    border-radius: 50%;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -ms-border-radius: 50%;
     width: 100%;
     height: 100%;
 }
@@ -4742,12 +4729,13 @@ html.mm-opening .mm-slideout {
 }
 .wrap-duan-moi {
     padding: 25px 20px;
+    font-size: 13px;
 }
 .wrap-duan-moi .item {
     border-bottom: solid 0.5px #ededed;
     padding-bottom: 15px;
     margin-bottom: 15px;
-    font-size: 14px;
+    font-size: 13px;
     position: relative;
     line-height: 23px;
 }
@@ -6019,10 +6007,12 @@ footer li a {
     .signin-signup .tab-content {
         padding-left: 0;
         padding-right: 0;
+        padding-bottom: 0;
     }
     .wrap-body-popup .signin-signup {
         width: auto;
         margin-top: 0;
+        padding-bottom: 0;
     }
     .item-step #adproduct-content {
         height: 100px;
@@ -6697,6 +6687,15 @@ footer li a {
     #listing-list .list-attr-td {
         margin-bottom: 4px;
     }
+    .wrap-duan-moi {
+        width: 850px;
+        margin: 50px auto 0;
+        padding: 0 0 100px 0;
+    }
+    .wrap-duan-moi .gallery-detail {
+        height: 450px;
+        margin-bottom: 20px;
+    }
 }
 @media ( max-width: 1366px ) {
     .item-listing .id-duan {
@@ -6798,4 +6797,61 @@ footer li a {
     .wrap-list-duan .date-post .dt-date {
         display: none;
     }
+}
+.detail-listing-dt .id-duan {
+    float: none;
+    line-height: 100%;
+    margin-bottom: 10px;
+}
+.detail-listing-dt .address-listing {
+    margin-bottom: 8px;
+    font-size: 20px;
+}
+.detail-listing-dt .infor-listing .list-attr-td {
+    margin-bottom: 10px;
+}
+.detail-listing-dt .price-td {
+    line-height: 100%;
+}
+.tabProject {
+    float: left;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #CACACA;
+}
+.tabProject li {
+    cursor: pointer;
+    float: left;
+}
+.tabProject li:last-child {
+    margin-right: 0;
+}
+.tabActiveProject {
+    background-color: #fff !important;
+}
+.tabProject li a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #2F2F2F;
+    display: block;
+    padding: 10px 15px;
+}
+.tabProject li.tabActiveProject a {
+    color: #00a769;
+    background: #EAEAEA;
+}
+.editor {
+    font-size: 13px;
+}
+.infor-bds {
+    min-height: 500px;
+}
+.editor h1,
+.editor h2,
+.editor h3,
+.editor h4,
+.editor h5 {
+    font-size: 14px;
+}
+.tabProject li a:hover {
+    background: #EAEAEA;
 }

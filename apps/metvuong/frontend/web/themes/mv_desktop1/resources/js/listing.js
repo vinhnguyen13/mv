@@ -105,8 +105,9 @@ var map = {
 	detail: function(id) {
 		var wWrapList = $('.detail-listing-dt').outerWidth();
 		var detailListing = $('.detail-listing');
+		var wrapDetailListing = $('.detail-listing-dt');
 		
-		detailListing.loading();
+		wrapDetailListing.loading({full: false});
 		
 		$('.detail-listing-dt').css({
 			left: -wWrapList +'px'
@@ -122,7 +123,7 @@ var map = {
 		        spaceBetween: 0
 		    });
 
-			detailListing.loading({done: true});
+			wrapDetailListing.loading({done: true});
 		});
 	},
 	closeDetail: function() {
@@ -533,7 +534,7 @@ $(document).ready(function(){
 			if(!this.isInit) {
 				this.isInit = true;
 				
-				mapEl.loading();
+				mapEl.loading({full: false});
 				
 				getListingLocation(function(result){
 					map.data = result;
