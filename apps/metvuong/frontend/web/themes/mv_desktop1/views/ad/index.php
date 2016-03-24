@@ -432,7 +432,7 @@ $this->registerJs($script, View::POS_BEGIN);
 				</div>
 
 				<div class="detail-listing-dt">
-					<div class="detail-listing">
+					<div class="detail-listing" style="position: relative;">
 						<a href="#" class="btn-close"><span class="icon icon-close"></span></a>
 						<div class="container"></div>
 					</div>

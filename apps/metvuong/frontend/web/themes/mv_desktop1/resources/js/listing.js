@@ -104,6 +104,9 @@ var map = {
 	},
 	detail: function(id) {
 		var wWrapList = $('.detail-listing-dt').outerWidth();
+		var detailListing = $('.detail-listing');
+		
+		detailListing.loading();
 		
 		$('.detail-listing-dt').css({
 			left: -wWrapList +'px'
@@ -111,13 +114,15 @@ var map = {
 		
 		$.get('/ad/detail', {id: id}, function(r){
 			
-			$('.detail-listing .container').html($(r).find('#wrapper').find('.detail-listing .container').html());
+			detailListing.find('.container').html($(r).find('#wrapper').find('.detail-listing .container').html());
 
 			var swiper = new Swiper('.swiper-container', {
 				pagination: '.swiper-pagination',
 				paginationClickable: true,
 		        spaceBetween: 0
 		    });
+
+			detailListing.loading({done: true});
 		});
 	},
 	closeDetail: function() {
@@ -492,6 +497,7 @@ $(document).ready(function(){
 	searchForm = $('#search-form');
 	submitButton = $('.btn-submit');
 	listingList = $('#listing-list ul');
+	mapEl = $('#map');
 //	var map = {
 //		gmap: null,
 //		focus: 1,
@@ -526,6 +532,8 @@ $(document).ready(function(){
 			
 			if(!this.isInit) {
 				this.isInit = true;
+				
+				mapEl.loading();
 				
 				getListingLocation(function(result){
 					map.data = result;
