@@ -24,13 +24,13 @@ $hideSearchForm = Yii::$app->request->get('s') || (Yii::$app->request->get('page
 $srcGmapV2 = Yii::$app->view->theme->baseUrl . '/resources/js/gmap-v2.js';
 
 $params = Yii::$app->request->get();
-if(isset($params['street_id']) || isset($params['project_building_id'])) {
+if(!empty($params['street_id']) || !empty($params['project_building_id'])) {
 	$initialZoom = 'zoomLevel.district.max';
 	$areaId = $searchModel->district_id;
-} else if(isset($params['ward_id'])) {
+} else if(!empty($params['ward_id'])) {
 	$initialZoom = 'zoomLevel.ward.max';
 	$areaId = $searchModel->ward_id;
-} else if(isset($params['district_id'])) {
+} else if(!empty($params['district_id'])) {
 	$initialZoom = 'zoomLevel.district.max';
 	$areaId = $params['district_id'];
 } else {
