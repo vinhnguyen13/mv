@@ -66,8 +66,8 @@ Yii::$app->view->registerMetaTag([
     'content' => $ava_img
 ]);
 ?>
+<div class="container">
 <div class="detail-listing">
-	<div class="container">
 		<?php 
 			$images = $product->adImages;
 			if($images):
@@ -254,9 +254,8 @@ Yii::$app->view->registerMetaTag([
 
 	        </div>
 	    </div>
-    </div>
 </div>
-
+</div>
 <?=$this->renderAjax('/ad/_partials/shareEmail',[
     'product' => $product,
     'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),

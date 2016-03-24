@@ -787,8 +787,6 @@ label {
 }
 .infor-by-up {
     font-size: 14px;
-    padding: 10px 0;
-    border-bottom: solid 1px #a5a5a5;
 }
 .infor-by-up strong {
     font-weight: 600;
@@ -3410,15 +3408,15 @@ html.mm-opening .mm-slideout {
 .price-td {
     letter-spacing: 0.7px;
     color: #00a769;
-    font-weight: 700;
-    font-size: 20px;
+    font-weight: 600;
+    font-size: 18px;
 }
 .price-td span {
     letter-spacing: 0.7px;
     color: #3b3b3b;
     font-size: 16px;
     display: block;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 100%;
 }
 .infor-listing .price-td span {
@@ -3542,8 +3540,8 @@ html.mm-opening .mm-slideout {
 }
 .detail-listing .address-listing {
     margin: 0 0 3px 0;
-    font-weight: 700;
-    font-size: 16px;
+    font-weight: 600;
+    font-size: 22px;
     color: #3c3c3c;
     line-height: 20px;
 }
@@ -6691,17 +6689,37 @@ footer li a {
     #listing-list .list-attr-td {
         margin-bottom: 4px;
     }
+    .detail-listing,
     .wrap-duan-moi {
         width: 850px;
         margin: 50px auto 0;
         padding: 0 0 100px 0;
     }
+    .detail-listing .gallery-detail,
     .wrap-duan-moi .gallery-detail {
         height: 450px;
         margin-bottom: 20px;
     }
     .dt-pagination {
         display: none;
+    }
+    .infor-listing {
+        margin: 0 0 25px 0;
+        padding: 0;
+    }
+    .infor-by-up {
+        margin-bottom: 5px;
+    }
+    .detail-listing .address-listing {
+        margin-bottom: 15px;
+    }
+    .detail-listing .id-duan {
+        line-height: 100%;
+        margin-top: 4px;
+    }
+    .detail-listing .infor-listing .list-attr-td {
+        
+margin-bottom: 10px;
     }
 }
 @media ( max-width: 1366px ) {
@@ -6825,7 +6843,7 @@ footer li a {
     margin-bottom: 25px;
     border-bottom: 1px solid #CACACA;
     position: relative;
-    padding-top: 50px;
+    /* padding-top: 50px; */
 }
 .tabProject li {
     float: left;
@@ -6905,4 +6923,27 @@ footer li a {
     border-right: 5px solid transparent;
     border-bottom: 5px solid #00a769;
     border-top: none;
+}
+.chudautu-infor .title-section {
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+.chudautu-infor .wrap-img {
+    width: 200px;
+    border: 1px solid #BDBDBD;
+    margin-right: 20px;
+}
+.chudautu-infor .infor-detail-chudautu {
+    overflow: hidden;
+}
+.wrap-duan-moi .chudautu-infor {
+    border: none;
+}
+.infor-detail-chudautu li {
+    margin-bottom: 5px;
+}
+.infor-detail-chudautu li strong {
+    display: inline-block;
+    padding-right: 10px;
 }

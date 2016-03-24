@@ -85,10 +85,41 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                         <li><a href="#popup-map" class="icon icon-map-loca"></a></li>
                     </ul>
                 </div>
-                <div class="item infor-time">
-                    <p><strong><?=Yii::t('project','Investor')?>: </strong> <?= empty($model->investors[0]->name) ? $lbl_updating : $model->investors[0]->name ?></p>
-                    <p><strong><?=Yii::t('project', 'Start date')?>: </strong> <?=empty($model->start_date) ? $lbl_updating : date('d/m/Y', $model->start_date) ?></p>
-                    <p><strong><?=Yii::t('project', 'Finish time')?>:</strong> <?=empty($model->estimate_finished) ? $lbl_updating : $model->estimate_finished ?></p>
+                <div class="item chudautu-infor">
+                    <div class="title-section">Chủ đầu tư</div>
+                    <div class="clearfix">
+                    	<div class="wrap-img pull-left">
+                    		<img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/novaland-cho-cuoc-song-bung-sang1.png' ?>" alt="">
+                    	</div>
+                    	<div class="infor-detail-chudautu">
+                    		<ul>
+				                <li>
+				                    <strong id="">Địa chỉ</strong>:
+				                    Đường Hoàng Hữu Nam, phường Long Thạnh Mỹ, quận 9, Tp.HCM</li>
+				                <li>
+				                    <strong id="">Điện thoại</strong>:
+				                    0862800021
+				                    |
+				                    <strong id="">Fax</strong>:
+				                    <span>Đang cập nhật</span>
+				                </li>
+				                <li>
+				                    <strong id="">Website</strong>:
+				                    <span>Đang cập nhật</span>
+				                </li>
+				                <li>
+				                    <strong id="">Email</strong>:
+				                    <span>Đang cập nhật</span>
+				                </li>
+				                <li>
+				                    <strong id="">Chat với người liên hệ công ty</strong>
+				                    <span class="nickchat">
+				                        <a id="" href="javascript:void(0)">Nick chat chưa được cập nhật!</a>
+				                    </span>
+				                </li>
+				            </ul>
+                    	</div>
+                    </div>
                 </div>
 
                 <?php
