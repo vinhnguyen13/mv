@@ -22,24 +22,13 @@ use yii\widgets\LinkPager;
                 <div class="list-duan">
                     <ul class="clearfix row">
                         <?php if(count($models) > 0) {
-                            foreach ($models as $model) {
-                                $image = '/themes/metvuong2/resources/images/default-ads.jpg';
-                                $gallery = array();
-                                if($model->gallery)
-                                    $gallery = explode(',', $model->gallery);
-                                if (count($gallery) > 0) {
-                                    $imageUrl = Yii::getAlias('@store')."/building-project-images/". $gallery[0];
-                                    if(file_exists($imageUrl)){
-                                        $image = Url::to('/store/building-project-images/' . $gallery[0]);
-                                    }
-                                }
-                                ?>
+                            foreach ($models as $model) { ?>
                                 <li class="col-xs-12 col-sm-6 col-md-4">
                                     <div class="wrap-item">
                                         <a href="<?= Url::to(["building/$model->slug"]); ?>" class="pic-intro rippler rippler-default">
                                             <div class="img-show">
-                                                <div><img src="<?=$image?>"
-                                                          data-original="<?=$image?>"
+                                                <div><img src="<?=$model->logoUrl?>"
+                                                          data-original="<?=$model->logoUrl?>"
                                                           style="display: block;"></div>
                                             </div>
                                         </a>

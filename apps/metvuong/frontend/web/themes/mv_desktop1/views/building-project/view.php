@@ -39,7 +39,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                     <div class="swiper-wrapper">
                         <?php
                         $gallery = explode(',', $model->gallery);
-                        if(!empty($gallery[0])) {
+                        if(count($gallery) > 0) {
                             foreach ($gallery as $image) {
                                 ?>
                                 <div class="swiper-slide">
@@ -50,11 +50,13 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                                     </div>
                                 </div>
                             <?php }
-                        } else { ?>
+                        } else {
+
+                            ?>
                             <div class="swiper-slide">
                                 <div class="img-show">
                                     <div>
-                                        <img src="/themes/metvuong2/resources/images/default-ads.jpg" alt="<?=$model->location?>">
+                                        <img src="<?=$model->logoUrl?>" alt="<?=$model->logoUrl?>">
                                     </div>
                                 </div>
                             </div>

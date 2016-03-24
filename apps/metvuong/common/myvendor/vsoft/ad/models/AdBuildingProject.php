@@ -8,6 +8,7 @@ use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\helpers\ArrayHelper;
 use common\models\AdBuildingProject as ABP;
+use yii\helpers\Url;
 
 
 class AdBuildingProject extends ABP
@@ -244,5 +245,24 @@ class AdBuildingProject extends ABP
             return $project;
         }
         return null;
+    }
+
+    public function getLogoUrl(){
+        $image = '/themes/metvuong2/resources/images/default-ads.jpg';
+        if($this->logo) {
+            $image = $this->logo;
+        }
+        else {
+            if ($this->gallery) {
+                $gallery = explode(',', $this->gallery);
+                if (count($gallery) > 0) {
+                    $imageUrl = Yii::getAlias('@store') . "/building-project-images/" . $gallery[0];
+                    if (file_exists($imageUrl)) {
+                        $image = Url::to('/store/building-project-images/' . $gallery[0]);
+                    }
+                }
+            }
+        }
+        return $image;
     }
 }
