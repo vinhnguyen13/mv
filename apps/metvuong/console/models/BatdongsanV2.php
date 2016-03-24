@@ -2139,7 +2139,7 @@ class BatdongsanV2 extends Component
                         $filename = null;
                         $from = isset($log_import["update_total"]) ? $log_import["update_total"] : 0;
                         for ($i = $from; $i <= $last_file_index; $i++) {
-                            if ($count_file > 3) {
+                            if ($count_file > 300) {
                                 $break_type = true;
                                 break;
                             }
