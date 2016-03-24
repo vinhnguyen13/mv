@@ -146,19 +146,10 @@ return [
         ],*/
         'i18n' => [
             'translations' => [
-                'user*' => [
-                    'class' => 'yii\i18n\DbMessageSource',
-                    'db' => 'db',
-                    'sourceLanguage' => 'en-US',
-                    'sourceMessageTable' => '{{%language_source}}',
-                    'messageTable' => '{{%language_translate}}',
-                    'cachingDuration' => 86400,
-                    'enableCaching' => false,
-                ],
                 '*' => [
                     'class' => 'yii\i18n\DbMessageSource',
                     'db' => 'db',
-                    'sourceLanguage' => 'en-US',
+                    'sourceLanguage' => 'en', /** with this language, is not translate **/
                     'sourceMessageTable' => '{{%language_source}}',
                     'messageTable' => '{{%language_translate}}',
                     'cachingDuration' => 86400,
