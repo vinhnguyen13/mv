@@ -38,20 +38,23 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                 <div class="gallery-detail swiper-container">
                     <div class="swiper-wrapper">
                         <?php
-                        $gallery = explode(',', $model->gallery);
-                        if(count($gallery) > 0) {
-                            foreach ($gallery as $image) {
-                                ?>
-                                <div class="swiper-slide">
-                                    <div class="img-show">
-                                        <div>
-                                            <img src="<?= \yii\helpers\Url::to('/store/building-project-images/' . $image) ?>" alt="<?=$model->location?>">
+                        if(!empty($model->gallery)) {
+                            $gallery = explode(',', $model->gallery);
+                            if (count($gallery) > 0) {
+                                foreach ($gallery as $image) {
+                                    ?>
+                                    <div class="swiper-slide">
+                                        <div class="img-show">
+                                            <div>
+                                                <img
+                                                    src="<?= \yii\helpers\Url::to('/store/building-project-images/' . $image) ?>"
+                                                    alt="<?= $model->location ?>">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            <?php }
+                                <?php }
+                            }
                         } else {
-
                             ?>
                             <div class="swiper-slide">
                                 <div class="img-show">
