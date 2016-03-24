@@ -122,7 +122,7 @@ $this->registerJs($script, View::POS_BEGIN);
 											<li><a href="#" data-value="9">9+</a></li>
 											<li><a href="#" data-value="10">10+</a></li>
 										</ul>
-										<input type="hidden" id="" class="value_selected" name="roomNo" value="" />
+										<?= Html::activeHiddenInput($searchModel, 'room_no'); ?>
 									</div>
 								</div>
 							</div>
@@ -142,7 +142,7 @@ $this->registerJs($script, View::POS_BEGIN);
 											<li><a href="#" data-value="9">9+</a></li>
 											<li><a href="#" data-value="10">10+</a></li>
 										</ul>
-										<input type="hidden" id="" class="value_selected" name="roomNo" value="" />
+										<?= Html::activeHiddenInput($searchModel, 'toilet_no'); ?>
 									</div>
 								</div>
 							</div>
