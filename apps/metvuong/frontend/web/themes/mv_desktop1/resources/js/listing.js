@@ -19,7 +19,6 @@ $(document).ready(function(){
 			return $('.m-header').css('display') == 'none';
 		},
 		enable: function() {
-			console.log('enable');
 			desktop.isEnabled = true;
 
 			if(!desktop.isLoadResources) {
@@ -29,7 +28,6 @@ $(document).ready(function(){
 			desktop.desktopEvent();
 		},
 		disable: function() {
-			console.log('disable');
 			desktop.isEnabled = false;
 
 			desktop.mobileEvent();
@@ -37,7 +35,6 @@ $(document).ready(function(){
 		loadResources: function() {
 			desktop.loadingResource = count(resources) + 1;
 			
-			console.log('load Resources');
 			desktop.isLoadResources = true;
 			
 			// get form data use for map
@@ -81,12 +78,10 @@ $(document).ready(function(){
 			// Load default attach event for mobile here
 		},
 		desktopEvent: function() {
-			console.log('listing attach event');
 			listing.el.on('click', '.item-listing a', listing.detailEvent);
 			listing.el.on('scroll', listing.moreEvent);
 		},
 		mobileEvent: function() {
-			console.log('listing detach event');
 			listing.el.off('click', '.item-listing a', listing.detailEvent);
 			listing.el.off('scroll', listing.moreEvent);
 		},
@@ -185,8 +180,6 @@ $(document).ready(function(){
 			console.log('field change');
 		},
 		getData: function(callback) {
-			console.log('getData');
-			
 			$.get(form.el.attr('action'), form.el.serialize(), function(r){
 				callback(r);
 			});

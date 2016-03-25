@@ -27,6 +27,7 @@ var listingMap = {
 		var options = {center: {lat: center[0], lng: center[1]}, zoom: listingMap.zoomLevel[levelValue.level][1]};
 		
 		listingMap.map = new google.maps.Map(document.getElementById('map'), options);
+		listingMap.infoWindow = new m2Map.InfoWindow({offsetTop: 40});
 		
 		listingMap.drawArea([area]);
 	},
@@ -59,8 +60,6 @@ var listingMap = {
 		}
 	},
 	drawAreaMarker: function(area, group) {
-		console.log(area);
-		console.log(group);
 		var center = JSON.parse(area.center);
 		center = {lat: center[0], lng: center[1]};
 		
@@ -68,8 +67,33 @@ var listingMap = {
 			position: center,
 			map: listingMap.map,
 		    icon: listingMap.icon(group.length, 0),
+		    id: area.id,
 		    ids: group
 		});
+		
+		listingMap.areaMarkers.push(marker);
+		
+		marker.addListener('mouseover', function(){
+			var name = area.pre ? area.pre + ' ' + area.name : area.name;
+			
+			listingMap.areaMarkerMouseover.call(this, name);
+		});
+		
+		marker.addListener('mouseout', function(){
+			listingMap.infoWindow.close();
+			listingMap.infoWindow.setOffsetTop(40);
+		});
+	},
+	areaMarkerMouseover: function(name) {
+		if(this.ids.length > 9999) {
+			listingMap.infoWindow.setOffsetTop(60);
+		} else if(this.ids.length > 999) {
+			listingMap.infoWindow.setOffsetTop(50);
+		}
+		
+		var infoContent = '<div class="info-wrap-single"><div style="padding: 6px 12px; font-weight: bold; font-size: 13px; white-space: nowrap">' + name + '</div><div class="arrow"></div></div>';
+		listingMap.infoWindow.setContent(infoContent);
+		listingMap.infoWindow.open(this);
 	},
 	drawPolygon: function(area) {
 		if(area.geometry) {
@@ -100,7 +124,10 @@ var listingMap = {
 			});
 			
 			polygon.setMap(listingMap.map);
-			google.maps.event.addListener(polygon, "mouseover", listingMap.polygonMouseover); 
+			listingMap.polygons.push(polygon);
+			
+			google.maps.event.addListener(polygon, "mouseover", listingMap.polygonMouseover);
+			google.maps.event.addListener(polygon, "mouseout", listingMap.polygonMouseout); 
 		}
 	},
 	groupProductByArea: function(idString) {
@@ -121,11 +148,26 @@ var listingMap = {
 		return groups;
 	},
 	polygonMouseover: function() {
-		console.log(this.id);
+		google.maps.event.trigger(listingMap.getAreaMarker(this.id), 'mouseover');
+	},
+	polygonMouseout: function() {
+		google.maps.event.trigger(listingMap.getAreaMarker(this.id), 'mouseout');
 	},
 	icon: function(counter, status) {
 		var base = (counter > 1) ? '/site/map-image?s={status}&t=' + counter : '/images/marker-{status}.png';
 		
 		return base.replace('{status}', status);
+	},
+	getAreaMarker: function(id) {
+		var marker;
+		
+		for(var i = 0; i<= listingMap.areaMarkers.length; i++) {
+			if(listingMap.areaMarkers[i].id == id) {
+				marker = listingMap.areaMarkers[i];
+				break;
+			}
+		}
+		
+		return marker;
 	}
 }
