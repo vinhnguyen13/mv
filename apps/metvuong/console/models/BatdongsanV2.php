@@ -850,7 +850,7 @@ class BatdongsanV2 extends Component
         $count_file = 1;
 
         $bds_import_log = $this->loadLog($path_folder."import/", $bds_import_filename);
-        if (isset($bds_import_log["type"]) == false) {
+        if (!isset($bds_import_log["type"]) == false) {
             $bds_import_log["type"] = array();
         }
 
@@ -1928,7 +1928,7 @@ class BatdongsanV2 extends Component
         $path = Yii::getAlias('@console') . "/data/bds_html/projects/";
         $file_log = "import_project_log.json";
         $project_log_import = $this->loadLog($path."import/", $file_log);
-        if(isset($project_log_import["type"]))
+        if(!isset($project_log_import["type"]))
             $project_log_import["type"] = array();
         $types = $this->projects;
         $break_type = false; // detect next type if it is false
@@ -2105,7 +2105,7 @@ class BatdongsanV2 extends Component
         $path = Yii::getAlias('@console') . "/data/bds_html/projects/";
         $file_log = "update_project_log.json";
         $project_log_import = $this->loadLog($path."update/", $file_log);
-        if(isset($project_log_import["type"]))
+        if(!isset($project_log_import["type"]))
             $project_log_import["type"] = array();
         $types = $this->projects;
         $break_type = false; // detect next type if it is false
