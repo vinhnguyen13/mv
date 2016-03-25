@@ -210,7 +210,14 @@ $this->registerJs($script, View::POS_BEGIN);
 								if($searchModel->district_id) {
 									$items = ($projects = AdBuildingProject::find()->where(['status' => 1, 'district_id' => $searchModel->district_id])->all()) ? ArrayHelper::map($projects, 'id', 'name') : [];
 								}
-								echo Html::activeDropDownList($searchModel, 'project_building_id', $items, ['prompt' => $searchModel->getAttributeLabel('project_building_id'), 'class' => 'form-control'])
+								
+								$options = ['prompt' => $searchModel->getAttributeLabel('project_building_id'), 'class' => 'form-control'];
+								
+								if($searchModel->category_id != AdProduct::CATEGORY_CHCK) {
+									$options['style'] = 'display: none';
+								}
+								
+								echo Html::activeDropDownList($searchModel, 'project_building_id', $items, $options)
 							?>
 								
 							<div class="frm-item choice_price_dt select-price">

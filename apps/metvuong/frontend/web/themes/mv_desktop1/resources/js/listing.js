@@ -112,12 +112,45 @@ $(document).ready(function(){
 		el: $('#search-form'),
 		init: function() {
 			codeMigrate();
-
+			
+			form.attachEvent();
+			
 			// Load default attach event for mobile here
 			form.orderByEl = $('#order_by');
 			
 			form.el.on('submit', form.filterFields);
 			form.orderByEl.on('change', form.sortSubmit);
+		},
+		attachEvent: function() {
+			form.cityEl = $('#city_id');
+			form.districtEl = $('#district_id');
+			form.wardEl = $('#ward_id');
+			form.streetEl = $('#street_id');
+			form.projectEl = $('#project_building_id');
+			
+			form.cityEl.change(function(){
+				$.get('/ad/list-district', {cityId: $(this).val()}, function(districts){
+					form.appendDropdown(form.districtEl, districts);
+					
+					form.appendDropdown(form.wardEl, []);
+					form.appendDropdown(form.streetEl, []);
+					form.appendDropdown(form.projectEl, []);
+				});
+			});
+			
+			form.districtEl.change(function(){
+				$.get('/ad/list-swp', {districtId: $(this).val()}, function(response){
+					form.appendDropdown(form.wardEl, response.wards);
+					form.appendDropdown(form.streetEl, response.streets);
+					form.appendDropdown(form.projectEl, response.projects);
+				});
+			});
+		},
+		appendDropdown: function(el, items) {
+			el.find("option:not(:first-child)").remove();
+			for(var i in items) {
+				el.append('<option value="' + i + '">' + items[i] + '</option>');
+			}
 		},
 		filterFields: function(e) {
 			form.el.find('select, input').filter(function(){
