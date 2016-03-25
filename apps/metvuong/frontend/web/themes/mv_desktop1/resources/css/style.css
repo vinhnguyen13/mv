@@ -2350,6 +2350,18 @@ label {
 #settings-user .mm-panels {
     width: 100%;
 }
+.icon-settings {
+    display: block;
+    height: 26px;
+    width: 26px;
+    background: url(../images/icon-setting.png) no-repeat center;
+    padding: 0;
+    line-height: 0;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+}
 #settings-user li a span.icon {
     margin-right: 20px;
     font-size: 1.6em;
@@ -6044,18 +6056,6 @@ footer li a {
         max-width: 135px;
         float: left;
     }
-    .icon-settings {
-        display: block;
-        height: 26px;
-        width: 26px;
-        background: url(../images/icon-setting.png) no-repeat center;
-        padding: 0;
-        line-height: 0;
-        border-radius: 3px;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        -ms-border-radius: 3px;
-    }
     .user-login .box-dropdown .dropdown-up-style {
         top: 63px;
         width: 200px;
@@ -6882,8 +6882,13 @@ footer li a {
     .list-per-post .list-post li {
         padding: 0;
     }
+    .all-packege .item-packege {
+        padding-left: 0;
+        padding-right: 0;
+        margin-bottom: 20px;
+    }
 }
-@media ( max-width: 640px ) {
+@media ( max-width: 985px ) {
     .wrap-attr-bottom {
         margin-top: 8px;
     }
