@@ -1,4 +1,7 @@
 var listingMap = {
+	polygons: [],
+	areaMarkers: [],
+	markers: [],
 	zoomLevelConst: {
 		CITY: 0,
 		DISTRICT: 1,
@@ -19,14 +22,13 @@ var listingMap = {
 		var area = listingMap.getFocusArea(levelValue.id, collection);
 		
 		var center = area.center ? JSON.parse(area.center) : [10.783091, 106.704899];
-		
+
 		var options = {center: {lat: center[0], lng: center[1]}, zoom: listingMap.zoomLevel[levelValue.level][1]};
 		
 		listingMap.map = new google.maps.Map(document.getElementById('map'), options);
-//		
-//		var focusArea = listingMap.getFocusArea();
-//		var dataCollection = listingMap.dataMap[focusArea.level];
-//		var areas = form.data[]
+		
+		listingMap.drawPolygon(area);
+		listingMap.drawAreaMarker(area);
 	},
 	getFocusArea: function(id, collection) {
 		return form.data[collection][id];
@@ -43,5 +45,43 @@ var listingMap = {
 		}
 		
 		return {level: level, id: id};
+	},
+	drawAreaMarker: function(area) {
+		
+	},
+	drawPolygon: function(area) {
+		if(area.geometry) {
+			var color = '#00a769';
+			var geometries = JSON.parse(area.geometry);
+			
+			var triangleCoords = [];
+			
+			for(var i = 0; i < geometries.length; i++) {
+				var latLngs = [];
+				var geometry = geometries[i];
+				
+				for(var j = 0; j < geometry.length; j++) {
+					latLngs.push(new google.maps.LatLng(geometry[j][0], geometry[j][1]));
+				}
+				
+				triangleCoords.push(latLngs);
+			}
+			
+			var polygon = new google.maps.Polygon({
+			    paths: triangleCoords,
+			    strokeColor: color,
+			    strokeOpacity: 0.8,
+			    strokeWeight: 1,
+			    fillColor: color,
+			    fillOpacity: 0.2,
+			    id: area.id
+			});
+			
+			polygon.setMap(listingMap.map);
+			google.maps.event.addListener(polygon, "mouseover", listingMap.polygonMouseover); 
+		}
+	},
+	polygonMouseover: function() {
+		console.log(this.id);
 	}
 }

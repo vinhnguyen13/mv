@@ -138,9 +138,10 @@ class AdController extends Controller
 			
 			$cities = AdCity::find()->indexBy('id')->select('center, geometry, name, id')->where(['id' => $searchModel->city_id])->all();
 			$districts = AdDistrict::find()->indexBy('id')->select('center, geometry, name, id, pre')->where(['city_id' => $searchModel->city_id])->all();
-			$wards = AdWard::find()->indexBy('id')->select('center, geometry, name, id, pre, district_id')->where(['district_id' => ArrayHelper::getColumn($districts, 'id')])->all();
+			$wards = AdWard::find()->indexBy('id')->select('center, geometry, name, id, pre')->where(['district_id' => ArrayHelper::getColumn($districts, 'id')])->all();
+			$streets = AdStreet::find()->indexBy('id')->select('name, id, pre')->where(['district_id' => ArrayHelper::getColumn($districts, 'id')])->all();
 			
-			return ['products' => $products, 'cities' => $cities, 'districts' => $districts, 'wards' => $wards];
+			return ['products' => $products, 'cities' => $cities, 'districts' => $districts, 'wards' => $wards, 'streets' => $streets];
 		} else {
 			$countQuery = clone $searchQuery;
 			$pages = new Pagination(['totalCount' => $countQuery->count()]);
