@@ -2169,8 +2169,8 @@ label {
     z-index: 2;
 }
 #avatar-user img {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
 }
 #menu-header,
 #settings-user {
@@ -2280,6 +2280,7 @@ label {
 #settings-user li span {
     display: block;
 }
+#avatar-user div,
 .list-noti .avatar a,
 .chat-list .wrap-img,
 .avatar-user-pr .avatar,
@@ -2300,6 +2301,9 @@ label {
     -ms-border-radius: 3px;
     width: 35px;
     height: auto;
+}
+#avatar-user div {
+    width: auto;
 }
 .list-noti .avatar a {
     width: 40px;
@@ -2332,9 +2336,9 @@ label {
 .user-edit .name-user {
     font-weight: 700;
     width: 100%;
-    white-space: nowrap; 
-    overflow: hidden;
-    text-overflow: ellipsis; 
+    /* white-space: nowrap; */
+    /* overflow: hidden; */
+    /* text-overflow: ellipsis; */
 }
 .user-edit .address {
     font-size: .7em;
@@ -2975,6 +2979,9 @@ html.mm-opening .mm-slideout {
 }
 .box-item .wrap-item >ul>li {
     margin-bottom: 25px;
+}
+.box-item .wrap-item >ul>li:last-child {
+    margin-bottom: 0;
 }
 .news-item .wrap-item {
     border-bottom: none;
@@ -5417,10 +5424,9 @@ html.mm-opening .mm-slideout {
 .txt-location li {
     border-bottom: solid 1px #dcdcdc;
     border-top: 1px solid #fff;
-    padding-bottom: 15px;
-    padding-top: 15px;
     float: left;
     width: 100%;
+    padding: 12px 0;
 }
 .txt-location li:first-child {
     border-top: none;
@@ -6423,7 +6429,7 @@ footer li a {
         padding-right: 0;
     }
     .infor-duan {
-        margin: 0 -20px;
+        
     }
 }
 .flag-lang {
@@ -6832,6 +6838,50 @@ footer li a {
     .title-fixed-wrap .wrap-list-duan {
         padding: 20px;
     }
+    #settings-user .user-edit a > div {
+        /* overflow: hidden; */
+    }
+    #settings-user li .wrap-img {
+        margin-right: 10px;
+    }
+    #settings-user li .name-user {
+        font-size: 14px;
+        font-weight: 600;
+    }
+    #settings-user .flag-lang {
+        padding: 15px 0;
+        color: #3c3c3c;
+        font-size: 17px;
+    }
+    #settings-user .flag-lang a {
+        padding: 0 10px;
+        margin: 0;
+        width: auto;
+    }
+    .option-show-listing .val-selected {
+        background: none;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .post-listing .title-top {
+        margin: 0 -20px;
+        width: auto;
+    }
+    .infor-duan .wrap-infor-duan {
+        padding: 20px 20px 0;
+    }
+    .infor-duan .list-duan ul {
+        margin: 0;
+    }
+    .infor-duan .list-duan ul li {
+        padding: 0;
+    }
+    .wrap-duan-moi .icons-detail {
+        margin: 0;
+    }
+    .list-per-post .list-post li {
+        padding: 0;
+    }
 }
 @media ( max-width: 640px ) {
     .wrap-attr-bottom {
@@ -6869,25 +6919,6 @@ footer li a {
 @media ( min-width: 1366px ) {
     .search-subpage .frm-item {
         width: auto;
-    }
-    .search-subpage .num-phongtam,
-    .search-subpage .num-phongngu {
-        /* width: 8%; */
-    }
-    .search-subpage .select-loaibds {
-        /* width: 13%; */
-    }
-    .search-subpage .select-duan {
-        /* width: 12%; */
-    }
-    .search-subpage .select-price {
-        /* width: 12.5%; */
-    }
-    .search-subpage .select-dt {
-        /* width: 9%; */
-    }
-    .search-subpage .select-others {
-        /* width: 8%; */
     }
 }
 @media ( min-width: 640px ) and ( max-width: 985px ) {
@@ -6964,6 +6995,9 @@ footer li a {
     padding: 0 15px 0;
     left: 0;
 }
+.editor img {
+    max-width: 100%;
+}
 .infor-bds {
     min-height: 500px;
 }
@@ -7038,4 +7072,22 @@ footer li a {
 .infor-detail-chudautu li strong {
     display: inline-block;
     padding-right: 10px;
+}
+@media ( min-width: 320px ) and ( max-width: 640px ) {
+    .search-subpage input, .search-homepage input {
+        height: 45px;
+        font-size: 13px;
+    }
+    #search-header, #btn-search span {
+        width: 26px;
+        height: 26px;
+        background-position: 0 -1820px;
+        background-size: 50px 2400px;
+    }
+    .search-box .search-homepage #btn-search {
+        height: 43px;
+    }
+    .search-homepage > ul {
+        margin-bottom: 15px;
+    }
 }

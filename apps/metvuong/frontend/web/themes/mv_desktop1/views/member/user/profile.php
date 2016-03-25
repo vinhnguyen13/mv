@@ -89,7 +89,7 @@ $user = $model->getUser();
                                     </div></div>
                                 <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></div>
                             </a>
-                            <a href="<?= $product->urlDetail() ?>"><p class="name-post"><span class="icon address-icon"></span><?=$product->getAddress()?></p></a>
+                            <a href="<?= $product->urlDetail() ?>"><p class="name-post"><?=$product->getAddress()?></p></a>
                             <p class="id-duan">ID:<span><?=$product->id?></span></p>
                             <ul class="clearfix list-attr-td">
                                 <li>

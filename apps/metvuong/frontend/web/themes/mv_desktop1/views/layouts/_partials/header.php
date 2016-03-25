@@ -8,14 +8,16 @@ use frontend\models\AdProductSearch;
         <div class="m-header">
             <a href="#menu-header" id="menu-toggle" class="pull-left"><span class="icon"></span></a>
             <a href="#settings-user" id="avatar-user" class="wrap-img wrapNotifyTotal">
-                <?php if(Yii::$app->user->isGuest){?>
-                    <img src="/images/default-avatar.jpg" alt="">
-                <?php } else{?>
-                    <img id="headAvatar" src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="">
-                    <?php if(!empty($this->params['notify_total'])){?>
-                        <span id="notifyTotal"><?=$this->params['notify_total'];?></span>
+                <div>
+                    <?php if(Yii::$app->user->isGuest){?>
+                        <img src="/images/default-avatar.jpg" alt="">
+                    <?php } else{?>
+                        <img id="headAvatar" src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="">
+                        <?php if(!empty($this->params['notify_total'])){?>
+                            <span id="notifyTotal"><?=$this->params['notify_total'];?></span>
+                        <?php }?>
                     <?php }?>
-                <?php }?>
+                </div>
             </a>
             <div class="logo">
                 <a href="<?=Url::home()?>">metvuong</a>
@@ -40,8 +42,13 @@ use frontend\models\AdProductSearch;
                     <ul class="clearfix">
                         <li><a href="<?=Url::to(['member/login'])?>" class="user-login-link"><?=Yii::t('user', 'Sign In')?></a></li>
                         <li><a href="<?=Url::to(['member/signup'])?>" class="user-signup-link"><?=Yii::t('user', 'Sign Up')?></a></li>
-                        <li class="flag-us"><a href="<?=Url::current(['language-change'=>'en-US'])?>"></a></li>
-                        <li class="flag-vn"><a href="<?=Url::current(['language-change'=>'vi-VN'])?>"></a></li>
+                        <li class="flag-lang">
+                            <p class="pull-right">
+                                <a href="<?=Url::current(['language-change'=>'en-US'])?>"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/flag-en.png' ?>" alt=""></a>
+                                <a href="<?=Url::current(['language-change'=>'vi-VN'])?>"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/flag-vn.png' ?>" alt=""></a>
+                            </p>
+                            <?=Yii::t('general', 'Language')?>
+                        </li>
                     </ul>
                 <?php } else{?>
                 <ul class="clearfix">
@@ -68,8 +75,13 @@ use frontend\models\AdProductSearch;
                     </a></li>
                     <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon icon-per"></span></div><?=Yii::t('user', 'Account')?></a></li>
                     <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><div><span class="icon icon-logout"></span></div><?=Yii::t('user', 'Log Out')?></a></li>
-                    <li class="flag-us"><a href="<?=Url::current(['language-change'=>'en-US'])?>"></a></li>
-                    <li class="flag-vn"><a href="<?=Url::current(['language-change'=>'vi-VN'])?>"></a></li>
+                    <li class="flag-lang">
+                        <p class="pull-right">
+                            <a href="<?=Url::current(['language-change'=>'en-US'])?>"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/flag-en.png' ?>" alt=""></a>
+                            <a href="<?=Url::current(['language-change'=>'vi-VN'])?>"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/flag-vn.png' ?>" alt=""></a>
+                        </p>
+                        <?=Yii::t('general', 'Language')?>
+                    </li>
                 </ul>
                 <?php } ?>
             </div>
