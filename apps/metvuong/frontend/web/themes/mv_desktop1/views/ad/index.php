@@ -383,7 +383,6 @@ $this->registerJs($script, View::POS_BEGIN);
 				</div>
 				<div id="sort" class="dropdown-select option-show-listing">
 					<div class="val-selected style-click clearfix">
-						Hiển thị theo
 						<?php
 							$items = [
 								'-created_at' => Yii::t('ad', 'Newest'),
@@ -391,7 +390,7 @@ $this->registerJs($script, View::POS_BEGIN);
 								'price' =>Yii::t('ad', 'Price (Low to Hight)'),
 							];
 						?>
-						<?= Html::activeDropDownList($searchModel, 'order_by', $items, ['class' => 'form-control']) ?>
+						<?= Html::activeDropDownList($searchModel, 'order_by', $items, ['prompt' => Yii::t('ad', 'Sort by'), 'class' => 'form-control']) ?>
 					</div>
 				</div>
 				<input type="hidden" name="s" value="1" />
