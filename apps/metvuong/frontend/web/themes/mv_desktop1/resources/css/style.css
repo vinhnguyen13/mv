@@ -470,6 +470,7 @@ header {
     background: #FFFFFF;
     font-size: 15px;
     padding: 10px 0;
+    border: 1px solid #00a769;
 }
 .list-social-login li a.facebook {
     
@@ -477,6 +478,7 @@ header {
 .list-social-login li a.facebook:hover {
     background: #3a5795;
     color: #fff;
+    border: 1px solid #3a5795;
 }
 .list-social-login li a.google {
     
@@ -484,6 +486,7 @@ header {
 .list-social-login li a.google:hover {
     background: #EA4335;
     color: #fff;
+    border: 1px solid #EA4335;
 }
 .list-social-login {
     display: block;
@@ -536,7 +539,7 @@ header {
 }
 .icons-detail {
     
-margin-top: 3px;
+margin-top: 12px;
 }
 .icons-detail li {
     float: left;
@@ -3321,7 +3324,7 @@ html.mm-opening .mm-slideout {
     display: inline-block;
 }
 .panel-body {
-    padding: 20px;
+    padding: 15px 0;
 }
 .search-wrap-home {
     display: inline-block;
@@ -3462,8 +3465,12 @@ html.mm-opening .mm-slideout {
     overflow: hidden;
 }
 .img-agent .btn-small {
-    width: 100%;
+    /* width: 100%; */
     margin-top: 15px;
+    text-overflow: inherit;
+}
+.email-btn {
+    
 }
 .wrap-list-duan .img-intro .img-show:before {
     padding-top: 90%;
@@ -3543,7 +3550,7 @@ html.mm-opening .mm-slideout {
     font-weight: 600;
     font-size: 22px;
     color: #3c3c3c;
-    line-height: 20px;
+    line-height: 27px;
 }
 .infor-agent {
     margin-bottom: 20px;
@@ -4931,8 +4938,8 @@ html.mm-opening .mm-slideout {
     padding-right: 5px;
 }
 .detail-listing .panel-body {
-    font-size: 14px;
-    line-height: 24px;
+    font-size: 13px;
+    line-height: 20px;
 }
 #done-page {
     position: absolute;
@@ -6219,6 +6226,25 @@ footer li a {
         margin: 0 auto 0;
         background: #fff;
     }
+    #popup-map.full-style .wrap-popup {
+        width: 700px;
+        height: 500px;
+        background: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        -ms-border-radius: 5px;
+    }
+    #popup-map {
+        display: -webkit-flex; /* Safari */
+        -webkit-align-items: center; /* Safari 7.0+ */
+        display: flex;
+        align-items: center;
+    }
+    #popup-map.hide-popup {
+        display: none;
+    }
     .full-style .title-popup{
         position: static;
     }
@@ -6685,6 +6711,10 @@ footer li a {
     text-transform: uppercase;
     color: #000;
 }
+.detail-listing .gallery-detail,
+.wrap-duan-moi .gallery-detail {
+    margin-bottom: 15px;
+}
 @media ( min-width: 985px ) {
     #listing-list .list-attr-td {
         margin-bottom: 4px;
@@ -6698,7 +6728,14 @@ footer li a {
     .detail-listing .gallery-detail,
     .wrap-duan-moi .gallery-detail {
         height: 450px;
-        margin-bottom: 20px;
+    }
+    .detail-listing-dt .detail-listing {
+        width: auto;
+        margin: 0 auto 0;
+        padding: 0 0 0 0;
+    }
+    .detail-listing-dt .detail-listing .gallery-detail {
+        height: auto;
     }
     .dt-pagination {
         display: none;
@@ -6718,8 +6755,39 @@ footer li a {
         margin-top: 4px;
     }
     .detail-listing .infor-listing .list-attr-td {
-        
-margin-bottom: 10px;
+        margin-bottom: 15px;
+    }
+    .detail-listing .collapse {
+        display: block;
+        visibility: visible;
+        border-bottom: solid 1px #a5a5a5;
+        margin-bottom: 20px;
+    }
+    #collapseEght {
+        border: none;
+    }
+    .detail-listing .collapse .panel-body {
+        padding-left: 0;
+        padding-right: 0;
+        padding-top: 10px;
+    }
+    .panel-default>.panel-heading {
+        border: none;
+    }
+    #headingOne {
+        border: none;
+    }
+    .panel-heading .panel-title a span,
+    .panel-heading .panel-title a.collapsed span {
+        display: none;
+    }
+    .panel-heading .panel-title a.collapsed {
+        padding: 0;
+    }
+    .price-td {
+        border-top: 1px solid #a5a5a5;
+        border-bottom: 1px solid #a5a5a5;
+        padding: 10px 0;
     }
 }
 @media ( max-width: 1366px ) {
@@ -6764,6 +6832,21 @@ margin-bottom: 10px;
         float: right;
         width: auto;
         margin: 5px 0 0 0;
+    }
+    .detail-listing .address-listing {
+        font-size: 18px;
+        margin-bottom: 0;
+        line-height: 23px;
+    }
+    .detail-listing .infor-listing {
+        margin-top: 0;
+        padding-top: 0;
+    }
+    .detail-listing .id-duan {
+        margin-bottom: 5px;
+    }
+    .detail-listing .icons-detail {
+        margin-top: 0;
     }
 }
 @media ( min-width: 985px ) and ( max-width: 1280px ) {

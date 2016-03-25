@@ -241,14 +241,13 @@ Yii::$app->view->registerMetaTag([
 									</div>
 									Ho Chi Minh City, Vietnam
 								</div>
+								<a href="#popup-email" id="" class="email-btn btn-common btn-small">Email</a>
+								<?php if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) { ?>
+									<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small">Chat</a>
+								<?php }?>
 							</div>
 						</div>
-						<div class="text-center">
-							<a href="#popup-email" id="" class="email-btn btn-common btn-small">Email</a>
-							<?php if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) { ?>
-								<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small">Chat</a>
-							<?php }?>
-						</div>
+						
 	                </div>
 	            </div>
 
@@ -345,6 +344,7 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 
 <script>
 	$(document).ready(function () {
+
 		$('#popup-email').popupMobi({
 			btnClickShow: ".email-btn",
 			closeBtn: '#popup-email .btn-cancel',
