@@ -15,6 +15,7 @@ AddDefaultCharset utf-8
     RewriteEngine On
 
     # the main rewrite rule for the frontend application
+    RewriteCond %{REQUEST_URI} !^/(api/web|api)
     RewriteCond %{REQUEST_URI} !^/(backend/web|admin)
     RewriteCond %{REQUEST_URI} !^/(store)
     RewriteRule !^frontend/web /frontend/web%{REQUEST_URI} [L]
@@ -25,6 +26,9 @@ AddDefaultCharset utf-8
     # the main rewrite rule for the backend application
     RewriteCond %{REQUEST_URI} ^/admin
     RewriteRule ^admin(.*) /backend/web/$1 [L]
+
+    RewriteCond %{REQUEST_URI} ^/api
+    RewriteRule ^api(.*) /api/web/$1 [L]
 
     # if a directory or a file of the frontend application exists, use the request directly
     RewriteCond %{REQUEST_URI} ^/frontend/web
