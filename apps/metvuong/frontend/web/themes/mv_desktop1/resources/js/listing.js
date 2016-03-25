@@ -35,20 +35,25 @@ $(document).ready(function(){
 			desktop.mobileEvent();
 		},
 		loadResources: function() {
-			desktop.loadingResource = count(resources);
+			desktop.loadingResource = count(resources) + 1;
 			
 			console.log('load Resources');
 			desktop.isLoadResources = true;
 			
+			// get form data use for map
+			form.getData(function(r){
+				form.data = r;
+				
+				desktop.loadedResource();
+			});
+			
+			// lazy load javascript src
 			var head = document.getElementsByTagName('head')[0];
 
-			for(var src in resources) {
+			for(var i = 0; i < resources.length; i++) {
 				var script = document.createElement('script');
-				script.src = src;
-
-				if(resources[src]) {
-					script.onload = desktop.loadedResource;
-				}
+				script.src = resources[i];
+				script.onload = desktop.loadedResource;
 				
 				head.appendChild(script);
 			}
@@ -179,8 +184,12 @@ $(document).ready(function(){
 		fieldChange: function(e) {
 			console.log('field change');
 		},
-		getData: function(callback, includeList, includeGeoMetry) {
+		getData: function(callback) {
 			console.log('getData');
+			
+			$.get(form.el.attr('action'), form.el.serialize(), function(r){
+				callback(r);
+			});
 		}
 	};
 	

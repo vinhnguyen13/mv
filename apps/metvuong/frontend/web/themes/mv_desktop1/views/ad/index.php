@@ -31,11 +31,7 @@ $categoryCHCK = AdCategory::CATEGORY_CHCK;
 
 $script = <<<EOD
 	var CATEGORY_CHCK = $categoryCHCK;
-	var resources = {
-		'$resourceListingMap': false,
-		'$resourceGmapV2': true,
-		'$resourceApi': true
-	};
+	var resources = ['$resourceListingMap', '$resourceGmapV2', '$resourceApi'];
 EOD;
 
 $this->registerJs($script, View::POS_BEGIN);

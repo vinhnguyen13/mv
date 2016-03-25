@@ -1,5 +1,5 @@
 var listingMap = {
 	init: function() {
-		console.log('listingmap init');
+		console.log(form.data);
 	}
 }
