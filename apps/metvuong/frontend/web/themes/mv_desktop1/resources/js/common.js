@@ -1,4 +1,7 @@
 $(document).ready(function() {
+
+    $('[data-toggle="tooltip"]').tooltip();
+
     $('.wrap-lazy img').lazyload({
         threshold : 200
     });

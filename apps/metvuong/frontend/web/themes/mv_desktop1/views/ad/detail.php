@@ -101,11 +101,11 @@ Yii::$app->view->registerMetaTag([
 				<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
 			</ul>
 			<ul class="pull-right icons-detail">
-				<li><a href="#popup-share-social" class="icon icon-share-td"></a></li>
+				<li><a href="#popup-share-social" class="icon icon-share-td" data-toggle="tooltip" data-placement="bottom" title="Share social"></a></li>
 	            <?php if($product->user_id != Yii::$app->user->id){ ?>
-				<li><a href="#" class="icon save-item <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>"></a></li>
+				<li><a data-toggle="tooltip" data-placement="bottom" title="Favourite" href="#" class="icon save-item <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>"></a></li>
 	            <?php } ?>
-				<li><a href="#popup-map" class="icon icon-map-loca"></a></li>
+				<li><a href="#popup-map" class="icon icon-map-loca" data-toggle="tooltip" data-placement="bottom" title="Location"></a></li>
 			</ul>
 			<p class="price-td">
 				<span>Giá</span>

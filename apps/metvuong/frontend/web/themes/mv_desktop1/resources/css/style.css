@@ -4391,9 +4391,9 @@ html.mm-opening .mm-slideout {
     display: block;
     width: 100%;
     height: 100%;
-    border: solid 1px #00a769;
+    border: 1px solid #BFBFBF;
     overflow: hidden;
-    padding: 5px;
+    padding: 2px;
 }
 #avatar .preview a img {
     display: block;
