@@ -381,19 +381,17 @@ $this->registerJs($script, View::POS_BEGIN);
 						<button class="btn-submit btn-common <?= $hideSearchForm ? '' : 'active' ?>">Tìm kiếm</button>
 					</div>
 				</div>
-				<div class="dropdown-select option-show-listing">
+				<div id="sort" class="dropdown-select option-show-listing">
 					<div class="val-selected style-click clearfix">
-						Hiển thị theo <span class="selected">Tin mới nhất</span>
-						<span class="icon arrowDown pull-right"></span>
-					</div>
-					<div class="item-dropdown hide-dropdown">
-						<ul>
-							<li><a data-value="-created_at" href="#">Tin mới nhất</a></li>
-							<li><a data-value="-price" href="#">Giá giảm dần</a></li>
-							<li><a data-value="price" href="#">Giá tăng dần</a></li>
-							<li><a data-value="score" href="#">Điểm cao nhất</a></li>
-						</ul>
-						<?= Html::activeHiddenInput($searchModel, 'order_by', ['id' => 'sort', 'class' => 'value_selected']) ?>
+						Hiển thị theo
+						<?php
+							$items = [
+								'-created_at' => Yii::t('ad', 'Newest'),
+								'-price' =>Yii::t('ad', 'Price (High to Low)'),
+								'price' =>Yii::t('ad', 'Price (Low to Hight)'),
+							];
+						?>
+						<?= Html::activeDropDownList($searchModel, 'order_by', $items, ['class' => 'form-control']) ?>
 					</div>
 				</div>
 				<input type="hidden" name="s" value="1" />
