@@ -1,3 +1,227 @@
+var form, desktop, listing;
+
+$(document).ready(function(){
+	desktop = {
+		isLoadResources: false,
+		init: function() {
+			desktop.checkToEnable();
+			
+			$(window).on('resize', desktop.checkToEnable);
+		},
+		checkToEnable: function() {
+			if(desktop.isDesktop() && !desktop.isEnabled) {
+				desktop.enable();
+			} else if(!desktop.isDesktop() && desktop.isEnabled) {
+				desktop.disable();
+			}
+		},
+		isDesktop: function() {
+			return $('.m-header').css('display') == 'none';
+		},
+		enable: function() {
+			console.log('enable');
+			desktop.isEnabled = true;
+
+			if(!desktop.isLoadResources) {
+				desktop.loadResources();
+			}
+			
+			desktop.desktopEvent();
+		},
+		disable: function() {
+			console.log('disable');
+			desktop.isEnabled = false;
+
+			desktop.mobileEvent();
+		},
+		loadResources: function() {
+			desktop.loadingResource = count(resources);
+			
+			console.log('load Resources');
+			desktop.isLoadResources = true;
+			
+			var head = document.getElementsByTagName('head')[0];
+
+			for(var src in resources) {
+				var script = document.createElement('script');
+				script.src = src;
+
+				if(resources[src]) {
+					script.onload = desktop.loadedResource;
+				}
+				
+				head.appendChild(script);
+			}
+		},
+		loadedResource: function() {
+			desktop.loadingResource--;
+
+			if(!desktop.loadingResource) {
+				listingMap.init();
+			}
+		},
+		desktopEvent: function() {
+			listing.desktopEvent();
+			form.desktopEvent();
+		},
+		mobileEvent: function() {
+			listing.mobileEvent();
+			form.mobileEvent();
+		}
+	};
+	
+	listing = {
+		el: $('#listing-list'),
+		init: function() {
+			// Load default attach event for mobile here
+		},
+		desktopEvent: function() {
+			console.log('listing attach event');
+			listing.el.on('click', '.item-listing a', listing.detailEvent);
+			listing.el.on('scroll', listing.moreEvent);
+		},
+		mobileEvent: function() {
+			console.log('listing detach event');
+			listing.el.off('click', '.item-listing a', listing.detailEvent);
+			listing.el.off('scroll', listing.moreEvent);
+		},
+		detailEvent: function(e) {
+			e.preventDefault();
+			listing.detail(Number($(this).data('id')));
+		},
+		detail: function(id) {
+			console.log('detail: ' + id);
+		},
+		moreEvent: function(e) {
+			var self = $(this);
+			
+			clearTimeout($.data(this, 'scrollTimer'));
+			
+		    $.data(this, 'scrollTimer', setTimeout(function() {
+		    	if(self.scrollTop() >= (self.get(0).scrollHeight - 100 - self.outerHeight())) {
+		    		listing.more();
+		    	}
+		    }, 250));
+		},
+		more: function() {
+			console.log('load more');
+		}
+	};
+	
+	form = {
+		el: $('#search-form'),
+		init: function() {
+			codeMigrate();
+
+			// Load default attach event for mobile here
+			form.orderByEl = $('#order_by');
+			
+			form.el.on('submit', form.filterFields);
+			form.orderByEl.on('change', form.sortSubmit);
+		},
+		filterFields: function(e) {
+			form.el.find('select, input').filter(function(){
+				return !this.value;
+			}).prop('disabled', true);
+		},
+		sortSubmit: function() {
+			form.el.submit();
+		},
+		desktopEvent: function() {
+			form.el.off('submit', form.filterFields);
+			form.orderByEl.off('change', form.sortSubmit);
+			
+			form.el.find('input, select').each(function(){
+				$(this).on('change', form.fieldChange);
+			});
+		},
+		mobileEvent: function() {
+			form.el.on('submit', form.filterFields);
+			form.orderByEl.on('change', form.sortSubmit);
+			
+			form.el.find('input, select').each(function(){
+				$(this).off('change', form.fieldChange);
+			});
+		},
+		fieldChange: function(e) {
+			console.log('field change');
+		},
+		getData: function(callback, includeList, includeGeoMetry) {
+			console.log('getData');
+		}
+	};
+	
+	form.init();
+	desktop.init();
+	listing.init();
+});
+
+function codeMigrate() {
+	$('.advande-search').toggleShowMobi({
+        btnEvent: '.btn-submit',
+        itemToggle: '.toggle-search'
+    });
+	
+	$('.dropdown-common').dropdown({
+		txtAdd: true,
+		styleShow: 0,
+		funCallBack: function (item) {
+			if(item.closest('ul').hasClass('loai-bds')) {
+				if(item.data('value') == '6') {
+					$('#du-an-select').removeClass('hide');
+				} else {
+					$('#du-an-select').addClass('hide');
+				}
+			}
+		}
+	});
+	
+	$('#type').on('change', function () {
+		$('.select-price .val-selected div span').hide();
+			
+		$('.select-price .box-dropdown').price_dt({
+			rebuild: true
+		});
+
+		if ( $(this).val() == 1 ) {
+			$('.select-price .box-dropdown').price_dt({
+				hinhthuc: 'mua'
+			});
+		}else if ( $(this).val() == 2 ) {
+			$('.select-price .box-dropdown').price_dt({
+				hinhthuc: 'thue'
+			});
+		}else {
+			$('.select-price .box-dropdown').price_dt();
+		}
+	});
+
+	var typeGet = $('.select-others #type').val();
+	if ( typeGet == 1 ) {
+		$('.select-price .box-dropdown').price_dt({
+			hinhthuc: 'mua'
+		});
+	}else if ( typeGet == 2 ) {
+		$('.select-price .box-dropdown').price_dt({
+			hinhthuc: 'thue'
+		});
+	}else {
+		$('.select-price .box-dropdown').price_dt();
+	}
+	
+	$('.select-dt .box-dropdown').price_dt();
+}
+
+function count(obj) {
+	var j = 0;
+	for(var i in obj) {
+		j++;
+	}
+	return j;
+}
+
+/*
+
 var mapEl;
 var searchForm;
 var submitButton;
@@ -614,27 +838,17 @@ $(document).ready(function(){
 		}
 	};
 
-	$(window).resize(function(){
-		if($('.m-header').css('display') == 'none') {
-			if(!desktop.isEnabled) {
-				desktop.enable();
-			}
-		} else {
-			if(desktop.isEnabled) {
-				desktop.disable();
-			}
-		}
-	}).trigger('resize');
+
 	
 	//$('.tinh-thanh').html('');
 	$('.loai-bds').html('');
-	/*for ( var i in dataCities) {
-		var item = $('<li><a href="#" data-value="'+i+'" data-order="1" class="disable">'+dataCities[i].name+'</a></li>');
-		if ( i == "1" ) {
-			item.find('a').removeClass('disable');
-		}
-		$('.tinh-thanh').append(item);
-	}*/
+//	for ( var i in dataCities) {
+//		var item = $('<li><a href="#" data-value="'+i+'" data-order="1" class="disable">'+dataCities[i].name+'</a></li>');
+//		if ( i == "1" ) {
+//			item.find('a').removeClass('disable');
+//		}
+//		$('.tinh-thanh').append(item);
+//	}
 	for ( var i in dataCategories) {
 		var item = $('<li><a href="#" data-value="'+i+'" data-order="3">'+dataCategories[i].name+'</a></li>');
 		$('.loai-bds').append(item);
@@ -677,25 +891,25 @@ $(document).ready(function(){
 			}
 			
 			
-			/*var selectedCityList = $('<li data-value="'+item.data('value')+'" data-order="'+item.data('order')+'">'+item.text()+'<span class="icon arrow-left arrow-small"></span></li>');
-
-			if ( item.closest('.tinh-thanh').length > 0 || item.is('input[type=hidden]') ) {
-				var idTT = item.data('value') == undefined ? item.val() : item.data('value');
-
-				$('.quan-huyen').html('');
-				var txtDefault = $('.quan-huyen').closest('.box-dropdown').find('.val-selected').data('placeholder');
-				$('.quan-huyen').closest('.box-dropdown').find('.val-selected').text(txtDefault);
-
-				for ( var i in dataCities) {
-					if ( i == idTT ) {
-						for ( var j in dataCities[i].districts ) {
-							var item = $('<li><a href="#" data-value="'+j+'" data-order="2">'+dataCities[i].districts[j].name+'</a></li>');
-							$('.quan-huyen').append(item);
-						}
-						break;
-					}
-				}
-			}*/
+//			var selectedCityList = $('<li data-value="'+item.data('value')+'" data-order="'+item.data('order')+'">'+item.text()+'<span class="icon arrow-left arrow-small"></span></li>');
+//
+//			if ( item.closest('.tinh-thanh').length > 0 || item.is('input[type=hidden]') ) {
+//				var idTT = item.data('value') == undefined ? item.val() : item.data('value');
+//
+//				$('.quan-huyen').html('');
+//				var txtDefault = $('.quan-huyen').closest('.box-dropdown').find('.val-selected').data('placeholder');
+//				$('.quan-huyen').closest('.box-dropdown').find('.val-selected').text(txtDefault);
+//
+//				for ( var i in dataCities) {
+//					if ( i == idTT ) {
+//						for ( var j in dataCities[i].districts ) {
+//							var item = $('<li><a href="#" data-value="'+j+'" data-order="2">'+dataCities[i].districts[j].name+'</a></li>');
+//							$('.quan-huyen').append(item);
+//						}
+//						break;
+//					}
+//				}
+//			}
 		}
 	});
 	
@@ -880,3 +1094,4 @@ $(document).ready(function(){
 //		});
 	});
 });
+*/
