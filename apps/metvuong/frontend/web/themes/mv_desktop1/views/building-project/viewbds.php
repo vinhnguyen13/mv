@@ -92,7 +92,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                     if(empty($investor->logo))
                         $image = \vsoft\ad\models\AdImages::defaultImage();?>
                 <div class="item chudautu-infor">
-                    <div class="title-section">Chủ đầu tư</div>
+                    <div class="title-section"><?=Yii::t('project', 'Investor')?></div>
                     <div class="clearfix">
                     	<div class="wrap-img pull-left">
                     		<img src="<?=filter_var($image, FILTER_VALIDATE_URL) ? $investor->logo : Yii::getAlias('@store') . "/building-project-images/" . $this->logo; ?>" alt="<?=$investor->name?>">
