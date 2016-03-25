@@ -250,7 +250,10 @@ class AdBuildingProject extends ABP
     public function getLogoUrl(){
         $image = '/themes/metvuong2/resources/images/default-ads.jpg';
         if($this->logo) {
-            $image = $this->logo;
+            $image =  $this->logo;
+            if(filter_var($image, FILTER_VALIDATE_URL) === FALSE){
+                $image = Yii::getAlias('@store') . "/building-project-images/" . $this->logo;
+            }
         }
         else {
             if ($this->gallery) {

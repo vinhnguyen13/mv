@@ -76,8 +76,8 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                     <div class="swiper-pagination"></div>
                 </div>
                 <div class="item infor-address-duan">
-                	<p><?= !empty($model->categories[0]->name) ? \vsoft\ad\models\AdBuildingProject::mb_ucfirst($model->categories[0]->name,"UTF-8") : "Chung cư cao cấp" ?></p>
-                    <strong><?= strtoupper($model->name)?></strong>
+                	<p><?= $model->investment_type  ?></p>
+                    <strong><?= $model->name ?></strong>
                     <?= empty($model->location) ? $lbl_updating : $model->location ?>
                     <ul class="pull-right icons-detail">
                         <li><a href="#popup-share-social" class="icon icon-share-td"></a></li>
@@ -87,32 +87,35 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                 </div>
                 <?php
                 if(count($model->investors) > 0){
-                    $investor = $model->investors[0];?>
+                    $investor = $model->investors[0];
+                    $image = $investor->logo;
+                    if(empty($investor->logo))
+                        $image = \vsoft\ad\models\AdImages::defaultImage();?>
                 <div class="item chudautu-infor">
                     <div class="title-section">Chủ đầu tư</div>
                     <div class="clearfix">
                     	<div class="wrap-img pull-left">
-                    		<img src="<?=empty($investor->logo) ? \vsoft\ad\models\AdImages::defaultImage() : $investor->logo ?>" alt="<?=$investor->name?>">
+                    		<img src="<?=filter_var($image, FILTER_VALIDATE_URL) ? $investor->logo : Yii::getAlias('@store') . "/building-project-images/" . $this->logo; ?>" alt="<?=$investor->name?>">
                     	</div>
                     	<div class="infor-detail-chudautu">
                     		<ul>
 				                <li>
 				                    <strong id=""><?=Yii::t('project','Address')?></strong>:
-				                    <?=empty($investor->address) ? Yii::t('profile','updating') : $investor->address ?></li>
+				                    <?=empty($investor->address) ? $lbl_updating : $investor->address ?></li>
 				                <li>
 				                    <strong id=""><?=Yii::t('project','Phone')?></strong>:
-                                    <?=empty($investor->phone) ? Yii::t('profile','updating') : $investor->phone ?>
+                                    <?=empty($investor->phone) ? $lbl_updating : $investor->phone ?>
 				                    |
 				                    <strong id=""><?=Yii::t('project','Fax')?></strong>:
-				                    <span><?=empty($investor->fax) ? Yii::t('profile','updating') : $investor->fax ?></span>
+				                    <span><?=empty($investor->fax) ? $lbl_updating : $investor->fax ?></span>
 				                </li>
 				                <li>
 				                    <strong id=""><?=Yii::t('project','Website')?></strong>:
-				                    <span><?=empty($investor->website) ? Yii::t('profile','updating') : "<a href=\"".$investor->website."\">".$investor->website."</a>" ?></span>
+				                    <span><?=empty($investor->website) ? $lbl_updating : "<a href=\"".$investor->website."\">".$investor->website."</a>" ?></span>
 				                </li>
 				                <li>
 				                    <strong id=""><?=Yii::t('project','Email')?></strong>:
-				                    <span><?=empty($investor->email) ? Yii::t('profile','updating') : $investor->email ?></span>
+				                    <span><?=empty($investor->email) ? $lbl_updating : $investor->email ?></span>
 				                </li>
 				            </ul>
                     	</div>

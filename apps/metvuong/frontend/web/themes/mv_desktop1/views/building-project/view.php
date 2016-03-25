@@ -33,7 +33,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 <div class="title-fixed-wrap">
     <div class="container">
         <div class="detail-duan-moi">
-            <div class="title-top"><?= strtoupper($model->name)?></div>
+            <div class="title-top"><?= $model->name?></div>
             <div class="wrap-duan-moi">
                 <div class="gallery-detail swiper-container">
                     <div class="swiper-wrapper">
@@ -46,8 +46,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                                     <div class="swiper-slide">
                                         <div class="img-show">
                                             <div>
-                                                <img
-                                                    src="<?= \yii\helpers\Url::to('/store/building-project-images/' . $image) ?>"
+                                                <img src="<?= \yii\helpers\Url::to('/store/building-project-images/' . $image) ?>"
                                                     alt="<?= $model->location ?>">
                                             </div>
                                         </div>
@@ -68,8 +67,8 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                     <div class="swiper-pagination"></div>
                 </div>
                 <div class="item infor-address-duan">
-                    <p><?= !empty($model->categories[0]->name) ? \vsoft\ad\models\AdBuildingProject::mb_ucfirst($model->categories[0]->name,'UTF-8') : "Chung cư cao cấp" ?></p>
-                    <strong><?= strtoupper($model->name)?></strong>
+                    <p><?= $model->investment_type ?></p>
+                    <strong><?= $model->name?></strong>
                     <span class="icon address-icon"></span><?= empty($model->location) ? $lbl_updating : $model->location ?>
                     <ul class="pull-right icons-detail">
                         <li><a href="#popup-share-social" class="icon icon-share-td"></a></li>
@@ -89,9 +88,9 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                 <div class="item infor-attr">
                     <p class="title-attr-duan"><?=Yii::t('project', 'Project information')?></p>
                     <ul class="clearfix">
-                        <li><strong><?=Yii::t('project', 'Facade width')?>:</strong><?=!empty($model->facade_width) ? $model->facade_width : Yii::t('profile','updating')?></li>
-                        <li><strong><?=Yii::t('project', 'Floor')?>:</strong><?=!empty($model->floor_no) ? $model->floor_no : Yii::t('profile','updating')?></li>
-                        <li><strong><?=Yii::t('project', 'Lift')?>:</strong><?=!empty($model->lift) ? $model->lift : Yii::t('profile','updating')?></li>
+                        <li><strong><?=Yii::t('project', 'Facade width')?>:</strong><?=!empty($model->facade_width) ? $model->facade_width : $lbl_updating?></li>
+                        <li><strong><?=Yii::t('project', 'Floor')?>:</strong><?=!empty($model->floor_no) ? $model->floor_no : $lbl_updating?></li>
+                        <li><strong><?=Yii::t('project', 'Lift')?>:</strong><?=!empty($model->lift) ? $model->lift : $lbl_updating?></li>
                     </ul>
                 </div>
                 <div class="item tien-ich-duan">

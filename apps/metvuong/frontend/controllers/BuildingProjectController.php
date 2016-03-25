@@ -2,7 +2,7 @@
 namespace frontend\controllers;
 
 use frontend\components\Controller;
-use vsoft\buildingProject\models\BuildingProject;
+//use vsoft\buildingProject\models\BuildingProject;
 use Yii;
 use yii\data\Pagination;
 use vsoft\ad\models\AdBuildingProject;
@@ -24,32 +24,15 @@ class BuildingProjectController extends Controller
     }
 
 	function actionIndex() {
-        $models = AdBuildingProject::find()->where('`status` = ' . AdBuildingProject::STATUS_ENABLED)->orderBy('id DESC');
+        $models = AdBuildingProject::find()->where('`status` = ' . AdBuildingProject::STATUS_ENABLED)
+            ->andWhere('`city_id` is not null')
+            ->orderBy(['city_id'=> SORT_ASC, 'id' => SORT_ASC]);
         $count = $models->count();
         $pagination = new Pagination(['totalCount' => $count]);
         $pagination->defaultPageSize = 12;
-        $models = $models->offset($pagination->offset)
-            ->limit($pagination->limit)
-            ->all();
+        $models = $models->offset($pagination->offset)->limit($pagination->limit)->all();
         return $this->render('index', ['models' => $models, 'pagination' => $pagination]);
 
-//		$model = AdBuildingProject::find()->where('`status` = ' . AdBuildingProject::STATUS_ENABLED)->one();
-//		if($model) {
-//			return $this->render('index', ['model' => $model]);
-//		} else {
-//			throw new NotFoundHttpException('The requested page does not exist.');
-//		}
-//		$countQuery = clone $query;
-//		$query = $query->orderBy('created_at DESC');
-//
-//		$pages = new Pagination(['totalCount' => $countQuery->count()]);
-//
-//		$models = $query->offset($pages->offset)->limit($pages->limit)->all();
-//
-//		return $this->render('index', [
-//			'models' => $models,
-//			'pages' => $pages,
-//		]);
 	}
 	
 	function actionView($slug) {
@@ -76,9 +59,11 @@ class BuildingProjectController extends Controller
 
     function actionFind() {
         $name = \Yii::$app->request->get("project_name");
-        $models = AdBuildingProject::find()->where('`status` = ' . AdBuildingProject::STATUS_ENABLED)->orderBy('id DESC');
+        $models = AdBuildingProject::find()->where('`status` = ' . AdBuildingProject::STATUS_ENABLED)
+            ->andWhere('`city_id` is not null')
+            ->orderBy(['city_id'=> SORT_ASC, 'id' => SORT_ASC]);
         if(!empty($name)) {
-            $models = $models->where('name LIKE :query')->addParams([':query' => '%' . $name . '%']);
+            $models = $models->andWhere('name LIKE :query')->addParams([':query' => '%' . $name . '%']);
         }
         $count = $models->count();
         $pagination = new Pagination(['totalCount' => $count]);

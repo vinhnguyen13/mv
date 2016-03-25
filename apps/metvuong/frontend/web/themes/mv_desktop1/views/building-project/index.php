@@ -35,14 +35,15 @@ use yii\widgets\LinkPager;
 
                                         <div class="info-item">
                                             <div class="address-feat">
-                                                <p><?= !empty($model->categories[0]->name) ? \vsoft\ad\models\AdBuildingProject::mb_ucfirst($model->categories[0]->name,'UTF-8') : "Chung cư cao cấp" ?></p>
-                                                <a href="<?= Url::to(["building/$model->slug"]); ?>" title="<?= mb_strtoupper($model->name, "UTF-8") ?>">
-                                                    <strong><?= mb_strtoupper($model->name, "UTF-8") ?></strong>
+                                                <p><?= $model->investment_type ?></p>
+                                                <a href="<?= Url::to(["building/$model->slug"]); ?>" title="<?= $model->name ?>">
+                                                    <strong><?= $model->name ?></strong>
                                                 </a>
                                                 <p class="address-duan"><?= empty($model->location) ? Yii::t('general', 'Updating') : $model->location ?></p>
                                                 <p class="date-post"><?=date('d/m/Y, H:i', $model->created_at)?></p>
                                             </div>
                                             <div class="bottom-feat-box clearfix">
+                                                <input type="hidden" value="<?=$model->id?>">
                                                 <p><?=\yii\helpers\StringHelper::truncate($model->description, 180)?></p>
                                             </div>
                                         </div>
