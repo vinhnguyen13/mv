@@ -28,8 +28,6 @@ class AdProduct extends AP
 	const TYPE_FOR_SELL_TOTAL = 'total_sell';
 	const TYPE_FOR_RENT_TOTAL = 'total_rent';
 	
-	const CATEGORY_CHCK = 6;
-	
 	private $oldAttr = [];
 	private static $elasticUpdateFields = ['city', 'district', 'ward', 'street', 'project_building'];
 	

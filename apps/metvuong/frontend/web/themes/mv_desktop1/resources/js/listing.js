@@ -200,10 +200,10 @@ function codeMigrate() {
 		styleShow: 0,
 		funCallBack: function (item) {
 			if(item.closest('ul').hasClass('loai-bds')) {
-				if(item.data('value') == '6') {
-					$('#du-an-select').removeClass('hide');
+				if(item.data('value') == CATEGORY_CHCK) {
+					form.projectEl.show();
 				} else {
-					$('#du-an-select').addClass('hide');
+					form.projectEl.hide();
 				}
 			}
 		}

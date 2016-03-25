@@ -27,7 +27,10 @@ $resourceListingMap = Html::encode(Yii::$app->view->theme->baseUrl . '/resources
 $resourceGmapV2 = Html::encode(Yii::$app->view->theme->baseUrl . '/resources/js/gmap-v2.js');
 $resourceApi = Html::encode('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4');
 
+$categoryCHCK = AdCategory::CATEGORY_CHCK;
+
 $script = <<<EOD
+	var CATEGORY_CHCK = $categoryCHCK;
 	var resources = {
 		'$resourceListingMap': false,
 		'$resourceGmapV2': true,
@@ -213,7 +216,7 @@ $this->registerJs($script, View::POS_BEGIN);
 								
 								$options = ['prompt' => $searchModel->getAttributeLabel('project_building_id'), 'class' => 'form-control'];
 								
-								if($searchModel->category_id != AdProduct::CATEGORY_CHCK) {
+								if($searchModel->category_id != AdCategory::CATEGORY_CHCK) {
 									$options['style'] = 'display: none';
 								}
 								

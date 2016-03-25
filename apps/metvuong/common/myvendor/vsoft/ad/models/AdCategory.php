@@ -24,6 +24,8 @@ class AdCategory extends AC
 	const APPLY_TO_TYPE_SELL = 1;
 	const APPLY_TO_TYPE_RENT = 2;
 	const APPLY_TO_TYPE_BOTH = 3;
+
+	const CATEGORY_CHCK = 6;
 	
 	public static function templateMap() {
 		return [
