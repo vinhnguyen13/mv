@@ -2,16 +2,16 @@ $(document).ready(function() {
 
     $('[data-toggle="tooltip"]').tooltip();
 
-    $('.wrap-lazy img').lazyload({
+    /*$('.wrap-lazy img').lazyload({
         threshold : 200
-    });
+    });*/
     $(window).on('resize', function () {
-        if ( !checkMobile() ) {
+        /*if ( !checkMobile() ) {
             $('#content-holder .wrap-lazy img').lazyload({
                 threshold : 200,
                 container: $('#listing-list')
             });
-        }
+        }*/
     }).trigger('resize');
 
     $(".rippler").rippler({

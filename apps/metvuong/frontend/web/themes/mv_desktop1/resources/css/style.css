@@ -5708,10 +5708,11 @@ footer li a {
         font-size: 14px;
     }
     .option-show-listing.dropdown-select .val-selected {
-        padding: 0;
+        padding: 10px 15px;
         background: none;
-        border-bottom: solid 1px #dcdcdc;
+        border-bottom: solid 1px #BDBDBD;
         text-align: center;
+        height: auto;
     }
     .option-show-listing.dropdown-select .val-selected:hover {
         border: none;
