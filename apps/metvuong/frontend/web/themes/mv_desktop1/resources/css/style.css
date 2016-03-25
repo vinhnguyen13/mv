@@ -1934,6 +1934,9 @@ label {
 .price-search div span {
     display: none;
 }
+.choice_price_dt div span.den {
+    padding: 0 5px;
+}
 .wrap-min,
 .wrap-max {
     /* font-weight: bold; */
@@ -5697,14 +5700,14 @@ footer li a {
         overflow-y: auto;
     }
     #content-holder {
-        padding: 85px 0 0 0;
+        padding: 100px 0 0 0;
     }
     #search-form {
         top: 0;
         z-index: 11;
     }
     .top-listing {
-        top: 50px;
+        top: 65px;
         padding: 0 15px;
         font-size: 14px;
     }
