@@ -111,7 +111,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 				                </li>
 				                <li>
 				                    <strong id=""><?=Yii::t('project','Website')?></strong>:
-				                    <span><?=empty($investor->website) ? $lbl_updating : "<a href=\"".$investor->website."\">".$investor->website."</a>" ?></span>
+				                    <span><?=empty($investor->website) ? $lbl_updating : "<a href=\"//".$investor->website."\">".$investor->website."</a>" ?></span>
 				                </li>
 				                <li>
 				                    <strong id=""><?=Yii::t('project','Email')?></strong>:
