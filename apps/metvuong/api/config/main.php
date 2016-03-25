@@ -72,13 +72,12 @@ return [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['v1/country', 'v1/member'],
+                    'controller' => ['v1/migration', 'v1/member'],
                     'tokens' => [
                         '{id}' => '<id:\\w+>'
                     ]
                     
                 ],
-                'POST v1/user/<action:\w+>' => 'v1/user/<action>',
                 'POST v1/test/<action:\w+>' => 'v1/test/<action>',
             ],
         ]

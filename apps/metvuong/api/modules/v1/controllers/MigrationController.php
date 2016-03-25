@@ -10,9 +10,9 @@ use yii\rest\ActiveController;
  * GET http://{domain}/v1/countries
  * @author Budi Irawan <deerawan@gmail.com>
  */
-class CountryController extends ActiveController
+class MigrationController extends ActiveController
 {
-    public $modelClass = 'api\modules\v1\models\Country';
+    public $modelClass = 'api\modules\v1\models\Migration';
 }
 
 

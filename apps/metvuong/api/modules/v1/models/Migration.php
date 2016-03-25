@@ -6,14 +6,14 @@ use \yii\db\ActiveRecord;
  *
  * @author Budi Irawan <deerawan@gmail.com>
  */
-class Country extends ActiveRecord
+class Migration extends ActiveRecord
 {
 	/**
 	 * @inheritdoc
 	 */
 	public static function tableName()
 	{
-		return 'country';
+		return 'migration';
 	}
 
     /**
@@ -21,7 +21,7 @@ class Country extends ActiveRecord
      */
     public static function primaryKey()
     {
-        return ['code'];
+        return ['version'];
     }
 
     /**
@@ -30,7 +30,7 @@ class Country extends ActiveRecord
     public function rules()
     {
         return [
-            [['code', 'name', 'population'], 'required']
+            [['version'], 'required']
         ];
     }
 }
