@@ -21,37 +21,51 @@ $types = AdProduct::getAdTypes ();
 
 $hideSearchForm = Yii::$app->request->get('s') || (Yii::$app->request->get('page', 1) != 1);
 
-$srcGmapV2 = Yii::$app->view->theme->baseUrl . '/resources/js/gmap-v2.js';
 
-$params = Yii::$app->request->get();
-if(!empty($params['street_id']) || !empty($params['project_building_id'])) {
-	$initialZoom = 'zoomLevel.district.max';
-	$areaId = $searchModel->district_id;
-} else if(!empty($params['ward_id'])) {
-	$initialZoom = 'zoomLevel.ward.max';
-	$areaId = $searchModel->ward_id;
-} else if(!empty($params['district_id'])) {
-	$initialZoom = 'zoomLevel.district.max';
-	$areaId = $params['district_id'];
-} else {
-	$initialZoom = 'zoomLevel.city.max';
-	$areaId = $searchModel->city_id;
-}
+$resourceListingMap = Html::encode(Yii::$app->view->theme->baseUrl . '/resources/js/listing-map.js');
+$resourceGmapV2 = Html::encode(Yii::$app->view->theme->baseUrl . '/resources/js/gmap-v2.js');
+$resourceApi = Html::encode('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4');
 
 $script = <<<EOD
-	var zoomLevel = {
-		detail: {min: 17, max: 21},
-		ward: {min: 15, max: 16},
-		district: {min: 12, max: 14},
-		city: {min: 0, max: 11}
+	var resources = {
+		'$resourceListingMap': false,
+		'$resourceGmapV2': true,
+		'$resourceApi': true
 	};
-	var srcApi = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=map.apiLoaded';
-	var srcGmapV2 = '$srcGmapV2';
-	var areaId = $areaId;
-	var initialZoom = $initialZoom;
 EOD;
 
 $this->registerJs($script, View::POS_BEGIN);
+// $srcGmapV2 = Yii::$app->view->theme->baseUrl . '/resources/js/gmap-v2.js';
+
+// $params = Yii::$app->request->get();
+// if(!empty($params['street_id']) || !empty($params['project_building_id'])) {
+// 	$initialZoom = 'zoomLevel.district.max';
+// 	$areaId = $searchModel->district_id;
+// } else if(!empty($params['ward_id'])) {
+// 	$initialZoom = 'zoomLevel.ward.max';
+// 	$areaId = $searchModel->ward_id;
+// } else if(!empty($params['district_id'])) {
+// 	$initialZoom = 'zoomLevel.district.max';
+// 	$areaId = $params['district_id'];
+// } else {
+// 	$initialZoom = 'zoomLevel.city.max';
+// 	$areaId = $searchModel->city_id;
+// }
+
+// $script = <<<EOD
+// 	var zoomLevel = {
+// 		detail: {min: 17, max: 21},
+// 		ward: {min: 15, max: 16},
+// 		district: {min: 12, max: 14},
+// 		city: {min: 0, max: 11}
+// 	};
+// 	var srcApi = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=map.apiLoaded';
+// 	var srcGmapV2 = '$srcGmapV2';
+// 	var areaId = $areaId;
+// 	var initialZoom = $initialZoom;
+// EOD;
+
+// $this->registerJs($script, View::POS_BEGIN);
 ?>
 
 <div class="result-listing clearfix">
