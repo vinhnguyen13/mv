@@ -531,7 +531,7 @@ $.fn.price_dt = function (options) {
                 $('#priceMin').trigger('change');
             }else if ( el.data('itemMinmax') == 'area' ) {
                 minmax == 'min-val' ? $('#dtMin').val(valMin) : $('#dtMax').val(valMax);
-                $('#pdtMin').trigger('change');
+                $('#dtMin').trigger('change');
             }
 
             renderTxtShow(minmax, txt);
