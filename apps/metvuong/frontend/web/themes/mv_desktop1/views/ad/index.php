@@ -13,6 +13,7 @@ use vsoft\ad\models\AdStreet;
 use yii\widgets\LinkPager;
 use common\models\AdCity;
 use vsoft\ad\models\AdDistrict;
+use vsoft\ad\models\AdBuildingProject;
 
 $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/listing.js', ['position' => View::POS_END]);
 
@@ -203,18 +204,15 @@ $this->registerJs($script, View::POS_BEGIN);
 									</div>
 								</div>
 							</div>
-							<div id="du-an-select" class="select-duan frm-item <?= Yii::$app->request->get('project_building') ? '' : 'hide' ?>">
-								<div class="box-dropdown dropdown-common">
-									<div class="val-selected style-click">
-										<span class="selected" data-placeholder="<?= Yii::t('ad', 'Project') ?>"><?= Yii::t('ad', 'Project') ?></span>
-										<span class="arrowDownFillFull"></span>
-									</div>
-									<div class="item-dropdown hide-dropdown">
-										<ul class="clearfix du-an"></ul>
-										<?= Html::activeHiddenInput($searchModel, 'project_building_id', ['id' => 'du-an']); ?>
-									</div>
-								</div>
-							</div>
+							
+							<?php
+								$items = [];
+								if($searchModel->district_id) {
+									$items = ($projects = AdBuildingProject::find()->where(['status' => 1, 'district_id' => $searchModel->district_id])->all()) ? ArrayHelper::map($projects, 'id', 'name') : [];
+								}
+								echo Html::activeDropDownList($searchModel, 'project_building_id', $items, ['prompt' => $searchModel->getAttributeLabel('project_building_id'), 'class' => 'form-control'])
+							?>
+								
 							<div class="frm-item choice_price_dt select-price">
 								<div class="box-dropdown" data-item-minmax="prices">
 									<div class="val-selected style-click price-search">
