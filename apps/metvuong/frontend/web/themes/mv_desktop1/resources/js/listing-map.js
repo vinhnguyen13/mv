@@ -10,6 +10,7 @@ var listingMap = {
 	},
 	zoomLevel: [[0,11],[12,14],[15,16],[17,21]],
 	dataMaps: ['cities','districts','wards','streets'],
+	idMaps: ['city_id','district_id','ward_id','street_id'],
 	init: function() {
 		listingMap.initMap();
 	},
@@ -27,8 +28,7 @@ var listingMap = {
 		
 		listingMap.map = new google.maps.Map(document.getElementById('map'), options);
 		
-		listingMap.drawPolygon(area);
-		listingMap.drawAreaMarker(area);
+		listingMap.drawArea([area]);
 	},
 	getFocusArea: function(id, collection) {
 		return form.data[collection][id];
@@ -46,8 +46,30 @@ var listingMap = {
 		
 		return {level: level, id: id};
 	},
-	drawAreaMarker: function(area) {
+	drawArea: function(areas) {
+		var levelValue = listingMap.getFocusLevelValue();
+		var areaString = listingMap.idMaps[levelValue.level];
+		var groups = listingMap.groupProductByArea(areaString);
+
+		for(var i = 0; i < areas.length; i++) {
+			var area = areas[i];
+			
+			listingMap.drawPolygon(area);
+			listingMap.drawAreaMarker(area, groups[area.id]);
+		}
+	},
+	drawAreaMarker: function(area, group) {
+		console.log(area);
+		console.log(group);
+		var center = JSON.parse(area.center);
+		center = {lat: center[0], lng: center[1]};
 		
+		var marker = new google.maps.Marker({
+			position: center,
+			map: listingMap.map,
+		    icon: listingMap.icon(group.length, 0),
+		    ids: group
+		});
 	},
 	drawPolygon: function(area) {
 		if(area.geometry) {
@@ -81,7 +103,29 @@ var listingMap = {
 			google.maps.event.addListener(polygon, "mouseover", listingMap.polygonMouseover); 
 		}
 	},
+	groupProductByArea: function(idString) {
+		var groups = {};
+		
+		
+		for(var i in form.data.products) {
+			var product = form.data.products[i];
+			var areaId = product[idString];
+			
+			if(groups[areaId]) {
+				groups[areaId].push(i);
+			} else {
+				groups[areaId] = [i];
+			}
+		}
+		
+		return groups;
+	},
 	polygonMouseover: function() {
 		console.log(this.id);
+	},
+	icon: function(counter, status) {
+		var base = (counter > 1) ? '/site/map-image?s={status}&t=' + counter : '/images/marker-{status}.png';
+		
+		return base.replace('{status}', status);
 	}
 }
