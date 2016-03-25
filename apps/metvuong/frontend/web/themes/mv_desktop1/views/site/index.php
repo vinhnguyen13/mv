@@ -51,7 +51,7 @@ use vsoft\ad\models\AdProduct;
                         <div class="item">
                             <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pic-intro rippler rippler-default">
                                 <div class="img-show">
-                                    <div><img src="" data-original="<?= $product->representImage ?>"></div>
+                                    <div><img src="<?= $product->representImage ?>" data-original=""></div>
                                 </div>
                                 <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></div>
                             </a>
