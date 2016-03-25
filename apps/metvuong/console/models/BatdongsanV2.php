@@ -15,6 +15,7 @@ use vsoft\ad\models\AdCity;
 use vsoft\ad\models\AdContactInfo;
 use vsoft\ad\models\AdDistrict;
 use vsoft\ad\models\AdImages;
+use vsoft\ad\models\AdInvestorBuildingProject;
 use vsoft\ad\models\AdProduct;
 use vsoft\ad\models\AdProductAdditionInfo;
 use vsoft\ad\models\AdStreet;
@@ -2114,16 +2115,9 @@ class BatdongsanV2 extends Component
 //            $current_type = 0;
         $count_file = 1;
 
-        $columnNameArray = ['city_id', 'district_id', 'name', 'logo',
-            'location', 'description', 'investment_type', 'hotline', 'website',
-            'lng', 'lat', 'slug', 'status', 'created_at', 'file_name', 'is_crawl', 'data_html'];
-        $bulkInsertArray = array();
-
-        $listContractorProject = [];
-
-        $cityData = \vsoft\craw\models\AdCity::find()->all();
-        $districtData = \vsoft\craw\models\AdDistrict::find()->all();
-        $contractorData = \vsoft\craw\models\AdInvestor::find()->all();
+//        $cityData = \vsoft\craw\models\AdCity::find()->all();
+//        $districtData = \vsoft\craw\models\AdDistrict::find()->all();
+//        $contractorData = \vsoft\craw\models\AdInvestor::find()->all();
 
         foreach($types as $key_type => $type){
             if($key_type >= $current_type && !$break_type){
@@ -2153,12 +2147,24 @@ class BatdongsanV2 extends Component
                                 }
 
                                 $recordUpdate = [
+                                    'logo' => $value[$filename]["logo"],
                                     'file_name' => $type . "/" . $filename,
                                     'is_crawl' => 1,
                                     'data_html' => $value[$filename]["data_html"],
                                 ];
                                 $project = \vsoft\ad\models\AdBuildingProject::getProjectBySlug($value[$filename]["slug"]);
                                 if(!empty($project)) {
+                                    $buildingInvestor = AdInvestorBuildingProject::findOne(['building_project_id' => $project->id]);
+                                    $investor = $value[$filename]["contractor"];
+                                    if(count($investor) > 0){
+                                        $recordInvUpdate = [
+                                            'logo' => $investor["logo"]
+                                        ];
+                                        \vsoft\ad\models\AdInvestor::getDb()->createCommand()
+                                            ->update(\vsoft\ad\models\AdInvestor::tableName(), $recordInvUpdate, 'id=:id', [':id' => $buildingInvestor->investor_id])
+                                            ->execute();
+                                    }
+
                                     \vsoft\ad\models\AdBuildingProject::getDb()->createCommand()
                                         ->update(\vsoft\ad\models\AdBuildingProject::tableName(), $recordUpdate, 'id=:id', [':id' => $project->id])
                                         ->execute();
@@ -2167,12 +2173,13 @@ class BatdongsanV2 extends Component
                                     array_push($log_import["files"], $filename);
                                     $log_import["update_total"] = count($log_import["files"]);
                                     $log_import["update_time"] = date("d-m-Y H:i");
+                                    $this->writeLog($log_import, $path."update/", $type.".json");
                                 }
                             }
                             $count_file++;
                         } // end file loop
-                        $this->writeLog($log_import, $path."update/", $type.".json");
-                        if ($break_type == false && count($bulkInsertArray) > 0) {
+
+                        if ($break_type == false) {
                             if (!in_array($type, $project_log_import["type"])) {
                                 array_push($project_log_import["type"], $type);
                             }
@@ -2233,6 +2240,8 @@ class BatdongsanV2 extends Component
             $city = $detail->find('#divCityOptions .current', 0)->innertext;
             $district = $detail->find('#divDistrictOptions .current', 0)->innertext;
             $logo = $detail->find('.prjava img', 0)->src;
+            if(strpos($logo,"200x150"))
+                $logo = str_replace("200x150", "365x230", $logo);
             $inv_type = $detail->find('#divCatagoryOptions .current', 0)->innertext;
 
             $hotline = $detail->find('.prjinfo li', 2)->innertext;

@@ -76,7 +76,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                     <div class="swiper-pagination"></div>
                 </div>
                 <div class="item infor-address-duan">
-                	<p><?= !empty($model->categories[0]->name) ? \vsoft\ad\models\AdBuildingProject::mb_ucfirst($model->categories[0]->name,'UTF-8') : "Chung cư cao cấp" ?></p>
+                	<p><?= !empty($model->categories[0]->name) ? \vsoft\ad\models\AdBuildingProject::mb_ucfirst($model->categories[0]->name,"UTF-8") : "Chung cư cao cấp" ?></p>
                     <strong><?= strtoupper($model->name)?></strong>
                     <?= empty($model->location) ? $lbl_updating : $model->location ?>
                     <ul class="pull-right icons-detail">
@@ -85,43 +85,40 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                         <li><a href="#popup-map" class="icon icon-map-loca"></a></li>
                     </ul>
                 </div>
+                <?php
+                if(count($model->investors) > 0){
+                    $investor = $model->investors[0];?>
                 <div class="item chudautu-infor">
                     <div class="title-section">Chủ đầu tư</div>
                     <div class="clearfix">
                     	<div class="wrap-img pull-left">
-                    		<img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/novaland-cho-cuoc-song-bung-sang1.png' ?>" alt="">
+                    		<img src="<?=empty($investor->logo) ? \vsoft\ad\models\AdImages::defaultImage() : $investor->logo ?>" alt="<?=$investor->name?>">
                     	</div>
                     	<div class="infor-detail-chudautu">
                     		<ul>
 				                <li>
-				                    <strong id="">Địa chỉ</strong>:
-				                    Đường Hoàng Hữu Nam, phường Long Thạnh Mỹ, quận 9, Tp.HCM</li>
+				                    <strong id=""><?=Yii::t('project','Address')?></strong>:
+				                    <?=empty($investor->address) ? Yii::t('profile','updating') : $investor->address ?></li>
 				                <li>
-				                    <strong id="">Điện thoại</strong>:
-				                    0862800021
+				                    <strong id=""><?=Yii::t('project','Phone')?></strong>:
+                                    <?=empty($investor->phone) ? Yii::t('profile','updating') : $investor->phone ?>
 				                    |
-				                    <strong id="">Fax</strong>:
-				                    <span>Đang cập nhật</span>
+				                    <strong id=""><?=Yii::t('project','Fax')?></strong>:
+				                    <span><?=empty($investor->fax) ? Yii::t('profile','updating') : $investor->fax ?></span>
 				                </li>
 				                <li>
-				                    <strong id="">Website</strong>:
-				                    <span>Đang cập nhật</span>
+				                    <strong id=""><?=Yii::t('project','Website')?></strong>:
+				                    <span><?=empty($investor->website) ? Yii::t('profile','updating') : "<a href=\"".$investor->website."\">".$investor->website."</a>" ?></span>
 				                </li>
 				                <li>
-				                    <strong id="">Email</strong>:
-				                    <span>Đang cập nhật</span>
-				                </li>
-				                <li>
-				                    <strong id="">Chat với người liên hệ công ty</strong>
-				                    <span class="nickchat">
-				                        <a id="" href="javascript:void(0)">Nick chat chưa được cập nhật!</a>
-				                    </span>
+				                    <strong id=""><?=Yii::t('project','Email')?></strong>:
+				                    <span><?=empty($investor->email) ? Yii::t('profile','updating') : $investor->email ?></span>
 				                </li>
 				            </ul>
                     	</div>
                     </div>
                 </div>
-
+                <?php } ?>
                 <?php
                 $tabProject = json_decode($model->data_html, true);
                 if(count($tabProject) > 0){
