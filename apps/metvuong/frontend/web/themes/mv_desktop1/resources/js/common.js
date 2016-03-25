@@ -306,6 +306,8 @@ $.fn.dropdown = function (options) {
 
                 $(el.find('input[type=hidden]')).val(dataValue);
 
+                $(el.find('input[type=hidden]')).trigger('change');
+
                 sc.settings.ajaxSubmit();
 
                 if (sc.settings.styleShow) {
