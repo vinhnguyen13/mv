@@ -5,6 +5,32 @@ $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_
 //$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/detail.js', ['position' => View::POS_END]);
 $this->registerCss('.map-wrap {position: relative;} .map-wrap:after {display: block; content: ""; padding-top: 75%;} .map-inside {position: absolute; width: 100%; height: 100%;} #map {height: 100%;}');
 
+Yii::$app->view->registerMetaTag([
+    'name' => 'keywords',
+    'content' => $model->location
+]);
+Yii::$app->view->registerMetaTag([
+    'name' => 'description',
+    'content' => $model->description
+]);
+
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:title',
+    'content' => $model->location
+]);
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:description',
+    'content' => $model->description
+]);
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:type',
+    'content' => 'article'
+]);
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:image',
+    'content' => $model->logoUrl
+]);
+
 $lbl_updating = Yii::t('general', 'Updating');
 
 $fb_appId = '680097282132293'; // stage.metvuong.com

@@ -5,6 +5,33 @@ $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_
 //$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/detail.js', ['position' => View::POS_END]);
 $this->registerCss('.map-wrap {position: relative;} .map-wrap:after {display: block; content: ""; padding-top: 75%;} .map-inside {position: absolute; width: 100%; height: 100%;} #map {height: 100%;}');
 
+$tabProject = json_decode($model->data_html, true);
+Yii::$app->view->registerMetaTag([
+    'name' => 'keywords',
+    'content' => $model->location
+]);
+Yii::$app->view->registerMetaTag([
+    'name' => 'description',
+    'content' => $tabProject["tong-quan"]
+]);
+
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:title',
+    'content' => $model->location
+]);
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:description',
+    'content' => $tabProject["tong-quan"]
+]);
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:type',
+    'content' => 'article'
+]);
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:image',
+    'content' => $model->logoUrl
+]);
+
 $lbl_updating = Yii::t('general', 'Updating');
 $tabKeys = [
     'tong-quan' => Yii::t('project','General'),
@@ -41,7 +68,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 <div class="title-fixed-wrap">
     <div class="container">
         <div class="detail-duan-moi">
-            <div class="title-top"><?= strtoupper($model->name)?></div>
+            <div class="title-top"><?=empty($model->name) ? Yii::t('project', 'Project') : $model->name?></div>
             <div class="wrap-duan-moi">
                 <div class="gallery-detail swiper-container">
                     <div class="swiper-wrapper">
@@ -95,7 +122,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                     <div class="title-section"><?=Yii::t('project', 'Investor')?></div>
                     <div class="clearfix">
                     	<div class="wrap-img pull-left">
-                    		<img src="<?=filter_var($image, FILTER_VALIDATE_URL) ? $investor->logo : Yii::getAlias('@store') . "/building-project-images/" . $this->logo; ?>" alt="<?=$investor->name?>">
+                    		<img src="<?=(filter_var($image, FILTER_VALIDATE_URL) === FALSE) ? Yii::getAlias('@store') . "/building-project-images/" . $investor->logo : $investor->logo ?>" alt="<?=$investor->name?>">
                     	</div>
                     	<div class="infor-detail-chudautu">
                     		<ul>
@@ -121,9 +148,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                     	</div>
                     </div>
                 </div>
-                <?php } ?>
-                <?php
-                $tabProject = json_decode($model->data_html, true);
+                <?php }
                 if(count($tabProject) > 0){
                 ?>
                 <div class="infor-bds">
