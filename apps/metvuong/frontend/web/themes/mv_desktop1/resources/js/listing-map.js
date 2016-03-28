@@ -1,4 +1,5 @@
 var listingMap = {
+	drawedMarkerDetail: false,
 	polygons: [],
 	areaMarkers: [],
 	markers: [],
@@ -68,6 +69,32 @@ var listingMap = {
 		
 		listingMap.drawArea(areas);
 		
+		listingMap.buildMarkers();
+
+		listingMap.infoWindow = new m2Map.InfoWindow({offsetTop: 40});
+		
+		listingMap.infoWindowMore = new google.maps.InfoWindow();
+		listingMap.infoWindowMore.addListener('domready', function() {
+			listingMap.infoWindow.close();
+			var marker = listingMap.infoWindowMore.anchor;
+			google.maps.event.clearListeners(marker, 'mouseover');
+			
+			var infoWindowClick = google.maps.event.addListener(listingMap.infoWindowMore, 'closeclick', detachEvent);
+			var infoWindowPositionChange = google.maps.event.addListener(listingMap.infoWindowMore, 'position_changed', detachEvent);
+			
+			var mapClick = google.maps.event.addListener(listingMap.map, 'mousedown', function(){
+				listingMap.infoWindowMore.close();
+				detachEvent();
+			});
+			
+			function detachEvent() {
+				marker.addListener('mouseover', listingMap.markerOver);
+				google.maps.event.removeListener(infoWindowClick);
+				google.maps.event.removeListener(infoWindowPositionChange);
+				google.maps.event.removeListener(mapClick);
+			}
+		});
+		
 		listingMap.map.addListener('zoom_changed', function(){
 			var zoomLevel = listingMap.getZoomLevel(this.getZoom());
 			var levelValue = listingMap.getFocusLevelValue();
@@ -78,11 +105,110 @@ var listingMap = {
 					
 					listingMap.removeArea();
 					
-					var areas = form.data[listingMap.dataMaps[listingMap.currentLevel]];
-					
-					listingMap.drawArea(areas);
+					if(listingMap.currentLevel < 3) {
+						if(listingMap.drawedMarkerDetail) {
+							listingMap.removeDetailMarkers();
+							listingMap.drawedMarkerDetail = false;
+						}
+						
+						var areas = form.data[listingMap.dataMaps[listingMap.currentLevel]];
+						listingMap.drawArea(areas);
+					} else {
+						listingMap.drawDetail();
+						listingMap.drawedMarkerDetail = true;
+					}
 				}
 			}
+		});
+		
+		listing.detail = function(id) {
+			listing._detail(id);
+			
+			listingMap.map.addListener('mousedown', function(){
+				listing.closeDetail();
+				google.maps.event.clearListeners(listingMap.map, 'mousedown');
+			});
+		};
+	},
+	buildMarkers: function() {
+		for(var i in form.data.products) {
+			var product = form.data.products[i];
+			var index = product.lat + '-' + product.lng;
+			var marker = listingMap.markers[index];
+			
+			if(marker) {
+				var ids = marker.get('ids');
+				ids.push(product.id);
+				marker.set('ids', ids);
+				marker.setIcon(listingMap.icon(ids.length, 0));
+			} else {
+				marker = new google.maps.Marker({
+					position: {lat: Number(product.lat), lng: Number(product.lng)},
+					map: null,
+				    icon: listingMap.icon(1, 0)
+				});
+				
+				marker.set('ids', [product.id]);
+				marker.addListener('mouseover', listingMap.markerOver);
+				marker.addListener('mouseout', listingMap.markerOut);
+				marker.addListener('click', listingMap.markerClick);
+				
+				listingMap.markers[index] = marker;
+			}
+		}
+	},
+	drawDetail: function() {
+		for(var i in listingMap.markers) {
+			listingMap.markers[i].setMap(listingMap.map);
+		}
+	},
+	removeDetailMarkers: function() {
+		for(var i in listingMap.markers) {
+			listingMap.markers[i].setMap(null);
+		}
+	},
+	markerOver: function() {
+		this.setZIndex(google.maps.Marker.MAX_ZINDEX++);
+		var ids = this.get('ids');
+		var id = ids[0];
+		
+		var product = form.data.products[id];
+		var infoContent = $('<div class="info-wrap-single">' + listingMap.buildInfoContent(product) + '</div>');
+		
+//		if(ids.length > 1) {
+//			infoContent.append('<div class="more">...</div>');
+//		}
+		
+		infoContent.append('<div class="arrow"></div>');
+		
+		listingMap.infoWindow.setContent(infoContent.get(0));
+		listingMap.infoWindow.open(this);
+	},
+	markerOut: function() {
+		listingMap.infoWindow.close();
+	},
+	markerClick: function() {
+		var ids = this.get('ids');
+		
+		if(ids.length == 1) {
+			listing.detail(ids[0]);
+		} else {
+			var infoContentWrap = $('<div class="info-wrap-multiple"></div>');
+			for(i = 0; i < ids.length; i++) {
+				var id = ids[i];
+				var product = form.data.products[id];
+				var infoContent = $(listingMap.buildInfoContent(product));
+				listingMap.attachInfoItemClick(infoContent, id);
+				infoContentWrap.append(infoContent);
+			}
+			
+			listingMap.infoWindowMore.setContent(infoContentWrap.get(0));
+			listingMap.infoWindowMore.open(listingMap.map, this);
+		}	
+	},
+	attachInfoItemClick: function(item, id) {
+		item.click(function(){
+			listing.detail(id);
 		});
 	},
 	getZoomLevel: function(zoom) {
@@ -284,5 +410,75 @@ var listingMap = {
 		}
 		
 		return marker;
+	},
+	buildInfoContent: function(product) {
+		var img = listingMap.getImageUrl(product);
+		var price = formatPrice(product.price);
+		var addition = listingMap.getAdditionInfo(product);
+		var address = listingMap.getAddress(product);
+		
+		var infoContent = '<div class="infoContent">' + 
+								'<div class="img-show"><div><img src="'+img+'"></div></div>' +
+								'<div class="address">' + address + '</div>' +
+								'<div class="price">' + price + '</div>' +
+								'<div class="addition">' + addition + '</div></div>' +
+							'</div>';
+		return infoContent;
+	},
+	getImageUrl: function(product) {
+		if(product.image_file_name) {
+			if(product.image_folder) {
+				return '/store/' + product.image_folder + '/480x360/' + product.image_file_name;
+			} else {
+				return product.image_file_name.replace('745x510', '350x280');
+			}
+		} else {
+			return '/themes/metvuong2/resources/images/default-ads.jpg';
+		}
+	},
+	getAdditionInfo: function(product) {
+		var addition = [];
+		
+		addition.push(product.area + 'm<sup>2</sup>');
+		
+		if(product.floor_no && product.floor_no != '0') {
+			addition.push(product.floor_no + ' ' + lajax.t('storey'));
+		}
+		if(product.room_no && product.room_no != '0') {
+			addition.push(product.room_no + ' ' + lajax.t('beds'));
+		}
+		if(product.toilet_no && product.toilet_no != '0') {
+			addition.push(product.toilet_no + ' ' + lajax.t('baths'));
+		}
+
+		return addition.join(' • ');
+	},
+	getAddress: function(product) {
+		var city = form.data.cities[Number(product.city_id)];
+		var district = form.data.districts[Number(product.district_id)];
+		var address = [];
+		var homeStreet = '';
+
+		if(product.home_no) {
+			homeStreet += product.home_no;
+		}
+
+		if(product.street_id) {
+			homeStreet = homeStreet ? homeStreet + ' ' : '';
+			homeStreet += form.data.streets[Number(product.street_id)]['pre'] + ' ' + form.data.streets[Number(product.street_id)]['name'];
+		}
+		
+		if(homeStreet) {
+			address.push(homeStreet);
+		}
+		
+		if(product.ward_id) {
+			address.push(form.data.wards[Number(product.ward_id)]['pre'] + ' ' + form.data.wards[Number(product.ward_id)]['name']);
+		}
+		
+		address.push(district['pre'] + ' ' + district['name']);
+		address.push(city['name']);
+		
+		return address.join(', ');
 	}
 }

@@ -126,6 +126,12 @@ $(document).ready(function(){
 		desktopEvent: function() {
 			listing.el.on('click', '.item-listing a', listing.detailEvent);
 			listing.el.on('scroll', listing.moreEvent);
+			
+			$('.btn-close').on('click', function(e){
+				e.preventDefault();
+				
+				listing.closeDetail();
+			});
 		},
 		mobileEvent: function() {
 			listing.el.off('click', '.item-listing a', listing.detailEvent);
@@ -136,6 +142,9 @@ $(document).ready(function(){
 			listing.detail(Number($(this).data('id')));
 		},
 		detail: function(id) {
+			listing._detail(id);
+		},
+		_detail: function(id) {
 			var wWrapList = $('.detail-listing-dt').outerWidth();
 			var detailListing = $('.detail-listing');
 			var wrapDetailListing = $('.detail-listing-dt');
@@ -157,6 +166,11 @@ $(document).ready(function(){
 			    });
 
 				wrapDetailListing.loading({done: true});
+			});
+		},
+		closeDetail: function() {
+			$('.detail-listing-dt').css({
+				left: '0px'
 			});
 		},
 		moreEvent: function(e) {
