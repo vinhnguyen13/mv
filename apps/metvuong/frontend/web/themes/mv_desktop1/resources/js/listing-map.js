@@ -13,6 +13,38 @@ var listingMap = {
 	idMaps: ['city_id','district_id','ward_id','street_id'],
 	init: function() {
 		listingMap.initMap();
+
+		listing.el.on('mouseenter', '.item-listing a', listingMap.listingMouseenter);
+		listing.el.on('mouseleave', '.item-listing a', listingMap.listingMouseleave);
+	},
+	listingMouseenter: function() {
+		var self = $(this);
+
+		$.data(this, 'mouseenterTimer', setTimeout(function(){
+			if(listingMap.getZoomLevel(listingMap.map.getZoom()) < 3) {
+				var marker = listingMap.getAreaMarkerByProductId(self.data('id') + '');
+				
+				if(marker) {
+					marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
+					marker.setIcon(listingMap.icon(marker.get('ids').length, 1));
+					
+					var position = marker.getPosition();
+					
+					if(!listingMap.map.getBounds().contains(position)) {
+						listingMap.map.setCenter(position);
+					}
+				}
+			}
+		}, 300));
+	},
+	listingMouseleave: function() {
+		clearTimeout($.data(this, 'mouseenterTimer'));
+		
+		var marker = listingMap.getAreaMarkerByProductId($(this).data('id') + '');
+		
+		if(marker) {
+			marker.setIcon(listingMap.icon(marker.get('ids').length, 0));
+		}
 	},
 	initMap: function() {
 		m2Map.loaded();
@@ -234,6 +266,18 @@ var listingMap = {
 
 		for(var i = 0; i<= listingMap.areaMarkers.length; i++) {
 			if(listingMap.areaMarkers[i] && listingMap.areaMarkers[i].id == id) {
+				marker = listingMap.areaMarkers[i];
+				break;
+			}
+		}
+		
+		return marker;
+	},
+	getAreaMarkerByProductId: function(id) {
+		var marker;
+
+		for(var i = 0; i<= listingMap.areaMarkers.length; i++) {
+			if(listingMap.areaMarkers[i] && listingMap.areaMarkers[i].ids.indexOf(id) !== -1) {
 				marker = listingMap.areaMarkers[i];
 				break;
 			}

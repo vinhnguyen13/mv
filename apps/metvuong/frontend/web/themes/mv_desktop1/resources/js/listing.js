@@ -1,5 +1,51 @@
 var form, desktop, listing;
 
+
+//}).on('mouseenter', '.item-listing a', function(e){
+//	var id = $(this).data('id');
+//	
+//	$.data(this, 'mouseenterTimer', setTimeout(function() {
+//		if(map.currentState == 'detail') {
+//			var marker = map.getMarker(id);
+//			marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
+//			marker.setIcon(map.icon(marker.get('ids').length, 1));
+//			
+//			var position = marker.getPosition();
+//			
+//			if(!map.gmap.getBounds().contains(position)) {
+//				map.gmap.setCenter(position);
+//			}
+//		} else {
+//			var marker = map.getMarkerGroup(id);
+//			
+//			if(marker) {
+//				marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
+//				marker.setIcon(map.icon(marker.get('ids').length, 1));
+//				
+//				var position = marker.getPosition();
+//				
+//				if(!map.gmap.getBounds().contains(position)) {
+//					map.gmap.setCenter(position);
+//				}
+//			}
+//		}
+//    }, 300));
+//}).on('mouseleave', '.item-listing a', function(e){
+//	clearTimeout($.data(this, 'mouseenterTimer'));
+//	if(map.currentState == 'detail') {
+//		var marker = map.getMarker($(this).data('id'));
+//		marker.setIcon(map.icon(marker.get('ids').length, 0));
+//	} else {
+//		var marker = map.getMarkerGroup($(this).data('id'));
+//		
+//		if(marker) {
+//			marker.setIcon(map.icon(marker.get('ids').length, 0));
+//		}
+//	}
+//});
+
+
+
 $(document).ready(function(){
 	desktop = {
 		isLoadResources: false,
@@ -90,7 +136,28 @@ $(document).ready(function(){
 			listing.detail(Number($(this).data('id')));
 		},
 		detail: function(id) {
-			console.log('detail: ' + id);
+			var wWrapList = $('.detail-listing-dt').outerWidth();
+			var detailListing = $('.detail-listing');
+			var wrapDetailListing = $('.detail-listing-dt');
+			
+			wrapDetailListing.loading({full: false});
+			
+			$('.detail-listing-dt').css({
+				left: -wWrapList +'px'
+			});
+			
+			$.get('/ad/detail', {id: id}, function(r){
+				
+				detailListing.find('.container').html($(r).find('#wrapper').find('.detail-listing .container').html());
+
+				var swiper = new Swiper('.swiper-container', {
+					pagination: '.swiper-pagination',
+					paginationClickable: true,
+			        spaceBetween: 0
+			    });
+
+				wrapDetailListing.loading({done: true});
+			});
 		},
 		moreEvent: function(e) {
 			var self = $(this);
