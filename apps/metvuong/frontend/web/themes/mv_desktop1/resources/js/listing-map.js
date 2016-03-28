@@ -134,6 +134,13 @@ var listingMap = {
 			listingMap.infoWindow.close();
 			listingMap.infoWindow.setOffsetTop(40);
 		});
+		
+		marker.addListener('click', function(){
+			var zoomLevel = listingMap.getZoomLevel(listingMap.map.getZoom());
+			var nextZoomLevel = zoomLevel + 1;
+			listingMap.map.setZoom(listingMap.zoomLevel[nextZoomLevel][0]);
+			listingMap.map.setCenter(this.getPosition());
+		});
 	},
 	areaMarkerMouseover: function(name) {
 		if(this.ids.length > 9999) {
@@ -178,7 +185,8 @@ var listingMap = {
 			listingMap.polygons.push(polygon);
 			
 			polygon.addListener("mouseover", listingMap.polygonMouseover);
-			polygon.addListener("mouseout", listingMap.polygonMouseout); 
+			polygon.addListener("mouseout", listingMap.polygonMouseout);
+			polygon.addListener("click", listingMap.polygonClick);
 		}
 	},
 	groupProductByArea: function(idString) {
@@ -205,7 +213,12 @@ var listingMap = {
 	},
 	polygonMouseout: function() {
 		if(marker = listingMap.getAreaMarker(this.id)) {
-			google.maps.event.trigger(listingMap.getAreaMarker(this.id), 'mouseout');
+			google.maps.event.trigger(marker, 'mouseout');
+		}
+	},
+	polygonClick: function() {
+		if(marker = listingMap.getAreaMarker(this.id)) {
+			google.maps.event.trigger(marker, 'click');
 		}
 	},
 	icon: function(counter, status) {
