@@ -111,7 +111,19 @@ var listingMap = {
 							listingMap.drawedMarkerDetail = false;
 						}
 						
-						var areas = form.data[listingMap.dataMaps[listingMap.currentLevel]];
+						var areas = {};
+
+						if(zoomLevel - levelValue.level == 1) {
+							var compareId = listingMap.idMaps[levelValue.level];
+							for(var i in form.data[listingMap.dataMaps[listingMap.currentLevel]]) {
+								if(form.data[listingMap.dataMaps[listingMap.currentLevel]][i][compareId] == levelValue.id) {
+									areas[i] = form.data[listingMap.dataMaps[listingMap.currentLevel]][i];
+								}
+							}
+						} else {
+							areas = form.data[listingMap.dataMaps[listingMap.currentLevel]];
+						}
+						
 						listingMap.drawArea(areas);
 					} else {
 						listingMap.drawDetail();

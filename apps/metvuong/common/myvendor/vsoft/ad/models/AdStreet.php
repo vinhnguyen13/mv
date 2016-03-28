@@ -24,10 +24,10 @@ class AdStreet extends ASt
 		$items = [];
 	
 		if($districtId) {
-			$streets = self::find()->where('`district_id` = :district_id', [':district_id' => $districtId])->all();
+			$streets = self::find()->orderBy('name')->where('`district_id` = :district_id', [':district_id' => $districtId])->all();
 	
 			foreach($streets as $street) {
-				$items[$street['id']] = "{$street['pre']} {$street['name']}";
+				$items[$street['id']] = "{$street['name']}";
 			}
 		}
 	

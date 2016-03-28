@@ -98,7 +98,7 @@ $this->registerJs($script, View::POS_BEGIN);
 										<div class="form-group col-xs-12 col-sm-6">
 											<div class="">
 												<?php 
-													$items = ArrayHelper::map($searchModel->city->adDistricts, 'id', function ($model) { return $model->pre . ' ' . $model->name; });
+													$items = AdDistrict::getListByCity($searchModel->city_id);
 												?>
 												<?= Html::activeDropDownList($searchModel, 'district_id', $items, ['prompt' => $searchModel->getAttributeLabel('district_id'), 'class' => 'form-control select2 style-common']) ?>
 											</div>
@@ -106,7 +106,7 @@ $this->registerJs($script, View::POS_BEGIN);
 										<div class="form-group col-xs-12 col-sm-6">
 											<div class="">
 												<?php 
-													$items = $searchModel->district_id ? ArrayHelper::map($searchModel->district->adWards, 'id', function ($model) { return $model->pre . ' ' . $model->name; }) : [];
+													$items = $searchModel->district_id ? AdWard::getListByDistrict($searchModel->district_id) : [];
 												?>
 												<?= Html::activeDropDownList($searchModel, 'ward_id', $items, ['prompt' => $searchModel->getAttributeLabel('ward_id'), 'class' => 'form-control select2 style-common']) ?>
 											</div>
@@ -114,7 +114,7 @@ $this->registerJs($script, View::POS_BEGIN);
 										<div class="form-group col-xs-12 col-sm-6">
 											<div class="">
 												<?php 
-													$items = $searchModel->district_id ? ArrayHelper::map($searchModel->district->adStreets, 'id', function ($model) { return $model->pre . ' ' . $model->name; }) : [];
+													$items = $searchModel->district_id ? AdStreet::getListByDistrict($searchModel->district_id) : [];
 												?>
 												<?= Html::activeDropDownList($searchModel, 'street_id', $items, ['prompt' => $searchModel->getAttributeLabel('street_id'), 'class' => 'form-control select2 style-common']) ?>
 											</div>

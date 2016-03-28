@@ -37,7 +37,7 @@ class AdDistrict extends AD
 		$items = [];
 		
 		if($cityId) {
-			$districts = self::find()->where('`city_id` = :city_id', [':city_id' => $cityId])->all();
+			$districts = self::find()->orderBy('name')->where('`city_id` = :city_id', [':city_id' => $cityId])->all();
 			
 			foreach($districts as $district) {
 				$items[$district['id']] = $district['pre'] ? "{$district['pre']} {$district['name']}" : $district['name'];
