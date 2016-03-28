@@ -148,7 +148,7 @@ $(document).ready(function(){
 			
 			$.get('/ad/detail', {id: id}, function(r){
 				
-				detailListing.find('.container').html($(r).find('#wrapper').find('.detail-listing .container').html());
+				detailListing.find('.container').html($(r).find('#wrapper').find('.detail-listing').html());
 
 				var swiper = new Swiper('.swiper-container', {
 					pagination: '.swiper-pagination',

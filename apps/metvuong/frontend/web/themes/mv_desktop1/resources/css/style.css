@@ -6653,8 +6653,8 @@ footer li a {
     top: 22px !important;
 }
 .item-dropdown li a .notifi {
-    top: 0;
-    left: 19px;
+    top: 4px;
+    left: 25px;
 }
 .noti-all {
     float: left;
