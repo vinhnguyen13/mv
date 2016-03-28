@@ -194,10 +194,22 @@ $(document).ready(function(){
 	desktop.init();
 	listing.init();
 	
-	$('.select2').each(function(){
+	$('.style-common').each(function(){
 		var self = $(this);
 		
-		$(this).select2({width: 'resolve'});
+		$(this).select2({width: '100%'});
+		
+		if(self.hasClass('hide')) {
+			$('#select2-' + self.attr('id') + '-container').closest('.select2-container').addClass('hide');
+		}
+	});
+	$('.select-duan .select2').each(function(){
+		var self = $(this);
+		
+		$(this).select2({
+			width: '100%',
+			dropdownCssClass: 'select2-duan'
+		});
 		
 		if(self.hasClass('hide')) {
 			$('#select2-' + self.attr('id') + '-container').closest('.select2-container').addClass('hide');

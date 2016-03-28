@@ -92,7 +92,7 @@ $this->registerJs($script, View::POS_BEGIN);
 													$citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
 													$citiesOptions = [];
 												?>
-												<?= Html::activeDropDownList($searchModel, 'city_id', $citiesDropdown, ['class' => 'form-control select2', 'options' => $citiesOptions]) ?>
+												<?= Html::activeDropDownList($searchModel, 'city_id', $citiesDropdown, ['class' => 'form-control select2 style-common', 'options' => $citiesOptions]) ?>
 											</div>
 										</div>
 										<div class="form-group col-xs-12 col-sm-6">
@@ -100,7 +100,7 @@ $this->registerJs($script, View::POS_BEGIN);
 												<?php 
 													$items = ArrayHelper::map($searchModel->city->adDistricts, 'id', function ($model) { return $model->pre . ' ' . $model->name; });
 												?>
-												<?= Html::activeDropDownList($searchModel, 'district_id', $items, ['prompt' => $searchModel->getAttributeLabel('district_id'), 'class' => 'form-control select2']) ?>
+												<?= Html::activeDropDownList($searchModel, 'district_id', $items, ['prompt' => $searchModel->getAttributeLabel('district_id'), 'class' => 'form-control select2 style-common']) ?>
 											</div>
 										</div>
 										<div class="form-group col-xs-12 col-sm-6">
@@ -108,7 +108,7 @@ $this->registerJs($script, View::POS_BEGIN);
 												<?php 
 													$items = $searchModel->district_id ? ArrayHelper::map($searchModel->district->adWards, 'id', function ($model) { return $model->pre . ' ' . $model->name; }) : [];
 												?>
-												<?= Html::activeDropDownList($searchModel, 'ward_id', $items, ['prompt' => $searchModel->getAttributeLabel('ward_id'), 'class' => 'form-control select2']) ?>
+												<?= Html::activeDropDownList($searchModel, 'ward_id', $items, ['prompt' => $searchModel->getAttributeLabel('ward_id'), 'class' => 'form-control select2 style-common']) ?>
 											</div>
 										</div>
 										<div class="form-group col-xs-12 col-sm-6">
@@ -116,7 +116,7 @@ $this->registerJs($script, View::POS_BEGIN);
 												<?php 
 													$items = $searchModel->district_id ? ArrayHelper::map($searchModel->district->adStreets, 'id', function ($model) { return $model->pre . ' ' . $model->name; }) : [];
 												?>
-												<?= Html::activeDropDownList($searchModel, 'street_id', $items, ['prompt' => $searchModel->getAttributeLabel('street_id'), 'class' => 'form-control select2']) ?>
+												<?= Html::activeDropDownList($searchModel, 'street_id', $items, ['prompt' => $searchModel->getAttributeLabel('street_id'), 'class' => 'form-control select2 style-common']) ?>
 											</div>
 										</div>
 									</div>
@@ -206,20 +206,24 @@ $this->registerJs($script, View::POS_BEGIN);
 								</div>
 							</div>
 							
-							<?php
-								$items = [];
-								if($searchModel->district_id) {
-									$items = ($projects = AdBuildingProject::find()->where(['status' => 1, 'district_id' => $searchModel->district_id])->all()) ? ArrayHelper::map($projects, 'id', 'name') : [];
-								}
-								
-								$options = ['prompt' => $searchModel->getAttributeLabel('project_building_id'), 'class' => 'form-control select2'];
-								
-								if($searchModel->category_id != AdCategory::CATEGORY_CHCK) {
-									$options['class'] = $options['class'] . ' hide';
-								}
-								
-								echo Html::activeDropDownList($searchModel, 'project_building_id', $items, $options)
-							?>
+							<div class="select-duan frm-item">
+								<div class="wrap-duan">
+									<?php
+										$items = [];
+										if($searchModel->district_id) {
+											$items = ($projects = AdBuildingProject::find()->where(['status' => 1, 'district_id' => $searchModel->district_id])->all()) ? ArrayHelper::map($projects, 'id', 'name') : [];
+										}
+										
+										$options = ['prompt' => $searchModel->getAttributeLabel('project_building_id'), 'class' => 'form-control select2'];
+										
+										if($searchModel->category_id != AdCategory::CATEGORY_CHCK) {
+											$options['class'] = $options['class'] . ' hide';
+										}
+										
+										echo Html::activeDropDownList($searchModel, 'project_building_id', $items, $options)
+									?>
+								</div>
+							</div>
 								
 							<div class="frm-item choice_price_dt select-price">
 								<div class="box-dropdown" data-item-minmax="prices">
