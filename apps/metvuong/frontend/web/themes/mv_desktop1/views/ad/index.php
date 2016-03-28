@@ -15,6 +15,8 @@ use common\models\AdCity;
 use vsoft\ad\models\AdDistrict;
 use vsoft\ad\models\AdBuildingProject;
 
+$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/select2.min.css');
+$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/select2.full.min.js', ['position' => View::POS_END]);
 $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/listing.js', ['position' => View::POS_END]);
 
 $categories = AdCategory::find ()->indexBy ( 'id' )->asArray ( true )->all ();
@@ -90,7 +92,7 @@ $this->registerJs($script, View::POS_BEGIN);
 													$citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
 													$citiesOptions = [];
 												?>
-												<?= Html::activeDropDownList($searchModel, 'city_id', $citiesDropdown, ['class' => 'form-control', 'options' => $citiesOptions]) ?>
+												<?= Html::activeDropDownList($searchModel, 'city_id', $citiesDropdown, ['class' => 'form-control select2', 'options' => $citiesOptions]) ?>
 											</div>
 										</div>
 										<div class="form-group col-xs-12 col-sm-6">
@@ -98,7 +100,7 @@ $this->registerJs($script, View::POS_BEGIN);
 												<?php 
 													$items = ArrayHelper::map($searchModel->city->adDistricts, 'id', function ($model) { return $model->pre . ' ' . $model->name; });
 												?>
-												<?= Html::activeDropDownList($searchModel, 'district_id', $items, ['prompt' => $searchModel->getAttributeLabel('district_id'), 'class' => 'form-control']) ?>
+												<?= Html::activeDropDownList($searchModel, 'district_id', $items, ['prompt' => $searchModel->getAttributeLabel('district_id'), 'class' => 'form-control select2']) ?>
 											</div>
 										</div>
 										<div class="form-group col-xs-12 col-sm-6">
@@ -106,7 +108,7 @@ $this->registerJs($script, View::POS_BEGIN);
 												<?php 
 													$items = $searchModel->district_id ? ArrayHelper::map($searchModel->district->adWards, 'id', function ($model) { return $model->pre . ' ' . $model->name; }) : [];
 												?>
-												<?= Html::activeDropDownList($searchModel, 'ward_id', $items, ['prompt' => $searchModel->getAttributeLabel('ward_id'), 'class' => 'form-control']) ?>
+												<?= Html::activeDropDownList($searchModel, 'ward_id', $items, ['prompt' => $searchModel->getAttributeLabel('ward_id'), 'class' => 'form-control select2']) ?>
 											</div>
 										</div>
 										<div class="form-group col-xs-12 col-sm-6">
@@ -114,7 +116,7 @@ $this->registerJs($script, View::POS_BEGIN);
 												<?php 
 													$items = $searchModel->district_id ? ArrayHelper::map($searchModel->district->adStreets, 'id', function ($model) { return $model->pre . ' ' . $model->name; }) : [];
 												?>
-												<?= Html::activeDropDownList($searchModel, 'street_id', $items, ['prompt' => $searchModel->getAttributeLabel('street_id'), 'class' => 'form-control']) ?>
+												<?= Html::activeDropDownList($searchModel, 'street_id', $items, ['prompt' => $searchModel->getAttributeLabel('street_id'), 'class' => 'form-control select2']) ?>
 											</div>
 										</div>
 									</div>
@@ -210,10 +212,10 @@ $this->registerJs($script, View::POS_BEGIN);
 									$items = ($projects = AdBuildingProject::find()->where(['status' => 1, 'district_id' => $searchModel->district_id])->all()) ? ArrayHelper::map($projects, 'id', 'name') : [];
 								}
 								
-								$options = ['prompt' => $searchModel->getAttributeLabel('project_building_id'), 'class' => 'form-control'];
+								$options = ['prompt' => $searchModel->getAttributeLabel('project_building_id'), 'class' => 'form-control select2'];
 								
 								if($searchModel->category_id != AdCategory::CATEGORY_CHCK) {
-									$options['style'] = 'display: none';
+									$options['class'] = $options['class'] . ' hide';
 								}
 								
 								echo Html::activeDropDownList($searchModel, 'project_building_id', $items, $options)

@@ -151,6 +151,10 @@ $(document).ready(function(){
 			for(var i in items) {
 				el.append('<option value="' + i + '">' + items[i] + '</option>');
 			}
+			
+			if(!items.length) {
+				$('#select2-' + el.attr('id') + '-container').text(el.find("option:first-child").text());
+			}
 		},
 		filterFields: function(e) {
 			form.el.find('select, input').filter(function(){
@@ -189,6 +193,16 @@ $(document).ready(function(){
 	form.init();
 	desktop.init();
 	listing.init();
+	
+	$('.select2').each(function(){
+		var self = $(this);
+		
+		$(this).select2({width: 'resolve'});
+		
+		if(self.hasClass('hide')) {
+			$('#select2-' + self.attr('id') + '-container').closest('.select2-container').addClass('hide');
+		}
+	});
 });
 
 function codeMigrate() {
@@ -203,9 +217,9 @@ function codeMigrate() {
 		funCallBack: function (item) {
 			if(item.closest('ul').hasClass('loai-bds')) {
 				if(item.data('value') == CATEGORY_CHCK) {
-					form.projectEl.show();
+					$('#select2-' + form.projectEl.attr('id') + '-container').closest('.select2-container').removeClass('hide');
 				} else {
-					form.projectEl.hide();
+					$('#select2-' + form.projectEl.attr('id') + '-container').closest('.select2-container').addClass('hide');
 				}
 			}
 		}
