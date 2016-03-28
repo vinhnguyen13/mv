@@ -107,7 +107,7 @@ var listingMap = {
 				listingMap.drawPolygon(area);
 			}
 			
-			if(groups[area.id]) {
+			if(groups[area.id] && area.center) {
 				listingMap.drawAreaMarker(area, groups[area.id]);
 			}
 		}
