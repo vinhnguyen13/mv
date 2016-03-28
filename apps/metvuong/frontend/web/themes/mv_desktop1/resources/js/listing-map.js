@@ -38,15 +38,18 @@ var listingMap = {
 		
 		listingMap.map.addListener('zoom_changed', function(){
 			var zoomLevel = listingMap.getZoomLevel(this.getZoom());
+			var levelValue = listingMap.getFocusLevelValue();
 			
-			if(listingMap.currentLevel != zoomLevel) {
-				listingMap.currentLevel = zoomLevel;
-				
-				listingMap.removeArea();
-				
-				var areas = form.data[listingMap.dataMaps[listingMap.currentLevel]];
-				
-				listingMap.drawArea(areas);
+			if(zoomLevel >= levelValue.level) {
+				if(listingMap.currentLevel != zoomLevel) {
+					listingMap.currentLevel = zoomLevel;
+					
+					listingMap.removeArea();
+					
+					var areas = form.data[listingMap.dataMaps[listingMap.currentLevel]];
+					
+					listingMap.drawArea(areas);
+				}
 			}
 		});
 	},
