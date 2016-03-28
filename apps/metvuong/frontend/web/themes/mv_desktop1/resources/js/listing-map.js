@@ -19,6 +19,8 @@ var listingMap = {
 		
 		var levelValue = listingMap.getFocusLevelValue();
 		
+		listingMap.currentLevel = levelValue.level;
+		
 		var collection = listingMap.dataMaps[levelValue.level];
 		var area = listingMap.getFocusArea(levelValue.id, collection);
 		
@@ -29,7 +31,35 @@ var listingMap = {
 		listingMap.map = new google.maps.Map(document.getElementById('map'), options);
 		listingMap.infoWindow = new m2Map.InfoWindow({offsetTop: 40});
 		
-		listingMap.drawArea([area]);
+		var areas = {};
+		areas[area.id] = area;
+		
+		listingMap.drawArea(areas);
+		
+		listingMap.map.addListener('zoom_changed', function(){
+			var zoomLevel = listingMap.getZoomLevel(this.getZoom());
+			
+			if(listingMap.currentLevel != zoomLevel) {
+				listingMap.currentLevel = zoomLevel;
+				
+				listingMap.removeArea();
+				
+				var areas = form.data[listingMap.dataMaps[listingMap.currentLevel]];
+				
+				listingMap.drawArea(areas);
+			}
+		});
+	},
+	getZoomLevel: function(zoom) {
+		var i = 0;
+		
+		for(i; i <= listingMap.zoomLevel.length; i++) {
+			if(zoom >= listingMap.zoomLevel[i][0] && zoom <= listingMap.zoomLevel[i][1]) {
+				break;
+			}
+		}
+		
+		return i;
 	},
 	getFocusArea: function(id, collection) {
 		return form.data[collection][id];
@@ -47,19 +77,40 @@ var listingMap = {
 		
 		return {level: level, id: id};
 	},
+	removeArea: function() {
+		for(var i = 0; i < listingMap.polygons.length; i++) {
+			google.maps.event.clearInstanceListeners(listingMap.polygons[i]);
+			listingMap.polygons[i].setMap(null);
+		}
+		
+		for(var i = 0; i < listingMap.areaMarkers.length; i++) {
+			listingMap.areaMarkers[i].setMap(null);
+		}
+
+		listingMap.polygons = [];
+		listingMap.areaMarkers = [];
+		
+		listingMap.infoWindow.close();
+	},
 	drawArea: function(areas) {
-		var levelValue = listingMap.getFocusLevelValue();
-		var areaString = listingMap.idMaps[levelValue.level];
+		var areaString = listingMap.idMaps[listingMap.currentLevel];
+
 		var groups = listingMap.groupProductByArea(areaString);
 
-		for(var i = 0; i < areas.length; i++) {
+		for(var i in areas) {
 			var area = areas[i];
 			
-			listingMap.drawPolygon(area);
-			listingMap.drawAreaMarker(area, groups[area.id]);
+			if(area.geometry) {
+				listingMap.drawPolygon(area);
+			}
+			
+			if(groups[area.id]) {
+				listingMap.drawAreaMarker(area, groups[area.id]);
+			}
 		}
 	},
 	drawAreaMarker: function(area, group) {
+
 		var center = JSON.parse(area.center);
 		center = {lat: center[0], lng: center[1]};
 		
@@ -126,8 +177,8 @@ var listingMap = {
 			polygon.setMap(listingMap.map);
 			listingMap.polygons.push(polygon);
 			
-			google.maps.event.addListener(polygon, "mouseover", listingMap.polygonMouseover);
-			google.maps.event.addListener(polygon, "mouseout", listingMap.polygonMouseout); 
+			polygon.addListener("mouseover", listingMap.polygonMouseover);
+			polygon.addListener("mouseout", listingMap.polygonMouseout); 
 		}
 	},
 	groupProductByArea: function(idString) {
@@ -148,10 +199,14 @@ var listingMap = {
 		return groups;
 	},
 	polygonMouseover: function() {
-		google.maps.event.trigger(listingMap.getAreaMarker(this.id), 'mouseover');
+		if(marker = listingMap.getAreaMarker(this.id)) {
+			google.maps.event.trigger(marker, 'mouseover');
+		}
 	},
 	polygonMouseout: function() {
-		google.maps.event.trigger(listingMap.getAreaMarker(this.id), 'mouseout');
+		if(marker = listingMap.getAreaMarker(this.id)) {
+			google.maps.event.trigger(listingMap.getAreaMarker(this.id), 'mouseout');
+		}
 	},
 	icon: function(counter, status) {
 		var base = (counter > 1) ? '/site/map-image?s={status}&t=' + counter : '/images/marker-{status}.png';
@@ -160,9 +215,9 @@ var listingMap = {
 	},
 	getAreaMarker: function(id) {
 		var marker;
-		
+
 		for(var i = 0; i<= listingMap.areaMarkers.length; i++) {
-			if(listingMap.areaMarkers[i].id == id) {
+			if(listingMap.areaMarkers[i] && listingMap.areaMarkers[i].id == id) {
 				marker = listingMap.areaMarkers[i];
 				break;
 			}
