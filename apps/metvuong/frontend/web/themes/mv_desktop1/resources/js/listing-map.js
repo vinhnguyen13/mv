@@ -120,6 +120,8 @@ var listingMap = {
 									areas[i] = form.data[listingMap.dataMaps[listingMap.currentLevel]][i];
 								}
 							}
+						} else if(zoomLevel == levelValue.level) {
+							areas[levelValue.id] = form.data[listingMap.dataMaps[zoomLevel]][levelValue.id];
 						} else {
 							areas = form.data[listingMap.dataMaps[listingMap.currentLevel]];
 						}
