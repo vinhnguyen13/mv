@@ -180,6 +180,11 @@ var listingMap = {
 		} else {
 			listingMap.drawDetail();
 			listingMap.drawedMarkerDetail = true;
+			
+			var center = JSON.parse(form.data.districts[form.districtEl.val()].center);
+			center = new google.maps.LatLng(center[0], center[1]);
+			listingMap.map.setCenter(center);
+			listingMap.map.setZoom(15);
 		}
 	},
 	buildMarkers: function() {
