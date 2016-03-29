@@ -2761,9 +2761,6 @@ html.mm-opening .mm-slideout {
     background: #fff;
     /* overflow: hidden; */
 }
-header.mm-slideout {
-    overflow: hidden;
-}
 .mm-menu.mm-offcanvas.mm-current {
     display: block !important;
 }
@@ -5366,6 +5363,9 @@ header.mm-slideout {
     }
     .wrap-header {
         padding: 0;
+    }
+    header.mm-slideout {
+        overflow: hidden;
     }
 }
 .user-login {
