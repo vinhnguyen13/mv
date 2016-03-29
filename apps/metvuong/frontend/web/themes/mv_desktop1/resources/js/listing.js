@@ -179,13 +179,9 @@ $(document).ready(function(){
 		moreEvent: function(e) {
 			var self = $(this);
 			
-			clearTimeout($.data(this, 'scrollTimer'));
-			
-		    $.data(this, 'scrollTimer', setTimeout(function() {
-		    	if(self.scrollTop() >= (self.get(0).scrollHeight - 200 - self.outerHeight())) {
-		    		listing.more();
-		    	}
-		    }, 250));
+			if(self.scrollTop() >= (self.get(0).scrollHeight - 200 - self.outerHeight())) {
+	    		listing.more();
+	    	}
 		},
 		more: function() {
 			var loadingList = $('#loading-list');
