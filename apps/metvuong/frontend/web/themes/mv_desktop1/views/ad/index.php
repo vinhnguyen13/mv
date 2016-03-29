@@ -390,6 +390,11 @@ $this->registerJs($script, View::POS_BEGIN);
 						<button class="btn-submit btn-common <?= $hideSearchForm ? '' : 'active' ?>">Tìm kiếm</button>
 					</div>
 				</div>
+				<div id="project-info">
+					<?php if($searchModel->project_building_id): ?>
+					<?= $this->render('_partials/projectInfo', ['project' => $searchModel->projectBuilding]) ?>
+					<?php endif; ?>
+				</div>
 				<div id="sort" class="dropdown-select option-show-listing">
 					<div class="val-selected style-click clearfix">
 						<?php
