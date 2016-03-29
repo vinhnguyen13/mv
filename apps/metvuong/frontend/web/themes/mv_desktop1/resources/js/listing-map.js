@@ -50,6 +50,7 @@ var listingMap = {
 		
 		if(marker) {
 			marker.setIcon(listingMap.icon(marker.get('ids').length, 0));
+			listingMap.infoWindow.setOffsetTop(40);
 		}
 	},
 	focusMarker: function(marker) {
@@ -217,6 +218,7 @@ var listingMap = {
 	},
 	markerOut: function() {
 		listingMap.infoWindow.close();
+		listingMap.infoWindow.setOffsetTop(40);
 	},
 	markerClick: function() {
 		var ids = this.get('ids');

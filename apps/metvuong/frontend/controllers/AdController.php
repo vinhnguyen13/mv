@@ -132,20 +132,29 @@ class AdController extends Controller
 		$searchQuery = $searchModel->search(Yii::$app->request->get());
 		
 		if(Yii::$app->request->isAjax) {
-			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-			
-			$products = $searchQuery->indexBy('id')->asArray(true)->all();
-			
-			$cities = AdCity::find()->indexBy('id')->select('center, geometry, name, id')->where(['id' => $searchModel->city_id])->all();
-			$districts = AdDistrict::find()->indexBy('id')->select('center, geometry, name, id, pre, city_id')->where(['city_id' => $searchModel->city_id])->all();
-			$wards = AdWard::find()->indexBy('id')->select('center, geometry, name, id, pre, district_id')->where(['district_id' => ArrayHelper::getColumn($districts, 'id')])->all();
-			$streets = AdStreet::find()->indexBy('id')->select('name, id, pre')->where(['district_id' => ArrayHelper::getColumn($districts, 'id')])->all();
-			
-			return ['products' => $products, 'cities' => $cities, 'districts' => $districts, 'wards' => $wards, 'streets' => $streets];
+			if($page = Yii::$app->request->get('page')) {
+				$offset = ($page - 1) * Yii::$app->params['listingLimit'];
+				
+				$products = $searchQuery->with(['city', 'district', 'ward', 'street'])->offset($offset)->limit(Yii::$app->params['listingLimit'])->all();
+				$categories = AdCategory::find ()->indexBy ( 'id' )->asArray ( true )->all ();
+				
+				return $this->renderPartial('_partials/list', ['products' => $products, 'categories' => $categories]);
+			} else {
+				Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+					
+				$products = $searchQuery->indexBy('id')->asArray(true)->all();
+					
+				$cities = AdCity::find()->indexBy('id')->select('center, geometry, name, id')->where(['id' => $searchModel->city_id])->all();
+				$districts = AdDistrict::find()->indexBy('id')->select('center, geometry, name, id, pre, city_id')->where(['city_id' => $searchModel->city_id])->all();
+				$wards = AdWard::find()->indexBy('id')->select('center, geometry, name, id, pre, district_id')->where(['district_id' => ArrayHelper::getColumn($districts, 'id')])->all();
+				$streets = AdStreet::find()->indexBy('id')->select('name, id, pre')->where(['district_id' => ArrayHelper::getColumn($districts, 'id')])->all();
+					
+				return ['products' => $products, 'cities' => $cities, 'districts' => $districts, 'wards' => $wards, 'streets' => $streets];
+			}
 		} else {
 			$countQuery = clone $searchQuery;
 			$pages = new Pagination(['totalCount' => $countQuery->count()]);
-			$pages->setPageSize(24);
+			$pages->setPageSize(Yii::$app->params['listingLimit']);
 			
     		$products = $searchQuery->with(['city', 'district', 'ward', 'street'])->offset($pages->offset)->limit($pages->limit)->all();
 			

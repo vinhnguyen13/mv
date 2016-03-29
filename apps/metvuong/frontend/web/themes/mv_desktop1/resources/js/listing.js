@@ -72,6 +72,9 @@ $(document).ready(function(){
 			}
 			
 			desktop.desktopEvent();
+			
+			desktop.countToEl = $('#count-to');
+			desktop.limit = Number(desktop.countToEl.text()) - Number($('#count-from').text()) + 1;
 		},
 		disable: function() {
 			desktop.isEnabled = false;
@@ -179,13 +182,35 @@ $(document).ready(function(){
 			clearTimeout($.data(this, 'scrollTimer'));
 			
 		    $.data(this, 'scrollTimer', setTimeout(function() {
-		    	if(self.scrollTop() >= (self.get(0).scrollHeight - 100 - self.outerHeight())) {
+		    	if(self.scrollTop() >= (self.get(0).scrollHeight - 200 - self.outerHeight())) {
 		    		listing.more();
 		    	}
 		    }, 250));
 		},
 		more: function() {
-			console.log('load more');
+//			if(! listing.isLoading) {
+//				listing.isLoading = true;
+//				
+//				var offset = Number(desktop.countToEl.text());
+//				
+//				if(offset < Number($('#count-total').text())) {
+//					var hiddenFieldWrap = $('<div></div>');
+//					var page = offset/desktop.limit + 1;
+//					
+//					hiddenFieldWrap.html('<input type="hidden" name="page" value="' + page + '" />');
+//					
+//					form.el.append(hiddenFieldWrap);
+//					
+//					form.getData(function(r) {
+//						listing.el.find('> ul').append(r);
+//						desktop.countToEl.text(offset + $(r).filter('li').length);
+//						
+//						listing.isLoading = false;
+//					});
+//					
+//					hiddenFieldWrap.remove();
+//				}
+//			}
 		}
 	};
 	
