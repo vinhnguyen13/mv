@@ -341,7 +341,10 @@ $(document).ready(function(){
 	$('.style-common').each(function(){
 		var self = $(this);
 		
-		$(this).select2({width: '100%'});
+		$(this).select2({
+			width: '100%',
+			dropdownParent: self.parent()
+		});
 		
 		if(self.hasClass('hide')) {
 			$('#select2-' + self.attr('id') + '-container').closest('.select2-container').addClass('hide');
@@ -352,7 +355,8 @@ $(document).ready(function(){
 		
 		$(this).select2({
 			width: '100%',
-			dropdownCssClass: 'select2-duan'
+			dropdownCssClass: 'select2-duan',
+			dropdownParent: self.parent()
 		});
 		
 		if(self.hasClass('hide')) {
