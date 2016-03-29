@@ -129,6 +129,12 @@ $(document).ready(function(){
 		desktopEvent: function() {
 			listing.el.on('click', '.item-listing a', listing.detailEvent);
 			listing.el.on('scroll', listing.moreEvent);
+			
+			$('.btn-close').on('click', function(e){
+				e.preventDefault();
+				
+				listing.closeDetail();
+			});
 		},
 		mobileEvent: function() {
 			listing.el.off('click', '.item-listing a', listing.detailEvent);
@@ -139,6 +145,9 @@ $(document).ready(function(){
 			listing.detail(Number($(this).data('id')));
 		},
 		detail: function(id) {
+			listing._detail(id);
+		},
+		_detail: function(id) {
 			var wWrapList = $('.detail-listing-dt').outerWidth();
 			var detailListing = $('.detail-listing');
 			var wrapDetailListing = $('.detail-listing-dt');
@@ -160,6 +169,11 @@ $(document).ready(function(){
 			    });
 
 				wrapDetailListing.loading({done: true});
+			});
+		},
+		closeDetail: function() {
+			$('.detail-listing-dt').css({
+				left: '0px'
 			});
 		},
 		moreEvent: function(e) {
@@ -206,9 +220,6 @@ $(document).ready(function(){
 	form = {
 		el: $('#search-form'),
 		init: function() {
-
-			form.getShowNumFrm();
-			
 			codeMigrate();
 			
 			form.attachEvent();
@@ -280,39 +291,6 @@ $(document).ready(function(){
 		},
 		fieldChange: function(e) {
 			console.log('field change');
-
-			form.getShowNumFrm($(e.target));
-		},
-		getShowNumFrm: function (el) {
-
-			if ( el == undefined ) {
-				$('.show-num-frm').each(function () {
-					var _this = $(this), count = 0;
-					_this.find(':input').not('input[type=hidden]').each(function () {
-						if ( $(this).val() != '' ) {
-							count += 1;
-						}
-					});
-					if ( count > 0 )
-						_this.find('.val-selected .selected').append('<span style="display: inline-block;padding-left:5px;">('+count+')</span>');
-				});
-				return;
-			}
-			
-			if ( el.closest('.show-num-frm').length > 0 ) {
-				var count = 0;
-
-				el.closest('.show-num-frm').find(':input').not('input[type=hidden]').each(function () {
-					if ( $(this).val() != '' ) {
-						count += 1;
-						el.closest('.show-num-frm').find('.val-selected .selected').find('span').remove();
-						el.closest('.show-num-frm').find('.val-selected .selected').append('<span style="display: inline-block;padding-left:5px;">('+count+')</span>');
-					}
-					if ( count == 0 ) {
-						el.closest('.show-num-frm').find('.val-selected .selected').find('span').remove();
-					}
-				});
-			}
 		},
 		getData: function(callback) {
 			$.get(form.el.attr('action'), form.el.serialize(), function(r){
