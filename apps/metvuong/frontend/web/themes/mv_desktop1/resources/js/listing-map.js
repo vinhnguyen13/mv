@@ -26,6 +26,13 @@ var listingMap = {
 				listingMap.buildMarkers();
 				
 				listingMap.draw();
+				
+				if(form.streetEl.val()) {
+					var center = JSON.parse(form.data.districts[form.districtEl.val()].center);
+					center = new google.maps.LatLng(center[0], center[1]);
+					listingMap.map.setCenter(center);
+					listingMap.map.setZoom(15);
+				}
 			});
 		};
 	},
@@ -155,7 +162,7 @@ var listingMap = {
 		
 		listingMap.removeArea();
 		
-		if(listingMap.currentLevel < 3) {
+		if(listingMap.currentLevel < 3 && !form.streetEl.val()) {
 			if(listingMap.drawedMarkerDetail) {
 				listingMap.removeDetailMarkers();
 				listingMap.drawedMarkerDetail = false;
@@ -180,11 +187,6 @@ var listingMap = {
 		} else {
 			listingMap.drawDetail();
 			listingMap.drawedMarkerDetail = true;
-			
-//			var center = JSON.parse(form.data.districts[form.districtEl.val()].center);
-//			center = new google.maps.LatLng(center[0], center[1]);
-//			listingMap.map.setCenter(center);
-//			listingMap.map.setZoom(15);
 		}
 	},
 	buildMarkers: function() {
