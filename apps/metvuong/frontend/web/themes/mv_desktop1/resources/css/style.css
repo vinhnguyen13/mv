@@ -2337,9 +2337,9 @@ label {
 .user-edit .name-user {
     font-weight: 700;
     width: 100%;
-    /* white-space: nowrap; */
-    /* overflow: hidden; */
-    /* text-overflow: ellipsis; */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .user-edit .address {
     font-size: .7em;
@@ -2760,6 +2760,9 @@ html.mm-opening .mm-slideout {
 .mm-slideout {
     background: #fff;
     /* overflow: hidden; */
+}
+header.mm-slideout {
+    overflow: hidden;
 }
 .mm-menu.mm-offcanvas.mm-current {
     display: block !important;
@@ -5573,7 +5576,7 @@ footer li a {
 }
 .ad-listing header .container {
     width: 100%;
-    padding-left: 10px;
+    /* padding-left: 10px; */
 }
 .wrap-map-listing {
     display: none;
@@ -6842,7 +6845,10 @@ footer li a {
         padding: 20px;
     }
     #settings-user .user-edit a > div {
-        /* overflow: hidden; */
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        display: block;
     }
     #settings-user li .wrap-img {
         margin-right: 10px;
