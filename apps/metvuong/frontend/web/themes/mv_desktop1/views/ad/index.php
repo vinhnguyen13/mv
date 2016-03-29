@@ -80,7 +80,7 @@ $this->registerJs($script, View::POS_BEGIN);
 				<div class="search-subpage">
 					<div class="advande-search clearfix">
 						<div class="toggle-search"<?= $hideSearchForm ? ' style="display: none"' : '' ?>>
-							<div class="frm-item select-location">
+							<div class="frm-item select-location show-num-frm">
 								<div class="box-dropdown dropdown-common">
 									<div class="val-selected style-click" data-text-add="Locations"><span class="selected">Locations</span><span class="arrowDownFillFull"></span></div>
 									<div class="item-dropdown hide-dropdown">
@@ -339,7 +339,7 @@ $this->registerJs($script, View::POS_BEGIN);
 									</div>
 								</div>
 							</div> -->
-							<div class="frm-item select-others">
+							<div class="frm-item select-others show-num-frm">
 								<div class="box-dropdown dropdown-common">
 									<div class="val-selected style-click">
 										<span class="selected" data-placeholder="Loại bất động sản?"><?= Yii::t('ad', 'More') ?></span>
