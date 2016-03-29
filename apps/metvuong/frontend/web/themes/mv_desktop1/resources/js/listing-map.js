@@ -17,6 +17,17 @@ var listingMap = {
 
 		listing.el.on('mouseenter', '.item-listing a', listingMap.listingMouseenter);
 		listing.el.on('mouseleave', '.item-listing a', listingMap.listingMouseleave);
+		
+		form.formChange = function() {
+			form._formChange(function(r){
+				form.updateList(r.list, count(r.products));
+				
+				form.data.products = r.products;
+				listingMap.buildMarkers();
+				
+				listingMap.draw();
+			});
+		};
 	},
 	listingMouseenter: function() {
 		var self = $(this);
@@ -119,36 +130,7 @@ var listingMap = {
 			
 			if(zoomLevel >= levelValue.level) {
 				if(listingMap.currentLevel != zoomLevel) {
-					listingMap.currentLevel = zoomLevel;
-					
-					listingMap.removeArea();
-					
-					if(listingMap.currentLevel < 3) {
-						if(listingMap.drawedMarkerDetail) {
-							listingMap.removeDetailMarkers();
-							listingMap.drawedMarkerDetail = false;
-						}
-						
-						var areas = {};
-
-						if(zoomLevel - levelValue.level == 1) {
-							var compareId = listingMap.idMaps[levelValue.level];
-							for(var i in form.data[listingMap.dataMaps[listingMap.currentLevel]]) {
-								if(form.data[listingMap.dataMaps[listingMap.currentLevel]][i][compareId] == levelValue.id) {
-									areas[i] = form.data[listingMap.dataMaps[listingMap.currentLevel]][i];
-								}
-							}
-						} else if(zoomLevel == levelValue.level) {
-							areas[levelValue.id] = form.data[listingMap.dataMaps[zoomLevel]][levelValue.id];
-						} else {
-							areas = form.data[listingMap.dataMaps[listingMap.currentLevel]];
-						}
-						
-						listingMap.drawArea(areas);
-					} else {
-						listingMap.drawDetail();
-						listingMap.drawedMarkerDetail = true;
-					}
+					listingMap.draw();
 				}
 			}
 		});
@@ -162,7 +144,44 @@ var listingMap = {
 			});
 		};
 	},
+	draw: function() {
+		var zoomLevel = listingMap.getZoomLevel(listingMap.map.getZoom());
+		var levelValue = listingMap.getFocusLevelValue();
+		
+		listingMap.currentLevel = zoomLevel;
+		
+		listingMap.removeArea();
+		
+		if(listingMap.currentLevel < 3) {
+			if(listingMap.drawedMarkerDetail) {
+				listingMap.removeDetailMarkers();
+				listingMap.drawedMarkerDetail = false;
+			}
+			
+			var areas = {};
+
+			if(zoomLevel - levelValue.level == 1) {
+				var compareId = listingMap.idMaps[levelValue.level];
+				for(var i in form.data[listingMap.dataMaps[listingMap.currentLevel]]) {
+					if(form.data[listingMap.dataMaps[listingMap.currentLevel]][i][compareId] == levelValue.id) {
+						areas[i] = form.data[listingMap.dataMaps[listingMap.currentLevel]][i];
+					}
+				}
+			} else if(zoomLevel == levelValue.level) {
+				areas[levelValue.id] = form.data[listingMap.dataMaps[zoomLevel]][levelValue.id];
+			} else {
+				areas = form.data[listingMap.dataMaps[listingMap.currentLevel]];
+			}
+			
+			listingMap.drawArea(areas);
+		} else {
+			listingMap.drawDetail();
+			listingMap.drawedMarkerDetail = true;
+		}
+	},
 	buildMarkers: function() {
+		listingMap.markers = {};
+		
 		for(var i in form.data.products) {
 			var product = form.data.products[i];
 			var index = product.lat + '-' + product.lng;

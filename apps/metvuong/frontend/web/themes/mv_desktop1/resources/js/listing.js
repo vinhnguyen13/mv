@@ -72,9 +72,13 @@ $(document).ready(function(){
 			}
 			
 			desktop.desktopEvent();
-			
+
+			desktop.countFrom = $('#count-from');
 			desktop.countToEl = $('#count-to');
-			desktop.limit = Number(desktop.countToEl.text()) - Number($('#count-from').text()) + 1;
+			desktop.countTotal = $('#count-total');
+			desktop.loadingList = $('#loading-list');
+			
+			desktop.limit = Number(desktop.countToEl.text()) - Number(desktop.countFrom.text()) + 1;
 		},
 		disable: function() {
 			desktop.isEnabled = false;
@@ -184,14 +188,12 @@ $(document).ready(function(){
 	    	}
 		},
 		more: function() {
-			var loadingList = $('#loading-list');
-			
-			if(loadingList.hasClass('hide')) {
+			if(desktop.loadingList.hasClass('hide')) {
 				
 				var offset = Number(desktop.countToEl.text());
 				
-				if(offset < Number($('#count-total').text())) {
-					loadingList.removeClass('hide');
+				if(offset < Number(desktop.countTotal.text())) {
+					desktop.loadingList.removeClass('hide');
 					
 					var hiddenFieldWrap = $('<div></div>');
 					var page = offset/desktop.limit + 1;
@@ -204,7 +206,7 @@ $(document).ready(function(){
 						listing.el.find('> ul').append(r);
 						desktop.countToEl.text(offset + $(r).filter('li').length);
 						
-						loadingList.addClass('hide');
+						desktop.loadingList.addClass('hide');
 					});
 					
 					hiddenFieldWrap.remove();
@@ -294,6 +296,37 @@ $(document).ready(function(){
 		fieldChange: function(e) {
 			console.log('field change');
 			form.getShowNumFrm($(e.target));
+			form.formChange();
+		},
+		formChange: function() {
+			form._formChange(function(r){
+				form.updateList(r.list, count(r.products));
+			});
+		},
+		_formChange: function(fn) {
+			listing.el.find('> ul').html('');
+			desktop.loadingList.removeClass('hide');
+			
+			var hiddenFieldWrap = $('<div></div>');
+			
+			hiddenFieldWrap.html('<input type="hidden" name="update" value="1" />');
+			
+			form.el.append(hiddenFieldWrap);
+			
+			form.getData(function(r) {
+				fn(r);
+
+				desktop.loadingList.addClass('hide');
+			});
+			
+			hiddenFieldWrap.remove();
+		},
+		updateList: function(list, total) {
+			desktop.countFrom.text(1);
+			desktop.countTotal.text(total);
+			desktop.countToEl.text($(list).filter('li').length);
+			
+			listing.el.find('> ul').html(list);
 		},
 		getShowNumFrm: function (el) {
 

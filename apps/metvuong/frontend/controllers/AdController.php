@@ -139,6 +139,16 @@ class AdController extends Controller
 				$categories = AdCategory::find ()->indexBy ( 'id' )->asArray ( true )->all ();
 				
 				return $this->renderPartial('_partials/list', ['products' => $products, 'categories' => $categories]);
+			} else if(Yii::$app->request->get('update')) {
+				Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+				
+				$cloneQuery = clone $searchQuery;
+				
+				$products = $searchQuery->indexBy('id')->asArray(true)->all();
+				$list = $cloneQuery->with(['city', 'district', 'ward', 'street'])->offset(0)->limit(Yii::$app->params['listingLimit'])->all();
+				$categories = AdCategory::find ()->indexBy ( 'id' )->asArray ( true )->all ();
+				
+				return ['products' => $products, 'list' => $this->renderPartial('_partials/list', ['products' => $list, 'categories' => $categories])];
 			} else {
 				Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 					
