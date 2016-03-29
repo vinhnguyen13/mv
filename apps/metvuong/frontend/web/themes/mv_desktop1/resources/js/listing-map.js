@@ -180,6 +180,11 @@ var listingMap = {
 		}
 	},
 	buildMarkers: function() {
+		
+		for(var i in listingMap.markers) {
+			listingMap.markers[i].setMap(null);
+		}
+		
 		listingMap.markers = {};
 		
 		for(var i in form.data.products) {
