@@ -414,6 +414,7 @@ $this->registerJs($script, View::POS_BEGIN);
 						<ul class="clearfix">
 							<?= $this->render('_partials/list', ['products' => $products, 'categories' => $categories]) ?>
 						</ul>
+						<div id="loading-list" class="hide" style="text-align: center;"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/loading-listing.gif' ?>" /></div>
 						<nav class="text-center dt-pagination">
 				            <?php
 				                echo LinkPager::widget([

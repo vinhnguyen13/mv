@@ -188,12 +188,15 @@ $(document).ready(function(){
 		    }, 250));
 		},
 		more: function() {
-			if(! listing.isLoading) {
-				listing.isLoading = true;
+			var loadingList = $('#loading-list');
+			
+			if(loadingList.hasClass('hide')) {
 				
 				var offset = Number(desktop.countToEl.text());
 				
 				if(offset < Number($('#count-total').text())) {
+					loadingList.removeClass('hide');
+					
 					var hiddenFieldWrap = $('<div></div>');
 					var page = offset/desktop.limit + 1;
 					
@@ -205,7 +208,7 @@ $(document).ready(function(){
 						listing.el.find('> ul').append(r);
 						desktop.countToEl.text(offset + $(r).filter('li').length);
 						
-						listing.isLoading = false;
+						loadingList.addClass('hide');
 					});
 					
 					hiddenFieldWrap.remove();
