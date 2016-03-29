@@ -36,7 +36,7 @@ var listingMap = {
 		$.data(this, 'mouseenterTimer', setTimeout(function(){
 			var marker;
 			
-			if(listingMap.getZoomLevel(listingMap.map.getZoom()) < 3) {
+			if(listingMap.getZoomLevel(listingMap.map.getZoom()) < 3 && !form.streetEl.val()) {
 				marker = listingMap.getAreaMarkerByProductId(id);
 			} else {
 				marker = listingMap.getMarker(id);
@@ -53,7 +53,7 @@ var listingMap = {
 		var id = $(this).data('id') + '';
 		var marker;
 		
-		if(listingMap.getZoomLevel(listingMap.map.getZoom()) < 3) {
+		if(listingMap.getZoomLevel(listingMap.map.getZoom()) < 3 && !form.streetEl.val()) {
 			marker = listingMap.getAreaMarkerByProductId(id);
 		} else {
 			marker = listingMap.getMarker(id);
@@ -93,12 +93,14 @@ var listingMap = {
 		listingMap.map = new google.maps.Map(document.getElementById('map'), options);
 		listingMap.infoWindow = new m2Map.InfoWindow({offsetTop: 40});
 		
-		var areas = {};
-		areas[area.id] = area;
-		
-		listingMap.drawArea(areas);
+//		var areas = {};
+//		areas[area.id] = area;
+//		
+//		listingMap.drawArea(areas);
 		
 		listingMap.buildMarkers();
+		
+		listingMap.draw();
 
 		listingMap.infoWindow = new m2Map.InfoWindow({offsetTop: 40});
 		
@@ -145,6 +147,7 @@ var listingMap = {
 		};
 	},
 	draw: function() {
+		console.log('draw');
 		var zoomLevel = listingMap.getZoomLevel(listingMap.map.getZoom());
 		var levelValue = listingMap.getFocusLevelValue();
 		
@@ -152,7 +155,7 @@ var listingMap = {
 		
 		listingMap.removeArea();
 		
-		if(listingMap.currentLevel < 3) {
+		if(listingMap.currentLevel < 3 && !form.streetEl.val()) {
 			if(listingMap.drawedMarkerDetail) {
 				listingMap.removeDetailMarkers();
 				listingMap.drawedMarkerDetail = false;
