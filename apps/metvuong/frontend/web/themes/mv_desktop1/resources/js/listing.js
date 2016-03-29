@@ -220,6 +220,9 @@ $(document).ready(function(){
 	form = {
 		el: $('#search-form'),
 		init: function() {
+
+			form.getShowNumFrm();
+
 			codeMigrate();
 			
 			form.attachEvent();
@@ -252,6 +255,9 @@ $(document).ready(function(){
 					form.appendDropdown(form.wardEl, response.wards);
 					form.appendDropdown(form.streetEl, response.streets);
 					form.appendDropdown(form.projectEl, response.projects);
+					if ( response.wards.length == 0 ) {
+						form.getShowNumFrm();
+					}
 				});
 			});
 		},
@@ -291,6 +297,39 @@ $(document).ready(function(){
 		},
 		fieldChange: function(e) {
 			console.log('field change');
+			form.getShowNumFrm($(e.target));
+		},
+		getShowNumFrm: function (el) {
+
+			if ( el == undefined ) {
+				$('.show-num-frm').each(function () {
+					var _this = $(this), count = 0;
+					_this.find('.val-selected .selected').find('span').remove();
+					_this.find(':input').not('input[type=hidden]').each(function () {
+						if ( $(this).val() != '' ) {
+							count += 1;
+						}
+					});
+					if ( count > 0 )
+						_this.find('.val-selected .selected').append('<span style="display: inline-block;padding-left:5px;">('+count+')</span>');
+				});
+				return;
+			}
+			
+			if ( el.closest('.show-num-frm').length > 0 ) {
+				var count = 0;
+
+				el.closest('.show-num-frm').find(':input').not('input[type=hidden]').each(function () {
+					if ( $(this).val() != '' ) {
+						count += 1;
+						el.closest('.show-num-frm').find('.val-selected .selected').find('span').remove();
+						el.closest('.show-num-frm').find('.val-selected .selected').append('<span style="display: inline-block;padding-left:5px;">('+count+')</span>');
+					}
+					if ( count == 0 ) {
+						el.closest('.show-num-frm').find('.val-selected .selected').find('span').remove();
+					}
+				});
+			}
 		},
 		getData: function(callback) {
 			$.get(form.el.attr('action'), form.el.serialize(), function(r){
