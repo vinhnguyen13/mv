@@ -2,7 +2,7 @@ var listingMap = {
 	drawedMarkerDetail: false,
 	polygons: [],
 	areaMarkers: [],
-	markers: [],
+	markers: {},
 	zoomLevelConst: {
 		CITY: 0,
 		DISTRICT: 1,
@@ -20,31 +20,46 @@ var listingMap = {
 	},
 	listingMouseenter: function() {
 		var self = $(this);
-
+		var id = self.data('id') + '';
+		
 		$.data(this, 'mouseenterTimer', setTimeout(function(){
+			var marker;
+			
 			if(listingMap.getZoomLevel(listingMap.map.getZoom()) < 3) {
-				var marker = listingMap.getAreaMarkerByProductId(self.data('id') + '');
-				
-				if(marker) {
-					marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
-					marker.setIcon(listingMap.icon(marker.get('ids').length, 1));
-					
-					var position = marker.getPosition();
-					
-					if(!listingMap.map.getBounds().contains(position)) {
-						listingMap.map.setCenter(position);
-					}
-				}
+				marker = listingMap.getAreaMarkerByProductId(id);
+			} else {
+				marker = listingMap.getMarker(id);
+			}
+			
+			if(marker) {
+				listingMap.focusMarker(marker);
 			}
 		}, 300));
 	},
 	listingMouseleave: function() {
 		clearTimeout($.data(this, 'mouseenterTimer'));
 		
-		var marker = listingMap.getAreaMarkerByProductId($(this).data('id') + '');
+		var id = $(this).data('id') + '';
+		var marker;
+		
+		if(listingMap.getZoomLevel(listingMap.map.getZoom()) < 3) {
+			marker = listingMap.getAreaMarkerByProductId(id);
+		} else {
+			marker = listingMap.getMarker(id);
+		}
 		
 		if(marker) {
 			marker.setIcon(listingMap.icon(marker.get('ids').length, 0));
+		}
+	},
+	focusMarker: function(marker) {
+		marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
+		marker.setIcon(listingMap.icon(marker.get('ids').length, 1));
+		
+		var position = marker.getPosition();
+		
+		if(!listingMap.map.getBounds().contains(position)) {
+			listingMap.map.setCenter(position);
 		}
 	},
 	initMap: function() {
@@ -413,17 +428,23 @@ var listingMap = {
 		
 		return marker;
 	},
-	getAreaMarkerByProductId: function(id) {
+	_getMarker: function(markers, id) {
 		var marker;
 
-		for(var i = 0; i<= listingMap.areaMarkers.length; i++) {
-			if(listingMap.areaMarkers[i] && listingMap.areaMarkers[i].ids.indexOf(id) !== -1) {
-				marker = listingMap.areaMarkers[i];
+		for(var i in markers) {
+			if(markers[i].ids.indexOf(id) !== -1) {
+				marker = markers[i];
 				break;
 			}
 		}
 		
 		return marker;
+	},
+	getMarker: function(id) {
+		return listingMap._getMarker(listingMap.markers, id);
+	},
+	getAreaMarkerByProductId: function(id) {
+		return listingMap._getMarker(listingMap.areaMarkers, id);
 	},
 	buildInfoContent: function(product) {
 		var img = listingMap.getImageUrl(product);
