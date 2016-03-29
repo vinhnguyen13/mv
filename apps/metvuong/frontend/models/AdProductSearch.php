@@ -5,6 +5,7 @@ use yii\data\ActiveDataProvider;
 use yii\helpers\Inflector;
 use vsoft\ad\models\AdProduct;
 use yii\helpers\StringHelper;
+use vsoft\ad\models\AdCategory;
 
 class AdProductSearch extends AdProduct {
 	const DEFAULT_CITY = 1;
@@ -143,6 +144,10 @@ class AdProductSearch extends AdProduct {
 		
 		if(!$this->type) {
 			$this->type = AdProduct::TYPE_FOR_SELL;
+		}
+		
+		if($this->project_building_id) {
+			$this->category_id = AdCategory::CATEGORY_CHCK;
 		}
 	}
 }
