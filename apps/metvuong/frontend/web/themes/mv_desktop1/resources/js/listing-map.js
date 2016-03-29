@@ -58,8 +58,10 @@ var listingMap = {
 		
 		var position = marker.getPosition();
 		
-		if(!listingMap.map.getBounds().contains(position)) {
-			listingMap.map.setCenter(position);
+		var offsetX = $('.detail-listing-dt').position().left / 2;
+		
+		if(!listingMap.getBounds(offsetX, 0).contains(position)) {
+			listingMap.setCenter(position, offsetX, 0);
 		}
 	},
 	initMap: function() {
@@ -515,5 +517,41 @@ var listingMap = {
 		address.push(city['name']);
 		
 		return address.join(', ');
+	},
+	setCenter: function(latLng, offsetx, offsety) {
+		var scale = Math.pow(2, listingMap.map.getZoom());
+		var bounds = listingMap.map.getBounds();
+		var projection = listingMap.map.getProjection();
+		
+		var nw = new google.maps.LatLng(bounds.getNorthEast().lat(), bounds.getSouthWest().lng());
+		
+		var worldCoordinateCenter = projection.fromLatLngToPoint(latLng);
+		var pixelOffset = new google.maps.Point((offsetx/scale) || 0, (offsety/scale) || 0);
+		
+		var worldCoordinateNewCenter = new google.maps.Point(
+			worldCoordinateCenter.x - pixelOffset.x,
+			worldCoordinateCenter.y + pixelOffset.y
+		);
+		
+		var center = projection.fromPointToLatLng(worldCoordinateNewCenter);
+		
+		listingMap.map.setCenter(center);
+	},
+	getBounds: function(offsetx, offsety) {
+		var scale = Math.pow(2, listingMap.map.getZoom());
+		var bounds = listingMap.map.getBounds();
+		var projection = listingMap.map.getProjection();
+		var northEast = bounds.getNorthEast();
+		
+		var worldCoordinateNorthEast = projection.fromLatLngToPoint(northEast);
+		var pixelOffset = new google.maps.Point(((offsetx*2)/scale) || 0, ((offsety*2)/scale) || 0);
+		var worldCoordinateNewNorthEast = new google.maps.Point(
+			worldCoordinateNorthEast.x + pixelOffset.x,
+			worldCoordinateNorthEast.y - pixelOffset.y
+		);
+		
+		var newNorthEast = projection.fromPointToLatLng(worldCoordinateNewNorthEast);
+
+		return new google.maps.LatLngBounds(bounds.getSouthWest(), newNorthEast);
 	}
 }
