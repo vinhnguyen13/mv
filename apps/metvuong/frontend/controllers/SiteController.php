@@ -319,7 +319,6 @@ class SiteController extends Controller
     					'mode'	=> 'sum'
 					],
 				],
-				'size' => 6,
     			'_source' => ['full_name', AdProduct::TYPE_FOR_SELL_TOTAL, AdProduct::TYPE_FOR_RENT_TOTAL]
     		];
     		 
