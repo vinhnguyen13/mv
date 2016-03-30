@@ -139,8 +139,10 @@ $(document).ready(function(){
 			// Load default attach event for mobile here
 		},
 		desktopEvent: function() {
+			listing.wrapListingEl = $('.wrap-listing');
+			
 			listing.el.on('click', '.item-listing a', listing.detailEvent);
-			listing.el.on('scroll', listing.moreEvent);
+			listing.wrapListingEl.on('scroll', listing.moreEvent);
 			
 			$('.btn-close').on('click', function(e){
 				e.preventDefault();
@@ -150,7 +152,7 @@ $(document).ready(function(){
 		},
 		mobileEvent: function() {
 			listing.el.off('click', '.item-listing a', listing.detailEvent);
-			listing.el.off('scroll', listing.moreEvent);
+			listing.wrapListingEl.off('scroll', listing.moreEvent);
 		},
 		detailEvent: function(e) {
 			e.preventDefault();
