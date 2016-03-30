@@ -47,6 +47,14 @@ var form, desktop, listing;
 
 
 $(document).ready(function(){
+	if ( !checkMobile() ) {
+		$(window).on('resize', function () {
+			var hFrm = $('#search-form').outerHeight(),
+				hWrap = $('.wrap-listing-item .inner-wrap').outerHeight();
+			$('.wrap-listing').css('height',(hWrap-hFrm)+'px');
+		}).trigger('resize');
+	}
+	
 	desktop = {
 		isLoadResources: false,
 		init: function() {
