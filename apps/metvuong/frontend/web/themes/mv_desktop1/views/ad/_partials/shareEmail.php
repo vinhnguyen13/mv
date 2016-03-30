@@ -94,7 +94,7 @@ use yii\helpers\Url;
                     <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
                 <?php }
                 if(isset($user) && !empty($user)){
-                    $address = $user->location->city;
+                    $address = empty($user->location) ? "" : $user->location->city;
                     ?>
                     <div class="img-show"><div><a href=""><img src="<?=$user->profile->avatar ?>" alt="<?=$address?>"></a></div></div>
                     <div class="infor-send">
