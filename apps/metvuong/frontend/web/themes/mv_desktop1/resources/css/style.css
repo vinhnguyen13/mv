@@ -7202,7 +7202,7 @@ footer li a {
     margin-bottom: 5px;
 }
 .infor-duan-suggest .address-listing {
-    padding-right: 100px;
+    /* padding-right: 100px; */
     line-height: 20px;
 }
 .items-list {
