@@ -88,7 +88,7 @@ use yii\widgets\LinkPager;
 
                         var html = '';
                         for (var i in response) {
-                            html += '<li><a href="#">' + response[i].full_name + '</a></li>';
+                            html += '<li><a href="/building-project/detail?id='+response[i][1]+'">' + response[i][0].full_name + '</a></li>';
                         }
                         $('.content-suggest ul').html(html);
                     } else {

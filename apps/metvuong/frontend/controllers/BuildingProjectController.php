@@ -50,13 +50,17 @@ class BuildingProjectController extends Controller
 	}
 	
 	function actionDetail($id) {
-		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+//		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 		
-		$model = AdBuildingProject::find()->where('`id` = :id', [':id' => $id])->asArray(true)->one();
+		$model = AdBuildingProject::find()->where('`id` = :id', [':id' => $id])->one();
 	
-		$model['url'] = Url::to(['building-project/view', 'slug' => $model['slug']]);
-		
-		return $model;
+//		$model['url'] = Url::to(['building-project/view', 'slug' => $model['slug']]);
+
+        if($model) {
+            $this->redirect(Url::to(['building-project/view', 'slug' => $model->slug]));
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
 	}
 
     function actionFind() {
@@ -103,8 +107,7 @@ class BuildingProjectController extends Controller
                         'mode'	=> 'sum'
                     ],
                 ],
-                'size' => 6,
-                '_source' => ['full_name']
+                'size' => 20
             ];
 
             $ch = curl_init(Yii::$app->params['elastic']['config']['hosts'][0] . '/term/project_building/_search');
@@ -116,7 +119,7 @@ class BuildingProjectController extends Controller
             $response = [];
 
             foreach ($result['hits']['hits'] as $k => $hit) {
-                $response[$k] = $hit['_source'];
+                $response[$k] = [$hit['_source'], $hit['_id']];
             }
 
             return $response;
