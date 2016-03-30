@@ -14,9 +14,14 @@ use yii\widgets\LinkPager;
             <div class="title-top"><?=Yii::t('general', 'New Project')?></div>
             <div class="wrap-infor-duan">
                 <div class="search-duan">
-                    <form id="search-duan-form" action="<?= \yii\helpers\Url::to(['building-project/find'], true) ?>">
-                        <input name="project_name" class="project_name" type="text" placeholder="<?=Yii::t('general', 'Find by name...')?>">
+                    <form id="search-duan-form" action="<?= \yii\helpers\Url::to(['building-project/search'], true) ?>">
+                        <input autocomplete="off" id="findProject" name="v" class="project_name" type="text" placeholder="<?=Yii::t('general', 'Find by name...')?>">
                         <button type="submit" id="btn-search-duan"><span class="icon icon-search-small-1"></span></button>
+                        <div class="suggest-search hide">
+                            <div class="content-suggest">
+                                <ul></ul>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="list-duan">
@@ -66,3 +71,34 @@ use yii\widgets\LinkPager;
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        var searchForm = $('#search-duan-form');
+        $('#findProject').keyup(function () {
+            var self = $(this);
+            var val = self.val().trim();
+            var url = searchForm.attr('action');
+            var ss = $('.suggest-search');
+
+            if (val.length >= 2) {
+                $.get(url, searchForm.serialize(), function (response) {
+                    if (response.length > 0) {
+                        ss.removeClass('hide');
+
+                        var html = '';
+                        for (var i in response) {
+                            html += '<li><a href="#">' + response[i].full_name + '</a></li>';
+                        }
+                        $('.content-suggest ul').html(html);
+                    } else {
+                        ss.addClass('hide');
+                    }
+                });
+            } else {
+                $('#v').val('');
+                ss.addClass('hide');
+            }
+        });
+    });
+</script>
