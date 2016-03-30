@@ -25,7 +25,7 @@ class AdImages extends AI
     }
     
     public function getUrl($size = self::SIZE_MEDIUM) {
-    	return self::getImageUrl($this->folder, $this->file_name);
+    	return self::getImageUrl($this->folder, $this->file_name, $size);
     }
     
     public static function getImageUrl($folder, $fileName, $size = self::SIZE_MEDIUM) {
