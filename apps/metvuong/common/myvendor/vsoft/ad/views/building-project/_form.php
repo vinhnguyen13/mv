@@ -118,7 +118,6 @@ if(!$model->isNewRecord) {
 			    	<?= $form->field($model, 'estimate_finished') ?>
 			    	<?= $form->field($model, 'owner_type') ?>
 			    	<?= $form->field($model, 'facilities')->checkboxList(ArrayHelper::map($facility, 'id', 'name')) ?>
-                    <div style="padding-left: 10px">Khác: </div>
 			    	<?= $form->field($model, 'hotline')->textArea()->hint('Mổi số điện thoại trên 1 dòng') ?>
 			    	<?= $form->field($model, 'website') ?>
 	    		</li>
