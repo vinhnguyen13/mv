@@ -12,6 +12,7 @@ var listingMap = {
 	zoomLevel: [[0,11],[12,14],[15,16],[17,21]],
 	dataMaps: ['cities','districts','wards','streets'],
 	idMaps: ['city_id','district_id','ward_id','street_id'],
+	streetLine: null,
 	init: function() {
 		listingMap.initMap();
 
@@ -26,13 +27,7 @@ var listingMap = {
 				listingMap.buildMarkers();
 				
 				listingMap.draw();
-				
-				if(form.streetEl.val()) {
-					var center = JSON.parse(form.data.districts[form.districtEl.val()].center);
-					center = new google.maps.LatLng(center[0], center[1]);
-					listingMap.map.setCenter(center);
-					listingMap.map.setZoom(15);
-				}
+				listingMap.drawStreet();
 			});
 		};
 	},
@@ -108,6 +103,8 @@ var listingMap = {
 		listingMap.buildMarkers();
 		
 		listingMap.draw();
+		listingMap.drawStreet();
+		
 
 		listingMap.infoWindow = new m2Map.InfoWindow({offsetTop: 40});
 		
@@ -153,8 +150,40 @@ var listingMap = {
 			});
 		};
 	},
+	drawStreet: function() {
+		if(form.streetEl.val()) {
+			if(form.data.streets[form.streetEl.val()].center) {
+				var center = JSON.parse(form.data.streets[form.streetEl.val()].center);
+				center = new google.maps.LatLng(center[0], center[1]);
+				listingMap.map.setCenter(center);
+				listingMap.map.setZoom(15);
+			}
+			
+			if(form.data.streets[form.streetEl.val()].geometry) {
+				var geometry = JSON.parse(form.data.streets[form.streetEl.val()].geometry);
+				var path = [];
+				for(var i in geometry) {
+					path.push({lat: geometry[i][0], lng: geometry[i][1]});
+				}
+				
+				listingMap.streetLine = new google.maps.Polyline({
+					path: path,
+					geodesic: true,
+					strokeColor: '#00a769',
+					strokeOpacity: 0.5,
+					strokeWeight: 6
+				});
+
+				listingMap.streetLine.setMap(listingMap.map);
+			}
+		}
+	},
 	draw: function() {
-		console.log('draw');
+		if(listingMap.streetLine) {
+			listingMap.streetLine.setMap(null);
+			listingMap.streetLine = null;
+		}
+
 		var zoomLevel = listingMap.getZoomLevel(listingMap.map.getZoom());
 		var levelValue = listingMap.getFocusLevelValue();
 		
