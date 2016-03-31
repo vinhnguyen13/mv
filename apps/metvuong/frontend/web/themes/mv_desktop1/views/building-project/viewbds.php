@@ -42,29 +42,7 @@ $tabKeys = [
     'ban-hang' => Yii::t('project','Business'),
     'ho-tro' => Yii::t('project','Support'),
 ];
-$fb_appId = '680097282132293'; // stage.metvuong.com
-if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
-    $fb_appId = '736950189771012';
-else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
-    $fb_appId = '891967050918314';
 ?>
-<script>
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId      : <?=$fb_appId?>,
-            xfbml      : true,
-            version    : 'v2.5'
-        });
-    };
-
-    (function(d, s, id){
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/vi_VN/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-</script>
 <div class="title-fixed-wrap">
     <div class="container">
         <div class="detail-duan-moi">
@@ -186,30 +164,14 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     </div>
 </div>
 
-<div id="popup-share-social" class="popup-common hide-popup">
-    <div class="wrap-popup">
-        <div class="inner-popup">
-            <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
-            <div class="wrap-body-popup">
-                <span><?=Yii::t('project', 'Share on Social Network')?></span>
-                <ul class="clearfix">
-                    <li>
-                        <a href="#" class="share-facebook">
-                            <div class="circle"><div><span class="icon icon-face"></span></div></div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#popup-email" class="email-btn">
-                            <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-
 <?=$this->renderAjax('/ad/_partials/shareEmail',[ 'project' => $model, 'yourEmail' => Yii::$app->user->isGuest ? '' : Yii::$app->user->identity->email, 'recipientEmail' => '', 'params' => ['your_email' => false, 'setValueToEmail' => false] ])?>
+
+<?=$this->render('/ad/_partials/shareSocial',[
+    'url' => Url::to(["building/$model->slug"], true),
+    'title' => $model->name,
+    'description' => \yii\helpers\StringHelper::truncate($model->description, 200, $suffix = '...', $encoding = 'UTF-8'),
+    'image' => $model->logoUrl
+])?>
 
 <script type="text/javascript">
 	$(document).ready(function () {
@@ -254,21 +216,8 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 
         $('#popup-share-social').popupMobi({
             btnClickShow: ".icons-detail .icon-share-td",
-            closeBtn: ".btn-close, .email-btn, .share-facebook",
+            closeBtn: ".btn-close",
             styleShow: "center"
-        });
-
-        $('#popup-email').popupMobi({
-            btnClickShow: ".email-btn",
-            closeBtn: '#popup-email .btn-cancel',
-            styleShow: "full"
-        });
-
-        $(document).on('click', '.share-facebook', function() {
-            FB.ui({
-                method: 'share',
-                href: '<?=Yii::$app->request->absoluteUrl?>'
-            }, function(response){});
         });
 
     });

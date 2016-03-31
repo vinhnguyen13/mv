@@ -326,11 +326,11 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 <script>
 	$(document).ready(function () {
 
-		$('#popup-email').popupMobi({
-			btnClickShow: ".email-btn",
-			closeBtn: '#popup-email .btn-cancel',
-			styleShow: "full"
-		});
+//		$('#popup-email').popupMobi({
+//			btnClickShow: ".email-btn",
+//			closeBtn: '#popup-email .btn-cancel',
+//			styleShow: "full"
+//		});
 
 		$('#popup-map').popupMobi({
 			btnClickShow: ".infor-listing .icon-map-loca",

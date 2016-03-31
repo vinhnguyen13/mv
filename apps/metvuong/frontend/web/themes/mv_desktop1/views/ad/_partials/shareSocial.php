@@ -39,4 +39,10 @@ use yii\helpers\Url;
         var winLeft = (screen.width / 2) - (winWidth / 2);
         window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + url + '&p[title]=' + title + '&p[summary]=' + descr + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
     }
+
+    $('#popup-email').popupMobi({
+        btnClickShow: ".email-btn",
+        closeBtn: '#popup-email .btn-cancel',
+        styleShow: "full"
+    });
 </script>
