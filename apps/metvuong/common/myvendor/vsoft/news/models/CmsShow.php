@@ -133,7 +133,7 @@ class CmsShow extends \funson86\cms\models\CmsShow
         return $query;
     }
 
-    public static function getLatestNews(){
+    public static function getLatestNews($limit = 100){
         $newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatID"] : 0;
         $homepageCatID = isset(Yii::$app->params["homepageCatID"]) ? Yii::$app->params["homepageCatID"] : 0;
         $metvuongCatID = isset(Yii::$app->params["metvuongCatID"]) ? Yii::$app->params["metvuongCatID"] : 0;
@@ -143,7 +143,7 @@ class CmsShow extends \funson86\cms\models\CmsShow
             ->where('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
             ->andWhere('cms_catalog.status = :status', [':status' => Status::STATUS_ACTIVE])
             ->andWhere(['NOT IN', 'cms_show.catalog_id', [1]])
-            ->asArray()->orderBy('cms_show.created_at DESC')->all();
+            ->asArray()->orderBy('cms_show.created_at DESC')->limit($limit)->all();
         return $news;
     }
 

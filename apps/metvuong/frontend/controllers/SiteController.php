@@ -94,7 +94,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         Yii::$app->meta->add(Yii::$app->request->absoluteUrl);
-        $homepage_news = CmsShow::getShowForHomepage();
+        $homepage_news = CmsShow::getLatestNews(8);
 //        $metvuong_news = CmsShow::getShowForMetvuong();
         return $this->render('index',['news' => $homepage_news]);
     }
