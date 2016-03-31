@@ -4067,7 +4067,7 @@ html.mm-opening .mm-slideout {
     color: #00a769;
     font-weight: 600;
     font-size: 18px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 .list-attr-per li {
     border-top: solid 0.5px #ededed;
@@ -4156,6 +4156,9 @@ html.mm-opening .mm-slideout {
     font-size: 15px;
     display: block;
 }
+.list-post li a:hover {
+    color: #00a769;
+}
 .list-post li .bgcover {
     width: 40%;
     height: 100px;
@@ -4176,7 +4179,7 @@ html.mm-opening .mm-slideout {
     right: 0;
 }
 .list-post li .name-post {
-    line-height: 23px;
+    line-height: 21px;
     margin-bottom: 1px;
 }
 .list-post li .list-attr-td li {
@@ -4767,10 +4770,9 @@ html.mm-opening .mm-slideout {
     margin-bottom: 10px;
 }
 .wrap-infor-duan .address-feat p {
-    margin-bottom: 10px;
-    color: #00a769;
+    margin-bottom: 5px;
     text-transform: uppercase;
-    font-size: 14px;
+    font-size: 13px;
 }
 .wrap-infor-duan .address-feat .address-duan {
     text-transform: capitalize;
@@ -4781,7 +4783,7 @@ html.mm-opening .mm-slideout {
     white-space: nowrap;
 }
 .wrap-infor-duan .address-feat .date-post {
-    margin-top: 10px;
+    margin-top: 8px;
     color: #8E8E8E;
     margin-bottom: 0;
 }
@@ -5320,7 +5322,7 @@ html.mm-opening .mm-slideout {
 }
 .search-duan input {
     border: none;
-    border: 1px solid #dedede;
+    border: 1px solid #979797;
     background: #fff;
     display: block;
     width: 100%;
@@ -6212,6 +6214,7 @@ footer li a {
         padding-left: 0;
         padding-right: 0;
         padding-top: 0;
+        margin-top: 50px;
     }
     .wrap-infor-duan .info-item .address-feat {
         padding: 0;
@@ -6395,19 +6398,24 @@ footer li a {
     }
     .infor-duan .title-top {
         border: none;
-        margin-bottom: 20px;
+        float: left;
+        width: auto;
+        margin: 0;
+        padding: 0;
     }
     .search-duan {
-        margin-bottom: 50px;
         position: relative;
+        float: right;
+        margin: 0;
+        width: 500px;
     }
     .wrap-infor-duan .bottom-feat-box {
         border: none;
         padding: 0;
-        height: 85px;
     }
     .list-duan ul {
         margin-left: 0;
+        margin: 0;
     }
     .list-duan ul li {
         margin-bottom: 30px;
@@ -6415,7 +6423,7 @@ footer li a {
         padding-left: 0;
     }
     .wrap-infor-duan .wrap-item .img-show:before {
-        padding-top: 70%;
+        padding-top: 60%;
     }
     
 }
@@ -7511,4 +7519,27 @@ footer li a {
 }
 .sidebar-user button {
     width: 100%;
+}
+.infor-duan {
+    padding-top: 50px;
+}
+.list-duan .item-sidebar {
+    /* border: none; */
+    padding: 0;
+}
+.list-duan .sidebar-col ul li {
+    padding: 0 0 0 0;
+    margin: 0 0 20px 0;
+}
+.list-duan .sidebar-col .name-post {
+    height: auto;
+    margin-bottom: 2px;
+}
+.list-duan .sidebar-col .name-post a {
+    font-size: 13px;
+    font-weight: 700;
+}
+.list-duan .sidebar-col .infor-by-up {
+    font-size: 13px;
+    margin-bottom: 3px;
 }
