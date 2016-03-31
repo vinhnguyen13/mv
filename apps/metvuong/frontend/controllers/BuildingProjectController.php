@@ -49,18 +49,23 @@ class BuildingProjectController extends Controller
 		}
 	}
 	
-	function actionDetail($id) {
-//		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-		
+	function actionRedirectView($id) {
 		$model = AdBuildingProject::find()->where('`id` = :id', [':id' => $id])->one();
-	
-//		$model['url'] = Url::to(['building-project/view', 'slug' => $model['slug']]);
-
         if($model) {
             $this->redirect(Url::to(['building-project/view', 'slug' => $model->slug]));
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+	}
+
+    function actionDetail($id) {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $model = AdBuildingProject::find()->where('`id` = :id', [':id' => $id])->asArray(true)->one();
+
+        $model['url'] = Url::to(['building-project/view', 'slug' => $model['slug']]);
+
+        return $model;
 	}
 
     function actionFind() {
