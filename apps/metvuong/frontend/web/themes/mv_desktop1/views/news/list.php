@@ -11,7 +11,7 @@ $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID, 'st
         <div class="page-news">
             <?= $this->render('/news/_partials/menu', ['cat_id'=>$cat_id]); ?>
             <?php if(count($news)){?>
-                <div class="wrap-news">
+                <div class="wrap-news list-sub-news">
                     <ul class="clearfix row">
                         <?php foreach($news as $n) {
                             $banner = "/store/news/show/".$n["banner"];

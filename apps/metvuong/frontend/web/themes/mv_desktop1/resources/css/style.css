@@ -34,6 +34,52 @@ input[type=text]:focus {
 .color-cd {
     color: #00a769 !important;   
 }
+.font-400 {
+    font-weight: 400 !important;
+}
+.font-600 {
+    font-weight: 600 !important;
+}
+.font-700 {
+    font-weight: 700 !important;
+}
+.fs-10 {
+	font-size: 10px !important;
+}
+.fs-11 {
+	font-size: 11px !important;
+}
+.fs-12 {
+	font-size: 12px !important;
+}
+.fs-13 {
+	font-size: 13px !important;
+}
+.fs-14 {
+	font-size: 14px !important;
+}
+.fs-15 {
+	font-size: 15px !important;
+}
+.fs-16 {
+	font-size: 16px !important;
+}
+.fs-17 {
+	font-size: 17px !important;
+}
+.fs-18 {
+	font-size: 18px !important;
+}
+.fs-19 {
+	font-size: 19px !important;
+}
+.fs-20 {
+	font-size: 20px !important;
+}
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+    padding-left: 20px;
+    padding-right: 20px;
+}
 .container {
     padding: 0 20px;
 }
@@ -2286,6 +2332,7 @@ label {
 #settings-user li span {
     display: block;
 }
+.user-avatar .avatar,
 #avatar-user div,
 .list-noti .avatar a,
 .chat-list .wrap-img,
@@ -4005,6 +4052,7 @@ html.mm-opening .mm-slideout {
 }
 .profile-user {
     margin-bottom: 50px;
+    margin-top: 50px;
 }
 .btn-chat {
     padding: 6px 55px 3px;
@@ -4019,7 +4067,7 @@ html.mm-opening .mm-slideout {
     color: #00a769;
     font-weight: 600;
     font-size: 18px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
 }
 .list-attr-per li {
     border-top: solid 0.5px #ededed;
@@ -6185,6 +6233,17 @@ footer li a {
     .wrap-news {
         padding-right: 50px;
     }
+    .list-sub-news {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .list-sub-news li {
+        margin-bottom: 30px;
+    }
+    .list-sub-news li a {
+        display: block;
+        margin-bottom: 10px;
+    }
     .list-menu-news .swiper-wrapper {
         padding: 0;
         width: auto;
@@ -6222,6 +6281,10 @@ footer li a {
     .name-news a {
         font-size: 18px;
         text-transform: uppercase;
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     .wrap-news .list-news li div > div {
         height: auto;
@@ -6230,7 +6293,7 @@ footer li a {
         margin-bottom: 5px;
     }
     .wrap-news li .short-txt {
-        /* height: 80px; */
+        height: 80px;
         font-size: 13px;
     }
     .unit-dt {
@@ -6256,7 +6319,7 @@ footer li a {
         padding: 0px 15px;
     }
     .list-post {
-        margin: 0 -15px;
+        margin: 0 -20px;
     }
     .list-post li .name-post {
         height: 45px;
@@ -6739,13 +6802,13 @@ footer li a {
     margin: 0 -20px;
 }
 .detail-listing-dt .btn-close {
-    position: fixed;
+    position: absolute;
     z-index: 5;
-    opacity: .6;
+    opacity: 1;
     padding: 5px 5px 2px;
     line-height: 100%;
-    background: rgba(234, 234, 234, 0.48);
-    top: 125px;
+    background: white;
+    top: 0;
     right: inherit;
 }
 .detail-listing-dt .btn-close:hover {
@@ -7318,4 +7381,134 @@ footer li a {
     .list-lq {
         overflow: hidden;
     }
+}
+@media ( min-width: 985px ) {
+    .list-sub-news li div > a.name-cate {
+        margin-bottom: 10px;
+    }
+    .list-per-post {
+        padding: 0;
+    }
+}
+.list-per-post,
+.user-avatar,
+.infor-priva {
+    border-bottom: solid 0.5px #a5a5a5;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    overflow: hidden;
+    font-size: 14px;
+}
+.user-avatar .avatar {
+    float: left;
+    margin-right: 25px;
+    width: auto;
+}
+.user-avatar .name-user {
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+.user-avatar .rating {
+    margin-bottom: 5px;
+}
+.user-avatar .num-mobi,
+.user-avatar .location {
+    margin-bottom: 5px;
+}
+.list-reivew {
+    font-size: 13px;
+}
+.list-reivew > li {
+    border-bottom: solid 0.5px #a5a5a5;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+.list-reivew > li a {
+    font-weight: 700;
+    display: inline-block;
+    margin-right: 10px;
+}
+.list-reivew .infor-user-review {
+    color: #6c6c6c;
+    margin-bottom: 6px;
+}
+.list-reivew .rating {
+    margin-bottom: 10px;
+}
+.list-per-post .nav-tabs {
+    border: solid 1px #bdbdbd;
+}
+.list-per-post .nav-tabs li {
+    width: auto;
+    border-right: solid 1px #bdbdbd;
+}
+.list-per-post .nav-tabs li:last-child {
+    border-right: none;
+}
+.list-per-post .nav-tabs li a {
+    border: none;
+    margin: 0;
+    padding: 8px 25px;
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #3c3c3c;
+}
+.list-per-post .nav-tabs>li.active>a, 
+.list-per-post .nav-tabs>li.active>a:focus, 
+.list-per-post .nav-tabs>li.active>a:hover {
+    background-color: #eaeaea;
+    border: none;
+}
+.list-per-post .list-post li .name-post {
+    height: auto;
+}
+.list-per-post .list-post li .name-post,
+.list-per-post .date-post,
+.list-per-post .list-post li .id-duan,
+.list-per-post .list-post .img-show,
+.list-per-post .list-post li  li {
+    margin-bottom: 9px;
+}
+.list-per-post .list-post .img-show {
+    margin-bottom: 15px;
+}
+.list-per-post .bottom-item {
+    border-top: solid 1px #c9c9c9;
+    padding-top: 10px;
+}
+.list-per-post .list-post .list-attr-td {
+    margin-bottom: 4px;
+}
+.list-per-post .list-post li a {
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.list-per-post .list-post li {
+    margin-bottom: 40px;
+}
+.sidebar-user .title-text {
+    margin-bottom: 15px;
+}
+.sidebar-user .frm-item textarea,
+.sidebar-user .frm-item input {
+    background: none;
+    border: 1px solid #979797;
+    width: 100%;
+    padding: 5px;
+    font-size: 13px;
+}
+.sidebar-user .frm-item {
+    margin-bottom: 10px;
+}
+.sidebar-user .frm-item input {
+    height: 30px;
+}
+.sidebar-user .item-sidebar {
+    border: none;
+}
+.sidebar-user button {
+    width: 100%;
 }
