@@ -61,7 +61,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
         <div class="detail-duan-moi">
             <!-- <div class="title-top"><?= $model->name?></div> -->
             <div class="wrap-duan-moi row">
-                <div class="col-xs-12 col-md-8 col-left">
+                <div class="col-xs-12 col-md-9 col-left">
                     <div class="gallery-detail swiper-container">
                         <div class="swiper-wrapper">
                             <?php
@@ -92,6 +92,8 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                             <?php }  ?>
                         </div>
                         <div class="swiper-pagination"></div>
+                        <div class="swiper-button-next"><span></span></div>
+                        <div class="swiper-button-prev"><span></span></div>
                     </div>
                     <div class="item infor-address-duan">
                         <p><?= $model->investment_type ?></p>
@@ -140,7 +142,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                         <?php }?>
                     </div>
                 </div>
-                <div class="col-xs-12 col-md-4 col-right sidebar-col">
+                <div class="col-xs-12 col-md-3 col-right sidebar-col">
                     <div class="item-sidebar">
                         <div class="title-sidebar">DỰ ÁN NỔI BẬT</div>
                         <ul class="clearfix list-post">
@@ -429,7 +431,9 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
         var swiper = new Swiper('.swiper-container', {
             pagination: '.swiper-pagination',
             paginationClickable: true,
-            spaceBetween: 30
+            spaceBetween: 30,
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev'
         });
 
         $('#popup-map').popupMobi({

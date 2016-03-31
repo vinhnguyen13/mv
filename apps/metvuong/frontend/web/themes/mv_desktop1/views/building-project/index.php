@@ -27,7 +27,7 @@ use yii\widgets\LinkPager;
             </div>
             <div class="wrap-infor-duan">
                 <div class="list-duan clearfix row">
-                    <div class="col-xs-12 col-md-8 col-left">
+                    <div class="col-xs-12 col-md-9 col-left">
                         <ul class="clearfix">
                             <?php if(count($models) > 0) {
                                 foreach ($models as $model) { ?>
@@ -70,7 +70,7 @@ use yii\widgets\LinkPager;
                             <?php } ?>
                         </ul>
                     </div>
-                    <div class="col-xs-12 col-md-4 col-right sidebar-col">
+                    <div class="col-xs-12 col-md-3 col-right sidebar-col">
                         <div class="item-sidebar">
                             <div class="title-sidebar">DỰ ÁN NỔI BẬT</div>
                             <ul class="clearfix list-post">

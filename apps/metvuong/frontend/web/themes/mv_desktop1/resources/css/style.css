@@ -4769,7 +4769,7 @@ html.mm-opening .mm-slideout {
     margin-bottom: 10px;
 }
 .wrap-infor-duan .address-feat p {
-    margin-bottom: 5px;
+    margin-bottom: 7px;
     text-transform: uppercase;
     font-size: 13px;
 }
@@ -6457,28 +6457,6 @@ footer li a {
     width: 7px;
     height: 12px;
 }
-.swiper-button-prev, .swiper-container-rtl .swiper-button-next,
-.swiper-button-next, .swiper-container-rtl .swiper-button-prev {
-    background: url(../images/icon.png) no-repeat top left;
-    background-size: 33px 1600px;
-}
-.swiper-button-prev, .swiper-container-rtl .swiper-button-next {
-    left: 0;
-    width: 11px;
-    height: 22px;
-    background-position: 0px -437px;
-    top: 3px;
-    right: inherit;
-    margin: 0;
-}
-.swiper-button-next {
-    width: 11px;
-    height: 22px;
-    background-position: 0 -413px;
-    top: 2px;
-    right: 0px;
-    margin-top: 0;
-}
 .pagination {
     padding: 0;
     margin: 0;
@@ -7582,12 +7560,15 @@ footer li a {
 .list-duan .col-left .wrap-item .info-item {
     overflow: hidden;
 }
+.detail-duan-moi .col-left,
 .list-duan .col-left {
     padding-right: 50px;
 }
+.detail-duan-moi .list-post .img-show:before,
 .list-duan .list-post .img-show:before {
     padding-top: 60%;
 }
+.detail-duan-moi .col-right,
 .list-duan .col-right {
     padding-left: 0;
 }
@@ -7645,4 +7626,43 @@ footer li a {
         float: left;
         padding: 0 10px;
     }
+}
+.swiper-button-next span, 
+.swiper-button-prev span {
+    position: absolute;
+    top: 50%;
+    width: 27px;
+    height: 44px;
+    margin-top: -22px;
+    z-index: 10;
+    cursor: pointer;
+    -moz-background-size: 27px 44px;
+    -webkit-background-size: 27px 44px;
+    background-size: 27px 44px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.swiper-button-next span, 
+.swiper-container-rtl .swiper-button-prev span {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org…L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23007aff'%2F%3E%3C%2Fsvg%3E");
+    right: 10px;
+    left: auto;
+}
+.swiper-button-next, 
+.swiper-button-prev {
+    top: 0;
+    height: 100%;
+    margin: 0;
+    width: 10%;
+    background-color: rgba(0, 0, 0, 0);
+}
+.swiper-button-next {
+    right: 0;
+}
+.swiper-button-prev {
+    left: 0;
+}
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+    background-color: rgba(0, 0, 0, 0.26);
 }
