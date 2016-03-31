@@ -1,5 +1,6 @@
 <?php 
 use vsoft\ad\models\AdCategory;
+use vsoft\ad\models\AdImages;
 use vsoft\ad\models\AdProduct;
 use vsoft\express\components\StringHelper;
 use yii\bootstrap\ActiveForm;
@@ -15,7 +16,7 @@ use vsoft\ad\models\AdProductAdditionInfo;
     $user = Yii::$app->user->identity;
 	$categories = AdCategory::find()->indexBy('id')->asArray(true)->all();
 	$types = AdProduct::getAdTypes();
-	
+
 	$owner = User::findOne($product->user_id);
 
 	$url = '#';
@@ -33,7 +34,7 @@ use vsoft\ad\models\AdProductAdditionInfo;
 	}
 
     $address = $product->getAddress($product->show_home_no);
-    
+
     $directionList = AdProductAdditionInfo::directionList();
 
 Yii::$app->view->registerMetaTag([
@@ -42,7 +43,7 @@ Yii::$app->view->registerMetaTag([
 ]);
 Yii::$app->view->registerMetaTag([
     'name' => 'description',
-    'content' => str_replace("\n", "<br />", htmlspecialchars($product->content))
+    'content' => \yii\helpers\StringHelper::truncate($product->content, 500, $suffix = '...', $encoding = 'UTF-8')
 ]);
 
 Yii::$app->view->registerMetaTag([
@@ -51,24 +52,20 @@ Yii::$app->view->registerMetaTag([
 ]);
 Yii::$app->view->registerMetaTag([
     'property' => 'og:description',
-    'content' => str_replace("\n", "<br />", htmlspecialchars($product->content))
+    'content' => \yii\helpers\StringHelper::truncate($product->content, 500, $suffix = '...', $encoding = 'UTF-8')
 ]);
 Yii::$app->view->registerMetaTag([
     'property' => 'og:type',
     'content' => 'article'
 ]);
-$ava_img = Url::home().'/frontend/web/themes/mv_desktop1/resources/images/logo.png';
-if(!empty($product->representImage)) {
-    $ava_img = $product->representImage;
-}
 Yii::$app->view->registerMetaTag([
     'property' => 'og:image',
-    'content' => $ava_img
+    'content' => $product->image_file_name ? AdImages::getImageUrl($product->image_folder, $product->image_file_name, AdImages::SIZE_THUMB) : AdImages::defaultImage()
 ]);
 ?>
 <div class="container">
-<div class="detail-listing">
-		<?php 
+    <div class="detail-listing">
+		<?php
 			$images = $product->adImages;
 			if($images):
 		?>
@@ -173,7 +170,7 @@ Yii::$app->view->registerMetaTag([
 	            </div>
 	            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
 	                <div class="panel-body" name="experience" placeholder="Vui lòng nhập chia sẻ kinh nghiệm">
-	                    
+
 	                </div>
 	            </div>
 	        </div>
@@ -247,7 +244,7 @@ Yii::$app->view->registerMetaTag([
 								<?php }?>
 							</div>
 						</div>
-						
+
 	                </div>
 	            </div>
 
@@ -271,28 +268,12 @@ Yii::$app->view->registerMetaTag([
 	</div>
 </div>
 
-<div id="popup-share-social" class="popup-common hide-popup">
-    <div class="wrap-popup">
-        <div class="inner-popup">
-            <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
-            <div class="wrap-body-popup">
-                <span>Share on Social Network</span>
-                <ul class="clearfix">
-                    <li>
-                        <a href="#" class="share-facebook">
-                            <div class="circle"><div><span class="icon icon-face"></span></div></div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="email-btn">
-                            <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
+<?=$this->render('/ad/_partials/shareSocial',[
+    'url' => $product->urlDetail(true),
+    'title' => $address,
+    'description' => \yii\helpers\StringHelper::truncate($product->content, 200, $suffix = '...', $encoding = 'UTF-8'),
+    'image' => $product->image_file_name ? AdImages::getImageUrl($product->image_folder, $product->image_file_name, AdImages::SIZE_THUMB) : AdImages::defaultImage()
+])?>
 
 <?php
 /**
@@ -365,7 +346,7 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 				    zoomControl: false,
 				    streetViewControl: false
 				});
-				
+
 				var marker = new google.maps.Marker({
 				    position: latLng,
 				    map: map
@@ -384,37 +365,6 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 			$('.email-btn').trigger('click');
 		});
 
-        $(document).on('click', '.share-facebook', function() {
-            FB.ui({
-                method: 'share',
-                href: '<?=Yii::$app->request->absoluteUrl?>'
-            }, function(response){});
-        });
-
 	});
 
-</script>
-<?php
-$fb_appId = '680097282132293'; // stage.metvuong.com
-if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
-    $fb_appId = '736950189771012';
-else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
-    $fb_appId = '891967050918314';
-?>
-<script>
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId      : <?=$fb_appId?>,
-            xfbml      : true,
-            version    : 'v2.5'
-        });
-    };
-
-    (function(d, s, id){
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/vi_VN/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
 </script>
