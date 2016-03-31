@@ -4766,7 +4766,6 @@ html.mm-opening .mm-slideout {
     font-size: 15px;
     font-weight: 600;
     overflow: hidden;
-    margin-top: 10px;
     margin-bottom: 10px;
 }
 .wrap-infor-duan .address-feat p {
@@ -7530,20 +7529,67 @@ footer li a {
     padding: 0 0 0 0;
     margin: 0 0 20px 0;
 }
+.detail-duan-moi .sidebar-col .name-post,
 .list-duan .sidebar-col .name-post {
     height: auto;
     margin-bottom: 2px;
 }
+.detail-duan-moi .sidebar-col .name-post a,
 .list-duan .sidebar-col .name-post a {
     font-size: 13px;
     font-weight: 700;
 }
+.detail-duan-moi .sidebar-col .infor-by-up,
 .list-duan .sidebar-col .infor-by-up {
     font-size: 13px;
     margin-bottom: 3px;
 }
 .detail-duan-moi {
     padding-top: 50px;
+}
+.wrap-duan-moi .sidebar-col .list-post {
+    margin: 0;
+}
+.wrap-duan-moi .sidebar-col .list-post li,
+.wrap-duan-moi .sidebar-col .list-post .id-duan,
+.wrap-duan-moi .sidebar-col .list-post .name-post,
+.wrap-duan-moi .sidebar-col .list-post .date-post {
+    margin-bottom: 5px;
+}
+.wrap-duan-moi .sidebar-col .list-post .name-post {
+    line-height: 20px;
+}
+.wrap-duan-moi .sidebar-col .list-attr-td li {
+    margin-bottom: 10px;
+}
+.wrap-duan-moi .sidebar-col .list-post > li {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+.list-duan .col-left ul li {
+    float: left;
+    width: 100%;
+}
+.list-duan .col-left .wrap-item {
+    float: left;
+    width: 100%;
+}
+.list-duan .col-left .wrap-item > a {
+    float: left;
+    width: 62%;
+    padding-right: 25px;
+}
+.list-duan .col-left .wrap-item .info-item {
+    overflow: hidden;
+}
+.list-duan .col-left {
+    padding-right: 50px;
+}
+.list-duan .list-post .img-show:before {
+    padding-top: 60%;
+}
+.list-duan .col-right {
+    padding-left: 0;
 }
 @media (max-width: 768px) {
     .item-sidebar .item-hot-sidebar {
@@ -7569,6 +7615,25 @@ footer li a {
     }
     .wrap-infor-duan .info-item .address-feat {
         margin-bottom: 0;
+    }
+    .list-duan .col-left .wrap-item > a {
+        width: 100%;
+        padding-right: 0;
+        float: none;
+        display: block;
+        margin-bottom: 10px;
+    }
+    .list-duan .col-left .wrap-item .info-item {
+        overflow: inherit;
+    }
+    .wrap-infor-duan .address-feat .date-post {
+        margin-bottom: 10px;
+    }
+    .list-duan .col-right {
+        padding: 0 20px;
+    }
+    .list-duan .col-left {
+        padding: 0 20px;
     }
 }
 @media ( min-width: 640px ) and ( max-width: 985px ) {

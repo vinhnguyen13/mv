@@ -141,9 +141,250 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-4 col-right sidebar-col">
-                    <div class="title-sidebar">DỰ ÁN NHIỀU NGƯỜI XEM</div>
-                    
+                    <div class="item-sidebar">
+                        <div class="title-sidebar">DỰ ÁN NỔI BẬT</div>
+                        <ul class="clearfix list-post">
+                            <li>
+                                <div class="wrap-item-post">
+                                    <a href="#" class="rippler rippler-default">
+                                        <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg"></div></div>
+                                    </a>
+                                    <p class="infor-by-up">Căn hộ chung cư Bán</p>
+                                    <p class="name-post"><a href="#">LOREM IPSUM DOLORIT </a></p>
+                                    <p class="fs-15 font-400">21 Nguyễn Trung Ngạn, P. Bến Nghé, Q1</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="wrap-item-post">
+                                    <a href="#" class="rippler rippler-default">
+                                        <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg"></div></div>
+                                    </a>
+                                    <p class="infor-by-up">Căn hộ chung cư Bán</p>
+                                    <p class="name-post"><a href="#">LOREM IPSUM DOLORIT </a></p>
+                                    <p class="fs-15 font-400">21 Nguyễn Trung Ngạn, P. Bến Nghé, Q1</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="wrap-item-post">
+                                    <a href="#" class="rippler rippler-default">
+                                        <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg"></div></div>
+                                    </a>
+                                    <p class="infor-by-up">Căn hộ chung cư Bán</p>
+                                    <p class="name-post"><a href="#">LOREM IPSUM DOLORIT </a></p>
+                                    <p class="fs-15 font-400">21 Nguyễn Trung Ngạn, P. Bến Nghé, Q1</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="item-sidebar">
+                        <div class="title-sidebar">DỰ ÁN NHIỀU NGƯỜI XEM</div>
+                        <ul class="clearfix list-post">
+                            <li>
+                                <div class="wrap-item-post">
+                                    <a href="#" class="rippler rippler-default">
+                                        <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg"></div></div>
+                                    </a>
+                                    <p class="infor-by-up">Căn hộ chung cư Bán</p>
+                                    <p class="name-post"><a href="#">LOREM IPSUM DOLORIT </a></p>
+                                    <p class="fs-15 font-400">21 Nguyễn Trung Ngạn, P. Bến Nghé, Q1</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="wrap-item-post">
+                                    <a href="#" class="rippler rippler-default">
+                                        <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg"></div></div>
+                                    </a>
+                                    <p class="infor-by-up">Căn hộ chung cư Bán</p>
+                                    <p class="name-post"><a href="#">LOREM IPSUM DOLORIT </a></p>
+                                    <p class="fs-15 font-400">21 Nguyễn Trung Ngạn, P. Bến Nghé, Q1</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="wrap-item-post">
+                                    <a href="#" class="rippler rippler-default">
+                                        <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg"></div></div>
+                                    </a>
+                                    <p class="infor-by-up">Căn hộ chung cư Bán</p>
+                                    <p class="name-post"><a href="#">LOREM IPSUM DOLORIT </a></p>
+                                    <p class="fs-15 font-400">21 Nguyễn Trung Ngạn, P. Bến Nghé, Q1</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+                <!-- <div class="col-xs-12 col-md-4 col-right sidebar-col">
+                    <div class="title-sidebar">SIMILAR PROJECTS</div>
+                    <ul class="clearfix list-post">
+                        <li>
+                            <div class="wrap-item-post">
+                                <a href="#" class="rippler rippler-default">
+                                    <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg">
+                                    <input type="hidden" value="/store/ad/2016/03/03/480x360/56d7ac4535c48.jpg">
+                                    </div></div>
+                                    <div class="title-item">Căn hộ chung cư Bán</div>
+                                </a>
+                                <p class="date-post">Ngày đăng tin: <strong>12/2/2016, 8:30AM</strong></p>
+                                <p class="name-post"><a href="#">Đường 10B, Xã Bình Chánh, Huyện Bình Chánh, Hồ Chí Minh</a></p>
+                                <p class="id-duan">ID:<span>5090</span></p>
+                                <ul class="clearfix list-attr-td">
+                                    <li>
+                                    <span class="icon icon-dt icon-dt-small"></span>58                                            
+                                </li>
+                                    <li>
+                                    <span class="icon icon-bed icon-bed-small"></span>4                                            
+                                </li>
+                                    <li>
+                                    <span class="icon icon-pt icon-pt-small"></span>4                                            
+                                </li>
+                                </ul>
+                                <div class="bottom-item clearfix">
+                                    <a href="#" class="pull-right fs-13">Chi tiết</a>
+                                    <p>Giá <strong class="color-cd pdL-5">4,5 billion đồng</strong></p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="wrap-item-post">
+                                <a href="#" class="rippler rippler-default">
+                                    <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg">
+                                    <input type="hidden" value="/store/ad/2016/03/03/480x360/56d7ac4535c48.jpg">
+                                    </div></div>
+                                    <div class="title-item">Căn hộ chung cư Bán</div>
+                                </a>
+                                <p class="date-post">Ngày đăng tin: <strong>12/2/2016, 8:30AM</strong></p>
+                                <p class="name-post"><a href="#">Đường 10B, Xã Bình Chánh, Huyện Bình Chánh, Hồ Chí Minh</a></p>
+                                <p class="id-duan">ID:<span>5090</span></p>
+                                <ul class="clearfix list-attr-td">
+                                    <li>
+                                    <span class="icon icon-dt icon-dt-small"></span>58                                            
+                                </li>
+                                    <li>
+                                    <span class="icon icon-bed icon-bed-small"></span>4                                            
+                                </li>
+                                    <li>
+                                    <span class="icon icon-pt icon-pt-small"></span>4                                            
+                                </li>
+                                </ul>
+                                <div class="bottom-item clearfix">
+                                    <a href="#" class="pull-right fs-13">Chi tiết</a>
+                                    <p>Giá <strong class="color-cd pdL-5">4,5 billion đồng</strong></p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="wrap-item-post">
+                                <a href="#" class="rippler rippler-default">
+                                    <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg">
+                                    <input type="hidden" value="/store/ad/2016/03/03/480x360/56d7ac4535c48.jpg">
+                                    </div></div>
+                                    <div class="title-item">Căn hộ chung cư Bán</div>
+                                </a>
+                                <p class="date-post">Ngày đăng tin: <strong>12/2/2016, 8:30AM</strong></p>
+                                <p class="name-post"><a href="#">Đường 10B, Xã Bình Chánh, Huyện Bình Chánh, Hồ Chí Minh</a></p>
+                                <p class="id-duan">ID:<span>5090</span></p>
+                                <ul class="clearfix list-attr-td">
+                                    <li>
+                                    <span class="icon icon-dt icon-dt-small"></span>58                                            
+                                </li>
+                                    <li>
+                                    <span class="icon icon-bed icon-bed-small"></span>4                                            
+                                </li>
+                                    <li>
+                                    <span class="icon icon-pt icon-pt-small"></span>4                                            
+                                </li>
+                                </ul>
+                                <div class="bottom-item clearfix">
+                                    <a href="#" class="pull-right fs-13">Chi tiết</a>
+                                    <p>Giá <strong class="color-cd pdL-5">4,5 billion đồng</strong></p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="wrap-item-post">
+                                <a href="#" class="rippler rippler-default">
+                                    <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg">
+                                    <input type="hidden" value="/store/ad/2016/03/03/480x360/56d7ac4535c48.jpg">
+                                    </div></div>
+                                    <div class="title-item">Căn hộ chung cư Bán</div>
+                                </a>
+                                <p class="date-post">Ngày đăng tin: <strong>12/2/2016, 8:30AM</strong></p>
+                                <p class="name-post"><a href="#">Đường 10B, Xã Bình Chánh, Huyện Bình Chánh, Hồ Chí Minh</a></p>
+                                <p class="id-duan">ID:<span>5090</span></p>
+                                <ul class="clearfix list-attr-td">
+                                    <li>
+                                    <span class="icon icon-dt icon-dt-small"></span>58                                            
+                                </li>
+                                    <li>
+                                    <span class="icon icon-bed icon-bed-small"></span>4                                            
+                                </li>
+                                    <li>
+                                    <span class="icon icon-pt icon-pt-small"></span>4                                            
+                                </li>
+                                </ul>
+                                <div class="bottom-item clearfix">
+                                    <a href="#" class="pull-right fs-13">Chi tiết</a>
+                                    <p>Giá <strong class="color-cd pdL-5">4,5 billion đồng</strong></p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="wrap-item-post">
+                                <a href="#" class="rippler rippler-default">
+                                    <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg">
+                                    <input type="hidden" value="/store/ad/2016/03/03/480x360/56d7ac4535c48.jpg">
+                                    </div></div>
+                                    <div class="title-item">Căn hộ chung cư Bán</div>
+                                </a>
+                                <p class="date-post">Ngày đăng tin: <strong>12/2/2016, 8:30AM</strong></p>
+                                <p class="name-post"><a href="#">Đường 10B, Xã Bình Chánh, Huyện Bình Chánh, Hồ Chí Minh</a></p>
+                                <p class="id-duan">ID:<span>5090</span></p>
+                                <ul class="clearfix list-attr-td">
+                                    <li>
+                                    <span class="icon icon-dt icon-dt-small"></span>58                                            
+                                </li>
+                                    <li>
+                                    <span class="icon icon-bed icon-bed-small"></span>4                                            
+                                </li>
+                                    <li>
+                                    <span class="icon icon-pt icon-pt-small"></span>4                                            
+                                </li>
+                                </ul>
+                                <div class="bottom-item clearfix">
+                                    <a href="#" class="pull-right fs-13">Chi tiết</a>
+                                    <p>Giá <strong class="color-cd pdL-5">4,5 billion đồng</strong></p>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="wrap-item-post">
+                                <a href="#" class="rippler rippler-default">
+                                    <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg">
+                                    <input type="hidden" value="/store/ad/2016/03/03/480x360/56d7ac4535c48.jpg">
+                                    </div></div>
+                                    <div class="title-item">Căn hộ chung cư Bán</div>
+                                </a>
+                                <p class="date-post">Ngày đăng tin: <strong>12/2/2016, 8:30AM</strong></p>
+                                <p class="name-post"><a href="#">Đường 10B, Xã Bình Chánh, Huyện Bình Chánh, Hồ Chí Minh</a></p>
+                                <p class="id-duan">ID:<span>5090</span></p>
+                                <ul class="clearfix list-attr-td">
+                                    <li>
+                                    <span class="icon icon-dt icon-dt-small"></span>58                                            
+                                </li>
+                                    <li>
+                                    <span class="icon icon-bed icon-bed-small"></span>4                                            
+                                </li>
+                                    <li>
+                                    <span class="icon icon-pt icon-pt-small"></span>4                                            
+                                </li>
+                                </ul>
+                                <div class="bottom-item clearfix">
+                                    <a href="#" class="pull-right fs-13">Chi tiết</a>
+                                    <p>Giá <strong class="color-cd pdL-5">4,5 billion đồng</strong></p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div> -->
             </div>
         </div>
     </div>
