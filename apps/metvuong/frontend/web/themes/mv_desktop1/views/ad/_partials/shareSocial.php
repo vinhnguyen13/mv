@@ -23,7 +23,7 @@ use yii\helpers\Url;
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="email-btn">
+                        <a href="#popup-email" class="email-btn">
                             <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
                         </a>
                     </li>

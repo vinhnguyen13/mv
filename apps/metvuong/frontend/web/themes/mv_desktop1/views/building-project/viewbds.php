@@ -220,5 +220,10 @@ $tabKeys = [
             styleShow: "center"
         });
 
+        $(document).on('click', '#popup-share-social .icon-email-1', function (e) {
+            $('#popup-share-social').addClass('hide-popup');
+            $('.email-btn').trigger('click');
+        });
+
     });
 </script>
