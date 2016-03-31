@@ -4770,7 +4770,7 @@ html.mm-opening .mm-slideout {
     margin-bottom: 10px;
 }
 .wrap-infor-duan .address-feat p {
-    margin-bottom: 8px;
+    margin-bottom: 5px;
     text-transform: uppercase;
     font-size: 13px;
 }
@@ -4783,7 +4783,7 @@ html.mm-opening .mm-slideout {
     white-space: nowrap;
 }
 .wrap-infor-duan .address-feat .date-post {
-    margin-top: 8px;
+    margin-top: 0;
     color: #8E8E8E;
     margin-bottom: 0;
 }
@@ -6420,7 +6420,7 @@ footer li a {
         margin: 0;
     }
     .list-duan ul li {
-        margin-bottom: 30px;
+        margin-bottom: 50px;
         padding-left: 0;
     }
     .wrap-infor-duan .wrap-item .img-show:before {
@@ -6840,8 +6840,6 @@ footer li a {
     }
     .detail-listing,
     .wrap-duan-moi {
-        width: 850px;
-        margin: 50px auto 0;
         padding: 0 0 100px 0;
     }
     .detail-listing .gallery-detail,
@@ -7123,7 +7121,7 @@ footer li a {
     background: #EAEAEA;
 }
 .list-duan .address-feat > a {
-    margin-bottom: 8px;
+    margin-bottom: 5px;
 }
 .form-group .help-block {
     text-align: left;
@@ -7543,6 +7541,9 @@ footer li a {
 .list-duan .sidebar-col .infor-by-up {
     font-size: 13px;
     margin-bottom: 3px;
+}
+.detail-duan-moi {
+    padding-top: 50px;
 }
 @media (max-width: 768px) {
     .item-sidebar .item-hot-sidebar {

@@ -59,84 +59,90 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 <div class="title-fixed-wrap">
     <div class="container">
         <div class="detail-duan-moi">
-            <div class="title-top"><?= $model->name?></div>
-            <div class="wrap-duan-moi">
-                <div class="gallery-detail swiper-container">
-                    <div class="swiper-wrapper">
-                        <?php
-                        if(!empty($model->gallery)) {
-                            $gallery = explode(',', $model->gallery);
-                            if (count($gallery) > 0) {
-                                foreach ($gallery as $image) {
-                                    ?>
-                                    <div class="swiper-slide">
-                                        <div class="img-show">
-                                            <div>
-                                                <img src="<?= \yii\helpers\Url::to('/store/building-project-images/' . $image) ?>"
-                                                    alt="<?= $model->location ?>">
+            <!-- <div class="title-top"><?= $model->name?></div> -->
+            <div class="wrap-duan-moi row">
+                <div class="col-xs-12 col-md-8 col-left">
+                    <div class="gallery-detail swiper-container">
+                        <div class="swiper-wrapper">
+                            <?php
+                            if(!empty($model->gallery)) {
+                                $gallery = explode(',', $model->gallery);
+                                if (count($gallery) > 0) {
+                                    foreach ($gallery as $image) {
+                                        ?>
+                                        <div class="swiper-slide">
+                                            <div class="img-show">
+                                                <div>
+                                                    <img src="<?= \yii\helpers\Url::to('/store/building-project-images/' . $image) ?>"
+                                                        alt="<?= $model->location ?>">
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                <?php }
-                            }
-                        } else {
-                            ?>
-                            <div class="swiper-slide">
-                                <div class="img-show">
-                                    <div>
-                                        <img src="<?=$model->logoUrl?>" alt="<?=$model->location?>">
+                                    <?php }
+                                }
+                            } else {
+                                ?>
+                                <div class="swiper-slide">
+                                    <div class="img-show">
+                                        <div>
+                                            <img src="<?=$model->logoUrl?>" alt="<?=$model->location?>">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        <?php }  ?>
+                            <?php }  ?>
+                        </div>
+                        <div class="swiper-pagination"></div>
                     </div>
-                    <div class="swiper-pagination"></div>
+                    <div class="item infor-address-duan">
+                        <p><?= $model->investment_type ?></p>
+                        <strong><?= $model->name?></strong>
+                        <span class="icon address-icon"></span><?= empty($model->location) ? $lbl_updating : $model->location ?>
+                        <ul class="pull-right icons-detail">
+                            <li><a href="#popup-share-social" class="icon icon-share-td"></a></li>
+        <!--                    <li><a href="#" class="icon save-item" data-id="4115" data-url="/ad/favorite"></a></li>-->
+                            <li><a href="#popup-map" class="icon icon-map-loca"></a></li>
+                        </ul>
+                    </div>
+                    <div class="item infor-time">
+                        <p><strong><?=Yii::t('project','Investor')?>: </strong> <?= empty($model->investors[0]->name) ? $lbl_updating : $model->investors[0]->name ?></p>
+                        <p><strong><?=Yii::t('project', 'Start date')?>: </strong> <?=empty($model->start_date) ? $lbl_updating : date('d/m/Y', $model->start_date) ?></p>
+                        <p><strong><?=Yii::t('project', 'Finish time')?>:</strong> <?=empty($model->estimate_finished) ? $lbl_updating : $model->estimate_finished ?></p>
+                    </div>
+                    <div class="item detail-infor">
+                        <p class="title-attr-duan"><?=Yii::t('ad', 'Description')?></p>
+                        <p><?=$model->description ?></p>
+                    </div>
+                    <div class="item infor-attr">
+                        <p class="title-attr-duan"><?=Yii::t('project', 'Project information')?></p>
+                        <ul class="clearfix">
+                            <li><strong><?=Yii::t('project', 'Facade width')?>:</strong><?=!empty($model->facade_width) ? $model->facade_width : $lbl_updating?></li>
+                            <li><strong><?=Yii::t('project', 'Floor')?>:</strong><?=!empty($model->floor_no) ? $model->floor_no : $lbl_updating?></li>
+                            <li><strong><?=Yii::t('project', 'Lift')?>:</strong><?=!empty($model->lift) ? $model->lift : $lbl_updating?></li>
+                        </ul>
+                    </div>
+                    <div class="item tien-ich-duan">
+                        <p class="title-attr-duan"><?=Yii::t('project', 'Facility')?></p>
+                        <?php
+                        $facilityListId = explode(",", $model->facilities);
+                        $facilities = \vsoft\ad\models\AdFacility::find()->where(['id' => $facilityListId])->all();
+                        $count_facilities = count($facilities);
+                        if($count_facilities > 0){
+                        ?>
+                        <ul class="clearfix">
+                            <?php foreach($facilities as $facility){ ?>
+                            <li>
+                                <div><p><span class="icon-ti icon-sport"></span><?= $facility->name ?></p></div>
+                            </li>
+                            <?php } ?>
+                        </ul>
+                        <?php } else {?>
+                        <p><?=$lbl_updating;?></p>
+                        <?php }?>
+                    </div>
                 </div>
-                <div class="item infor-address-duan">
-                    <p><?= $model->investment_type ?></p>
-                    <strong><?= $model->name?></strong>
-                    <span class="icon address-icon"></span><?= empty($model->location) ? $lbl_updating : $model->location ?>
-                    <ul class="pull-right icons-detail">
-                        <li><a href="#popup-share-social" class="icon icon-share-td"></a></li>
-    <!--                    <li><a href="#" class="icon save-item" data-id="4115" data-url="/ad/favorite"></a></li>-->
-                        <li><a href="#popup-map" class="icon icon-map-loca"></a></li>
-                    </ul>
-                </div>
-                <div class="item infor-time">
-                    <p><strong><?=Yii::t('project','Investor')?>: </strong> <?= empty($model->investors[0]->name) ? $lbl_updating : $model->investors[0]->name ?></p>
-                    <p><strong><?=Yii::t('project', 'Start date')?>: </strong> <?=empty($model->start_date) ? $lbl_updating : date('d/m/Y', $model->start_date) ?></p>
-                    <p><strong><?=Yii::t('project', 'Finish time')?>:</strong> <?=empty($model->estimate_finished) ? $lbl_updating : $model->estimate_finished ?></p>
-                </div>
-                <div class="item detail-infor">
-                    <p class="title-attr-duan"><?=Yii::t('ad', 'Description')?></p>
-                    <p><?=$model->description ?></p>
-                </div>
-                <div class="item infor-attr">
-                    <p class="title-attr-duan"><?=Yii::t('project', 'Project information')?></p>
-                    <ul class="clearfix">
-                        <li><strong><?=Yii::t('project', 'Facade width')?>:</strong><?=!empty($model->facade_width) ? $model->facade_width : $lbl_updating?></li>
-                        <li><strong><?=Yii::t('project', 'Floor')?>:</strong><?=!empty($model->floor_no) ? $model->floor_no : $lbl_updating?></li>
-                        <li><strong><?=Yii::t('project', 'Lift')?>:</strong><?=!empty($model->lift) ? $model->lift : $lbl_updating?></li>
-                    </ul>
-                </div>
-                <div class="item tien-ich-duan">
-                    <p class="title-attr-duan"><?=Yii::t('project', 'Facility')?></p>
-                    <?php
-                    $facilityListId = explode(",", $model->facilities);
-                    $facilities = \vsoft\ad\models\AdFacility::find()->where(['id' => $facilityListId])->all();
-                    $count_facilities = count($facilities);
-                    if($count_facilities > 0){
-                    ?>
-                    <ul class="clearfix">
-                        <?php foreach($facilities as $facility){ ?>
-                        <li>
-                            <div><p><span class="icon-ti icon-sport"></span><?= $facility->name ?></p></div>
-                        </li>
-                        <?php } ?>
-                    </ul>
-                    <?php } else {?>
-                    <p><?=$lbl_updating;?></p>
-                    <?php }?>
+                <div class="col-xs-12 col-md-4 col-right sidebar-col">
+                    <div class="title-sidebar">DỰ ÁN NHIỀU NGƯỜI XEM</div>
+                    
                 </div>
             </div>
         </div>

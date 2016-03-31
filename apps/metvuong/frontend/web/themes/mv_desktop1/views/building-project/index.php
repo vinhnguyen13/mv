@@ -43,8 +43,7 @@ use yii\widgets\LinkPager;
 
                                             <div class="info-item">
                                                 <div class="address-feat">
-                                                    <p class="infor-by-up">Căn hộ chung cư Bán</p>
-                                                    <p><?= $model->investment_type ?></p>
+                                                    <!-- <p><?= $model->investment_type ?></p> -->
                                                     <a class="color-cd" href="<?= Url::to(["building/$model->slug"]); ?>" title="<?= $model->name ?>">
                                                         <strong><?= $model->name ?></strong>
                                                     </a>
@@ -73,7 +72,7 @@ use yii\widgets\LinkPager;
                     </div>
                     <div class="col-xs-12 col-md-4 col-right sidebar-col">
                         <div class="item-sidebar">
-                            <div class="title-text">DỰ ÁN NỔI BẬT</div>
+                            <div class="title-sidebar">DỰ ÁN NỔI BẬT</div>
                             <ul class="clearfix list-post">
                                 <li>
                                     <div class="wrap-item-post">
@@ -108,7 +107,7 @@ use yii\widgets\LinkPager;
                             </ul>
                         </div>
                         <div class="item-sidebar">
-                            <div class="title-text">DỰ ÁN NHIỀU NGƯỜI XEM</div>
+                            <div class="title-sidebar">DỰ ÁN NHIỀU NGƯỜI XEM</div>
                             <ul class="clearfix list-post">
                                 <li>
                                     <div class="wrap-item-post">
