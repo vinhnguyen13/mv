@@ -68,8 +68,13 @@ class NewsController extends Controller
             ->where('cms_show.id = :id', [':id' => $id])
             ->andWhere('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
             ->asArray()->orderBy('cms_show.created_at DESC')->one();
-
-        $this->view->title = $detail["title"];
+        $click = (int)$detail["click"] + 1;
+        if(count($detail) > 0) {
+            CmsShow::getDb()->createCommand()
+                ->update(CmsShow::tableName(), ['click' => $click], ['id' => $detail["id"]])
+                ->execute();
+            $this->view->title = $detail["title"];
+        }
         return $this->render('detail', ['news' => $detail]);
     }
 
