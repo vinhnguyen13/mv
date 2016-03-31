@@ -5309,9 +5309,11 @@ html.mm-opening .mm-slideout {
     text-decoration: underline;
 }
 .search-duan {
-    position: relative;
     margin-bottom: 20px;
     font-size: 14px;
+}
+.search-duan form {
+    position: relative;
 }
 #btn-search-duan {
     right: 0;
@@ -7554,5 +7556,27 @@ footer li a {
     .wrap-news .list-news li > div > div {
         height: auto;
         padding-bottom: 30px;
+    }
+}
+@media ( max-width: 985px ) {
+    .infor-duan {
+        padding-top: 0;
+    }
+    .search-duan {
+        padding: 20px;
+        margin-bottom: 0;
+    }
+    .wrap-infor-duan .info-item .address-feat {
+        margin-bottom: 0;
+    }
+}
+@media ( min-width: 640px ) and ( max-width: 985px ) {
+    .infor-duan .list-duan ul {
+        margin: 0 -10px;
+    }
+    .infor-duan .list-duan ul li {
+        width: 50%;
+        float: left;
+        padding: 0 10px;
     }
 }
