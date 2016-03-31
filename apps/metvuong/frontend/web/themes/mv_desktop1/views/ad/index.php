@@ -388,7 +388,7 @@ $this->registerJs($script, View::POS_BEGIN);
 								</div> -->
 							</div>
 							
-							<button class="btn-submit btn-common <?= $hideSearchForm ? '' : 'active' ?>">Tìm kiếm</button>
+							<button class="btn-submit btn-common <?= $hideSearchForm ? '' : 'active' ?>"><?= Yii::t('ad', 'Search') ?></button>
 						</div>
 					</div>
 					<div id="project-info">
@@ -414,7 +414,7 @@ $this->registerJs($script, View::POS_BEGIN);
 					<div id="content-holder">
 						<?php if(count($products) > 0): ?>
 						<div class="top-listing clearfix">
-							<p><span id="count-from"><?= $pages->offset + 1 ?></span> - <span id="count-to"><?= $pages->offset + count($products) ?></span> Tin từ <span id="count-total"><?= $pages->totalCount ?></span> Tin</p>
+							<p><span id="count-from"><?= $pages->offset + 1 ?></span> - <span id="count-to"><?= $pages->offset + count($products) ?></span> <?= sprintf(Yii::t('ad', 'of %s listings'), '<span id="count-total">' . $pages->totalCount . '</span>') ?></p>
 						</div>
 						<div id="listing-list" class="wrap-lazy">
 							<ul class="clearfix">

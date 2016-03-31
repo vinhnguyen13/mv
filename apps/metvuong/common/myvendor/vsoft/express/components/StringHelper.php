@@ -59,10 +59,10 @@ class StringHelper extends SH {
 	public static function formatCurrency($number) {
 		if($number > 999999999) {
 			$currency = $number / 1000000000;
-			$currency = self::formatNumber($currency) . ' tỷ';
+			$currency = self::formatNumber($currency) . ' ' . \Yii::t('ad', 'billion');
 		} else if($number > 999999) {
 			$currency = $number / 1000000;
-			$currency = self::formatNumber($currency) . ' triệu';
+			$currency = self::formatNumber($currency) . ' ' . \Yii::t('ad', 'million');
 		} else {
 			$currency = self::formatNumber($number);
 		}

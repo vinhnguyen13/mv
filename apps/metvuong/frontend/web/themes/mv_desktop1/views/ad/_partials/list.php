@@ -43,7 +43,7 @@
 				</ul>
 			</div>
 			<div class="wrap-attr-bottom">
-				<span class="price"><span>Giá</span><?= StringHelper::formatCurrency($product->price) ?></span>
+				<span class="price"><span><?= Yii::t('ad', 'Price') ?></span><?= StringHelper::formatCurrency($product->price) ?></span>
 							</div>
 		                </div>
 					</a>
