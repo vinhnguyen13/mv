@@ -94,7 +94,7 @@ $user = $model->getUser();
                 </div>
                 <div class="review-user">
                     <div class="title-text clearfix">REVIEW
-                        <a href="#" class="btn-review btn-common pull-right">Viết Review</a>
+                        <a href="#popup-review" class="btn-review btn-common pull-right">Viết Review</a>
                     </div>
                     <ul class="list-reivew">
                         <li>
@@ -274,12 +274,38 @@ $user = $model->getUser();
         </div>
     </div>
 </div>
+<div id="popup-review" class="popup-common hide-popup">
+    <div class="wrap-popup">
+        <div class="inner-popup">
+            <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
+            <div class="review-box-popup">
+                <h2 class="color-cd fs-18 text-uper font-600 mgB-20">REVIEW SILVER RANGER</h2>
+                <p class="fs-13 mgB-10">Tell us about your experience with this agent. Your review will help other users find the agent that's right for them.</p>
+                <p class="fs-13 mgB-5 font-600">Môi giới này đã</p>
+                <select name="" id="" class="mgB-15">
+                    <option value="">Giúp tôi thuê nhà</option>
+                </select>
+                <div class="check-rating mgB-15">
+                    <span class="font-600 fs-13 pdR-10">Rate this agent</span>
+                    <ul class="rating clearfix">
+                        <li>rating</li>
+                    </ul>
+                </div>
+                <p class="fs-13 mgB-5 font-600">Viết review</p>
+                <textarea class="pd-5 mgB-5" name="" id="" cols="30" rows="10" placeholder="Nội dung"></textarea>
+                <div class="text-right">
+                    <button class="btn-common">GỬI</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     $(document).ready(function () {
-        /*$('#popup-email').popupMobi({
-            btnClickShow: ".email-btn",
-            closeBtn: '#popup-email .btn-cancel',
-            styleShow: 'full'
-        });*/
+        $('#popup-review').popupMobi({
+            btnClickShow: '.review-user a',
+            closeBtn: '#popup-review .btn-close',
+            styleShow: 'center'
+        });
     });
 </script>
