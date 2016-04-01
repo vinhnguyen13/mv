@@ -150,7 +150,7 @@ var Chat = {
                 if(params.getAttribute('sttOnline') && params.getAttribute('sttOnline')==0){
                     Chat.sendMessage(Strophe.getBareJidFromJid(from) , 1, 'headline', {sttOnline: 1});
                 }else{
-                    Chat.log(Strophe.getBareJidFromJid(from) + " is online", Strophe.getBareJidFromJid(to), params);
+                    Chat.log(Strophe.getBareJidFromJid(from) + " is online -------", Strophe.getBareJidFromJid(to), params);
                 }
             }
         }
