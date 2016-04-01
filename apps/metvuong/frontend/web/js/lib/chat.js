@@ -118,8 +118,7 @@ var Chat = {
             Chat.log("Sender is composing");
             Chat.chatStates[from] = "composing"
             chatUI.typingMessage(from);
-        }
-        else if(msg.getElementsByTagName('body').length){
+        }else if(msg.getElementsByTagName('body').length){
             var body = msg.getElementsByTagName('body')[0];
             var params = msg.getElementsByTagName('msgParams')[0];
             var messageInfo = {
@@ -144,6 +143,15 @@ var Chat = {
                 var params = msg.getElementsByTagName('notifyParams')[0];
                 $(document).trigger('chat/receiveMessage', [msg, {type: 'notify', from: Strophe.getBareJidFromJid(from), to: Strophe.getBareJidFromJid(to), fromName: params.getAttribute('fromName'), toName: params.getAttribute('toName'), total: params.getAttribute('total')}]);
                 chatUI.typingMessage(from, 1);
+            }
+        }else if(type == 'headline'){
+            if(msg.getElementsByTagName('params').length){
+                var params = msg.getElementsByTagName('params')[0];
+                if(params.getAttribute('sttOnline') && params.getAttribute('sttOnline')==0){
+                    Chat.sendMessage(Strophe.getBareJidFromJid(from) , 1, 'headline', {sttOnline: 1});
+                }else{
+                    Chat.log(Strophe.getBareJidFromJid(from) + " is online", Strophe.getBareJidFromJid(to), params);
+                }
             }
         }
         // we must return true to keep the handler alive.
@@ -179,6 +187,14 @@ var Chat = {
             }).c("msg", {ts: $.now()}).t(message);
             if(params){
                 reply.up().c("notifyParams", params);
+            }
+        }else if (messagetype === 'headline') {
+            reply = $msg({to: messgeTo,
+                from: Strophe.getBareJidFromJid(Chat.connection.jid),
+                type: messagetype
+            }).c("msg", {ts: $.now()}).t(message);
+            if(params){
+                reply.up().c("params", params);
             }
         }else{
             reply = $msg({to: messgeTo,

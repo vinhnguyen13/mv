@@ -54,6 +54,8 @@ if(!Yii::$app->user->isGuest) {
                             }
                         });
                     }, 500);
+                }else if(params.type == 'online'){
+                    console.log('------------------', params);
                 }
             });
             $(document).bind('chat/readNotify', function (event, type) {

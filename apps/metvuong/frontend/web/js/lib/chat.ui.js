@@ -95,7 +95,6 @@
             if(!chatBoxExist){
                 return false;
             }
-            console.log(chatBoxExist);
             if(type == chatUI.MSG_SEND_ME){
                 var html = chatUI.buildMessageToBox(chatUI.usrFromJid(this.to), msg, type, params);
             }else if(type == chatUI.MSG_SEND_YOU){
