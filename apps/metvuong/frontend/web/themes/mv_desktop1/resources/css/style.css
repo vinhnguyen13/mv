@@ -2336,6 +2336,7 @@ label {
 #avatar-user div,
 .list-noti .avatar a,
 .chat-list .wrap-img,
+.chat-live .wrap-img,
 .avatar-user-pr .avatar,
 .user-edit .wrap-img {
     position: static;
@@ -2775,8 +2776,16 @@ html.mm-opening .mm-slideout {
     transform: translate3d(80%,0,0);
 }
 .chat-list {
-    padding: 37px 15px 15px;
+    width: 40%;
+    display: table-cell;
+    border-right: 2px solid #c8c8c8;
 }
+.chat-live {
+    width: 60%;
+    display: table-cell;
+    padding-left: 20px;
+}
+.chat-live .wrap-img,
 .chat-list .wrap-img {
     float: left;
     margin-right: 20px;
@@ -2788,26 +2797,41 @@ html.mm-opening .mm-slideout {
     height: 100%;
     width: 100%;
 }
+.chat-live .chat-detail,
 .chat-list .chat-detail {
     overflow: hidden;
-    font-size: .9em;
+    font-size: 14px;
 }
+.chat-live .item,
 .chat-list .item {
-    padding: 18px 0;
+    padding: 10px 0;
     border-bottom: 1px solid #B1B1B1;
     float: left;
     width: 100%;
 }
+.chat-list .item {
+    padding-right: 20px;
+}
+.chat-live .item,
 .chat-list .item:last-child {
-    border: none;
+    border-bottom: none;
 }
+.chat-live .item a,
 .chat-list .item a {
-    color: #777;
 }
+.chat-live .item .name,
 .chat-list .item .name {
     color: #000;
     font-weight: 700;
-    font-size: 1em;
+    font-size: 14px;
+    max-width: 150px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.chat-list .item .name {
+    color: #00a769;
+    margin-bottom: 5px;
 }
 .mm-slideout {
     background: #fff;
@@ -2816,8 +2840,13 @@ html.mm-opening .mm-slideout {
 .mm-menu.mm-offcanvas.mm-current {
     display: block !important;
 }
+.chat-live .item span,
 .chat-list .item span {
     display: block;
+}
+.chat-list .item .time-chat {
+    font-size: 12px;
+    vertical-align: middle;
 }
 .type-input-chat {
     position: fixed;
@@ -3913,7 +3942,6 @@ html.mm-opening .mm-slideout {
 }
 .search-history {
     position: fixed;
-    height: 37px;
     width: 100%;
     top: 77px;
     left: 0;
@@ -3923,9 +3951,9 @@ html.mm-opening .mm-slideout {
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     -ms-border-radius: 0;
-    height: 100%;
     width: 100%;
     padding-left: 39px;
+    height: 39px;
 }
 .icon-search-white {
     width: 33px;
@@ -3942,7 +3970,7 @@ html.mm-opening .mm-slideout {
     background: none;
 }
 .btn-search-hist span {
-    margin-top: 2px;
+    margin-top: 4px;
 }
 .search-history.focus input {
     left: 0;
@@ -3955,6 +3983,7 @@ html.mm-opening .mm-slideout {
 .chat-history {
     position: relative;
     padding-top: 36px;
+    padding-bottom: 50px;
 }
 .item-listing .id-duan {
     font-weight: 400;
@@ -4992,7 +5021,7 @@ html.mm-opening .mm-slideout {
     padding: 3px 0 1px;
 }
 .unread {
-    background: rgba(237,239,245,.98);
+    background: #f7f7f7;
 }
 .list-noti {
     padding-left: 25px;
@@ -6199,17 +6228,17 @@ footer li a {
         display: none;
     }
     .wrap-noti {
-        margin-top: 30px;
+        width: 850px;
+        margin: 30px auto 0;
     }
     .search-history {
         position: relative;
         float: left;
-        width: auto;
         top: 0;
         left: inherit;
-        margin-top: 30px;
-        margin-bottom: 20px;
-        width: 300px;
+        padding-bottom: 15px;
+        border-right: 2px solid #fff;
+        right: -2px;
     }
     .wrap-infor-duan {
         background: none;
@@ -7688,3 +7717,10 @@ footer li a {
 .list-menu-news .swiper-button-prev {
     left: -25px;
 }
+.wrap-history {
+    width: 850px;
+    margin: 80px auto 0;
+    min-height: 500px;
+}
+.chat-live,
+.chat-list {height: 500px;/* overflow-x: hidden; *//* overflow-y: auto; */}
