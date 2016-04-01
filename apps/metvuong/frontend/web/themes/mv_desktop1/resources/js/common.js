@@ -304,10 +304,13 @@ $.fn.dropdown = function (options) {
                 var txt = $(this).text(),
                 dataValue = $(this).data('value') != undefined ? $(this).data('value') : txt;
 
-                $(el.find('input[type=hidden]')).val(dataValue);
-
-                $(el.find('input[type=hidden]')).trigger('change');
-
+                if ( $(el.find('input[type=hidden]')).val() == dataValue ) {
+                    l('no change');
+                }else {
+                    $(el.find('input[type=hidden]')).val(dataValue);
+                    $(el.find('input[type=hidden]')).trigger('change');
+                }
+                
                 sc.settings.ajaxSubmit();
 
                 if (sc.settings.styleShow) {
