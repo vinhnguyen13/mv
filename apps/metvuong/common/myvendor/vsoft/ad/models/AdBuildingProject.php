@@ -24,7 +24,7 @@ class AdBuildingProject extends ABP
     public function rules()
     {
         return [
-	        [['city_id', 'district_id', 'created_at', 'updated_at', 'status', 'is_crawl'], 'integer'],
+	        [['city_id', 'district_id', 'created_at', 'updated_at', 'status', 'is_crawl', 'hot_project', 'click'], 'integer'],
 	        [['name'], 'required'],
 	        [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video', 'progress',
                 'name', 'description', 'file_name', 'data_html'], 'string'],
@@ -88,6 +88,8 @@ class AdBuildingProject extends ABP
     	'facade_width' => 'Mặt tiền(m)',
     	'lift' => 'Thang máy(cái)',
     	'start_date' => 'Ngày khởi công',
+        'hot_project' => 'Dự án nổi bật',
+        'click' => 'Lượt xem'
     	];
     }
     
@@ -270,5 +272,20 @@ class AdBuildingProject extends ABP
             }
         }
         return $image;
+    }
+
+    public static function getHotProject(){
+        $projects = self::find()->where('hot_project = :hot', [':hot' => 1])
+            ->andWhere('status = :s', [':s' => 1])
+            ->orderBy(['id' => SORT_DESC])->limit(4)
+            ->all();
+        return $projects;
+    }
+
+    public static function getTopProject(){
+        $projects = self::find()->where('status = :s', [':s' => 1])
+            ->orderBy(['click' => SORT_DESC])->limit(4)
+            ->all();
+        return $projects;
     }
 }

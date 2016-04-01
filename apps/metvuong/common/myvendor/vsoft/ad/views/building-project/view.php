@@ -51,7 +51,7 @@ $this->registerJs('buildingProject.initView()', View::POS_READY, 'initform');
 		    <tr><th><?= $model->getAttributeLabel('floor_no') ?></th><td><?= $model->floor_no ?></td></tr>
 		    <tr><th><?= $model->getAttributeLabel('facilities') ?></th><td><?= $model->facilities ?></td></tr>
 		    <tr><th><?= $model->getAttributeLabel('hotline') ?></th><td><?= $model->formatMultiline('hotline') ?></td></tr>
-		    <tr><th><?= $model->getAttributeLabel('website') ?></th><td><a target="_blank" href="<?= $model->website ?>"><?= $model->website ?></a></td></tr>
+		    <tr><th><?= $model->getAttributeLabel('website') ?></th><td><a target="_blank" href="//<?= $model->website ?>"><?= $model->website ?></a></td></tr>
 		    <tr class="info"><th colspan="2">Bản đồ vị trí</th></tr>
 		    <tr>
 		    	<td><?= $model->getAttributeLabel('location_detail') ?></td>

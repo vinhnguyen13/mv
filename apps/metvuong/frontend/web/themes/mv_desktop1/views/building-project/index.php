@@ -19,6 +19,7 @@ use yii\widgets\LinkPager;
                         <button type="submit" id="btn-search-duan"><span class="icon icon-search-small-1"></span></button>
                         <div class="suggest-search hide">
                             <div class="content-suggest">
+                                <a class="btn-close"><span class="icon icon-close"></span></a>
                                 <ul></ul>
                             </div>
                         </div>
@@ -71,76 +72,15 @@ use yii\widgets\LinkPager;
                         </ul>
                     </div>
                     <div class="col-xs-12 col-md-3 col-right sidebar-col">
-                        <div class="item-sidebar">
-                            <div class="title-sidebar">DỰ ÁN NỔI BẬT</div>
-                            <ul class="clearfix list-post">
-                                <li>
-                                    <div class="wrap-item-post">
-                                        <a href="#" class="rippler rippler-default">
-                                            <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg"></div></div>
-                                        </a>
-                                        <p class="infor-by-up">Căn hộ chung cư Bán</p>
-                                        <p class="name-post"><a href="#">LOREM IPSUM DOLORIT </a></p>
-                                        <p class="fs-15 font-400">21 Nguyễn Trung Ngạn, P. Bến Nghé, Q1</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="wrap-item-post">
-                                        <a href="#" class="rippler rippler-default">
-                                            <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg"></div></div>
-                                        </a>
-                                        <p class="infor-by-up">Căn hộ chung cư Bán</p>
-                                        <p class="name-post"><a href="#">LOREM IPSUM DOLORIT </a></p>
-                                        <p class="fs-15 font-400">21 Nguyễn Trung Ngạn, P. Bến Nghé, Q1</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="wrap-item-post">
-                                        <a href="#" class="rippler rippler-default">
-                                            <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg"></div></div>
-                                        </a>
-                                        <p class="infor-by-up">Căn hộ chung cư Bán</p>
-                                        <p class="name-post"><a href="#">LOREM IPSUM DOLORIT </a></p>
-                                        <p class="fs-15 font-400">21 Nguyễn Trung Ngạn, P. Bến Nghé, Q1</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="item-sidebar">
-                            <div class="title-sidebar">DỰ ÁN NHIỀU NGƯỜI XEM</div>
-                            <ul class="clearfix list-post">
-                                <li>
-                                    <div class="wrap-item-post">
-                                        <a href="#" class="rippler rippler-default">
-                                            <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg"></div></div>
-                                        </a>
-                                        <p class="infor-by-up">Căn hộ chung cư Bán</p>
-                                        <p class="name-post"><a href="#">LOREM IPSUM DOLORIT </a></p>
-                                        <p class="fs-15 font-400">21 Nguyễn Trung Ngạn, P. Bến Nghé, Q1</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="wrap-item-post">
-                                        <a href="#" class="rippler rippler-default">
-                                            <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg"></div></div>
-                                        </a>
-                                        <p class="infor-by-up">Căn hộ chung cư Bán</p>
-                                        <p class="name-post"><a href="#">LOREM IPSUM DOLORIT </a></p>
-                                        <p class="fs-15 font-400">21 Nguyễn Trung Ngạn, P. Bến Nghé, Q1</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="wrap-item-post">
-                                        <a href="#" class="rippler rippler-default">
-                                            <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg"></div></div>
-                                        </a>
-                                        <p class="infor-by-up">Căn hộ chung cư Bán</p>
-                                        <p class="name-post"><a href="#">LOREM IPSUM DOLORIT </a></p>
-                                        <p class="fs-15 font-400">21 Nguyễn Trung Ngạn, P. Bến Nghé, Q1</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+                        <?php
+                        $hotproject = \vsoft\ad\models\AdBuildingProject::getHotProject();
+                        if(count($hotproject) > 0)
+                            echo $this->render('/building-project/_partials/hotproject',['projects' => $hotproject]);
+
+                        $topproject = \vsoft\ad\models\AdBuildingProject::getTopProject();
+                        if(count($topproject) > 0)
+                            echo $this->render('/building-project/_partials/topproject',['projects' => $topproject]);
+                        ?>
                     </div>
                 </div>
             </div>
@@ -148,9 +88,19 @@ use yii\widgets\LinkPager;
     </div>
 </div>
 
+<style>
+    .content-suggest ul li:hover{
+        background-color: antiquewhite;
+    }
+    .content-suggest ul li a{
+        text-decoration: none;
+    }
+</style>
+
 <script>
     $(document).ready(function () {
         var searchForm = $('#search-duan-form');
+        var result  = 0;
         $('#findProject').keyup(function () {
             var self = $(this);
             var val = self.val().trim();
@@ -159,7 +109,8 @@ use yii\widgets\LinkPager;
 
             if (val.length >= 2) {
                 $.get(url, searchForm.serialize(), function (response) {
-                    if (response.length > 0) {
+                    result = response.length;
+                    if (result > 0) {
                         ss.removeClass('hide');
 
                         var html = '';
@@ -175,6 +126,15 @@ use yii\widgets\LinkPager;
                 $('#v').val('');
                 ss.addClass('hide');
             }
+        });
+
+        $('#search-duan-form .btn-close').click(function(){
+            $('.suggest-search').addClass('hide');
+        });
+
+        $('#findProject').mouseenter(function(){
+            if(result > 0)
+                $('.suggest-search').removeClass('hide');
         });
     });
 </script>

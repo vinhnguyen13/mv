@@ -120,6 +120,7 @@ if(!$model->isNewRecord) {
 			    	<?= $form->field($model, 'facilities')->checkboxList(ArrayHelper::map($facility, 'id', 'name')) ?>
 			    	<?= $form->field($model, 'hotline')->textArea()->hint('Mổi số điện thoại trên 1 dòng') ?>
 			    	<?= $form->field($model, 'website') ?>
+			    	<?= $form->field($model, 'hot_project')->checkbox() ?>
 	    		</li>
 	    		<li>
 	    			<?= $form->field($model, 'location_detail')->widget(CKEditor::className(), [
