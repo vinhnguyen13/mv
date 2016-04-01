@@ -71,19 +71,23 @@ Yii::$app->view->registerMetaTag([
 					$images = $product->adImages;
 					if($images):
 				?>
-				<div class="gallery-detail swiper-container">
-					<div class="swiper-wrapper">
-						<?php foreach ($images as $image): ?>
-						<div class="swiper-slide">
-							<div class="img-show">
-								<div>
-									<img src="<?= $image->url ?>" alt="<?=$address?>">
+				<div class="wrap-swiper">
+					<div class="gallery-detail swiper-container">
+						<div class="swiper-wrapper">
+							<?php foreach ($images as $image): ?>
+							<div class="swiper-slide">
+								<div class="img-show">
+									<div>
+										<img src="<?= $image->url ?>" alt="<?=$address?>">
+									</div>
 								</div>
 							</div>
+							<?php endforeach; ?>
 						</div>
-						<?php endforeach; ?>
+						<div class="swiper-pagination"></div>
+						<div class="swiper-button-next"><span></span></div>
+        				<div class="swiper-button-prev"><span></span></div>
 					</div>
-					<div class="swiper-pagination"></div>
 				</div>
 				<?php endif; ?>
 				<p class="infor-by-up">
@@ -388,8 +392,8 @@ Yii::$app->view->registerMetaTag([
                     </ul>
 				</div>
 			</div>
+		</div>
 	</div>
-</div>
 </div>
 <?=$this->renderAjax('/ad/_partials/shareEmail',[
     'product' => $product,
@@ -503,6 +507,15 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 			$('#popup-share-social').addClass('hide-popup');
 			$('.email-btn').trigger('click');
 		});
+
+		var swiper = new Swiper('.detail-listing-extra .swiper-container', {
+			pagination: '.swiper-pagination',
+			paginationClickable: true,
+	        spaceBetween: 0,
+	        nextButton: '.swiper-button-next',
+	        prevButton: '.swiper-button-prev',
+	        loop: true
+	    });
 
 	});
 

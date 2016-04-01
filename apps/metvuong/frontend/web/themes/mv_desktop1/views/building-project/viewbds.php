@@ -46,110 +46,186 @@ $tabKeys = [
 <div class="title-fixed-wrap">
     <div class="container">
         <div class="detail-duan-moi">
-            <div class="title-top"><?=empty($model->name) ? Yii::t('project', 'Project') : $model->name?></div>
-            <div class="wrap-duan-moi">
-                <div class="gallery-detail swiper-container">
-                    <div class="swiper-wrapper">
-                        <?php
-                        if(!empty($model->gallery)) {
-                            $gallery = explode(',', $model->gallery);
-                            if (count($gallery) > 0) {
-                                foreach ($gallery as $image) {
-                                    ?>
-                                    <div class="swiper-slide">
-                                        <div class="img-show">
-                                            <div>
-                                                <img
-                                                    src="<?= \yii\helpers\Url::to('/store/building-project-images/' . $image) ?>"
-                                                    alt="<?= $model->location ?>">
+            <!-- <div class="title-top"><?=empty($model->name) ? Yii::t('project', 'Project') : $model->name?></div> -->
+            <div class="wrap-duan-moi row">
+                <div class="col-xs-12 col-md-9 col-left">
+                    <div class="gallery-detail swiper-container">
+                        <div class="swiper-wrapper">
+                            <?php
+                            if(!empty($model->gallery)) {
+                                $gallery = explode(',', $model->gallery);
+                                if (count($gallery) > 0) {
+                                    foreach ($gallery as $image) {
+                                        ?>
+                                        <div class="swiper-slide">
+                                            <div class="img-show">
+                                                <div>
+                                                    <img
+                                                        src="<?= \yii\helpers\Url::to('/store/building-project-images/' . $image) ?>"
+                                                        alt="<?= $model->location ?>">
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                <?php }
-                            }
-                        } else {
-                            ?>
-                            <div class="swiper-slide">
-                                <div class="img-show">
-                                    <div>
-                                        <img src="<?=$model->logoUrl?>" alt="<?=$model->logoUrl?>">
+                                    <?php }
+                                }
+                            } else {
+                                ?>
+                                <div class="swiper-slide">
+                                    <div class="img-show">
+                                        <div>
+                                            <img src="<?=$model->logoUrl?>" alt="<?=$model->logoUrl?>">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        <?php }  ?>
+                            <?php }  ?>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-button-next"><span></span></div>
+                        <div class="swiper-button-prev"><span></span></div>
                     </div>
-                    <div class="swiper-pagination"></div>
-                </div>
-                <div class="item infor-address-duan">
-                	<p><?= $model->investment_type  ?></p>
-                    <strong><?= $model->name ?></strong>
-                    <?= empty($model->location) ? $lbl_updating : $model->location ?>
-                    <ul class="pull-right icons-detail">
-                        <li><a href="#popup-share-social" class="icon icon-share-td"></a></li>
-                        <!--                    <li><a href="#" class="icon save-item" data-id="4115" data-url="/ad/favorite"></a></li>-->
-                        <li><a href="#popup-map" class="icon icon-map-loca"></a></li>
-                    </ul>
-                </div>
-                <?php
-                if(count($model->investors) > 0){
-                    $investor = $model->investors[0];
-                    $image = $investor->logo;
-                    if(empty($investor->logo))
-                        $image = \vsoft\ad\models\AdImages::defaultImage();?>
-                <div class="item chudautu-infor">
-                    <div class="title-section"><?=Yii::t('project', 'Investor')?></div>
-                    <div class="clearfix">
-                    	<div class="wrap-img pull-left">
-                    		<img src="<?=(filter_var($image, FILTER_VALIDATE_URL) === FALSE) ? Yii::getAlias('@store') . "/building-project-images/" . $investor->logo : $investor->logo ?>" alt="<?=$investor->name?>">
-                    	</div>
-                    	<div class="infor-detail-chudautu">
-                    		<ul>
-				                <li>
-				                    <strong id=""><?=Yii::t('project','Address')?></strong>:
-				                    <?=empty($investor->address) ? $lbl_updating : $investor->address ?></li>
-				                <li>
-				                    <strong id=""><?=Yii::t('project','Phone')?></strong>:
-                                    <?=empty($investor->phone) ? $lbl_updating : $investor->phone ?>
-				                    |
-				                    <strong id=""><?=Yii::t('project','Fax')?></strong>:
-				                    <span><?=empty($investor->fax) ? $lbl_updating : $investor->fax ?></span>
-				                </li>
-				                <li>
-				                    <strong id=""><?=Yii::t('project','Website')?></strong>:
-				                    <span><?=empty($investor->website) ? $lbl_updating : "<a href=\"//".$investor->website."\">".$investor->website."</a>" ?></span>
-				                </li>
-				                <li>
-				                    <strong id=""><?=Yii::t('project','Email')?></strong>:
-				                    <span><?=empty($investor->email) ? $lbl_updating : $investor->email ?></span>
-				                </li>
-				            </ul>
-                    	</div>
+                    <div class="item infor-address-duan">
+                    	<p><?= $model->investment_type  ?></p>
+                        <strong><?= $model->name ?></strong>
+                        <?= empty($model->location) ? $lbl_updating : $model->location ?>
+                        <ul class="pull-right icons-detail">
+                            <li><a href="#popup-share-social" class="icon icon-share-td"></a></li>
+                            <!--                    <li><a href="#" class="icon save-item" data-id="4115" data-url="/ad/favorite"></a></li>-->
+                            <li><a href="#popup-map" class="icon icon-map-loca"></a></li>
+                        </ul>
                     </div>
-                </div>
-                <?php }
-                if(count($tabProject) > 0){
-                ?>
-                <div class="infor-bds">
-	                <ul class="tabProject clearfix">
-                        <?php
-                        foreach($tabProject as $key => $tabValue){
-                        ?>
-						<li class="">
-							<a href="javascript:void(0)" rel="nofollow" style="white-space:nowrap;"><?=$tabKeys[$key]?></a>
-						</li>
-                        <?php } ?>
-					</ul>
-					<?php
-                    foreach($tabProject as $key => $tabValue){
-                    ?>
-					<div class="editor" style="display:none;clear: both">
-                        <div class="a1">
-                            <?=$tabValue?>
+                    <?php
+                    if(count($model->investors) > 0){
+                        $investor = $model->investors[0];
+                        $image = $investor->logo;
+                        if(empty($investor->logo))
+                            $image = \vsoft\ad\models\AdImages::defaultImage();?>
+                    <div class="item chudautu-infor">
+                        <div class="title-section"><?=Yii::t('project', 'Investor')?></div>
+                        <div class="clearfix">
+                        	<div class="wrap-img pull-left">
+                        		<img src="<?=(filter_var($image, FILTER_VALIDATE_URL) === FALSE) ? Yii::getAlias('@store') . "/building-project-images/" . $investor->logo : $investor->logo ?>" alt="<?=$investor->name?>">
+                        	</div>
+                        	<div class="infor-detail-chudautu">
+                        		<ul>
+    				                <li>
+    				                    <strong id=""><?=Yii::t('project','Address')?></strong>:
+    				                    <?=empty($investor->address) ? $lbl_updating : $investor->address ?></li>
+    				                <li>
+    				                    <strong id=""><?=Yii::t('project','Phone')?></strong>:
+                                        <?=empty($investor->phone) ? $lbl_updating : $investor->phone ?>
+    				                    |
+    				                    <strong id=""><?=Yii::t('project','Fax')?></strong>:
+    				                    <span><?=empty($investor->fax) ? $lbl_updating : $investor->fax ?></span>
+    				                </li>
+    				                <li>
+    				                    <strong id=""><?=Yii::t('project','Website')?></strong>:
+    				                    <span><?=empty($investor->website) ? $lbl_updating : "<a href=\"//".$investor->website."\">".$investor->website."</a>" ?></span>
+    				                </li>
+    				                <li>
+    				                    <strong id=""><?=Yii::t('project','Email')?></strong>:
+    				                    <span><?=empty($investor->email) ? $lbl_updating : $investor->email ?></span>
+    				                </li>
+    				            </ul>
+                        	</div>
                         </div>
                     </div>
+                    <?php }
+                    if(count($tabProject) > 0){
+                    ?>
+                    <div class="infor-bds">
+    	                <ul class="tabProject clearfix">
+                            <?php
+                            foreach($tabProject as $key => $tabValue){
+                            ?>
+    						<li class="">
+    							<a href="javascript:void(0)" rel="nofollow" style="white-space:nowrap;"><?=$tabKeys[$key]?></a>
+    						</li>
+                            <?php } ?>
+    					</ul>
+    					<?php
+                        foreach($tabProject as $key => $tabValue){
+                        ?>
+    					<div class="editor" style="display:none;clear: both">
+                            <div class="a1">
+                                <?=$tabValue?>
+                            </div>
+                        </div>
+                        <?php } ?>
+    			    </div>
                     <?php } ?>
-			    </div>
-                <?php } ?>
+                </div>
+                <div class="col-xs-12 col-md-3 col-right sidebar-col">
+                    <div class="item-sidebar">
+                        <div class="title-sidebar">DỰ ÁN NỔI BẬT</div>
+                        <ul class="clearfix list-post">
+                            <li>
+                                <div class="wrap-item-post">
+                                    <a href="#" class="rippler rippler-default">
+                                        <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg"></div></div>
+                                    </a>
+                                    <p class="infor-by-up">Căn hộ chung cư Bán</p>
+                                    <p class="name-post"><a href="#">LOREM IPSUM DOLORIT </a></p>
+                                    <p class="fs-15 font-400">21 Nguyễn Trung Ngạn, P. Bến Nghé, Q1</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="wrap-item-post">
+                                    <a href="#" class="rippler rippler-default">
+                                        <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg"></div></div>
+                                    </a>
+                                    <p class="infor-by-up">Căn hộ chung cư Bán</p>
+                                    <p class="name-post"><a href="#">LOREM IPSUM DOLORIT </a></p>
+                                    <p class="fs-15 font-400">21 Nguyễn Trung Ngạn, P. Bến Nghé, Q1</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="wrap-item-post">
+                                    <a href="#" class="rippler rippler-default">
+                                        <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg"></div></div>
+                                    </a>
+                                    <p class="infor-by-up">Căn hộ chung cư Bán</p>
+                                    <p class="name-post"><a href="#">LOREM IPSUM DOLORIT </a></p>
+                                    <p class="fs-15 font-400">21 Nguyễn Trung Ngạn, P. Bến Nghé, Q1</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="item-sidebar">
+                        <div class="title-sidebar">DỰ ÁN NHIỀU NGƯỜI XEM</div>
+                        <ul class="clearfix list-post">
+                            <li>
+                                <div class="wrap-item-post">
+                                    <a href="#" class="rippler rippler-default">
+                                        <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg"></div></div>
+                                    </a>
+                                    <p class="infor-by-up">Căn hộ chung cư Bán</p>
+                                    <p class="name-post"><a href="#">LOREM IPSUM DOLORIT </a></p>
+                                    <p class="fs-15 font-400">21 Nguyễn Trung Ngạn, P. Bến Nghé, Q1</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="wrap-item-post">
+                                    <a href="#" class="rippler rippler-default">
+                                        <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg"></div></div>
+                                    </a>
+                                    <p class="infor-by-up">Căn hộ chung cư Bán</p>
+                                    <p class="name-post"><a href="#">LOREM IPSUM DOLORIT </a></p>
+                                    <p class="fs-15 font-400">21 Nguyễn Trung Ngạn, P. Bến Nghé, Q1</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="wrap-item-post">
+                                    <a href="#" class="rippler rippler-default">
+                                        <div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121171906-9f37.jpg"></div></div>
+                                    </a>
+                                    <p class="infor-by-up">Căn hộ chung cư Bán</p>
+                                    <p class="name-post"><a href="#">LOREM IPSUM DOLORIT </a></p>
+                                    <p class="fs-15 font-400">21 Nguyễn Trung Ngạn, P. Bến Nghé, Q1</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -186,10 +262,14 @@ $tabKeys = [
     		$('.wrap-duan-moi .editor').hide();
     		$('.wrap-duan-moi .editor').eq(indexItem).velocity("fadeIn", { duration: 200 });
     	});
+        
         var swiper = new Swiper('.swiper-container', {
             pagination: '.swiper-pagination',
             paginationClickable: true,
-            spaceBetween: 30
+            spaceBetween: 0,
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            loop: true
         });
 
         $('#popup-map').popupMobi({

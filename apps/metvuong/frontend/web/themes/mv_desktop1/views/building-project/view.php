@@ -98,7 +98,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                     <div class="item infor-address-duan">
                         <p><?= $model->investment_type ?></p>
                         <strong><?= $model->name?></strong>
-                        <span class="icon address-icon"></span><?= empty($model->location) ? $lbl_updating : $model->location ?>
+                        <?= empty($model->location) ? $lbl_updating : $model->location ?>
                         <ul class="pull-right icons-detail">
                             <li><a href="#popup-share-social" class="icon icon-share-td"></a></li>
         <!--                    <li><a href="#" class="icon save-item" data-id="4115" data-url="/ad/favorite"></a></li>-->
@@ -431,9 +431,10 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
         var swiper = new Swiper('.swiper-container', {
             pagination: '.swiper-pagination',
             paginationClickable: true,
-            spaceBetween: 30,
+            spaceBetween: 0,
             nextButton: '.swiper-button-next',
-            prevButton: '.swiper-button-prev'
+            prevButton: '.swiper-button-prev',
+            loop: true
         });
 
         $('#popup-map').popupMobi({

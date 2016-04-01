@@ -174,12 +174,15 @@ $(document).ready(function(){
 			
 			$.get('/ad/detail', {id: id}, function(r){
 				
-				detailListing.find('.container').html($(r).find('#wrapper').find('.detail-listing').html());
+				detailListing.find('.container').html($(r).find('#wrapper').find('.detail-listing .col-left').html());
 
-				var swiper = new Swiper('.swiper-container', {
+				var swiper = new Swiper('.detail-listing-dt .swiper-container', {
 					pagination: '.swiper-pagination',
 					paginationClickable: true,
-			        spaceBetween: 0
+			        spaceBetween: 0,
+			        nextButton: '.swiper-button-next',
+			        prevButton: '.swiper-button-prev',
+			        loop: true
 			    });
 
 				wrapDetailListing.loading({done: true});

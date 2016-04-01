@@ -23,8 +23,8 @@ Yii::t('news', 'Economy');
                 <?php }?>
             </div>
         </div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"><span></span></div>
+        <div class="swiper-button-prev"><span></span></div>
     </div>
     <h2><?=Yii::t('news','NEWS')?></h2>
 </div>
@@ -35,7 +35,8 @@ Yii::t('news', 'Economy');
             spaceBetween: 0,
             slidesPerView: 'auto',
             nextButton: '.swiper-button-next',
-            prevButton: '.swiper-button-prev'
+            prevButton: '.swiper-button-prev',
+            preventClicks: false
         });
     });
 </script>
