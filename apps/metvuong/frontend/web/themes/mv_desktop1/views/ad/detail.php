@@ -110,6 +110,67 @@ Yii::$app->view->registerMetaTag([
 			            <?php } ?>
 						<li><a href="#popup-map" class="icon icon-map-loca" data-toggle="tooltip" data-placement="bottom" title="Location"></a></li>
 					</ul>
+
+					<?=$this->renderAjax('/ad/_partials/shareEmail',[
+				    'product' => $product,
+				    'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
+				    'recipientEmail' => $product->adContactInfo->email,
+				    'params' => ['your_email' => false, 'recipient_email' => false] ])?>
+
+
+					<div id="popup-map" class="popup-common hide-popup">
+						<div class="wrap-popup">
+							<div class="inner-popup">
+								<a href="#" class="btn-close-map">trở lại</a>
+					        	<div id="map_detail" data-lat="<?= $product->lat ?>" data-lng="<?= $product->lng ?>"></div>
+							</div>
+						</div>
+					</div>
+
+					<?=$this->render('/ad/_partials/shareSocial',[
+					    'url' => $product->urlDetail(true),
+					    'title' => $address,
+					    'description' => \yii\helpers\StringHelper::truncate($product->content, 200, $suffix = '...', $encoding = 'UTF-8'),
+					    'image' => $product->image_file_name ? AdImages::getImageUrl($product->image_folder, $product->image_file_name, AdImages::SIZE_THUMB) : AdImages::defaultImage()
+					])?>
+
+					<script>
+						$(document).ready(function () {
+							$('#popup-map').popupMobi({
+								btnClickShow: ".infor-listing .icon-map-loca",
+								closeBtn: "#popup-map .btn-close-map",
+								effectShow: "show-hide",
+								funCallBack: function() {
+									var mapEl = $('#map_detail');
+									var latLng = {lat: Number(mapEl.data('lat')), lng:  Number(mapEl.data('lng'))};
+									var map = new google.maps.Map(mapEl.get(0), {
+										center: latLng,
+									    zoom: 16,
+									    mapTypeControl: false,
+									    zoomControl: false,
+									    streetViewControl: false
+									});
+
+									var marker = new google.maps.Marker({
+									    position: latLng,
+									    map: map
+									});
+								}
+							});
+
+							$('#popup-share-social').popupMobi({
+					            btnClickShow: ".icons-detail .icon-share-td",
+					            closeBtn: ".btn-close",
+					            styleShow: "center"
+					        });
+
+							$(document).on('click', '#popup-share-social .icon-email-1', function (e) {
+								$('#popup-share-social').addClass('hide-popup');
+								$('.email-btn').trigger('click');
+							});
+						});
+					</script>
+
 					<p class="price-td">
 						<span>Giá</span>
 						<?= StringHelper::formatCurrency($product->price) ?>
@@ -395,28 +456,7 @@ Yii::$app->view->registerMetaTag([
 		</div>
 	</div>
 </div>
-<?=$this->renderAjax('/ad/_partials/shareEmail',[
-    'product' => $product,
-    'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
-    'recipientEmail' => $product->adContactInfo->email,
-    'params' => ['your_email' => false, 'recipient_email' => false] ])?>
 
-
-<div id="popup-map" class="popup-common hide-popup">
-	<div class="wrap-popup">
-		<div class="inner-popup">
-			<a href="#" class="btn-close-map">trở lại</a>
-        	<div id="map" data-lat="<?= $product->lat ?>" data-lng="<?= $product->lng ?>"></div>
-		</div>
-	</div>
-</div>
-
-<?=$this->render('/ad/_partials/shareSocial',[
-    'url' => $product->urlDetail(true),
-    'title' => $address,
-    'description' => \yii\helpers\StringHelper::truncate($product->content, 200, $suffix = '...', $encoding = 'UTF-8'),
-    'image' => $product->image_file_name ? AdImages::getImageUrl($product->image_folder, $product->image_file_name, AdImages::SIZE_THUMB) : AdImages::defaultImage()
-])?>
 
 <?php
 /**
@@ -474,39 +514,6 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 //			closeBtn: '#popup-email .btn-cancel',
 //			styleShow: "full"
 //		});
-
-		$('#popup-map').popupMobi({
-			btnClickShow: ".infor-listing .icon-map-loca",
-			closeBtn: "#popup-map .btn-close-map",
-			effectShow: "show-hide",
-			funCallBack: function() {
-				var mapEl = $('#map');
-				var latLng = {lat: Number(mapEl.data('lat')), lng:  Number(mapEl.data('lng'))};
-				var map = new google.maps.Map(mapEl.get(0), {
-					center: latLng,
-				    zoom: 16,
-				    mapTypeControl: false,
-				    zoomControl: false,
-				    streetViewControl: false
-				});
-
-				var marker = new google.maps.Marker({
-				    position: latLng,
-				    map: map
-				});
-			}
-		});
-
-		$('#popup-share-social').popupMobi({
-            btnClickShow: ".icons-detail .icon-share-td",
-            closeBtn: ".btn-close",
-            styleShow: "center"
-        });
-
-		$(document).on('click', '#popup-share-social .icon-email-1', function (e) {
-			$('#popup-share-social').addClass('hide-popup');
-			$('.email-btn').trigger('click');
-		});
 
 		var swiper = new Swiper('.detail-listing-extra .swiper-container', {
 			pagination: '.swiper-pagination',

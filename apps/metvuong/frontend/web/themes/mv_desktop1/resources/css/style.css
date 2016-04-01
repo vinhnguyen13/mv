@@ -7926,3 +7926,6 @@ footer li a {
 .review-box-popup {
     padding: 20px 10px;
 }
+#map_detail {
+    height: 100%;
+}
