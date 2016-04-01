@@ -21,15 +21,15 @@ $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID, 'st
                                     $banner = '/themes/metvuong2/resources/images/default-ads.jpg';
                                 ?>
                                 <li class="col-xs-12 col-sm-6 col-md-4">
-                                    <div>
+                                    <div title="<?=$n["title"]?>">
                                         <a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n["id"], 'slug' => $n["slug"]], true)?>" class="rippler rippler-default">
                                             <div class="img-show"><div><img src="<?=$banner?>" alt="<?=$n["title"]?>"></div></div>
                                         </a>
                                         <div>
                                             <a href="<?=\yii\helpers\Url::to(['news/list', 'cat_id'=>$n["catalog_id"], 'cat_slug'=>$n["cat_slug"]], true)?>" class="name-cate"><?=mb_strtoupper($n["cat_title"], "UTF-8")?></a>
-                                            <p class="name-news"><a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n["id"], 'slug' => $n["slug"]], true)?>"><?=$n["title"]?></a></p>
+                                            <p class="name-news"><a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n["id"], 'slug' => $n["slug"]], true)?>" title="<?=$n["title"]?>"><?=$n["title"]?></a></p>
                                             <p class="date-post"><?=date('d/m/Y, H:i', $n["created_at"])?></p>
-                                            <p class="short-txt">
+                                            <p class="short-txt" title="<?=$n["brief"]?>">
                                                 <?=\yii\helpers\StringHelper::truncate($n["brief"], 200)?>
                                             </p>
                                             <a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n["id"], 'slug' => $n["slug"]], true)?>" class="view-more"><?=Yii::t('news','Read more')?> <span class="icon arrowLeft-small-black"></span></a>

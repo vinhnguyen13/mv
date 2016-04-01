@@ -5,8 +5,8 @@
  * Date: 10/1/2015 9:09 AM
  */
 use yii\helpers\StringHelper;
-Yii::t('news', 'HOT NEWS');
 Yii::t('news', 'REAL ESTATE NEWS');
+Yii::t('news', 'HOT NEWS');
 Yii::t('news', 'FINANCIAL & BANKING NEWS');
 
 if(count($news) > 0){
@@ -14,17 +14,21 @@ if(count($news) > 0){
 <div class="item-sidebar clearfix">
     <div class="title-sidebar">
         <?php if($cat_id > 0) {?>
-            <a href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => $cat_id, 'cat_slug' => $cat_slug]) ?>"><?=$title?></a>
+            <a href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => $cat_id, 'cat_slug' => $cat_slug]) ?>"><?=Yii::t('news', $title)?></a>
         <?php } else {?>
-            <?=$title?>
+            <?=Yii::t('news', $title)?>
         <?php } ?>
     </div>
     <?php foreach($news as $k => $n) {
-        if($k == 0){ ?>
+        if($k == 0){
+            $banner = "/store/news/show/".$n->banner ;
+            $checkBanner = file_exists(Yii::getAlias('@store')."/news/show/".$n->banner );
+            if($checkBanner == false)
+                $banner = '/themes/metvuong2/resources/images/default-ads.jpg';?>
         <div class="item-hot-sidebar">
             <a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n->id, 'slug' => $n->slug], true)?>" title="<?=$n->title?>">
                 <div class="img-show">
-                    <div><img src="/store/news/show/<?= $n->banner ?>" alt="<?=$n->title?>"></div>
+                    <div><img src="<?= $banner ?>" alt="<?=$n->title?>"></div>
                 </div>
             </a>
             <a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n->id, 'slug' => $n->slug], true)?>" title="<?=$n->title?>" class="name-post"><?= StringHelper::truncate($n->title, 60) ?></a>
