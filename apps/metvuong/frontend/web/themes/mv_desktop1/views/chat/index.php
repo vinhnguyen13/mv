@@ -17,38 +17,69 @@ if(!empty($jid_id)){
 			<div class="title-top">
 				<span><?=Yii::t('chat', 'Chat history')?></span>
 			</div>
-			<div class="search-history">
-				<input type="text" id="findConversation" class="form-control" placeholder="<?=Yii::t('general', 'Find by name...')?>">
-				<button class="btn-search-hist" href="#"><span class="icon icon-search-small"></span></button>
-			</div>
-			<div class="chat-list clearfix">
-				<?php
-				if(!empty($msgs)) {
-					foreach($msgs as $msg){
-						$jid_user = Yii::$app->get('dbChat')->cache(function ($db) use ($msg) {
-							return Yii::$app->get('dbChat')->createCommand('SELECT jid FROM tig_ma_jids tmj WHERE jid_id=:jid_id')->bindValues([':jid_id'=>$msg['withuser']])->queryOne();
-						});
-						if(!empty($jid_user['jid'])){
-							$username = Chat::find()->getUsername($jid_user['jid']);
-							$user = \frontend\models\User::find()->where(['username' => $username])->one();
-						}
-						if(!empty($user->profile)){
-					?>
-							<div class="item" chat-with="<?=$user->username;?>">
-								<a href="<?= Url::to(['/chat/with', 'username' => $user->username]) ?>">
-									<span class="wrap-img"><img src="<?=$user->profile->getAvatarUrl();?>" alt=""></span>
-									<div class="chat-detail">
-										<span class="pull-right time-chat"><?=date('H:i:s d-m-Y', strtotime($msg['ts']));?></span>
-										<span class="name"><?=$user->profile->getDisplayName();?></span>
-										<span><?=$msg['body'];?></span>
-									</div>
-								</a>
-							</div>
+			<div class="wrap-history clearfix">
+				<div class="search-history">
+					<input type="text" id="findConversation" class="form-control" placeholder="<?=Yii::t('general', 'Find by name...')?>">
+					<button class="btn-search-hist" href="#"><span class="icon icon-search-small"></span></button>
+				</div>
+				<div class="chat-list clearfix">
 					<?php
+					if(!empty($msgs)) {
+						foreach($msgs as $msg){
+							$jid_user = Yii::$app->get('dbChat')->cache(function ($db) use ($msg) {
+								return Yii::$app->get('dbChat')->createCommand('SELECT jid FROM tig_ma_jids tmj WHERE jid_id=:jid_id')->bindValues([':jid_id'=>$msg['withuser']])->queryOne();
+							});
+							if(!empty($jid_user['jid'])){
+								$username = Chat::find()->getUsername($jid_user['jid']);
+								$user = \frontend\models\User::find()->where(['username' => $username])->one();
+							}
+							if(!empty($user->profile)){
+						?>
+								<div class="item" chat-with="<?=$user->username;?>">
+									<a href="<?= Url::to(['/chat/with', 'username' => $user->username]) ?>">
+										<span class="wrap-img"><img src="<?=$user->profile->getAvatarUrl();?>" alt=""></span>
+										<div class="chat-detail">
+											<span class="pull-right time-chat"><?=date('H:i:s d-m-Y', strtotime($msg['ts']));?></span>
+											<span class="name"><?=$user->profile->getDisplayName();?></span>
+											<span><?=$msg['body'];?></span>
+										</div>
+									</a>
+								</div>
+						<?php
+							}
 						}
 					}
-				}
-				?>
+					?>
+				</div>
+				<div class="chat-live">
+					<div class="wrap-item-live clearfix">
+						<div class="item" chat-with="quangvinhit2010">
+							<span class="wrap-img"><img src="/images/default-avatar.jpg" alt=""></span>
+							<div class="chat-detail">
+								<span class="pull-right time-chat">17:18:34 04-03-2016</span>
+								<span class="name">quangvinhit2010@gmail.com</span>
+								<span>222222</span>
+							</div>
+						</div>
+						<div class="item" chat-with="quangvinhit2010">
+							<span class="wrap-img"><img src="/images/default-avatar.jpg" alt=""></span>
+							<div class="chat-detail">
+								<span class="pull-right time-chat">17:18:34 04-03-2016</span>
+								<span class="name">quangvinhit2010@gmail.com</span>
+								<span>222222</span>
+							</div>
+						</div>
+					</div>
+					<div class="input-txt-chat">
+						<div class="wrap-input-chat">
+							<textarea name="" id="" cols="30" rows="10"></textarea>
+							<div class="text-right fs-13">
+								<span></span>
+								Bấm Enter để gửi
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
