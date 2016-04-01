@@ -73,9 +73,9 @@ use yii\widgets\LinkPager;
                     </div>
                     <div class="col-xs-12 col-md-3 col-right sidebar-col">
                         <?php
-                        $hotproject = \vsoft\ad\models\AdBuildingProject::getHotProject();
-                        if(count($hotproject) > 0)
-                            echo $this->render('/building-project/_partials/hotproject',['projects' => $hotproject]);
+//                        $hotproject = \vsoft\ad\models\AdBuildingProject::getHotProject();
+//                        if(count($hotproject) > 0)
+//                            echo $this->render('/building-project/_partials/hotproject',['projects' => $hotproject]);
 
                         $topproject = \vsoft\ad\models\AdBuildingProject::getTopProject();
                         if(count($topproject) > 0)

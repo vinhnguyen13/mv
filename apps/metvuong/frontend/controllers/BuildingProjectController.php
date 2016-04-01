@@ -28,7 +28,7 @@ class BuildingProjectController extends Controller
 	function actionIndex() {
         $models = AdBuildingProject::find()->where('`status` = ' . AdBuildingProject::STATUS_ENABLED)
             ->andWhere('`city_id` is not null')
-            ->orderBy(['city_id'=> SORT_ASC, 'id' => SORT_DESC]);
+            ->orderBy(['hot_project' => SORT_DESC,'city_id'=> SORT_ASC, 'id' => SORT_DESC]);
         $count = $models->count();
         $pagination = new Pagination(['totalCount' => $count]);
         $pagination->defaultPageSize = 12;

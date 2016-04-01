@@ -11,7 +11,7 @@ use vsoft\ad\models\AdAreaType;
 /* @var $model app\models\CmsShow */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => Module::t('cms', 'Cms Shows'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Module::t('cms', 'Building Project'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 $this->registerJsFile(Yii::getAlias('@web') . '/js/building-project.js', ['depends' => ['yii\web\YiiAsset']]);

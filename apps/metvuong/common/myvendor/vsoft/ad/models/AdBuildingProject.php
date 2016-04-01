@@ -273,17 +273,17 @@ class AdBuildingProject extends ABP
         return $image;
     }
 
-    public static function getHotProject(){
-        $projects = self::find()->where('hot_project = :hot', [':hot' => 1])
-            ->andWhere('status = :s', [':s' => 1])
-            ->orderBy(['id' => SORT_DESC])->limit(4)
-            ->all();
-        return $projects;
-    }
+//    public static function getHotProject(){
+//        $projects = self::find()->where('hot_project = :hot', [':hot' => 1])
+//            ->andWhere('status = :s', [':s' => 1])
+//            ->orderBy(['id' => SORT_DESC])->limit(4)
+//            ->all();
+//        return $projects;
+//    }
 
     public static function getTopProject(){
         $projects = self::find()->where('status = :s', [':s' => 1])
-            ->orderBy(['click' => SORT_DESC])->limit(4)
+            ->orderBy(['click' => SORT_DESC])->limit(10)
             ->all();
         return $projects;
     }
