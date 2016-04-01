@@ -98,7 +98,7 @@ $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID, 'st
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        var swiper = new Swiper('.list-menu-news > .container', {
+        var swiper = new Swiper('.list-menu-news .swiper-container', {
             paginationClickable: true,
             spaceBetween: 0,
             slidesPerView: 'auto',

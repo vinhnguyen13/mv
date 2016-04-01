@@ -4943,6 +4943,7 @@ html.mm-opening .mm-slideout {
 }
 .list-menu-news {
     padding: 0 20px;
+    position: relative;
 }
 .icon-postlisting {
     background: url(../images/icon-type-postlisting.png) no-repeat top left;
@@ -6263,9 +6264,13 @@ footer li a {
     .wrap-news .list-news li {
         width: 100%;
         float: left;
-        padding: 0 0 40px 0;
+        padding: 0 0 20px 0;
         border-bottom: none;
-        margin: 0 0 40px 0;
+        margin: 0 0 20px 0;
+    }
+    .wrap-news .list-news li:first-child {
+        padding-bottom: 40px;
+        margin-bottom: 40px;
     }
     .wrap-news .list-news li:first-child {
         border-bottom: solid 1px #969696;
@@ -7665,4 +7670,21 @@ footer li a {
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
     background-color: rgba(0, 0, 0, 0.26);
+}
+.list-menu-news .swiper-button-next,
+.list-menu-news .swiper-button-prev {
+    width: 26px;
+    height: 14px;
+    top: 4px;
+}
+.list-menu-news .swiper-button-next:hover, 
+.list-menu-news .swiper-button-prev:hover {
+    background-color: inherit;
+    opacity: .5;
+}
+.list-menu-news .swiper-button-next {
+    right: -25px;
+}
+.list-menu-news .swiper-button-prev {
+    left: -25px;
 }

@@ -8,8 +8,8 @@ Yii::t('news', 'Business');
 Yii::t('news', 'Economy');
 ?>
 <div class="title-top clearfix">
-    <div class="list-menu-news swiper-container">
-        <div class="container">
+    <div class="list-menu-news">
+        <div class="swiper-container">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
                     <a <?=(empty($cat_id)) ? 'class="active"' : '';?>  href="<?=Url::to(['news/index'])?>"><?=Yii::t('news','All')?></a>
@@ -22,9 +22,9 @@ Yii::t('news', 'Economy');
                     <?php }?>
                 <?php }?>
             </div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
         </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
     </div>
     <h2><?=Yii::t('news','NEWS')?></h2>
 </div>
