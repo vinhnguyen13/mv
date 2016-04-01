@@ -39,6 +39,9 @@ class BuildingProjectController extends Controller
 	
 	function actionView($slug) {
 		$model = AdBuildingProject::find()->where('`slug` = :slug', [':slug' => $slug])->one();
+        $click = $model->click;
+        $model->click = $click + 1;
+        $model->update();
 		if($model) {
             if($model->is_crawl == 1)
                 return $this->render('viewbds', ['model' => $model]);
