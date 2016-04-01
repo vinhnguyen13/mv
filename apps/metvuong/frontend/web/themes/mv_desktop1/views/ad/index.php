@@ -439,8 +439,11 @@ $this->registerJs($script, View::POS_BEGIN);
 				</div>
 			</div>
 			<div class="detail-listing-dt">
+				<div class="bar-top-detail">
+					<a href="#" class="btn-close font-700 fs-14">Close</a>
+					<a href="#" class="btn-extra font-700 fs-14">Expand</a>
+				</div>
 				<div class="detail-listing" style="position: relative;">
-					<a href="#" class="btn-close"><span class="icon icon-close"></span></a>
 					<div class="container"></div>
 				</div>
 			</div>

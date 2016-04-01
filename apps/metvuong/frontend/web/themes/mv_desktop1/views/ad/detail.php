@@ -136,6 +136,7 @@ Yii::$app->view->registerMetaTag([
 
 					<script>
 						$(document).ready(function () {
+							$('[data-toggle="tooltip"]').tooltip();
 							$('#popup-map').popupMobi({
 								btnClickShow: ".infor-listing .icon-map-loca",
 								closeBtn: "#popup-map .btn-close-map",

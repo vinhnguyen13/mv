@@ -6814,15 +6814,12 @@ footer li a {
     background: #fff;
     width: 750px;
     height: 100%;
-    /* -webkit-box-shadow: 0 5px 15px rgba(0,0,0,.5); */
-    /* box-shadow: 0 5px 15px rgba(0,0,0,.5); */
     z-index: 1;
-    overflow-x: hidden;
-    overflow-y: scroll;
     transition: left .3s ease-out;
     -webkit-transition: left .3s ease-out;
     -moz-transition: left .3s ease-out;
     -ms-transition: left .3s ease-out;
+    padding-top: 40px;
 }
 .wrap-listing-dt {
     height: 100%;
@@ -6841,19 +6838,23 @@ footer li a {
     margin: 0 -20px;
 }
 .detail-listing-dt .btn-close {
-    position: absolute;
-    z-index: 5;
     opacity: 1;
-    padding: 5px 5px 2px;
+    padding: 13px 15px;
     line-height: 100%;
-    background: white;
     top: 0;
     right: inherit;
+    float: right;
+    position: static;
+    border-left: 1px solid #ADADAD;
 }
-.detail-listing-dt .btn-close:hover {
-    opacity: 1;
-    background: #EAEAEA;
-    border-radius: 3px;
+.detail-listing-dt .btn-extra {
+    float: right;
+    padding: 10px 15px;
+    border-right: 1px solid #fff;
+}
+.detail-listing-dt .btn-close:hover,
+.detail-listing-dt .btn-extra:hover {
+    background: rgba(156, 156, 156, 0.35);
 }
 .advande-search .val-selected .txt-holder-minmax,
 .advande-search .val-selected .selected {
@@ -6880,6 +6881,9 @@ footer li a {
         width: auto;
         margin: 0 auto 0;
         padding: 0 0 0 0;
+        height: 100%;
+        overflow-x: hidden;
+        overflow-y: scroll;
     }
     .detail-listing-dt .detail-listing .gallery-detail {
         height: auto;
@@ -7928,4 +7932,13 @@ footer li a {
 }
 #map_detail {
     height: 100%;
+}
+.bar-top-detail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #F1F1F1;
+    z-index: 10;
+    height: 40px;
 }
