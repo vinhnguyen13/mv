@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Url;
 $newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatID"] : 0;
-$catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID]);
+$catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID, 'status' => \vsoft\news\models\Status::STATUS_ACTIVE]);
 Yii::t('news', 'Real Estate');
 Yii::t('news', 'Financial & Banking');
 Yii::t('news', 'Business');

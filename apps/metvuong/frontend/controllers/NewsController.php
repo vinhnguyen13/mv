@@ -86,17 +86,22 @@ class NewsController extends Controller
             ->andWhere('cms_catalog.status = :status', [':status' => Status::STATUS_ACTIVE])
             ->andWhere(['IN', 'cms_show.catalog_id', [$cat_id]])
             ->orderBy('cms_show.created_at DESC');
-        $count = $query->count();
+        $count = (int)$query->count();
         $pagination = new Pagination(['totalCount' => $count]);
         $pagination->defaultPageSize = 5;
 
         $news = $query->offset($pagination->offset)
             ->limit($pagination->limit)
             ->asArray()->all();
+        if($count > 0){
+            $this->view->title = $news[0]["cat_title"];
+        }
+        else {
+            $catalog = CmsCatalog::findOne($cat_id);
+            $this->view->title = $catalog->title;
+        }
 
-//        $catalog = CmsCatalog::findOne($cat_id);
-        $this->view->title = $news[0]["cat_title"];
-        return $this->render('list', ['news' => $news, 'cat_id'=>$cat_id, 'pagination' => $pagination]);
+        return $this->render('list', ['news' => $news, 'cat_id' => $cat_id, 'pagination' => $pagination]);
     }
 
     public function actionGetone()

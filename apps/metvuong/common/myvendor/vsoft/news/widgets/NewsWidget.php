@@ -14,6 +14,7 @@ use yii\base\Widget;
 class NewsWidget extends Widget
 {
     public $view;
+    public $limit;
     public $category = [
         'hotnews' => 0,
         'realestate' => 3,
@@ -27,7 +28,7 @@ class NewsWidget extends Widget
         $result = null;
         $view = $this->view;
         $cat_id = $this->category[$view];
-        $limit = 4;//$this->limit[$view];
+        $limit = $this->limit;
         $offset = 0;
         $order_by = ['id' => SORT_DESC];
         if($view == "hotnews")
