@@ -2133,10 +2133,10 @@ class BatdongsanV2 extends Component
                         $filename = null;
                         $from = isset($log_import["update_total"]) ? $log_import["update_total"] : 0;
                         for ($i = $from; $i <= $last_file_index; $i++) {
-                            if ($count_file > 500) {
-                                $break_type = true;
-                                break;
-                            }
+//                            if ($count_file > 1000) {
+//                                $break_type = true;
+//                                break;
+//                            }
                             $filename = $files[$i];
                             $filePath = $path . $type. "/files/" . $filename;
                             if (file_exists($filePath)) {
@@ -2239,9 +2239,8 @@ class BatdongsanV2 extends Component
             $address = $detail->find('#hdAddress', 0)->value;
             $city = $detail->find('#divCityOptions .current', 0)->innertext;
             $district = $detail->find('#divDistrictOptions .current', 0)->innertext;
-            $logo = $detail->find('.prjava img', 0)->src;
-            if(strpos($logo,"200x150"))
-                $logo = str_replace("200x150", "365x230", $logo);
+            $logoTop = $detail->find('.prjava img', 0)->src;
+
             $inv_type = $detail->find('#divCatagoryOptions .current', 0)->innertext;
 
             $hotline = $detail->find('.prjinfo li', 2)->innertext;
@@ -2256,7 +2255,14 @@ class BatdongsanV2 extends Component
             $slug = $detail->find('link[rel=canonical]', 0)->href;
             $slug = substr($slug, 1, strpos($slug, "-pj")-1);
 
-            $description = $detail->find('#detail .a1', 0)->innertext;
+            $general = $detail->find('#detail .a1', 0);
+            $imgGeneral = $general->find('img', 0);
+            if(empty($imgGeneral))
+                $logo = $logoTop;
+            else
+                $logo = $imgGeneral->src;
+
+            $description = $general->innertext;
             $description = trim(strip_tags($description,'<br>'));
             $description = str_replace('<br />', PHP_EOL, $description);
             $description = trim($description);

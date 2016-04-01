@@ -253,10 +253,9 @@ class AdBuildingProject extends ABP
         $image = '/themes/metvuong2/resources/images/default-ads.jpg';
         $logo = $this->logo;
         if($logo) {
-            if(filter_var($logo, FILTER_VALIDATE_URL) === FALSE){
-                $image ="/store/building-project-images/" . $this->logo;
-            } else if(file_exists($image) === TRUE){
-                $image = "store/building-project-images/" . $this->logo;
+            $checkLogo = Yii::getAlias('@store'). "/building-project-images/" . $logo;
+            if(file_exists($checkLogo) === TRUE){
+                $image = "/store/building-project-images/" . $logo;
             } else
                 $image = $logo;
         }
