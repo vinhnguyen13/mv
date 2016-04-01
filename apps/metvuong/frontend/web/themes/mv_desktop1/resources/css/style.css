@@ -6370,7 +6370,7 @@ footer li a {
         padding: 0px 15px;
     }
     .list-post {
-        margin: 0 -20px;
+        /* margin: 0 -20px; */
     }
     .list-post li .name-post {
         height: 45px;
@@ -7776,4 +7776,42 @@ footer li a {
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
+}
+.detail-listing-extra .col-left {
+    padding-right: 50px;
+}
+.detail-listing-extra .sidebar-col .img-show:before {
+    padding-top: 70%;
+}
+.detail-listing-extra .item-sidebar {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+.detail-listing-extra .list-post .date-post,
+.detail-listing-extra .list-post a,
+.detail-listing-extra .list-post .list-attr-td li,
+.detail-listing-extra .list-post .id-duan,
+.detail-listing-extra .list-post {
+    font-size: 13px;
+    margin: 0 0 6px 0;
+}
+.detail-listing-extra .list-post a {
+    font-size: 15px;
+}
+.detail-listing-extra .bottom-feat-box a {
+    font-size: 13px;
+    margin: 0;
+}
+.detail-listing-extra .bottom-feat-box {
+    padding: 0 0;
+    border: none;
+}
+.detail-listing-extra .list-post li a .img-show {
+    margin-bottom: 5px;
+}
+.detail-listing-extra .list-post > li {
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    border-bottom: solid 0.5px #dcdcdc;
 }

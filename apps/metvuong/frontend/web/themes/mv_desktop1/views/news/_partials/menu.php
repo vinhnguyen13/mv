@@ -28,3 +28,14 @@ Yii::t('news', 'Economy');
     </div>
     <h2><?=Yii::t('news','NEWS')?></h2>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var swiper = new Swiper('.list-menu-news .swiper-container', {
+            paginationClickable: true,
+            spaceBetween: 0,
+            slidesPerView: 'auto',
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev'
+        });
+    });
+</script>

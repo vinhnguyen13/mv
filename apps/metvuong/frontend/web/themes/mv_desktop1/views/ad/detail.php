@@ -64,192 +64,331 @@ Yii::$app->view->registerMetaTag([
 ]);
 ?>
 <div class="container">
-    <div class="detail-listing">
-		<?php
-			$images = $product->adImages;
-			if($images):
-		?>
-		<div class="gallery-detail swiper-container">
-			<div class="swiper-wrapper">
-				<?php foreach ($images as $image): ?>
-				<div class="swiper-slide">
-					<div class="img-show">
-						<div>
-							<img src="<?= $image->url ?>" alt="<?=$address?>">
-						</div>
-					</div>
-				</div>
-				<?php endforeach; ?>
-			</div>
-			<div class="swiper-pagination"></div>
-		</div>
-		<?php endif; ?>
-		<p class="infor-by-up">
-			<?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?>
-		</p>
-		<div class="infor-listing">
-			<div class="address-listing">
-				<p><?= $address ?></p>
-			</div>
-			<p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
-			<ul class="clearfix list-attr-td">
-				<?= $product->area ? '<li> <span class="icon icon-dt icon-dt-small"></span>' . $product->area . 'm2 </li>' : '' ?>
-				<?= $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
-				<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
-			</ul>
-			<ul class="pull-right icons-detail">
-				<li><a href="#popup-share-social" class="icon icon-share-td" data-toggle="tooltip" data-placement="bottom" title="Share social"></a></li>
-	            <?php if($product->user_id != Yii::$app->user->id){ ?>
-				<li><a data-toggle="tooltip" data-placement="bottom" title="Favourite" href="#" class="icon save-item <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>"></a></li>
-	            <?php } ?>
-				<li><a href="#popup-map" class="icon icon-map-loca" data-toggle="tooltip" data-placement="bottom" title="Location"></a></li>
-			</ul>
-			<p class="price-td">
-				<span>Giá</span>
-				<?= StringHelper::formatCurrency($product->price) ?>
-			</p>
-		</div>
-		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-	        <div class="panel panel-default">
-	            <div class="panel-heading" role="tab" id="headingOne">
-	                <h4 class="panel-title">
-	                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-	                        Diễn tả chi tiết<span class="icon"></span>
-	                    </a>
-	                </h4>
-	            </div>
-	            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-	                <div class="panel-body" name="about" placeholder="Vui lòng chia sẻ tiểu sử">
-	                    <p><?= str_replace("\n", "<br />", htmlspecialchars($product->content)) ?></p>
-	                </div>
-	            </div>
-	        </div>
-	        <div class="panel panel-default">
-	            <div class="panel-heading" role="tab" id="headingTwo">
-	                <h4 class="panel-title">
-	                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-	                        Thông tin chi tiết<span class="icon"></span>
-	                    </a>
-	                </h4>
-	            </div>
-	            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-	                <div class="panel-body" name="activity" contenteditable="true">
-	                	<ul class="clearfix list-tienich-detail">
-		                    <?php if($product->area): ?>
-							<li><strong>Diện tích:</strong> <?= $product->area ?>m2</li>
-							<?php endif; ?>
-							<?php if($product->adProductAdditionInfo->facade_width): ?>
-							<li><strong>Mặt tiền:</strong> <?= $product->adProductAdditionInfo->facade_width ?>m</li>
-							<?php endif; ?>
-							<?php if($product->adProductAdditionInfo->land_width): ?>
-							<li><strong>Đường vào:</strong> <?= $product->adProductAdditionInfo->land_width ?>m</li>
-							<?php endif; ?>
-							<?php if($product->adProductAdditionInfo->floor_no): ?>
-							<li><strong>Tầng cao:</strong> <?= $product->adProductAdditionInfo->floor_no ?>  Tầng</li>
-							<?php endif; ?>
-							<?php if($product->adProductAdditionInfo->home_direction): ?>
-							<li><strong>Hướng nhà:</strong> <?= $directionList[$product->adProductAdditionInfo->home_direction] ?></li>
-							<?php endif; ?>
-							<?php if($product->adProductAdditionInfo->facade_direction): ?>
-							<li><strong>Hướng ban công:</strong> <?= $directionList[$product->adProductAdditionInfo->facade_direction] ?></li>
-							<?php endif; ?>
-							<?php if($product->adProductAdditionInfo->interior): ?>
-							<li><strong>Nội thất:</strong> <?= $product->adProductAdditionInfo->interior ?></li>
-							<?php endif; ?>
-						</ul>
-	                </div>
-	            </div>
-	        </div>
-	        <div class="panel panel-default">
-	            <div class="panel-heading" role="tab" id="headingFour">
-	                <h4 class="panel-title">
-	                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-	                        Tiện ích<span class="icon"></span>
-	                    </a>
-	                </h4>
-	            </div>
-	            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-	                <div class="panel-body" name="experience" placeholder="Vui lòng nhập chia sẻ kinh nghiệm">
-
-	                </div>
-	            </div>
-	        </div>
-	        <div class="panel panel-default">
-	            <div class="panel-heading" role="tab" id="headingSeven">
-	                <h4 class="panel-title">
-	                    <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEght" aria-expanded="false" aria-controls="collapseSeven">
-	                        Liên hệ<span class="icon"></span>
-	                    </a>
-	                </h4>
-	            </div>
-	            <div id="collapseEght" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven">
-	                <div class="panel-body text-center">
-	            	    <div class="infor-agent clearfix">
-				            <?php if(!empty($owner->username)) { ?>
-							<a href="<?=$url;?>" class="wrap-img">
-				                <img src="<?= $avatar ?>" alt="" /></a>
-				            <?php } else { ?>
-				                <a class="wrap-img" href="<?=$url;?>"><img src="<?= $avatar ?>" alt="" /></a>
-				            <?php } ?>
-				            <div class="img-agent">
-					            <a href="<?=$url;?>" class="name-agent"><?= $product->adContactInfo->name ?></a>
-								<div class="rating-start">
-									<fieldset class="rate">
-										<input type="radio" id="rating10" name="rating" value="10"> <label
-											for="rating10" title="5 stars"> </label> <input type="radio"
-											id="rating9" name="rating" value="9"> <label for="rating9"
-											class="half" title="5 stars"> </label> <input type="radio"
-											id="rating8" name="rating" value="8"> <label for="rating8"
-											title="4 stars"> </label> <input type="radio" id="rating7"
-											name="rating" value="7"> <label for="rating7" class="half"
-											title="4 stars"> </label> <input type="radio" id="rating6"
-											name="rating" value="6"> <label for="rating6" title="3 stars"> </label>
-										<input type="radio" id="rating5" name="rating" value="5"> <label
-											for="rating5" class="half" title="3 stars"> </label> <input
-											type="radio" id="rating4" name="rating" value="4"> <label
-											for="rating4" title="2 stars"> </label> <input type="radio"
-											id="rating3" name="rating" value="3"> <label for="rating3"
-											class="half" title="2 stars"> </label> <input type="radio"
-											id="rating2" name="rating" value="2"> <label for="rating2"
-											title="1 stars"> </label> <input type="radio" id="rating1"
-											name="rating" value="1"> <label for="rating1" class="half"
-											title="1 stars"> </label>
-									</fieldset>
+	<div class="title-fixed-wrap">
+	    <div class="detail-listing row detail-listing-extra">
+	    	<div class="col-xs-12 col-md-9 col-left">
+				<?php
+					$images = $product->adImages;
+					if($images):
+				?>
+				<div class="gallery-detail swiper-container">
+					<div class="swiper-wrapper">
+						<?php foreach ($images as $image): ?>
+						<div class="swiper-slide">
+							<div class="img-show">
+								<div>
+									<img src="<?= $image->url ?>" alt="<?=$address?>">
 								</div>
-								<?php if($product->adContactInfo->mobile): ?>
-								<div class="item-agent">
-									<div>
-										<span class="icon icon-phone"></span>
-									</div>
-									<a href="tel:<?= $product->adContactInfo->mobile ?>"><?= $product->adContactInfo->mobile ?></a>
-								</div>
-								<?php endif; ?>
-								<?php if($product->adContactInfo->email): ?>
-								<div class="item-agent">
-									<div>
-										<span class="icon icon-email"></span>
-									</div>
-									<?= $product->adContactInfo->email ?>
-								</div>
-								<?php endif; ?>
-								<div class="item-agent">
-									<div>
-										<span class="icon address-icon"></span>
-									</div>
-									Ho Chi Minh City, Vietnam
-								</div>
-								<a href="#popup-email" id="" class="email-btn btn-common btn-small">Email</a>
-								<?php if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) { ?>
-									<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small">Chat</a>
-								<?php }?>
 							</div>
 						</div>
+						<?php endforeach; ?>
+					</div>
+					<div class="swiper-pagination"></div>
+				</div>
+				<?php endif; ?>
+				<p class="infor-by-up">
+					<?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?>
+				</p>
+				<div class="infor-listing">
+					<div class="address-listing">
+						<p><?= $address ?></p>
+					</div>
+					<p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
+					<ul class="clearfix list-attr-td">
+						<?= $product->area ? '<li> <span class="icon icon-dt icon-dt-small"></span>' . $product->area . 'm2 </li>' : '' ?>
+						<?= $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
+						<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
+					</ul>
+					<ul class="pull-right icons-detail">
+						<li><a href="#popup-share-social" class="icon icon-share-td" data-toggle="tooltip" data-placement="bottom" title="Share social"></a></li>
+			            <?php if($product->user_id != Yii::$app->user->id){ ?>
+						<li><a data-toggle="tooltip" data-placement="bottom" title="Favourite" href="#" class="icon save-item <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>"></a></li>
+			            <?php } ?>
+						<li><a href="#popup-map" class="icon icon-map-loca" data-toggle="tooltip" data-placement="bottom" title="Location"></a></li>
+					</ul>
+					<p class="price-td">
+						<span>Giá</span>
+						<?= StringHelper::formatCurrency($product->price) ?>
+					</p>
+				</div>
+				<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+			        <div class="panel panel-default">
+			            <div class="panel-heading" role="tab" id="headingOne">
+			                <h4 class="panel-title">
+			                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+			                        Diễn tả chi tiết<span class="icon"></span>
+			                    </a>
+			                </h4>
+			            </div>
+			            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+			                <div class="panel-body" name="about" placeholder="Vui lòng chia sẻ tiểu sử">
+			                    <p><?= str_replace("\n", "<br />", htmlspecialchars($product->content)) ?></p>
+			                </div>
+			            </div>
+			        </div>
+			        <div class="panel panel-default">
+			            <div class="panel-heading" role="tab" id="headingTwo">
+			                <h4 class="panel-title">
+			                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+			                        Thông tin chi tiết<span class="icon"></span>
+			                    </a>
+			                </h4>
+			            </div>
+			            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+			                <div class="panel-body" name="activity" contenteditable="true">
+			                	<ul class="clearfix list-tienich-detail">
+				                    <?php if($product->area): ?>
+									<li><strong>Diện tích:</strong> <?= $product->area ?>m2</li>
+									<?php endif; ?>
+									<?php if($product->adProductAdditionInfo->facade_width): ?>
+									<li><strong>Mặt tiền:</strong> <?= $product->adProductAdditionInfo->facade_width ?>m</li>
+									<?php endif; ?>
+									<?php if($product->adProductAdditionInfo->land_width): ?>
+									<li><strong>Đường vào:</strong> <?= $product->adProductAdditionInfo->land_width ?>m</li>
+									<?php endif; ?>
+									<?php if($product->adProductAdditionInfo->floor_no): ?>
+									<li><strong>Tầng cao:</strong> <?= $product->adProductAdditionInfo->floor_no ?>  Tầng</li>
+									<?php endif; ?>
+									<?php if($product->adProductAdditionInfo->home_direction): ?>
+									<li><strong>Hướng nhà:</strong> <?= $directionList[$product->adProductAdditionInfo->home_direction] ?></li>
+									<?php endif; ?>
+									<?php if($product->adProductAdditionInfo->facade_direction): ?>
+									<li><strong>Hướng ban công:</strong> <?= $directionList[$product->adProductAdditionInfo->facade_direction] ?></li>
+									<?php endif; ?>
+									<?php if($product->adProductAdditionInfo->interior): ?>
+									<li><strong>Nội thất:</strong> <?= $product->adProductAdditionInfo->interior ?></li>
+									<?php endif; ?>
+								</ul>
+			                </div>
+			            </div>
+			        </div>
+			        <div class="panel panel-default">
+			            <div class="panel-heading" role="tab" id="headingFour">
+			                <h4 class="panel-title">
+			                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+			                        Tiện ích<span class="icon"></span>
+			                    </a>
+			                </h4>
+			            </div>
+			            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+			                <div class="panel-body" name="experience" placeholder="Vui lòng nhập chia sẻ kinh nghiệm">
 
-	                </div>
-	            </div>
+			                </div>
+			            </div>
+			        </div>
+			        <div class="panel panel-default">
+			            <div class="panel-heading" role="tab" id="headingSeven">
+			                <h4 class="panel-title">
+			                    <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEght" aria-expanded="false" aria-controls="collapseSeven">
+			                        Liên hệ<span class="icon"></span>
+			                    </a>
+			                </h4>
+			            </div>
+			            <div id="collapseEght" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven">
+			                <div class="panel-body text-center">
+			            	    <div class="infor-agent clearfix">
+						            <?php if(!empty($owner->username)) { ?>
+									<a href="<?=$url;?>" class="wrap-img">
+						                <img src="<?= $avatar ?>" alt="" /></a>
+						            <?php } else { ?>
+						                <a class="wrap-img" href="<?=$url;?>"><img src="<?= $avatar ?>" alt="" /></a>
+						            <?php } ?>
+						            <div class="img-agent">
+							            <a href="<?=$url;?>" class="name-agent"><?= $product->adContactInfo->name ?></a>
+										<div class="rating-start">
+											<fieldset class="rate">
+												<input type="radio" id="rating10" name="rating" value="10"> <label
+													for="rating10" title="5 stars"> </label> <input type="radio"
+													id="rating9" name="rating" value="9"> <label for="rating9"
+													class="half" title="5 stars"> </label> <input type="radio"
+													id="rating8" name="rating" value="8"> <label for="rating8"
+													title="4 stars"> </label> <input type="radio" id="rating7"
+													name="rating" value="7"> <label for="rating7" class="half"
+													title="4 stars"> </label> <input type="radio" id="rating6"
+													name="rating" value="6"> <label for="rating6" title="3 stars"> </label>
+												<input type="radio" id="rating5" name="rating" value="5"> <label
+													for="rating5" class="half" title="3 stars"> </label> <input
+													type="radio" id="rating4" name="rating" value="4"> <label
+													for="rating4" title="2 stars"> </label> <input type="radio"
+													id="rating3" name="rating" value="3"> <label for="rating3"
+													class="half" title="2 stars"> </label> <input type="radio"
+													id="rating2" name="rating" value="2"> <label for="rating2"
+													title="1 stars"> </label> <input type="radio" id="rating1"
+													name="rating" value="1"> <label for="rating1" class="half"
+													title="1 stars"> </label>
+											</fieldset>
+										</div>
+										<?php if($product->adContactInfo->mobile): ?>
+										<div class="item-agent">
+											<div>
+												<span class="icon icon-phone"></span>
+											</div>
+											<a href="tel:<?= $product->adContactInfo->mobile ?>"><?= $product->adContactInfo->mobile ?></a>
+										</div>
+										<?php endif; ?>
+										<?php if($product->adContactInfo->email): ?>
+										<div class="item-agent">
+											<div>
+												<span class="icon icon-email"></span>
+											</div>
+											<?= $product->adContactInfo->email ?>
+										</div>
+										<?php endif; ?>
+										<div class="item-agent">
+											<div>
+												<span class="icon address-icon"></span>
+											</div>
+											Ho Chi Minh City, Vietnam
+										</div>
+										<a href="#popup-email" id="" class="email-btn btn-common btn-small">Email</a>
+										<?php if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) { ?>
+											<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small">Chat</a>
+										<?php }?>
+									</div>
+								</div>
 
-	        </div>
-	    </div>
+			                </div>
+			            </div>
+
+			        </div>
+			    </div>
+			</div>
+			<div class="col-xs-12 col-md-3 col-right sidebar-col">
+				<div class="item-sidebar">
+					<div class="title-sidebar">SIMILAR LISTINGS</div>
+					<ul class="clearfix list-post">
+                        <li>
+	                        <div class="item">
+	                            <a href="#" class="pic-intro rippler rippler-default">
+	                                <div class="img-show">
+	                                    <div><img src="http://file4.batdongsan.com.vn/resize/745x510/2016/01/29/20160129105149-e443.jpg" data-original=""></div>
+	                                </div>
+	                                <div class="title-item">Căn hộ chung cư Cho thuê</div>
+	                            </a>
+	                            <div class="info-item">
+	                                <div class="address-feat">
+	                                    <p class="date-post">Ngày đăng tin: <strong>12/2/2016, 8:30AM</strong></p>
+	                                    <a title="Phường 14, Quận Gò Vấp, Hồ Chí Minh" href="#">Phường 14, Quận Gò Vấp, Hồ Chí Minh</a>
+	                                    <p class="id-duan">ID:<span>28671</span></p>
+	                                    <ul class="clearfix list-attr-td">
+	                                        <li>
+	                                            <span class="icon icon-dt icon-dt-small"></span>80m2
+	                                        </li>
+	                                        <li>
+	                                            <span class="icon icon-bed icon-bed-small"></span> 02
+	                                        </li>
+	                                        <li>
+	                                            <span class="icon icon-pt icon-pt-small"></span> 02
+	                                        </li>
+	                                    </ul>
+	                                </div>
+	                                <div class="bottom-feat-box clearfix">
+	                                    <a href="#" class="pull-right">Chi tiết</a>
+	                                    <p>Giá <strong>4 tỷ đồng</strong></p>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </li>
+	                    <li>
+	                        <div class="item">
+	                            <a href="#" class="pic-intro rippler rippler-default">
+	                                <div class="img-show">
+	                                    <div><img src="http://file4.batdongsan.com.vn/resize/745x510/2016/01/29/20160129105149-e443.jpg" data-original=""></div>
+	                                </div>
+	                                <div class="title-item">Căn hộ chung cư Cho thuê</div>
+	                            </a>
+	                            <div class="info-item">
+	                                <div class="address-feat">
+	                                    <p class="date-post">Ngày đăng tin: <strong>12/2/2016, 8:30AM</strong></p>
+	                                    <a title="Phường 14, Quận Gò Vấp, Hồ Chí Minh" href="#">Phường 14, Quận Gò Vấp, Hồ Chí Minh</a>
+	                                    <p class="id-duan">ID:<span>28671</span></p>
+	                                    <ul class="clearfix list-attr-td">
+	                                        <li>
+	                                            <span class="icon icon-dt icon-dt-small"></span>80m2
+	                                        </li>
+	                                        <li>
+	                                            <span class="icon icon-bed icon-bed-small"></span> 02
+	                                        </li>
+	                                        <li>
+	                                            <span class="icon icon-pt icon-pt-small"></span> 02
+	                                        </li>
+	                                    </ul>
+	                                </div>
+	                                <div class="bottom-feat-box clearfix">
+	                                    <a href="#" class="pull-right">Chi tiết</a>
+	                                    <p>Giá <strong>4 tỷ đồng</strong></p>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </li>
+	                    <li>
+	                        <div class="item">
+	                            <a href="#" class="pic-intro rippler rippler-default">
+	                                <div class="img-show">
+	                                    <div><img src="http://file4.batdongsan.com.vn/resize/745x510/2016/01/29/20160129105149-e443.jpg" data-original=""></div>
+	                                </div>
+	                                <div class="title-item">Căn hộ chung cư Cho thuê</div>
+	                            </a>
+	                            <div class="info-item">
+	                                <div class="address-feat">
+	                                    <p class="date-post">Ngày đăng tin: <strong>12/2/2016, 8:30AM</strong></p>
+	                                    <a title="Phường 14, Quận Gò Vấp, Hồ Chí Minh" href="#">Phường 14, Quận Gò Vấp, Hồ Chí Minh</a>
+	                                    <p class="id-duan">ID:<span>28671</span></p>
+	                                    <ul class="clearfix list-attr-td">
+	                                        <li>
+	                                            <span class="icon icon-dt icon-dt-small"></span>80m2
+	                                        </li>
+	                                        <li>
+	                                            <span class="icon icon-bed icon-bed-small"></span> 02
+	                                        </li>
+	                                        <li>
+	                                            <span class="icon icon-pt icon-pt-small"></span> 02
+	                                        </li>
+	                                    </ul>
+	                                </div>
+	                                <div class="bottom-feat-box clearfix">
+	                                    <a href="#" class="pull-right">Chi tiết</a>
+	                                    <p>Giá <strong>4 tỷ đồng</strong></p>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </li>
+	                    <li>
+	                        <div class="item">
+	                            <a href="#" class="pic-intro rippler rippler-default">
+	                                <div class="img-show">
+	                                    <div><img src="http://file4.batdongsan.com.vn/resize/745x510/2016/01/29/20160129105149-e443.jpg" data-original=""></div>
+	                                </div>
+	                                <div class="title-item">Căn hộ chung cư Cho thuê</div>
+	                            </a>
+	                            <div class="info-item">
+	                                <div class="address-feat">
+	                                    <p class="date-post">Ngày đăng tin: <strong>12/2/2016, 8:30AM</strong></p>
+	                                    <a title="Phường 14, Quận Gò Vấp, Hồ Chí Minh" href="#">Phường 14, Quận Gò Vấp, Hồ Chí Minh</a>
+	                                    <p class="id-duan">ID:<span>28671</span></p>
+	                                    <ul class="clearfix list-attr-td">
+	                                        <li>
+	                                            <span class="icon icon-dt icon-dt-small"></span>80m2
+	                                        </li>
+	                                        <li>
+	                                            <span class="icon icon-bed icon-bed-small"></span> 02
+	                                        </li>
+	                                        <li>
+	                                            <span class="icon icon-pt icon-pt-small"></span> 02
+	                                        </li>
+	                                    </ul>
+	                                </div>
+	                                <div class="bottom-feat-box clearfix">
+	                                    <a href="#" class="pull-right">Chi tiết</a>
+	                                    <p>Giá <strong>4 tỷ đồng</strong></p>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </li>
+                    </ul>
+				</div>
+			</div>
+	</div>
 </div>
 </div>
 <?=$this->renderAjax('/ad/_partials/shareEmail',[
