@@ -29,8 +29,8 @@ class NotificationController extends Controller
 
     public function beforeAction($action)
     {
-        $this->view->params['noFooter'] = true;
         $this->checkAccess();
+        $this->view->params['noFooter'] = true;
         return parent::beforeAction($action);
     }
 

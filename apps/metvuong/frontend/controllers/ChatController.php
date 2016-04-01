@@ -18,14 +18,9 @@ class ChatController extends Controller
 
     public function beforeAction($action)
     {
+        $this->checkAccess();
         $this->view->params['noFooter'] = true;
         return parent::beforeAction($action);
-    }
-
-    public function init()
-    {
-        parent::init();
-        $this->checkAccess();
     }
 
     public function actionIndex(){
