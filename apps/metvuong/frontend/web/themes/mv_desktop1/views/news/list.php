@@ -10,7 +10,7 @@ $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID, 'st
     <div class="container">
         <div class="page-news">
             <?= $this->render('/news/_partials/menu', ['cat_id'=>$cat_id]); ?>
-            <?php if(count($news)){?>
+            <?php if(count($news) > 0){?>
                 <div class="row wrap-news-page">
                     <div class="wrap-news col-xs-12 col-md-9">
                         <ul class="clearfix row list-news">
@@ -47,48 +47,22 @@ $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID, 'st
                         </nav>
                     </div>
                     <div class="col-md-3 col-xs-12 sidebar-news">
-                        <div class="item-sidebar clearfix">
-                            <div class="title-sidebar">TIN NỔI BẬT</div>
-                            <div class="item-hot-sidebar">
-                                <a href="#"><div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121085435-7e5d.jpg" alt="<?=$n["title"]?>"></div></div></a>
-                                <a href="#" class="name-post">Lorem ipsum dolorit diam est amet odio varius odio </a>
-                                <p class="intro-txt">Quisque varius iaculis odio sit amet elementum. Nunc porta cursus est a pretium. Nullam non metus tristique sem hendrerit tincidunt ac aliquet lectus. Vivamus ultrices laoreet convallis.</p>
-                            </div>
-                            <ul class="list-lq">
-                                <li><a href="#"><span class="dot"></span>Lorem ipsum dolorit diam est amet odio varius odio sem </a></li>
-                                <li><a href="#"><span class="dot"></span>Lorem ipsum dolorit diam est amet odio varius odio sem </a></li>
-                                <li><a href="#"><span class="dot"></span>Lorem ipsum dolorit diam est amet odio varius odio sem </a></li>
-                            </ul>
-                        </div>
-                        <div class="item-sidebar clearfix">
-                            <div class="title-sidebar">TIN TÀI CHÍNH NGÂN HÀNG</div>
-                            <div class="item-hot-sidebar">
-                                <a href="#"><div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121085435-7e5d.jpg" alt="<?=$n["title"]?>"></div></div></a>
-                                <a href="#" class="name-post">Lorem ipsum dolorit diam est amet odio varius odio </a>
-                                <p class="intro-txt">Quisque varius iaculis odio sit amet elementum. Nunc porta cursus est a pretium. Nullam non metus tristique sem hendrerit tincidunt ac aliquet lectus. Vivamus ultrices laoreet convallis.</p>
-                            </div>
-                            <ul class="list-lq">
-                                <li><a href="#"><span class="dot"></span>Lorem ipsum dolorit diam est amet odio varius odio sem </a></li>
-                                <li><a href="#"><span class="dot"></span>Lorem ipsum dolorit diam est amet odio varius odio sem </a></li>
-                                <li><a href="#"><span class="dot"></span>Lorem ipsum dolorit diam est amet odio varius odio sem </a></li>
-                            </ul>
-                        </div>
-                        <div class="item-sidebar clearfix">
-                            <div class="title-sidebar">TIN BẤT ĐỘNG SẢN</div>
-                            <div class="item-hot-sidebar">
-                                <a href="#"><div class="img-show"><div><img src="http://file4.batdongsan.com.vn/resize/350x280/2016/01/21/20160121085435-7e5d.jpg" alt="<?=$n["title"]?>"></div></div></a>
-                                <a href="#" class="name-post">Lorem ipsum dolorit diam est amet odio varius odio </a>
-                                <p class="intro-txt">Quisque varius iaculis odio sit amet elementum. Nunc porta cursus est a pretium. Nullam non metus tristique sem hendrerit tincidunt ac aliquet lectus. Vivamus ultrices laoreet convallis.</p>
-                            </div>
-                            <ul class="list-lq">
-                                <li><a href="#"><span class="dot"></span>Lorem ipsum dolorit diam est amet odio varius odio sem </a></li>
-                                <li><a href="#"><span class="dot"></span>Lorem ipsum dolorit diam est amet odio varius odio sem </a></li>
-                                <li><a href="#"><span class="dot"></span>Lorem ipsum dolorit diam est amet odio varius odio sem </a></li>
-                            </ul>
-                        </div>
+                        <?= \vsoft\news\widgets\NewsWidget::widget(['view' => 'hotnews', 'title' => 'HOT NEWS', 'limit' => 4])?>
+                        <?= \vsoft\news\widgets\NewsWidget::widget(['view' => 'finance', 'title' => 'FINANCIAL & BANKING NEWS', 'limit' => 4])?>
+                        <?= \vsoft\news\widgets\NewsWidget::widget(['view' => 'realestate', 'title' => 'REAL ESTATE NEWS', 'limit' => 4])?>
                     </div>
                 </div>
 
+            <?php } else {?>
+                <div class="row wrap-news-page">
+                    <div class="wrap-news">
+                        <p class="text-center">
+                            <?=Yii::t('news','We are updating News more ...')?><br>
+                            <?=Yii::t('news', 'Please try again later')?><br>
+                            <?=Yii::t('news', 'THANK YOU')?>
+                        </p>
+                    </div>
+                </div>
             <?php } ?>
         </div>
     </div>

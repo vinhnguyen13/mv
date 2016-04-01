@@ -14,6 +14,7 @@ use yii\base\Widget;
 class NewsWidget extends Widget
 {
     public $view;
+    public $title;
     public $limit;
     public $category = [
         'hotnews' => 0,
@@ -38,6 +39,12 @@ class NewsWidget extends Widget
         $result = $news->where($where)
             ->limit($limit)->offset($offset)->orderBy($order_by)->all();
 
-        return $this->render($view, ['news' => $result, 'cat_id' => $cat_id]);
+        $cat_slug = null;
+        if($cat_id > 0) {
+            $catalog = \vsoft\news\models\CmsCatalog::findOne($cat_id);
+            $cat_slug = $catalog->slug;
+        }
+
+        return $this->render('realestate', ['news' => $result, 'title' => $this->title, 'cat_id' => $cat_id, 'cat_slug' => $cat_slug]);
     }
 }
