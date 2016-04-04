@@ -40,7 +40,7 @@ use frontend\models\AdProductSearch;
                 <a href="#" id="hide-settings" class="icon"></a>
                 <?php if(Yii::$app->user->isGuest){?>
                     <ul class="clearfix">
-                        <li><a href="<?=Url::to(['member/login'])?>" class="user-login-link"><?=Yii::t('user', 'Sign In')?></a></li>
+                        <li><a href="<?=Url::to(['member/login'])?>" class="user-login-link" ><?=Yii::t('user', 'Sign In')?></a></li>
                         <li><a href="<?=Url::to(['member/signup'])?>" class="user-signup-link"><?=Yii::t('user', 'Sign Up')?></a></li>
                         <li class="flag-lang">
                             <p class="pull-right">
@@ -175,22 +175,34 @@ use frontend\models\AdProductSearch;
         </div>
     </div>
 </header>
-<div id="popup-login" class="popup-common hide-popup">
-    <div class="wrap-popup">
-        <div class="inner-popup">
-            <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
-            <div class="wrap-body-popup">
-                
+<div id="popup-login" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
+                <div class="wrap-popup">
+                    <div class="inner-popup">
+                        <div class="wrap-body-popup">
+                            
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<div id="popup-signup" class="popup-common hide-popup">
-    <div class="wrap-popup">
-        <div class="inner-popup">
-            <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
-            <div class="wrap-body-popup">
-
+<div id="popup-signup" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
+                <div class="wrap-popup">
+                    <div class="inner-popup">
+                        <div class="wrap-body-popup">
+                            
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -198,13 +210,6 @@ use frontend\models\AdProductSearch;
 <script>
     $(document).ready(function () {
         $(document).on('click', '.user-login-link', function (e) {
-            if ( checkMobile() ) {
-                // is mobile
-
-            }else {
-
-            }
-            // is desktop
             e.preventDefault();
             $('body').loading();
             $.ajax({
@@ -213,22 +218,12 @@ use frontend\models\AdProductSearch;
                 success: function (data) {
                     $('body').loading({done: true});
                     $('#popup-login .wrap-body-popup').html(data);
-                    $('#popup-login').popupMobi({
-                        styleShow: 'center',
-                        duration: 500,
-                        closeBtn: '#popup-login .btn-close'
-                    });
+                    $('#popup-login').modal('show');
                 }
             });
 
         });
         $(document).on('click', '.user-signup-link', function (e) {
-            if ( checkMobile() ) {
-                // is mobile
-
-            }else {
-            }
-            // is desktop
             e.preventDefault();
             $('body').loading();
             $.ajax({
@@ -237,11 +232,7 @@ use frontend\models\AdProductSearch;
                 success: function (data) {
                     $('body').loading({done: true});
                     $('#popup-signup .wrap-body-popup').html(data);
-                    $('#popup-signup').popupMobi({
-                        styleShow: 'center',
-                        duration: 500,
-                        closeBtn: '#popup-signup .btn-close'
-                    });
+                    $('#popup-signup').modal('show');
                 }
             });
         });

@@ -100,9 +100,9 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                         <strong><?= $model->name?></strong>
                         <?= empty($model->location) ? $lbl_updating : $model->location ?>
                         <ul class="pull-right icons-detail">
-                            <li><a href="#popup-share-social" class="icon icon-share-td"></a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#popup-share-social" class="icon icon-share-td"></a></li>
         <!--                    <li><a href="#" class="icon save-item" data-id="4115" data-url="/ad/favorite"></a></li>-->
-                            <li><a href="#popup-map" class="icon icon-map-loca"></a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#popup-map" class="icon icon-map-loca"></a></li>
                         </ul>
                     </div>
                     <div class="item infor-time">
@@ -330,34 +330,41 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
         </div>
     </div>
 </div>
-
-<div id="popup-map" class="popup-common hide-popup">
-    <div class="wrap-popup">
-        <div class="inner-popup">
-            <a href="#" class="btn-close-map"><?=Yii::t('project', 'Back')?></a>
-            <div id="map" data-lat="<?= $model->lat ?>" data-lng="<?= $model->lng ?>"></div>
+<div id="popup-map" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <a href="#" class="btn-close-map close" data-dismiss="modal" aria-label="Close"><?=Yii::t('project', 'Back')?></a>
+                <div id="map" data-lat="<?= $model->lat ?>" data-lng="<?= $model->lng ?>"></div>
+            </div>
         </div>
     </div>
 </div>
 
-<div id="popup-share-social" class="popup-common hide-popup">
-    <div class="wrap-popup">
-        <div class="inner-popup">
-            <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
-            <div class="wrap-body-popup">
-                <span><?=Yii::t('project', 'Share on Social Network')?></span>
-                <ul class="clearfix">
-                    <li>
-                        <a href="#" class="share-facebook">
-                            <div class="circle"><div><span class="icon icon-face"></span></div></div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#popup-email" class="email-btn">
-                            <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
-                        </a>
-                    </li>
-                </ul>
+<div id="popup-share-social" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
+                <div class="wrap-popup">
+                    <div class="inner-popup">
+                        <div class="wrap-body-popup">
+                            <span><?=Yii::t('project', 'Share on Social Network')?></span>
+                            <ul class="clearfix">
+                                <li>
+                                    <a href="#" class="share-facebook">
+                                        <div class="circle"><div><span class="icon icon-face"></span></div></div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" data-toggle="modal" data-target="#popup-email" class="email-btn">
+                                        <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -375,7 +382,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
             prevButton: '.swiper-button-prev'
         });
 
-        $('#popup-map').popupMobi({
+        /*$('#popup-map').popupMobi({
             btnClickShow: ".icon-map-loca",
             closeBtn: "#popup-map .btn-close-map",
             effectShow: "show-hide",
@@ -407,7 +414,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
             btnClickShow: ".email-btn",
             closeBtn: '#popup-email .btn-cancel',
             styleShow: "full"
-        });
+        });*/
 
         $(document).on('click', '.share-facebook', function() {
             FB.ui({

@@ -185,7 +185,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
         	<div class="share-social">
                 <ul class="clearfix list-attr-per">
                     <li>
-                        <a class="share-email-btn" href="#popup-email">
+                        <a class="share-email-btn" href="#" data-toggle="modal" data-target="#popup-email">
                             <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
                             <div class="txt-infor-right">
                                 <div><?=Yii::t('statistic','Share With Email')?></div>
@@ -218,7 +218,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
             <div class="overflow-all">
                 <p class="name-user-inter">James Bond</p>
                 <a href="#" class="btn-common btn-chat"><span class="icon icon-chat-1"></span></a>
-                <a href="#popup-email" class="btn-common btn-email share-email-btn"><span class="icon icon-email-1"></span></a>
+                <a href="#" data-toggle="modal" data-target="#popup-email" class="btn-common btn-email share-email-btn"><span class="icon icon-email-1"></span></a>
             </div>
         </div>
     </div>

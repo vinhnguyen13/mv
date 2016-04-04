@@ -285,24 +285,36 @@ use vsoft\ad\models\AdImages;
 	</div>
 </div>
 <?php if($product->isNewRecord): ?>
-	<div id="popup-share-social" class="popup-common hide-popup">
-	    <div class="inner-popup">
-            <div class="wrap-body-popup">
-                <div style="font-weight: bold; font-size: 20px; color: #514AB3; margin: -8px 0 22px 0;">Đăng tin thành công !</div>
-				<div style="font-size: 14px; margin-bottom: 32px;">Tin của bạn đang chờ xét duyệt và sẽ được hiển thị đến người mua sớm nhất.<br /><br />Cảm ơn đã sử dụng dịch vụ của MetVuong</div>
-				<a href="<?= Url::current() ?>" style="font-size: 16px; text-transform: uppercase;">Tiếp tục đăng tin</a>
-            </div>
-        </div>
+	<div id="popup-share-social" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="inner-popup">
+			            <div class="wrap-body-popup">
+			                <div style="font-weight: bold; font-size: 20px; color: #514AB3; margin: -8px 0 22px 0;">Đăng tin thành công !</div>
+							<div style="font-size: 14px; margin-bottom: 32px;">Tin của bạn đang chờ xét duyệt và sẽ được hiển thị đến người mua sớm nhất.<br /><br />Cảm ơn đã sử dụng dịch vụ của MetVuong</div>
+							<a href="<?= Url::current() ?>" style="font-size: 16px; text-transform: uppercase;">Tiếp tục đăng tin</a>
+			            </div>
+			        </div>
+				</div>
+			</div>
+		</div>
 	</div>
 <?php else: ?>
-	<div id="popup-share-social" class="popup-common hide-popup">
-	    <div class="inner-popup">
-            <div class="wrap-body-popup">
-                <div style="font-weight: bold; font-size: 20px; color: #514AB3; margin: -8px 0 22px 0;">Cập nhật thành công !</div>
-				<div style="font-size: 14px; margin-bottom: 32px;">Tin của bạn sẽ chờ xét duyệt lại trước khi hiển thị đến người xem.<br /><br />Cảm ơn đã sử dụng dịch vụ của MetVuong</div>
-				<a href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>" style="font-size: 16px; text-transform: uppercase;">Quay trở về dashboard</a>
-            </div>
-        </div>
+	<div id="popup-share-social" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<div class="inner-popup">
+			            <div class="wrap-body-popup">
+			                <div style="font-weight: bold; font-size: 20px; color: #514AB3; margin: -8px 0 22px 0;">Cập nhật thành công !</div>
+							<div style="font-size: 14px; margin-bottom: 32px;">Tin của bạn sẽ chờ xét duyệt lại trước khi hiển thị đến người xem.<br /><br />Cảm ơn đã sử dụng dịch vụ của MetVuong</div>
+							<a href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>" style="font-size: 16px; text-transform: uppercase;">Quay trở về dashboard</a>
+			            </div>
+			        </div>
+				</div>
+			</div>
+		</div>
 	</div>
 <?php endif; ?>
 	
@@ -325,9 +337,9 @@ use vsoft\ad\models\AdImages;
 			<li> <span class="icon icon-pt icon-pt-small"></span> <span class="toilet-show"></span> </li>
 		</ul>
 		<ul class="pull-right icons-detail">
-			<li><a href="#popup-share-social" class="icon icon-share-td"></a></li>
+			<li><a href="#" data-toggle="modal" data-target="#popup-share-social" class="icon icon-share-td"></a></li>
 			<li><a href="#" class="icon save-item"></a></li>
-			<li><a href="#popup-map" class="icon icon-map-loca"></a></li>
+			<li><a href="#" data-toggle="modal" data-target="#popup-map" class="icon icon-map-loca"></a></li>
 		</ul>
 		<p class="price-td">
 			<span><?= Yii::t('ad', 'Price') ?></span>
@@ -448,7 +460,7 @@ use vsoft\ad\models\AdImages;
 						</div>
 					</div>
 					<div class="text-center">
-						<a href="#popup-email" id="" class="email-btn btn-common btn-small">Email</a>
+						<a href="#" data-toggle="modal" data-target="#popup-email" class="email-btn btn-common btn-small">Email</a>
 						<?php if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) { ?>
 							<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small">Chat</a>
 						<?php }?>
