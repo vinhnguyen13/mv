@@ -23,6 +23,8 @@ var listing = {
 		listing.limit = Number(listing.countToEl.text()) - Number(listing.countFromEl.text()) + 1;
 		
 		events.attachDesktopEvent(listing.listEl, 'click', '.item-listing > a', listing.detailEvent);
+		events.attachDesktopEvent(listing.listEl, 'mouseenter', '.item-listing > a', listing.mouseenterEvent);
+		events.attachDesktopEvent(listing.listEl, 'mouseleave', '.item-listing > a', listing.mouseleaveEvent);
 		events.attachDesktopEvent($('.wrap-listing'), 'scroll', listing.more);
 		events.attachDesktopEvent(form.fields.projectBuildingId, 'change', listing.loadProject);
 		events.attachDesktopEvent(form.fields.categoryId, 'change', listing.resetProjectField);
@@ -36,6 +38,58 @@ var listing = {
 		listing.getListingMarker(function(r){
 			listing.firstTimeDraw();
 		});
+	},
+	mouseenterEvent: function() {
+		var id = $(this).data('id');
+		
+		$.data(this, 'mouseenterTimer', setTimeout(function(){
+			var marker = listing.getFocusMarker(id);
+			
+			if(marker) {
+				marker.setIcon(listing.icon(marker.get('ids').length, 1));
+				
+				var offsetX = $('.detail-listing-dt').position().left / 2;
+				var position = marker.getPosition();
+				
+				if(!listing.getBounds(offsetX, 0).contains(position)) {
+					listing.setCenter(position, offsetX, 0);
+				}
+			}
+		}, 300));
+	},
+	mouseleaveEvent: function() {
+		clearTimeout($.data(this, 'mouseenterTimer'));
+		
+		var marker = listing.getFocusMarker($(this).data('id'));
+		
+		if(marker) {
+			marker.setIcon(listing.icon(marker.get('ids').length, 0));
+		}
+	},
+	getFocusMarker: function(id) {
+		var marker;
+		
+		if(listing.currentDrawLevel == 'detail') {
+			marker = listing.getMarkerDetail(id + '');
+		} else {
+			marker = listing.getMarkerArea(id + '');
+		}
+		
+		return marker;
+	},
+	getMarkerDetail: function(id) {
+		for(var i in listing.markers) {
+			if(listing.markers[i].get('ids').indexOf(id) !== -1) {
+				return listing.markers[i];
+			}
+		}
+	},
+	getMarkerArea: function(id) {
+		for(var i in listing.areaMarkers) {
+			if(listing.areaMarkers[i].get('ids').indexOf(id) !== -1) {
+				return listing.areaMarkers[i];
+			}
+		}
 	},
 	loadedAllResources: function() {
 		if(desktop.countLoadedResource == resources.length) {
@@ -179,7 +233,7 @@ var listing = {
 				listing.drawAreaPolygon(area[i]);
 			}
 			if(area[i].center && group[i]) {
-				listing.drawAreaMarker(area[i], group[i].length);
+				listing.drawAreaMarker(area[i], group[i]);
 			}
 		}
 	},
@@ -210,12 +264,12 @@ var listing = {
 			var areaId = product[idString];
 			
 			if(groups[areaId]) {
-				groups[areaId].push(i);
+				groups[areaId].push(product.id);
 			} else {
-				groups[areaId] = [i];
+				groups[areaId] = [product.id];
 			}
 		}
-		
+
 		return groups;
 	},
 	drawAreaPolygon: function(area) {
@@ -239,9 +293,10 @@ var listing = {
 		
 		listing.polygons[area.id] = polygon;
 	},
-	drawAreaMarker: function(area, total) {
+	drawAreaMarker: function(area, ids) {
 		var marker = listing.marker(listing.parseCenter(area.center), listing.map);
-		marker.setIcon(listing.icon(total, 0));
+		marker.setIcon(listing.icon(ids.length, 0));
+		marker.set('ids', ids);
 		listing.areaMarkers[area.id] = marker;
 	},
 	focusArea: function() {
@@ -515,6 +570,42 @@ var listing = {
 		var c = JSON.parse(center);
 		
 		return {lat: c[0], lng: c[1]};
+	},
+	setCenter: function(latLng, offsetx, offsety) {
+		var scale = Math.pow(2, listing.map.getZoom());
+		var bounds = listing.map.getBounds();
+		var projection = listing.map.getProjection();
+		
+		var nw = new google.maps.LatLng(bounds.getNorthEast().lat(), bounds.getSouthWest().lng());
+		
+		var worldCoordinateCenter = projection.fromLatLngToPoint(latLng);
+		var pixelOffset = new google.maps.Point((offsetx/scale) || 0, (offsety/scale) || 0);
+		
+		var worldCoordinateNewCenter = new google.maps.Point(
+			worldCoordinateCenter.x - pixelOffset.x,
+			worldCoordinateCenter.y + pixelOffset.y
+		);
+		
+		var center = projection.fromPointToLatLng(worldCoordinateNewCenter);
+		
+		listing.map.setCenter(center);
+	},
+	getBounds: function(offsetx, offsety) {
+		var scale = Math.pow(2, listing.map.getZoom());
+		var bounds = listing.map.getBounds();
+		var projection = listing.map.getProjection();
+		var northEast = bounds.getNorthEast();
+		
+		var worldCoordinateNorthEast = projection.fromLatLngToPoint(northEast);
+		var pixelOffset = new google.maps.Point(((offsetx*2)/scale) || 0, ((offsety*2)/scale) || 0);
+		var worldCoordinateNewNorthEast = new google.maps.Point(
+			worldCoordinateNorthEast.x + pixelOffset.x,
+			worldCoordinateNorthEast.y - pixelOffset.y
+		);
+		
+		var newNorthEast = projection.fromPointToLatLng(worldCoordinateNewNorthEast);
+
+		return new google.maps.LatLngBounds(bounds.getSouthWest(), newNorthEast);
 	}
 }
 
