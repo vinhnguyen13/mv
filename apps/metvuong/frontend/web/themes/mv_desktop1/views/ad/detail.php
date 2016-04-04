@@ -60,7 +60,7 @@ Yii::$app->view->registerMetaTag([
 ]);
 Yii::$app->view->registerMetaTag([
     'property' => 'og:image',
-    'content' => $product->image_file_name ? AdImages::getImageUrl($product->image_folder, $product->image_file_name, AdImages::SIZE_THUMB) : AdImages::defaultImage()
+    'content' => $product->representImage
 ]);
 ?>
 <div class="container">

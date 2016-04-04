@@ -17,7 +17,9 @@ if(empty($district_id))
 
 $categories = \vsoft\ad\models\AdCategory::find ()->indexBy( 'id' )->asArray( true )->all ();
 $types = AdProduct::getAdTypes();
-$products = AdProduct::find()->where(['city_id' => $city_id, 'district_id' => $district_id])->orderBy(new \yii\db\Expression('rand()'))->limit(3)->all();
+$products = AdProduct::find()->innerJoin(AdImages::tableName(), "ad_product.id = ad_images.product_id")
+    ->where(['city_id' => $city_id, 'district_id' => $district_id])->orderBy(new \yii\db\Expression('rand()'))->limit(3)->all();
+
 if(count($products) > 0) {
 ?>
 <div class="col-xs-12 col-md-3 col-right sidebar-col">
@@ -30,7 +32,7 @@ if(count($products) > 0) {
                 <div class="item">
                     <a href="<?= $product->urlDetail(); ?>" class="pic-intro rippler rippler-default">
                         <div class="img-show">
-                            <div><img src="<?=$product->image_file_name ? AdImages::getImageUrl($product->image_folder, $product->image_file_name, AdImages::SIZE_THUMB) : AdImages::defaultImage()?>" alt="<?=$product->getAddress($product->show_home_no)?>"></div>
+                            <div><img src="<?=$product->representImage?>" alt="<?=$product->getAddress($product->show_home_no)?>"></div>
                         </div>
                         <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?></div>
                     </a>
