@@ -12,6 +12,7 @@ use frontend\models\UserLocation;
 use vsoft\ad\models\AdProduct;
 use Yii;
 use yii\base\InvalidParamException;
+use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
@@ -265,9 +266,24 @@ class MemberController extends Controller
             'scenario' => 'updateprofile',
         ]);
 
+        $sale_products = array();
+        $rent_products = array();
         $model = $model->loadProfile($username, 'updateprofile');
         if($model) {
-            $products = AdProduct::find()->where('user_id = :uid', [':uid' => $model->user_id])->all();
+            $query = AdProduct::find()->where('user_id = :uid', [':uid' => $model->user_id]);
+            $count = $query->count();
+            $pagination = new Pagination(['totalCount' => $count]);
+            $pagination->defaultPageSize = 6;
+            $products = $query->offset($pagination->offset)->limit($pagination->limit)
+                ->orderBy(['district_id' => SORT_ASC, 'city_id'=> SORT_ASC, 'id' => SORT_DESC])->all();
+            if($count> 0){
+                foreach($products as $product){
+                    if($product->type == 1)
+                        array_push($sale_products, $product);
+                    else
+                        array_push($rent_products, $product);
+                }
+            }
         }
 
         if(Yii::$app->request->isAjax) {
@@ -290,7 +306,8 @@ class MemberController extends Controller
             ]);
         }
         return $this->render('user/profile', [
-            'model' => $model, 'username'=>$username, 'products' => $products
+            'model' => $model, 'username'=>$username, 'products' => $products,
+            'sale_products' => $sale_products, 'rent_products' => $rent_products, 'pagination' => $pagination
         ]);
     }
 

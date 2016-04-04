@@ -48,7 +48,7 @@ if(count($products) > 0) {
                             </ul>
                         </div>
                         <div class="bottom-feat-box clearfix">
-                            <p>Giá <strong><?= StringHelper::formatCurrency($product->price) ?></strong></p>
+                            <p>Giá <strong><?= StringHelper::formatCurrency($product->price) ?></strong>VND</p>
                         </div>
                     </div>
                 </div>

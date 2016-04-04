@@ -7,6 +7,7 @@
 use vsoft\express\components\StringHelper;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
+use yii\widgets\LinkPager;
 
 // user get from username in address bar
 $user = $model->getUser();
@@ -26,31 +27,35 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
                         </ul>
                         <p class="location"><?= empty($user->location) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $user->location->city ?></p>
                         <p class="num-mobi"><?= empty($model->mobile) ?  "<a href='#'><i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i></a>" : "<a href='tel:".$model->mobile."'>".$model->mobile."</a>" ?></p>
-                        <p class="email-user"><a href="#" data-toggle="modal" data-target="#popup-email" class="email-btn"><?= empty($model->public_email) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->public_email ?></a></p>
+                        <p class="email-user"><a href="#popup-email" class="email-btn"><?= empty($model->public_email) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->public_email ?></a></p>
                     </div>
                 </div>
                 <div class="infor-priva">
-                    <div class="title-text">THÔNG TIN CÁ NHÂN</div>
+                    <div class="title-text"><?=Yii::t('profile','Personal Information')?></div>
                     <p><?= empty($model->bio) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->bio ?></p>
                 </div>
                 <?php
-                if(count($products) > 0) {
+                $count_product = $pagination->totalCount;
+                if($count_product > 0) {
                 $categories = \vsoft\ad\models\AdCategory::find ()->indexBy( 'id' )->asArray( true )->all ();
                 $types = \vsoft\ad\models\AdProduct::getAdTypes ();
+                $count_sale = count($sale_products);
+                $count_rent = count($rent_products);
                 ?>
                 <div class="list-per-post">
                     <div class="title-text clearfix"><?=Yii::t('profile', 'LISTINGS')?>
                         <ul class="nav nav-tabs pull-right" role="tablist">
-                            <li role="presentation" class="active"><a href="#list-all" aria-controls="list-all" role="tab" data-toggle="tab">Tất cả (10)</a></li>
-                            <li role="presentation"><a href="#list-by" aria-controls="list-by" role="tab" data-toggle="tab">Bán (3)</a></li>
-                            <li role="presentation"><a href="#list-rent" aria-controls="list-rent" role="tab" data-toggle="tab">Cho thuê (7)</a></li>
+                            <li role="presentation" class="active"><a href="#list-all" aria-controls="list-all" role="tab" data-toggle="tab">Tất cả (<?=$count_product?>)</a></li>
+                            <li role="presentation"><a href="#list-by" aria-controls="list-by" role="tab" data-toggle="tab">Bán(<?=$count_sale?>)</a></li>
+                            <li role="presentation"><a href="#list-rent" aria-controls="list-rent" role="tab" data-toggle="tab">Cho thuê (<?=$count_rent?>)</a></li>
                         </ul>
                     </div>
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane fade in active" id="list-all">
                             <ul class="clearfix list-post">
-                                <?php foreach ($products as $product) {
-                                    ?>
+                                <?php
+                                foreach ($products as $product) {
+                                ?>
                                 <li class="col-xs-12 col-sm-6">
                                     <div class="wrap-item-post">
                                         <a href="<?= $product->urlDetail() ?>" class="rippler rippler-default">
@@ -59,7 +64,7 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
                                                 </div></div>
                                             <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></div>
                                         </a>
-                                        <p class="date-post">Ngày đăng tin: <strong>12/2/2016, 8:30AM</strong></p>
+                                        <p class="date-post"><?=Yii::t('listing','Listing date')?>: <strong><?= date("d/m/Y H:i", $product->created_at) ?></strong></p>
                                         <p class="name-post"><a href="<?= $product->urlDetail() ?>"><?=$product->getAddress()?></a></p>
                                         <p class="id-duan">ID:<span><?=$product->id?></span></p>
                                         <ul class="clearfix list-attr-td">
@@ -74,16 +79,90 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
                                             </li>
                                         </ul>
                                         <div class="bottom-item clearfix">
-                                            <a href="#" class="pull-right fs-13">Chi tiết</a>
-                                            <p>Giá <strong class="color-cd pdL-5"><?= StringHelper::formatCurrency($product->price) ?> đồng</strong></p>
+                                            <p><?=Yii::t('profile','Price')?> <strong class="color-cd pdL-5"><?= StringHelper::formatCurrency($product->price) ?> VND</strong></p>
                                         </div>
                                     </div>
                                 </li>
                                 <?php } ?>
                             </ul>
+                            <nav class="text-center">
+                                <?php
+                                echo LinkPager::widget([
+                                    'pagination' => $pagination
+                                ]);
+                                ?>
+                            </nav>
                         </div>
-                        <div role="tabpanel" class="tab-pane fade" id="list-by">...</div>
-                        <div role="tabpanel" class="tab-pane fade" id="list-rent">...</div>
+                        <div role="tabpanel" class="tab-pane fade" id="list-by">
+                            <ul class="clearfix list-post">
+                                <?php
+                                foreach ($sale_products as $product) {
+                                    ?>
+                                    <li class="col-xs-12 col-sm-6">
+                                        <div class="wrap-item-post">
+                                            <a href="<?= $product->urlDetail() ?>" class="rippler rippler-default">
+                                                <div class="img-show"><div><img src="<?= $product->representImage ?>">
+                                                        <input type="hidden" value="<?= $product->representImage ?>">
+                                                    </div></div>
+                                                <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></div>
+                                            </a>
+                                            <p class="date-post"><?=Yii::t('listing','Listing date')?>: <strong><?= date("d/m/Y H:i", $product->created_at) ?></strong></p>
+                                            <p class="name-post"><a href="<?= $product->urlDetail() ?>"><?=$product->getAddress()?></a></p>
+                                            <p class="id-duan">ID:<span><?=$product->id?></span></p>
+                                            <ul class="clearfix list-attr-td">
+                                                <li>
+                                                    <span class="icon icon-dt icon-dt-small"></span><?= $product->area ?>
+                                                </li>
+                                                <li>
+                                                    <span class="icon icon-bed icon-bed-small"></span><?= $product->adProductAdditionInfo->room_no ?>
+                                                </li>
+                                                <li>
+                                                    <span class="icon icon-pt icon-pt-small"></span><?= $product->adProductAdditionInfo->toilet_no ?>
+                                                </li>
+                                            </ul>
+                                            <div class="bottom-item clearfix">
+                                                <p><?=Yii::t('profile','Price')?> <strong class="color-cd pdL-5"><?= StringHelper::formatCurrency($product->price) ?> VND</strong></p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                <?php } ?>
+                            </ul>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="list-rent">
+                            <ul class="clearfix list-post">
+                                <?php
+                                foreach ($rent_products as $product) {
+                                    ?>
+                                    <li class="col-xs-12 col-sm-6">
+                                        <div class="wrap-item-post">
+                                            <a href="<?= $product->urlDetail() ?>" class="rippler rippler-default">
+                                                <div class="img-show"><div><img src="<?= $product->representImage ?>">
+                                                        <input type="hidden" value="<?= $product->representImage ?>">
+                                                    </div></div>
+                                                <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></div>
+                                            </a>
+                                            <p class="date-post"><?=Yii::t('listing','Listing date')?>: <strong><?= date("d/m/Y H:i", $product->created_at) ?></strong></p>
+                                            <p class="name-post"><a href="<?= $product->urlDetail() ?>"><?=$product->getAddress()?></a></p>
+                                            <p class="id-duan">ID:<span><?=$product->id?></span></p>
+                                            <ul class="clearfix list-attr-td">
+                                                <li>
+                                                    <span class="icon icon-dt icon-dt-small"></span><?= $product->area ?>
+                                                </li>
+                                                <li>
+                                                    <span class="icon icon-bed icon-bed-small"></span><?= $product->adProductAdditionInfo->room_no ?>
+                                                </li>
+                                                <li>
+                                                    <span class="icon icon-pt icon-pt-small"></span><?= $product->adProductAdditionInfo->toilet_no ?>
+                                                </li>
+                                            </ul>
+                                            <div class="bottom-item clearfix">
+                                                <p><?=Yii::t('profile','Price')?> <strong class="color-cd pdL-5"><?= StringHelper::formatCurrency($product->price) ?> VND</strong></p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                <?php } ?>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <?php } else { ?>
@@ -94,7 +173,7 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
                 <?php } ?>
                 <div class="review-user">
                     <div class="title-text clearfix">REVIEW
-                        <a href="#" data-toggle="modal" data-target="#popup-review" class="btn-review btn-common pull-right">Viết Review</a>
+                        <a href="#popup-review" class="btn-review btn-common pull-right">Viết Review</a>
                     </div>
                     <ul class="list-reivew">
                         <li>
@@ -158,18 +237,18 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
 
             <div class="col-xs-12 col-xs-3 sidebar-user">
                 <div class="item-sidebar">
-                    <div class="title-text">CONTACT WITH SILVER RANGER</div>
+                    <div class="title-text"><?=Yii::t('profile','CONTACT WITH')?> <?= empty($model->name) ? strtoupper($user->username) : mb_strtoupper($model->name, "UTF-8") ?></div>
                     <form action="">
                         <div class="form-group frm-item">
-                            <input type="text" id="" class="" name="" value="" placeholder="Tên ...">
+                            <input type="text" id="" class="" name="" value="" placeholder="<?=Yii::t('send_email','Your name')?> ...">
                         </div>
                         <div class="form-group frm-item">
-                            <input type="text" id="" class="" name="" value="" placeholder="Email ...">
+                            <input type="text" id="" class="" name="" value="" placeholder="<?=Yii::t('send_email','Your email')?> ...">
                         </div>
                         <div class="form-group frm-item">
                             <textarea name="" id="" cols="30" rows="10" placeholder="I am interested in “21, Nguyễn Trung Ngạn…”"></textarea>
                         </div>
-                        <button class="btn-common btn-send-email">Gửi email</button>
+                        <button class="btn-common btn-send-email"><?=Yii::t('profile', 'Send mail')?></button>
                     </form>
                 </div>
             </div>
@@ -183,39 +262,45 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
     'recipientEmail' => (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
     'params' => ['your_email' => false, 'recipient_email' => false] ]);
 ?>
-<div id="popup-review" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
-                <div class="wrap-popup">
-                    <div class="inner-popup">
-                        <div class="review-box-popup">
-                            <h2 class="color-cd fs-18 text-uper font-600 mgB-20">REVIEW SILVER RANGER</h2>
-                            <p class="fs-13 mgB-10">Tell us about your experience with this agent. Your review will help other users find the agent that's right for them.</p>
-                            <p class="fs-13 mgB-5 font-600">Môi giới này đã</p>
-                            <select name="" id="" class="mgB-15">
-                                <option value="">Giúp tôi thuê nhà</option>
-                            </select>
-                            <div class="check-rating mgB-15">
-                                <span class="font-600 fs-13 pdR-10">Rate this agent</span>
-                                <ul class="rating clearfix">
-                                    <li>rating</li>
-                                </ul>
-                            </div>
-                            <p class="fs-13 mgB-5 font-600">Viết review</p>
-                            <textarea class="pd-5 mgB-5" name="" id="" cols="30" rows="10" placeholder="Nội dung"></textarea>
-                            <div class="text-right">
-                                <button class="btn-common">GỬI</button>
-                            </div>
-                        </div>
-                    </div>
+<div id="popup-review" class="popup-common hide-popup">
+    <div class="wrap-popup">
+        <div class="inner-popup">
+            <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
+            <div class="review-box-popup">
+                <h2 class="color-cd fs-18 text-uper font-600 mgB-20">REVIEW SILVER RANGER</h2>
+                <p class="fs-13 mgB-10">Tell us about your experience with this agent. Your review will help other users find the agent that's right for them.</p>
+                <p class="fs-13 mgB-5 font-600">Môi giới này đã</p>
+                <select name="" id="" class="mgB-15">
+                    <option value="">Giúp tôi thuê nhà</option>
+                </select>
+                <div class="check-rating mgB-15">
+                    <span class="font-600 fs-13 pdR-10">Rate this agent</span>
+                    <ul class="rating clearfix">
+                        <li>rating</li>
+                    </ul>
+                </div>
+                <p class="fs-13 mgB-5 font-600">Viết review</p>
+                <textarea class="pd-5 mgB-5" name="" id="" cols="30" rows="10" placeholder="Nội dung"></textarea>
+                <div class="text-right">
+                    <button class="btn-common">GỬI</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script>
+    $(document).ready(function () {
+        $('#popup-review').popupMobi({
+            btnClickShow: '.review-user a',
+            closeBtn: '#popup-review .btn-close',
+            styleShow: 'center'
+        });
+        $('#popup-email').popupMobi({
+            btnClickShow: ".email-btn",
+            closeBtn: '#popup-email .btn-cancel',
+            styleShow: "full"
+        });
+    });
     $(document).bind('chat/afterConnect', function (event, type) {
         var to_jid = chatUI.genJid('<?=$user->username?>');
         Chat.sendMessage(to_jid , 1, 'headline', {sttOnline: 0});
