@@ -39,6 +39,7 @@ $script = <<<EOD
 	var getMarkersUrl = '$getMarkersUrl';
 	var loadProjectUrl = '$loadProjectUrl';
 	var getGeometryUrl = '$getGeometryUrl';
+	var getGeometryVersion = 1;
 EOD;
 
 $this->registerJs($script, View::POS_BEGIN);

@@ -306,7 +306,7 @@ var listing = {
 		}
 		
 		listing.loadAreaXHR = $.ajax(getGeometryUrl, {
-			data: {cityId: form.fields.cityId.val()},
+			data: {cityId: form.fields.cityId.val(), v: getGeometryVersion},
 			dataType: 'json',
 			cache: true,
 			success: function(r) {
