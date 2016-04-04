@@ -55,7 +55,20 @@ var listing = {
 		listing.firstTimeDraw();
 		
 		listing.map.addListener('zoom_changed', function(){
-			listing.draw();
+			var focusArea = listing.focusArea();
+			var zoomLevel = listing.getZoomLevel(listing.map.getZoom());
+			
+			var drawLevel = listing.getDrawLevel(focusArea.collection, zoomLevel);
+			
+			if(drawLevel != listing.currentDrawLevel) {
+				if(listing.currentDrawLevel != 'detail') {
+					listing.removeAllArea();
+				} else {
+					listing.hideMarkers();
+				}
+				
+				listing.currentDrawLevel = listing.draw();
+			}
 		});
 	},
 	_initMap: function() {
@@ -70,47 +83,64 @@ var listing = {
 	},
 	firstTimeDraw: function() {
 		if(typeof listing.products !== 'undefined' && typeof listing.area != 'undefined') {
-			listing.draw();
+			listing.currentDrawLevel = listing.draw();
 		}
 	},
 	draw: function() {
+		console.log('draw');
 		var focusArea = listing.focusArea();
 
+		var drawLevel = 'detail';
+		
 		if(focusArea.collection == 'street') {
 			listing.drawDetail();
 			listing.drawStreet(listing.area['street'][focusArea.id]);
 		} else {
-			var zoom = listing.map.getZoom();
-			var zoomLevel = listing.getZoomLevel(zoom);
+			var zoomLevel = listing.getZoomLevel(listing.map.getZoom());
 
-			var focusOrderArea = listing.orderArea[focusArea.collection];
-			var zoomOrderArea = listing.orderArea[zoomLevel];
+			drawLevel = listing.getDrawLevel(focusArea.collection, zoomLevel);
 			
-			var drawString = (focusOrderArea > zoomOrderArea) ? focusArea.collection : zoomLevel;
-			
-			if(drawString == 'detail') {
+			if(drawLevel == 'detail') {
 				listing.drawDetail();
 			} else {
-				var area = {};
+				var area = listing.getDrawArea(focusArea.collection, zoomLevel);
 				
-				if(focusOrderArea >= zoomOrderArea) {
-					area[focusArea.id] = listing.area[focusArea.collection][focusArea.id];
-				} else {
-					if(focusArea.collection == 'city') {
-						area = listing.area[zoomLevel];
-					} else if(focusArea.collection == 'district') {
-						for(var i in listing.area['ward']) {
-							var ward = listing.area['ward'][i];
-							if(ward['district_id'] == focusArea.id) {
-								area[i] = ward;
-							}
-						}
-					}
-				}
-				
-				listing['draw' + cfl(drawString)].call(null, area);
+				listing['draw' + cfl(drawLevel)].call(null, area);
 			}
 		}
+		
+		return drawLevel;
+	},
+	getDrawLevel: function(focusLevel, zoomLevel) {
+		var focusOrderArea = listing.orderArea[focusLevel];
+		var zoomOrderArea = listing.orderArea[zoomLevel];
+		
+		return (focusOrderArea > zoomOrderArea) ? focusLevel : zoomLevel;
+	},
+	getDrawArea: function(focusLevel, zoomLevel) {
+		var focusArea = listing.focusArea();
+		
+		var focusOrderArea = listing.orderArea[focusLevel];
+		var zoomOrderArea = listing.orderArea[zoomLevel];
+		
+		var area = {};
+		
+		if(focusOrderArea >= zoomOrderArea) {
+			area[focusArea.id] = listing.area[focusArea.collection][focusArea.id];
+		} else {
+			if(focusArea.collection == 'city') {
+				area = listing.area[zoomLevel];
+			} else if(focusArea.collection == 'district') {
+				for(var i in listing.area['ward']) {
+					var ward = listing.area['ward'][i];
+					if(ward['district_id'] == focusArea.id) {
+						area[i] = ward;
+					}
+				}
+			}
+		}
+		
+		return area;
 	},
 	drawStreet: function(street) {
 		if(street.geometry) {
@@ -255,7 +285,7 @@ var listing = {
 		
 		$.get('/ad/detail', {id: id}, function(r){
 			
-			detailListing.find('.container').html($(r).find('#wrapper').find('.detail-listing').html());
+			detailListing.find('.container').html($(r).find('#detail-wrap').html());
 
 			var swiper = new Swiper('.swiper-container', {
 				pagination: '.swiper-pagination',

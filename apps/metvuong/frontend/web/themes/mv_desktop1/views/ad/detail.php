@@ -66,7 +66,7 @@ Yii::$app->view->registerMetaTag([
 <div class="container">
 	<div class="title-fixed-wrap">
 	    <div class="detail-listing row detail-listing-extra">
-	    	<div class="col-xs-12 col-md-9 col-left">
+	    	<div id="detail-wrap" class="col-xs-12 col-md-9 col-left">
 				<?php
 					$images = $product->adImages;
 					if($images):
