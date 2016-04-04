@@ -486,29 +486,29 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 	?>
 	<script>
 		$(document).ready(function () {
-			$(document).on('click', '.save-item', function (e) {
-				e.preventDefault();
-				$(this).toggleClass('active');
-				var timer = 0;
-				clearTimeout(timer);
-				var _id = $(this).attr('data-id');
-				var _url = $(this).attr('data-url');
-				var _stt = ($(this).hasClass('active')) ? 1 : 0;
-				timer = setTimeout(function () {
-					$.ajax({
-						type: "post",
-						url: _url,
-						data: {id: _id, stt: _stt},
-						success: function (data) {
-							if(data.statusCode == 200){
-								var to_jid = chatUI.genJid('<?=$userTo->username?>');
-								Chat.sendMessage(to_jid , 'save product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: data.parameters.msg});
-							}
-						}
-					});
-				}, 500);
+            $(document).on('click', '.save-item', function (e) {
+                e.preventDefault();
+                $(this).toggleClass('active');
+                var timer = 0;
+                clearTimeout(timer);
+                var _id = $(this).attr('data-id');
+                var _url = $(this).attr('data-url');
+                var _stt = ($(this).hasClass('active')) ? 1 : 0;
+                timer = setTimeout(function () {
+                    $.ajax({
+                        type: "post",
+                        url: _url,
+                        data: {id: _id, stt: _stt},
+                        success: function (data) {
+                            if(data.statusCode == 200){
+                                var to_jid = chatUI.genJid('<?=$userTo->username?>');
+                                Chat.sendMessage(to_jid , 'save product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: data.parameters.msg});
+                            }
+                        }
+                    });
+                }, 500);
 
-			});
+            });
 			$(document).bind('chat/afterConnect', function (event, data) {
 				<?php if(Yii::$app->session->getFlash('notify_other')){?>
 					var to_jid = chatUI.genJid('<?=$userTo->username?>');
