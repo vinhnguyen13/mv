@@ -7,6 +7,7 @@ var listing = {
 	projectInfoEl: $('#project-info'),
 	contentHolderEl: $('#content-holder'),
 	areaEl: $('.area-select'),
+	detailListing: $('.detail-listing-dt'),
 	markers: {},
 	polygons: {},
 	areaMarkers: {},
@@ -14,7 +15,8 @@ var listing = {
 	zoomLevel: {
 		city: {min: 0, max: 11},
 		district: {min: 12, max: 14},
-		ward: {min: 15, max: 16}
+		ward: {min: 15, max: 16},
+		detail: {min: 17, max: 21}
 	},
 	initialZoom: {city: 11, district: 14, ward: 16, street: 15},
 	orderArea: {city: 0, district: 1, ward: 2, detail: 3},
@@ -46,10 +48,9 @@ var listing = {
 			var marker = listing.getFocusMarker(id);
 			
 			if(marker) {
-				marker.setIcon(listing.icon(marker.get('ids').length, 1));
-				marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
+				listing.focusMarker(marker);
 				
-				var offsetX = $('.detail-listing-dt').position().left / 2;
+				var offsetX = listing.detailListing.position().left / 2;
 				var position = marker.getPosition();
 				
 				if(!listing.getBounds(offsetX, 0).contains(position)) {
@@ -57,6 +58,10 @@ var listing = {
 				}
 			}
 		}, 300));
+	},
+	focusMarker: function(marker) {
+		marker.setIcon(listing.icon(marker.get('ids').length, 1));
+		marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
 	},
 	mouseleaveEvent: function() {
 		clearTimeout($.data(this, 'mouseenterTimer'));
@@ -138,6 +143,8 @@ var listing = {
 				google.maps.event.clearListeners(listing.map, 'mousedown');
 			});
 		};
+		
+		listing.infoWindow = new m2Map.InfoWindow({offsetTop: 40});
 	},
 	firstTimeDraw: function() {
 		if(typeof listing.products !== 'undefined' && typeof listing.area != 'undefined') {
@@ -300,14 +307,93 @@ var listing = {
 		var polygon = listing.polygon(triangleCoords);
 		
 		polygon.setMap(listing.map);
+		polygon.set('id', area.id);
+		
+		polygon.addListener("mouseover", listing.polygonMouseover);
+		polygon.addListener("mouseout", listing.polygonMouseout);
+		polygon.addListener("click", listing.polygonClick);
 		
 		listing.polygons[area.id] = polygon;
+	},
+	polygonMouseover: function() {
+		if(marker = listing.getAreaMarkerRef(this.id)) {
+			google.maps.event.trigger(marker, 'mouseover');
+		}
+	},
+	polygonMouseout: function() {
+		if(marker = listing.getAreaMarkerRef(this.id)) {
+			google.maps.event.trigger(marker, 'mouseout');
+		}
+	},
+	polygonClick: function() {
+		if(marker = listing.getAreaMarkerRef(this.id)) {
+			google.maps.event.trigger(marker, 'click');
+			google.maps.event.trigger(marker, 'mouseout');
+		}
+	},
+	getAreaMarkerRef: function(id) {
+		var marker;
+
+		for(var i in listing.areaMarkers) {
+			if(i == id) {
+				marker = listing.areaMarkers[i];
+				break;
+			}
+		}
+		
+		return marker;
 	},
 	drawAreaMarker: function(area, ids) {
 		var marker = listing.marker(listing.parseCenter(area.center), listing.map);
 		marker.setIcon(listing.icon(ids.length, 0));
 		marker.set('ids', ids);
+		
+		marker.addListener('mouseover', function() {
+			var name = area.pre ? area.pre + ' ' + area.name : area.name;
+			listing.areaMarkerOver.call(this, name);
+		});
+		
+		marker.addListener('mouseout', listing.areaMarkerOut);
+		marker.addListener('click', listing.areaMarkerClick);
+		
 		listing.areaMarkers[area.id] = marker;
+	},
+	areaMarkerOver: function(name) {
+		var infoContent = '<div class="info-wrap-single"><div style="padding: 6px 12px; font-weight: bold; font-size: 13px; white-space: nowrap">' + name + '</div><div class="arrow"></div></div>';
+		
+		listing.infoWindow.setContent(infoContent);
+		listing.infoWindow.open(this);
+		listing.fixOffsetTopInfoWindow(this);
+	},
+	areaMarkerOut: function() {
+		listing.infoWindow.close();
+	},
+	areaMarkerClick: function() {
+		var focusArea = listing.focusArea();
+		var zoomLevel = listing.getZoomLevel(listing.map.getZoom());
+		var drawLevel = listing.getDrawLevel(focusArea.collection, zoomLevel);
+		var flag = false;
+		
+		for(var i in listing.zoomLevel) {
+			if(flag) {
+				listing.map.setZoom(listing.zoomLevel[i].min);
+				listing.setCenter(this.getPosition(), listing.detailListing.position().left / 2, 0);
+				
+				break;
+			}
+			if(i == drawLevel) {
+				flag = true;
+			}
+		}
+	},
+	fixOffsetTopInfoWindow: function(marker) {
+		if(marker.ids.length > 9999) {
+			listing.infoWindow.setOffsetTop(60);
+		} else if(marker.ids.length > 999) {
+			listing.infoWindow.setOffsetTop(50);
+		} else {
+			listing.infoWindow.setOffsetTop(40);
+		}
 	},
 	focusArea: function() {
 		var obj = {};
@@ -323,16 +409,12 @@ var listing = {
 		return obj;
 	},
 	getZoomLevel: function(zoom) {
-		var zoomLevel = 'detail';
-
 		for(var i in listing.zoomLevel) {
 			if(listing.zoomLevel[i]['min'] <= zoom && listing.zoomLevel[i]['max'] >= zoom) {
-				zoomLevel = i;
+				return i;
 				break;
 			}
 		}
-		
-		return zoomLevel;
 	},
 	detailEvent: function(e) {
 		e.preventDefault();
@@ -343,13 +425,13 @@ var listing = {
 		listing.detail(id);
 	},
 	detail: function(id) {
-		var wWrapList = $('.detail-listing-dt').outerWidth();
+		var wWrapList = listing.detailListing.outerWidth();
 		var detailListing = $('.detail-listing');
-		var wrapDetailListing = $('.detail-listing-dt');
+		var wrapDetailListing = listing.detailListing;
 		
 		wrapDetailListing.loading({full: false});
 		
-		$('.detail-listing-dt').css({
+		listing.detailListing.css({
 			left: -wWrapList +'px'
 		});
 		
@@ -371,7 +453,7 @@ var listing = {
 		listing._closeDetail();
 	},
 	_closeDetail: function() {
-		$('.detail-listing-dt').css({
+		listing.detailListing.css({
 			left: '0px'
 		});
 	},
