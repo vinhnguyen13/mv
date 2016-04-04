@@ -27,7 +27,10 @@ class AdStreet extends ASt
 			$streets = self::find()->orderBy('name')->where('`district_id` = :district_id', [':district_id' => $districtId])->all();
 	
 			foreach($streets as $street) {
-				$items[$street['id']] = "{$street['name']}";
+				$items[] = [
+					'id' => $street['id'],
+					'name' => $street['name']
+				];
 			}
 		}
 	

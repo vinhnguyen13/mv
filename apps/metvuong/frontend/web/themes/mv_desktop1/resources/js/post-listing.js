@@ -357,7 +357,7 @@ var form = {
 	appendDropdown: function(el, items) {
 		el.find("option:not(:first-child)").remove();
 		for(var i in items) {
-			el.append('<option value="' + i + '">' + items[i] + '</option>');
+			el.append('<option value="' + items[i]['id'] + '">' + items[i]['name'] + '</option>');
 		}
 	},
 	getSelectedCat: function() {

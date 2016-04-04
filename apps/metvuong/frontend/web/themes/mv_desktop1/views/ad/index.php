@@ -29,10 +29,16 @@ $resourceGmapV2 = Html::encode(Yii::$app->view->theme->baseUrl . '/resources/js/
 $resourceApi = Html::encode('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4');
 
 $categoryCHCK = AdCategory::CATEGORY_CHCK;
+$getMarkersUrl = Url::to(['/ad/get-markers']);
+$loadProjectUrl = Url::to(['/ad/get-project']);
+$getGeometryUrl = Url::to(['/ad/get-geometry']);
 
 $script = <<<EOD
 	var CATEGORY_CHCK = $categoryCHCK;
 	var resources = ['$resourceListingMap', '$resourceGmapV2', '$resourceApi'];
+	var getMarkersUrl = '$getMarkersUrl';
+	var loadProjectUrl = '$loadProjectUrl';
+	var getGeometryUrl = '$getGeometryUrl';
 EOD;
 
 $this->registerJs($script, View::POS_BEGIN);
@@ -90,33 +96,34 @@ $this->registerJs($script, View::POS_BEGIN);
 													<?php 
 														$cities = AdCity::find()->all();
 														$citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
-														$citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != AdProduct::DEFAULT_CITY)]; });
+														// $citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != AdProduct::DEFAULT_CITY)]; });
+														$citiesOptions = [];
 													?>
-													<?= Html::activeDropDownList($searchModel, 'city_id', $citiesDropdown, ['class' => 'form-control select2 style-common', 'options' => $citiesOptions]) ?>
+													<?= Html::activeDropDownList($searchModel, 'city_id', $citiesDropdown, ['class' => 'form-control select2 style-common area-select', 'options' => $citiesOptions]) ?>
 												</div>
 											</div>
 											<div class="form-group col-xs-12 col-sm-6">
 												<div class="">
 													<?php 
-														$items = AdDistrict::getListByCity($searchModel->city_id);
+														$items = ArrayHelper::map(AdDistrict::getListByCity($searchModel->city_id), 'id', 'name');
 													?>
-													<?= Html::activeDropDownList($searchModel, 'district_id', $items, ['prompt' => $searchModel->getAttributeLabel('district_id'), 'class' => 'form-control select2 style-common']) ?>
+													<?= Html::activeDropDownList($searchModel, 'district_id', $items, ['prompt' => $searchModel->getAttributeLabel('district_id'), 'class' => 'form-control select2 style-common area-select']) ?>
 												</div>
 											</div>
 											<div class="form-group col-xs-12 col-sm-6">
 												<div class="">
 													<?php 
-														$items = $searchModel->district_id ? AdWard::getListByDistrict($searchModel->district_id) : [];
+														$items = $searchModel->district_id ? ArrayHelper::map(AdWard::getListByDistrict($searchModel->district_id), 'id', 'name') : [];
 													?>
-													<?= Html::activeDropDownList($searchModel, 'ward_id', $items, ['prompt' => $searchModel->getAttributeLabel('ward_id'), 'class' => 'form-control select2 style-common']) ?>
+													<?= Html::activeDropDownList($searchModel, 'ward_id', $items, ['prompt' => $searchModel->getAttributeLabel('ward_id'), 'class' => 'form-control select2 style-common area-select']) ?>
 												</div>
 											</div>
 											<div class="form-group col-xs-12 col-sm-6">
 												<div class="">
 													<?php 
-														$items = $searchModel->district_id ? AdStreet::getListByDistrict($searchModel->district_id) : [];
+														$items = $searchModel->district_id ? ArrayHelper::map(AdStreet::getListByDistrict($searchModel->district_id), 'id', 'name') : [];
 													?>
-													<?= Html::activeDropDownList($searchModel, 'street_id', $items, ['prompt' => $searchModel->getAttributeLabel('street_id'), 'class' => 'form-control select2 style-common']) ?>
+													<?= Html::activeDropDownList($searchModel, 'street_id', $items, ['prompt' => $searchModel->getAttributeLabel('street_id'), 'class' => 'form-control select2 style-common area-select']) ?>
 												</div>
 											</div>
 										</div>
@@ -412,30 +419,27 @@ $this->registerJs($script, View::POS_BEGIN);
 				</form>
 				<div class="wrap-listing clearfix">
 					<div id="content-holder">
-						<?php if(count($products) > 0): ?>
-						<div class="top-listing clearfix">
-							<p><span id="count-from"><?= $pages->offset + 1 ?></span> - <span id="count-to"><?= $pages->offset + count($products) ?></span> <?= sprintf(Yii::t('ad', 'of %s listings'), '<span id="count-total">' . $pages->totalCount . '</span>') ?></p>
+						<div id="has-result" class="<?= count($products) > 0 ? '' : 'hide' ?>">
+							<div class="top-listing clearfix">
+								<p><span id="count-from"><?= $pages->offset + 1 ?></span> - <span id="count-to"><?= $pages->offset + count($products) ?></span> <?= sprintf(Yii::t('ad', 'of %s listings'), '<span id="count-total">' . $pages->totalCount . '</span>') ?></p>
+							</div>
+							<div id="listing-list" class="wrap-lazy">
+								<ul class="clearfix">
+									<?= $this->render('_partials/list', ['products' => $products, 'categories' => $categories]) ?>
+								</ul>
+								<nav class="text-center dt-pagination">
+						            <?php
+						                echo LinkPager::widget([
+						                    'pagination' => $pages,
+											'maxButtonCount' => 5
+						                ]);
+						            ?>
+					            </nav>
+							</div>
 						</div>
-						<div id="listing-list" class="wrap-lazy">
-							<ul class="clearfix">
-								<?= $this->render('_partials/list', ['products' => $products, 'categories' => $categories]) ?>
-							</ul>
-							<div id="loading-list" class="hide" style="text-align: center;"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/loading-listing.gif' ?>" /></div>
-							<nav class="text-center dt-pagination">
-					            <?php
-					                echo LinkPager::widget([
-					                    'pagination' => $pages,
-										'maxButtonCount' => 5
-					                ]);
-					            ?>
-				            </nav>
-						</div>
-						<?php else: ?>
-						<div class="container" id="no-result">Chưa có tin đăng theo tìm kiếm của bạn, <a href="#">đăng ký nhận thông báo khi có tin đăng phù hợp</a>.</div>
-						<?php endif; ?>
+						<div class="container<?= count($products) > 0 ? ' hide' : '' ?>" id="no-result">Chưa có tin đăng theo tìm kiếm của bạn, <a href="#">đăng ký nhận thông báo khi có tin đăng phù hợp</a>.</div>
 					</div>
-
-					
+					<div id="loading-list" class="hide" style="text-align: center; margin-top: 20px; margin-bottom: 15px;"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/loading-listing.gif' ?>" /></div>
 				</div>
 			</div>
 			<div class="detail-listing-dt">

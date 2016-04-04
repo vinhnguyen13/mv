@@ -23,7 +23,7 @@
 		<a data-id="<?= $product->id ?>" class="clearfix" href="<?= $product->urlDetail(); ?>" title="<?= $product->getAddress($product->show_home_no) ?>">
 			<div class="bgcover img-intro">
 				<div>
-					<img src="<?= $product->image_file_name ? AdImages::getImageUrl($product->image_folder, $product->image_file_name, AdImages::SIZE_THUMB) : AdImages::defaultImage() ?>" />
+					<img src="<?= $product->file_name ? AdImages::getImageUrl($product->folder, $product->file_name, AdImages::SIZE_THUMB) : AdImages::defaultImage() ?>" />
 				</div>
 			</div>
 			<div class="attrs-item">
@@ -38,8 +38,8 @@
 				<p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
 				<ul class="clearfix list-attr-td">
 					<?= $product->area ? '<li> <span class="icon icon-dt icon-dt-small"></span>' . $product->area . 'm2 </li>' : '' ?>
-					<?= $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
-					<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
+					<?= $product->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->room_no . ' </li>' : '' ?>
+					<?= $product->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->toilet_no . ' </li>' : '' ?>
 				</ul>
 			</div>
 			<div class="wrap-attr-bottom">

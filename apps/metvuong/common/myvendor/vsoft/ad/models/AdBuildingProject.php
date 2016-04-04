@@ -234,7 +234,10 @@ class AdBuildingProject extends ABP
     		$projects = self::find()->where('`district_id` = :district_id', [':district_id' => $districtId])->all();
     
     		foreach($projects as $project) {
-    			$items[$project['id']] = $project['name'];
+    			$items[] = [
+					'id' => $project['id'],
+					'name' => $project['name']
+    			];
     		}
     	}
     

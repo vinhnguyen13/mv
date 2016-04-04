@@ -27,7 +27,10 @@ class AdWard extends AW
 			$wards = self::find()->orderBy('name')->where('`district_id` = :district_id', [':district_id' => $districtId])->all();
 				
 			foreach($wards as $ward) {
-				$items[$ward['id']] = "{$ward['name']}";
+				$items[] = [
+					'id' => $ward['id'],
+					'name' => $ward['name']
+				];
 			}
 		}
 	
