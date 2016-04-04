@@ -61,13 +61,7 @@ var listing = {
 			var drawLevel = listing.getDrawLevel(focusArea.collection, zoomLevel);
 			
 			if(drawLevel != listing.currentDrawLevel) {
-				if(listing.currentDrawLevel != 'detail') {
-					listing.removeAllArea();
-				} else {
-					listing.hideMarkers();
-				}
-				
-				listing.currentDrawLevel = listing.draw();
+				listing.currentDrawLevel = listing.reDraw();
 			}
 		});
 	},
@@ -87,7 +81,6 @@ var listing = {
 		}
 	},
 	draw: function() {
-		console.log('draw');
 		var focusArea = listing.focusArea();
 
 		var drawLevel = 'detail';
@@ -110,6 +103,15 @@ var listing = {
 		}
 		
 		return drawLevel;
+	},
+	reDraw: function() {
+		if(listing.currentDrawLevel != 'detail') {
+			listing.removeAllArea();
+		} else {
+			listing.hideMarkers();
+		}
+		
+		return listing.draw();
 	},
 	getDrawLevel: function(focusLevel, zoomLevel) {
 		var focusOrderArea = listing.orderArea[focusLevel];
@@ -151,9 +153,8 @@ var listing = {
 				path.push({lat: geometry[i][0], lng: geometry[i][1]});
 			}
 			
-			var polyline = listing.polyline(path);
-			
-			polyline.setMap(listing.map);
+			listing.polylineStreet = listing.polyline(path);
+			listing.polylineStreet.setMap(listing.map);
 		}
 	},
 	drawWard: function(ward) {
@@ -379,13 +380,19 @@ var listing = {
 		return hiddenFields;
 	},
 	fieldChange: function() {
+		var field = $(this);
+		
 		listing.updateListing();
 		
 		if(this.id != 'order_by') {
-			listing.removeMarkers();
+			if(listing.polylineStreet) {
+				listing.polylineStreet.setMap(null);
+				listing.polylineStreet = null;
+				listing.removeMarkers();
+			}
 			
 			listing.getListingMarker(function(r){
-				listing.draw();
+				listing.currentDrawLevel = listing.reDraw();
 			});
 		}
 	},
