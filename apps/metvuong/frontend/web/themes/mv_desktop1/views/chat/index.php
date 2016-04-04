@@ -53,31 +53,7 @@ if(!empty($jid_id)){
 				</div>
 				<div class="chat-live">
 					<div class="wrap-item-live clearfix">
-						<div class="item" chat-with="quangvinhit2010">
-							<span class="wrap-img"><img src="/images/default-avatar.jpg" alt=""></span>
-							<div class="chat-detail">
-								<span class="pull-right time-chat">17:18:34 04-03-2016</span>
-								<span class="name">quangvinhit2010@gmail.com</span>
-								<span>222222</span>
-							</div>
-						</div>
-						<div class="item" chat-with="quangvinhit2010">
-							<span class="wrap-img"><img src="/images/default-avatar.jpg" alt=""></span>
-							<div class="chat-detail">
-								<span class="pull-right time-chat">17:18:34 04-03-2016</span>
-								<span class="name">quangvinhit2010@gmail.com</span>
-								<span>222222</span>
-							</div>
-						</div>
-					</div>
-					<div class="input-txt-chat">
-						<div class="wrap-input-chat">
-							<textarea name="" id="" cols="30" rows="10"></textarea>
-							<div class="text-right fs-13">
-								<span></span>
-								Bấm Enter để gửi
-							</div>
-						</div>
+
 					</div>
 				</div>
 			</div>
@@ -100,6 +76,26 @@ if(!empty($jid_id)){
 <script>
 	$(document).ready(function () {
 		var timer = 0;
+		$(document).bind('chat/withAnother', function (event, user) {
+			if(user){
+				$.ajax({
+					type: "get",
+					dataType: 'html',
+					url: '/chat/with/'+user,
+					success: function (data) {
+						$('.wrap-item-live').html(data);
+					}
+				});
+			}
+		});
+		$(document).on('click', '.wrap-history .chat-list .item a', function (e) {
+			$('body').loading();
+			var user = $(this).parent().attr('chat-with');
+			$(document).trigger('chat/withAnother', [user]);
+			Chat.historyMessage(user+'@<?=Chat::DOMAIN?>');
+			return false;
+		});
+
 		/*$(document).on('keyup', '#findConversation', function (e) {
 			var word = $(this).val();
 			clearTimeout(timer);

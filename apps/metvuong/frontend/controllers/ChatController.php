@@ -35,7 +35,11 @@ class ChatController extends Controller
         if($username == Yii::$app->user->identity->username){
             $this->redirect(Url::to(['/chat/index']));
         }
-        return $this->render('with', ['username'=>$username]);
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('with', ['username'=>$username]);
+        }else{
+            return $this->render('with', ['username'=>$username]);
+        }
     }
 
     public function actionConversation(){
