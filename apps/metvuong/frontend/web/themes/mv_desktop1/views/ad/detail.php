@@ -173,6 +173,12 @@ Yii::$app->view->registerMetaTag([
 					            styleShow: "center"
 					        });
 
+                            $('#popup-email').popupMobi({
+                                btnClickShow: ".email-btn",
+                                closeBtn: '#popup-email .btn-cancel',
+                                styleShow: "full"
+                            });
+
 							$(document).on('click', '#popup-share-social .icon-email-1', function (e) {
 								$('#popup-share-social').addClass('hide-popup');
 								$('.email-btn').trigger('click');
