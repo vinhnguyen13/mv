@@ -181,8 +181,7 @@ $(document).ready(function(){
 					paginationClickable: true,
 			        spaceBetween: 0,
 			        nextButton: '.swiper-button-next',
-			        prevButton: '.swiper-button-prev',
-			        loop: true
+			        prevButton: '.swiper-button-prev'
 			    });
 
 				wrapDetailListing.loading({done: true});

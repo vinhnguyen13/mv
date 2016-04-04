@@ -372,8 +372,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
             paginationClickable: true,
             spaceBetween: 0,
             nextButton: '.swiper-button-next',
-            prevButton: '.swiper-button-prev',
-            loop: true
+            prevButton: '.swiper-button-prev'
         });
 
         $('#popup-map').popupMobi({

@@ -136,6 +136,14 @@ Yii::$app->view->registerMetaTag([
 
 					<script>
 						$(document).ready(function () {
+							var swiper = new Swiper('.detail-listing-extra .swiper-container', {
+								pagination: '.swiper-pagination',
+								paginationClickable: true,
+						        nextButton: '.swiper-button-next',
+						        prevButton: '.swiper-button-prev',
+						        spaceBetween: 0
+						    });
+
 							$('[data-toggle="tooltip"]').tooltip();
 							$('#popup-map').popupMobi({
 								btnClickShow: ".infor-listing .icon-map-loca",
@@ -506,25 +514,3 @@ if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
 	<?php
 }
 ?>
-
-<script>
-	$(document).ready(function () {
-
-//		$('#popup-email').popupMobi({
-//			btnClickShow: ".email-btn",
-//			closeBtn: '#popup-email .btn-cancel',
-//			styleShow: "full"
-//		});
-
-		var swiper = new Swiper('.detail-listing-extra .swiper-container', {
-			pagination: '.swiper-pagination',
-			paginationClickable: true,
-	        spaceBetween: 0,
-	        nextButton: '.swiper-button-next',
-	        prevButton: '.swiper-button-prev',
-	        loop: true
-	    });
-
-	});
-
-</script>
