@@ -91,10 +91,10 @@ use yii\helpers\Url;
 
 <script>
 	$(document).ready(function () {
-		$('#nang-cap').popupMobi({
+		/*$('#nang-cap').popupMobi({
 			btnClickShow: '.btn-nang-cap',
 			styleShow: 'center',
 			closeBtn: '#nang-cap .btn-cancel, #nang-cap .btn-ok',
-		});
+		});*/
     });
 </script>

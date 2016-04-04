@@ -210,7 +210,7 @@ $tabKeys = [
             prevButton: '.swiper-button-prev'
         });
 
-        $('#popup-map').popupMobi({
+        /*$('#popup-map').popupMobi({
             btnClickShow: ".icon-map-loca",
             closeBtn: "#popup-map .btn-close-map",
             effectShow: "show-hide",
@@ -236,7 +236,7 @@ $tabKeys = [
             btnClickShow: ".icons-detail .icon-share-td",
             closeBtn: ".btn-close",
             styleShow: "center"
-        });
+        });*/
 
         $(document).on('click', '#popup-share-social .icon-email-1', function (e) {
             $('#popup-share-social').addClass('hide-popup');

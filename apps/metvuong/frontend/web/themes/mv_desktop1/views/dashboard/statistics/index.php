@@ -234,7 +234,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 
 <script>
     $(document).ready(function () {
-        $('#popup-user-inter').popupMobi({
+        /*$('#popup-user-inter').popupMobi({
             btnClickShow: '.statis .panel-body .list-item a.popup_enable',
             styleShow: 'center',
             closeBtn: '#popup-user-inter .btn-close, #popup-user-inter .share-email-btn',
@@ -255,7 +255,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
             btnClickShow: ".share-email-btn",
             closeBtn: '#popup-email .btn-cancel',
             styleShow: 'full'
-        });
+        });*/
 
         var params = getUrlParams();
         if(params["date"] !== undefined && params["date"] !== 'undefined-undefined-'){

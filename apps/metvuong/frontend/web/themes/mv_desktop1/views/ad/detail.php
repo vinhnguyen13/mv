@@ -104,11 +104,11 @@ Yii::$app->view->registerMetaTag([
 						<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
 					</ul>
 					<ul class="pull-right icons-detail">
-						<li><a href="#popup-share-social" class="icon icon-share-td" data-toggle="tooltip" data-placement="bottom" title="Share social"></a></li>
+						<li><a href="#" data-toggle="modal" data-target="#popup-share-social" class="icon icon-share-td" title="Share social"></a></li>
 			            <?php if($product->user_id != Yii::$app->user->id){ ?>
-						<li><a data-toggle="tooltip" data-placement="bottom" title="Favourite" href="#" class="icon save-item <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>"></a></li>
+						<li><a title="Favourite" href="#" class="icon save-item <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>"></a></li>
 			            <?php } ?>
-						<li><a href="#popup-map" class="icon icon-map-loca" data-toggle="tooltip" data-placement="bottom" title="Location"></a></li>
+						<li><a href="#" data-toggle="modal" data-target="#popup-map" class="icon icon-map-loca" title="Location"></a></li>
 					</ul>
 
 					<?=$this->renderAjax('/ad/_partials/shareEmail',[
@@ -118,11 +118,13 @@ Yii::$app->view->registerMetaTag([
 				    'params' => ['your_email' => false, 'recipient_email' => false] ])?>
 
 
-					<div id="popup-map" class="popup-common hide-popup">
-						<div class="wrap-popup">
-							<div class="inner-popup">
-								<a href="#" class="btn-close-map">trở lại</a>
-					        	<div id="map_detail" data-lat="<?= $product->lat ?>" data-lng="<?= $product->lng ?>"></div>
+					<div id="popup-map" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-body">
+									<a href="#" class="btn-close-map close" data-dismiss="modal" aria-label="Close">trở lại</a>
+									<div id="map_detail" data-lat="<?= $product->lat ?>" data-lng="<?= $product->lng ?>"></div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -145,39 +147,23 @@ Yii::$app->view->registerMetaTag([
 						    });
 
 							$('[data-toggle="tooltip"]').tooltip();
-							$('#popup-map').popupMobi({
-								btnClickShow: ".infor-listing .icon-map-loca",
-								closeBtn: "#popup-map .btn-close-map",
-								effectShow: "show-hide",
-								funCallBack: function() {
-									var mapEl = $('#map_detail');
-									var latLng = {lat: Number(mapEl.data('lat')), lng:  Number(mapEl.data('lng'))};
-									var map = new google.maps.Map(mapEl.get(0), {
-										center: latLng,
-									    zoom: 16,
-									    mapTypeControl: false,
-									    zoomControl: false,
-									    streetViewControl: false
-									});
 
-									var marker = new google.maps.Marker({
-									    position: latLng,
-									    map: map
-									});
-								}
+							$('#popup-map').on('show.bs.modal', function (e) {
+							    var mapEl = $('#map_detail');
+								var latLng = {lat: Number(mapEl.data('lat')), lng:  Number(mapEl.data('lng'))};
+								var map = new google.maps.Map(mapEl.get(0), {
+									center: latLng,
+								    zoom: 16,
+								    mapTypeControl: false,
+								    zoomControl: false,
+								    streetViewControl: false
+								});
+
+								var marker = new google.maps.Marker({
+								    position: latLng,
+								    map: map
+								});
 							});
-
-							$('#popup-share-social').popupMobi({
-					            btnClickShow: ".icons-detail .icon-share-td",
-					            closeBtn: ".btn-close",
-					            styleShow: "center"
-					        });
-
-                            $('#popup-email').popupMobi({
-                                btnClickShow: ".email-btn",
-                                closeBtn: '#popup-email .btn-cancel',
-                                styleShow: "full"
-                            });
 
 							$(document).on('click', '#popup-share-social .icon-email-1', function (e) {
 								$('#popup-share-social').addClass('hide-popup');
@@ -320,7 +306,7 @@ Yii::$app->view->registerMetaTag([
 											</div>
 											Ho Chi Minh City, Vietnam
 										</div>
-										<a href="#popup-email" id="" class="email-btn btn-common btn-small">Email</a>
+										<a href="#" data-toggle="modal" data-target="#popup-email" class="email-btn btn-common btn-small">Email</a>
 										<?php if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) { ?>
 											<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small">Chat</a>
 										<?php }?>

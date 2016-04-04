@@ -2358,10 +2358,6 @@ label {
     padding: 2px;
     background: #fff;
     border: 1px solid #BFBFBF;
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    -ms-border-radius: 3px;
     width: 35px;
     height: auto;
 }
@@ -2793,7 +2789,7 @@ html.mm-opening .mm-slideout {
 .chat-live {
     width: 60%;
     padding-left: 20px;
-    padding-bottom: 110px;
+    padding-bottom: 40px;
 }
 .chat-live .wrap-img,
 .chat-list .wrap-img {
@@ -2871,7 +2867,7 @@ html.mm-opening .mm-slideout {
     vertical-align: middle;
 }
 .type-input-chat {
-    position: fixed;
+    /* position: fixed; */
     bottom: 0;
     /* left: 0; */
     width: 100%;
@@ -2906,7 +2902,7 @@ html.mm-opening .mm-slideout {
     position: relative;
 }
 .wrap-chat-item {
-    position: fixed;
+    /* position: fixed; */
     top: 0;
     bottom: 0;
     /* left: 0; */
@@ -2918,7 +2914,6 @@ html.mm-opening .mm-slideout {
     overflow-x: hidden;
     overflow-y: auto;
     padding: 25px 15px;
-    background: #ececec;
 }
 .container-chat .item {
     margin-bottom: 20px;
@@ -2928,13 +2923,13 @@ html.mm-opening .mm-slideout {
     display: block;
     height: 40px;
     overflow: hidden;
-    border-radius: 50%;
     float: left;
     /* margin-right: 10px; */
+    padding: 0;
 }
 .container-chat .item .chat-txt {
     overflow: hidden;
-    padding: 5px 5px 5px 15px;
+    padding: 5px 5px 5px 0px;
     position: relative;
 }
 .container-chat .chat-txt .txt-detail {
@@ -2948,6 +2943,7 @@ html.mm-opening .mm-slideout {
     font-size: .9em;
     position: relative;
     z-index: 2;
+    border: 1px solid #EFEFEF;
 }
 .container-chat .item.box-me .txt-detail {
     box-shadow: -1px 1px 1px #ADADAD;
@@ -2979,12 +2975,13 @@ html.mm-opening .mm-slideout {
    position: absolute;
    top: 14px;
    left: 5px;
-   border-top: 20px solid #fff;
+   border-top: 20px solid #ADADAD;
    border-top-color: inherit;
    border-left: 20px solid transparent;
    border-right: 20px solid transparent;
    z-index: 1;
-   color: #fff;
+   color: #E2E2E2;
+   display: none;
 }
 .container-chat .item.box-me .chat-txt {
     padding-left: 5px;
@@ -5231,6 +5228,7 @@ html.mm-opening .mm-slideout {
 #share_form .frm-item textarea,
 #share_form .frm-item input {
     padding: 7px 0;
+    font-size: 14px;
 }
 .edit-user-tt {
     padding-top: 40px;
@@ -6408,10 +6406,11 @@ footer li a {
         position: static;
     }
     .wrap-chat-item {
-        padding: 160px 40px 35px 0;
+        padding: 0;
+        width: auto;
     }
     .chat-real {
-        padding-top: 20px;
+        padding-top: 0;
     }
     .type-input-chat {
         padding: 0 40px 0 0;
@@ -6420,7 +6419,7 @@ footer li a {
         border-left: 1px solid #B3B3B3;
     }
     .type-input-chat .sm-chat {
-        right: 40px;
+        right: 0;
     }
     .list-menu-news {
         padding: 0;
@@ -7830,8 +7829,6 @@ footer li a {
 }
 .wrap-item-live {
     height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
 }
 .detail-listing-extra .col-left {
     padding-right: 50px;
@@ -8024,4 +8021,34 @@ footer li a {
     .chat-btn, .email-btn {
         width: auto;
     }
+}
+#chat-container .container {
+    width: auto;
+}
+#chat-container .type-input-chat {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 0;
+}
+#chat-container {
+    height: 100%;
+}
+.chat-real {
+    height: 500px;
+    padding-top: 32px;
+    padding-bottom: 35px;
+}
+.wrap-chat-item {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.chat-real .title-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    font-size: 15px;
 }

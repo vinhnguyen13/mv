@@ -292,14 +292,14 @@ $user = $model->getUser();
 </style>
 <script>
 	$(document).ready(function () {
-		$('#edit-ttcn, #edit-mtbt, #edit-changepass').popupMobi({
+		/*$('#edit-ttcn, #edit-mtbt, #edit-changepass').popupMobi({
 			btnClickShow: ".edit-tt",
 			closeBtn: '.btn-cancel',
             styleShow: 'full',
 			funCallBack: function (itemClick, popupItem) {
                 
             }
-		});
+		});*/
 
         $('#edit-ttcn .btn-done').on('click', function(e){
             e.preventDefault();
