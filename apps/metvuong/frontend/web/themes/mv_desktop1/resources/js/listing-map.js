@@ -539,10 +539,11 @@ var listing = {
 		listing.updateListing();
 		
 		if(this.id != 'order_by') {
+			listing.removeMarkers();
+			
 			if(listing.polylineStreet) {
 				listing.polylineStreet.setMap(null);
 				listing.polylineStreet = null;
-				listing.removeMarkers();
 			}
 			
 			listing.getListingMarker(function(r){
