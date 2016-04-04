@@ -48,7 +48,6 @@ if(count($products) > 0) {
                             </ul>
                         </div>
                         <div class="bottom-feat-box clearfix">
-                            <a href="<?= $product->urlDetail(); ?>" class="pull-right"><?=Yii::t('listing', 'Detail')?></a>
                             <p>Giá <strong><?= StringHelper::formatCurrency($product->price) ?></strong></p>
                         </div>
                     </div>
