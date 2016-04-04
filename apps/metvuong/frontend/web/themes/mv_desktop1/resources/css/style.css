@@ -8024,6 +8024,7 @@ footer li a {
 }
 #chat-container .container {
     width: auto;
+    padding: 0;
 }
 #chat-container .type-input-chat {
     position: absolute;
@@ -8037,7 +8038,7 @@ footer li a {
 }
 .chat-real {
     height: 500px;
-    padding-top: 32px;
+    padding-top: 26px;
     padding-bottom: 35px;
 }
 .wrap-chat-item {
