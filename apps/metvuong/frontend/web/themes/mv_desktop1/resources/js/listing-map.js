@@ -47,6 +47,7 @@ var listing = {
 			
 			if(marker) {
 				marker.setIcon(listing.icon(marker.get('ids').length, 1));
+				marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
 				
 				var offsetX = $('.detail-listing-dt').position().left / 2;
 				var position = marker.getPosition();
@@ -128,6 +129,15 @@ var listing = {
 		var options = {center: center, zoom: listing.initialZoom[focusArea.collection]};
 		
 		listing.map = new google.maps.Map(document.getElementById('map'), options);
+		
+		listing._detailEvent = function(id) {
+			listing.detail(id);
+			
+			listing.map.addListener('mousedown', function(){
+				listing._closeDetail();
+				google.maps.event.clearListeners(listing.map, 'mousedown');
+			});
+		};
 	},
 	firstTimeDraw: function() {
 		if(typeof listing.products !== 'undefined' && typeof listing.area != 'undefined') {
@@ -326,7 +336,11 @@ var listing = {
 	},
 	detailEvent: function(e) {
 		e.preventDefault();
-		listing.detail($(this).data('id'));
+		
+		listing._detailEvent($(this).data('id'));
+	},
+	_detailEvent: function(id) {
+		listing.detail(id);
 	},
 	detail: function(id) {
 		var wWrapList = $('.detail-listing-dt').outerWidth();
@@ -354,6 +368,9 @@ var listing = {
 	},
 	closeDetail: function(e) {
 		e.preventDefault();
+		listing._closeDetail();
+	},
+	_closeDetail: function() {
 		$('.detail-listing-dt').css({
 			left: '0px'
 		});
