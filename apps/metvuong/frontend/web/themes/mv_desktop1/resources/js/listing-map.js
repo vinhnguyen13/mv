@@ -526,6 +526,8 @@ var listing = {
 
 			wrapDetailListing.loading({done: true});
 			
+			$('.btn-extra').attr('href', detailListing.find('.btn-copy').data('clipboard-text'));
+			
 			location.hash = id;
 		});
 	},
