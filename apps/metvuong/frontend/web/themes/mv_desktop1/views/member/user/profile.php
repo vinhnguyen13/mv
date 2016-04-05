@@ -15,6 +15,7 @@ $user = $model->getUser();
 $recipientEmail = empty($model->public_email) ? $user->email : $model->public_email;
 // get user was been login
 $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->profile->public_email) ? Yii::$app->user->identity->email : Yii::$app->user->identity->profile->public_email);
+$count_product = $pagination->totalCount;
 ?>
 <div class="title-fixed-wrap">
     <div class="container">
@@ -40,7 +41,7 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
                 </div>
                 <ul class="clearfix tabs-scroll">
                     <li><a class="active" href="#tab-infor">Cá nhân</a></li>
-                    <li><a href="#tab-list-post">Listings (10)</a></li>
+                    <li><a href="#tab-list-post">Listings (<?=$count_product?>)</a></li>
                     <li><a href="#tab-review">Review (3)</a></li>
                 </ul>
                 <div id="tab-infor" class="infor-priva tabs-scroll-item">
@@ -48,8 +49,6 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
                     <p><?= empty($model->bio) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->bio ?></p>
                 </div>
                 <?php
-                $count_product = $pagination->totalCount;
-
                 if($count_product > 0) {
                 $categories = \vsoft\ad\models\AdCategory::find ()->indexBy( 'id' )->asArray( true )->all ();
                 $types = \vsoft\ad\models\AdProduct::getAdTypes ();
@@ -123,21 +122,19 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
                                             <div class="address-feat clearfix">
                                                 <p class="date-post"><?=Yii::t('listing','Listing date')?>: <strong><?= date("d/m/Y H:i", $product->created_at) ?></strong></p>
                                                 <div class="address-listing"><a href="<?= $product->urlDetail() ?>"><?=$product->getAddress()?></a></div>
-                                                <p class="id-duan">ID:<span><?=$product->id?></span></p>
+                                                <p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
                                                 <ul class="clearfix list-attr-td">
-                                                    <li>
-                                                        <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span><?= $product->area ?>
-                                                    </li>
-                                                    <li>
-                                                        <span class="icon icon-bed icon-bed-small"></span><?= $product->adProductAdditionInfo->room_no ?>
-                                                    </li>
-                                                    <li>
-                                                        <span class="icon icon-pt icon-pt-small"></span><?= $product->adProductAdditionInfo->toilet_no ?>
-                                                    </li>
+                                                    <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
+                                                        <li><span><?=Yii::t('listing','updating')?></span></li>
+                                                    <?php } else {
+                                                        echo $product->area ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span>' . $product->area . 'm2 </li>' : '';
+                                                        echo $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
+                                                        echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
+                                                    } ?>
                                                 </ul>
                                             </div>
                                             <div class="bottom-item clearfix">
-                                                <p><?=Yii::t('profile','Price')?> <strong class="color-cd pdL-5"><?= StringHelper::formatCurrency($product->price) ?> VND</strong></p>
+                                                <p><?=Yii::t('listing','Price')?> <strong class="color-cd pdL-5"><?= StringHelper::formatCurrency($product->price) ?> vnd</strong></p>
                                             </div>
                                         </div>
                                     </li>
@@ -160,21 +157,19 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
                                             <div class="address-feat clearfix">
                                                 <p class="date-post"><?=Yii::t('listing','Listing date')?>: <strong><?= date("d/m/Y H:i", $product->created_at) ?></strong></p>
                                                 <div class="address-listing"><a href="<?= $product->urlDetail() ?>"><?=$product->getAddress()?></a></div>
-                                                <p class="id-duan">ID:<span><?=$product->id?></span></p>
+                                                <p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
                                                 <ul class="clearfix list-attr-td">
-                                                    <li>
-                                                        <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span><?= $product->area ?>
-                                                    </li>
-                                                    <li>
-                                                        <span class="icon icon-bed icon-bed-small"></span><?= $product->adProductAdditionInfo->room_no ?>
-                                                    </li>
-                                                    <li>
-                                                        <span class="icon icon-pt icon-pt-small"></span><?= $product->adProductAdditionInfo->toilet_no ?>
-                                                    </li>
+                                                    <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
+                                                        <li><span><?=Yii::t('listing','updating')?></span></li>
+                                                    <?php } else {
+                                                        echo $product->area ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span>' . $product->area . 'm2 </li>' : '';
+                                                        echo $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
+                                                        echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
+                                                    } ?>
                                                 </ul>
                                             </div>
                                             <div class="bottom-item clearfix">
-                                                <p><?=Yii::t('profile','Price')?> <strong class="color-cd pdL-5"><?= StringHelper::formatCurrency($product->price) ?> VND</strong></p>
+                                                <p><?=Yii::t('listing','Price')?> <strong class="color-cd pdL-5"><?= StringHelper::formatCurrency($product->price) ?> vnd</strong></p>
                                             </div>
                                         </div>
                                     </li>

@@ -271,19 +271,22 @@ class MemberController extends Controller
         $model = $model->loadProfile($username, 'updateprofile');
         if($model) {
             $query = AdProduct::find()->where('user_id = :uid', [':uid' => $model->user_id]);
+            $detectProducts = $query->orderBy(['district_id' => SORT_ASC, 'city_id'=> SORT_ASC, 'id' => SORT_DESC])->all();
+            if(count($detectProducts) > 0){
+                foreach($detectProducts as $product){
+                    if($product->type == 1) {
+                        array_push($sale_products, $product);
+                    }
+                    else {
+                        array_push($rent_products, $product);
+                    }
+                }
+            }
             $count = $query->count();
             $pagination = new Pagination(['totalCount' => $count]);
             $pagination->defaultPageSize = 6;
             $products = $query->offset($pagination->offset)->limit($pagination->limit)
                 ->orderBy(['district_id' => SORT_ASC, 'city_id'=> SORT_ASC, 'id' => SORT_DESC])->all();
-            if($count > 0){
-                foreach($products as $product){
-                    if($product->type == 1)
-                        array_push($sale_products, $product);
-                    else
-                        array_push($rent_products, $product);
-                }
-            }
         }
 
         if(Yii::$app->request->isAjax) {
