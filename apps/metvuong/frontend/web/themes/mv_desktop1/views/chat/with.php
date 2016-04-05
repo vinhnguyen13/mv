@@ -43,7 +43,7 @@ $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 			<div class="title-top"><?=$nameUserTo;?></div>
 			<div class="wrap-chat-item container">
 				<div class="container-chat">
-					<div class="wrap-chat">
+					<div class="wrap-chat clearfix">
 
 					</div>
 				</div>
