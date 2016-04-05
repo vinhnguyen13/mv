@@ -107,7 +107,7 @@ Yii::$app->view->registerMetaTag([
 					</div>
 					<ul class="pull-right icons-detail">
 						<li>
-							<button data-toggle="tooltip" data-placement="bottom" title="Copy link" class="btn-copy tooltip-show" type="button" data-clipboard-text="https://www.google.com/">
+							<button data-toggle="tooltip" data-placement="bottom" title="Copy link" class="btn-copy tooltip-show" type="button" data-clipboard-text="<?= $product->urlDetail(true) ?>">
 								<span class="wrap-icon-svg"><svg class="icon-svg icon-copy-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-copy-svg"></use></svg></span>
 							</button>
 						</li>
