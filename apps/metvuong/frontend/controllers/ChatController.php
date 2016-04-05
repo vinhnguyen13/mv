@@ -3,7 +3,6 @@
 namespace frontend\controllers;
 use frontend\components\Controller;
 use frontend\models\Chat;
-use frontend\models\Profile;
 use Yii;
 use yii\base\Event;
 use yii\base\ViewEvent;

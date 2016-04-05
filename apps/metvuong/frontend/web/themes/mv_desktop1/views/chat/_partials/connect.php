@@ -39,7 +39,8 @@ if(!Yii::$app->user->isGuest) {
                     if ('<?=$urlBase?>' == 'chat/with') {
                         chatUI.loadMessageToBox(msg, params);
                     } else if ('<?=$urlBase?>' == 'chat/index') {
-                        chatUI.loadMessageToList(msg, params);
+                        chatUI.loadMessageToBox(msg, params);
+//                        chatUI.loadMessageToList(msg, params);
                     }
                 }else if(params.type == 'notify'){
                     chatUI.notify(chatUI.NOTIFY_OTHER, params.total);

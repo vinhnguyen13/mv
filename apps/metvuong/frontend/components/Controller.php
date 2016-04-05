@@ -82,7 +82,8 @@ class Controller extends \yii\web\Controller
     protected function checkAccess()
     {
         if(Yii::$app->user->isGuest) {
-            $this->redirect('/member/login');
+            Yii::$app->response->redirect('/member/login');
+            Yii::$app->end();
         }
         return true;
     }
