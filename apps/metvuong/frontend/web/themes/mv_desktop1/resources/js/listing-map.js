@@ -498,6 +498,8 @@ var listing = {
 		listing._detail(id);
 	},
 	_detail: function(id) {
+		clearTimeout(listing.closeTimeout);
+		
 		var wWrapList = listing.detailListing.outerWidth();
 		var detailListing = $('.detail-listing');
 		var wrapDetailListing = listing.detailListing;
@@ -526,9 +528,11 @@ var listing = {
 		listing._closeDetail();
 	},
 	_closeDetail: function() {
-		listing.detailListing.css({
-			left: '0px'
-		});
+		listing.closeTimeout = setTimeout(function(){
+			listing.detailListing.css({
+				left: '0px'
+			});
+		}, 100);
 	},
 	more: function() {
 		var self = $(this);
