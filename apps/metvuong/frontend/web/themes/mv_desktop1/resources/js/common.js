@@ -4,6 +4,38 @@ $(window).on('load', function () {
 
 $(document).ready(function() {
 
+    $('.rating').barrating({
+        showSelectedRating: false
+    });
+
+    $('.tabs-scroll li a').on('click', function (e) {
+        e.preventDefault();
+        var _this = $(this),
+            idTab = _this.attr('href'),
+            getOffset = $(idTab).offset().top - 75;
+
+        $('.tabs-scroll li a').removeClass('active');
+        _this.addClass('active');
+
+        $('html, body').stop().animate({
+            scrollTop: getOffset
+        }, '500', 'swing');
+    });
+    function onScroll(){
+        var scrollPos = $(document).scrollTop();
+        $('.tabs-scroll li a').each(function () {
+            var currLink = $(this);
+            var refElement = $(currLink.attr("href"));
+            if (refElement.position().top <= scrollPos && refElement.position().top + refElement.outerHeight() > scrollPos) {
+                $('.tabs-scroll li a').removeClass("active");
+                currLink.addClass("active");
+            }
+            else{
+                //currLink.removeClass("active");
+            }
+        });
+    }
+
     $(document).on('show.bs.modal', '.modal', function () {
         var zIndex = 1040 + (10 * $('.modal:visible').length);
         $(this).css('z-index', zIndex);
@@ -75,6 +107,8 @@ $(document).ready(function() {
         var _this = $(this),
             val = _this.scrollTop();
 
+        onScroll();
+
         if ( val >= hWin ) {
             $('body').append(elScroll);
             flagScroll = true;
@@ -89,7 +123,7 @@ $(document).ready(function() {
         }else {
             $('#scroll-top').hide();
         }
-    });
+    }).trigger('scroll');
 
     var searchForm = $('#search-form');
     $('#search').keyup(function() {

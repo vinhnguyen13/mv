@@ -23,6 +23,7 @@ AppAsset::register($this);
     <?php $this->head() ?>
 </head>
 <body <?=!empty($this->params['body']) ? \common\components\Util::me()->arrayToHtmlAttributes($this->params['body']) : ''?>>
+    <?php $this->beginContent('@app/views/layouts/_partials/icons.php'); ?><?php $this->endContent();?>
     <?php $this->beginBody() ?>
         <?= $content ?>
     <?php $this->endBody() ?>

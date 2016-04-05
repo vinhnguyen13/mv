@@ -106,6 +106,11 @@ Yii::$app->view->registerMetaTag([
 						</ul>	
 					</div>
 					<ul class="pull-right icons-detail">
+						<li>
+							<button title="copy link" class="btn-copy" type="button" data-clipboard-text="https://www.google.com/">
+								<span class="wrap-icon-svg"><svg class="icon-svg icon-copy-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-copy-svg"></use></svg></span>
+							</button>
+						</li>
 						<li><a href="#" data-toggle="modal" data-target="#popup-share-social" class="icon icon-share-td" title="Share social"></a></li>
 			            <?php if($product->user_id != Yii::$app->user->id){ ?>
 						<li><a title="Favourite" href="#" class="icon save-item <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>"></a></li>
@@ -140,6 +145,9 @@ Yii::$app->view->registerMetaTag([
 
 					<script>
 						$(document).ready(function () {
+
+							var clipboard = new Clipboard('.btn-copy');
+
 							var swiper = new Swiper('.detail-listing-extra .swiper-container', {
 								pagination: '.swiper-pagination',
 								paginationClickable: true,

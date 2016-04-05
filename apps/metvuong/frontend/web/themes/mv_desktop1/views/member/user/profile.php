@@ -22,15 +22,26 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
                     <div class="wrap-img avatar"><img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="<?=$model->avatar?>" alt="metvuong avatar" /></div>
                     <div class="overflow-all">
                         <p class="name-user fs-18 font-600" ><?= $model->name ?></p>
-                        <ul class="rating">
-                            <li>rating</li>    
-                        </ul>
+                        <div class="stars">
+                            <select class="rating" name="rating">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
                         <p class="location"><?= empty($user->location) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $user->location->city ?></p>
                         <p class="num-mobi"><?= empty($model->mobile) ?  "<a href='#'><i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i></a>" : "<a href='tel:".$model->mobile."'>".$model->mobile."</a>" ?></p>
                         <p class="email-user"><a href="#popup-email" class="email-btn"><?= empty($model->public_email) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->public_email ?></a></p>
                     </div>
                 </div>
-                <div class="infor-priva">
+                <ul class="clearfix tabs-scroll">
+                    <li><a class="active" href="#tab-infor">Cá nhân</a></li>
+                    <li><a href="#tab-list-post">Listings (10)</a></li>
+                    <li><a href="#tab-review">Review (3)</a></li>
+                </ul>
+                <div id="tab-infor" class="infor-priva tabs-scroll-item">
                     <div class="title-text"><?=Yii::t('profile','Personal Information')?></div>
                     <p><?= empty($model->bio) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->bio ?></p>
                 </div>
@@ -43,7 +54,7 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
                 $count_sale = count($sale_products);
                 $count_rent = count($rent_products);
                 ?>
-                <div class="list-per-post">
+                <div id="tab-list-post" class="list-per-post tabs-scroll-item">
                     <div class="title-text clearfix"><?=Yii::t('profile', 'LISTINGS')?>
                         <ul class="nav nav-tabs pull-right" role="tablist">
                             <li role="presentation" class="active"><a href="#list-all" aria-controls="list-all" role="tab" data-toggle="tab">Tất cả (<?=$count_product?>)</a></li>
@@ -73,7 +84,7 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
                                                 <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
                                                     <li><?=Yii::t('listing','updating')?></li>
                                                 <?php } else {
-                                                    echo $product->area ? '<li> <span class="icon icon-dt icon-dt-small"></span>' . $product->area . 'm2 </li>' : '';
+                                                    echo $product->area ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span>' . $product->area . 'm2 </li>' : '';
                                                     echo $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
                                                     echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
                                                 } ?>
@@ -176,15 +187,21 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
                     <p><a href="<?= Url::to(['/ad/post']) ?>"><?=Yii::t('profile', 'Please, post listing here')?>.</a></p>
                 </div>
                 <?php } ?>
-                <div class="review-user">
+                <div id="tab-review" class="review-user tabs-scroll-item">
                     <div class="title-text clearfix">REVIEW
                         <a href="#popup-review" class="btn-review btn-common pull-right">Viết Review</a>
                     </div>
                     <ul class="list-reivew">
                         <li>
-                            <ul class="rating">
-                                <li>rating</li>
-                            </ul>
+                            <div class="stars">
+                                <select class="rating" name="rating">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
                             <p class="infor-user-review"><a href="#">Gao Ranger</a>12/02/2016, 8:30AM | Giúp tôi thuê nhà</p>
                             <p>Quisque varius iaculis odio sit amet elementum. Nunc porta cursus est a pretium. 
                                 Nullam non metus tristique sem hendrerit tincidunt ac aliquet lectus. 
@@ -195,9 +212,15 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
                             </p>
                         </li>
                         <li>
-                            <ul class="rating">
-                                <li>rating</li>
-                            </ul>
+                            <div class="stars">
+                                <select class="rating" name="rating">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
                             <p class="infor-user-review"><a href="#">Gao Ranger</a>12/02/2016, 8:30AM | Giúp tôi thuê nhà</p>
                             <p>Quisque varius iaculis odio sit amet elementum. Nunc porta cursus est a pretium. 
                                 Nullam non metus tristique sem hendrerit tincidunt ac aliquet lectus. 
@@ -208,9 +231,15 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
                             </p>
                         </li>
                         <li>
-                            <ul class="rating">
-                                <li>rating</li>
-                            </ul>
+                            <div class="stars">
+                                <select class="rating" name="rating">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
                             <p class="infor-user-review"><a href="#">Gao Ranger</a>12/02/2016, 8:30AM | Giúp tôi thuê nhà</p>
                             <p>Quisque varius iaculis odio sit amet elementum. Nunc porta cursus est a pretium. 
                                 Nullam non metus tristique sem hendrerit tincidunt ac aliquet lectus. 
@@ -221,9 +250,15 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
                             </p>
                         </li>
                         <li>
-                            <ul class="rating">
-                                <li>rating</li>
-                            </ul>
+                            <div class="stars">
+                                <select class="rating" name="rating">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
                             <p class="infor-user-review"><a href="#">Gao Ranger</a>12/02/2016, 8:30AM | Giúp tôi thuê nhà</p>
                             <p>Quisque varius iaculis odio sit amet elementum. Nunc porta cursus est a pretium. 
                                 Nullam non metus tristique sem hendrerit tincidunt ac aliquet lectus. 
@@ -280,9 +315,15 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
                 </select>
                 <div class="check-rating mgB-15">
                     <span class="font-600 fs-13 pdR-10">Rate this agent</span>
-                    <ul class="rating clearfix">
-                        <li>rating</li>
-                    </ul>
+                    <div class="stars">
+                        <select class="rating" name="rating">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
                 </div>
                 <p class="fs-13 mgB-5 font-600">Viết review</p>
                 <textarea class="pd-5 mgB-5" name="" id="" cols="30" rows="10" placeholder="Nội dung"></textarea>
