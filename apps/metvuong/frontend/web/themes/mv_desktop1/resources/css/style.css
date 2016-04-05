@@ -8073,3 +8073,6 @@ footer li a {
     height: 25px;
     fill: #00a769;
 }
+.icon-copy-svg:hover {
+    fill: #04794E;
+}

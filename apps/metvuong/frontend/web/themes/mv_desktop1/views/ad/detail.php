@@ -100,7 +100,7 @@ Yii::$app->view->registerMetaTag([
 						</div>
 						<p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
 						<ul class="clearfix list-attr-td">
-							<?= $product->area ? '<li> <span class="icon icon-dt icon-dt-small"></span>' . $product->area . 'm2 </li>' : '' ?>
+							<?= $product->area ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span>' . $product->area . 'm2 </li>' : '' ?>
 							<?= $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
 							<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
 						</ul>	
@@ -111,11 +111,11 @@ Yii::$app->view->registerMetaTag([
 								<span class="wrap-icon-svg"><svg class="icon-svg icon-copy-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-copy-svg"></use></svg></span>
 							</button>
 						</li>
-						<li><a href="#" data-toggle="modal" data-target="#popup-share-social" class="icon icon-share-td" title="Share social"></a></li>
+						<li><a href="#" data-toggle="modal tooltip" data-placement="bottom" data-target="#popup-share-social" class="icon icon-share-td tooltip-show" title="Share social"></a></li>
 			            <?php if($product->user_id != Yii::$app->user->id){ ?>
-						<li><a title="Favourite" href="#" class="icon save-item <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>"></a></li>
+						<li><a data-toggle="tooltip" data-placement="bottom" title="Favourite" href="#" class="icon save-item tooltip-show <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>"></a></li>
 			            <?php } ?>
-						<li><a href="#" data-toggle="modal" data-target="#popup-map" class="icon icon-map-loca" title="Location"></a></li>
+						<li><a href="#" data-toggle="modal tooltip" data-placement="bottom" data-target="#popup-map" class="icon icon-map-loca tooltip-show" title="Location"></a></li>
 					</ul>
 
 					<?=$this->renderAjax('/ad/_partials/shareEmail',[
@@ -156,7 +156,7 @@ Yii::$app->view->registerMetaTag([
 						        spaceBetween: 0
 						    });
 
-							$('[data-toggle="tooltip"]').tooltip();
+							$('.tooltip-show').tooltip();
 
 							$('#popup-map').on('show.bs.modal', function (e) {
 							    var mapEl = $('#map_detail');

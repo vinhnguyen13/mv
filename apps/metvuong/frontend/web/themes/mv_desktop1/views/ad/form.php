@@ -332,7 +332,7 @@ use vsoft\ad\models\AdImages;
 		</div>
 		<p class="id-duan">ID:<span>MV000</span></p>
 		<ul class="clearfix list-attr-td">
-			<li> <span class="icon icon-dt icon-dt-small"></span><span class="area-show"></span>m2 </li>
+			<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span><span class="area-show"></span>m2 </li>
 			<li> <span class="icon icon-bed icon-bed-small"></span> <span class="bed-show"></span> </li>
 			<li> <span class="icon icon-pt icon-pt-small"></span> <span class="toilet-show"></span> </li>
 		</ul>

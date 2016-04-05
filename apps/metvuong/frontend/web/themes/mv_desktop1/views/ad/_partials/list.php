@@ -37,7 +37,7 @@
 				</p>
 				<p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
 				<ul class="clearfix list-attr-td">
-					<?= $product->area ? '<li> <span class="icon icon-dt icon-dt-small"></span>' . $product->area . 'm2 </li>' : '' ?>
+					<?= $product->area ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span>' . $product->area . 'm2 </li>' : '' ?>
 					<?= $product->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->room_no . ' </li>' : '' ?>
 					<?= $product->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->toilet_no . ' </li>' : '' ?>
 				</ul>

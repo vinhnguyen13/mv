@@ -124,7 +124,7 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
                                                 <p class="id-duan">ID:<span><?=$product->id?></span></p>
                                                 <ul class="clearfix list-attr-td">
                                                     <li>
-                                                        <span class="icon icon-dt icon-dt-small"></span><?= $product->area ?>
+                                                        <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span><?= $product->area ?>
                                                     </li>
                                                     <li>
                                                         <span class="icon icon-bed icon-bed-small"></span><?= $product->adProductAdditionInfo->room_no ?>
@@ -161,7 +161,7 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
                                                 <p class="id-duan">ID:<span><?=$product->id?></span></p>
                                                 <ul class="clearfix list-attr-td">
                                                     <li>
-                                                        <span class="icon icon-dt icon-dt-small"></span><?= $product->area ?>
+                                                        <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span><?= $product->area ?>
                                                     </li>
                                                     <li>
                                                         <span class="icon icon-bed icon-bed-small"></span><?= $product->adProductAdditionInfo->room_no ?>

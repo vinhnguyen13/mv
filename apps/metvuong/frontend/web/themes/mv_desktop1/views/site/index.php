@@ -64,7 +64,7 @@ use vsoft\ad\models\AdProduct;
                                     <p class="id-duan">ID:<span><?=$product->id;?></span></p>
                                     <ul class="clearfix list-attr-td">
                                         <li>
-                                            <span class="icon icon-dt icon-dt-small"></span>80m2
+                                            <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span>80m2
                                         </li>
                                         <li>
                                             <span class="icon icon-bed icon-bed-small"></span> 02
