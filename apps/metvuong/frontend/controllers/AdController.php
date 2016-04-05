@@ -378,7 +378,10 @@ class AdController extends Controller
     		$post = Yii::$app->request->post();
     		
     		$product->load($post);
+    		
     		$additionInfo->load($post);
+    		$additionInfo->addition_fields = json_encode($additionInfo->addition_fields);
+    		
     		$contactInfo->load($post);
     		
     		$result = ['success' => true];

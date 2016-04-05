@@ -223,6 +223,20 @@ use vsoft\ad\models\AdImages;
 							<?= $form->field($additionInfo, 'interior', ['options' => ['class' => 'col-xs-12 form-group']])
 									->label(false)
 									->textArea(['placeholder' => $additionInfo->getAttributeLabel('interior')]) ?>
+							
+							<div id="addition-field-template" style="display: none;">
+								<div class="addition-field">
+									<?= $form->field($additionInfo, 'addition_fields', ['options' => ['class' => 'col-xs-6 form-group']])
+											->label(false)
+											->textInput(['placeholder' => Yii::t('ad', 'Title'), 'class' => 'form-control field-title', 'id' => false]) ?>
+									<?= $form->field($additionInfo, 'addition_fields', ['options' => ['class' => 'col-xs-6 form-group']])
+											->label(false)
+											->textInput(['placeholder' => Yii::t('ad', 'Content'), 'class' => 'form-control field-content', 'id' => false]) ?>
+									<input class="field-remove" type="button" value="remove" />
+								</div>
+							</div>		
+							<div id="addition-fields"></div>
+							<button id="add-field" type="button" class="btn-common"><?= Yii::t('ad', 'Add field') ?></button>
 						</div>
 					</div>
 

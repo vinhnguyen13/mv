@@ -27,7 +27,7 @@ class AdProductAdditionInfo extends APAI
         return [
             [['product_id', 'home_direction', 'facade_direction', 'floor_no', 'room_no', 'toilet_no'], 'integer'],
             [['facade_width', 'land_width'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/'],
-            [['interior'], 'string', 'max' => 3200],
+            [['interior', 'addition_fields'], 'string', 'max' => 3200],
             [['product_id'], 'unique']
         ];
     }

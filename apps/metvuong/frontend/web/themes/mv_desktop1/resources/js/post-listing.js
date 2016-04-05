@@ -322,6 +322,36 @@ var form = {
 			
 			swiper.destroy(false, true);
 		});
+		
+		$('#add-field').click(function(){
+			var additionFields = $('#addition-fields');
+			var flag = true;
+			
+			additionFields.find('.form-control').each(function(){
+				var self = $(this);
+				
+				if(!self.val()) {
+					self.focus();
+					flag = false;
+					
+					return false;
+				}
+			});
+			
+			if(flag) {
+				var template = 	$('#addition-field-template').children().clone();
+				var formControl = template.find('.form-control');
+				
+				formControl.attr('name', formControl.attr('name') + '[]');
+				template.find('.field-remove').click(function(){
+					template.remove();
+				});
+				
+				additionFields.append(template);
+				
+				template.find('.field-title').focus();
+			}
+		});
 	},
 	appendProjectDropdown: function(projects) {
 		form.projectInfoEl.hide();
