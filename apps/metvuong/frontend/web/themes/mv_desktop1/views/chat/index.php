@@ -15,9 +15,6 @@ if(!empty($jid_id)){
 	<div class="container">
 		<?php $this->beginContent('@app/views/layouts/_partials/menuUser.php'); ?><?php $this->endContent();?>
 		<div class="chat-history">
-			<div class="title-top">
-				<span><?=Yii::t('chat', 'Chat history')?></span>
-			</div>
 			<div class="wrap-history clearfix">
 				<div class="search-history">
 					<input type="text" id="findConversation" class="form-control" placeholder="<?=Yii::t('general', 'Find by name...')?>">

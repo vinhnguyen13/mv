@@ -67,10 +67,10 @@ use vsoft\ad\models\AdProduct;
                                             <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span>80m2
                                         </li>
                                         <li>
-                                            <span class="icon icon-bed icon-bed-small"></span> 02
+                                            <span class="wrap-icon-svg"><svg class="icon-svg icon-bed-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bed-svg"></use></svg></span> 02
                                         </li>
                                         <li>
-                                            <span class="icon icon-pt icon-pt-small"></span> 02
+                                            <span class="wrap-icon-svg"><svg class="icon-svg icon-bathroom-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bathroom-svg"></use></svg></span> 02
                                         </li>
                                     </ul>
                                 </div>

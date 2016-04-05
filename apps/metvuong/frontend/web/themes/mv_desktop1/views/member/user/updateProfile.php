@@ -15,10 +15,8 @@ $user = $model->getUser();
 ?>
 <div class="title-fixed-wrap">
     <div class="container">
+        <?php $this->beginContent('@app/views/layouts/_partials/menuUser.php'); ?><?php $this->endContent();?>
     	<div class="edit-user-tt">
-    		<div class="title-top">
-    			<a href="#"><?=Yii::t('profile', 'Update Profile')?></a>
-    		</div>
     		<div class="wrap-edit-tt">
     			<div class="avatar-user-pr">
                     <div class="wrap-img avatar">

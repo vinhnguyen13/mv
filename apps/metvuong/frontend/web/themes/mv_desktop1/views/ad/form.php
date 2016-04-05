@@ -347,8 +347,8 @@ use vsoft\ad\models\AdImages;
 		<p class="id-duan">ID:<span>MV000</span></p>
 		<ul class="clearfix list-attr-td">
 			<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span><span class="area-show"></span>m2 </li>
-			<li> <span class="icon icon-bed icon-bed-small"></span> <span class="bed-show"></span> </li>
-			<li> <span class="icon icon-pt icon-pt-small"></span> <span class="toilet-show"></span> </li>
+			<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bed-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bed-svg"></use></svg></span> <span class="bed-show"></span> </li>
+			<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bathroom-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bathroom-svg"></use></svg></span> <span class="toilet-show"></span> </li>
 		</ul>
 		<ul class="pull-right icons-detail">
 			<li><a href="#" data-toggle="modal" data-target="#popup-share-social" class="icon icon-share-td"></a></li>
