@@ -36,6 +36,7 @@ if(!empty($jid_id)){
 							if(!empty($user->profile)){
 						?>
 								<div class="item" chat-with="<?=$user->username;?>">
+									<!--class="unread"-->
 									<a href="<?= Url::to(['/chat/with', 'username' => $user->username]) ?>">
 										<span class="wrap-img"><img src="<?=$user->profile->getAvatarUrl();?>" alt=""></span>
 										<div class="chat-detail">
@@ -96,6 +97,8 @@ if(!empty($jid_id)){
 		});
 
 		$(document).on('click', '.wrap-history .chat-list .item a', function (e) {
+			$('.wrap-history .chat-list .item a').removeClass('active');
+			$(this).addClass('active');
 			$('body').loading();
 			var user = $(this).parent().attr('chat-with');
 			$(document).trigger('chat/withAnother', [user]);
