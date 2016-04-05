@@ -17,6 +17,7 @@ $(document).ready(function(){
 			events.attachMobileEvent(form.fields.orderBy, 'change', form.sortSubmit);
 			
 			form.commonEvents();
+			form.getShowNumFrm();
 		},
 		filterFields: function(e) {
 			for(var i in form.fields) {
