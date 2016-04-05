@@ -86,8 +86,8 @@ $count_product = $pagination->totalCount;
                                                     <li><span><?=Yii::t('listing','updating')?></span></li>
                                                 <?php } else {
                                                     echo $product->area ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span>' . $product->area . 'm2 </li>' : '';
-                                                    echo $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
-                                                    echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
+                                                    echo $product->adProductAdditionInfo->room_no ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bed-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bed-svg"></use></svg></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
+                                                    echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bathroom-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bathroom-svg"></use></svg></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
                                                 } ?>
                                             </ul>    
                                         </div>
@@ -128,8 +128,8 @@ $count_product = $pagination->totalCount;
                                                         <li><span><?=Yii::t('listing','updating')?></span></li>
                                                     <?php } else {
                                                         echo $product->area ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span>' . $product->area . 'm2 </li>' : '';
-                                                        echo $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
-                                                        echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
+                                                        echo $product->adProductAdditionInfo->room_no ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bed-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bed-svg"></use></svg></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
+                                                        echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bathroom-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bathroom-svg"></use></svg></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
                                                     } ?>
                                                 </ul>
                                             </div>
@@ -163,8 +163,8 @@ $count_product = $pagination->totalCount;
                                                         <li><span><?=Yii::t('listing','updating')?></span></li>
                                                     <?php } else {
                                                         echo $product->area ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span>' . $product->area . 'm2 </li>' : '';
-                                                        echo $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
-                                                        echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
+                                                        echo $product->adProductAdditionInfo->room_no ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bed-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bed-svg"></use></svg></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
+                                                        echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bathroom-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bathroom-svg"></use></svg></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
                                                     } ?>
                                                 </ul>
                                             </div>
@@ -186,7 +186,7 @@ $count_product = $pagination->totalCount;
                 <?php } ?>
                 <div id="tab-review" class="review-user tabs-scroll-item">
                     <div class="title-text clearfix">REVIEW
-                        <a href="#popup-review" class="btn-review btn-common pull-right">Viết Review</a>
+                        <a href="#" data-toggle="modal" data-target="#popup-review" class="btn-review btn-common pull-right">Viết Review</a>
                     </div>
                     <ul class="list-reivew">
                         <li>
@@ -314,33 +314,39 @@ $count_product = $pagination->totalCount;
     'recipientEmail' => $recipientEmail,
     'params' => ['your_email' => false, 'recipient_email' => false] ]);
 ?>
-<div id="popup-review" class="popup-common hide-popup">
-    <div class="wrap-popup">
-        <div class="inner-popup">
-            <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
-            <div class="review-box-popup">
-                <h2 class="color-cd fs-18 text-uper font-600 mgB-20">REVIEW SILVER RANGER</h2>
-                <p class="fs-13 mgB-10">Tell us about your experience with this agent. Your review will help other users find the agent that's right for them.</p>
-                <p class="fs-13 mgB-5 font-600">Môi giới này đã</p>
-                <select name="" id="" class="mgB-15">
-                    <option value="">Giúp tôi thuê nhà</option>
-                </select>
-                <div class="check-rating mgB-15">
-                    <span class="font-600 fs-13 pdR-10">Rate this agent</span>
-                    <div class="stars">
-                        <select class="rating" name="rating">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
+<div id="popup-review" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="wrap-popup">
+                    <div class="inner-popup">
+                        <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
+                        <div class="review-box-popup">
+                            <h2 class="color-cd fs-18 text-uper font-600 mgB-20">REVIEW SILVER RANGER</h2>
+                            <p class="fs-13 mgB-10">Tell us about your experience with this agent. Your review will help other users find the agent that's right for them.</p>
+                            <p class="fs-13 mgB-5 font-600">Môi giới này đã</p>
+                            <select name="" id="" class="mgB-15">
+                                <option value="">Giúp tôi thuê nhà</option>
+                            </select>
+                            <div class="check-rating mgB-15">
+                                <span class="font-600 fs-13 pdR-10">Rate this agent</span>
+                                <div class="stars">
+                                    <select class="rating" name="rating">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <p class="fs-13 mgB-5 font-600">Viết review</p>
+                            <textarea class="pd-5 mgB-5" name="" id="" cols="30" rows="10" placeholder="Nội dung"></textarea>
+                            <div class="text-right">
+                                <button class="btn-common">GỬI</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <p class="fs-13 mgB-5 font-600">Viết review</p>
-                <textarea class="pd-5 mgB-5" name="" id="" cols="30" rows="10" placeholder="Nội dung"></textarea>
-                <div class="text-right">
-                    <button class="btn-common">GỬI</button>
                 </div>
             </div>
         </div>
@@ -349,17 +355,6 @@ $count_product = $pagination->totalCount;
 
 <script>
     $(document).ready(function () {
-        $('#popup-review').popupMobi({
-            btnClickShow: '.review-user a',
-            closeBtn: '#popup-review .btn-close',
-            styleShow: 'center'
-        });
-
-        $('#popup-email').popupMobi({
-            btnClickShow: ".email-btn",
-            closeBtn: '#popup-email .btn-cancel',
-            styleShow: "full"
-        });
 
         $('#profile_send_mail .btn-send-email').click( function(){
             var recipient_email = $('#profile_send_mail .recipient_email').val();
