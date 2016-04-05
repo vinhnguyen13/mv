@@ -638,7 +638,7 @@ margin-top: 12px;
     font-weight: 400;
     font-size: 14px;
     position: relative;
-    margin-bottom: 5px;
+    margin-bottom: 7px;
 }
 .item-listing .address-listing {
     font-weight: 700;
@@ -676,6 +676,11 @@ margin-top: 12px;
 .address-listing a {
     color: #00a769;
     font-weight: 600;
+    font-size: 15px;
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 .attr-home .price {
     font-weight: bold;
@@ -1558,7 +1563,6 @@ label {
     height: 20px;
     background-position: 0 -43px;
     position: relative;
-    top: 1px;
 }
 .icon-bed-small {
     background-position: 0 -642px;
@@ -2834,8 +2838,12 @@ html.mm-opening .mm-slideout {
     width: 100%;
     padding: 10px;
 }
+.chat-list .item a.unread {
+    background: #E6FFF0;
+}
+.chat-list .item a.active,
 .chat-list .item a:hover {
-    background-color: #E8E8E8;
+    background-color: #A9FFCD;
 }
 .chat-live .item .name,
 .chat-list .item .name {
@@ -3135,7 +3143,7 @@ html.mm-opening .mm-slideout {
 }
 .box-item .address-feat {
     display: block;
-    padding: 15px;
+    padding: 15px 15px 5px;
     color: #3c3c3c;
     font-size: 16px;
     font-weight: 600;
@@ -5126,9 +5134,6 @@ html.mm-opening .mm-slideout {
         padding: 0 10px;
         margin-bottom: 25px;
     }
-    .box-feature-item .address-feat {
-        height: 120px;
-    }
     #listing-list > ul {
         padding: 0 10px;
     }
@@ -5406,9 +5411,6 @@ html.mm-opening .mm-slideout {
     }
     .box-item .address-feat .list-attr-td {
         float: left;
-    }
-    .box-feature-item .address-feat {
-        height: 100px;
     }
     .wrap-header {
         padding: 0 20px;
@@ -6552,7 +6554,6 @@ footer li a {
     padding-left: 5px;
 }
 .box-feature-item .date-post {
-    margin: 0 0 8px 0;
     font-size: 14px;
 }
 .wrap-attr-detail li .public_email {
@@ -7436,7 +7437,6 @@ footer li a {
     height: auto;
 }
 .list-per-post .list-post li .name-post,
-.list-per-post .date-post,
 .list-per-post .list-post li .id-duan,
 .list-per-post .list-post .img-show,
 .list-per-post .list-post li  li {
@@ -8002,7 +8002,7 @@ footer li a {
     font-size: 15px;
 }
 .address-feat {
-    margin-bottom: 5px;
+    margin-bottom: 7px;
 }
 .list-attr-td {
     float: left;
