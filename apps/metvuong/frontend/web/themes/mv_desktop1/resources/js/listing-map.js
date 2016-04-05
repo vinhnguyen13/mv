@@ -126,6 +126,7 @@ var listing = {
 		});
 	},
 	_initMap: function() {
+		var mapEl = $('#map');
 		var focusArea = listing.focusArea();
 		var area = listing.area[focusArea.collection][focusArea.id];
 		
@@ -133,15 +134,18 @@ var listing = {
 		
 		var options = {center: center, zoom: listing.initialZoom[focusArea.collection]};
 		
-		listing.map = new google.maps.Map(document.getElementById('map'), options);
+		listing.map = new google.maps.Map(mapEl.get(0), options);
 		
 		listing.detail = function(id) {
 			listing._detail(id);
 			
-			listing.map.addListener('mousedown', function(){
+			var temp = function(){
 				listing._closeDetail();
-				google.maps.event.clearListeners(listing.map, 'mousedown');
-			});
+				
+				mapEl.off('mousedown', temp);
+			};
+			
+			mapEl.on('mousedown', temp);
 		};
 		
 		listing.infoWindow = new m2Map.InfoWindow({offsetTop: 40});
