@@ -88,6 +88,13 @@ if(!empty($jid_id)){
 				});
 			}
 		});
+
+		$(document).bind('chat/afterConnect', function (event, data) {
+			if($('.wrap-history .chat-list .item').length > 0){
+				$('.wrap-history .chat-list .item:first a').trigger( "click" );
+			}
+		});
+
 		$(document).on('click', '.wrap-history .chat-list .item a', function (e) {
 			$('body').loading();
 			var user = $(this).parent().attr('chat-with');
@@ -95,7 +102,6 @@ if(!empty($jid_id)){
 			Chat.historyMessage(user+'@<?=Chat::DOMAIN?>');
 			return false;
 		});
-
 		/*$(document).on('keyup', '#findConversation', function (e) {
 			var word = $(this).val();
 			clearTimeout(timer);
