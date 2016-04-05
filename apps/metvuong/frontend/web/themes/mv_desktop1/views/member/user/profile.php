@@ -36,6 +36,7 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
                 </div>
                 <?php
                 $count_product = $pagination->totalCount;
+
                 if($count_product > 0) {
                 $categories = \vsoft\ad\models\AdCategory::find ()->indexBy( 'id' )->asArray( true )->all ();
                 $types = \vsoft\ad\models\AdProduct::getAdTypes ();
@@ -66,20 +67,18 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
                                         </a>
                                         <p class="date-post"><?=Yii::t('listing','Listing date')?>: <strong><?= date("d/m/Y H:i", $product->created_at) ?></strong></p>
                                         <p class="name-post"><a href="<?= $product->urlDetail() ?>"><?=$product->getAddress()?></a></p>
-                                        <p class="id-duan">ID:<span><?=$product->id?></span></p>
+                                        <p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
                                         <ul class="clearfix list-attr-td">
-                                            <li>
-                                                <span class="icon icon-dt icon-dt-small"></span><?= $product->area ?>
-                                            </li>
-                                            <li>
-                                                <span class="icon icon-bed icon-bed-small"></span><?= $product->adProductAdditionInfo->room_no ?>
-                                            </li>
-                                            <li>
-                                                <span class="icon icon-pt icon-pt-small"></span><?= $product->adProductAdditionInfo->toilet_no ?>
-                                            </li>
+                                            <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
+                                                <li><?=Yii::t('listing','updating')?></li>
+                                            <?php } else {
+                                                echo $product->area ? '<li> <span class="icon icon-dt icon-dt-small"></span>' . $product->area . 'm2 </li>' : '';
+                                                echo $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
+                                                echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
+                                            } ?>
                                         </ul>
                                         <div class="bottom-item clearfix">
-                                            <p><?=Yii::t('profile','Price')?> <strong class="color-cd pdL-5"><?= StringHelper::formatCurrency($product->price) ?> VND</strong></p>
+                                            <p><?=Yii::t('listing','Price')?> <strong class="color-cd pdL-5"><?= StringHelper::formatCurrency($product->price) ?> VND</strong></p>
                                         </div>
                                     </div>
                                 </li>

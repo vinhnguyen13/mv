@@ -276,7 +276,7 @@ class MemberController extends Controller
             $pagination->defaultPageSize = 6;
             $products = $query->offset($pagination->offset)->limit($pagination->limit)
                 ->orderBy(['district_id' => SORT_ASC, 'city_id'=> SORT_ASC, 'id' => SORT_DESC])->all();
-            if($count> 0){
+            if($count > 0){
                 foreach($products as $product){
                     if($product->type == 1)
                         array_push($sale_products, $product);
@@ -306,8 +306,9 @@ class MemberController extends Controller
             ]);
         }
         return $this->render('user/profile', [
-            'model' => $model, 'username'=>$username, 'products' => $products,
-            'sale_products' => $sale_products, 'rent_products' => $rent_products, 'pagination' => $pagination
+            'model' => $model, 'username'=>$username,
+            'products' => $products, 'pagination' => $pagination,
+            'sale_products' => $sale_products, 'rent_products' => $rent_products
         ]);
     }
 

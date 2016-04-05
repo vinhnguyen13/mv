@@ -44,13 +44,17 @@ if(count($products) > 0) {
                             </div>
                             <p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
                             <ul class="clearfix list-attr-td">
-                                <?= $product->area ? '<li> <span class="icon icon-dt icon-dt-small"></span>' . $product->area . 'm2 </li>' : '' ?>
-                                <?= $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
-                                <?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
+                                <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
+                                <li><?=Yii::t('listing','updating')?></li>
+                                <?php } else {
+                                    echo $product->area ? '<li> <span class="icon icon-dt icon-dt-small"></span>' . $product->area . 'm2 </li>' : '';
+                                    echo $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
+                                    echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
+                                } ?>
                             </ul>
                         </div>
                         <div class="bottom-feat-box clearfix">
-                            <p>Giá <strong><?= StringHelper::formatCurrency($product->price) ?></strong>VND</p>
+                            <p><?=Yii::t('listing','Price')?> <strong><?= StringHelper::formatCurrency($product->price) ?> vnd</strong></p>
                         </div>
                     </div>
                 </div>
