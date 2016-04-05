@@ -40,6 +40,10 @@ var listing = {
 		listing.getListingMarker(function(r){
 			listing.firstTimeDraw();
 		});
+		
+		if(location.hash) {
+			listing._detail(location.hash.replace('#', ''));
+		}
 	},
 	mouseenterEvent: function() {
 		var id = $(this).data('id');
@@ -521,6 +525,8 @@ var listing = {
 		    });
 
 			wrapDetailListing.loading({done: true});
+			
+			location.hash = id;
 		});
 	},
 	closeDetail: function(e) {
