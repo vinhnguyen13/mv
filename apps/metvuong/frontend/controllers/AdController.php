@@ -125,8 +125,11 @@ class AdController extends Controller
     	
     	$model = new AdProductSearch();
     	$query = $model->search(Yii::$app->request->get());
+
+    	$query->addSelect('ad_product.created_at, ad_product.category_id, ad_product.type, ad_images.file_name, ad_images.folder');
+    	$query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
     	
-    	return $query->asArray(true)->all();
+    	return $query->indexBy('id')->asArray(true)->all();
     }
 
     function actionGetProject($id) {

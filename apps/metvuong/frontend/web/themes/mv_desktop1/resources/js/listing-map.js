@@ -145,6 +145,74 @@ var listing = {
 		};
 		
 		listing.infoWindow = new m2Map.InfoWindow({offsetTop: 40});
+		
+		listing.infoWindowMore = new google.maps.InfoWindow();
+		listing.infoWindowMore.addListener('domready', function() {
+			listing.infoWindow.close();
+			var marker = listing.infoWindowMore.anchor;
+			google.maps.event.clearListeners(marker, 'mouseover');
+			
+			var infoWindowClick = google.maps.event.addListener(listing.infoWindowMore, 'closeclick', detachEvent);
+			var infoWindowPositionChange = google.maps.event.addListener(listing.infoWindowMore, 'position_changed', detachEvent);
+			
+			var mapClick = google.maps.event.addListener(listing.map, 'mousedown', function(){
+				listing.infoWindowMore.close();
+				detachEvent();
+			});
+			
+			function detachEvent() {
+				marker.addListener('mouseover', listing.markerOver);
+				google.maps.event.removeListener(infoWindowClick);
+				google.maps.event.removeListener(infoWindowPositionChange);
+				google.maps.event.removeListener(mapClick);
+			}
+		});
+	},
+	markerOver: function() {
+		this.setZIndex(google.maps.Marker.MAX_ZINDEX++);
+		var ids = this.get('ids');
+		var id = ids[0];
+		
+		var product = listing.products[id];
+		
+		var infoContent = $('<div class="info-wrap-single">' + listing.buildInfoContent(product) + '</div>');
+		
+//		if(ids.length > 1) {
+//			infoContent.append('<div class="more">...</div>');
+//		}
+		
+		infoContent.append('<div class="arrow"></div>');
+		
+		listing.infoWindow.setContent(infoContent.get(0));
+		listing.infoWindow.open(this);
+	},
+	markerOut: function() {
+		listing.infoWindow.close();
+		listing.infoWindow.setOffsetTop(40);
+	},
+	markerClick: function() {
+		var ids = this.get('ids');
+		
+		if(ids.length == 1) {
+			listing.detail(ids[0]);
+		} else {
+			var infoContentWrap = $('<div class="info-wrap-multiple"></div>');
+			for(i = 0; i < ids.length; i++) {
+				var id = ids[i];
+				var product = listing.products[id];
+				var infoContent = $(listing.buildInfoContent(product));
+				listing.attachInfoItemClick(infoContent, id);
+				infoContentWrap.append(infoContent);
+			}
+			
+			listing.infoWindowMore.setContent(infoContentWrap.get(0));
+			listing.infoWindowMore.open(listing.map, this);
+		}	
+	},
+	attachInfoItemClick: function(item, id) {
+		item.click(function(){
+			listing.detail(id);
+		});
 	},
 	firstTimeDraw: function() {
 		if(typeof listing.products !== 'undefined' && typeof listing.area != 'undefined') {
@@ -593,6 +661,10 @@ var listing = {
 					
 					marker.set('ids', [product.id]);
 					marker.setIcon(listing.icon(1, 0));
+
+					marker.addListener('mouseover', listing.markerOver);
+					marker.addListener('mouseout', listing.markerOut);
+					marker.addListener('click', listing.markerClick);
 					
 					listing.markers[index] = marker;
 				}
@@ -706,6 +778,76 @@ var listing = {
 		var newNorthEast = projection.fromPointToLatLng(worldCoordinateNewNorthEast);
 
 		return new google.maps.LatLngBounds(bounds.getSouthWest(), newNorthEast);
+	},
+	buildInfoContent: function(product) {
+		var img = listing.getImageUrl(product);
+		var price = formatPrice(product.price);
+		var addition = listing.getAdditionInfo(product);
+		var address = listing.getAddress(product);
+		
+		var infoContent = '<div class="infoContent">' + 
+								'<div class="img-show"><div><img src="'+img+'"></div></div>' +
+								'<div class="address">' + address + '</div>' +
+								'<div class="price">' + price + '</div>' +
+								'<div class="addition">' + addition + '</div></div>' +
+							'</div>';
+		return infoContent;
+	},
+	getImageUrl: function(product) {
+		if(product.file_name) {
+			if(product.image_folder) {
+				return '/store/' + product.image_folder + '/480x360/' + product.file_name;
+			} else {
+				return product.file_name.replace('745x510', '350x280');
+			}
+		} else {
+			return '/themes/metvuong2/resources/images/default-ads.jpg';
+		}
+	},
+	getAdditionInfo: function(product) {
+		var addition = [];
+		
+		addition.push(product.area + 'm<sup>2</sup>');
+		
+		if(product.floor_no && product.floor_no != '0') {
+			addition.push(product.floor_no + ' ' + lajax.t('storey'));
+		}
+		if(product.room_no && product.room_no != '0') {
+			addition.push(product.room_no + ' ' + lajax.t('beds'));
+		}
+		if(product.toilet_no && product.toilet_no != '0') {
+			addition.push(product.toilet_no + ' ' + lajax.t('baths'));
+		}
+
+		return addition.join(' • ');
+	},
+	getAddress: function(product) {
+		var city = listing.area['city'][Number(product.city_id)];
+		var district = listing.area['district'][Number(product.district_id)];
+		var address = [];
+		var homeStreet = '';
+
+		if(product.home_no) {
+			homeStreet += product.home_no;
+		}
+
+		if(product.street_id) {
+			homeStreet = homeStreet ? homeStreet + ' ' : '';
+			homeStreet += listing.area['street'][Number(product.street_id)]['pre'] + ' ' + listing.area['street'][Number(product.street_id)]['name'];
+		}
+		
+		if(homeStreet) {
+			address.push(homeStreet);
+		}
+		
+		if(product.ward_id) {
+			address.push(listing.area['ward'][Number(product.ward_id)]['pre'] + ' ' + listing.area['ward'][Number(product.ward_id)]['name']);
+		}
+		
+		address.push(district['pre'] + ' ' + district['name']);
+		address.push(city['name']);
+		
+		return address.join(', ');
 	}
 }
 
@@ -716,7 +858,7 @@ function cfl(s) {
     return s.charAt(0).toUpperCase() + s.slice(1);
 }
 /*
-var listingMap = {
+vlistingMap = {
 	drawedMarkerDetail: false,
 	polygons: [],
 	areaMarkers: [],
