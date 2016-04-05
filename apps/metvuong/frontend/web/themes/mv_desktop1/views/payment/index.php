@@ -165,14 +165,13 @@
 
 <script>
 	$(document).ready(function () {
-		alert(2);
-		$('#edit-ttcn, #edit-mtbt, #edit-changepass').popupMobi({
+		/*$('#edit-ttcn, #edit-mtbt, #edit-changepass').popupMobi({
 			btnClickShow: ".edit-tt",
 			closeBtn: '.btn-cancel',
 			styleShow: 'full',
 			funCallBack: function (item) {
 				
 			}
-		});
+		});*/
 	});
 </script>

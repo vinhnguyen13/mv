@@ -56,9 +56,11 @@ use vsoft\ad\models\AdProduct;
                                 <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></div>
                             </a>
                             <div class="info-item">
-                                <div class="address-feat">
+                                <div class="address-feat clearfix">
                                     <p class="date-post">Ngày đăng tin: <strong>12/2/2016, 8:30AM</strong></p>
-                                    <a title="<?= $product->getAddress(true) ?>" href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>"><?= $product->getAddress(true) ?></a>
+                                    <div class="address-listing">
+                                        <a title="<?= $product->getAddress(true) ?>" href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>"><?= $product->getAddress(true) ?></a>    
+                                    </div>
                                     <p class="id-duan">ID:<span><?=$product->id;?></span></p>
                                     <ul class="clearfix list-attr-td">
                                         <li>

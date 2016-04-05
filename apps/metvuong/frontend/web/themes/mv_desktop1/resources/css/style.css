@@ -638,6 +638,7 @@ margin-top: 12px;
     font-weight: 400;
     font-size: 14px;
     position: relative;
+    margin-bottom: 5px;
 }
 .item-listing .address-listing {
     font-weight: 700;
@@ -674,6 +675,7 @@ margin-top: 12px;
 }
 .address-listing a {
     color: #00a769;
+    font-weight: 600;
 }
 .attr-home .price {
     font-weight: bold;
@@ -850,6 +852,8 @@ label {
 }
 .infor-by-up {
     font-size: 14px;
+    line-height: 100%;
+    margin-bottom: 5px;
 }
 .infor-by-up strong {
     font-weight: 600;
@@ -3192,7 +3196,6 @@ html.mm-opening .mm-slideout {
     height: 24px;
     background-position: 0 0;
     position: relative;
-    top: 3px;
 }
 .icon-dt-small {
     background-position: 0 -601px;
@@ -3614,45 +3617,27 @@ html.mm-opening .mm-slideout {
     font-size: 13px;
     padding-right: 10px;
     margin-right: 10px;
-    height: 20px;
     vertical-align: middle;
     line-height: 19px;
     font-weight: 600;
 }
 .list-attr-td li:last-child {
-    padding-right: 0;
     margin-right: 0;
-    border: none;
+    padding-right: 0;
 }
 .list-attr-td li span {
     margin-right: 8px;
     vertical-align: middle;
-    float: left;
 }
 .list-attr-td li .icon {
     position: relative;
-}
-.list-attr-td li .icon-dt {
-    top: 0;
-}
-.list-attr-td li .icon-dt {
-    top: 0;
 }
 .list-attr-td li .icon-bed-1 {
     position: relative;
     top: 1px;
 }
-.list-attr-td {
-    margin-bottom: 12px;
-}
-.infor-listing .list-attr-td {
-    margin-bottom: 15px;
-}
 .list-attr-td li .icon-pt {
     top: -2px;
-}
-.list-attr-td li:last-child span {
-    vertical-align: middle;
 }
 .item-listing .price {
     border: solid 1px #8e8e8e;
@@ -3672,12 +3657,18 @@ html.mm-opening .mm-slideout {
     font-size: 15px;
     margin-top: 15px;
 }
-.detail-listing .address-listing {
-    margin: 0 0 3px 0;
+.detail-listing .infor-listing .address-listing {
     font-weight: 600;
     font-size: 22px;
     color: #3c3c3c;
     line-height: 27px;
+    margin-bottom: 10px;
+}
+.detail-listing .sidebar-col .address-listing {
+    font-size: 15px;
+}
+.detail-listing .address-feat {
+    margin-top: 5px;
 }
 .infor-agent {
     margin-bottom: 20px;
@@ -4072,9 +4063,11 @@ html.mm-opening .mm-slideout {
     margin-top: 25px;
 }
 .id-duan {
-    /* color: #AFAFAF; */
     font-weight: 400;
     font-size: 13px;
+    float: right;
+    line-height: 100%;
+    margin-top: 3px;
 }
 .id-duan span {
     font-weight: 700;
@@ -4198,15 +4191,6 @@ html.mm-opening .mm-slideout {
 .list-per-post {
     padding: 20px;
 }
-.list-post li {
-    margin-bottom: 25px;
-}
-.list-post li a{
-    color: #3c3c3c;
-    font-weight: 600;
-    font-size: 15px;
-    display: block;
-}
 .list-post li a:hover {
     color: #00a769;
 }
@@ -4233,23 +4217,9 @@ html.mm-opening .mm-slideout {
     line-height: 21px;
     margin-bottom: 1px;
 }
-.list-post li .list-attr-td li {
-    font-size: 15px;
-    margin-bottom: 5px;
-}
-.list-post li .list-attr-td li:last-child {
-    margin: 0;
-    padding: 0;
-}
-.list-post li .list-attr-td {
-    margin-bottom: 0;
-}
 .list-post li .price-post strong {
     font-weight: 700;
     font-size: 18px;
-}
-.popup-common {
-    
 }
 .popup-common .wrap-popup {
     position: relative;
@@ -4736,9 +4706,6 @@ html.mm-opening .mm-slideout {
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     -ms-border-radius: 50%;
-}
-.list-post li .id-duan {
-    margin: 0 0 5px 0;
 }
 .icon-chat-sub{
     background-position: 0 -529px;
@@ -5435,9 +5402,6 @@ html.mm-opening .mm-slideout {
     .search-home {
         padding-bottom: 150px;
     }
-    .id-duan {
-        float: right;
-    }
     .status-duan .id-duan {
         float: none;
     }
@@ -5678,10 +5642,6 @@ footer li a {
         width: 25%;
     }
 }
-.address-feat > a {
-    margin-bottom: 10px;
-    display: block;
-}
 .ad-listing header .container {
     width: 100%;
     /* padding-left: 10px; */
@@ -5799,7 +5759,6 @@ footer li a {
     }
     #listing-list .wrap-attr-item {
         position: relative;
-        top: -3px;
     }
     #listing-list .wrap-attr-bottom {
         margin-top: 4px;
@@ -5923,6 +5882,8 @@ footer li a {
     font-weight: 400;
     margin-bottom: 0px;
     line-height: 100%;
+    font-size: 13px;
+    margin-bottom: 4px;
 }
 .wrap-news .date-post {
     margin-bottom: 10px;
@@ -5939,18 +5900,6 @@ footer li a {
 }
 .wrap-attr-item .date-post {
     margin-bottom: 3px;
-}
-.wrap-item .address-feat > a {
-    margin-bottom: 12px;
-    color: #3c3c3c;
-    line-height: 20px;
-    font-size: 16px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-.wrap-item .address-feat .id-duan {
-    margin-bottom: 7px;
 }
 @media ( min-width: 985px ) and ( max-width: 1366px ) {
     .select-quan-huyen, .select-tinh-thanh {
@@ -6682,9 +6631,6 @@ footer li a {
     #listing-list .item-listing a:hover {
         background: none;
     }
-    .wrap-item .address-feat > a {
-        margin-bottom: 5px;
-    }
     .user-edit a:hover {
         background-color: inherit;
     }
@@ -6892,13 +6838,6 @@ footer li a {
     .infor-by-up {
         margin-bottom: 5px;
     }
-    .detail-listing .address-listing {
-        margin-bottom: 15px;
-    }
-    .detail-listing .id-duan {
-        line-height: 100%;
-        margin-top: 4px;
-    }
     .detail-listing .infor-listing .list-attr-td {
         margin-bottom: 15px;
     }
@@ -7031,15 +6970,11 @@ footer li a {
     }
     .detail-listing .address-listing {
         font-size: 15px;
-        margin-bottom: 0;
         line-height: 20px;
     }
     .detail-listing .infor-listing {
         margin-top: 0;
         padding-top: 0;
-    }
-    .detail-listing .id-duan {
-        margin-bottom: 5px;
     }
     .detail-listing .icons-detail {
         margin-top: 0;
@@ -7844,16 +7779,9 @@ footer li a {
     margin: 0;
     padding: 0;
 }
-.detail-listing-extra .list-post .date-post,
-.detail-listing-extra .list-post a,
-.detail-listing-extra .list-post .list-attr-td li,
-.detail-listing-extra .list-post .id-duan,
 .detail-listing-extra .list-post {
     font-size: 13px;
     margin: 0 0 6px 0;
-}
-.detail-listing-extra .list-post a {
-    font-size: 15px;
 }
 .detail-listing-extra .bottom-feat-box a {
     font-size: 13px;
@@ -7985,6 +7913,7 @@ footer li a {
     width: auto;
 }
 @media (max-width: 985px) {
+    #popup-email .modal-dialog,
     #popup-map .modal-dialog {
         width: 100%;
         top: 0;
@@ -7992,14 +7921,19 @@ footer li a {
         margin: 0;
         height: 100%;
     }
+    #popup-email.modal:before,
     #popup-map.modal:before {
         display: none;
     }
     #map_detail {
         height: 100%;
     }
+    #popup-email .modal-content,
     #popup-map .modal-content {
         box-shadow: none;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        -ms-box-shadow: none;
         border: none;
     }
     .detail-listing-extra .col-left {
@@ -8023,6 +7957,18 @@ footer li a {
     }
     .chat-btn, .email-btn {
         width: auto;
+    }
+    #popup-email .title-popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+    }
+    #popup-email .modal-body {
+        padding-top: 44px;
+    }
+    .popup-common {
+        background: #fff;
     }
 }
 #chat-container .container {
@@ -8055,4 +8001,10 @@ footer li a {
     left: 0;
     width: 100%;
     font-size: 15px;
+}
+.address-feat {
+    margin-bottom: 5px;
+}
+.list-attr-td {
+    float: left;
 }

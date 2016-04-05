@@ -90,19 +90,21 @@ Yii::$app->view->registerMetaTag([
 					</div>
 				</div>
 				<?php endif; ?>
-				<p class="infor-by-up">
-					<?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?>
-				</p>
 				<div class="infor-listing">
-					<div class="address-listing">
-						<p><?= $address ?></p>
+					<div class="address-feat clearfix">
+						<p class="infor-by-up">
+							<?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?>
+						</p>
+						<div class="address-listing">
+							<p><?= $address ?></p>
+						</div>
+						<p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
+						<ul class="clearfix list-attr-td">
+							<?= $product->area ? '<li> <span class="icon icon-dt icon-dt-small"></span>' . $product->area . 'm2 </li>' : '' ?>
+							<?= $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
+							<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
+						</ul>	
 					</div>
-					<p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
-					<ul class="clearfix list-attr-td">
-						<?= $product->area ? '<li> <span class="icon icon-dt icon-dt-small"></span>' . $product->area . 'm2 </li>' : '' ?>
-						<?= $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
-						<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon icon-pt icon-pt-small"></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
-					</ul>
 					<ul class="pull-right icons-detail">
 						<li><a href="#" data-toggle="modal" data-target="#popup-share-social" class="icon icon-share-td" title="Share social"></a></li>
 			            <?php if($product->user_id != Yii::$app->user->id){ ?>

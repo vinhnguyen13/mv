@@ -37,9 +37,11 @@ if(count($products) > 0) {
                         <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?></div>
                     </a>
                     <div class="info-item">
-                        <div class="address-feat">
+                        <div class="address-feat clearfix">
                             <p class="date-post"><?=Yii::t('listing','Listing date')?>: <strong><?= date("d/m/Y H:i", $product->created_at) ?></strong></p>
-                            <a title="<?= $product->getAddress($product->show_home_no) ?>" href="<?= $product->urlDetail(); ?>"><?= $product->getAddress($product->show_home_no) ?></a>
+                            <div class="address-listing">
+                                <a title="<?= $product->getAddress($product->show_home_no) ?>" href="<?= $product->urlDetail(); ?>"><?= $product->getAddress($product->show_home_no) ?></a>    
+                            </div>
                             <p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
                             <ul class="clearfix list-attr-td">
                                 <?= $product->area ? '<li> <span class="icon icon-dt icon-dt-small"></span>' . $product->area . 'm2 </li>' : '' ?>

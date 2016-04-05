@@ -458,3 +458,4 @@ $this->registerJs($script, View::POS_BEGIN);
 		<div id="map" class="inner-wrap"></div>
 	</div>
 </div>
+
