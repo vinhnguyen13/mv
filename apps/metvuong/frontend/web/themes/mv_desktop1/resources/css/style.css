@@ -2915,12 +2915,11 @@ html.mm-opening .mm-slideout {
 }
 .wrap-chat-item .container-chat {
     height: 100%;
-}
-.wrap-chat-item .container-chat .wrap-chat {
-    height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
-    padding: 25px 15px;
+}
+.wrap-chat-item .container-chat .wrap-chat {
+    padding: 25px 0;
 }
 .container-chat .item {
     margin-bottom: 20px;
