@@ -9,8 +9,10 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
 
+
 // user get from username in address bar
 $user = $model->getUser();
+$recipientEmail = empty($model->public_email) ? $user->email : $model->public_email;
 // get user was been login
 $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->profile->public_email) ? Yii::$app->user->identity->email : Yii::$app->user->identity->profile->public_email);
 ?>
@@ -82,7 +84,7 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
                                             <p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
                                             <ul class="clearfix list-attr-td">
                                                 <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
-                                                    <li><?=Yii::t('listing','updating')?></li>
+                                                    <li><span><?=Yii::t('listing','updating')?></span></li>
                                                 <?php } else {
                                                     echo $product->area ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span>' . $product->area . 'm2 </li>' : '';
                                                     echo $product->adProductAdditionInfo->room_no ? '<li> <span class="icon icon-bed icon-bed-small"></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
@@ -278,18 +280,33 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
             <div class="col-xs-12 col-xs-3 sidebar-user">
                 <div class="item-sidebar">
                     <div class="title-text"><?=Yii::t('profile','CONTACT WITH')?> <?= empty($model->name) ? strtoupper($user->username) : mb_strtoupper($model->name, "UTF-8") ?></div>
-                    <form action="">
+                    <?php
+                    $share_form = Yii::createObject([
+                        'class'    => \frontend\models\ShareForm::className(),
+                        'scenario' => 'share',
+                    ]);
+
+                    $f = ActiveForm::begin([
+                        'id' => 'profile_send_mail',
+                        'enableAjaxValidation' => false,
+                        'enableClientValidation' => true,
+                        'action' => Url::to(['/ad/sendmail'])
+                    ]);
+
+                    ?>
                         <div class="form-group frm-item">
-                            <input type="text" id="" class="" name="" value="" placeholder="<?=Yii::t('send_email','Your name')?> ...">
+                            <input type="text" class="from_name" name="from_name" value="" placeholder="<?=Yii::t('send_email','Name')?> ...">
+                            <input type="hidden" name="send_from" value="profile-<?=$user->username?>">
                         </div>
                         <div class="form-group frm-item">
-                            <input type="text" id="" class="" name="" value="" placeholder="<?=Yii::t('send_email','Your email')?> ...">
+                            <?= $f->field($share_form, 'your_email')->textInput(['class'=>'your_email', 'placeholder'=>Yii::t('send_email', 'Email...')])->label(false) ?>
                         </div>
                         <div class="form-group frm-item">
-                            <textarea name="" id="" cols="30" rows="10" placeholder="I am interested in “21, Nguyễn Trung Ngạn…”"></textarea>
+                            <?= $f->field($share_form, 'content')->textarea(['class'=>'content', 'cols' => 30, 'rows' => 10, 'placeholder'=>Yii::t('send_email', 'I am interested in "21, Nguyễn Trung Ngạn…"')])->label(false) ?>
+                            <?= $f->field($share_form, 'recipient_email')->hiddenInput(['class'=>'recipient_email', 'value'=> $recipientEmail])->label(false);?>
                         </div>
-                        <button class="btn-common btn-send-email"><?=Yii::t('profile', 'Send mail')?></button>
-                    </form>
+                        <button class="btn-common btn-send-email"><?=Yii::t('send_email', 'Send mail')?></button>
+                    <?php $f->end(); ?>
                 </div>
             </div>
 
@@ -299,7 +316,7 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
 <?= $this->render('/ad/_partials/shareEmail',[
     'user' => $user,
     'yourEmail' => $yourEmail,
-    'recipientEmail' => (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
+    'recipientEmail' => $recipientEmail,
     'params' => ['your_email' => false, 'recipient_email' => false] ]);
 ?>
 <div id="popup-review" class="popup-common hide-popup">
@@ -334,6 +351,7 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
         </div>
     </div>
 </div>
+
 <script>
     $(document).ready(function () {
         $('#popup-review').popupMobi({
@@ -341,10 +359,47 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
             closeBtn: '#popup-review .btn-close',
             styleShow: 'center'
         });
+
         $('#popup-email').popupMobi({
             btnClickShow: ".email-btn",
             closeBtn: '#popup-email .btn-cancel',
             styleShow: "full"
+        });
+
+        $('#profile_send_mail .btn-send-email').click( function(){
+            var recipient_email = $('#profile_send_mail .recipient_email').val();
+            var your_email = $('#profile_send_mail .your_email').val();
+            if(recipient_email.length > 0 && your_email.length > 0) {
+                $('body').loading(recipient_email);
+                $.ajax({
+                    type: "post",
+                    dataType: 'json',
+                    url: $('#profile_send_mail').attr('action'),
+                    data: $('#profile_send_mail').serializeArray(),
+                    success: function (data) {
+                        $('body').loading({done:true});
+                        if(data.status == 200){
+//                            $('.btn-cancel').trigger('click');
+                            $('#profile_send_mail .from_name').val("");
+                            $('#profile_send_mail .your_email').val("");
+                            $('#profile_send_mail textarea').val("");
+                        }
+                        else if(data.status == 404){
+                            var arr = [];
+                            $.each(data.parameters, function (idx, val) {
+                                var element = 'shareform-' + idx;
+                                arr[element] = lajax.t(val);
+                            });
+                            $('#profile_send_mail').yiiActiveForm('updateMessages', arr, true);
+//                            $('#popup-sent .btn-close').trigger('click');
+                        } else {
+                            console.log(data);
+                        }
+                        return true;
+                    }
+                });
+            }
+            return false;
         });
     });
     $(document).bind('chat/afterConnect', function (event, type) {

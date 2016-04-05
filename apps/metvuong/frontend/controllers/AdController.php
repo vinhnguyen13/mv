@@ -603,19 +603,22 @@ class AdController extends Controller
             $model->load($post);
             $model->validate();
             if (!$model->hasErrors()) {
-//                // send from
-//                Yii::$app->mailer->compose(['html' => '../mail/notifyReceivedEmail-html',], ['contact' => $model])
-//                    ->setFrom(Yii::$app->params['adminEmail'])
-//                    ->setTo([$model->your_email])
-//                    ->setSubject($model->subject." - Thanks for sharing a listing with ".$model->your_email)
-//                    ->send();
-
+                $from_user = isset($post["from_name"]) ? $post["from_name"] : null;
                 // send to
+                $subEmail = empty($model->subject) ? $from_user . " sent a message from Metvuong.com" : "Metvuong.com - ". $model->subject;
                 $result = Yii::$app->mailer->compose(['html' => '../mail/notifyReceivedEmail-html',], ['contact' => $model])
-                    ->setFrom(Yii::$app->params['adminEmail'])
-                    ->setTo([$model->recipient_email])
-                    ->setSubject("Metvuong.com - ".$model->subject)
-                    ->send();
+                ->setFrom(Yii::$app->params['adminEmail'])
+                ->setTo([$model->recipient_email])
+                ->setSubject($subEmail)
+                ->send();
+                if($result){
+                    $send_from = isset($post["send_from"]) ? $post["send_from"] : null;
+                    $from_email = $model->your_email;
+                    $to_email = $model->recipient_email;
+                    $subject = $model->subject;
+                    $content = $model->content;
+                    Tracking::find()->saveEmailLog($from_user, $from_email, $to_email, $subject, $content, $send_from);
+                }
                 return ['status' => 200, 'result' => $result];
             } else {
                 return ['status' => 404, 'parameters' => $model->errors];

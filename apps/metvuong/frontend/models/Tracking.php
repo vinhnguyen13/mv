@@ -7,7 +7,9 @@
  */
 
 namespace frontend\models;
+use kartik\helpers\Enum;
 use vsoft\ad\models\AdProductSaved;
+use vsoft\express\models\SysEmail;
 use vsoft\tracking\models\base\AdProductFinder;
 use vsoft\tracking\models\base\AdProductVisitor;
 use Yii;
@@ -189,6 +191,19 @@ class Tracking extends Component
 	        $query = (int)AdProductSaved::find()->where(['product_id' => (int)$pid])->andWhere('saved_at > :sa',[':sa' => 0])->count();
 	        return $query;
     	}
+    }
+
+    public function saveEmailLog($from_user, $from_email, $to_email, $subject, $content, $send_from){
+        $sysEmail = new SysEmail();
+        $sysEmail->from_user = $from_user; //utf8_encode($from_user);
+        $sysEmail->from_email = $from_email;
+        $sysEmail->to_email = $to_email;
+        $sysEmail->subject = $subject;
+        $sysEmail->content = $content;//utf8_encode($content);
+        $sysEmail->send_from = $send_from;
+        $sysEmail->time = time();
+        $sysEmail->ip = Yii::$app->request->userIP;
+        return $sysEmail->save();
     }
 
 }
