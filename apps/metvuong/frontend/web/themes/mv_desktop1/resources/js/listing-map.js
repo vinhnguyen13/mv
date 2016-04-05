@@ -540,6 +540,7 @@ var listing = {
 			listing.detailListing.css({
 				left: '0px'
 			});
+			location.hash = '';
 		}, 100);
 	},
 	more: function() {
