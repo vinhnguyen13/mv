@@ -135,8 +135,8 @@ var listing = {
 		
 		listing.map = new google.maps.Map(document.getElementById('map'), options);
 		
-		listing._detailEvent = function(id) {
-			listing.detail(id);
+		listing.detail = function(id) {
+			listing._detail(id);
 			
 			listing.map.addListener('mousedown', function(){
 				listing._closeDetail();
@@ -488,13 +488,12 @@ var listing = {
 	},
 	detailEvent: function(e) {
 		e.preventDefault();
-		
-		listing._detailEvent($(this).data('id'));
-	},
-	_detailEvent: function(id) {
-		listing.detail(id);
+		listing.detail($(this).data('id'));
 	},
 	detail: function(id) {
+		listing._detail(id);
+	},
+	_detail: function(id) {
 		var wWrapList = listing.detailListing.outerWidth();
 		var detailListing = $('.detail-listing');
 		var wrapDetailListing = listing.detailListing;
