@@ -48,7 +48,7 @@ $(document).ready(function() {
         $('.modal:visible').length && $(document.body).addClass('modal-open');
     });
 
-    $('[data-toggle="tooltip"]').tooltip();
+    $('.tooltip-show').tooltip();
 
     $(".rippler").rippler({
         effectClass      :  'rippler-effect',
