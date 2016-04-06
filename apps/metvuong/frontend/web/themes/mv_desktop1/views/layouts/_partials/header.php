@@ -112,7 +112,7 @@ use frontend\models\AdProductSearch;
                 <?php } else{?>
                     <ul class="pull-left list-redire">
                         <li>
-                            <a class="tooltip-show wrapNotifyChat" href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="Tin nhắn">
+                            <a class="tooltip-show wrapNotifyChat" href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('chat', 'Chat')?>">
                                 <span class="wrap-icon-svg">
                                     <svg class="icon-svg icon-email-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-email-svg"></use></svg>
                                 </span>
@@ -122,7 +122,7 @@ use frontend\models\AdProductSearch;
                             </a>
                         </li>
                         <li>
-                            <a class="tooltip-show wrapNotifyOther" href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="Thông báo">
+                            <a class="tooltip-show wrapNotifyOther" href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('activity', 'Notification')?>">
                                 <span class="wrap-icon-svg">
                                     <svg class="icon-svg icon-bell-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bell-svg"></use></svg>
                                 </span>
@@ -140,7 +140,7 @@ use frontend\models\AdProductSearch;
                         </li>
                     </ul>
                     <div class="user-edit box-dropdown">
-                        <a class="val-selected wrapNotifyTotal tooltip-show" data-toggle="tooltip" data-placement="bottom" href="#" title="Trang cá nhân">
+                        <a class="val-selected wrapNotifyTotal tooltip-show" data-toggle="tooltip" data-placement="bottom" href="#" title="<?=Yii::t('user', 'Profile')?>">
                             <span class="wrap-img"><img src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="" width="40" height="40"></span>
                             <div>
                                 <p><span class="name-user"><?=Yii::$app->user->identity->profile->getDisplayName();?></span>
