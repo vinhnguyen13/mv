@@ -32,7 +32,6 @@ use yii\helpers\Url;
                 </div><?=Yii::t('chat', 'Chat')?>
             </a>
         </li>
-        <li>
         <li><a href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>" class="<?=!empty($this->params['menuUpdateProfile']) ? 'active' : '' ;?>"><div><span class="icon icon-settings"></span></div><?=Yii::t('user', 'Setting')?></a></li>
                 <div>
                     <span class="wrap-icon-svg"><svg class="icon-svg icon-setting-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-setting-svg"></use></svg></span>
