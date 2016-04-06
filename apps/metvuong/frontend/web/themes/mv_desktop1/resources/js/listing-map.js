@@ -8,6 +8,7 @@ var listing = {
 	contentHolderEl: $('#content-holder'),
 	areaEl: $('.area-select'),
 	detailListing: $('.detail-listing-dt'),
+	mapEl: $('#map'),
 	markers: {},
 	polygons: {},
 	areaMarkers: {},
@@ -42,7 +43,7 @@ var listing = {
 		});
 		
 		if(location.hash) {
-			listing._detail(location.hash.replace('#', ''));
+			listing.detail(location.hash.replace('#', ''));
 		}
 	},
 	mouseenterEvent: function() {
@@ -130,7 +131,6 @@ var listing = {
 		});
 	},
 	_initMap: function() {
-		var mapEl = $('#map');
 		var focusArea = listing.focusArea();
 		var area = listing.area[focusArea.collection][focusArea.id];
 		
@@ -138,19 +138,7 @@ var listing = {
 		
 		var options = {center: center, zoom: listing.initialZoom[focusArea.collection]};
 		
-		listing.map = new google.maps.Map(mapEl.get(0), options);
-		
-		listing.detail = function(id) {
-			listing._detail(id);
-			
-			var temp = function(){
-				listing._closeDetail();
-				
-				mapEl.off('mousedown', temp);
-			};
-			
-			mapEl.on('mousedown', temp);
-		};
+		listing.map = new google.maps.Map(listing.mapEl.get(0), options);
 		
 		listing.infoWindow = new m2Map.InfoWindow({offsetTop: 40});
 		
@@ -499,9 +487,6 @@ var listing = {
 		listing.detail($(this).data('id'));
 	},
 	detail: function(id) {
-		listing._detail(id);
-	},
-	_detail: function(id) {
 		clearTimeout(listing.closeTimeout);
 		
 		var wWrapList = listing.detailListing.outerWidth();
@@ -529,6 +514,11 @@ var listing = {
 			$('.btn-extra').attr('href', detailListing.find('.btn-copy').data('clipboard-text'));
 			
 			location.hash = id;
+		});
+		
+		listing.mapEl.off('mousedown').one('mousedown', function(){
+			listing._closeDetail();
+			console.log('close');
 		});
 	},
 	closeDetail: function(e) {
