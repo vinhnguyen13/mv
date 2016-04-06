@@ -155,6 +155,15 @@ return [
                     'cachingDuration' => 86400,
                     'enableCaching' => false,
                 ],
+                'user*' => [
+                    'class' => 'yii\i18n\DbMessageSource',
+                    'db' => 'db',
+                    'sourceLanguage' => 'en', /** with this language, is not translate **/
+                    'sourceMessageTable' => '{{%language_source}}',
+                    'messageTable' => '{{%language_translate}}',
+                    'cachingDuration' => 86400,
+                    'enableCaching' => false,
+                ],
             ]
         ],
         'meta' =>[
