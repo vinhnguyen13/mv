@@ -210,6 +210,9 @@ use frontend\models\AdProductSearch;
 <script>
     $(document).ready(function () {
         $(document).on('click', '.user-login-link', function (e) {
+            if(checkMobile()){
+                return true;
+            }
             e.preventDefault();
             $('body').loading();
             $.ajax({
@@ -224,6 +227,9 @@ use frontend\models\AdProductSearch;
 
         });
         $(document).on('click', '.user-signup-link', function (e) {
+            if(checkMobile()){
+                return true;
+            }
             e.preventDefault();
             $('body').loading();
             $.ajax({
