@@ -13,10 +13,6 @@ $(document).ready(function() {
             $($(this).data('target')).toggleClass('in');
         });
     }
-    
-    $('.rating').barrating({
-        showSelectedRating: false
-    });
 
     $('.tabs-scroll li a').on('click', function (e) {
         e.preventDefault();
