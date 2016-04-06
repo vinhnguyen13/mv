@@ -73,6 +73,11 @@
                 chatBoxExist.find('.wrap-chat').append(chatList);
             }
             $('.container-chat').scrollTop($('.wrap-chat').height());
+            $('.wrap-chat-item .container-chat').slimscroll({
+                alwaysVisible: true,
+                height: 440,
+                start : 'bottom'
+            });
             $('body').loading({done:true});
             $('.chat-group').find('#typingMsg').focus();
         },
@@ -108,6 +113,11 @@
                 chatBoxExist.find('.wrap-chat').append(html);
             }
             $('.container-chat').scrollTop($('.wrap-chat').height());
+            $('.wrap-chat-item .container-chat').slimscroll({
+                alwaysVisible: true,
+                height: 440,
+                start : 'bottom'
+            });
             $(document).trigger('chat/readNotify', [chatUI.NOTIFY_CHAT]);
         },
         loadMessageToList: function (msg, params) {
