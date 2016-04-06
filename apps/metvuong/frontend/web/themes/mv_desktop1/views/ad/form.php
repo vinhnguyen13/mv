@@ -225,18 +225,24 @@ use vsoft\ad\models\AdImages;
 									->textArea(['placeholder' => $additionInfo->getAttributeLabel('interior')]) ?>
 							
 							<div id="addition-field-template" style="display: none;">
-								<div class="addition-field">
-									<?= $form->field($additionInfo, 'addition_fields', ['options' => ['class' => 'col-xs-6 form-group']])
+								<div class="addition-field row">
+									<?= $form->field($additionInfo, 'addition_fields', ['options' => ['class' => 'col-xs-3 form-group']])
 											->label(false)
 											->textInput(['placeholder' => Yii::t('ad', 'Title'), 'class' => 'form-control field-title', 'id' => false]) ?>
-									<?= $form->field($additionInfo, 'addition_fields', ['options' => ['class' => 'col-xs-6 form-group']])
+									<?= $form->field($additionInfo, 'addition_fields', ['options' => ['class' => 'col-xs-7 form-group']])
 											->label(false)
 											->textInput(['placeholder' => Yii::t('ad', 'Content'), 'class' => 'form-control field-content', 'id' => false]) ?>
-									<input class="field-remove" type="button" value="remove" />
+									<div class="col-xs-2">
+										<button class="field-remove" type="button">
+											<svg class="icon-svg icon-close-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-close-svg"></use></svg>
+										</button>
+									</div>
 								</div>
 							</div>		
-							<div id="addition-fields"></div>
-							<button id="add-field" type="button" class="btn-common"><?= Yii::t('ad', 'Add field') ?></button>
+							<div class="col-xs-12 form-group">
+								<div id="addition-fields"></div>
+								<button id="add-field" type="button" class="btn-common"><?= Yii::t('ad', 'Add field') ?></button>		
+							</div>
 						</div>
 					</div>
 

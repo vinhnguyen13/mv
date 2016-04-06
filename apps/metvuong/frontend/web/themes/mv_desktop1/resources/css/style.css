@@ -4990,7 +4990,7 @@ html.mm-opening .mm-slideout {
 .unit-dt {
     position: absolute;
     top: 6px;
-    right: 20px;
+    right: 30px;
     font-size: 14px;
 }
 .list-noti .avatar a {
@@ -8235,4 +8235,16 @@ footer li a {
         display: inline-block;
         margin-left: 10px;
     }
+}
+.field-remove {
+    background: none;
+    border: none;
+    padding: 10px 5px;
+}
+.field-remove .icon-close-svg {
+    width: 20px;
+    height: 20px;
+}
+.field-remove:hover .icon-close-svg {
+    fill: #00a769;
 }
