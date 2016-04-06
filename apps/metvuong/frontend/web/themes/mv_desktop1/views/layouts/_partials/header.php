@@ -112,23 +112,27 @@ use frontend\models\AdProductSearch;
                 <?php } else{?>
                     <ul class="pull-left list-redire">
                         <li>
-                            <a class="tooltip-show" href="#" data-toggle="tooltip" data-placement="bottom" title="Tin nhắn">
+                            <a class="tooltip-show wrapNotifyChat" href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="Tin nhắn">
                                 <span class="wrap-icon-svg">
                                     <svg class="icon-svg icon-email-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-email-svg"></use></svg>
                                 </span>
-                                <span class="notifi">5</span>
+                                <?php if(!empty($this->params['notify_chat'])){?>
+                                    <span id="notifyChat" class="notifi"><?=$this->params['notify_chat'];?></span>
+                                <?php }?>
                             </a>
                         </li>
                         <li>
-                            <a class="tooltip-show" href="#" data-toggle="tooltip" data-placement="bottom" title="Thông báo">
+                            <a class="tooltip-show wrapNotifyOther" href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="Thông báo">
                                 <span class="wrap-icon-svg">
                                     <svg class="icon-svg icon-bell-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bell-svg"></use></svg>
                                 </span>
-                                <span class="notifi">5</span>
+                                <?php if(!empty($this->params['notify_other'])){?>
+                                    <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
+                                <?php }?>
                             </a>
                         </li>
                         <li>
-                            <a class="tooltip-show" href="#" data-toggle="tooltip" data-placement="bottom" title="Dashboard">
+                            <a class="tooltip-show" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="Dashboard">
                                 <span class="wrap-icon-svg">
                                     <svg class="icon-svg icon-dasboar-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dasboar-svg"></use></svg>
                                 </span>
@@ -142,9 +146,6 @@ use frontend\models\AdProductSearch;
                                 <p><span class="name-user"><?=Yii::$app->user->identity->profile->getDisplayName();?></span>
                                     <span class="address"><?=empty(Yii::$app->user->identity->location) ? "" : Yii::$app->user->identity->location->city?></span></p>
                             </div>
-                            <?php if(!empty($this->params['notify_total'])){?>
-                                <span id="notifyTotal" class="notifi"><?=$this->params['notify_total'];?></span>
-                            <?php }?>
                         </a>
                         <div class="item-dropdown hide-dropdown">
                             <ul class="clearfix">

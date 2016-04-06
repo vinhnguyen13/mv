@@ -58,8 +58,13 @@ if(!Yii::$app->user->isGuest) {
                 }else if(params.type == 'online'){
                     console.log('------------------', params);
                 }
+//                if(!checkMobile()){
+//                    $('.wrapNotifyTotal').find('#notifyTotal').hide();
+//                }
             });
+
             $(document).bind('chat/readNotify', function (event, type) {
+
                 if(type == chatUI.NOTIFY_CHAT){
                     $('#notifyChat').remove();
                     $('#notifyTotal').remove();
