@@ -71,7 +71,7 @@ $count_product = $pagination->totalCount;
                                 ?>
                                 <li class="col-xs-12 col-sm-6">
                                     <div class="wrap-item-post">
-                                        <a phref="#" class="edit-listing">
+                                        <a href="<?= Url::to(['/ad/update', 'id' => $product->id]) ?>" class="edit-listing">
                                             <svg class="icon-svg icon-edit-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-edit-svg"></use></svg></a>
                                         <a href="<?= $product->urlDetail() ?>" class="rippler rippler-default">
                                             <div class="img-show"><div><img src="<?= $product->representImage ?>">

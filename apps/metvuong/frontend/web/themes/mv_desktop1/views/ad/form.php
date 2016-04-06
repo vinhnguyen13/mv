@@ -130,15 +130,15 @@ use vsoft\ad\models\AdImages;
 							?>
 							<?= $form->field($product, 'district_id', ['options' => ['class' => 'col-xs-6 form-group']])
 									 ->label(false)
-									 ->dropDownList(AdDistrict::getListByCity($product->city_id), ['prompt' => $product->getAttributeLabel('district_id')]) ?>
+									 ->dropDownList(ArrayHelper::map(AdDistrict::getListByCity($product->city_id), 'id', 'name'), ['prompt' => $product->getAttributeLabel('district_id')]) ?>
 							
 							<?= $form->field($product, 'ward_id', ['options' => ['class' => 'col-xs-12 form-group']])
 								->label(false)
-								->dropDownList(AdWard::getListByDistrict($product->district_id), ['prompt' => $product->getAttributeLabel('ward_id')]) ?>
+								->dropDownList(ArrayHelper::map(AdWard::getListByDistrict($product->district_id), 'id', 'name'), ['prompt' => $product->getAttributeLabel('ward_id')]) ?>
 								
 							<?= $form->field($product, 'street_id', ['options' => ['class' => 'col-xs-12 form-group']])
 								->label(false)
-								->dropDownList(AdStreet::getListByDistrict($product->district_id), ['prompt' => $product->getAttributeLabel('street_id')]) ?>
+								->dropDownList(ArrayHelper::map(AdStreet::getListByDistrict($product->district_id), 'id', 'name'), ['prompt' => $product->getAttributeLabel('street_id')]) ?>
 							
 							<div id="home-wrap">
 								<?= $form->field($product, 'home_no', ['options' => ['class' => 'col-xs-12 form-group']])
