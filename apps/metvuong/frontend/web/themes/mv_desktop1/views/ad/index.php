@@ -97,8 +97,7 @@ $this->registerJs($script, View::POS_BEGIN);
 													<?php 
 														$cities = AdCity::find()->all();
 														$citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
-														// $citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != AdProduct::DEFAULT_CITY)]; });
-														$citiesOptions = [];
+														$citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != AdProduct::DEFAULT_CITY)]; });
 													?>
 													<?= Html::activeDropDownList($searchModel, 'city_id', $citiesDropdown, ['class' => 'form-control select2 style-common area-select', 'options' => $citiesOptions]) ?>
 												</div>
