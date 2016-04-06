@@ -200,7 +200,7 @@ var form = {
 		
 		$('.preview').click(function(){
 			detailListing.show();
-			formView.hide();
+			//formView.hide();
 			
 			swiperWrap.html('');
 			var imgs = $('.files').children();
@@ -212,7 +212,9 @@ var form = {
 				swiper = new Swiper('.swiper-container', {
 					pagination: '.swiper-pagination',
 					paginationClickable: true,
-			        spaceBetween: 30
+			        spaceBetween: 0,
+			        nextButton: '.swiper-button-next',
+        			prevButton: '.swiper-button-prev'
 			    });
 			} else {
 				swiperContainer.hide();

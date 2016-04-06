@@ -289,7 +289,7 @@ use vsoft\ad\models\AdImages;
 									->textInput(['placeholder' => $contactInfo->getAttributeLabel('address')]) ?>
 						</div>
 						<div class="text-center pdT-25">
-							<button type="button" class="preview btn-common">Preview</button>
+							<button type="button" class="preview btn-common" data-toggle="modal" data-target="#review-listing-post">Preview</button>
 							<button type="button" class="btn-post btn-common"><?= $product->isNewRecord ? Yii::t('ad', 'Post') : Yii::t('ad', 'Update') ?></button>
 						</div>
 					</div>
@@ -332,161 +332,190 @@ use vsoft\ad\models\AdImages;
 	</div>
 <?php endif; ?>
 	
-<div class="detail-listing" style="display: none;">
-	<div class="gallery-detail swiper-container">
-		<div class="swiper-wrapper"></div>
-		<div class="swiper-pagination"></div>
-	</div>
-	
-	<p class="infor-by-up"></p>
-	
-	<div class="infor-listing">
-		<div class="address-listing">
-			<p></p>
-		</div>
-		<p class="id-duan">ID:<span>MV000</span></p>
-		<ul class="clearfix list-attr-td">
-			<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span><span class="area-show"></span>m2 </li>
-			<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bed-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bed-svg"></use></svg></span> <span class="bed-show"></span> </li>
-			<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bathroom-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bathroom-svg"></use></svg></span> <span class="toilet-show"></span> </li>
-		</ul>
-		<ul class="pull-right icons-detail">
-			<li><a href="#" data-toggle="modal" data-target="#popup-share-social" class="icon icon-share-td"></a></li>
-			<li><a href="#" class="icon save-item"></a></li>
-			<li><a href="#" data-toggle="modal" data-target="#popup-map" class="icon icon-map-loca"></a></li>
-		</ul>
-		<p class="price-td">
-			<span><?= Yii::t('ad', 'Price') ?></span>
-			<span class="price-show"></span>
-		</p>
-	</div>
-	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-        <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingOne">
-                <h4 class="panel-title">
-                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                        <?= Yii::t('ad', 'Content') ?><span class="icon"></span>
-                    </a>
-                </h4>
-            </div>
-            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-                <div class="panel-body" name="about" placeholder="Vui lòng chia sẻ tiểu sử">
-                    <p class="content-show"></p>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingTwo">
-                <h4 class="panel-title">
-                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        <?= Yii::t('ad', 'Detail Information') ?><span class="icon"></span>
-                    </a>
-                </h4>
-            </div>
-            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                <div class="panel-body" name="activity">
-                	<ul class="clearfix list-tienich-detail">
-						<li class="project-item"><strong><?= Yii::t('ad', 'Project') ?>:</strong> <span class="project-show"></span></li>
-						<li class="facade-width-item"><strong><?= Yii::t('ad', 'Facade') ?>:</strong> <span class="facade-width-show"></span>m</li>
-						<li class="land-width-item"><strong><?= Yii::t('ad', 'Entry width') ?>:</strong> <span class="land-width-show"></span>m</li>
-						<li class="floor-no-item"><strong><span id="floor-no-text"></span>:</strong> <span class="floor-no-show"></span></li>
-						<li class="home-di-item"><strong><?= Yii::t('ad', 'House direction') ?>:</strong> <span class="home-di-show"></span></li>
-						<li class="facade-di-item"><strong><?= Yii::t('ad', 'Balcony direction') ?>:</strong> <span class="facade-di-show"></span></li>
-						<li class="interior-item"><strong><?= Yii::t('ad', 'Furniture') ?>:</strong> <span class="interior-show"></span></li>
-                	</ul>
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingFour">
-                <h4 class="panel-title">
-                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                        <?= Yii::t('ad', 'Facilities') ?><span class="icon"></span>
-                    </a>
-                </h4>
-            </div>
-            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-                <div class="panel-body" name="experience" placeholder="Vui lòng nhập chia sẻ kinh nghiệm">
-                    
-                </div>
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingSeven">
-                <h4 class="panel-title">
-                    <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEght" aria-expanded="false" aria-controls="collapseSeven">
-                        <?= Yii::t('ad', 'Contact') ?><span class="icon"></span>
-                    </a>
-                </h4>
-            </div>
-            <div id="collapseEght" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven">
-                <div class="panel-body text-center">
-            	    <div class="infor-agent clearfix">
-			            <?php if(!empty($owner->username)) { ?>
-						<a href="#" class="wrap-img">
-			                <img src="<?= $avatar ?>" alt="" /></a>
-			            <?php } else { ?>
-			                <a class="wrap-img" href=""><img src="<?= $avatar ?>" alt="" /></a>
-			            <?php } ?>
-			            <div class="img-agent">
-				            <a href="" class="name-agent"></a>
-							<div class="rating-start">
-								<fieldset class="rate">
-									<input type="radio" id="rating10" name="rating" value="10"> <label
-										for="rating10" title="5 stars"> </label> <input type="radio"
-										id="rating9" name="rating" value="9"> <label for="rating9"
-										class="half" title="5 stars"> </label> <input type="radio"
-										id="rating8" name="rating" value="8"> <label for="rating8"
-										title="4 stars"> </label> <input type="radio" id="rating7"
-										name="rating" value="7"> <label for="rating7" class="half"
-										title="4 stars"> </label> <input type="radio" id="rating6"
-										name="rating" value="6"> <label for="rating6" title="3 stars"> </label>
-									<input type="radio" id="rating5" name="rating" value="5"> <label
-										for="rating5" class="half" title="3 stars"> </label> <input
-										type="radio" id="rating4" name="rating" value="4"> <label
-										for="rating4" title="2 stars"> </label> <input type="radio"
-										id="rating3" name="rating" value="3"> <label for="rating3"
-										class="half" title="2 stars"> </label> <input type="radio"
-										id="rating2" name="rating" value="2"> <label for="rating2"
-										title="1 stars"> </label> <input type="radio" id="rating1"
-										name="rating" value="1"> <label for="rating1" class="half"
-										title="1 stars"> </label>
-								</fieldset>
+<div id="review-listing-post" class="detail-listing modal fade popup-common" style="display: none;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="inner-popup">
+					<div class="wrap-swiper">
+						<div class="gallery-detail swiper-container">
+							<div class="swiper-wrapper"></div>
+							<div class="swiper-pagination"></div>
+							<div class="swiper-button-next"><span></span></div>
+							<div class="swiper-button-prev"><span></span></div>
+						</div>	
+					</div>
+		            
+					<div class="infor-listing">
+						<div class="address-feat clearfix">
+							<p class="infor-by-up"></p>
+							<div class="address-listing">
+								<p></p>
 							</div>
-							<div class="item-agent icon-phone-item">
-								<div>
-									<span class="icon icon-phone"></span>
-								</div>
-								<a class="phone-show" href="tel:"></a>
-							</div>
-							<div class="item-agent icon-email-item">
-								<div>
-									<span class="icon icon-email"></span>
-								</div>
-								<span class="email-show"></span>
-							</div>
-							<div class="item-agent address-icon-item">
-								<div>
-									<span class="icon address-icon"></span>
-								</div>
-								<span class="address-show"></span>
-							</div>
+							<p class="id-duan">ID:<span>MV000</span></p>
+							<ul class="clearfix list-attr-td">
+								<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span><span class="area-show"></span>m2 </li>
+								<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bed-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bed-svg"></use></svg></span> <span class="bed-show"></span> </li>
+								<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bathroom-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bathroom-svg"></use></svg></span> <span class="toilet-show"></span> </li>
+							</ul>
 						</div>
+						<ul class="pull-right icons-detail">
+							<li><a href="#" class="icon icon-share-td"></a></li>
+							<li><a href="#" class="icon save-item"></a></li>
+							<li><a href="#" data-toggle="modal" data-target="#popup-map" class="icon icon-map-loca"></a></li>
+						</ul>
+						<p class="price-td">
+							<span><?= Yii::t('ad', 'Price') ?></span>
+							<span class="price-show"></span>
+						</p>
 					</div>
-					<div class="text-center">
-						<a href="#" data-toggle="modal" data-target="#popup-email" class="email-btn btn-common btn-small">Email</a>
-						<?php if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) { ?>
-							<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small">Chat</a>
-						<?php }?>
-					</div>
-                </div>
-            </div>
+					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+				        <div class="panel panel-default">
+				            <div class="panel-heading" role="tab" id="headingOne">
+				                <h4 class="panel-title">
+				                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+				                        <?= Yii::t('ad', 'Content') ?>
+				                        <span class="edit-listing">
+					                    	<svg class="icon-svg icon-edit-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-edit-svg"></use></svg></span>
+					                    </span>
+				                        <span class="icon"></span>
+				                    </a>
+				                </h4>
+				            </div>
+				            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+				                <div class="panel-body" name="about" placeholder="Vui lòng chia sẻ tiểu sử">
+				                    <p class="content-show"></p>
+				                </div>
+				            </div>
+				        </div>
+				        <div class="panel panel-default">
+				            <div class="panel-heading" role="tab" id="headingTwo">
+				                <h4 class="panel-title">
+				                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+				                        <?= Yii::t('ad', 'Detail Information') ?>
+				                        <span class="edit-listing">
+					                    	<svg class="icon-svg icon-edit-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-edit-svg"></use></svg></span>
+					                    </span>
+				                        <span class="icon"></span>
+				                    </a>
+				                </h4>
+				            </div>
+				            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+				                <div class="panel-body" name="activity">
+				                	<ul class="clearfix list-tienich-detail">
+										<li class="project-item"><strong><?= Yii::t('ad', 'Project') ?>:</strong> <span class="project-show"></span></li>
+										<li class="facade-width-item"><strong><?= Yii::t('ad', 'Facade') ?>:</strong> <span class="facade-width-show"></span>m</li>
+										<li class="land-width-item"><strong><?= Yii::t('ad', 'Entry width') ?>:</strong> <span class="land-width-show"></span>m</li>
+										<li class="floor-no-item"><strong><span id="floor-no-text"></span>:</strong> <span class="floor-no-show"></span></li>
+										<li class="home-di-item"><strong><?= Yii::t('ad', 'House direction') ?>:</strong> <span class="home-di-show"></span></li>
+										<li class="facade-di-item"><strong><?= Yii::t('ad', 'Balcony direction') ?>:</strong> <span class="facade-di-show"></span></li>
+										<li class="interior-item"><strong><?= Yii::t('ad', 'Furniture') ?>:</strong> <span class="interior-show"></span></li>
+				                	</ul>
+				                </div>
+				            </div>
+				        </div>
+				        <div class="panel panel-default">
+				            <div class="panel-heading" role="tab" id="headingFour">
+				                <h4 class="panel-title">
+				                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+				                        <?= Yii::t('ad', 'Facilities') ?>
+				                        <span class="edit-listing">
+					                    	<svg class="icon-svg icon-edit-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-edit-svg"></use></svg></span>
+					                    </span>
+				                        <span class="icon"></span>
+				                    </a>
+				                </h4>
+				            </div>
+				            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+				                <div class="panel-body" name="experience" placeholder="Vui lòng nhập chia sẻ kinh nghiệm">
+				                    
+				                </div>
+				            </div>
+				        </div>
+				        <div class="panel panel-default">
+				            <div class="panel-heading" role="tab" id="headingSeven">
+				                <h4 class="panel-title">
+				                    <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEght" aria-expanded="false" aria-controls="collapseSeven">
+				                        <?= Yii::t('ad', 'Contact') ?>
+				                        <span class="edit-listing">
+					                    	<svg class="icon-svg icon-edit-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-edit-svg"></use></svg></span>
+					                    </span>
+				                        <span class="icon"></span>
+				                    </a>
+				                </h4>
+				            </div>
+				            <div id="collapseEght" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven">
+				                <div class="panel-body text-center">
+				            	    <div class="infor-agent clearfix">
+							            <?php if(!empty($owner->username)) { ?>
+										<a href="#" class="wrap-img">
+							                <img src="<?= $avatar ?>" alt="" /></a>
+							            <?php } else { ?>
+							                <a class="wrap-img" href=""><img src="<?= $avatar ?>" alt="" /></a>
+							            <?php } ?>
+							            <div class="img-agent">
+								            <a href="" class="name-agent"></a>
+											<div class="rating-start">
+												<fieldset class="rate">
+													<input type="radio" id="rating10" name="rating" value="10"> <label
+														for="rating10" title="5 stars"> </label> <input type="radio"
+														id="rating9" name="rating" value="9"> <label for="rating9"
+														class="half" title="5 stars"> </label> <input type="radio"
+														id="rating8" name="rating" value="8"> <label for="rating8"
+														title="4 stars"> </label> <input type="radio" id="rating7"
+														name="rating" value="7"> <label for="rating7" class="half"
+														title="4 stars"> </label> <input type="radio" id="rating6"
+														name="rating" value="6"> <label for="rating6" title="3 stars"> </label>
+													<input type="radio" id="rating5" name="rating" value="5"> <label
+														for="rating5" class="half" title="3 stars"> </label> <input
+														type="radio" id="rating4" name="rating" value="4"> <label
+														for="rating4" title="2 stars"> </label> <input type="radio"
+														id="rating3" name="rating" value="3"> <label for="rating3"
+														class="half" title="2 stars"> </label> <input type="radio"
+														id="rating2" name="rating" value="2"> <label for="rating2"
+														title="1 stars"> </label> <input type="radio" id="rating1"
+														name="rating" value="1"> <label for="rating1" class="half"
+														title="1 stars"> </label>
+												</fieldset>
+											</div>
+											<div class="item-agent icon-phone-item">
+												<div>
+													<span class="icon icon-phone"></span>
+												</div>
+												<a class="phone-show" href="tel:"></a>
+											</div>
+											<div class="item-agent icon-email-item">
+												<div>
+													<span class="icon icon-email"></span>
+												</div>
+												<span class="email-show"></span>
+											</div>
+											<div class="item-agent address-icon-item">
+												<div>
+													<span class="icon address-icon"></span>
+												</div>
+												<span class="address-show"></span>
+											</div>
+										</div>
+									</div>
+									<div class="text-center">
+										<a href="#" data-toggle="modal" data-target="#popup-email" class="email-btn btn-common btn-small">Email</a>
+										<?php if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) { ?>
+											<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small">Chat</a>
+										<?php }?>
+									</div>
+				                </div>
+				            </div>
 
-        </div>
-    </div>
-	<div class="text-center">
-		<button type="button" class="back-form btn-common"><?= Yii::t('ad', 'Back') ?></button>
-		<button type="button" class="btn-post btn-common"><?= $product->isNewRecord ? Yii::t('ad', 'Post') : Yii::t('ad', 'Update') ?></button>
+				        </div>
+				    </div>
+					<div class="text-center">
+						<button type="button" class="back-form btn-common"><?= Yii::t('ad', 'Back') ?></button>
+						<button type="button" class="btn-post btn-common"><?= $product->isNewRecord ? Yii::t('ad', 'Post') : Yii::t('ad', 'Update') ?></button>
+					</div>
+		        </div>
+			</div>
+		</div>
 	</div>
 </div>
 

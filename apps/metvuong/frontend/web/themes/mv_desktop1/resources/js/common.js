@@ -4,6 +4,16 @@ $(window).on('load', function () {
 
 $(document).ready(function() {
 
+    if ( !checkMobile() ) {
+        $('.collapse').on('show.bs.collapse hide.bs.collapse', function(e) {
+            e.preventDefault();
+        });
+        $('[data-toggle="collapse"]').on('click', function(e) {
+            e.preventDefault();
+            $($(this).data('target')).toggleClass('in');
+        });
+    }
+    
     $('.rating').barrating({
         showSelectedRating: false
     });

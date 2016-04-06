@@ -1826,6 +1826,7 @@ label {
     -ms-border-radius: 0;
     background: none;
     border-bottom: solid 1px #a5a5a5;
+    position: relative;
 }
 #headingOne {
     border-top: solid 1px #a5a5a5;
@@ -1918,8 +1919,9 @@ label {
     color: #3c3c3c;
     font-weight: 700;
     font-size: 15px;
+    cursor: default;
 }
-.panel-heading .panel-title a span {
+.panel-heading .panel-title a .icon {
     width: 24px;
     height: 2px;
     background-position: 0 -580px;
@@ -1927,7 +1929,7 @@ label {
     top: 21px;
     right: 0;
 }
-.panel-heading .panel-title a.collapsed span {
+.panel-heading .panel-title a.collapsed .icon {
     background-position: 0 -556px;
     height: 24px;
     margin-top: 0;
@@ -1935,9 +1937,7 @@ label {
 }
 .panel-heading .panel-title a.collapsed {
     background: #fff;
-}
-.panel-heading .panel-title a span {
-    
+    cursor: default;
 }
 .hide-dropdown {
     display: none;
@@ -2523,7 +2523,7 @@ footer {
 .wrap-list-duan .intro-detail {
     position: relative;
     color: #3c3c3c;
-    padding: 0 0 0 20px;
+    padding: 0 0 0 30px;
     overflow: hidden;
 }
 .wrap-list-duan .img-intro > a {
@@ -2561,6 +2561,10 @@ footer {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin-bottom: 8px;
+}
+.wrap-list-duan .address-feat {
+    margin-bottom: 10px;
 }
 .wrap-list-duan .loca-duan em {
     margin-right: 5px;
@@ -3708,6 +3712,11 @@ html.mm-opening .mm-slideout {
     padding: 25px 0;
     border-bottom: solid 1px #a5a5a5;
 }
+.wrap-list-duan .list-attr-td li {
+    width: auto;
+    padding: 0 10px 0 0;
+    border-bottom: none;
+}
 .wrap-list-duan li .img-show {
     position: relative;
     float: left;
@@ -3902,15 +3911,7 @@ html.mm-opening .mm-slideout {
     vertical-align: middle;
     width: 30px;
 }
-.wrap-list-duan .intro-detail > div {
-    margin-bottom: 7px;
-    font-size: 14px;
-}
 .wrap-list-duan .intro-detail .status-duan {
-    border-bottom: solid 0.5px #c8c8c8;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-    font-size: 13.5px;
     font-weight: 700;
     color: #3c3c3c;
 }
@@ -5465,7 +5466,7 @@ html.mm-opening .mm-slideout {
     color: #00a769;
     text-decoration: underline;
 }
-.list-menu li.acvite a {
+.list-menu li.active a {
     color: #00a769;
     font-weight: 700;
 }
@@ -6834,6 +6835,7 @@ footer li a {
         visibility: visible;
         border-bottom: solid 1px #a5a5a5;
         margin-bottom: 20px;
+        height: auto !important;
     }
     #collapseEght {
         border: none;
@@ -7911,6 +7913,7 @@ footer li a {
         margin: 0;
         height: 100%;
     }
+    #review-listing-post.modal:before,
     #popup-email.modal:before,
     #popup-map.modal:before {
         display: none;
@@ -7918,6 +7921,7 @@ footer li a {
     #map_detail {
         height: 100%;
     }
+    #review-listing-post .modal-content,
     #popup-email .modal-content,
     #popup-map .modal-content {
         box-shadow: none;
@@ -8086,8 +8090,9 @@ footer li a {
 .menuUser li a > div {
     display: inline-block;
     vertical-align: middle;
-    width: 50px;
+    width: 45px;
 }
+.menuUser li a.active,
 .menuUser li a:hover {
     background: #E8E8E8;
     color: #00a769;
@@ -8161,4 +8166,73 @@ footer li a {
     display: inline-block;
     margin-left: 10px;
     width: 50%;
+}
+.wrap-list-duan .bottom-feat-box {
+    padding: 10px 0;
+    font-size: 13px;
+}
+.icon-listing-svg {
+    width: 25px;
+    height: 30px;
+    fill: #00a769;
+}
+.icon-bell-svg {
+    fill: #FFFFFF;
+    width: 24px;
+    height: 30px;
+}
+.icon-chat-svg {
+    fill: #00a769;
+    width: 30px;
+    height: 30px;
+}
+.icon-setting-svg {
+    fill: #00a769;
+    width: 28px;
+    height: 28px;
+}
+#review-listing-post {
+    position: fixed;
+    height: 100%;
+}
+#review-listing-post .modal-dialog {
+    width: 750px;
+}
+#review-listing-post .inner-popup {
+    padding: 0 15px 30px;
+}
+#review-listing-post .gallery-detail {
+    margin: 0 -15px 15px;
+    height: auto;
+}
+.modal-backdrop.in {
+    background: none;
+    height: 100% !important;
+    position: fixed;
+}
+.modal-open .modal {
+    background: rgba(0, 0, 0, 0.45);
+}
+#review-listing-post .swiper-button-next span,
+#review-listing-post .swiper-button-prev span {
+    height: 25px;
+}
+.edit-listing {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+}
+@media ( max-width: 985px ) {
+    #review-listing-post .modal-dialog {
+        width: 100%;
+        margin: 0;
+    }
+    .edit-listing {
+        right: inherit;
+        left: 0;
+        position: static;
+        display: inline-block;
+        margin-left: 10px;
+    }
 }
