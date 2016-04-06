@@ -518,7 +518,6 @@ var listing = {
 		
 		listing.mapEl.off('mousedown').one('mousedown', function(){
 			listing._closeDetail();
-			console.log('close');
 		});
 	},
 	closeDetail: function(e) {
