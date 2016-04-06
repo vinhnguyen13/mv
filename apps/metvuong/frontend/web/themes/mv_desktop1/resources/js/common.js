@@ -142,35 +142,30 @@ $(document).ready(function() {
     	var url = searchForm.attr('action');
     	var ss = $('.suggest-search');
     	
-    	if(val.length > 2) {
-    		if($.data(this, 'v') != val) {
-    			$.data(this, 'v', val);
-            	
-    			if($.data(this, 'ajax')) {
-    				$.data(this, 'ajax').abort();
-    			}
-    			
-    			$.data(this, 'ajax', $.get(url, searchForm.serialize(), function(response){
-            		var cs = $('.content-suggest ul');
-            		
-            		if(response.length > 0) {
-            			ss.removeClass('hide');
-            			
-            			var html = '';
-            			for(var i in response) {
-            				html += '<li>' + response[i].full_name + ' <a href="' + response[i].url_sale + '">' + lajax.t('Sale') + ' (' + response[i].total_sell + ')</a><a href="' + response[i].url_rent + '">' + lajax.t('Rent') + ' (' + response[i].total_rent + ')</a></li>';
-                      	}
-            			
-            			$('.content-suggest ul').html(html);
-            		} else {
-            			ss.addClass('hide');
-            		}
-            	}));
-    		}
-    	} else {
-    		$.data(this, 'v', '');
-    		ss.addClass('hide');
-    	}
+    	if($.data(this, 'v') != val) {
+			$.data(this, 'v', val);
+        	
+			if($.data(this, 'ajax')) {
+				$.data(this, 'ajax').abort();
+			}
+			
+			$.data(this, 'ajax', $.get(url, searchForm.serialize(), function(response){
+        		var cs = $('.content-suggest ul');
+        		
+        		if(response.length > 0) {
+        			ss.removeClass('hide');
+        			
+        			var html = '';
+        			for(var i in response) {
+        				html += '<li>' + response[i].full_name + ' <a href="' + response[i].url_sale + '">' + lajax.t('Sale') + ' (' + response[i].total_sell + ')</a><a href="' + response[i].url_rent + '">' + lajax.t('Rent') + ' (' + response[i].total_rent + ')</a></li>';
+                  	}
+        			
+        			$('.content-suggest ul').html(html);
+        		} else {
+        			ss.addClass('hide');
+        		}
+        	}));
+		}
     });
 
     $(window).resize(function () {
