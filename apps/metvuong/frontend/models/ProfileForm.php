@@ -11,6 +11,7 @@ use frontend\models\Profile;
 use frontend\models\User;
 use yii\base\Model;
 use Yii;
+use yii\web\NotFoundHttpException;
 
 class ProfileForm extends Model
 {
@@ -169,6 +170,8 @@ class ProfileForm extends Model
         if($user){
             $profile = $user->profile;
             $profile->avatar = $profile->getAvatarUrl();
+        } else {
+            throw new NotFoundHttpException('Not Found');
         }
         $model = Yii::createObject([
             'class'    => ProfileForm::className(),
