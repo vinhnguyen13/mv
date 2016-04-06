@@ -8222,6 +8222,7 @@ footer li a {
     top: 0;
     right: 0;
     cursor: pointer;
+    z-index: 99;
 }
 @media ( max-width: 985px ) {
     #review-listing-post .modal-dialog {
@@ -8257,4 +8258,30 @@ footer li a {
 }
 .field-remove:hover .icon-close-svg {
     fill: #00a769;
+}
+.list-per-post .list-post li .edit-listing {
+    right: inherit;
+    left: 0;
+    z-index: 99;
+    padding: 5px;
+    background: rgb(0, 167, 105);
+}
+.list-per-post .list-post li .edit-listing svg {
+    fill: #fff;
+}
+.wrap-item-post {
+    position: relative;
+}
+#edit-listing {
+    stroke: #fff;
+}
+#detail-wrap .edit-listing {
+    background: rgb(0, 167, 105);
+    padding: 5px;
+    left: inherit;
+    right: 50px;
+}
+.edit-listing .edit-listing:hover,
+#detail-wrap .edit-listing:hover {
+    background: rgb(2, 220, 139);
 }
