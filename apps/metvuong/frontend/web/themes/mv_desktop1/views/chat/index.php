@@ -21,6 +21,7 @@ if(!empty($jid_id)){
 					<button class="btn-search-hist" href="#"><span class="icon icon-search-small"></span></button>
 				</div>
 				<div class="chat-list clearfix">
+					<div class="wrap-chat-list">
 					<?php
 					if(!empty($msgs)) {
 						foreach($msgs as $msg){
@@ -49,6 +50,7 @@ if(!empty($jid_id)){
 						}
 					}
 					?>
+					</div>
 				</div>
 				<div class="chat-live">
 					<div class="wrap-item-live clearfix">
@@ -74,6 +76,12 @@ if(!empty($jid_id)){
 
 <script>
 	$(document).ready(function () {
+
+		$('.wrap-chat-list').slimscroll({
+			alwaysVisible: true,
+			height: 500
+		});
+
 		var timer = 0;
 		$(document).bind('chat/withAnother', function (event, user) {
 			if(user){
