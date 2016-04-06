@@ -36,7 +36,7 @@ $count_product = $pagination->totalCount;
                                     <?php }
                                 }?>
                             </select>
-                            <span>(<?=$model->rating_no > 1 ? $model->rating_no . " " .Yii::t('profile', 'users') : $model->rating_no. " " .Yii::t('profile', 'user')?>)</span>
+                            <span>(<?=$model->rating_no > 1 ? $model->rating_no . " " .Yii::t('profile', 'reviews') : $model->rating_no. " " .Yii::t('profile', 'review')?>)</span>
                         </div>
                         <p class="location"><?= empty($user->location) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $user->location->city ?></p>
                         <p class="num-mobi"><?= empty($model->mobile) ?  "<a href='#'><i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i></a>" : "<a href='tel:".$model->mobile."'>".$model->mobile."</a>" ?></p>
