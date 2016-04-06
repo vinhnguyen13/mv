@@ -19,6 +19,7 @@ class ChatController extends Controller
     {
         $this->checkAccess();
         $this->view->params['noFooter'] = true;
+        $this->view->params['menuChat'] = true;
         return parent::beforeAction($action);
     }
 

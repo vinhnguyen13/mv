@@ -317,6 +317,7 @@ class MemberController extends Controller
 
     public function actionUpdateProfile($username)
     {
+        $this->view->params['menuUpdateProfile'] = true;
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Url::to(['member/login']));
         }

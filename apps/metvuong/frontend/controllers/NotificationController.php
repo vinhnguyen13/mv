@@ -22,6 +22,7 @@ class NotificationController extends Controller
     {
         $this->checkAccess();
         $this->view->params['noFooter'] = true;
+        $this->view->params['menuNotification'] = true;
         return parent::beforeAction($action);
     }
 

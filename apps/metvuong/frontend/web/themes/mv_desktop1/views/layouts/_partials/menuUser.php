@@ -3,9 +3,9 @@ use yii\helpers\Url;
 ?>
 <div class="menuUser">
     <ul class="clearfix">
-        <li><a href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>"><div><span class="icon icon-listings"></span></div><?=Yii::t('ad', 'Listings')?></a></li>
+        <li><a href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>" class="<?=!empty($this->params['menuDashboard']) ? 'active' : '' ;?>"><div><span class="icon icon-listings"></span></div><?=Yii::t('ad', 'Listings')?></a></li>
         <li>
-            <a href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" class="wrapNotifyOther">
+            <a href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" class="wrapNotifyOther <?=!empty($this->params['menuNotification']) ? 'active' : '' ;?>">
                 <div><span class="icon icon-alert"></span>
                     <?php if(!empty($this->params['notify_other'])){?>
                         <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
@@ -14,7 +14,7 @@ use yii\helpers\Url;
             </a>
         </li>
         <li>
-            <a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" class="wrapNotifyChat">
+            <a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" class="wrapNotifyChat <?=!empty($this->params['menuChat']) ? 'active' : '' ;?>">
                 <div>
                     <span class="icon icon-chat"></span>
                     <?php if(!empty($this->params['notify_chat'])){?>
@@ -23,7 +23,7 @@ use yii\helpers\Url;
                 </div><?=Yii::t('chat', 'Chat')?>
             </a>
         </li>
-        <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon icon-settings"></span></div><?=Yii::t('user', 'Setting')?></a></li>
+        <li><a href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>" class="<?=!empty($this->params['menuUpdateProfile']) ? 'active' : '' ;?>"><div><span class="icon icon-settings"></span></div><?=Yii::t('user', 'Setting')?></a></li>
 
     </ul>
 </div>
