@@ -25,8 +25,8 @@ class ProfileForm extends Model
     public $created_at;
     public $bio;
     public $about;
-    public $activity;
-    public $experience;
+    public $rating_point;
+    public $rating_no;
     public $slug;
     public $first_name;
     public $last_name;
@@ -61,7 +61,7 @@ class ProfileForm extends Model
     public function scenarios()
     {
         return [
-            'updateprofile' => ['user_id', 'name', 'public_email', 'phone', 'mobile', 'address', 'bio'],
+            'updateprofile' => ['user_id', 'name', 'public_email', 'phone', 'mobile', 'address', 'bio', 'rating_point', 'rating_no'],
             'password' => ['old_password', 'new_password'],
             'updateavatar' => ['avatar', 'created_at'],
             'updatebio' => ['bio'],
@@ -183,6 +183,8 @@ class ProfileForm extends Model
         $model->address = $profile->address;
         $model->avatar = $profile->avatar;
         $model->bio = $profile->bio;
+        $model->rating_point = $profile->rating_point;
+        $model->rating_no = $profile->rating_no;
         $model->created_at = Yii::$app->user->id;
         $model->user = $user;
         return $model;

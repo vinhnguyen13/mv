@@ -63,6 +63,8 @@ class Profile extends ActiveRecord
             'locationLength' => ['location', 'string', 'max' => 255],
             'websiteLength' => ['website', 'string', 'max' => 255],
             'address' => ['address', 'string', 'max' => 255],
+            'rating_point' => ['rating_point', 'integer'],
+            'rating_no' => ['rating_no', 'integer'],
         ];
     }
 
@@ -76,7 +78,7 @@ class Profile extends ActiveRecord
             'location'       => Yii::t('user', 'Location'),
             'website'        => Yii::t('user', 'Website'),
             'bio'            => Yii::t('user', 'Bio'),
-            'address'            => Yii::t('user', 'Address'),
+            'address'            => Yii::t('user', 'Address')
         ];
     }
 

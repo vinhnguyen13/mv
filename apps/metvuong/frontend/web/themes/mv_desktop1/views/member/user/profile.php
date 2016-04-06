@@ -9,7 +9,6 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
 
-
 // user get from username in address bar
 $user = $model->getUser();
 $recipientEmail = empty($model->public_email) ? $user->email : $model->public_email;
@@ -27,12 +26,17 @@ $count_product = $pagination->totalCount;
                         <p class="name-user fs-18 font-600" ><?= $model->name ?></p>
                         <div class="stars">
                             <select class="rating" name="rating">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
+                                <?php
+                                $rating_point = floor($model->rating_point);
+                                for($i=1; $i<=5; $i++) {
+                                    if ($i == $rating_point) { ?>
+                                        <option value="<?=$i?>" selected><?=$i?></option>
+                                    <?php } else { ?>
+                                        <option value="<?=$i?>"><?=$i?></option>
+                                    <?php }
+                                }?>
                             </select>
+                            <span>(<?=$model->rating_no > 1 ? $model->rating_no . " " .Yii::t('profile', 'users') : $model->rating_no. " " .Yii::t('profile', 'user')?>)</span>
                         </div>
                         <p class="location"><?= empty($user->location) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $user->location->city ?></p>
                         <p class="num-mobi"><?= empty($model->mobile) ?  "<a href='#'><i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i></a>" : "<a href='tel:".$model->mobile."'>".$model->mobile."</a>" ?></p>
@@ -191,90 +195,19 @@ $count_product = $pagination->totalCount;
                 </div>
                 <?php } ?>
                 <div id="tab-review" class="review-user tabs-scroll-item">
-                    <div class="title-text clearfix">REVIEW
-                        <a href="#" data-toggle="modal" data-target="#popup-review" class="btn-review btn-common pull-right">Viết Review</a>
+                    <div class="title-text clearfix"><?=Yii::t('profile', 'REVIEW')?>
+                        <?php if(Yii::$app->user->id != $user->id) {
+                            if (Yii::$app->user->isGuest) { ?>
+                                <a href="#"
+                                   class="btn-review btn-common pull-right user-login-link"><?= Yii::t('profile', 'Write Review') ?></a>
+                            <?php } else { ?>
+                                <a href="#" data-toggle="modal" data-target="#popup-review"
+                                   class="btn-review btn-common pull-right"><?= Yii::t('profile', 'Write Review') ?></a>
+                            <?php }
+                        } ?>
                     </div>
-                    <ul class="list-reivew">
-                        <li>
-                            <div class="stars">
-                                <select class="rating" name="rating">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </div>
-                            <p class="infor-user-review"><a href="#">Gao Ranger</a>12/02/2016, 8:30AM | Giúp tôi thuê nhà</p>
-                            <p>Quisque varius iaculis odio sit amet elementum. Nunc porta cursus est a pretium. 
-                                Nullam non metus tristique sem hendrerit tincidunt ac aliquet lectus. 
-                                Vivamus ultrices laoreet convallis. Duis varius ultrices condimentum.
-                                Quisque varius iaculis odio sit amet elementum. Nunc porta cursus est a pretium. 
-                                Nullam non metus tristique sem hendrerit tincidunt ac aliquet lectus. 
-                                Vivamus ultrices laoreet convallis. Duis varius ultrices condimentum.
-                            </p>
-                        </li>
-                        <li>
-                            <div class="stars">
-                                <select class="rating" name="rating">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </div>
-                            <p class="infor-user-review"><a href="#">Gao Ranger</a>12/02/2016, 8:30AM | Giúp tôi thuê nhà</p>
-                            <p>Quisque varius iaculis odio sit amet elementum. Nunc porta cursus est a pretium. 
-                                Nullam non metus tristique sem hendrerit tincidunt ac aliquet lectus. 
-                                Vivamus ultrices laoreet convallis. Duis varius ultrices condimentum.
-                                Quisque varius iaculis odio sit amet elementum. Nunc porta cursus est a pretium. 
-                                Nullam non metus tristique sem hendrerit tincidunt ac aliquet lectus. 
-                                Vivamus ultrices laoreet convallis. Duis varius ultrices condimentum.
-                            </p>
-                        </li>
-                        <li>
-                            <div class="stars">
-                                <select class="rating" name="rating">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </div>
-                            <p class="infor-user-review"><a href="#">Gao Ranger</a>12/02/2016, 8:30AM | Giúp tôi thuê nhà</p>
-                            <p>Quisque varius iaculis odio sit amet elementum. Nunc porta cursus est a pretium. 
-                                Nullam non metus tristique sem hendrerit tincidunt ac aliquet lectus. 
-                                Vivamus ultrices laoreet convallis. Duis varius ultrices condimentum.
-                                Quisque varius iaculis odio sit amet elementum. Nunc porta cursus est a pretium. 
-                                Nullam non metus tristique sem hendrerit tincidunt ac aliquet lectus. 
-                                Vivamus ultrices laoreet convallis. Duis varius ultrices condimentum.
-                            </p>
-                        </li>
-                        <li>
-                            <div class="stars">
-                                <select class="rating" name="rating">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </div>
-                            <p class="infor-user-review"><a href="#">Gao Ranger</a>12/02/2016, 8:30AM | Giúp tôi thuê nhà</p>
-                            <p>Quisque varius iaculis odio sit amet elementum. Nunc porta cursus est a pretium. 
-                                Nullam non metus tristique sem hendrerit tincidunt ac aliquet lectus. 
-                                Vivamus ultrices laoreet convallis. Duis varius ultrices condimentum.
-                                Quisque varius iaculis odio sit amet elementum. Nunc porta cursus est a pretium. 
-                                Nullam non metus tristique sem hendrerit tincidunt ac aliquet lectus. 
-                                Vivamus ultrices laoreet convallis. Duis varius ultrices condimentum.
-                            </p>
-                        </li>
-                    </ul>
-                    <div class="text-right">
-                        <a href="#" class="color-cd fs-13 font-600">Xem tất cả Review</a>
-                    </div>
+                    <?php $reviews = \frontend\models\UserReview::find()->where('review_id = :rid', [':rid' => $user->id])->orderBy(['created_at' => SORT_DESC])->all(); ?>
+                    <?=$this->render('/member/_partials/review', ['reviews' => $reviews])?>
                 </div>
             </div>
 
@@ -328,29 +261,52 @@ $count_product = $pagination->totalCount;
                     <div class="inner-popup">
                         <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
                         <div class="review-box-popup">
-                            <h2 class="color-cd fs-18 text-uper font-600 mgB-20">REVIEW SILVER RANGER</h2>
+                            <h2 class="color-cd fs-18 text-uper font-600 mgB-20"><?=Yii::t('profile', 'REVIEW')?> <?= empty($model->name) ? strtoupper($user->username) : mb_strtoupper($model->name, "UTF-8") ?></h2>
                             <p class="fs-13 mgB-10">Tell us about your experience with this agent. Your review will help other users find the agent that's right for them.</p>
-                            <p class="fs-13 mgB-5 font-600">Môi giới này đã</p>
-                            <select name="" id="" class="mgB-15">
-                                <option value="">Giúp tôi thuê nhà</option>
-                            </select>
-                            <div class="check-rating mgB-15">
-                                <span class="font-600 fs-13 pdR-10">Rate this agent</span>
-                                <div class="stars">
-                                    <select class="rating" name="rating">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
+                            <form id="review-form"
+                                  action="<?=Url::to(['/member/review', 'review_id' => $user->id,
+                                            'name' => (empty(Yii::$app->user->identity->profile->name) ? (Yii::$app->user->isGuest ? "" : Yii::$app->user->identity->username) : Yii::$app->user->identity->profile->name),
+                                            'username' => (Yii::$app->user->isGuest ? "" : Yii::$app->user->identity->username)])?>">
+                                <p class="fs-13 mgB-5 font-600">Môi giới này đã</p>
+                                <select name="review_type" id="review_type" class="mgB-15">
+                                    <option value="1">Giúp tôi mua nhà</option>
+                                    <option value="2">Giúp tôi thuê nhà</option>
+                                </select>
+                                <div class="check-rating mgB-15">
+                                    <span class="font-600 fs-13 pdR-10">Rate this agent</span>
+                                    <div class="stars">
+                                        <select class="rating" name="rating">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <p class="fs-13 mgB-5 font-600">Viết review</p>
-                            <textarea class="pd-5 mgB-5" name="" id="" cols="30" rows="10" placeholder="Nội dung"></textarea>
-                            <div class="text-right">
-                                <button class="btn-common">GỬI</button>
-                            </div>
+                                <p class="fs-13 mgB-5 font-600">Review content</p>
+                                <textarea class="pd-5 mgB-5" name="review_content" id="review_content" cols="30" rows="10" placeholder="Nội dung"></textarea>
+                                <div class="text-right">
+                                    <button class="btn-common send_review">GỬI</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="popup-login" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
+                <div class="wrap-popup">
+                    <div class="inner-popup">
+                        <div class="wrap-body-popup">
+
                         </div>
                     </div>
                 </div>
@@ -361,6 +317,40 @@ $count_product = $pagination->totalCount;
 
 <script>
     $(document).ready(function () {
+        $(document).on('click', '.user-login-link', function (e) {
+            e.preventDefault();
+            $('body').loading();
+            $.ajax({
+                type: "get",
+                url: "<?=Url::to(['/member/login'])?>",
+                success: function (data) {
+                    $('body').loading({done: true});
+                    $('#popup-login .wrap-body-popup').html(data);
+                    $('#popup-login').modal('show');
+                }
+            });
+
+        });
+
+        $(document).on('click', '.send_review', function (e) {
+            e.preventDefault();
+            $('body').loading();
+            $.ajax({
+                type: "post",
+                dataType: 'json',
+                url: $('#review-form').attr('action'),
+                data: $('#review-form').serializeArray(),
+                success: function (data) {
+                    $('#popup-review').modal('hide');
+                    $('body').loading({done:true});
+                    if(data.statusCode == 200) {
+                        window.location.reload();
+                    }
+                    return true;
+                }
+            });
+            return false;
+        });
 
         $('#profile_send_mail .btn-send-email').click( function(){
             var recipient_email = $('#profile_send_mail .recipient_email').val();

@@ -4,11 +4,13 @@ namespace frontend\controllers;
 use frontend\components\Finder;
 use dektrium\user\helpers\Password;
 use frontend\models\LoginForm;
+use frontend\models\Profile;
 use frontend\models\RegistrationForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\Token;
 use frontend\models\User;
 use frontend\models\UserLocation;
+use frontend\models\UserReview;
 use vsoft\ad\models\AdProduct;
 use Yii;
 use yii\base\InvalidParamException;
@@ -415,6 +417,49 @@ class MemberController extends Controller
         ]);
     }
 
+    public function actionReview($review_id, $name, $username){
+        $this->checkAccess();
+        $model = UserReview::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['review_id' => $review_id])->one();
+        if(empty($model))
+            $model = new UserReview();
+        if(Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $post = Yii::$app->request->post();
+            if(count($post) > 0) {
+                $model->user_id = Yii::$app->user->id;
+                $model->review_id = $review_id;
+                $model->name = $name;
+                $model->username = $username;
+                $model->rating = isset($post["rating"]) ? (int)$post["rating"] : 0;
+                $model->type = isset($post["review_type"]) ? (int)$post["review_type"] : 1;
+                $model->description = isset($post["review_content"]) ? $post["review_content"] : null;
+                $model->created_at = time();
+                $model->validate();
+                if (!$model->hasErrors() && $model->save()) {
+                    // update rating point in profile
+                    $reviews = UserReview::find()->where(['review_id' => $review_id])->orderBy(['created_at' => SORT_DESC])->all();
+                    $countReview = count($reviews);
+                    if($countReview > 0){
+                        $sumRating = 0;
+                        foreach($reviews as $review){
+                            $sumRating = $sumRating + $review->rating;
+                        }
+                        $avgRating = floor($sumRating/$countReview);
+                        $user = User::findIdentity($review_id);
+                        $profile = $user->profile;
+                        $profile->rating_point = $avgRating;
+                        $profile->rating_no = $countReview;
+                        $profile->save();
 
+                        return ['statusCode' => 200, 'review' => $model, 'profile' => $profile];
+                    }
+                    return ['statusCode' => 200, 'send_status' => true];
+                } else {
+                    return ['statusCode' => 400, 'parameters' => $model->errors];
+                }
+            }
+        }
+        return ['statusCode' => 404];
+    }
 
 }
