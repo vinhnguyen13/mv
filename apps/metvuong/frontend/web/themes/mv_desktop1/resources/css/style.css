@@ -2320,6 +2320,7 @@ label {
     background-color: #EAEAEA;
     text-decoration: none;
 }
+.list-redire li a .notifi,
 .menuUser li a .notifi,
 .user-login .val-selected .notifi,
 .item-dropdown li a .notifi,
@@ -8284,4 +8285,33 @@ footer li a {
 .edit-listing .edit-listing:hover,
 #detail-wrap .edit-listing:hover {
     background: rgb(2, 220, 139);
+}
+.list-redire {
+    padding: 20px 0 0;
+    margin-right: 10px;
+}
+.list-redire li {
+    float: left;
+    margin-left: 20px;
+}
+.list-redire li a {
+    position: relative;
+}
+.list-redire li a .notifi {
+    top: -7px;
+    left: 13px;
+}
+.list-redire li a .icon-bell-svg {
+    width: 20px;
+    height: 24px;
+}
+#hover-bell {
+    stroke: #3c3c3c;
+}
+.list-redire li a .icon-email-svg {
+    width: 25px;
+    height: 17px;
+}
+#hover-bell:hover {
+    stroke: red;
 }

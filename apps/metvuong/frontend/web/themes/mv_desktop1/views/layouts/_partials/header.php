@@ -110,6 +110,31 @@ use frontend\models\AdProductSearch;
                     </div>
                 </div>
                 <?php } else{?>
+                    <ul class="pull-left list-redire">
+                        <li>
+                            <a href="#">
+                                <span class="wrap-icon-svg">
+                                    <svg class="icon-svg icon-email-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-email-svg"></use></svg>
+                                </span>
+                                <span class="notifi">5</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="wrap-icon-svg">
+                                    <svg class="icon-svg icon-bell-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bell-svg"></use></svg>
+                                </span>
+                                <span class="notifi">5</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="wrap-icon-svg">
+                                    <svg class="icon-svg icon-dasboar-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dasboar-svg"></use></svg>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
                     <div class="user-edit box-dropdown">
                         <a class="val-selected wrapNotifyTotal" href="#" title="Trang cá nhân">
                             <span class="wrap-img"><img src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="" width="40" height="40"></span>
