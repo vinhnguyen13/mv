@@ -58,6 +58,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 </script>
 <div class="title-fixed-wrap">
     <div class="container">
+        <?php $this->beginContent('@app/views/layouts/_partials/menuUser.php'); ?><?php $this->endContent();?>
         <div class="statis">
         	<div class="title-top">
                 <?=Yii::t('statistic','Statistic')?>
