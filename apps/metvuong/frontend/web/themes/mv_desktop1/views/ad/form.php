@@ -226,13 +226,13 @@ use vsoft\ad\models\AdImages;
 							
 							<div id="addition-field-template" style="display: none;">
 								<div class="addition-field row">
-									<?= $form->field($additionInfo, 'addition_fields', ['options' => ['class' => 'col-xs-3 form-group']])
+									<?= $form->field($additionInfo, 'addition_fields', ['options' => ['class' => 'col-xs-12 col-md-4 col-sm-4 col-lg-4 form-group']])
 											->label(false)
 											->textInput(['placeholder' => Yii::t('ad', 'Title'), 'class' => 'form-control field-title', 'id' => false]) ?>
-									<?= $form->field($additionInfo, 'addition_fields', ['options' => ['class' => 'col-xs-7 form-group']])
+									<?= $form->field($additionInfo, 'addition_fields', ['options' => ['class' => 'col-xs-9 col-md-7 pdL-0 pdR-0 col-sm-5 col-lg-7 form-group']])
 											->label(false)
 											->textInput(['placeholder' => Yii::t('ad', 'Content'), 'class' => 'form-control field-content', 'id' => false]) ?>
-									<div class="col-xs-2">
+									<div class="col-xs-3 col-md-1 col-lg-1 text-center pdL-0">
 										<button class="field-remove" type="button">
 											<svg class="icon-svg icon-close-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-close-svg"></use></svg>
 										</button>

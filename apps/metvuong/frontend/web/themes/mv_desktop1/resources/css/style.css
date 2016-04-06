@@ -6851,8 +6851,8 @@ footer li a {
     #headingOne {
         border: none;
     }
-    .panel-heading .panel-title a span,
-    .panel-heading .panel-title a.collapsed span {
+    .panel-heading .panel-title a .icon,
+    .panel-heading .panel-title a.collapsed .icon {
         display: none;
     }
     .panel-heading .panel-title a.collapsed {
@@ -8234,6 +8234,16 @@ footer li a {
         position: static;
         display: inline-block;
         margin-left: 10px;
+    }
+    .item-step select,
+    .item-step input {
+        height: 35px;
+        font-size: 13px;
+    }
+    .item-step textarea {
+        font-size: 13px;
+        height: 80px;
+        resize: none;
     }
 }
 .field-remove {
