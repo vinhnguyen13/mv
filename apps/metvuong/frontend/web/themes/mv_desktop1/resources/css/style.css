@@ -2583,7 +2583,7 @@ footer {
     display: none;
 }
 .statis section {
-    padding: 15px 15px 0;
+    padding: 30px 0 0 0;
 }
 #sandbox-container input {
     border-radius: 0;
@@ -3003,7 +3003,7 @@ html.mm-opening .mm-slideout {
     border-bottom: 1px solid #c4c4c4;
 }
 .statis .panel-heading .panel-title a {
-    background-color: #F2F2F2;
+    background-color: #EFEFEF;
     line-height: 100%;
 }
 .statis .panel-default>.panel-heading+.panel-collapse>.panel-body {
@@ -5341,25 +5341,25 @@ html.mm-opening .mm-slideout {
     text-align: center;
 }
 .option-view-stats li {
-    display: inline-block;
-    width: 30%;
-    margin-right: 3.25%;
+    width: 33.333%;
+    float: left;
 }
 .option-view-stats li:last-child {
     margin-right: 0;
 }
 .option-view-stats li a {
     display: block;
-    background-color: #f0f0f0;
     color: #3c3c3c;
     font-weight: 600;
     text-transform: capitalize;
     padding: 6px 14px 8px;
     font-size: 15px;
+    border-right: 1px solid #BDBDBD;
+    text-transform: uppercase;
+    line-height: 100%;
 }
-.option-view-stats li a.active {
-    background-color: #00a769;
-    color: #fff;
+.option-view-stats li:last-child a {
+    border-right: none;
 }
 @media (min-width: 985px) {
     .search-homepage > ul,
@@ -5926,6 +5926,7 @@ footer li a {
         margin: 0 0 0 0;
         font-weight: 600;
         line-height: 100%;
+        display: none;
     }
     .select-type {
         padding: 0;
@@ -8070,7 +8071,7 @@ footer li a {
 .menuUser li a {
     display: block;
     border-bottom: 1px solid #a5a5a5;
-    padding: 15px 50px 15px 20px;
+    padding: 15px 30px 15px 20px;
     text-transform: uppercase;
     position: relative;
 }
@@ -8090,6 +8091,7 @@ footer li a {
 .menuUser li a .notifi {
     left: 50px;
 }
+.statis,
 .noti-alert,
 .edit-user-tt,
 .u-allduan {
@@ -8430,6 +8432,7 @@ footer li a {
 .list-social-login li a.facebook,
 .list-social-login li a.google {
     max-width: 100%;
+    width: 100%;
 }
 .icon-heart-svg,
 .icon-eye-svg {
