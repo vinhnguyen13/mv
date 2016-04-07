@@ -331,6 +331,7 @@ var form = {
 			if(swiperWrap.html()) {
 				swiper.destroy(false, true);
 			}
+			$('#review-listing-post').modal('hide');
 		});
 		
 		$('#add-field').click(function(){
