@@ -74,7 +74,7 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 	<div class="title-fixed-wrap">
 	    <div class="detail-listing row detail-listing-extra">
 	    	<div id="detail-wrap" class="col-xs-12 col-md-9 col-left">
-				<?php if($owner): ?>
+				<?php if(Yii::$app->user->identity && Yii::$app->user->identity->id == $product->user_id): ?>
 				<a href="<?= Url::to(['update', 'id' => $product->id]) ?>" class="edit-listing">
 					<svg class="icon-svg edit-listing-white"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit-listing-white"></use></svg></a>
 				<?php endif; ?>
