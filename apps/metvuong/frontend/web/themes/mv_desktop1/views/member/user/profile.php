@@ -354,7 +354,7 @@ $count_product = $pagination->totalCount;
                     $('#popup-review').modal('hide');
                     $('body').loading({done:true});
                     if(data.statusCode == 200) {
-//                        window.location.reload();
+                        window.location.reload();
                     }
                     return true;
                 }
