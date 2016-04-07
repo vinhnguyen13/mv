@@ -8333,7 +8333,7 @@ footer li a {
     position: relative;
     display: -moz-inline-box;
     display: inline-block;
-    background: url(../images/icon-star.png);
+    background: url(../images/icon-star.png) no-repeat top left;
     background-size: 103px 56px;
     height: 16px;
     outline: none;
@@ -8369,7 +8369,7 @@ footer li a {
 
 .rateit .rateit-hover
 {
-    background: url(../images/icon-star.png) 0px -39px;
+    background: url(../images/icon-star.png) no-repeat 1px -38px;
     background-size: 103px 56px;
 }
 
@@ -8380,8 +8380,8 @@ footer li a {
 
 .rateit .rateit-selected
 {
-    background: url(../images/icon-star.png) 0px -17px;
-    background-size: 18px 51px;
+    background: url(../images/icon-star.png) no-repeat 1px -19px;
+    background-size: 103px 56px;
 }
 
 .rateit .rateit-selected-rtl

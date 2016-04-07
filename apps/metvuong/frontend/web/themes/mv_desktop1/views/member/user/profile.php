@@ -25,7 +25,8 @@ $count_product = $pagination->totalCount;
                     <div class="overflow-all">
                         <p class="name-user fs-18 font-600" ><?= $model->name ?></p>
                         <div class="stars">
-                            <select class="rating" name="rating">
+                            <span class="rateit"></span>
+                            <!-- <select class="rating" name="rating">
                                 <?php
                                 $rating_point = floor($model->rating_point);
                                 for($i=1; $i<=5; $i++) {
@@ -36,7 +37,7 @@ $count_product = $pagination->totalCount;
                                     <?php }
                                 }?>
                             </select>
-                            <span>(<?=$model->rating_no > 1 ? $model->rating_no . " " .Yii::t('profile', 'reviews') : $model->rating_no. " " .Yii::t('profile', 'review')?>)</span>
+                            <span>(<?=$model->rating_no > 1 ? $model->rating_no . " " .Yii::t('profile', 'reviews') : $model->rating_no. " " .Yii::t('profile', 'review')?>)</span> -->
                         </div>
                         <p class="location"><?= empty($user->location) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $user->location->city ?></p>
                         <p class="num-mobi"><?= empty($model->mobile) ?  "<a href='#'><i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i></a>" : "<a href='tel:".$model->mobile."'>".$model->mobile."</a>" ?></p>
@@ -76,7 +77,7 @@ $count_product = $pagination->totalCount;
                                 <li class="col-xs-12 col-sm-6">
                                     <div class="wrap-item-post">
                                         <a href="<?= Url::to(['/ad/update', 'id' => $product->id]) ?>" class="edit-listing">
-                                            <svg class="icon-svg icon-edit-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-edit-svg"></use></svg></a>
+                                            <svg class="icon-svg edit-listing-white"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit-listing-white"></use></svg></a>
                                         <a href="<?= $product->urlDetail() ?>" class="rippler rippler-default">
                                             <div class="img-show"><div><img src="<?= $product->representImage ?>">
                                                     <input type="hidden" value="<?= $product->representImage ?>">
@@ -120,7 +121,7 @@ $count_product = $pagination->totalCount;
                                     <li class="col-xs-12 col-sm-6">
                                         <div class="wrap-item-post">
                                             <a phref="#" class="edit-listing">
-                                            <svg class="icon-svg icon-edit-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-edit-svg"></use></svg></a>
+                                            <svg class="icon-svg edit-listing-white"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit-listing-white"></use></svg></a>
                                             <a href="<?= $product->urlDetail() ?>" class="rippler rippler-default">
                                                 <div class="img-show"><div><img src="<?= $product->representImage ?>">
                                                         <input type="hidden" value="<?= $product->representImage ?>">
@@ -157,7 +158,7 @@ $count_product = $pagination->totalCount;
                                     <li class="col-xs-12 col-sm-6">
                                         <div class="wrap-item-post">
                                             <a phref="#" class="edit-listing">
-                                            <svg class="icon-svg icon-edit-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-edit-svg"></use></svg></a>
+                                            <svg class="icon-svg edit-listing-white"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit-listing-white"></use></svg></a>
                                             <a href="<?= $product->urlDetail() ?>" class="rippler rippler-default">
                                                 <div class="img-show"><div><img src="<?= $product->representImage ?>">
                                                         <input type="hidden" value="<?= $product->representImage ?>">

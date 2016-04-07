@@ -72,7 +72,7 @@ Yii::$app->view->registerMetaTag([
 					if($images):
 				?>
 				<a href="<?= Url::to(['update', 'id' => $product->id]) ?>" class="edit-listing">
-					<svg class="icon-svg icon-edit-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-edit-svg"></use></svg></a>
+					<svg class="icon-svg edit-listing-white"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit-listing-white"></use></svg></a>
 				<div class="wrap-swiper">
 					<div class="gallery-detail swiper-container">
 						<div class="swiper-wrapper">
