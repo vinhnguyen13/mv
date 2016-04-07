@@ -71,6 +71,9 @@ class AdContactInfo extends ACI
 	 * Auto register user for agent
 	 */
 	public function getUserInfo() {
+		if(empty(Yii::$app->setting->get('generateAccount'))){
+			return false;
+		}
 		if(($user = User::findOne(['email'=>$this->email])) != null) {
 			return $user;
 		}else{

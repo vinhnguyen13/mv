@@ -29,7 +29,9 @@ use vsoft\ad\models\AdProductAdditionInfo;
 		 */
 		if($product->adContactInfo->email){
 			$user = $product->adContactInfo->getUserInfo();
-			$url = $user->urlProfile();
+			if(!empty($user)){
+				$url = $user->urlProfile();
+			}
 		}
 		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
 	}
