@@ -512,9 +512,9 @@ var listing = {
 			wrapDetailListing.loading({done: true});
 			
 			$('.btn-extra').attr('href', detailListing.find('.btn-copy').data('clipboard-text'));
-			
-			location.hash = id;
 		});
+		
+		location.hash = id;
 		
 		listing.mapEl.off('mousedown').one('mousedown', function(){
 			listing._closeDetail();
@@ -525,11 +525,11 @@ var listing = {
 		listing._closeDetail();
 	},
 	_closeDetail: function() {
+		location.hash = '';
 		listing.closeTimeout = setTimeout(function(){
 			listing.detailListing.css({
 				left: '0px'
 			});
-			location.hash = '';
 		}, 100);
 	},
 	more: function() {
