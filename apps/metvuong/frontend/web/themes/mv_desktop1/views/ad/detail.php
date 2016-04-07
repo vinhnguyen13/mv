@@ -67,12 +67,14 @@ Yii::$app->view->registerMetaTag([
 	<div class="title-fixed-wrap">
 	    <div class="detail-listing row detail-listing-extra">
 	    	<div id="detail-wrap" class="col-xs-12 col-md-9 col-left">
+				<?php if($owner): ?>
+				<a href="<?= Url::to(['update', 'id' => $product->id]) ?>" class="edit-listing">
+					<svg class="icon-svg edit-listing-white"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit-listing-white"></use></svg></a>
+				<?php endif; ?>
 				<?php
 					$images = $product->adImages;
 					if($images):
 				?>
-				<a href="<?= Url::to(['update', 'id' => $product->id]) ?>" class="edit-listing">
-					<svg class="icon-svg edit-listing-white"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit-listing-white"></use></svg></a>
 				<div class="wrap-swiper">
 					<div class="gallery-detail swiper-container">
 						<div class="swiper-wrapper">
