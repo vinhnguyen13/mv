@@ -39,9 +39,26 @@ $count_product = $pagination->totalCount;
                             </select>
                             <span>(<?=$model->rating_no > 1 ? $model->rating_no . " " .Yii::t('profile', 'reviews') : $model->rating_no. " " .Yii::t('profile', 'review')?>)</span> -->
                         </div>
-                        <p class="location"><?= empty($user->location) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $user->location->city ?></p>
-                        <p class="num-mobi"><?= empty($model->mobile) ?  "<a href='#'><i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i></a>" : "<a href='tel:".$model->mobile."'>".$model->mobile."</a>" ?></p>
-                        <p class="email-user"><a href="#popup-email" class="email-btn"><?= empty($model->public_email) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->public_email ?></a></p>
+                        <p class="location">
+                            <span class="wrap-icon-svg">
+                                <svg class="icon-svg icon-location-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-location-svg"></use></svg>
+                            </span>
+                            <?= empty($user->location) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $user->location->city ?>
+                        </p>
+                        <p class="num-mobi">
+                            <span class="wrap-icon-svg">
+                                <svg class="icon-svg icon-bell-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bell-svg"></use></svg>
+                            </span>
+                            <?= empty($model->mobile) ?  "<a href='#'><i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i></a>" : "<a href='tel:".$model->mobile."'>".$model->mobile."</a>" ?>
+                        </p>
+                        <p class="email-user">
+                            <a href="#popup-email" class="email-btn">
+                                <span class="wrap-icon-svg">
+                                    <svg class="icon-svg icon-email-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-email-svg"></use></svg>
+                                </span>
+                                <?= empty($model->public_email) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->public_email ?>
+                            </a>
+                        </p>
                     </div>
                 </div>
                 <ul class="clearfix tabs-scroll">

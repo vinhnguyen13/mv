@@ -10,7 +10,6 @@ use yii\helpers\Html;
 	<div class="container">
 		<?php $this->beginContent('@app/views/layouts/_partials/menuUser.php'); ?><?php $this->endContent();?>
 		<div class="noti-alert">
-			<div class="title-top"><?=Yii::t('activity', 'Notification')?></div>
 			<?php
 			$query = \frontend\models\UserActivity::find();
 	//		$query->andWhere(['params.owner'=>[1]]);

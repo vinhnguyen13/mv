@@ -114,7 +114,7 @@ use frontend\models\AdProductSearch;
                         <li>
                             <a class="tooltip-show wrapNotifyChat" href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('chat', 'Chat')?>">
                                 <span class="wrap-icon-svg">
-                                    <svg class="icon-svg icon-email-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-email-svg"></use></svg>
+                                    <svg class="icon-svg icon-chat-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-chat-svg"></use></svg>
                                 </span>
                                 <?php if(!empty($this->params['notify_chat'])){?>
                                     <span id="notifyChat" class="notifi"><?=$this->params['notify_chat'];?></span>

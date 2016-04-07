@@ -2893,6 +2893,7 @@ html.mm-opening .mm-slideout {
     border: 1px solid #B3B3B3;
     border-left: none;
     border-right: none;
+    font-size: 14px;
 }
 .type-input-chat .sm-chat {
     position: absolute;
@@ -6186,7 +6187,7 @@ footer li a {
         display: none;
     }
     .wrap-noti {
-        width: 850px;
+        /* width: 850px; */
         margin: 30px auto 0;
     }
     .search-history {
@@ -7976,6 +7977,7 @@ footer li a {
     left: 0;
     width: 100%;
     padding: 0;
+    z-index: 9;
 }
 #chat-container {
     height: 100%;
@@ -7986,9 +7988,9 @@ footer li a {
     padding-bottom: 35px;
 }
 .wrap-chat-item {
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
+    /* height: 100%; */
+    /* overflow-x: hidden; */
+    /* overflow-y: auto; */
 }
 .chat-real .title-top {
     position: absolute;
@@ -8084,7 +8086,7 @@ footer li a {
 .menuUser li a {
     display: block;
     border-bottom: 1px solid #a5a5a5;
-    padding: 15px 50px 15px 30px;
+    padding: 15px 50px 15px 20px;
     text-transform: uppercase;
     position: relative;
 }
@@ -8104,6 +8106,7 @@ footer li a {
 .menuUser li a .notifi {
     left: 50px;
 }
+.noti-alert,
 .edit-user-tt,
 .u-allduan {
     padding-left: 280px;
@@ -8186,6 +8189,11 @@ footer li a {
     fill: #00a769;
     width: 30px;
     height: 30px;
+}
+.list-redire .icon-chat-svg {
+    fill: #3c3c3c;
+    width: 26px;
+    height: 24px;
 }
 .icon-setting-svg {
     fill: #00a769;
