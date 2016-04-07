@@ -515,22 +515,6 @@ header {
     display: block;
     margin-bottom: 10px;
 }
-.list-social-login li a {
-    display: block;
-    position: relative;
-    border-radius: 0;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    -ms-border-radius: 0;
-    border: none;
-    font-weight: 600;
-}
-.list-social-login li a.facebook, .list-social-login li a.google {
-    background: #FFFFFF;
-    font-size: 15px;
-    padding: 10px 0;
-    border: 1px solid #00a769;
-}
 .list-social-login li a.facebook {
     
 }
@@ -538,9 +522,6 @@ header {
     background: #3a5795;
     color: #fff;
     border: 1px solid #3a5795;
-}
-.list-social-login li a.google {
-    
 }
 .list-social-login li a.google:hover {
     background: #EA4335;
@@ -2205,6 +2186,8 @@ label {
 .save-item.active {
     background-position: 0px -505px;
 }
+.list-social-login li a.facebook, 
+.list-social-login li a.google,
 .btn-common {
     border: none;
     background: #00a769;
@@ -2826,7 +2809,7 @@ html.mm-opening .mm-slideout {
     border-bottom: none;
 }
 .chat-live .item {
-    padding: 10px;
+    padding: 0 10px 10px;
 }
 .chat-live .item a,
 .chat-list .item a {
@@ -2835,11 +2818,11 @@ html.mm-opening .mm-slideout {
     padding: 10px;
 }
 .chat-list .item a.unread {
-    background: #E6FFF0;
+    background: #F5F5F5;
 }
 .chat-list .item a.active,
 .chat-list .item a:hover {
-    background-color: #A9FFCD;
+    background-color: #D6D6D6;
 }
 .chat-live .item .name,
 .chat-list .item .name {
@@ -2929,6 +2912,9 @@ html.mm-opening .mm-slideout {
 .container-chat .item {
     margin-bottom: 0;
 }
+.container-chat .item.box-me .txt-detail {
+    background: #E8E8E8;
+}
 .container-chat .item .avatar {
     width: 40px;
     display: block;
@@ -2940,7 +2926,7 @@ html.mm-opening .mm-slideout {
 }
 .container-chat .item .chat-txt {
     overflow: hidden;
-    padding: 0 5px 5px 0px;
+    padding: 0 5px 0 0px;
     position: relative;
 }
 .container-chat .chat-txt .txt-detail {
@@ -2951,7 +2937,7 @@ html.mm-opening .mm-slideout {
     -moz-box-shadow: 1px 1px 1px #ADADAD;
     -ms-box-shadow: 1px 1px 1px #ADADAD;
     padding: 10px;
-    font-size: .9em;
+    font-size: 13px;
     position: relative;
     z-index: 2;
     border: 1px solid #EFEFEF;
@@ -2965,11 +2951,11 @@ html.mm-opening .mm-slideout {
 .container-chat .chat-txt .time-detail {
     text-transform: uppercase;
     font-weight: 600;
-    font-size: .75em;
+    font-size: 11px;
     color: #A0A0A0;
     text-shadow: 1px 1px 1px #fff;
     margin-top: 5px;
-    padding-left: 15px;
+    padding-left: 0;
 }
 .container-chat .item.box-me .avatar {
     float: right;
@@ -2979,7 +2965,6 @@ html.mm-opening .mm-slideout {
 .container-chat .item.box-you .time-detail {
     padding: 0;
     text-align: right;
-    padding-right: 15px;
 }
 .container-chat .chat-txt:after {
    content: "";
@@ -4328,6 +4313,8 @@ html.mm-opening .mm-slideout {
     padding: 10px 15px 15px;
     border-top: none;
 }
+.list-social-login li a.facebook, 
+.list-social-login li a.google,
 .inner-popup .btn-common {
     text-transform: uppercase;
     border: solid 1.5px #00a769;
@@ -8301,6 +8288,9 @@ footer li a {
 .list-redire li a {
     position: relative;
 }
+.list-redire li a:hover svg {
+    fill: #00a769;
+}
 .list-redire li a .notifi {
     top: -7px;
     left: 13px;
@@ -8428,11 +8418,48 @@ footer li a {
     vertical-align: middle;
 }
 .icon-email-svg {
-    fill: #00a769;
+    fill: #A70000;
 }
 .profile-user .list-post > li {
     margin-bottom: 40px;
 }
 .profile-user .list-post > li .address-feat {
     height: 72px;
+}
+.list-social-login li a.facebook,
+.list-social-login li a.google {
+    max-width: 100%;
+}
+.list-noti .user-get .list-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.user-get .list-icon li {
+    margin-bottom: 8px;
+    text-align: center;
+}
+.user-get .list-icon li span {
+    display: block;
+}
+.user-get .list-icon li:last-child {
+    margin-bottom: 0;
+}
+.icon-heart-svg,
+.icon-eye-svg {
+    width: 26px;
+    height: 22px;
+}
+.icon-heart-svg {
+    fill: #009745;
+}
+.list-icon .icon-chat-svg {
+    height: 24px;
+}
+.list-icon .icon-email-svg {
+    height: 18px;
+    width: 24px;
+}
+.user-get .list-icon li a:hover svg {
+    fill: #6B6B6B;
 }

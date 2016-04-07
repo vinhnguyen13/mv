@@ -859,7 +859,7 @@ $.fn.loading = function (options) {
                 left: 0,
                 width: '100%',
                 height: '100%',
-                'z-index': 999,
+                'z-index': 999999,
                 background: 'rgba(0, 0, 0, 0.51)'
             });
             el.append($loading);
