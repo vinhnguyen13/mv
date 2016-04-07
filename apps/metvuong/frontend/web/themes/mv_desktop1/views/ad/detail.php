@@ -269,7 +269,7 @@ Yii::$app->view->registerMetaTag([
 									<a href="/<?=$owner->username;?>" class="wrap-img">
 						                <img src="<?= $avatar ?>" alt="<?=$owner->username;?>" /></a>
 						            <?php } else { ?>
-						                <a class="wrap-img" href="<?=$url;?>"><img src="<?= $avatar ?>" alt="<?=$owner->username;?>" /></a>
+						                <a class="wrap-img" href="<?=$url;?>"><img src="<?= $avatar ?>" alt="" /></a>
 						            <?php } ?>
 						            <div class="img-agent">
 							            <a href="/<?= !empty($owner) ? $owner->username : "#" ?>" class="name-agent"><?= $product->adContactInfo->name ?></a>
