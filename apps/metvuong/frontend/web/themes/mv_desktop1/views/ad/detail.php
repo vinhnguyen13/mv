@@ -1,4 +1,5 @@
-<?php 
+<?php
+use frontend\models\Tracking;
 use vsoft\ad\models\AdCategory;
 use vsoft\ad\models\AdImages;
 use vsoft\ad\models\AdProduct;
@@ -62,6 +63,10 @@ Yii::$app->view->registerMetaTag([
     'property' => 'og:image',
     'content' => $product->representImage
 ]);
+
+if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']['all'] == true) && ($product->user_id != Yii::$app->user->id)) {
+    Tracking::find()->productVisitor(Yii::$app->user->id, $product->id, time());
+}
 ?>
 <div class="container">
 	<div class="title-fixed-wrap">
