@@ -48,6 +48,7 @@ use vsoft\ad\models\AdImages;
 						]
 					]);
 				?>
+					<input type="hidden" id="is-update" value="<?= $product->isNewRecord ? 0 : 1 ?>" />
 					<div class="step-link">
 						<ul class="clearfix">
 							<li><a data-active-section="tt-chung" class="active" href="#">1</a><span class="icon arrowLeft"></span></li>

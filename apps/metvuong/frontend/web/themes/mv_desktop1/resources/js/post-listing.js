@@ -48,6 +48,12 @@ var form = {
 	init: function() {
 		form.initJavasciptCall();
 		form.attachEvent();
+		
+		if($('#is-update').val() == '1') {
+			setTimeout(function(){
+				$('.preview').trigger('click');
+			}, 1);
+		}
 	},
 	initJavasciptCall: function() {
 		form.ownerHostEl = $('#owner-host');
@@ -204,6 +210,7 @@ var form = {
 			
 			swiperWrap.html('');
 			var imgs = $('.files').children();
+
 			if(imgs.length) {
 				swiperContainer.show();
 				imgs.each(function(){
