@@ -22,7 +22,7 @@ if(!empty($data) && count($data) > 0) {
         $(function () {
             $('#chartAds').highcharts({
                 chart: {
-                    type: 'column'
+                    type: 'line'
                 },
                 legend: {
                     enabled: false

@@ -32,30 +32,14 @@ $favouriteTo = (!empty($favourites) && isset($favourites["to"])) ? $favourites["
 //echo "<pre>";
 //exit();
 
-$fb_appId = '680097282132293'; // stage.metvuong.com
-if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
-    $fb_appId = '736950189771012';
-else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
-    $fb_appId = '891967050918314';
+//$fb_appId = '680097282132293'; // stage.metvuong.com
+//if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
+//    $fb_appId = '736950189771012';
+//else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
+//    $fb_appId = '891967050918314';
 
 ?>
-<script>
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId      : <?=$fb_appId?>,
-            xfbml      : true,
-            version    : 'v2.5'
-        });
-    };
 
-    (function(d, s, id){
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/vi_VN/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-</script>
 <div class="title-fixed-wrap">
     <div class="container">
         <?php $this->beginContent('@app/views/layouts/_partials/menuUser.php'); ?><?php $this->endContent();?>
@@ -194,7 +178,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                         </a>
                     </li>
                     <li class="share-facebook">
-                        <a href="#">
+                        <a href="javascript:fbShare('<?=$urlDetail ?>', '<?=$address ?>', '<?=StringHelper::truncate($product->content, 150) ?>', '<?= $product->representImage ?>', 520, 350)">
                             <div class="circle"><div><span class="icon icon-face"></span></div></div>
                             <div class="txt-infor-right">
                                 <div><?=Yii::t('statistic','Share With Facebook')?></div>
@@ -365,14 +349,20 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
             return false;
         });
 
-        $(document).on('click', '.share-social .share-facebook', function() {
-            var detailUrl = $('#share_form ._detailUrl').val();
-            if(detailUrl == null || detailUrl == '' )
-                detailUrl = $('#share_form ._domain').val();
-            FB.ui({
-                method: 'share',
-                href: detailUrl
-            }, function(response){});
-        });
+//        $(document).on('click', '.share-social .share-facebook', function() {
+//            var detailUrl = $('#share_form ._detailUrl').val();
+//            if(detailUrl == null || detailUrl == '' )
+//                detailUrl = $('#share_form ._domain').val();
+//            FB.ui({
+//                method: 'share',
+//                href: detailUrl
+//            }, function(response){});
+//        });
+
+        function fbShare(url, title, descr, image, winWidth, winHeight) {
+            var winTop = (screen.height / 2) - (winHeight / 2);
+            var winLeft = (screen.width / 2) - (winWidth / 2);
+            window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + url + '&p[title]=' + title + '&p[summary]=' + descr + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+        }
     });
 </script>
