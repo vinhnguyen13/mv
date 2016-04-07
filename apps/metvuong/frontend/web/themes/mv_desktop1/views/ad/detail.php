@@ -265,7 +265,7 @@ Yii::$app->view->registerMetaTag([
 			            <div id="collapseEght" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven">
 			                <div class="panel-body text-center">
 			            	    <div class="infor-agent clearfix">
-						            <?php if(!empty($owner->username)) { ?>
+						            <?php if(!empty($owner)) { ?>
 									<a href="/<?=$owner->username;?>" class="wrap-img">
 						                <img src="<?= $avatar ?>" alt="<?=$owner->username;?>" /></a>
 						            <?php } else { ?>
