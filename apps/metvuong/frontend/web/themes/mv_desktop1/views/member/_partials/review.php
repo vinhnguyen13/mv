@@ -14,16 +14,7 @@
             ?>
             <li class="<?=$review->user_id?>">
                 <div class="stars">
-                    <span class="rateit rating-review" data-rateit-value="2.5" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
-                    <!-- <select class="rating" name="rating">
-                        <?php for($i=1; $i<=5; $i++) {
-                            if ($i == $review->rating) { ?>
-                                <option value="<?=$i?>" selected><?=$i?></option>
-                            <?php } else { ?>
-                                <option value="<?=$i?>"><?=$i?></option>
-                            <?php }
-                        }?>
-                    </select> -->
+                    <span class="rateit rating-review" data-rateit-value="<?=$review->rating?>" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
                 </div>
                 <p class="infor-user-review">
                     <a href="/<?=$review->username?>"><?=$review->name?></a><?= date("d/m/Y h:iA", $review->created_at) ?> |

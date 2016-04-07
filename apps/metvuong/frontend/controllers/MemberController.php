@@ -444,7 +444,7 @@ class MemberController extends Controller
                         foreach($reviews as $review){
                             $sumRating = $sumRating + $review->rating;
                         }
-                        $avgRating = floor($sumRating/$countReview);
+                        $avgRating = $sumRating / $countReview;
                         $user = User::findIdentity($review_id);
                         $profile = $user->profile;
                         $profile->rating_point = $avgRating;
