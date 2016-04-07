@@ -445,11 +445,12 @@ class MemberController extends Controller
                             $sumRating = $sumRating + $review->rating;
                         }
                         $avgRating = $sumRating / $countReview;
+
                         $user = User::findIdentity($review_id);
                         $profile = $user->profile;
                         $profile->rating_point = $avgRating;
                         $profile->rating_no = $countReview;
-                        $profile->save();
+                        $profile->save(false);
 
                         return ['statusCode' => 200, 'review' => $model, 'profile' => $profile];
                     }
