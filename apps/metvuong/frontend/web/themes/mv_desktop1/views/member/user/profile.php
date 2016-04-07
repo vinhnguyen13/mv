@@ -25,7 +25,7 @@ $count_product = $pagination->totalCount;
                     <div class="overflow-all">
                         <p class="name-user fs-18 font-600" ><?= $model->name ?></p>
                         <div class="stars">
-                            <span class="rateit"></span>
+                            <span id="rating-all" class="rateit" data-rateit-value="2.5" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
                             <!-- <select class="rating" name="rating">
                                 <?php
                                 $rating_point = floor($model->rating_point);
@@ -276,13 +276,8 @@ $count_product = $pagination->totalCount;
                                 <div class="check-rating mgB-15">
                                     <span class="font-600 fs-13 pdR-10">Rate this agent</span>
                                     <div class="stars">
-                                        <select class="rating" name="rating">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select>
+                                        <span id="rating-review" class="rateit"></span>
+                                        <input type="hidden" id="val-rating" value="">
                                     </div>
                                 </div>
                                 <p class="fs-13 mgB-5 font-600">Review content</p>
@@ -318,6 +313,15 @@ $count_product = $pagination->totalCount;
 
 <script>
     $(document).ready(function () {
+
+        $('#rating-all').rateit();
+
+        $('#rating-review').rateit({
+            clickRating: function (value_rating) {
+                $('#val-rating').val(value_rating);
+            }
+        });
+
         $(document).on('click', '.user-login-link', function (e) {
             e.preventDefault();
             $('body').loading();

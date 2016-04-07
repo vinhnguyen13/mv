@@ -32,12 +32,13 @@ $(document).ready(function() {
         $('.tabs-scroll li a').each(function () {
             var currLink = $(this);
             var refElement = $(currLink.attr("href"));
-            if (refElement.position().top <= scrollPos && refElement.position().top + refElement.outerHeight() > scrollPos) {
-                $('.tabs-scroll li a').removeClass("active");
-                currLink.addClass("active");
-            }
-            else{
-                //currLink.removeClass("active");
+            try {
+                if (refElement.position().top <= scrollPos && refElement.position().top + refElement.outerHeight() > scrollPos) {
+                    $('.tabs-scroll li a').removeClass("active");
+                    currLink.addClass("active");
+                }
+            }catch (err) {
+                l(err);
             }
         });
     }

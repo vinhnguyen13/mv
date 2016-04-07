@@ -282,10 +282,13 @@
                         var value = (score * itemdata('step')) + itemdata('min');
                         setSelection(value);
                         range.blur();
+
+                        options.clickRating(value);
                     });
 
                     //support key nav
                     range.keyup(function (e) {
+                        l(2);
                         if (e.which == 38 || e.which == (ltr ? 39 : 37)) {
                             setSelection(Math.min(itemdata('value') + itemdata('step'), itemdata('max')));
                         }
@@ -331,9 +334,22 @@
     };
 
     //some default values.
-    $.fn.rateit.defaults = { min: 0, max: 5, step: 0.5, starwidth: 21, starheight: 18, readonly: false, resetable: true, ispreset: false };
+    $.fn.rateit.defaults = { 
+        min: 0, 
+        max: 5, 
+        step: 0.5, 
+        starwidth: 21, 
+        starheight: 18, 
+        readonly: false, 
+        resetable: true, 
+        ispreset: false,
+        clickRating: function() {}
+    };
 
     //invoke it on all .rateit elements. This could be removed if not wanted.
-    $(function () { $('div.rateit, span.rateit').rateit(); });
+    /*$(function () { 
+        //$('div.rateit, span.rateit').rateit();
+
+    });*/
 
 })(jQuery);

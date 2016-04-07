@@ -8391,7 +8391,7 @@ footer li a {
 
 .rateit .rateit-preset
 {
-    background: url(star.gif) left -48px;
+    /* background: url(star.gif) left -48px; */
 }
 
 .rateit .rateit-preset-rtl
@@ -8418,4 +8418,8 @@ footer li a {
 }
 #edit-listing {
     stroke: #00a769;
+}
+.check-rating .stars {
+    display: inline-block;
+    vertical-align: middle;
 }
