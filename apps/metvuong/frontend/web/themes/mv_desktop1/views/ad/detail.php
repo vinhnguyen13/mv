@@ -115,11 +115,11 @@ Yii::$app->view->registerMetaTag([
 								<span class="wrap-icon-svg"><svg class="icon-svg icon-copy-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-copy-svg"></use></svg></span>
 							</button>
 						</li>
-						<li><a href="#" data-toggle="modal tooltip" data-placement="bottom" data-target="#popup-share-social" class="icon icon-share-td tooltip-show" title="Share social"></a></li>
+						<li><a href="#" data-toggle="modal" data-placement="bottom" data-target="#popup-share-social" class="icon icon-share-td tooltip-show" title="Share social"></a></li>
 			            <?php if($product->user_id != Yii::$app->user->id){ ?>
 						<li><a data-toggle="tooltip" data-placement="bottom" title="Favourite" href="#" class="icon save-item tooltip-show <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>"></a></li>
 			            <?php } ?>
-						<li><a href="#" data-toggle="modal tooltip" data-placement="bottom" data-target="#popup-map" class="icon icon-map-loca tooltip-show" title="Location"></a></li>
+						<li><a href="#" data-toggle="modal" data-placement="bottom" data-target="#popup-map" class="icon icon-map-loca tooltip-show" title="Location"></a></li>
 					</ul>
 
 					<?=$this->renderAjax('/ad/_partials/shareEmail',[

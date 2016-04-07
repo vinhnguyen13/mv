@@ -7434,8 +7434,7 @@ footer li a {
 }
 .list-per-post .list-post li .name-post,
 .list-per-post .list-post li .id-duan,
-.list-per-post .list-post .img-show,
-.list-per-post .list-post li  li {
+.list-per-post .list-post .img-show {
     margin-bottom: 9px;
 }
 .list-per-post .list-post .img-show {
@@ -7453,9 +7452,6 @@ footer li a {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-}
-.list-per-post .list-post li {
-    margin-bottom: 40px;
 }
 .sidebar-user .title-text {
     margin-bottom: 15px;
@@ -8430,4 +8426,13 @@ footer li a {
 .check-rating .stars {
     display: inline-block;
     vertical-align: middle;
+}
+.icon-email-svg {
+    fill: #00a769;
+}
+.profile-user .list-post > li {
+    margin-bottom: 40px;
+}
+.profile-user .list-post > li .address-feat {
+    height: 72px;
 }

@@ -22,12 +22,6 @@
 	</symbol>
 	<symbol id="icon-bathroom-svg" viewBox="0 0 21 24">
 		<g id="" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
-	        <style>
-				#bathroom-svg {
-					stroke: "#3C3C3C";
-					fill: "red";
-				}
-	        </style>
 	        <g id="bathroom-svg" sketch:type="MSArtboardGroup" transform="translate(-1301.000000, -1809.000000)" stroke-width="0.5" stroke="#3C3C3C" fill="#3C3C3C">
 	            <g id="Group-Copy-5" sketch:type="MSLayerGroup" transform="translate(1200.000000, 1733.000000)">
 	                <g id="Group" transform="translate(17.000000, 77.000000)" sketch:type="MSShapeGroup">

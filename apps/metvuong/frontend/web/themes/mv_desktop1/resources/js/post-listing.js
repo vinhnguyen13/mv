@@ -328,8 +328,9 @@ var form = {
 		$('.back-form').click(function(){
 			detailListing.hide();
 			formView.show();
-			
-			swiper.destroy(false, true);
+			if(swiperWrap.html()) {
+				swiper.destroy(false, true);
+			}
 		});
 		
 		$('#add-field').click(function(){
