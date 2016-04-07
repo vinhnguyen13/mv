@@ -272,7 +272,7 @@ Yii::$app->view->registerMetaTag([
 						                <a class="wrap-img" href="<?=$url;?>"><img src="<?= $avatar ?>" alt="<?=$owner->username;?>" /></a>
 						            <?php } ?>
 						            <div class="img-agent">
-							            <a href="/<?=$owner->username;?>" class="name-agent"><?= $product->adContactInfo->name ?></a>
+							            <a href="/<?= !empty($owner) ? $owner->username : "#" ?>" class="name-agent"><?= $product->adContactInfo->name ?></a>
 										<div class="rating-start">
 											<fieldset class="rate">
 												<input type="radio" id="rating10" name="rating" value="10"> <label
