@@ -605,7 +605,7 @@ class AdController extends Controller
             if (!$model->hasErrors()) {
                 $from_user = isset($post["from_name"]) ? $post["from_name"] : null;
                 // send to
-                $subEmail = empty($model->subject) ? $from_user . " sent a message from Metvuong.com" : "Metvuong.com - ". $model->subject;
+                $subEmail = empty($model->subject) ? $from_user . " [".$model->your_email."]" . " sent a message from Metvuong.com" : "Metvuong.com - ". $model->subject;
                 $result = Yii::$app->mailer->compose(['html' => '../mail/notifyReceivedEmail-html',], ['contact' => $model])
                 ->setFrom(Yii::$app->params['adminEmail'])
                 ->setTo([$model->recipient_email])
