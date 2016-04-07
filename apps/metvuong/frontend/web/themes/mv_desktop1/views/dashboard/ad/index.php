@@ -15,10 +15,10 @@ use yii\helpers\Url;
                     <li role="presentation"><a href="#list-rent" aria-controls="list-rent" role="tab" data-toggle="tab">Cho thuê (1)</a></li>
                     <li class="pull-right">
                     	<div class="clearfix fs-13">
-                    		Hiển thị theo
-                    		<select name="" id="" class="fs-13">
-                    			<option value="">Ngày đăng</option>
-                    		</select>
+                    		<div class="search-history">
+								<input type="text" id="" class="form-control" placeholder="Search listing...">
+								<button class="btn-search-hist" href="#"><span class="icon icon-search-small"></span></button>
+							</div>
                     	</div>
                     </li>
                 </ul>

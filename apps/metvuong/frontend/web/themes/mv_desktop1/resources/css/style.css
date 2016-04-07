@@ -8147,7 +8147,7 @@ footer li a {
 .wrap-list-duan .nav-tabs li:last-child {
     line-height: 42px;
     text-align: right;
-    width: 25%;
+    width: 30%;
 }
 .wrap-list-duan .nav-tabs li:last-child select {
     display: inline-block;
@@ -8462,4 +8462,16 @@ footer li a {
 }
 .user-get .list-icon li a:hover svg {
     fill: #6B6B6B;
+}
+.wrap-list-duan .nav-tabs .search-history {
+    margin: 0;
+    padding: 2px 0 0 0;
+    width: 100%;
+}
+.wrap-list-duan .nav-tabs .search-history input {
+    border-bottom: none;
+}
+.wrap-list-duan .nav-tabs .search-history .btn-search-hist {
+    padding: 6px 9px;
+    height: 100%;
 }
