@@ -2718,6 +2718,7 @@ footer {
     font-weight: 600;
     color: #000;
     font-size: 14px;
+    display: inline-block;
 }
 .list-noti .user-get p {
     color: #777777;
@@ -8430,21 +8431,6 @@ footer li a {
 .list-social-login li a.google {
     max-width: 100%;
 }
-.list-noti .user-get .list-icon {
-    position: absolute;
-    top: 0;
-    right: 0;
-}
-.user-get .list-icon li {
-    margin-bottom: 8px;
-    text-align: center;
-}
-.user-get .list-icon li span {
-    display: block;
-}
-.user-get .list-icon li:last-child {
-    margin-bottom: 0;
-}
 .icon-heart-svg,
 .icon-eye-svg {
     width: 26px;
@@ -8452,16 +8438,6 @@ footer li a {
 }
 .icon-heart-svg {
     fill: #009745;
-}
-.list-icon .icon-chat-svg {
-    height: 24px;
-}
-.list-icon .icon-email-svg {
-    height: 18px;
-    width: 24px;
-}
-.user-get .list-icon li a:hover svg {
-    fill: #6B6B6B;
 }
 .wrap-list-duan .nav-tabs .search-history {
     margin: 0;
@@ -8474,4 +8450,21 @@ footer li a {
 .wrap-list-duan .nav-tabs .search-history .btn-search-hist {
     padding: 6px 9px;
     height: 100%;
+}
+.icon-noti-type {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.list-noti .user-get .icon-email-svg {
+    width: 25px;
+    height: 19px;
+    position: relative;
+    top: -3px;
+}
+.list-noti .user-get .icon-chat-svg {
+    width: 27px;
+    height: 24px;
+    position: relative;
+    top: -3px;
 }

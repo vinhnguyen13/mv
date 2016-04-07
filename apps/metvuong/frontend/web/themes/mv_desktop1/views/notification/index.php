@@ -36,33 +36,25 @@ use yii\helpers\Html;
 									data-id="<?= $id ?>">
 									<div class="user-get clearfix">
 										<!--<span class="icon icon-message"></span>-->
-										<ul class="list-icon">
+										<div class="icon-noti-type">
 											<?php if ($activity->isAction(UserActivity::ACTION_AD_CLICK)) { ?>
-												<li>
-													<span class="wrap-icon-svg">
-					                                    <svg class="icon-svg icon-eye-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-eye-svg"></use></svg>
-					                                </span>
-				                                </li>
-											<?php } elseif ($activity->isAction(UserActivity::ACTION_AD_FAVORITE)) { ?>
-												<li>
-													<span class="wrap-icon-svg">
-					                                    <svg class="icon-svg icon-heart-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-heart-svg"></use></svg>
-					                                </span>
-				                                </li>
-											<?php } ?>
-											<li>
-												<a href="#"><span class="wrap-icon-svg">
-				                                    <svg class="icon-svg icon-chat-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-chat-svg"></use></svg>
-				                                </span></a>
-			                                </li>
-			                                <li>
-												<a href="#"><span class="wrap-icon-svg">
-				                                    <svg class="icon-svg icon-email-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-email-svg"></use></svg>
-				                                </span></a>
-			                                </li>
-		                                </ul>
-										<div class="avatar"><a href="<?= $owner->urlProfile(); ?>"><img src="<?= Url::to(['member/avatar', 'usrn' => $owner->username]) ?>" alt="" width="40" height="40"></a></div>
+												<span class="wrap-icon-svg">
+				                                    <svg class="icon-svg icon-eye-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-eye-svg"></use></svg>
+				                                </span>
+				                            <?php } elseif ($activity->isAction(UserActivity::ACTION_AD_FAVORITE)) { ?>
+												<span class="wrap-icon-svg">
+				                                    <svg class="icon-svg icon-heart-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-heart-svg"></use></svg>
+				                                </span>
+				                            <?php } ?>
+			                            </div>
+		                                <div class="avatar"><a href="<?= $owner->urlProfile(); ?>"><img src="<?= Url::to(['member/avatar', 'usrn' => $owner->username]) ?>" alt="" width="40" height="40"></a></div>
 										<a href="#" class="name"><?= $owner->profile->getDisplayName(); ?></a>
+										<a href="#" class="pdL-10 pdR-10"><span class="wrap-icon-svg">
+		                                    <svg class="icon-svg icon-email-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-email-svg"></use></svg>
+		                                </span></a>
+		                                <a href="#"><span class="wrap-icon-svg">
+		                                    <svg class="icon-svg icon-chat-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-chat-svg"></use></svg>
+		                                </span></a>
 										<?php
 										$product = AdProduct::findOne(['id' => $params['product']]);
 										if (!empty($product)) {
