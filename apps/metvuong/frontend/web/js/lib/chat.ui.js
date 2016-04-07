@@ -52,7 +52,6 @@
             var objHis = $(iq);
             var child = objHis.children().children();
             var length = child.length - 1;
-            var chatList = '';
             chatBoxExist = chatUI.getBoxChat(objHis.attr('id'), objHis.children().attr('with'));
             if(!chatBoxExist){
                 return false;
@@ -61,17 +60,24 @@
                 var item = child.eq(i);
                 var body = item.find('body').text();
                 if(item.is('to')) {
-                    var chatItem = chatUI.buildMessageToBox(chatUI.usrFromJid(objHis.attr('id')), body, chatUI.MSG_SEND_ME, {ts: item.find('body').attr('ts')});
+                    if(chatBoxExist.find('.wrap-chat .item:last').hasClass('box-me') == true){
+                        chatBoxExist.find('.wrap-chat .item:last').find('.txt-detail p').append("<br/>"+body);
+                    }else{
+                        var chatItem = chatUI.buildMessageToBox(chatUI.usrFromJid(objHis.attr('id')), body, chatUI.MSG_SEND_ME, {ts: item.find('body').attr('ts')});
+                        chatBoxExist.find('.wrap-chat').append(chatItem);
+                    }
                 } else {
-                    var chatItem = chatUI.buildMessageToBox(chatUI.usrFromJid(objHis.children().attr('with')), body, chatUI.MSG_SEND_YOU, {ts: item.find('body').attr('ts')});
+                    if(chatBoxExist.find('.wrap-chat .item:last').hasClass('box-you') == true){
+                        chatBoxExist.find('.wrap-chat .item:last').find('.txt-detail p').append("<br/>"+body);
+                    }else {
+                        var chatItem = chatUI.buildMessageToBox(chatUI.usrFromJid(objHis.children().attr('with')), body, chatUI.MSG_SEND_YOU, {ts: item.find('body').attr('ts')});
+                        chatBoxExist.find('.wrap-chat').append(chatItem);
+                    }
                 }
-                chatList += chatItem;
+
+                console.log('_________', chatBoxExist.find('.wrap-chat .item:last').hasClass('box-me'));
             }
-            if(chatBoxExist.find('.loading-chat').length > 0){
-                $(html).insertBefore( chatBoxExist.find('.wrap-chat .loading-chat') );
-            }else{
-                chatBoxExist.find('.wrap-chat').append(chatList);
-            }
+
             $('.container-chat').scrollTop($('.wrap-chat').height());
             $('.wrap-chat-item .container-chat').slimscroll({
                 alwaysVisible: true,
@@ -101,17 +107,29 @@
                 return false;
             }
             if(type == chatUI.MSG_SEND_ME){
-                var html = chatUI.buildMessageToBox(chatUI.usrFromJid(this.to), msg, type, params);
+                if(chatBoxExist.find('.wrap-chat .item:last').hasClass('box-me') == true){
+                    chatBoxExist.find('.wrap-chat .item:last').find('.txt-detail p').append("<br/>"+msg);
+                }else {
+                    var html = chatUI.buildMessageToBox(chatUI.usrFromJid(this.to), msg, type, params);
+                    if(chatBoxExist.find('.loading-chat').length > 0){
+                        $(html).insertBefore( chatBoxExist.find('.wrap-chat .loading-chat') );
+                    }else{
+                        chatBoxExist.find('.wrap-chat').append(html);
+                    }
+                }
             }else if(type == chatUI.MSG_SEND_YOU){
-                var html = chatUI.buildMessageToBox(chatUI.usrFromJid(this.from), msg, type, params);
-            }else{
-                var html = document.createTextNode(msg);
+                if(chatBoxExist.find('.wrap-chat .item:last').hasClass('box-you') == true){
+                    chatBoxExist.find('.wrap-chat .item:last').find('.txt-detail p').append("<br/>"+msg);
+                }else {
+                    var html = chatUI.buildMessageToBox(chatUI.usrFromJid(this.from), msg, type, params);
+                    if(chatBoxExist.find('.loading-chat').length > 0){
+                        $(html).insertBefore( chatBoxExist.find('.wrap-chat .loading-chat') );
+                    }else{
+                        chatBoxExist.find('.wrap-chat').append(html);
+                    }
+                }
             }
-            if(chatBoxExist.find('.loading-chat').length > 0){
-                $(html).insertBefore( chatBoxExist.find('.wrap-chat .loading-chat') );
-            }else{
-                chatBoxExist.find('.wrap-chat').append(html);
-            }
+
             $('.container-chat').scrollTop($('.wrap-chat').height());
             $('.wrap-chat-item .container-chat').slimscroll({
                 alwaysVisible: true,
