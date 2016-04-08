@@ -18,7 +18,7 @@ if(!empty($jid_id)){
 			<div class="wrap-history clearfix">
 				<div class="search-history">
 					<input type="text" id="findConversation" class="form-control" placeholder="<?=Yii::t('general', 'Find by name...')?>">
-					<button class="btn-search-hist" href="#"><span class="icon icon-search-small"></span></button>
+					<button class="btn-search-hist" href="#"><span class="icon-mv"><span class="icon-icons-search"></span></span></button>
 				</div>
 				<div class="chat-list clearfix">
 					<div class="wrap-chat-list">

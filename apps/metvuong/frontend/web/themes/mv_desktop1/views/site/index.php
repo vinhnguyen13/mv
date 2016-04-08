@@ -25,7 +25,7 @@ use vsoft\ad\models\AdProduct;
                 </ul>
                 <form id="search-form" action="<?= Url::to(['site/search']) ?>">
                     <input autocomplete="off" id="search" name="v" type="text" placeholder="<?=Yii::t('general', 'Quick Search')?>" />
-                    <button type="submit" id="btn-search"><span class="icon"></span></button>
+                    <button type="submit" id="btn-search"><span class="icon-mv"><span class="icon-icons-search"></span></span></button>
                     <div class="suggest-search hide">
                         <div class="content-suggest">
                             <ul></ul>
@@ -64,13 +64,13 @@ use vsoft\ad\models\AdProduct;
                                     <p class="id-duan">ID:<span><?=$product->id;?></span></p>
                                     <ul class="clearfix list-attr-td">
                                         <li>
-                                            <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span>80m2
+                                            <span class="icon-mv"><span class="icon-page-1-copy"></span></span>80m2
                                         </li>
                                         <li>
-                                            <span class="wrap-icon-svg"><svg class="icon-svg icon-bed-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bed-svg"></use></svg></span> 02
+                                            <span class="icon-mv"><span class="icon-bed-search"></span></span>02
                                         </li>
                                         <li>
-                                            <span class="wrap-icon-svg"><svg class="icon-svg icon-bathroom-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bathroom-svg"></use></svg></span> 02
+                                            <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>02
                                         </li>
                                     </ul>
                                 </div>
@@ -124,15 +124,15 @@ use vsoft\ad\models\AdProduct;
                     <p class="name-cty color-cd">METVUONG TEAM</p>
                     <ul class="clearfix">
                         <li>
-                            <span class="icon icon-map-loca pull-left"></span>
+                            <span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
                             <p>Lầu 12 Tòa nhà Miss Aodai <br> 21 Nguyễn Trung Ngạn, Quận 1, thành phố Hồ Chí Minh.</p>
                         </li>
                         <li>
-                            <span class="icon icon-phone-2 pull-left"></span>
+                            <span class="icon-mv"><span class="icon-phone-profile"></span></span>
                             <p><a href="tel:08345678">08. 345 678</a> - <a href="tel:0908123456">0908 123 456</a></p>
                         </li>
                         <li>
-                            <span class="icon icon-email-3 pull-left"></span>
+                            <span class="icon-mv"><span class="icon-mail-profile"></span></span>
                             <p>contact@metvuong.com</p>
                         </li>
                     </ul>

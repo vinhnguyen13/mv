@@ -20,8 +20,9 @@ $count_product = $pagination->totalCount;
                             <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>"><img
                                     src="<?= $product->representImage ?>"></a>
                         </div>
-                        <a href="<?= Url::to(['/ad/update', 'id' => $product->id]) ?>"
-                           class="edit-duan"><span class="icon-edit-small icon"></span></a>
+                        <a href="<?= Url::to(['/ad/update', 'id' => $product->id]) ?>" class="edit-duan">
+                            <span class="icon-mv"><span class="icon-edit-copy-4"></span></span>
+                        </a>
                     </div>
                     <div class="intro-detail">
                         <div class="address-feat clearfix">
@@ -37,23 +38,11 @@ $count_product = $pagination->totalCount;
                                 ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id; ?></span>
                             </p>
                             <ul class="clearfix list-attr-td">
-                                <li><span class="wrap-icon-svg"><svg
-                                            class="icon-svg icon-dt-svg">
-                                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                 xlink:href="#icon-dt-svg"></use>
-                                        </svg></span>135m2
+                                <li><span class="icon-mv"><span class="icon-page-1-copy"></span></span>135m2
                                 </li>
-                                <li><span class="wrap-icon-svg"><svg
-                                            class="icon-svg icon-bed-svg">
-                                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                 xlink:href="#icon-bed-svg"></use>
-                                        </svg></span> 3
+                                <li><span class="icon-mv"><span class="icon-bed-search"></span></span>3
                                 </li>
-                                <li><span class="wrap-icon-svg"><svg
-                                            class="icon-svg icon-bathroom-svg">
-                                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                 xlink:href="#icon-bathroom-svg"></use>
-                                        </svg></span> 2
+                                <li><span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>2
                                 </li>
                             </ul>
                         </div>
@@ -96,18 +85,23 @@ $count_product = $pagination->totalCount;
                             }
                             ?>
                             <div class="wrap-icon">
-                                <div><span class="icon icon-search-small-1"></span></div>
-                                <strong><?= $search ?></strong> <?= Yii::t('statistic', 'Search') ?>
+                                <span class="icon-mv"><span class="icon-icons-search"></span></span>
+                                <strong><?= $search ?></strong><?= Yii::t('statistic', 'Search') ?>
                             </div>
                             <div class="wrap-icon">
-                                <div><span class="icon icon-view-small"></span></div>
-                                <strong><?= $click ?></strong> <?= Yii::t('statistic', 'Click') ?>
+                                <span class="icon-mv"><span class="icon-eye-copy"></span></span>
+                                <strong><?= $click ?></strong><?= Yii::t('statistic', 'Click') ?>
                             </div>
                             <div class="wrap-icon">
-                                <div><span class="icon icon-heart-small"></span></div>
-                                <strong><?= $fav ?></strong> <?= Yii::t('statistic', 'Favourite') ?>
+                                <span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
+                                <strong><?= $fav ?></strong><?= Yii::t('statistic', 'Favourite') ?>
+                            </div>
+                            <div class="wrap-icon">
+                                <span class="icon-mv"><span class="icon-share-social"></span></span>
+                                <strong>10</strong>Chia sẻ 
                             </div>
                         </div>
+                        <a href="#" class="see-detail-listing fs-13 font-600 color-cd-hover"><span class="text-decor">Trang chi tiết</span><span class="icon-mv mgL-10"><span class="icon-angle-right"></span></tspan></a>
                     </div>
                 </div>
             </li>

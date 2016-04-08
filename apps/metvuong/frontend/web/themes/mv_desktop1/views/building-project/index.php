@@ -16,7 +16,7 @@ use yii\widgets\LinkPager;
                 <div class="search-duan">
                     <form id="search-duan-form" action="<?= \yii\helpers\Url::to(['building-project/search'], true) ?>">
                         <input autocomplete="off" id="findProject" name="v" class="project_name" type="text" placeholder="<?=Yii::t('general', 'Find by name...')?>">
-                        <button type="submit" id="btn-search-duan"><span class="icon icon-search-small-1"></span></button>
+                        <button type="submit" id="btn-search-duan"><span class="icon-mv"><span class="icon-icons-search"></span></span></button>
                         <div class="suggest-search hide">
                             <div class="content-suggest">
                                 <a class="btn-close"><span class="icon icon-close"></span></a>

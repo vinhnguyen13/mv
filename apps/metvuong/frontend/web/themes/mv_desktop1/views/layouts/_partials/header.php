@@ -73,7 +73,7 @@ use frontend\models\AdProductSearch;
                                 <span id="notifyChat" class="notifi"><?=$this->params['notify_chat'];?></span>
                             <?php }?>
                     </a></li>
-                    <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon icon-settings"></span></div><?=Yii::t('user', 'Setting')?></a></li>
+                    <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon-mv"><span class="icon-settings"></span></span></div><?=Yii::t('user', 'Setting')?></a></li>
                     <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><div><span class="icon icon-logout"></span></div><?=Yii::t('user', 'Log Out')?></a></li>
                     <li class="flag-lang">
                         <p class="pull-right">
@@ -113,9 +113,7 @@ use frontend\models\AdProductSearch;
                     <ul class="pull-left list-redire">
                         <li>
                             <a class="tooltip-show wrapNotifyChat" href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('chat', 'Chat')?>">
-                                <span class="wrap-icon-svg">
-                                    <svg class="icon-svg icon-chat-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-chat-svg"></use></svg>
-                                </span>
+                                <span class="icon-mv"><span class="icon-bubbles-icon"></span></span>
                                 <?php if(!empty($this->params['notify_chat'])){?>
                                     <span id="notifyChat" class="notifi"><?=$this->params['notify_chat'];?></span>
                                 <?php }?>
@@ -123,9 +121,7 @@ use frontend\models\AdProductSearch;
                         </li>
                         <li>
                             <a class="tooltip-show wrapNotifyOther" href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('activity', 'Notification')?>">
-                                <span class="wrap-icon-svg">
-                                    <svg class="icon-svg icon-bell-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bell-svg"></use></svg>
-                                </span>
+                                <span class="icon-mv"><span class="icon-icons-bell"></span></span>
                                 <?php if(!empty($this->params['notify_other'])){?>
                                     <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
                                 <?php }?>
@@ -133,9 +129,7 @@ use frontend\models\AdProductSearch;
                         </li>
                         <li>
                             <a class="tooltip-show" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="Dashboard">
-                                <span class="wrap-icon-svg">
-                                    <svg class="icon-svg icon-dasboar-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dasboar-svg"></use></svg>
-                                </span>
+                                <span class="icon-mv"><span class="icon-barometer"></span></span>
                             </a>
                         </li>
                     </ul>
@@ -152,12 +146,12 @@ use frontend\models\AdProductSearch;
                                 <li>
                                     <a href="<?=Url::to(['member/profile', 'username'=>Yii::$app->user->identity->username])?>">
                                         <div>
-                                            <span class="icon icon-per"></span>
+                                            <span class="icon-mv"><span class="icon-user-icon-profile1"></span></span>
                                         </div>
                                         <?=Yii::t('user', 'Profile')?>
                                     </a>
                                 </li>
-                                <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon icon-settings"></span></div><?=Yii::t('user', 'Setting')?></a></li>
+                                <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon-mv"><span class="icon-settings"></span></span></div><?=Yii::t('user', 'Setting')?></a></li>
                                 <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><div><span class="icon icon-logout"></span></div><?=Yii::t('user', 'Log Out')?></a></li>
                                 <li class="flag-lang">
                                     <div class="pull-right">

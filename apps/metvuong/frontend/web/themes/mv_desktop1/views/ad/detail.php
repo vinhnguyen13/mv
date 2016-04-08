@@ -76,7 +76,7 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 	    	<div id="detail-wrap" class="col-xs-12 col-md-9 col-left">
 				<?php if(Yii::$app->user->identity && Yii::$app->user->identity->id == $product->user_id): ?>
 				<a href="<?= Url::to(['update', 'id' => $product->id]) ?>" class="edit-listing">
-					<svg class="icon-svg edit-listing-white"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit-listing-white"></use></svg></a>
+					<span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
 				<?php endif; ?>
 				<?php
 					$images = $product->adImages;
@@ -111,22 +111,34 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 						</div>
 						<p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
 						<ul class="clearfix list-attr-td">
-							<?= $product->area ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span>' . $product->area . 'm2 </li>' : '' ?>
-							<?= $product->adProductAdditionInfo->room_no ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bed-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bed-svg"></use></svg></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
-							<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bathroom-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bathroom-svg"></use></svg></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
+							<?= $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '' ?>
+							<?= $product->adProductAdditionInfo->room_no ? '<li> <span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
+							<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
 						</ul>	
 					</div>
 					<ul class="pull-right icons-detail">
 						<li>
 							<button data-toggle="tooltip" data-placement="bottom" title="Copy link" class="btn-copy tooltip-show" type="button" data-clipboard-text="<?= $product->urlDetail(true) ?>">
-								<span class="wrap-icon-svg"><svg class="icon-svg icon-copy-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-copy-svg"></use></svg></span>
+								<span class="icon-mv"><span class="icon-link"></span></span>
 							</button>
 						</li>
-						<li><a href="#" data-toggle="modal" data-placement="bottom" data-target="#popup-share-social" class="icon icon-share-td tooltip-show" title="Share social"></a></li>
+						<li>
+							<a href="#" data-toggle="modal" data-placement="bottom" data-target="#popup-share-social" class="tooltip-show" title="Share social">
+								<span class="icon-mv"><span class="icon-share-social"></span></span>
+							</a>	
+						</li>
 			            <?php if($product->user_id != Yii::$app->user->id){ ?>
-						<li><a data-toggle="tooltip" data-placement="bottom" title="Favourite" href="#" class="icon save-item tooltip-show <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>"></a></li>
+						<li>
+							<a data-toggle="tooltip" data-placement="bottom" title="Favourite" href="#" class="icon save-item tooltip-show <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>">
+								<span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
+							</a>
+						</li>
 			            <?php } ?>
-						<li><a href="#" data-toggle="modal" data-placement="bottom" data-target="#popup-map" class="icon icon-map-loca tooltip-show" title="Location"></a></li>
+						<li>
+							<a href="#" data-toggle="modal" data-placement="bottom" data-target="#popup-map" class="tooltip-show" title="Location">
+								<span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>	
+							</a>
+						</li>
 					</ul>
 
 					<?=$this->renderAjax('/ad/_partials/shareEmail',[

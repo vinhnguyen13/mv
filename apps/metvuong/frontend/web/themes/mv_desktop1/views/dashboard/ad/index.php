@@ -26,7 +26,7 @@ $count_product = count($products);
                     	<div class="clearfix fs-13">
                     		<div class="search-history">
 								<input type="text" id="" class="form-control" placeholder="Search listing...">
-								<button class="btn-search-hist" href="#"><span class="icon icon-search-small"></span></button>
+								<button class="btn-search-hist" href="#"><span class="icon-mv"><span class="icon-icons-search"></span></span></button>
 							</div>
                     	</div>
                     </li>

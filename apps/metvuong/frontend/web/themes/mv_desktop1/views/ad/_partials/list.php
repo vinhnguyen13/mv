@@ -37,9 +37,9 @@
 				</p>
 				<p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
 				<ul class="clearfix list-attr-td">
-					<?= $product->area ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span>' . $product->area . 'm2 </li>' : '' ?>
-					<?= $product->room_no ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bed-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bed-svg"></use></svg></span> ' . $product->room_no . ' </li>' : '' ?>
-					<?= $product->toilet_no ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bathroom-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bathroom-svg"></use></svg></span> ' . $product->toilet_no . ' </li>' : '' ?>
+					<?= $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '' ?>
+					<?= $product->room_no ? '<li> <span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->room_no . ' </li>' : '' ?>
+					<?= $product->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>' . $product->toilet_no . ' </li>' : '' ?>
 				</ul>
 			</div>
 			<div class="wrap-attr-bottom">

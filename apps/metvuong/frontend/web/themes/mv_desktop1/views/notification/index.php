@@ -38,23 +38,19 @@ use yii\helpers\Html;
 										<!--<span class="icon icon-message"></span>-->
 										<div class="icon-noti-type">
 											<?php if ($activity->isAction(UserActivity::ACTION_AD_CLICK)) { ?>
-												<span class="wrap-icon-svg">
-				                                    <svg class="icon-svg icon-eye-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-eye-svg"></use></svg>
-				                                </span>
+												<span class="icon-mv fs-18 color-body"><span class="icon-eye-copy"></span></span>
 				                            <?php } elseif ($activity->isAction(UserActivity::ACTION_AD_FAVORITE)) { ?>
-												<span class="wrap-icon-svg">
-				                                    <svg class="icon-svg icon-heart-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-heart-svg"></use></svg>
-				                                </span>
+												<span class="icon-mv fs-19 color-body"><span class="icon-heart-icon-listing"></span></span>
 				                            <?php } ?>
 			                            </div>
 		                                <div class="avatar"><a href="<?= $owner->urlProfile(); ?>"><img src="<?= Url::to(['member/avatar', 'usrn' => $owner->username]) ?>" alt="" width="40" height="40"></a></div>
 										<a href="#" class="name"><?= $owner->profile->getDisplayName(); ?></a>
-										<a href="#" class="pdL-10 pdR-10"><span class="wrap-icon-svg">
-		                                    <svg class="icon-svg icon-email-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-email-svg"></use></svg>
-		                                </span></a>
-		                                <a href="#"><span class="wrap-icon-svg">
-		                                    <svg class="icon-svg icon-chat-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-chat-svg"></use></svg>
-		                                </span></a>
+										<a href="#" class="pdL-10 pdR-10">
+											<span class="icon-mv fs-18 color-cd"><span class="icon-mail-profile"></span></span>
+										</a>
+		                                <a href="#">
+		                                	<span class="icon-mv fs-20 color-cd"><span class="icon-bubbles-icon"></span></span>
+		                                </a>
 										<?php
 										$product = AdProduct::findOne(['id' => $params['product']]);
 										if (!empty($product)) {

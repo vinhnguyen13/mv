@@ -81,8 +81,7 @@ $count_product = $pagination->totalCount;
                                 ?>
                                 <li class="col-xs-12 col-sm-6">
                                     <div class="wrap-item-post">
-                                        <a href="<?= Url::to(['/ad/update', 'id' => $product->id]) ?>" class="edit-listing">
-                                            <svg class="icon-svg edit-listing-white"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit-listing-white"></use></svg></a>
+                                        <a href="<?= Url::to(['/ad/update', 'id' => $product->id]) ?>" class="edit-listing"><span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
                                         <a href="<?= $product->urlDetail() ?>" class="rippler rippler-default">
                                             <div class="img-show"><div><img src="<?= $product->representImage ?>">
                                                     <input type="hidden" value="<?= $product->representImage ?>">
@@ -97,9 +96,9 @@ $count_product = $pagination->totalCount;
                                                 <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
                                                     <li><span><?=Yii::t('listing','updating')?></span></li>
                                                 <?php } else {
-                                                    echo $product->area ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span>' . $product->area . 'm2 </li>' : '';
-                                                    echo $product->adProductAdditionInfo->room_no ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bed-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bed-svg"></use></svg></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
-                                                    echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bathroom-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bathroom-svg"></use></svg></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
+                                                    echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '';
+                                                    echo $product->adProductAdditionInfo->room_no ? '<li> <span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
+                                                    echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
                                                 } ?>
                                             </ul>    
                                         </div>
@@ -125,8 +124,7 @@ $count_product = $pagination->totalCount;
                                     ?>
                                     <li class="col-xs-12 col-sm-6">
                                         <div class="wrap-item-post">
-                                            <a phref="#" class="edit-listing">
-                                            <svg class="icon-svg edit-listing-white"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit-listing-white"></use></svg></a>
+                                            <a phref="#" class="edit-listing"><span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
                                             <a href="<?= $product->urlDetail() ?>" class="rippler rippler-default">
                                                 <div class="img-show"><div><img src="<?= $product->representImage ?>">
                                                         <input type="hidden" value="<?= $product->representImage ?>">
@@ -141,7 +139,7 @@ $count_product = $pagination->totalCount;
                                                     <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
                                                         <li><span><?=Yii::t('listing','updating')?></span></li>
                                                     <?php } else {
-                                                        echo $product->area ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span>' . $product->area . 'm2 </li>' : '';
+                                                        echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '';
                                                         echo $product->adProductAdditionInfo->room_no ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bed-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bed-svg"></use></svg></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
                                                         echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bathroom-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bathroom-svg"></use></svg></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
                                                     } ?>
@@ -162,8 +160,7 @@ $count_product = $pagination->totalCount;
                                     ?>
                                     <li class="col-xs-12 col-sm-6">
                                         <div class="wrap-item-post">
-                                            <a phref="#" class="edit-listing">
-                                            <svg class="icon-svg edit-listing-white"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#edit-listing-white"></use></svg></a>
+                                            <a phref="#" class="edit-listing"><span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
                                             <a href="<?= $product->urlDetail() ?>" class="rippler rippler-default">
                                                 <div class="img-show"><div><img src="<?= $product->representImage ?>">
                                                         <input type="hidden" value="<?= $product->representImage ?>">
@@ -178,9 +175,9 @@ $count_product = $pagination->totalCount;
                                                     <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
                                                         <li><span><?=Yii::t('listing','updating')?></span></li>
                                                     <?php } else {
-                                                        echo $product->area ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span>' . $product->area . 'm2 </li>' : '';
-                                                        echo $product->adProductAdditionInfo->room_no ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bed-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bed-svg"></use></svg></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
-                                                        echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bathroom-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bathroom-svg"></use></svg></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
+                                                        echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '';
+                                                        echo $product->adProductAdditionInfo->room_no ? '<li> <span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
+                                                        echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
                                                     } ?>
                                                 </ul>
                                             </div>
