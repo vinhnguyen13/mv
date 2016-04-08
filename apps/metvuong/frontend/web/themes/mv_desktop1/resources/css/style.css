@@ -8026,6 +8026,7 @@ footer li a {
     width: 100%;
     padding: 0;
     z-index: 9;
+    height: auto;
 }
 #chat-container {
     height: 100%;
