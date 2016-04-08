@@ -61,7 +61,23 @@ if(!Yii::$app->user->isGuest) {
             });
 
             $(document).bind('chat/afterConnect', function (event, data) {
-                
+            });
+
+            $(document).on('click', '.chat-now', function (e) {
+                $('.box-chat-footer').loading();
+                user = $(this).attr('data-chat-user');
+                if (user) {
+                    $.ajax({
+                        type: "get",
+                        dataType: 'html',
+                        url: '/chat/with/' + user,
+                        success: function (data) {
+                            $('.box-chat-footer').append(data);
+                            Chat.historyMessage(user+'@<?=Chat::DOMAIN?>');
+                        }
+                    });
+                }
+                return false;
             });
 
             $(document).bind('chat/readNotify', function (event, type) {

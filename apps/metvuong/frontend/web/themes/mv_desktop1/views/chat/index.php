@@ -85,12 +85,14 @@ if(!empty($jid_id)){
 		var timer = 0;
 		$(document).bind('chat/withAnother', function (event, user) {
 			if(user){
+				$('body').loading();
 				$.ajax({
 					type: "get",
 					dataType: 'html',
 					url: '/chat/with/'+user,
 					success: function (data) {
 						$('.wrap-item-live').html(data);
+						Chat.historyMessage(user+'@<?=Chat::DOMAIN?>');
 					}
 				});
 			}
@@ -105,10 +107,8 @@ if(!empty($jid_id)){
 		$(document).on('click', '.wrap-history .chat-list .item a', function (e) {
 			$('.wrap-history .chat-list .item a').removeClass('active');
 			$(this).addClass('active');
-			$('body').loading();
 			var user = $(this).parent().attr('chat-with');
 			$(document).trigger('chat/withAnother', [user]);
-			Chat.historyMessage(user+'@<?=Chat::DOMAIN?>');
 			return false;
 		});
 		/*$(document).on('keyup', '#findConversation', function (e) {
