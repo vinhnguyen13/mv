@@ -182,7 +182,7 @@ $tabKeys = [
 <?=$this->renderAjax('/ad/_partials/shareEmail',[ 'project' => $model, 'yourEmail' => Yii::$app->user->isGuest ? '' : Yii::$app->user->identity->email, 'recipientEmail' => '', 'params' => ['your_email' => false, 'setValueToEmail' => false] ])?>
 
 <?=$this->render('/ad/_partials/shareSocial',[
-    'url' => Url::to(["building/$model->slug"], true),
+    'url' => Url::to(["building-project/view", 'slug'=>$model->slug], true),
     'title' => $model->name,
     'description' => \yii\helpers\StringHelper::truncate($model->description, 200, $suffix = '...', $encoding = 'UTF-8'),
     'image' => $model->logoUrl

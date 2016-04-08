@@ -45,7 +45,7 @@ use yii\widgets\LinkPager;
                                             <div class="info-item">
                                                 <div class="address-feat">
                                                     <!-- <p><?= $model->investment_type ?></p> -->
-                                                    <a class="color-cd" href="<?= Url::to(["building/$model->slug"]); ?>" title="<?= $model->name ?>">
+                                                    <a class="color-cd" href="<?= Url::to(["building-project/view", 'slug'=>$model->slug]); ?>" title="<?= $model->name ?>">
                                                         <strong><?= $model->name ?></strong>
                                                     </a>
                                                     <p class="address-duan"><?= empty($model->location) ? Yii::t('general', 'Updating') : $model->location ?></p>
