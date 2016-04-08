@@ -6,7 +6,7 @@ $params = array_merge(
     require(__DIR__ . '/params-local.php')
 );
 $baseUrl = str_replace('/frontend/web', '', (new \yii\web\Request())->getBaseUrl());
-return [
+$return =  [
     'id' => 'app-frontend',
     'name'=>'MetVuong',
     'language'=>'vi-VN',
@@ -190,3 +190,45 @@ return [
     ],
     'params' => $params,
 ];
+
+
+$return['components']['urlManager']['rules'] = [
+    '/' => 'site/index',
+    'tin-tuc' => 'news/index',
+    'tin-tuc/<cat_id:\d+>-<cat_slug>' => 'news/list',
+    'tin-tuc/chi-tiet/<id:\d+>-<slug>' => 'news/view',
+    'du-an' => 'building-project/index',
+    'du-an/<slug>' => 'building-project/view',
+    'can-mua-<type:1>-<city_id>-<district_id>' => 'ad/index',
+    'can-thue-<type:2>-<city_id>-<district_id>' => 'ad/index',
+    'real-estate/redirect' => 'ad/redirect',
+    'dang-tin' => 'ad/post',
+    'real-estate/post-listing' => 'ad/post-listing',
+    'real-estate/detail/<id:\d+>-<slug>' => 'ad/detail',
+    'real-estate/update/<id:\d+>' => 'ad/update',
+    'member/<usrn>/avatar' => 'member/avatar',
+    'chat/with/<username>' => 'chat/with',
+    'goi-gia' => 'payment/package',
+
+    '<username>' => 'member/profile',
+    '<username>/cap-nhat' => 'member/update-profile',
+    '<username>/thong-bao' => 'notification/index',
+    '<username>/thong-bao/cap-nhat' => 'notification/update',
+    '<username>/danh-sach-tin-dang' => 'dashboard/ad',
+    '<username>/tro-chuyen' => 'chat/index',
+
+    'mvuser/protect/<action>' => 'user/security/<action>',
+    'mvuser/join/<action>' => 'user/registration/<action>',
+    'mvuser/forgot/<action>' => 'user/recovery/<action>',
+
+];
+
+//echo "<pre>";
+//print_r($_REQUEST);
+//print_r(strpos($_COOKIE['language'], 'vi-VN'));
+//print_r(PHP_EOL);
+//print_r($return['components']['urlManager']['rules']);
+//echo "</pre>";
+//exit;
+return $return;
+
