@@ -1,18 +1,27 @@
 <?php
 use yii\web\View;
 use yii\helpers\Url;
+use yii\widgets\LinkPager;
 
+$count_product = count($products);
 ?>
 <div class="title-fixed-wrap">
 	<div class="container">
 		<?php $this->beginContent('@app/views/layouts/_partials/menuUser.php'); ?><?php $this->endContent();?>
 		<div class="u-allduan">
-			<?php if($products): ?>
+            <?php if($count_product <= 0){?>
+                <div class="no-duan">
+                    <div>
+                        <p>Hiện tại, bạn không có tin đăng nào.</p>
+                        <a href="<?= Url::to(['/ad/post']) ?>" class="btn-000">Đăng Dự Án</a>
+                    </div>
+                </div>
+            <?php } else { ?>
 			<div class="wrap-list-duan">
 				<ul class="nav nav-tabs clearfix" role="tablist">
-                    <li role="presentation" class="active"><a href="#list-all" aria-controls="list-all" role="tab" data-toggle="tab">Tất cả (1)</a></li>
-                    <li role="presentation"><a href="#list-sell" aria-controls="list-sell" role="tab" data-toggle="tab">Bán (1)</a></li>
-                    <li role="presentation"><a href="#list-rent" aria-controls="list-rent" role="tab" data-toggle="tab">Cho thuê (1)</a></li>
+                    <li role="presentation" class="active"><a href="#list-all" aria-controls="list-all" role="tab" data-toggle="tab">Tất cả (<?=$count_product > 0 ? $pagination->totalCount : 0?>)</a></li>
+                    <li role="presentation"><a class="sell_product" data-url="<?=Url::to(['/dashboard/ad-sell'], true)?>" href="#list-sell" aria-controls="list-sell" role="tab" data-toggle="tab">Bán (<?=$sell?>)</a></li>
+                    <li role="presentation"><a class="rent_product" data-url="<?=Url::to(['/dashboard/ad-rent'], true)?>" href="#list-rent" aria-controls="list-rent" role="tab" data-toggle="tab">Cho thuê (<?=$rent?>)</a></li>
                     <li class="pull-right">
                     	<div class="clearfix fs-13">
                     		<div class="search-history">
@@ -24,72 +33,13 @@ use yii\helpers\Url;
                 </ul>
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane fade in active" id="list-all">
-						<ul class="clearfix list-item">
-							<?php foreach($products as $product): ?>
-							<li>
-								<div class="item">
-									<div class="img-show">
-										<div>
-											<a href="<?=Url::to(['/dashboard/statistics', 'id' => $product->id])?>"><img src="<?= $product->representImage ?>"></a>
-										</div>
-										<a href="<?= Url::to(['/ad/update', 'id' => $product->id]) ?>" class="edit-duan"><span class="icon-edit-small icon"></span></a>
-									</div>
-									<div class="intro-detail">
-										<div class="address-feat clearfix">
-											<p class="date-post"><span class="font-600"><?=Yii::t('statistic','Date of posting')?>:</span> <?= date("d/m/Y", $product->created_at) ?></p>
-											<?php if($product->projectBuilding): ?>
-											<p class="name-duan"><?= $product->projectBuilding->name ?></p>
-											<?php endif; ?>
-											<p class="loca-duan"><?= $product->address ?></p>
-											<p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
-											<ul class="clearfix list-attr-td">
-				                                <li> <span class="wrap-icon-svg"><svg class="icon-svg icon-dt-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-dt-svg"></use></svg></span>135m2 </li>
-				                                <li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bed-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bed-svg"></use></svg></span> 3 </li>
-				                                <li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bathroom-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bathroom-svg"></use></svg></span> 2 </li>                            
-				                            </ul>	
-										</div>
-										<div class="bottom-feat-box clearfix">
-		                            		<div class="pull-right push-price">
-		                            			<div class="status-duan">
-													<?php if($product->end_date < time()): ?>
-													<div class="wrap-icon status-get-point"><div><span class="icon icon-inactive-pro"></span></div><strong><?=Yii::t('statistic','Inactive Project')?></strong></div>
-													<?php else: ?>
-													<div class="wrap-icon status-get-point"><div><span class="icon icon-active-pro"></span></div><strong><?=Yii::t('statistic','Active Project')?></strong></div>
-													<?php endif; ?>
-												</div>
-												<?php if($product->end_date > time()){
-					                                $d = $product->end_date - time();
-					                                $day_number = floor($d/(60*60*24)); ?>
-					                                <p><?=Yii::t('statistic','Expired in the last')?> <strong><?= $day_number > 1 ? $day_number." ".Yii::t('statistic','days') : $day_number." ".Yii::t('statistic','day') ?></strong></p>
-					                            <?php } ?>
-												<a href="#nang-cap" class="btn-nang-cap"><?=Yii::t('statistic','Upgrade')?></a>
-											</div>
-					                        <?php
-					                        if(($search = \frontend\models\Tracking::find()->countFinders($product->id)) === null){
-												$search = 0;
-											}
-											if(($click = \frontend\models\Tracking::find()->countVisitors($product->id)) === null){
-												$click = 0;
-											}
-											if(($fav = \frontend\models\Tracking::find()->countFavourites($product->id)) === null){
-												$fav = 0;
-											}
-					                        ?>
-											<div class="wrap-icon"><div><span class="icon icon-search-small-1"></span></div><strong><?=$search?></strong> <?=Yii::t('statistic','Search')?></div>
-					                        <div class="wrap-icon"><div><span class="icon icon-view-small"></span></div><strong><?=$click?></strong> <?=Yii::t('statistic','Click')?></div>
-											<div class="wrap-icon"><div><span class="icon icon-heart-small"></span></div><strong><?=$fav?></strong> <?=Yii::t('statistic','Favourite')?></div>        
-		                                </div>
-									</div>
-								</div>
-							</li>
-							<?php endforeach; ?>
-						</ul>
+						<?=$this->render('/dashboard/ad/list',['products' => $products, 'pagination' => $pagination])?>
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="list-sell">
-                    	...
+
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="list-rent">
-                    	...
+
                     </div>
                 </div>
 				<div id="nang-cap" class="popup-common hide-popup">
@@ -106,14 +56,7 @@ use yii\helpers\Url;
 					</div>
 				</div>
 			</div>
-			<?php else: ?>
-			<div class="no-duan">
-				<div>
-					<p>Hiện tại, bạn không có<br>dự án nào.</p>
-					<a href="<?= Url::to(['/ad/post']) ?>" class="btn-000">Đăng Dự Án</a>
-				</div>
-			</div>
-			<?php endif; ?>
+            <?php } ?>
 		</div>
 	</div>
 </div>
@@ -125,5 +68,39 @@ use yii\helpers\Url;
 			styleShow: 'center',
 			closeBtn: '#nang-cap .btn-cancel, #nang-cap .btn-ok',
 		});*/
+        $('.sell_product').click(function(){
+            if($('#list-sell ul.list-item li').length < 1){
+                var url = $(this).attr('data-url');
+//                console.log(url);
+                $('body').loading();
+                $.ajax({
+                    type: "get",
+                    dataType: 'html',
+                    url: url,
+                    success: function (data) {
+                        $('#list-sell').html(data);
+                        $('body').loading({done: true});
+                    }
+                });
+            }
+            return false;
+        });
+
+        $('.rent_product').click(function(){
+            if($('#list-rent ul.list-item li').length < 1){
+                var url = $(this).attr('data-url');
+                $('body').loading();
+                $.ajax({
+                    type: "get",
+                    dataType: 'html',
+                    url: url,
+                    success: function (data) {
+                        $('#list-rent').html(data);
+                        $('body').loading({done: true});
+                    }
+                });
+            }
+            return false;
+        });
     });
 </script>

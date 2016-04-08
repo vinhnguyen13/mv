@@ -13,6 +13,7 @@ use vsoft\express\components\ImageHelper;
 use vsoft\tracking\models\base\AdProductFinder;
 use vsoft\tracking\models\base\AdProductVisitor;
 use Yii;
+use yii\data\Pagination;
 use yii\db\mssql\PDO;
 use yii\helpers\Url;
 use vsoft\news\models\CmsShow;
@@ -168,8 +169,49 @@ class DashboardController extends Controller
         if($checkUsername == false)
             return $this->goHome();
 
-    	$products = AdProduct::find()->where(['user_id' => Yii::$app->user->id])->with('projectBuilding')->orderBy('`created_at` DESC')->all();
-        return $this->render('ad/index', ['products' => $products]);
+        $sell = 0;
+        $rent = 0;
+
+    	$query = AdProduct::find()->where(['user_id' => Yii::$app->user->id])->with('projectBuilding')->orderBy('`created_at` DESC');
+        $detectProducts = $query->all();
+        if(count($detectProducts) > 0){
+            foreach($detectProducts as $product){
+                if($product->type == 1) {
+                    $sell += 1;
+                }
+                else {
+                    $rent += 1;
+                }
+            }
+        }
+        $pagination = new Pagination(['totalCount' => $query->count()]);
+        $pagination->defaultPageSize = 6;
+        $products = $query->offset($pagination->offset)->limit($pagination->limit)->all();
+        return $this->render('ad/index', ['products' => $products, 'pagination' => $pagination, 'sell' => $sell, 'rent' => $rent]);
+    }
+
+    public function actionAdSell(){
+        if(Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_HTML;
+            $query = AdProduct::find()->where(['user_id' => Yii::$app->user->id, 'type' => 1])->with('projectBuilding')->orderBy('`created_at` DESC');
+            $pagination = new Pagination(['totalCount' => $query->count()]);
+            $pagination->defaultPageSize = 6;
+            $products = $query->offset($pagination->offset)->limit($pagination->limit)->all();
+            return $this->renderAjax('/dashboard/ad/list', ['products' => $products, 'pagination' => $pagination]);
+        }
+        return false;
+    }
+
+    public function actionAdRent(){
+        if(Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_HTML;
+            $query = AdProduct::find()->where(['user_id' => Yii::$app->user->id, 'type' => 2])->with('projectBuilding')->orderBy('`created_at` DESC');
+            $pagination = new Pagination(['totalCount' => $query->count()]);
+            $pagination->defaultPageSize = 6;
+            $products = $query->offset($pagination->offset)->limit($pagination->limit)->all();
+            return $this->renderAjax('/dashboard/ad/list', ['products' => $products, 'pagination' => $pagination]);
+        }
+        return false;
     }
 
     public function actionPassword()

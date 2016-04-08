@@ -49,7 +49,7 @@ use yii\widgets\LinkPager;
                                                         <strong><?= $model->name ?></strong>
                                                     </a>
                                                     <p class="address-duan"><?= empty($model->location) ? Yii::t('general', 'Updating') : $model->location ?></p>
-                                                    <p class="date-post"><?=date('d/m/Y, H:i', $model->created_at)?></p>
+                                                    <p class="date-post"><?=date('d/m/Y', $model->created_at)?></p>
                                                 </div>
                                                 <div class="bottom-feat-box clearfix">
                                                     <input type="hidden" value="<?=$model->id?>">
