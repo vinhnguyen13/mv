@@ -8196,7 +8196,7 @@ footer li a {
 .wrap-list-duan .bottom-feat-box .icon-mv {
     font-size: 19px;
     width: 30px;
-    color: #009455;
+    color: #3c3c3c;
     text-align: center;
     margin-right: 5px;
 }
@@ -8313,7 +8313,9 @@ footer li a {
     font-size: 27px;
 }
 .list-redire li a .icon-barometer {
-    font-size: 30px;
+    font-size: 35px;
+    position: relative;
+    top: -3px;
 }
 .list-redire li a:hover .icon-mv {
     color: #009544;
