@@ -7424,6 +7424,13 @@ footer li a {
 .user-avatar .location {
     margin-bottom: 5px;
 }
+.user-avatar .icon-mv {
+    width: 30px;
+    font-size: 18px;
+}
+.user-avatar .icon-phone-profile {
+    font-size: 19px;
+}
 .list-reivew {
     font-size: 13px;
 }

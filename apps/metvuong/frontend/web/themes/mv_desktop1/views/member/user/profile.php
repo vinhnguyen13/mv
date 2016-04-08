@@ -28,22 +28,16 @@ $count_product = $pagination->totalCount;
                             <span id="rating-all" class="rateit" data-rateit-value="<?=$model->rating_point?>" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
                         </div>
                         <p class="location">
-                            <!-- <span class="wrap-icon-svg">
-                                <svg class="icon-svg icon-location-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-location-svg"></use></svg>
-                            </span> -->
+                            <span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
                             <?= empty($user->location) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $user->location->city ?>
                         </p>
                         <p class="num-mobi">
-                            <!-- <span class="wrap-icon-svg">
-                                <svg class="icon-svg icon-bell-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bell-svg"></use></svg>
-                            </span> -->
+                            <span class="icon-mv"><span class="icon-phone-profile"></span></span>
                             <?= empty($model->mobile) ?  "<a href='#'><i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i></a>" : "<a href='tel:".$model->mobile."'>".$model->mobile."</a>" ?>
                         </p>
                         <p class="email-user">
                             <a href="#popup-email" class="email-btn">
-                                <!-- <span class="wrap-icon-svg">
-                                    <svg class="icon-svg icon-email-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-email-svg"></use></svg>
-                                </span> -->
+                                <span class="icon-mv"><span class="icon-mail-profile"></span></span>
                                 <?= empty($model->public_email) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->public_email ?>
                             </a>
                         </p>
