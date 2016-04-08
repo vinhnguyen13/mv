@@ -4,6 +4,14 @@ $(window).on('load', function () {
 
 $(document).ready(function() {
 
+    $(document).on('click', '.box-chat-footer .close-box', function (e) {
+        e.preventDefault();
+        $(this).closest('.item-box-chat').remove();
+    });
+    $(document).on('click', '.box-chat-footer .title-top', function () {
+        $(this).closest('.box-chat-footer').toggleClass('show-hide-chat');
+    });
+
     if ( !checkMobile() ) {
         $('.collapse').on('show.bs.collapse hide.bs.collapse', function(e) {
             e.preventDefault();

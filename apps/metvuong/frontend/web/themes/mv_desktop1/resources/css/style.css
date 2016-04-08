@@ -2887,7 +2887,7 @@ html.mm-opening .mm-slideout {
 }
 .type-input-chat .sm-chat {
     position: absolute;
-    bottom: 0;
+    bottom: 0px;
     right: 0;
     height: 35px;
     border: none;
@@ -7415,21 +7415,25 @@ footer li a {
 }
 .user-avatar .name-user {
     text-transform: uppercase;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
 }
 .user-avatar .rating {
     margin-bottom: 5px;
 }
 .user-avatar .num-mobi,
 .user-avatar .location {
-    margin-bottom: 5px;
+    margin-bottom: 7px;
 }
 .user-avatar .icon-mv {
-    width: 30px;
+    width: 19px;
     font-size: 18px;
+    margin-right: 5px;
 }
 .user-avatar .icon-phone-profile {
     font-size: 19px;
+}
+.user-avatar .icon-mail-profile {
+    font-size: 15px;
 }
 .list-reivew {
     font-size: 13px;
@@ -8013,6 +8017,7 @@ footer li a {
 #chat-container .container {
     width: auto;
     padding: 0;
+    height: 100%;
 }
 #chat-container .type-input-chat {
     position: absolute;
@@ -8031,7 +8036,7 @@ footer li a {
     padding-bottom: 35px;
 }
 .wrap-chat-item {
-    /* height: 100%; */
+    height: 100%;
     /* overflow-x: hidden; */
     /* overflow-y: auto; */
 }
@@ -8657,12 +8662,122 @@ footer li a {
 .icons-detail .icon-mv {
     font-size: 23px;
 }
-.box-chat-footer {
+.wrap-items-chat {
     position: fixed;
     bottom: 0;
-    right: 20px;
+    right: 10px;
+}
+.wrap-items-chat .item-box-chat {
+    position: relative;
     width: 260px;
+    height: 34px;
+    float: left;
+    margin-left: 12px;
+}
+.wrap-items-chat .more-box-chat {
+    float: left;
+    position: relative;
+    height: 34px;
+}
+.wrap-items-chat .more-box-chat .dropdown {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.wrap-items-chat .more-box-chat a {
+    background: #E8E8E8;
+    color: #009455;
+    padding: 6px 0 8px 8px;
+    display: block;
+    border: 1px solid #B9B9B9;
+    border-bottom: none;
+    border-radius: 3px 3px 0 0;
+    -webkit-border-radius: 3px 3px 0 0;
+    -moz-border-radius: 3px 3px 0 0;
+    -ms-border-radius: 3px 3px 0 0;
+    font-size: 14px;
+    font-weight: 700;
+    width: 60px;
+}
+.wrap-items-chat .more-box-chat .icon-mv {
+    font-size: 24px;
+    float: left;
+    margin-right: 7px;
+}
+.wrap-items-chat .more-box-chat a:hover {
+    color: #3c3c3c;
+}
+.box-chat-footer {
+    position: absolute;
+    width: 100%;
     background: #fff;
     z-index: 999;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.53);
+    -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.53);
+    -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.53);
+    -ms-box-shadow: 0 0 3px rgba(0, 0, 0, 0.53);
+    border-radius: 3px 3px 0 0;
+    height: 350px;
+    bottom: 0;
+}
+.box-chat-footer.show-hide-chat {
+    top: 0;
+}
+.close-box {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 7px 10px;
+    font-size: 13px;
+    color: #FFFFFF;
+    z-index: 999;
+}
+.close-box:hover .icon-mv {
+    transition: all .1s ease-out;
+    -webkit-transition: all .1s ease-out;
+    -moz-transition: all .1s ease-out;
+    -ms-transition: all .1s ease-out;
+}
+.close-box:hover .icon-mv {
+    font-size: 15px;
+}
+.box-chat-footer .title-top {
+    padding: 8px 0 8px 10px;
+    background: #00a769;
+    border-radius: 3px 3px 0 0;
+    -webkit-border-radius: 3px 3px 0 0;
+    -moz-border-radius: 3px 3px 0 0;
+    -ms-border-radius: 3px 3px 0 0;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.53);
+    -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.53);
+    -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.53);
+    -ms-box-shadow: 0 0 3px rgba(0, 0, 0, 0.53);
+    cursor: pointer;
+}
+.box-chat-footer .title-top a {
+    font-size: 13px;
+    color: #fff;
+}
+.box-chat-footer .chat-real {
+    padding-top: 32px;
+    height: 100%;
+}
+.box-chat-footer .container-chat .wrap-chat {
+    padding: 10px;
+}
+.box-chat-footer .container-chat .item {
+    margin-bottom: 10px;
+}
+.box-chat-footer .container-chat .item .avatar {
+    margin-right: 10px;
+}
+.box-chat-footer .type-input-chat input {
+    border-left: none;
+    border-right: none;
+}
+.box-chat-footer .type-input-chat .sm-chat {
+    border-right: none;
+}
+.box-chat-footer #chat-container .type-input-chat {
+    height: auto;
 }

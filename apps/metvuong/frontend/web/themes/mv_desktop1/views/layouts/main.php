@@ -29,11 +29,28 @@ AppAsset::register($this);
     <?php $this->endBody() ?>
     <?php $this->beginContent('@app/views/chat/_partials/connect.php'); ?><?php $this->endContent();?>
     <?php $this->beginContent('@app/views/layouts/_partials/analyticstracking.php'); ?><?php $this->endContent();?>
-    <div class="box-chat-footer">
-        <a href="#" class="close-box">
-            <span class="icon-mv"><span class="icon-close-icon"></span></span>
-        </a>
-        
+    <div class="wrap-items-chat">
+        <div class="more-box-chat hide">
+            <div class="dropdown">
+                <a href="#" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="icon-mv"><span class="icon-bubbles-icon"></span></span>5
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dLabel">
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                </ul>
+            </div>
+        </div>
+        <div class="item-box-chat">
+            <div class="box-chat-footer">
+                <a href="#" class="close-box">
+                    <span class="icon-mv"><span class="icon-close-icon"></span></span>
+                </a>
+
+            </div>        
+        </div>
     </div>
 </body>
 </html>

@@ -79,7 +79,7 @@ if(!empty($jid_id)){
 
 		$('.wrap-chat-list').slimscroll({
 			alwaysVisible: true,
-			height: 500
+			height: '100%'
 		});
 
 		var timer = 0;
