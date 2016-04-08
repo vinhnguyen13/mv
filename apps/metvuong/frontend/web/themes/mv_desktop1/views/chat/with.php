@@ -40,7 +40,7 @@ $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 <script id="chat-box-template" type="text/x-handlebars-template">
 	<div class="container">
 		<div class="chat-real chat-group" chat-from="{{from}}" chat-to="{{to}}">
-			<div class="title-top"><?=$nameUserTo;?></div>
+			<div class="title-top"><a href="/{{to}}" title="<?=Yii::t('chat', 'View profile')?>" target="_blank"><?=$nameUserTo;?></a></div>
 			<div class="wrap-chat-item container">
 				<div class="container-chat">
 					<div class="wrap-chat clearfix">

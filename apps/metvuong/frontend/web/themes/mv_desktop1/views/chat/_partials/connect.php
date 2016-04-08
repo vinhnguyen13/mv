@@ -31,17 +31,13 @@ if(!Yii::$app->user->isGuest) {
         $(document).ready(function () {
             chatUI.connect();
             $(document).bind('chat/receiveMessage', function (event, msg, params) {
+                console.log('_______', msg, '_______');
                 chatUI.setConservation(params.from, params.to);
                 if(params.type == 'chat'){
                     if(params.chatType != chatUI.MSG_SEND_ME){
                         chatUI.notify(chatUI.NOTIFY_CHAT, 1);
                     }
-                    if ('<?=$urlBase?>' == 'chat/with') {
-                        chatUI.loadMessageToBox(msg, params);
-                    } else if ('<?=$urlBase?>' == 'chat/index') {
-                        chatUI.loadMessageToBox(msg, params);
-//                        chatUI.loadMessageToList(msg, params);
-                    }
+                    chatUI.loadMessageToBox(msg, params);
                 }else if(params.type == 'notify'){
                     chatUI.notify(chatUI.NOTIFY_OTHER, params.total);
                     var timer = 0;
@@ -61,6 +57,11 @@ if(!Yii::$app->user->isGuest) {
 //                if(!checkMobile()){
 //                    $('.wrapNotifyTotal').find('#notifyTotal').hide();
 //                }
+
+            });
+
+            $(document).bind('chat/afterConnect', function (event, data) {
+                
             });
 
             $(document).bind('chat/readNotify', function (event, type) {
