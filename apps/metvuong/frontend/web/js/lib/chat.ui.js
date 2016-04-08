@@ -49,6 +49,7 @@
             }
         },
         loadMessageHistoryToBox: function (iq) {
+            $('body').loading({done:true});
             var objHis = $(iq);
             var child = objHis.children().children();
             var length = child.length - 1;
@@ -74,8 +75,6 @@
                         chatBoxExist.find('.wrap-chat').append(chatItem);
                     }
                 }
-
-                console.log('_________', chatBoxExist.find('.wrap-chat .item:last').hasClass('box-me'));
             }
 
             $('.container-chat').scrollTop($('.wrap-chat').height());
@@ -84,7 +83,6 @@
                 height: 440,
                 start : 'bottom'
             });
-            $('body').loading({done:true});
             $('.chat-group').find('#typingMsg').focus();
         },
         buildMessageToBox: function (username, msg, type, params) {
