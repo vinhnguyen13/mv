@@ -3922,18 +3922,23 @@ html.mm-opening .mm-slideout {
     margin-bottom: 0;
 }
 .push-price {
-    text-align: center;
+    text-align: right;
     font-size: 13px;
 }
-.push-price a {
+.push-price .btn-nang-cap {
     border: solid 1px #00a769;
     color: #00a769;
     padding: 5px 20px;
     display: block;
-    /* margin-top: 10px; */
-}
-.push-price .btn-nang-cap {
     float: right;
+}
+.push-price .see-detail-listing {
+    letter-spacing: 0;
+    display: inline-block;
+}
+.wrap-list-duan .push-price .see-detail-listing .icon-mv {
+    width: auto;
+    margin: 0;
 }
 .push-price p {
     margin-bottom: 10px;
@@ -8644,4 +8649,13 @@ footer li a {
 }
 .icons-detail .icon-mv {
     font-size: 23px;
+}
+.box-chat-footer {
+    position: fixed;
+    bottom: 0;
+    right: 20px;
+    width: 260px;
+    background: #fff;
+    z-index: 999;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .3);
 }

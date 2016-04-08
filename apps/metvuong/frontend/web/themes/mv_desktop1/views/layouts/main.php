@@ -29,6 +29,12 @@ AppAsset::register($this);
     <?php $this->endBody() ?>
     <?php $this->beginContent('@app/views/chat/_partials/connect.php'); ?><?php $this->endContent();?>
     <?php $this->beginContent('@app/views/layouts/_partials/analyticstracking.php'); ?><?php $this->endContent();?>
+    <div class="box-chat-footer">
+        <a href="#" class="close-box">
+            <span class="icon-mv"><span class="icon-close-icon"></span></span>
+        </a>
+        
+    </div>
 </body>
 </html>
 <?php $this->endPage() ?>

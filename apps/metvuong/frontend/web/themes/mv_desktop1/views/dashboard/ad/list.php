@@ -72,6 +72,8 @@ $count_product = $pagination->totalCount;
                                 <?php } ?>
                                 <a href="#nang-cap"
                                    class="btn-nang-cap"><?= Yii::t('statistic', 'Upgrade') ?></a>
+                                <div class="clearfix"></div>
+                                <a href="#" class="see-detail-listing fs-13 font-600 color-cd-hover mgT-5"><span class="text-decor">Trang chi tiết</span><span class="icon-mv mgL-10"><span class="icon-angle-right"></span></tspan></a>
                             </div>
                             <?php
                             if (($search = \frontend\models\Tracking::find()->countFinders($product->id)) === null) {
@@ -101,7 +103,6 @@ $count_product = $pagination->totalCount;
                                 <strong>10</strong>Chia sẻ 
                             </div>
                         </div>
-                        <a href="#" class="see-detail-listing fs-13 font-600 color-cd-hover"><span class="text-decor">Trang chi tiết</span><span class="icon-mv mgL-10"><span class="icon-angle-right"></span></tspan></a>
                     </div>
                 </div>
             </li>
