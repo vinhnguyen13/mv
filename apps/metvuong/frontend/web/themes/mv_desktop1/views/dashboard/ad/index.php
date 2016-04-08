@@ -68,7 +68,7 @@ $count_product = count($products);
 			styleShow: 'center',
 			closeBtn: '#nang-cap .btn-cancel, #nang-cap .btn-ok',
 		});*/
-        $('.sell_product').click(function(){
+        /*$('.sell_product').click(function(){
             if($('#list-sell ul.list-item li').length < 1){
                 var url = $(this).attr('data-url');
 //                console.log(url);
@@ -84,9 +84,28 @@ $count_product = count($products);
                 });
             }
             return false;
-        });
+        });*/
 
-        $('.rent_product').click(function(){
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+
+        if ( $(this).hasClass('loaded') || $(this).data('url') == undefined ) return;
+
+        var url = $(this).data('url');
+        
+        $(this).addClass('loaded');
+        $('body').loading();
+        $.ajax({
+            type: "get",
+            dataType: 'html',
+            url: url,
+            success: function (data) {
+                $('#list-sell').html(data);
+                $('body').loading({done: true});
+            }
+        });
+    });
+
+        /*$('.rent_product').click(function(){
             if($('#list-rent ul.list-item li').length < 1){
                 var url = $(this).attr('data-url');
                 $('body').loading();
@@ -101,6 +120,6 @@ $count_product = count($products);
                 });
             }
             return false;
-        });
+        });*/
     });
 </script>
