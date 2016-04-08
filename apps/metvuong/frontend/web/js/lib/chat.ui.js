@@ -80,7 +80,7 @@
             $('.container-chat').scrollTop($('.wrap-chat').height());
             $('.wrap-chat-item .container-chat').slimscroll({
                 alwaysVisible: true,
-                height: 440,
+                height: '100%',
                 start : 'bottom'
             });
             $('.chat-group').find('#typingMsg').focus();
@@ -131,7 +131,7 @@
             $('.container-chat').scrollTop($('.wrap-chat').height());
             $('.wrap-chat-item .container-chat').slimscroll({
                 alwaysVisible: true,
-                height: 440,
+                height: '100%',
                 start : 'bottom'
             });
             $(document).trigger('chat/readNotify', [chatUI.NOTIFY_CHAT]);

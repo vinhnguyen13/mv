@@ -61,9 +61,13 @@ if(!Yii::$app->user->isGuest) {
             });
 
             $(document).bind('chat/afterConnect', function (event, data) {
+                var template = Handlebars.compile($("#wrap-items-chat-template").html());
+                var html = template({});
+                $('body').append(html);
             });
 
             $(document).on('click', '.chat-now', function (e) {
+                $('.wrap-items-chat').toggleClass('hide');
                 $('.box-chat-footer').loading();
                 user = $(this).attr('data-chat-user');
                 if (user) {
@@ -88,6 +92,31 @@ if(!Yii::$app->user->isGuest) {
                 }
             });
         });
+    </script>
+    <script id="wrap-items-chat-template" type="text/x-handlebars-template">
+        <div class="wrap-items-chat hide">
+            <div class="more-box-chat hide">
+                <div class="dropdown">
+                    <a href="#" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="icon-mv"><span class="icon-bubbles-icon"></span></span>5
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dLabel">
+                        <li>a</li>
+                        <li>a</li>
+                        <li>a</li>
+                        <li>a</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="item-box-chat">
+                <div class="box-chat-footer">
+                    <a href="#" class="close-box">
+                        <span class="icon-mv"><span class="icon-close-icon"></span></span>
+                    </a>
+
+                </div>
+            </div>
+        </div>
     </script>
     <?php
 }
