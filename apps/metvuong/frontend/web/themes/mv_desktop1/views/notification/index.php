@@ -48,7 +48,7 @@ use yii\helpers\Html;
 										<a href="#" class="pdL-10 pdR-10">
 											<span class="icon-mv fs-18 color-cd"><span class="icon-mail-profile"></span></span>
 										</a>
-		                                <a href="#">
+		                                <a href="#" class="chat-now" data-chat-user="<?=$owner->username?>">
 		                                	<span class="icon-mv fs-20 color-cd"><span class="icon-bubbles-icon"></span></span>
 		                                </a>
 										<?php
