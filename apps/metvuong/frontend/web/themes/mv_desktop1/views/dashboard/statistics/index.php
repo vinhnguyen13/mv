@@ -48,145 +48,262 @@ $favouriteTo = (!empty($favourites) && isset($favourites["to"])) ? $favourites["
                 <?=Yii::t('statistic','Statistic')?>
                 <a href="<?=$backUrl?>" id="prev-page"><span class="icon arrowRight-1"></span></a>
             </div>
-        	<section>
-        		<div id="sandbox-container">
-        			<input type="text" class="form-control toDate" readonly placeholder="<?=Yii::t('statistic','Select date')?>">
-        			<span class="icon arrowDown"></span>
-        		</div>
-        		<div class="summary clearfix">
-                    <ul class="option-view-stats clearfix">
-                        <li><a href="#" class="btn-finder active" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $finderFrom, 'to' => $finderTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><?=Yii::t('statistic','Search')?></a></li>
-                        <li><a href="#" class="btn-visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $visitorFrom, 'to' => $visitorTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><?=Yii::t('statistic','Click')?></a></li>
-                        <li><a href="#" class="btn-favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'id' => $id, 'from' => $favouriteFrom, 'to' => $favouriteTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><?=Yii::t('statistic','Favourite')?></a></li>
-                    </ul>
+        	<section class="clearfix mgB-40">
+        		<!-- <div id="sandbox-container">
+                    <input type="text" class="form-control toDate" readonly placeholder="<?=Yii::t('statistic','Select date')?>">
+                    <span class="icon arrowDown"></span>
+                </div> -->
 
-        			<div class="wrap-chart clearfix">
+                <div class="pull-right fs-13 mgB-15">
+                    Chọn lọc
+                    <select name="" id="" class="mgL-10">
+                        <option value="">Theo tuần</option>
+                        <option value="">Theo tháng</option>
+                        <option value="">Theo quý</option>
+                    </select>
+                </div>
+                <div class="clearfix"></div>
+        		<div class="summary clearfix">
+                    <div class="wrap-chart clearfix">
         				<div class="wrap-img">
                             <div class="wrapChart">
                                 <?=$this->render('/dashboard/chart/'.$view, ['id' => $id, 'from' => $finderFrom, 'to' => $finderTo, 'address' => $address, 'urlDetail' => $urlDetail]);?>
                             </div>
                         </div>
         			</div>
+                    <ul class="option-view-stats clearfix">
+                        <li><a href="#" class="btn-finder active" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $finderFrom, 'to' => $finderTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><?=Yii::t('statistic','Search')?><span>10</span></a></li>
+                        <li><a href="#" class="btn-visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $visitorFrom, 'to' => $visitorTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><?=Yii::t('statistic','Click')?><span>10</span></a></li>
+                        <li><a href="#" class="btn-favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'id' => $id, 'from' => $favouriteFrom, 'to' => $favouriteTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><?=Yii::t('statistic','Favourite')?><span>10</span></a></li>
+                        <li><a href="#" class="btn-share" data-url="">Chia sẻ <span>10</span></a></li>
+                    </ul>
         		</div>
         	</section>
-        	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-        		<div class="panel panel-default finder" style="display: block;">
-        			<div class="panel-heading title-sub" role="tab" id="headingOne">
-        				<h4 class="panel-title">
-        					<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-        					<em class="icon-eye"></em> <?=Yii::t('statistic','Search')?>
-        					<span class="pull-right icon"></span>
-        					</a>
-        				</h4>
-        			</div>
-        			<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-        				<div class="panel-body">
-        					<ul class="clearfix list-item">
-                                <?php if(isset($finders["finders"]) && count($finders["finders"]) > 0){?>
-                                <?php foreach($finders["finders"] as $key => $finder){
-                                        $classPopupUser = 'popup_enable';
-                                        if($key == $user->username)
-                                            $classPopupUser = '';
-                                    ?>
-        						<li>
-                                    <a class="<?=$classPopupUser?>" href="#popup-user-inter" data-email="<?=$finder['email']?>" data-ava="<?=Url::to($finder['avatar'], true)?>">
-                                        <img src="<?=Url::to($finder['avatar'], true)?>" alt="<?=$key?>">
-                                        <?=$key?>
+            <h2 class="text-uper fs-16 font-600 mgB-30 color-cd">STATISTIC FOR 27/01/2016</h2>
+            <table class="tbl-review">
+                <tr>
+                    <th class="text-uper fs-15 font-600">LƯỢT XEM</th>
+                    <th class="text-uper fs-15 font-600">THÍCH</th>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="clearfix">
+                            <a class="fs-13" href="#">
+                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
+                                <span class="num-show pull-right color-cd font-600">7</span>
+                                <span class="name-user">James Bond</span>
+                            </a>
+                        </div>
+                        <div class="clearfix">
+                            <a class="fs-13" href="#">
+                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
+                                <span class="num-show pull-right color-cd font-600">7</span>
+                                <span class="name-user">James Bond</span>
+                            </a>
+                        </div>
+                        <div class="clearfix">
+                            <a class="fs-13" href="#">
+                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
+                                <span class="num-show pull-right color-cd font-600">7</span>
+                                <span class="name-user">James Bond</span>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="clearfix">
+                            <a class="fs-13" href="#">
+                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
+                                <span class="num-show pull-right color-cd font-600">7</span>
+                                <span class="name-user">James Bond</span>
+                            </a>
+                        </div>
+                        <div class="clearfix">
+                            <a class="fs-13" href="#">
+                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
+                                <span class="num-show pull-right color-cd font-600">7</span>
+                                <span class="name-user">James Bond</span>
+                            </a>
+                        </div>
+                        <div class="clearfix">
+                            <a class="fs-13" href="#">
+                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
+                                <span class="num-show pull-right color-cd font-600">7</span>
+                                <span class="name-user">James Bond</span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="text-uper fs-15 font-600">TÌM KIẾM</th>
+                    <th class="text-uper fs-15 font-600">CHIA SẺ</th>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="clearfix">
+                            <a class="fs-13" href="#">
+                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
+                                <span class="num-show pull-right color-cd font-600">7</span>
+                                <span class="name-user">James Bond</span>
+                            </a>
+                        </div>
+                        <div class="clearfix">
+                            <a class="fs-13" href="#">
+                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
+                                <span class="num-show pull-right color-cd font-600">7</span>
+                                <span class="name-user">James Bond</span>
+                            </a>
+                        </div>
+                        <div class="clearfix">
+                            <a class="fs-13" href="#">
+                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
+                                <span class="num-show pull-right color-cd font-600">7</span>
+                                <span class="name-user">James Bond</span>
+                            </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="clearfix">
+                            <a class="fs-13" href="#">
+                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
+                                <span class="num-show pull-right color-cd font-600">7</span>
+                                <span class="name-user">James Bond</span>
+                            </a>
+                        </div>
+                        <div class="clearfix">
+                            <a class="fs-13" href="#">
+                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
+                                <span class="num-show pull-right color-cd font-600">7</span>
+                                <span class="name-user">James Bond</span>
+                            </a>
+                        </div>
+                        <div class="clearfix">
+                            <a class="fs-13" href="#">
+                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
+                                <span class="num-show pull-right color-cd font-600">7</span>
+                                <span class="name-user">James Bond</span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        	<!-- <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default finder" style="display: block;">
+                    <div class="panel-heading title-sub" role="tab" id="headingOne">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <em class="icon-eye"></em> <?=Yii::t('statistic','Search')?>
+                            <span class="pull-right icon"></span>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="panel-body">
+                            <ul class="clearfix list-item">
+                                            <?php if(isset($finders["finders"]) && count($finders["finders"]) > 0){?>
+                                            <?php foreach($finders["finders"] as $key => $finder){
+                                                    $classPopupUser = 'popup_enable';
+                                                    if($key == $user->username)
+                                                        $classPopupUser = '';
+                                                ?>
+                                <li>
+                                                <a class="<?=$classPopupUser?>" href="#popup-user-inter" data-email="<?=$finder['email']?>" data-ava="<?=Url::to($finder['avatar'], true)?>">
+                                                    <img src="<?=Url::to($finder['avatar'], true)?>" alt="<?=$key?>">
+                                                    <?=$key?>
+                                                </a>
+                                    <span class="pull-right"><?=$finder['count']?></span>
+                                </li>
+                                            <?php }
+                                            } else { ?>
+                                            <li><?=Yii::t('statistic','Not found user')?></li>
+                                            <?php }?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default visitor" style="display: none;">
+                    <div class="panel-heading title-sub" role="tab" id="headingTwo">
+                        <h4 class="panel-title">
+                            <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                            <em class="icon-user"></em> <?=Yii::t('statistic','Click')?>
+                            <span class="pull-right icon"></span>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                        <div class="panel-body">
+                            <ul class="clearfix list-item">
+                                            <?php if(isset($visitors["visitors"]) && count($visitors["visitors"]) > 0){
+                                                foreach($visitors["visitors"] as $key => $visitor){
+                                                    $classPopupUser = 'popup_enable';
+                                                    if($key == $user->username)
+                                                        $classPopupUser = '';
+                                                    ?>
+                                                    <li>
+                                                        <a class="<?=$classPopupUser?>" href="#popup-user-inter" data-email="<?=$visitor['email']?>" data-ava="<?=Url::to($visitor['avatar'], true)?>">
+                                                            <img src="<?=$visitor['avatar']?>" alt="<?=$key?>">
+                                                            <?=$key?>
+                                                        </a>
+                                                        <span class="pull-right"><?=$visitor['count']?></span>
+                                                    </li>
+                                                <?php }
+                                            }  else { ?>
+                                                <li><?=Yii::t('statistic','Not click user')?></li>
+                                            <?php }?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default favourite" style="display: none;">
+                    <div class="panel-heading title-sub" role="tab" id="headingThree">
+                        <h4 class="panel-title">
+                            <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                            <em class="icon-heart"></em> <?=Yii::t('statistic','favourite')?>
+                            <span class="pull-right icon"></span>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+                        <div class="panel-body">
+                            <ul class="clearfix list-item">
+                                            <?php if(isset($favourites["saved"]) && count($favourites["saved"]) > 0){
+                                                foreach($favourites["saved"] as $key => $favourite){
+                                                    ?>
+                                                    <li>
+                                                        <a class="popup_enable" href="#popup-user-inter" data-email="<?=$favourite['email']?>"  data-ava="<?=Url::to($favourite['avatar'], true)?>">
+                                                            <img src="<?=$favourite['avatar']?>" alt="<?=$key?>">
+                                                            <?=$key?>
+                                                        </a>
+                                                    </li>
+                                                <?php }
+                                            }  else { ?>
+                                                <li><?=Yii::t('statistic','Not favourite user')?></li>
+                                            <?php } ?>
+            
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="share-social">
+                            <ul class="clearfix list-attr-per">
+                                <li>
+                                    <a class="share-email-btn" href="#" data-toggle="modal" data-target="#popup-email">
+                                        <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
+                                        <div class="txt-infor-right">
+                                            <div><?=Yii::t('statistic','Share With Email')?></div>
+                                        </div>
                                     </a>
-        							<span class="pull-right"><?=$finder['count']?></span>
-        						</li>
-                                <?php }
-                                } else { ?>
-                                <li><?=Yii::t('statistic','Not found user')?></li>
-                                <?php }?>
-        					</ul>
-        				</div>
-        			</div>
-        		</div>
-        		<div class="panel panel-default visitor" style="display: none;">
-        			<div class="panel-heading title-sub" role="tab" id="headingTwo">
-        				<h4 class="panel-title">
-        					<a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-        					<em class="icon-user"></em> <?=Yii::t('statistic','Click')?>
-        					<span class="pull-right icon"></span>
-        					</a>
-        				</h4>
-        			</div>
-        			<div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
-        				<div class="panel-body">
-        					<ul class="clearfix list-item">
-                                <?php if(isset($visitors["visitors"]) && count($visitors["visitors"]) > 0){
-                                    foreach($visitors["visitors"] as $key => $visitor){
-                                        $classPopupUser = 'popup_enable';
-                                        if($key == $user->username)
-                                            $classPopupUser = '';
-                                        ?>
-                                        <li>
-                                            <a class="<?=$classPopupUser?>" href="#popup-user-inter" data-email="<?=$visitor['email']?>" data-ava="<?=Url::to($visitor['avatar'], true)?>">
-                                                <img src="<?=$visitor['avatar']?>" alt="<?=$key?>">
-                                                <?=$key?>
-                                            </a>
-                                            <span class="pull-right"><?=$visitor['count']?></span>
-                                        </li>
-                                    <?php }
-                                }  else { ?>
-                                    <li><?=Yii::t('statistic','Not click user')?></li>
-                                <?php }?>
-        					</ul>
-        				</div>
-        			</div>
-        		</div>
-        		<div class="panel panel-default favourite" style="display: none;">
-        			<div class="panel-heading title-sub" role="tab" id="headingThree">
-        				<h4 class="panel-title">
-        					<a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-        					<em class="icon-heart"></em> <?=Yii::t('statistic','favourite')?>
-        					<span class="pull-right icon"></span>
-        					</a>
-        				</h4>
-        			</div>
-        			<div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
-        				<div class="panel-body">
-        					<ul class="clearfix list-item">
-                                <?php if(isset($favourites["saved"]) && count($favourites["saved"]) > 0){
-                                    foreach($favourites["saved"] as $key => $favourite){
-                                        ?>
-                                        <li>
-                                            <a class="popup_enable" href="#popup-user-inter" data-email="<?=$favourite['email']?>"  data-ava="<?=Url::to($favourite['avatar'], true)?>">
-                                                <img src="<?=$favourite['avatar']?>" alt="<?=$key?>">
-                                                <?=$key?>
-                                            </a>
-                                        </li>
-                                    <?php }
-                                }  else { ?>
-                                    <li><?=Yii::t('statistic','Not favourite user')?></li>
-                                <?php } ?>
-
-        					</ul>
-        				</div>
-        			</div>
-        		</div>
-        	</div>
-        	<div class="share-social">
-                <ul class="clearfix list-attr-per">
-                    <li>
-                        <a class="share-email-btn" href="#" data-toggle="modal" data-target="#popup-email">
-                            <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
-                            <div class="txt-infor-right">
-                                <div><?=Yii::t('statistic','Share With Email')?></div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="share-facebook">
-                        <a href="javascript:fbShare('<?=$urlDetail ?>', '<?=$address ?>', '<?=StringHelper::truncate($product->content, 150) ?>', '<?= $product->representImage ?>', 520, 350)">
-                            <div class="circle"><div><span class="icon icon-face"></span></div></div>
-                            <div class="txt-infor-right">
-                                <div><?=Yii::t('statistic','Share With Facebook')?></div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-        	</div>
+                                </li>
+                                <li class="share-facebook">
+                                    <a href="javascript:fbShare('<?=$urlDetail ?>', '<?=$address ?>', '<?=StringHelper::truncate($product->content, 150) ?>', '<?= $product->representImage ?>', 520, 350)">
+                                        <div class="circle"><div><span class="icon icon-face"></span></div></div>
+                                        <div class="txt-infor-right">
+                                            <div><?=Yii::t('statistic','Share With Facebook')?></div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+            </div> -->
         </div>
     </div>
 </div>

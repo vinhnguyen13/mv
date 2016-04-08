@@ -2632,9 +2632,15 @@ footer {
     font-size: .85em;
 }
 .summary .wrap-chart {
-    margin: 15px 0 20px;
+    margin: 0 0 0;
     /* float: left; */
     /* width: 100%; */
+    border: 1px solid #dbdbdb;
+    border-bottom: none;
+    padding-bottom: 15px;
+}
+.summary .wrap-chart .wrap-img {
+    padding: 10px;
 }
 .box-statis-num {
     text-transform: uppercase;
@@ -5341,7 +5347,7 @@ html.mm-opening .mm-slideout {
     text-align: center;
 }
 .option-view-stats li {
-    width: 33.333%;
+    width: 25%;
     float: left;
 }
 .option-view-stats li:last-child {
@@ -5350,16 +5356,33 @@ html.mm-opening .mm-slideout {
 .option-view-stats li a {
     display: block;
     color: #3c3c3c;
-    font-weight: 600;
+    font-weight: 400;
     text-transform: capitalize;
-    padding: 6px 14px 8px;
-    font-size: 15px;
-    border-right: 1px solid #BDBDBD;
-    text-transform: uppercase;
+    padding: 25px 14px;
+    font-size: 13px;
+    border: 1px solid #dbdbdb;
+    border-left: none;
     line-height: 100%;
+    background: #f8f8f8;
 }
-.option-view-stats li:last-child a {
-    border-right: none;
+.option-view-stats li:first-child a {
+    border-left: 1px solid #dbdbdb;
+}
+.option-view-stats li a span {
+    display: block;
+    margin-top: 10px;
+    font-size: 16px;
+}
+.option-view-stats li a.active,
+.option-view-stats li a:hover {
+    border-top: 1px solid #fff;
+    color: #00a769;
+    font-weight: 600;
+    background: none;
+}
+.option-view-stats li a.active span,
+.option-view-stats li a:hover span {
+    color: #00a769;
 }
 @media (min-width: 985px) {
     .search-homepage > ul,
@@ -7983,6 +8006,7 @@ footer li a {
     left: 0;
     width: 100%;
     font-size: 15px;
+    display: block;
 }
 .address-feat {
     margin-bottom: 7px;
@@ -8063,6 +8087,7 @@ footer li a {
     top: 0;
     height: 100%;
     border-right: 1px solid #a5a5a5;
+    /* border-left: 1px solid #a5a5a5; */
     padding-top: 115px;
     background: #fff;
     z-index: 10;
@@ -8470,4 +8495,38 @@ footer li a {
     height: 24px;
     position: relative;
     top: -3px;
+}
+.statis .tbl-review {
+    width: 100%;
+}
+.statis .tbl-review th,
+.statis .tbl-review td {
+    border: 1px solid #dbdbdb;
+    text-align: center;
+    padding: 20px 50px;
+}
+.statis .tbl-review td > div {
+    margin-bottom: 5px;
+}
+.statis .tbl-review th {
+    padding: 15px 50px
+}
+.statis .tbl-review a {
+    display: block;
+    padding: 5px;
+}
+.statis .tbl-review a:hover {
+    background: #EFEFEF;
+    color: #00a769;
+}
+.tbl-review a img {
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    margin-right: 30px;
+}
+.tbl-review td a .name-user {
+    text-align: left;
+    display: block;
+    line-height: 27px;
 }
