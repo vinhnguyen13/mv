@@ -212,10 +212,10 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 								});
 							});
 
-							$(document).on('click', '#popup-share-social .icon-email-1', function (e) {
+							/*$(document).on('click', '#popup-share-social .icon-email-1', function (e) {
 								$('#popup-share-social').addClass('hide-popup');
 								$('.email-btn').trigger('click');
-							});
+							});*/
 						});
 					</script>
 
