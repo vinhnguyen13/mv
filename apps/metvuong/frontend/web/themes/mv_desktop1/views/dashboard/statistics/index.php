@@ -42,7 +42,6 @@ $favouriteTo = (!empty($favourites) && isset($favourites["to"])) ? $favourites["
 
 <div class="title-fixed-wrap">
     <div class="container">
-        <?php $this->beginContent('@app/views/layouts/_partials/menuUser.php'); ?><?php $this->endContent();?>
         <div class="title-top">
             <?=Yii::t('statistic','Statistic')?>
             <!-- <a href="<?=$backUrl?>" id="prev-page"><span class="icon arrowRight-1"></span></a> -->
