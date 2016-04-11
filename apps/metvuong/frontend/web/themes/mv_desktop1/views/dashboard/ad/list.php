@@ -113,7 +113,7 @@ $count_product = count($products);
         <?php }?>
         <li class="col-xs-12"><a href="#" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> $type,'last_id' => $last_id])?>" class="load_listing pull-right"><?=Yii::t('listing','More listing')?>...</a></li>
     <?php } else { ?>
-       <li class="col-xs-12"><span class="pull-right">That's all listing.</span>"</li>
+       <li class="col-xs-12"><span class="pull-right">That's all listing.</span></li>
     <?php } ?>
 <script>
     $('#list-all a.load_listing').click(function(){
