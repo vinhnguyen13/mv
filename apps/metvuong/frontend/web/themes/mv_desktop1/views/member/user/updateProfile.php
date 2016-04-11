@@ -92,7 +92,7 @@ $user = $model->getUser();
                     </div>
                     <div class="wrap-attr-detail">
                         <a href="#" class="edit-profile"><span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
-                        <a class="text-decor color-cd-hover fs-13 font-600" href="#">Đổi mật khẩu</a>
+                        <a class="text-decor color-cd-hover fs-13 font-600 link-change-pass" href="#">Đổi mật khẩu</a>
                     </div>
                     <div class="box-edit-show wrap-attr-detail">
                         <a href="#" class="done-profile btn-common">Xong</a>
@@ -391,7 +391,7 @@ $user = $model->getUser();
 </style>
 <script>
 	$(document).ready(function () {
-		$('.edit-profile').on('click', function (e) {
+		$('.edit-profile, .link-change-pass').on('click', function (e) {
             e.preventDefault();
             var _this = $(this);
             _this.closest('section').find('.wrap-attr-detail').hide();
@@ -403,7 +403,17 @@ $user = $model->getUser();
             _this.closest('section').loading({
                 full: false
             });
-            
+            $.ajax({
+                type: 'POST',
+                url: '',
+                success: function (res) {
+                    _this.closest('section').loading({
+                        done: true
+                    });
+                    _this.closest('section').find('.wrap-attr-detail').show();
+                    _this.closest('section').find('.box-edit-show').hide();
+                }
+            });
         });
 
         $('#edit-ttcn .btn-done').on('click', function(e){
