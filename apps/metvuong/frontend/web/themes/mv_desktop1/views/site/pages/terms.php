@@ -1,6 +1,6 @@
 <div class="title-fixed-wrap">
 	<div class="page-terms">
-		<div class="title-top"><a href="#" id="prev-page" class="hide"><span class="icon arrowRight-1"></span></a>ĐIỀU KHOẢN & ĐIỀU KIỆN</div>
+		<div class="title-top"><!-- <a href="#" id="prev-page" class="hide"><span class="icon arrowRight-1"></span></a> -->ĐIỀU KHOẢN & ĐIỀU KIỆN</div>
 		<div class="inner-page">
 			<div class="pd-20">
 				<p>Trước hết, chúng tôi xin chân thành cám ơn các bạn đã quan tâm và có mong muốn sử dụng dịch vụ của chúng tôi. Trước khi bắt đầu tham quan <a href="/"><strong>Metvuong.com</strong></a> cũng như sử dụng các dịch vụ trên trang website, xin vui lòng đọc cẩn thận và ghi nhớ Điều khoản Thoả thuận này. Việc sử dụng hoặc truy cập vào website <a href="/"><strong>Metvuong.com</strong></a> sẽ được hiểu là sự chấp nhận và đồng ý ràng buộc vào Điều khoản Thoả thuận.</p>

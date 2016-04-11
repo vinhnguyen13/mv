@@ -1,6 +1,6 @@
 <div class="title-fixed-wrap">
 	<div class="page-faqs">
-		<div class="title-top"><a href="#" id="prev-page" class="hide"><span class="icon arrowRight-1"></span></a>NHỮNG CÂU HỎI THƯỜNG GẶP</div>
+		<div class="title-top"><!-- <a href="#" id="prev-page" class="hide"><span class="icon arrowRight-1"></span></a> -->NHỮNG CÂU HỎI THƯỜNG GẶP</div>
 		<div class="inner-page">
 			<ul class="clearfix list-phuluc">
 				<li>

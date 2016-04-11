@@ -15,7 +15,7 @@ $count_product = count($products);
         $categories = \vsoft\ad\models\AdCategory::find()->indexBy('id')->asArray( true )->all();
         $types = \vsoft\ad\models\AdProduct::getAdTypes ();
         foreach ($products as $product) { ?>
-            <li>
+            <li class="col-xs-12 col-md-12 col-sm-6">
                 <div class="item">
                     <div class="img-show">
                         <div>
@@ -111,9 +111,9 @@ $count_product = count($products);
                 </div>
             </li>
         <?php }?>
-        <li><a href="#" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> $type,'last_id' => $last_id])?>" class="load_listing pull-right"><?=Yii::t('listing','More listing')?>...</a></li>
+        <li class="col-xs-12"><a href="#" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> $type,'last_id' => $last_id])?>" class="load_listing pull-right"><?=Yii::t('listing','More listing')?>...</a></li>
     <?php } else { ?>
-       <li><span class="pull-right">That's all listing.</span>"</li>
+       <li class="col-xs-12"><span class="pull-right">That's all listing.</span>"</li>
     <?php } ?>
 <script>
     $('#list-all a.load_listing').click(function(){

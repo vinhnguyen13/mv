@@ -7,6 +7,7 @@ use yii\widgets\LinkPager;
 <div class="title-fixed-wrap">
 	<div class="container">
 		<?php $this->beginContent('@app/views/layouts/_partials/menuUser.php'); ?><?php $this->endContent();?>
+        <div class="title-top">Listings</div>
 		<div class="u-allduan">
             <?php if($total <= 0){?>
                 <div class="no-duan">
