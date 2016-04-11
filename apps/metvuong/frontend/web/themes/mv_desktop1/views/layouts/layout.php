@@ -6,7 +6,9 @@
         <?php $this->beginContent('@app/views/layouts/_partials/header.php'); ?><?php $this->endContent();?>
     <?php }?>
     <div id="wrapper">
-        <?php $this->beginContent('@app/views/layouts/_partials/menuUser.php'); ?><?php $this->endContent();?>
+        <?php if(!empty($this->params['isDashboard'])){?>
+            <?php $this->beginContent('@app/views/layouts/_partials/menuUser.php'); ?><?php $this->endContent();?>
+        <?php }?>
         <div class="contentContainer">
             <?=$content;?>
         </div>

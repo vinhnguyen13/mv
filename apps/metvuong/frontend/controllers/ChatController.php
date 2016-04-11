@@ -18,8 +18,7 @@ class ChatController extends Controller
     public function beforeAction($action)
     {
         $this->checkAccess();
-        $this->view->params['noFooter'] = true;
-        $this->view->params['menuChat'] = true;
+        $this->view->params = ['noFooter' => true, 'menuChat' => true, 'isDashboard' => true];
         return parent::beforeAction($action);
     }
 

@@ -30,8 +30,7 @@ class DashboardController extends Controller
     public function beforeAction($action)
     {
         $this->checkAccess();
-        $this->view->params['noFooter'] = true;
-        $this->view->params['menuDashboard'] = true;
+        $this->view->params = ['noFooter' => true, 'menuDashboard' => true, 'isDashboard' => true];
         if(Yii::$app->user->isGuest){
             $this->redirect(['/member/login']);
         }

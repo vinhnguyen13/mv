@@ -21,8 +21,7 @@ class NotificationController extends Controller
     public function beforeAction($action)
     {
         $this->checkAccess();
-        $this->view->params['noFooter'] = true;
-        $this->view->params['menuNotification'] = true;
+        $this->view->params = ['noFooter' => true, 'menuNotification' => true, 'isDashboard' => true];
         return parent::beforeAction($action);
     }
 
