@@ -80,7 +80,7 @@ if(!empty($data) && count($data) > 0) {
                                         this.series.data[i].update({ color: '#909090' }, true, false);
                                     }
                                     this.update({ color: '#00a769' }, true, false);
-                                    getDataSavedByClick(this.category);
+//                                    getDataSavedByClick(this.category);
                                 }
                             }
                         }
@@ -92,23 +92,23 @@ if(!empty($data) && count($data) > 0) {
                 }
             });
         });
-        function getDataSavedByClick(date, categories){
-            var timer = 0;
-            clearTimeout(timer);
-            timer = setTimeout(function () {
-                $.ajax({
-                    type: "get",
-                    dataType: 'html',
-                    url: '<?=Url::to(['/dashboard/clickchart','id' => $id])?>' + '&date=' + date + '&view=_partials/saved',
-                    success: function (data) {
-                        if(data){
-                            $('.favourite .list-item').html(data);
-                            $('.date-filter-chart').html('<?=Yii::t('chart', 'Statistical favourite on')?> <span>'+date+'</span>');
-                        }
-                    }
-                });
-            }, 500);
-        }
+//        function getDataSavedByClick(date, categories){
+//            var timer = 0;
+//            clearTimeout(timer);
+//            timer = setTimeout(function () {
+//                $.ajax({
+//                    type: "get",
+//                    dataType: 'html',
+//                    url: '<?//=Url::to(['/dashboard/clickchart','id' => $id])?>//' + '&date=' + date + '&view=_partials/saved',
+//                    success: function (data) {
+//                        if(data){
+//                            $('.favourite .list-item').html(data);
+//                            $('.date-filter-chart').html('<?//=Yii::t('chart', 'Statistical favourite on')?>// <span>'+date+'</span>');
+//                        }
+//                    }
+//                });
+//            }, 500);
+//        }
     </script>
     <?php
 } else {

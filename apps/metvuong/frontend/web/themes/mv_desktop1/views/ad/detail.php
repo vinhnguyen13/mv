@@ -161,10 +161,11 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 					</div>
 
 					<?=$this->render('/ad/_partials/shareSocial',[
+                        'product_id' => $product->id,
 					    'url' => $product->urlDetail(true),
 					    'title' => $address,
 					    'description' => \yii\helpers\StringHelper::truncate($product->content, 200, $suffix = '...', $encoding = 'UTF-8'),
-					    'image' => $product->image_file_name ? AdImages::getImageUrl($product->image_folder, $product->image_file_name, AdImages::SIZE_THUMB) : AdImages::defaultImage()
+					    'image' => $product->representImage
 					])?>
 
 					<script>

@@ -17,6 +17,7 @@ use vsoft\express\components\ImageHelper;
 use vsoft\express\components\StringHelper;
 use vsoft\news\models\CmsShow;
 use vsoft\news\models\Status;
+use vsoft\tracking\models\base\AdProductShare;
 use Yii;
 use yii\base\Exception;
 use yii\data\Pagination;
@@ -683,4 +684,14 @@ class AdController extends Controller
 		
 		return $response;
 	}
+
+    public function actionTrackingShareFacebook(){
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $uid = Yii::$app->user->isGuest ? null : Yii::$app->user->id;
+        $pid = (int)Yii::$app->request->get('product_id');
+        if($pid > 0) {
+            return Tracking::find()->productShare($uid, $pid, time(), AdProductShare::SHARE_FACEBOOK);
+        }
+        return false;
+    }
 }

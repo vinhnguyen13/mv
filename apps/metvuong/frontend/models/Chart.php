@@ -12,6 +12,7 @@ use vsoft\ad\models\AdProduct;
 use vsoft\ad\models\AdProductSaved;
 use vsoft\ad\models\AdProductSavedSearch;
 use vsoft\tracking\models\base\AdProductFinder;
+use vsoft\tracking\models\base\AdProductShare;
 use vsoft\tracking\models\base\AdProductVisitor;
 use vsoft\tracking\models\AdProductVisitorSearch;
 use Yii;
@@ -59,6 +60,18 @@ class Chart extends Component
         }, array_keys($dateRange), $dateRange);
         if(count($adProductVisitors) > 0){
             return $this->pushDataToChart($adProductVisitors, $defaultData, $dateRange, 'visitors');
+        }
+        return false;
+    }
+
+    public function getDataShare($pid, $from, $to){
+        $adProductShares = AdProductShare::find()->where(['between', 'time', $from, $to])->andWhere(['product_id' => (int)$pid])->orderBy('time DESC')->all();
+        $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
+        $defaultData = array_map(function ($key, $date) {
+            return ['y' => 0];
+        }, array_keys($dateRange), $dateRange);
+        if(count($adProductShares) > 0){
+            return $this->pushDataToChart($adProductShares, $defaultData, $dateRange, 'shares');
         }
         return false;
     }
@@ -229,6 +242,33 @@ class Chart extends Component
             $infoDataVisitors["to"] = $to;
         }
         return $infoDataVisitors;
+    }
+    public function getShareWithLastTime($id, $useDate){
+        if(empty($useDate)) {
+            $share = AdProductShare::find()->where((['product_id' => $id]))->orderBy('time DESC')->one();
+            if (count($share) > 0)
+                $useDate = new \DateTime(date('Y-m-d', $share->time));
+            else
+                $useDate = new \DateTime(date('Y-m-d', time()));
+        } else {
+            $useDate = new \DateTime($useDate);
+        }
+
+        $f = date_format($useDate, 'Y-m-d 00:00:00');
+        $dateFrom = new \DateTime($f);
+        $from = strtotime('-6 days', $dateFrom->getTimestamp());
+
+        $t = date_format($useDate, 'Y-m-d 23:59:59');
+        $dateTo = new \DateTime($t);
+        $to = $dateTo->getTimestamp();
+
+        $dataShares = $this->getDataShare($id, $from, $to);
+        $infoDataShares = empty($dataShares) ? null : $dataShares["infoData"];
+        if(!empty($infoDataShares) && isset($infoDataShares["visitors"])){
+            $infoDataShares["from"] = $from;
+            $infoDataShares["to"] = $to;
+        }
+        return $infoDataShares;
     }
 
     public function getSavedWithLastTime($id, $useDate)

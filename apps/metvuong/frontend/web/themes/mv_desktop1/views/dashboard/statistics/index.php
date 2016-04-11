@@ -7,6 +7,7 @@ use yii\helpers\Url;
 Yii::$app->getView()->registerJsFile('http://code.highcharts.com/highcharts.js', ['position' => View::POS_BEGIN]);
 //Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporting.js', ['position' => View::POS_BEGIN]);
 
+
 $id = $product->id;
 $address = $product->getAddress();
 $urlDetail = $product->urlDetail(true);
@@ -71,14 +72,14 @@ $favouriteTo = (!empty($favourites) && isset($favourites["to"])) ? $favourites["
                         </div>
         			</div>
                     <ul class="option-view-stats clearfix">
-                        <li><a href="#" class="btn-finder active" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $finderFrom, 'to' => $finderTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><?=Yii::t('statistic','Search')?><span>10</span></a></li>
-                        <li><a href="#" class="btn-visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $visitorFrom, 'to' => $visitorTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><?=Yii::t('statistic','Click')?><span>10</span></a></li>
-                        <li><a href="#" class="btn-favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'id' => $id, 'from' => $favouriteFrom, 'to' => $favouriteTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><?=Yii::t('statistic','Favourite')?><span>10</span></a></li>
-                        <li><a href="#" class="btn-share" data-url="">Chia sẻ <span>10</span></a></li>
+                        <li><a href="#" class="btn-finder active" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $finderFrom, 'to' => $finderTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><?=Yii::t('statistic','Search')?><span><?=$search ?></span></a></li>
+                        <li><a href="#" class="btn-visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $visitorFrom, 'to' => $visitorTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><?=Yii::t('statistic','Click')?><span><?=$click ?></span></a></li>
+                        <li><a href="#" class="btn-favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'id' => $id, 'from' => $favouriteFrom, 'to' => $favouriteTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><?=Yii::t('statistic','Favourite')?><span><?=$fav ?></span></a></li>
+                        <li><a href="#" class="btn-share" data-url=""><?=Yii::t('statistic','Share')?> <span>10</span></a></li>
                     </ul>
         		</div>
         	</section>
-            <h2 class="text-uper fs-16 font-600 mgB-30 color-cd">STATISTIC FOR 27/01/2016</h2>
+            <h2 class="text-uper fs-16 font-600 mgB-30 color-cd">STATISTIC DATA</h2>
             <table class="tbl-review">
                 <tr>
                     <th class="text-uper fs-15 font-600">LƯỢT XEM</th>
@@ -86,50 +87,30 @@ $favouriteTo = (!empty($favourites) && isset($favourites["to"])) ? $favourites["
                 </tr>
                 <tr>
                     <td>
-                        <div class="clearfix">
-                            <a class="fs-13" href="#">
-                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
-                                <span class="num-show pull-right color-cd font-600">7</span>
-                                <span class="name-user">James Bond</span>
-                            </a>
-                        </div>
-                        <div class="clearfix">
-                            <a class="fs-13" href="#">
-                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
-                                <span class="num-show pull-right color-cd font-600">7</span>
-                                <span class="name-user">James Bond</span>
-                            </a>
-                        </div>
-                        <div class="clearfix">
-                            <a class="fs-13" href="#">
-                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
-                                <span class="num-show pull-right color-cd font-600">7</span>
-                                <span class="name-user">James Bond</span>
-                            </a>
-                        </div>
+                        <?php if(isset($visitors["visitors"]) && count($visitors["visitors"]) > 0){
+                            foreach($visitors["visitors"] as $key => $value){?>
+                                <div class="clearfix">
+                                    <a class="fs-13" href="<?=Url::to(['member/profile', 'username'=>$key])?>">
+                                        <img class="pull-left" src="<?=Url::to($value['avatar'], true)?>" alt="">
+                                        <span class="num-show pull-right color-cd font-600"><?=$value['count']?></span>
+                                        <span class="name-user"><?=$key?></span>
+                                    </a>
+                                </div>
+                            <?php }
+                        }?>
                     </td>
                     <td>
-                        <div class="clearfix">
-                            <a class="fs-13" href="#">
-                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
-                                <span class="num-show pull-right color-cd font-600">7</span>
-                                <span class="name-user">James Bond</span>
-                            </a>
-                        </div>
-                        <div class="clearfix">
-                            <a class="fs-13" href="#">
-                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
-                                <span class="num-show pull-right color-cd font-600">7</span>
-                                <span class="name-user">James Bond</span>
-                            </a>
-                        </div>
-                        <div class="clearfix">
-                            <a class="fs-13" href="#">
-                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
-                                <span class="num-show pull-right color-cd font-600">7</span>
-                                <span class="name-user">James Bond</span>
-                            </a>
-                        </div>
+                        <?php if(isset($favourites["saved"]) && count($favourites["saved"]) > 0){
+                            foreach($favourites["saved"] as $key => $value){?>
+                                <div class="clearfix">
+                                    <a class="fs-13" href="<?=Url::to(['member/profile', 'username'=>$key])?>">
+                                        <img class="pull-left" src="<?=Url::to($value['avatar'], true)?>" alt="">
+                                        <span class="num-show pull-right color-cd font-600"><?=$value['count']?></span>
+                                        <span class="name-user"><?=$key?></span>
+                                    </a>
+                                </div>
+                            <?php }
+                        }?>
                     </td>
                 </tr>
                 <tr>
@@ -138,176 +119,38 @@ $favouriteTo = (!empty($favourites) && isset($favourites["to"])) ? $favourites["
                 </tr>
                 <tr>
                     <td>
-                        <div class="clearfix">
-                            <a class="fs-13" href="#">
-                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
-                                <span class="num-show pull-right color-cd font-600">7</span>
-                                <span class="name-user">James Bond</span>
-                            </a>
-                        </div>
-                        <div class="clearfix">
-                            <a class="fs-13" href="#">
-                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
-                                <span class="num-show pull-right color-cd font-600">7</span>
-                                <span class="name-user">James Bond</span>
-                            </a>
-                        </div>
-                        <div class="clearfix">
-                            <a class="fs-13" href="#">
-                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
-                                <span class="num-show pull-right color-cd font-600">7</span>
-                                <span class="name-user">James Bond</span>
-                            </a>
-                        </div>
+                        <?php if(isset($finders["finders"]) && count($finders["finders"]) > 0){
+                            foreach($finders["finders"] as $key => $finder){?>
+                                <div class="clearfix">
+                                    <a class="fs-13" href="<?=Url::to(['member/profile', 'username'=>$key])?>">
+                                        <img class="pull-left" src="<?=Url::to($finder['avatar'], true)?>" alt="">
+                                        <span class="num-show pull-right color-cd font-600"><?=$finder['count']?></span>
+                                        <span class="name-user"><?=$key?></span>
+                                    </a>
+                                </div>
+                            <?php }
+                        }?>
                     </td>
                     <td>
-                        <div class="clearfix">
-                            <a class="fs-13" href="#">
-                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
-                                <span class="num-show pull-right color-cd font-600">7</span>
-                                <span class="name-user">James Bond</span>
-                            </a>
-                        </div>
-                        <div class="clearfix">
-                            <a class="fs-13" href="#">
-                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
-                                <span class="num-show pull-right color-cd font-600">7</span>
-                                <span class="name-user">James Bond</span>
-                            </a>
-                        </div>
-                        <div class="clearfix">
-                            <a class="fs-13" href="#">
-                                <img class="pull-left" src="/images/default-avatar.jpg" alt="">
-                                <span class="num-show pull-right color-cd font-600">7</span>
-                                <span class="name-user">James Bond</span>
-                            </a>
-                        </div>
+                        <?php if(isset($shares["shares"]) && count($shares["shares"]) > 0){
+                            foreach($shares["shares"] as $key => $value){?>
+                                <div class="clearfix">
+                                    <a class="fs-13" href="<?=Url::to(['member/profile', 'username'=>$key])?>">
+                                        <img class="pull-left" src="<?=Url::to($value['avatar'], true)?>" alt="">
+                                        <span class="num-show pull-right color-cd font-600"><?=$value['count']?></span>
+                                        <span class="name-user"><?=$key?></span>
+                                    </a>
+                                </div>
+                            <?php }
+                        }?>
                     </td>
                 </tr>
             </table>
-        	<!-- <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default finder" style="display: block;">
-                    <div class="panel-heading title-sub" role="tab" id="headingOne">
-                        <h4 class="panel-title">
-                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            <em class="icon-eye"></em> <?=Yii::t('statistic','Search')?>
-                            <span class="pull-right icon"></span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                        <div class="panel-body">
-                            <ul class="clearfix list-item">
-                                            <?php if(isset($finders["finders"]) && count($finders["finders"]) > 0){?>
-                                            <?php foreach($finders["finders"] as $key => $finder){
-                                                    $classPopupUser = 'popup_enable';
-                                                    if($key == $user->username)
-                                                        $classPopupUser = '';
-                                                ?>
-                                <li>
-                                                <a class="<?=$classPopupUser?>" href="#popup-user-inter" data-email="<?=$finder['email']?>" data-ava="<?=Url::to($finder['avatar'], true)?>">
-                                                    <img src="<?=Url::to($finder['avatar'], true)?>" alt="<?=$key?>">
-                                                    <?=$key?>
-                                                </a>
-                                    <span class="pull-right"><?=$finder['count']?></span>
-                                </li>
-                                            <?php }
-                                            } else { ?>
-                                            <li><?=Yii::t('statistic','Not found user')?></li>
-                                            <?php }?>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default visitor" style="display: none;">
-                    <div class="panel-heading title-sub" role="tab" id="headingTwo">
-                        <h4 class="panel-title">
-                            <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                            <em class="icon-user"></em> <?=Yii::t('statistic','Click')?>
-                            <span class="pull-right icon"></span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
-                        <div class="panel-body">
-                            <ul class="clearfix list-item">
-                                            <?php if(isset($visitors["visitors"]) && count($visitors["visitors"]) > 0){
-                                                foreach($visitors["visitors"] as $key => $visitor){
-                                                    $classPopupUser = 'popup_enable';
-                                                    if($key == $user->username)
-                                                        $classPopupUser = '';
-                                                    ?>
-                                                    <li>
-                                                        <a class="<?=$classPopupUser?>" href="#popup-user-inter" data-email="<?=$visitor['email']?>" data-ava="<?=Url::to($visitor['avatar'], true)?>">
-                                                            <img src="<?=$visitor['avatar']?>" alt="<?=$key?>">
-                                                            <?=$key?>
-                                                        </a>
-                                                        <span class="pull-right"><?=$visitor['count']?></span>
-                                                    </li>
-                                                <?php }
-                                            }  else { ?>
-                                                <li><?=Yii::t('statistic','Not click user')?></li>
-                                            <?php }?>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default favourite" style="display: none;">
-                    <div class="panel-heading title-sub" role="tab" id="headingThree">
-                        <h4 class="panel-title">
-                            <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                            <em class="icon-heart"></em> <?=Yii::t('statistic','favourite')?>
-                            <span class="pull-right icon"></span>
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
-                        <div class="panel-body">
-                            <ul class="clearfix list-item">
-                                            <?php if(isset($favourites["saved"]) && count($favourites["saved"]) > 0){
-                                                foreach($favourites["saved"] as $key => $favourite){
-                                                    ?>
-                                                    <li>
-                                                        <a class="popup_enable" href="#popup-user-inter" data-email="<?=$favourite['email']?>"  data-ava="<?=Url::to($favourite['avatar'], true)?>">
-                                                            <img src="<?=$favourite['avatar']?>" alt="<?=$key?>">
-                                                            <?=$key?>
-                                                        </a>
-                                                    </li>
-                                                <?php }
-                                            }  else { ?>
-                                                <li><?=Yii::t('statistic','Not favourite user')?></li>
-                                            <?php } ?>
-            
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="share-social">
-                            <ul class="clearfix list-attr-per">
-                                <li>
-                                    <a class="share-email-btn" href="#" data-toggle="modal" data-target="#popup-email">
-                                        <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
-                                        <div class="txt-infor-right">
-                                            <div><?=Yii::t('statistic','Share With Email')?></div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="share-facebook">
-                                    <a href="javascript:fbShare('<?=$urlDetail ?>', '<?=$address ?>', '<?=StringHelper::truncate($product->content, 150) ?>', '<?= $product->representImage ?>', 520, 350)">
-                                        <div class="circle"><div><span class="icon icon-face"></span></div></div>
-                                        <div class="txt-infor-right">
-                                            <div><?=Yii::t('statistic','Share With Facebook')?></div>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-            </div> -->
         </div>
     </div>
 </div>
 
-<div id="popup-user-inter" class="popup-common hide-popup">
+<!-- div id="popup-user-inter" class="popup-common hide-popup">
     <div class="wrap-popup">
         <div class="inner-popup">
             <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
@@ -323,11 +166,11 @@ $favouriteTo = (!empty($favourites) && isset($favourites["to"])) ? $favourites["
             </div>
         </div>
     </div>
-</div>
+</div -->
 
-<?=$this->renderAjax('/ad/_partials/shareEmail',[ 'product' => $product, 'yourEmail' => empty($user->profile->public_email) ? $user->email : $user->profile->public_email, 'recipientEmail' => '', 'params' => ['your_email' => false, 'setValueToEmail' => true] ])?>
+<?php //$this->renderAjax('/ad/_partials/shareEmail',[ 'product' => $product, 'yourEmail' => empty($user->profile->public_email) ? $user->email : $user->profile->public_email, 'recipientEmail' => '', 'params' => ['your_email' => false, 'setValueToEmail' => true] ])?>
 
-<?php 
+<?php
 $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/bootstrap-datepicker.min.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'datepicker');
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/bootstrap-datepicker.min.js', ['position'=>View::POS_BEGIN]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/bootstrap-datepicker.vi.min.js', ['position'=>View::POS_BEGIN]);
@@ -358,43 +201,43 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
             styleShow: 'full'
         });*/
 
-        var params = getUrlParams();
-        if(params["date"] !== undefined && params["date"] !== 'undefined-undefined-'){
-            var arrDate = params["date"].split("-");
-            var useDate = arrDate[2]+"/"+arrDate[1]+"/"+arrDate[0];
-            $('.toDate').attr('placeholder', ""+useDate);
-        }
-
-        $('#sandbox-container input').datepicker({
-            language: "vi",
-            autoclose: true,
-            onSelect: function() {
-                return $(this).trigger('change');
-            }
-        });
-
-        $('#sandbox-container input').change(function(){
-            $('body').loading();
-            var theDate = $(this).datepicker().val();
-            var arrDate = theDate.split("/");
-            var useDate = arrDate[2]+"-"+arrDate[1]+"-"+arrDate[0];
-            if(useDate) {
-                window.location = '<?=Url::to(['/dashboard/statistics','id' => $id], true)?>' + '&date=' + useDate;
-            }
-        });
-
-        function getUrlParams()
-        {
-            var vars = [], hash;
-            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-            for(var i = 0; i < hashes.length; i++)
-            {
-                hash = hashes[i].split('=');
-                vars.push(hash[0]);
-                vars[hash[0]] = hash[1];
-            }
-            return vars;
-        }
+//        var params = getUrlParams();
+//        if(params["date"] !== undefined && params["date"] !== 'undefined-undefined-'){
+//            var arrDate = params["date"].split("-");
+//            var useDate = arrDate[2]+"/"+arrDate[1]+"/"+arrDate[0];
+//            $('.toDate').attr('placeholder', ""+useDate);
+//        }
+//
+//        $('#sandbox-container input').datepicker({
+//            language: "vi",
+//            autoclose: true,
+//            onSelect: function() {
+//                return $(this).trigger('change');
+//            }
+//        });
+//
+//        $('#sandbox-container input').change(function(){
+//            $('body').loading();
+//            var theDate = $(this).datepicker().val();
+//            var arrDate = theDate.split("/");
+//            var useDate = arrDate[2]+"-"+arrDate[1]+"-"+arrDate[0];
+//            if(useDate) {
+//                window.location = '<?//=Url::to(['/dashboard/statistics','id' => $id], true)?>//' + '&date=' + useDate;
+//            }
+//        });
+//
+//        function getUrlParams()
+//        {
+//            var vars = [], hash;
+//            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+//            for(var i = 0; i < hashes.length; i++)
+//            {
+//                hash = hashes[i].split('=');
+//                vars.push(hash[0]);
+//                vars[hash[0]] = hash[1];
+//            }
+//            return vars;
+//        }
 
         $(document).on('click', '.btn-finder', function() {
             var url = $(this).attr('data-url');
@@ -410,9 +253,9 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
                         $('.option-view-stats li a').removeClass("active");
                         $('.btn-finder').addClass("active");
                         $('.wrapChart').html(data);
-                        $('.finder').show();
-                        $('.visitor').hide();
-                        $('.favourite').hide();
+//                        $('.finder').show();
+//                        $('.visitor').hide();
+//                        $('.favourite').hide();
                     }
                 });
             }
@@ -433,9 +276,9 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
                         $('.option-view-stats li a').removeClass("active");
                         $('.btn-visitor').addClass("active");
                         $('.wrapChart').html(data);
-                        $('.finder').hide();
-                        $('.visitor').show();
-                        $('.favourite').hide();
+//                        $('.finder').hide();
+//                        $('.visitor').show();
+//                        $('.favourite').hide();
                     }
                 });
             }
@@ -456,9 +299,9 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
                         $('.option-view-stats li a').removeClass("active");
                         $('.btn-favourite').addClass("active");
                         $('.wrapChart').html(data);
-                        $('.finder').hide();
-                        $('.visitor').hide();
-                        $('.favourite').show();
+//                        $('.finder').hide();
+//                        $('.visitor').hide();
+//                        $('.favourite').show();
                     }
                 });
             }

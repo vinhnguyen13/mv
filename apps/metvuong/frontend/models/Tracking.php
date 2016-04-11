@@ -11,6 +11,7 @@ use kartik\helpers\Enum;
 use vsoft\ad\models\AdProductSaved;
 use vsoft\express\models\SysEmail;
 use vsoft\tracking\models\base\AdProductFinder;
+use vsoft\tracking\models\base\AdProductShare;
 use vsoft\tracking\models\base\AdProductVisitor;
 use Yii;
 use yii\base\Component;
@@ -100,6 +101,32 @@ class Tracking extends Component
             $adProductVisitor->device = $this->getMobileDetect();
             $adProductVisitor->save();
             return !empty($return) ? $adProductVisitor : true;
+        }
+        return false;
+    }
+    public function productShare($uid, $pid, $time = null, $type, $return = false){
+        if($this->checkAccess()) {
+            $time = !empty($time) ? $time : time();
+            $query = AdProductShare::find();
+            $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:01", $time)), strtotime(date("d-m-Y 23:59:59", $time))]);
+            $query->andWhere(['user_id' => $uid]);
+            $query->andWhere(['product_id' => (int)$pid]);
+            $query->andWhere(['type' => (int)$type]);
+            $query->orderBy('time DESC');
+            $adProductShare = $query->one();
+            if ($adProductShare === null) {
+                $adProductShare = new AdProductShare();
+                $adProductShare->user_id = $uid;
+                $adProductShare->product_id = (int)$pid;
+                $adProductShare->count = 1;
+            } else {
+                $adProductShare->count++;
+            }
+            $adProductShare->time = $time;
+            $adProductShare->device = $this->getMobileDetect();
+            $adProductShare->type = $type;
+            $adProductShare->save();
+            return !empty($return) ? $adProductShare : true;
         }
         return false;
     }

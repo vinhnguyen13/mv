@@ -59,6 +59,9 @@ class DashboardController extends Controller
         }
 
         $id = (int)Yii::$app->request->get("id");
+        $search = (int)Yii::$app->request->get("search");
+        $click = (int)Yii::$app->request->get("click");
+        $fav = (int)Yii::$app->request->get("fav");
         $product = AdProduct::findOne($id);
         $finders = null;
         $visitors = null;
@@ -73,6 +76,7 @@ class DashboardController extends Controller
 
         $finders = Chart::find()->getFinderWithLastTime($id, $date);
         $visitors = Chart::find()->getVisitorWithLastTime($id, $date);
+        $shares = Chart::find()->getShareWithLastTime($id, $date);
         $favourites = Chart::find()->getSavedWithLastTime($id, $date);
 
         if(Yii::$app->request->isAjax){
@@ -232,7 +236,10 @@ class DashboardController extends Controller
                     }
                 }
             }
-            return $this->renderAjax('/dashboard/ad/list', ['products' => $products, 'type' => $type, 'last_id' => $last_id]);
+            return $this->renderAjax('/dashboard/ad/list', ['products' => $products,
+                'type' => $type,
+                'last_id' => $last_id
+            ]);
         }
         return false;
     }

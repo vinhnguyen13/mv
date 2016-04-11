@@ -4,10 +4,8 @@ use frontend\models\Chart;
 
 $data = null;
 if($from > 0 && $to > 0)
-    $data = Chart::find()->getDataFinder($id, $from, $to);
-
+    $data = Chart::find()->getDataShare($id, $from, $to);
 if(!empty($data) && count($data) > 0) {
-
     $dataChart = $data['dataChart'];
     $categories = $data['categories'];
 
@@ -28,7 +26,7 @@ if(!empty($data) && count($data) > 0) {
                     enabled: false
                 },
                 title: {
-                    text: '<?=Yii::t('chart', 'The searching user')?>',
+                    text: '<?=Yii::t('chart', 'The sharing user')?>',
                     x: -20 //center
                 },
                 subtitle: {
@@ -36,7 +34,7 @@ if(!empty($data) && count($data) > 0) {
                     x: -20
                 },
                 xAxis: {
-                    categories: <?=json_encode($categories)?>,
+                    categories: <?=json_encode($categories);?>,
                     max: <?=!empty(count($categories)) ? count($categories) - 1 : 0?>,
                     labels: {
                         formatter: function () {
@@ -59,16 +57,16 @@ if(!empty($data) && count($data) > 0) {
                 },
                 tooltip: {
                     useHTML: true,
-                    formatter: function () {
-                        var tooltip;
-                        if (this.key == 'last') {
-                            tooltip = '<b>Final result is </b> ' + this.y;
-                        }
-                        else {
-                            tooltip = '<b>' + this.y + ' <?=Yii::t('chart','user')?></b><br/>';
-                        }
-                        return tooltip;
-                    }
+                    formatter: function() {
+                     var tooltip;
+                     if (this.key == 'last') {
+                     tooltip = '<b>Final result is </b> ' + this.y;
+                     }
+                     else {
+                     tooltip = '<b>' + this.y + ' <?=Yii::t('chart','user')?></b><br/>';
+                     }
+                     return tooltip;
+                     }
                 },
                 plotOptions: {
                     column: {
@@ -81,10 +79,10 @@ if(!empty($data) && count($data) > 0) {
                             events: {
                                 click: function () {
                                     for (var i = 0; i < this.series.data.length; i++) {
-                                        this.series.data[i].update({color: '#909090'}, true, false);
+                                        this.series.data[i].update({ color: '#909090' }, true, false);
                                     }
-                                    this.update({color: '#00a769'}, true, false);
-//                                    getDataByClick(this.category);
+                                    this.update({ color: '#00a769' }, true, false);
+//                                    getDataShareByClick(this.category);
                                 }
                             }
                         }
@@ -96,18 +94,18 @@ if(!empty($data) && count($data) > 0) {
                 }
             });
         });
-//        function getDataByClick(date, categories) {
+//        function getDataShareByClick(date){
 //            var timer = 0;
 //            clearTimeout(timer);
 //            timer = setTimeout(function () {
 //                $.ajax({
 //                    type: "get",
 //                    dataType: 'html',
-//                    url: '<?//=Url::to(['/dashboard/clickchart','id' => $id])?>//' + '&date=' + date + '&view=_partials/finder',
+//                    url: '<?//=Url::to(['/dashboard/clickchart','id' => $id])?>//' + '&date=' + date + '&view=_partials/share',
 //                    success: function (data) {
-//                        if (data) {
-//                            $('.finder .list-item').html(data);
-//                            $('.date-filter-chart').html('<?//=Yii::t('chart', 'Statistic searching on')?>//  <span>' + date + '</span>');
+//                        if(data){
+//                            $('.share .list-item').html(data);
+//                            $('.date-filter-chart').html('<?//=Yii::t('chart', 'Statistic share on')?>// <span>'+date+'</span>');
 //                        }
 //                    }
 //                });
@@ -115,16 +113,17 @@ if(!empty($data) && count($data) > 0) {
 //        }
     </script>
     <?php
-} else {
+}else {
     ?>
     <div class="alert alert-warning">
-        <p class="text-center"><?=Yii::t('chart','No one search this listing')?>, <?=Yii::t('chart','please refresh')?> <a href="<?=$urlDetail?>"><?=Yii::t('chart','your listing')?></a>.</p>
+        <p class="text-center"><?=Yii::t('chart','No one share this listing')?>, <?=Yii::t('chart','please refresh')?> <a href="<?=$urlDetail?>"><?=Yii::t('chart','your listing')?></a>.</p>
     </div>
     <?php
 }?>
 <div class="statistic-info">
     <a href="<?=$urlDetail?>" style="color: black;"><p class="name-post"><span class="icon address-icon"></span><?=$address?></p></a>
     <?php if($from > 0 && $to > 0) {?>
-    <p class="date-filter-chart text-center mgT-15"><?=Yii::t('chart', 'Statistic searching from')?> <span class="from"><?=date('d/m/Y', $from)?></span> - <span class="to"><?=date('d/m/Y', $to)?></span></p>
+    <p class="date-filter-chart text-center mgT-15"><?=Yii::t('chart', 'Statistic share from')?> <span class="from"><?=date('d/m/Y', $from)?></span> - <span class="to"><?=date('d/m/Y', $to)?></span></p>
     <?php } ?>
 </div>
+

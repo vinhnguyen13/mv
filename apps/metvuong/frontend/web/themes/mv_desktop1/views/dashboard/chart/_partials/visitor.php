@@ -82,7 +82,7 @@ if(!empty($data) && count($data) > 0) {
                                         this.series.data[i].update({ color: '#909090' }, true, false);
                                     }
                                     this.update({ color: '#00a769' }, true, false);
-                                    getDataVisitorByClick(this.category);
+                                    //getDataVisitorByClick(this.category);
                                 }
                             }
                         }
@@ -94,23 +94,23 @@ if(!empty($data) && count($data) > 0) {
                 }
             });
         });
-        function getDataVisitorByClick(date){
-            var timer = 0;
-            clearTimeout(timer);
-            timer = setTimeout(function () {
-                $.ajax({
-                    type: "get",
-                    dataType: 'html',
-                    url: '<?=Url::to(['/dashboard/clickchart','id' => $id])?>' + '&date=' + date + '&view=_partials/visitor',
-                    success: function (data) {
-                        if(data){
-                            $('.visitor .list-item').html(data);
-                            $('.date-filter-chart').html('<?=Yii::t('chart', 'Statistic visitor on')?> <span>'+date+'</span>');
-                        }
-                    }
-                });
-            }, 500);
-        }
+//        function getDataVisitorByClick(date){
+//            var timer = 0;
+//            clearTimeout(timer);
+//            timer = setTimeout(function () {
+//                $.ajax({
+//                    type: "get",
+//                    dataType: 'html',
+//                    url: '<?//=Url::to(['/dashboard/clickchart','id' => $id])?>//' + '&date=' + date + '&view=_partials/visitor',
+//                    success: function (data) {
+//                        if(data){
+//                            $('.visitor .list-item').html(data);
+//                            $('.date-filter-chart').html('<?//=Yii::t('chart', 'Statistic visitor on')?>// <span>'+date+'</span>');
+//                        }
+//                    }
+//                });
+//            }, 500);
+//        }
     </script>
     <?php
 }else {

@@ -21,7 +21,8 @@ use yii\helpers\Url;
                             <span>Share on Social Network</span>
                             <ul class="clearfix">
                                 <li>
-                                    <a target="_blank" href="javascript:fbShare('<?=$url ?>', '<?=$title ?>', '<?=$description ?>', '<?= $image ?>', 520, 350)" class="share-facebook">
+                                    <a target="_blank" href="#"
+                                       data-url="<?=Url::to(['/ad/tracking-share-facebook', 'product_id' => $product_id], true)?>" class="share-facebook">
                                         <div class="circle"><div><span class="icon icon-face"></span></div></div>
                                     </a>
                                 </li>
@@ -45,6 +46,27 @@ use yii\helpers\Url;
         var winLeft = (screen.width / 2) - (winWidth / 2);
         window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + url + '&p[title]=' + title + '&p[summary]=' + descr + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
     }
+
+    $('.share-facebook').click(function (){
+        var url = $('.share-facebook').data("url");
+        if(url.length > 0) {
+            $('body').loading();
+            $.ajax({
+                type: "get",
+                dataType: 'json',
+                url: url,
+                success: function (data) {
+                    l(data);
+                    $('#popup-share-social').modal('hide');
+                }
+            });
+            $('body').loading({done:true});
+            fbShare('<?=$url ?>', '<?=$title ?>', '<?=StringHelper::truncate($description, 120) ?>', '<?= $image ?>', 520, 350);
+
+            return true;
+        }
+        return false;
+    });
 
     /*$('#popup-email').popupMobi({
         btnClickShow: ".email-btn",

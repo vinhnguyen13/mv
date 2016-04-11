@@ -32,9 +32,7 @@ use yii\widgets\LinkPager;
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane fade active in" id="list-all">
                         <ul class="clearfix list-item">
-                            <?php
-                            echo $this->render('/dashboard/ad/list', ['products' => $products, 'type' => 0, 'last_id' => $last_id]);
-                            ?>
+                            <?=$this->render('/dashboard/ad/list', ['products' => $products, 'type' => 0, 'last_id' => $last_id])?>
                         </ul>
 
                     </div>
