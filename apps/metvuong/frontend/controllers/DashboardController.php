@@ -93,7 +93,13 @@ class DashboardController extends Controller
                 'visitors' => $visitors,
                 'finders' => $finders,
                 'favourites' => $favourites,
-                'view' => '_partials/finder'
+                'shares' => $shares,
+                'view' => '_partials/finder',
+                'search' => $search,
+                'click' => $click,
+                'fav' => $fav,
+                'from' => $finders["from"],
+                'to' => $finders["to"],
             ]);
         }
     }
