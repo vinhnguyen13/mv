@@ -169,50 +169,62 @@ class DashboardController extends Controller
         if($checkUsername == false)
             return $this->goHome();
 
+        $products = array();
+        $last_id = empty(Yii::$app->request->get('last_id')) ? 0 : (int)Yii::$app->request->get('last_id');
         $sell = 0;
         $rent = 0;
-
-    	$query = AdProduct::find()->where(['user_id' => Yii::$app->user->id])->with('projectBuilding')->orderBy('`created_at` DESC');
-        $detectProducts = $query->all();
-        if(count($detectProducts) > 0){
-            foreach($detectProducts as $product){
+    	$query = AdProduct::find()->where(['user_id' => Yii::$app->user->id])->with('projectBuilding');
+        if($last_id != 0){
+            $query->andWhere('id < :id', [':id' => $last_id]);
+        }
+        $totalProducts = $query->orderBy(['id' => SORT_DESC])->all();
+        $count_total = count($totalProducts);
+        if($count_total > 0){
+            foreach($totalProducts as $key => $product){
                 if($product->type == 1) {
                     $sell += 1;
                 }
                 else {
                     $rent += 1;
                 }
+                if($key < 6){
+                    array_push($products, $product);
+                    $last_id = $product->id;
+                }
             }
         }
-        $pagination = new Pagination(['totalCount' => $query->count()]);
-        $pagination->defaultPageSize = 6;
-        $products = $query->offset($pagination->offset)->limit($pagination->limit)->all();
-        return $this->render('ad/index', ['products' => $products, 'pagination' => $pagination, 'sell' => $sell, 'rent' => $rent]);
+        return $this->render('ad/index', ['products' => $products, 'last_id' => $last_id, 'total' => $count_total, 'sell' => $sell, 'rent' => $rent
+        ]);
     }
 
-    public function actionAdSell(){
+    public function actionAdList(){
         if(Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_HTML;
-            $query = AdProduct::find()->where(['user_id' => Yii::$app->user->id, 'type' => 1])->with('projectBuilding')->orderBy('`created_at` DESC');
-            $pagination = new Pagination(['totalCount' => $query->count()]);
-            $pagination->defaultPageSize = 6;
-            $products = $query->offset($pagination->offset)->limit($pagination->limit)->all();
-            return $this->renderAjax('/dashboard/ad/list', ['products' => $products, 'pagination' => $pagination]);
+            $type = (int)Yii::$app->request->get('type');
+            $products = array();
+            $last_id = empty(Yii::$app->request->get('last_id')) ? 0 : (int)Yii::$app->request->get('last_id');
+            $query = AdProduct::find()->where(['user_id' => Yii::$app->user->id])->with('projectBuilding');
+            if($type > 0){
+                $query->andWhere(['type' => $type]);
+            }
+            if($last_id != 0){
+                $query->andWhere('id < :id', [':id' => $last_id]);
+            }
+            $totalProducts = $query->orderBy(['id' => SORT_DESC])->all();
+            $count_total = count($totalProducts);
+            if($count_total > 0){
+                foreach($totalProducts as $key => $product){
+                    if($key < 6){
+                        array_push($products, $product);
+                        $last_id = $product->id;
+                    }
+                }
+            }
+            return $this->renderAjax('/dashboard/ad/list', ['products' => $products, 'type' => $type, 'last_id' => $last_id]);
         }
         return false;
     }
 
-    public function actionAdRent(){
-        if(Yii::$app->request->isAjax) {
-            Yii::$app->response->format = Response::FORMAT_HTML;
-            $query = AdProduct::find()->where(['user_id' => Yii::$app->user->id, 'type' => 2])->with('projectBuilding')->orderBy('`created_at` DESC');
-            $pagination = new Pagination(['totalCount' => $query->count()]);
-            $pagination->defaultPageSize = 6;
-            $products = $query->offset($pagination->offset)->limit($pagination->limit)->all();
-            return $this->renderAjax('/dashboard/ad/list', ['products' => $products, 'pagination' => $pagination]);
-        }
-        return false;
-    }
 
     public function actionPassword()
     {
