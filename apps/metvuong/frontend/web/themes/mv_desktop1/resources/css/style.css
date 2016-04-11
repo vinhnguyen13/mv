@@ -35,8 +35,14 @@ input[type=text]:focus {
     border: 1px solid #00a769;
     outline: none;
 }
+.posi_relative {
+    position: relative;
+}
+.posi_absolute {
+    position: absolute;
+}
 .text-decor {
-    text-decoration: underline;
+    text-decoration: underline !important;
 }
 .text-uper {
     text-transform: uppercase !important;
@@ -304,6 +310,7 @@ header {
 }
 .wrap-img img {
     max-width: 100%;
+    display: block;
 }
 .regis-home h2,
 .search-home h2 {
@@ -5072,14 +5079,17 @@ html.mm-opening .mm-slideout {
 }
 .wrap-edit-tt .title-update-tt {
     position: relative;
-    background: #f5f5f5;
-    padding: 10px 20px;
     letter-spacing: 0.5px;
     font-weight: 600;
     font-size: 15px;
+    text-transform: uppercase;
+    color: #009455;
 }
 .wrap-attr-detail {
     font-size: 15px;
+}
+.box-edit-show {
+    display: none;
 }
 .wrap-attr-detail li {
     float: left;
@@ -5108,9 +5118,6 @@ html.mm-opening .mm-slideout {
     text-align: right;
     font-size: 15px;
     border: none;
-}
-.wrap-attr-detail .txt-wrap {
-    padding: 15px 20px;
 }
 .wrap-edit-tt .title-update-tt a {
     position: absolute;
@@ -7425,7 +7432,7 @@ footer li a {
 }
 .user-avatar .num-mobi,
 .user-avatar .location {
-    margin-bottom: 7px;
+    margin-bottom: 0;
 }
 .user-avatar .icon-mv {
     width: 19px;
@@ -8794,5 +8801,70 @@ footer li a {
     color: #fff !important;
 }
 #review-listing-post .edit-listing {
+    padding: 5px;
+}
+.user-avatar .stars {
+    margin-bottom: 5px;
+}
+.user-avatar .location {
+    margin-bottom: 3px;
+}
+.wrap-attr-detail .icon-mv {
+    width: 30px;
+    font-size: 19px;
+}
+.wrap-attr-detail .edit-profile .icon-mv {
+    width: auto;
+}
+.wrap-attr-detail .icon-phone-profile {
+    font-size: 20px
+}
+.wrap-attr-detail .icon-mail-profile {
+    font-size: 15px
+}
+.wrap-attr-detail p {
+    font-size: 14px;
+}
+.wrap-edit-tt section {
+    border-bottom: 1px solid #a5a5a5;
+    padding: 20px 0;
+    position: relative;
+}
+.wrap-edit-tt section:last-child {
+    border-bottom: none;
+}
+.wrap-edit-tt section .title-update-tt {
+    margin-bottom: 10px;
+}
+.done-profile,
+.edit-profile {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    padding: 5px 10px;
+    color: #009455;
+    font-size: 20px;
+    line-height: 100%;
+    z-index: 99;
+}
+.edit-profile:hover {
+    background: #009455;
+    color: #fff;
+}
+.done-profile {
+    font-size: 13px;
+    color: #fff;
+    padding: 7px 25px;
+}
+.wrap-attr-detail input {
+    border: 1px solid #d4d4d4;
+    padding: 3px 5px;
+    min-width: 300px;
+}
+.wrap-attr-detail textarea {
+    border: 1px solid #d4d4d4;
+    width: 100%;
+    height: 100px;
+    resize: none;
     padding: 5px;
 }

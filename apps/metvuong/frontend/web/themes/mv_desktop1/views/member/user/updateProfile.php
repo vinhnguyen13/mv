@@ -18,102 +18,203 @@ $user = $model->getUser();
         <?php $this->beginContent('@app/views/layouts/_partials/menuUser.php'); ?><?php $this->endContent();?>
     	<div class="edit-user-tt">
     		<div class="wrap-edit-tt">
-    			<div class="avatar-user-pr">
-                    <div class="wrap-img avatar">
-                        <a href="#" data-toggle="modal" data-target="#avatar">
+                <section class="infor-user-settings">
+                    <div class="wrap-attr-detail clearfix">
+                        <a href="#" class="edit-profile"><span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
+                        <div class="avatar wrap-img pull-left mgR-15">
                             <img id="profileAvatar" src="<?=$model->avatar?>" alt="metvuong avatar" />
-                            <span class="icon icon-edit-small-1"></span>
-                        </a>
+                        </div>    
+                        <div class="overflow-all">
+                            <p class="name-user fs-18 font-600 color-cd text-uper mgB-5">Mét Vuông</p>
+                            <p class="location mgB-5">
+                                <span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
+                                Cà Mau
+                            </p>
+                            <p class="num-mobi mgB-5">
+                                <span class="icon-mv"><span class="icon-phone-profile"></span></span>
+                                <a href="tel:0905296128">0905296128</a>                        
+                            </p>
+                            <p class="email-user">
+                                <a href="#popup-email" class="email-btn">
+                                    <span class="icon-mv"><span class="icon-mail-profile"></span></span>
+                                    quangvinh@abc.com
+                                </a>
+                            </p>
+                        </div>
                     </div>
-                </div>
-    			<section class="ttcn">
-    				<div class="title-update-tt">
-                        <?=Yii::t('profile', 'Personal Information')?>
-    					<a href="#edit-ttcn" class="edit-tt"><span class="icon icon-edit-small-1"></span></a>
-    				</div>
-    				<div class="list-tt-user wrap-attr-detail">
-    					<ul class="clearfix">
-    						<li>
-    							<span class="attr-right pull-right name"><?=empty($model->name) ? $user->username : $model->name  ?></span>
-    							<span><?=Yii::t('profile', 'Name')?></span>
-    						</li>
-    						<li>
-    							<span class="attr-right pull-right phone-num"><?=empty($model->mobile) ? "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->mobile ?></span>
-    							<span><?=Yii::t('profile', 'Mobile')?></span>
-    						</li>
-    						<li>
-    							<span class="attr-right pull-right public_email"><?=empty($model->public_email) ? $user->email : $model->public_email ?></span>
-    							<span><?=Yii::t('profile', 'Email')?></span>
-    						</li>
-    					</ul>
-    				</div>
-    			</section>
-    			
-    			<section class="mtbt">
-    				<div class="title-update-tt">
-    					<?=Yii::t('profile', 'Description')?>
-    					<a href="#edit-mtbt" class="edit-tt"><span class="icon icon-edit-small-1"></span></a>
-    				</div>
-    				<div class="wrap-attr-detail">
-    					<div class="txt-wrap">
-    						<p class="txt-mota"><?=empty($model->bio) ? "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->bio ?></p>
-    					</div>
-    				</div>
-    			</section>
-
-    			<section class="diadiem">
-    				<div class="title-update-tt">
-                        <?=Yii::t('profile', 'Address')?>
-    					<!-- <a href="#" class="edit-tt"><span class="icon icon-edit-small-1"></span></a> -->
-    				</div>
-    				<div class="list-tt-user wrap-attr-detail">
-                        <?php
-
-                        $user_location_form = \frontend\models\UserLocation::find()->where(['user_id' => Yii::$app->user->id])->one();
-                        if(empty($user_location_form))
-                            $user_location_form = new \frontend\models\UserLocation();
-
-                        $form = ActiveForm::begin ( [
-                            'id' => 'user-location-form',
-                            'enableClientValidation' => false,
-                            'options' => [
-                                'autocomplete' => 'off',
-                                'spellcheck' => 'false'
-                            ],
-                            'action' => Url::to(['member/update-user-location'])
-                        ]);
-                        ?>
-    					<ul class="clearfix">
-    						<li>
-                                <?php
-                                $cities = AdCity::find()->all();
-                                $citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
-    //                            $citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != \frontend\models\UserLocation::DEFAULT_CITY)]; });
-                                echo $form->field($user_location_form, 'city_id', ['options' => ['class' => 'attr-right pull-right city']])
-                                    ->dropDownList($citiesDropdown, ['prompt' => Yii::t('profile','Select...'), 'options' => [empty($user_location_form) ? 1 : $user_location_form->city_id => ['Selected ' => true]]])
-                                    ->label(false);
-
-                                echo $form->field($user_location_form, 'user_id')->hiddenInput(['value'=>Yii::$app->user->id])->label(false);
-                                ?>
-    							<span><?=Yii::t('profile', 'City')?></span>
-    						</li>
-    					</ul>
-                        <?php $form->end(); ?>
-    				</div>
-    			</section>
-
-    			<section class="matkhau">
-    				<div class="title-update-tt">
+                    <div class="box-edit-show wrap-attr-detail clearfix">
+                        <a href="#" class="done-profile btn-common">Xong</a>
+                        <div class="avatar wrap-img pull-left mgR-15 text-center">
+                            <img class="mgB-10" id="profileAvatar" src="<?=$model->avatar?>" alt="metvuong avatar" />
+                            <a class="btn-common" href="#" data-toggle="modal" data-target="#avatar">Tải hình</a>
+                        </div>
+                        <div class="overflow-all">
+                            <p class="name-user fs-18 font-600 color-cd text-uper mgB-5">
+                                <input type="text" value="Mét Vuông">
+                            </p>
+                            <p class="location mgB-5">
+                                <span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
+                                <input type="text" value="Cà Mau">
+                            </p>
+                            <p class="num-mobi mgB-5">
+                                <span class="icon-mv"><span class="icon-phone-profile"></span></span>
+                                <input type="text" value="0905296128">
+                            </p>
+                            <p class="email-user">
+                                <a href="#popup-email" class="email-btn">
+                                    <span class="icon-mv"><span class="icon-mail-profile"></span></span>
+                                    <input type="text" value="quangvinh@abc.com">
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="title-update-tt">
+                        <?=Yii::t('profile', 'Description')?>
+                    </div>
+                    <div class="wrap-attr-detail">
+                        <a href="#" class="edit-profile"><span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
+                        <div class="txt-wrap">
+                            <p class="txt-mota"><?=empty($model->bio) ? "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->bio ?></p>
+                        </div>
+                    </div>
+                    <div class="box-edit-show wrap-attr-detail">
+                        <a href="#" class="done-profile btn-common">Xong</a>
+                        <div class="txt-wrap">
+                            <?=empty($model->bio) ? "<textarea></textarea>" : "<textarea>".$model->bio."</textarea>" ?>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="title-update-tt">
                         <?=Yii::t('profile', 'Change password')?>
-    					<a href="#edit-changepass" class="edit-tt"><span class="icon icon-edit-small-1"></span></a>
-    				</div>
-    			</section>
+                    </div>
+                    <div class="wrap-attr-detail">
+                        <a href="#" class="edit-profile"><span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
+                        <a class="text-decor color-cd-hover fs-13 font-600" href="#">Đổi mật khẩu</a>
+                    </div>
+                    <div class="box-edit-show wrap-attr-detail">
+                        <a href="#" class="done-profile btn-common">Xong</a>
+                        <div class="row">
+                            <div class="col-xs-3">
+                                Mật khẩu hiện tại
+                            </div>
+                            <div class="col-xs-9 mgB-10">
+                                <input type="password" value="">
+                            </div>
+                            <div class="col-xs-3">
+                                Mật khẩu mới
+                            </div>
+                            <div class="col-xs-9 mgB-10">
+                                <input type="password" value="">
+                            </div>
+                            <div class="col-xs-3">
+                                Nhập lại mật khẩu
+                            </div>
+                            <div class="col-xs-9">
+                                <input type="password" value="">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+    			<!-- <div class="avatar-user-pr">
+                                    <div class="wrap-img avatar">
+                                        <a href="#" data-toggle="modal" data-target="#avatar">
+                                            <img id="profileAvatar" src="<?=$model->avatar?>" alt="metvuong avatar" />
+                                            <span class="icon icon-edit-small-1"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                <section class="ttcn">
+                    <div class="title-update-tt">
+                                        <?=Yii::t('profile', 'Personal Information')?>
+                        <a href="#edit-ttcn" class="edit-tt"><span class="icon icon-edit-small-1"></span></a>
+                    </div>
+                    <div class="list-tt-user wrap-attr-detail">
+                        <ul class="clearfix">
+                            <li>
+                                <span class="attr-right pull-right name"><?=empty($model->name) ? $user->username : $model->name  ?></span>
+                                <span><?=Yii::t('profile', 'Name')?></span>
+                            </li>
+                            <li>
+                                <span class="attr-right pull-right phone-num"><?=empty($model->mobile) ? "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->mobile ?></span>
+                                <span><?=Yii::t('profile', 'Mobile')?></span>
+                            </li>
+                            <li>
+                                <span class="attr-right pull-right public_email"><?=empty($model->public_email) ? $user->email : $model->public_email ?></span>
+                                <span><?=Yii::t('profile', 'Email')?></span>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                
+                <section class="mtbt">
+                    <div class="title-update-tt">
+                        <?=Yii::t('profile', 'Description')?>
+                        <a href="#edit-mtbt" class="edit-tt"><span class="icon icon-edit-small-1"></span></a>
+                    </div>
+                    <div class="wrap-attr-detail">
+                        <div class="txt-wrap">
+                            <p class="txt-mota"><?=empty($model->bio) ? "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->bio ?></p>
+                        </div>
+                    </div>
+                </section>
+                
+                <section class="diadiem">
+                    <div class="title-update-tt">
+                                        <?=Yii::t('profile', 'Address')?>
+                        <a href="#" class="edit-tt"><span class="icon icon-edit-small-1"></span></a>
+                    </div>
+                    <div class="list-tt-user wrap-attr-detail">
+                                        <?php
+                
+                                        $user_location_form = \frontend\models\UserLocation::find()->where(['user_id' => Yii::$app->user->id])->one();
+                                        if(empty($user_location_form))
+                                            $user_location_form = new \frontend\models\UserLocation();
+                
+                                        $form = ActiveForm::begin ( [
+                                            'id' => 'user-location-form',
+                                            'enableClientValidation' => false,
+                                            'options' => [
+                                                'autocomplete' => 'off',
+                                                'spellcheck' => 'false'
+                                            ],
+                                            'action' => Url::to(['member/update-user-location'])
+                                        ]);
+                                        ?>
+                        <ul class="clearfix">
+                            <li>
+                                                <?php
+                                                $cities = AdCity::find()->all();
+                                                $citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
+                    //                            $citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != \frontend\models\UserLocation::DEFAULT_CITY)]; });
+                                                echo $form->field($user_location_form, 'city_id', ['options' => ['class' => 'attr-right pull-right city']])
+                                                    ->dropDownList($citiesDropdown, ['prompt' => Yii::t('profile','Select...'), 'options' => [empty($user_location_form) ? 1 : $user_location_form->city_id => ['Selected ' => true]]])
+                                                    ->label(false);
+                
+                                                echo $form->field($user_location_form, 'user_id')->hiddenInput(['value'=>Yii::$app->user->id])->label(false);
+                                                ?>
+                                <span><?=Yii::t('profile', 'City')?></span>
+                            </li>
+                        </ul>
+                                        <?php $form->end(); ?>
+                    </div>
+                </section>
+                
+                <section class="matkhau">
+                    <div class="title-update-tt">
+                                        <?=Yii::t('profile', 'Change password')?>
+                        <a href="#edit-changepass" class="edit-tt"><span class="icon icon-edit-small-1"></span></a>
+                    </div>
+                </section> -->
     		</div>
     	</div>
     </div>
 </div>
 
-<div class="modal fade" id="avatar" tabindex="-1" role="dialog" aria-labelledby="myModalAvatar">
+<div class="modal fade popup-common" id="avatar" tabindex="-1" role="dialog" aria-labelledby="myModalAvatar">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -290,14 +391,20 @@ $user = $model->getUser();
 </style>
 <script>
 	$(document).ready(function () {
-		/*$('#edit-ttcn, #edit-mtbt, #edit-changepass').popupMobi({
-			btnClickShow: ".edit-tt",
-			closeBtn: '.btn-cancel',
-            styleShow: 'full',
-			funCallBack: function (itemClick, popupItem) {
-                
-            }
-		});*/
+		$('.edit-profile').on('click', function (e) {
+            e.preventDefault();
+            var _this = $(this);
+            _this.closest('section').find('.wrap-attr-detail').hide();
+            _this.closest('section').find('.box-edit-show').show();
+        });
+        $('.done-profile').on('click', function (e) {
+            e.preventDefault();
+            var _this = $(this);
+            _this.closest('section').loading({
+                full: false
+            });
+            
+        });
 
         $('#edit-ttcn .btn-done').on('click', function(e){
             e.preventDefault();

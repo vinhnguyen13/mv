@@ -841,7 +841,6 @@ $.fn.loading = function (options) {
 
     return this.each(function() {
         var defaults = {
-            inside: false,
             full: true,
             done: false
         },
@@ -857,6 +856,7 @@ $.fn.loading = function (options) {
             el.find('.loading-proccess').fadeOut(300, function () {
                 $(this).remove();
             });
+            el.parent().css('position','static');
             return;
         }
 
@@ -883,7 +883,7 @@ $.fn.loading = function (options) {
                 background: 'rgba(0, 0, 0, 0.51)'
             });
 
-            //el.parent().css('position','relative');
+            el.parent().css('position','relative');
             
             el.append($loading);
 
