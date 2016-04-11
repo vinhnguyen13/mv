@@ -13,7 +13,6 @@ if(!empty($jid_id)){
 ?>
 <div class="title-fixed-wrap">
 	<div class="container">
-		<?php $this->beginContent('@app/views/layouts/_partials/menuUser.php'); ?><?php $this->endContent();?>
 		<div class="title-top">
             Chat History
         </div> 
@@ -86,7 +85,7 @@ if(!empty($jid_id)){
 		});
 
 		var timer = 0;
-		$(document).bind('chat/withAnother', function (event, user) {
+		$(document).unbind('chat/withAnother').bind('chat/withAnother', function (event, user) {
 			if(user){
 				$('body').loading();
 				$.ajax({
