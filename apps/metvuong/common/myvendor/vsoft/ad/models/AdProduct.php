@@ -146,6 +146,19 @@ class AdProduct extends AP
 		];
 	}
 	
+	public static function getAdOwners() {
+		return [
+			AdProduct::OWNER_HOST => 'owner',
+			AdProduct::OWNER_AGENT => 'agent',
+		];
+	}
+	
+	public function getOwnerString() {
+		$owners = self::getAdOwners();
+		
+		return $owners[$this->owner];
+	}
+	
 	public function getAdImages()
 	{
 		return $this->hasMany(AdImages::className(), ['product_id' => 'id'])->orderBy(['order' => SORT_ASC])->indexBy('id');

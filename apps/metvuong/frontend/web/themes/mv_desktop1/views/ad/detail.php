@@ -104,7 +104,7 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 				<div class="infor-listing">
 					<div class="address-feat clearfix">
 						<p class="infor-by-up">
-							<?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?>
+							<?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?> <?= Yii::t('ad', 'by') ?> <a href="javascript:;"><?= $product->ownerString ?></a>
 						</p>
 						<div class="address-listing">
 							<p><?= $address ?></p>
@@ -248,8 +248,11 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 			                </h4>
 			            </div>
 			            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-			                <div class="panel-body" name="activity" contenteditable="true">
+			                <div class="panel-body" name="activity">
 			                	<ul class="clearfix list-tienich-detail">
+				                    <?php if($product->projectBuilding): ?>
+									<li><strong>Thuộc dự án:</strong> <a href="<?= Url::to(["building-project/view", 'slug'=> $product->projectBuilding->slug]); ?>"><?= $product->projectBuilding->name ?></a></li>
+									<?php endif; ?>
 				                    <?php if($product->area): ?>
 									<li><strong>Diện tích:</strong> <?= $product->area ?>m2</li>
 									<?php endif; ?>
@@ -275,6 +278,7 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 			                </div>
 			            </div>
 			        </div>
+			        <?php if($product->projectBuilding): ?>
 			        <div class="panel panel-default">
 			            <div class="panel-heading" role="tab" id="headingFour">
 			                <h4 class="panel-title">
@@ -289,6 +293,7 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 			                </div>
 			            </div>
 			        </div>
+			        <?php endif; ?>
 			        <div class="panel panel-default">
 			            <div class="panel-heading" role="tab" id="headingSeven">
 			                <h4 class="panel-title">
