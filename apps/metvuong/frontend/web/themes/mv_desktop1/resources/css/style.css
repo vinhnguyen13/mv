@@ -8901,6 +8901,8 @@ footer li a {
     .menuUser {
         display: none;
     }
+    .chat-history,
+    .edit-user-tt,
     .statis,
     .u-allduan {
         padding-left: 0;
@@ -8959,6 +8961,8 @@ footer li a {
     .wrap-list-duan .list-item li {
         border-bottom: none;
     }
+    .chat-history,
+    .edit-user-tt,
     .statis {
         padding: 0 20px 50px;
     }
@@ -8968,5 +8972,10 @@ footer li a {
     .statis .tbl-review td {
         padding: 20px 5px;
         width: 50%;
+    }
+    .search-history {
+        margin-bottom: 15px;
+        position: relative;
+        margin-top: 20px;
     }
 }

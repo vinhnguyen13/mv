@@ -88,9 +88,9 @@ $tabKeys = [
                         <strong><?= $model->name ?></strong>
                         <?= empty($model->location) ? $lbl_updating : $model->location ?>
                         <ul class="pull-right icons-detail">
-                            <li><a href="#popup-share-social" class="icon icon-share-td"></a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#popup-share-social" class="icon icon-share-td"></a></li>
                             <!--                    <li><a href="#" class="icon save-item" data-id="4115" data-url="/ad/favorite"></a></li>-->
-                            <li><a href="#popup-map" class="icon icon-map-loca"></a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#popup-map" class="icon icon-map-loca"></a></li>
                         </ul>
                     </div>
                     <?php
@@ -170,11 +170,13 @@ $tabKeys = [
     </div>
 </div>
 
-<div id="popup-map" class="popup-common hide-popup">
-    <div class="wrap-popup">
-        <div class="inner-popup">
-            <a href="#" class="btn-close-map"><?=Yii::t('project', 'Back')?></a>
-            <div id="map" data-lat="<?= $model->lat ?>" data-lng="<?= $model->lng ?>"></div>
+<div id="popup-map" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <a href="#" class="btn-close-map close" data-dismiss="modal" aria-label="Close">trở lại</a>
+                <div id="map" data-lat="<?= $model->lat ?>" data-lng="<?= $model->lng ?>"></div>
+            </div>
         </div>
     </div>
 </div>
@@ -238,10 +240,10 @@ $tabKeys = [
             styleShow: "center"
         });*/
 
-        $(document).on('click', '#popup-share-social .icon-email-1', function (e) {
+        /*$(document).on('click', '#popup-share-social .icon-email-1', function (e) {
             $('#popup-share-social').addClass('hide-popup');
             $('.email-btn').trigger('click');
-        });
+        });*/
 
     });
 </script>

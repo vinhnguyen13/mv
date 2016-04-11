@@ -16,6 +16,9 @@ $user = $model->getUser();
 <div class="title-fixed-wrap">
     <div class="container">
         <?php $this->beginContent('@app/views/layouts/_partials/menuUser.php'); ?><?php $this->endContent();?>
+        <div class="title-top">
+            Settings
+        </div>        
     	<div class="edit-user-tt">
     		<div class="wrap-edit-tt">
                 <section class="infor-user-settings">
