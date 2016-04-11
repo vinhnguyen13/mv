@@ -170,19 +170,11 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 					<script>
 						$(document).ready(function () {
 
-							$('.btn-copy.tooltip-show').tooltip({
-								delay: {
-									show: 50, 
-									hide: 500
-								}
-							});
-
 							var clipboard = new Clipboard('.btn-copy');
 
 							clipboard.on('success', function(e) {
 							    var txtSuccess = $(e.trigger).data('titleSuccess');
-							    $(e.trigger).parent().find('.tooltip-inner').html(txtSuccess);
-							    
+							    alertBox(txtSuccess);
 							    e.clearSelection();
 							});
 

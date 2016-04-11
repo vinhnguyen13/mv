@@ -856,7 +856,7 @@ $.fn.loading = function (options) {
             el.find('.loading-proccess').fadeOut(300, function () {
                 $(this).remove();
             });
-            el.parent().css('position','static');
+            el.parent().css('position','');
             return;
         }
 
@@ -1014,12 +1014,13 @@ function checkMobile () {
 }
 
 function alertBox(txt) {
-    var wrap = '<div class="alert-item">'+txt+'</div>';
+    var wrap = '<div class="alert-item"><div class="wrap-alert">'+txt+'</div></div>';
     $('body').append($(wrap));
     $('.alert-item').fadeIn(300);
+
     setTimeout(function () {
         $('.alert-item').fadeOut('slow', function() {
-            //$(this).remove();
+            $(this).remove();
         });
-    },500);
+    },1500);
 }

@@ -75,7 +75,7 @@ use vsoft\ad\models\AdProduct;
                                     </ul>
                                 </div>
                                 <div class="bottom-feat-box clearfix">
-                                    <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pull-right">Chi tiết</a>
+                                    <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pull-right color-cd-hover">Chi tiết</a>
                                     <p>Giá <strong>4 tỷ đồng</strong></p>
                                 </div>
                             </div>
