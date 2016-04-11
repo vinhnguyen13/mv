@@ -347,6 +347,8 @@ class AdController extends Controller
     				foreach ($oldImages as $id) {
     					$product->adImages[$id]->delete();
     				}
+    				
+    				$result['url'] = $product->urlDetail();
     			} else {
     				$result['success'] = false;
     				$result['errors'] = [
