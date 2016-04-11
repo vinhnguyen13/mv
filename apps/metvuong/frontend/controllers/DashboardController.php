@@ -202,8 +202,11 @@ class DashboardController extends Controller
                 }
             }
         }
-        return $this->render('ad/index', ['products' => $products, 'last_id' => $last_id, 'total' => $count_total, 'sell' => $sell, 'rent' => $rent
-        ]);
+        if(Yii::$app->request->isAjax) {
+            return $this->renderAjax('ad/index', ['products' => $products, 'last_id' => $last_id, 'total' => $count_total, 'sell' => $sell, 'rent' => $rent]);
+        }else{
+            return $this->render('ad/index', ['products' => $products, 'last_id' => $last_id, 'total' => $count_total, 'sell' => $sell, 'rent' => $rent]);
+        }
     }
 
     public function actionAdList(){
