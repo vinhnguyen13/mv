@@ -255,7 +255,7 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 									<li><strong><?= Yii::t('ad', 'Project') ?>:</strong> <a href="<?= Url::to(["building-project/view", 'slug'=> $product->projectBuilding->slug]); ?>"><?= $product->projectBuilding->name ?></a></li>
 									<?php endif; ?>
 									<?php if($product->adProductAdditionInfo->facade_width): ?>
-									<li><strong><strong><?= Yii::t('ad', 'Facade') ?>:</strong> <?= $product->adProductAdditionInfo->facade_width ?>m</li>
+									<li><strong><?= Yii::t('ad', 'Facade') ?>:</strong> <?= $product->adProductAdditionInfo->facade_width ?>m</li>
 									<?php endif; ?>
 									<?php if($product->adProductAdditionInfo->land_width): ?>
 									<li><strong><?= Yii::t('ad', 'Entry width') ?>:</strong> <?= $product->adProductAdditionInfo->land_width ?>m</li>
