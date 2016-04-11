@@ -235,7 +235,7 @@ use vsoft\ad\models\AdImages;
 											->textInput(['placeholder' => Yii::t('ad', 'Content'), 'class' => 'form-control field-content', 'id' => false]) ?>
 									<div class="col-xs-3 col-md-1 col-lg-1 text-center pdL-0">
 										<button class="field-remove" type="button">
-											<svg class="icon-svg icon-close-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-close-svg"></use></svg>
+											<span class="icon-mv fs-20"><span class="icon-close-icon"></span></span>
 										</button>
 									</div>
 								</div>

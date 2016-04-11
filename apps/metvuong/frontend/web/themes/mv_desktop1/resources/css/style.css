@@ -8301,6 +8301,9 @@ footer li a {
     border: none;
     padding: 10px 5px;
 }
+.field-remove:hover {
+    color: #009455;
+}
 .list-per-post .list-post li .edit-listing {
     right: inherit;
     left: 0;
