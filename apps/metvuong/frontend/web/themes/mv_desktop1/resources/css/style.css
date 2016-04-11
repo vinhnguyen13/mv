@@ -1906,7 +1906,6 @@ label {
 }
 .panel-heading .panel-title a {
     background: none;
-    text-shadow: 1px 1px 1px #fff;
     position: relative;
     letter-spacing: 0.5px;
     color: #3c3c3c;
@@ -5980,6 +5979,9 @@ footer li a {
         line-height: 100%;
         display: none;
     }
+    .post-listing .title-top {
+        display: block;
+    }
     .select-type {
         padding: 0;
     }
@@ -8784,4 +8786,13 @@ footer li a {
 }
 .box-chat-footer #chat-container .type-input-chat {
     height: auto;
+}
+.panel-heading .panel-title .edit-listing:hover {
+    background: #009455;
+}
+.panel-heading .panel-title .edit-listing:hover .icon-mv {
+    color: #fff !important;
+}
+#review-listing-post .edit-listing {
+    padding: 5px;
 }

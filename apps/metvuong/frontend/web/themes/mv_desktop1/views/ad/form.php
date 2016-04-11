@@ -383,7 +383,7 @@ use vsoft\ad\models\AdImages;
 				                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
 				                        <?= Yii::t('ad', 'Content') ?>
 				                        <span class="edit-listing">
-					                    	<svg class="icon-svg icon-edit-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-edit-svg"></use></svg></span>
+					                    	<span class="icon-mv fs-20 color-cd"><span class="icon-edit-copy-4"></span></span>
 					                    </span>
 				                        <span class="icon"></span>
 				                    </a>
@@ -401,7 +401,7 @@ use vsoft\ad\models\AdImages;
 				                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
 				                        <?= Yii::t('ad', 'Detail Information') ?>
 				                        <span class="edit-listing">
-					                    	<svg class="icon-svg icon-edit-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-edit-svg"></use></svg></span>
+					                    	<span class="icon-mv fs-20 color-cd"><span class="icon-edit-copy-4"></span></span>
 					                    </span>
 				                        <span class="icon"></span>
 				                    </a>
@@ -427,7 +427,7 @@ use vsoft\ad\models\AdImages;
 				                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
 				                        <?= Yii::t('ad', 'Facilities') ?>
 				                        <span class="edit-listing">
-					                    	<svg class="icon-svg icon-edit-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-edit-svg"></use></svg></span>
+					                    	<span class="icon-mv fs-20 color-cd"><span class="icon-edit-copy-4"></span></span>
 					                    </span>
 				                        <span class="icon"></span>
 				                    </a>
@@ -445,7 +445,7 @@ use vsoft\ad\models\AdImages;
 				                    <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEght" aria-expanded="false" aria-controls="collapseSeven">
 				                        <?= Yii::t('ad', 'Contact') ?>
 				                        <span class="edit-listing">
-					                    	<svg class="icon-svg icon-edit-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-edit-svg"></use></svg></span>
+					                    	<span class="icon-mv fs-20 color-cd"><span class="icon-edit-copy-4"></span></span>
 					                    </span>
 				                        <span class="icon"></span>
 				                    </a>
