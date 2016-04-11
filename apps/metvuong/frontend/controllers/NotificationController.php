@@ -36,7 +36,14 @@ class NotificationController extends Controller
                     return true;
                 }
             }
-        }else {
+            if($output = Cache::me()->get(Cache::PRE_NOTIFICATION.'ajax'.Yii::$app->user->id)){
+                return $output;
+            }else{
+                $output = $this->renderAjax('index', []);
+                Cache::me()->set(Cache::PRE_NOTIFICATION.'ajax'.Yii::$app->user->id, $output);
+                return $output;
+            }
+        }
             if($output = Cache::me()->get(Cache::PRE_NOTIFICATION.Yii::$app->user->id)){
                 return $output;
             }else{
@@ -44,7 +51,7 @@ class NotificationController extends Controller
                 Cache::me()->set(Cache::PRE_NOTIFICATION.Yii::$app->user->id, $output);
                 return $output;
             }
-        }
+
     }
 
     public function actionUpdate()

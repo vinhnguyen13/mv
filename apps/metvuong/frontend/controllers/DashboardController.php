@@ -76,13 +76,23 @@ class DashboardController extends Controller
         $visitors = Chart::find()->getVisitorWithLastTime($id, $date);
         $favourites = Chart::find()->getSavedWithLastTime($id, $date);
 
-        return $this->render('statistics/index', [
-            'product' => $product,
-            'visitors' => $visitors,
-            'finders' => $finders,
-            'favourites' => $favourites,
-            'view' => '_partials/finder'
-        ]);
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('statistics/index', [
+                'product' => $product,
+                'visitors' => $visitors,
+                'finders' => $finders,
+                'favourites' => $favourites,
+                'view' => '_partials/finder'
+            ]);
+        }else{
+            return $this->render('statistics/index', [
+                'product' => $product,
+                'visitors' => $visitors,
+                'finders' => $finders,
+                'favourites' => $favourites,
+                'view' => '_partials/finder'
+            ]);
+        }
     }
 
     public function actionClickchart(){

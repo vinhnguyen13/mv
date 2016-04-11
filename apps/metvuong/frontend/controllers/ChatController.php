@@ -24,7 +24,11 @@ class ChatController extends Controller
     }
 
     public function actionIndex(){
-        return $this->render('index');
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('index');
+        }else{
+            return $this->render('index');
+        }
     }
 
     public function actionIndex2(){

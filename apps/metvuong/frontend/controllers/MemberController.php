@@ -325,33 +325,34 @@ class MemberController extends Controller
         }
 
         if($username == Yii::$app->user->identity->username) {
-
-            if(Yii::$app->request->isAjax){
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                $post = Yii::$app->request->post();
-                if($post){
-                    $scenario = trim($post["scenario"]);
-                    $model = Yii::createObject([
-                        'class'    => ProfileForm::className(),
-                        'scenario' => $scenario,
-                    ]);
-                    $model = $model->loadProfile($username, $scenario);
-                    $model->load($post);
-                    $model->validate();
-                    if (!$model->hasErrors() ) {
-                        $model->updateProfile();
-                        return ['statusCode'=>200, 'modelResult'=>$model];
-                    }else{
-                        return ['statusCode'=>400, 'parameters' => $model->errors, 'user'=> 'error'];
-                    }
-                }
-            }
-
             $model = Yii::createObject([
                 'class'    => ProfileForm::className(),
                 'scenario' => 'updateprofile',
             ]);
             $model = $model->loadProfile($username, 'updateprofile');
+            if(Yii::$app->request->isAjax){
+                if(Yii::$app->request->isPost) {
+                    Yii::$app->response->format = Response::FORMAT_JSON;
+                    $post = Yii::$app->request->post();
+                    if ($post) {
+                        $scenario = trim($post["scenario"]);
+                        $model = Yii::createObject([
+                            'class' => ProfileForm::className(),
+                            'scenario' => $scenario,
+                        ]);
+                        $model = $model->loadProfile($username, $scenario);
+                        $model->load($post);
+                        $model->validate();
+                        if (!$model->hasErrors()) {
+                            $model->updateProfile();
+                            return ['statusCode' => 200, 'modelResult' => $model];
+                        } else {
+                            return ['statusCode' => 400, 'parameters' => $model->errors, 'user' => 'error'];
+                        }
+                    }
+                }
+                return $this->renderAjax('user/updateProfile',['model'=> $model]);
+            }
             return $this->render('user/updateProfile',['model'=> $model]);
         }
 

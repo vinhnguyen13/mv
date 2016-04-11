@@ -6,7 +6,10 @@
         <?php $this->beginContent('@app/views/layouts/_partials/header.php'); ?><?php $this->endContent();?>
     <?php }?>
     <div id="wrapper">
-        <?=$content;?>
+        <?php $this->beginContent('@app/views/layouts/_partials/menuUser.php'); ?><?php $this->endContent();?>
+        <div class="contentContainer">
+            <?=$content;?>
+        </div>
     </div>
     <?php if(empty($this->params['noFooter'])){?>
         <?php $this->beginContent('@app/views/layouts/_partials/footer.php'); ?><?php $this->endContent();?>

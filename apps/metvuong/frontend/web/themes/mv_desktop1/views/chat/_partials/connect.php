@@ -31,7 +31,6 @@ if(!Yii::$app->user->isGuest) {
         $(document).ready(function () {
             chatUI.connect();
             $(document).bind('chat/receiveMessage', function (event, msg, params) {
-                console.log('_______', msg, '_______');
                 chatUI.setConservation(params.from, params.to);
                 if(params.type == 'chat'){
                     if(params.chatType != chatUI.MSG_SEND_ME){

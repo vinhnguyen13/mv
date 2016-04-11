@@ -20,6 +20,8 @@ class Cache extends Component
 {
     const PRE_NOTIFICATION = 'NOTIFICATION';
     const PRE_LISTINGS = 'LISTINGS';
+
+    const RENDERAJAX = 'ajax';
     public static function me()
     {
         return Yii::createObject(self::className());
