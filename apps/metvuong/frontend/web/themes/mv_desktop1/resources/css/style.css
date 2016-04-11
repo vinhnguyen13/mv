@@ -44,6 +44,9 @@ input[type=text]:focus {
 .text-decor {
     text-decoration: underline !important;
 }
+.text-cappi {
+    text-transform: capitalize;
+}
 .text-uper {
     text-transform: uppercase !important;
 }
@@ -2551,7 +2554,7 @@ footer {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    margin-bottom: 8px;
+    margin-bottom: 3px;
 }
 .wrap-list-duan .address-feat {
     margin-bottom: 10px;
@@ -2566,7 +2569,7 @@ footer {
 }
 .wrap-list-duan .date-post {
     font-size: 13px;
-    margin-bottom: 4px;
+    margin-bottom: 5px;
 }
 .status-get-point strong {
     font-size: 13px;
@@ -3712,6 +3715,10 @@ html.mm-opening .mm-slideout {
     width: 100%;
     padding: 25px 0;
     border-bottom: solid 1px #a5a5a5;
+}
+.wrap-list-duan .list-item .load_listing {
+    text-decoration: underline;
+    font-size: 14px;
 }
 .wrap-list-duan .list-attr-td li {
     width: auto;

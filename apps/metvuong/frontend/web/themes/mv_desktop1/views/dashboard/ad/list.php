@@ -28,7 +28,6 @@ $count_product = count($products);
                     </div>
                     <div class="intro-detail">
                         <div class="address-feat clearfix">
-                            <p class="pull-right text-lowercase"><span><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></span></p>
                             <p class="date-post"><span
                                     class="font-600"><?= Yii::t('statistic', 'Date of posting') ?>
                                     :</span> <?= date("d/m/Y", $product->created_at) ?></p>
@@ -37,7 +36,7 @@ $count_product = count($products);
                                 <p class="name-duan"><?= $product->projectBuilding->name ?></p>
                             <?php endif; ?>
                             <p class="loca-duan"><a href="<?=$product->urlDetail(true)?>"><?= $product->address ?></a></p>
-
+                            <p class="fs-13 mgB-10 text-cappi"><span><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></span></p>
                             <p class="id-duan">
                                 ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id; ?></span>
                             </p>
@@ -112,14 +111,14 @@ $count_product = count($products);
                 </div>
             </li>
         <?php }?>
-        <a href="#" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> $type,'last_id' => $last_id])?>" class="load_listing pull-right"><?=Yii::t('listing','More listing')?>...</a>
+        <li><a href="#" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> $type,'last_id' => $last_id])?>" class="load_listing pull-right"><?=Yii::t('listing','More listing')?>...</a></li>
     <?php } else { ?>
-       <span class="pull-right">That's all listing.</span>";
+       <li><span class="pull-right">That's all listing.</span>"</li>
     <?php } ?>
 <script>
     $('#list-all a.load_listing').click(function(){
         $('body').loading();
-        $(this).remove();
+        $(this).parent().remove();
         $.ajax({
             type: "get",
             dataType: 'html',
