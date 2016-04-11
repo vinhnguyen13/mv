@@ -9,6 +9,7 @@ use yii\web\View;
 use frontend\models\User;
 use yii\helpers\Url;
 use vsoft\ad\models\AdProductAdditionInfo;
+use yii\helpers\ArrayHelper;
 
 	$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/detail.js', ['position' => View::POS_END]);
@@ -220,7 +221,7 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 					</script>
 
 					<p class="price-td">
-						<span>Giá</span>
+						<span><?= Yii::t('ad', 'Price') ?></span>
 						<?= StringHelper::formatCurrency($product->price) ?>
 					</p>
 				</div>
@@ -229,7 +230,7 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 			            <div class="panel-heading" role="tab" id="headingOne">
 			                <h4 class="panel-title">
 			                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-			                        Diễn tả chi tiết<span class="icon"></span>
+			                        <?= Yii::t('ad', 'Content') ?><span class="icon"></span>
 			                    </a>
 			                </h4>
 			            </div>
@@ -243,7 +244,7 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 			            <div class="panel-heading" role="tab" id="headingTwo">
 			                <h4 class="panel-title">
 			                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-			                        Thông tin chi tiết<span class="icon"></span>
+			                        <?= Yii::t('ad', 'Detail Information') ?><span class="icon"></span>
 			                    </a>
 			                </h4>
 			            </div>
@@ -251,45 +252,42 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 			                <div class="panel-body" name="activity">
 			                	<ul class="clearfix list-tienich-detail">
 				                    <?php if($product->projectBuilding): ?>
-									<li><strong>Thuộc dự án:</strong> <a href="<?= Url::to(["building-project/view", 'slug'=> $product->projectBuilding->slug]); ?>"><?= $product->projectBuilding->name ?></a></li>
-									<?php endif; ?>
-				                    <?php if($product->area): ?>
-									<li><strong>Diện tích:</strong> <?= $product->area ?>m2</li>
+									<li><strong><?= Yii::t('ad', 'Project') ?>:</strong> <a href="<?= Url::to(["building-project/view", 'slug'=> $product->projectBuilding->slug]); ?>"><?= $product->projectBuilding->name ?></a></li>
 									<?php endif; ?>
 									<?php if($product->adProductAdditionInfo->facade_width): ?>
-									<li><strong>Mặt tiền:</strong> <?= $product->adProductAdditionInfo->facade_width ?>m</li>
+									<li><strong><strong><?= Yii::t('ad', 'Facade') ?>:</strong> <?= $product->adProductAdditionInfo->facade_width ?>m</li>
 									<?php endif; ?>
 									<?php if($product->adProductAdditionInfo->land_width): ?>
-									<li><strong>Đường vào:</strong> <?= $product->adProductAdditionInfo->land_width ?>m</li>
+									<li><strong><?= Yii::t('ad', 'Entry width') ?>:</strong> <?= $product->adProductAdditionInfo->land_width ?>m</li>
 									<?php endif; ?>
 									<?php if($product->adProductAdditionInfo->floor_no): ?>
-									<li><strong>Tầng cao:</strong> <?= $product->adProductAdditionInfo->floor_no ?>  Tầng</li>
+									<li><strong><?= $product->projectBuilding ? Yii::t('ad', 'Floor plan') : Yii::t('ad', 'Number of storeys') ?>:</strong> <?= $product->adProductAdditionInfo->floor_no ?>  Tầng</li>
 									<?php endif; ?>
 									<?php if($product->adProductAdditionInfo->home_direction): ?>
-									<li><strong>Hướng nhà:</strong> <?= $directionList[$product->adProductAdditionInfo->home_direction] ?></li>
+									<li><strong><?= Yii::t('ad', 'House direction') ?>:</strong> <?= $directionList[$product->adProductAdditionInfo->home_direction] ?></li>
 									<?php endif; ?>
 									<?php if($product->adProductAdditionInfo->facade_direction): ?>
-									<li><strong>Hướng ban công:</strong> <?= $directionList[$product->adProductAdditionInfo->facade_direction] ?></li>
+									<li><strong><?= Yii::t('ad', 'Balcony direction') ?>:</strong> <?= $directionList[$product->adProductAdditionInfo->facade_direction] ?></li>
 									<?php endif; ?>
 									<?php if($product->adProductAdditionInfo->interior): ?>
-									<li><strong>Nội thất:</strong> <?= $product->adProductAdditionInfo->interior ?></li>
+									<li><strong><?= Yii::t('ad', 'Furniture') ?>:</strong> <?= $product->adProductAdditionInfo->interior ?></li>
 									<?php endif; ?>
 								</ul>
 			                </div>
 			            </div>
 			        </div>
-			        <?php if($product->projectBuilding): ?>
+			        <?php if($product->projectBuilding && $product->projectBuilding->adFacilities): ?>
 			        <div class="panel panel-default">
 			            <div class="panel-heading" role="tab" id="headingFour">
 			                <h4 class="panel-title">
 			                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-			                        Tiện ích<span class="icon"></span>
+			                        <?= Yii::t('ad', 'Facilities') ?><span class="icon"></span>
 			                    </a>
 			                </h4>
 			            </div>
 			            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-			                <div class="panel-body" name="experience" placeholder="Vui lòng nhập chia sẻ kinh nghiệm">
-
+			                <div class="panel-body" name="experience">
+								<?= implode(', ', ArrayHelper::getColumn($product->projectBuilding->adFacilities, 'name')) ?>
 			                </div>
 			            </div>
 			        </div>
@@ -298,7 +296,7 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 			            <div class="panel-heading" role="tab" id="headingSeven">
 			                <h4 class="panel-title">
 			                    <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEght" aria-expanded="false" aria-controls="collapseSeven">
-			                        Liên hệ<span class="icon"></span>
+			                        <?= Yii::t('ad', 'Contact') ?><span class="icon"></span>
 			                    </a>
 			                </h4>
 			            </div>

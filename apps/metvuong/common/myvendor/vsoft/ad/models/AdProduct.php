@@ -141,8 +141,8 @@ class AdProduct extends AP
 	
 	public static function getAdTypes() {
 		return [
-			AdProduct::TYPE_FOR_SELL => 'Bán',
-			AdProduct::TYPE_FOR_RENT => 'Cho thuê',
+			AdProduct::TYPE_FOR_SELL => \Yii::t('ad', 'Sell'),
+			AdProduct::TYPE_FOR_RENT => \Yii::t('ad', 'Rent'),
 		];
 	}
 	

@@ -9,6 +9,7 @@ use yii\db\Expression;
 use yii\helpers\ArrayHelper;
 use common\models\AdBuildingProject as ABP;
 use yii\helpers\Url;
+use yii\db\Query;
 
 
 class AdBuildingProject extends ABP
@@ -289,5 +290,17 @@ class AdBuildingProject extends ABP
             ->orderBy(['click' => SORT_DESC])->limit(10)
             ->all();
         return $projects;
+    }
+    
+    public function getAdFacilities() {
+    	$facilities = array_filter(explode(',', $this->facilities));
+    	
+    	if($facilities) {
+    		$query = new Query();
+    		$query->from('ad_facility')->where(['id' => $facilities])->all();
+    		return $query->all();
+    	}
+    	
+    	return [];
     }
 }
