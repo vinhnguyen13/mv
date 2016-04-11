@@ -190,7 +190,9 @@ var form = {
 					if(r.success) {
 						listingForm.hide();
 						detailListing.hide();
-						$('#popup-share-social').removeClass('hide-popup');
+						$('#to-detail').attr('href', r.url);
+						$('.post-listing').hide();
+						$('#success-notify').removeClass('hide');
 						$('body').loading({done: true});
 					} else {
 						alert('có lỗi xảy ra !');

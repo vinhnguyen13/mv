@@ -428,6 +428,8 @@ class AdController extends Controller
     					$adImage->save(false);
     				}
     			}
+    			
+    			$result['url'] = $product->urlDetail();
     		} else {
     			$result['success'] = false;
     			$result['errors'] = [
