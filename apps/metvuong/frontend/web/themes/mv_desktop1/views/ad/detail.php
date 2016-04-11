@@ -118,7 +118,7 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 					</div>
 					<ul class="pull-right icons-detail">
 						<li>
-							<button data-toggle="tooltip" data-placement="bottom" title="Copy link" class="btn-copy tooltip-show" type="button" data-clipboard-text="<?= $product->urlDetail(true) ?>">
+							<button data-toggle="tooltip" data-placement="bottom" title="Copy link" data-title-success="Copied" class="btn-copy tooltip-show" type="button" data-clipboard-text="<?= $product->urlDetail(true) ?>">
 								<span class="icon-mv"><span class="icon-link"></span></span>
 							</button>
 						</li>
@@ -129,7 +129,7 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 						</li>
 			            <?php if($product->user_id != Yii::$app->user->id){ ?>
 						<li>
-							<a data-toggle="tooltip" data-placement="bottom" title="Favourite" href="#" class="icon save-item tooltip-show <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>">
+							<a data-toggle="tooltip" data-placement="bottom" title="Favourite" href="#" class="tooltip-show <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>">
 								<span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
 							</a>
 						</li>
@@ -169,9 +169,23 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 					<script>
 						$(document).ready(function () {
 
+							$('.btn-copy.tooltip-show').tooltip({
+								delay: {
+									show: 50, 
+									hide: 500
+								}
+							});
+
 							var clipboard = new Clipboard('.btn-copy');
 
-							var swiper = new Swiper('.detail-listing-extra .swiper-container', {
+							clipboard.on('success', function(e) {
+							    var txtSuccess = $(e.trigger).data('titleSuccess');
+							    $(e.trigger).parent().find('.tooltip-inner').html(txtSuccess);
+							    
+							    e.clearSelection();
+							});
+
+							var swiper = new Swiper('.swiper-container', {
 								pagination: '.swiper-pagination',
 								paginationClickable: true,
 						        nextButton: '.swiper-button-next',

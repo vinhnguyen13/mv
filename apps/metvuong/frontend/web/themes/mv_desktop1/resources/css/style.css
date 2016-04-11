@@ -3917,6 +3917,7 @@ html.mm-opening .mm-slideout {
 .wrap-list-duan .intro-detail .status-duan {
     font-weight: 700;
     color: #3c3c3c;
+    margin-bottom: 5px;
 }
 .status-duan .id-duan {
     margin-bottom: 0;
@@ -8209,7 +8210,7 @@ footer li a {
     font-size: 13px;
 }
 .wrap-list-duan .bottom-feat-box .wrap-icon {
-    margin-bottom: 8px;
+    margin-bottom: 0px;
 }
 .wrap-list-duan .bottom-feat-box .icon-mv {
     font-size: 19px;
@@ -8317,7 +8318,7 @@ footer li a {
     background: rgb(2, 220, 139);
 }
 .list-redire {
-    padding: 20px 0 0;
+    padding: 17px 0 0;
     margin-right: 14px;
 }
 .list-redire li {
@@ -8333,7 +8334,7 @@ footer li a {
 .list-redire li a .icon-barometer {
     font-size: 35px;
     position: relative;
-    top: -3px;
+    top: -1px;
 }
 .list-redire li a:hover .icon-mv {
     color: #009544;
@@ -8523,7 +8524,8 @@ footer li a {
     font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+.icon-mv [class^="icon-"],
+.icon-mv [class*=" icon-"] {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'mvicon' !important;
     speak: none;
@@ -8661,7 +8663,7 @@ footer li a {
     color: #009455;
 }
 .icons-detail .icon-mv {
-    font-size: 23px;
+    font-size: 22px;
 }
 .wrap-items-chat {
     position: fixed;
