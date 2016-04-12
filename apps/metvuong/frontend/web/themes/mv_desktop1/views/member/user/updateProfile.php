@@ -70,7 +70,7 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                             $cities = AdCity::find()->all();
                             $citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
                             //                            $citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != \frontend\models\UserLocation::DEFAULT_CITY)]; });
-                            echo $form->field($user_location, 'city_id', ['options' => ['class' => 'attr-right pull-right city']])
+                            echo $form->field($user_location, 'city_id', ['options' => ['class' => 'attr-right city']])
                                 ->dropDownList($citiesDropdown, ['prompt' => Yii::t('profile','Select...'), 'options' => [empty($user_location) ? 1 : $user_location->city_id => ['Selected ' => true]]])
                                 ->label(false);
 

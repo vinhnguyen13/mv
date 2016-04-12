@@ -35,6 +35,15 @@ input[type=text]:focus {
     border: 1px solid #00a769;
     outline: none;
 }
+.inline {
+    display: inline;
+}
+.block {
+    display: block;
+}
+.inline-block {
+    display: inline-block;
+}
 .posi_relative {
     position: relative;
 }
@@ -8904,6 +8913,7 @@ footer li a {
     color: #fff;
     padding: 7px 25px;
 }
+.wrap-attr-detail select,
 .wrap-attr-detail input {
     border: 1px solid #d4d4d4;
     padding: 3px 5px;
