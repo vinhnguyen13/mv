@@ -5415,6 +5415,15 @@ html.mm-opening .mm-slideout {
     margin-top: 10px;
     font-size: 16px;
 }
+.option-view-stats li a span.icon-mv {
+    display: inline-block;
+    margin-top: 0;
+    vertical-align: top;
+    margin-right: 10px;
+}
+.option-view-stats li a span.icon-mv span {
+    margin-top: 0;
+}
 .option-view-stats li a.active,
 .option-view-stats li a:hover {
     border-top: 1px solid #fff;

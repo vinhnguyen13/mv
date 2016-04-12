@@ -71,18 +71,18 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                         </div>
         			</div>
                     <ul class="option-view-stats clearfix">
-                        <li><a href="#" class="btn-finder active" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $finderFrom, 'to' => $finderTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><?=Yii::t('statistic','Search')?><span><?=$search_count ?></span></a></li>
-                        <li><a href="#" class="btn-visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $visitorFrom, 'to' => $visitorTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><?=Yii::t('statistic','Click')?><span><?=$click_count ?></span></a></li>
-                        <li><a href="#" class="btn-favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'id' => $id, 'from' => $favouriteFrom, 'to' => $favouriteTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><?=Yii::t('statistic','Favourite')?><span><?=$fav_count ?></span></a></li>
-                        <li><a href="#" class="btn-share" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/share', 'id' => $id, 'from' => $shareFrom, 'to' => $shareTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><?=Yii::t('statistic','Share')?> <span><?=$share_count?></span></a></li>
+                        <li><a href="#" class="btn-finder active" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $finderFrom, 'to' => $finderTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"> <span class="icon-mv fs-19"><span class="icon-icons-search"></span></span> <?=Yii::t('statistic','Search')?><span><?=$search_count ?></span></a></li>
+                        <li><a href="#" class="btn-visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $visitorFrom, 'to' => $visitorTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><span class="icon-mv"><span class="icon-eye-copy"></span></span><?=Yii::t('statistic','Click')?><span><?=$click_count ?></span></a></li>
+                        <li><a href="#" class="btn-favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'id' => $id, 'from' => $favouriteFrom, 'to' => $favouriteTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><span class="icon-mv"><span class="icon-heart-icon-listing"></span></span><?=Yii::t('statistic','Favourite')?><span><?=$fav_count ?></span></a></li>
+                        <li><a href="#" class="btn-share" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/share', 'id' => $id, 'from' => $shareFrom, 'to' => $shareTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"> <span class="icon-mv"><span class="icon-share-social"></span></span> <?=Yii::t('statistic','Share')?> <span><?=$share_count?></span></a></li>
                     </ul>
         		</div>
         	</section>
             <h2 class="text-uper fs-16 font-600 mgB-30 color-cd">STATISTIC</h2>
             <table class="tbl-review">
                 <tr>
-                    <th class="text-uper fs-15 font-600">LƯỢT XEM</th>
-                    <th class="text-uper fs-15 font-600">THÍCH</th>
+                    <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10 fs-17"><span class="icon-eye-copy"></span></span>LƯỢT XEM</th>
+                    <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10"><span class="icon-heart-icon-listing fs-19"></span></span>THÍCH</th>
                 </tr>
                 <tr>
                     <td>
@@ -113,8 +113,8 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                     </td>
                 </tr>
                 <tr>
-                    <th class="text-uper fs-15 font-600">TÌM KIẾM</th>
-                    <th class="text-uper fs-15 font-600">CHIA SẺ</th>
+                    <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10"><span class="icon-icons-search fs-19"></span></span>TÌM KIẾM</th>
+                    <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10"><span class="icon-share-social fs-19"></span></span>CHIA SẺ</th>
                 </tr>
                 <tr>
                     <td>
