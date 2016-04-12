@@ -143,11 +143,12 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                 </div>
                 <div class="wrap-attr-detail">
                     <a href="#" class="edit-profile"><span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
-<!--                    <a class="text-decor color-cd-hover fs-13 font-600 link-change-pass" href="#">Đổi mật khẩu</a>-->
+                    <a class="text-decor color-cd-hover fs-13 font-600 link-change-pass" href="#">Đổi mật khẩu</a>
                 </div>
                 <div class="box-edit-show wrap-attr-detail">
                     <a href="#" class="done-profile btn-common">Xong</a>
                     <div class="row">
+                        <br>
                         <?php
                         $profile_form = Yii::createObject([
                             'class'    => \frontend\models\ProfileForm::className(),
@@ -178,7 +179,7 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                         <div class="col-xs-9">
                             <input type="password" class="re-type-pass" value="" placeholder="<?=Yii::t('profile','Input...')?>">
                         </div>
-                        <div class="col-xs-9 error hide" style="width: 100%; color: red;"></div>
+                        <div class="col-xs-9 error hide" style="color: red;"></div>
                         <?php $f->end(); ?>
                     </div>
                 </div>
@@ -460,13 +461,13 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
             _this.closest('section').loading({
                 full: false
             });
-            $('.changepass .error').addClass('hide');
+
             var new_password = $('.new_password').val();
             var rePass = $('.re-type-pass').val();
             if(new_password !== rePass){
+                _this.closest('section').loading({done: true});
                 $('.changepass .error').html('<br><?=Yii::t('profile','Confirm password not match.')?>');
                 $('.changepass .error').removeClass('hide');
-                $('.changepass .loading-proccess').remove();
                 $('.changepass .re-type-pass').focus();
                 return false;
             }
@@ -477,30 +478,28 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                 url: $('#form-edit-changepass').attr('action'),
                 data: $('#form-edit-changepass').serializeArray(),
                 success: function (data) {
+//                    l(data);
                     _this.closest('section').loading({done: true});
-                    _this.closest('section').find('.wrap-attr-detail').show();
-                    _this.closest('section').find('.box-edit-show').hide();
-                    
                     if(data.statusCode == 200){
 //                        $('.btn-cancel').trigger('click');
-                        $('.changepass .error').html('<br><b style="color:#00a769;"><?=Yii::t('profile','Reset password success.')?></b>');
-                        $('.changepass .error').removeClass('hide');
+                        _this.closest('section').find('.wrap-attr-detail').show();
+                        _this.closest('section').find('.box-edit-show').hide();
+                        $('#resetPassword').modal('show');
                     } else {
-                        $('.changepass .error').removeClass('hide');
                         var strMessage = '';
                         $.each(data.parameters, function(idx, val){
-                            strMessage += "<br/>" + lajax.t(val);
+                            strMessage += "<br>" + val;
                         });
                         $('.changepass .error').html(strMessage);
-                        $('.changepass .loading-proccess').remove();
                         return false;
                     }
                     return true;
                 },
                 error: function (data) {
+                    l(data);
                     var strMessage = '';
                     $.each(data.parameters, function(idx, val){
-                        strMessage += "\n" + val;
+                        strMessage += "<br>" + val;
                     });
                     $('.changepass .error').html(strMessage);
                     $('.changepass .error').removeClass('hide');
