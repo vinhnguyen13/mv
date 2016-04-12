@@ -118,27 +118,22 @@ class Chart extends Component
 
                 if (array_key_exists($username, $infoSaved)) {
                     $cc = $infoSaved[$username]['count'];
-                    $cc = $view == 'share' ? ($cc + $item->count) : ($cc + 1);
-                    $infoSaved[$username] = [
-                        'count' => $cc,
-                        'avatar' => $avatar,
-                        'email' => $email
-                    ];
+                    $cc = $view == "shares" ? ($cc + $item->count) : ($cc + 1);
                 } else {
-                    $cc = $view == 'share' ? $item->count : 1;
-                    $infoSaved[$username] = [
-                        'count' => $cc,
-                        'avatar' => $avatar,
-                        'email' => $email
-                    ];
+                    $cc = $view == "shares" ? $item->count : 1;
                 }
 
-
+                $infoSaved[$username] = [
+                    'count' => $cc,
+                    'avatar' => $avatar,
+                    'email' => $email
+                ];
 
                 $infoData[$view] = $infoSaved;
             }
             return ['dataChart'=>$tmpDataByPid, 'categories'=>$dateRange, 'infoData' => $infoData];
         }
+        return false;
     }
 
     public function getContacts(){
