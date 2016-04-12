@@ -118,24 +118,24 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 				</div>
 				<ul class="pull-right icons-detail">
 					<li>
-						<button data-toggle="tooltip" data-placement="bottom" title="Copy link" data-title-success="Copied" class="btn-copy tooltip-show" type="button" data-clipboard-text="<?= $product->urlDetail(true) ?>">
+						<button data-toggle="tooltip" data-placement="bottom" title="<?= Yii::t('ad', 'Copy link') ?>" data-title-success="<?= Yii::t('ad', 'Copied') ?>" class="btn-copy tooltip-show" type="button" data-clipboard-text="<?= $product->urlDetail(true) ?>">
 							<span class="icon-mv"><span class="icon-link"></span></span>
 						</button>
 					</li>
 					<li>
-						<a href="#" data-toggle="modal" data-placement="bottom" data-target="#popup-share-social" class="tooltip-show" title="Share social">
+						<a href="#" data-toggle="modal" data-placement="bottom" data-target="#popup-share-social" class="tooltip-show" title="<?= Yii::t('ad', 'Share social') ?>">
 							<span class="icon-mv"><span class="icon-share-social"></span></span>
 						</a>	
 					</li>
 		            <?php if($product->user_id != Yii::$app->user->id){ ?>
 					<li>
-						<a data-toggle="tooltip" data-placement="bottom" title="Favourite" href="#" class="tooltip-show <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>">
+						<a data-toggle="tooltip" data-placement="bottom" title="<?= Yii::t('ad', 'Favourite') ?>" href="#" class="tooltip-show <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>">
 							<span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
 						</a>
 					</li>
 		            <?php } ?>
 					<li>
-						<a href="#" data-toggle="modal" data-placement="bottom" data-target="#popup-map" class="tooltip-show" title="Location">
+						<a href="#" data-toggle="modal" data-placement="bottom" data-target="#popup-map" class="tooltip-show" title="<?= Yii::t('ad', 'Location') ?>">
 							<span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>	
 						</a>
 					</li>
