@@ -13,7 +13,7 @@ $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 	
 </div>
 <!--chat script-->
-<script id="chat-send-template" type="text/x-handlebars-template">
+<script class="chat-send-template" type="text/x-handlebars-template">
 	<div class="item box-me">
 		<div class="chat-txt">
 			<div class="txt-detail">
@@ -23,7 +23,7 @@ $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 		</div>
 	</div>
 </script>
-<script id="chat-receive-template" type="text/x-handlebars-template">
+<script class="chat-receive-template" type="text/x-handlebars-template">
 	<div class="item box-you">
 		<a href="#" class="avatar wrap-img"><img src="{{avatarUrl}}" alt=""></a>
 		<div class="chat-txt">
@@ -34,10 +34,10 @@ $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 		</div>
 	</div>
 </script>
-<script id="chat-typing-template" type="text/x-handlebars-template">
+<script class="chat-typing-template" type="text/x-handlebars-template">
 	<div class="loading-chat">{{from}} is typing<span class="one">.</span><span class="two">.</span><span class="three">.</span></div>
 </script>
-<script id="chat-box-template" type="text/x-handlebars-template">
+<script class="chat-box-template" type="text/x-handlebars-template">
 	<div class="container">
 		<div class="chat-real chat-group" chat-from="{{from}}" chat-to="{{to}}">
 			<div class="title-top"><a href="/{{to}}" title="<?=Yii::t('chat', 'View profile')?>" target="_blank"><?=$nameUserTo;?></a></div>

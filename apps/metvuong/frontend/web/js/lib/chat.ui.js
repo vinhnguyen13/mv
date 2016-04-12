@@ -26,7 +26,7 @@
         showBoxChat: function (from, to) {
             var from = chatUI.usrFromJid(from);
             var to = chatUI.usrFromJid(to);
-            var template = Handlebars.compile($("#chat-box-template").html());
+            var template = Handlebars.compile($(".chat-box-template").html());
             var html = template({from: from, to: to});
             chatBoxExist = chatUI.getBoxChat('.chat-group', from, to);
             if(chatBoxExist){
@@ -90,10 +90,10 @@
             var timestamp = (params.ts) ? params.ts : 0;
             var _time = formatTime(timestamp);
             if(type == chatUI.MSG_SEND_ME){
-                var template = Handlebars.compile($("#chat-send-template").html());
+                var template = Handlebars.compile($(".chat-send-template").html());
                 var html = template({msg: msg, avatarUrl: '/member/'+username+'/avatar', time: _time});
             }else if(type == chatUI.MSG_SEND_YOU){
-                var template = Handlebars.compile($("#chat-receive-template").html());
+                var template = Handlebars.compile($(".chat-receive-template").html());
                 var html = template({msg: msg, avatarUrl: '/member/'+username+'/avatar', time: _time});
             }
             return html;
@@ -141,7 +141,7 @@
             var timestamp = (params.ts) ? params.ts : 0;
             var _time = formatTime(timestamp);
             var chatBoxExist = $('.chat-history');
-            var template = Handlebars.compile($("#chat-receive-template").html());
+            var template = Handlebars.compile($(".chat-receive-template").html());
             var html = template({msg: msg, avatarUrl: '/member/'+chatUI.usrFromJid(this.from)+'/avatar', time: _time, fromName: params.fromName, chatUrl: '/chat/with/'+chatUI.usrFromJid(this.from), from: chatUI.usrFromJid(this.from)});
             if($(".item[chat-with='" + chatUI.usrFromJid(this.to) + "']")){
                 $(".item[chat-with='" + chatUI.usrFromJid(this.to) + "']").remove();
@@ -183,7 +183,7 @@
             }
             if(from && !close) {
                 from = chatUI.usrFromJid(from);
-                var template = Handlebars.compile($("#chat-typing-template").html());
+                var template = Handlebars.compile($(".chat-typing-template").html());
                 var html = template({from: from});
                 chatBoxExist.find('.wrap-chat').append(html);
             }

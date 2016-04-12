@@ -64,14 +64,14 @@ if(!Yii::$app->user->isGuest) {
             });
 
             $(document).bind('chat/addBoxChat', function (event, user) {
-                var template = Handlebars.compile($("#item-box-chat-template").html());
+                var template = Handlebars.compile($(".item-box-chat-template").html());
                 var html = template({});
                 html = $(html).attr('chat-to', user);
                 $('.wrap-items-chat').append(html);
             });
 
             $(document).bind('chat/addWrapBoxChat', function (event, user) {
-                var template = Handlebars.compile($("#wrap-items-chat-template").html());
+                var template = Handlebars.compile($(".wrap-items-chat-template").html());
                 var html = template({});
                 $('body').append(html);
             });
@@ -112,7 +112,7 @@ if(!Yii::$app->user->isGuest) {
             });
         });
     </script>
-    <script id="wrap-items-chat-template" type="text/x-handlebars-template">
+    <script class="wrap-items-chat-template" type="text/x-handlebars-template">
         <div class="wrap-items-chat hide">
             <div class="more-box-chat hide">
                 <div class="dropdown">
@@ -130,7 +130,7 @@ if(!Yii::$app->user->isGuest) {
         </div>
     </script>
 
-    <script id="item-box-chat-template" type="text/x-handlebars-template">
+    <script class="item-box-chat-template" type="text/x-handlebars-template">
         <div class="item-box-chat" chat-from="<?=Yii::$app->user->identity->username?>" chat-to="">
             <div class="box-chat-footer">
                 <a href="#" class="close-box">
