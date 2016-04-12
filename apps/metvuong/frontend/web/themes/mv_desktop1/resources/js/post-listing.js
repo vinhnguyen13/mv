@@ -40,6 +40,10 @@ $(document).ready(function(){
 	});
 
 	form.init();
+	
+	$('#review-listing-post').on('hidden.bs.modal', function () {
+		
+	});
 });
 
 var form = {

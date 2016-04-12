@@ -333,19 +333,30 @@ use vsoft\ad\models\AdImages;
 		            
 					<div class="infor-listing">
 						<div class="address-feat clearfix">
-							<p class="infor-by-up"></p>
-							<div class="address-listing">
-								<p></p>
+							<div class="posi_relative">
+								<p class="infor-by-up"></p>
+								<span class="edit-listing">
+			                    	<span class="icon-mv fs-20 color-cd"><span class="icon-edit-copy-4"></span></span>
+			                    </span>
 							</div>
-							<p class="id-duan">ID:<span>MV000</span></p>
-							<ul class="clearfix list-attr-td">
-								<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span><span class="area-show"></span>m2 </li>
-								<li> <span class="icon-mv"><span class="icon-bed-search"></span></span><span class="bed-show"></span> </li>
-								<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span><span class="toilet-show"></span> </li>
-							</ul>
-							<span class="edit-listing">
-		                    	<span class="icon-mv fs-20 color-cd"><span class="icon-edit-copy-4"></span></span>
-		                    </span>
+							<div class="posi_relative">
+								<div class="address-listing">
+									<p></p>
+								</div>
+								<span class="edit-listing">
+			                    	<span class="icon-mv fs-20 color-cd"><span class="icon-edit-copy-4"></span></span>
+			                    </span>
+							</div>
+							<div class="posi_relative">
+								<ul class="clearfix list-attr-td">
+									<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span><span class="area-show"></span>m2 </li>
+									<li> <span class="icon-mv"><span class="icon-bed-search"></span></span><span class="bed-show"></span> </li>
+									<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span><span class="toilet-show"></span> </li>
+								</ul>
+								<span class="edit-listing">
+			                    	<span class="icon-mv fs-20 color-cd"><span class="icon-edit-copy-4"></span></span>
+			                    </span>
+							</div>
 						</div>
 						<div class="posi_relative">
 							<p class="price-td">
