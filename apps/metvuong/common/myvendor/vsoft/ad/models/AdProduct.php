@@ -148,8 +148,8 @@ class AdProduct extends AP
 	
 	public static function getAdOwners() {
 		return [
-			AdProduct::OWNER_HOST => 'owner',
-			AdProduct::OWNER_AGENT => 'agent',
+			AdProduct::OWNER_HOST => Yii::t('ad', 'owner'),
+			AdProduct::OWNER_AGENT => Yii::t('ad', 'agent'),
 		];
 	}
 	
