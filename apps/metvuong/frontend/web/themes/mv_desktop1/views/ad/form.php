@@ -343,16 +343,19 @@ use vsoft\ad\models\AdImages;
 								<li> <span class="icon-mv"><span class="icon-bed-search"></span></span><span class="bed-show"></span> </li>
 								<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span><span class="toilet-show"></span> </li>
 							</ul>
+							<span class="edit-listing">
+		                    	<span class="icon-mv fs-20 color-cd"><span class="icon-edit-copy-4"></span></span>
+		                    </span>
 						</div>
-						<ul class="pull-right icons-detail">
-							<li><a href="#" class="icon icon-share-td"></a></li>
-							<li><a href="#" class="icon save-item"></a></li>
-							<li><a href="#" data-toggle="modal" data-target="#popup-map" class="icon icon-map-loca"></a></li>
-						</ul>
-						<p class="price-td">
-							<span><?= Yii::t('ad', 'Price') ?></span>
-							<span class="price-show"></span>
-						</p>
+						<div class="posi_relative">
+							<p class="price-td">
+								<span><?= Yii::t('ad', 'Price') ?></span>
+								<span class="price-show"></span>
+							</p>
+							<span class="edit-listing">
+		                    	<span class="icon-mv fs-20 color-cd"><span class="icon-edit-copy-4"></span></span>
+		                    </span>
+						</div>
 					</div>
 					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 				        <div class="panel panel-default">
