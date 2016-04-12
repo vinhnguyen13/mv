@@ -370,14 +370,15 @@ var form = {
 				var formControl = template.find('.form-control');
 				
 				formControl.attr('name', formControl.attr('name') + '[]');
-				template.find('.field-remove').click(function(){
-					template.remove();
-				});
 				
 				additionFields.append(template);
 				
 				template.find('.field-title').focus();
 			}
+		});
+		
+		$('#addition-fields').on('click', '.field-remove', function(){
+			$(this).closest('.addition-field').remove();
 		});
 	},
 	appendProjectDropdown: function(projects) {
