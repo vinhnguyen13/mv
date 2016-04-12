@@ -180,7 +180,7 @@ $(document).ready(function() {
     		$.data(this, 'v', '');
     		ss.addClass('hide');
     	}
-    });
+    }).focus();
 
     $(window).resize(function () {
         $('.hFullScreen').css({
