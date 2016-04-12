@@ -59,7 +59,7 @@ $this->registerJs($script, View::POS_BEGIN);
 							<div class="toggle-search"<?= $hideSearchForm ? ' style="display: none"' : '' ?>>
 								<div class="frm-item select-location show-num-frm">
 									<div class="box-dropdown dropdown-common">
-										<div class="val-selected style-click" data-text-add="Locations"><span class="selected">Locations</span><span class="arrowDownFillFull"></span></div>
+										<div class="val-selected style-click" data-text-add="<?= Yii::t('ad', 'Locations') ?>"><span class="selected"><?= Yii::t('ad', 'Locations') ?></span><span class="arrowDownFillFull"></span></div>
 										<div class="item-dropdown hide-dropdown">
 											<div class="form-group col-xs-12 col-sm-6">
 												<div class="">
@@ -100,7 +100,7 @@ $this->registerJs($script, View::POS_BEGIN);
 								</div>
 								<div class="frm-item num-phongngu">
 									<div class="box-dropdown dropdown-common">
-										<div class="val-selected style-click" data-text-add="Beds"><span class="selected">0+ Beds</span><span class="arrowDownFillFull"></span></div>
+										<div class="val-selected style-click" data-text-add="<?= Yii::t('ad', 'Beds') ?>"><span class="selected">0+ <?= Yii::t('ad', 'Beds') ?></span><span class="arrowDownFillFull"></span></div>
 										<div class="item-dropdown item-bed-bath hide-dropdown">
 											<ul class="clearfix">
 												<li><a href="#" data-value="1">1+</a></li>
@@ -120,7 +120,7 @@ $this->registerJs($script, View::POS_BEGIN);
 								</div>
 								<div class="frm-item num-phongtam">
 									<div class="box-dropdown dropdown-common">
-										<div class="val-selected style-click" data-text-add="Bath"><span class="selected">0+ Bath</span><span class="arrowDownFillFull"></span></div>
+										<div class="val-selected style-click" data-text-add="<?= Yii::t('ad', 'Bath') ?>"><span class="selected">0+ <?= Yii::t('ad', 'Bath') ?></span><span class="arrowDownFillFull"></span></div>
 										<div class="item-dropdown item-bed-bath hide-dropdown">
 											<ul class="clearfix">
 												<li><a href="#" data-value="1">1+</a></li>
