@@ -54,6 +54,9 @@ use yii\helpers\Url;
                 $('.menuUser li a').removeClass('active');
                 $(this).addClass('active');
                 window.history.pushState("object or string", "Title", $(this).attr('href'));
+                if($(this).hasClass('wrapNotifyChat')){
+                    $(document).trigger('chat/removeBoxChat');
+                }
                 $.ajax({
                     type: "get",
                     dataType: 'html',

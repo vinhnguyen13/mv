@@ -63,6 +63,10 @@ if(!Yii::$app->user->isGuest) {
                 $(document).trigger('chat/addWrapBoxChat');
             });
 
+            $(document).bind('chat/removeBoxChat', function (event, data) {
+                $('.wrap-items-chat .item-box-chat').remove();
+            });
+
             $(document).bind('chat/addBoxChat', function (event, user) {
                 var template = Handlebars.compile($(".item-box-chat-template").html());
                 var html = template({});
