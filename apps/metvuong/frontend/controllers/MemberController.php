@@ -346,7 +346,7 @@ class MemberController extends Controller
                         $model->validate();
                         if (!$model->hasErrors()) {
                             $model->updateProfile();
-                            return ['statusCode' => 200, 'modelResult' => $model];
+                            return ['statusCode' => 200, 'model' => $model];
                         } else {
                             return ['statusCode' => 400, 'parameters' => $model->errors, 'user' => 'error'];
                         }

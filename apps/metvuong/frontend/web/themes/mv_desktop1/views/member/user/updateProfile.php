@@ -14,7 +14,7 @@ use yii\helpers\Url;
 $user = $model->getUser();
 $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii::$app->user->id])->one();
 ?>
-<div class="title-fixed-wrap">
+<div class="title-fixed-wrap" xmlns="http://www.w3.org/1999/html">
     <div class="edit-user-tt">
         <div class="title-top">Settings</div>
         <div class="wrap-edit-tt">
@@ -25,19 +25,21 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                         <img id="profileAvatar" src="<?=$model->avatar?>" alt="metvuong avatar" />
                     </div>    
                     <div class="overflow-all">
-                        <p class="name-user fs-18 font-600 color-cd text-uper mgB-5"><?=empty($model->name) ? $user->username : $model->name  ?></p>
+                        <p class="name-user fs-18 font-600 color-cd text-uper mgB-5"><span class="name"><?=empty($model->name) ? $user->username : $model->name  ?></span></p>
                         <p class="location mgB-5">
                             <span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
-                            <?=empty($user_location) ? Yii::t('general', 'Updating') : $user_location->city?>
+                            <span class="address"><?=empty($user_location) ? Yii::t('general', 'Updating') : $user_location->city?></span>
                         </p>
                         <p class="num-mobi mgB-5">
                             <span class="icon-mv"><span class="icon-phone-profile"></span></span>
-                            <a href="<?=empty($model->mobile) ? "#" : "tel:".$model->mobile ?>"><?=empty($model->mobile) ? "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->mobile ?></a>
+                            <a href="<?=empty($model->mobile) ? "#" : "tel:".$model->mobile ?>">
+                                <span class="mobile"><?=empty($model->mobile) ? "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->mobile ?></span>
+                            </a>
                         </p>
                         <p class="email-user">
-                            <a href="#popup-email" class="email-btn">
+                            <a href="#" class="email-btn">
                                 <span class="icon-mv"><span class="icon-mail-profile"></span></span>
-                                <?=empty($model->public_email) ? $user->email : $model->public_email ?>
+                                <span class="public_email"><?=empty($model->public_email) ? $user->email : $model->public_email ?></span>
                             </a>
                         </p>
                     </div>
@@ -49,9 +51,33 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                         <a class="btn-common" href="#" data-toggle="modal" data-target="#avatar">Tải hình</a>
                     </div>
                     <div class="overflow-all">
+                        <?php
+                        $profile_form = Yii::createObject([
+                            'class'    => \frontend\models\ProfileForm::className(),
+                            'scenario' => 'updateprofile',
+                        ]);
+                        $f = ActiveForm::begin([
+                            'id' => 'form-edit-ttcn',
+                            'enableAjaxValidation' => false,
+                            'enableClientValidation' => true,
+                            'action' => Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])
+                        ]);
+                        ?>
                         <p class="name-user fs-18 font-600 color-cd text-uper mgB-5">
-                            <input type="text" value="<?=empty($model->name) ? $user->username : $model->name  ?>">
+                            <?= $f->field($profile_form, 'name')->textInput(['value' => empty($model->name) ? $user->username : $model->name ])->label(false)?>
                         </p>
+                        <p class="num-mobi mgB-5">
+                            <span class="icon-mv"><span class="icon-phone-profile"></span></span>
+                            <?= $f->field($profile_form, 'mobile')->textInput(['type'=>'number', 'maxlength' => 10, 'value' => $model->mobile ])->label(false)?>
+                        </p>
+                        <p class="email-user">
+                            <a href="#popup-email" class="email-btn">
+                                <span class="icon-mv"><span class="icon-mail-profile"></span></span>
+                                <?= $f->field($profile_form, 'public_email')->textInput(['value' => empty($model->public_email) ? $user->email : $model->public_email ])->label(false)?>
+                            </a>
+                            <input type="hidden" name="scenario" value="updateprofile">
+                        </p>
+                        <?php $f->end(); ?>
                         <p class="location mgB-5">
                             <span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
                             <?php
@@ -77,22 +103,12 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                             echo $form->field($user_location, 'user_id')->hiddenInput(['value'=>Yii::$app->user->id])->label(false);
                             $form->end();
                             ?>
-<!--                            <input type="text" value="Cà Mau">-->
-                        </p>
-                        <p class="num-mobi mgB-5">
-                            <span class="icon-mv"><span class="icon-phone-profile"></span></span>
-                            <input type="text" value="<?=empty($model->mobile) ? "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->mobile ?>">
-                        </p>
-                        <p class="email-user">
-                            <a href="#popup-email" class="email-btn">
-                                <span class="icon-mv"><span class="icon-mail-profile"></span></span>
-                                <input type="text" value="<?=empty($model->public_email) ? $user->email : $model->public_email ?>">
-                            </a>
                         </p>
                     </div>
+
                 </div>
             </section>
-            <section>
+            <section class="mtbt">
                 <div class="title-update-tt">
                     <?=Yii::t('profile', 'Description')?>
                 </div>
@@ -104,18 +120,32 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                 </div>
                 <div class="box-edit-show wrap-attr-detail">
                     <a href="#" class="done-profile btn-common">Xong</a>
+                    <?php
+                    $profile_form = Yii::createObject([
+                        'class'    => \frontend\models\ProfileForm::className(),
+                        'scenario' => 'updatebio',
+                    ]);
+                    $f = ActiveForm::begin([
+                        'id' => 'form-edit-mtbt',
+                        'enableAjaxValidation' => false,
+                        'enableClientValidation' => true,
+                        'action' => Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])
+                    ]);
+                    ?>
                     <div class="txt-wrap">
-                        <?=empty($model->bio) ? "<textarea></textarea>" : "<textarea>".$model->bio."</textarea>" ?>
+                        <?= $f->field($profile_form, 'bio')->textarea(['value' => $model->bio ])->label(false)?>
+                        <input type="hidden" name="scenario" value="updatebio">
                     </div>
+                    <?php $f->end(); ?>
                 </div>
             </section>
-            <section>
+            <section class="changepass">
                 <div class="title-update-tt">
                     <?=Yii::t('profile', 'Change password')?>
                 </div>
                 <div class="wrap-attr-detail">
                     <a href="#" class="edit-profile"><span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
-                    <a class="text-decor color-cd-hover fs-13 font-600 link-change-pass" href="#">Đổi mật khẩu</a>
+<!--                    <a class="text-decor color-cd-hover fs-13 font-600 link-change-pass" href="#">Đổi mật khẩu</a>-->
                 </div>
                 <div class="box-edit-show wrap-attr-detail">
                     <a href="#" class="done-profile btn-common">Xong</a>
@@ -136,19 +166,19 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                             <?=Yii::t('profile', 'Old password')?>
                         </div>
                         <div class="col-xs-9 mgB-10">
-                            <?= $f->field($model, 'old_password')->textInput(['class' => 'attr-right old_password', 'type' => 'password', 'placeholder' => Yii::t('profile','Input...')])->label(false) ?>
+                            <?= $f->field($model, 'old_password')->textInput(['class' => 'old_password', 'type' => 'password', 'placeholder' => Yii::t('profile','Input...')])->label(false) ?>
                         </div>
                         <div class="col-xs-3">
                             <?=Yii::t('profile', 'New password')?>
                         </div>
                         <div class="col-xs-9 mgB-10">
-                            <?= $f->field($model, 'new_password')->textInput(['class' => 'attr-right new_password', 'type' => 'password', 'placeholder' => Yii::t('profile','Input...')])->label(false) ?>
+                            <?= $f->field($model, 'new_password')->textInput(['class' => 'new_password', 'type' => 'password', 'placeholder' => Yii::t('profile','Input...')])->label(false) ?>
                         </div>
                         <div class="col-xs-3">
                             <?=Yii::t('profile', 'Confirm password')?>
                         </div>
                         <div class="col-xs-9">
-                            <input type="password" class="attr-right re-type-pass" value="" placeholder="<?=Yii::t('profile','Input...')?>">
+                            <input type="password" class="re-type-pass" value="" placeholder="<?=Yii::t('profile','Input...')?>">
                         </div>
                         <div class="col-xs-9 error hide" style="width: 100%; color: red;"></div>
                         <?php $f->end(); ?>
@@ -298,80 +328,6 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
     </div>
 </div>
 
-<div id="edit-ttcn" class="popup-common hide-popup">
-	<div class="wrap-popup">
-        <?php
-        $profile_form = Yii::createObject([
-            'class'    => \frontend\models\ProfileForm::className(),
-            'scenario' => 'updateprofile',
-        ]);
-        $f = ActiveForm::begin([
-            'id' => 'form-edit-ttcn',
-            'enableAjaxValidation' => false,
-            'enableClientValidation' => true,
-            'action' => Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])
-        ]);
-        ?>
-		<div class="title-popup clearfix text-center">
-            <?=Yii::t('profile', 'Personal Information')?>
-			<a href="#" class="txt-cancel btn-cancel">Cancel</a>
-			<a href="#" class="txt-done btn-done">Done</a>
-		</div>
-		<div class="inner-popup">
-            <div class="list-tt-user wrap-attr-detail">
-				<ul class="clearfix">
-					<li>
-						<span><?=Yii::t('profile', 'Name')?></span>
-                        <?= $f->field($profile_form, 'name')->textInput(['class'=>'attr-right name', 'value' => empty($model->name) ? $user->username : $model->name ])->label(false)?>
-					</li>
-					<li>
-						<span><?=Yii::t('profile', 'Mobile')?></span>
-                        <?= $f->field($profile_form, 'mobile')->textInput(['class'=>'attr-right phone-num', 'type'=>'number', 'maxlength' => 10, 'value' => $model->mobile ])->label(false)?>
-					</li>
-					<li>
-						<span><?=Yii::t('profile', 'Email')?></span>
-                        <?= $f->field($profile_form, 'public_email')->textInput(['class'=>'attr-right public_email', 'value' => empty($model->public_email) ? $user->email : $model->public_email ])->label(false)?>
-					</li>
-                    <li>
-                        <input type="hidden" name="scenario" value="updateprofile">
-                    </li>
-				</ul>
-
-			</div>
-		</div>
-        <?php $f->end(); ?>
-	</div>
-</div>
-
-<div id="edit-mtbt" class="popup-common hide-popup">
-	<div class="wrap-popup">
-        <?php
-        $profile_form = Yii::createObject([
-            'class'    => \frontend\models\ProfileForm::className(),
-            'scenario' => 'updatebio',
-        ]);
-        $f = ActiveForm::begin([
-            'id' => 'form-edit-mtbt',
-            'enableAjaxValidation' => false,
-            'enableClientValidation' => true,
-            'action' => Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])
-        ]);
-        ?>
-		<div class="title-popup clearfix text-center">
-            <?=Yii::t('profile', 'Description')?>
-			<a href="#" class="txt-cancel btn-cancel">Cancel</a>
-			<a href="#" class="txt-done btn-done">Done</a>
-		</div>
-		<div class="inner-popup">
-            <div class="list-tt-user wrap-attr-detail">
-                <?= $f->field($profile_form, 'bio')->textarea(['class'=>'txt-mota', 'value' => $model->bio ])->label(false)?>
-                <input type="hidden" name="scenario" value="updatebio">
-			</div>
-		</div>
-        <?php $f->end(); ?>
-	</div>
-</div>
-
 <div id="edit-changepass" class="popup-common hide-popup">
 	<div class="wrap-popup">
         <?php
@@ -433,47 +389,27 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
             _this.closest('section').find('.wrap-attr-detail').hide();
             _this.closest('section').find('.box-edit-show').show();
         });
-        $('.done-profile').on('click', function (e) {
+
+        $('.infor-user-settings .done-profile').on('click', function(e){
             e.preventDefault();
             var _this = $(this);
             _this.closest('section').loading({
                 full: false
             });
             $.ajax({
-                type: 'POST',
-                url: '',
-                success: function (res) {
-                    _this.closest('section').loading({
-                        done: true
-                    });
-                    _this.closest('section').find('.wrap-attr-detail').show();
-                    _this.closest('section').find('.box-edit-show').hide();
-                }
-            });
-        });
-
-        $('#edit-ttcn .btn-done').on('click', function(e){
-            e.preventDefault();
-            var _this = $(this);
-            _this.loading({
-                full: false
-            });
-            $('#edit-ttcn .error').addClass('hide');
-            $.ajax({
                 type: 'post',
                 dataType: 'json',
                 url: $('#form-edit-ttcn').attr('action'),
                 data: $('#form-edit-ttcn').serializeArray(),
                 success: function (data) {
-                    
-                    _this.loading({done: true});
-                    
+                    _this.closest('section').loading({done: true});
+                    _this.closest('section').find('.wrap-attr-detail').show();
+                    _this.closest('section').find('.box-edit-show').hide();
                     if(data.statusCode == 200){
-                        $('.btn-cancel').trigger('click');
-                        $('.ttcn .name').html(data.modelResult.name);
-                        $('.user-edit .name-user').html(data.modelResult.name);
-                        $('.ttcn .phone-num').html(data.modelResult.mobile);
-                        $('.ttcn .public_email').html(data.modelResult.public_email);
+                        $('.user-edit .name-user').html(data.model.name);
+                        $('.infor-user-settings .name').html(data.model.name);
+                        $('.infor-user-settings .mobile').html(data.model.mobile);
+                        $('.infor-user-settings .public_email').html(data.model.public_email);
                     } else if (data.statusCode == 400) {
                         var arr = [];
                         $.each(data.parameters, function (idx, val) {
@@ -492,12 +428,12 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
             });
         });
 
-        $('#edit-mtbt .btn-done').on('click', function(){
+        $('.mtbt .done-profile').on('click', function(){
             var _this = $(this);
-            _this.loading({
+            _this.closest('section').loading({
                 full: false
             });
-            $('#edit-mtbt .error').addClass('hide');
+            $('.edit-mtbt .error').addClass('hide');
             
             $.ajax({
                 type: 'post',
@@ -505,12 +441,11 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                 url: $('#form-edit-mtbt').attr('action'),
                 data: $('#form-edit-mtbt').serializeArray(),
                 success: function (data) {
-
-                    _this.loading({done: true});
-                    
+                    _this.closest('section').loading({done: true});
+                    _this.closest('section').find('.wrap-attr-detail').show();
+                    _this.closest('section').find('.box-edit-show').hide();
                     if(data.statusCode == 200){
-                        $('.btn-cancel').trigger('click');
-                        $('.mtbt .txt-mota').html(data.modelResult.bio);
+                        $('.mtbt .txt-mota').html(data.model.bio);
                     } else {
                         return false;
                     }
@@ -522,19 +457,19 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
             });
         });
 
-        $('#edit-changepass .btn-done').on('click', function(){
+        $('.changepass .done-profile').on('click', function(){
             var _this = $(this);
-            _this.loading({
+            _this.closest('section').loading({
                 full: false
             });
-            $('#edit-changepass .error').addClass('hide');
+            $('.changepass .error').addClass('hide');
             var new_password = $('.new_password').val();
             var rePass = $('.re-type-pass').val();
             if(new_password !== rePass){
-                $('#edit-changepass .error').html('<br><?=Yii::t('profile','Confirm password not match.')?>');
-                $('#edit-changepass .error').removeClass('hide');
-                $('#edit-changepass .loading-proccess').remove();
-                $('.re-type-pass').focus();
+                $('.changepass .error').html('<br><?=Yii::t('profile','Confirm password not match.')?>');
+                $('.changepass .error').removeClass('hide');
+                $('.changepass .loading-proccess').remove();
+                $('.changepass .re-type-pass').focus();
                 return false;
             }
 
@@ -544,21 +479,22 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                 url: $('#form-edit-changepass').attr('action'),
                 data: $('#form-edit-changepass').serializeArray(),
                 success: function (data) {
-
-                    _this.loading({done: true});
+                    _this.closest('section').loading({done: true});
+                    _this.closest('section').find('.wrap-attr-detail').show();
+                    _this.closest('section').find('.box-edit-show').hide();
                     
                     if(data.statusCode == 200){
 //                        $('.btn-cancel').trigger('click');
-                        $('#edit-changepass .error').html('<br><b style="color:#00a769;"><?=Yii::t('profile','Reset password success.')?></b>');
-                        $('#edit-changepass .error').removeClass('hide');
+                        $('.changepass .error').html('<br><b style="color:#00a769;"><?=Yii::t('profile','Reset password success.')?></b>');
+                        $('.changepass .error').removeClass('hide');
                     } else {
-                        $('#edit-changepass .error').removeClass('hide');
+                        $('.changepass .error').removeClass('hide');
                         var strMessage = '';
                         $.each(data.parameters, function(idx, val){
                             strMessage += "<br/>" + lajax.t(val);
                         });
-                        $('#edit-changepass .error').html(strMessage);
-                        $('#edit-changepass .loading-proccess').remove();
+                        $('.changepass .error').html(strMessage);
+                        $('.changepass .loading-proccess').remove();
                         return false;
                     }
                     return true;
@@ -568,8 +504,8 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                     $.each(data.parameters, function(idx, val){
                         strMessage += "\n" + val;
                     });
-                    $('#edit-changepass .error').html(strMessage);
-                    $('#edit-changepass .error').removeClass('hide');
+                    $('.changepass .error').html(strMessage);
+                    $('.changepass .error').removeClass('hide');
                     return false;
                 }
             });
@@ -586,29 +522,26 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
         });
         
         $('#userlocation-city_id').change(function(){
-            var timer = 0;
-            clearTimeout(timer);
-            timer = setTimeout(function () {
-                $.ajax({
-                    type: 'post',
-                    dataType: 'json',
-                    url: $('#user-location-form').attr('action'),
-                    data: $('#user-location-form').serializeArray(),
-                    success: function (data) {
-                        if(data.statusCode == 200){
-                            var addr = $('#userlocation-city_id option:selected').html();
-                            $('.user-edit .address').html(addr);
-                        }
-                        return true;
-                    },
-                    error: function (data) {
-                        return false;
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: $('#user-location-form').attr('action'),
+                data: $('#user-location-form').serializeArray(),
+                success: function (data) {
+                    if(data.statusCode == 200){
+                        var addr = $('#userlocation-city_id option:selected').html();
+                        $('.user-edit .address').html(addr);
+                        $('.infor-user-settings .address').html(addr);
                     }
-                });
-            }, 500);
+                    return true;
+                },
+                error: function (data) {
+                    return false;
+                }
+            });
         });
 
-        $("#edit-ttcn .phone-num").keypress(function (e) {
+        $("#form-edit-ttcn .phone-num").keypress(function (e) {
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
                 return false;
             }
