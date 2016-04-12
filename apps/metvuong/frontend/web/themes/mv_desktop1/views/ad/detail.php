@@ -71,299 +71,297 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
     Tracking::find()->productVisitor(Yii::$app->user->id, $product->id, time());
 }
 ?>
-<div class="container">
-	<div class="title-fixed-wrap">
-	    <div class="detail-listing row detail-listing-extra">
-	    	<div id="detail-wrap" class="col-xs-12 col-md-9 col-left">
-				<?php if(Yii::$app->user->identity && Yii::$app->user->identity->id == $product->user_id): ?>
-				<a href="<?= Url::to(['update', 'id' => $product->id]) ?>" class="edit-listing">
-					<span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
-				<?php endif; ?>
-				<?php
-					$images = $product->adImages;
-					if($images):
-				?>
-				<div class="wrap-swiper">
-					<div class="gallery-detail swiper-container">
-						<div class="swiper-wrapper">
-							<?php foreach ($images as $image): ?>
-							<div class="swiper-slide">
-								<div class="img-show">
-									<div>
-										<img src="<?= $image->url ?>" alt="<?=$address?>">
-									</div>
-								</div>
-							</div>
-							<?php endforeach; ?>
-						</div>
-						<div class="swiper-pagination"></div>
-						<div class="swiper-button-next"><span></span></div>
-        				<div class="swiper-button-prev"><span></span></div>
-					</div>
-				</div>
-				<?php endif; ?>
-				<div class="infor-listing">
-					<div class="address-feat clearfix">
-						<p class="infor-by-up">
-							<?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?> <?= Yii::t('ad', 'by') ?> <a href="javascript:;"><?= $product->ownerString ?></a>
-						</p>
-						<div class="address-listing">
-							<p><?= $address ?></p>
-						</div>
-						<p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
-						<ul class="clearfix list-attr-td">
-							<?= $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '' ?>
-							<?= $product->adProductAdditionInfo->room_no ? '<li> <span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
-							<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
-						</ul>	
-					</div>
-					<ul class="pull-right icons-detail">
-						<li>
-							<button data-toggle="tooltip" data-placement="bottom" title="Copy link" data-title-success="Copied" class="btn-copy tooltip-show" type="button" data-clipboard-text="<?= $product->urlDetail(true) ?>">
-								<span class="icon-mv"><span class="icon-link"></span></span>
-							</button>
-						</li>
-						<li>
-							<a href="#" data-toggle="modal" data-placement="bottom" data-target="#popup-share-social" class="tooltip-show" title="Share social">
-								<span class="icon-mv"><span class="icon-share-social"></span></span>
-							</a>	
-						</li>
-			            <?php if($product->user_id != Yii::$app->user->id){ ?>
-						<li>
-							<a data-toggle="tooltip" data-placement="bottom" title="Favourite" href="#" class="tooltip-show <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>">
-								<span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
-							</a>
-						</li>
-			            <?php } ?>
-						<li>
-							<a href="#" data-toggle="modal" data-placement="bottom" data-target="#popup-map" class="tooltip-show" title="Location">
-								<span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>	
-							</a>
-						</li>
-					</ul>
-
-					<?=$this->renderAjax('/ad/_partials/shareEmail',[
-				    'product' => $product,
-				    'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
-				    'recipientEmail' => $product->adContactInfo->email,
-				    'params' => ['your_email' => false, 'recipient_email' => false] ])?>
-
-
-					<div id="popup-map" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-						<div class="modal-dialog" role="document">
-							<div class="modal-content">
-								<div class="modal-body">
-									<a href="#" class="btn-close-map close" data-dismiss="modal" aria-label="Close">trở lại</a>
-									<div id="map_detail" data-lat="<?= $product->lat ?>" data-lng="<?= $product->lng ?>"></div>
+<div class="title-fixed-wrap">
+    <div class="detail-listing row detail-listing-extra">
+    	<div id="detail-wrap" class="col-xs-12 col-md-9 col-left">
+			<?php if(Yii::$app->user->identity && Yii::$app->user->identity->id == $product->user_id): ?>
+			<a href="<?= Url::to(['update', 'id' => $product->id]) ?>" class="edit-listing">
+				<span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
+			<?php endif; ?>
+			<?php
+				$images = $product->adImages;
+				if($images):
+			?>
+			<div class="wrap-swiper">
+				<div class="gallery-detail swiper-container">
+					<div class="swiper-wrapper">
+						<?php foreach ($images as $image): ?>
+						<div class="swiper-slide">
+							<div class="img-show">
+								<div>
+									<img src="<?= $image->url ?>" alt="<?=$address?>">
 								</div>
 							</div>
 						</div>
+						<?php endforeach; ?>
 					</div>
-
-					<?=$this->render('/ad/_partials/shareSocial',[
-                        'product_id' => $product->id,
-					    'url' => $product->urlDetail(true),
-					    'title' => $address,
-					    'description' => \yii\helpers\StringHelper::truncate($product->content, 200, $suffix = '...', $encoding = 'UTF-8'),
-					    'image' => $product->representImage
-					])?>
-
-					<script>
-						$(document).ready(function () {
-
-							var clipboard = new Clipboard('.btn-copy');
-
-							clipboard.on('success', function(e) {
-							    var txtSuccess = $(e.trigger).data('titleSuccess');
-							    alertBox(txtSuccess);
-							    e.clearSelection();
-							});
-
-							var swiper = new Swiper('.swiper-container', {
-								pagination: '.swiper-pagination',
-								paginationClickable: true,
-						        nextButton: '.swiper-button-next',
-						        prevButton: '.swiper-button-prev',
-						        spaceBetween: 0
-						    });
-
-							$('.tooltip-show').tooltip();
-
-							$('#popup-map').on('show.bs.modal', function (e) {
-							    var mapEl = $('#map_detail');
-								var latLng = {lat: Number(mapEl.data('lat')), lng:  Number(mapEl.data('lng'))};
-								var map = new google.maps.Map(mapEl.get(0), {
-									center: latLng,
-								    zoom: 16,
-								    mapTypeControl: false,
-								    zoomControl: false,
-								    streetViewControl: false
-								});
-
-								var marker = new google.maps.Marker({
-								    position: latLng,
-								    map: map
-								});
-							});
-
-							/*$(document).on('click', '#popup-share-social .icon-email-1', function (e) {
-								$('#popup-share-social').addClass('hide-popup');
-								$('.email-btn').trigger('click');
-							});*/
-						});
-					</script>
-
-					<p class="price-td">
-						<span><?= Yii::t('ad', 'Price') ?></span>
-						<?= StringHelper::formatCurrency($product->price) ?>
-					</p>
+					<div class="swiper-pagination"></div>
+					<div class="swiper-button-next"><span></span></div>
+    				<div class="swiper-button-prev"><span></span></div>
 				</div>
-				<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-			        <div class="panel panel-default">
-			            <div class="panel-heading" role="tab" id="headingOne">
-			                <h4 class="panel-title">
-			                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-			                        <?= Yii::t('ad', 'Content') ?><span class="icon"></span>
-			                    </a>
-			                </h4>
-			            </div>
-			            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-			                <div class="panel-body" name="about" placeholder="Vui lòng chia sẻ tiểu sử">
-			                    <p><?= str_replace("\n", "<br />", htmlspecialchars($product->content)) ?></p>
-			                </div>
-			            </div>
-			        </div>
-			        <div class="panel panel-default">
-			            <div class="panel-heading" role="tab" id="headingTwo">
-			                <h4 class="panel-title">
-			                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-			                        <?= Yii::t('ad', 'Detail Information') ?><span class="icon"></span>
-			                    </a>
-			                </h4>
-			            </div>
-			            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-			                <div class="panel-body" name="activity">
-			                	<ul class="clearfix list-tienich-detail">
-				                    <?php if($product->projectBuilding): ?>
-									<li><strong><?= Yii::t('ad', 'Project') ?>:</strong> <a href="<?= Url::to(["building-project/view", 'slug'=> $product->projectBuilding->slug]); ?>"><?= $product->projectBuilding->name ?></a></li>
-									<?php endif; ?>
-									<?php if($product->adProductAdditionInfo->facade_width): ?>
-									<li><strong><?= Yii::t('ad', 'Facade') ?>:</strong> <?= $product->adProductAdditionInfo->facade_width ?>m</li>
-									<?php endif; ?>
-									<?php if($product->adProductAdditionInfo->land_width): ?>
-									<li><strong><?= Yii::t('ad', 'Entry width') ?>:</strong> <?= $product->adProductAdditionInfo->land_width ?>m</li>
-									<?php endif; ?>
-									<?php if($product->adProductAdditionInfo->floor_no): ?>
-									<li><strong><?= $product->projectBuilding ? Yii::t('ad', 'Floor plan') : Yii::t('ad', 'Number of storeys') ?>:</strong> <?= $product->adProductAdditionInfo->floor_no ?>  Tầng</li>
-									<?php endif; ?>
-									<?php if($product->adProductAdditionInfo->home_direction): ?>
-									<li><strong><?= Yii::t('ad', 'House direction') ?>:</strong> <?= $directionList[$product->adProductAdditionInfo->home_direction] ?></li>
-									<?php endif; ?>
-									<?php if($product->adProductAdditionInfo->facade_direction): ?>
-									<li><strong><?= Yii::t('ad', 'Balcony direction') ?>:</strong> <?= $directionList[$product->adProductAdditionInfo->facade_direction] ?></li>
-									<?php endif; ?>
-									<?php if($product->adProductAdditionInfo->interior): ?>
-									<li><strong><?= Yii::t('ad', 'Furniture') ?>:</strong> <?= $product->adProductAdditionInfo->interior ?></li>
-									<?php endif; ?>
-								</ul>
-			                </div>
-			            </div>
-			        </div>
-			        <?php if($product->projectBuilding && $product->projectBuilding->adFacilities): ?>
-			        <div class="panel panel-default">
-			            <div class="panel-heading" role="tab" id="headingFour">
-			                <h4 class="panel-title">
-			                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-			                        <?= Yii::t('ad', 'Facilities') ?><span class="icon"></span>
-			                    </a>
-			                </h4>
-			            </div>
-			            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-			                <div class="panel-body" name="experience">
-								<?= implode(', ', ArrayHelper::getColumn($product->projectBuilding->adFacilities, 'name')) ?>
-			                </div>
-			            </div>
-			        </div>
-			        <?php endif; ?>
-			        <div class="panel panel-default">
-			            <div class="panel-heading" role="tab" id="headingSeven">
-			                <h4 class="panel-title">
-			                    <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEght" aria-expanded="false" aria-controls="collapseSeven">
-			                        <?= Yii::t('ad', 'Contact') ?><span class="icon"></span>
-			                    </a>
-			                </h4>
-			            </div>
-			            <div id="collapseEght" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven">
-			                <div class="panel-body text-center">
-			            	    <div class="infor-agent clearfix">
-						            <?php if(!empty($owner)) { ?>
-									<a href="/<?=$owner->username;?>" class="wrap-img">
-						                <img src="<?= $avatar ?>" alt="<?=$owner->username;?>" /></a>
-						            <?php } else { ?>
-						                <a class="wrap-img" href="<?=$url;?>"><img src="<?= $avatar ?>" alt="" /></a>
-						            <?php } ?>
-						            <div class="img-agent">
-							            <a href="/<?= !empty($owner) ? $owner->username : "#" ?>" class="name-agent"><?= $product->adContactInfo->name ?></a>
-										<div class="rating-start">
-											<fieldset class="rate">
-												<input type="radio" id="rating10" name="rating" value="10"> <label
-													for="rating10" title="5 stars"> </label> <input type="radio"
-													id="rating9" name="rating" value="9"> <label for="rating9"
-													class="half" title="5 stars"> </label> <input type="radio"
-													id="rating8" name="rating" value="8"> <label for="rating8"
-													title="4 stars"> </label> <input type="radio" id="rating7"
-													name="rating" value="7"> <label for="rating7" class="half"
-													title="4 stars"> </label> <input type="radio" id="rating6"
-													name="rating" value="6"> <label for="rating6" title="3 stars"> </label>
-												<input type="radio" id="rating5" name="rating" value="5"> <label
-													for="rating5" class="half" title="3 stars"> </label> <input
-													type="radio" id="rating4" name="rating" value="4"> <label
-													for="rating4" title="2 stars"> </label> <input type="radio"
-													id="rating3" name="rating" value="3"> <label for="rating3"
-													class="half" title="2 stars"> </label> <input type="radio"
-													id="rating2" name="rating" value="2"> <label for="rating2"
-													title="1 stars"> </label> <input type="radio" id="rating1"
-													name="rating" value="1"> <label for="rating1" class="half"
-													title="1 stars"> </label>
-											</fieldset>
-										</div>
-										<?php if($product->adContactInfo->mobile): ?>
-										<div class="item-agent">
-											<div>
-												<span class="icon icon-phone"></span>
-											</div>
-											<a href="tel:<?= $product->adContactInfo->mobile ?>"><?= $product->adContactInfo->mobile ?></a>
-										</div>
-										<?php endif; ?>
-										<?php if($product->adContactInfo->email): ?>
-										<div class="item-agent">
-											<div>
-												<span class="icon icon-email"></span>
-											</div>
-											<?= $product->adContactInfo->email ?>
-										</div>
-										<?php endif; ?>
-										<div class="item-agent">
-											<div>
-												<span class="icon address-icon"></span>
-											</div>
-											Ho Chi Minh City, Vietnam
-										</div>
-										<a href="#" data-toggle="modal" data-target="#popup-email" class="email-btn btn-common btn-small">Email</a>
-										<?php if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) { ?>
-											<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
-										<?php }?>
-									</div>
-								</div>
-
-			                </div>
-			            </div>
-
-			        </div>
-			    </div>
 			</div>
-			<?= $this->render('/ad/_partials/similarListing', ['city_id' => $product->city_id, 'district_id' => $product->district_id]) ?>
+			<?php endif; ?>
+			<div class="infor-listing">
+				<div class="address-feat clearfix">
+					<p class="infor-by-up">
+						<?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?> <?= Yii::t('ad', 'by') ?> <a href="javascript:;"><?= $product->ownerString ?></a>
+					</p>
+					<div class="address-listing">
+						<p><?= $address ?></p>
+					</div>
+					<p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
+					<ul class="clearfix list-attr-td">
+						<?= $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '' ?>
+						<?= $product->adProductAdditionInfo->room_no ? '<li> <span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
+						<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
+					</ul>	
+				</div>
+				<ul class="pull-right icons-detail">
+					<li>
+						<button data-toggle="tooltip" data-placement="bottom" title="Copy link" data-title-success="Copied" class="btn-copy tooltip-show" type="button" data-clipboard-text="<?= $product->urlDetail(true) ?>">
+							<span class="icon-mv"><span class="icon-link"></span></span>
+						</button>
+					</li>
+					<li>
+						<a href="#" data-toggle="modal" data-placement="bottom" data-target="#popup-share-social" class="tooltip-show" title="Share social">
+							<span class="icon-mv"><span class="icon-share-social"></span></span>
+						</a>	
+					</li>
+		            <?php if($product->user_id != Yii::$app->user->id){ ?>
+					<li>
+						<a data-toggle="tooltip" data-placement="bottom" title="Favourite" href="#" class="tooltip-show <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>">
+							<span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
+						</a>
+					</li>
+		            <?php } ?>
+					<li>
+						<a href="#" data-toggle="modal" data-placement="bottom" data-target="#popup-map" class="tooltip-show" title="Location">
+							<span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>	
+						</a>
+					</li>
+				</ul>
+
+				<?=$this->renderAjax('/ad/_partials/shareEmail',[
+			    'product' => $product,
+			    'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
+			    'recipientEmail' => $product->adContactInfo->email,
+			    'params' => ['your_email' => false, 'recipient_email' => false] ])?>
+
+
+				<div id="popup-map" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-body">
+								<a href="#" class="btn-close-map close" data-dismiss="modal" aria-label="Close">trở lại</a>
+								<div id="map_detail" data-lat="<?= $product->lat ?>" data-lng="<?= $product->lng ?>"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<?=$this->render('/ad/_partials/shareSocial',[
+                    'product_id' => $product->id,
+				    'url' => $product->urlDetail(true),
+				    'title' => $address,
+				    'description' => \yii\helpers\StringHelper::truncate($product->content, 200, $suffix = '...', $encoding = 'UTF-8'),
+				    'image' => $product->representImage
+				])?>
+
+				<script>
+					$(document).ready(function () {
+
+						var clipboard = new Clipboard('.btn-copy');
+
+						clipboard.on('success', function(e) {
+						    var txtSuccess = $(e.trigger).data('titleSuccess');
+						    alertBox(txtSuccess);
+						    e.clearSelection();
+						});
+
+						var swiper = new Swiper('.swiper-container', {
+							pagination: '.swiper-pagination',
+							paginationClickable: true,
+					        nextButton: '.swiper-button-next',
+					        prevButton: '.swiper-button-prev',
+					        spaceBetween: 0
+					    });
+
+						$('.tooltip-show').tooltip();
+
+						$('#popup-map').on('show.bs.modal', function (e) {
+						    var mapEl = $('#map_detail');
+							var latLng = {lat: Number(mapEl.data('lat')), lng:  Number(mapEl.data('lng'))};
+							var map = new google.maps.Map(mapEl.get(0), {
+								center: latLng,
+							    zoom: 16,
+							    mapTypeControl: false,
+							    zoomControl: false,
+							    streetViewControl: false
+							});
+
+							var marker = new google.maps.Marker({
+							    position: latLng,
+							    map: map
+							});
+						});
+
+						/*$(document).on('click', '#popup-share-social .icon-email-1', function (e) {
+							$('#popup-share-social').addClass('hide-popup');
+							$('.email-btn').trigger('click');
+						});*/
+					});
+				</script>
+
+				<p class="price-td">
+					<span><?= Yii::t('ad', 'Price') ?></span>
+					<?= StringHelper::formatCurrency($product->price) ?>
+				</p>
+			</div>
+			<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+		        <div class="panel panel-default">
+		            <div class="panel-heading" role="tab" id="headingOne">
+		                <h4 class="panel-title">
+		                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+		                        <?= Yii::t('ad', 'Content') ?><span class="icon"></span>
+		                    </a>
+		                </h4>
+		            </div>
+		            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+		                <div class="panel-body" name="about" placeholder="Vui lòng chia sẻ tiểu sử">
+		                    <p><?= str_replace("\n", "<br />", htmlspecialchars($product->content)) ?></p>
+		                </div>
+		            </div>
+		        </div>
+		        <div class="panel panel-default">
+		            <div class="panel-heading" role="tab" id="headingTwo">
+		                <h4 class="panel-title">
+		                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+		                        <?= Yii::t('ad', 'Detail Information') ?><span class="icon"></span>
+		                    </a>
+		                </h4>
+		            </div>
+		            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+		                <div class="panel-body" name="activity">
+		                	<ul class="clearfix list-tienich-detail">
+			                    <?php if($product->projectBuilding): ?>
+								<li><strong><?= Yii::t('ad', 'Project') ?>:</strong> <a href="<?= Url::to(["building-project/view", 'slug'=> $product->projectBuilding->slug]); ?>"><?= $product->projectBuilding->name ?></a></li>
+								<?php endif; ?>
+								<?php if($product->adProductAdditionInfo->facade_width): ?>
+								<li><strong><?= Yii::t('ad', 'Facade') ?>:</strong> <?= $product->adProductAdditionInfo->facade_width ?>m</li>
+								<?php endif; ?>
+								<?php if($product->adProductAdditionInfo->land_width): ?>
+								<li><strong><?= Yii::t('ad', 'Entry width') ?>:</strong> <?= $product->adProductAdditionInfo->land_width ?>m</li>
+								<?php endif; ?>
+								<?php if($product->adProductAdditionInfo->floor_no): ?>
+								<li><strong><?= $product->projectBuilding ? Yii::t('ad', 'Floor plan') : Yii::t('ad', 'Number of storeys') ?>:</strong> <?= $product->adProductAdditionInfo->floor_no ?>  Tầng</li>
+								<?php endif; ?>
+								<?php if($product->adProductAdditionInfo->home_direction): ?>
+								<li><strong><?= Yii::t('ad', 'House direction') ?>:</strong> <?= $directionList[$product->adProductAdditionInfo->home_direction] ?></li>
+								<?php endif; ?>
+								<?php if($product->adProductAdditionInfo->facade_direction): ?>
+								<li><strong><?= Yii::t('ad', 'Balcony direction') ?>:</strong> <?= $directionList[$product->adProductAdditionInfo->facade_direction] ?></li>
+								<?php endif; ?>
+								<?php if($product->adProductAdditionInfo->interior): ?>
+								<li><strong><?= Yii::t('ad', 'Furniture') ?>:</strong> <?= $product->adProductAdditionInfo->interior ?></li>
+								<?php endif; ?>
+							</ul>
+		                </div>
+		            </div>
+		        </div>
+		        <?php if($product->projectBuilding && $product->projectBuilding->adFacilities): ?>
+		        <div class="panel panel-default">
+		            <div class="panel-heading" role="tab" id="headingFour">
+		                <h4 class="panel-title">
+		                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+		                        <?= Yii::t('ad', 'Facilities') ?><span class="icon"></span>
+		                    </a>
+		                </h4>
+		            </div>
+		            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+		                <div class="panel-body" name="experience">
+							<?= implode(', ', ArrayHelper::getColumn($product->projectBuilding->adFacilities, 'name')) ?>
+		                </div>
+		            </div>
+		        </div>
+		        <?php endif; ?>
+		        <div class="panel panel-default">
+		            <div class="panel-heading" role="tab" id="headingSeven">
+		                <h4 class="panel-title">
+		                    <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEght" aria-expanded="false" aria-controls="collapseSeven">
+		                        <?= Yii::t('ad', 'Contact') ?><span class="icon"></span>
+		                    </a>
+		                </h4>
+		            </div>
+		            <div id="collapseEght" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven">
+		                <div class="panel-body text-center">
+		            	    <div class="infor-agent clearfix">
+					            <?php if(!empty($owner)) { ?>
+								<a href="/<?=$owner->username;?>" class="wrap-img">
+					                <img src="<?= $avatar ?>" alt="<?=$owner->username;?>" /></a>
+					            <?php } else { ?>
+					                <a class="wrap-img" href="<?=$url;?>"><img src="<?= $avatar ?>" alt="" /></a>
+					            <?php } ?>
+					            <div class="img-agent">
+						            <a href="/<?= !empty($owner) ? $owner->username : "#" ?>" class="name-agent"><?= $product->adContactInfo->name ?></a>
+									<div class="rating-start">
+										<fieldset class="rate">
+											<input type="radio" id="rating10" name="rating" value="10"> <label
+												for="rating10" title="5 stars"> </label> <input type="radio"
+												id="rating9" name="rating" value="9"> <label for="rating9"
+												class="half" title="5 stars"> </label> <input type="radio"
+												id="rating8" name="rating" value="8"> <label for="rating8"
+												title="4 stars"> </label> <input type="radio" id="rating7"
+												name="rating" value="7"> <label for="rating7" class="half"
+												title="4 stars"> </label> <input type="radio" id="rating6"
+												name="rating" value="6"> <label for="rating6" title="3 stars"> </label>
+											<input type="radio" id="rating5" name="rating" value="5"> <label
+												for="rating5" class="half" title="3 stars"> </label> <input
+												type="radio" id="rating4" name="rating" value="4"> <label
+												for="rating4" title="2 stars"> </label> <input type="radio"
+												id="rating3" name="rating" value="3"> <label for="rating3"
+												class="half" title="2 stars"> </label> <input type="radio"
+												id="rating2" name="rating" value="2"> <label for="rating2"
+												title="1 stars"> </label> <input type="radio" id="rating1"
+												name="rating" value="1"> <label for="rating1" class="half"
+												title="1 stars"> </label>
+										</fieldset>
+									</div>
+									<?php if($product->adContactInfo->mobile): ?>
+									<div class="item-agent">
+										<div>
+											<span class="icon icon-phone"></span>
+										</div>
+										<a href="tel:<?= $product->adContactInfo->mobile ?>"><?= $product->adContactInfo->mobile ?></a>
+									</div>
+									<?php endif; ?>
+									<?php if($product->adContactInfo->email): ?>
+									<div class="item-agent">
+										<div>
+											<span class="icon icon-email"></span>
+										</div>
+										<?= $product->adContactInfo->email ?>
+									</div>
+									<?php endif; ?>
+									<div class="item-agent">
+										<div>
+											<span class="icon address-icon"></span>
+										</div>
+										Ho Chi Minh City, Vietnam
+									</div>
+									<a href="#" data-toggle="modal" data-target="#popup-email" class="email-btn btn-common btn-small">Email</a>
+									<?php if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) { ?>
+										<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
+									<?php }?>
+								</div>
+							</div>
+
+		                </div>
+		            </div>
+
+		        </div>
+		    </div>
 		</div>
+		<?= $this->render('/ad/_partials/similarListing', ['city_id' => $product->city_id, 'district_id' => $product->district_id]) ?>
 	</div>
 </div>
 

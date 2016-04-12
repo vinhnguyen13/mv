@@ -4481,12 +4481,11 @@ html.mm-opening .mm-slideout {
     /* height: auto !important; */
 }
 .wrap-detail-article {
-    padding: 15px 20px;
+    padding: 15px 0;
     color: #3c3c3c;
     font-size: 14px;
     line-height: 20px;
-    width: 850px;
-    margin: 30px auto 0;
+    width: 100%;
 }
 .wrap-detail-article .big-title {
     font-size: 25px;
@@ -4579,6 +4578,12 @@ html.mm-opening .mm-slideout {
     padding: 25px 20px;
     color: #3c3c3c;
     font-size: 14px;
+}
+.wrap-detail-article,
+.sidebar-news,
+.wrap-news {
+    padding-left: 0;
+    padding-right: 0;
 }
 .wrap-news .list-news li {
     margin-bottom: 25px;
@@ -6860,7 +6865,7 @@ footer li a {
     }
     .detail-listing,
     .wrap-duan-moi {
-        padding: 0 0 100px 0;
+        padding: 35px 0 100px 0;
     }
     .detail-listing .gallery-detail,
     .wrap-duan-moi .gallery-detail {
@@ -9005,6 +9010,7 @@ footer li a {
 .all-packege .title-top {
     margin-bottom: 35px;
 }
+.edit-user-tt .title-top,
 .chat-history .title-top {
     display: none;
 }

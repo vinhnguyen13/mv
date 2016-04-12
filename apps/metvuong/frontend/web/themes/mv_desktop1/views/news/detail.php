@@ -63,10 +63,10 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     }(document, 'script', 'facebook-jssdk'));
 </script>
 <div class="title-fixed-wrap">
-    <div class="container">
-        <div class="detail-news page-news">
-            <?= $this->render('/news/_partials/menu', ['cat_id'=>$news["catalog_id"]]); ?>
-            <div class="wrap-detail-article">
+    <div class="detail-news page-news">
+        <?= $this->render('/news/_partials/menu', ['cat_id'=>$news["catalog_id"]]); ?>
+        <div class="wrap-detail-article wrap-news-page">
+            <div class="wrap-news col-xs-12 col-md-9">
                 <input id="current_id" type="hidden" value="<?=$news["id"]?>">
                 <input id="current_slug" type="hidden" value="<?=$news["slug"]?>">
                 <input id="current_title" type="hidden" value="<?=$news["title"]?>">
@@ -77,7 +77,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                         <span class=""><?=date("d/m/Y g:i a",$news["created_at"])?></span>,
                         <a href="#" class="name-cate"><?=$news["cat_title"]?></a>
                     </div>
-                    <div class="detail-content pdL-5">
+                    <div class="detail-content">
                         <div class="box-content">
                             <div><?=$news["content"]?></div>
                             <div id="social<?=$news["id"]?>" class="share-social mgT-10 wrap-img">
@@ -90,11 +90,16 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                     </div>
                 </article>
             </div>
-            <!-- <div class="toHeight" style="height: 10px;"></div> -->
-            <div class="load-more-article">
-                <div class="loading text-center" >
-                    <img src="<?=Yii::$app->view->theme->baseUrl."/resources/images/loading-listing.gif"?>" alt="Loading..." title="<?=$news["title"]?>" />
-                </div>
+            <div class="col-md-3 col-xs-12 sidebar-news">
+                <?= \vsoft\news\widgets\NewsWidget::widget(['view' => 'hotnews', 'title' => 'HOT NEWS', 'limit' => 4])?>
+                <?= \vsoft\news\widgets\NewsWidget::widget(['view' => 'finance', 'title' => 'FINANCIAL & BANKING NEWS', 'limit' => 4])?>
+                <?= \vsoft\news\widgets\NewsWidget::widget(['view' => 'realestate', 'title' => 'REAL ESTATE NEWS', 'limit' => 4])?>
+            </div>
+        </div>
+        <!-- <div class="toHeight" style="height: 10px;"></div> -->
+        <div class="load-more-article">
+            <div class="loading text-center" >
+                <img src="<?=Yii::$app->view->theme->baseUrl."/resources/images/loading-listing.gif"?>" alt="Loading..." title="<?=$news["title"]?>" />
             </div>
         </div>
     </div>
@@ -178,13 +183,13 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                                     var time = timeConverter(data.created_at);
                                     var cat_id = data.catalog_id;
                                     window.history.pushState(data.slug, data.title, data.id + '-' + data.slug );
-                                    $('.wrap-detail-article').append(
+                                    $('.wrap-detail-article .wrap-news').append(
                                         '<article>' +
                                         '<h1 class="big-title">' + data.title + '</h1>' +
                                         '<div class="time-post">' +
                                         '<span>' + time + '</span>' +
                                         '</div>' +
-                                        '<div class="detail-content pdL-5">' +
+                                        '<div class="detail-content">' +
                                         '<div class="box-content">' +
                                         '<div>' + data.content + '</div>' +
                                         '<div id="social' + data.id + '" class="share-social mgT-10 wrap-img">' +
