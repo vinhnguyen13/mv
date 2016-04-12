@@ -335,17 +335,13 @@ use vsoft\ad\models\AdImages;
 						<div class="address-feat clearfix">
 							<div class="posi_relative">
 								<p class="infor-by-up"></p>
-								<span class="edit-listing">
-			                    	<span class="icon-mv fs-20 color-cd"><span class="icon-edit-copy-4"></span></span>
-			                    </span>
+								<span class="icon-mv fs-20 color-cd edit-listing"><span class="icon-edit-copy-4"></span></span>
 							</div>
 							<div class="posi_relative">
 								<div class="address-listing">
 									<p></p>
 								</div>
-								<span class="edit-listing">
-			                    	<span class="icon-mv fs-20 color-cd"><span class="icon-edit-copy-4"></span></span>
-			                    </span>
+								<span class="edit-listing icon-mv fs-16 color-cd"><span class="icon-edit-copy-4"></span></span>
 							</div>
 							<div class="posi_relative">
 								<ul class="clearfix list-attr-td">
@@ -353,9 +349,7 @@ use vsoft\ad\models\AdImages;
 									<li> <span class="icon-mv"><span class="icon-bed-search"></span></span><span class="bed-show"></span> </li>
 									<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span><span class="toilet-show"></span> </li>
 								</ul>
-								<span class="edit-listing">
-			                    	<span class="icon-mv fs-20 color-cd"><span class="icon-edit-copy-4"></span></span>
-			                    </span>
+								<span class="edit-listing icon-mv fs-16 color-cd"><span class="icon-edit-copy-4"></span></span>
 							</div>
 						</div>
 						<div class="posi_relative">
@@ -363,9 +357,7 @@ use vsoft\ad\models\AdImages;
 								<span><?= Yii::t('ad', 'Price') ?></span>
 								<span class="price-show"></span>
 							</p>
-							<span class="edit-listing">
-		                    	<span class="icon-mv fs-20 color-cd"><span class="icon-edit-copy-4"></span></span>
-		                    </span>
+							<span class="edit-listing icon-mv fs-16 color-cd"><span class="icon-edit-copy-4"></span></span>
 						</div>
 					</div>
 					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -374,9 +366,7 @@ use vsoft\ad\models\AdImages;
 				                <h4 class="panel-title">
 				                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
 				                        <?= Yii::t('ad', 'Content') ?>
-				                        <span class="edit-listing">
-					                    	<span class="icon-mv fs-20 color-cd"><span class="icon-edit-copy-4"></span></span>
-					                    </span>
+				                        <span class="edit-listing icon-mv fs-16 color-cd"><span class="icon-edit-copy-4"></span></span>
 				                        <span class="icon"></span>
 				                    </a>
 				                </h4>
@@ -392,9 +382,7 @@ use vsoft\ad\models\AdImages;
 				                <h4 class="panel-title">
 				                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
 				                        <?= Yii::t('ad', 'Detail Information') ?>
-				                        <span class="edit-listing">
-					                    	<span class="icon-mv fs-20 color-cd"><span class="icon-edit-copy-4"></span></span>
-					                    </span>
+				                        <span class="edit-listing icon-mv fs-16 color-cd"><span class="icon-edit-copy-4"></span></span>
 				                        <span class="icon"></span>
 				                    </a>
 				                </h4>
@@ -433,9 +421,7 @@ use vsoft\ad\models\AdImages;
 				                <h4 class="panel-title">
 				                    <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEght" aria-expanded="false" aria-controls="collapseSeven">
 				                        <?= Yii::t('ad', 'Contact') ?>
-				                        <span class="edit-listing">
-					                    	<span class="icon-mv fs-20 color-cd"><span class="icon-edit-copy-4"></span></span>
-					                    </span>
+				                        <span class="edit-listing icon-mv fs-16 color-cd"><span class="icon-edit-copy-4"></span></span>
 				                        <span class="icon"></span>
 				                    </a>
 				                </h4>
