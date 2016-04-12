@@ -83,7 +83,6 @@ if(!Yii::$app->user->isGuest) {
             $(document).on('click', '.chat-now', function (e) {
                 $('.box-chat-footer').loading();
                 user = $(this).attr('data-chat-user');
-                console.log(user);
                 if (user) {
                     chatBoxExist = chatUI.getBoxChat('.item-box-chat', '<?=Yii::$app->user->identity->username?>', user);
                     if(!chatBoxExist){

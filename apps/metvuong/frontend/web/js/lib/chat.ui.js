@@ -28,7 +28,6 @@
             var to = chatUI.usrFromJid(to);
             var template = Handlebars.compile($(".chat-box-template").html());
             if(params){
-                console.log(params);
                 var html = template({from: from, to: to, fromName: params.fromName, toName: params.toName});
             }else{
                 var html = template({from: from, to: to});
