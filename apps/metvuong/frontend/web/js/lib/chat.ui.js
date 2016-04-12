@@ -23,11 +23,16 @@
             this.from = chatUI.usrFromJid(from);
             this.to = chatUI.usrFromJid(to);
         },
-        showBoxChat: function (from, to) {
+        showBoxChat: function (from, to, params) {
             var from = chatUI.usrFromJid(from);
             var to = chatUI.usrFromJid(to);
             var template = Handlebars.compile($(".chat-box-template").html());
-            var html = template({from: from, to: to});
+            if(params){
+                console.log(params);
+                var html = template({from: from, to: to, fromName: params.fromName, toName: params.toName});
+            }else{
+                var html = template({from: from, to: to});
+            }
             chatBoxExist = chatUI.getBoxChat('.chat-group', from, to);
             if(chatBoxExist){
                 chatBoxExist.css({height: 'auto'}).show();
