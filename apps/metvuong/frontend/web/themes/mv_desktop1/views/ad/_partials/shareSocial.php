@@ -63,7 +63,7 @@ use yii\helpers\Url;
             });
             $('body').loading({done:true});
             if($(this).attr('class') == 'share-facebook')
-                fbShare('<?=$url ?>', '<?=$title ?>', '<?=StringHelper::truncate($description, 120) ?>', '<?= $image ?>', 520, 350);
+                fbShare('<?=$url ?>', '<?=$title ?>', '<?=$description ?>', '<?= $image ?>', 520, 350);
 
             return true;
         }
