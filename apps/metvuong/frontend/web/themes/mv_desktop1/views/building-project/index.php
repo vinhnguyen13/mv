@@ -9,79 +9,77 @@ use yii\widgets\LinkPager;
 
 ?>
 <div class="title-fixed-wrap">
-    <div class="container">
-        <div class="infor-duan">
-            <div class="clearfix">
-                <div class="title-top"><?=Yii::t('general', 'New Project')?></div>
-                <div class="search-duan">
-                    <form id="search-duan-form" action="<?= \yii\helpers\Url::to(['building-project/search'], true) ?>">
-                        <input autocomplete="off" id="findProject" name="v" class="project_name" type="text" placeholder="<?=Yii::t('general', 'Find by name...')?>">
-                        <button type="submit" id="btn-search-duan"><span class="icon-mv"><span class="icon-icons-search"></span></span></button>
-                        <div class="suggest-search hide">
-                            <div class="content-suggest">
-                                <a class="btn-close"><span class="icon icon-close"></span></a>
-                                <ul></ul>
-                            </div>
+    <div class="infor-duan">
+        <div class="clearfix">
+            <div class="title-top"><?=Yii::t('general', 'New Project')?></div>
+            <div class="search-duan">
+                <form id="search-duan-form" action="<?= \yii\helpers\Url::to(['building-project/search'], true) ?>">
+                    <input autocomplete="off" id="findProject" name="v" class="project_name" type="text" placeholder="<?=Yii::t('general', 'Find by name...')?>">
+                    <button type="submit" id="btn-search-duan"><span class="icon-mv"><span class="icon-icons-search"></span></span></button>
+                    <div class="suggest-search hide">
+                        <div class="content-suggest">
+                            <a class="btn-close"><span class="icon icon-close"></span></a>
+                            <ul></ul>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
-            <div class="wrap-infor-duan">
-                <div class="list-duan clearfix row">
-                    <div class="col-xs-12 col-md-9 col-left">
-                        <ul class="clearfix">
-                            <?php if(count($models) > 0) {
-                                foreach ($models as $model) { ?>
-                                    <li>
-                                        <div class="wrap-item">
-                                            <a href="<?= Url::to(["building-project/view", 'slug'=>$model->slug]); ?>" class="pic-intro rippler rippler-default">
-                                                <div class="img-show">
-                                                    <div><img src="<?=$model->logoUrl?>"
-                                                              data-original="<?=$model->logoUrl?>"
-                                                              style="display: block;"></div>
-                                                </div>
-                                            </a>
+        </div>
+        <div class="wrap-infor-duan">
+            <div class="list-duan clearfix row">
+                <div class="col-xs-12 col-md-9 col-left">
+                    <ul class="clearfix">
+                        <?php if(count($models) > 0) {
+                            foreach ($models as $model) { ?>
+                                <li>
+                                    <div class="wrap-item">
+                                        <a href="<?= Url::to(["building-project/view", 'slug'=>$model->slug]); ?>" class="pic-intro rippler rippler-default">
+                                            <div class="img-show">
+                                                <div><img src="<?=$model->logoUrl?>"
+                                                          data-original="<?=$model->logoUrl?>"
+                                                          style="display: block;"></div>
+                                            </div>
+                                        </a>
 
-                                            <div class="info-item">
-                                                <div class="address-feat">
-                                                    <!-- <p><?= $model->investment_type ?></p> -->
-                                                    <a class="color-cd" href="<?= Url::to(["building-project/view", 'slug'=>$model->slug]); ?>" title="<?= $model->name ?>">
-                                                        <strong><?= $model->name ?></strong>
-                                                    </a>
-                                                    <p class="address-duan"><?= empty($model->location) ? Yii::t('general', 'Updating') : $model->location ?></p>
-                                                    <p class="date-post"><?=date('d/m/Y', $model->created_at)?></p>
-                                                </div>
-                                                <div class="bottom-feat-box clearfix">
-                                                    <input type="hidden" value="<?=$model->id?>">
-                                                    <p><?=\yii\helpers\StringHelper::truncate($model->description, 180)?></p>
-                                                </div>
+                                        <div class="info-item">
+                                            <div class="address-feat">
+                                                <!-- <p><?= $model->investment_type ?></p> -->
+                                                <a class="color-cd" href="<?= Url::to(["building-project/view", 'slug'=>$model->slug]); ?>" title="<?= $model->name ?>">
+                                                    <strong><?= $model->name ?></strong>
+                                                </a>
+                                                <p class="address-duan"><?= empty($model->location) ? Yii::t('general', 'Updating') : $model->location ?></p>
+                                                <p class="date-post"><?=date('d/m/Y', $model->created_at)?></p>
+                                            </div>
+                                            <div class="bottom-feat-box clearfix">
+                                                <input type="hidden" value="<?=$model->id?>">
+                                                <p><?=\yii\helpers\StringHelper::truncate($model->description, 180)?></p>
                                             </div>
                                         </div>
-                                    </li>
-                                <?php } ?>
-                                <nav class="text-center">
-                                    <?php
-                                    echo LinkPager::widget([
-                                        'pagination' => $pagination
-                                    ]);
-                                    ?>
-                                </nav>
-                            <?php } else {?>
-                                <div>Không tìm thấy dự án "<b class="found-name"><?=$project_name?></b>"</div>
+                                    </div>
+                                </li>
                             <?php } ?>
-                        </ul>
-                    </div>
-                    <div class="col-xs-12 col-md-3 col-right sidebar-col">
-                        <?php
+                            <nav class="text-center">
+                                <?php
+                                echo LinkPager::widget([
+                                    'pagination' => $pagination
+                                ]);
+                                ?>
+                            </nav>
+                        <?php } else {?>
+                            <div>Không tìm thấy dự án "<b class="found-name"><?=$project_name?></b>"</div>
+                        <?php } ?>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-md-3 col-right sidebar-col">
+                    <?php
 //                        $hotproject = \vsoft\ad\models\AdBuildingProject::getHotProject();
 //                        if(count($hotproject) > 0)
 //                            echo $this->render('/building-project/_partials/hotproject',['projects' => $hotproject]);
 
-                        $topproject = \vsoft\ad\models\AdBuildingProject::getTopProject();
-                        if(count($topproject) > 0)
-                            echo $this->render('/building-project/_partials/topproject',['projects' => $topproject]);
-                        ?>
-                    </div>
+                    $topproject = \vsoft\ad\models\AdBuildingProject::getTopProject();
+                    if(count($topproject) > 0)
+                        echo $this->render('/building-project/_partials/topproject',['projects' => $topproject]);
+                    ?>
                 </div>
             </div>
         </div>

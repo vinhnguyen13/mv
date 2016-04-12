@@ -194,6 +194,7 @@ header {
 }
 #wrapper {
     padding-top: 41px;
+    /* padding: 0; */
 }
 .search-homepage {
     margin: 25px auto 0;
@@ -313,6 +314,7 @@ header {
 .wrap-img img {
     max-width: 100%;
     display: block;
+    width: 120px;
 }
 .regis-home h2,
 .search-home h2 {
@@ -529,7 +531,7 @@ header {
     padding: 12px 30px;
     background: #4e4e4e;
     font-size: 15px;
-    text-transform: capitalize;
+    text-transform: uppercase;
     border: none;
 }
 .footer-modal {
@@ -949,7 +951,7 @@ label {
     margin-bottom: 5px;
 }
 .post-listing {
-    padding: 0 0 200px 0;
+    padding: 35px 0 200px 0;
     position: relative;
     width: 100%;
     /* overflow: hidden; */
@@ -2787,10 +2789,11 @@ html.mm-opening .mm-slideout {
     border-right: 1px solid #a5a5a5;
     overflow-x: hidden;
     overflow-y: auto;
+    padding-right: 30px;
 }
 .chat-live {
     width: 60%;
-    padding-left: 20px;
+    padding-left: 30px;
     padding-bottom: 40px;
 }
 .chat-live .wrap-img,
@@ -4020,7 +4023,6 @@ html.mm-opening .mm-slideout {
     position: relative;
     padding-top: 36px;
     padding-bottom: 50px;
-    padding-left: 280px;
 }
 .item-listing .id-duan {
     font-weight: 400;
@@ -5985,7 +5987,7 @@ footer li a {
         margin: 0 0 0 0;
         font-weight: 600;
         line-height: 100%;
-        display: none;
+        /* display: none; */
     }
     .post-listing .title-top {
         display: block;
@@ -6000,7 +6002,7 @@ footer li a {
         display: none;
     }
     .title-fixed-wrap {
-        margin-top: 40px;
+        /* margin-top: 40px; */
     }
     .step-link {
         position: absolute;
@@ -6247,6 +6249,7 @@ footer li a {
         left: inherit;
         width: 40%;
         padding-bottom: 15px;
+        padding-right: 30px;
     }
     .wrap-infor-duan {
         background: none;
@@ -6261,6 +6264,9 @@ footer li a {
     .page-news .title-top {
         position: static;
         border: none;
+        display: block;
+        float: left;
+        width: auto;
     }
     .list-menu-news a {
         font-size: 14px;
@@ -6292,7 +6298,7 @@ footer li a {
         margin: 0;
     }
     .page-news {
-        padding: 0 0 50px 0;
+        padding: 35px 0 50px 0;
     }
     .wrap-news ul.list-news {
         margin-left: 0;
@@ -6360,7 +6366,6 @@ footer li a {
     .all-packege {
         background: inherit;
         padding: 35px 0;
-        margin: 0 -15px;
     }
     .item-packege{
         padding: 0px 15px;
@@ -6625,6 +6630,7 @@ footer li a {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
+    vertical-align: middle;
 }
 .guest-dropdown .arrowDown {
     background-color: inherit;
@@ -8111,10 +8117,11 @@ footer li a {
     height: 100%;
     border-right: 1px solid #a5a5a5;
     /* border-left: 1px solid #a5a5a5; */
-    padding-top: 115px;
+    padding-top: 63px;
     background: #fff;
     z-index: 10;
     width: 240px;
+    /* left: 340px; */
 }
 .menuUser li a {
     display: block;
@@ -8149,6 +8156,7 @@ footer li a {
 .menuUser li a .notifi {
     left: 40px;
 }
+.chat-history,
 .statis,
 .noti-alert,
 .edit-user-tt,
@@ -8302,7 +8310,7 @@ footer li a {
     right: inherit;
     left: 0;
     z-index: 99;
-    padding: 5px;
+    padding: 5px 10px;
     background: rgb(0, 167, 105);
 }
 #detail-wrap .edit-listing .icon-mv,
@@ -8978,4 +8986,10 @@ footer li a {
         position: relative;
         margin-top: 20px;
     }
+}
+.all-packege .title-top {
+    margin-bottom: 35px;
+}
+.chat-history .title-top {
+    display: none;
 }

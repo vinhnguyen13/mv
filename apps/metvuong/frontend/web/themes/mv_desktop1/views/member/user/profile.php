@@ -134,8 +134,8 @@ $count_product = $pagination->totalCount;
                                                         <li><span><?=Yii::t('listing','updating')?></span></li>
                                                     <?php } else {
                                                         echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '';
-                                                        echo $product->adProductAdditionInfo->room_no ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bed-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bed-svg"></use></svg></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
-                                                        echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="wrap-icon-svg"><svg class="icon-svg icon-bathroom-svg"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-bathroom-svg"></use></svg></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
+                                                        echo $product->adProductAdditionInfo->room_no ? '<li> <span class="icon-mv"><span class="icon-bed-search"></span></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
+                                                        echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
                                                     } ?>
                                                 </ul>
                                             </div>
