@@ -42,106 +42,100 @@ use vsoft\ad\models\AdProduct;
     $products = Ad::find()->homePageRandom();
     ?>
     <section class="box-item box-feature-item">
-        <div class="container">
-            <div class="title-sub">Featured properties</div>
-            <div class="wrap-item wrap-lazy">
-                <ul class="clearfix">
-                    <?php foreach ($products as $product): ?>
-                    <li>
-                        <div class="item">
-                            <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pic-intro rippler rippler-default">
-                                <div class="img-show">
-                                    <div><img src="<?= $product->representImage ?>" data-original=""></div>
+        <div class="title-sub">Featured properties</div>
+        <div class="wrap-item wrap-lazy">
+            <ul class="clearfix">
+                <?php foreach ($products as $product): ?>
+                <li>
+                    <div class="item">
+                        <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pic-intro rippler rippler-default">
+                            <div class="img-show">
+                                <div><img src="<?= $product->representImage ?>" data-original=""></div>
+                            </div>
+                            <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></div>
+                        </a>
+                        <div class="info-item">
+                            <div class="address-feat clearfix">
+                                <p class="date-post">Ngày đăng tin: <strong>12/2/2016, 8:30AM</strong></p>
+                                <div class="address-listing">
+                                    <a title="<?= $product->getAddress(true) ?>" href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>"><?= $product->getAddress(true) ?></a>    
                                 </div>
-                                <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></div>
-                            </a>
-                            <div class="info-item">
-                                <div class="address-feat clearfix">
-                                    <p class="date-post">Ngày đăng tin: <strong>12/2/2016, 8:30AM</strong></p>
-                                    <div class="address-listing">
-                                        <a title="<?= $product->getAddress(true) ?>" href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>"><?= $product->getAddress(true) ?></a>    
-                                    </div>
-                                    <p class="id-duan">ID:<span><?=$product->id;?></span></p>
-                                    <ul class="clearfix list-attr-td">
-                                        <li>
-                                            <span class="icon-mv"><span class="icon-page-1-copy"></span></span>80m2
-                                        </li>
-                                        <li>
-                                            <span class="icon-mv"><span class="icon-bed-search"></span></span>02
-                                        </li>
-                                        <li>
-                                            <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>02
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="bottom-feat-box clearfix">
-                                    <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pull-right color-cd-hover">Chi tiết</a>
-                                    <p>Giá <strong>4 tỷ đồng</strong></p>
-                                </div>
+                                <p class="id-duan">ID:<span><?=$product->id;?></span></p>
+                                <ul class="clearfix list-attr-td">
+                                    <li>
+                                        <span class="icon-mv"><span class="icon-page-1-copy"></span></span>80m2
+                                    </li>
+                                    <li>
+                                        <span class="icon-mv"><span class="icon-bed-search"></span></span>02
+                                    </li>
+                                    <li>
+                                        <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>02
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="bottom-feat-box clearfix">
+                                <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pull-right color-cd-hover">Chi tiết</a>
+                                <p>Giá <strong>4 tỷ đồng</strong></p>
                             </div>
                         </div>
-                    </li>
-                    <?php
-                    endforeach;
-                    ?>
-                </ul>
-            </div>
+                    </div>
+                </li>
+                <?php
+                endforeach;
+                ?>
+            </ul>
         </div>
     </section>
 
     <?php if(count($news) > 0) {?>
     <section class="box-item news-item">
-        <div class="container">
-            <div class="title-sub"><?=Yii::t('news','NEWS')?></div>
-            <div class="wrap-item">
-                <?php
-                    foreach($news as $n){
-                ?>
-                <div class="item clearfix">
-                    <a class="rippler rippler-default" href="<?= \yii\helpers\Url::to(['news/view', 'id' => $n['id'], 'slug' => $n['slug']], true) ?>">
-                        <div class="img-show"><div><img src="<?=Url::to('/store/news/show/' . $n['banner']) ?>"></div></div>
-                        <span class="txt-short-news">
-                            <span class="title-news color-30a868"><?=$n['title']?></span>
-                            <span class="date-news"><?=date('d/m/Y, H:i', $n['created_at'])?></span>
-                            <?=StringHelper::truncate($n['brief'], 130)?>
-                        </span>
-                    </a>
-                </div>
-                <?php } ?>
+        <div class="title-sub"><?=Yii::t('news','NEWS')?></div>
+        <div class="wrap-item">
+            <?php
+                foreach($news as $n){
+            ?>
+            <div class="item clearfix">
+                <a class="rippler rippler-default" href="<?= \yii\helpers\Url::to(['news/view', 'id' => $n['id'], 'slug' => $n['slug']], true) ?>">
+                    <div class="img-show"><div><img src="<?=Url::to('/store/news/show/' . $n['banner']) ?>"></div></div>
+                    <span class="txt-short-news">
+                        <span class="title-news color-30a868"><?=$n['title']?></span>
+                        <span class="date-news"><?=date('d/m/Y, H:i', $n['created_at'])?></span>
+                        <?=StringHelper::truncate($n['brief'], 130)?>
+                    </span>
+                </a>
             </div>
+            <?php } ?>
         </div>
     </section>
     <?php } ?>
 
     <section class="search-home">
-        <div class="container">
-            <div class="title-sub">LIÊN HỆ</div>
-            <div class="clearfix">
-                <div class="wrap-img map-location">
-                    <div class="img-show"><iframe width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:EksyMSBOZ3V54buFbiBUcnVuZyBOZ-G6oW4sIELhur9uIE5naMOpLCBRdeG6rW4gMSwgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0&key=AIzaSyDgukAnWQNq0fitebULUbottG5gvK64OCQ" allowfullscreen></iframe></div>
-                </div>
-                <div class="txt-location">
-                    <p class="name-cty color-cd">METVUONG TEAM</p>
-                    <ul class="clearfix">
-                        <li>
-                            <span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
-                            <p>Lầu 12 Tòa nhà Miss Aodai <br> 21 Nguyễn Trung Ngạn, Quận 1, thành phố Hồ Chí Minh.</p>
-                        </li>
-                        <li>
-                            <span class="icon-mv"><span class="icon-phone-profile"></span></span>
-                            <p><a href="tel:08345678">08. 345 678</a> - <a href="tel:0908123456">0908 123 456</a></p>
-                        </li>
-                        <li>
-                            <span class="icon-mv"><span class="icon-mail-profile"></span></span>
-                            <p>contact@metvuong.com</p>
-                        </li>
-                    </ul>
-                    <p class="color-cd get-email">SUBSCRIBED OUR NEWSLETTER</p>
-                    <form action="">
-                        <input type="text" placeholder="Your Email" />
-                        <button type="submit" class="btn-common">Subscribe</button>
-                    </form>
-                </div>
+        <div class="title-sub">LIÊN HỆ</div>
+        <div class="clearfix">
+            <div class="wrap-img map-location">
+                <div class="img-show"><iframe width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:EksyMSBOZ3V54buFbiBUcnVuZyBOZ-G6oW4sIELhur9uIE5naMOpLCBRdeG6rW4gMSwgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0&key=AIzaSyDgukAnWQNq0fitebULUbottG5gvK64OCQ" allowfullscreen></iframe></div>
+            </div>
+            <div class="txt-location">
+                <p class="name-cty color-cd">METVUONG TEAM</p>
+                <ul class="clearfix">
+                    <li>
+                        <span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
+                        <p>Lầu 12 Tòa nhà Miss Aodai <br> 21 Nguyễn Trung Ngạn, Quận 1, thành phố Hồ Chí Minh.</p>
+                    </li>
+                    <li>
+                        <span class="icon-mv"><span class="icon-phone-profile"></span></span>
+                        <p><a href="tel:08345678">08. 345 678</a> - <a href="tel:0908123456">0908 123 456</a></p>
+                    </li>
+                    <li>
+                        <span class="icon-mv"><span class="icon-mail-profile"></span></span>
+                        <p>contact@metvuong.com</p>
+                    </li>
+                </ul>
+                <p class="color-cd get-email">SUBSCRIBED OUR NEWSLETTER</p>
+                <form action="">
+                    <input type="text" placeholder="Your Email" />
+                    <button type="submit" class="btn-common">Subscribe</button>
+                </form>
             </div>
         </div>
     </section>

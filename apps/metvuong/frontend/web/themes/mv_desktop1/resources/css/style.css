@@ -308,12 +308,12 @@ header {
     margin-top: 0px;
 }
 .search-home {
-    padding: 30px 0 80px;
+    padding: 30px 20px 80px;
     background: #f5f5f5;
 }
 .box-item.box-feature-item {
     background: #f5f5f5;
-    padding: 35px 0 30px;
+    padding: 35px 20px 30px;
     margin-bottom: 0;
     /* background: red; */
 }
