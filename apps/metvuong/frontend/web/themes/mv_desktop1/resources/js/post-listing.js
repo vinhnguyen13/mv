@@ -52,6 +52,13 @@ var form = {
 		if($('#is-update').val() == '1') {
 			setTimeout(function(){
 				$('.preview').trigger('click');
+				
+				var formVal = $('#listing-form').serialize();
+				window.onbeforeunload = function() {
+					if(formVal != $('#listing-form').serialize()) {
+						return lajax.t("Are you sure you want to navigate away from this page and discard all changes ?");
+					}
+				};
 			}, 1);
 		}
 	},
@@ -257,8 +264,10 @@ var form = {
 			if(form.projectEl.val()) {
 				$('.project-item').show();
 				$('.project-show').html('<a href="' + form.projectDetailEl.attr('href') + '">' + form.projectEl.find('option').filter(':selected').text() + '</a>');
+				$('#facilities-section').removeClass('hide');
 			} else {
 				$('.project-item').hide();
+				$('#facilities-section').addClass('hide');
 			}
 			
 			if(form.facadeWiEl.val()) {

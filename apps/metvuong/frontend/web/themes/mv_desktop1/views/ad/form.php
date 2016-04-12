@@ -402,14 +402,11 @@ use vsoft\ad\models\AdImages;
 				                </div>
 				            </div>
 				        </div>
-				        <div class="panel panel-default">
+				        <div id="facilities-section" class="panel panel-default">
 				            <div class="panel-heading" role="tab" id="headingFour">
 				                <h4 class="panel-title">
 				                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
 				                        <?= Yii::t('ad', 'Facilities') ?>
-				                        <span class="edit-listing">
-					                    	<span class="icon-mv fs-20 color-cd"><span class="icon-edit-copy-4"></span></span>
-					                    </span>
 				                        <span class="icon"></span>
 				                    </a>
 				                </h4>
