@@ -160,8 +160,12 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 				</div>
 
 				<?php
-                $description = \yii\helpers\StringHelper::truncate($product->content, 300, $suffix = '...', $encoding = 'UTF-8');
+                $description = \yii\helpers\StringHelper::truncate($product->content, 200, $suffix = '...', $encoding = 'UTF-8');
                 $description = str_replace("\n", " ", $description);
+                echo "<pre>";
+                print_r($description);
+                echo "<pre>";
+                exit();
                 echo $this->render('/ad/_partials/shareSocial',[
                     'product_id' => $product->id,
 				    'url' => $product->urlDetail(true),

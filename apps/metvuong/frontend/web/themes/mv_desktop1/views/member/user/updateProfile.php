@@ -12,6 +12,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 $user = $model->getUser();
+$user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii::$app->user->id])->one();
 ?>
 <div class="title-fixed-wrap">
     <div class="edit-user-tt">
@@ -24,19 +25,19 @@ $user = $model->getUser();
                         <img id="profileAvatar" src="<?=$model->avatar?>" alt="metvuong avatar" />
                     </div>    
                     <div class="overflow-all">
-                        <p class="name-user fs-18 font-600 color-cd text-uper mgB-5">Mét Vuông</p>
+                        <p class="name-user fs-18 font-600 color-cd text-uper mgB-5"><?=empty($model->name) ? $user->username : $model->name  ?></p>
                         <p class="location mgB-5">
                             <span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
-                            Cà Mau
+                            <?=empty($user_location) ? Yii::t('general', 'Updating') : $user_location->city?>
                         </p>
                         <p class="num-mobi mgB-5">
                             <span class="icon-mv"><span class="icon-phone-profile"></span></span>
-                            <a href="tel:0905296128">0905296128</a>                        
+                            <a href="<?=empty($model->mobile) ? "#" : "tel:".$model->mobile ?>"><?=empty($model->mobile) ? "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->mobile ?></a>
                         </p>
                         <p class="email-user">
                             <a href="#popup-email" class="email-btn">
                                 <span class="icon-mv"><span class="icon-mail-profile"></span></span>
-                                quangvinh@abc.com
+                                <?=empty($model->public_email) ? $user->email : $model->public_email ?>
                             </a>
                         </p>
                     </div>
@@ -49,20 +50,43 @@ $user = $model->getUser();
                     </div>
                     <div class="overflow-all">
                         <p class="name-user fs-18 font-600 color-cd text-uper mgB-5">
-                            <input type="text" value="Mét Vuông">
+                            <input type="text" value="<?=empty($model->name) ? $user->username : $model->name  ?>">
                         </p>
                         <p class="location mgB-5">
                             <span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
-                            <input type="text" value="Cà Mau">
+                            <?php
+                            if(empty($user_location))
+                                $user_location = new \frontend\models\UserLocation();
+
+                            $form = ActiveForm::begin ( [
+                                'id' => 'user-location-form',
+                                'enableClientValidation' => false,
+                                'options' => [
+                                    'autocomplete' => 'off',
+                                    'spellcheck' => 'false'
+                                ],
+                                'action' => Url::to(['member/update-user-location'])
+                            ]);
+                            $cities = AdCity::find()->all();
+                            $citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
+                            //                            $citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != \frontend\models\UserLocation::DEFAULT_CITY)]; });
+                            echo $form->field($user_location, 'city_id', ['options' => ['class' => 'attr-right pull-right city']])
+                                ->dropDownList($citiesDropdown, ['prompt' => Yii::t('profile','Select...'), 'options' => [empty($user_location) ? 1 : $user_location->city_id => ['Selected ' => true]]])
+                                ->label(false);
+
+                            echo $form->field($user_location, 'user_id')->hiddenInput(['value'=>Yii::$app->user->id])->label(false);
+                            $form->end();
+                            ?>
+<!--                            <input type="text" value="Cà Mau">-->
                         </p>
                         <p class="num-mobi mgB-5">
                             <span class="icon-mv"><span class="icon-phone-profile"></span></span>
-                            <input type="text" value="0905296128">
+                            <input type="text" value="<?=empty($model->mobile) ? "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->mobile ?>">
                         </p>
                         <p class="email-user">
                             <a href="#popup-email" class="email-btn">
                                 <span class="icon-mv"><span class="icon-mail-profile"></span></span>
-                                <input type="text" value="quangvinh@abc.com">
+                                <input type="text" value="<?=empty($model->public_email) ? $user->email : $model->public_email ?>">
                             </a>
                         </p>
                     </div>
@@ -96,24 +120,38 @@ $user = $model->getUser();
                 <div class="box-edit-show wrap-attr-detail">
                     <a href="#" class="done-profile btn-common">Xong</a>
                     <div class="row">
+                        <?php
+                        $profile_form = Yii::createObject([
+                            'class'    => \frontend\models\ProfileForm::className(),
+                            'scenario' => 'password',
+                        ]);
+                        $f = ActiveForm::begin([
+                            'id' => 'form-edit-changepass',
+                            'enableAjaxValidation' => false,
+                            'enableClientValidation' => true,
+                            'action' => Url::to(['member/password'])
+                        ]);
+                        ?>
                         <div class="col-xs-3">
-                            Mật khẩu hiện tại
+                            <?=Yii::t('profile', 'Old password')?>
                         </div>
                         <div class="col-xs-9 mgB-10">
-                            <input type="password" value="">
+                            <?= $f->field($model, 'old_password')->textInput(['class' => 'attr-right old_password', 'type' => 'password', 'placeholder' => Yii::t('profile','Input...')])->label(false) ?>
                         </div>
                         <div class="col-xs-3">
-                            Mật khẩu mới
+                            <?=Yii::t('profile', 'New password')?>
                         </div>
                         <div class="col-xs-9 mgB-10">
-                            <input type="password" value="">
+                            <?= $f->field($model, 'new_password')->textInput(['class' => 'attr-right new_password', 'type' => 'password', 'placeholder' => Yii::t('profile','Input...')])->label(false) ?>
                         </div>
                         <div class="col-xs-3">
-                            Nhập lại mật khẩu
+                            <?=Yii::t('profile', 'Confirm password')?>
                         </div>
                         <div class="col-xs-9">
-                            <input type="password" value="">
+                            <input type="password" class="attr-right re-type-pass" value="" placeholder="<?=Yii::t('profile','Input...')?>">
                         </div>
+                        <div class="col-xs-9 error hide" style="width: 100%; color: red;"></div>
+                        <?php $f->end(); ?>
                     </div>
                 </div>
             </section>
