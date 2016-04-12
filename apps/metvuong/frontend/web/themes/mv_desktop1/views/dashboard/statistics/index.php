@@ -42,10 +42,6 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
 
 <div class="title-fixed-wrap">
     <div class="container">
-        <div class="title-top">
-            <?=Yii::t('statistic','Statistic')?>
-            <!-- <a href="<?=$backUrl?>" id="prev-page"><span class="icon arrowRight-1"></span></a> -->
-        </div>
         <div class="statis">
         	<section class="clearfix mgB-40">
         		<!-- <div id="sandbox-container">

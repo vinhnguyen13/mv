@@ -5,6 +5,7 @@ use frontend\models\Chart;
 $data = null;
 if($from > 0 && $to > 0)
     $data = Chart::find()->getDataShare($id, $from, $to);
+
 if(!empty($data) && count($data) > 0) {
     $dataChart = $data['dataChart'];
     $categories = $data['categories'];
