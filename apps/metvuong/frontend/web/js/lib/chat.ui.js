@@ -28,19 +28,19 @@
             var to = chatUI.usrFromJid(to);
             var template = Handlebars.compile($("#chat-box-template").html());
             var html = template({from: from, to: to});
-            chatBoxExist = chatUI.getBoxChat(from, to);
+            chatBoxExist = chatUI.getBoxChat('.chat-group', from, to);
             if(chatBoxExist){
                 chatBoxExist.css({height: 'auto'}).show();
             }else{
-                $('#chat-container').append(html);
+                $('.chat-container').append(html);
             }
             $('.chat-group').find('#typingMsg').focus();
         },
-        getBoxChat: function (from, to) {
+        getBoxChat: function (_class, from, to) {
             var from = chatUI.usrFromJid(from);
             var to = chatUI.usrFromJid(to);
-            var chatBoxExist1 = $(".chat-group[chat-from='" + from + "'][chat-to='" + to + "']");
-            var chatBoxExist2 = $(".chat-group[chat-from='" + to + "'][chat-to='" + from + "']");
+            var chatBoxExist1 = $(_class + "[chat-from='" + from + "'][chat-to='" + to + "']");
+            var chatBoxExist2 = $(_class + "[chat-from='" + to + "'][chat-to='" + from + "']");
             if (chatBoxExist1.length > 0) {
                 return chatBoxExist1;
             }
@@ -53,7 +53,7 @@
             var objHis = $(iq);
             var child = objHis.children().children();
             var length = child.length - 1;
-            chatBoxExist = chatUI.getBoxChat(objHis.attr('id'), objHis.children().attr('with'));
+            chatBoxExist = chatUI.getBoxChat('.chat-group', objHis.attr('id'), objHis.children().attr('with'));
             if(!chatBoxExist){
                 return false;
             }
@@ -77,8 +77,8 @@
                 }
             }
 
-            $('.container-chat').scrollTop($('.wrap-chat').height());
-            $('.wrap-chat-item .container-chat').slimscroll({
+            chatBoxExist.find('.container-chat').scrollTop($('.wrap-chat').height());
+            chatBoxExist.find('.wrap-chat-item .container-chat').slimscroll({
                 alwaysVisible: true,
                 height: '100%',
                 start : 'bottom'
@@ -100,7 +100,7 @@
         },
         loadMessageToBox: function (msg, params) {
             var type = params.chatType;
-            chatBoxExist = chatUI.getBoxChat(this.from, this.to);
+            chatBoxExist = chatUI.getBoxChat('.chat-group', this.from, this.to);
             if(!chatBoxExist){
                 return false;
             }
@@ -128,8 +128,8 @@
                 }
             }
 
-            $('.container-chat').scrollTop($('.wrap-chat').height());
-            $('.wrap-chat-item .container-chat').slimscroll({
+            chatBoxExist.find('.container-chat').scrollTop($('.wrap-chat').height());
+            chatBoxExist.find('.wrap-chat-item .container-chat').slimscroll({
                 alwaysVisible: true,
                 height: '100%',
                 start : 'bottom'
@@ -174,7 +174,7 @@
             return $('.'+parent).find('#'+child);
         },
         typingMessage: function (from, close) {
-            chatBoxExist = chatUI.getBoxChat(Chat.connection.jid, from);
+            chatBoxExist = chatUI.getBoxChat('.chat-group', Chat.connection.jid, from);
             if(!chatBoxExist){
                 return false;
             }

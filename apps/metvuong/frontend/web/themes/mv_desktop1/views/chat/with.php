@@ -9,7 +9,7 @@ $nameUserTo = $userTo->profile->getDisplayName();
 $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 
 ?>
-<div id="chat-container" class="">
+<div id="chat-container" class="chat-container">
 	
 </div>
 <!--chat script-->

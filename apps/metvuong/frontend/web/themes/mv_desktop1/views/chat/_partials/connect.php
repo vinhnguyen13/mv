@@ -60,31 +60,51 @@ if(!Yii::$app->user->isGuest) {
             });
 
             $(document).bind('chat/afterConnect', function (event, data) {
+                $(document).trigger('chat/addWrapBoxChat');
+            });
+
+            $(document).bind('chat/addBoxChat', function (event, user) {
+                var template = Handlebars.compile($("#item-box-chat-template").html());
+                var html = template({});
+                html = $(html).attr('chat-to', user);
+                $('.wrap-items-chat').append(html);
+            });
+
+            $(document).bind('chat/addWrapBoxChat', function (event, user) {
                 var template = Handlebars.compile($("#wrap-items-chat-template").html());
                 var html = template({});
                 $('body').append(html);
             });
 
             $(document).on('click', '.chat-now', function (e) {
-                $('.wrap-items-chat').toggleClass('hide');
                 $('.box-chat-footer').loading();
                 user = $(this).attr('data-chat-user');
+                console.log(user);
                 if (user) {
-                    $.ajax({
-                        type: "get",
-                        dataType: 'html',
-                        url: '/chat/with/' + user,
-                        success: function (data) {
-                            $('.box-chat-footer').append(data);
-                            Chat.historyMessage(user+'@<?=Chat::DOMAIN?>');
-                        }
-                    });
+                    chatBoxExist = chatUI.getBoxChat('.item-box-chat', '<?=Yii::$app->user->identity->username?>', user);
+                    if(!chatBoxExist){
+                        $(document).trigger('chat/addBoxChat', [user]);
+                        chatBoxExist = chatUI.getBoxChat('.item-box-chat', '<?=Yii::$app->user->identity->username?>', user);
+                        $.ajax({
+                            type: "get",
+                            dataType: 'html',
+                            url: '/chat/with/' + user,
+                            success: function (data) {
+                                chatBoxExist.find('.box-chat-footer').append(data);
+                                Chat.historyMessage(user + '@<?=Chat::DOMAIN?>');
+                            }
+                        });
+                    }
+                    if(chatBoxExist) {
+                        $('.wrap-items-chat').removeClass('hide');
+                        $('body').loading({done:true});
+                    }
+
                 }
                 return false;
             });
 
             $(document).bind('chat/readNotify', function (event, type) {
-
                 if(type == chatUI.NOTIFY_CHAT){
                     $('#notifyChat').remove();
                     $('#notifyTotal').remove();
@@ -107,13 +127,16 @@ if(!Yii::$app->user->isGuest) {
                     </ul>
                 </div>
             </div>
-            <div class="item-box-chat">
-                <div class="box-chat-footer">
-                    <a href="#" class="close-box">
-                        <span class="icon-mv"><span class="icon-close-icon"></span></span>
-                    </a>
+        </div>
+    </script>
 
-                </div>
+    <script id="item-box-chat-template" type="text/x-handlebars-template">
+        <div class="item-box-chat" chat-from="<?=Yii::$app->user->identity->username?>" chat-to="">
+            <div class="box-chat-footer">
+                <a href="#" class="close-box">
+                    <span class="icon-mv"><span class="icon-close-icon"></span></span>
+                </a>
+
             </div>
         </div>
     </script>
