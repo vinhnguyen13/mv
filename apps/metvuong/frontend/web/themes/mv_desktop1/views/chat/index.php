@@ -98,15 +98,22 @@ if(!empty($jid_id)){
 					}
 				});
 			}
+			return false;
 		});
 
 		$(document).bind('chat/afterConnect', function (event, data) {
+			$(document).trigger('chat/listLoadDefault');
+			return false;
+		});
+
+		$(document).unbind('chat/listLoadDefault').bind('chat/listLoadDefault', function (event, data) {
 			if($('.wrap-history .chat-list .item').length > 0){
 				$('.wrap-history .chat-list .item:first a').trigger( "click" );
 			}
+			return false;
 		});
 
-		$(document).on('click', '.wrap-history .chat-list .item a', function (e) {
+		$('.wrap-history .chat-list .item a').click(function (e) {
 			$('.wrap-history .chat-list .item a').removeClass('active');
 			$(this).addClass('active');
 			var user = $(this).parent().attr('chat-with');

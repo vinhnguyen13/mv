@@ -63,11 +63,8 @@ use yii\helpers\Url;
                     url: $(this).attr('href'),
                     success: function (data) {
                         $('body').loading({done: true});
-//                    $('.title-fixed-wrap').html('');
                         $('.contentContainer').html(data);
-                        if ($('.contentContainer').find('.wrap-history .chat-list .item').length > 0) {
-                            $('.contentContainer').find('.wrap-history .chat-list .item:first a').trigger("click");
-                        }
+                        $(document).trigger('chat/listLoadDefault');
                     }
                 });
                 return false;
