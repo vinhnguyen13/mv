@@ -1837,7 +1837,7 @@ label {
 }
 .panel-heading a {
     display: block;
-    padding: 15px 0;
+    /* padding: 15px 0; */
 }
 .panel-group .panel {
     box-shadow: 0px 0px 0px;
@@ -9017,6 +9017,7 @@ footer li a {
 .all-packege .title-top {
     margin-bottom: 35px;
 }
+.statis .title-top,
 .edit-user-tt .title-top,
 .chat-history .title-top {
     display: none;
@@ -9038,4 +9039,18 @@ footer li a {
     left: 0;
     width: 100%;
     padding-right: 40px;
+}
+.collapsing {
+    position:relative;
+    height: auto !important;
+    overflow:hidden;
+    -webkit-transition-timing-function:ease;
+    -o-transition-timing-function:ease;
+    transition-timing-function:ease;
+    -webkit-transition-duration:.35s;
+    -o-transition-duration:.35s;
+    transition-duration:.35s;
+    -webkit-transition-property:height,visibility;
+    -o-transition-property:height,visibility;
+    transition-property:height,visibility
 }
