@@ -27,7 +27,7 @@ $count_product = count($products);
             if (($share = \frontend\models\Tracking::find()->countShares($product->id)) === null) {
                 $share = 0;
             } ?>
-            <li class="col-xs-12 col-md-12 col-sm-6">
+            <li class="col-xs-12 col-md-6 col-sm-6">
                 <div class="item">
                     <div class="img-show">
                         <div>
