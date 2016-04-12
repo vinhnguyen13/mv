@@ -2787,9 +2787,9 @@ html.mm-opening .mm-slideout {
 .chat-list {
     width: 40%;
     border-right: 1px solid #a5a5a5;
-    overflow-x: hidden;
-    overflow-y: auto;
-    padding-right: 30px;
+    /* overflow-x: hidden; */
+    /* overflow-y: auto; */
+    padding-right: 40px;
 }
 .chat-live {
     width: 60%;
@@ -2816,11 +2816,11 @@ html.mm-opening .mm-slideout {
 .chat-live .item,
 .chat-list .item {
     padding: 0;
-    border-bottom: 1px solid #B1B1B1;
     float: left;
     width: 100%;
 }
 .chat-list .item {
+    padding-right: 14px;
 }
 .chat-live .item,
 .chat-list .item:last-child {
@@ -2834,6 +2834,7 @@ html.mm-opening .mm-slideout {
     float: left;
     width: 100%;
     padding: 10px;
+    border-bottom: 1px solid #B1B1B1;
 }
 .chat-list .item a.unread {
     background: #F5F5F5;
@@ -4021,7 +4022,7 @@ html.mm-opening .mm-slideout {
 }
 .chat-history {
     position: relative;
-    padding-top: 36px;
+    /* padding-top: 36px; */
     padding-bottom: 50px;
 }
 .item-listing .id-duan {
@@ -6247,9 +6248,9 @@ footer li a {
         position: relative;
         top: 0;
         left: inherit;
-        width: 40%;
+        /* width: 40%; */
         padding-bottom: 15px;
-        padding-right: 30px;
+        /* padding-right: 30px; */
     }
     .wrap-infor-duan {
         background: none;
@@ -7785,12 +7786,20 @@ footer li a {
 .wrap-history {
     margin: 0 0 0;
     min-height: 500px;
+    height: 100%;
+    /* padding-bottom: 50px; */
 }
 .chat-live,
 .chat-list {
-    height: 500px;
+    /* height: 500px; */
     position: relative;
     float: left;
+    padding-top: 100px;
+    height: 100%;
+    padding-bottom: 20px;
+}
+.chat-live {
+    padding-top: 50px;
 }
 .input-txt-chat {
     position: absolute;
@@ -8044,14 +8053,19 @@ footer li a {
     padding: 0;
     z-index: 9;
     height: auto;
+    padding: 20px;
+    background: #EAEAEA;
+}
+#chat-container .type-input-chat > div {
+    position: relative;
 }
 #chat-container {
     height: 100%;
 }
 .chat-real {
-    height: 500px;
+    height: 100%;
     padding-top: 26px;
-    padding-bottom: 35px;
+    padding-bottom: 75px;
 }
 .wrap-chat-item {
     height: 100%;
@@ -8488,6 +8502,7 @@ footer li a {
     padding: 2px 0 0 0;
     width: 100%;
     position: relative;
+    top: 0;
 }
 .wrap-list-duan .nav-tabs .search-history input {
     border-bottom: none;
@@ -8992,4 +9007,22 @@ footer li a {
 }
 .chat-history .title-top {
     display: none;
+}
+.chat-history .chat-real .title-top {
+    display: block;
+}
+.wrap-history-item {
+    position: fixed;
+    height: 100%;
+    top: 0;
+    padding-top: 65px;
+    width: 960px;
+    padding-bottom: 0;
+}
+.search-history {
+    position: absolute;
+    top: 35px;
+    left: 0;
+    width: 100%;
+    padding-right: 40px;
 }
