@@ -74,7 +74,6 @@ use yii\helpers\Url;
                             <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> $product->urlDetail(true) ])->label(false) ?>
                             <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
                             <?php
-                                Tracking::find()->productShare(Yii::$app->user->id, $product->id, time(), \vsoft\tracking\models\base\AdProductShare::SHARE_EMAIL);
                             }
                             else if(isset($project) && !empty($project)){
                                 $image = '/themes/metvuong2/resources/images/default-ads.jpg';

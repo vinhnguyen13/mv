@@ -23,13 +23,12 @@ $visitorTo = (!empty($visitors) && isset($visitors["to"])) ? $visitors["to"] : 0
 $favouriteFrom = (!empty($favourites) && isset($favourites["from"])) ? $favourites["from"] : 0;
 $favouriteTo = (!empty($favourites) && isset($favourites["to"])) ? $favourites["to"] : 0;
 
+$shareFrom = (!empty($shares) && isset($shares["from"])) ? $shares["from"] : 0;
+$shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
+
 //echo "<pre>";
-//var_dump(date('Y-m-d H:i:s',$finderFrom));
-//var_dump(date('Y-m-d H:i:s',$finderTo));
-//var_dump(date('Y-m-d H:i:s',$visitorFrom));
-//var_dump(date('Y-m-d H:i:s',$visitorTo));
-//var_dump(date('Y-m-d H:i:s',$favouriteFrom));
-//var_dump(date('Y-m-d H:i:s',$favouriteTo));
+//var_dump(date('Y-m-d H:i:s',$shareFrom));
+//var_dump(date('Y-m-d H:i:s',$shareTo));
 //echo "<pre>";
 //exit();
 
@@ -75,11 +74,11 @@ $favouriteTo = (!empty($favourites) && isset($favourites["to"])) ? $favourites["
                         <li><a href="#" class="btn-finder active" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $finderFrom, 'to' => $finderTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><?=Yii::t('statistic','Search')?><span><?=$search_count ?></span></a></li>
                         <li><a href="#" class="btn-visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $visitorFrom, 'to' => $visitorTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><?=Yii::t('statistic','Click')?><span><?=$click_count ?></span></a></li>
                         <li><a href="#" class="btn-favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'id' => $id, 'from' => $favouriteFrom, 'to' => $favouriteTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><?=Yii::t('statistic','Favourite')?><span><?=$fav_count ?></span></a></li>
-                        <li><a href="#" class="btn-share" data-url=""><?=Yii::t('statistic','Share')?> <span><?=$share_count?></span></a></li>
+                        <li><a href="#" class="btn-share" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/share', 'id' => $id, 'from' => $shareFrom, 'to' => $shareTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><?=Yii::t('statistic','Share')?> <span><?=$share_count?></span></a></li>
                     </ul>
         		</div>
         	</section>
-            <h2 class="text-uper fs-16 font-600 mgB-30 color-cd">STATISTIC DATA</h2>
+            <h2 class="text-uper fs-16 font-600 mgB-30 color-cd">STATISTIC</h2>
             <table class="tbl-review">
                 <tr>
                     <th class="text-uper fs-15 font-600">LƯỢT XEM</th>
@@ -253,9 +252,6 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
                         $('.option-view-stats li a').removeClass("active");
                         $('.btn-finder').addClass("active");
                         $('.wrapChart').html(data);
-//                        $('.finder').show();
-//                        $('.visitor').hide();
-//                        $('.favourite').hide();
                     }
                 });
             }
@@ -276,9 +272,26 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
                         $('.option-view-stats li a').removeClass("active");
                         $('.btn-visitor').addClass("active");
                         $('.wrapChart').html(data);
-//                        $('.finder').hide();
-//                        $('.visitor').show();
-//                        $('.favourite').hide();
+                    }
+                });
+            }
+            return false;
+        });
+
+        $(document).on('click', '.btn-share', function() {
+            var url = $(this).attr('data-url');
+            if(url != '') {
+                $('.wrapChart').html('');
+                $('body').loading();
+                $.ajax({
+                    type: "get",
+                    dataType: 'html',
+                    url: url,
+                    success: function (data) {
+                        $('body').loading({done: true});
+                        $('.option-view-stats li a').removeClass("active");
+                        $('.btn-share').addClass("active");
+                        $('.wrapChart').html(data);
                     }
                 });
             }
@@ -299,24 +312,11 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
                         $('.option-view-stats li a').removeClass("active");
                         $('.btn-favourite').addClass("active");
                         $('.wrapChart').html(data);
-//                        $('.finder').hide();
-//                        $('.visitor').hide();
-//                        $('.favourite').show();
                     }
                 });
             }
             return false;
         });
-
-//        $(document).on('click', '.share-social .share-facebook', function() {
-//            var detailUrl = $('#share_form ._detailUrl').val();
-//            if(detailUrl == null || detailUrl == '' )
-//                detailUrl = $('#share_form ._domain').val();
-//            FB.ui({
-//                method: 'share',
-//                href: detailUrl
-//            }, function(response){});
-//        });
 
         function fbShare(url, title, descr, image, winWidth, winHeight) {
             var winTop = (screen.height / 2) - (winHeight / 2);

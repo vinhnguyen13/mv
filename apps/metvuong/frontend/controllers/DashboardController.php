@@ -59,10 +59,6 @@ class DashboardController extends Controller
         }
 
         $id = (int)Yii::$app->request->get("id");
-        $search = (int)Yii::$app->request->get("search");
-        $click = (int)Yii::$app->request->get("click");
-        $fav = (int)Yii::$app->request->get("fav");
-        $share = (int)Yii::$app->request->get("share");
         $product = AdProduct::findOne($id);
         $finders = null;
         $visitors = null;
@@ -91,6 +87,18 @@ class DashboardController extends Controller
                 'view' => '_partials/finder'
             ]);
         }else{
+            if (($search = \frontend\models\Tracking::find()->countFinders($product->id)) === null) {
+                $search = 0;
+            }
+            if (($click = \frontend\models\Tracking::find()->countVisitors($product->id)) === null) {
+                $click = 0;
+            }
+            if (($fav = \frontend\models\Tracking::find()->countFavourites($product->id)) === null) {
+                $fav = 0;
+            }
+            if (($share = \frontend\models\Tracking::find()->countShares($product->id)) === null) {
+                $share = 0;
+            }
             return $this->render('statistics/index', [
                 'product' => $product,
                 'visitors' => $visitors,

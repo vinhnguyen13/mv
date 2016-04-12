@@ -102,9 +102,7 @@ class Chart extends Component
                 $day = date(self::DATE_FORMAT, $item->time);
                 if($view == "saved")
                     $day = date(self::DATE_FORMAT, $item->saved_at);
-//                $product = AdProduct::getDb()->cache(function ($db) use ($item) {
-//                    return AdProduct::find()->where(['id' => $item->product_id])->one();
-//                });
+
                 $key = $item->product_id;
                 if(empty($tmpDataByPid[$key]['data'])){
                     $tmpDataByPid[$key]['data'] = $defaultData;
@@ -112,8 +110,7 @@ class Chart extends Component
                 $kDate = array_search($day, $dateRange);
                 $tmpDataByPid[$key]['data'][$kDate]['y']++;
                 $tmpDataByPid[$key]['data'][$kDate]['color'] = '#00a769';
-//                $tmpDataByPid[$key]['data'][$kDate]['url'] = Url::to(['/user-management/chart', 'view'=>'_partials/listContact', 'date'=>$day, 'pid'=>$key, 'type'=>$type]);
-//                $tmpDataByPid[$key]['name'] = $product->getAddress();
+
 
                 $user = User::findIdentity($item->user_id);
                 $username = $user->username;
@@ -187,7 +184,7 @@ class Chart extends Component
 
     public function getFinderWithLastTime($id, $useDate){
         if(empty($useDate)) {
-            $finder = AdProductFinder::find()->where((['product_id' => $id]))->orderBy('time DESC')->one();
+            $finder = AdProductFinder::find()->where(['product_id' => $id])->orderBy('time DESC')->one();
             if (count($finder) > 0)
                 $useDate = new \DateTime(date('Y-m-d', $finder->time));
             else
@@ -218,7 +215,7 @@ class Chart extends Component
 
     public function getVisitorWithLastTime($id, $useDate){
         if(empty($useDate)) {
-            $visitor = AdProductVisitor::find()->where((['product_id' => $id]))->orderBy('time DESC')->one();
+            $visitor = AdProductVisitor::find()->where(['product_id' => $id])->orderBy('time DESC')->one();
             if (count($visitor) > 0)
                 $useDate = new \DateTime(date('Y-m-d', $visitor->time));
             else
@@ -245,7 +242,7 @@ class Chart extends Component
     }
     public function getShareWithLastTime($id, $useDate){
         if(empty($useDate)) {
-            $share = AdProductShare::find()->where((['product_id' => $id]))->orderBy('time DESC')->one();
+            $share = AdProductShare::find()->where(['product_id' => $id])->orderBy('time DESC')->one();
             if (count($share) > 0)
                 $useDate = new \DateTime(date('Y-m-d', $share->time));
             else
@@ -264,7 +261,7 @@ class Chart extends Component
 
         $dataShares = $this->getDataShare($id, $from, $to);
         $infoDataShares = empty($dataShares) ? null : $dataShares["infoData"];
-        if(!empty($infoDataShares) && isset($infoDataShares["visitors"])){
+        if(!empty($infoDataShares) && isset($infoDataShares["shares"])){
             $infoDataShares["from"] = $from;
             $infoDataShares["to"] = $to;
         }
@@ -274,7 +271,7 @@ class Chart extends Component
     public function getSavedWithLastTime($id, $useDate)
     {
         if(empty($useDate)) {
-            $saved = AdProductSaved::find()->where((['product_id' => $id]))->orderBy('saved_at DESC')->one();
+            $saved = AdProductSaved::find()->where(['product_id' => $id])->orderBy('saved_at DESC')->one();
             if (count($saved) > 0)
                 $useDate = new \DateTime(date('Y-m-d', $saved->saved_at));
             else

@@ -685,12 +685,13 @@ class AdController extends Controller
 		return $response;
 	}
 
-    public function actionTrackingShareFacebook(){
+    public function actionTrackingShare(){
         Yii::$app->response->format = Response::FORMAT_JSON;
         $uid = Yii::$app->user->isGuest ? null : Yii::$app->user->id;
         $pid = (int)Yii::$app->request->get('product_id');
+        $type = (int)Yii::$app->request->get('type');
         if($pid > 0) {
-            return Tracking::find()->productShare($uid, $pid, time(), AdProductShare::SHARE_FACEBOOK);
+            return Tracking::find()->productShare($uid, $pid, time(), $type);
         }
         return false;
     }

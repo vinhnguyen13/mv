@@ -31,12 +31,7 @@ $count_product = count($products);
                 <div class="item">
                     <div class="img-show">
                         <div>
-                            <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id,
-                                'search' => $search,
-                                'click' => $click,
-                                'fav' => $fav,
-                                'share' => $share
-                            ]) ?>" title="<?=Yii::t('statistic', 'View statistic detail')?>"><img
+                            <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>" title="<?=Yii::t('statistic', 'View statistic detail')?>"><img
                                     src="<?= $product->representImage ?>" alt="<?=Yii::t('statistic', 'View statistic detail')?>"></a>
                         </div>
                         <a href="<?= Url::to(['/ad/update', 'id' => $product->id]) ?>" class="edit-duan">
