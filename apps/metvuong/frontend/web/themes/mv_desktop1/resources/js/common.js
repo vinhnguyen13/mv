@@ -158,10 +158,14 @@ $(document).ready(function() {
     			$.data(this, 'ajax', $.get(url, searchForm.serialize(), function(response){
             		var cs = $('.content-suggest ul');
             		
-            		if(response.length > 0) {
+            		if(response.address) {
+            			ss.removeClass('hide');
+            			$('.content-suggest ul').html('<li><a href="' + response.url + '">' + response.address + '</a></li>');
+            		} else if(response.length > 0) {
             			ss.removeClass('hide');
             			
             			var html = '';
+            			
             			for(var i in response) {
             				html += '<li>' + response[i].full_name + ' <a href="' + response[i].url_sale + '">' + lajax.t('Sale') + ' (' + response[i].total_sell + ')</a><a href="' + response[i].url_rent + '">' + lajax.t('Rent') + ' (' + response[i].total_rent + ')</a></li>';
                       	}

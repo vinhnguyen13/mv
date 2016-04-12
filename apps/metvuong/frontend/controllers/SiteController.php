@@ -297,43 +297,62 @@ class SiteController extends Controller
     	
     	if(Yii::$app->request->isAjax) {
     		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    		
-    		$v = Elastic::transform($v);
-    		 
-    		$params = [
-				'query' => [
-					'match_phrase_prefix' => [
-						'search_field' => [
-    						'query' => $v,
-    						'max_expansions' => 100
-    					]
-					],
-    			],
-    			'sort' => [
-    				'total_sell' => [
-    					'order' => 'desc',
-    					'mode'	=> 'sum'
-					],
-    				'total_rent' => [
-    					'order' => 'desc',
-    					'mode'	=> 'sum'
-					],
-				],
-    			'_source' => ['full_name', AdProduct::TYPE_FOR_SELL_TOTAL, AdProduct::TYPE_FOR_RENT_TOTAL]
-    		];
-    		 
-    		$ch = curl_init(Yii::$app->params['elastic']['config']['hosts'][0] . '/term/_search');
-    		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-    		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
-    		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    		 
-    		$result = json_decode(curl_exec($ch), true);
     		$response = [];
-    		 
-    		foreach ($result['hits']['hits'] as $k => $hit) {
-    			$response[$k] = $hit['_source'];
-    			$response[$k]['url_sale'] = Url::to(['/ad/index', $hit['_type'] . '_id' => $hit['_id'], 'type' => AdProduct::TYPE_FOR_SELL, 's' => 1]);
-    			$response[$k]['url_rent'] = Url::to(['/ad/index', $hit['_type'] . '_id' => $hit['_id'], 'type' => AdProduct::TYPE_FOR_RENT, 's' => 1]);
+    		
+    		if(StringHelper::startsWith(strtolower($v), 'mv')) {
+    			$id = str_replace('mv', '', strtolower($v));
+    			$product = AdProduct::findOne($id);
+    			
+    			if($product) {
+    				$response['address'] = $product->address;
+    				$response['url'] = $product->urlDetail();
+    			}
+    		} else {
+	    		$v = Elastic::transform($v);
+	    		 
+	    		$params = [
+					'query' => [
+						'match_phrase_prefix' => [
+							'search_field' => [
+	    						'query' => $v,
+	    						'max_expansions' => 100
+	    					]
+						],
+	    			],
+	    			'sort' => [
+	    				'total_sell' => [
+	    					'order' => 'desc',
+	    					'mode'	=> 'sum'
+						],
+	    				'total_rent' => [
+	    					'order' => 'desc',
+	    					'mode'	=> 'sum'
+						],
+					],
+	    			'_source' => ['full_name', AdProduct::TYPE_FOR_SELL_TOTAL, AdProduct::TYPE_FOR_RENT_TOTAL]
+	    		];
+	    		 
+	    		$ch = curl_init(Yii::$app->params['elastic']['config']['hosts'][0] . '/term/_search');
+	    		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+	    		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
+	    		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	    		 
+	    		$result = json_decode(curl_exec($ch), true);
+	    		 
+	    		foreach ($result['hits']['hits'] as $k => $hit) {
+	    			$response[$k] = $hit['_source'];
+	    			$response[$k]['url_sale'] = Url::to(['/ad/index', $hit['_type'] . '_id' => $hit['_id'], 'type' => AdProduct::TYPE_FOR_SELL, 's' => 1]);
+	    			$response[$k]['url_rent'] = Url::to(['/ad/index', $hit['_type'] . '_id' => $hit['_id'], 'type' => AdProduct::TYPE_FOR_RENT, 's' => 1]);
+	    		}
+	    		
+	    		if(!$response && is_numeric($v)) {
+	    			$product = AdProduct::findOne($v);
+	    			 
+	    			if($product) {
+	    				$response['address'] = $product->address;
+	    				$response['url'] = $product->urlDetail();
+	    			}
+	    		}
     		}
     		
     		return $response;
