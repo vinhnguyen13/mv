@@ -234,6 +234,10 @@ class AdBuildingProject extends ABP
     	if($districtId) {
     		$projects = self::find()->where('`district_id` = :district_id', [':district_id' => $districtId])->all();
     
+    		usort($projects, function($a, $b) {
+    			return strnatcmp($a['name'], $b['name']);
+    		});
+    		
     		foreach($projects as $project) {
     			$items[] = [
 					'id' => $project['id'],

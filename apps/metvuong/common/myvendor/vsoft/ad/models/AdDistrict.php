@@ -38,6 +38,10 @@ class AdDistrict extends AD
 		
 		if($cityId) {
 			$districts = self::find()->orderBy('name')->where('`city_id` = :city_id', [':city_id' => $cityId])->all();
+
+			usort($districts, function($a, $b) {
+				return strnatcmp($a['name'], $b['name']);
+			});
 			
 			foreach($districts as $district) {
 				$items[] = [

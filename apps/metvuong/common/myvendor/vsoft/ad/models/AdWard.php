@@ -26,6 +26,10 @@ class AdWard extends AW
 		if($districtId) {
 			$wards = self::find()->orderBy('name')->where('`district_id` = :district_id', [':district_id' => $districtId])->all();
 				
+			usort($wards, function($a, $b) {
+				return strnatcmp($a['name'], $b['name']);
+			});
+			
 			foreach($wards as $ward) {
 				$items[] = [
 					'id' => $ward['id'],

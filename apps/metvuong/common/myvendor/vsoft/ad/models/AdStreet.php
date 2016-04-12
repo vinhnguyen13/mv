@@ -26,6 +26,10 @@ class AdStreet extends ASt
 		if($districtId) {
 			$streets = self::find()->orderBy('name')->where('`district_id` = :district_id', [':district_id' => $districtId])->all();
 	
+			usort($streets, function($a, $b) {
+				return strnatcmp($a['name'], $b['name']);
+			});
+			
 			foreach($streets as $street) {
 				$items[] = [
 					'id' => $street['id'],
