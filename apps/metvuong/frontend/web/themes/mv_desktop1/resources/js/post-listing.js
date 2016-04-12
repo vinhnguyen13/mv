@@ -205,6 +205,7 @@ var form = {
 						$('.post-listing').hide();
 						$('#success-notify').removeClass('hide');
 						$('body').loading({done: true});
+						window.onbeforeunload = function() {};
 					} else {
 						alert('có lỗi xảy ra !');
 					}

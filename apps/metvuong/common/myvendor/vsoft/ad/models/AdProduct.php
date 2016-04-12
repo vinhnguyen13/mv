@@ -181,6 +181,11 @@ class AdProduct extends AP
 		return $this->hasOne(AdBuildingProject::className(), ['id' => 'project_building_id']);
 	}
 	
+    public function getAdProductAdditionInfo()
+    {
+        return $this->hasOne(AdProductAdditionInfo::className(), ['product_id' => 'id']);
+    }
+	
 	public function getRepresentImage() {
 		$image = AdImages::find()->orderBy('`order` ASC')->where(['product_id' => $this->id])->one();
 		

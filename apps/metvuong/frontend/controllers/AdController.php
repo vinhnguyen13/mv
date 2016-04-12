@@ -285,6 +285,8 @@ class AdController extends Controller
     			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     			$post = Yii::$app->request->post();
     			
+    			$post['AdProductAdditionInfo']['addition_fields'] = json_encode($post['AdProductAdditionInfo']['addition_fields']);
+
     			$product->load($post);
     			$additionInfo->load($post);
     			$contactInfo->load($post);
@@ -379,12 +381,11 @@ class AdController extends Controller
     		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     		
     		$post = Yii::$app->request->post();
+
+    		$post['AdProductAdditionInfo']['addition_fields'] = json_encode($post['AdProductAdditionInfo']['addition_fields']);
     		
     		$product->load($post);
-    		
     		$additionInfo->load($post);
-    		$additionInfo->addition_fields = json_encode($additionInfo->addition_fields);
-    		
     		$contactInfo->load($post);
     		
     		$result = ['success' => true];
