@@ -9,7 +9,7 @@ $nameUserTo = $userTo->profile->getDisplayName();
 $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 
 ?>
-<div id="chat-container" class="chat-container">
+<div class="chat-container">
 	
 </div>
 <!--chat script-->
@@ -50,7 +50,7 @@ $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 			</div>
 			<div class="type-input-chat container">
 				<div>
-					<input type="text" id="typingMsg" placeholder="<?=Yii::t('chat', 'Type a message...')?>">
+					<input type="text" class="typingMsg" placeholder="<?=Yii::t('chat', 'Type a message...')?>">
 					<button class="sm-chat"><span class="icon icon-chat-sub"></span></button>		
 				</div>
 			</div>
@@ -69,17 +69,17 @@ $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 			var onlines = chatUI.onlineList();
 		}, 5000);
 		chatUI.showBoxChat(xmpp_jid, '<?=$to;?>');
-		$(document).on('keyup', '.chat-group #typingMsg', function (e) {
+		$(document).on('keyup', '.chat-group .typingMsg', function (e) {
 			var key = e.which;
 			var chatBoxExist = $(this).closest('.chat-group');
 			var to = chatBoxExist.attr('chat-to');
 			var to_jid = chatUI.genJid(to);
-			var msg = chatBoxExist.find('#typingMsg').val();
+			var msg = chatBoxExist.find('.typingMsg').val();
 			msg = $.trim(msg);
 			if(key == 13 && msg.length > 0){
 				Chat.sendMessage(to_jid , msg, 'chat', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>'});
 				Chat.sendMessage(chatUI.genJid(xmpp_jid), msg, 'chatme', {from: chatUI.genJid(xmpp_jid), to: to_jid, fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>'});
-				chatBoxExist.find('#typingMsg').val('');
+				chatBoxExist.find('.typingMsg').val('');
 			}else{
 				Chat.sendChatState(to_jid, 'composing');
 			}
@@ -90,12 +90,12 @@ $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 			var chatBoxExist = $(this).closest('.chat-group');
 			var to = chatBoxExist.attr('chat-to');
 			var to_jid = chatUI.genJid(to);
-			var msg = chatBoxExist.find('#typingMsg').val();
+			var msg = chatBoxExist.find('.typingMsg').val();
 			msg = $.trim(msg);
 			if(msg && msg.length > 0){
 				Chat.sendMessage(to_jid , msg, 'chat', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>'});
 				Chat.sendMessage(chatUI.genJid(xmpp_jid), msg, 'chatme', {from: chatUI.genJid(xmpp_jid), to: to_jid, fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>'});
-				chatBoxExist.find('#typingMsg').val('');
+				chatBoxExist.find('.typingMsg').val('');
 			}
 			return false;
 		});
