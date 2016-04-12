@@ -21,7 +21,7 @@ use yii\helpers\Url;
                             <span>Share on Social Network</span>
                             <ul class="clearfix">
                                 <li>
-                                    <a target="_blank" href="#"
+                                    <a href="#"
                                        data-url="<?=Url::to(['/ad/tracking-share-facebook', 'product_id' => $product_id], true)?>" class="share-facebook">
                                         <div class="circle"><div><span class="icon icon-face"></span></div></div>
                                     </a>
@@ -56,8 +56,6 @@ use yii\helpers\Url;
                 dataType: 'json',
                 url: url,
                 success: function (data) {
-                    l(data);
-                    $('#popup-share-social').modal('hide');
                 }
             });
             $('body').loading({done:true});

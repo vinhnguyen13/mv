@@ -220,6 +220,18 @@ class Tracking extends Component
     	}
     }
 
+    public function countShares($pid){
+        if($this->isEnable()) {
+            $count_share = 0;
+            $shares = AdProductShare::find()->where(['product_id' => (int)$pid])->all();
+            foreach($shares as $share){
+                $count_share = $count_share + $share["count"];
+            }
+            return $count_share;
+        }
+        return 0;
+    }
+
     public function saveEmailLog($from_user, $from_email, $to_email, $subject, $content, $send_from){
         $sysEmail = new SysEmail();
         $sysEmail->from_user = $from_user; //utf8_encode($from_user);

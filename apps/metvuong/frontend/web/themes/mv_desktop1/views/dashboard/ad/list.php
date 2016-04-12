@@ -14,12 +14,29 @@ $count_product = count($products);
     if($count_product > 0) {
         $categories = \vsoft\ad\models\AdCategory::find()->indexBy('id')->asArray( true )->all();
         $types = \vsoft\ad\models\AdProduct::getAdTypes ();
-        foreach ($products as $product) { ?>
+        foreach ($products as $product) {
+            if (($search = \frontend\models\Tracking::find()->countFinders($product->id)) === null) {
+                $search = 0;
+            }
+            if (($click = \frontend\models\Tracking::find()->countVisitors($product->id)) === null) {
+                $click = 0;
+            }
+            if (($fav = \frontend\models\Tracking::find()->countFavourites($product->id)) === null) {
+                $fav = 0;
+            }
+            if (($share = \frontend\models\Tracking::find()->countShares($product->id)) === null) {
+                $share = 0;
+            } ?>
             <li class="col-xs-12 col-md-12 col-sm-6">
                 <div class="item">
                     <div class="img-show">
                         <div>
-                            <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>" title="<?=Yii::t('statistic', 'View statistic detail')?>"><img
+                            <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id,
+                                'search' => $search,
+                                'click' => $click,
+                                'fav' => $fav,
+                                'share' => $share
+                            ]) ?>" title="<?=Yii::t('statistic', 'View statistic detail')?>"><img
                                     src="<?= $product->representImage ?>" alt="<?=Yii::t('statistic', 'View statistic detail')?>"></a>
                         </div>
                         <a href="<?= Url::to(['/ad/update', 'id' => $product->id]) ?>" class="edit-duan">
@@ -79,17 +96,6 @@ $count_product = count($products);
                                 <div class="clearfix"></div>
                                 <a href="<?=$product->urlDetail(true)?>" class="see-detail-listing fs-13 font-600 color-cd-hover mgT-5"><span class="text-decor"><?=Yii::t('statistic', 'Go detail page')?></span><span class="icon-mv mgL-10"><span class="icon-angle-right"></span></span></a>
                             </div>
-                            <?php
-                            if (($search = \frontend\models\Tracking::find()->countFinders($product->id)) === null) {
-                                $search = 0;
-                            }
-                            if (($click = \frontend\models\Tracking::find()->countVisitors($product->id)) === null) {
-                                $click = 0;
-                            }
-                            if (($fav = \frontend\models\Tracking::find()->countFavourites($product->id)) === null) {
-                                $fav = 0;
-                            }
-                            ?>
                             <div class="wrap-icon">
                                 <span class="icon-mv"><span class="icon-icons-search"></span></span>
                                 <strong><?= $search ?></strong><?= Yii::t('statistic', 'Search') ?>
@@ -104,7 +110,7 @@ $count_product = count($products);
                             </div>
                             <div class="wrap-icon">
                                 <span class="icon-mv"><span class="icon-share-social"></span></span>
-                                <strong>10</strong>Chia sẻ 
+                                <strong><?= $share ?></strong>Chia sẻ
                             </div>
                         </div>
                     </div>

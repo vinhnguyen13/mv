@@ -62,10 +62,12 @@ class DashboardController extends Controller
         $search = (int)Yii::$app->request->get("search");
         $click = (int)Yii::$app->request->get("click");
         $fav = (int)Yii::$app->request->get("fav");
+        $share = (int)Yii::$app->request->get("share");
         $product = AdProduct::findOne($id);
         $finders = null;
         $visitors = null;
         $favourites = null;
+        $shares = null;
 
         if(Yii::$app->user->id != $product->user_id)
             $this->goHome();
@@ -85,6 +87,7 @@ class DashboardController extends Controller
                 'visitors' => $visitors,
                 'finders' => $finders,
                 'favourites' => $favourites,
+                'shares' => $shares,
                 'view' => '_partials/finder'
             ]);
         }else{
@@ -95,9 +98,10 @@ class DashboardController extends Controller
                 'favourites' => $favourites,
                 'shares' => $shares,
                 'view' => '_partials/finder',
-                'search' => $search,
-                'click' => $click,
-                'fav' => $fav,
+                'search_count' => $search,
+                'click_count' => $click,
+                'fav_count' => $fav,
+                'share_count' => $share,
                 'from' => $finders["from"],
                 'to' => $finders["to"],
             ]);
