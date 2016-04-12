@@ -63,22 +63,20 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                             'action' => Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])
                         ]);
                         ?>
-                        <p class="name-user fs-18 font-600 color-cd text-uper mgB-5">
+                        <div class="name-user fs-18 font-600 color-cd text-uper mgB-5">
                             <?= $f->field($profile_form, 'name')->textInput(['value' => empty($model->name) ? $user->username : $model->name ])->label(false)?>
-                        </p>
-                        <p class="num-mobi mgB-5">
+                        </div>
+                        <div class="num-mobi">
                             <span class="icon-mv"><span class="icon-phone-profile"></span></span>
                             <?= $f->field($profile_form, 'mobile')->textInput(['type'=>'number', 'maxlength' => 10, 'value' => $model->mobile ])->label(false)?>
-                        </p>
-                        <p class="email-user">
-                            <a href="#popup-email" class="email-btn">
-                                <span class="icon-mv"><span class="icon-mail-profile"></span></span>
-                                <?= $f->field($profile_form, 'public_email')->textInput(['value' => empty($model->public_email) ? $user->email : $model->public_email ])->label(false)?>
-                            </a>
+                        </div>
+                        <div class="email-user">
+                            <span class="icon-mv"><span class="icon-mail-profile"></span></span>
+                            <?= $f->field($profile_form, 'public_email')->textInput(['value' => empty($model->public_email) ? $user->email : $model->public_email ])->label(false)?>
                             <input type="hidden" name="scenario" value="updateprofile">
-                        </p>
+                        </div>
                         <?php $f->end(); ?>
-                        <p class="location mgB-5">
+                        <div class="location mgB-5">
                             <span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
                             <?php
                             if(empty($user_location))
@@ -103,7 +101,7 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                             echo $form->field($user_location, 'user_id')->hiddenInput(['value'=>Yii::$app->user->id])->label(false);
                             $form->end();
                             ?>
-                        </p>
+                        </div>
                     </div>
 
                 </div>

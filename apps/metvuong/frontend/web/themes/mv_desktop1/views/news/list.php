@@ -10,7 +10,7 @@ $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID, 'st
     <div class="page-news">
         <?= $this->render('/news/_partials/menu', ['cat_id'=>$cat_id]); ?>
         <?php if(count($news) > 0){?>
-            <div class="row wrap-news-page">
+            <div class="clearfix wrap-news-page">
                 <div class="wrap-news col-xs-12 col-md-9">
                     <ul class="clearfix row list-news">
                         <?php foreach($news as $n) {
