@@ -4,6 +4,8 @@ $(window).on('load', function () {
 
 $(document).ready(function() {
 
+
+
     $(document).on('click', '.box-chat-footer .close-box', function (e) {
         e.preventDefault();
         $(this).closest('.item-box-chat').remove();
@@ -182,11 +184,14 @@ $(document).ready(function() {
     	}
     }).focus();
 
-    $(window).resize(function () {
-        $('.hFullScreen').css({
-            height: $('#hScreen').outerHeight() - 40
+    $(window).on('resize', function () {
+        var hWindow = $(this).outerHeight(),
+            hHeader = $('header').outerHeight();
+        
+        $('.chat-list, .chat-live').css({
+            height: hWindow - hHeader +'px'
         });
-    });
+    }).trigger('resize');
 });
 
 function l(x){console.log(x);}

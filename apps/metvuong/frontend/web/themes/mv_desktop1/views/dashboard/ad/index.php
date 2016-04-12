@@ -22,8 +22,10 @@ use yii\widgets\LinkPager;
                 <li class="pull-right">
                     <div class="clearfix fs-13">
                         <div class="search-history">
-                            <input type="text" id="" class="form-control" placeholder="Search listing...">
-                            <button class="btn-search-hist" href="#"><span class="icon-mv"><span class="icon-icons-search"></span></span></button>
+                            <div>
+                                <input type="text" id="" class="form-control" placeholder="Search listing...">
+                                <button class="btn-search-hist" href="#"><span class="icon-mv"><span class="icon-icons-search"></span></span></button>
+                            </div>
                         </div>
                     </div>
                 </li>

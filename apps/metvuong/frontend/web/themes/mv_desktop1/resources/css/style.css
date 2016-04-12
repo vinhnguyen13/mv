@@ -2908,13 +2908,14 @@ html.mm-opening .mm-slideout {
 }
 .type-input-chat .sm-chat {
     position: absolute;
-    bottom: 0px;
     right: 0;
-    height: 35px;
+    height: 33px;
     border: none;
-    border: 1px solid #B3B3B3;
+    border-left: 1px solid #B3B3B3;
     background: #fff;
-    padding: 8px 10px;
+    padding: 0px 10px;
+    top: 1px;
+    right: 1px;
 }
 .chat-real {
     height: 100%;
@@ -4039,7 +4040,7 @@ html.mm-opening .mm-slideout {
 .chat-history {
     position: relative;
     /* padding-top: 36px; */
-    padding-bottom: 50px;
+    /* padding-bottom: 50px; */
 }
 .item-listing .id-duan {
     font-weight: 400;
@@ -6274,14 +6275,6 @@ footer li a {
         /* width: 850px; */
         margin: 30px auto 0;
     }
-    .search-history {
-        position: relative;
-        top: 0;
-        left: inherit;
-        /* width: 40%; */
-        padding-bottom: 15px;
-        /* padding-right: 30px; */
-    }
     .wrap-infor-duan {
         background: none;
         padding-left: 0;
@@ -6451,7 +6444,6 @@ footer li a {
         border-right: 1px solid #B3B3B3;
     }
     .type-input-chat .sm-chat {
-        right: 1px;
     }
     .list-menu-news {
         padding: 0;
@@ -7829,9 +7821,7 @@ footer li a {
     height: 100%;
     padding-bottom: 20px;
 }
-.chat-live {
-    padding-top: 50px;
-}
+.chat-live {padding-top: 45px;}
 .input-txt-chat {
     position: absolute;
     left: 0;
@@ -8098,8 +8088,8 @@ footer li a {
 }
 .chat-real {
     height: 100%;
-    padding-top: 26px;
     padding-bottom: 75px;
+    padding-top: 30px;
 }
 .wrap-chat-item {
     height: 100%;
@@ -8107,12 +8097,7 @@ footer li a {
     /* overflow-y: auto; */
 }
 .chat-real .title-top {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
     font-size: 15px;
-    display: block;
 }
 .address-feat {
     margin-bottom: 7px;
@@ -9047,21 +9032,11 @@ footer li a {
 }
 .chat-history .chat-real .title-top {
     display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 .wrap-history-item {
-    position: fixed;
-    height: 100%;
-    top: 0;
-    padding-top: 65px;
-    width: 960px;
-    padding-bottom: 0;
-}
-.search-history {
-    position: absolute;
-    top: 35px;
-    left: 0;
-    width: 100%;
-    padding-right: 40px;
 }
 .collapsing {
     position:relative;
@@ -9076,4 +9051,11 @@ footer li a {
     -webkit-transition-property:height,visibility;
     -o-transition-property:height,visibility;
     transition-property:height,visibility
+}
+.search-history {
+    position: absolute;
+    width: 100%;
+    top: 35px;
+    left: 0;
+    padding-right: 40px;
 }
