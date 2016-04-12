@@ -6448,9 +6448,10 @@ footer li a {
     }
     .type-input-chat input {
         border-left: 1px solid #B3B3B3;
+        border-right: 1px solid #B3B3B3;
     }
     .type-input-chat .sm-chat {
-        right: 0;
+        right: 1px;
     }
     .list-menu-news {
         padding: 0;
@@ -8070,12 +8071,12 @@ footer li a {
         background: #fff;
     }
 }
-#chat-container .container {
+.chat-container .container {
     width: auto;
     padding: 0;
     height: 100%;
 }
-#chat-container .type-input-chat {
+.chat-container .type-input-chat {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -8086,10 +8087,13 @@ footer li a {
     padding: 20px;
     background: #EAEAEA;
 }
-#chat-container .type-input-chat > div {
+.box-chat-footer .type-input-chat {
+    padding: 10px;
+}
+.chat-container .type-input-chat > div {
     position: relative;
 }
-#chat-container {
+.chat-container {
     height: 100%;
 }
 .chat-real {
@@ -8842,13 +8846,13 @@ footer li a {
     margin-right: 10px;
 }
 .box-chat-footer .type-input-chat input {
-    border-left: none;
-    border-right: none;
+    /* border-left: none; */
+    /* border-right: none; */
 }
 .box-chat-footer .type-input-chat .sm-chat {
     border-right: none;
 }
-.box-chat-footer #chat-container .type-input-chat {
+.box-chat-footer .chat-container .type-input-chat {
     height: auto;
 }
 .panel-heading .panel-title .edit-listing:hover {
