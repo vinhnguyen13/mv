@@ -356,7 +356,7 @@ use vsoft\ad\models\AdImages;
 						<div class="address-feat clearfix">
 							<div class="posi_relative">
 								<p class="infor-by-up"></p>
-								<span class="icon-mv fs-20 color-cd edit-listing"><span class="icon-edit-copy-4"></span></span>
+								<span class="icon-mv fs-16 color-cd edit-listing" style="top: -5px;"><span class="icon-edit-copy-4"></span></span>
 							</div>
 							<div class="posi_relative">
 								<div class="address-listing">
