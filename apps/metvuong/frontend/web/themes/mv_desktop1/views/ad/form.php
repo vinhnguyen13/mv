@@ -242,7 +242,7 @@ use vsoft\ad\models\AdImages;
 						<div class="col-xs-12 form-group">
 							<div id="addition-fields">
 								<?php
-									$additionFields = $additionInfo->addition_fields ? array_chunk(json_decode($additionInfo->addition_fields), 2) : [];
+									$additionFields = ($additionInfo->addition_fields && $additionInfo->addition_fields != '""') ? array_chunk(json_decode($additionInfo->addition_fields), 2) : [];
 									foreach ($additionFields as $additionField):
 								?>
 								<div class="addition-field row">
