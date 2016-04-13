@@ -44,6 +44,10 @@ $(document).ready(function(){
 	$('#review-listing-post').on('hidden.bs.modal', function () {
 		
 	});
+	
+	$('.edit-listing').click(function(){
+		console.log('s');
+	});
 });
 
 var form = {
