@@ -1,3 +1,5 @@
+var ref;
+
 $(document).ready(function(){
 
 	$('.frm-radio').radio({
@@ -12,39 +14,201 @@ $(document).ready(function(){
 	
 	form.init();
 	
-	var ref = {
+	ref = {
 		current: $(),
 		off: function(el, fn) {
 			el.removeClass('save');
 			el.off('click', fn);
 			ref.current = $();
 		},
+		clone: function(el, wrapClone){
+			var formGroupClone = el.closest('.form-group').clone().addClass('clone');
+			var formControl = formGroupClone.find('.form-control');
+
+			if(el.is("select")) {
+				formControl.val(el.val());
+			}
+
+			formControl.attr('id', formControl.attr('id') + '-clone');
+			
+			formControl.on('change', function(){
+				el.val(formControl.val());
+			});
+			
+			wrapClone.append(formGroupClone);
+			
+			return formControl;
+		},
+		buildSelectFromRadio: function(options, id) {
+			var select = $('<select class="clone" id="' + id + '"></select>');
+			
+			for(var i in options) {
+				var option = $('<option value="' + options[i].val() + '">' + options[i].parent().next().text().toLowerCase() + '</option>');
+				option.prop('selected', options[i].prop('checked'));
+				select.append(option);
+			}
+			
+			select.on('change', function(){
+				for(var i in options) {
+					if(options[i].val() == $(this).val()) {
+						options[i].closest('a').trigger('click');
+						break;
+					}
+				}
+			});
+			
+			return select;
+		},
+		removeErrorForWrap: function(wrapClone) {
+			wrapClone.find('select').change(function(){
+				form.hideError($(this));
+			});
+			
+			wrapClone.find('input').keyup(function(){
+				form.hideError($(this));
+			});
+		},
 		editS1: function(el) {
-			console.log('s1');
+			var inforByUp = $('.infor-by-up').hide();
+			var wrap = inforByUp.closest('.posi_relative');
+			
+			var ownerHost = $('#owner-host');
+			var ownerAgent = $('#owner-agent');
+			var typeForSell = $('#type-for-sell');
+			var typrForRent = $('#type-for-rent');
+			
+			var wrapClone = $('<div class="wrap-clone"></div>');
+			
+			var ownerSelect = ref.buildSelectFromRadio([ownerHost, ownerAgent], 'owner-select');
+			var typeForSelect = ref.buildSelectFromRadio([typeForSell, typrForRent], 'type-for-select');
+			
+			wrapClone.append(ownerSelect);
+			wrapClone.append(typeForSelect);
+			
+			var catSelect = ref.clone(form.catEl, wrapClone);
+			
+			wrap.append(wrapClone);
+			
+			ref.removeErrorForWrap(wrapClone);
+			
+			typeForSelect.on('change', function(){
+				catSelect.html(form.catEl.html());
+				catSelect.val(form.catEl.val());
+			});
 			
 			var fn = function() {
-				console.log('save s1');
-				ref.off(el, fn);
+				if(form.require(catSelect, lajax.t('Choose property types'))) {
+					form.updateS1();
+					form.updateS3();
+					
+					wrapClone.remove();
+					
+					inforByUp.show();
+					
+					ref.off(el, fn);
+				}
 			};
 			
 			el.on('click', fn);
 		},
 		editS2: function(el) {
-			console.log('s2');
+			var addressListing = $('.address-listing').hide();
+			var wrap = addressListing.closest('.posi_relative');
+			
+			var wrapClone = $('<div class="wrap-clone"></div>');
+			
+			var cityClone = ref.clone(form.cityEl, wrapClone);
+			var districtClone = ref.clone(form.districtEl, wrapClone);
+			var wardClone = ref.clone(form.wardEl, wrapClone);
+			var streetClone = ref.clone(form.streetEl, wrapClone);
+			var homeClone = ref.clone(form.homeEl, wrapClone);
+			
+			cityClone.on('change', function(){
+				$.get('/ad/list-district', {cityId: cityClone.val()}, function(districts){
+					form.appendDropdown(form.districtEl, districts);
+					form.appendDropdown(districtClone, districts);
+					
+					form.appendDropdown(form.wardEl, []);
+					form.appendDropdown(wardClone, []);
+					form.appendDropdown(form.streetEl, []);
+					form.appendDropdown(streetClone, []);
+					form.appendProjectDropdown([]);
+				});
+			});
+			
+			districtClone.on('change', function(){
+				$.get('/ad/list-swp', {districtId: form.districtEl.val()}, function(response){
+					form.appendDropdown(form.wardEl, response.wards);
+					form.appendDropdown(wardClone, response.wards);
+					form.appendDropdown(form.streetEl, response.streets);
+					form.appendDropdown(streetClone, response.streets);
+					form.appendProjectDropdown(response.projects);
+				});
+			});
+			
+			wrap.append(wrapClone);
+			
+			ref.removeErrorForWrap(wrapClone);
 			
 			var fn = function() {
-				console.log('save s2');
-				ref.off(el, fn);
+				var flag = form.require(cityClone, lajax.t('Choose city'));
+				flag = flag && form.require(districtClone, lajax.t('Choose district'));
+				flag = flag && form.require(wardClone, lajax.t('Choose ward'));
+				flag = flag && form.require(streetClone, lajax.t('Choose street'));
+				
+				if(flag) {
+					form.updateS2();
+					
+					wrapClone.remove();
+					addressListing.show();
+					ref.off(el, fn);
+				}
 			};
 			
 			el.on('click', fn);
 		},
 		editS3: function(el) {
-			console.log('s2');
+			var listAttrTd = $('.list-attr-td').hide();
+			var wrap = listAttrTd.closest('.posi_relative');
+			
+			var wrapClone = $('<div class="wrap-clone"></div>');
+			
+			var areaClone = ref.clone(form.areaEl, wrapClone);
+			var roomClone, toiletClone;
+			
+			if(form.catEl.val() != form.DNDU) {
+				roomClone = ref.clone(form.roomEl, wrapClone);
+				toiletClone = ref.clone(form.toiletEl, wrapClone);
+			}
+			
+			wrap.append(wrapClone);
+			ref.removeErrorForWrap(wrapClone);
 			
 			var fn = function() {
-				console.log('save s2');
-				ref.off(el, fn);
+				if(form.require(areaClone, lajax.t('Enter home size'))) {
+					var selectedCat = form.getSelectedCat();
+					var limit = Number(selectedCat.data('limit'));
+					
+					if(!form.isNumber(areaClone.val()) || areaClone.val() < 0) {
+						form.showError(areaClone, lajax.t('Home size is invalid'));
+					} else if(limit < (formatArea = form.formatNumber(areaClone.val()))) {
+						form.showError(areaClone, lajax.t('Home size must be not greater %s').replace('%s', limit));
+					} else {
+						areaClone.val(parseFloat(formatArea).toString().replace('.', ',')).trigger('change');
+					}
+				}
+				
+				if(form.catEl.val() != form.DNDU) {
+					form.require(roomClone, lajax.t('Enter no of bedrooms'));
+					form.require(toiletClone, lajax.t('Enter no of bathrooms'));
+				}
+				
+				if(!wrap.find('.has-error').length) {
+					form.updateS3();
+					wrapClone.remove();
+					listAttrTd.show();
+					ref.off(el, fn);
+				}
 			};
 			
 			el.on('click', fn);
@@ -96,8 +260,12 @@ $(document).ready(function(){
 		}
 	}
 	
-	$('#review-listing-post').on('hidden.bs.modal', function () {
+	$('#review-listing-post').on('hide.bs.modal', function () {
 		ref.current.trigger('click');
+		
+		if($('#review-listing-post').find('.has-error').length) {
+			return false;
+		}
 	});
 	
 	$('.edit-listing').click(function(){
@@ -105,6 +273,10 @@ $(document).ready(function(){
 		
 		if(!self.hasClass('save')) {
 			ref.current.trigger('click');
+			
+			if($('#review-listing-post').find('.has-error').length) {
+				return false;
+			}
 			
 			ref[self.data('ref')](self);
 			self.addClass('save');
@@ -303,6 +475,14 @@ var form = {
 		var detailListing = $('.detail-listing');
 		
 		$('.btn-post').click(function(){
+			if($(this).hasClass('btn-post-preview')) {
+				ref.current.trigger('click');
+
+				if($('#review-listing-post').find('.has-error').length) {
+					return false;
+				}
+			}
+			
 			form.require(form.nameEl, 'Nhập họ tên');
 			
 			if(form.require(form.mobileEl, 'Nhập số di động')) {
@@ -336,7 +516,13 @@ var form = {
 						$('body').loading({done: true});
 						window.onbeforeunload = function() {};
 					} else {
-						alert('có lỗi xảy ra !');
+						$('body').loading({done: true});
+						
+						for(var i in r.errors) {
+							for(var j in r.errors[i]) {
+								alert(r.errors[i][j][0]);
+							}
+						}
 					}
 				});
 			}
@@ -370,27 +556,11 @@ var form = {
 				swiperContainer.hide();
 			}
 			
-			var type = $("input[name='AdProduct[type]']:checked").parent().next().text();
-			var owner = $("input[name='AdProduct[owner]']:checked").parent().next().text();
+			form.updateS1();
+			form.updateS2();
+			form.updateS3();
 			
-			$('.infor-by-up').html(capitalizeFirstLetter(form.getSelectedCat().text()) + ' ' + type + ' bởi <a href="#">' + owner + '</a>');
 			
-			$('.address-listing p').text(form.buildAddress());
-			
-			if(form.catEl.val() == form.DNDU) {
-				$('.icon-bed').hide();
-				$('.icon-pt').hide();
-			} else if(form.catEl.val() == form.CHCK) {
-				$('#floor-no-text').text('Floor plan');
-			} else {
-				$('#floor-no-text').text('Number of storeys');
-				$('.icon-bed').show();
-				$('.icon-pt').show();
-			}
-			
-			$('.area-show').text(form.areaEl.val());
-			$('.bed-show').text(form.roomEl.val());
-			$('.toilet-show').text(form.toiletEl.val());
 			
 			$('.price-show').text(form.priceFormatEl.text());
 			$('.content-show').html(form.contentEl.val().replace(/\n/g, "<br />"));
@@ -471,7 +641,7 @@ var form = {
 		});
 		
 		$('.back-form').click(function(){
-			detailListing.hide();
+			//detailListing.hide();
 			formView.show();
 			if(swiperWrap.html()) {
 				swiper.destroy(false, true);
@@ -595,6 +765,28 @@ var form = {
 		var r = results[0];
 		form.latEl.val(r.geometry.location.lat());
 		form.lngEl.val(r.geometry.location.lng());
+	},
+	updateS1: function() {
+		var type = $("input[name='AdProduct[type]']:checked").parent().next().text();
+		var owner = $("input[name='AdProduct[owner]']:checked").parent().next().text();
+		
+		$('.infor-by-up').html(capitalizeFirstLetter(form.getSelectedCat().text()) + ' ' + type + ' bởi <a href="#">' + owner + '</a>');
+	},
+	updateS2: function() {
+		$('.address-listing p').text(form.buildAddress());
+	},
+	updateS3: function() {
+		if(form.catEl.val() == form.DNDU) {
+			$('.bed-li').hide();
+			$('.toilet-li').hide();
+		} else {
+			$('.bed-li').show();
+			$('.toilet-li').show();
+		}
+		
+		$('.area-show').text(form.areaEl.val());
+		$('.bed-show').text(form.roomEl.val());
+		$('.toilet-show').text(form.toiletEl.val());
 	}
 };
 

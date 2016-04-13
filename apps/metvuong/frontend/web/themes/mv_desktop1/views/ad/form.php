@@ -18,7 +18,7 @@ use vsoft\ad\models\AdImages;
 	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/string-helper.js', ['position' => View::POS_END]);
 	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/post-listing.js', ['position' => View::POS_END]);
 	$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
-	$this->registerCss("#project-info {position: relative;} #project-info .loading-proccess span {border-top-color: #8C7777; border-left-color: #8C7777;} #project-info .loading-proccess {display: none;} #project-info.loading .loading-proccess {display: block;} #project-info.loading .result {display: none;}");
+	$this->registerCss(".wrap-clone:after { display: block; content: ''; clear: both; } #project-info {position: relative;} #project-info .loading-proccess span {border-top-color: #8C7777; border-left-color: #8C7777;} #project-info .loading-proccess {display: none;} #project-info.loading .loading-proccess {display: block;} #project-info.loading .result {display: none;}");
 	$this->registerJs("var APPLY_TO_TYPE_BOTH = " . AdCategory::APPLY_TO_TYPE_BOTH . ";", View::POS_HEAD);
 	
 	$listRoom = [];
@@ -81,7 +81,7 @@ use vsoft\ad\models\AdImages;
 							<li>
 								<a class="frm-radio" href="#">
 									<span class="radio-ui icon-postlisting icon-mogioi">
-										<?= Html::radio($ownerName, ($product->owner == AdProduct::OWNER_AGENT), ['value' => AdProduct::OWNER_AGENT]) ?>
+										<?= Html::radio($ownerName, ($product->owner == AdProduct::OWNER_AGENT), ['value' => AdProduct::OWNER_AGENT, 'id' => 'owner-agent']) ?>
 									</span>
 									<span class="txt-type-post"><?= Yii::t('ad', 'Agent') ?></span>
 								</a>
@@ -90,7 +90,7 @@ use vsoft\ad\models\AdImages;
 								<a class="frm-radio" href="#">
 									<span class="radio-ui icon-postlisting icon-ban-post">
 										<?php $typeName = Html::getInputName($product, 'type') ?>
-										<?= Html::radio($typeName, ($product->type == AdProduct::TYPE_FOR_SELL || !$product->type), ['value' => AdProduct::TYPE_FOR_SELL]) ?>
+										<?= Html::radio($typeName, ($product->type == AdProduct::TYPE_FOR_SELL || !$product->type), ['value' => AdProduct::TYPE_FOR_SELL, 'id' => 'type-for-sell']) ?>
 									</span>
 									<span class="txt-type-post"><?= Yii::t('ad', 'Sell') ?></span>
 								</a>
@@ -98,7 +98,7 @@ use vsoft\ad\models\AdImages;
 							<li>
 								<a class="frm-radio" href="#">
 									<span class="radio-ui icon-postlisting icon-chothue">
-										<?= Html::radio($typeName, ($product->type == AdProduct::TYPE_FOR_RENT), ['value' => AdProduct::TYPE_FOR_RENT]) ?>
+										<?= Html::radio($typeName, ($product->type == AdProduct::TYPE_FOR_RENT), ['value' => AdProduct::TYPE_FOR_RENT, 'id' => 'type-for-rent']) ?>
 									</span>
 									<span class="txt-type-post"><?= Yii::t('ad', 'Rent') ?></span>
 								</a>
@@ -374,8 +374,8 @@ use vsoft\ad\models\AdImages;
 							<div class="posi_relative">
 								<ul class="clearfix list-attr-td">
 									<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span><span class="area-show"></span>m2 </li>
-									<li> <span class="icon-mv"><span class="icon-bed-search"></span></span><span class="bed-show"></span> </li>
-									<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span><span class="toilet-show"></span> </li>
+									<li class="bed-li"> <span class="icon-mv"><span class="icon-bed-search"></span></span><span class="bed-show"></span> </li>
+									<li class="toilet-li"> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span><span class="toilet-show"></span> </li>
 								</ul>
 								<span data-ref="editS3" class="edit-listing icon-mv fs-16 color-cd"><span class="icon-edit-copy-4"></span></span>
 							</div>
@@ -521,7 +521,7 @@ use vsoft\ad\models\AdImages;
 				    </div>
 					<div class="text-center">
 						<button type="button" class="back-form btn-common"><?= Yii::t('ad', 'Back') ?></button>
-						<button type="button" class="btn-post btn-common"><?= $product->isNewRecord ? Yii::t('ad', 'Post') : Yii::t('ad', 'Update') ?></button>
+						<button type="button" class="btn-post btn-common btn-post-preview"><?= $product->isNewRecord ? Yii::t('ad', 'Post') : Yii::t('ad', 'Update') ?></button>
 					</div>
 		        </div>
 			</div>
