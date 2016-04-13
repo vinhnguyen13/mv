@@ -107,21 +107,10 @@ class Tracking extends Component
     public function productShare($uid, $pid, $time = null, $type, $return = false){
         if($this->checkAccess()) {
             $time = !empty($time) ? $time : time();
-            $query = AdProductShare::find();
-            $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:01", $time)), strtotime(date("d-m-Y 23:59:59", $time))]);
-            $query->where(['user_id' => $uid]);
-            $query->andWhere(['product_id' => (int)$pid]);
-            $query->andWhere(['type' => (int)$type]);
-            $query->orderBy('time DESC');
-            $adProductShare = $query->one();
-            if ($adProductShare === null) {
-                $adProductShare = new AdProductShare();
-                $adProductShare->user_id = $uid;
-                $adProductShare->product_id = (int)$pid;
-                $adProductShare->count = 1;
-            } else {
-                $adProductShare->count++;
-            }
+            $adProductShare = new AdProductShare();
+            $adProductShare->user_id = $uid;
+            $adProductShare->product_id = (int)$pid;
+            $adProductShare->count++;
             $adProductShare->time = $time;
             $adProductShare->device = $this->getMobileDetect();
             $adProductShare->type = $type;

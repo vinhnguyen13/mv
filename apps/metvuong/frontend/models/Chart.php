@@ -124,9 +124,9 @@ class Chart extends Component
 
                 if (array_key_exists($username, $infoSaved)) {
                     $cc = $infoSaved[$username]['count'];
-                    $cc = $view == "shares" ? ($cc + $item->count) : ($cc + 1);
+                    $cc = ($cc + 1);
                 } else {
-                    $cc = $view == "shares" ? $item->count : 1;
+                    $cc = 1;
                 }
 
                 $infoSaved[$username] = [
