@@ -3817,9 +3817,6 @@ html.mm-opening .mm-slideout {
     padding: 2px 10px 6px;
     background: rgba(99, 99, 99, 0.84);
 }
-.edit-duan:hover {
-    background: #009455;
-}
 .edit-duan .icon-mv {
     font-size: 20px;
     color: #fff;
@@ -8420,7 +8417,11 @@ footer li a {
     left: 0;
     z-index: 99;
     padding: 5px 10px;
-    background: rgb(0, 167, 105);
+    background: rgba(99, 99, 99, 0.84);
+}
+.list-per-post .list-post li .edit-listing:hover,
+.edit-duan:hover {
+    background: #009455;
 }
 #detail-wrap .edit-listing .icon-mv,
 .list-per-post .list-post li .edit-listing .icon-mv {
@@ -8941,6 +8942,9 @@ footer li a {
     line-height: 100%;
     top: 0;
 }
+#review-listing-post .edit-listing.save .icon-edit-copy-4:before {
+    content: "\e922";
+}
 .user-avatar .stars {
     margin-bottom: 5px;
     line-height: 100%;
@@ -9272,4 +9276,49 @@ footer li a {
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover,
 .wrap-list-duan .nav-tabs a {
     border: none;
+}
+.wrap-clone .field-adproduct-category_id {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 0;
+}
+.wrap-clone select {
+    border-radius: 0;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -ms-box-shadow: none;
+    float: left;
+    height: 35px;
+    margin-right: 10px;
+    font-size: 14px;
+    padding: 0 5px;
+}
+.wrap-clone {
+    margin: 10px 0;
+    background: #ECECEC;
+    padding: 10px 10px 0;
+}
+.wrap-clone > [class^="col-"] {
+    padding-left: 0;
+    margin-bottom: 0;
+}
+.wrap-clone .field-adproduct-street_id {
+    width: 100%;
+}
+.wrap-clone .help-block {
+    float: left;
+    width: 100%;
+}
+.wrap-clone .unit-dt {
+    top: 4px;
+}
+.wrap-clone .field-adproduct-price {
+    font-size: 13px;
+    width: 100%;
+}
+.wrap-clone .field-adproduct-price input {
+    width: 30%;
+    margin-right: 10px;
+    display: inline-block;
 }

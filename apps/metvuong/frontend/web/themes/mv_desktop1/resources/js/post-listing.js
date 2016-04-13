@@ -115,7 +115,7 @@ $(document).ready(function(){
 			var addressListing = $('.address-listing').hide();
 			var wrap = addressListing.closest('.posi_relative');
 			
-			var wrapClone = $('<div class="wrap-clone"></div>');
+			var wrapClone = $('<div class="wrap-clone row pdR-30"></div>');
 			
 			var cityClone = ref.clone(form.cityEl, wrapClone);
 			var districtClone = ref.clone(form.districtEl, wrapClone);
