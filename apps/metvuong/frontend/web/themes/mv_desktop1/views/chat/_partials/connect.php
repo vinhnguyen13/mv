@@ -34,6 +34,9 @@ if(!Yii::$app->user->isGuest) {
                 chatUI.setConservation(params.from, params.to);
                 if(params.type == 'chat'){
                     if(params.chatType != chatUI.MSG_SEND_ME){
+                        if($('.wrap-history-item').length == 0){
+                            $(document).trigger('chat/showBoxChat', [chatUI.usrFromJid(params.from)]);
+                        }
                         chatUI.notify(chatUI.NOTIFY_CHAT, 1);
                     }
                     chatUI.loadMessageToBox(msg, params);
@@ -67,12 +70,22 @@ if(!Yii::$app->user->isGuest) {
                 $('.wrap-items-chat .item-box-chat').remove();
             });
 
+            $(document).bind('chat/showBoxChat', function (event, user) {
+                if (user) {
+                    var chatBoxExist = chatUI.getBoxChat('.item-box-chat', '<?=Yii::$app->user->identity->username?>', user);
+                    if(!chatBoxExist){
+                        $(document).trigger('chat/addBoxChat', [user]);
+                        chatBoxExist = chatUI.getBoxChat('.item-box-chat', '<?=Yii::$app->user->identity->username?>', user);
+                    }
+                }
+            });
+
             $(document).bind('chat/addBoxChat', function (event, user) {
                 var template = Handlebars.compile($(".item-box-chat-template").html());
                 var itemBoxChatTemplate = template({});
                 html = $(itemBoxChatTemplate).attr('chat-to', user);
                 $('.wrap-items-chat').append(html);
-                chatBoxExist = chatUI.getBoxChat('.item-box-chat', '<?=Yii::$app->user->identity->username?>', user);
+                var chatBoxExist = chatUI.getBoxChat('.item-box-chat', '<?=Yii::$app->user->identity->username?>', user);
                 if(chatBoxExist) {
                     $('.box-chat-footer').loading();
                     $.ajax({
@@ -81,11 +94,11 @@ if(!Yii::$app->user->isGuest) {
                         url: '/chat/with/' + user,
                         success: function (data) {
                             Chat.historyMessage(user + '@<?=Chat::DOMAIN?>');
-                            console.log(chatBoxExist.attr('chat-to'));
                             chatBoxExist.find('.box-chat-footer').append(data);
                             $('body').loading({done:true});
                         }
                     });
+                    $('.wrap-items-chat').removeClass('hide');
                 }
 
             });
@@ -99,12 +112,7 @@ if(!Yii::$app->user->isGuest) {
             $(document).on('click', '.chat-now', function (e) {
                 user = $(this).attr('data-chat-user');
                 if (user) {
-                    chatBoxExist = chatUI.getBoxChat('.item-box-chat', '<?=Yii::$app->user->identity->username?>', user);
-                    if(!chatBoxExist){
-                        $(document).trigger('chat/addBoxChat', [user]);
-                        chatBoxExist = chatUI.getBoxChat('.item-box-chat', '<?=Yii::$app->user->identity->username?>', user);
-                    }
-                    $('.wrap-items-chat').removeClass('hide');
+                    $(document).trigger('chat/showBoxChat', [user]);
                 }
                 return false;
             });
