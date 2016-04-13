@@ -45,7 +45,10 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                     </div>
                 </div>
                 <div class="box-edit-show wrap-attr-detail clearfix">
-                    <a href="#" class="done-profile btn-common">Xong</a>
+                    <div class="posi_absolute btn-mani">
+                        <a href="#" class="done-profile btn-common">Xong</a>    
+                        <a href="#" class="cancel-profile btn-common btn-cancel">Hủy</a>    
+                    </div>
                     <div class="avatar wrap-img pull-left mgR-15 text-center">
                         <img class="mgB-10" id="profileAvatar" src="<?=$model->avatar?>" alt="metvuong avatar" />
                         <a class="btn-common" href="#" data-toggle="modal" data-target="#avatar">Tải hình</a>
@@ -117,7 +120,10 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                     </div>
                 </div>
                 <div class="box-edit-show wrap-attr-detail">
-                    <a href="#" class="done-profile btn-common">Xong</a>
+                    <div class="posi_absolute btn-mani">
+                        <a href="#" class="done-profile btn-common">Xong</a>    
+                        <a href="#" class="cancel-profile btn-common btn-cancel">Hủy</a>    
+                    </div>
                     <?php
                     $profile_form = Yii::createObject([
                         'class'    => \frontend\models\ProfileForm::className(),
@@ -147,7 +153,10 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                     <span class="pass_result"></span>
                 </div>
                 <div class="box-edit-show wrap-attr-detail">
-                    <a href="#" class="done-profile btn-common">Xong</a>
+                    <div class="posi_absolute btn-mani">
+                        <a href="#" class="done-profile btn-common">Xong</a>    
+                        <a href="#" class="cancel-profile btn-common btn-cancel">Hủy</a>    
+                    </div>
                     <div class="row">
                         <br>
                         <?php
@@ -251,6 +260,13 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
             var _this = $(this);
             _this.closest('section').find('.wrap-attr-detail').hide();
             _this.closest('section').find('.box-edit-show').show();
+        });
+
+        $('.cancel-profile').on('click', function (e) {
+            e.preventDefault();
+            var _this = $(this);
+            _this.closest('section').find('.wrap-attr-detail').show();
+            _this.closest('section').find('.box-edit-show').hide();
         });
 
         $('.infor-user-settings .done-profile').on('click', function(e){

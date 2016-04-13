@@ -2236,6 +2236,9 @@ label {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.btn-cancel {
+    background: #C4C4C4;
+}
 .btn-small {
     padding: 7px 30px;
 }
@@ -6752,6 +6755,9 @@ footer li a {
 	background-image:-o-linear-gradient(top, #3EACBA, #48C6D4);
 	background-image:linear-gradient(top, #3EACBA, #48C6D4);
 }
+.btn-cancel:hover {
+    background: #C4C4C4;
+}
 .info-wrap-single {
     position: relative;
     background: #fff;
@@ -8931,7 +8937,6 @@ footer li a {
 .wrap-edit-tt section .title-update-tt {
     margin-bottom: 10px;
 }
-.done-profile,
 .edit-profile {
     position: absolute;
     top: 10px;
@@ -8946,16 +8951,25 @@ footer li a {
     background: #009455;
     color: #fff;
 }
+.btn-mani {
+    position: absolute;
+    top: 10px;
+    right: 0;
+}
+.cancel-profile,
 .done-profile {
     font-size: 13px;
     color: #fff;
     padding: 7px 25px;
+    line-height: 100%;
 }
 .wrap-attr-detail select,
 .wrap-attr-detail input {
     border: 1px solid #d4d4d4;
     padding: 3px 5px;
     min-width: 300px;
+    height: 35px;
+    font-size: 13px;
 }
 .wrap-attr-detail textarea {
     border: 1px solid #d4d4d4;
