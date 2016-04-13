@@ -23,7 +23,7 @@ $count_product = $pagination->totalCount;
                 <div class="user-avatar">
                     <div class="wrap-img avatar"><img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="<?=$model->avatar?>" alt="metvuong avatar" /></div>
                     <div class="overflow-all">
-                        <p class="name-user fs-18 font-600" ><?= $model->name ?><a href="#"><span class="icon-mv"><span class="icon-bubbles-icon"></span></span></a></p>
+                        <p class="name-user fs-18 font-600" ><?= $model->name ?><a href="#" class="chat-now" data-chat-user="<?=$user->username?>"><span class="icon-mv"><span class="icon-bubbles-icon"></span></span></a></p>
                         <div class="stars">
                             <span id="rating-all" class="rateit" data-rateit-value="<?=$model->rating_point?>" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
                         </div>
