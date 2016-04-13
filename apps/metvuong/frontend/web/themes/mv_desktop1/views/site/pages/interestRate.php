@@ -30,7 +30,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
                             ]
                         ]);
                         ?>
-                        
+
                     </td>
                 </tr>
                 <tr>
