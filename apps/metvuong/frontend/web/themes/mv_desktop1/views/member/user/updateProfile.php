@@ -151,7 +151,7 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                     <a href="#" class="edit-profile"><span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
 <!--                    <a class="text-decor color-cd-hover fs-13 font-600 link-change-pass" href="#">Đổi mật khẩu</a> -->
                     <span class="pass_result"></span>
-                    <p>Password last changed <?=\frontend\models\ProfileForm::humanTiming($user->updated_at)?>.</p>
+                    <span class="last_changed">Password last changed <?=\frontend\models\ProfileForm::humanTiming($user->updated_at)?>.</span>
                 </div>
                 <div class="box-edit-show wrap-attr-detail">
                     <div class="posi_absolute btn-mani">
@@ -363,10 +363,12 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                 success: function (data) {
                     _this.closest('section').loading({done: true});
                     if(data.statusCode == 200){
+                        $('.changepass .last_changed').remove();
                         _this.closest('section').find('.wrap-attr-detail').show();
                         _this.closest('section').find('.box-edit-show').hide();
-                        _this.closest('section').find('.pass_result').html("Thay đổi mật khẩu thành công.");
+                        _this.closest('section').find('.pass_result').html("<span class=\"reset_success\"><?=Yii::t('profile','Reset password sucesss.')?></span>");
                         $('#form-edit-changepass input').val('');
+
                     } else {
                         var strMessage = '';
                         var focusName = '';
