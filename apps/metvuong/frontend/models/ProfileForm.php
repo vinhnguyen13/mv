@@ -116,7 +116,7 @@ class ProfileForm extends Model
                 'new_password',
                 function ($attribute) {
                     if($this->old_password == $this->new_password) {
-                        $this->addError($attribute, Yii::t('user', 'New password is the same old password. '));
+                        $this->addError($attribute, Yii::t('user', 'New password like old password. Try again.'));
                     }
                 }
             ],
@@ -134,7 +134,11 @@ class ProfileForm extends Model
     public function resetPass(){
         $user = User::findIdentity(Yii::$app->user->id);
         if (!$this->hasErrors()) {
-            return $user->resetPassword($this->new_password);
+            $result = $user->resetPassword($this->new_password);
+            if($result){
+                User::getDb()->createCommand()->update(User::tableName(), ['updated_at' => time()], 'id = :id', [':id' => Yii::$app->user->id])->execute();
+                return $result;
+            }
         }
         return false;
     }
@@ -152,6 +156,28 @@ class ProfileForm extends Model
             return $profile->save();
         }
         return false;
+    }
+
+    public static function humanTiming($time)
+    {
+        $time = time() - $time; // to get the time since that moment
+        $time = ($time<1)? 1 : $time;
+        $tokens = array (
+            31536000 => 'year',
+            2592000 => 'month',
+            604800 => 'week',
+            86400 => 'day',
+            3600 => 'hour',
+            60 => 'minute',
+            1 => 'second'
+        );
+
+        foreach ($tokens as $unit => $text) {
+            if ($time < $unit) continue;
+            $numberOfUnits = floor($time / $unit);
+            return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'');
+        }
+
     }
 
 //    public function slugify($string, $replacement = '-', $lowercase = true, $transliterateOptions = null){

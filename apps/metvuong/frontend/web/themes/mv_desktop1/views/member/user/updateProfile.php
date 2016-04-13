@@ -32,7 +32,7 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                         </p>
                         <p class="num-mobi mgB-5">
                             <span class="icon-mv"><span class="icon-phone-profile"></span></span>
-                            <a href="<?=empty($model->mobile) ? "#" : "tel:".$model->mobile ?>">
+                            <a href="<?=empty($model->mobile) ? "#" : "tel:".$model->mobile ?>" class="mobile">
                                 <?=empty($model->mobile) ? "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->mobile ?>
                             </a>
                         </p>
@@ -151,6 +151,7 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                     <a href="#" class="edit-profile"><span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
 <!--                    <a class="text-decor color-cd-hover fs-13 font-600 link-change-pass" href="#">Đổi mật khẩu</a> -->
                     <span class="pass_result"></span>
+                    <p>Password last changed <?=\frontend\models\ProfileForm::humanTiming($user->updated_at)?>.</p>
                 </div>
                 <div class="box-edit-show wrap-attr-detail">
                     <div class="posi_absolute btn-mani">
