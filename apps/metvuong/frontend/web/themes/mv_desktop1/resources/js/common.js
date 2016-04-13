@@ -191,6 +191,7 @@ $(document).ready(function() {
         $('.chat-list, .chat-live').css({
             height: hWindow - hHeader +'px'
         });
+        l(2);
     }).trigger('resize');
 });
 

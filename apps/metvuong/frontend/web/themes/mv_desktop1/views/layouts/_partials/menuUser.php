@@ -65,8 +65,10 @@ use yii\helpers\Url;
                         $('body').loading({done: true});
                         $('.contentContainer').html(data);
                         $(document).trigger('chat/listLoadDefault');
+                        $(window).trigger('resize');
                     }
                 });
+
                 return false;
             });
         });

@@ -325,15 +325,22 @@ use vsoft\ad\models\AdImages;
 	</div>
 	<div id="success-notify" class="hide">
 		<?php if($product->isNewRecord): ?>
-			<div style="font-weight: bold; font-size: 20px; color: #514AB3; margin: -8px 0 22px 0;">Đăng tin thành công !</div>
-			<div style="font-size: 14px; margin-bottom: 32px;">Tin của bạn đang chờ xét duyệt và sẽ được hiển thị đến người mua sớm nhất.<br /><br />Cảm ơn đã sử dụng dịch vụ của MetVuong</div>
-			<a style="margin-right: 22px;" href="<?= Url::current() ?>" style="font-size: 16px; text-transform: uppercase;">Tiếp tục đăng tin</a>
-			<a style="display: inline-block;" id="to-detail" href="#" style="font-size: 16px; text-transform: uppercase;">Xem tin vừa đăng</a>
+			<div class="color-cd fs-20 font-600 mgB-15 text-uper">Đăng tin thành công !</div>
+			<p class="mgB-10 fs-14">Tin của bạn đang chờ xét duyệt và sẽ được hiển thị đến người mua sớm nhất.</p>
+			<p class="mgB-10 fs-14">Cảm ơn đã sử dụng dịch vụ của MetVuong</p>
+			<div class="text-center">
+				<a class="btn-common" href="<?= Url::current() ?>">Tiếp tục đăng tin</a>
+				<a class="btn-common" id="to-detail" href="#">Xem tin vừa đăng</a>	
+			</div>
+			
 		<?php else: ?>
-			<div style="font-weight: bold; font-size: 20px; color: #514AB3; margin: -8px 0 22px 0;">Cập nhật thành công !</div>
-			<div style="font-size: 14px; margin-bottom: 32px;">Tin của bạn sẽ chờ xét duyệt lại trước khi hiển thị đến người xem.<br /><br />Cảm ơn đã sử dụng dịch vụ của MetVuong</div>
-			<a style="margin-right: 22px;" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>" style="font-size: 16px; text-transform: uppercase;">Quay trở về dashboard</a>
-			<a style="display: inline-block;" id="to-detail" href="#" style="font-size: 16px; text-transform: uppercase;">Xem tin vừa cập nhật</a>
+			<div class="color-cd fs-20 font-600 mgB-15 text-uper">Cập nhật thành công !</div>
+			<p class="mgB-10 fs-14">Tin của bạn sẽ chờ xét duyệt lại trước khi hiển thị đến người xem.</p>
+			<p class="mgB-10 fs-14">Cảm ơn đã sử dụng dịch vụ của MetVuong</p>
+			<div class="text-center">
+				<a class="btn-common" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>">Quay trở về dashboard</a>
+				<a class="btn-common" id="to-detail" href="#">Xem tin vừa cập nhật</a>
+			</div>
 		<?php endif; ?>
 	</div>
 </div>
