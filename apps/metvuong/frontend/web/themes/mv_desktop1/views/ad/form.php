@@ -456,55 +456,57 @@ use vsoft\ad\models\AdImages;
 				            </div>
 				            <div id="collapseEght" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven">
 				                <div class="panel-body text-center">
-				            	    <div class="infor-agent clearfix">
-							            <?php if(!empty($owner->username)) { ?>
-										<a href="#" class="wrap-img">
-							                <img src="<?= $avatar ?>" alt="" /></a>
-							            <?php } else { ?>
-							                <a class="wrap-img" href=""><img src="<?= $avatar ?>" alt="" /></a>
-							            <?php } ?>
-							            <div class="img-agent">
-								            <a href="" class="name-agent"></a>
-											<div class="rating-start">
-												<fieldset class="rate">
-													<input type="radio" id="rating10" name="rating" value="10"> <label
-														for="rating10" title="5 stars"> </label> <input type="radio"
-														id="rating9" name="rating" value="9"> <label for="rating9"
-														class="half" title="5 stars"> </label> <input type="radio"
-														id="rating8" name="rating" value="8"> <label for="rating8"
-														title="4 stars"> </label> <input type="radio" id="rating7"
-														name="rating" value="7"> <label for="rating7" class="half"
-														title="4 stars"> </label> <input type="radio" id="rating6"
-														name="rating" value="6"> <label for="rating6" title="3 stars"> </label>
-													<input type="radio" id="rating5" name="rating" value="5"> <label
-														for="rating5" class="half" title="3 stars"> </label> <input
-														type="radio" id="rating4" name="rating" value="4"> <label
-														for="rating4" title="2 stars"> </label> <input type="radio"
-														id="rating3" name="rating" value="3"> <label for="rating3"
-														class="half" title="2 stars"> </label> <input type="radio"
-														id="rating2" name="rating" value="2"> <label for="rating2"
-														title="1 stars"> </label> <input type="radio" id="rating1"
-														name="rating" value="1"> <label for="rating1" class="half"
-														title="1 stars"> </label>
-												</fieldset>
-											</div>
-											<div class="item-agent icon-phone-item">
-												<div>
-													<span class="icon icon-phone"></span>
+				                	<div class="wrap-for-edit">
+					            	    <div class="infor-agent clearfix">
+								            <?php if(!empty($owner->username)) { ?>
+											<a href="#" class="wrap-img">
+								                <img src="<?= $avatar ?>" alt="" /></a>
+								            <?php } else { ?>
+								                <a class="wrap-img" href=""><img src="<?= $avatar ?>" alt="" /></a>
+								            <?php } ?>
+								            <div class="img-agent">
+									            <a href="" class="name-agent"></a>
+												<div class="rating-start">
+													<fieldset class="rate">
+														<input type="radio" id="rating10" name="rating" value="10"> <label
+															for="rating10" title="5 stars"> </label> <input type="radio"
+															id="rating9" name="rating" value="9"> <label for="rating9"
+															class="half" title="5 stars"> </label> <input type="radio"
+															id="rating8" name="rating" value="8"> <label for="rating8"
+															title="4 stars"> </label> <input type="radio" id="rating7"
+															name="rating" value="7"> <label for="rating7" class="half"
+															title="4 stars"> </label> <input type="radio" id="rating6"
+															name="rating" value="6"> <label for="rating6" title="3 stars"> </label>
+														<input type="radio" id="rating5" name="rating" value="5"> <label
+															for="rating5" class="half" title="3 stars"> </label> <input
+															type="radio" id="rating4" name="rating" value="4"> <label
+															for="rating4" title="2 stars"> </label> <input type="radio"
+															id="rating3" name="rating" value="3"> <label for="rating3"
+															class="half" title="2 stars"> </label> <input type="radio"
+															id="rating2" name="rating" value="2"> <label for="rating2"
+															title="1 stars"> </label> <input type="radio" id="rating1"
+															name="rating" value="1"> <label for="rating1" class="half"
+															title="1 stars"> </label>
+													</fieldset>
 												</div>
-												<a class="phone-show" href="tel:"></a>
-											</div>
-											<div class="item-agent icon-email-item">
-												<div>
-													<span class="icon icon-email"></span>
+												<div class="item-agent icon-phone-item">
+													<div>
+														<span class="icon icon-phone"></span>
+													</div>
+													<a class="phone-show" href="tel:"></a>
 												</div>
-												<span class="email-show"></span>
-											</div>
-											<div class="item-agent address-icon-item">
-												<div>
-													<span class="icon address-icon"></span>
+												<div class="item-agent icon-email-item">
+													<div>
+														<span class="icon icon-email"></span>
+													</div>
+													<span class="email-show"></span>
 												</div>
-												<span class="address-show"></span>
+												<div class="item-agent address-icon-item">
+													<div>
+														<span class="icon address-icon"></span>
+													</div>
+													<span class="address-show"></span>
+												</div>
 											</div>
 										</div>
 									</div>

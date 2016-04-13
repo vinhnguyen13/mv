@@ -215,44 +215,161 @@ $(document).ready(function(){
 			
 		},
 		editS4: function(el) {
-			console.log('s2');
+			var priceTd = $('.price-td').hide();
+			var wrap = priceTd.closest('.posi_relative');
+			
+			var wrapClone = $('<div class="wrap-clone"></div>');
+			
+			var priceClone = ref.clone(form.priceEl, wrapClone);
+			var priceFormat = priceClone.next().removeAttr('id');
+			
+			priceClone.keyup(function(){
+				var val = priceClone.val();
+				
+				if(/^\d+$/.test(val)) {
+					val = parseInt(val) + '';
+					priceFormat.show().text(formatPrice(val) + ' ' + lajax.t('VND'));
+				} else {
+					priceFormat.hide();
+				}
+			})
+			
+			wrap.append(wrapClone);
+			ref.removeErrorForWrap(wrapClone);
 			
 			var fn = function() {
-				console.log('save s2');
-				ref.off(el, fn);
+				if(form.require(priceClone, lajax.t('Enter price'))) {
+					if(!form.isDigit(priceClone.val())) {
+						form.showError(priceClone, lajax.t('Price is invalid'));
+					} else {
+						priceClone.val(parseInt(priceClone.val())).trigger('change');
+						form.priceEl.trigger('keyup');
+					}
+				}
+				
+				if(!wrap.find('.has-error').length) {
+					form.updateS4();
+					wrapClone.remove();
+					priceTd.show();
+					ref.off(el, fn);
+				}
 			};
 			
 			el.on('click', fn);
 			
 		},
 		editS5: function(el) {
-			console.log('s2');
+			var contentShow = $('.content-show').hide();
+			var wrap = contentShow.closest('.panel-body');
+			
+			var wrapClone = $('<div class="wrap-clone"></div>');
+			
+			var contentClone = ref.clone(form.contentEl, wrapClone);
+			contentClone.height(300);
+			
+			wrap.append(wrapClone);
+			ref.removeErrorForWrap(wrapClone);
 			
 			var fn = function() {
-				console.log('save s2');
-				ref.off(el, fn);
+				form.require(contentClone, lajax.t('Enter content'));
+				
+				if(!wrap.find('.has-error').length) {
+					form.updateS5();
+					wrapClone.remove();
+					contentShow.show();
+					ref.off(el, fn);
+				}
 			};
 			
 			el.on('click', fn);
 			
 		},
 		editS6: function(el) {
-			console.log('s2');
+			var listTi = $('.list-tienich-detail').hide();
+			var wrap = listTi.closest('.panel-body');
+			
+			var wrapClone = $('<div class="wrap-clone"></div>');
+			
+			var projectClone = ref.clone(form.projectEl, wrapClone);
+			var facadeWiClone = ref.clone(form.facadeWiEl, wrapClone);
+			var landWiClone = ref.clone(form.landWiEl, wrapClone);
+			var homeDiClone = ref.clone(form.homeDiEl, wrapClone);
+			var facadeDiClone = ref.clone(form.facadeDiEl, wrapClone);
+			var floorClone;
+			
+			if(form.catEl.val() != form.DNDU) {
+				floorClone = ref.clone(form.floorEl, wrapClone);
+			}
+			
+			var interiorClone = ref.clone(form.interiorEl, wrapClone);
+			
+			facadeWiClone.parent().append('<span class="unit-dt">m</span>');
+			landWiClone.parent().append('<span class="unit-dt">m</span>');
+
+			wrap.append(wrapClone);
+			ref.removeErrorForWrap(wrapClone);
 			
 			var fn = function() {
-				console.log('save s2');
-				ref.off(el, fn);
+				if(facadeWiClone.val() && !form.isDigit(facadeWiClone.val())) {
+					form.showError(facadeWiClone, lajax.t('Facade is invalid'));
+				}
+				
+				if(landWiClone.val() && !form.isDigit(landWiClone.val())) {
+					form.showError(landWiClone, lajax.t('Entry width is invalid'));
+				}
+				
+				if(form.catEl.val() != form.DNDU) {
+					if(floorClone.val() && !form.isDigit(floorClone.val())) {
+						form.showError(floorClone, lajax.t('%s is invalid').replace('%s', form.floorEl.attr('placeholder')));
+					}
+				}
+				
+				if(!wrap.find('.has-error').length) {
+					form.updateS6();
+					wrapClone.remove();
+					listTi.show();
+					ref.off(el, fn);
+				}
 			};
 			
 			el.on('click', fn);
 			
 		},
 		editS7: function(el) {
-			console.log('s2');
+			var inforAgent = $('.infor-agent').hide();
+			var wrap = inforAgent.closest('.wrap-for-edit');
+			
+			var wrapClone = $('<div class="wrap-clone"></div>');
+			
+			var nameClone = ref.clone(form.nameEl, wrapClone);
+			var mobileClone = ref.clone(form.mobileEl, wrapClone);
+			var emailClone = ref.clone(form.emailEl, wrapClone);
+			ref.clone(form.addressEl, wrapClone);
+
+			wrap.append(wrapClone);
+			ref.removeErrorForWrap(wrapClone);
 			
 			var fn = function() {
-				console.log('save s2');
-				ref.off(el, fn);
+				form.require(nameClone, 'Nhập họ tên');
+				
+				if(form.require(mobileClone, 'Nhập số di động')) {
+					if(!form.isDigit(mobileClone.val())) {
+						form.showError(mobileClone, 'Số điện thoại không hợp lệ');
+					} else if(mobileClone.val().length < 7 || mobileClone.val().length > 11) {
+						form.showError(mobileClone, 'Số điện thoại không được ít hơn 7 hoặc nhiều hơn 11 số.');
+					}
+				}
+				
+				if(!form.validateEmail(emailClone.val())) {
+					form.showError(emailClone, 'Địa chỉ email không hợp lệ');
+				}
+				
+				if(!wrap.find('.has-error').length) {
+					form.updateS7();
+					wrapClone.remove();
+					inforAgent.show();
+					ref.off(el, fn);
+				}
 			};
 			
 			el.on('click', fn);
@@ -559,85 +676,10 @@ var form = {
 			form.updateS1();
 			form.updateS2();
 			form.updateS3();
-			
-			
-			
-			$('.price-show').text(form.priceFormatEl.text());
-			$('.content-show').html(form.contentEl.val().replace(/\n/g, "<br />"));
-			
-			if(form.projectEl.val()) {
-				$('.project-item').show();
-				$('.project-show').html('<a href="' + form.projectDetailEl.attr('href') + '">' + form.projectEl.find('option').filter(':selected').text() + '</a>');
-				$('#facilities-section').removeClass('hide');
-			} else {
-				$('.project-item').hide();
-				$('#facilities-section').addClass('hide');
-			}
-			
-			if(form.facadeWiEl.val()) {
-				$('.facade-width-item').show();
-				$('.facade-width-show').text(form.facadeWiEl.val());
-			} else {
-				$('.facade-width-item').hide();
-			}
-			
-			if(form.landWiEl.val()) {
-				$('.land-width-item').show();
-				$('.land-width-show').text(form.landWiEl.val());
-			} else {
-				$('.land-width-item').hide();
-			}
-			
-			if(form.floorEl.val()) {
-				$('.floor-no-item').show().find('strong').text(form.floorEl.attr('placeholder') + ':');
-				$('.floor-no-show').text(form.floorEl.val());
-			} else {
-				$('.floor-no-item').hide();
-			}
-			
-			if(form.homeDiEl.val()) {
-				$('.home-di-item').show();
-				$('.home-di-show').text(form.homeDiEl.find('option').filter(':selected').text());
-			} else {
-				$('.home-di-item').hide();
-			}
-			
-			if(form.facadeDiEl.val()) {
-				$('.facade-di-item').show();
-				$('.facade-di-show').text(form.facadeDiEl.find('option').filter(':selected').text());
-			} else {
-				$('.facade-di-item').hide();
-			}
-			
-			if(form.interiorEl.val()) {
-				$('.interior-item').show();
-				$('.interior-show').text(form.interiorEl.val());
-			} else {
-				$('.interior-item').hide();
-			}
-			
-			$('.name-agent').text(form.nameEl.val());
-			
-			if(form.mobileEl.val()) {
-				$('.icon-phone-item').show();
-				$('.phone-show').text(form.mobileEl.val());
-			} else {
-				$('.icon-phone-item').hide();
-			}
-			
-			if(form.emailEl.val()) {
-				$('.icon-email-item').show();
-				$('.email-show').text(form.emailEl.val());
-			} else {
-				$('.icon-email-item').hide();
-			}
-			
-			if(form.addressEl.val()) {
-				$('.address-icon-item').show();
-				$('.address-show').text(form.addressEl.val());
-			} else {
-				$('.address-icon-item').hide();
-			}
+			form.updateS4();
+			form.updateS5();
+			form.updateS6();
+			form.updateS7();
 		});
 		
 		$('.back-form').click(function(){
@@ -787,6 +829,88 @@ var form = {
 		$('.area-show').text(form.areaEl.val());
 		$('.bed-show').text(form.roomEl.val());
 		$('.toilet-show').text(form.toiletEl.val());
+	},
+	updateS4: function() {
+		$('.price-show').text(form.priceFormatEl.text());
+	},
+	updateS5: function() {
+		$('.content-show').html(form.contentEl.val().replace(/\n/g, "<br />"));
+	},
+	updateS6: function() {
+		if(form.projectEl.val()) {
+			$('.project-item').show();
+			$('.project-show').html('<a href="' + form.projectDetailEl.attr('href') + '">' + form.projectEl.find('option').filter(':selected').text() + '</a>');
+			$('#facilities-section').removeClass('hide');
+		} else {
+			$('.project-item').hide();
+			$('#facilities-section').addClass('hide');
+		}
+		
+		if(form.facadeWiEl.val()) {
+			$('.facade-width-item').show();
+			$('.facade-width-show').text(form.facadeWiEl.val());
+		} else {
+			$('.facade-width-item').hide();
+		}
+		
+		if(form.landWiEl.val()) {
+			$('.land-width-item').show();
+			$('.land-width-show').text(form.landWiEl.val());
+		} else {
+			$('.land-width-item').hide();
+		}
+		
+		if(form.floorEl.val()) {
+			$('.floor-no-item').show().find('strong').text(form.floorEl.attr('placeholder') + ':');
+			$('.floor-no-show').text(form.floorEl.val());
+		} else {
+			$('.floor-no-item').hide();
+		}
+		
+		if(form.homeDiEl.val()) {
+			$('.home-di-item').show();
+			$('.home-di-show').text(form.homeDiEl.find('option').filter(':selected').text());
+		} else {
+			$('.home-di-item').hide();
+		}
+		
+		if(form.facadeDiEl.val()) {
+			$('.facade-di-item').show();
+			$('.facade-di-show').text(form.facadeDiEl.find('option').filter(':selected').text());
+		} else {
+			$('.facade-di-item').hide();
+		}
+		
+		if(form.interiorEl.val()) {
+			$('.interior-item').show();
+			$('.interior-show').text(form.interiorEl.val());
+		} else {
+			$('.interior-item').hide();
+		}
+	},
+	updateS7: function(){
+		$('.name-agent').text(form.nameEl.val());
+		
+		if(form.mobileEl.val()) {
+			$('.icon-phone-item').show();
+			$('.phone-show').text(form.mobileEl.val());
+		} else {
+			$('.icon-phone-item').hide();
+		}
+		
+		if(form.emailEl.val()) {
+			$('.icon-email-item').show();
+			$('.email-show').text(form.emailEl.val());
+		} else {
+			$('.icon-email-item').hide();
+		}
+		
+		if(form.addressEl.val()) {
+			$('.address-icon-item').show();
+			$('.address-show').text(form.addressEl.val());
+		} else {
+			$('.address-icon-item').hide();
+		}
 	}
 };
 
