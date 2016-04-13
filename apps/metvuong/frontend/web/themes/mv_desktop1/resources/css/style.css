@@ -8845,14 +8845,23 @@ footer li a {
     -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.53);
     -ms-box-shadow: 0 0 3px rgba(0, 0, 0, 0.53);
     cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 .box-chat-footer .title-top a {
     font-size: 13px;
     color: #fff;
+    display: block;
+    width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .box-chat-footer .chat-real {
     padding-top: 32px;
     height: 100%;
+    padding-bottom: 55px;
 }
 .box-chat-footer .container-chat .wrap-chat {
     padding: 10px;
