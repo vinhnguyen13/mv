@@ -40,13 +40,14 @@ $count_product = count($products);
                     </div>
                     <div class="intro-detail">
                         <div class="address-feat clearfix">
-                            <p class="date-post"><span
-                                    class="font-600"><?= Yii::t('statistic', 'Date of posting') ?>
-                                    :</span> <?= date("d/m/Y", $product->created_at) ?></p>
-
-                            <?php if ($product->projectBuilding): ?>
-                                <p class="name-duan"><?= $product->projectBuilding->name ?></p>
-                            <?php endif; ?>
+                            <div class="clearfix mgB-5">
+                                <?php if ($product->projectBuilding): ?>
+                                    <p class="name-duan"><?= $product->projectBuilding->name ?></p>
+                                <?php endif; ?>
+                                <p class="date-post"><span
+                                        class="font-600"><?= Yii::t('statistic', 'Date of posting') ?>
+                                        :</span> <?= date("d/m/Y", $product->created_at) ?></p>
+                            </div>
                             <p class="loca-duan"><a href="<?=$product->urlDetail(true)?>"><?= $product->address ?></a></p>
                             <p class="fs-13 mgB-10 text-cappi"><span><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></span></p>
                             <p class="id-duan">
