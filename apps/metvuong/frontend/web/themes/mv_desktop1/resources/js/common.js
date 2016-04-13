@@ -741,15 +741,17 @@ $.fn.slideSection = function (options) {
             el.append(nextBack);
         }
         
-        //el.find('.section').eq(sc.settings.active).removeClass('hide');
         el.find('.section').eq(sc.settings.active).velocity("fadeIn", { duration: 500 });
-
-        hWrapSection(sc.settings.active);
 
         current = sc.settings.active;
 
+        sc.settings.funCallBack(current);
+        pagi(current);
+
         if ( current == 0 ) {
             btnBack.addClass('disable');
+        }else if ( current+1 == lenItem ) {
+            btnNext.addClass('disable');
         }
 
         function next (e) {
@@ -761,16 +763,8 @@ $.fn.slideSection = function (options) {
 
             el.find('.section').eq(current).find('.val-selected').removeClass('error');
 
-            //el.find('.section').removeClass('back-in back-out');
-
             if ( current+1 < lenItem ) {
                 var oldItem = current;
-
-                /*el.find('.section').eq(oldItem).addClass('out').removeClass('in');
-
-                setTimeout(function () {
-                    el.find('.section').eq(oldItem).addClass('hide');
-                },350);*/
 
                 el.find('.section').hide();
 
@@ -780,11 +774,7 @@ $.fn.slideSection = function (options) {
 
                 pagi(current);
 
-                //el.find('.section').eq(current).addClass('in').removeClass('hide');
-
                 el.find('.section').eq(current).velocity("fadeIn", { duration: 500 });
-
-                hWrapSection(current);
 
                 if ( current+1 == lenItem ) {
                     btnNext.addClass('disable');
@@ -798,17 +788,9 @@ $.fn.slideSection = function (options) {
             e.preventDefault();
             if ( $(this).hasClass('disable') ) return;
 
-            //el.find('.section').removeClass('in out');
-
             var oldItem = current;
 
             el.find('.section').hide();
-
-            /*el.find('.section').eq(oldItem).removeClass('back-in').addClass('back-out');
-
-            setTimeout(function () {
-                el.find('.section').eq(oldItem).addClass('hide');
-            },350);*/
 
             current = current - 1;
 
@@ -816,11 +798,7 @@ $.fn.slideSection = function (options) {
 
             pagi(current);
 
-            //el.find('.section').eq(current).addClass('back-in').removeClass('out hide');
-
             el.find('.section').eq(current).velocity("fadeIn", { duration: 500 });
-
-            hWrapSection(current);
             
             if ( current == 0 ) {
                 btnNext.removeClass('disable');
@@ -830,19 +808,11 @@ $.fn.slideSection = function (options) {
             }
         }
 
-        function hWrapSection (current) {
-            /*var hActive = el.find('.section').eq(current).outerHeight();
-            el.css({
-                height: hActive+120+'px'
-            });*/
-        }
-
         function pagi (current) {
             if ( current == 0 ) return;
             $(sc.settings.pagi).find('li').removeClass('active');
             $(sc.settings.pagi).find('li').eq(current-1).addClass('active');
         }
-
     });
 }
 

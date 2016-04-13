@@ -1384,7 +1384,7 @@ label {
     background-position: 0 -93px;
 }
 .search-subpage {
-    padding: 0 20px 15px;
+    padding: 0 0 15px;
     margin: 0 0 15px;
     border-bottom: 1px solid #9b9b9b;
 }
@@ -1488,7 +1488,7 @@ label {
 }
 .option-show-listing {
     margin-bottom: 10px;
-    padding: 0 20px;
+    padding: 0 0;
 }
 .dropdown-select .arrowDown {
     position: absolute;
@@ -1554,12 +1554,12 @@ label {
 }
 .top-listing {
     line-height: 25px;
-    padding: 0 20px;
+    padding: 0 0;
     margin-bottom: 10px;
 }
 .item-listing .img-intro {
     /* height: 225px; */
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     position: relative;
     background: #DEDEDE;
 }
@@ -5178,7 +5178,7 @@ html.mm-opening .mm-slideout {
 }
 #listing-list > ul > li {
     border-bottom: 1px solid #ededed;
-    padding: 20px; */
+    padding: 20px 0; */
 }
 @media (min-width: 640px) {
     #listing-list > ul > li,
@@ -5189,7 +5189,7 @@ html.mm-opening .mm-slideout {
         margin-bottom: 25px;
     }
     #listing-list > ul {
-        padding: 0 10px;
+    margin: 0 -10px;
     }
     #listing-list > ul > li {
         border: none;
@@ -5201,7 +5201,7 @@ html.mm-opening .mm-slideout {
         margin: 0 -10px;
     }
     #listing-list .wrap-attr-item {
-        height: 120px;
+        height: 95px;
         overflow: hidden;
         padding: 0 15px;
         border-bottom: 1px solid #ededed;
@@ -7466,7 +7466,19 @@ footer li a {
 }
 .user-avatar .name-user {
     text-transform: uppercase;
-    margin-bottom: 3px;
+    margin-bottom: 5px;
+    line-height: 100%;
+}
+.user-avatar .name-user a {
+    position: relative;
+    margin-left: 10px;
+    color: #009455;
+}
+.user-avatar .name-user a:hover {
+    color: #3c3c3c;
+}
+.user-avatar .name-user span {
+    font-size: 20px;
 }
 .user-avatar .rating {
     margin-bottom: 5px;
@@ -7475,10 +7487,14 @@ footer li a {
 .user-avatar .location {
     margin-bottom: 0;
 }
+.user-avatar .num-mobi {
+    margin-bottom: 5px;
+}
 .user-avatar .icon-mv {
     width: 19px;
     font-size: 18px;
     margin-right: 5px;
+    line-height: 100%;
 }
 .user-avatar .icon-phone-profile {
     font-size: 19px;
@@ -8870,9 +8886,10 @@ footer li a {
 }
 .user-avatar .stars {
     margin-bottom: 5px;
+    line-height: 100%;
 }
 .user-avatar .location {
-    margin-bottom: 3px;
+    margin-bottom: 7px;
 }
 .wrap-attr-detail .icon-mv {
     width: 30px;
@@ -9043,6 +9060,16 @@ footer li a {
         margin-bottom: 15px;
         position: relative;
         margin-top: 20px;
+    }
+    .search-box {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    #listing-list .item-listing .wrap-attr-item {
+        overflow: hidden;
+    }
+    .item-listing .infor-by-up {
+        margin-bottom: 3px;
     }
 }
 .all-packege .title-top {

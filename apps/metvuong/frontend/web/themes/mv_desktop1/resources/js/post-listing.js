@@ -9,36 +9,7 @@ $(document).ready(function(){
 			}
 		}
 	});
-	$('.wrap-frm-listing').slideSection({
-		active: 0,
-		validateFrm: function (step) {
-			var s = 'step' + step;
-			
-			if(form.validate[s]) {
-				form.validate[s]();
-			}
-
-			form.fixHeight(step);
-			
-			if($('#' + s).find('.has-error').length) {
-				return false;
-			} else {
-				if(form.success['step' + step]) {
-					form.success['step' + step]();
-				}
-				
-				return true;
-			}
-		},
-		funCallBack: function (current) {
-			if ( current > 0 ) {
-				$('.step-link').show();
-			}else {
-				$('.step-link').hide();
-			}
-		}
-	});
-
+	
 	form.init();
 	
 	$('#review-listing-post').on('hidden.bs.modal', function () {
@@ -56,11 +27,42 @@ var form = {
 	init: function() {
 		form.initJavasciptCall();
 		form.attachEvent();
-		
+
 		if($('#is-update').val() == '1') {
+			
+			$('.wrap-frm-listing').slideSection({
+				active: 4,
+				validateFrm: function (step) {
+					var s = 'step' + step;
+					
+					if(form.validate[s]) {
+						form.validate[s]();
+					}
+
+					form.fixHeight(step);
+					
+					if($('#' + s).find('.has-error').length) {
+						return false;
+					} else {
+						if(form.success['step' + step]) {
+							form.success['step' + step]();
+						}
+						
+						return true;
+					}
+				},
+				funCallBack: function (current) {
+					if ( current > 0 ) {
+						$('.step-link').show();
+					}else {
+						$('.step-link').hide();
+					}
+				}
+			});
+
 			setTimeout(function(){
 				$('.preview').trigger('click');
-				
+
 				var formVal = $('#listing-form').serialize();
 				window.onbeforeunload = function() {
 					if(formVal != $('#listing-form').serialize()) {
@@ -68,6 +70,36 @@ var form = {
 					}
 				};
 			}, 1);
+		}else {
+			$('.wrap-frm-listing').slideSection({
+				active: 0,
+				validateFrm: function (step) {
+					var s = 'step' + step;
+					
+					if(form.validate[s]) {
+						form.validate[s]();
+					}
+
+					form.fixHeight(step);
+					
+					if($('#' + s).find('.has-error').length) {
+						return false;
+					} else {
+						if(form.success['step' + step]) {
+							form.success['step' + step]();
+						}
+						
+						return true;
+					}
+				},
+				funCallBack: function (current) {
+					if ( current > 0 ) {
+						$('.step-link').show();
+					}else {
+						$('.step-link').hide();
+					}
+				}
+			});
 		}
 	},
 	initJavasciptCall: function() {
