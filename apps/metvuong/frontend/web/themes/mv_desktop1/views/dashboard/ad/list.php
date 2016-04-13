@@ -90,7 +90,7 @@ $count_product = count($products);
                                 <a href="#nang-cap"
                                    class="btn-nang-cap"><?= Yii::t('statistic', 'Upgrade') ?></a>
                                 <div class="clearfix"></div>
-                                <a href="<?=$product->urlDetail(true)?>" class="see-detail-listing fs-13 font-600 color-cd-hover mgT-5"><span class="text-decor"><?=Yii::t('statistic', 'Go detail page')?></span><span class="icon-mv mgL-10"><span class="icon-angle-right"></span></span></a>
+                                <a href="<?=$product->urlDetail(true)?>" class="see-detail-listing fs-13 font-600 color-cd-hover mgT-10"><span class="text-decor"><?=Yii::t('statistic', 'Go detail page')?></span><span class="icon-mv mgL-10"><span class="icon-angle-right"></span></span></a>
                             </div>
                             <div class="wrap-icon">
                                 <span class="icon-mv"><span class="icon-icons-search"></span></span>

@@ -2513,7 +2513,7 @@ footer {
     width: 100%;
 }
 .wrap-list-duan {
-    padding: 25px 0 0;
+    padding: 65px 0 0;
     margin-bottom: 30px;
 }
 .wrap-list-duan li .item {
@@ -2531,8 +2531,11 @@ footer {
     color: #3c3c3c;
     /* padding: 0 0 0 30px; */
     overflow: hidden;
-    padding: 15px;
-    background: #F5F5F5;
+    padding: 15px 15px 15px 35px;
+    /* background: #F5F5F5; */
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
 }
 .wrap-list-duan .img-intro > a {
     display: inline-block;
@@ -2561,9 +2564,9 @@ footer {
 }
 .wrap-list-duan .name-duan {
     text-transform: uppercase;
-    font-size: 15px;
-    float: left;
-    width: 59%;
+    font-size: 20px;
+    /* float: left; */
+    /* width: 59%; */
     line-height: 100%;
 }
 .wrap-list-duan .loca-duan {
@@ -2692,7 +2695,7 @@ footer {
     font-weight: 400;
     font-size: 18px;
     color: #00a769;
-    margin-bottom: 10px;
+    margin-bottom: 25px;
     letter-spacing: 2px;
 }
 .statis .title-sub {
@@ -3190,7 +3193,7 @@ html.mm-opening .mm-slideout {
     position: absolute;
     top: 0;
     right: 0;
-    background: rgba(0, 167, 105, 0.58);
+    background: rgba(99, 99, 99, 0.84);
     padding: 8px 15px;
     color: #fff;
     text-transform: uppercase;
@@ -3739,10 +3742,10 @@ html.mm-opening .mm-slideout {
 }
 .wrap-list-duan .list-item li {
     float: left;
-    /* width: 100%; */
-    padding: 0 15px;
-    /* border-bottom: solid 1px #a5a5a5; */
-    margin-bottom: 30px;
+    width: 100%;
+    padding: 30px 15px;
+    border-bottom: solid 1px #a5a5a5;
+    /* margin-bottom: 30px; */
 }
 .wrap-list-duan .list-item {
     margin: 0 -15px;
@@ -3763,9 +3766,12 @@ html.mm-opening .mm-slideout {
 }
 .wrap-list-duan li .img-show {
     position: relative;
-    /* float: left; */
-    /* width: 40%; */
+    float: left;
+    width: 40%;
     /* margin-bottom: 12px; */
+}
+.wrap-list-duan li .img-show:before {
+    padding-top: 70%;
 }
 .icon-inactive-pro {
     background-position: 0px -1066px;
@@ -3808,15 +3814,15 @@ html.mm-opening .mm-slideout {
     top: 0;
     right: 0;
     padding: 2px 10px 6px;
+    background: rgba(99, 99, 99, 0.84);
+}
+.edit-duan:hover {
     background: #009455;
 }
 .edit-duan .icon-mv {
     font-size: 20px;
     color: #fff;
     line-height: 100%;
-}
-.edit-duan:hover .icon-mv {
-    color: #3c3c3c;
 }
 .icon-active-pro {
     background-position: 0 -1086px;
@@ -3980,13 +3986,14 @@ html.mm-opening .mm-slideout {
 .push-price .btn-nang-cap {
     border: solid 1px #00a769;
     color: #00a769;
-    padding: 5px 20px;
+    padding: 1px 20px;
     display: block;
     float: right;
 }
 .push-price .see-detail-listing {
     letter-spacing: 0;
     display: inline-block;
+    line-height: 100%;
 }
 .wrap-list-duan .push-price .see-detail-listing .icon-mv {
     width: auto;
@@ -4025,7 +4032,7 @@ html.mm-opening .mm-slideout {
     -ms-border-radius: 0;
     width: 100%;
     padding-left: 39px;
-    height: 39px;
+    height: 30px;
 }
 .icon-search-white {
     width: 33px;
@@ -4042,9 +4049,11 @@ html.mm-opening .mm-slideout {
     background: none;
 }
 .btn-search-hist .icon-mv {
-    font-size: 22px;
+    font-size: 19px;
     position: relative;
-    top: -2px;
+    top: 5px;
+    line-height: 100%;
+    vertical-align: top;
 }
 .search-history.focus input {
     left: 0;
@@ -6276,9 +6285,13 @@ footer li a {
     .user-login .item-dropdown a:hover {
         text-decoration: none;
     }
+    .noti-alert,
     .wrap-list-duan {
         padding-left: 0;
         padding-right: 0;
+        width: 680px;
+        margin-left: 100px;
+        overflow: hidden;
     }
     .page-faqs, .page-terms, .noti-alert, .detail-news {
         padding: 0;
@@ -8187,27 +8200,33 @@ footer li a {
     height: 100%;
     border-right: 1px solid #a5a5a5;
     /* border-left: 1px solid #a5a5a5; */
-    padding-top: 63px;
+    /* padding-top: 63px; */
     background: #fff;
     z-index: 10;
     width: 240px;
     /* left: 340px; */
+    margin-top: 128px;
 }
 .menuUser li a {
     display: block;
     border-bottom: 1px solid #a5a5a5;
-    padding: 15px 30px 15px 20px;
+    padding: 0 30px 0 20px;
     text-transform: uppercase;
     position: relative;
     color: #3c3c3c;
+    font-size: 15px;
+    height: 60px;
+    line-height: 60px;
 }
 .menuUser li a > div {
     display: inline-block;
     vertical-align: middle;
     width: 45px;
+    line-height: 100%;
 }
 .menuUser li a > div span.icon-mv {
-    font-size: 30px;
+    font-size: 27px;
+    line-height: 100%;
 }
 .menuUser li a > div .icon-settings {
     font-size: 30px;
@@ -8217,7 +8236,7 @@ footer li a {
 .menuUser li a.active > div .icon-settings,
 .menuUser li a.active,
 .menuUser li a:hover {
-    background: #E8E8E8;
+    background: #F7F7F7;
     color: #00a769;
 }
 .menuUser li a.active {
@@ -8231,7 +8250,7 @@ footer li a {
 .noti-alert,
 .edit-user-tt,
 .u-allduan {
-    padding-left: 280px;
+    padding-left: 240px;
 }
 .wrap-list-duan .tab-content {
     padding: 0;
@@ -8246,7 +8265,7 @@ footer li a {
 }
 .wrap-list-duan .nav-tabs {
     border-bottom: solid 1px #a5a5a5;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 .wrap-list-duan .nav-tabs li {
     width: 20%;
@@ -8299,7 +8318,8 @@ footer li a {
     font-size: 13px;
 }
 .wrap-list-duan .bottom-feat-box .wrap-icon {
-    margin-bottom: 0px;
+    margin-bottom: 7px;
+    line-height: 100%;
 }
 .wrap-list-duan .bottom-feat-box .icon-mv {
     font-size: 19px;
@@ -8561,17 +8581,21 @@ footer li a {
     width: 100%;
 }
 .wrap-list-duan .nav-tabs .search-history {
-    margin: 0;
-    padding: 2px 0 0 0;
+    margin: 5px 0 0 0;
+    padding: 0px 0 0 0;
     width: 100%;
     position: relative;
     top: 0;
 }
+.wrap-list-duan .nav-tabs .search-history > div {
+    position: relative;
+}
 .wrap-list-duan .nav-tabs .search-history input {
-    border-bottom: none;
+    /* border-bottom: none; */
 }
 .wrap-list-duan .nav-tabs .search-history .btn-search-hist {
     padding: 0 10px;
+    height: 100%;
 }
 .icon-noti-type {
     position: absolute;
@@ -9226,4 +9250,9 @@ footer li a {
 }
 .detail-listing-extra {
     padding-top: 50px;
+}
+.wrap-list-duan .nav-tabs a:hover,
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover,
+.wrap-list-duan .nav-tabs a {
+    border: none;
 }
