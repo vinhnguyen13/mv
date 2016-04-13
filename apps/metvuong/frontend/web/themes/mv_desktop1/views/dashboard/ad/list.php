@@ -41,14 +41,15 @@ $count_product = count($products);
                     <div class="intro-detail">
                         <div class="address-feat clearfix">
                             <div class="clearfix mgB-5">
-                                <?php if ($product->projectBuilding): ?>
-                                    <p class="name-duan"><?= $product->projectBuilding->name ?></p>
-                                <?php endif; ?>
                                 <p class="date-post"><span
                                         class="font-600"><?= Yii::t('statistic', 'Date of posting') ?>
                                         :</span> <?= date("d/m/Y", $product->created_at) ?></p>
                             </div>
-                            <p class="loca-duan"><a href="<?=$product->urlDetail(true)?>"><?= $product->address ?></a></p>
+                            <?php if ($product->projectBuilding){ ?>
+                                <p class="loca-duan"><a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>"><?= $product->projectBuilding->name ?></a></p>
+                            <?php } else { ?>
+                            <p class="loca-duan"><a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>"><?= $product->address ?></a></p>
+                            <?php } ?>
                             <p class="fs-13 mgB-10 text-cappi"><span><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></span></p>
                             <p class="id-duan">
                                 ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id; ?></span>
@@ -133,7 +134,7 @@ $count_product = count($products);
     });
     $('#list-sell a.load_listing').click(function(){
         $('body').loading();
-        $(this).remove();
+        $(this).parent().remove();
         $.ajax({
             type: "get",
             dataType: 'html',
@@ -146,7 +147,7 @@ $count_product = count($products);
     });
     $('#list-rent a.load_listing').click(function(){
         $('body').loading();
-        $(this).remove();
+        $(this).parent().remove();
         $.ajax({
             type: "get",
             dataType: 'html',
