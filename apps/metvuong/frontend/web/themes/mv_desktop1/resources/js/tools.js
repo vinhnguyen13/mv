@@ -343,7 +343,7 @@ var Tools = {
                 temp += '<td colspan="2">Tổng số</td>';
             }
             else {
-                temp += '<td>Tá»•ng sá»‘</td>';
+                temp += '<td>Tổng số</td>';
             }
             temp += '<td>'+FormatNumber(tongTienPhaiTra)+'</td><td>'+FormatNumber(tongTraGoc)+'</td><td>'+FormatNumber(tongTraLai)+'</td><td></td><td></td></tr>';
             temp+="</table>"

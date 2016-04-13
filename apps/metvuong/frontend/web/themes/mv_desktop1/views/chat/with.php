@@ -9,8 +9,8 @@ $nameUserTo = $userTo->profile->getDisplayName();
 $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 
 ?>
-<div class="chat-container">
-	
+<div class="chat-container" chat-from="<?=Yii::$app->user->identity->username?>" chat-to="<?=$to?>">
+
 </div>
 <!--chat script-->
 <script class="chat-send-template" type="text/x-handlebars-template">
@@ -51,7 +51,7 @@ $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 			<div class="type-input-chat container">
 				<div>
 					<input type="text" class="typingMsg" placeholder="<?=Yii::t('chat', 'Type a message...')?>">
-					<button class="sm-chat"><span class="icon icon-chat-sub"></span></button>		
+					<button class="sm-chat"><span class="icon icon-chat-sub"></span></button>
 				</div>
 			</div>
 		</div>

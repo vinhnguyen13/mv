@@ -69,9 +69,25 @@ if(!Yii::$app->user->isGuest) {
 
             $(document).bind('chat/addBoxChat', function (event, user) {
                 var template = Handlebars.compile($(".item-box-chat-template").html());
-                var html = template({});
-                html = $(html).attr('chat-to', user);
+                var itemBoxChatTemplate = template({});
+                html = $(itemBoxChatTemplate).attr('chat-to', user);
                 $('.wrap-items-chat').append(html);
+                chatBoxExist = chatUI.getBoxChat('.item-box-chat', '<?=Yii::$app->user->identity->username?>', user);
+                if(chatBoxExist) {
+                    $('.box-chat-footer').loading();
+                    $.ajax({
+                        type: "get",
+                        dataType: 'html',
+                        url: '/chat/with/' + user,
+                        success: function (data) {
+                            Chat.historyMessage(user + '@<?=Chat::DOMAIN?>');
+                            console.log(chatBoxExist.attr('chat-to'));
+                            chatBoxExist.find('.box-chat-footer').append(data);
+                            $('body').loading({done:true});
+                        }
+                    });
+                }
+
             });
 
             $(document).bind('chat/addWrapBoxChat', function (event, user) {
@@ -81,28 +97,14 @@ if(!Yii::$app->user->isGuest) {
             });
 
             $(document).on('click', '.chat-now', function (e) {
-                $('.box-chat-footer').loading();
                 user = $(this).attr('data-chat-user');
                 if (user) {
                     chatBoxExist = chatUI.getBoxChat('.item-box-chat', '<?=Yii::$app->user->identity->username?>', user);
                     if(!chatBoxExist){
                         $(document).trigger('chat/addBoxChat', [user]);
                         chatBoxExist = chatUI.getBoxChat('.item-box-chat', '<?=Yii::$app->user->identity->username?>', user);
-                        $.ajax({
-                            type: "get",
-                            dataType: 'html',
-                            url: '/chat/with/' + user,
-                            success: function (data) {
-                                chatBoxExist.find('.box-chat-footer').append(data);
-                                Chat.historyMessage(user + '@<?=Chat::DOMAIN?>');
-                            }
-                        });
                     }
-                    if(chatBoxExist) {
-                        $('.wrap-items-chat').removeClass('hide');
-                        $('body').loading({done:true});
-                    }
-
+                    $('.wrap-items-chat').removeClass('hide');
                 }
                 return false;
             });

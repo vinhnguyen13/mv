@@ -4,7 +4,8 @@
         NOTIFY_OTHER: 2,
         MSG_SEND_ME: 1,
         MSG_SEND_YOU: 2,
-        BOSH_SERVICE: 'http://metvuong.com:5280/wating',
+        //BOSH_SERVICE: 'http://metvuong.com:5280/wating',
+        BOSH_SERVICE: 'ws://metvuong.com:5290/wating',
         connect: function() {
             Chat.connect(chatUI.genJid(xmpp_jid), xmpp_key, chatUI.BOSH_SERVICE, xmpp_debug);
         },
@@ -36,7 +37,7 @@
             if(chatBoxExist){
                 chatBoxExist.css({height: 'auto'}).show();
             }else{
-                $('.chat-container').append(html);
+                $(".chat-container"+"[chat-from='" + from + "'][chat-to='" + to + "']").append(html);
             }
             $('.chat-group').find('.typingMsg').focus();
         },

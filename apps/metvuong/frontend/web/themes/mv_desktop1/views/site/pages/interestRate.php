@@ -6,7 +6,6 @@
  * Time: 9:52 AM
  */
 
-//Yii::$app->getView()->registerJsFile('http://ancu.com/public/client/js/jquery.autoNumeric-1.7.5.js', ['position' => \yii\web\View::POS_BEGIN]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tools.js', ['position' => \yii\web\View::POS_BEGIN]);
 ?>
 <script type="text/javascript">var base_url = '<?=\yii\helpers\Url::home()?>';</script>
