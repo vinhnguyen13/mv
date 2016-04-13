@@ -12,12 +12,105 @@ $(document).ready(function(){
 	
 	form.init();
 	
+	var ref = {
+		current: $(),
+		off: function(el, fn) {
+			el.removeClass('save');
+			el.off('click', fn);
+			ref.current = $();
+		},
+		editS1: function(el) {
+			console.log('s1');
+			
+			var fn = function() {
+				console.log('save s1');
+				ref.off(el, fn);
+			};
+			
+			el.on('click', fn);
+		},
+		editS2: function(el) {
+			console.log('s2');
+			
+			var fn = function() {
+				console.log('save s2');
+				ref.off(el, fn);
+			};
+			
+			el.on('click', fn);
+		},
+		editS3: function(el) {
+			console.log('s2');
+			
+			var fn = function() {
+				console.log('save s2');
+				ref.off(el, fn);
+			};
+			
+			el.on('click', fn);
+			
+		},
+		editS4: function(el) {
+			console.log('s2');
+			
+			var fn = function() {
+				console.log('save s2');
+				ref.off(el, fn);
+			};
+			
+			el.on('click', fn);
+			
+		},
+		editS5: function(el) {
+			console.log('s2');
+			
+			var fn = function() {
+				console.log('save s2');
+				ref.off(el, fn);
+			};
+			
+			el.on('click', fn);
+			
+		},
+		editS6: function(el) {
+			console.log('s2');
+			
+			var fn = function() {
+				console.log('save s2');
+				ref.off(el, fn);
+			};
+			
+			el.on('click', fn);
+			
+		},
+		editS7: function(el) {
+			console.log('s2');
+			
+			var fn = function() {
+				console.log('save s2');
+				ref.off(el, fn);
+			};
+			
+			el.on('click', fn);
+			
+		}
+	}
+	
 	$('#review-listing-post').on('hidden.bs.modal', function () {
-		
+		ref.current.trigger('click');
 	});
 	
 	$('.edit-listing').click(function(){
-		console.log('s');
+		var self = $(this);
+		
+		if(!self.hasClass('save')) {
+			ref.current.trigger('click');
+			
+			ref[self.data('ref')](self);
+			self.addClass('save');
+			
+			ref.current = self;
+		}
 	});
 });
 
