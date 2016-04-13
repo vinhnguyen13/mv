@@ -3712,7 +3712,8 @@ html.mm-opening .mm-slideout {
 }
 .chat-btn,
 .email-btn {
-    width: 47%;
+    /* width: 47%; */
+    margin-right: 10px;
 }
 .signin,
 .field-login-form-rememberme,
