@@ -28,6 +28,12 @@ class Chart extends Component
     const TYPE_FINDER = 2;
     const TYPE_SAVED = 3;
 
+    protected $filter = [
+        'week' => -6,
+        'month' => -30,
+        'quarter' => -90,
+    ];
+
     public static function find()
     {
         return Yii::createObject(Chart::className());
@@ -181,7 +187,8 @@ class Chart extends Component
 
     }
 
-    public function getFinderWithLastTime($id, $useDate){
+    public function getFinderWithLastTime($id, $useDate, $filter){
+
         if(empty($useDate)) {
             $finder = AdProductFinder::find()->where(['product_id' => $id])->orderBy('time DESC')->one();
             if (count($finder) > 0)
@@ -192,9 +199,11 @@ class Chart extends Component
             $useDate = new \DateTime($useDate);
         }
 
+        $days = $this->filter[$filter]." days";
+
         $f = date_format($useDate, 'Y-m-d 00:00:00');
         $dateFrom = new \DateTime($f);
-        $from = strtotime('-6 days', $dateFrom->getTimestamp());
+        $from = strtotime($days, $dateFrom->getTimestamp());
 
         $t = date_format($useDate, 'Y-m-d 23:59:59');
         $dateTo = new \DateTime($t);
@@ -212,7 +221,7 @@ class Chart extends Component
         return null;
     }
 
-    public function getVisitorWithLastTime($id, $useDate){
+    public function getVisitorWithLastTime($id, $useDate, $filter){
         if(empty($useDate)) {
             $visitor = AdProductVisitor::find()->where(['product_id' => $id])->orderBy('time DESC')->one();
             if (count($visitor) > 0)
@@ -223,9 +232,11 @@ class Chart extends Component
             $useDate = new \DateTime($useDate);
         }
 
+        $days = $this->filter[$filter]." days";
+
         $f = date_format($useDate, 'Y-m-d 00:00:00');
         $dateFrom = new \DateTime($f);
-        $from = strtotime('-6 days', $dateFrom->getTimestamp());
+        $from = strtotime($days, $dateFrom->getTimestamp());
 
         $t = date_format($useDate, 'Y-m-d 23:59:59');
         $dateTo = new \DateTime($t);
@@ -239,7 +250,7 @@ class Chart extends Component
         }
         return $infoDataVisitors;
     }
-    public function getShareWithLastTime($id, $useDate){
+    public function getShareWithLastTime($id, $useDate, $filter){
         if(empty($useDate)) {
             $share = AdProductShare::find()->where(['product_id' => $id])->orderBy('time DESC')->one();
             if (count($share) > 0)
@@ -250,9 +261,11 @@ class Chart extends Component
             $useDate = new \DateTime($useDate);
         }
 
+        $days = $this->filter[$filter]." days";
+
         $f = date_format($useDate, 'Y-m-d 00:00:00');
         $dateFrom = new \DateTime($f);
-        $from = strtotime('-6 days', $dateFrom->getTimestamp());
+        $from = strtotime($days, $dateFrom->getTimestamp());
 
         $t = date_format($useDate, 'Y-m-d 23:59:59');
         $dateTo = new \DateTime($t);
@@ -267,7 +280,7 @@ class Chart extends Component
         return $infoDataShares;
     }
 
-    public function getSavedWithLastTime($id, $useDate)
+    public function getSavedWithLastTime($id, $useDate, $filter )
     {
         if(empty($useDate)) {
             $saved = AdProductSaved::find()->where(['product_id' => $id])->orderBy('saved_at DESC')->one();
@@ -279,9 +292,11 @@ class Chart extends Component
             $useDate = new \DateTime($useDate);
         }
 
+        $days = $this->filter[$filter]." days";
+
         $f = date_format($useDate, 'Y-m-d 00:00:00');
         $dateFrom = new \DateTime($f);
-        $from = strtotime('-6 days', $dateFrom->getTimestamp());
+        $from = strtotime($days, $dateFrom->getTimestamp());
 
         $t = date_format($useDate, 'Y-m-d 23:59:59');
         $dateTo = new \DateTime($t);

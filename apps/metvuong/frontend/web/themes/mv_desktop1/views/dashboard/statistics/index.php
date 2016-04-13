@@ -12,7 +12,7 @@ $id = $product->id;
 $address = $product->getAddress();
 $urlDetail = $product->urlDetail(true);
 $user = Yii::$app->user->identity;
-$backUrl = empty($user) ? "#" : Url::to([$user->username."/ad"]);
+//$backUrl = empty($user) ? "#" : Url::to([$user->username."/ad"]);
 
 $finderFrom = (!empty($finders) && isset($finders["from"])) ? $finders["from"] : 0;
 $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
@@ -45,20 +45,14 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
         <div class="statis">
             <div class="title-top">
                 <?=Yii::t('statistic','Statistic')?>
-                <!-- <a href="<?=$backUrl?>" id="prev-page"><span class="icon arrowRight-1"></span></a> -->
             </div>
         	<section class="clearfix mgB-40">
-        		<!-- <div id="sandbox-container">
-                    <input type="text" class="form-control toDate" readonly placeholder="<?=Yii::t('statistic','Select date')?>">
-                    <span class="icon arrowDown"></span>
-                </div> -->
-
                 <div class="pull-right fs-13 mgB-15">
                     Chọn lọc
-                    <select name="" id="" class="mgL-10">
-                        <option value="">Theo tuần</option>
-                        <option value="">Theo tháng</option>
-                        <option value="">Theo quý</option>
+                    <select id="filterChart" class="mgL-10">
+                        <option value="week">Theo tuần</option>
+                        <option value="month">Theo tháng</option>
+                        <option value="quarter">Theo quý</option>
                     </select>
                 </div>
                 <div class="clearfix"></div>
@@ -149,94 +143,14 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
     </div>
 </div>
 
-<!-- div id="popup-user-inter" class="popup-common hide-popup">
-    <div class="wrap-popup">
-        <div class="inner-popup">
-            <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
-            <div class="pull-left circle avatar-user-inter">
-                <a href="#">
-                <img src="/images/default-avatar.jpg" alt="" width="50" height="50">
-                </a>
-            </div>
-            <div class="overflow-all">
-                <p class="name-user-inter">James Bond</p>
-                <a href="#" class="btn-common btn-chat"><span class="icon icon-chat-1"></span></a>
-                <a href="#" data-toggle="modal" data-target="#popup-email" class="btn-common btn-email share-email-btn"><span class="icon icon-email-1"></span></a>
-            </div>
-        </div>
-    </div>
-</div -->
-
-<?php //$this->renderAjax('/ad/_partials/shareEmail',[ 'product' => $product, 'yourEmail' => empty($user->profile->public_email) ? $user->email : $user->profile->public_email, 'recipientEmail' => '', 'params' => ['your_email' => false, 'setValueToEmail' => true] ])?>
-
 <?php
-$this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/bootstrap-datepicker.min.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'datepicker');
-Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/bootstrap-datepicker.min.js', ['position'=>View::POS_BEGIN]);
-Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/bootstrap-datepicker.vi.min.js', ['position'=>View::POS_BEGIN]);
+//$this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/bootstrap-datepicker.min.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'datepicker');
+//Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/bootstrap-datepicker.min.js', ['position'=>View::POS_BEGIN]);
+//Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/bootstrap-datepicker.vi.min.js', ['position'=>View::POS_BEGIN]);
 ?>
 
 <script>
     $(document).ready(function () {
-        /*$('#popup-user-inter').popupMobi({
-            btnClickShow: '.statis .panel-body .list-item a.popup_enable',
-            styleShow: 'center',
-            closeBtn: '#popup-user-inter .btn-close, #popup-user-inter .share-email-btn',
-            funCallBack: function(item) {
-                if(item == '') {
-                    $('#popup-user-inter').addClass('hide-popup');
-                } else {
-                    $('#popup-user-inter .avatar-user-inter img').attr('src', item.data('ava'));
-                    $('#popup-user-inter .avatar-user-inter a').attr('href', '/' + item[0].innerText.trim());
-                    $('#popup-user-inter .name-user-inter').html('Bạn có thể Chat và Email với tài khoản: <a href="/' + item[0].innerText.trim() + '">' + item[0].innerText.trim() + '</a>');
-                    $('#popup-user-inter .btn-chat').attr('href', '/chat/with/' + item[0].innerText.trim());
-                    $('.recipient_email').attr('value', item[0].attributes["data-email"].value);
-                }
-            }
-        });
-
-        $('#popup-email').popupMobi({
-            btnClickShow: ".share-email-btn",
-            closeBtn: '#popup-email .btn-cancel',
-            styleShow: 'full'
-        });*/
-
-//        var params = getUrlParams();
-//        if(params["date"] !== undefined && params["date"] !== 'undefined-undefined-'){
-//            var arrDate = params["date"].split("-");
-//            var useDate = arrDate[2]+"/"+arrDate[1]+"/"+arrDate[0];
-//            $('.toDate').attr('placeholder', ""+useDate);
-//        }
-//
-//        $('#sandbox-container input').datepicker({
-//            language: "vi",
-//            autoclose: true,
-//            onSelect: function() {
-//                return $(this).trigger('change');
-//            }
-//        });
-//
-//        $('#sandbox-container input').change(function(){
-//            $('body').loading();
-//            var theDate = $(this).datepicker().val();
-//            var arrDate = theDate.split("/");
-//            var useDate = arrDate[2]+"-"+arrDate[1]+"-"+arrDate[0];
-//            if(useDate) {
-//                window.location = '<?//=Url::to(['/dashboard/statistics','id' => $id], true)?>//' + '&date=' + useDate;
-//            }
-//        });
-//
-//        function getUrlParams()
-//        {
-//            var vars = [], hash;
-//            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-//            for(var i = 0; i < hashes.length; i++)
-//            {
-//                hash = hashes[i].split('=');
-//                vars.push(hash[0]);
-//                vars[hash[0]] = hash[1];
-//            }
-//            return vars;
-//        }
 
         $(document).on('click', '.btn-finder', function() {
             var url = $(this).attr('data-url');
@@ -323,5 +237,15 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
             var winLeft = (screen.width / 2) - (winWidth / 2);
             window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + url + '&p[title]=' + title + '&p[summary]=' + descr + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
         }
+
+        $('#filterChart').val('<?=$filter?>');
+
+        $('#filterChart').change(function(){
+            var val = $(this).val();
+            if (val != '') {
+                var goto = '<?=Url::to(['/dashboard/statistics', 'id' => $id], true)?>'+'&filter='+val;
+                window.location = goto;
+            }
+        });
     });
 </script>

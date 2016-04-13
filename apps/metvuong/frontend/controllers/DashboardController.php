@@ -68,25 +68,29 @@ class DashboardController extends Controller
         if(Yii::$app->user->id != $product->user_id)
             $this->goHome();
 
+        $filter = Yii::$app->request->get("filter");
+        if(empty($filter))
+            $filter = "week";
+
         $date = Yii::$app->request->get("date");
         if($date == "undefined-undefined-")
             $date = null;
 
-        $finders = Chart::find()->getFinderWithLastTime($id, $date);
-        $visitors = Chart::find()->getVisitorWithLastTime($id, $date);
-        $shares = Chart::find()->getShareWithLastTime($id, $date);
-        $favourites = Chart::find()->getSavedWithLastTime($id, $date);
+        $finders = Chart::find()->getFinderWithLastTime($id, $date, $filter);
+        $visitors = Chart::find()->getVisitorWithLastTime($id, $date, $filter);
+        $shares = Chart::find()->getShareWithLastTime($id, $date, $filter);
+        $favourites = Chart::find()->getSavedWithLastTime($id, $date, $filter);
 
-        if(Yii::$app->request->isAjax){
-            return $this->renderAjax('statistics/index', [
-                'product' => $product,
-                'visitors' => $visitors,
-                'finders' => $finders,
-                'favourites' => $favourites,
-                'shares' => $shares,
-                'view' => '_partials/finder'
-            ]);
-        }else{
+//        if(Yii::$app->request->isAjax){
+//            return $this->renderAjax('statistics/index', [
+//                'product' => $product,
+//                'visitors' => $visitors,
+//                'finders' => $finders,
+//                'favourites' => $favourites,
+//                'shares' => $shares,
+//                'view' => '_partials/finder'
+//            ]);
+//        }else{
             if (($search = \frontend\models\Tracking::find()->countFinders($product->id)) === null) {
                 $search = 0;
             }
@@ -112,8 +116,9 @@ class DashboardController extends Controller
                 'share_count' => $share,
                 'from' => $finders["from"],
                 'to' => $finders["to"],
+                'filter' => $filter
             ]);
-        }
+//        }
     }
 
     public function actionClickchart(){
