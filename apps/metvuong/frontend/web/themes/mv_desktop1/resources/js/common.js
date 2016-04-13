@@ -189,7 +189,7 @@ $(document).ready(function() {
             hHeader = $('header').outerHeight();
         
         $('.chat-list, .chat-live').css({
-            height: hWindow - hHeader +'px'
+            height: hWindow - hHeader - 65 +'px'
         });
         l(2);
     }).trigger('resize');
