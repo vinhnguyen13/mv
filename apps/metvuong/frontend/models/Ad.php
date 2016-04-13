@@ -7,6 +7,7 @@
  */
 
 namespace frontend\models;
+use vsoft\ad\models\AdImages;
 use vsoft\ad\models\AdProduct;
 use vsoft\ad\models\AdProductRating;
 use vsoft\ad\models\AdProductSaved;
@@ -171,9 +172,10 @@ class Ad extends Component
 
     public function homePageRandom(){
         $query = AdProduct::find();
-        $where = ['ad_product.status' => 1];
+//        $where = ['ad_product.status' => 1];
         $query->leftJoin('ad_product_addition_info', '`ad_product_addition_info`.`product_id` = `ad_product`.`id`');
         $query->with('adProductAdditionInfo');
+        $query->innerJoin(AdImages::tableName(), "ad_product.id = ad_images.product_id");
         $products = $query->limit(6)->orderBy("RAND()")->all();
         return $products;
     }

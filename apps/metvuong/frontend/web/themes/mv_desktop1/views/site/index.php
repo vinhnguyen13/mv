@@ -48,7 +48,7 @@ use vsoft\ad\models\AdProduct;
                 <?php foreach ($products as $product): ?>
                 <li>
                     <div class="item">
-                        <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pic-intro rippler rippler-default">
+                        <a href="<?= $product->urlDetail(true) ?>" class="pic-intro rippler rippler-default">
                             <div class="img-show">
                                 <div><img src="<?= $product->representImage ?>" data-original=""></div>
                             </div>
@@ -56,26 +56,24 @@ use vsoft\ad\models\AdProduct;
                         </a>
                         <div class="info-item">
                             <div class="address-feat clearfix">
-                                <p class="date-post">Ngày đăng tin: <strong>12/2/2016, 8:30AM</strong></p>
+                                <p class="date-post"><?= Yii::t('statistic', 'Date of posting') ?>: <strong><?= date("d/m/Y", $product->created_at) ?></strong></p>
                                 <div class="address-listing">
-                                    <a title="<?= $product->getAddress(true) ?>" href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>"><?= $product->getAddress(true) ?></a>    
+                                    <a title="<?= $product->getAddress(true) ?>" href="<?= $product->urlDetail(true) ?>"><?= $product->getAddress(true) ?></a>
                                 </div>
                                 <p class="id-duan">ID:<span><?=$product->id;?></span></p>
                                 <ul class="clearfix list-attr-td">
-                                    <li>
-                                        <span class="icon-mv"><span class="icon-page-1-copy"></span></span>80m2
-                                    </li>
-                                    <li>
-                                        <span class="icon-mv"><span class="icon-bed-search"></span></span>02
-                                    </li>
-                                    <li>
-                                        <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>02
-                                    </li>
+                                    <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
+                                        <li><span><?=Yii::t('listing','updating')?></span></li>
+                                    <?php } else {
+                                        echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '';
+                                        echo $product->adProductAdditionInfo->room_no ? '<li> <span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
+                                        echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
+                                    } ?>
                                 </ul>
                             </div>
                             <div class="bottom-feat-box clearfix">
-                                <a href="<?= Url::to(['/ad/detail', 'id' => $product->id, 'slug' => \common\components\Slug::me()->slugify($product->getAddress())]) ?>" class="pull-right color-cd-hover">Chi tiết</a>
-                                <p>Giá <strong>4 tỷ đồng</strong></p>
+                                <a href="<?= $product->urlDetail(true) ?>" class="pull-right color-cd-hover">Chi tiết</a>
+                                <p><?=Yii::t('listing','Price')?> <strong><?= vsoft\express\components\StringHelper::formatCurrency($product->price) ?> vnd</strong></p>
                             </div>
                         </div>
                     </div>
