@@ -206,6 +206,7 @@ class DashboardController extends Controller
             return $this->goHome();
 
         $products = array();
+        $search = array();
         $last_id = empty(Yii::$app->request->get('last_id')) ? 0 : (int)Yii::$app->request->get('last_id');
         $sell = 0;
         $rent = 0;
@@ -217,6 +218,15 @@ class DashboardController extends Controller
         $count_total = count($totalProducts);
         if($count_total > 0){
             foreach($totalProducts as $key => $product){
+                if($product->projectBuilding) {
+                    $tempProduct["label"] = Yii::$app->params['listing_prefix_id'] . $product->id." - ".$product->projectBuilding->name;
+                    $tempProduct["url"] = Url::to(['/dashboard/statistics', 'id' => $product->id], true);
+                } else {
+                    $tempProduct["label"] = Yii::$app->params['listing_prefix_id'] . $product->id." - ".$product->address;
+                    $tempProduct["url"] = Url::to(['/dashboard/statistics', 'id' => $product->id], true);
+                }
+                array_push($search, $tempProduct);
+
                 if($product->type == 1) {
                     $sell += 1;
                 }
@@ -230,9 +240,9 @@ class DashboardController extends Controller
             }
         }
         if(Yii::$app->request->isAjax) {
-            return $this->renderAjax('ad/index', ['products' => $products, 'last_id' => $last_id, 'total' => $count_total, 'sell' => $sell, 'rent' => $rent]);
+            return $this->renderAjax('ad/index', ['products' => $products, 'search' => $search, 'last_id' => $last_id, 'total' => $count_total, 'sell' => $sell, 'rent' => $rent]);
         }else{
-            return $this->render('ad/index', ['products' => $products, 'last_id' => $last_id, 'total' => $count_total, 'sell' => $sell, 'rent' => $rent]);
+            return $this->render('ad/index', ['products' => $products, 'search' => $search, 'last_id' => $last_id, 'total' => $count_total, 'sell' => $sell, 'rent' => $rent]);
         }
     }
 

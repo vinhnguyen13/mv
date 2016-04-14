@@ -1,7 +1,10 @@
 <?php
+use yii\helpers\ArrayHelper;
 use yii\web\View;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
+
+$listSearch = json_encode(array_values($search));
 
 ?>
 <div class="title-fixed-wrap">
@@ -77,11 +80,15 @@ use yii\widgets\LinkPager;
                     </div>
                 </div>
             </div>
+            <div class="ui-widget">
+                <label for="tags">Search: </label>
+                <input id="tags">
+            </div>
         </div>
         <?php } ?>
     </div>
 </div>
-
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script>
 	$(document).ready(function () {
         /*$('#nang-cap').popupMobi({
@@ -89,6 +96,14 @@ use yii\widgets\LinkPager;
          styleShow: 'center',
          closeBtn: '#nang-cap .btn-cancel, #nang-cap .btn-ok',
          });*/
+        var list = <?=$listSearch?>;
+        $( "#tags" ).autocomplete({
+            source: list
+        }).autocomplete( "instance" )._renderItem = function( ul, item ) {
+            return $( "<li>" )
+                .append( "<a href='"+item.url+"'>" + item.label + "</a>" )
+                .appendTo( ul );
+        };
 
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
             if ($(this).hasClass('loaded') || $(this).data('url') == undefined) return;
