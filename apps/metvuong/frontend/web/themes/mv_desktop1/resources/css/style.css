@@ -6924,6 +6924,9 @@ footer li a {
 .wrap-duan-moi .gallery-detail {
     margin-bottom: 15px;
 }
+.swiper-container {
+    width: 100%;
+}
 @media ( min-width: 985px ) {
     #listing-list .list-attr-td {
         margin-bottom: 4px;
@@ -7952,6 +7955,7 @@ footer li a {
 }
 .wrap-swiper {
     position: relative;
+    width: 100%;
 }
 @media ( min-width: 1380px ) {
     .wrap-map-listing {
@@ -9333,4 +9337,23 @@ footer li a {
     width: 30%;
     margin-right: 10px;
     display: inline-block;
+}
+@media ( max-width: 985px ) {
+    .post-listing {
+        padding-top: 0
+    }
+    .toggle-num-home label input {
+        height: auto;
+    }
+    .post-listing .section {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    #listing-form .form-group {
+        padding-left: 20px !important;
+    }
+    #listing-form .form-group.field-adproductadditioninfo-facade_width,
+    #listing-form .form-group.field-adproductadditioninfo-facade_width {
+        padding-left: 0px !important;
+    }
 }
