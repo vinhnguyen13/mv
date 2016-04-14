@@ -1933,19 +1933,33 @@ label {
     font-size: 15px;
     cursor: default;
 }
-.panel-heading .panel-title a .icon {
-    width: 24px;
-    height: 2px;
-    background-position: 0 -580px;
-    position: absolute;
-    top: 21px;
-    right: 0;
+.panel-heading .panel-title a .icon-mv {
+    float: right;
+    margin-top: 5px;
 }
-.panel-heading .panel-title a.collapsed .icon {
-    background-position: 0 -556px;
-    height: 24px;
-    margin-top: 0;
-    top: 10px;
+#review-listing-post .panel-heading .panel-title a .icon-mv {
+    display: none;
+}
+#review-listing-post .panel-heading .panel-title a .edit-listing {
+    display: inline;
+}
+#review-listing-post .collapse,
+#review-listing-post .collapsing {
+    height: auto !important;
+    display: block;
+    visibility: visible;
+}
+#review-listing-post .inner-popup {
+    background: #fff;
+}
+.panel-heading .panel-title a .edit-listing.icon-mv {
+    float: none;
+}
+.panel-heading .panel-title a .icon-plus:before {
+    content: "\e909";
+}
+.panel-heading .panel-title a.collapsed .icon-plus:before {
+    content: "\e90a";
 }
 .panel-heading .panel-title a.collapsed {
     background: #fff;
@@ -6894,7 +6908,7 @@ footer li a {
     /* padding: 0; */
 }
 .detail-listing-dt .detail-listing .wrap-swiper {
-    margin: 0 -20px;
+    /* margin: 0 -20px; */
 }
 .detail-listing-dt .btn-close {
     opacity: 1;
@@ -8361,7 +8375,7 @@ footer li a {
     padding: 0 15px 30px;
 }
 #review-listing-post .gallery-detail {
-    margin: 0 -15px 15px;
+    margin: 0 0 15px;
     height: auto;
 }
 .modal-backdrop.in {
@@ -8401,6 +8415,7 @@ footer li a {
     #review-listing-post .modal-dialog {
         width: 100%;
         margin: 0;
+        height: 100%;
     }
     .edit-listing {
         right: inherit;
@@ -8622,6 +8637,7 @@ footer li a {
 }
 .wrap-list-duan .nav-tabs .search-history input {
     /* border-bottom: none; */
+    padding-left: 35px;
 }
 .wrap-list-duan .nav-tabs .search-history .btn-search-hist {
     padding: 0 10px;
@@ -8956,7 +8972,7 @@ footer li a {
 #review-listing-post .edit-listing {
     padding: 3px 6px;
     line-height: 100%;
-    top: 0;
+    margin-top: 0;
 }
 #review-listing-post .edit-listing.save .icon-edit-copy-4:before {
     content: "\e922";
@@ -9174,22 +9190,6 @@ footer li a {
     top: 0;
     left: 0;
 }
-.wrap-history-item {
-}
-.collapsing {
-    position:relative;
-    height: auto !important;
-    overflow:hidden;
-    -webkit-transition-timing-function:ease;
-    -o-transition-timing-function:ease;
-    transition-timing-function:ease;
-    -webkit-transition-duration:.35s;
-    -o-transition-duration:.35s;
-    transition-duration:.35s;
-    -webkit-transition-property:height,visibility;
-    -o-transition-property:height,visibility;
-    transition-property:height,visibility
-}
 .search-history {
     position: absolute;
     /* width: 100%; */
@@ -9349,11 +9349,54 @@ footer li a {
         padding-left: 0;
         padding-right: 0;
     }
-    #listing-form .form-group {
+    #listing-form #addition-fields .form-group {
         padding-left: 20px !important;
     }
-    #listing-form .form-group.field-adproductadditioninfo-facade_width,
+    #listing-form .form-group.field-adproductadditioninfo-land_width,
     #listing-form .form-group.field-adproductadditioninfo-facade_width {
         padding-left: 0px !important;
     }
+    #review-listing-post .gallery-detail {
+        margin: 0 0 10px 0;
+    }
+    #review-listing-post .infor-by-up {
+        display: inline-block;
+    }
+    #review-listing-post .infor-listing .address-listing p,
+    #review-listing-post .infor-listing .address-listing {
+        display: inline;
+    }
+    #review-listing-post .infor-listing .address-listing {
+        font-size: 18px;
+        line-height: 18px;
+    }
+    #review-listing-post .price-td {
+        display: inline;
+    }
+    #review-listing-post .list-attr-td {
+        margin-top: 3px;
+    }
+    .panel-heading .panel-title a {
+        padding: 10px 0;
+    }
+}
+.ui-autocomplete {
+    z-index: 999;
+    background: #fff;
+    border: 1px solid #C8C8C8;
+    border-radius: 3px;
+    padding: 3px 0px;
+    box-shadow: 0px 0px 6px rgba(133, 133, 133, 0.4);
+    -webkit-box-shadow: 0px 0px 6px rgba(133, 133, 133, 0.4);
+    -moz-box-shadow: 0px 0px 6px rgba(133, 133, 133, 0.4);
+    -ms-box-shadow: 0px 0px 6px rgba(133, 133, 133, 0.4);
+}
+.ui-autocomplete li a {
+    font-size: 13px;
+    display: block;
+    padding: 3px 10px;
+}
+.ui-autocomplete li a:hover{
+    background: #ECECEC;
+    color: #009455;
 }

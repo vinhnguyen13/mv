@@ -373,7 +373,7 @@ use vsoft\ad\models\AdImages;
 								</div>
 								<span data-ref="editS2" class="edit-listing icon-mv fs-16 color-cd"><span class="icon-edit-copy-4"></span></span>
 							</div>
-							<div class="posi_relative">
+							<div class="posi_relative mgT-5">
 								<ul class="clearfix list-attr-td">
 									<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span><span class="area-show"></span>m2 </li>
 									<li class="bed-li"> <span class="icon-mv"><span class="icon-bed-search"></span></span><span class="bed-show"></span> </li>
@@ -397,7 +397,7 @@ use vsoft\ad\models\AdImages;
 				                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
 				                        <?= Yii::t('ad', 'Content') ?>
 				                        <span data-ref="editS5" class="edit-listing icon-mv fs-16 color-cd"><span class="icon-edit-copy-4"></span></span>
-				                        <span class="icon"></span>
+				                        <span class="icon-mv"><span class="icon-plus"></span></span>
 				                    </a>
 				                </h4>
 				            </div>
@@ -413,7 +413,7 @@ use vsoft\ad\models\AdImages;
 				                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
 				                        <?= Yii::t('ad', 'Detail Information') ?>
 				                        <span data-ref="editS6" class="edit-listing icon-mv fs-16 color-cd"><span class="icon-edit-copy-4"></span></span>
-				                        <span class="icon"></span>
+				                        <span class="icon-mv"><span class="icon-plus"></span></span>
 				                    </a>
 				                </h4>
 				            </div>
@@ -436,7 +436,7 @@ use vsoft\ad\models\AdImages;
 				                <h4 class="panel-title">
 				                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
 				                        <?= Yii::t('ad', 'Facilities') ?>
-				                        <span class="icon"></span>
+				                        <span class="icon-mv"><span class="icon-plus"></span></span>
 				                    </a>
 				                </h4>
 				            </div>
@@ -452,7 +452,7 @@ use vsoft\ad\models\AdImages;
 				                    <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEght" aria-expanded="false" aria-controls="collapseSeven">
 				                        <?= Yii::t('ad', 'Contact') ?>
 				                        <span data-ref="editS7" class="edit-listing icon-mv fs-16 color-cd"><span class="icon-edit-copy-4"></span></span>
-				                        <span class="icon"></span>
+				                        <span class="icon-mv"><span class="icon-plus"></span></span>
 				                    </a>
 				                </h4>
 				            </div>

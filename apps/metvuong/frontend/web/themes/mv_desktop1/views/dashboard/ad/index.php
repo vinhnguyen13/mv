@@ -28,7 +28,7 @@ $listSearch = json_encode(array_values($search));
                     <div class="clearfix fs-13">
                         <div class="search-history">
                             <div>
-                                <input type="text" id="" class="form-control" placeholder="Search listing...">
+                                <input type="text" id="tags" class="form-control" placeholder="Search listing...">
                                 <button class="btn-search-hist" href="#"><span class="icon-mv"><span class="icon-icons-search"></span></span></button>
                             </div>
                         </div>
@@ -80,10 +80,9 @@ $listSearch = json_encode(array_values($search));
                     </div>
                 </div>
             </div>
-            <div class="ui-widget">
-                <label for="tags">Search: </label>
+            <!-- <div class="ui-widget">
                 <input id="tags">
-            </div>
+            </div> -->
         </div>
         <?php } ?>
     </div>
@@ -98,7 +97,8 @@ $listSearch = json_encode(array_values($search));
          });*/
         var list = <?=$listSearch?>;
         $( "#tags" ).autocomplete({
-            source: list
+            source: list,
+            open: function() { $('.ui-menu').width(300) }
         }).autocomplete( "instance" )._renderItem = function( ul, item ) {
             return $( "<li>" )
                 .append( "<a href='"+item.url+"'>" + item.label + "</a>" )
