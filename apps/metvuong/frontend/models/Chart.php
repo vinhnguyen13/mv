@@ -125,15 +125,21 @@ class Chart extends Component
                 if (array_key_exists($username, $infoSaved)) {
                     $cc = $infoSaved[$username]['count'];
                     $cc = ($cc + 1);
+                    $infoSaved[$username] = [
+                        'count' => $cc,
+                        'avatar' => $avatar,
+                        'email' => $email
+                    ];
                 } else {
                     $cc = 1;
+                    $infoSaved[$username] = [
+                        'count' => $cc,
+                        'avatar' => $avatar,
+                        'email' => $email
+                    ];
                 }
 
-                $infoSaved[$username] = [
-                    'count' => $cc,
-                    'avatar' => $avatar,
-                    'email' => $email
-                ];
+
 
                 $infoData[$view] = $infoSaved;
             }

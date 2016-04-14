@@ -64,7 +64,7 @@ if(!empty($data) && count($data) > 0) {
                      tooltip = '<b>Final result is </b> ' + this.y;
                      }
                      else {
-                     tooltip = '<b>' + this.y + ' <?=Yii::t('chart','user')?></b><br/>';
+                     tooltip = '<b>' + this.y + ' <?=Yii::t('chart','share')?></b><br/>';
                      }
                      return tooltip;
                      }
