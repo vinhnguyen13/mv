@@ -38,14 +38,18 @@ use yii\widgets\LinkPager;
                         <?=$this->render('/dashboard/ad/list', ['products' => $products, 'type' => 0, 'last_id' => $last_id])?>
                     </ul>
                     <input type="hidden" class="last_id" value="<?=$last_id?>">
-                    <a href="#" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 0])?>" class="pull-right load_listing"><?=Yii::t('listing','More listing')?>...</a>
+                    <div class="text-center">
+                        <a href="#" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 0])?>" class="load_listing btn-common"><?=Yii::t('listing','More listing')?>...</a>
+                    </div>
                     <span class="that_all pull-right hide">That's all listing.</span>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="list-sell">
                     <ul class="clearfix list-item"></ul>
                     <input type="hidden" class="last_id" value="0">
                     <?php if($sell > 6){?>
-                    <a href="#" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 1])?>" class="pull-right load_listing"><?=Yii::t('listing','More listing')?>...</a>
+                    <div class="text-center">
+                        <a href="#" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 1])?>" class="load_listing btn-common"><?=Yii::t('listing','More listing')?>...</a>
+                    </div>
                     <span class="that_all pull-right hide">That's all listing.</span>
                     <?php } ?>
                 </div>
@@ -53,7 +57,9 @@ use yii\widgets\LinkPager;
                     <ul class="clearfix list-item"></ul>
                     <input type="hidden" class="last_id" value="0">
                     <?php if($rent > 6){?>
-                    <a href="#" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 2])?>" class="pull-right load_listing"><?=Yii::t('listing','More listing')?>...</a>
+                    <div class="text-center">
+                        <a href="#" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 2])?>" class="load_listing btn-common"><?=Yii::t('listing','More listing')?>...</a>
+                    </div>
                     <span class="that_all pull-right hide">That's all listing.</span>
                     <?php } ?>
                 </div>
