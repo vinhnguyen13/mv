@@ -90,7 +90,11 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                     </a>
                                 </div>
                             <?php }
-                        }?>
+                        } else {?>
+                            <div class="clearfix fs-13">
+                                <span>Không tìm thấy.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>">Cập nhật tin đăng.</a>
+                            </div>
+                        <?php }?>
                     </td>
                     <td>
                         <?php if(isset($favourites["saved"]) && count($favourites["saved"]) > 0){
@@ -103,7 +107,11 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                     </a>
                                 </div>
                             <?php }
-                        }?>
+                        } else {?>
+                            <div class="clearfix fs-13">
+                                <span>Không tìm thấy.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>">Cập nhật tin đăng.</a>
+                            </div>
+                        <?php }?>
                     </td>
                 </tr>
                 <tr>
@@ -122,7 +130,11 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                     </a>
                                 </div>
                             <?php }
-                        }?>
+                        } else {?>
+                            <div class="clearfix fs-13">
+                                <span>Không tìm thấy.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>">Cập nhật tin đăng.</a>
+                            </div>
+                        <?php }?>
                     </td>
                     <td>
                         <?php if(isset($shares["shares"]) && count($shares["shares"]) > 0){
@@ -135,7 +147,11 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                     </a>
                                 </div>
                             <?php }
-                        }?>
+                        } else {?>
+                            <div class="clearfix fs-13">
+                                <span>Không tìm thấy.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>">Cập nhật tin đăng.</a>
+                            </div>
+                        <?php }?>
                     </td>
                 </tr>
             </table>
