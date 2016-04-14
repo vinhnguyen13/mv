@@ -5006,6 +5006,9 @@ html.mm-opening .mm-slideout {
     float: left;
     margin-right: 15px;
 }
+#popup-share-social .inner-popup li a {
+    display: block;
+}
 #popup-share-social .inner-popup .icon {
     margin: 0 auto 0;
 }
@@ -8375,6 +8378,14 @@ footer li a {
     right: 0;
     cursor: pointer;
     z-index: 99;
+}
+.detail-listing-dt .edit-listing {
+    right: inherit;
+    left:0;
+    padding: 6px 10px;
+    background: rgba(99, 99, 99, 0.84);
+    line-height: 100%;
+    color: #fff;
 }
 .edit-listing:hover {
     background: #009455;
