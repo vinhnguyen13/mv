@@ -169,6 +169,12 @@ $return =  [
         'meta' =>[
             'class' => 'frontend\components\MetaExt',
         ],
+        'assetManager' => [
+            /*
+             * add timestamp after file
+             */
+            'appendTimestamp' => true,
+        ],
         /*'assetManager' => [
             'bundles' => [
                 'yii\bootstrap\BootstrapAsset' => [
