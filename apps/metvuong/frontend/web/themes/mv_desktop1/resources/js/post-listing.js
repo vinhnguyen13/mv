@@ -446,16 +446,20 @@ var form = {
 				}
 			});
 
-			setTimeout(function(){
-				$('.preview').trigger('click');
+			$(window).on('load', function () {
+				setTimeout(function(){
+					$('.preview').trigger('click');
 
-				var formVal = $('#listing-form').serialize();
-				window.onbeforeunload = function() {
-					if(formVal != $('#listing-form').serialize()) {
-						return lajax.t("Are you sure you want to navigate away from this page and discard all changes ?");
-					}
-				};
-			}, 1);
+					var formVal = $('#listing-form').serialize();
+					window.onbeforeunload = function() {
+						if(formVal != $('#listing-form').serialize()) {
+							return lajax.t("Are you sure you want to navigate away from this page and discard all changes ?");
+						}
+					};
+				}, 100);
+			});
+
+			
 		}else {
 			$('.wrap-frm-listing').slideSection({
 				active: 0,
