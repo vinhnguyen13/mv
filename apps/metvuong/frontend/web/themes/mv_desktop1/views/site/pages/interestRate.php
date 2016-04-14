@@ -14,14 +14,13 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
     <div class="tool-cacu">
         <div class="news_blocks_contain">
             <div class="tool-hdr"> Tính lãi suất vay vốn </div>
-            <div class="sum"> Cho phép bạn tính toán tiền tiết kiệm khi gửi một số tiền theo một kỳ hạn nhất định và so sánh lãi suất, tiền được hưởng giữa các ngân hàng </div>                        
+            <div class="sum"> Cho phép bạn tính toán tiền tiết kiệm khi gửi một số tiền theo một kỳ hạn nhất định và so sánh lãi suất, tiền được hưởng giữa các ngân hàng </div>
             <table class="funding-tbl">
                 <tbody id="thongTinVayVon">
                 <tr>
                     <td class="label"> Ngày bắt đầu </td>
                     <td>
-                        <?
-                        echo \yii\jui\DatePicker::widget([
+                        <?=\yii\jui\DatePicker::widget([
                             'language' => 'en',
                             'dateFormat' => 'yyyy-MM-dd',
                             'options' => [
@@ -70,7 +69,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
                     <td> <a href="#" onclick="Tools.loan_calculate();" class="btn-form btn-common"> Tính nhanh <span class="arrow-icon"> </span> </a> </td>
                 </tr>
                 </tbody>
-            </table> 
+            </table>
             <div class="tool-hdr black-hdr"> Kết quả </div>
             <article>
                 <table class="funding-tbl">
