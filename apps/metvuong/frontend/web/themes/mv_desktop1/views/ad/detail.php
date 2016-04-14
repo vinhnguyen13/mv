@@ -270,6 +270,12 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 								<?php if($product->adProductAdditionInfo->interior): ?>
 								<li><strong><?= Yii::t('ad', 'Furniture') ?>:</strong> <?= $product->adProductAdditionInfo->interior ?></li>
 								<?php endif; ?>
+								<?php
+									$additionFields = ($product->adProductAdditionInfo->addition_fields && $product->adProductAdditionInfo->addition_fields != '""') ? array_chunk(json_decode($product->adProductAdditionInfo->addition_fields), 2) : [];
+									foreach ($additionFields as $additionField):
+								?>
+								<li><strong><?= $additionField[0] ?>:</strong> <?= $additionField[1] ?></li>
+								<?php endforeach; ?>
 							</ul>
 		                </div>
 		            </div>
