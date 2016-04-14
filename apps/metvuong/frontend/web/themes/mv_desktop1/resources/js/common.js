@@ -3,9 +3,7 @@ $(window).on('load', function () {
 });
 
 $(document).ready(function() {
-
-
-
+    
     $(document).on('click', '.box-chat-footer .close-box', function (e) {
         e.preventDefault();
         $(this).closest('.item-box-chat').remove();
@@ -191,7 +189,6 @@ $(document).ready(function() {
         $('.chat-list, .chat-live').css({
             height: hWindow - hHeader - 65 +'px'
         });
-        l(2);
     }).trigger('resize');
 });
 

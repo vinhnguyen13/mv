@@ -489,10 +489,10 @@ header {
 .tab-content .tab-pane {
     border: 1px solid #979797;
     padding: 20px;
-    box-shadow: 2px 2px 5px #C3C3C3;
-    -webkit-box-shadow: 2px 2px 5px #C3C3C3;
-    -moz-box-shadow: 2px 2px 5px #C3C3C3;
-    -ms-box-shadow: 2px 2px 5px #C3C3C3;
+    box-shadow: 0 0 5px #868686;
+    -webkit-box-shadow: 0 0 5px #868686;
+    -moz-box-shadow: 0 0 5px #868686;
+    -ms-box-shadow: 0 0 5px #868686;
 }
 .tab-content .tab-pane input {
     border: none;
@@ -547,9 +547,6 @@ header {
     display: block;
     margin-bottom: 10px;
 }
-.list-social-login li a.facebook {
-    
-}
 .list-social-login li a.facebook:hover {
     background: #3a5795;
     color: #fff;
@@ -564,7 +561,7 @@ header {
     display: block;
 }
 .list-social-login li {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 .list-social-login a i {
     position: absolute;
@@ -4416,10 +4413,25 @@ html.mm-opening .mm-slideout {
 }
 .list-social-login li a.facebook, 
 .list-social-login li a.google,
-.inner-popup .btn-common {
+.btn-login {
     text-transform: uppercase;
-    border: solid 1.5px #00a769;
+    border: none;
     padding: 10px 30px;
+    background: none;
+    color: #3c3c3c;
+}
+.btn-login:hover {
+    color: #fff;
+    border: 1px solid #00a769;
+}
+.btn-login {
+    border: 1px solid #00a769;
+}
+.list-social-login li a.google {
+    border: 1px solid #EA4335;
+}
+.list-social-login li a.facebook {
+    border: 1px solid #3a5795;
 }
 .inner-popup .btn-cancel {
     background: none;
@@ -8626,6 +8638,16 @@ footer li a {
     max-width: 100%;
     width: 100%;
 }
+.list-social-login li a.facebook .icon-mv,
+.list-social-login li a.google .icon-mv {
+    margin-right: 15px;
+    line-height: 100%;
+    position: relative;
+    top: -1px;
+}
+.list-social-login li a.google .icon-mv {
+    font-size: 16px;
+}
 .wrap-list-duan .nav-tabs .search-history {
     margin: 5px 0 0 0;
     padding: 0px 0 0 0;
@@ -8710,7 +8732,15 @@ footer li a {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-
+.icon-google-plus:before {
+    content: "\e923";
+}
+.icon-facebook:before {
+    content: "\e924";
+}
+.icon-floppy-o:before {
+    content: "\e922";
+}
 .icon-angle-down:before {
     content: "\e900";
 }
@@ -9406,4 +9436,7 @@ footer li a {
 }
 .ui-helper-hidden-accessible {
     display: none;
+}
+input:-webkit-autofill {
+    background-color: #fff !important;
 }
