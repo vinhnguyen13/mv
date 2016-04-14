@@ -2,10 +2,6 @@
 use yii\helpers\ArrayHelper;
 use yii\web\View;
 use yii\helpers\Url;
-use yii\widgets\LinkPager;
-
-$listSearch = json_encode(array_values($search));
-
 ?>
 <div class="title-fixed-wrap">
 	<div class="u-allduan">
@@ -95,15 +91,20 @@ $listSearch = json_encode(array_values($search));
          styleShow: 'center',
          closeBtn: '#nang-cap .btn-cancel, #nang-cap .btn-ok',
          });*/
-        var list = <?=$listSearch?>;
-        $( "#tags" ).autocomplete({
-            source: list,
-            open: function() { $('.ui-menu').width(300) }
-        }).autocomplete( "instance" )._renderItem = function( ul, item ) {
-            return $( "<li>" )
-                .append( "<a href='"+item.url+"'>" + item.label + "</a>" )
-                .appendTo( ul );
-        };
+        $("#tags").click(function() {
+            var list = <?=json_encode(array_values($search))?>;
+            $("#tags").autocomplete({
+                source: list,
+                open: function () {
+                    $('.ui-menu').width(300)
+                },
+                autoFocus:true
+            }).autocomplete("instance")._renderItem = function (ul, item) {
+                return $("<li>")
+                    .append("<a href='" + item.url + "'>" + item.label + "</a>")
+                    .appendTo(ul);
+            };
+        });
 
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
             if ($(this).hasClass('loaded') || $(this).data('url') == undefined) return;
