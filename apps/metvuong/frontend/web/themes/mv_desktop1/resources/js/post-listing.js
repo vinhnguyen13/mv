@@ -887,6 +887,16 @@ var form = {
 		} else {
 			$('.interior-item').hide();
 		}
+		
+		var additionFields = $('#addition-fields').find('.addition-field');
+		var tienIch = $('.list-tienich-detail');
+		
+		tienIch.find('> .addition-field-show').remove();
+		
+		for(var i = 0; i < additionFields.length; i++) {
+			var additionField = additionFields.eq(i);
+			tienIch.append('<li class="addition-field-show"><strong>' + additionField.find('.field-title').val() + ':</strong> <span>' + additionField.find('.field-content').val() + '</span></li>');
+		}
 	},
 	updateS7: function(){
 		$('.name-agent').text(form.nameEl.val());
