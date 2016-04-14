@@ -25,7 +25,7 @@ class MVBootstrap implements BootstrapInterface
         $app->language = $preferredLanguage;
         $this->changeLanguage();
 
-        if(Yii::$app->mobileDetect->isMobile()){
+        if(Yii::$app->mobileDetect->isMobile() && false){
             Yii::$app->set('view', [
                 'class' => 'yii\web\View',
 //                'title' => '2amigOS! Consulting Group LLC',
