@@ -239,30 +239,32 @@ use vsoft\ad\models\AdImages;
 								</div>
 							</div>
 						</div>		
-						<div class="col-xs-12 form-group">
-							<div id="addition-fields">
-								<?php
-									$additionFields = ($additionInfo->addition_fields && $additionInfo->addition_fields != '""') ? array_chunk(json_decode($additionInfo->addition_fields), 2) : [];
-									foreach ($additionFields as $additionField):
-								?>
-								<div class="addition-field row">
-									<div class="col-xs-12 col-md-4 col-sm-4 col-lg-4 form-group field-adproductadditioninfo-addition_fields">
-										<input type="text" class="form-control field-title" name="AdProductAdditionInfo[addition_fields][]" value="<?= $additionField[0] ?>" placeholder="Title">
-										<div class="help-block"></div>
+						<div class="col-xs-12 form-group" id="addition-fields-holder">
+							<div id="addition-fields-wrap">
+								<div id="addition-fields">
+									<?php
+										$additionFields = ($additionInfo->addition_fields && $additionInfo->addition_fields != '""') ? array_chunk(json_decode($additionInfo->addition_fields), 2) : [];
+										foreach ($additionFields as $additionField):
+									?>
+									<div class="addition-field row">
+										<div class="col-xs-12 col-md-4 col-sm-4 col-lg-4 form-group field-adproductadditioninfo-addition_fields">
+											<input type="text" class="form-control field-title" name="AdProductAdditionInfo[addition_fields][]" value="<?= $additionField[0] ?>" placeholder="Title">
+											<div class="help-block"></div>
+										</div>
+										<div class="col-xs-9 col-md-7 pdL-0 pdR-0 col-sm-5 col-lg-7 form-group field-adproductadditioninfo-addition_fields">
+											<input type="text" class="form-control field-content" name="AdProductAdditionInfo[addition_fields][]" value="<?= $additionField[1] ?>" placeholder="Content">
+											<div class="help-block"></div>
+										</div>
+										<div class="col-xs-3 col-md-1 col-lg-1 text-center pdL-0">
+											<button class="field-remove" type="button">
+												<span class="icon-mv fs-20"><span class="icon-close-icon"></span></span>
+											</button>
+										</div>
 									</div>
-									<div class="col-xs-9 col-md-7 pdL-0 pdR-0 col-sm-5 col-lg-7 form-group field-adproductadditioninfo-addition_fields">
-										<input type="text" class="form-control field-content" name="AdProductAdditionInfo[addition_fields][]" value="<?= $additionField[1] ?>" placeholder="Content">
-										<div class="help-block"></div>
-									</div>
-									<div class="col-xs-3 col-md-1 col-lg-1 text-center pdL-0">
-										<button class="field-remove" type="button">
-											<span class="icon-mv fs-20"><span class="icon-close-icon"></span></span>
-										</button>
-									</div>
+									<?php endforeach; ?>
 								</div>
-								<?php endforeach; ?>
+								<button id="add-field" type="button" class="btn-common"><?= Yii::t('ad', 'Add field') ?></button>
 							</div>
-							<button id="add-field" type="button" class="btn-common"><?= Yii::t('ad', 'Add field') ?></button>		
 						</div>
 					</div>
 				</div>

@@ -306,6 +306,8 @@ $(document).ready(function(){
 			facadeWiClone.parent().append('<span class="unit-dt">m</span>');
 			landWiClone.parent().append('<span class="unit-dt">m</span>');
 
+			$('#addition-fields-wrap').appendTo(wrapClone);
+			
 			wrap.append(wrapClone);
 			ref.removeErrorForWrap(wrapClone);
 			
@@ -325,6 +327,8 @@ $(document).ready(function(){
 				}
 				
 				if(!wrap.find('.has-error').length) {
+					$('#addition-fields-wrap').appendTo($('#addition-fields-holder'));
+					
 					form.updateS6();
 					wrapClone.remove();
 					listTi.show();
