@@ -4441,6 +4441,7 @@ html.mm-opening .mm-slideout {
     background: none;
     border: none;
     font-weight: 600;
+    text-shadow: 0 1px 0 #fff;
 }
 #popup-email .close,
 .title-popup .txt-done {
@@ -6800,6 +6801,7 @@ footer li a {
 	background-image:-o-linear-gradient(top, #3EACBA, #48C6D4);
 	background-image:linear-gradient(top, #3EACBA, #48C6D4);
 }
+.btn-done:hover,
 .btn-cancel:hover {
     background: #C4C4C4;
 }
@@ -9390,13 +9392,18 @@ footer li a {
     -webkit-box-shadow: 0px 0px 6px rgba(133, 133, 133, 0.4);
     -moz-box-shadow: 0px 0px 6px rgba(133, 133, 133, 0.4);
     -ms-box-shadow: 0px 0px 6px rgba(133, 133, 133, 0.4);
+    /* display: block !important; */
 }
 .ui-autocomplete li a {
     font-size: 13px;
     display: block;
     padding: 3px 10px;
 }
+.ui-autocomplete li.ui-state-focus a,
 .ui-autocomplete li a:hover{
     background: #ECECEC;
     color: #009455;
+}
+.ui-helper-hidden-accessible {
+    display: none;
 }
