@@ -26,13 +26,20 @@ $count_product = count($products);
             }
             if (($share = \frontend\models\Tracking::find()->countShares($product->id)) === null) {
                 $share = 0;
-            } ?>
+            }
+            $thumb = $product->representImage;
+            if(strpos($thumb, "default")){
+                if($product->projectBuilding){
+                    $thumb = $product->projectBuilding->logoUrl;
+                }
+            }
+            ?>
             <li class="col-xs-12 col-md-6 col-sm-6">
                 <div class="item">
                     <div class="img-show">
                         <div>
-                            <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>" title="<?=Yii::t('statistic', 'View statistic detail')?>"><img
-                                    src="<?= $product->representImage ?>" alt="<?=Yii::t('statistic', 'View statistic detail')?>"></a>
+                            <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>" title="<?=Yii::t('statistic', 'View statistic detail')?>">
+                                <img src="<?=$thumb ?>" alt="<?=Yii::t('statistic', 'View statistic detail')?>"></a>
                         </div>
                         <a href="<?= Url::to(['/ad/update', 'id' => $product->id]) ?>" class="edit-duan">
                             <span class="icon-mv"><span class="icon-edit-copy-4"></span></span>
