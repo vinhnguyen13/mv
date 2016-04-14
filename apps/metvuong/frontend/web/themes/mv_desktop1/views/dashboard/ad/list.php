@@ -114,49 +114,6 @@ $count_product = count($products);
                 </div>
             </li>
         <?php }?>
-        <li class="col-xs-12"><a href="#" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> $type,'last_id' => $last_id])?>" class="load_listing pull-right"><?=Yii::t('listing','More listing')?>...</a></li>
-    <?php } else { ?>
-       <li class="col-xs-12"><span class="pull-right">That's all listing.</span></li>
     <?php } ?>
-<script>
-    $('#list-all a.load_listing').click(function(){
-        $('body').loading();
-        $(this).parent().remove();
-        $.ajax({
-            type: "get",
-            dataType: 'html',
-            url: $(this).data('url'),
-            success: function (data) {
-                $('#list-all .list-item').append(data);
-                $('body').loading({done: true});
-            }
-        });
-    });
-    $('#list-sell a.load_listing').click(function(){
-        $('body').loading();
-        $(this).parent().remove();
-        $.ajax({
-            type: "get",
-            dataType: 'html',
-            url: $(this).data('url'),
-            success: function (data) {
-                $('#list-sell .list-item').append(data);
-                $('body').loading({done: true});
-            }
-        });
-    });
-    $('#list-rent a.load_listing').click(function(){
-        $('body').loading();
-        $(this).parent().remove();
-        $.ajax({
-            type: "get",
-            dataType: 'html',
-            url: $(this).data('url'),
-            success: function (data) {
-                $('#list-rent .list-item').append(data);
-                $('body').loading({done: true});
-            }
-        });
-    });
-</script>
+
 
