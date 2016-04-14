@@ -83,7 +83,6 @@ class Connect extends AuthChoice
     protected function renderMainContent()
     {
         echo Html::beginTag('ul', ['class' => 'list-social-login clearfix']);
-        echo Html::tag('li', $this->groupTitle, ['class' => 'list-social-login clearfix']);
         foreach ($this->getClients() as $externalService) {
             echo Html::beginTag('li', ['class' => '']);
             $this->clientLink($externalService);
