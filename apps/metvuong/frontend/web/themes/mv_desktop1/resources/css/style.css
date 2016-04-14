@@ -8732,6 +8732,9 @@ footer li a {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+.icon-key:before {
+    content: "\e925";
+}
 .icon-google-plus:before {
     content: "\e923";
 }
