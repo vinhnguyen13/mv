@@ -218,12 +218,18 @@ class DashboardController extends Controller
         $count_total = count($totalProducts);
         if($count_total > 0){
             foreach($totalProducts as $key => $product){
+                $thumb = $product->representImage;
                 if($product->projectBuilding) {
+                    if(strpos($thumb, "default")){
+                        $thumb = $product->projectBuilding->logoUrl;
+                    }
                     $tempProduct["label"] = Yii::$app->params['listing_prefix_id'] . $product->id." - ".$product->projectBuilding->name;
                     $tempProduct["url"] = Url::to(['/dashboard/statistics', 'id' => $product->id], true);
+                    $tempProduct["thumb"] = $thumb;
                 } else {
                     $tempProduct["label"] = Yii::$app->params['listing_prefix_id'] . $product->id." - ".$product->address;
                     $tempProduct["url"] = Url::to(['/dashboard/statistics', 'id' => $product->id], true);
+                    $tempProduct["thumb"] = $thumb;
                 }
                 array_push($search, $tempProduct);
 
