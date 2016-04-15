@@ -6519,7 +6519,7 @@ footer li a {
     .list-menu-news {
         padding: 0;
         float: right;
-        width: 70%;
+        max-width: 70%;
         padding: 0 20px;
     }
     .list-menu-news > .container {
@@ -6557,14 +6557,17 @@ footer li a {
         margin-left: 0;
         margin: 0;
     }
-    .list-duan ul li {
-        margin-bottom: 50px;
+    .list-duan .col-left ul li {
+        margin-bottom: 40px;
+        padding-bottom: 40px;
         padding-left: 0;
+    }
+    .list-duan .col-left ul li:first-child {
+        border-bottom: solid 1px #969696;
     }
     .wrap-infor-duan .wrap-item .img-show:before {
         padding-top: 60%;
     }
-    
 }
 .select-location .dropdown-up-style .item-dropdown,
 .select-others .dropdown-up-style .item-dropdown {
@@ -7563,6 +7566,7 @@ footer li a {
     font-size: 18px;
     margin-right: 5px;
     line-height: 100%;
+    margin-left: 1px;
 }
 .user-avatar .icon-phone-profile {
     font-size: 19px;
@@ -7724,11 +7728,14 @@ footer li a {
 }
 .list-duan .col-left .wrap-item > a {
     float: left;
-    width: 62%;
-    padding-right: 25px;
+    width: 45%;
+    margin-right: 4%;
 }
 .list-duan .col-left .wrap-item .info-item {
     overflow: hidden;
+}
+.list-duan .col-left li:first-child .wrap-item > a {
+    width: 60%;
 }
 .detail-duan-moi .col-left,
 .list-duan .col-left {
@@ -9422,4 +9429,14 @@ input:-webkit-autofill {
 .tooltip-inner {
     display: block;
     white-space: nowrap;
+}
+.report-listing select {
+    width: 150px;
+    height: 25px;
+    font-size: 13px;
+    padding: 0 0 0 0;
+    margin-left: 10px;
+}
+.report-listing {
+    font-size: 13px;
 }
