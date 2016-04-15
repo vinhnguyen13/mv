@@ -17,4 +17,36 @@ if(!empty($env) && in_array($env, [YII_ENV_PROD, YII_ENV_TEST])){
 </script>
 <?php
 }
+if(true){
+    $parseUrl = Yii::$app->urlManager->parseRequest(Yii::$app->request);
+    $urlBase = !empty($parseUrl[0]) ? $parseUrl[0] : '';
+
+
+?>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            if (typeof ga !== "undefined") {
+                <?php if(!Yii::$app->user->isGuest){?>
+                    ga('send', {
+                        hitType: 'event',
+                        eventCategory: '<?=Yii::$app->user->identity->username;?>',
+                        eventAction: '<?=\yii\helpers\Url::current();?>',
+                        eventLabel: ''
+                    });
+                <?php }else{
+                ?>
+                    ga('send', {
+                        hitType: 'event',
+                        eventCategory: 'Guest <?=Yii::$app->request->userIP;?>',
+                        eventAction: '<?=\yii\helpers\Url::current();?>',
+                        eventLabel: ''
+                    });
+                <?php
+                }
+                ?>
+            }
+        });
+    </script>
+<?php
+}
 ?>
