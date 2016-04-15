@@ -211,20 +211,22 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 						$('.tooltip-show').tooltip();
 
 						$('#popup-map').on('show.bs.modal', function (e) {
-						    var mapEl = $('#map_detail');
-							var latLng = {lat: Number(mapEl.data('lat')), lng:  Number(mapEl.data('lng'))};
-							var map = new google.maps.Map(mapEl.get(0), {
-								center: latLng,
-							    zoom: 16,
-							    mapTypeControl: false,
-							    zoomControl: false,
-							    streetViewControl: false
-							});
+							setTimeout(function(){
+							    var mapEl = $('#map_detail');
+								var latLng = {lat: Number(mapEl.data('lat')), lng:  Number(mapEl.data('lng'))};
+								var map = new google.maps.Map(mapEl.get(0), {
+									center: latLng,
+								    zoom: 16,
+								    mapTypeControl: false,
+								    zoomControl: false,
+								    streetViewControl: false
+								});
 
-							var marker = new google.maps.Marker({
-							    position: latLng,
-							    map: map
-							});
+								var marker = new google.maps.Marker({
+								    position: latLng,
+								    map: map
+								});
+							}, 400);
 						});
 
 						/*$(document).on('click', '#popup-share-social .icon-email-1', function (e) {
