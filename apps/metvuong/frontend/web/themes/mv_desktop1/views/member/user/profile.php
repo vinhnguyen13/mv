@@ -25,7 +25,7 @@ $count_review = count($reviews);
                 <div class="user-avatar">
                     <div class="wrap-img avatar"><img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="<?=$model->avatar?>" alt="metvuong avatar" /></div>
                     <div class="overflow-all">
-                        <div class="pull-right report-listing">
+                        <!-- div class="pull-right report-listing">
                             Report:
                             <select name="" id="">
                                 <option value="" selected>Report</option>
@@ -33,7 +33,7 @@ $count_review = count($reviews);
                                 <option value="">abc</option>
                                 <option value="">abc</option>
                             </select>
-                        </div>
+                        </div-->
                         <p class="name-user fs-18 font-600" ><?= $model->name ?><a href="#" class="chat-now" data-chat-user="<?=$user->username?>"><span class="icon-mv"><span class="icon-bubbles-icon"></span></span></a></p>
                         <div class="stars">
                             <span id="rating-all" class="rateit" data-rateit-value="<?=$model->rating_point?>" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
@@ -56,9 +56,14 @@ $count_review = count($reviews);
                     </div>
                 </div>
                 <ul class="clearfix tabs-scroll">
-                    <li><a class="active" href="#tab-infor">Cá nhân</a></li>
-                    <li><a href="#tab-list-post">Listings (<?=$count_product?>)</a></li>
-                    <li><a href="#tab-review">Review (<?=$count_review?>)</a></li>
+                    <li><a class="active" href="#tab-infor"><?=Yii::t('profile', 'About')?></a></li>
+                    <?php if($count_product > 0) {?>
+                    <li><a href="#tab-list-post"><?=Yii::t('profile', 'Listings')?> (<?=$count_product?>)</a></li>
+                    <li><a href="#tab-review"><?=Yii::t('profile', 'Reviews')?>  (<?=$count_review?>)</a></li>
+                    <?php } else { ?>
+                    <li><a><?=Yii::t('profile', 'Listings')?></a></li>
+                    <li><a><?=Yii::t('profile', 'Reviews')?></a></li>
+                    <?php } ?>
                 </ul>
                 <div id="tab-infor" class="infor-priva tabs-scroll-item">
                     <div class="title-text"><?=Yii::t('profile','Personal Information')?></div>
@@ -205,15 +210,10 @@ $count_review = count($reviews);
                 <?php } ?>
                 <div id="tab-review" class="review-user tabs-scroll-item">
                     <div class="title-text clearfix"><?=Yii::t('profile', 'REVIEW')?>
-                        <?php if(Yii::$app->user->id != $user->id) {
-                            if (Yii::$app->user->isGuest) { ?>
-                                <a href="#"
-                                   class="btn-review btn-common pull-right user-login-link"><?= Yii::t('profile', 'Write Review') ?></a>
-                            <?php } else { ?>
-                                <a href="#" data-toggle="modal" data-target="#popup-review"
+                        <?php if(Yii::$app->user->id != $user->id && $count_product > 0 && !Yii::$app->user->isGuest) { ?>
+                            <a href="#" data-toggle="modal" data-target="#popup-review"
                                    class="btn-review btn-common pull-right"><?= Yii::t('profile', 'Write Review') ?></a>
-                            <?php }
-                        } ?>
+                        <?php } ?>
                     </div>
                     <?php
                     echo $this->render('/member/_partials/review', ['reviews' => $reviews]) ?>
@@ -222,7 +222,7 @@ $count_review = count($reviews);
 
             <div class="col-xs-12 col-xs-3 sidebar-user">
                 <div class="item-sidebar">
-                    <?=\vsoft\ad\widgets\ListingWidget::widget(['title' => Yii::t('listing','SIMILAR LISTINGS'), 'limit' => 4])?>
+                    <?=\vsoft\ad\widgets\ListingWidget::widget(['user_id' => $user->id, 'title' => Yii::t('listing','SIMILAR LISTINGS'), 'limit' => 4])?>
                 </div>
             </div>
 
