@@ -15,6 +15,8 @@ $recipientEmail = empty($model->public_email) ? $user->email : $model->public_em
 // get user was been login
 $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->profile->public_email) ? Yii::$app->user->identity->email : Yii::$app->user->identity->profile->public_email);
 $count_product = $pagination->totalCount;
+$reviews = \frontend\models\UserReview::find()->where('review_id = :rid', [':rid' => $user->id])->orderBy(['created_at' => SORT_DESC])->all();
+$count_review = count($reviews);
 ?>
 <div class="title-fixed-wrap">
     <div class="container">
@@ -35,7 +37,7 @@ $count_product = $pagination->totalCount;
                         <p class="name-user fs-18 font-600" ><?= $model->name ?><a href="#" class="chat-now" data-chat-user="<?=$user->username?>"><span class="icon-mv"><span class="icon-bubbles-icon"></span></span></a></p>
                         <div class="stars">
                             <span id="rating-all" class="rateit" data-rateit-value="<?=$model->rating_point?>" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
-                            <span class="fs-13 font-600">(10)</span>
+                            <span class="fs-13 font-600">(<?=$count_review?>)</span>
                         </div>
                         <p class="location">
                             <span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
@@ -56,7 +58,7 @@ $count_product = $pagination->totalCount;
                 <ul class="clearfix tabs-scroll">
                     <li><a class="active" href="#tab-infor">Cá nhân</a></li>
                     <li><a href="#tab-list-post">Listings (<?=$count_product?>)</a></li>
-                    <li><a href="#tab-review">Review (3)</a></li>
+                    <li><a href="#tab-review">Review (<?=$count_review?>)</a></li>
                 </ul>
                 <div id="tab-infor" class="infor-priva tabs-scroll-item">
                     <div class="title-text"><?=Yii::t('profile','Personal Information')?></div>
@@ -213,7 +215,7 @@ $count_product = $pagination->totalCount;
                             <?php }
                         } ?>
                     </div>
-                    <?php $reviews = \frontend\models\UserReview::find()->where('review_id = :rid', [':rid' => $user->id])->orderBy(['created_at' => SORT_DESC])->all();
+                    <?php
                     echo $this->render('/member/_partials/review', ['reviews' => $reviews]) ?>
                 </div>
             </div>
