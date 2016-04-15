@@ -109,7 +109,7 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 					<div class="address-listing">
 						<p><?= $address ?></p>
 					</div>
-					<p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
+					<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
 					<ul class="clearfix list-attr-td">
 						<?= $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '' ?>
 						<?= $product->adProductAdditionInfo->room_no ? '<li> <span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
