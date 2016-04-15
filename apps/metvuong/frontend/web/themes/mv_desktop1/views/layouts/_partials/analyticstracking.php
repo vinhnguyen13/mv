@@ -31,7 +31,7 @@ if(true){
                         hitType: 'event',
                         eventCategory: '<?=Yii::$app->user->identity->username;?>',
                         eventAction: '<?=\yii\helpers\Url::current();?>',
-                        eventLabel: ''
+                        eventLabel: '<?=\yii\helpers\Url::current();?>'
                     });
                 <?php }else{
                 ?>
@@ -39,7 +39,7 @@ if(true){
                         hitType: 'event',
                         eventCategory: 'Guest <?=Yii::$app->request->userIP;?>',
                         eventAction: '<?=\yii\helpers\Url::current();?>',
-                        eventLabel: ''
+                        eventLabel: '<?=\yii\helpers\Url::current();?>'
                     });
                 <?php
                 }
