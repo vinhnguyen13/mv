@@ -220,34 +220,7 @@ $count_product = $pagination->totalCount;
 
             <div class="col-xs-12 col-xs-3 sidebar-user">
                 <div class="item-sidebar">
-                    <div class="title-text"><?=Yii::t('profile','CONTACT WITH')?> <?= empty($model->name) ? strtoupper($user->username) : mb_strtoupper($model->name, "UTF-8") ?></div>
-                    <?php
-                    $share_form = Yii::createObject([
-                        'class'    => \frontend\models\ShareForm::className(),
-                        'scenario' => 'share',
-                    ]);
-
-                    $f = ActiveForm::begin([
-                        'id' => 'profile_send_mail',
-                        'enableAjaxValidation' => false,
-                        'enableClientValidation' => true,
-                        'action' => Url::to(['/ad/sendmail'])
-                    ]);
-
-                    ?>
-                        <div class="form-group frm-item">
-                            <input type="text" class="from_name" name="from_name" value="" placeholder="<?=Yii::t('send_email','Name')?> ...">
-                            <input type="hidden" name="send_from" value="profile-<?=$user->username?>">
-                        </div>
-                        <div class="form-group frm-item">
-                            <?= $f->field($share_form, 'your_email')->textInput(['class'=>'your_email', 'placeholder'=>Yii::t('send_email', 'Email...')])->label(false) ?>
-                        </div>
-                        <div class="form-group frm-item">
-                            <?= $f->field($share_form, 'content')->textarea(['class'=>'content', 'cols' => 30, 'rows' => 10, 'placeholder'=>Yii::t('send_email', 'I am interested in "21, Nguyễn Trung Ngạn…"')])->label(false) ?>
-                            <?= $f->field($share_form, 'recipient_email')->hiddenInput(['class'=>'recipient_email', 'value'=> $recipientEmail])->label(false);?>
-                        </div>
-                        <button class="btn-common btn-send-email"><?=Yii::t('send_email', 'Send mail')?></button>
-                    <?php $f->end(); ?>
+                    <?=\vsoft\ad\widgets\ListingWidget::widget(['title' => Yii::t('listing','SIMILAR LISTINGS'), 'limit' => 4])?>
                 </div>
             </div>
 

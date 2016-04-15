@@ -324,13 +324,17 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 		                <div class="panel-body text-center">
 		            	    <div class="infor-agent clearfix">
 					            <?php if(!empty($owner)) { ?>
-								<a href="/<?=$owner->username;?>" class="wrap-img">
+								    <a href="<?=Url::to(['member/profile', 'username' => $owner->username])?>" class="wrap-img">
 					                <img src="<?= $avatar ?>" alt="<?=$owner->username;?>" /></a>
 					            <?php } else { ?>
-					                <a class="wrap-img" href="<?=$url;?>"><img src="<?= $avatar ?>" alt="" /></a>
+					                <a class="wrap-img"><img src="<?= $avatar ?>" alt="" /></a>
 					            <?php } ?>
 					            <div class="img-agent">
-						            <a href="/<?= !empty($owner) ? $owner->username : "#" ?>" class="name-agent"><?= $product->adContactInfo->name ?></a>
+                                    <?php if(!empty($owner)) { ?>
+						            <a href="<?=Url::to(['member/profile', 'username' => $owner->username])?>" class="name-agent"><?= $product->adContactInfo->name ?></a>
+                                    <?php } else {?>
+						            <span class="name-agent"><?= $product->adContactInfo->name ?></span>
+                                    <?php } ?>
 									<div class="rating-start">
 										<fieldset class="rate">
 											<input type="radio" id="rating10" name="rating" value="10"> <label
@@ -376,10 +380,8 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 										</div>
 										Ho Chi Minh City, Vietnam
 									</div>
-									<?php if($product->adContactInfo->email && $userId != $product->user_id): ?>
-									<a href="#" data-toggle="modal" data-target="#popup-email" class="email-btn btn-common btn-small">Email</a>
-									<?php endif; ?>
 									<?php if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) { ?>
+                                        <a href="#" data-toggle="modal" data-target="#popup-email" class="email-btn btn-common btn-small">Email</a>
 										<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
 									<?php }?>
 								</div>
@@ -391,8 +393,13 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 		        </div>
 		    </div>
 		</div>
-		<?= $this->render('/ad/_partials/similarListing', ['city_id' => $product->city_id, 'district_id' => $product->district_id]) ?>
-	</div>
+        <div class="col-xs-12 col-md-3 col-right sidebar-col">
+            <div class="item-sidebar">
+                <?=\vsoft\ad\widgets\ListingWidget::widget(['title' => Yii::t('listing','SIMILAR LISTINGS'), 'limit' => 4])?>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 
