@@ -658,36 +658,59 @@ var form = {
 		var swiperWrap = swiperContainer.find('.swiper-wrapper');
 		var swiper;
 		
-		$('.preview').click(function(){
-			detailListing.show();
-			//formView.hide();
+		$('.preview').click(function(e){
+			form.require(form.nameEl, 'Nhập họ tên');
 			
-			swiperWrap.html('');
-			var imgs = $('.files').children();
-
-			if(imgs.length) {
-				swiperContainer.show();
-				imgs.each(function(){
-					swiperWrap.append('<div class="swiper-slide"> <div class="img-show"> <div> <img src="' + $(this).find('a').attr('href') + '"> </div> </div> </div>');
-				});
-				swiper = new Swiper('.swiper-container', {
-					pagination: '.swiper-pagination',
-					paginationClickable: true,
-			        spaceBetween: 0,
-			        nextButton: '.swiper-button-next',
-        			prevButton: '.swiper-button-prev'
-			    });
-			} else {
-				swiperContainer.hide();
+			if(form.require(form.mobileEl, 'Nhập số di động')) {
+				if(!form.isDigit(form.mobileEl.val())) {
+					form.showError(form.mobileEl, 'Số điện thoại không hợp lệ');
+				} else if(form.mobileEl.val().length < 7 || form.mobileEl.val().length > 11) {
+					form.showError(form.mobileEl, 'Số điện thoại không được ít hơn 7 hoặc nhiều hơn 11 số.');
+				} else {
+					form.hideError(form.mobileEl);
+				}
 			}
 			
-			form.updateS1();
-			form.updateS2();
-			form.updateS3();
-			form.updateS4();
-			form.updateS5();
-			form.updateS6();
-			form.updateS7();
+			if(!form.validateEmail(form.emailEl.val())) {
+				form.showError(form.emailEl, 'Địa chỉ email không hợp lệ');
+			} else {
+				form.hideError(form.emailEl);
+			}
+
+			if(!$('#step5').find('.has-error').length) {
+				//detailListing.show();
+				//formView.hide();
+				
+				swiperWrap.html('');
+				var imgs = $('.files').children();
+
+				if(imgs.length) {
+					swiperContainer.show();
+					imgs.each(function(){
+						swiperWrap.append('<div class="swiper-slide"> <div class="img-show"> <div> <img src="' + $(this).find('a').attr('href') + '"> </div> </div> </div>');
+					});
+					swiper = new Swiper('.swiper-container', {
+						pagination: '.swiper-pagination',
+						paginationClickable: true,
+				        spaceBetween: 0,
+				        nextButton: '.swiper-button-next',
+	        			prevButton: '.swiper-button-prev'
+				    });
+				} else {
+					swiperContainer.hide();
+				}
+				
+				form.updateS1();
+				form.updateS2();
+				form.updateS3();
+				form.updateS4();
+				form.updateS5();
+				form.updateS6();
+				form.updateS7();
+			} else {
+				e.stopPropagation();
+				return false;
+			}
 		});
 		
 		$('.back-form').click(function(){
