@@ -6276,6 +6276,66 @@ footer li a {
         left: inherit;
         right: 0;
     }
+    .user-login .chat-notifi .dropdown-up-style,
+    .user-login .alert-notifi .dropdown-up-style {
+        left: 0;
+        right: inherit;
+        top: 46px;
+        width: 250px;
+    }
+    .chat-notifi .dropdown-up-style .noti-item,
+    .alert-notifi .dropdown-up-style .noti-item {
+        min-height: 300px;
+    }
+    .chat-notifi .val-selected,
+    .alert-notifi .val-selected {
+        height: auto;
+        background: none;
+        line-height: inherit;
+        padding: 0;
+    }
+    .chat-notifi.box-dropdown .val-selected.active,
+    .alert-notifi.box-dropdown .val-selected.active {
+        background: none;
+        color: #009544;
+    }
+    .wrap-noti-dopdown {
+        position: relative;
+        height: 100%;
+        padding-bottom: 28px;
+    }
+    .wrap-noti-dopdown .noti-item {
+        height: 100%;
+    }
+    .wrap-noti-dopdown .noti-item .loading-proccess {
+        background: none !important;
+    }
+    .wrap-noti-dopdown .noti-item .loading-proccess span {
+        border-top-color: #009455;
+        border-left-color: #009455;
+        margin-top: -10px;
+        margin-left: -10px;
+    }
+    .list-redire li a.view-more-notifi {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        border: none;
+        text-align: center;
+        font-size: 12px;
+        background: #EAEAEA;
+        padding: 5px 0;
+        border-top: 1px solid #ADADAD;
+        color: #009455;
+        border-radius: 0 0 4px 4px;
+        -webkit-border-radius: 0 0 4px 4px;
+        -moz-border-radius: 0 0 4px 4px;
+        -ms-border-radius: 0 0 4px 4px;
+    }
+    .list-redire li a.view-more-notifi:hover {
+        text-decoration: underline;
+    }
     .user-login .dropdown-up-style .item-dropdown {
         border: none;
         -webkit-box-shadow: none;
@@ -6566,7 +6626,7 @@ footer li a {
         border-bottom: solid 1px #969696;
     }
     .wrap-infor-duan .wrap-item .img-show:before {
-        padding-top: 60%;
+        /* padding-top: 60%; */
     }
 }
 .select-location .dropdown-up-style .item-dropdown,
@@ -9439,4 +9499,8 @@ input:-webkit-autofill {
 }
 .report-listing {
     font-size: 13px;
+}
+.noti-alert .wrap-alert-info {
+    padding-top: 60px;
+    padding-left: 40px;
 }

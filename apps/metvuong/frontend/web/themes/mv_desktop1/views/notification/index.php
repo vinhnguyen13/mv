@@ -82,8 +82,10 @@ use yii\helpers\Html;
 			<?php
 		}else{
 			?>
-			<div class="alert alert-info">
-				<p><?=Yii::t('common', '{object} no data', ['object' => Yii::t('activity', 'Notification')])?></p>
+			<div class="wrap-alert-info">
+				<div class="alert alert-info">
+					<p><?=Yii::t('common', '{object} no data', ['object' => Yii::t('activity', 'Notification')])?></p>
+				</div>
 			</div>
 			<?php
 		}

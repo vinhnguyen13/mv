@@ -287,7 +287,8 @@ $.fn.dropdown = function (options) {
             selectedValue: true,
             ajaxSubmit: function () {},
             funCallBack: function () {},
-            renderAddEvent: function () {}
+            renderAddEvent: function () {},
+            closeCallBack: function () {}
         },
         sc = {},
         el = $(this),
@@ -307,8 +308,7 @@ $.fn.dropdown = function (options) {
         }
 
         showSortLoad();
-        outsiteClick();
-
+        
         function showSortLoad () {
             if ( $(el.find('input[type=hidden]')).val() != '' && $(el.find('input[type=hidden]')).length > 0 ) {
                 valGet = $(el.find('input[type=hidden]')).val();
@@ -339,6 +339,11 @@ $.fn.dropdown = function (options) {
                     selectItem(itemList, _this);
                 }
             }else { // absolute
+                $('.box-dropdown').find('.val-selected').removeClass('active');
+                $('.box-dropdown').find('.dropdown-up-style').removeClass('active');
+                $('.box-dropdown').find('.dropdown-up-style').addClass('hide');
+                sc.settings.closeCallBack();
+                
                 if ( _this.hasClass('active') ) {
                     _this.removeClass('active');
                     el.find('.dropdown-up-style').removeClass('active');
@@ -354,6 +359,8 @@ $.fn.dropdown = function (options) {
                     selectItem(itemList, _this);
                 }
             }
+            sc.settings.ajaxSubmit();
+            outsiteClick(el);
         }
 
         function selectItem (item, itemValueClick) {
@@ -396,10 +403,12 @@ $.fn.dropdown = function (options) {
             });
         }
 
-        function outsiteClick () {
+        function outsiteClick (el) {
+            $(document).unbind('click');
             $(document).on('click', function (e) {
                 var container = el;
-                if ( !container.is(e.target) && container.has(e.target).length === 0 ){
+
+                if ( !container.is(e.target) && container.has(e.target).length === 0 ) {
                     el.find('.val-selected').removeClass('active');
                     if ( sc.settings.styleShow ) {
                         el.find('.val-selected').parent().find('.item-dropdown').velocity("slideUp", { duration: 0 });
@@ -407,6 +416,7 @@ $.fn.dropdown = function (options) {
                         el.find('.dropdown-up-style').removeClass('active');
                         setTimeout(function() {
                             el.find('.dropdown-up-style').addClass('hide');
+                            sc.settings.closeCallBack();
                         },250);
                     }
                 }
@@ -860,7 +870,7 @@ $.fn.loading = function (options) {
                 background: 'rgba(0, 0, 0, 0.51)'
             });
 
-            el.parent().css('position','relative');
+            el.css('position','relative');
             
             el.append($loading);
 
