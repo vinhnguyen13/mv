@@ -387,7 +387,7 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 										</div>
 										Ho Chi Minh City, Vietnam
 									</div>
-									<?php if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) { ?>
+									<?php if(!empty($owner->username) && !$owner->isMe()) { ?>
                                         <a href="#" data-toggle="modal" data-target="#popup-email" class="email-btn btn-common btn-small">Email</a>
 										<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
 									<?php }?>
