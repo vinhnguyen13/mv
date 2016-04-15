@@ -236,7 +236,7 @@ use vsoft\ad\models\AdImages;
 								</div>
 							</div>
 						</div>
-						 -->
+						
 						<div class="col-xs-12 form-group" id="addition-fields-holder">
 							<div id="addition-fields-wrap">
 								<div id="addition-fields">
@@ -264,6 +264,7 @@ use vsoft\ad\models\AdImages;
 								<button id="add-field" type="button" class="btn-common"><?= Yii::t('ad', 'Add field') ?></button>
 							</div>
 						</div>
+						-->
 					</div>
 				</div>
 
