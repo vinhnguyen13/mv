@@ -74,7 +74,7 @@ use frontend\models\AdProductSearch;
                             <?php }?>
                     </a></li>
                     <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon-mv"><span class="icon-settings"></span></span></div><?=Yii::t('user', 'Setting')?></a></li>
-                    <li><a href="<?=Url::to(['/member/logout'])?>"><div><span class="icon icon-logout"></span></div><?=Yii::t('user', 'Log Out')?></a></li>
+                    <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><div><span class="icon icon-logout"></span></div><?=Yii::t('user', 'Log Out')?></a></li>
                     <li class="flag-lang">
                         <p class="pull-right">
                             <a href="<?=Url::current(['language-change'=>'en-US'])?>"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/flag-en.png' ?>" alt=""></a>
@@ -112,42 +112,20 @@ use frontend\models\AdProductSearch;
                 <?php } else{?>
                     <ul class="pull-left list-redire">
                         <li>
-                            <div class="chat-notifi box-dropdown">
-                                <!-- <?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?> -->
-                                <a class="val-selected tooltip-show wrapNotifyChat" href="#" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('chat', 'Chat')?>">
-                                    <span class="icon-mv"><span class="icon-bubbles-icon"></span></span>
-                                    <?php if(!empty($this->params['notify_chat'])){?>
-                                        <span id="notifyChat" class="notifi"><?=$this->params['notify_chat'];?></span>
-                                    <?php }?>
-                                </a>
-                                <div class="item-dropdown hide-dropdown">
-                                    <div class="wrap-noti-dopdown">
-                                        <div class="noti-item">
-                                            
-                                        </div>
-                                        <a href="#" class="view-more-notifi">Xem thêm</a>
-                                    </div>
-                                </div>
-                            </div>
+                            <a class="tooltip-show wrapNotifyChat" href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('chat', 'Chat')?>">
+                                <span class="icon-mv"><span class="icon-bubbles-icon"></span></span>
+                                <?php if(!empty($this->params['notify_chat'])){?>
+                                    <span id="notifyChat" class="notifi"><?=$this->params['notify_chat'];?></span>
+                                <?php }?>
+                            </a>
                         </li>
                         <li>
-                            <div class="alert-notifi box-dropdown">
-                                <!-- <?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?> -->
-                                <a class="val-selected tooltip-show wrapNotifyOther" href="#" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('activity', 'Notification')?>">
-                                    <span class="icon-mv"><span class="icon-icons-bell"></span></span>
-                                    <?php if(!empty($this->params['notify_other'])){?>
-                                        <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
-                                    <?php }?>
-                                </a>
-                                <div class="item-dropdown hide-dropdown">
-                                    <div class="wrap-noti-dopdown">
-                                        <div class="noti-item">
-                                            
-                                        </div>
-                                        <a href="#" class="view-more-notifi">Xem thêm</a>
-                                    </div>
-                                </div>
-                            </div>
+                            <a class="tooltip-show wrapNotifyOther" href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('activity', 'Notification')?>">
+                                <span class="icon-mv"><span class="icon-icons-bell"></span></span>
+                                <?php if(!empty($this->params['notify_other'])){?>
+                                    <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
+                                <?php }?>
+                            </a>
                         </li>
                         <li>
                             <a class="tooltip-show" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="Dashboard">
@@ -174,7 +152,7 @@ use frontend\models\AdProductSearch;
                                     </a>
                                 </li>
                                 <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon-mv"><span class="icon-settings"></span></span></div><?=Yii::t('user', 'Setting')?></a></li>
-                                <li><a href="<?=Url::to(['/member/logout'])?>"><div><span class="icon icon-logout"></span></div><?=Yii::t('user', 'Log Out')?></a></li>
+                                <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><div><span class="icon icon-logout"></span></div><?=Yii::t('user', 'Log Out')?></a></li>
                                 <li class="flag-lang">
                                     <div class="pull-right">
                                         <a href="<?=Url::current(['language-change'=>'en-US'])?>"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/flag-en.png' ?>" alt=""></a>
@@ -207,7 +185,7 @@ use frontend\models\AdProductSearch;
                 <div class="wrap-popup">
                     <div class="inner-popup">
                         <div class="wrap-body-popup">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -223,7 +201,7 @@ use frontend\models\AdProductSearch;
                 <div class="wrap-popup">
                     <div class="inner-popup">
                         <div class="wrap-body-popup">
-                            
+
                         </div>
                     </div>
                 </div>
@@ -267,20 +245,9 @@ use frontend\models\AdProductSearch;
             });
         });
 
-        $('.user-edit, .guest-dropdown').dropdown({
+        $('.user-login .box-dropdown, .guest-dropdown').dropdown({
             styleShow: 0,
             selectedValue: false
-        });
-
-        $('.alert-notifi,.chat-notifi').dropdown({
-            styleShow: 0,
-            selectedValue: false,
-            ajaxSubmit: function () {
-                $('.wrap-noti-dopdown .noti-item').loading({full: false});
-            },
-            closeCallBack: function () {
-                $('.wrap-noti-dopdown .noti-item').loading({done: true});
-            }
         });
 
     });
