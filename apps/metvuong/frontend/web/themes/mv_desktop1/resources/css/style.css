@@ -6205,18 +6205,13 @@ footer li a {
         height: auto;
     }
     .field-adproduct-city_id {
-        width: 100%;
+        /* width: 100%; */
     }
     .dt-post,
     .field-adproduct-price,
     .field-adproduct-street_id,
     .field-adproduct-ward_id {
         width: 50%;
-    }
-    #home-wrap {
-        float: left;
-        width: 50%;
-        position: relative;
     }
     #home-wrap .toggle-num-home {
         margin-top: -15px;

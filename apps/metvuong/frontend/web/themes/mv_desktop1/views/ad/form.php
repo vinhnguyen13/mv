@@ -155,13 +155,11 @@ use vsoft\ad\models\AdImages;
 							->label(false)
 							->dropDownList(ArrayHelper::map(AdStreet::getListByDistrict($product->district_id), 'id', 'name'), ['prompt' => $product->getAttributeLabel('street_id')]) ?>
 						
-						<div id="home-wrap">
-							<?= $form->field($product, 'home_no', ['options' => ['class' => 'col-xs-12 form-group']])
-									->label(false)
-									->textInput(['placeholder' => $product->getAttributeLabel('home_no')]) ?>
-								
-							<?= $form->field($product, 'show_home_no', ['options' => ['class' => 'col-xs-12 form-group toggle-num-home']])->label(false)->checkbox(['data-set' => $product->isNewRecord ? '0' : '1']) ?>
-						</div>
+						<?= $form->field($product, 'home_no', ['options' => ['class' => 'col-xs-12 form-group']])
+								->label(false)
+								->textInput(['placeholder' => $product->getAttributeLabel('home_no')]) ?>
+							
+						<?= $form->field($product, 'show_home_no', ['options' => ['class' => 'col-xs-12 form-group toggle-num-home']])->label(false)->checkbox(['data-set' => $product->isNewRecord ? '0' : '1']) ?>
 						
 						<div class="col-xs-12 form-group dt-post">
 							<?= $form->field($product, 'area', ['options' => ['class' => '']])
