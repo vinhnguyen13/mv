@@ -62,9 +62,8 @@ use vsoft\ad\models\AdImages;
 				<?php endif; ?>
 					<div class="dt-hide">
 						<ul class="clearfix">
-							<li>BẠN LÀ?</li>
-							<li>BẠN MUỐN?</li>
-							<li>LOẠI BĐS BẠN TÌM?</li>
+							<li><?= Yii::t('ad', 'YOU ARE?') ?></li>
+							<li><?= Yii::t('ad', 'YOU WANT?') ?></li>
 						</ul>
 					</div>
 					<div class="dt-show">
