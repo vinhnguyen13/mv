@@ -63,7 +63,7 @@ use vsoft\ad\models\AdImages;
 					<div class="dt-hide">
 						<ul class="clearfix">
 							<li><?= Yii::t('ad', 'YOU ARE?') ?></li>
-							<li><?= Yii::t('ad', 'YOU WANT?') ?></li>
+							<li><?= Yii::t('ad', 'YOU WANT TO?') ?></li>
 						</ul>
 					</div>
 					<div class="dt-show">
