@@ -26,6 +26,7 @@ $count_product = $pagination->totalCount;
                         <p class="name-user fs-18 font-600" ><?= $model->name ?><a href="#" class="chat-now" data-chat-user="<?=$user->username?>"><span class="icon-mv"><span class="icon-bubbles-icon"></span></span></a></p>
                         <div class="stars">
                             <span id="rating-all" class="rateit" data-rateit-value="<?=$model->rating_point?>" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
+                            <span class="fs-13 font-600">(10)</span>
                         </div>
                         <p class="location">
                             <span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>

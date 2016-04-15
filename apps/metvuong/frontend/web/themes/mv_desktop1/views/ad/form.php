@@ -329,8 +329,8 @@ use vsoft\ad\models\AdImages;
 			<p class="mgB-10 fs-14">Tin của bạn đang chờ xét duyệt và sẽ được hiển thị đến người mua sớm nhất.</p>
 			<p class="mgB-10 fs-14">Cảm ơn đã sử dụng dịch vụ của MetVuong</p>
 			<div class="text-center">
-				<a class="btn-common" href="<?= Url::current() ?>">Tiếp tục đăng tin</a>
-				<a class="btn-common" id="to-detail" href="#">Xem tin vừa đăng</a>	
+				<a class="btn-common mgR-10" href="<?= Url::current() ?>">Tiếp tục đăng tin</a>
+				<a class="btn-common mgL-10" id="to-detail" href="#">Xem tin vừa đăng</a>	
 			</div>
 			
 		<?php else: ?>

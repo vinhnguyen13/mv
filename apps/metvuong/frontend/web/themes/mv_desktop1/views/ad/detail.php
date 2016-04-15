@@ -120,7 +120,7 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 				</div>
 				<ul class="pull-right icons-detail">
 					<li>
-						<button data-toggle="tooltip" data-placement="bottom" title="<?= Yii::t('ad', 'Copy link') ?>" data-title-success="<?= Yii::t('ad', 'Copied') ?>" class="btn-copy tooltip-show" type="button" data-clipboard-text="<?= $product->urlDetail(true) ?>">
+						<button data-toggle="tooltip" data-placement="bottom" title="<?= Yii::t('ad', 'Copy link') ?>" data-title-success="<?= Yii::t('ad', 'Copied') ?>" class="btn-copy" type="button" data-clipboard-text="<?= $product->urlDetail(true) ?>">
 							<span class="icon-mv"><span class="icon-link"></span></span>
 						</button>
 					</li>
@@ -180,10 +180,24 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 
 						var clipboard = new Clipboard('.btn-copy');
 
+						$('.btn-copy').tooltip({
+							delay: {
+								"show": 100,
+								"hide": 500
+							}
+						}).mouseout(function () {
+							$('.tooltip').hide();
+							$('.btn-copy').tooltip({
+								delay: {
+									"show": 100,
+									"hide": 50
+								}
+							});
+						});
+
 						clipboard.on('success', function(e) {
 						    var txtSuccess = $(e.trigger).data('titleSuccess');
-						    alertBox(txtSuccess);
-						    e.clearSelection();
+						    $('.tooltip .tooltip-inner').text(txtSuccess);
 						});
 
 						var swiper = new Swiper('.swiper-container', {
