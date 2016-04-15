@@ -214,6 +214,7 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 							setTimeout(function(){
 							    var mapEl = $('#map_detail');
 								var latLng = {lat: Number(mapEl.data('lat')), lng:  Number(mapEl.data('lng'))};
+
 								var map = new google.maps.Map(mapEl.get(0), {
 									center: latLng,
 								    zoom: 16,
