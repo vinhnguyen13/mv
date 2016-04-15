@@ -244,7 +244,8 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 		            <div class="panel-heading" role="tab" id="headingOne">
 		                <h4 class="panel-title">
 		                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-		                        <?= Yii::t('ad', 'Content') ?><span class="icon"></span>
+		                        <?= Yii::t('ad', 'Content') ?>
+		                        <span class="icon-mv"><span class="icon-plus"></span></span>
 		                    </a>
 		                </h4>
 		            </div>
@@ -258,7 +259,8 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 		            <div class="panel-heading" role="tab" id="headingTwo">
 		                <h4 class="panel-title">
 		                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-		                        <?= Yii::t('ad', 'Detail Information') ?><span class="icon"></span>
+		                        <?= Yii::t('ad', 'Detail Information') ?>
+		                        <span class="icon-mv"><span class="icon-plus"></span></span>
 		                    </a>
 		                </h4>
 		            </div>
@@ -301,7 +303,8 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 		            <div class="panel-heading" role="tab" id="headingFour">
 		                <h4 class="panel-title">
 		                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-		                        <?= Yii::t('ad', 'Facilities') ?><span class="icon"></span>
+		                        <?= Yii::t('ad', 'Facilities') ?>
+		                        <span class="icon-mv"><span class="icon-plus"></span></span>
 		                    </a>
 		                </h4>
 		            </div>
@@ -316,7 +319,8 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 		            <div class="panel-heading" role="tab" id="headingSeven">
 		                <h4 class="panel-title">
 		                    <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEght" aria-expanded="false" aria-controls="collapseSeven">
-		                        <?= Yii::t('ad', 'Contact') ?><span class="icon"></span>
+		                        <?= Yii::t('ad', 'Contact') ?>
+		                        <span class="icon-mv"><span class="icon-plus"></span></span>
 		                    </a>
 		                </h4>
 		            </div>

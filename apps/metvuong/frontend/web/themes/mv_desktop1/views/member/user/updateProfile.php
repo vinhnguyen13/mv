@@ -172,22 +172,22 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                             'action' => Url::to(['member/password'])
                         ]);
                         ?>
-                        <div class="col-xs-3">
+                        <div class="col-xs-12 col-md-3">
                             <?=Yii::t('profile', 'Old password')?>
                         </div>
-                        <div class="col-xs-9 mgB-10">
+                        <div class="col-xs-12 col-md-9 mgB-10">
                             <?= $f->field($model, 'old_password')->textInput(['class' => 'old_password', 'type' => 'password', 'placeholder' => Yii::t('profile','Input...')])->label(false) ?>
                         </div>
-                        <div class="col-xs-3">
+                        <div class="col-xs-12 col-md-3">
                             <?=Yii::t('profile', 'New password')?>
                         </div>
-                        <div class="col-xs-9 mgB-10">
+                        <div class="col-xs-12 col-md-9 mgB-10">
                             <?= $f->field($model, 'new_password')->textInput(['class' => 'new_password', 'type' => 'password', 'placeholder' => Yii::t('profile','Input...')])->label(false) ?>
                         </div>
-                        <div class="col-xs-3">
+                        <div class="col-xs-12 col-md-3">
                             <?=Yii::t('profile', 'Confirm password')?>
                         </div>
-                        <div class="col-xs-9">
+                        <div class="col-xs-12 col-md-9">
                             <input type="password" class="re-type-pass" value="" placeholder="<?=Yii::t('profile','Input...')?>">
                             <p class="help-block help-block-error error hide"></p>
                         </div>
