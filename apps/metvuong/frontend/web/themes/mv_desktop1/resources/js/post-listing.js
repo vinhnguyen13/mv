@@ -306,7 +306,7 @@ $(document).ready(function(){
 			facadeWiClone.parent().append('<span class="unit-dt">m</span>');
 			landWiClone.parent().append('<span class="unit-dt">m</span>');
 
-			$('#addition-fields-wrap').appendTo(wrapClone);
+			// $('#addition-fields-wrap').appendTo(wrapClone);
 			
 			wrap.append(wrapClone);
 			ref.removeErrorForWrap(wrapClone);
@@ -327,7 +327,7 @@ $(document).ready(function(){
 				}
 				
 				if(!wrap.find('.has-error').length) {
-					$('#addition-fields-wrap').appendTo($('#addition-fields-holder'));
+					// $('#addition-fields-wrap').appendTo($('#addition-fields-holder'));
 					
 					form.updateS6();
 					wrapClone.remove();
@@ -895,7 +895,7 @@ var form = {
 		} else {
 			$('.interior-item').hide();
 		}
-		
+		/*
 		var additionFields = $('#addition-fields').find('.addition-field');
 		var tienIch = $('.list-tienich-detail');
 		
@@ -905,6 +905,7 @@ var form = {
 			var additionField = additionFields.eq(i);
 			tienIch.append('<li class="addition-field-show"><strong>' + additionField.find('.field-title').val() + ':</strong> <span>' + additionField.find('.field-content').val() + '</span></li>');
 		}
+		*/
 	},
 	updateS7: function(){
 		$('.name-agent').text(form.nameEl.val());

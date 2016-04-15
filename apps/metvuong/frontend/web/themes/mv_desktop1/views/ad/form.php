@@ -222,7 +222,7 @@ use vsoft\ad\models\AdImages;
 						<?= $form->field($additionInfo, 'interior', ['options' => ['class' => 'col-xs-12 form-group']])
 								->label(false)
 								->textArea(['placeholder' => $additionInfo->getAttributeLabel('interior')]) ?>
-						
+						<!-- 
 						<div id="addition-field-template" style="display: none;">
 							<div class="addition-field row">
 								<?= $form->field($additionInfo, 'addition_fields', ['options' => ['class' => 'col-xs-12 col-md-4 col-sm-4 col-lg-4 form-group']])
@@ -237,7 +237,8 @@ use vsoft\ad\models\AdImages;
 									</button>
 								</div>
 							</div>
-						</div>		
+						</div>
+						 -->
 						<div class="col-xs-12 form-group" id="addition-fields-holder">
 							<div id="addition-fields-wrap">
 								<div id="addition-fields">
@@ -363,13 +364,13 @@ use vsoft\ad\models\AdImages;
 						<div class="address-feat clearfix">
 							<div class="posi_relative">
 								<p class="infor-by-up"></p>
-								<span data-ref="editS1" class="icon-mv fs-16 color-cd edit-listing" style="top: -5px;"><span class="icon-edit-copy-4"></span></span>
+								<span data-ref="editS1" class="icon-mv fs-16 color-cd edit-listing" style="top: -5px; display: none;"><span class="icon-edit-copy-4"></span></span>
 							</div>
 							<div class="posi_relative">
 								<div class="address-listing">
 									<p></p>
 								</div>
-								<span data-ref="editS2" class="edit-listing icon-mv fs-16 color-cd"><span class="icon-edit-copy-4"></span></span>
+								<span data-ref="editS2" class="edit-listing icon-mv fs-16 color-cd" style="display: none;"><span class="icon-edit-copy-4"></span></span>
 							</div>
 							<div class="posi_relative mgT-5">
 								<ul class="clearfix list-attr-td">
