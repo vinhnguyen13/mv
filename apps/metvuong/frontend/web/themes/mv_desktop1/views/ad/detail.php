@@ -335,7 +335,7 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 					            <?php } ?>
 					            <div class="img-agent">
                                     <?php if(!empty($owner)) { ?>
-						            <a href="<?=Url::to(['member/profile', 'username' => $owner->username])?>" class="name-agent"><?= $product->adContactInfo->name ?></a>
+						            <a href="<?=Url::to(['member/profile', 'username' => $owner->username])?>" class="name-agent"><?= $owner->profile->name ?></a>
                                     <?php } else {?>
 						            <span class="name-agent"><?= $product->adContactInfo->name ?></span>
                                     <?php } ?>
