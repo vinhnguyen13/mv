@@ -131,6 +131,22 @@ use vsoft\ad\models\AdImages;
 								 ->label(false)
 								 ->dropDownList(ArrayHelper::map(AdDistrict::getListByCity($product->city_id), 'id', 'name'), ['prompt' => $product->getAttributeLabel('district_id')]) ?>
 						
+						<div id="project-info-wrap" class="col-xs-12">
+							<?php
+								$projects = $product->district_id ? AdBuildingProject::find()->where('district_id = :district_id', [':district_id' => $product->district_id])->all() : [];
+								echo $form->field($product, 'project_building_id', ['options' => ['class' => 'form-group']])
+									 ->label(false)
+									 ->dropDownList(ArrayHelper::map($projects, 'id', 'name'), ['prompt' => $product->getAttributeLabel('project_building_id')])
+							?>
+							<div id="project-info" style="display: none;" data-url="<?= Url::to(['building-project/detail']) ?>">
+								<div class="loading-proccess"><span></span></div>
+								<div class="result">
+									<div>Vị trí: <span id="project-info-location"></span></div>
+									<a target="_blank" id="project-info-detail" href="#">Xem chi tiết dự án</a>
+								</div>
+							</div>
+						</div>
+						
 						<?= $form->field($product, 'ward_id', ['options' => ['class' => 'col-xs-12 form-group']])
 							->label(false)
 							->dropDownList(ArrayHelper::map(AdWard::getListByDistrict($product->district_id), 'id', 'name'), ['prompt' => $product->getAttributeLabel('ward_id')]) ?>
@@ -164,22 +180,6 @@ use vsoft\ad\models\AdImages;
 						<?= $form->field($additionInfo, 'toilet_no', ['options' => ['class' => 'col-xs-6 form-group']])
 							->label(false)
 							->dropDownList($listRoom, ['prompt' => $additionInfo->getAttributeLabel('toilet_no')]) ?>
-							
-						<div id="project-info-wrap" class="col-xs-12">
-							<?php
-								$projects = $product->district_id ? AdBuildingProject::find()->where('district_id = :district_id', [':district_id' => $product->district_id])->all() : [];
-								echo $form->field($product, 'project_building_id', ['options' => ['class' => 'form-group']])
-									 ->label(false)
-									 ->dropDownList(ArrayHelper::map($projects, 'id', 'name'), ['prompt' => $product->getAttributeLabel('project_building_id')])
-							?>
-							<div id="project-info" style="display: none;" data-url="<?= Url::to(['building-project/detail']) ?>">
-								<div class="loading-proccess"><span></span></div>
-								<div class="result">
-									<div>Vị trí: <span id="project-info-location"></span></div>
-									<a target="_blank" id="project-info-detail" href="#">Xem chi tiết dự án</a>
-								</div>
-							</div>
-						</div>
 						
 						<?= Html::activeHiddenInput($product, 'lat') ?>
 						<?= Html::activeHiddenInput($product, 'lng') ?>
