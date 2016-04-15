@@ -70,11 +70,13 @@ Yii::$app->view->registerMetaTag([
 if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']['all'] == true) && ($product->user_id != Yii::$app->user->id)) {
     Tracking::find()->productVisitor(Yii::$app->user->id, $product->id, time());
 }
+
+$userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 ?>
 <div class="title-fixed-wrap">
     <div class="detail-listing row detail-listing-extra">
     	<div id="detail-wrap" class="col-xs-12 col-md-9 col-left">
-			<?php if(Yii::$app->user->identity && Yii::$app->user->identity->id == $product->user_id): ?>
+			<?php if($userId == $product->user_id): ?>
 			<a href="<?= Url::to(['update', 'id' => $product->id]) ?>" class="edit-listing">
 				<span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
 			<?php endif; ?>
@@ -360,7 +362,9 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 										</div>
 										Ho Chi Minh City, Vietnam
 									</div>
+									<?php if($product->adContactInfo->email && $userId != $product->user_id): ?>
 									<a href="#" data-toggle="modal" data-target="#popup-email" class="email-btn btn-common btn-small">Email</a>
+									<?php endif; ?>
 									<?php if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) { ?>
 										<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
 									<?php }?>

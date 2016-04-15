@@ -319,7 +319,6 @@ use vsoft\ad\models\AdImages;
 					</div>
 					<div class="text-center pdT-25">
 						<button type="button" class="preview btn-common" data-toggle="modal" data-target="#review-listing-post">Preview</button>
-						<button type="button" class="btn-post btn-common"><?= $product->isNewRecord ? Yii::t('ad', 'Post') : Yii::t('ad', 'Update') ?></button>
 					</div>
 				</div>
 			<?php $form->end() ?>
@@ -509,7 +508,6 @@ use vsoft\ad\models\AdImages;
 													</div>
 													<span class="address-show"></span>
 												</div>
-												<a href="#" data-toggle="modal" data-target="#popup-email" class="email-btn btn-common btn-small">Email</a>
 												<?php if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) { ?>
 													<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small">Chat</a>
 												<?php }?>
