@@ -6,7 +6,9 @@ use frontend\models\AdProductSearch;
 <header class="clearfix header">
     <div class="container wrap-header">
         <div class="m-header">
-            <a href="#menu-header" id="menu-toggle" class="pull-left"><span class="icon"></span></a>
+            <a href="#menu-header" id="menu-toggle" class="pull-left">
+                <span class="icon-mv"><span class="icon-menu"></span></span>
+            </a>
             <a href="#settings-user" id="avatar-user" class="wrap-img wrapNotifyTotal">
                 <div>
                     <?php if(Yii::$app->user->isGuest){?>
@@ -26,12 +28,12 @@ use frontend\models\AdProductSearch;
                 <div class="wrap-menu">
                     <a href="#" id="hide-menu" class="icon"></a>
                     <ul class="clearfix">
-                        <li class="<?=!empty($this->params['menuBuy']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/index', 'type' => AdProduct::TYPE_FOR_SELL, 'city_id' => AdProductSearch::DEFAULT_CITY, 'district_id' => AdProductSearch::DEFAULT_DISTRICT]) ?>"><div><span class="icon icon-search"></span></div><?=Yii::t('general', 'Buy')?></a></li>
-                        <li class="<?=!empty($this->params['menuRent']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/index', 'type' => AdProduct::TYPE_FOR_RENT, 'city_id' => AdProductSearch::DEFAULT_CITY, 'district_id' => AdProductSearch::DEFAULT_DISTRICT]) ?>"><div><span class="icon icon-search"></span></div><?=Yii::t('general', 'Rent')?></a></li>
-                        <li class="<?=!empty($this->params['menuSell']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/post']) ?>"><div><span class="icon icon-key"></span></div><?=Yii::t('general', 'Sell')?></a></li>
-                        <li class="<?=!empty($this->params['menuProject']) ? 'active' : '' ;?>"><a href="<?=Url::to(['building-project/index']);?>"><div><span class="icon icon-home"></span></div><?=Yii::t('general', 'New Project')?></a></li>
-                        <li class="<?=!empty($this->params['menuNews']) ? 'active' : '' ;?>"><a href="<?=Url::to(['news/index']);?>"><div><span class="icon icon-news"></span></div><?=Yii::t('general', 'News')?></a></li>
-                        <li class="<?=!empty($this->params['menuPricing']) ? 'active' : '' ;?>"><a href="<?=Url::to(['/payment/package'])?>"><div><span class="icon icon-tags"></span></div><?=Yii::t('general', 'Pricing')?></a></li>
+                        <li class="<?=!empty($this->params['menuBuy']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/index', 'type' => AdProduct::TYPE_FOR_SELL, 'city_id' => AdProductSearch::DEFAULT_CITY, 'district_id' => AdProductSearch::DEFAULT_DISTRICT]) ?>"><span class="icon-mv"><span class="icon-icons-search"></span></span><?=Yii::t('general', 'Buy')?></a></li>
+                        <li class="<?=!empty($this->params['menuRent']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/index', 'type' => AdProduct::TYPE_FOR_RENT, 'city_id' => AdProductSearch::DEFAULT_CITY, 'district_id' => AdProductSearch::DEFAULT_DISTRICT]) ?>"><span class="icon-mv"><span class="icon-icons-search"></span></span><?=Yii::t('general', 'Rent')?></a></li>
+                        <li class="<?=!empty($this->params['menuSell']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/post']) ?>"><span class="icon-mv"><span class="icon-key"></span></span><?=Yii::t('general', 'Sell')?></a></li>
+                        <li class="<?=!empty($this->params['menuProject']) ? 'active' : '' ;?>"><a href="<?=Url::to(['building-project/index']);?>"><span class="icon-mv"><span class="icon-fill-1"></span></span><?=Yii::t('general', 'New Project')?></a></li>
+                        <li class="<?=!empty($this->params['menuNews']) ? 'active' : '' ;?>"><a href="<?=Url::to(['news/index']);?>"><span class="icon-mv"><span class="icon-group"></span></span><?=Yii::t('general', 'News')?></a></li>
+                        <li class="<?=!empty($this->params['menuPricing']) ? 'active' : '' ;?>"><a href="<?=Url::to(['/payment/package'])?>"><span class="icon-mv"><span class="icon-pricing-icon"></span></span><?=Yii::t('general', 'Pricing')?></a></li>
                     </ul>
                 </div>
             </div>
@@ -62,19 +64,19 @@ use frontend\models\AdProductSearch;
                         </a>
                     </li>
                     <!-- <li><a href="<?= Url::to(['/ad/post']) ?>"><em class="icon-plus"></em>Đăng tin mới</a></li> -->
-                    <li><a href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" class="wrapNotifyOther"><div><span class="icon icon-alert"></span></div><?=Yii::t('activity', 'Notification')?>
+                    <li><a href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" class="wrapNotifyOther"><span class="icon-mv"><span class="icon-icons-bell"></span></span><?=Yii::t('activity', 'Notification')?>
                             <?php if(!empty($this->params['notify_other'])){?>
                                 <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
                             <?php }?>
                         </a></li>
-                    <li><a href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>"><div><span class="icon icon-listings"></span></div><?=Yii::t('ad', 'Listings')?></a></li>
-                    <li><a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" class="wrapNotifyChat"><div><span class="icon icon-chat"></span></div><?=Yii::t('chat', 'Chat')?>
+                    <li><a href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>"><span class="icon-mv"><span class="icon-bubbles-icon"></span></span><?=Yii::t('ad', 'Listings')?></a></li>
+                    <li><a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" class="wrapNotifyChat"><span class="icon-mv"><span class="icon-heart-icon-listing"></span></span><?=Yii::t('chat', 'Chat')?>
                             <?php if(!empty($this->params['notify_chat'])){?>
                                 <span id="notifyChat" class="notifi"><?=$this->params['notify_chat'];?></span>
                             <?php }?>
                     </a></li>
-                    <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><div><span class="icon-mv"><span class="icon-settings"></span></span></div><?=Yii::t('user', 'Setting')?></a></li>
-                    <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><div><span class="icon icon-logout"></span></div><?=Yii::t('user', 'Log Out')?></a></li>
+                    <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])?>"><span class="icon-mv"><span class="icon-settings"></span></span><?=Yii::t('user', 'Setting')?></a></li>
+                    <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><span class="icon icon-logout"></span><?=Yii::t('user', 'Log Out')?></a></li>
                     <li class="flag-lang">
                         <p class="pull-right">
                             <a href="<?=Url::current(['language-change'=>'en-US'])?>"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/flag-en.png' ?>" alt=""></a>

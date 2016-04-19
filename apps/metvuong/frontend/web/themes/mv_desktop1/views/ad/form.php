@@ -451,21 +451,21 @@ use vsoft\ad\models\AdFacility;
 													</fieldset>
 												</div>
 												<div class="item-agent icon-phone-item">
-													<div>
-														<span class="icon icon-phone"></span>
-													</div>
+													<span class="icon-mv">
+														<span class="icon-phone-profile"></span>
+													</span>
 													<a class="phone-show" href="tel:"></a>
 												</div>
 												<div class="item-agent icon-email-item">
-													<div>
-														<span class="icon icon-email"></span>
-													</div>
+													<span class="icon-mv">
+														<span class="icon-mail-profile"></span>
+													</span>
 													<span class="email-show"></span>
 												</div>
 												<div class="item-agent address-icon-item">
-													<div>
-														<span class="icon address-icon"></span>
-													</div>
+													<span class="icon-mv">
+														<span class="icon-pin-active-copy-3"></span>
+													</span>
 													<span class="address-show"></span>
 												</div>
 												<?php if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) { ?>

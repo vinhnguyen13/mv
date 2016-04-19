@@ -194,8 +194,18 @@ header {
     margin: 0 0 0 0;
     background-position: 0 -24px;
 }
+#menu-toggle span {
+    font-size: 25px;
+    line-height: 100%;
+    vertical-align: top;
+}
+#menu-toggle .icon-mv {
+    position: relative;
+    top: -2px;
+    color: #00a769;
+}
 #menu-toggle {
-    padding: 11px 20px 9px;
+    padding: 11px 20px 11px;
     display: block;
     line-height: 100%;
     position: relative;
@@ -381,6 +391,11 @@ header {
     font-size: 17px;
     display: block;
     letter-spacing: 1.2px;
+}
+.wrap-menu a .icon-mv {
+    width: 40px;
+    font-size: 25px;
+    color: #00a769;
 }
 .wrap-menu li:first-child a {
     
@@ -2306,6 +2321,12 @@ label {
 #settings-user li:last-child a {
     border: none;
 }
+#settings-user a .icon-mv {
+    display: inline-block;
+    width: 40px;
+    font-size: 25px;
+    color: #009455;
+}
 #settings-user li.flag-vn,
 #settings-user li.flag-us {
     width: inherit;
@@ -3639,6 +3660,22 @@ html.mm-opening .mm-slideout {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+.item-agent .icon-mv {
+    width: 35px;
+}
+.item-agent .icon-phone-profile {
+    font-size: 20px;
+}
+.item-agent .icon-mail-profile {
+    font-size: 14px;
+    margin-left: 1px;
+}
+.item-agent .icon-pin-active-copy-3 {
+    font-size: 16px;
+}
+.item-agent span {
+    font-size: 20px;
 }
 .img-agent .btn-small {
     /* width: 100%; */
@@ -8765,6 +8802,15 @@ footer li a {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+.icon-pricing-icon:before {
+    content: "\e926";
+}
+.icon-group:before {
+    content: "\e927";
+}
+.icon-fill-1:before {
+    content: "\e928";
+}
 .icon-key:before {
     content: "\e925";
 }
@@ -8879,7 +8925,6 @@ footer li a {
 .icon-user-icon-profile1:before {
     content: "\e921";
 }
-.icon-settings,
 .icon-user-icon-profile1 {
     font-size: 26px;
     color: #009455;
