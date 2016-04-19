@@ -7,14 +7,14 @@ class m160419_033740_alter_ads_table extends Migration
 {
     public function up()
     {
-		$this->execute("ALTER TABLE `metvuong`.`ad_product_addition_info`   
+		$this->execute("ALTER TABLE `ad_product_addition_info`   
 						DROP COLUMN `addition_fields`, 
 						ADD COLUMN `facility` VARCHAR(255) NULL AFTER `interior`;");
     }
 
     public function down()
     {
-        $this->execute("ALTER TABLE `metvuong`.`ad_product_addition_info`   
+        $this->execute("ALTER TABLE `ad_product_addition_info`   
 						DROP COLUMN `facility`, 
 						ADD COLUMN `addition_fields` TEXT NULL AFTER `interior`;");
     }
