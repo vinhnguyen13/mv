@@ -112,7 +112,7 @@ use yii\helpers\Url;
             var tabName = $(this).attr('aria-controls');
             var number = parseInt($(this).data('number'));
             var count = $('#'+tabName+' .list-item>li').length;
-            if(count < number) {
+            if(count < 1) {
                 $('body').loading();
                 $.ajax({
                     type: "get",
