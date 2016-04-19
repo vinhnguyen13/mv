@@ -397,7 +397,7 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 										<div>
 											<span class="icon address-icon"></span>
 										</div>
-										<?=$owner?>
+										Ho Chi Minh City, Vietnam
 									</div>
 									<?php if(!empty($owner->username) && !$owner->isMe()) { ?>
                                         <a href="#" data-toggle="modal" data-target="#popup_email_contact" class="email-btn btn-common btn-small">Email</a>
