@@ -6912,6 +6912,7 @@ footer li a {
 	background-image:-ms-linear-gradient(top, #3EACBA, #48C6D4);
 	background-image:-o-linear-gradient(top, #3EACBA, #48C6D4);
 	background-image:linear-gradient(top, #3EACBA, #48C6D4);
+	color: #fff;
 }
 .btn-done:hover,
 .btn-cancel:hover {
