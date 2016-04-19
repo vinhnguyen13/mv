@@ -305,6 +305,13 @@ $(document).ready(function(){
 			
 			facadeWiClone.parent().append('<span class="unit-dt">m</span>');
 			landWiClone.parent().append('<span class="unit-dt">m</span>');
+			
+			projectClone.on('change', function(){
+				var geoCode = new google.maps.Geocoder;
+				geoCode.geocode({address: form.buildAddress()}, function(results) {
+					form.setLatLng(results);
+				});
+			});
 
 			// $('#addition-fields-wrap').appendTo(wrapClone);
 			
@@ -378,6 +385,27 @@ $(document).ready(function(){
 			
 			el.on('click', fn);
 			
+		},
+		editS8: function(el) {
+			var facilitiesShow = $('.facilities-show').hide();
+			var wrap = facilitiesShow.closest('.panel-body');
+			
+			var wrapClone = $('<div class="wrap-clone"></div>');
+			
+			$('.field-adproductadditioninfo-facility').appendTo(wrapClone);
+
+			wrap.append(wrapClone);
+			ref.removeErrorForWrap(wrapClone);
+			
+			var fn = function() {
+				$('.field-adproductadditioninfo-facility').appendTo($('#step3').find('.row'));
+				form.updateS8();
+				wrapClone.remove();
+				facilitiesShow.show();
+				ref.off(el, fn);
+			};
+			
+			el.on('click', fn);
 		}
 	}
 	
@@ -413,6 +441,12 @@ var form = {
 	init: function() {
 		form.initJavasciptCall();
 		form.attachEvent();
+		
+		if(!form.projectEl.val()) {
+			$('.field-adproductadditioninfo-facility').show();
+		} else {
+			$('.field-adproductadditioninfo-facility').hide();
+		}
 
 		if($('#is-update').val() == '1') {
 			
@@ -707,6 +741,7 @@ var form = {
 				form.updateS5();
 				form.updateS6();
 				form.updateS7();
+				form.updateS8();
 			} else {
 				e.stopPropagation();
 				return false;
@@ -871,10 +906,8 @@ var form = {
 		if(form.projectEl.val()) {
 			$('.project-item').show();
 			$('.project-show').html('<a href="' + form.projectDetailEl.attr('href') + '">' + form.projectEl.find('option').filter(':selected').text() + '</a>');
-			$('#facilities-section').removeClass('hide');
 		} else {
 			$('.project-item').hide();
-			$('#facilities-section').addClass('hide');
 		}
 		
 		if(form.facadeWiEl.val()) {
@@ -953,6 +986,15 @@ var form = {
 		} else {
 			$('.address-icon-item').hide();
 		}
+	},
+	updateS8: function(){
+		var facilities = [];
+		$('#adproductadditioninfo-facility').children().each(function(){
+			if($(this).find('input').prop('checked')) {
+				facilities.push($(this).text());
+			}
+		});
+		$('.facilities-show').text(facilities.join(','));
 	}
 };
 
@@ -1064,6 +1106,10 @@ form.success = {
 			geoCode.geocode({address: form.buildAddress()}, function(results) {
 				form.setLatLng(results);
 			});
+			
+			$('.field-adproductadditioninfo-facility').show();
+		} else {
+			$('.field-adproductadditioninfo-facility').hide();
 		}
 	}
 };

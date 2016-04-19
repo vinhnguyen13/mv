@@ -10,6 +10,7 @@ use frontend\models\User;
 use yii\helpers\Url;
 use vsoft\ad\models\AdProductAdditionInfo;
 use yii\helpers\ArrayHelper;
+use vsoft\ad\models\AdFacility;
 
 	$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/detail.js', ['position' => View::POS_END]);
@@ -291,12 +292,6 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 								<?php if($product->adProductAdditionInfo->interior): ?>
 								<li><strong><?= Yii::t('ad', 'Furniture') ?>:</strong> <?= $product->adProductAdditionInfo->interior ?></li>
 								<?php endif; ?>
-								<?php
-									$additionFields = ($product->adProductAdditionInfo->addition_fields && $product->adProductAdditionInfo->addition_fields != '""') ? array_chunk(json_decode($product->adProductAdditionInfo->addition_fields), 2) : [];
-									foreach ($additionFields as $additionField):
-								?>
-								<li><strong><?= $additionField[0] ?>:</strong> <?= $additionField[1] ?></li>
-								<?php endforeach; ?>
 							</ul>
 		                </div>
 		            </div>
@@ -314,6 +309,22 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 		            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
 		                <div class="panel-body" name="experience">
 							<?= implode(', ', ArrayHelper::getColumn($product->projectBuilding->adFacilities, 'name')) ?>
+		                </div>
+		            </div>
+		        </div>
+		        <?php elseif($product->adProductAdditionInfo->facility): ?>
+		        <div class="panel panel-default">
+		            <div class="panel-heading" role="tab" id="headingFour">
+		                <h4 class="panel-title">
+		                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+		                        <?= Yii::t('ad', 'Facilities') ?>
+		                        <span class="icon-mv"><span class="icon-plus"></span></span>
+		                    </a>
+		                </h4>
+		            </div>
+		            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+		                <div class="panel-body" name="experience">
+							<?= implode(', ', ArrayHelper::getColumn(AdFacility::find()->where(['id' => $product->adProductAdditionInfo->facility])->all(), 'name')) ?>
 		                </div>
 		            </div>
 		        </div>

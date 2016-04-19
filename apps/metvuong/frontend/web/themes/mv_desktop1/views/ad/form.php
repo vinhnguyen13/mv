@@ -14,6 +14,7 @@
 	use vsoft\ad\models\AdStreet;
 	use vsoft\ad\models\AdCategory;
 use vsoft\ad\models\AdImages;
+use vsoft\ad\models\AdFacility;
 
 	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/string-helper.js', ['position' => View::POS_END]);
 	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/post-listing.js', ['position' => View::POS_END]);
@@ -220,51 +221,10 @@ use vsoft\ad\models\AdImages;
 						<?= $form->field($additionInfo, 'interior', ['options' => ['class' => 'col-xs-12 form-group']])
 								->label(false)
 								->textArea(['placeholder' => $additionInfo->getAttributeLabel('interior')]) ?>
-						<!-- 
-						<div id="addition-field-template" style="display: none;">
-							<div class="addition-field row">
-								<?= $form->field($additionInfo, 'addition_fields', ['options' => ['class' => 'col-xs-12 col-md-4 col-sm-4 col-lg-4 form-group']])
-										->label(false)
-										->textInput(['placeholder' => Yii::t('ad', 'Title'), 'class' => 'form-control field-title', 'id' => false, 'value' => '']) ?>
-								<?= $form->field($additionInfo, 'addition_fields', ['options' => ['class' => 'col-xs-9 col-md-7 pdL-0 pdR-0 col-sm-5 col-lg-7 form-group']])
-										->label(false)
-										->textInput(['placeholder' => Yii::t('ad', 'Content'), 'class' => 'form-control field-content', 'id' => false, 'value' => '']) ?>
-								<div class="col-xs-3 col-md-1 col-lg-1 text-center pdL-0">
-									<button class="field-remove" type="button">
-										<span class="icon-mv fs-20"><span class="icon-close-icon"></span></span>
-									</button>
-								</div>
-							</div>
-						</div>
 						
-						<div class="col-xs-12 form-group" id="addition-fields-holder">
-							<div id="addition-fields-wrap">
-								<div id="addition-fields">
-									<?php
-										$additionFields = ($additionInfo->addition_fields && $additionInfo->addition_fields != '""') ? array_chunk(json_decode($additionInfo->addition_fields), 2) : [];
-										foreach ($additionFields as $additionField):
-									?>
-									<div class="addition-field row">
-										<div class="col-xs-12 col-md-4 col-sm-4 col-lg-4 form-group field-adproductadditioninfo-addition_fields">
-											<input type="text" class="form-control field-title" name="AdProductAdditionInfo[addition_fields][]" value="<?= $additionField[0] ?>" placeholder="Title">
-											<div class="help-block"></div>
-										</div>
-										<div class="col-xs-9 col-md-7 pdL-0 pdR-0 col-sm-5 col-lg-7 form-group field-adproductadditioninfo-addition_fields">
-											<input type="text" class="form-control field-content" name="AdProductAdditionInfo[addition_fields][]" value="<?= $additionField[1] ?>" placeholder="Content">
-											<div class="help-block"></div>
-										</div>
-										<div class="col-xs-3 col-md-1 col-lg-1 text-center pdL-0">
-											<button class="field-remove" type="button">
-												<span class="icon-mv fs-20"><span class="icon-close-icon"></span></span>
-											</button>
-										</div>
-									</div>
-									<?php endforeach; ?>
-								</div>
-								<button id="add-field" type="button" class="btn-common"><?= Yii::t('ad', 'Add field') ?></button>
-							</div>
-						</div>
-						-->
+						<?= $form->field($additionInfo, 'facility')
+								->label(false)
+								->checkboxList(ArrayHelper::map(AdFacility::find()->all(), 'id', 'name')) ?>
 					</div>
 				</div>
 
@@ -429,18 +389,19 @@ use vsoft\ad\models\AdImages;
 				                </div>
 				            </div>
 				        </div>
-				        <div id="facilities-section" class="panel panel-default">
+				        <div class="panel panel-default">
 				            <div class="panel-heading" role="tab" id="headingFour">
 				                <h4 class="panel-title">
 				                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
 				                        <?= Yii::t('ad', 'Facilities') ?>
+				                        <span data-ref="editS8" class="edit-listing icon-mv fs-16 color-cd"><span class="icon-edit-copy-4"></span></span>
 				                        <span class="icon-mv"><span class="icon-plus"></span></span>
 				                    </a>
 				                </h4>
 				            </div>
 				            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
 				                <div class="panel-body" name="experience" placeholder="Vui lòng nhập chia sẻ kinh nghiệm">
-				                    
+				                    <div class="facilities-show"></div>
 				                </div>
 				            </div>
 				        </div>

@@ -16,6 +16,7 @@ use Yii;
  * @property integer $room_no
  * @property integer $toilet_no
  * @property string $interior
+ * @property string $facility
  *
  * @property AdProduct $product
  */
@@ -39,6 +40,7 @@ class AdProductAdditionInfo extends \yii\db\ActiveRecord
             [['product_id', 'home_direction', 'facade_direction', 'floor_no', 'room_no', 'toilet_no'], 'integer'],
             [['facade_width', 'land_width'], 'number'],
             [['interior'], 'string', 'max' => 3200],
+            [['facility'], 'string', 'max' => 255],
             [['product_id'], 'unique']
         ];
     }
@@ -58,6 +60,7 @@ class AdProductAdditionInfo extends \yii\db\ActiveRecord
             'room_no' => 'Room No',
             'toilet_no' => 'Toilet No',
             'interior' => 'Interior',
+            'facility' => 'Facility',
         ];
     }
 

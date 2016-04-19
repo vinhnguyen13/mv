@@ -25,9 +25,10 @@ class AdProductAdditionInfo extends APAI
 	public function rules()
     {
         return [
+        	['facility', 'safe'],
             [['product_id', 'home_direction', 'facade_direction', 'floor_no', 'room_no', 'toilet_no'], 'integer'],
             [['facade_width', 'land_width'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/'],
-            [['interior', 'addition_fields'], 'string', 'max' => 3200],
+            [['interior'], 'string', 'max' => 3200],
             [['product_id'], 'unique']
         ];
     }
@@ -61,7 +62,18 @@ class AdProductAdditionInfo extends APAI
     	];
     }
     
+    public function afterFind() {
+    	$this->facility = explode(',', $this->facility);
+    	
+    	return parent::afterFind();
+    }
+    
 	public function beforeSave($insert) {
+
+		if($this->facility) {
+			$this->facility = implode(',', $this->facility);
+		}
+		
 		if($this->facade_width) {
 			$this->facade_width = str_replace(',', '.', $this->facade_width);
 		}
