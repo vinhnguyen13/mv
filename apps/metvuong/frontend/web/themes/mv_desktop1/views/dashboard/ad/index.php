@@ -24,7 +24,7 @@ use yii\helpers\Url;
                     <div class="clearfix fs-13">
                         <div class="search-history">
                             <div>
-                                <input type="text" id="tags" class="form-control" placeholder="Search listing...">
+                                <input type="text" id="tags" class="form-control" placeholder="<?= Yii::t('listing', 'Search listing...') ?>">
                                 <button class="btn-search-hist" href="#"><span class="icon-mv"><span class="icon-icons-search"></span></span></button>
                             </div>
                         </div>

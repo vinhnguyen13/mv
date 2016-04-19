@@ -42,7 +42,7 @@ use vsoft\ad\models\AdProduct;
     $products = Ad::find()->homePageRandom();
     ?>
     <section class="box-item box-feature-item">
-        <div class="title-sub">Featured properties</div>
+        <div class="title-sub"><?= Yii::t('listing', 'Featured properties') ?></div>
         <div class="wrap-item wrap-lazy">
             <ul class="clearfix">
                 <?php foreach ($products as $product): ?>
@@ -129,10 +129,10 @@ use vsoft\ad\models\AdProduct;
                         <p>contact@metvuong.com</p>
                     </li>
                 </ul>
-                <p class="color-cd get-email">SUBSCRIBED OUR NEWSLETTER</p>
+                <p class="color-cd get-email"><?= Yii::t('general', 'SUBSCRIBED OUR NEWSLETTER') ?></p>
                 <form action="">
-                    <input type="text" placeholder="Your Email" />
-                    <button type="submit" class="btn-common">Subscribe</button>
+                    <input type="text" placeholder="<?= Yii::t('general', 'Your Email') ?>" />
+                    <button type="submit" class="btn-common"><?= Yii::t('general', 'Subscribe') ?></button>
                 </form>
             </div>
         </div>
