@@ -79,9 +79,9 @@ $count_review = count($reviews);
                 <div id="tab-list-post" class="list-per-post tabs-scroll-item">
                     <div class="title-text clearfix"><?=Yii::t('profile', 'LISTINGS')?>
                         <ul class="nav nav-tabs pull-right" role="tablist">
-                            <li role="presentation" class="active"><a href="#list-all" aria-controls="list-all" role="tab" data-toggle="tab">Tất cả (<?=$count_product?>)</a></li>
-                            <li role="presentation"><a href="#list-by" aria-controls="list-by" role="tab" data-toggle="tab">Bán(<?=$count_sale?>)</a></li>
-                            <li role="presentation"><a href="#list-rent" aria-controls="list-rent" role="tab" data-toggle="tab">Cho thuê (<?=$count_rent?>)</a></li>
+                            <li role="presentation" class="active"><a href="#list-all" aria-controls="list-all" role="tab" data-toggle="tab"><?=Yii::t('profile','All')?> (<?=$count_product?>)</a></li>
+                            <li role="presentation"><a href="#list-by" aria-controls="list-by" role="tab" data-toggle="tab"><?=Yii::t('profile','Sell')?> (<?=$count_sale?>)</a></li>
+                            <li role="presentation"><a href="#list-rent" aria-controls="list-rent" role="tab" data-toggle="tab"><?=Yii::t('profile','Rent')?> (<?=$count_rent?>)</a></li>
                         </ul>
                     </div>
                     <div class="tab-content">

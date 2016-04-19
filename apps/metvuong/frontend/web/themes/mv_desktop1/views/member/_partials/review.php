@@ -26,7 +26,7 @@
         }
     } else { ?>
         <li>
-            <p>Review not found.</p>
+            <p><?=Yii::t('profile', 'Review not found.')?></p>
         </li>
     <?php } ?>
 </ul>
