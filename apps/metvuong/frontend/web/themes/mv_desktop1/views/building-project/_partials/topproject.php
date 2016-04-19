@@ -18,7 +18,7 @@ use yii\helpers\Url;
                     </a>
                     <p class="infor-by-up"><?=$project->investment_type?></p>
                     <p class="name-post"><a href="<?= Url::to(["building-project/view", 'slug'=>$project->slug]); ?>"><?=$project->name?> </a></p>
-                    <p class="fs-15 font-400"><?=$project->location?></p>
+                    <p class="fs-13 font-400"><?=$project->location?></p>
                 </div>
             </li>
         <?php } ?>
