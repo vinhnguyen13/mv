@@ -195,24 +195,13 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 
 						var clipboard = new Clipboard('.btn-copy');
 
-						$('.btn-copy').tooltip({
-							delay: {
-								"show": 100,
-								"hide": 500
-							}
-						}).mouseout(function () {
-							$('.tooltip').hide();
-							$('.btn-copy').tooltip({
-								delay: {
-									"show": 100,
-									"hide": 50
-								}
-							});
-						});
-
 						clipboard.on('success', function(e) {
 						    var txtSuccess = $(e.trigger).data('titleSuccess');
+						    $('.btn-copy').tooltip("show");
 						    $('.tooltip .tooltip-inner').text(txtSuccess);
+						    setTimeout(function () {
+						    	$('.btn-copy').tooltip("destroy");
+						    },500);
 						});
 
 						var swiper = new Swiper('.swiper-container', {
