@@ -149,7 +149,7 @@ use yii\helpers\Url;
 <script>
     $(document).on('click', '.send_mail', function(e){
         e.preventDefault();
-        var _this = $(this);
+//        var _this = $(this);
         var recipient_email = $('#share_form .recipient_email').val();
         var your_email = $('#share_form .your_email').val();
         if(recipient_email != null && your_email != null) {
@@ -165,7 +165,7 @@ use yii\helpers\Url;
                     if(data.status == 200){
                         $('.btn-cancel').trigger('click');
                         setTimeout(function () {
-                            _this.alertBox();    
+                            $('body').alertBox("Email has been sent to "+recipient_email);
                         },300);
                     }
                     else if(data.status == 404){

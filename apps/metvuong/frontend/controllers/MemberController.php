@@ -433,9 +433,11 @@ class MemberController extends Controller
                 $model->name = $name;
                 $model->username = $username;
                 $model->rating = isset($post["rating"]) ? (int)$post["rating"] : 0;
-                $model->type = isset($post["review_type"]) ? (int)$post["review_type"] : 1;
+                $model->type = isset($post["type"]) ? (int)$post["type"] : 1;
                 $model->description = isset($post["review_content"]) ? $post["review_content"] : null;
                 $model->created_at = time();
+                $model->ip = isset($post["ip"]) ? $post["ip"] : null;
+                $model->is_report = isset($post["is_report"]) ? $post["is_report"] : null;
                 $model->validate();
                 if (!$model->hasErrors() && $model->save()) {
                     // update rating point in profile

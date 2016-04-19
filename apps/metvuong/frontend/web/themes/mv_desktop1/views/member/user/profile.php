@@ -25,15 +25,10 @@ $count_review = count($reviews);
                 <div class="user-avatar">
                     <div class="wrap-img avatar"><img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="<?=$model->avatar?>" alt="metvuong avatar" /></div>
                     <div class="overflow-all">
-                        <!-- div class="pull-right report-listing">
-                            Report:
-                            <select name="" id="">
-                                <option value="" selected>Report</option>
-                                <option value="">abc</option>
-                                <option value="">abc</option>
-                                <option value="">abc</option>
-                            </select>
-                        </div-->
+                        <div class="pull-right report-listing">
+                            <a href="#" data-toggle="modal" data-target="#popup-report-user"
+                               class="btn-review btn-common"><?= Yii::t('profile', 'Report') ?></a>
+                        </div>
                         <p class="name-user fs-18 font-600" ><?= $model->name ?><a href="#" class="chat-now" data-chat-user="<?=$user->username?>"><span class="icon-mv"><span class="icon-bubbles-icon"></span></span></a></p>
                         <div class="stars">
                             <span id="rating-all" class="rateit" data-rateit-value="<?=$model->rating_point?>" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
@@ -251,21 +246,21 @@ $count_review = count($reviews);
                                             'name' => (empty(Yii::$app->user->identity->profile->name) ? (Yii::$app->user->isGuest ? "" : Yii::$app->user->identity->username) : Yii::$app->user->identity->profile->name),
                                             'username' => (Yii::$app->user->isGuest ? "" : Yii::$app->user->identity->username)])?>">
                                 <p class="fs-13 mgB-5 font-600">Môi giới này đã</p>
-                                <select name="review_type" id="review_type" class="mgB-15">
+                                <select name="type" id="type" class="mgB-15">
                                     <option value="1">Giúp tôi mua nhà</option>
                                     <option value="2">Giúp tôi thuê nhà</option>
                                 </select>
                                 <div class="check-rating mgB-15">
-                                    <span class="font-600 fs-13 pdR-10">Rate this agent</span>
+                                    <span class="font-600 fs-13 pdR-10"><?=Yii::t('profile', 'Rate this agent')?></span>
                                     <div class="stars">
                                         <span id="rating-review" class="rateit"></span>
                                         <input type="hidden" name="rating" id="val-rating" value="">
                                     </div>
                                 </div>
-                                <p class="fs-13 mgB-5 font-600">Review content</p>
-                                <textarea class="pd-5 mgB-5" name="review_content" id="review_content" cols="30" rows="10" placeholder="Nội dung"></textarea>
+                                <p class="fs-13 mgB-5 font-600"><?=Yii::t('profile', 'Review content')?></p>
+                                <textarea class="pd-5 mgB-5" name="review_content" id="review_content" cols="30" rows="10" placeholder="<?=Yii::t('profile','Content')?>"></textarea>
                                 <div class="text-right">
-                                    <button class="btn-common send_review">GỬI</button>
+                                    <button class="btn-common send_review"><?=Yii::t('profile','Send review')?></button>
                                 </div>
                             </form>
                         </div>
@@ -285,6 +280,36 @@ $count_review = count($reviews);
                     <div class="inner-popup">
                         <div class="wrap-body-popup">
 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="popup-report-user" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="wrap-popup">
+                    <div class="inner-popup">
+                        <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
+                        <div class="review-box-popup">
+                            <h2 class="color-cd fs-18 text-uper font-600 mgB-20"><?=Yii::t('profile', 'REPORT')?> <?= empty($model->name) ? strtoupper($user->username) : mb_strtoupper($model->name, "UTF-8") ?></h2>
+                            <p class="fs-13 mgB-10">Tell us about your experience with this agent. Your report will help other users review the agent that's right for them.</p>
+                            <form id="report-form"
+                                  action="<?=Url::to(['/member/review', 'review_id' => $user->id,
+                                      'name' => (empty(Yii::$app->user->identity->profile->name) ? (Yii::$app->user->isGuest ? "" : Yii::$app->user->identity->username) : Yii::$app->user->identity->profile->name),
+                                      'username' => (Yii::$app->user->isGuest ? "" : Yii::$app->user->identity->username)])?>">
+                                <?=\yii\helpers\Html::radioList('type', null, \frontend\models\UserReview::REPORT_LIST, ['class' => 'fs-13 clearfix'])?>
+                                <input type="hidden" name="ip" value="<?=Yii::$app->request->userIP ?>">
+                                <input type="hidden" name="is_report" value="1">
+                                <textarea class="pd-5 mgB-5" name="report_content" id="report_content" cols="30" rows="6" placeholder="<?=Yii::t('profile','Content')?>"></textarea>
+                                <div class="text-right">
+                                    <button class="btn-common send_report"><?=Yii::t('profile','Send report')?></button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -332,6 +357,25 @@ $count_review = count($reviews);
                     $('body').loading({done:true});
                     if(data.statusCode == 200) {
                         window.location.reload();
+                    }
+                    return true;
+                }
+            });
+            return false;
+        });
+
+        $(document).on('click', '.send_report', function () {
+            $('body').loading();
+            $.ajax({
+                type: "post",
+                dataType: 'json',
+                url: $('#report-form').attr('action'),
+                data: $('#report-form').serializeArray(),
+                success: function (data) {
+                    $('#popup-report-user').modal('hide');
+                    $('body').loading({done:true});
+                    if(data.statusCode == 200) {
+                        $('body').alertBox("<?=Yii::t('profile', 'Thanks for send report.')?>");
                     }
                     return true;
                 }

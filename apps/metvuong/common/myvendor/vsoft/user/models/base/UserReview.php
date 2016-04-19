@@ -31,8 +31,8 @@ class UserReview extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'review_id'], 'required'],
-            [['user_id', 'review_id', 'rating', 'type', 'created_at'], 'integer'],
-            [['name', 'username', 'description'], 'string']
+            [['user_id', 'review_id', 'rating', 'type', 'created_at', 'is_report'], 'integer'],
+            [['name', 'username', 'description', 'ip'], 'string']
         ];
     }
 
@@ -49,6 +49,7 @@ class UserReview extends \yii\db\ActiveRecord
             'type' => Yii::t('review', 'Type'),
             'description' => Yii::t('review', 'Description'),
             'created_at' => Yii::t('review', 'Created At'),
+            'ip' => Yii::t('review', 'IP Address'),
         ];
     }
 }
