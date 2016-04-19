@@ -85,8 +85,8 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 				$images = $product->adImages;
 				if($images):
 			?>
-			<div class="wrap-swiper">
-				<div class="gallery-detail swiper-container">
+			<div class="wrap-swiper clearfix">
+				<div class="gallery-detail swiper-container pull-left">
 					<div class="swiper-wrapper">
 						<?php foreach ($images as $image): ?>
 						<div class="swiper-slide">
@@ -98,10 +98,48 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 						</div>
 						<?php endforeach; ?>
 					</div>
+
 					<div class="swiper-pagination"></div>
-					<div class="swiper-button-next"><span></span></div>
-    				<div class="swiper-button-prev"><span></span></div>
+
+					<div class="posi_absolute btn-slide">
+						<div class="swiper-button-prev icon-mv"><span class="icon-angle-left"></span></div>
+						<div class="swiper-button-next icon-mv"><span class="icon-angle-right"></span></div>
+    				</div>
 				</div>
+				<ul class="pull-right icons-detail">
+					<li>
+						<a href="#" data-toggle="tooltip" data-placement="bottom" title="<?= Yii::t('ad', 'Copy link') ?>" data-title-success="<?= Yii::t('ad', 'Copied') ?>" class="btn-copy" data-clipboard-text="<?= $product->urlDetail(true) ?>">
+							<span class="icon-mv"><span class="icon-link"></span></span>
+							<?= Yii::t('ad', 'Copy link') ?>
+						</a>
+					</li>
+					<li>
+						<a href="#" data-toggle="modal" data-target="#popup-share-social">
+							<span class="icon-mv"><span class="icon-share-social"></span></span>
+							<?= Yii::t('ad', 'Share Property') ?>
+						</a>	
+					</li>
+		            <?php if($product->user_id != Yii::$app->user->id){ ?>
+					<li>
+						<a href="#" class="<?=!empty($product->productSaved->saved_at) ? 'active' : '';?> save-item" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>">
+							<span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
+							<?= Yii::t('ad', 'Add to Favorites') ?>
+						</a>
+					</li>
+		            <?php } ?>
+					<li>
+						<a href="#" data-toggle="modal" data-target="#popup-map">
+							<span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>	
+							<?= Yii::t('ad', 'Location') ?>
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							<span class="icon-mv"><span class="icon-warning"></span></span>	
+							<?= Yii::t('ad', 'Report Abuse') ?>
+						</a>
+					</li>
+				</ul>
 			</div>
 			<?php endif; ?>
 			<div class="infor-listing">
@@ -119,31 +157,6 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 						<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
 					</ul>	
 				</div>
-				<ul class="pull-right icons-detail">
-					<li>
-						<button data-toggle="tooltip" data-placement="bottom" title="<?= Yii::t('ad', 'Copy link') ?>" data-title-success="<?= Yii::t('ad', 'Copied') ?>" class="btn-copy" type="button" data-clipboard-text="<?= $product->urlDetail(true) ?>">
-							<span class="icon-mv"><span class="icon-link"></span></span>
-						</button>
-					</li>
-					<li>
-						<a href="#" data-toggle="modal" data-placement="bottom" data-target="#popup-share-social" class="tooltip-show" title="<?= Yii::t('ad', 'Share social') ?>">
-							<span class="icon-mv"><span class="icon-share-social"></span></span>
-						</a>	
-					</li>
-		            <?php if($product->user_id != Yii::$app->user->id){ ?>
-					<li>
-						<a data-toggle="tooltip" data-placement="bottom" title="<?= Yii::t('ad', 'Favourite') ?>" href="#" class="tooltip-show <?=!empty($product->productSaved->saved_at) ? 'active' : '';?> save-item" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>">
-							<span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
-						</a>
-					</li>
-		            <?php } ?>
-					<li>
-						<a href="#" data-toggle="modal" data-placement="bottom" data-target="#popup-map" class="tooltip-show" title="<?= Yii::t('ad', 'Location') ?>">
-							<span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>	
-						</a>
-					</li>
-				</ul>
-
 				<?=$this->renderAjax('/ad/_partials/shareEmail',[
                     'popup_email_name' => 'popup_email_contact',
                     'product' => $product,
