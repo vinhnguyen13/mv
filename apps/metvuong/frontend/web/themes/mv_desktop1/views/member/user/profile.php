@@ -17,6 +17,8 @@ $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->p
 $count_product = $pagination->totalCount;
 $reviews = \frontend\models\UserReview::find()->where('review_id = :rid', [':rid' => $user->id])->orderBy(['created_at' => SORT_DESC])->all();
 $count_review = count($reviews);
+
+$report_list = \frontend\models\UserReview::REPORT_LIST;
 ?>
 <div class="title-fixed-wrap">
     <div class="container">
@@ -302,7 +304,7 @@ $count_review = count($reviews);
                                   action="<?=Url::to(['/member/review', 'review_id' => $user->id,
                                       'name' => (empty(Yii::$app->user->identity->profile->name) ? (Yii::$app->user->isGuest ? "" : Yii::$app->user->identity->username) : Yii::$app->user->identity->profile->name),
                                       'username' => (Yii::$app->user->isGuest ? "" : Yii::$app->user->identity->username)])?>">
-                                <?=\yii\helpers\Html::radioList('type', null, \frontend\models\UserReview::REPORT_LIST, ['class' => 'fs-13 clearfix'])?>
+                                <?=\yii\helpers\Html::radioList('type', null, $report_list, ['class' => 'fs-13 clearfix'])?>
                                 <input type="hidden" name="ip" value="<?=Yii::$app->request->userIP ?>">
                                 <input type="hidden" name="is_report" value="1">
                                 <textarea class="pd-5 mgB-5" name="report_content" id="report_content" cols="30" rows="6" placeholder="<?=Yii::t('profile','Content')?>"></textarea>
