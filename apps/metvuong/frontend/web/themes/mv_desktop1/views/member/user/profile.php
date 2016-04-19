@@ -18,7 +18,12 @@ $count_product = $pagination->totalCount;
 $reviews = \frontend\models\UserReview::find()->where('review_id = :rid', [':rid' => $user->id])->orderBy(['created_at' => SORT_DESC])->all();
 $count_review = count($reviews);
 
-$report_list = \frontend\models\UserReview::REPORT_LIST;
+$report_list = [
+    3 => 'It is spam',
+    4 => 'It is inappropriate',
+    5 => 'It insults or attacks someone based on their religion, ethnicity or sexual orientation',
+    6 => 'It describes buying or selling drugs, guns or regulated products',
+];
 ?>
 <div class="title-fixed-wrap">
     <div class="container">
