@@ -156,7 +156,7 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-body">
-								<a href="#" class="btn-close-map close" data-dismiss="modal" aria-label="Close"><?Yii::t('listing','Back')?></a>
+								<a href="#" class="btn-close-map close" data-dismiss="modal" aria-label="Close"><?=Yii::t('listing','Back')?></a>
 								<div id="map_detail" data-lat="<?= $product->lat ?>" data-lng="<?= $product->lng ?>"></div>
 							</div>
 						</div>
@@ -393,12 +393,14 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 										<?= $product->adContactInfo->email ?>
 									</div>
 									<?php endif; ?>
+                                    <?php if($owner->location){ ?>
 									<div class="item-agent">
 										<div>
 											<span class="icon address-icon"></span>
 										</div>
-										Ho Chi Minh City, Vietnam
+										<?= $owner->location->city ?>
 									</div>
+                                    <?php } ?>
 									<?php if(!empty($owner->username) && !$owner->isMe()) { ?>
                                         <a href="#" data-toggle="modal" data-target="#popup_email_contact" class="email-btn btn-common btn-small">Email</a>
 										<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
