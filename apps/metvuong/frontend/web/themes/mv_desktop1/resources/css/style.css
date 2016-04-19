@@ -6523,6 +6523,9 @@ footer li a {
     .profile-user .list-post {
         margin: 0 -20px;
     }
+    .profile-user .item-sidebar .list-post {
+        margin: 0;
+    }
     .list-post li .name-post {
         height: 45px;
         overflow: hidden;
@@ -7049,6 +7052,7 @@ footer li a {
     .detail-listing .infor-listing .list-attr-td {
         margin-bottom: 15px;
     }
+    .detail-listing .collapsing,
     .detail-listing .collapse {
         display: block;
         visibility: visible;
@@ -7062,7 +7066,7 @@ footer li a {
     .detail-listing .collapse .panel-body {
         padding-left: 0;
         padding-right: 0;
-        padding-top: 10px;
+        /* padding-top: 10px; */
     }
     .panel-default>.panel-heading {
         border: none;
@@ -7724,11 +7728,7 @@ footer li a {
 .infor-duan {
     padding-top: 50px;
 }
-.list-duan .item-sidebar {
-    /* border: none; */
-    padding: 0;
-}
-.list-duan .sidebar-col ul li {
+.sidebar-col ul li {
     padding: 0 0 0 0;
     margin: 0 0 20px 0;
 }
@@ -7792,16 +7792,14 @@ footer li a {
 .list-duan .col-left li:first-child .wrap-item > a {
     width: 60%;
 }
-.detail-duan-moi .col-left,
-.list-duan .col-left {
+.col-left {
     padding-right: 50px;
 }
 .detail-duan-moi .list-post .img-show:before,
 .list-duan .list-post .img-show:before {
     padding-top: 60%;
 }
-.detail-duan-moi .col-right,
-.list-duan .col-right {
+.col-right {
     padding-left: 0;
 }
 @media (max-width: 768px) {
@@ -9570,4 +9568,15 @@ input:-webkit-autofill {
 .noti-alert .wrap-alert-info {
     padding-top: 60px;
     padding-left: 40px;
+}
+@media ( min-width: 985px ) {
+    .panel-heading .panel-title a .icon-mv {
+        display: none;
+    }
+    .collapsing {
+        height: auto !important;
+    }
+    .profile-user .item-sidebar .list-post > li {
+        margin-bottom: 20px;
+    }
 }

@@ -21,7 +21,7 @@ $count_review = count($reviews);
 <div class="title-fixed-wrap">
     <div class="container">
         <div class="profile-user row">
-            <div class="col-xs-12 col-md-9 left-user">
+            <div class="col-xs-12 col-md-9 col-left">
                 <div class="user-avatar">
                     <div class="wrap-img avatar"><img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="<?=$model->avatar?>" alt="metvuong avatar" /></div>
                     <div class="overflow-all">
@@ -220,7 +220,7 @@ $count_review = count($reviews);
                 </div>
             </div>
 
-            <div class="col-xs-12 col-xs-3 sidebar-user">
+            <div class="col-xs-12 col-xs-3 col-right sidebar-col">
                 <div class="item-sidebar">
                     <?=\vsoft\ad\widgets\ListingWidget::widget(['user_id' => $user->id, 'title' => Yii::t('listing','SIMILAR LISTINGS'), 'limit' => 4])?>
                 </div>
