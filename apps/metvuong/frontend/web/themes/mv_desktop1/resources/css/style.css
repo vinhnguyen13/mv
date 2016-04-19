@@ -4410,6 +4410,7 @@ html.mm-opening .mm-slideout {
     border: solid 0.7px #979797;
     padding: 10px 15px 15px;
     border-top: none;
+    font-size: 14px;
 }
 .list-social-login li a.facebook, 
 .list-social-login li a.google,

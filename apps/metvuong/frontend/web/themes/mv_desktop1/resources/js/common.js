@@ -1000,14 +1000,27 @@ function checkMobile () {
     return false;
 }
 
-function alertBox(txt) {
-    var wrap = '<div class="alert-item"><div class="wrap-alert">'+txt+'</div></div>';
-    $('body').append($(wrap));
-    $('.alert-item').fadeIn(300);
+$.fn.alertBox = function (options) {
 
-    setTimeout(function () {
-        $('.alert-item').fadeOut('slow', function() {
-            $(this).remove();
-        });
-    },1500);
+    return this.each(function() {
+        var defaults = {
+            
+        },
+        sc = {},
+        el = $(this),
+        wrap = '<div class="alert-item"><div class="wrap-alert">'+el.data('alert')+'</div></div>';
+
+        if ( el.length == 0 ) return el;
+
+        sc.settings = $.extend({}, defaults, options);
+
+        $('body').append($(wrap));
+        $('.alert-item').fadeIn(300);
+
+        setTimeout(function () {
+            $('.alert-item').fadeOut('slow', function() {
+                $(this).remove();
+            });
+        },1500);
+    });
 }

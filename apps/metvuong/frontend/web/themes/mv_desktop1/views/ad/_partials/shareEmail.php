@@ -16,7 +16,7 @@ use yii\helpers\Url;
             <div class="modal-header title-popup clearfix">
                 <div class="text-center"><?=Yii::t('send_email','SHARE VIA EMAIL')?></div>
                 <a href="#" class="txt-cancel btn-cancel close" data-dismiss="modal" aria-label="Close"><?=Yii::t('send_email','Cancel')?></a>
-                <a href="#" class="txt-done btn-done send_mail"><?=Yii::t('send_email','Send')?></a>
+                <a href="#" class="txt-done btn-done send_mail" data-alert="Gửi email thành công !"><?=Yii::t('send_email','Send')?></a>
             </div>
             <div class="modal-body">
                 <div class="wrap-popup">
@@ -164,6 +164,9 @@ use yii\helpers\Url;
                     $('body').loading({done:true});
                     if(data.status == 200){
                         $('.btn-cancel').trigger('click');
+                        setTimeout(function () {
+                            _this.alertBox();    
+                        },300);
                     }
                     else if(data.status == 404){
                         var arr = [];
