@@ -6254,7 +6254,7 @@ footer li a {
         margin-top: -15px;
     }
     #listing-form .form-group .help-block {
-        margin-bottom: 20px;
+        margin-bottom: 15px;
     }
     .step-link li .arrowLeft {
         background: #fff;
@@ -7778,6 +7778,10 @@ footer li a {
     padding: 0 0 0 0;
     margin: 0 0 20px 0;
 }
+.sidebar-col .list-attr-td li {
+    margin: 0 10px 0 0;
+    padding-right: 10px;
+}
 .detail-duan-moi .sidebar-col .name-post,
 .list-duan .sidebar-col .name-post {
     height: auto;
@@ -9245,7 +9249,7 @@ footer li a {
         overflow: inherit;
     }
     .wrap-list-duan .list-item {
-        margin: 0 -10px;
+        margin: 0 -15px;
     }
     .wrap-list-duan .nav-tabs {
         border: none;
@@ -9644,6 +9648,10 @@ input:-webkit-autofill {
     .profile-user .item-sidebar .list-post > li {
         margin-bottom: 20px;
     }
+    .profile-user .item-sidebar .bottom-feat-box {
+        padding-left: 0;
+        padding-right: 0;
+    }
 }
 .btn-slide {
     bottom: 0;
@@ -9695,7 +9703,7 @@ input:-webkit-autofill {
     transition: background-color .1s linear;
     -ms-transition: background-color .1s linear;
     -moz-transition: background-color .1s linear;
-    padding: 15px 25px;
+    padding: 15px 22px;
     display: block;
     background: #ECECEC;
     border-bottom: 1px solid #CACACA;
@@ -9716,7 +9724,7 @@ input:-webkit-autofill {
 }
 .wrap-swiper .icons-detail a .icon-mv {
     color: #3c3c3c;
-    width: 40px;
+    width: 35px;
 }
 .detail-listing .panel-group {
     padding: 0 20px;
@@ -9729,4 +9737,27 @@ input:-webkit-autofill {
 .detail-listing-dt .wrap-swiper .icons-detail a .icon-mv {
     width: 30px;
     font-size: 18px;
+}
+#project-info .result {
+    margin-bottom: 15px;
+}
+#report-form label {
+    display: block;
+    line-height: 20px;
+    margin-bottom: 10px;
+    font-weight: 400;
+}
+#report-form label:hover {
+    color: #3c3c3c;
+}
+#report-form label input {
+    position: relative;
+    top: 2px;
+    margin-right: 5px;
+}
+#report-form label:hover ~ label {
+    color: #3c3c3c;
+}
+#report_content {
+    margin-top: 10px;
 }
