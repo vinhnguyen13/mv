@@ -48,7 +48,7 @@ $count_review = count($reviews);
                             <?= empty($model->mobile) ?  "<a href='#'><i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i></a>" : "<a href='tel:".$model->mobile."'>".$model->mobile."</a>" ?>
                         </p>
                         <p class="email-user">
-                            <a href="#popup-email" class="email-btn">
+                            <a href="#popup_email_contact" class="email-btn">
                                 <span class="icon-mv"><span class="icon-mail-profile"></span></span>
                                 <?= empty($model->public_email) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->public_email ?>
                             </a>
@@ -230,6 +230,7 @@ $count_review = count($reviews);
     </div>
 </div>
 <?= $this->render('/ad/_partials/shareEmail',[
+    'popup_email_name' => 'popup_email_contact',
     'user' => $user,
     'yourEmail' => $yourEmail,
     'recipientEmail' => $recipientEmail,
