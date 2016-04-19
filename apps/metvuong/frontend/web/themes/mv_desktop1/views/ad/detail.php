@@ -393,14 +393,15 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 										<?= $product->adContactInfo->email ?>
 									</div>
 									<?php endif; ?>
-                                    <?php if($owner->location){ ?>
+                                    <?php if($owner){
+                                        if(!empty($owner->location)) {?>
 									<div class="item-agent">
 										<div>
 											<span class="icon address-icon"></span>
 										</div>
-										<?= $owner->location->city ?>
+										<?= $owner->location->city?>
 									</div>
-                                    <?php } ?>
+                                    <?php } } ?>
 									<?php if(!empty($owner->username) && !$owner->isMe()) { ?>
                                         <a href="#" data-toggle="modal" data-target="#popup_email_contact" class="email-btn btn-common btn-small">Email</a>
 										<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>

@@ -153,7 +153,7 @@ use yii\helpers\Url;
         var recipient_email = $('#share_form .recipient_email').val();
         var your_email = $('#share_form .your_email').val();
         if(recipient_email != null && your_email != null) {
-            _this.loading();
+            $('body').loading();
             $('#popup-sent .user_name').html(recipient_email);
             $.ajax({
                 type: "post",
@@ -175,7 +175,7 @@ use yii\helpers\Url;
                             arr[element] = lajax.t(val);
                         });
                         $('#share_form').yiiActiveForm('updateMessages', arr, true);
-                        $('#popup-sent .btn-close').trigger('click');
+//                        $('#popup-sent .btn-close').trigger('click');
                     } else {
                         console.log(data);
                     }
