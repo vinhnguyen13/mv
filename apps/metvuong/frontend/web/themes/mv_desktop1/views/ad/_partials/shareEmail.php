@@ -10,11 +10,11 @@ use yii\helpers\StringHelper;
 use yii\helpers\Url;
 
 ?>
-<div id="popup-email" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div id="<?=$popup_email_name?>" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header title-popup clearfix">
-                <div class="text-center"><?=Yii::t('send_email','SHARE VIA EMAIL')?></div>
+                <div class="text-center"><?=$popup_email_name == "popup_email_share" ? Yii::t('send_email','SHARE VIA EMAIL') : "CONTACT" ?></div>
                 <a href="#" class="txt-cancel btn-cancel close" data-dismiss="modal" aria-label="Close"><?=Yii::t('send_email','Cancel')?></a>
                 <a href="#" class="txt-done btn-done send_mail" data-alert="Gửi email thành công !"><?=Yii::t('send_email','Send')?></a>
             </div>
@@ -38,7 +38,7 @@ use yii\helpers\Url;
                             echo $f->field($share_form, 'your_email')->hiddenInput(['class'=>'your_email', 'value'=> $yourEmail])->label(false);
                         } else { ?>
                         <div class="frm-item frm-email">
-                            <?= $f->field($share_form, 'your_email')->textInput(['class'=>'your_email', 'value' => isset($params['setValueFromEmail']) ? $yourEmail : "", 'placeholder'=>Yii::t('send_email', 'Your email')])->label(false) ?>
+                            <?= $f->field($share_form, 'your_email')->textInput(['class'=>'your_email', 'value' => isset($params['setValueFromEmail']) ? $yourEmail : "", 'placeholder'=>Yii::t('send_email', 'From email')])->label(false) ?>
                         </div>
                         <?php }
 
@@ -47,7 +47,7 @@ use yii\helpers\Url;
                         } else {
                         ?>
                         <div class="frm-item frm-email">
-                            <?= $f->field($share_form, 'recipient_email')->textInput(['class'=>'recipient_email', 'value' => isset($params['setValueToEmail']) ? $recipientEmail : "", 'placeholder'=>Yii::t('send_email', 'Recipient\'s email ...')])->label(false) ?>
+                            <?= $f->field($share_form, 'recipient_email')->textInput(['class'=>'recipient_email', 'value' => isset($params['setValueToEmail']) ? $recipientEmail : "", 'placeholder'=>Yii::t('send_email', 'To email ...')])->label(false) ?>
                         </div>
                         <?php }  ?>
 

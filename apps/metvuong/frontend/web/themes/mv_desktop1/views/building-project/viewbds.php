@@ -181,7 +181,7 @@ $tabKeys = [
     </div>
 </div>
 
-<?=$this->renderAjax('/ad/_partials/shareEmail',[ 'project' => $model, 'yourEmail' => Yii::$app->user->isGuest ? '' : Yii::$app->user->identity->email, 'recipientEmail' => '', 'params' => ['your_email' => false, 'setValueToEmail' => false] ])?>
+<?=$this->renderAjax('/ad/_partials/shareEmail',[ 'popup_email_name' => 'popup-email', 'project' => $model, 'yourEmail' => Yii::$app->user->isGuest ? '' : Yii::$app->user->identity->email, 'recipientEmail' => '', 'params' => ['your_email' => false, 'setValueToEmail' => false] ])?>
 
 <?php
 $content = strip_tags($model->description);

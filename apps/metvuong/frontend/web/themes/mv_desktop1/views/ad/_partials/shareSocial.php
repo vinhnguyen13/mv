@@ -8,6 +8,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
 
+$user = Yii::$app->user->identity;
 ?>
 
 <div id="popup-share-social" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -19,18 +20,18 @@ use yii\helpers\Url;
                         <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
                         <div class="wrap-body-popup">
                             <span>Share on Social Network</span>
-                            <?php if(!empty($product_id)) {?>
+                            <?php if($product) {?>
                             <ul class="clearfix">
                                 <li>
                                     <a href="#" class="share-facebook"
-                                       data-url="<?=Url::to(['/ad/tracking-share', 'product_id' => $product_id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_FACEBOOK], true)?>">
+                                       data-url="<?=Url::to(['/ad/tracking-share', 'product_id' => $product->id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_FACEBOOK], true)?>">
                                         <div class="circle"><div><span class="icon icon-face"></span></div></div>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#"
-                                       data-url="<?=Url::to(['/ad/tracking-share', 'product_id' => $product_id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_EMAIL], true)?>"
-                                       data-toggle="modal" data-target="#popup-email" class="email-btn">
+                                       data-url="<?=Url::to(['/ad/tracking-share', 'product_id' => $product->id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_EMAIL], true)?>"
+                                       data-toggle="modal" data-target="#popup_email_share" class="email-btn">
                                         <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
                                     </a>
                                 </li>
@@ -43,7 +44,7 @@ use yii\helpers\Url;
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" data-toggle="modal" data-target="#popup-email" class="email-btn">
+                                    <a href="#" data-toggle="modal" data-target="#popup_email_share" class="email-btn">
                                         <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
                                     </a>
                                 </li>
@@ -56,6 +57,13 @@ use yii\helpers\Url;
         </div>
     </div>
 </div>
+
+<?=$this->renderAjax('/ad/_partials/shareEmail',[
+    'popup_email_name' => 'popup_email_share',
+    'product' => $product,
+    'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
+    'recipientEmail' => null,
+    'params' => ['your_email' => false, 'recipient_email' => true] ])?>
 
 <script>
     function fbShare(url, title, descr, image, winWidth, winHeight) {

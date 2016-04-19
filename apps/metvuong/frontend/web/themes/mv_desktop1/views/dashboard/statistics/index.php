@@ -50,9 +50,9 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                 <div class="pull-right fs-13 mgB-15">
                     Chọn lọc
                     <select id="filterChart" class="mgL-10">
-                        <option value="week">Theo tuần</option>
-                        <option value="month">Theo tháng</option>
-                        <option value="quarter">Theo quý</option>
+                        <option value="week"><?=Yii::t('statistic','Week')?></option>
+                        <option value="month"><?=Yii::t('statistic','Month')?></option>
+                        <option value="quarter"><?=Yii::t('statistic','Quarter')?></option>
                     </select>
                 </div>
                 <div class="clearfix"></div>
@@ -72,11 +72,11 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                     </ul>
         		</div>
         	</section>
-            <h2 class="text-uper fs-16 font-600 mgB-30 color-cd">STATISTIC</h2>
+            <h2 class="text-uper fs-16 font-600 mgB-30 color-cd"><?=Yii::t('statistic','STATISTIC')?></h2>
             <table class="tbl-review">
                 <tr>
-                    <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10 fs-17"><span class="icon-eye-copy"></span></span>LƯỢT XEM</th>
-                    <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10"><span class="icon-heart-icon-listing fs-19"></span></span>THÍCH</th>
+                    <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10 fs-17"><span class="icon-eye-copy"></span></span><?=Yii::t('statistic','VIEW')?></th>
+                    <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10"><span class="icon-heart-icon-listing fs-19"></span></span><?=Yii::t('statistic','LIKE')?></th>
                 </tr>
                 <tr>
                     <td>
@@ -92,7 +92,7 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                             <?php }
                         } else {?>
                             <div class="clearfix fs-13">
-                                <span>Không tìm thấy.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>">Cập nhật tin đăng.</a>
+                                <span><?=Yii::t('statistic','Not found')?>.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>"><?=Yii::t('statistic','Please, update your listing')?>.</a>
                             </div>
                         <?php }?>
                     </td>
@@ -109,14 +109,14 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                             <?php }
                         } else {?>
                             <div class="clearfix fs-13">
-                                <span>Không tìm thấy.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>">Cập nhật tin đăng.</a>
+                                <span><?=Yii::t('statistic','Not found')?>.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>"><?=Yii::t('statistic','Please, update your listing')?>.</a>
                             </div>
                         <?php }?>
                     </td>
                 </tr>
                 <tr>
-                    <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10"><span class="icon-icons-search fs-19"></span></span>TÌM KIẾM</th>
-                    <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10"><span class="icon-share-social fs-19"></span></span>CHIA SẺ</th>
+                    <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10"><span class="icon-icons-search fs-19"></span></span><?=Yii::t('statistic','SEARCH')?></th>
+                    <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10"><span class="icon-share-social fs-19"></span></span><?=Yii::t('statistic','SHARE')?></th>
                 </tr>
                 <tr>
                     <td>
@@ -132,7 +132,7 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                             <?php }
                         } else {?>
                             <div class="clearfix fs-13">
-                                <span>Không tìm thấy.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>">Cập nhật tin đăng.</a>
+                                <span><?=Yii::t('statistic','Not found')?>.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>"><?=Yii::t('statistic','Please, update your listing')?>.</a>
                             </div>
                         <?php }?>
                     </td>
@@ -149,7 +149,7 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                             <?php }
                         } else {?>
                             <div class="clearfix fs-13">
-                                <span>Không tìm thấy.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>">Cập nhật tin đăng.</a>
+                                <span><?=Yii::t('statistic','Not found')?>.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>"><?=Yii::t('statistic','Please, update your listing')?>.</a>
                             </div>
                         <?php }?>
                     </td>

@@ -223,7 +223,7 @@ class DashboardController extends Controller
                     if(strpos($thumb, "default")){
                         $thumb = $product->projectBuilding->logoUrl;
                     }
-                    $tempProduct["label"] = Yii::$app->params['listing_prefix_id'] . $product->id." - ".$product->projectBuilding->name;
+                    $tempProduct["label"] = Yii::$app->params['listing_prefix_id'] . $product->id." - ".$product->projectBuilding->name." - ".$product->address;
                     $tempProduct["url"] = Url::to(['/dashboard/statistics', 'id' => $product->id], true);
                     $tempProduct["thumb"] = $thumb;
                 } else {

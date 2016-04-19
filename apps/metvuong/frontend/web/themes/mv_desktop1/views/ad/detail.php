@@ -132,7 +132,7 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 					</li>
 		            <?php if($product->user_id != Yii::$app->user->id){ ?>
 					<li>
-						<a data-toggle="tooltip" data-placement="bottom" title="<?= Yii::t('ad', 'Favourite') ?>" href="#" class="tooltip-show <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>">
+						<a data-toggle="tooltip" data-placement="bottom" title="<?= Yii::t('ad', 'Favourite') ?>" href="#" class="tooltip-show <?=!empty($product->productSaved->saved_at) ? 'active' : '';?> save-item" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>">
 							<span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
 						</a>
 					</li>
@@ -145,17 +145,18 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 				</ul>
 
 				<?=$this->renderAjax('/ad/_partials/shareEmail',[
-			    'product' => $product,
-			    'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
-			    'recipientEmail' => $product->adContactInfo->email,
-			    'params' => ['your_email' => false, 'recipient_email' => false] ])?>
+                    'popup_email_name' => 'popup_email_contact',
+                    'product' => $product,
+                    'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
+                    'recipientEmail' => $product->adContactInfo->email,
+                    'params' => ['your_email' => false, 'recipient_email' => false] ])?>
 
 
 				<div id="popup-map" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-body">
-								<a href="#" class="btn-close-map close" data-dismiss="modal" aria-label="Close">trở lại</a>
+								<a href="#" class="btn-close-map close" data-dismiss="modal" aria-label="Close"><?Yii::t('listing','Back')?></a>
 								<div id="map_detail" data-lat="<?= $product->lat ?>" data-lng="<?= $product->lng ?>"></div>
 							</div>
 						</div>
@@ -169,7 +170,7 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
                 $description = str_replace("\n", "", $description);
 
                 echo $this->render('/ad/_partials/shareSocial',[
-                    'product_id' => $product->id,
+                    'product' => $product,
 				    'url' => $product->urlDetail(true),
 				    'title' => $address,
 				    'description' => $description,
@@ -396,10 +397,10 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 										<div>
 											<span class="icon address-icon"></span>
 										</div>
-										Ho Chi Minh City, Vietnam
+										<?=$owner?>
 									</div>
 									<?php if(!empty($owner->username) && !$owner->isMe()) { ?>
-                                        <a href="#" data-toggle="modal" data-target="#popup-email" class="email-btn btn-common btn-small">Email</a>
+                                        <a href="#" data-toggle="modal" data-target="#popup_email_contact" class="email-btn btn-common btn-small">Email</a>
 										<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
 									<?php }?>
 								</div>
