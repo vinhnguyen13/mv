@@ -222,7 +222,7 @@ use vsoft\ad\models\AdFacility;
 								->label(false)
 								->textArea(['placeholder' => $additionInfo->getAttributeLabel('interior')]) ?>
 						
-						<?= $form->field($additionInfo, 'facility')
+						<?= $form->field($additionInfo, 'facility', ['options' => ['class' => 'col-xs-12 form-group']])
 								->label(false)
 								->checkboxList(ArrayHelper::map(AdFacility::find()->all(), 'id', 'name')) ?>
 					</div>

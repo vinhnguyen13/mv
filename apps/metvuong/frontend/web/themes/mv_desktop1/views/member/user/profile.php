@@ -34,7 +34,7 @@ $report_list = [
                     <div class="overflow-all">
                         <div class="pull-right report-listing">
                             <a href="#" data-toggle="modal" data-target="#popup-report-user"
-                               class="btn-review btn-common"><?= Yii::t('profile', 'Report') ?></a>
+                               class="btn-report btn"><span class="icon-mv"><span class="icon-warning"></span></span><?= Yii::t('profile', 'Report') ?></a>
                         </div>
                         <p class="name-user fs-18 font-600" ><?= $model->name ?><a href="#" class="chat-now" data-chat-user="<?=$user->username?>"><span class="icon-mv"><span class="icon-bubbles-icon"></span></span></a></p>
                         <div class="stars">

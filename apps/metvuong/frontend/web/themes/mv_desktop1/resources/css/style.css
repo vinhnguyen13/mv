@@ -818,7 +818,7 @@ margin-top: 12px;
 /* Click + hover color */
  /* color current and previous stars on checked */
 
-.rating label:hover, label:hover ~ label {color: #d5dd00; opacity: .9;}
+.rating label:hover, label:hover ~ label {/* color: #d5dd00; *//* opacity: .9; */}
 
 /* Hover highlights */
 input:checked ~ label,
@@ -5348,7 +5348,7 @@ html.mm-opening .mm-slideout {
 #share_form .frm-item textarea,
 #share_form .frm-item input {
     padding: 7px 0;
-    font-size: 14px;
+    font-size: 13px;
 }
 .edit-user-tt {
     /* padding-top: 40px; */
@@ -6241,6 +6241,9 @@ footer li a {
         background: none;
         border: solid 1px #979797;
         height: 40px;
+    }
+    .item-step input[type=checkbox] {
+        height: auto;
     }
     .toggle-num-home label input {
         height: auto;
@@ -9769,4 +9772,50 @@ input:-webkit-autofill {
 }
 #report_content {
     margin-top: 10px;
+}
+.btn {
+    position: relative;
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 20px;
+    color: #333;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    background-color: #eee;
+    background-image: linear-gradient(#fcfcfc,#eee);
+    border: 1px solid #d5d5d5;
+    border-radius: 3px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-appearance: none;
+}
+.btn:hover, .btn:active, .btn.zeroclipboard-is-hover, .btn.zeroclipboard-is-active {
+    text-decoration: none;
+    background-color: #ddd;
+    background-image: linear-gradient(#eee,#ddd);
+    border-color: #ccc;
+}
+.btn-report {
+    padding: 5px 15px;
+}
+.field-adproductadditioninfo-facility input[type=checkbox] {
+    position: relative;
+    top: 2px;
+    margin-right: 5px;
+}
+label:hover {
+    cursor: pointer;
+    color: #009455;
+}
+.field-adproductadditioninfo-facility label {
+    font-size: 14px;
+    font-weight: 400;
+    margin-right: 20px;
+    line-height: 100%;
+    text-transform: capitalize;
 }

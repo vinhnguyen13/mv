@@ -92,7 +92,7 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 						<div class="swiper-slide">
 							<div class="img-show">
 								<div>
-									<img src="<?= $image->url ?>" alt="<?=$address?>">
+									<img src="<?= $image->getUrl(AdImages::SIZE_LARGE) ?>" alt="<?=$address?>">
 								</div>
 							</div>
 						</div>
@@ -120,7 +120,7 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 						</a>	
 					</li>
 					<li>
-						<a href="#" data-toggle="modal" data-target="#popup_email_share">
+						<a href="#" data-toggle="modal" data-target="#popup_email_contact">
 							<span class="icon-mv fs-18"><span class="icon-mail-profile"></span></span>
 							<?= Yii::t('ad', 'Share Email') ?>
 						</a>	
@@ -188,13 +188,15 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
                 $description = str_replace("\r", "", $description);
                 $description = str_replace("\n", "", $description);
 
-                echo $this->render('/ad/_partials/shareSocial',[
+                /*echo $this->render('/ad/_partials/shareSocial',[
                     'product' => $product,
 				    'url' => $product->urlDetail(true),
 				    'title' => $address,
 				    'description' => $description,
 				    'image' => $product->representImage
-				])?>
+				])*/
+
+				?>
 
 				<script>
 					$(document).ready(function () {

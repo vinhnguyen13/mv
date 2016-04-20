@@ -503,7 +503,7 @@ var listing = {
 			
 			detailListing.find('.container').html($(r).find('#detail-wrap').html());
 
-			detailListing.find('.popup-common').appendTo('body');
+			//detailListing.find('.popup-common').appendTo('body');
 
 			var swiper = new Swiper('.swiper-container', {
 				pagination: '.swiper-pagination',
