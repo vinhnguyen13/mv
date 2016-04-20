@@ -23,7 +23,7 @@ $user = Yii::$app->user->identity;
                             <?php if(isset($product) && !empty($product)) {?>
                             <ul class="clearfix">
                                 <li>
-                                    <a href="#" class="share-facebook"
+                                    <a href="#" class="share-facebook" data-toggle="modal" data-target="#popup_email_share"
                                        data-url="<?=Url::to(['/ad/tracking-share', 'product_id' => $product->id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_FACEBOOK], true)?>">
                                         <div class="circle"><div><span class="icon icon-face"></span></div></div>
                                     </a>
@@ -66,6 +66,13 @@ echo $this->renderAjax('/ad/_partials/shareEmail',[
     'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
     'recipientEmail' => null,
     'params' => ['your_email' => false, 'recipient_email' => true] ]);
+} else {
+    echo $this->renderAjax('/ad/_partials/shareEmail',[
+        'popup_email_name' => 'popup_email_share',
+        'project' => $project,
+        'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
+        'recipientEmail' => null,
+        'params' => ['your_email' => false, 'recipient_email' => true] ]);
 }?>
 
 <script>
