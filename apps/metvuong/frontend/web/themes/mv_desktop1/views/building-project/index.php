@@ -8,7 +8,7 @@ use yii\helpers\Url;
 use yii\widgets\LinkPager;
 
 ?>
-<div class="title-fixed-wrap">
+<div class="title-fixed-wrap container">
     <div class="infor-duan">
         <div class="clearfix">
             <div class="title-top"><?=Yii::t('general', 'New Project')?></div>

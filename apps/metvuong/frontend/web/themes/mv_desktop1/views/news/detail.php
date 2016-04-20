@@ -62,7 +62,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 </script>
-<div class="title-fixed-wrap">
+<div class="title-fixed-wrap container">
     <div class="detail-news page-news">
         <?= $this->render('/news/_partials/menu', ['cat_id'=>$news["catalog_id"]]); ?>
         <div class="wrap-detail-article wrap-news-page">

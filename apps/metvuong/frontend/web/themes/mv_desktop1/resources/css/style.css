@@ -3199,6 +3199,7 @@ html.mm-opening .mm-slideout {
     color: #3c3c3c;
     font-size: 16px;
     font-weight: 600;
+    height: 90px;
 }
 .box-item .address-feat .address-icon {
     position: relative;
@@ -3301,6 +3302,9 @@ html.mm-opening .mm-slideout {
     float: left;
     width: 100%;
     color: #000;
+}
+.news-item .item .img-show:before {
+    padding-top: 65%;
 }
 .news-item .item span {
     display: block;

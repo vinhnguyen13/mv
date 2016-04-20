@@ -14,7 +14,7 @@ use yii\helpers\Url;
 $user = $model->getUser();
 $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii::$app->user->id])->one();
 ?>
-<div class="title-fixed-wrap" xmlns="http://www.w3.org/1999/html">
+<div class="title-fixed-wrap container" xmlns="http://www.w3.org/1999/html">
     <div class="edit-user-tt">
         <div class="title-top">Settings</div>
         <div class="wrap-edit-tt">

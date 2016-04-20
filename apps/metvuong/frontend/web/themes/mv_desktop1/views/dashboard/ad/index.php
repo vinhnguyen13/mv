@@ -3,7 +3,7 @@ use yii\helpers\ArrayHelper;
 use yii\web\View;
 use yii\helpers\Url;
 ?>
-<div class="title-fixed-wrap">
+<div class="title-fixed-wrap container">
 	<div class="u-allduan">
         <?php if($total <= 0){?>
             <div class="no-duan">

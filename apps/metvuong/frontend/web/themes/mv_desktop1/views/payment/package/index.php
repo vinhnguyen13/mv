@@ -6,7 +6,7 @@
  * Time: 9:51 AM
  */
 ?>
-<div class="title-fixed-wrap">
+<div class="title-fixed-wrap container">
 	<div class="all-packege clearfix">
 		<div class="title-top">CÁC GÓI GIÁ</div>
 		<div class="item-packege col-xs-12 col-sm-6 col-md-4">

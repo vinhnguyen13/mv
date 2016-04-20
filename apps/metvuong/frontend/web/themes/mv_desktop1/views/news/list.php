@@ -6,7 +6,7 @@ $newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatI
 $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID, 'status' => \vsoft\news\models\Status::STATUS_ACTIVE]);
 
 ?>
-<div class="title-fixed-wrap">
+<div class="title-fixed-wrap container">
     <div class="page-news">
         <?= $this->render('/news/_partials/menu', ['cat_id'=>$cat_id]); ?>
         <?php if(count($news) > 0){?>

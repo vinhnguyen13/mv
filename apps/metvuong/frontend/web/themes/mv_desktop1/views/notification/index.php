@@ -6,7 +6,7 @@ use vsoft\ad\models\AdProduct;
 use frontend\models\UserActivity;
 use yii\helpers\Html;
 ?>
-<div class="title-fixed-wrap">
+<div class="title-fixed-wrap container">
 	
 	<div class="noti-alert">
 		<?php

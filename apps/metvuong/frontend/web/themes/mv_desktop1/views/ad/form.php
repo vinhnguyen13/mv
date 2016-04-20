@@ -34,7 +34,7 @@ use vsoft\ad\models\AdFacility;
 		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
 	}
 ?>
-<div class="title-fixed-wrap">
+<div class="title-fixed-wrap container">
 	<div class="post-listing">
 		<div class="title-top"><?= $product->isNewRecord ? Yii::t('ad', 'Post Listing') : sprintf(Yii::t('ad', 'Update Listing MV%s'), $product->id) ?></div>
 		<div class="wrap-frm-listing clearfix">

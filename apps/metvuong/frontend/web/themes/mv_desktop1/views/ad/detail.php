@@ -74,8 +74,8 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 
 $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 ?>
-<div class="title-fixed-wrap">
-    <div class="detail-listing row detail-listing-extra">
+<div class="title-fixed-wrap container">
+	<div class="detail-listing row detail-listing-extra">
     	<div id="detail-wrap" class="col-xs-12 col-md-9 col-left">
 			<?php if($userId == $product->user_id): ?>
 			<a href="<?= Url::to(['update', 'id' => $product->id]) ?>" class="edit-listing">

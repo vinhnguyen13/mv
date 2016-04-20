@@ -11,7 +11,7 @@ if(!empty($jid_id)){
 	$msgs = Yii::$app->dbChat->createCommand($sql)->bindValues([':jid_id'=>$jid_id['jid_id']])->queryAll();
 }
 ?>
-<div class="title-fixed-wrap">
+<div class="title-fixed-wrap container">
 	<div class="chat-history">
 		<div class="wrap-history-item">
 			<div class="title-top">Chat History</div> 
