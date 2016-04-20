@@ -3677,6 +3677,9 @@ html.mm-opening .mm-slideout {
 .item-agent span {
     font-size: 20px;
 }
+#review-listing-post .item-agent .email-show {
+    font-size: 15px;
+}
 .img-agent .btn-small {
     /* width: 100%; */
     margin-top: 15px;
@@ -4834,6 +4837,11 @@ html.mm-opening .mm-slideout {
     background-color: #00a769;
     /* float: left; */
     /* width: 100%; */
+    background-image: linear-gradient(#00a769,#00a769);
+    border: none;
+    border-radius: 0px;
+    color: #fff;
+    font-weight: 400;
 }
 #share_form ::-webkit-input-placeholder {
    font-style: italic;
@@ -7091,7 +7099,7 @@ footer li a {
         overflow-y: scroll;
     }
     .detail-listing-dt .detail-listing .gallery-detail {
-        height: 322px;
+        height: 320px;
     }
     .dt-pagination {
         display: none;
@@ -8396,6 +8404,9 @@ footer li a {
     font-size: 27px;
     line-height: 100%;
 }
+.menuUser li a > div span.icon-mv .icon-barometer {
+    font-size: 32px;
+}
 .menuUser li a > div .icon-settings {
     font-size: 30px;
     color: #3c3c3c;
@@ -8514,6 +8525,7 @@ footer li a {
 #review-listing-post .gallery-detail {
     margin: 0 0 15px;
     height: auto;
+    width: 100%;
 }
 .modal-backdrop.in {
     background: none;
@@ -9107,6 +9119,7 @@ footer li a {
     padding: 3px 6px;
     line-height: 100%;
     margin-top: 0;
+    color: #fff !important;
 }
 #review-listing-post .edit-listing.save .icon-edit-copy-4:before {
     content: "\e922";
@@ -9759,6 +9772,9 @@ input:-webkit-autofill {
     width: 30px;
     font-size: 18px;
 }
+.detail-listing-dt .wrap-swiper .icons-detail a .icon-mv.fs-18 {
+    font-size: 15px !important;
+}
 #project-info .result {
     margin-bottom: 15px;
 }
@@ -9827,4 +9843,21 @@ label:hover {
     margin-right: 20px;
     line-height: 100%;
     text-transform: capitalize;
+}
+.hinh-anh .fileinput-button.btn:hover,
+.hinh-anh .fileinput-button.btn:active,
+.hinh-anh .fileinput-button.btn.zeroclipboard-is-hover,
+.hinh-anh .fileinput-button.btn.zeroclipboard-is-active {
+    background-color: #00a769;
+    /* float: left; */
+    /* width: 100%; */
+    background-image: linear-gradient(#00a769,#00a769);
+    border: none;
+    border-radius: 0px;
+    color: #fff;
+    font-weight: 400;
+}
+.wrap-swiper .edit-item .edit-listing {
+    position: static;
+    background: #CECECE;
 }

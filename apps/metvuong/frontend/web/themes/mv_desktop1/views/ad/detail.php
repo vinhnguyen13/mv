@@ -65,10 +65,6 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 <div class="title-fixed-wrap container">
 	<div class="detail-listing row detail-listing-extra">
     	<div id="detail-wrap" class="col-xs-12 col-md-9 col-left">
-			<?php if($userId == $product->user_id): ?>
-			<a href="<?= Url::to(['update', 'id' => $product->id]) ?>" class="edit-listing">
-				<span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
-			<?php endif; ?>
 			<?php
 				$images = $product->adImages;
 				if($images):
@@ -133,6 +129,14 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 							<?= Yii::t('ad', 'Report Abuse') ?>
 						</a>
 					</li>
+					<?php if($userId == $product->user_id): ?>
+					<li class="edit-item">
+						<a href="<?= Url::to(['update', 'id' => $product->id]) ?>" class="edit-listing">
+							<span class="icon-mv"><span class="icon-edit-copy-4"></span></span>
+							Edit Listing
+						</a>
+					</li>
+					<?php endif; ?>
 				</ul>
 			</div>
 			<?php endif; ?>

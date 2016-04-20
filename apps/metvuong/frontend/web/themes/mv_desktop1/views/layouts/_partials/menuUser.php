@@ -9,9 +9,9 @@ use yii\helpers\Url;
                     <a href="<?= Url::to(['/dashboard/ad', 'username' => Yii::$app->user->identity->username]) ?>"
                        class="<?= !empty($this->params['menuDashboard']) ? 'active' : ''; ?>">
                         <div>
-                            <span class="icon-mv"><span class="icon-fill-2-fill-6-fill-8"></span></span>
+                            <span class="icon-mv"><span class="icon-barometer"></span></span>
                         </div>
-                        <?= Yii::t('ad', 'Listings') ?>
+                        <?= Yii::t('ad', 'Dashboard') ?>
                     </a>
                 </li>
                 <li>
