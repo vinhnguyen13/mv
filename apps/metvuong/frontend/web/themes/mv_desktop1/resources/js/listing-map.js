@@ -500,6 +500,14 @@ var listing = {
 		});
 		
 		$.get('/ad/detail', {id: id}, function(r){
+
+			var temp = $(r).find('#detail-wrap');
+
+			temp.find('.popup-common').each(function () {
+				var _this = $(this),
+					idThis = _this.attr('id');
+				$('body').find('#'+idThis).remove();
+			});
 			
 			detailListing.find('.container').html($(r).find('#detail-wrap').html());
 
