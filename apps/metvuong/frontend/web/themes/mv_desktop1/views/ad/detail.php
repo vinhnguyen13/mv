@@ -42,30 +42,18 @@ use vsoft\ad\models\AdFacility;
 
     $directionList = AdProductAdditionInfo::directionList();
 
+$content = strip_tags($product->content);
+$description = \yii\helpers\StringHelper::truncate($content, 500, $suffix = '...', $encoding = 'UTF-8');
+$description = str_replace("\r", "", $description);
+$description = str_replace("\n", "", $description);
+
 Yii::$app->view->registerMetaTag([
     'name' => 'keywords',
     'content' => $address
 ]);
 Yii::$app->view->registerMetaTag([
     'name' => 'description',
-    'content' => \yii\helpers\StringHelper::truncate($product->content, 500, $suffix = '...', $encoding = 'UTF-8')
-]);
-
-Yii::$app->view->registerMetaTag([
-    'property' => 'og:title',
-    'content' => $address
-]);
-Yii::$app->view->registerMetaTag([
-    'property' => 'og:description',
-    'content' => \yii\helpers\StringHelper::truncate($product->content, 500, $suffix = '...', $encoding = 'UTF-8')
-]);
-Yii::$app->view->registerMetaTag([
-    'property' => 'og:type',
-    'content' => 'article'
-]);
-Yii::$app->view->registerMetaTag([
-    'property' => 'og:image',
-    'content' => $product->representImage
+    'content' => $description
 ]);
 
 if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']['all'] == true) && ($product->user_id != Yii::$app->user->id)) {
@@ -114,20 +102,20 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 						</a>
 					</li>
 					<li>
-						<a href="#">
+						<a href="#" class="share-facebook" data-url="<?=Url::to(['/ad/tracking-share', 'product_id' => $product->id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_FACEBOOK], true)?>">
 							<span class="icon-mv"><span class="icon-facebook"></span></span>
 							<?= Yii::t('ad', 'Share Facebook') ?>
 						</a>	
 					</li>
 					<li>
-						<a href="#" data-toggle="modal" data-target="#popup_email_contact">
+						<a href="#" data-toggle="modal" data-target="#popup_email_share">
 							<span class="icon-mv fs-18"><span class="icon-mail-profile"></span></span>
 							<?= Yii::t('ad', 'Share Email') ?>
 						</a>	
 					</li>
 		            <?php if($product->user_id != Yii::$app->user->id){ ?>
 					<li>
-						<a href="#" class="<?=!empty($product->productSaved->saved_at) ? 'active' : '';?> save-item" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>">
+						<a href="#" class="save-item <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>">
 							<span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
 							<?= Yii::t('ad', 'Add to Favorites') ?>
 						</a>
@@ -167,7 +155,14 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
                     'popup_email_name' => 'popup_email_contact',
                     'product' => $product,
                     'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
-                    'recipientEmail' => $product->adContactInfo->email,
+                    'recipientEmail' => null,
+                    'params' => ['your_email' => false, 'recipient_email' => false] ])?>
+
+                <?=$this->renderAjax('/ad/_partials/shareEmail',[
+                    'popup_email_name' => 'popup_email_share',
+                    'product' => $product,
+                    'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
+                    'recipientEmail' => null,
                     'params' => ['your_email' => false, 'recipient_email' => false] ])?>
 
 
@@ -181,22 +176,6 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 						</div>
 					</div>
 				</div>
-
-				<?php
-                $content = strip_tags($product->content);
-                $description = \yii\helpers\StringHelper::truncate($content, 200, $suffix = '...', $encoding = 'UTF-8');
-                $description = str_replace("\r", "", $description);
-                $description = str_replace("\n", "", $description);
-
-                /*echo $this->render('/ad/_partials/shareSocial',[
-                    'product' => $product,
-				    'url' => $product->urlDetail(true),
-				    'title' => $address,
-				    'description' => $description,
-				    'image' => $product->representImage
-				])*/
-
-				?>
 
 				<script>
 					$(document).ready(function () {
@@ -241,6 +220,40 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 								});
 							}, 400);
 						});
+
+                        function fbShare(url, title, descr, image, winWidth, winHeight) {
+                            var winTop = (screen.height / 2) - (winHeight / 2);
+                            var winLeft = (screen.width / 2) - (winWidth / 2);
+                            window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + url + '&p[title]=' + title + '&p[summary]=' + descr + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+                        }
+
+                        $('.share-facebook').click(function (){
+                            $('body').loading();
+                            var url = $(this).data("url");
+                            if(url != undefined && url.length > 0) {
+                                $.ajax({
+                                    type: "get",
+                                    dataType: 'json',
+                                    url: url,
+                                    success: function (data) {
+                                        var link = '<?=$product->urlDetail(true)?>';
+                                        if(link != '#' && link.length > 0) {
+                                            var winWidth = 520;
+                                            var winHeight = 350;
+                                            var winTop = (screen.height / 2) - (winHeight / 2);
+                                            var winLeft = (screen.width / 2) - (winWidth / 2);
+                                            var title = '<?=$address?>';
+                                            var descr = '<?=$description?>';
+                                            var image = '<?=Yii::$app->request->hostInfo.$product->representImage?>';
+                                            window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + link + '&p[title]=' + title + '&p[summary]=' + descr + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+                                        }
+                                        $('body').loading({done:true});
+                                        return true;
+                                    }
+                                });
+                            }
+                            return false;
+                        });
 
 						/*$(document).on('click', '#popup-share-social .icon-email-1', function (e) {
 							$('#popup-share-social').addClass('hide-popup');
