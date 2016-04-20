@@ -20,7 +20,7 @@ $user = Yii::$app->user->identity;
                         <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
                         <div class="wrap-body-popup">
                             <span>Share on Social Network</span>
-                            <?php if($product) {?>
+                            <?php if(isset($product) && !empty($product)) {?>
                             <ul class="clearfix">
                                 <li>
                                     <a href="#" class="share-facebook"
@@ -58,12 +58,15 @@ $user = Yii::$app->user->identity;
     </div>
 </div>
 
-<?=$this->renderAjax('/ad/_partials/shareEmail',[
+<?php
+if(isset($product) && !empty($product)){
+echo $this->renderAjax('/ad/_partials/shareEmail',[
     'popup_email_name' => 'popup_email_share',
     'product' => $product,
     'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
     'recipientEmail' => null,
-    'params' => ['your_email' => false, 'recipient_email' => true] ])?>
+    'params' => ['your_email' => false, 'recipient_email' => true] ]);
+}?>
 
 <script>
     function fbShare(url, title, descr, image, winWidth, winHeight) {
