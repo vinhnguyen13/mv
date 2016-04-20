@@ -26,6 +26,7 @@ use vsoft\craw\models\AdContractor;
 use vsoft\craw\models\AdInvestor;
 use Yii;
 use yii\base\Component;
+use yii\base\Exception;
 
 class BatdongsanV2 extends Component
 {
@@ -65,12 +66,18 @@ class BatdongsanV2 extends Component
 
     public function parse()
     {
-        ob_start();
-        $this->time_start = time();
-        $this->getPages(1);
-        $this->time_end = time();
-        print_r("\nTime: ");
-        print_r($this->time_end - $this->time_start);
+        try {
+//            ob_start();
+            $this->time_start = time();
+            $this->getPages(1);
+            $this->time_end = time();
+            print_r("\nTime: ");
+            print_r($this->time_end - $this->time_start);
+        } catch(Exception $e) {
+            $currentBuffers = ob_get_clean();
+            ob_end_clean(); // Let's end and clear ob...
+            echo "<br />Some error occured: " . $e->getMessage();
+        }
     }
 
     public function parseRent()
@@ -160,6 +167,8 @@ class BatdongsanV2 extends Component
                             }
 
                         } else {
+                            $log['current_page'] = 0;
+                            $this->writeFileLog($log, $path_folder."/".$type."/", "bds_log_{$type}.json");
                             print_r("\nLast file of {$type} done.");
                         }
                     } else {
