@@ -65,11 +65,11 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 <div class="title-fixed-wrap container">
 	<div class="detail-listing row detail-listing-extra">
     	<div id="detail-wrap" class="col-xs-12 col-md-9 col-left">
-			<?php
-				$images = $product->adImages;
-				if($images):
-			?>
 			<div class="wrap-swiper clearfix">
+				<?php
+					$images = $product->adImages;
+					if($images):
+				?>
 				<div class="gallery-detail swiper-container pull-left">
 					<div class="swiper-wrapper">
 						<?php foreach ($images as $image): ?>
@@ -90,6 +90,9 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 						<div class="swiper-button-next icon-mv"><span class="icon-angle-right"></span></div>
     				</div>
 				</div>
+				<?php else: ?>
+				<img alt="" src="/themes/metvuong2/resources/images/default-ads.jpg" />
+				<?php endif; ?>
 				<ul class="pull-right icons-detail">
 					<li>
 						<a href="#" data-toggle="tooltip" data-placement="bottom" title="<?= Yii::t('ad', 'Copy link') ?>" data-title-success="<?= Yii::t('ad', 'Copied') ?>" class="btn-copy" data-clipboard-text="<?= $product->urlDetail(true) ?>">
@@ -139,7 +142,6 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 					<?php endif; ?>
 				</ul>
 			</div>
-			<?php endif; ?>
 			<div class="infor-listing">
 				<div class="address-feat clearfix">
 					<p class="infor-by-up">
