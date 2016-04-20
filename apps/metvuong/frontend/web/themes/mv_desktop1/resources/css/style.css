@@ -3739,7 +3739,7 @@ html.mm-opening .mm-slideout {
 }
 .detail-listing .infor-listing .address-listing {
     font-weight: 600;
-    font-size: 22px;
+    font-size: 18px;
     color: #3c3c3c;
     line-height: 27px;
     margin-bottom: 10px;
@@ -7581,6 +7581,7 @@ footer li a {
     font-weight: 600;
     position: relative;
     padding-left: 15px;
+    line-height: 17px;
 }
 .item-sidebar .name-post:hover,
 .list-lq li a:hover {
@@ -9738,6 +9739,9 @@ input:-webkit-autofill {
     font-size: 13px;
     padding-left: 15px;
     padding-right: 10px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .detail-listing-dt .wrap-swiper .icons-detail a .icon-mv {
     width: 30px;

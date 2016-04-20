@@ -114,9 +114,15 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 						</a>
 					</li>
 					<li>
-						<a href="#" data-toggle="modal" data-target="#popup-share-social">
-							<span class="icon-mv"><span class="icon-share-social"></span></span>
-							<?= Yii::t('ad', 'Share Property') ?>
+						<a href="#">
+							<span class="icon-mv"><span class="icon-facebook"></span></span>
+							<?= Yii::t('ad', 'Share Facebook') ?>
+						</a>	
+					</li>
+					<li>
+						<a href="#" data-toggle="modal" data-target="#popup_email_share">
+							<span class="icon-mv fs-18"><span class="icon-mail-profile"></span></span>
+							<?= Yii::t('ad', 'Share Email') ?>
 						</a>	
 					</li>
 		            <?php if($product->user_id != Yii::$app->user->id){ ?>
