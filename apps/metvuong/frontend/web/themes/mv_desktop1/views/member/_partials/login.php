@@ -22,7 +22,7 @@ $model = Yii::createObject(LoginForm::className());
 </div>
 <div class="checkbox"> <?= $form->field($model, 'rememberMe')->checkbox() ?> </div>
 <div class="footer-modal clearfix">
-    <button type="button" class="btn btn-primary btn-common btn-login" id="btn-login"><?=Yii::t('user', 'Sign In')?></button>
+    <button type="button" class="btn-primary btn-common btn-login" id="btn-login"><?=Yii::t('user', 'Sign In')?></button>
 </div>
 <?php ActiveForm::end(); ?>
 
