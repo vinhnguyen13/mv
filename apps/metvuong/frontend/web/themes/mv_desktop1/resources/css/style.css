@@ -9861,3 +9861,8 @@ label:hover {
     position: static;
     background: #CECECE;
 }
+.box-item .search-home > .container
+.box-item > .container {
+    padding-left: 0;
+    padding-right: 0;
+}
