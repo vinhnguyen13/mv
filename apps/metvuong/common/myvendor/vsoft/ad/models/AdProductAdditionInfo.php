@@ -63,7 +63,9 @@ class AdProductAdditionInfo extends APAI
     }
     
     public function afterFind() {
-    	$this->facility = explode(',', $this->facility);
+    	if(!empty($this->facility)) {
+    		$this->facility = explode(',', $this->facility);
+    	}
     	
     	return parent::afterFind();
     }
