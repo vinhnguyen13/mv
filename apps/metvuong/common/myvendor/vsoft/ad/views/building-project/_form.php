@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
@@ -32,6 +32,12 @@ $districtData = [];
 foreach ($districts as $district) {
 	$districtOptions[$district->id] = ['data-city-id' => $district->city_id];
 	$districtData[$district->id] = $district->pre . ' ' . $district->name;
+}
+
+if(!$model->isNewRecord) {
+    //get selected value from db if value exist
+    $checkedList = explode(",", $model->facilities);
+    $model->facilities = $checkedList;
 }
 ?>
 <div id="project-building-form" class="cms-show-form">
@@ -80,7 +86,18 @@ foreach ($districts as $district) {
 	    			<input type="hidden" name="BuildingProject[district_id]" value="" />
 	    			<?= $form->field($model, 'district_id')->dropDownList($districtData, ['options' => $districtOptions, 'prompt' => '---', 'class' => 'select-2 form-control', 'disabled' => ($model->city_id) ? false : true]) ?>
 	  				<?= $form->field($model, 'categories')->dropDownList(ArrayHelper::map($categories, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
-	  				<?= $form->field($model, 'investors')->dropDownList(ArrayHelper::map($investors, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
+					<?= $form->field($model, 'description')->widget(CKEditor::className(), [
+						'editorOptions' => [
+							'preset' => 'basic',
+							'inline' => false,
+							'height' => 150,
+							'resize_enabled' => false,
+							'removePlugins' => '',
+						]
+					]) ?>
+                    <?= $form->field($model, 'investors')->dropDownList(ArrayHelper::map($investors, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
+                    <?= $form->field($model, 'architects')->dropDownList(ArrayHelper::map($architects, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
+                    <?= $form->field($model, 'contractors')->dropDownList(ArrayHelper::map($contractors, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
 			    	<?= $form->field($model, 'logo')->widget(FileUploadUI::className(), [
 						'url' => Url::to('/express/upload/image'),
 						'clientOptions' => ['maxNumberOfFiles' => 1] ]) ?>
@@ -94,12 +111,16 @@ foreach ($districts as $district) {
 			    	<?= $form->field($model, 'commercial_leasing_area')->textArea() ?>
 			    	<?= $form->field($model, 'apartment_no') ?>
 			    	<?= $form->field($model, 'floor_no') ?>
+			    	<?= $form->field($model, 'facade_width')->input('number') ?>
+			    	<?= $form->field($model, 'lift')->input('number') ?>
+			    	<?= $form->field($model, 'start_date')->widget(\yii\jui\DatePicker::className(), ['options' => ['class' => 'form-control']]) ?>
 			    	<?= $form->field($model, 'start_time') ?>
 			    	<?= $form->field($model, 'estimate_finished') ?>
 			    	<?= $form->field($model, 'owner_type') ?>
-			    	<?= $form->field($model, 'facilities') ?>
+			    	<?= $form->field($model, 'facilities')->checkboxList(ArrayHelper::map($facility, 'id', 'name')) ?>
 			    	<?= $form->field($model, 'hotline')->textArea()->hint('Mổi số điện thoại trên 1 dòng') ?>
 			    	<?= $form->field($model, 'website') ?>
+			    	<?= $form->field($model, 'hot_project')->checkbox() ?>
 	    		</li>
 	    		<li>
 	    			<?= $form->field($model, 'location_detail')->widget(CKEditor::className(), [
@@ -239,6 +260,6 @@ foreach ($districts as $district) {
     </div>
     <?php ActiveForm::end(); ?>
 </div>
-<?php 
+<?php
 	$this->registerJs('buildingProject.customColorbox($(".map-area >.files >li >.preview >a"), false);', View::POS_READY, 'colorboxMapArea');
 ?>

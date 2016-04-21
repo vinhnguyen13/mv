@@ -15,9 +15,7 @@ class AdBuildingProjectSearch extends AdBuildingProject {
 	public function search($params)
 	{
 		$query = AdBuildingProject::find();
-	
-		$query->orderBy(['created_at' => SORT_DESC]);
-		
+
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query,
 		]);
@@ -27,11 +25,12 @@ class AdBuildingProjectSearch extends AdBuildingProject {
 		}
 	
 		$query->andFilterWhere([
-			'id' => $this->id
+			'click' => $this->click,
 		]);
 	
 		$query->andFilterWhere(['like', 'name', $this->name]);
-	
+//        $query->orderBy(['created_at' => SORT_DESC]);
+
 		return $dataProvider;
 	}
 }

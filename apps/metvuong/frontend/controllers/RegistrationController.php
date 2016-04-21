@@ -31,7 +31,7 @@ use yii\web\NotFoundHttpException;
  */
 class RegistrationController extends Controller
 {
-    public $layout = '@app/views/layouts/news';
+    public $layout = '@app/views/layouts/layout';
     use AjaxValidationTrait;
 
     /** @var Finder */
@@ -111,19 +111,22 @@ class RegistrationController extends Controller
         }
 
         /** @var User $user */
+        $profileAttributes = [];
         if(!empty($account->provider)){
             switch($account->provider){
                 case 'google':
                     if(($data = json_decode($account->data)) !== false){
                         if(!empty($data->emails[0]->value)){
-                            $account->email = $data->emails[0]->value;
+                            $profileAttributes['name'] = $data->displayName;
+                            $profileAttributes['public_email'] = $account->email = $data->emails[0]->value;
                         }
                     }
                     break;
                 case 'facebook':
                     if(($data = json_decode($account->data)) !== false){
                         if(!empty($data->email)){
-                            $account->email = $data->email;
+                            $profileAttributes['name'] = $data->name;
+                            $profileAttributes['public_email'] = $account->email = $data->email;
                         }
                     }
                     break;
@@ -139,11 +142,13 @@ class RegistrationController extends Controller
         $user->validate();
         if (!$user->hasErrors()) {
             $user->create();
+            !empty($profileAttributes) ? $user->profile->updateAttributes($profileAttributes) : false;
         }else{
             $user = User::findOne(['email'=>$account->email]);
         }
         if(!empty($user)){
             $account->connect($user);
+            $account->update();
             Yii::$app->user->login($user, $this->module->rememberFor);
         }
         return $this->goBack();

@@ -3,6 +3,7 @@ namespace backend\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 use yii\web\Controller;
 use common\models\LoginForm;
 use yii\filters\VerbFilter;
@@ -26,7 +27,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index', 'clear-cache'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -79,5 +80,14 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    public function actionClearCache(){
+        Yii::$app->session->setFlash(
+            'info',
+            Yii::t('user', 'Your account has been created and a message with further instructions has been sent to your email')
+        );
+        Yii::$app->cache->flush();
+        $this->redirect(Url::home());
     }
 }

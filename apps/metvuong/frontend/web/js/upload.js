@@ -16,7 +16,6 @@ var customFileUpload = {
 	},
 	fileuploaddone: function(event, data, ins) {
 		var input = $('#' + event.target.id.replace(/\-fileupload$/, '')).prev();
-		
 		var val = input.val();
 		var filesName = val ? val.split(',') : [];
 		
@@ -26,6 +25,15 @@ var customFileUpload = {
 		if($(ins).data('callback')) {
 			eval($(ins).data('callback') + '("done", event, data, ins)');
 		}
+	},
+	fileuploadcompleted: function(event, data, ins) {
+		var input = $('#' + event.target.id.replace(/\-fileupload$/, '')).prev();
+		
+		var values = [];
+		$(ins).find('> .files > li').each(function(){
+			values.push($(this).find('.preview a').attr('title'));
+		});
+		input.val(values.join(','));
 	},
 	fileuploaddestroy: function(event, data, ins) {
 		if(data.context.data('delete-later')) {

@@ -2,7 +2,9 @@
 namespace console\controllers;
 
 use console\models\Batdongsan;
+use console\models\BatdongsanV2;
 use console\models\Homefinder;
+use console\models\Muaban_net;
 use yii\console\Controller;
 
 /**
@@ -24,22 +26,76 @@ class CrawlerController extends Controller
         echo "cron service runnning";
     }
 
+    // Homefinder
     public function actionHomefinder()
     {
         Homefinder::find()->parse();
     }
-
     public function actionImporthomefinder()
     {
         Homefinder::find()->importData_2();
     }
 
+    // Sale Batdongsan
     public function actionBatdongsan()
     {
-        Batdongsan::find()->parse();
+        BatdongsanV2::find()->parse();
     }
     public function actionImportbatdongsan()
     {
-        Batdongsan::find()->importData();
+        BatdongsanV2::find()->importData(1);
     }
+    public function actionImportbatdongsan2()
+    {
+        BatdongsanV2::find()->importDataForTool(1);
+    }
+    public function actionUpdatebatdongsan()
+    {
+        BatdongsanV2::find()->updateData();
+    }
+    // Agent Batdongsan
+    public function actionAgentbatdongsan()
+    {
+        BatdongsanV2::find()->getAgents();
+    }
+    public function actionImportagentbds()
+    {
+        BatdongsanV2::find()->importAgent();
+    }
+    // Rent Batdongsan
+    public function actionRentbatdongsan()
+    {
+        BatdongsanV2::find()->parseRent();
+    }
+
+    public function actionImportrentbds()
+    {
+        BatdongsanV2::find()->importDataForTool(2);
+    }
+
+    // Get Projects
+    public function actionProjectbds(){
+        BatdongsanV2::find()->getProjects();
+    }
+    public function actionImportprojectbds(){
+        BatdongsanV2::find()->importProjects();
+    }
+    public function actionUpdateProjectPrimary(){
+        BatdongsanV2::find()->updateProjects();
+    }
+
+    // Get Contractor
+    public function actionContractorbds(){
+        BatdongsanV2::find()->getContractors();
+    }
+    public function actionImportcontractorbds(){
+//        BatdongsanV2::find()->importProjects();
+    }
+
+    // Muaban.net
+    public function actionMuaban()
+    {
+        Muaban_net::find()->parse();
+    }
+
 }

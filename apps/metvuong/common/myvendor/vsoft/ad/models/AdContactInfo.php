@@ -2,8 +2,10 @@
 
 namespace vsoft\ad\models;
 
+use dektrium\user\helpers\Password;
+use frontend\models\User;
 use Yii;
-use vsoft\ad\models\base\AdContactInfoBase;
+use common\models\AdContactInfo as ACI;
 
 /**
  * This is the model class for table "ad_contact_info".
@@ -17,7 +19,7 @@ use vsoft\ad\models\base\AdContactInfoBase;
  *
  * @property AdProduct $product
  */
-class AdContactInfo extends AdContactInfoBase
+class AdContactInfo extends ACI
 {
 
 	public function rules()
@@ -33,6 +35,23 @@ class AdContactInfo extends AdContactInfoBase
 		];
 	}
 	
+	public function attributeLabels()
+	{
+		return [
+			'product_id' => 'Product ID',
+			'name' => Yii::t('ad', 'Name'),
+			'address' => Yii::t('ad', 'Address'),
+			'phone' => Yii::t('ad', 'Phone'),
+			'mobile' => Yii::t('ad', 'Mobile'),
+			'email' => Yii::t('ad', 'Email'),
+		];
+	}
+
+	public function getProduct()
+	{
+		return $this->hasOne(AdProduct::className(), ['id' => 'product_id']);
+	}
+
 	public function loadDefaultValues($skipIfSet = true) {
 		if(!Yii::$app->user->isGuest) {
 			$this->name = Yii::$app->user->identity->profile->name;
@@ -40,5 +59,43 @@ class AdContactInfo extends AdContactInfoBase
 		}
 		
 		return parent::loadDefaultValues($skipIfSet);
+	}
+
+	/**
+	 * get Url
+	 */
+	public function getUrl() {
+
+	}
+	/**
+	 * Auto register user for agent
+	 */
+	public function getUserInfo() {
+		if(empty(Yii::$app->setting->get('generateAccount'))){
+			return false;
+		}
+		if(($user = User::findOne(['email'=>$this->email])) != null) {
+			return $user;
+		}else{
+			$user = Yii::createObject(User::className());
+			$user->setScenario('register');
+			$user->email = $this->email;
+			$user->password = Password::generate(8);
+			if(empty($user->username)){
+				$user->username = $user->generateUsername();
+			}
+			$user->setAttributes($this->attributes);
+			$user->validate();
+			if (!$user->hasErrors()) {
+				$user->register();
+				if(!empty($user->id)){
+					$this->product->user_id = $user->id;
+					$this->product->save();
+					return $user;
+				}
+			}else{
+				return $user->errors;
+			}
+		}
 	}
 }

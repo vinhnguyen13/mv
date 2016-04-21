@@ -56,7 +56,7 @@ class ToolController extends Controller
 
     public function actionChart()
     {
-        $filePath = Yii::$app->view->theme->basePath . '/resources/chart/data.json';
+        $filePath = Yii::getAlias('@store') . '/chart/data.json';
         $fileContent = $this->readFile($filePath);
         return $this->render('chart', [
             'data'=>$fileContent
@@ -66,7 +66,7 @@ class ToolController extends Controller
     public function actionGetChart()
     {
         if(Yii::$app->request->isAjax){
-            $filePath = Yii::$app->view->theme->basePath . '/resources/chart/data.json';
+            $filePath = Yii::getAlias('@store') . '/chart/data.json';
             $fileContent = $this->readFile($filePath);
             $fileContent = Json::decode($fileContent, true);
             return $this->renderAjax('_partials/chart_view', [
@@ -88,7 +88,7 @@ class ToolController extends Controller
             $this->_session = Yii::$app->session;
             $this->_session->set($step, filter_var($app->request->post('total_project_cost'), FILTER_SANITIZE_NUMBER_INT));
 
-            $pathData = Yii::$app->view->theme->basePath.'\\resources\\chart\\';
+            $pathData = Yii::getAlias('@store').'/chart/';
 
             $data_file = 'data.json';
             if($step == 'scenario_1' || $step == "calculation_1"){

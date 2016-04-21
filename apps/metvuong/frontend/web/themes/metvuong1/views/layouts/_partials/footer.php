@@ -1,4 +1,4 @@
-<footer class="clearfix">
+<!-- <footer class="clearfix">
     <div class="pull-left copyright">
         <p><span>&copy;</span>2015. Bản quyền thuộc về Công ty Metvuong</p>
     </div>
@@ -15,5 +15,5 @@
             </li>
         </ul>
     </div>
-</footer>
+</footer> -->
 <?php $this->beginContent('@app/views/layouts/_partials/popup.php'); ?><?php $this->endContent();?>

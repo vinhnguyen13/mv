@@ -51,6 +51,9 @@ class CmsCatalogController extends \funson86\cms\controllers\backend\CmsCatalogC
 
         $searchModel = new CmsCatalogSearch();
         $dataProvider = CmsCatalog::get(Yii::$app->params['newsCatID'], CmsCatalog::find()->asArray()->all());
+        $homeProvider = CmsCatalog::get(0, CmsCatalog::find()->where('id = :cat_id', [':cat_id' => Yii::$app->params['homepageCatID']])->asArray()->all());
+        if(!empty($homeProvider))
+            $dataProvider = array_merge($homeProvider,$dataProvider);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

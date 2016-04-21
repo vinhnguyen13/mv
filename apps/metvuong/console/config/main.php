@@ -12,6 +12,7 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'console\controllers',
     'aliases' => array(
+        '@store' => dirname(dirname(__DIR__)) . '/store',
         '@dektrium/user' => dirname(dirname(dirname(dirname(__DIR__)))) . '/myvendor/dektrium/yii2-user',
         '@vendor' => dirname(dirname(dirname(dirname(__DIR__)))) . '/myvendor',
         '@common' => dirname(dirname(__DIR__)) . '/common',

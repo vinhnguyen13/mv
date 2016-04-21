@@ -57,6 +57,9 @@ return [
         'ad' => [
             'class' => 'vsoft\ad\Module',
         ],
+        'craw' => [
+            'class' => 'vsoft\craw\Module',
+        ],
         'express' => [
             'class' => 'vsoft\express\Module',
         ],
@@ -67,7 +70,8 @@ return [
         'translatemanager' => [
             'class' => 'lajax\translatemanager\Module',
             'tmpDir' => '@frontend/runtime',
-            'roles' => ['@']
+            'roles' => ['@'],
+            'allowedIPs' => ['*'] /**deploy not allow `*`**/
         ],
     ],
     'components' => [

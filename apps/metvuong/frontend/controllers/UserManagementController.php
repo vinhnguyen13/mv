@@ -16,7 +16,9 @@ use frontend\components\Controller;
 
 class UserManagementController extends Controller
 {
-    public $layout = '@app/views/user-management/layouts/main';
+//    public $layout = '@app/views/user-management/layouts/main';
+
+    public $layout = '@app/views/layouts/layout';
 
     public function beforeAction($action)
     {
@@ -97,11 +99,9 @@ class UserManagementController extends Controller
             'scenario' => 'updateprofile',
         ]);
 
-        $model = $model->loadProfile();
-        if($model->avatar) {
-            $model->avatar  = Url::to('/store/avatar/' . $model->avatar);
-        } else {
-            $model->avatar  = Url::to('/store/avatar/default-avatar.jpg');
+        $model = $model->loadProfile(Yii::$app->user->username);
+        if(!$model->avatar) {
+            $model->avatar  = 'default-avatar.jpg';
         }
 
         if(Yii::$app->request->isAjax) {
@@ -111,6 +111,46 @@ class UserManagementController extends Controller
                 $model->load($post);
                 $model->validate();
                 if (!$model->hasErrors()) {
+                    $res = $model->updateProfile();
+                    return ['statusCode'=>true];
+                }else{
+                    return ['statusCode'=> false, 'parameters' => $model->errors];
+                }
+            }
+            return $this->renderAjax('user/profile', [
+                'model' => $model
+            ]);
+        }
+        return $this->render('user/profile', [
+            'model' => $model
+        ]);
+    }
+
+    public function actionProfileMobile()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = Yii::createObject([
+            'class'    => ProfileForm::className(),
+            'scenario' => 'updateprofile',
+        ]);
+
+        $model = $model->loadProfile(Yii::$app->user->username);
+        if(!$model->avatar) {
+            $model->avatar  = 'default-avatar.jpg';
+        }
+
+        if(Yii::$app->request->isAjax) {
+            if(Yii::$app->request->isPost){
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                $post = Yii::$app->request->post();
+                $model->load($post);
+                $model->validate();
+                if (!$model->hasErrors()) {
+                    if($post["type"])
+                        $model->$post["type"] = strip_tags(html_entity_decode($post["txt"]));
                     $res = $model->updateProfile();
                     return ['statusCode'=>true];
                 }else{
@@ -161,7 +201,7 @@ class UserManagementController extends Controller
     }
 
 
-    public function actionAvatar($folder = 'building-project-images', $resizeForAds = false) {
+    public function actionAvatar($folder = 'avatar', $resizeForAds = false) {
         $model = Yii::createObject([
             'class' => ProfileForm::className(),
             'scenario' => 'updateavatar',
@@ -188,8 +228,8 @@ class UserManagementController extends Controller
             $imageHelper->makeThumb(false, $thumbnailPath);
 
             $response['files'][] = [
-                'url'           => Url::to("/store/$folder/". $orginal),
-                'thumbnailUrl'  => Url::to("/store/$folder/" . $thumbnail),
+                'url'           => Url::to("/store/$folder/" .$orginal),
+                'thumbnailUrl'  => Url::to("/store/$folder/" .$thumbnail),
                 'name'          => $orginal,
                 'type'          => $image->type,
                 'size'          => $image->size,
@@ -200,26 +240,28 @@ class UserManagementController extends Controller
             $model->updateAvatar($orginal);
             return $response;
         }
+        return $response['files'] = array();
     }
 
-    public function actionDeleteImage($orginal, $thumbnail, $deleteLater = false, $folder = 'building-project-images', $resizeForAds = false) {
+    public function actionDeleteImage($orginal, $thumbnail, $deleteLater = false, $folder = 'avatar') {
         Yii::$app->response->format = Response::FORMAT_JSON;
-        if(! $deleteLater) {
+        if(!$deleteLater) {
             $dir = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $folder;
-            unlink($dir . DIRECTORY_SEPARATOR . $orginal);
-            if(unlink($dir . DIRECTORY_SEPARATOR . $thumbnail) && $thumbnail != "default-avatar.thumb.jpg")
+            if($orginal != "default-avatar.jpg" && $thumbnail != "default-avatar.thumb.jpg")
             {
+                if(file_exists($dir . DIRECTORY_SEPARATOR . $orginal))
+                    unlink($dir . DIRECTORY_SEPARATOR . $orginal);
+                if(file_exists($dir . DIRECTORY_SEPARATOR . $thumbnail))
+                    unlink($dir . DIRECTORY_SEPARATOR . $thumbnail);
                 $model = Yii::createObject([
                     'class' => ProfileForm::className(),
                     'scenario' => 'updateavatar',
                 ]);
 
-                $model->updateAvatar(null);
+                return $model->updateAvatar(null);
             }
-
         }
-
-        return ['files' => []];
+        return false;
     }
 
 }

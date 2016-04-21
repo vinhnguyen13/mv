@@ -7,9 +7,11 @@
  */
 
 namespace frontend\models;
+use vsoft\ad\models\AdImages;
 use vsoft\ad\models\AdProduct;
 use vsoft\ad\models\AdProductRating;
 use vsoft\ad\models\AdProductSaved;
+use frontend\models\UserActivity;
 use Yii;
 use yii\base\Component;
 use yii\helpers\ArrayHelper;
@@ -103,13 +105,23 @@ class Ad extends Component
                     $adSaved = new AdProductSaved();
                     $adSaved->product_id = $post['id'];
                     $adSaved->user_id = Yii::$app->user->id;
+                    $adSaved->saved_at = time();
+                }else{
+                    $adSaved->saved_at = !empty($post['stt']) ? time() : 0;
                 }
-                $adSaved->saved_at = !empty($post['stt']) ? time() : 0;
                 $adSaved->validate();
                 if(!$adSaved->hasErrors()){
                     $adSaved->save();
+                    if(Yii::$app->user->id != $adSaved->product->user_id) {
+                        UserActivity::me()->saveActivity(UserActivity::ACTION_AD_FAVORITE, [
+                            'owner' => Yii::$app->user->id,
+                            'product' => $adSaved->product_id,
+                            'buddy' => $adSaved->product->user_id,
+                            'saved_at' => $adSaved->saved_at,
+                        ], $adSaved->product_id);
+                    }
                 }
-                return ['statusCode'=>200, 'parameters'=>['msg'=>'']];
+                return ['statusCode'=>200, 'parameters'=>['msg'=>Yii::$app->session->getFlash('notify_other')]];
             }
         }
         return ['statusCode'=>404, 'parameters'=>['msg'=>'']];
@@ -117,9 +129,14 @@ class Ad extends Component
 
     public function report(){
         $this->checkLogin();
-        if(Yii::$app->request->isPost && Yii::$app->request->isAjax) {
-
+        if(Yii::$app->request->isPost && Yii::$app->request->isAjax){
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $post = Yii::$app->request->post();
+            if(!empty($post['user_id'])){
+                return ['statusCode'=>200, 'parameters'=>['msg'=>'']];
+            }
         }
+        return ['statusCode'=>404, 'parameters'=>['msg'=>'user is not found']];
     }
 
     public function rating(){
@@ -151,5 +168,15 @@ class Ad extends Component
             }
             return ['statusCode'=>404, 'parameters'=>['msg'=>'Missing data']];
         }
+    }
+
+    public function homePageRandom(){
+        $query = AdProduct::find();
+//        $where = ['ad_product.status' => 1];
+        $query->leftJoin('ad_product_addition_info', '`ad_product_addition_info`.`product_id` = `ad_product`.`id`');
+        $query->with('adProductAdditionInfo');
+        $query->innerJoin(AdImages::tableName(), "ad_product.id = ad_images.product_id");
+        $products = $query->limit(6)->orderBy("RAND()")->all();
+        return $products;
     }
 }

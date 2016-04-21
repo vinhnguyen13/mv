@@ -5,7 +5,7 @@ use yii\helpers\Url;
 
 $this->title = Yii::t('express','We offer exeptional amenities and renowned white - glove services');
 ?>
-<?php $this->beginContent('@app/views/layouts/_partials/js/jsContainer.php', ['options'=>[]]); ?><?php $this->endContent();?>
+<?php $this->beginContent('@app/views/layouts/_partials/head/container.php', ['options'=>[]]); ?><?php $this->endContent();?>
 <script>
     $(document).ready(function(){
         $(document).bind( 'submit_search', function(event, json, string, callback){
@@ -227,7 +227,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                             <?php ActiveForm::end(); ?>
                             <div class="pull-left text-right mgT-10">
                                 <div data-active="1" data-tab="mua-thue" class="search-select active" data-step='step1'>
-                                    <a href="#" title="Muốn Mua/Thuê">
+                                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="Tìm kiếm bất động sản cần <span>Mua</span> hoặc <span>Thuê</span>">
                                         <span>
                                             <em class="fa fa-home"></em>
                                             <em class="fa fa-search"></em>
@@ -236,7 +236,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     </a>
                                 </div>
                                 <div data-active="2" data-tab="ban-thue" class="search-select" data-step='step2'>
-                                    <a href="#" title="Đăng ký Bán/Thuê">
+                                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="Rao tin bất động sản cần <span>Bán</span> hoặc <span>Cho Thuê</span>">
                                         <span>
                                             <em class="fa fa-home"></em>
                                             <em class="fa fa-pencil-square-o"></em>
@@ -245,7 +245,7 @@ $this->title = Yii::t('express','We offer exeptional amenities and renowned whit
                                     </a>
                                 </div>
                                 <div data-active="3" data-tab="tin-tuc"  class="search-select" data-step='step3'>
-                                    <a href="#" title="Tin Tức">
+                                    <a href="#" data-toggle="tooltip" data-placement="bottom" title="<span>Tin tức</span> và <span>dự án</span> bất động sản">
                                         <span>
                                             <em class="fa fa-home"></em>
                                             <em class="fa fa-file-text"></em>

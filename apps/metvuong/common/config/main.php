@@ -9,11 +9,15 @@ return [
         '@vsoft/buildingProject' => dirname(__DIR__) . '/myvendor/vsoft/building-project',
         '@vsoft/express' => dirname(__DIR__) . '/myvendor/vsoft/express',
         '@vsoft/user' => dirname(__DIR__) . '/myvendor/vsoft/user',
+        '@vsoft/tracking' => dirname(__DIR__) . '/myvendor/vsoft/tracking',
+        '@vsoft/chat' => dirname(__DIR__) . '/myvendor/vsoft/chat',
         '@vsoft/ad' => dirname(__DIR__) . '/myvendor/vsoft/ad',
+        '@vsoft/craw' => dirname(__DIR__) . '/myvendor/vsoft/craw',
         '@funson86' => dirname(__DIR__) . '/myvendor/funson86',
         '@funson86/cms' => dirname(__DIR__) . '/myvendor/funson86/yii2-cms',
         '@funson86/setting' => dirname(__DIR__) . '/myvendor/funson86/yii2-setting',
         '@linslin/yii2/curl' => dirname(__DIR__) . '/myvendor/linslin/yii2-curl',
+        '@dkeeper/mobiledetect' => dirname(__DIR__) . '/myvendor/dkeeper/yii2-mobiledetect-master',
     ),
     'modules' => [
         'express' => [
@@ -33,9 +37,6 @@ return [
             'enableCookieValidation' => true,
             'enableCsrfValidation' => true,
             'cookieValidationKey' => '6zRXJTEnacve8RrgN6K5eoXf0JI0AwFs',
-        ],
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
         ],
         'session' => [
             'class' => 'yii\web\DbSession',

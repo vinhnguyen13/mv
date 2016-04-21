@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 //fix the issue that it can assign itself as parent
 //$parentCatalog = ArrayHelper::merge([0 => Module::t('blog', 'Root Catalog')], ArrayHelper::map(CmsCatalog::get(0, CmsCatalog::find()->asArray()->all()), 'id', 'label'));
 // get List Catalog of News
-$parentCatalog = ArrayHelper::merge([2 => 'News'], ArrayHelper::map(CmsCatalog::get(Yii::$app->params['newsCatID'], CmsCatalog::find()->asArray()->all()), 'id', 'label'));
+$parentCatalog = ArrayHelper::merge([20 => 'Homepage', 2 => 'News'], ArrayHelper::map(CmsCatalog::get(Yii::$app->params['newsCatID'], CmsCatalog::find()->asArray()->all()), 'id', 'label'));
 unset($parentCatalog[$model->id]);
 
 ?>
@@ -29,7 +29,9 @@ unset($parentCatalog[$model->id]);
         ],
     ]); ?>
 
-    <?= $form->field($model, 'parent_id')->dropDownList($parentCatalog) ?>
+    <?= $form->field($model, 'parent_id')->dropDownList($parentCatalog, [
+        'options' => [2 => ['Selected' => true]]
+    ]) ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => 255]) ?>
 

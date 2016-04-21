@@ -3,7 +3,7 @@
 namespace vsoft\ad\models;
 
 use Yii;
-use vsoft\ad\models\base\AdProductAdditionInfoBase;
+use common\models\AdProductAdditionInfo as APAI;
 
 /**
  * This is the model class for table "ad_product_addition_info".
@@ -20,11 +20,12 @@ use vsoft\ad\models\base\AdProductAdditionInfoBase;
  *
  * @property AdProduct $product
  */
-class AdProductAdditionInfo extends \vsoft\ad\models\base\AdProductAdditionInfoBase
+class AdProductAdditionInfo extends APAI
 {
 	public function rules()
     {
         return [
+        	['facility', 'safe'],
             [['product_id', 'home_direction', 'facade_direction', 'floor_no', 'room_no', 'toilet_no'], 'integer'],
             [['facade_width', 'land_width'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/'],
             [['interior'], 'string', 'max' => 3200],
@@ -36,32 +37,45 @@ class AdProductAdditionInfo extends \vsoft\ad\models\base\AdProductAdditionInfoB
     {
         return [
             'product_id' => 'Product ID',
-            'facade_width' => 'Facade Width',
-            'land_width' => 'Land Width',
-            'home_direction' => 'Home Direction',
-            'facade_direction' => 'Facade Direction',
-            'floor_no' => 'Floor No',
-            'room_no' => 'Room No',
-            'toilet_no' => 'Toilet No',
-            'interior' => 'Nội thất',
+            'facade_width' => Yii::t('ad', 'Facade'),
+            'land_width' => Yii::t('ad', 'Entry width'),
+            'home_direction' => Yii::t('ad', 'House direction'),
+            'facade_direction' => Yii::t('ad', 'Balcony direction'),
+            'floor_no' => Yii::t('ad', 'Number of storeys'),
+            'room_no' => Yii::t('ad', 'Beds'),
+            'toilet_no' => Yii::t('ad', 'Baths'),
+            'interior' => Yii::t('ad', 'Furniture'),
         ];
     }
     
     public static function directionList() {
     	return [
-			0 => 'KXĐ',
-			1 => 'Đông',
-			2 => 'Tây',
-			3 => 'Nam',
-			4 => 'Bắc',
-			5 => 'Đông-Bắc',
-			6 => 'Tây-Bắc',
-			7 => 'Đông-Nam',
-			8 => 'Tây-Nam'
+			0 => Yii::t('ad', 'NA'),
+			1 => Yii::t('ad', 'East'),
+			2 => Yii::t('ad', 'West'),
+			3 => Yii::t('ad', 'South'),
+			4 => Yii::t('ad', 'North'),
+			5 => Yii::t('ad', 'East-North'),
+			6 => Yii::t('ad', 'West-North'),
+			7 => Yii::t('ad', 'East-South'),
+			8 => Yii::t('ad', 'West-South')
     	];
     }
     
+    public function afterFind() {
+    	if(!empty($this->facility)) {
+    		$this->facility = explode(',', $this->facility);
+    	}
+    	
+    	return parent::afterFind();
+    }
+    
 	public function beforeSave($insert) {
+
+		if($this->facility) {
+			$this->facility = implode(',', $this->facility);
+		}
+		
 		if($this->facade_width) {
 			$this->facade_width = str_replace(',', '.', $this->facade_width);
 		}

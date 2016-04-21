@@ -3,8 +3,8 @@
 namespace vsoft\ad\models;
 
 use Yii;
-use vsoft\ad\models\base\AdCategoryBase;
 use yii\data\ActiveDataProvider;
+use common\models\AdCategory as AC;
 
 /**
  * This is the model class for table "ad_category".
@@ -16,7 +16,7 @@ use yii\data\ActiveDataProvider;
  *
  * @property AdProduct[] $adProducts
  */
-class AdCategory extends AdCategoryBase
+class AdCategory extends AC
 {
 	const TEMPLATE_SUGGEST_LIST = 1;
 	const TEMPLATE_COST_MIN_MAX = 2;
@@ -24,6 +24,8 @@ class AdCategory extends AdCategoryBase
 	const APPLY_TO_TYPE_SELL = 1;
 	const APPLY_TO_TYPE_RENT = 2;
 	const APPLY_TO_TYPE_BOTH = 3;
+
+	const CATEGORY_CHCK = 6;
 	
 	public static function templateMap() {
 		return [

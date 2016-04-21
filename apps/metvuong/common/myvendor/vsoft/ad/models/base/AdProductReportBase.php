@@ -2,6 +2,8 @@
 
 namespace vsoft\ad\models\base;
 
+use frontend\models\User;
+use vsoft\ad\models\AdProduct;
 use Yii;
 
 /**

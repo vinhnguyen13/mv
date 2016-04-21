@@ -6,8 +6,8 @@ use funson86\cms\Module;
 /* @var $this yii\web\View */
 /* @var $model app\models\CmsShow */
 
-$this->title = Module::t('cms', 'Create ') . Module::t('cms', 'Cms Show');
-$this->params['breadcrumbs'][] = ['label' => Module::t('cms', 'Cms Shows'), 'url' => ['index']];
+$this->title = Module::t('cms', 'Create ') . Module::t('cms', 'Building Project');
+$this->params['breadcrumbs'][] = ['label' => Module::t('cms', 'Building Project'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cms-show-create">
@@ -18,6 +18,9 @@ $this->params['breadcrumbs'][] = $this->title;
     	'areaTypes' => $areaTypes,
     	'investors' => $investors,
     	'categories' => $categories,
+        'architects' => $architects,
+        'contractors' => $contractors,
+        'facility' => $facility
     ]) ?>
 
 </div>

@@ -3,7 +3,7 @@
 namespace vsoft\ad\models;
 
 use Yii;
-use vsoft\ad\models\base\AdInvestorBuildingProjectBase;
+use common\models\AdInvestorBuildingProject as AIBP;
 
 /**
  * This is the model class for table "ad_investor_building_project".
@@ -14,7 +14,7 @@ use vsoft\ad\models\base\AdInvestorBuildingProjectBase;
  * @property AdBuildingProject $buildingProject
  * @property AdInvestor $investor
  */
-class AdInvestorBuildingProject extends AdInvestorBuildingProjectBase
+class AdInvestorBuildingProject extends AIBP
 {
 	
 }

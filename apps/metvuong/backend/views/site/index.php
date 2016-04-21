@@ -7,7 +7,7 @@ $this->registerJsFile(Yii::getAlias('@web') . '/js/masonry.pkgd.min.js', ['depen
 
 $javascript = <<<EOD
 	var row = $('.row');
-		
+
 	row.masonry({itemSelector: '.item', columnWidth: '.sizer'});
 	$('#search').keyup(function(){
 		var key = $(this).val().toLowerCase();
@@ -32,10 +32,22 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
         	<div class="col-lg-3 sizer"></div>
             <div class="col-lg-3 item">
             	<div class="panel panel-primary">
+			      <div class="panel-heading">Quản lý tin CRAW</div>
+			      <div class="panel-body">
+			      	<ol class="list-unstyled">
+	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['craw/manager/'])?>">Quản lý tin CRAW</a></li>
+	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['craw/agent/'])?>">Quản lý môi giới</a></li>
+	                </ol>
+			      </div>
+			    </div>
+            </div>
+            <div class="col-lg-3 item">
+            	<div class="panel panel-primary">
 			      <div class="panel-heading">Quản lý tin đăng</div>
 			      <div class="panel-body">
 			      	<ol class="list-unstyled">
 	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['ad/category/'])?>">Phân loại tin đăng</a></li>
+	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['ad/report/'])?>">Báo cáo tin đăng</a></li>
 	                </ol>
 			      </div>
 			    </div>
@@ -47,6 +59,9 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
 			      	<ol class="list-unstyled">
 	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['ad/building-project/'])?>">Dự án</a></li>
 	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['ad/investor/'])?>">Chủ đầu tư</a></li>
+	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['ad/architect/'])?>">Danh sách kiến trúc sư</a></li>
+	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['ad/contractor/'])?>">Nhà thầu thi công</a></li>
+	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['ad/facility/'])?>">Tiện ích</a></li>
 	                </ol>
 			      </div>
 			    </div>
@@ -87,7 +102,8 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
 				</div>
 			</div>
 			<?php
-			if (Yii::$app->user->can('accessSystems')) {
+			$permissionName = !empty(Yii::$app->setting->get('aclAdmin')) ? Yii::$app->setting->get('aclAdmin') : 'Admin';
+			if (Yii::$app->user->can($permissionName)) {
 				?>
 				<div class="col-lg-3 item">
 					<div class="panel panel-primary">

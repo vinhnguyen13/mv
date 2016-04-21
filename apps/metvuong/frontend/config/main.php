@@ -6,7 +6,7 @@ $params = array_merge(
     require(__DIR__ . '/params-local.php')
 );
 $baseUrl = str_replace('/frontend/web', '', (new \yii\web\Request())->getBaseUrl());
-return [
+$return =  [
     'id' => 'app-frontend',
     'name'=>'MetVuong',
     'language'=>'vi-VN',
@@ -14,8 +14,8 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => [
         'log',
-        'languageSelector' => [
-            'class' => 'frontend\components\LanguageSelector',
+        'MVBootstrap' => [
+            'class' => 'frontend\components\MVBootstrap',
             'supportedLanguages' => ['en-US', 'vi-VN'],
         ],
     ],
@@ -37,12 +37,23 @@ return [
                 'security' => 'frontend\controllers\SecurityController',
                 'registration' => 'frontend\controllers\RegistrationController',
             ],
+            'urlRules' => [
+//                '<id:\d+>'                               => 'profile/show',
+//                '<action:(login|logout)>'                => 'security/<action>',
+//                '<action:(register|resend)>'             => 'registration/<action>',
+//                'confirm/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'registration/confirm',
+//                'forgot'                                 => 'recovery/request',
+//                'recover/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'recovery/reset',
+//                'settings/<action:\w+>'                  => 'settings/<action>'
+            ]
         ],
     ],
     'components' => [
         'user' => [
             'identityClass' => 'frontend\models\User',
             'enableAutoLogin' => true,
+            'on afterLogin' => ['frontend\components\Login', 'handleAfterLogin'],
+            'loginUrl' => ['member/login'],
         ],
         'request' => [
             'baseUrl' => $baseUrl,
@@ -61,11 +72,11 @@ return [
         ],
         'view' => [
             'theme' => [
-                'basePath' => '@webroot/themes/metvuong1',
-                'baseUrl' => '/frontend/web/themes/metvuong1',
+                'basePath' => '@webroot/themes/mv_desktop1',
+                'baseUrl' => '/frontend/web/themes/mv_desktop1',
                 'pathMap' => [
-                    '@app/views' => '@webroot/themes/metvuong1/views',
-                    '@dektrium/user/views' => '@webroot/themes/metvuong1/views',
+                    '@app/views' => '@webroot/themes/mv_desktop1/views',
+                    '@dektrium/user/views' => '@webroot/themes/mv_desktop1/views',
                 ],
             ],
         ],
@@ -75,14 +86,31 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-//                'site/login' => 'user/security/login',
-//                'site/signup' => 'user/registration/register',
-                '<cat_id:\d+>-<cat_slug>/<id:\d+>-<slug>' => 'news/view',
-                '<cat_id:\d+>-<slug>' => 'news/list',
-                'building/<slug>' => 'building-project/view',
+                '/' => 'site/index',
+                'news' => 'news/index',
+                'news/<cat_id:\d+>-<cat_slug>' => 'news/list',
+                'news/view/<id:\d+>-<slug>' => 'news/view',
+                'du-an' => 'building-project/index',
+                'du-an/<slug>' => 'building-project/view',
                 'real-estate/result' => 'ad/index',
                 'real-estate/redirect' => 'ad/redirect',
                 'real-estate/post' => 'ad/post',
+                'real-estate/post-listing' => 'ad/post-listing',
+                'real-estate/detail/<id:\d+>-<slug>' => 'ad/detail',
+                'real-estate/update/<id:\d+>' => 'ad/update',
+                'member/<usrn>/avatar' => 'member/avatar',
+                'chat/with/<username>' => 'chat/with',
+                '<username>' => 'member/profile',
+                '<username>/update' => 'member/update-profile',
+                '<username>/notification' => 'notification/index',
+                '<username>/notification/update' => 'notification/update',
+                '<username>/ad' => 'dashboard/ad',
+                '<username>/chat' => 'chat/index',
+                'pricing/package' => 'payment/package',
+
+                'mvuser/protect/<action>' => 'user/security/<action>',
+                'mvuser/join/<action>' => 'user/registration/<action>',
+                'mvuser/forgot/<action>' => 'user/recovery/<action>',
 //                '<controller:\w+>/<id:\d+>' => '<controller>/view',
 //                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
 //                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
@@ -118,19 +146,19 @@ return [
         ],*/
         'i18n' => [
             'translations' => [
-                'user*' => [
+                '*' => [
                     'class' => 'yii\i18n\DbMessageSource',
                     'db' => 'db',
-                    'sourceLanguage' => 'en-US',
+                    'sourceLanguage' => 'en', /** with this language, is not translate **/
                     'sourceMessageTable' => '{{%language_source}}',
                     'messageTable' => '{{%language_translate}}',
                     'cachingDuration' => 86400,
                     'enableCaching' => false,
                 ],
-                '*' => [
+                'user*' => [
                     'class' => 'yii\i18n\DbMessageSource',
                     'db' => 'db',
-                    'sourceLanguage' => 'en-US',
+                    'sourceLanguage' => 'en', /** with this language, is not translate **/
                     'sourceMessageTable' => '{{%language_source}}',
                     'messageTable' => '{{%language_translate}}',
                     'cachingDuration' => 86400,
@@ -142,6 +170,12 @@ return [
             'class' => 'frontend\components\MetaExt',
         ],
         'assetManager' => [
+            /*
+             * add timestamp after file
+             */
+            'appendTimestamp' => true,
+        ],
+        /*'assetManager' => [
             'bundles' => [
                 'yii\bootstrap\BootstrapAsset' => [
                     'css' => [],
@@ -154,7 +188,53 @@ return [
                     'jsOptions' => ['position'=>\yii\web\View::POS_HEAD]
                 ],
             ],
-        ],
+        ],*/
+        'mobileDetect' => [
+//            'class' => dirname(dirname(__DIR__)) . '/common/myvendor/dkeeper/yii2-mobiledetect-master/Detect'
+            'class' => 'dkeeper\mobiledetect\Detect'
+        ]
     ],
     'params' => $params,
 ];
+
+
+$return['components']['urlManager']['rules'] = [
+    '/' => 'site/index',
+    'tin-tuc' => 'news/index',
+    'tin-tuc/<cat_id:\d+>-<cat_slug>' => 'news/list',
+    'tin-tuc/chi-tiet/<id:\d+>-<slug>' => 'news/view',
+    'du-an' => 'building-project/index',
+    'du-an/<slug>' => 'building-project/view',
+    'can-mua-<type:1>-<city_id>-<district_id>' => 'ad/index',
+    'can-thue-<type:2>-<city_id>-<district_id>' => 'ad/index',
+    'real-estate/redirect' => 'ad/redirect',
+    'dang-tin' => 'ad/post',
+    'real-estate/post-listing' => 'ad/post-listing',
+    'real-estate/detail/<id:\d+>-<slug>' => 'ad/detail',
+    'real-estate/update/<id:\d+>' => 'ad/update',
+    'member/<usrn>/avatar' => 'member/avatar',
+    'chat/with/<username>' => 'chat/with',
+    'goi-gia' => 'payment/package',
+
+    '<username>' => 'member/profile',
+    '<username>/cap-nhat' => 'member/update-profile',
+    '<username>/thong-bao' => 'notification/index',
+    '<username>/thong-bao/cap-nhat' => 'notification/update',
+    '<username>/danh-sach-tin-dang' => 'dashboard/ad',
+    '<username>/tro-chuyen' => 'chat/index',
+
+    'mvuser/protect/<action>' => 'user/security/<action>',
+    'mvuser/join/<action>' => 'user/registration/<action>',
+    'mvuser/forgot/<action>' => 'user/recovery/<action>',
+
+];
+
+//echo "<pre>";
+//print_r($_REQUEST);
+//print_r(strpos($_COOKIE['language'], 'vi-VN'));
+//print_r(PHP_EOL);
+//print_r($return['components']['urlManager']['rules']);
+//echo "</pre>";
+//exit;
+return $return;
+

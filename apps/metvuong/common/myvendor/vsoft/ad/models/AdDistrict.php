@@ -3,7 +3,7 @@
 namespace vsoft\ad\models;
 
 use Yii;
-use vsoft\ad\models\base\AdDistrictBase;
+use common\models\AdDistrict as AD;
 
 /**
  * This is the model class for table "ad_district".
@@ -20,7 +20,7 @@ use vsoft\ad\models\base\AdDistrictBase;
  * @property AdStreet[] $adStreets
  * @property AdWard[] $adWards
  */
-class AdDistrict extends AdDistrictBase
+class AdDistrict extends AD
 {
 	public function getStreets()
 	{
@@ -31,5 +31,26 @@ class AdDistrict extends AdDistrictBase
 	public function getWards()
 	{
 		return $this->hasMany(AdWard::className(), ['district_id' => 'id']);
+	}
+	
+	public static function getListByCity($cityId) {
+		$items = [];
+		
+		if($cityId) {
+			$districts = self::find()->orderBy('name')->where('`city_id` = :city_id', [':city_id' => $cityId])->all();
+
+			usort($districts, function($a, $b) {
+				return strnatcmp($a['name'], $b['name']);
+			});
+			
+			foreach($districts as $district) {
+				$items[] = [
+					'id' => $district['id'],
+					'name' => $district['pre'] ? "{$district['pre']} {$district['name']}" : $district['name']
+				];
+			}
+		}
+		
+		return $items;
 	}
 }

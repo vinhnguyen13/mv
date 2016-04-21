@@ -6,6 +6,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use funson86\cms\models\Status;
+use vsoft\news\models\CmsShow;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\filters\AccessControl;
@@ -24,13 +25,16 @@ use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use vsoft\ad\models\AdCategory;
 use vsoft\news\models\CmsCatalog;
+use yii\helpers\StringHelper;
+use frontend\models\Elastic;
+use vsoft\ad\models\AdProduct;
 
 /**
  * Site controller
  */
 class SiteController extends Controller
 {
-    public $layout = '@app/views/layouts/news';
+    public $layout = '@app/views/layouts/layout';
 
     /**
      * @inheritdoc
@@ -72,6 +76,9 @@ class SiteController extends Controller
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
+			'page' => [
+				'class' => 'yii\web\ViewAction',
+			],
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
@@ -86,9 +93,10 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $this->layout = '@app/views/layouts/main';
         Yii::$app->meta->add(Yii::$app->request->absoluteUrl);
-        return $this->render('index');
+        $homepage_news = CmsShow::getLatestNews(4);
+//        $metvuong_news = CmsShow::getShowForMetvuong();
+        return $this->render('index',['news' => $homepage_news]);
     }
 
     /**
@@ -144,6 +152,64 @@ class SiteController extends Controller
         print_r(phpinfo());
         echo "</pre>";
         exit;
+    }
+    
+    public function actionMapImage($t, $s) {
+    	if(ctype_digit($t) && $t < 100000 && $t > 1) {
+    		header('Content-Type: image/png');
+    		if(strlen($t) > 4) {
+    			$imgSrcName = ($s == 0) ? 'mc-2' : 'mch-2';
+    			$offsetX = 21; // image width / 2
+    			$offsetY = 20; // image height / 2
+    		} else if(strlen($t) > 3) {
+    			$imgSrcName = ($s == 0) ? 'mc-1' : 'mch-1';
+    			$offsetX = 16; // image width / 2
+    			$offsetY = 17; // image height / 2
+    		} else {
+    			$imgSrcName = ($s == 0) ? 'mc' : 'mch';
+    			$offsetX = 12; // image width / 2
+    			$offsetY = 13; // image height / 2
+    		}
+    		
+    		$markerImagesFolder = \Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . 'images';
+    		$markerSaveName = $markerImagesFolder . DIRECTORY_SEPARATOR . 'genarate' . DIRECTORY_SEPARATOR . $imgSrcName . '-' . $t . '.png';
+    		
+    		if(file_exists($markerSaveName)) {
+    			$im = @imagecreatefrompng($markerSaveName);
+    			imagealphablending($im, true);
+    			imagesavealpha($im, true);
+    		} else {
+    			$im = @imagecreatefrompng($markerImagesFolder . DIRECTORY_SEPARATOR . $imgSrcName . '.png');
+    			imagealphablending($im, true);
+    			imagesavealpha($im, true);
+    			
+    			$font = \Yii::getAlias('@webroot') . DIRECTORY_SEPARATOR . 'fonts' . DIRECTORY_SEPARATOR . 'MyriadPro-Regular.otf';
+    			$size = 10;
+    			$color = ($s == 0) ? imagecolorallocate($im, 0, 0, 0) : imagecolorallocate($im, 255, 255, 255);
+    			
+    			// calculate center text on image
+    			$bbox = imagettfbbox($size, 0, $font, $t);
+    			$dx = ($bbox[2]-$bbox[0])/2.0 - ($bbox[2]-$bbox[4])/2.0;
+    			$dy = ($bbox[3]-$bbox[1])/2.0 + ($bbox[7]-$bbox[1])/2.0;
+    			
+    			if(StringHelper::startsWith($t, '1')) {
+    				$recalOffsetX = $offsetX - 1;
+    			} else if(StringHelper::startsWith($t, '4')) {
+    				$recalOffsetX = $offsetX + 1;
+    			}
+    			$px = StringHelper::startsWith($t, '1') ? $recalOffsetX - $dx : $offsetX - $dx;
+    			
+    			$py = $offsetY - $dy;
+    			
+    			imagettftext($im, $size, 0, $px, $py, $color, $font, $t);
+    			
+    			imagepng($im, $markerSaveName);
+    		}
+    		
+    		imagepng($im);
+    		imagedestroy($im);
+    		exit();
+    	}
     }
     
     public function actionServiceLocationList() {
@@ -205,27 +271,100 @@ class SiteController extends Controller
     	}
     	
 
-    	$catalogs = CmsCatalog::find()->indexBy('id')->select('id, title')->where(['parent_id'=>Yii::$app->params['newsCatID'], 'status'=>Status::STATUS_ACTIVE])->asArray(true)->all();
-    	 
-    	foreach ($catalogs as $k => &$catalog) {
-    		unset($catalog['id']);
+    	$catalogs = CmsCatalog::find()->indexBy('id')->select('id, title')->where(['parent_id'=>Yii::$app->params['newsCatID'], 'status'=>Status::STATUS_ACTIVE 
+		] )->asArray ( true )->all ();
+		
+		foreach ( $catalogs as $k => &$catalog ) {
+			unset ( $catalog ['id'] );
+		}
+		
+		$news = [ 
+				1 => [ 
+						'title' => Yii::t ( 'cms', 'Tin Tức' ) 
+				],
+				2 => [ 
+						'title' => Yii::t ( 'cms', 'Dự Án' ) 
+				] 
+		];
+		
+		$content = 'var dataCities = ' . json_encode ( $cities, JSON_UNESCAPED_UNICODE ) . ';' . 'var dataCategories = ' . json_encode ( $categories, JSON_UNESCAPED_UNICODE ) . ';' . 'var newsCatalogs = ' . json_encode ( $catalogs, JSON_UNESCAPED_UNICODE ) . ';' . 'var news = ' . json_encode ( $news, JSON_UNESCAPED_UNICODE ) . ';';
+		$file = fopen ( Yii::getAlias ( '@store' ) . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . "data.js", "w" );
+		fwrite ( $file, $content );
+		fclose ( $file );
+	}
+	public function actionSearch() {
+    	$v = \Yii::$app->request->get('v');
+    	
+    	if(Yii::$app->request->isAjax) {
+    		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    		$response = [];
+    		
+    		if(StringHelper::startsWith(strtolower($v), 'mv')) {
+    			$id = str_replace('mv', '', strtolower($v));
+    			$product = AdProduct::findOne($id);
+    			
+    			if($product) {
+    				$response['address'] = $product->address;
+    				$response['url'] = $product->urlDetail();
+    			}
+    		} else {
+	    		$v = Elastic::transform($v);
+	    		 
+	    		$params = [
+					'query' => [
+						'match_phrase_prefix' => [
+							'search_field' => [
+	    						'query' => $v,
+	    						'max_expansions' => 100
+	    					]
+						],
+	    			],
+	    			'sort' => [
+	    				'total_sell' => [
+	    					'order' => 'desc',
+	    					'mode'	=> 'sum'
+						],
+	    				'total_rent' => [
+	    					'order' => 'desc',
+	    					'mode'	=> 'sum'
+						],
+					],
+	    			'_source' => ['full_name', AdProduct::TYPE_FOR_SELL_TOTAL, AdProduct::TYPE_FOR_RENT_TOTAL]
+	    		];
+	    		 
+	    		$ch = curl_init(Yii::$app->params['elastic']['config']['hosts'][0] . '/term/_search');
+	    		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+	    		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
+	    		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	    		 
+	    		$result = json_decode(curl_exec($ch), true);
+	    		 
+	    		foreach ($result['hits']['hits'] as $k => $hit) {
+	    			$response[$k] = $hit['_source'];
+	    			$response[$k]['url_sale'] = Url::to(['/ad/index', $hit['_type'] . '_id' => $hit['_id'], 'type' => AdProduct::TYPE_FOR_SELL, 's' => 1]);
+	    			$response[$k]['url_rent'] = Url::to(['/ad/index', $hit['_type'] . '_id' => $hit['_id'], 'type' => AdProduct::TYPE_FOR_RENT, 's' => 1]);
+	    		}
+	    		
+	    		if(!$response && is_numeric($v)) {
+	    			$product = AdProduct::findOne($v);
+	    			 
+	    			if($product) {
+	    				$response['address'] = $product->address;
+	    				$response['url'] = $product->urlDetail();
+	    			}
+	    		}
+    		}
+    		
+    		return $response;
+    	} else {
+    		$id = str_replace('mv', '', strtolower($v));
+    		$product = AdProduct::findOne($id);
+    		
+    		if($product) {
+    			return $this->redirect($product->urlDetail());
+    		} else {
+    			return $this->redirect(Url::to(['/ad/index']));
+    		}
     	}
-
-        $news = [
-            1=>['title'=>Yii::t('cms', 'Tin Tức')],
-            2=>['title'=>Yii::t('cms', 'Dự Án')],
-        ];
-
-		$content = 'var dataCities = ' . json_encode($cities, JSON_UNESCAPED_UNICODE) . ';' .
-					'var dataCategories = ' . json_encode($categories, JSON_UNESCAPED_UNICODE) . ';' .
-					'var newsCatalogs = ' . json_encode($catalogs, JSON_UNESCAPED_UNICODE) . ';'.
-					'var news = ' . json_encode($news, JSON_UNESCAPED_UNICODE) . ';';
-    	$file = fopen(Yii::getAlias('@store') . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . "data.js", "w");
-    	fwrite($file, $content);
-		fclose($file);
-    }
-    
-    public function actionTest() {
-    	return $this->render('test');
     }
 }

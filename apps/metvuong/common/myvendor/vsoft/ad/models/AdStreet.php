@@ -3,7 +3,7 @@
 namespace vsoft\ad\models;
 
 use Yii;
-use vsoft\ad\models\base\AdStreetBase;
+use common\models\AdStreet as ASt;
 
 /**
  * This is the model class for table "ad_street".
@@ -18,7 +18,26 @@ use vsoft\ad\models\base\AdStreetBase;
  * @property AdProduct[] $adProducts
  * @property AdDistrict $district
  */
-class AdStreet extends AdStreetBase
+class AdStreet extends ASt
 {
+	public static function getListByDistrict($districtId) {
+		$items = [];
 	
+		if($districtId) {
+			$streets = self::find()->orderBy('name')->where('`district_id` = :district_id', [':district_id' => $districtId])->all();
+	
+			usort($streets, function($a, $b) {
+				return strnatcmp($a['name'], $b['name']);
+			});
+			
+			foreach($streets as $street) {
+				$items[] = [
+					'id' => $street['id'],
+					'name' => $street['name']
+				];
+			}
+		}
+	
+		return $items;
+	}
 }

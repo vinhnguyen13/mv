@@ -21,6 +21,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Query;
+use yii\helpers\Url;
 use yii\web\Application as WebApplication;
 use yii\web\IdentityInterface;
 
@@ -119,6 +120,14 @@ class User extends \dektrium\user\models\User
     public function getProfile()
     {
         return $this->hasOne($this->module->modelMap['Profile'], ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLocation()
+    {
+        return $this->hasOne(UserLocation::className(), ['user_id' => 'id']);
     }
 
     /**
@@ -447,6 +456,13 @@ class User extends \dektrium\user\models\User
                 $this->_profile->link('user', $this);
             }
         }
+
+        if(!empty($this->profile)){
+            $attributes = [];
+            empty($this->profile->name) ? $attributes['name'] = $this->username : false;
+            empty($this->profile->public_email) ? $attributes['public_email'] = $this->email : false;
+            !empty($attributes) ? $this->profile->updateAttributes($attributes) : false;
+        }
     }
 
     /** @inheritdoc */
@@ -466,4 +482,32 @@ class User extends \dektrium\user\models\User
     {
         throw new NotSupportedException('Method "' . __CLASS__ . '::' . __METHOD__ . '" is not implemented.');
     }
+
+    /**
+     * @return bool
+     */
+    public function isMe()
+    {
+        if(!Yii::$app->user->isGuest){
+            return ($this->id == Yii::$app->user->identity->id ) ? true : false;
+        }
+        return false;
+    }
+
+    /**
+     * @return string
+     */
+    public function urlProfile()
+    {
+        return Url::to(['member/profile', 'username'=>$this->username]);
+    }
+    /**
+     * @return string
+     */
+    public function urlChat($username = null)
+    {
+        $username = !empty($username) ? $username : $this->username;
+        return Url::to(['/chat/with', 'username'=>$username]);
+    }
+
 }

@@ -1,6 +1,6 @@
 <?php
 return [
-    'adminEmail' => 'admin@example.com',
+	'listingLimit' => 24,
     'meta' => [
         'attributes' => [
             'name' => ['keywords', 'description'],

@@ -105,6 +105,17 @@ function Gmap(el, options) {
 		return map.getBounds();
 	}
 	
+	self.dragend = function(callback) {
+		map.addListener('dragend', function() {
+			callback();
+		});
+	};
+	self.dragstart = function(callback) {
+		map.addListener('dragstart', function() {
+			callback();
+		});
+	};
+	
 	mapCounter++;
 	
 	return self;
@@ -118,6 +129,10 @@ function InfoWindow(options) {
 		infoWindow.open(marker.getMap(), marker.getOriginal());
 	}
 	
+	self.close = function() {
+		infoWindow.close();
+	}
+	
 	self.close = function(marker) {
 		infoWindow.close();
 	}
@@ -127,11 +142,15 @@ function InfoWindow(options) {
 	}
 }
 
-function Marker(options) {
-	var id = markerCounter;
+function Marker(options, id) {
+	if(!id) {
+		id = markerCounter;
+	}
+
 	var self = this;
 	var marker = new google.maps.Marker(options);
 	var map;
+	this.counter = 1;
 	
 	self.dragend = function(callback) {
 		marker.addListener('dragend', function(evt) {
@@ -141,6 +160,30 @@ function Marker(options) {
 	
 	self.click = function(callback) {
 		marker.addListener('click', function(evt) {
+			callback({lat: evt.latLng.lat(), lng: evt.latLng.lng()});
+		});
+	}
+	
+	self.mousedown = function(callback) {
+		marker.addListener('mousedown', function(evt) {
+			callback({lat: evt.latLng.lat(), lng: evt.latLng.lng()});
+		});
+	}
+	
+	self.mouseup = function(callback) {
+		marker.addListener('mouseup', function(evt) {
+			callback({lat: evt.latLng.lat(), lng: evt.latLng.lng()});
+		});
+	}
+	
+	self.mouseover = function(callback) {
+		marker.addListener('mouseover', function(evt) {
+			callback({lat: evt.latLng.lat(), lng: evt.latLng.lng()});
+		});
+	}
+	
+	self.mouseout = function(callback) {
+		marker.addListener('mouseout', function(evt) {
 			callback({lat: evt.latLng.lat(), lng: evt.latLng.lng()});
 		});
 	}
@@ -177,6 +220,10 @@ function Marker(options) {
 	
 	self.setIcon = function(icon) {
 		marker.setIcon(icon);
+	}
+	
+	self.setLabel = function(options) {
+		marker.setLabel(options);
 	}
 	
 	self.setZIndex = function(index) {

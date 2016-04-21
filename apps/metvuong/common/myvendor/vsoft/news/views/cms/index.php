@@ -1,6 +1,7 @@
 <?php
 
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
@@ -11,6 +12,8 @@ use yii\widgets\Pjax;
 
 $this->title = Yii::t('app', 'Cms Shows');
 $this->params['breadcrumbs'][] = $this->title;
+
+$newsCatID = !empty(Yii::$app->params['newsCatID']) ? Yii::$app->params['newsCatID'] : 2;
 ?>
 <div class="cms-show-index">
 
@@ -34,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($model) {
                     $imgPath = Url::to( '/themes/metvuong1/resources/images/default-ads.jpg');
                     if($model->banner) {
-                        $checkFile = file_exists(Yii::getAlias('@store')."\\news\\show\\".$model->banner);     
+                        $checkFile = file_exists(Yii::getAlias('@store')."/news/show/".$model->banner);
                         if($checkFile)
                             $imgPath = Url::to('/store/news/show/' . $model->banner);
                     } else {
@@ -59,6 +62,8 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $model->getCatalog()->one()->title;
                     return '';
                 },
+                'filter' => Html::activeDropDownList($searchModel, 'catalog_id', ArrayHelper::map(\vsoft\news\models\CmsCatalog::find()->where(['not in', 'id', [1, $newsCatID]])
+                    ->andWhere('status = :status', [':status' => 1])->asArray()->all(), 'id', 'title'),['class'=>'form-control','prompt' => 'All']),
             ],
 
             [
@@ -66,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($model) {
                     return \vsoft\news\models\Status::labels($model->status);
                 },
-                'options' => ['width' => '100']
+                'filter' => Html::activeDropDownList($searchModel, 'status', \vsoft\news\models\Status::labels(),['class'=>'form-control','prompt' => 'All']),
             ],
             [
                 'attribute' => 'updated_at',

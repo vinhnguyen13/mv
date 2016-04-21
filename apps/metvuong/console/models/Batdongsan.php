@@ -49,33 +49,36 @@ class Batdongsan extends Component
 
     public function getPages()
     {
-        $url = self::DOMAIN . '/nha-dat-ban/';
+        $url = self::DOMAIN . '/nha-dat-ban';
         $page = $this->getUrlContent($url);
         if(!empty($page)) {
             $html = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
             $pagination = $html->find('.container-default .background-pager-right-controls a');
             $count_page = count($pagination);
+            $last_page = (int)str_replace("/nha-dat-ban/p", "", $pagination[$count_page-1]->href);
+//            $last_page = str_replace("/nha-dat-ban-phuong-tan-quy/p", "", $pagination[$count_page-1]->href);
             if($count_page > 0) {
-//                $last_page = str_replace("/nha-dat-ban/p", "", $pagination[$count_page-1]->href);
 //                $last_page = 3;
                 $log = $this->loadFileLog();
                 $current_page = empty($log["current_page"]) ? 1 : ($log["current_page"]+1);
-                $last_page = $current_page + 5;
-                for($i = $current_page; $i <= $last_page; $i++){
-                    $log = $this->loadFileLog();
-                    $sequence_id = empty($log["last_id"]) ? 0 : ($log["last_id"]+1);
-                    $list_return = $this->getListProject($i, $sequence_id, $log);
-                    if(!empty($list_return) && $list_return["status"] == 1){
-                        $list_return["data"]["current_page"] = $i;
-                        $this->writeFileLog($list_return["data"]);
-                        print_r("Page ".$i." done!");
-                        print_r("\n");
+                $current_page_add = $current_page + 4;
+                if($current_page_add <= $last_page) {
+                    for ($i = $current_page; $i <= $current_page_add; $i++) {
+                        $log = $this->loadFileLog();
+                        $sequence_id = empty($log["last_id"]) ? 0 : ($log["last_id"] + 1);
+                        $list_return = $this->getListProject($i, $sequence_id, $log);
+                        if (!empty($list_return["data"])) {
+                            $list_return["data"]["current_page"] = $i;
+                            $this->writeFileLog($list_return["data"]);
+                            print_r("Page " . $i . " done!");
+                            print_r("\n");
+                        }
+                        sleep(1);
+                        ob_flush();
                     }
-                    sleep(1);
-                    ob_flush();
                 }
             } else {
-                echo "Cannot find pagination of _".self::DOMAIN;
+                echo "Cannot find listing. End page!".self::DOMAIN;
             }
         } else {
             echo "Cannot access in get pages of ".self::DOMAIN;
@@ -85,13 +88,13 @@ class Batdongsan extends Component
     public function getListProject($current_page, $sequence_id, $log)
     {
         $href = "/nha-dat-ban/p".$current_page;
+//        $href = "/nha-dat-ban-phuong-tan-quy/p".$current_page;
         $page = $this->getUrlContent(self::DOMAIN . $href);
         if(!empty($page)) {
             $html = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
             $list = $html->find('div.p-title a');
-            if (!empty($list)) {
+            if (count($list) > 0) {
                 // about 20 listing
-                $status = 1; // ghi file
                 foreach ($list as $item) {
                     $startIndex = strripos($item->href, '-pr');
                     $productId = substr($item->href, $startIndex, strlen($item->href));
@@ -107,15 +110,14 @@ class Batdongsan extends Component
                             $log["files"][$sequence_id] = $res;
                             $log["last_id"] = $sequence_id;
                             $sequence_id = $sequence_id + 1;
-//                            $status = 1;
                         }
                     } else {
                         var_dump($productId);
                     }
                 }
-                return ['status' => $status, 'data' => $log];
+                return ['data' => $log];
             } else {
-                echo "Cannot find get title link of _".self::DOMAIN;
+                echo "Cannot find listing. End page!".self::DOMAIN;
             }
 
         } else {

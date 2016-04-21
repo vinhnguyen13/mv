@@ -5,33 +5,41 @@
  * Date: 10/1/2015 9:09 AM
  */
 use yii\helpers\StringHelper;
+Yii::t('news', 'REAL ESTATE NEWS');
+Yii::t('news', 'HOT NEWS');
+Yii::t('news', 'FINANCIAL & BANKING NEWS');
 
-$catalog = \vsoft\news\models\CmsCatalog::findOne($cat_id);
-
+if(count($news) > 0){
 ?>
-<div class="news-bds">
-    <a class="color-title-link" href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => $cat_id, 'slug' => $catalog->slug]) ?>">
-        <div class="widget-title clearfix">
-            <h2>bất động sản</h2>
-        </div>
-    </a>
-    <?php if (!empty($news)) { ?>
-        <div class="row">
-            <?php foreach ($news as $k => $n) { ?>
-                <div class="col-sm-4">
-                    <div class="wrap-img bgcover"
-                         style="background-image: url('/store/news/show/<?= $n->banner ?>');"></div>
-                    <p>
-                        <a class="color-title-link"
-                           href="<?= \yii\helpers\Url::to(['news/view', 'id' => $n->id, 'slug' => $n->slug, 'cat_id' => $catalog->id, 'cat_slug' => $catalog->slug]) ?>">
-                            <?= StringHelper::truncate($n->title, 30) ?>
-                        </a>
-                    </p>
-
-                    <p> <?= StringHelper::truncate($n->brief, 120) ?></p>
+<div class="item-sidebar clearfix">
+    <div class="title-sidebar">
+        <?php if($cat_id > 0) {?>
+            <a href="<?= \yii\helpers\Url::to(['news/list', 'cat_id' => $cat_id, 'cat_slug' => $cat_slug]) ?>"><?=Yii::t('news', $title)?></a>
+        <?php } else {?>
+            <?=Yii::t('news', $title)?>
+        <?php } ?>
+    </div>
+    <?php foreach($news as $k => $n) {
+        if($k == 0){
+            $banner = "/store/news/show/".$n->banner ;
+            $checkBanner = file_exists(Yii::getAlias('@store')."/news/show/".$n->banner );
+            if($checkBanner == false)
+                $banner = '/themes/metvuong2/resources/images/default-ads.jpg';?>
+        <div class="item-hot-sidebar">
+            <a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n->id, 'slug' => $n->slug], true)?>" title="<?=$n->title?>">
+                <div class="img-show">
+                    <div><img src="<?= $banner ?>" alt="<?=$n->title?>"></div>
                 </div>
-            <?php } ?>
+            </a>
+            <a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n->id, 'slug' => $n->slug], true)?>" title="<?=$n->title?>" class="name-post"><?= StringHelper::truncate($n->title, 60) ?></a>
+            <p class="intro-txt" title="<?=$n->brief?>"><?= StringHelper::truncate($n->brief, 180) ?></p>
         </div>
-    <?php } ?>
+        <?php } else {?>
+        <ul class="list-lq">
+            <li><a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n->id, 'slug' => $n->slug], true)?>" title="<?=$n->title?>"><span class="dot"></span><?= StringHelper::truncate($n->title, 60) ?> </a></li>
+        </ul>
+    <?php }
+    }?>
 </div>
+<?php }?>
 

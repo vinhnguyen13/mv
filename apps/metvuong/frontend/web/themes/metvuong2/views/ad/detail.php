@@ -1,0 +1,622 @@
+<?php 
+use vsoft\ad\models\AdStreet;
+use vsoft\ad\models\AdWard;
+use vsoft\ad\models\AdDistrict;
+use vsoft\ad\models\AdCity;
+use vsoft\ad\models\AdCategory;
+use vsoft\ad\models\AdProduct;
+use vsoft\ad\models\AdBuildingProject;
+use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
+use yii\helpers\Url;
+use vsoft\ad\models\AdProductAdditionInfo;
+use vsoft\express\components\StringHelper;
+
+    $images = $product->adImages;
+	$street = AdStreet::findOne($product->street_id);
+	$ward = AdWard::findOne($product->ward_id);
+	$district = AdDistrict::findOne($product->district_id);
+	$city = AdCity::findOne($product->city_id);
+	$categoryName = AdCategory::findOne($product->category_id)->name;
+	$typeName = ($product->type == AdProduct::TYPE_FOR_SELL) ? 'bán' : 'cho thuê';
+	$direction = AdProductAdditionInfo::directionList();
+	
+	$owner = \frontend\models\User::findOne($product->user_id);
+	if($owner && $owner->profile) {
+        $avatar = $owner->profile->getAvatarUrl();
+	} else {
+		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
+	}
+	
+	$address = '';
+	
+	if($product->home_no) {
+		$address .= "{$product->home_no}, ";
+	}
+	
+	if($street) {
+		$address .= "{$street->pre} {$street->name}, ";
+	}
+	
+	if($ward) {
+		$address .= "{$ward->pre} {$ward->name}, ";
+	}
+	
+	if($address) {
+		$address .= "{$district->pre} {$district->name}, {$city->name}";
+	} else {
+		$address = "{$district->pre} {$district->name}, {$city->name}";
+	}
+
+    $imgFB = Yii::$app->urlManager->hostInfo.Yii::$app->view->theme->baseUrl."/resources/images/logo.png";
+    if(!empty($images[0]["file_name"])) {
+        if (preg_match('/^(http|https):\\/\\/[a-z0-9_]+([\\-\\.]{1}[a-z_0-9]+)*\\.[_a-z]{2,5}' . '((:[0-9]{1,5})?\\/.*)?$/i', $images[0]["file_name"])) {
+            $imgFB = $images[0]["file_name"];
+        } else {
+            $imgFB = Yii::$app->urlManager->hostInfo.Yii::$app->view->theme->baseUrl."/".$images[0]["file_name"];
+        }
+    }
+
+    Yii::$app->view->registerMetaTag([
+        'property' => 'og:title',
+        'content' => trim($address)
+    ]);
+    Yii::$app->view->registerMetaTag([
+        'property' => 'og:description',
+        'content' => $product->content
+    ]);
+    Yii::$app->view->registerMetaTag([
+        'property' => 'og:type',
+        'content' => 'article'
+    ]);
+    Yii::$app->view->registerMetaTag([
+        'property' => 'og:image',
+        'content' => $imgFB
+    ]);
+
+    $fb_appId = '680097282132293'; // stage.metvuong.com
+    if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
+        $fb_appId = '736950189771012';
+    else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
+        $fb_appId = '891967050918314';
+
+?>
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : <?=$fb_appId?>,
+            xfbml      : true,
+            version    : 'v2.5'
+        });
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.async=true;
+        js.src = "//connect.facebook.net/vi_VN/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="detail-template-2">
+    <div class="swiper-container gallery-detail-duan">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-2.jpg)">
+                <a data-lightbox="detail-post" class="group" href="<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-2.jpg"></a>
+            </div>
+            <div class="swiper-slide bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-4.jpg)">
+                <a data-lightbox="detail-post" class="group" href="<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-4.jpg"></a>
+            </div>
+            <div class="swiper-slide bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/22311_Khai-truong-Pearl-Plaza-10.jpg)">
+                <a data-lightbox="detail-post" class="group" href="<?=Yii::$app->view->theme->baseUrl?>/resources/images/22311_Khai-truong-Pearl-Plaza-10.jpg"></a>
+            </div>
+            <div class="swiper-slide bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/23311_Khai-truong-Pearl-Plaza-11.jpg)">
+                <a data-lightbox="detail-post" class="group" href="<?=Yii::$app->view->theme->baseUrl?>/resources/images/23311_Khai-truong-Pearl-Plaza-11.jpg"></a>
+            </div>
+            <div class="swiper-slide bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-2.jpg)">
+                <a data-lightbox="detail-post" class="group" href="<?=Yii::$app->view->theme->baseUrl?>/resources/images/21311_Khai-truong-Pearl-Plaza-2.jpg"></a>
+            </div>
+            <div class="swiper-slide bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg)">
+                <a data-lightbox="detail-post" class="group" href="<?=Yii::$app->view->theme->baseUrl?>/resources/images/22311_Khai-truong-Pearl-Plaza-8.jpg"></a>
+            </div>
+            <div class="swiper-slide bgcover" style="background-image:url(<?=Yii::$app->view->theme->baseUrl?>/resources/images/621042015085736.jpg)">
+                <a data-lightbox="detail-post" class="group" href="<?=Yii::$app->view->theme->baseUrl?>/resources/images/621042015085736.jpg"></a>
+            </div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+    <div class="container infor-listing">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="name-duan">LANCASTER LUX</p>
+                <p class="address-duan">230 NGUYEN TRAI, DISTRICT 1, BEN NGHE WARD</p>
+                <p class="date-duan">Available in January 2019</p>
+                <p class="attr-duan">2 BEDS | 2 BATHS | 3,5 ty VND | 90 m2 | 38,800,000 VND / m2 </p>
+            </div>
+            <div class="col-md-6">
+                <a href="#" class="view-floorplan pull-left"><span class="icon"></span>View Floorplan</a>
+                <a href="#" class="view-map pull-left"><em class="fa fa-map-marker"></em>View map</a>
+                <div class="clearfix"></div>
+                <div class="pull-right pull-left pdT-20">
+                    <button class="btn-favorite"><em class="fa fa-heart-o"></em></button>
+                    <button class="btn-contact-agent">contact agent</button>
+                </div>
+            </div>
+        </div>
+        <div class="row item-infor-detail">
+            <div class="col-md-4">
+                <strong>Key details</strong>
+                <span class="num-infor">20</span>
+            </div>
+            <div class="wrap-infor-attr col-md-8">
+                <div class="col-md-6">
+                    <ul class="clearfix">
+                        <li><span>Ownership:</span>Freehold</li>
+                        <li><span>Minimum down payment:</span>10%</li>
+                        <li><span>Units in building:</span>458</li>
+                        <li><span>Unit floor:</span>12</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul class="clearfix">
+                        <li><span>Building floors:</span>40</li>
+                        <li><span>building age:</span>new</li>
+                        <li><span>Maintenance fee:</span>18,000VND/SQM/Month</li>
+                        <li><span>Developer:</span>TTG holding</li>
+                        <li><span>Designer:</span>Bim factory</li>
+                        <li><span>Contractor:</span>cofico</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="#" class="see-less pull-right"><span class="icon"></span><span class="txt-toggle">see less</span></a>
+        </div>
+        <div class="row item-infor-detail">
+            <div class="col-md-4">
+                <strong>Amenities</strong>
+                <span class="num-infor">20</span>
+            </div>
+            <div class="wrap-infor-attr col-md-8">
+                <div class="col-md-6">
+                    <ul class="clearfix">
+                        <li>Gym</li>
+                        <li>Spa</li>
+                        <li>Swimming pool</li>
+                        <li>Sky park</li>
+                        <li>Club house</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul class="clearfix">
+                        <li>Library</li>
+                        <li>Kids playroom</li>
+                        <li>Mailbox</li>
+                        <li>24/7 concierge</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="#" class="see-less pull-right"><span class="icon"></span><span class="txt-toggle">see less</span></a>
+        </div>
+        <div class="row item-infor-detail">
+            <div class="col-md-4">
+                <strong>Finishing schedule</strong>
+                <span class="num-infor">20</span>
+            </div>
+            <div class="wrap-infor-attr col-md-8">
+                <div class="col-md-6">
+                    <ul class="clearfix">
+                        <li><span>Kitchen</span></li>
+                        <li>Miele or bosch equivalent</li>
+                        <li>Refridgerator</li>
+                        <li>Kitchen hob</li>
+                        <li>Electric water heater</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul class="clearfix">
+                        <li><span>Living room</span></li>
+                        <li>Split typeaircon</li>
+                        <li>Home automation system</li>
+                        <li>Video phone unit</li>
+                        <li>Rfid / Password protected door</li>
+                    </ul>
+                </div>
+            </div>
+            <a href="#" class="see-less pull-right"><span class="icon"></span><span class="txt-toggle">see less</span></a>
+        </div>
+        <div class="row item-infor-detail">
+            <div class="col-md-4">
+                <strong>Nearby landmarks</strong>
+            </div>
+        </div>
+        <div class="row item-infor-detail">
+            <div class="col-md-4">
+                <strong>Pricing schedule</strong>
+            </div>
+        </div>
+        <div class="row item-infor-detail">
+            <div class="col-md-4">
+                <strong>Payment terms</strong>
+            </div>
+        </div>
+        <div class="row item-infor-detail">
+            <div class="col-md-4">
+                <strong>Mortgate calculator</strong>
+            </div>
+        </div>
+        <div class="row item-infor-detail">
+            <div class="col-md-4">
+                <strong>Project status</strong>
+            </div>
+        </div>
+        <div class="contact-agent-bottom">
+            <a href="#" class="wrap-img infor-agent">
+                <img src="<?=Yii::$app->view->theme->baseUrl?>/resources/images/demo-agent.jpg" alt="">
+                <span class="name-agent">Hao Do</span>
+                <span class="email-agent">hao.do@metvuong.vn</span>
+            </a>
+            <button class="btn-contact-agent">contact agent</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="<?=Yii::$app->view->theme->baseUrl?>/resources/js/lightbox.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var swiper = new Swiper('.swiper-container', {
+            slidesPerView: 'auto',
+            paginationClickable: true,
+            spaceBetween: 0,
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev'
+        });
+
+        lightbox.option({
+            'resizeDuration': 300,
+            'fadeDuration': 400
+        });
+    });
+</script>
+
+
+
+<div id="detail-listing" style="display: none;">
+
+    <div class="detail-slide">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="tabs-detail-item clearfix">
+                    <ul class="pull-left">
+                        <li><a href="#" class="save-item icon-hear"  data-id="<?=$product->id;?>" href="#" data-url="<?=Url::to(['/ad/favorite'])?>"><em class="fa fa-heart-o"></em>Save</a></li>
+                        <li><a href="#" data-toggle="modal" data-target="#box-share" class="share-item"><em class="fa fa-share-alt"></em>Share</a></li>
+                        <li><a href="#" class="more-item">More<em class="fa fa-sort-desc"></em></a>
+                            <div class="sub-more hidden-effect">
+                                <div class="wrap-effect clearfix">
+                                    <ul class='clearfix'>
+                                        <li><a class="print-detail" href="#"><em class="icon-printer"></em>Print</a></li>
+                                        <li><a href="#" class="report_modal" data-toggle="modal" data-target="#report-listing" data-url="<?=Url::to(['/ad/report'])?>" data-uid="<?=empty(Yii::$app->user->id) ? 0 : Yii::$app->user->id?>"><em class="icon-info"></em>Báo cáo bài viết</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- <ul class="pull-right">
+                        <li class="expand-win"><a href="#"><em class="fa fa-expand"></em>Expand</a></li>
+                        <li class="close-detail">
+                            <button type="button" class="close btn-close-detail" data-dismiss="modal" aria-label="Close">
+                                <em class="fa fa-close"></em>close
+                            </button>
+                        </li>
+                    </ul> -->
+                    <div class="modal fade" id="report-listing" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" class="icon"></span>
+                                    </button>
+                                    <h3>Báo cáo bài viết</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="wrap-modal clearfix">
+                                        <form id="frm-report" action="<?=Url::to(['/ad/sendreport'])?>">
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="optionsRadios" id="r1" value="1">
+                                                    Lừa đảo
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="optionsRadios" id="r2" value="2">
+                                                    Trùng địa chỉ
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="optionsRadios" id="r3" value="3">
+                                                    Tin đã đăng
+                                                </label>
+                                            </div>
+                                            <input type="hidden" id="pid" name="pid" value="<?=$product->id?>">
+                                            <input type="hidden" id="uid" name="uid" value="<?=empty(Yii::$app->user->id) ? 0 : Yii::$app->user->id?>">
+                                            <button class="btn btn-common send_report">Gửi báo cáo</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="box-share" tabindex="-1" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true" class="icon"></span>
+                                    </button>
+                                    <h3>Chia sẻ</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="wrap-modal clearfix">
+                                        <?php
+                                        $share_form = Yii::createObject([
+                                            'class'    => \frontend\models\ShareForm::className(),
+                                            'scenario' => 'share',
+                                        ]);
+
+                                        $f = ActiveForm::begin([
+                                            'id' => 'share_form',
+                                            'enableAjaxValidation' => false,
+                                            'enableClientValidation' => true,
+                                            'action' => Url::to(['/ad/sendmail'])
+                                        ]);
+                                        ?>
+                                            <div class="form-group">
+                                                <?= $f->field($share_form, 'recipient_email')->textInput(['class'=>'form-control recipient_email', 'placeholder'=>Yii::t('recipient_email', 'Email người nhận...')]) ?>
+                                            </div>
+                                            <div class="form-group">
+                                                <?= $f->field($share_form, 'your_email')->textInput(['class'=>'form-control your_email', 'placeholder'=>Yii::t('your_email', 'Email của bạn...')]) ?>
+                                            </div>
+                                            <div class="form-group">
+                                                <?= $f->field($share_form, 'content')->textarea(['class'=>'form-control content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('content', 'Nội dung chia sẻ...')]) ?>
+                                            </div>
+                                            <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=>$address])->label(false) ?>
+                                            <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=>Yii::$app->urlManager->createAbsoluteUrl(['ad/detail', 'id'=>$product->id, 'slug'=>\yii\helpers\Inflector::slug($product->getAddress())])])->label(false) ?>
+                                            <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-common send_mail">Gửi email</button>
+                                            </div>
+                                            <ul class="share-social clearfix">
+                                                <li class="right"><a href="#" class="logo-social fb-icon"></a></li>
+                                            </ul>
+                                        <?php $f->end(); ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="modal-detail-listting" class="modal-body">
+                <div class="wrap-modal clearfix">
+                    <?= $this->render('_partials/slide', ['images' => $images]) ?>
+                    <div class="row detail-post" data-id="<?=$product->id;?>">
+                        <div class="col-sm-8 dt-left-col">
+                            <h1 class="title-dt"><?= $address ?></h1>
+                            <div class="pull-right hdp-summary">
+                                <p class="type-result"><?= mb_strtoupper("$categoryName $typeName", 'UTF-8') ?></p>
+                                <table>
+                                    <?php if($product->project_building_id): ?>
+                                    <tr>
+                                        <th>Dự án</th>
+                                        <td><?= AdBuildingProject::findOne($product->project_building_id)->name ?></td>
+                                    </tr>
+                                    <?php endif; ?>
+                                    <tr>
+                                        <th>Giá:</th>
+                                        <td><p class="price-summary"><?= StringHelper::formatCurrency($product->price) ?><?= $product->type == AdProduct::TYPE_FOR_RENT ? '/tháng' : '' ?></p></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Diện tích:</th>
+                                        <td><?= StringHelper::formatNumber($product->area) ?> m<sup>2</sup></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p class="home-attr">4 phòng <span>.</span> 3 toilets <span>.</span> 2,274 sqft</p>
+                            <p class="infor-post-date"><em class="fa fa-calendar"></em><?= date('d/m/Y', $product->created_at) ?></p>
+                            <div class="rating" data-url="<?=Url::to(['/ad/rating', 'type'=>'']);?>">
+                                <fieldset class="rate">
+                                    <?php for($i = 10; $i > 0; $i--):?>
+                                    <input type="radio" id="rating<?=$i?>" name="rating" value="<?=$i?>" <?=($i==round($product->rating)) ? 'checked' : ''?> /><label for="rating<?=$i?>" <?=($i%2!=0) ? 'class="half"' : ''?> title="<?=ceil($i/2)?> stars"></label>
+                                    <?php endfor;?>
+                                </fieldset>
+                            </div>
+                            <div class="clearfix"></div>
+
+                            <p class="ttmt">Thông tin mô tả</p>
+                            <div class="wrap-ttmt"><?= str_replace("\n", "<br />", htmlspecialchars($product->content)) ?></div>
+                            <?php
+                                $additionInfo = $product->adProductAdditionInfo;
+                                unset($additionInfo['product_id']);
+                                if($additionInfo && array_filter($additionInfo->attributes)):
+                            ?>
+                            <p class="ttmt">Thông tin thêm</p>
+                            <table>
+                                <?php if($additionInfo->facade_width): ?>
+                                <tr>
+                                    <th>Mặt tiền</th>
+                                    <td><?= StringHelper::formatNumber($additionInfo->facade_width) ?> m</td>
+                                </tr>
+                                <?php endif; ?>
+                                <?php if($additionInfo->land_width): ?>
+                                <tr>
+                                    <th>Đường vào</th>
+                                    <td><?= StringHelper::formatNumber($additionInfo->land_width) ?> m</td>
+                                </tr>
+                                <?php endif; ?>
+                                <?php if($additionInfo->home_direction): ?>
+                                <tr>
+                                    <th>Hướng nhà</th>
+                                    <td><?= $direction[$additionInfo->home_direction] ?></td>
+                                </tr>
+                                <?php endif; ?>
+                                <?php if($additionInfo->facade_direction): ?>
+                                <tr>
+                                    <th>Hướng ban công</th>
+                                    <td><?= $direction[$additionInfo->facade_direction] ?></td>
+                                </tr>
+                                <?php endif; ?>
+                                <?php if($additionInfo->floor_no): ?>
+                                <tr>
+                                    <th>Số tầng</th>
+                                    <td><?= $additionInfo->floor_no ?></td>
+                                </tr>
+                                <?php endif; ?>
+                                <?php if($additionInfo->room_no): ?>
+                                <tr>
+                                    <th>Số phòng ngủ</th>
+                                    <td><?= $additionInfo->room_no ?></td>
+                                </tr>
+                                <?php endif; ?>
+                                <?php if($additionInfo->toilet_no): ?>
+                                <tr>
+                                    <th>Số toilet</th>
+                                    <td><?= $additionInfo->toilet_no ?></td>
+                                </tr>
+                                <?php endif; ?>
+                                <?php if($additionInfo->interior): ?>
+                                <tr>
+                                    <th>Nội thất</th>
+                                    <td><?= $additionInfo->interior ?></td>
+                                </tr>
+                                <?php endif; ?>
+                            </table>
+                            <?php endif; ?>
+                        </div>
+                        <?php if($product->adContactInfo): ?>
+                        <div class="col-sm-4 dt-right-col">
+                            <div class="contact-wrapper">
+                                <div class="rating pull-right">
+                                    <fieldset class="rate">
+                                        <input type="radio" id="rating-contact-10" name="rating-contact" value="10" /><label for="rating-contact-10" title="5 stars"></label>
+                                        <input type="radio" id="rating-contact-9" name="rating-contact" value="9" /><label class="half" for="rating-contact-9" title="4 1/2 stars"></label>
+                                        <input type="radio" id="rating-contact-8" name="rating-contact" value="8" /><label for="rating-contact-8" title="4 stars"></label>
+                                        <input type="radio" id="rating-contact-7" name="rating-contact" value="7" /><label class="half" for="rating-contact-7" title="3 1/2 stars"></label>
+                                        <input type="radio" id="rating-contact-6" name="rating-contact" value="6" /><label for="rating-contact-6" title="3 stars"></label>
+                                        <input type="radio" id="rating-contact-5" name="rating-contact" value="5" /><label class="half" for="rating-contact-5" title="2 1/2 stars"></label>
+                                        <input type="radio" id="rating-contact-4" name="rating-contact" value="4" /><label for="rating-contact-4" title="2 stars"></label>
+                                        <input type="radio" id="rating-contact-3" name="rating-contact" value="3" /><label class="half" for="rating-contact-3" title="1 1/2 stars"></label>
+                                        <input type="radio" id="rating-contact-2" name="rating-contact" value="2" /><label for="rating-contact-2" title="1 star"></label>
+                                        <input type="radio" id="rating-contact-1" name="rating-contact" value="1" /><label class="half" for="rating-contact-1" title="1/2 star"></label>
+                                    </fieldset>
+                                </div>
+                                <p class="title-contact">Liên hệ</p>
+                                <div class="contact-person clearfix">
+                                    <a href="#" class="wrap-img pull-left"><img src="<?= $avatar ?>" alt=""></a>
+                                    <div class="clearfix">
+                                        <?php if($product->adContactInfo->name): ?>
+                                        <p><strong>Tên:</strong><?= $product->adContactInfo->name ?></p>
+                                        <?php endif; ?>
+                                        <?php if($product->adContactInfo->phone): ?>
+                                        <p><strong>Điện thoại:</strong><?= $product->adContactInfo->phone ?></p>
+                                        <?php endif; ?>
+                                        <?php if($product->adContactInfo->mobile): ?>
+                                        <p><strong>Di động:</strong><?= $product->adContactInfo->mobile ?></p>
+                                        <?php endif; ?>
+                                        <?php if($product->adContactInfo->email): ?>
+                                        <p><strong>Email:</strong><?= $product->adContactInfo->email ?></p>
+                                        <?php endif; ?>
+                                        <?php if($product->adContactInfo->address): ?>
+                                        <p><strong>Địa chỉ:</strong><?= $product->adContactInfo->address ?></p>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                                <form style="display: none;" action="" id="frm-contact-person">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Tên bạn">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Email">
+                                    </div>
+                                    <div class="form-group mgB-0">
+                                        <input type="text" class="form-control" placeholder="Điện thoại">
+                                    </div>
+                                    <p class="alert">Tin nhắn này sẽ được đọc khi người này online</p>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox"> Hiện thông báo khi người này đọc tin nhắn</label>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="button" class="btn btn-primary">Gửi tin nhắn cho người này</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).on('click', '#share_form button.send_mail', function(){
+            var timer = 0;
+            var recipient_email = $('#share_form .recipient_email').val();
+            var your_email = $('#share_form .your_email').val();
+            if(recipient_email != null && your_email != null) {
+                var content_mail = $('#share_form .content').val();
+//                alert(recipient_email+your_email+content_mail);
+                $('#box-share').modal('hide');
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                    $.ajax({
+                        type: "post",
+                        dataType: 'json',
+                        url: $('#share_form').attr('action'),
+                        data: $('#share_form').serializeArray(),
+                        success: function (data) {
+                            if(data.status == 200){
+//                                alert("success");
+                            }
+                            else {
+                                var strMessage = '';
+                                $.each(data.parameters, function(idx, val){
+                                    var element = 'change-pass-form-'+idx;
+                                    strMessage += "\n" + val;
+                                });
+                                alert(strMessage+"\nTry again");
+                            }
+                            return true;
+                        },
+                        error: function () {
+                            var strMessage = '';
+                            $.each(data.parameters, function(idx, val){
+                                var element = 'change-pass-form-'+idx;
+                                strMessage += "\n" + val;
+                            });
+                            alert(strMessage);
+                            return false;
+                        }
+                    });
+                }, 1000);
+            }
+            return false;
+        });
+
+        $(document).on('click', '#share_form a.fb-icon', function() {
+            var detailUrl = $('#share_form ._detailUrl').val();
+            if(detailUrl == null || detailUrl == '' )
+                detailUrl = $('#share_form ._domain').val();
+            FB.ui({
+                method: 'share',
+                href: detailUrl
+            }, function(response){});
+        });
+
+        $(document).on('click', '#share_form a.twe-icon', function() {
+            location.href='skype:nhuttranm?chat';
+        });
+    </script>
+</div>

@@ -15,6 +15,8 @@ use Yii;
 use yii\authclient\ClientInterface;
 use yii\authclient\widgets\AuthChoice;
 use yii\authclient\widgets\AuthChoiceAsset;
+use yii\authclient\widgets\AuthChoiceItem;
+use yii\base\InvalidConfigException;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -81,9 +83,8 @@ class Connect extends AuthChoice
     protected function renderMainContent()
     {
         echo Html::beginTag('ul', ['class' => 'list-social-login clearfix']);
-        echo Html::tag('li', $this->groupTitle, ['class' => 'list-social-login clearfix']);
         foreach ($this->getClients() as $externalService) {
-            echo Html::beginTag('li', ['class' => 'auth-client']);
+            echo Html::beginTag('li', ['class' => '']);
             $this->clientLink($externalService);
             echo Html::endTag('li');
         }
@@ -94,6 +95,11 @@ class Connect extends AuthChoice
     {
         if ($text === null) {
             $text = Html::tag('span', $client->getTitle(), ['class' => 'auth-title']);
+            if($client->getName() == 'google'){
+                $text = Html::tag('span', $client->getTitle().Yii::t('user', 'Sign In with Google'), ['class' => 'auth-title']);
+            }elseif($client->getName() == 'facebook'){
+                $text = Html::tag('span', $client->getTitle().Yii::t('user', 'Sign In with Facebook'), ['class' => 'auth-title']);
+            }
         }
         if (!array_key_exists('class', $htmlOptions)) {
             $htmlOptions['class'] = 'btn btn-default ' . $client->getName();

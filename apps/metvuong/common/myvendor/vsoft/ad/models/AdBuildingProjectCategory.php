@@ -3,7 +3,7 @@
 namespace vsoft\ad\models;
 
 use Yii;
-use vsoft\ad\models\base\AdBuildingProjectCategoryBase;
+use common\models\AdBuildingProjectCategory as ABPC;
 
 /**
  * This is the model class for table "ad_building_project_category".
@@ -14,7 +14,7 @@ use vsoft\ad\models\base\AdBuildingProjectCategoryBase;
  * @property AdBuildingProject $buildingProject
  * @property AdCategory $category
  */
-class AdBuildingProjectCategory extends AdBuildingProjectCategoryBase
+class AdBuildingProjectCategory extends ABPC
 {
-	
+
 }

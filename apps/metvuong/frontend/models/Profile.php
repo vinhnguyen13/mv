@@ -62,6 +62,9 @@ class Profile extends ActiveRecord
             'gravatarEmailLength' => ['gravatar_email', 'string', 'max' => 255],
             'locationLength' => ['location', 'string', 'max' => 255],
             'websiteLength' => ['website', 'string', 'max' => 255],
+            'address' => ['address', 'string', 'max' => 255],
+            'rating_point' => ['rating_point', 'integer'],
+            'rating_no' => ['rating_no', 'integer'],
         ];
     }
 
@@ -75,6 +78,7 @@ class Profile extends ActiveRecord
             'location'       => Yii::t('user', 'Location'),
             'website'        => Yii::t('user', 'Website'),
             'bio'            => Yii::t('user', 'Bio'),
+            'address'            => Yii::t('user', 'Address')
         ];
     }
 
@@ -102,12 +106,19 @@ class Profile extends ActiveRecord
 
     public function getAvatarUrl()
     {
+        $avatar = Url::to( '/images/default-avatar.jpg');
         if($this->avatar) {
             $pathinfo = pathinfo($this->avatar);
-            $avatar = Url::to('/store/avatar/' . $pathinfo['filename'] . '.thumb.' . $pathinfo['extension']);
-        } else {
-            $avatar = Url::to( '/images/default-avatar.jpg');
-        }
+            $filePath = Yii::getAlias('@store').'/avatar/' . $pathinfo['filename'] . '.thumb.' . $pathinfo['extension'];
+            if(file_exists($filePath)){
+                $avatar = Url::to('/store/avatar/' . $pathinfo['filename'] . '.thumb.' . $pathinfo['extension']);
+            }
+        } 
         return $avatar;
+    }
+
+    public function getDisplayName()
+    {
+        return !empty($this->name) ? $this->name : $this->user->email;
     }
 }

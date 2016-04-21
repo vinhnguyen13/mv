@@ -3,15 +3,16 @@
 namespace vsoft\ad\models;
 
 use Yii;
-use vsoft\ad\models\base\AdBuildingProjectBase;
-use vsoft\ad\models\base\AdAreaTypeBase;
 use yii\behaviors\TimestampBehavior;
-use yii\db\Expression;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 use yii\helpers\ArrayHelper;
+use common\models\AdBuildingProject as ABP;
+use yii\helpers\Url;
+use yii\db\Query;
 
 
-class AdBuildingProject extends AdBuildingProjectBase
+class AdBuildingProject extends ABP
 {
 	private static $areaTypes = [];
 	
@@ -24,12 +25,15 @@ class AdBuildingProject extends AdBuildingProjectBase
     public function rules()
     {
         return [
-	        [['city_id', 'district_id', 'created_at', 'updated_at', 'status'], 'integer'],
+	        [['city_id', 'district_id', 'created_at', 'updated_at', 'status', 'is_crawl', 'hot_project', 'click'], 'integer'],
 	        [['name'], 'required'],
-	        [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video', 'progress'], 'string'],
+	        [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video', 'progress',
+                'name', 'description', 'file_name', 'data_html'], 'string'],
+            [['facade_width'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/', 'max' => 10000],
+            [['lift'], 'integer', 'max' => 100],
 	        [['lng', 'lat'], 'number'],
-	        [['name', 'logo', 'land_area', 'apartment_no', 'floor_no', 'start_time', 'estimate_finished', 'hotline', 'slug'], 'string', 'max' => 32],
-	        [['location', 'investment_type', 'commercial_leasing_area', 'owner_type', 'facilities', 'website'], 'string', 'max' => 255]
+	        [['land_area', 'apartment_no', 'floor_no', 'start_time', 'estimate_finished', 'hotline'], 'string', 'max' => 32],
+	        [['location', 'investment_type', 'commercial_leasing_area', 'owner_type', 'website', 'logo', 'slug'], 'string', 'max' => 255]
         ];
     }
     
@@ -54,6 +58,7 @@ class AdBuildingProject extends AdBuildingProjectBase
     	'name' => 'Tên dự án',
     	'logo' => 'Logo / Ảnh đại diện',
     	'location' => 'Vị trí',
+    	'description' => 'Thông tin mô tả',
     	'investment_type' => 'Loại hình đầu tư',
     	'land_area' => 'Diện tích khu đất',
     	'commercial_leasing_area' => 'Diện tích trung tâm văn phòng dịch vụ',
@@ -81,6 +86,11 @@ class AdBuildingProject extends AdBuildingProjectBase
     	'status' => 'Status',
     	'investors' => 'Chủ đầu tư',
     	'categories' => 'Phân loại',
+    	'facade_width' => 'Mặt tiền(m)',
+    	'lift' => 'Thang máy(cái)',
+    	'start_date' => 'Ngày khởi công',
+        'hot_project' => 'Dự án nổi bật',
+        'click' => 'Lượt xem'
     	];
     }
     
@@ -88,7 +98,7 @@ class AdBuildingProject extends AdBuildingProjectBase
     {
     	return [
 	    	'slug' => [
-		    	'class' => 'Zelenin\yii\behaviors\Slug',
+		    	'class' => 'common\components\Slug',
 		    	'slugAttribute' => 'slug',
 		    	'attribute' => 'name',
 		    	// optional params
@@ -103,7 +113,7 @@ class AdBuildingProject extends AdBuildingProjectBase
 				'class' => TimestampBehavior::className(),
 				'attributes' => [
 	    			ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-	    			ActiveRecord::EVENT_BEFORE_UPDATE => 'updated_at',
+	    			ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
 				],
 				'value' => new Expression('UNIX_TIMESTAMP()'),
 			],
@@ -186,6 +196,14 @@ class AdBuildingProject extends AdBuildingProjectBase
 	public function getCategories() {
 		return $this->hasMany(AdCategory::className(), ['id' => 'category_id'])->viaTable('ad_building_project_category', ['building_project_id' => 'id']);
 	}
+
+    public function getArchitects() {
+		return $this->hasMany(AdArchitect::className(), ['id' => 'architect_id'])->viaTable('ad_architect_building_project', ['building_project_id' => 'id']);
+	}
+
+	public function getContractors() {
+		return $this->hasMany(AdContractor::className(), ['id' => 'contractor_id'])->viaTable('ad_contractor_building_project', ['building_project_id' => 'id']);
+	}
 	
 	public function saveMultiple($data, $relationModels, $field) {
 		$postIds = $data[$field] ? $data[$field] : [];
@@ -201,4 +219,92 @@ class AdBuildingProject extends AdBuildingProjectBase
 			}
 		}
 	}
+
+    public static function mb_ucfirst($string, $encoding='UTF-8')
+    {
+        $strlen = mb_strlen($string, $encoding);
+        $firstChar = mb_substr($string, 0, 1, $encoding);
+        $then = mb_substr($string, 1, $strlen - 1, $encoding);
+        return mb_strtoupper($firstChar, $encoding) . $then;
+    }
+    
+    public static function getListByDistrict($districtId) {
+    	$items = [];
+    
+    	if($districtId) {
+    		$projects = self::find()->where('`district_id` = :district_id', [':district_id' => $districtId])->all();
+    
+    		usort($projects, function($a, $b) {
+    			return strnatcmp($a['name'], $b['name']);
+    		});
+    		
+    		foreach($projects as $project) {
+    			$items[] = [
+					'id' => $project['id'],
+					'name' => $project['name']
+    			];
+    		}
+    	}
+    
+    	return $items;
+    }
+
+    public static function getProjectBySlug($slug){
+        if($slug) {
+            $project = self::find()->where('`slug` = :slug', [':slug' => $slug])->one();
+            return $project;
+        }
+        return null;
+    }
+
+    public function getLogoUrl(){
+        $image = '/themes/metvuong2/resources/images/default-ads.jpg';
+        $logo = $this->logo;
+        if($logo) {
+            $checkLogo = Yii::getAlias('@store'). "/building-project-images/" . $logo;
+            if(file_exists($checkLogo) === TRUE){
+                $image = "/store/building-project-images/" . $logo;
+            } else
+                $image = $logo;
+        }
+        else {
+            if ($this->gallery) {
+                $gallery = explode(',', $this->gallery);
+                if (count($gallery) > 0) {
+                    $imageUrl = Yii::getAlias('@store') . "/building-project-images/" . $gallery[0];
+                    if (file_exists($imageUrl)) {
+                        $image = Url::to('/store/building-project-images/' . $gallery[0]);
+                    }
+                }
+            }
+        }
+        return $image;
+    }
+
+//    public static function getHotProject(){
+//        $projects = self::find()->where('hot_project = :hot', [':hot' => 1])
+//            ->andWhere('status = :s', [':s' => 1])
+//            ->orderBy(['id' => SORT_DESC])->limit(4)
+//            ->all();
+//        return $projects;
+//    }
+
+    public static function getTopProject(){
+        $projects = self::find()->where('status = :s', [':s' => 1])
+            ->orderBy(['click' => SORT_DESC])->limit(10)
+            ->all();
+        return $projects;
+    }
+    
+    public function getAdFacilities() {
+    	$facilities = array_filter(explode(',', $this->facilities));
+    	
+    	if($facilities) {
+    		$query = new Query();
+    		$query->from('ad_facility')->where(['id' => $facilities])->all();
+    		return $query->all();
+    	}
+    	
+    	return [];
+    }
 }

@@ -9,5 +9,6 @@ RewriteCond %{REQUEST_URI} !\.(js|ico|gif|jpg|png|css)$
 
 
 # otherwise forward it to index.php
-
+#fix err: ERR_INCOMPLETE_CHUNKED_ENCODING
+SetEnv downgrade-1.0
 RewriteRule . index.php
