@@ -29,9 +29,9 @@
         <div class="inner-box">
             <div class="wrap-logo"><img src="/commingsoon/logo.png" alt=""></div>
             <h1>SẮP RA MẮT!</h1>
-            <p>MetVuong đang trong quá trình hoàn thiện và hứa hẹn sẽ mang đến cho bạn một trang mạng tuyệt vời nhất về Bất Động Sản.</p>
+            <p>MetVuong đang trong quá trình hoàn thiện và hứa hẹn <br> mang đến cho bạn một trang mạng Bất Động Sản tuyệt vời nhất.</p>
             <div class="line"></div>
-            <p><strong><a href="/tin-tuc">Đến mục Tin tức ngay</a></strong></p>
+            <p><strong><a href="/tin-tuc">Quay lại mục Tin tức</a></strong></p>
             <p>hoặc</p>
             <p><strong>Đến các trang mạng xã hội của MetVuong</strong></p>
             <div class="text-center">
