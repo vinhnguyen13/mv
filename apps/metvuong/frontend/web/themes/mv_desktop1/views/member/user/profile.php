@@ -226,7 +226,7 @@ $report_list = [
                 </div>
             </div>
 
-            <div class="col-xs-12 col-xs-3 col-right sidebar-col">
+            <div class="col-xs-12 col-md-3 col-right sidebar-col">
                 <div class="item-sidebar">
                     <?=\vsoft\ad\widgets\ListingWidget::widget(['user_id' => $user->id, 'title' => Yii::t('listing','SIMILAR LISTINGS'), 'limit' => 4])?>
                 </div>

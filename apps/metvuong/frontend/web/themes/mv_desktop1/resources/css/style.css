@@ -7179,7 +7179,7 @@ footer li a {
         padding: 0;
     }
     .title-fixed-wrap .wrap-list-duan {
-        padding: 20px;
+        padding: 20px 0;
     }
     #settings-user .user-edit a > div {
         text-overflow: ellipsis;
@@ -8267,7 +8267,7 @@ footer li a {
         font-size: 14px;
     }
     .panel-heading .panel-title a {
-        font-size: 13px;
+        font-size: 14px;
     }
     .title-sidebar {
         font-size: 15px;
@@ -9304,7 +9304,7 @@ footer li a {
     .chat-history,
     .edit-user-tt,
     .statis {
-        padding: 0 20px 50px;
+        padding: 0 0 50px;
     }
     .statis .tbl-review th {
         font-size: 13px !important;
@@ -9526,7 +9526,7 @@ footer li a {
         margin-top: 3px;
     }
     .panel-heading .panel-title a {
-        padding: 10px 0;
+        padding: 15px 0;
     }
     .search-box #btn-search .icon-mv {
         position: relative;
@@ -9553,6 +9553,7 @@ footer li a {
     .detail-listing-extra {
         padding-top: 0;
     }
+    .detail-listing-extra .col-right,
     .detail-listing-extra .col-left {
         padding-left: 0;
         padding-right: 0;
@@ -10028,6 +10029,12 @@ label:hover {
         border: none;
         min-height: 100%;
     }
+    .user-avatar,
+    .infor-priva,
+    .review-user,
+    .col-right .item-sidebar,
+    .col-right,
+    .col-left,
     .result-listing {
         padding-left: 20px;
         padding-right: 20px;
@@ -10045,5 +10052,27 @@ label:hover {
     }
     .all-packege {
         padding: 0;
+        background: inherit;
     }
+    .list-per-post .nav-tabs {
+        width: 100%;
+        margin-top: 15px;
+    }
+    .list-per-post .nav-tabs li {
+        width: 33.3333%;
+    }
+    .list-per-post .list-post li .edit-listing {
+        position: absolute;
+        margin: 0;
+    }
+    .user-avatar .avatar {
+        margin-right: 10px;
+    }
+    .detail-listing .panel-body {
+        text-align: left
+    }
+    .detail-listing-extra .item-sidebar {
+        padding-left: 0;
+        padding-right: 0;
+    }   
 }
