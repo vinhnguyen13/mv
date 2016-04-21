@@ -630,7 +630,7 @@ var form = {
 					if(r.home_no) {
 						form.homeEl.val(r.home_no).prop('disabled', true);
 					} else {
-						form.homeEl.prop('disabled', false);
+						form.homeEl.val('').prop('disabled', false);
 					}
 				});
 			} else {
