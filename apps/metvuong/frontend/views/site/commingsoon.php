@@ -36,7 +36,7 @@
             <p><strong>Đến các trang mạng xã hội của MetVuong</strong></p>
             <div class="text-center">
                 <a href="https://www.facebook.com/metvuongbatdongsan" title="facebook" class="logo-face"><img src="/commingsoon/logo-face.png" alt=""></a>
-                <a href="javascript:alert('Coming Soon !')" title="google+" class="logo-go"><img src="/commingsoon/logo-go.png" alt=""></a>
+                <a href="https://plus.google.com/109274474274313872943" title="google+" class="logo-go"><img src="/commingsoon/logo-go.png" alt=""></a>
             </div>
         </div>
     </div>
