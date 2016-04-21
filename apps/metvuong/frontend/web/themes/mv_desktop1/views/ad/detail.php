@@ -101,45 +101,45 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 					<li class="color-1">
 						<a href="#" data-toggle="tooltip" data-placement="bottom" title="<?= Yii::t('ad', 'Copy link') ?>" data-title-success="<?= Yii::t('ad', 'Copied') ?>" class="btn-copy" data-clipboard-text="<?= $product->urlDetail(true) ?>">
 							<span class="icon-mv"><span class="icon-link"></span></span>
-							<?= Yii::t('ad', 'Copy link') ?>
+							<span><?= Yii::t('ad', 'Copy link') ?></span>
 						</a>
 					</li>
 					<li class="color-2">
 						<a href="#" class="share-facebook" data-url="<?=Url::to(['/ad/tracking-share', 'product_id' => $product->id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_FACEBOOK], true)?>">
 							<span class="icon-mv"><span class="icon-facebook"></span></span>
-							<?= Yii::t('ad', 'Share Facebook') ?>
+							<span><?= Yii::t('ad', 'Share Facebook') ?></span>
 						</a>	
 					</li>
 					<li class="color-3">
 						<a href="#" data-toggle="modal" data-target="#popup_email_share">
 							<span class="icon-mv fs-18"><span class="icon-mail-profile"></span></span>
-							<?= Yii::t('ad', 'Share Email') ?>
+							<span><?= Yii::t('ad', 'Share Email') ?></span>
 						</a>	
 					</li>
 		            <?php if($product->user_id != Yii::$app->user->id){ ?>
 					<li class="color-4">
 						<a href="#" class="save-item <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>">
 							<span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
-							<?= Yii::t('ad', 'Add to Favorites') ?>
+							<span><?= Yii::t('ad', 'Add to Favorites') ?></span>
 						</a>
 					</li>
 		            <?php } ?>
 					<li class="color-5">
 						<a href="#" data-toggle="modal" data-target="#popup-map">
 							<span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>	
-							<?= Yii::t('ad', 'Location') ?>
+							<span><?= Yii::t('ad', 'Location') ?></span>
 						</a>
 					</li>
 					<li class="color-6">
 						<a href="#" class="report<?=Yii::$app->user->isGuest ? " user-login-link" : "" ?>">
 							<span class="icon-mv"><span class="icon-warning"></span></span>	
-							<?= Yii::t('ad', 'Report Abuse') ?>
+							<span><?= Yii::t('ad', 'Report Abuse') ?></span>
 						</a>
 					</li>
 					<li class="color-8">
 						<a href="#" data-popover="true" data-placement="left">
 							<span class="icon-mv"><span class="icon-phone-profile"></span></span>	
-							<?= Yii::t('ad', 'Contact Agent') ?>
+							<span><?= Yii::t('ad', 'Contact Agent') ?></span>
 						</a>
 						<div class="popover-append hide">
 							<div class="infor-agent clearfix">

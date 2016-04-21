@@ -32,7 +32,8 @@
             <p>We are currently under construction.</p>
             <p>We will be here soon with our awesome website.</p>
             <div class="line"></div>
-            <p><strong>Go to <a href="/tin-tuc">News</a></strong> or</p>
+            <p><strong><a href="/tin-tuc">Go to News</a></strong></p>
+            <p>or</p>
             <p><strong>PLEASE CHECK OUT OUR SOCIAL NETWORK</strong></p>
             <div class="text-center">
                 <a href="https://www.facebook.com/metvuongbatdongsan" title="facebook" class="logo-face"><img src="/commingsoon/logo-face.png" alt=""></a>
