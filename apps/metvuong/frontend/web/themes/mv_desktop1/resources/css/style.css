@@ -9739,15 +9739,15 @@ height: 362px;
     padding: 16px 22px 17px;
     display: block;
     background: #848484;
-    color: #000000;
+    color: #FFFFFF;
     font-size: 14px;
 }
 .wrap-swiper .icons-detail a:hover,
 .wrap-swiper .icons-detail a:hover .icon-mv {
-    color: #009455;
+    color: #000000;
 }
 .wrap-swiper .icons-detail a .icon-mv {
-    color: #000000;
+    color: #FFFFFF;
     width: 35px;
 }
 .detail-listing .panel-group {
@@ -9859,29 +9859,29 @@ label:hover {
     padding-right: 0;
 }
 .icons-detail .color-1 a {
-    background: #848484;
+    background: #007342;
 }
 .icons-detail li a:hover {
     /* background: rgb(179, 179, 179); */
 }
 .icons-detail .color-2 a {
-    background: #929292;
+    background: #00844C;
 }
 .icons-detail .color-3 a {
-    background: #9C9C9C;
+    background: #009858;
 }
 .icons-detail .color-4 a {
     background: #ADADAD;
 }
 .icons-detail .color-5 a {
-    background: #B9B9B9;
+    background: #00A760;
 }
 .icons-detail .color-6 a {
-    background: #CACACA;
+    background: #00B568;
 }
 .icons-detail .color-7 a {
-    background: #DCDCDC;
+    background: #00BF6E;
 }
 .icons-detail .color-8 a {
-    background: #E8E8E8;
+    background: #00D078;
 }
