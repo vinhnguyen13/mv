@@ -5,10 +5,10 @@ use yii\console\Controller;
 
 class ProjectController extends Controller {
 	public function actionUpdate() {
-		$projects = Yii::$app->db->createCommand("SELECT id, location, district_id FROM `ad_building_project`")->queryAll();
+		$projects = \Yii::$app->db->createCommand("SELECT id, location, district_id FROM `ad_building_project`")->queryAll();
 			
-		$wards = Yii::$app->db->createCommand("SELECT id, name, district_id FROM `ad_ward`")->queryAll();
-		$streets = Yii::$app->db->createCommand("SELECT id, name, district_id FROM `ad_street`")->queryAll();
+		$wards = \Yii::$app->db->createCommand("SELECT id, name, district_id FROM `ad_ward`")->queryAll();
+		$streets = \Yii::$app->db->createCommand("SELECT id, name, district_id FROM `ad_street`")->queryAll();
 			
 		foreach ($projects as $project) {
 			$parseLocation = $this->parseLocation($project);
@@ -63,7 +63,7 @@ class ProjectController extends Controller {
 			}
 		
 			if($update) {
-				Yii::$app->db->createCommand()->update('ad_building_project', $update, 'id = ' . $project['id'])->execute();
+				\Yii::$app->db->createCommand()->update('ad_building_project', $update, 'id = ' . $project['id'])->execute();
 			}
 		}
 	}
