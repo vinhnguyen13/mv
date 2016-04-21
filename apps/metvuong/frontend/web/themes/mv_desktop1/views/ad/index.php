@@ -98,6 +98,25 @@ $this->registerJs($script, View::POS_BEGIN);
 										</div>
 									</div>
 								</div>
+								<div class="frm-item select-loaibds">
+									<div class="box-dropdown dropdown-common">
+										<div class="val-selected style-click">
+											<span class="selected" data-placeholder="<?= Yii::t('ad', 'Property Types') ?>"><?= Yii::t('ad', 'Property Types') ?></span>
+											<span class="arrowDownFillFull"></span>
+										</div>
+										<div class="item-dropdown hide-dropdown">
+											<ul class="clearfix loai-bds">
+												<?php
+													foreach ($categories as $categoryId => $category):
+														if($category['apply_to_type'] == $searchModel->type || $category['apply_to_type'] == AdCategory::APPLY_TO_TYPE_BOTH):
+												?>
+												<li><a href="#" data-value="<?= $categoryId ?>" data-order="3"><?= $category['name'] ?></a></li>
+												<?php endif; endforeach; ?>
+											</ul>
+											<?= Html::activeHiddenInput($searchModel, 'category_id', ['id' => 'loai-bds']); ?>
+										</div>
+									</div>
+								</div>
 								<div class="frm-item num-phongngu">
 									<div class="box-dropdown dropdown-common">
 										<div class="val-selected style-click" data-text-add="<?= Yii::t('ad', 'Beds') ?>"><span class="selected">0+ <?= Yii::t('ad', 'Beds') ?></span><span class="arrowDownFillFull"></span></div>
@@ -162,26 +181,6 @@ $this->registerJs($script, View::POS_BEGIN);
 										</div>
 									</div>
 								</div> -->
-								<div class="frm-item select-loaibds">
-									<div class="box-dropdown dropdown-common">
-										<div class="val-selected style-click">
-											<span class="selected" data-placeholder="<?= Yii::t('ad', 'Property Types') ?>"><?= Yii::t('ad', 'Property Types') ?></span>
-											<span class="arrowDownFillFull"></span>
-										</div>
-										<div class="item-dropdown hide-dropdown">
-											<ul class="clearfix loai-bds">
-												<?php
-													foreach ($categories as $categoryId => $category):
-														if($category['apply_to_type'] == $searchModel->type || $category['apply_to_type'] == AdCategory::APPLY_TO_TYPE_BOTH):
-												?>
-												<li><a href="#" data-value="<?= $categoryId ?>" data-order="3"><?= $category['name'] ?></a></li>
-												<?php endif; endforeach; ?>
-											</ul>
-											<?= Html::activeHiddenInput($searchModel, 'category_id', ['id' => 'loai-bds']); ?>
-										</div>
-									</div>
-								</div>
-								
 								<div class="select-duan frm-item">
 									<div class="wrap-duan">
 										<?php

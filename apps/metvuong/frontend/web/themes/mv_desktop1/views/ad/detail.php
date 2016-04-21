@@ -85,61 +85,71 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 
 					<div class="swiper-pagination"></div>
 
-					<div class="posi_absolute btn-slide">
-						<div class="swiper-button-prev icon-mv"><span class="icon-angle-left"></span></div>
-						<div class="swiper-button-next icon-mv"><span class="icon-angle-right"></span></div>
-    				</div>
+					<div class="swiper-button-prev icon-mv"><span class=""></span></div>
+					<div class="swiper-button-next icon-mv"><span class=""></span></div>
 				</div>
 				<?php else: ?>
-				<img alt="" src="/themes/metvuong2/resources/images/default-ads.jpg" />
+				<div class="no-gallery pull-left">
+					<div class="img-show">
+						<div>
+							<img alt="" src="/themes/metvuong2/resources/images/default-ads.jpg" />
+						</div>
+					</div>
+				</div>
 				<?php endif; ?>
 				<ul class="pull-right icons-detail">
-					<li>
+					<li class="color-1">
 						<a href="#" data-toggle="tooltip" data-placement="bottom" title="<?= Yii::t('ad', 'Copy link') ?>" data-title-success="<?= Yii::t('ad', 'Copied') ?>" class="btn-copy" data-clipboard-text="<?= $product->urlDetail(true) ?>">
 							<span class="icon-mv"><span class="icon-link"></span></span>
 							<?= Yii::t('ad', 'Copy link') ?>
 						</a>
 					</li>
-					<li>
+					<li class="color-2">
 						<a href="#" class="share-facebook" data-url="<?=Url::to(['/ad/tracking-share', 'product_id' => $product->id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_FACEBOOK], true)?>">
 							<span class="icon-mv"><span class="icon-facebook"></span></span>
 							<?= Yii::t('ad', 'Share Facebook') ?>
 						</a>	
 					</li>
-					<li>
+					<li class="color-3">
 						<a href="#" data-toggle="modal" data-target="#popup_email_share">
 							<span class="icon-mv fs-18"><span class="icon-mail-profile"></span></span>
 							<?= Yii::t('ad', 'Share Email') ?>
 						</a>	
 					</li>
 		            <?php if($product->user_id != Yii::$app->user->id){ ?>
-					<li>
+					<li class="color-4">
 						<a href="#" class="save-item <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>">
 							<span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
 							<?= Yii::t('ad', 'Add to Favorites') ?>
 						</a>
 					</li>
 		            <?php } ?>
-					<li>
+					<li class="color-5">
 						<a href="#" data-toggle="modal" data-target="#popup-map">
 							<span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>	
 							<?= Yii::t('ad', 'Location') ?>
 						</a>
 					</li>
-					<li>
-						<a href="#" class="report<?=Yii::$app->user->isGuest ? " user-login-link" : "" ?>">
+					<li class="color-6">
+						<a href="#">
 							<span class="icon-mv"><span class="icon-warning"></span></span>	
 							<?= Yii::t('ad', 'Report Abuse') ?>
 						</a>
 					</li>
 					<?php if($userId == $product->user_id): ?>
-					<li class="edit-item">
+					<li class="edit-item color-7">
 						<a href="<?= Url::to(['update', 'id' => $product->id]) ?>" class="edit-listing">
 							<span class="icon-mv"><span class="icon-edit-copy-4"></span></span>
 							Edit Listing
 						</a>
 					</li>
 					<?php endif; ?>
+					<li class="color-8">
+						<a href="#">
+							<span class="icon-mv"><span class="icon-phone-profile"></span></span>	
+							<?= Yii::t('ad', 'Contact Agent') ?>
+						</a>
+					</li>
 				</ul>
 			</div>
 			<div class="infor-listing">
@@ -157,7 +167,6 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 						<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
 					</ul>	
 				</div>
-
 				<?=$this->renderAjax('/ad/_partials/shareEmail',[
                     'popup_email_name' => 'popup_email_contact',
                     'product' => $product,
@@ -183,21 +192,6 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 						</div>
 					</div>
 				</div>
-
-                <div id="popup-alert-report" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                 <div class="wrap-popup">
-                                    <div class="inner-popup">
-                                        <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
-                                        <div class="report_text text-center"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
 				<script>
 					$(document).ready(function () {
@@ -274,39 +268,6 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
                                     }
                                 });
                             }
-                            return false;
-                        });
-
-                        $('.report').click(function(){
-                            var _user_id = parseInt($('#report-form #uid').val());
-                            if(_user_id != 0) {
-                                $('#report-listing').modal('show');
-                            } else {
-                                $('#popup-login').modal('show');
-                            }
-                        });
-
-                        $('#report-form .send_report').click(function() {
-                            $('body').loading();
-                            $.ajax({
-                                type: "post",
-                                dataType: 'json',
-                                url: $('#report-form').attr('action'),
-                                data: $('#report-form').serializeArray(),
-                                success: function (data) {
-                                    $('#report-listing').modal('hide');
-                                    if (data == 200) {
-                                        $('body').loading({done: true});
-                                        $('#popup-alert-report .report_text').text("<?=Yii::t('listing', 'Report has been sent.')?>");
-                                        $('#popup-alert-report').modal('show');
-                                        return true;
-                                    }
-                                },
-                                error: function () {
-                                    $('#report-listing').modal('hide');
-                                    $('body').loading({done: true});
-                                }
-                            });
                             return false;
                         });
 
@@ -502,36 +463,6 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
     </div>
 </div>
 
-<div id="report-listing" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="wrap-popup">
-                    <div class="inner-popup">
-                        <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
-                        <div class="review-box-popup">
-                            <h2 class="color-cd fs-18 text-uper font-600 mgB-20"><?=Yii::t('profile', 'REPORT')?></h2>
-                            <p class="fs-13 mgB-10">Tell us about your experience with this agent. Your report will help other users review the agent that's right for them.</p>
-                            <form id="report-form" action="<?=Url::to(['/ad/sendreport'])?>" class="fs-13">
-                                <?php
-                                $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\ad\models\ReportType::report_product])->all();
-                                echo \yii\helpers\Html::radioList('optionsRadios', 1, ArrayHelper::map($report_list, 'id', 'name'));
-                                ?>
-                                <label><input type="radio" name="optionsRadios" value="-1"> <?=Yii::t('listing', 'Something else')?> </label>
-                                <textarea class="pd-5 mgB-5" name="description" id="description" cols="30" rows="5" placeholder="<?=Yii::t('profile','Content')?>"></textarea>
-                                <input type="hidden" id="pid" name="pid" value="<?=$product->id?>">
-                                <input type="hidden" id="uid" name="uid" value="<?=empty(Yii::$app->user->id) ? 0 : Yii::$app->user->id?>">
-                                <div class="text-right">
-                                    <button class="btn-common send_report"><?=Yii::t('listing', 'Send report')?></button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <?php
 /**
