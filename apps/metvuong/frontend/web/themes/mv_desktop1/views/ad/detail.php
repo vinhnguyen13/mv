@@ -136,19 +136,33 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 							<?= Yii::t('ad', 'Report Abuse') ?>
 						</a>
 					</li>
-					<?php if($userId == $product->user_id): ?>
-					<li class="edit-item color-7">
-						<a href="<?= Url::to(['update', 'id' => $product->id]) ?>" class="edit-listing">
-							<span class="icon-mv"><span class="icon-edit-copy-4"></span></span>
-							<?= Yii::t('ad', 'Edit Listing') ?>
-						</a>
-					</li>
-					<?php endif; ?>
 					<li class="color-8">
-						<a href="#">
+						<a href="#" data-popover="true" data-placement="left">
 							<span class="icon-mv"><span class="icon-phone-profile"></span></span>	
 							<?= Yii::t('ad', 'Contact Agent') ?>
 						</a>
+						<div class="popover-append hide">
+							<div class="infor-agent clearfix">
+								<a href="#" class="wrap-img"><img src="/images/default-avatar.jpg" alt="porsche"></a>
+								<div class="img-agent">
+									<a href="#" class="name-agent">Hao Do</a>
+									<div class="item-agent">
+										<div>
+											<span class="icon icon-phone"></span>
+										</div>
+										<a href="tel:0988888888">0988888888</a>
+									</div>
+									<div class="item-agent">
+										<div>
+											<span class="icon icon-email"></span>
+										</div>
+										porsche@gmail.com 
+									</div>
+									<a href="#" data-toggle="modal" data-target="#popup_email_contact" class="email-btn btn-common btn-small">Email</a>
+									<a href="#" id="" class="chat-btn btn-common btn-small chat-now" data-chat-user="porsche">Chat</a>
+								</div>
+							</div>
+						</div>
 					</li>
 				</ul>
 			</div>
@@ -186,7 +200,9 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-body">
-								<a href="#" class="btn-close-map close" data-dismiss="modal" aria-label="Close"><?=Yii::t('listing','Back')?></a>
+								<a href="#" class="btn-close-map close" data-dismiss="modal" aria-label="Close">
+									<span class="icon-mv fs-12 mgR-5"><span class="icon-close-icon"></span></span><?=Yii::t('listing','Close')?>
+								</a>
 								<div id="map_detail" data-lat="<?= $product->lat ?>" data-lng="<?= $product->lng ?>"></div>
 							</div>
 						</div>
@@ -241,6 +257,19 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 
 				<script>
 					$(document).ready(function () {
+
+						$('body').popover({
+							selector: '[data-popover]', 
+							trigger: 'click hover',
+							html: true,
+							delay: {
+								show: 50, 
+								hide: 50
+							},
+							content: function () {
+								return $('.popover-append').html();
+							}
+						});
 
 						var clipboard = new Clipboard('.btn-copy');
 
@@ -339,7 +368,7 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
                                         $('body').loading({done: true});
                                         $('#popup-alert-report .report_text').text("<?=Yii::t('listing', 'Report has been sent.')?>");
                                         $('#popup-alert-report').modal('show');
-                                        
+
                                         return true;
                                     }
                                 },
