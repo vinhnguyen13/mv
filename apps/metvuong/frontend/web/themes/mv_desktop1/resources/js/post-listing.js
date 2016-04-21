@@ -614,6 +614,24 @@ var form = {
 					form.lngEl.val(r.lng);
 					
 					form.fixHeight(2);
+					
+					if(r.ward_id) {
+						form.wardEl.val(r.ward_id).prop('disabled', true);
+					} else {
+						form.wardEl.val('').prop('disabled', false);
+					}
+					
+					if(r.street_id) {
+						form.streetEl.val(r.street_id).prop('disabled', true);
+					} else {
+						form.streetEl.val('').prop('disabled', false);
+					}
+					
+					if(r.home_no) {
+						form.homeEl.val(r.home_no).prop('disabled', true);
+					} else {
+						form.homeEl.val('').prop('disabled', false);
+					}
 				});
 			} else {
 				form.projectInfoEl.hide();

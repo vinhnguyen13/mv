@@ -32,11 +32,15 @@ $report_list = [
                 <div class="user-avatar">
                     <div class="wrap-img avatar"><img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="<?=$model->avatar?>" alt="metvuong avatar" /></div>
                     <div class="overflow-all">
-                        <div class="pull-right report-listing">
-                            <a href="#" data-toggle="modal" data-target="#popup-report-user"
-                               class="btn-report btn"><span class="icon-mv"><span class="icon-warning"></span></span><?= Yii::t('profile', 'Report') ?></a>
-                        </div>
-                        <p class="name-user fs-18 font-600" ><?= $model->name ?><a href="#" class="chat-now" data-chat-user="<?=$user->username?>"><span class="icon-mv"><span class="icon-bubbles-icon"></span></span></a></p>
+                        <p class="name-user fs-18 font-600" >
+                            <?= $model->name ?>
+                            <a href="#" class="chat-now tooltip-show" data-chat-user="<?=$user->username?>" data-placement="bottom" title="Chat">
+                                <span class="icon-mv"><span class="icon-bubbles-icon"></span></span>
+                            </a>
+                            <a href="#" data-toggle="modal" data-placement="bottom" data-target="#popup-report-user" class="btn-report tooltip-show" title="<?= Yii::t('profile', 'Report') ?>">
+                                <span class="icon-mv"><span class="icon-warning"></span></span>
+                            </a>
+                        </p>
                         <div class="stars">
                             <span id="rating-all" class="rateit" data-rateit-value="<?=$model->rating_point?>" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
                             <span class="fs-13 font-600">(<?=$count_review?>)</span>
@@ -222,7 +226,7 @@ $report_list = [
                 </div>
             </div>
 
-            <div class="col-xs-12 col-xs-3 col-right sidebar-col">
+            <div class="col-xs-12 col-md-3 col-right sidebar-col">
                 <div class="item-sidebar">
                     <?=\vsoft\ad\widgets\ListingWidget::widget(['user_id' => $user->id, 'title' => Yii::t('listing','SIMILAR LISTINGS'), 'limit' => 4])?>
                 </div>

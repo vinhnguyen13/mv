@@ -40,11 +40,21 @@ Yii::$app->view->registerMetaTag([
     'content' => Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'. $news["banner"])
 ]);
 
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:url',
+    'content' => \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true)
+]);
+
 $fb_appId = '680097282132293'; // stage.metvuong.com
 if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
     $fb_appId = '736950189771012';
 else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     $fb_appId = '891967050918314';
+
+$banner = Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'. $news["banner"]);
+//$checkBanner = file_exists(Yii::getAlias('@store')."/news/show/".$news["banner"]);
+//if($checkBanner == false)
+//    $banner = Yii::$app->urlManager->createAbsoluteUrl('/themes/metvuong2/resources/images/default-ads.jpg');
 
 ?>
 <script>
@@ -86,7 +96,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                             <div id="social<?=$news["id"]?>" class="share-social mgT-10 wrap-img">
                                 <div class="fb-like" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>" data-layout="button_count" style="margin-right: 10px;"></div>
                                 <div class="fb-send" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>" data-show-faces="false" style="margin-right: 10px;"></div>
-                                <div class="fb-share-button" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>" data-layout="button_count"></div><br>
+                                <a class="fb-share" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>" data-layout="button_count">share facebook</a><br>
                                 <div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]])?>" data-width="100%" data-numposts="3"></div>
                             </div>
                         </div>
@@ -157,6 +167,30 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
             slidesPerView: 'auto',
             nextButton: '.swiper-button-next',
             prevButton: '.swiper-button-prev'
+        });
+
+//        $(document).on('click', '.detail-content .fb-share', function(){
+//            var href = $(this).data('href');
+//            FB.ui({
+//                method: 'share',
+//                href: href
+//            }, function(response){});
+//            return false;
+//        });
+
+
+        function fbShare(url, title, descr, image, winWidth, winHeight) {
+            var winTop = (screen.height / 2) - (winHeight / 2);
+            var winLeft = (screen.width / 2) - (winWidth / 2);
+            window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + url + '&p[title]=' + title + '&p[summary]=' + descr + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+        }
+
+        $(document).on('click', '.detail-content .fb-share', function(){
+            var url = '<?= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>';
+            var image = '<?=$banner?>';
+            var name = '<?=$news["title"]?>';
+            var descr = '<?=$news["brief"]?>';
+            fbShare(url, name, descr, image, 800, 600);
         });
 
 //        var timer;

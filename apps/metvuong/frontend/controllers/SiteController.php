@@ -132,6 +132,11 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
+	public function actionCommingsoon()
+	{
+		return $this->renderPartial('commingsoon');
+	}
+
     public function actionLanguage()
     {
         $language = Yii::$app->request->get('language');
