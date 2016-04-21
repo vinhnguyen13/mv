@@ -4,7 +4,10 @@ use yii\widgets\LinkPager;
 
 $newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatID"] : 0;
 $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID, 'status' => \vsoft\news\models\Status::STATUS_ACTIVE]);
-
+Yii::t('news', 'Real Estate');
+Yii::t('news', 'Financial & Banking');
+Yii::t('news', 'Business');
+Yii::t('news', 'Economy');
 ?>
 <div class="title-fixed-wrap container">
     <div class="page-news">
@@ -25,7 +28,7 @@ $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID, 'st
                                 <div class="img-show"><div><img src="<?=$banner?>" alt="<?=$n["title"]?>"></div></div>
                             </a>
                             <div>
-                                <a href="<?=\yii\helpers\Url::to(['news/list', 'cat_id'=>$n["catalog_id"], 'cat_slug'=>$n["cat_slug"]], true)?>" class="name-cate"><?=mb_strtoupper($n["cat_title"], "UTF-8")?></a>
+                                <a href="<?=\yii\helpers\Url::to(['news/list', 'cat_id'=>$n["catalog_id"], 'cat_slug'=>$n["cat_slug"]], true)?>" class="name-cate"><?=mb_strtoupper(Yii::t('news', $n["cat_title"]), 'UTF-8')?></a>
                                 <p class="name-news"><a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n["id"], 'slug' => $n["slug"]], true)?>" title="<?=$n["title"]?>"><?=$n["title"]?></a></p>
                                 <p class="date-post"><?=date('d/m/Y, H:i', $n["created_at"])?></p>
                                 <p class="short-txt" title="<?=$n["brief"]?>">
