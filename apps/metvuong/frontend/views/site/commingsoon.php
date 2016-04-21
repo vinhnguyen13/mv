@@ -28,13 +28,12 @@
     <div>
         <div class="inner-box">
             <div class="wrap-logo"><img src="/commingsoon/logo.png" alt=""></div>
-            <h1>COMING SOON!</h1>
-            <p>We are currently under construction.</p>
-            <p>We will be here soon with our awesome website.</p>
+            <h1>SẮP RA MẮT!</h1>
+            <p>MetVuong đang trong quá trình hoàn thiện và hứa hẹn sẽ mang đến cho bạn một trang mạng tuyệt vời nhất về Bất Động Sản.</p>
             <div class="line"></div>
-            <p><strong><a href="/tin-tuc">Go to News</a></strong></p>
-            <p>or</p>
-            <p><strong>PLEASE CHECK OUT OUR SOCIAL NETWORK</strong></p>
+            <p><strong><a href="/tin-tuc">Đến mục Tin tức ngay</a></strong></p>
+            <p>hoặc</p>
+            <p><strong>Đến các trang mạng xã hội của MetVuong</strong></p>
             <div class="text-center">
                 <a href="https://www.facebook.com/metvuongbatdongsan" title="facebook" class="logo-face"><img src="/commingsoon/logo-face.png" alt=""></a>
                 <a href="javascript:alert('Coming Soon !')" title="google+" class="logo-go"><img src="/commingsoon/logo-go.png" alt=""></a>
