@@ -31,7 +31,7 @@ Yii::t('news', 'Economy');
                                 <a href="<?=\yii\helpers\Url::to(['news/list', 'cat_id'=>$n["catalog_id"], 'cat_slug'=>$n["cat_slug"]], true)?>" class="name-cate"><?=mb_strtoupper(Yii::t('news', $n["cat_title"]), 'UTF-8')?></a>
                                 <p class="name-news"><a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n["id"], 'slug' => $n["slug"]], true)?>" title="<?=$n["title"]?>"><?=$n["title"]?></a></p>
                                 <p class="date-post"><?=date('d/m/Y, H:i', $n["created_at"])?></p>
-                                <p class="short-txt" title="<?=$n["brief"]?>">
+                                <p class="short-txt">
                                     <?=\yii\helpers\StringHelper::truncate($n["brief"], 200)?>
                                 </p>
                                 <a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n["id"], 'slug' => $n["slug"]], true)?>" class="view-more"><?=Yii::t('news','Read more')?> <span class="icon arrowLeft-small-black"></span></a>
