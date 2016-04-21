@@ -9749,6 +9749,9 @@ height: 381px;
     background: #848484;
     color: #FFFFFF;
     font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .wrap-swiper .icons-detail a:hover,
 .wrap-swiper .icons-detail a:hover .icon-mv {
