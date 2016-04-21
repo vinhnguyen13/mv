@@ -96,7 +96,7 @@ if($checkBanner == false)
                             <div id="social<?=$news["id"]?>" class="share-social mgT-10 wrap-img">
                                 <div class="fb-like" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>" data-layout="button_count" style="margin-right: 10px;"></div>
                                 <div class="fb-send" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>" data-show-faces="false" style="margin-right: 10px;"></div>
-                                <div class="fb-share-button" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>" data-layout="button_count"></div><br>
+                                <a href="javascript:void();" class="fb-share" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>" data-layout="button_count">facebook</a><br>
                                 <div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]])?>" data-width="100%" data-numposts="3"></div>
                             </div>
                         </div>
@@ -168,6 +168,16 @@ if($checkBanner == false)
             nextButton: '.swiper-button-next',
             prevButton: '.swiper-button-prev'
         });
+
+        $(document).on('click', '.detail-content .fb-share', function(){
+            var href = $(this).data('href');
+            FB.ui({
+                method: 'share',
+                href: href
+            }, function(response){});
+            return false;
+        });
+
 
 //        function fbShare(url, title, descr, image, winWidth, winHeight) {
 //            var winTop = (screen.height / 2) - (winHeight / 2);
