@@ -9952,6 +9952,7 @@ label:hover {
     padding: 15px;
 }
 @media (max-width: 985px) {
+    .list-menu-news,
     .box-item.box-feature-item,
     .news-item,
     .search-home {
@@ -10035,5 +10036,14 @@ label:hover {
         margin-left: -20px;
         margin-right: -20px;
         width: inherit;
+    }
+    .detail-duan-moi {
+        padding-top: 0;
+    }
+    .box-content iframe {
+        max-width: 100%;
+    }
+    .all-packege {
+        padding: 0;
     }
 }
