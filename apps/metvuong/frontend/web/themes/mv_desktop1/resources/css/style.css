@@ -2645,7 +2645,7 @@ footer {
     display: none;
 }
 .statis section {
-    padding: 30px 0 0 0;
+    /* padding: 30px 0 0 0; */
 }
 #sandbox-container input {
     border-radius: 0;
@@ -6440,6 +6440,7 @@ footer li a {
         width: 680px;
         overflow: hidden;
     }
+    .statis,
     .wrap-noti,
     .wrap-history,
     .wrap-list-duan,
@@ -6924,6 +6925,7 @@ footer li a {
 .notifile a div {
     line-height: 100%;
 }
+.wrap-swiper .icons-detail .popover .btn-common:hover,
 .btn-common:hover {
 	background: #00a769;
 	background-image: -webkit-linear-gradient(top, #00a769, #00C77E);
@@ -9714,15 +9716,19 @@ input:-webkit-autofill {
     height: 362px;
     margin: 0;
     /* background: #ECECEC; */
-    background: #F3F3F3;
+    background: #00D078;
 }
 .detail-listing .no-gallery,
 .detail-listing-extra .wrap-swiper .icons-detail {
     height: 336px;
 }
-.detail-listing-dt .no-gallery {
+.detail-listing-extra .wrap-swiper .icons-detail {
     
-height: 362px;
+height: 381px;
+}
+
+.detail-listing-dt .no-gallery {
+    height: 362px;
 }
 .detail-listing .no-gallery img {
     /* max-height: 100%; */
@@ -9730,6 +9736,9 @@ height: 362px;
 .wrap-swiper .icons-detail li {
     float: none;
     margin: 0 0 0 0;
+}
+.wrap-swiper .icons-detail li:last-child {
+    /* border-bottom: 1px solid #00BD6D; */
 }
 .wrap-swiper .icons-detail a {
     transition: background-color .1s linear;
@@ -9740,6 +9749,9 @@ height: 362px;
     background: #848484;
     color: #FFFFFF;
     font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .wrap-swiper .icons-detail a:hover,
 .wrap-swiper .icons-detail a:hover .icon-mv {
@@ -9752,7 +9764,7 @@ height: 362px;
 .detail-listing .panel-group {
     padding: 0 20px;
 }
-.detail-listing-dt .wrap-swiper .icons-detail a {
+.detail-listing-dt .wrap-swiper .icons-detail > a {
     font-size: 13px;
     padding-left: 15px;
     padding-right: 10px;
@@ -9881,7 +9893,7 @@ label:hover {
 .icons-detail .color-7 a {
     background: #00BF6E;
 }
-.icons-detail .color-8 a {
+.icons-detail .color-8 > a {
     background: #00D078;
 }
 .fb-comments {
@@ -9895,4 +9907,39 @@ label:hover {
 }
 .fb-like {
     z-index: 10;
+}
+.wrap-swiper .icons-detail .popover {
+    max-width: inherit;
+}
+.wrap-swiper .icons-detail .popover a {
+    background: none;
+    color: #3c3c3c;
+    padding: 0;
+    display: inline-block;
+}
+.wrap-swiper .icons-detail .popover .name-agent {
+    margin-bottom: 15px;
+}
+.wrap-swiper .icons-detail .popover .btn-common {
+    display: block;
+    background: #00a769;
+    color: #fff;
+    padding: 10px 30px;
+    font-size: 13px;
+    text-align: center;
+    font-weight: 600;
+    margin: 0 10px 0 0;
+    float: left;
+}
+.wrap-swiper .icons-detail .popover .infor-agent {
+    margin-bottom: 0;
+    display: block;
+}
+.wrap-swiper .icons-detail .popover .item-agent {
+    margin: 0 0 15px 0;
+    padding: 0;
+    overflow: visible;
+}
+.wrap-swiper .icons-detail .popover-content {
+    padding: 15px;
 }
