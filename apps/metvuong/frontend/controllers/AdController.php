@@ -574,21 +574,28 @@ class AdController extends Controller
         if(Yii::$app->request->isPost && Yii::$app->request->isAjax) {
 //            Yii::$app->response->format = Response::FORMAT_JSON;
             $post = Yii::$app->request->post();
-            $user_ip = Yii::$app->getRequest()->getUserIP();
             if (!empty($post["uid"]) && !empty($post["pid"]) && !empty($post["optionsRadios"])) {
                 try {
-                    $product_report = new AdProductReport();
+                    $product_report = AdProductReport::find()->where(['user_id' => (int)$post["uid"]])->andWhere(['product_id' => (int)$post["pid"]])
+                                    ->orderBy(['report_at' => SORT_DESC])->one();
+                    if(!$product_report)
+                        $product_report = new AdProductReport();
+
                     $product_report->user_id = $post["uid"];
                     $product_report->product_id = $post["pid"];
-                    $product_report->type = $post["optionsRadios"];
-                    $product_report->ip = $user_ip;
+                    $type = (int)$post["optionsRadios"];
+                    $product_report->type = $type;
+                    if($type == -1 && !empty($post["description"])){
+                        $product_report->description = $post["description"];
+                    }
+                    $product_report->ip = Yii::$app->getRequest()->getUserIP();;
                     $product_report->status = Status::STATUS_ACTIVE;
                     $product_report->report_at = time();
                     if ($product_report->save())
                         return 200;
                 } catch(IntegrityException $ie){
                     if($ie->getMessage())
-                        return 13;
+                        return 13 . " - " . $ie->getMessage();
                 }
             }
         }
