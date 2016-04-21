@@ -9,7 +9,10 @@
 
 use yii\helpers\Url;
 
-
+Yii::t('news', 'Real Estate');
+Yii::t('news', 'Financial & Banking');
+Yii::t('news', 'Business');
+Yii::t('news', 'Economy');
 
 Yii::$app->view->registerMetaTag([
     'name' => 'keywords',
@@ -74,8 +77,8 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                 <article>
                     <h1 class="big-title"><?=$news["title"]?></h1>
                     <div class="time-post">
-                        <span class=""><?=date("d/m/Y g:i a",$news["created_at"])?></span>,
-                        <a href="#" class="name-cate"><?=$news["cat_title"]?></a>
+                        <span class=""><?=date("d/m/Y",$news["created_at"])?></span>,
+                        <a href="#" class="name-cate"><?=mb_strtoupper(Yii::t('news', $news["cat_title"]), 'UTF-8')?></a>
                     </div>
                     <div class="detail-content">
                         <div class="box-content">
