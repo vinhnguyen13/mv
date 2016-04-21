@@ -52,9 +52,9 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     $fb_appId = '891967050918314';
 
 $banner = Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'. $news["banner"]);
-$checkBanner = file_exists(Yii::getAlias('@store')."/news/show/".$news["banner"]);
-if($checkBanner == false)
-    $banner = Yii::$app->urlManager->createAbsoluteUrl('/themes/metvuong2/resources/images/default-ads.jpg');
+//$checkBanner = file_exists(Yii::getAlias('@store')."/news/show/".$news["banner"]);
+//if($checkBanner == false)
+//    $banner = Yii::$app->urlManager->createAbsoluteUrl('/themes/metvuong2/resources/images/default-ads.jpg');
 
 ?>
 <script>
