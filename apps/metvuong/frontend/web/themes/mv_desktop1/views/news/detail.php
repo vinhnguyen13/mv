@@ -190,7 +190,8 @@ if($checkBanner == false)
             var image = '<?=$banner?>';
             var name = '<?=$news["title"]?>';
             var descr = '<?=$news["brief"]?>';
-            fbShare(url, name, descr, image, 800, 500);
+            window.open('http://www.facebook.com/sharer.php?u=' + url);
+//            fbShare(url, name, descr, image, 800, 500);
         });
 
 //        var timer;
