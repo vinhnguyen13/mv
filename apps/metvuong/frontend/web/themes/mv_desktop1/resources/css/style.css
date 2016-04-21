@@ -7661,6 +7661,10 @@ footer li a {
     text-transform: uppercase;
     margin-bottom: 5px;
     line-height: 100%;
+    margin-top: 3px;
+}
+.user-avatar .name-user .tooltip-inner {
+    text-transform: capitalize;
 }
 .user-avatar .name-user a {
     position: relative;
@@ -7672,6 +7676,9 @@ footer li a {
 }
 .user-avatar .name-user span {
     font-size: 20px;
+}
+.user-avatar .name-user .btn-report span {
+    font-size: 18px;
 }
 .user-avatar .rating {
     margin-bottom: 5px;
@@ -7964,6 +7971,8 @@ footer li a {
     left: 50%;
     margin-left: -16px;
 }
+.detail-listing-extra .swiper-button-next span,
+.detail-listing-extra .swiper-button-prev span,
 .detail-listing-dt .swiper-button-next span, 
 .detail-listing-dt .swiper-button-prev span {
     height: 20px;
@@ -9830,7 +9839,7 @@ height: 381px;
     border-color: #ccc;
 }
 .btn-report {
-    padding: 5px 15px;
+    /* padding: 5px 15px; */
 }
 .field-adproductadditioninfo-facility input[type=checkbox] {
     position: relative;
