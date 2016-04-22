@@ -9548,7 +9548,7 @@ footer li a {
     .news-item {
     }
     #container {
-        overflow: hidden;
+        /* overflow-x: hidden; */
     }
     .detail-listing-extra {
         padding-top: 0;
