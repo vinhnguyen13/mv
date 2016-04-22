@@ -5,6 +5,7 @@ use yii\helpers\Url;
 ?>
 <div class="title-fixed-wrap container">
 	<div class="u-allduan">
+        <div class="title-top">Dashboard</div>
         <?php if($total <= 0){?>
             <div class="no-duan">
                 <div>
