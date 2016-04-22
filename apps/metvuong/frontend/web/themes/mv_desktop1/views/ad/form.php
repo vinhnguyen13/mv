@@ -107,7 +107,7 @@ use vsoft\ad\models\AdFacility;
 						
 						<?php
 							$categories = AdCategory::find()->all();
-							$categoriesDropdown = ArrayHelper::map($categories, 'id', 'name');
+							$categoriesDropdown = ArrayHelper::map($categories, 'id', function($model){return Yii::t('ad', $model->name);});
 							$categoriesOptions = ArrayHelper::map($categories, 'id', function($category){ return ['data-type' => $category->apply_to_type, 'data-limit' => $category->limit_area]; });
 								
 							echo $form->field($product, 'category_id')

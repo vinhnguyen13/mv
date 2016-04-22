@@ -119,7 +119,7 @@ use vsoft\ad\models\AdProduct;
                     <div class="img-show"><iframe width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:EksyMSBOZ3V54buFbiBUcnVuZyBOZ-G6oW4sIELhur9uIE5naMOpLCBRdeG6rW4gMSwgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0&key=AIzaSyDgukAnWQNq0fitebULUbottG5gvK64OCQ" allowfullscreen></iframe></div>
                 </div>
                 <div class="txt-location">
-                    <p class="name-cty color-cd">METVUONG TEAM</p>
+                    <p class="name-cty color-cd"><?= Yii::t('general', 'METVUONG TEAM') ?></p>
                     <ul class="clearfix">
                         <li>
                             <span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>

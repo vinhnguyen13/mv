@@ -10,7 +10,7 @@ use yii\helpers\Url;
             <div class="no-duan">
                 <div>
                     <p>Hiện tại, bạn không có tin đăng nào.</p>
-                    <a href="<?= Url::to(['/ad/post']) ?>" class="btn-000">Đăng Dự Án</a>
+                    <a href="<?= Url::to(['/ad/post']) ?>" class="btn-common">Đăng Dự Án</a>
                 </div>
             </div>
         <?php } else { ?>

@@ -51,6 +51,8 @@ if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
 else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     $fb_appId = '891967050918314';
 
+$_title = str_replace("'", "\'", $news["title"]);
+$_brief = str_replace("'", "\'", $news["brief"]);
 $banner = Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'. $news["banner"]);
 //$checkBanner = file_exists(Yii::getAlias('@store')."/news/show/".$news["banner"]);
 //if($checkBanner == false)
@@ -187,9 +189,9 @@ $banner = Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'. $news["b
 
         $(document).on('click', '.detail-content .fb-share', function(){
             var url = '<?= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>';
-            var image = '<?=$banner?>';
-            var name = '<?=str_replace("'", "\'", $news["title"]) ?>';
-            var descr = '<?=str_replace("'", "\'", $news["brief"])?>';
+            var image = '<?=$banner ?>';
+            var name = '<?=$_title ?>';
+            var descr = '<?=$_brief ?>';
             fbShare(url, name, descr, image, 800, 600);
         });
 

@@ -33,7 +33,7 @@
 					<?= $product->getAddress($product->show_home_no) ?>
 				</p>
 				<p class="infor-by-up">
-					<strong><?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?></strong>
+					<strong><?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= strtolower($types[$product->type]) ?></strong>
 				</p>
 				<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
 				<ul class="clearfix list-attr-td">

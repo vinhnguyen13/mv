@@ -3199,7 +3199,7 @@ html.mm-opening .mm-slideout {
     color: #3c3c3c;
     font-size: 16px;
     font-weight: 600;
-    height: 90px;
+    height: 85px;
 }
 .box-item .address-feat .address-icon {
     position: relative;
@@ -5616,7 +5616,7 @@ html.mm-opening .mm-slideout {
         padding: 0;
     }
     header.mm-slideout {
-        overflow: hidden;
+        /* overflow: hidden; */
     }
 }
 .user-login {
@@ -6129,6 +6129,10 @@ footer li a {
         font-weight: 600;
         line-height: 100%;
         /* display: none; */
+    }
+    .noti-alert .title-top,
+    .u-allduan .title-top {
+        display: none;
     }
     .post-listing .title-top {
         display: block;
@@ -7898,6 +7902,7 @@ footer li a {
     }
     .wrap-infor-duan .info-item .address-feat {
         margin-bottom: 0;
+        padding-bottom: 0;
     }
     .list-duan .col-left .wrap-item > a {
         width: 100%;
@@ -9682,6 +9687,15 @@ input:-webkit-autofill {
     .profile-user .item-sidebar .bottom-feat-box {
         padding: 0;
     }
+    .chat-live {
+        padding-top: 0;
+    }
+    .search-history {
+        top: 0;
+    }
+    .chat-list {
+        padding-top: 60px
+    }
 }
 .btn-slide .swiper-button-next span, 
 .btn-slide .swiper-button-prev span,
@@ -10031,7 +10045,6 @@ label:hover {
     .review-user,
     .col-right .item-sidebar,
     .col-right,
-    .col-left,
     .result-listing {
         padding-left: 20px;
         padding-right: 20px;
@@ -10046,6 +10059,9 @@ label:hover {
     }
     .box-content iframe {
         max-width: 100%;
+    }
+    .box-content iframe.fb_iframe_widget_lift {
+        max-width: inherit;
     }
     .all-packege {
         padding: 0;
@@ -10073,9 +10089,12 @@ label:hover {
     .detail-listing-extra .item-sidebar {
         padding-left: 0;
         padding-right: 0;
-    }   
+    }
     .item-sidebar li .bottom-feat-box {
         padding: 0;
+    }
+    .box-feature-item .bottom-feat-box {
+        padding: 0 15px 10px;
     }
     .wrap-noti {
         padding: 30px 0 0 51px;
@@ -10083,6 +10102,26 @@ label:hover {
     .edit-user-tt .title-top,
     .chat-history .title-top {
         display: block;
+    }
+    .list-noti .item {
+        padding: 0;
+    }
+    .list-noti .user-get .name {
+        font-size: 13px;
+        display: block;
+    }
+    .wrap-infor-duan .bottom-feat-box {
+        padding-top: 0;
+    }
+    .col-right,
+    .col-left {
+        padding: 0;
+    }
+    .profile-user {
+        margin: 0;
+    }
+    .col-left {
+        padding-top: 30px;
     }
 }
 .fb-share {

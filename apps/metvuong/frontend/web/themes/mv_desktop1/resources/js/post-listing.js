@@ -1105,7 +1105,7 @@ form.success = {
 		switch(form.catEl.val()) {
 	    	case form.CHCK:
 	    		form.projectWrapEl.show();
-	        	form.floorEl.attr('placeholder', lajax.t('Floor plan'));
+	        	form.floorEl.attr('placeholder', lajax.t('Floor'));
 	    		break;
 	    	case form.DNDU:
 	        	form.homeWrapEl.hide();
