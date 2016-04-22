@@ -188,8 +188,8 @@ $banner = Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'. $news["b
         $(document).on('click', '.detail-content .fb-share', function(){
             var url = '<?= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>';
             var image = '<?=$banner?>';
-            var name = '<?=$news["title"]?>';
-            var descr = '<?=$news["brief"]?>';
+            var name = '<?=str_replace("'", "\'", $news["title"]) ?>';
+            var descr = '<?=str_replace("'", "\'", $news["brief"])?>';
             fbShare(url, name, descr, image, 800, 600);
         });
 
