@@ -196,11 +196,11 @@ $banner = Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'. $news["b
                 method: 'share',
                 href: '<?=Yii::$app->request->absoluteUrl?>'
             }, function(response){
-                if (response && !response.error_message) {
-                    alert('Posting completed.');
-                } else {
-                    alert('Error while posting.');
-                }
+//                if (response && !response.error_message) {
+//                    alert('Posting completed.');
+//                } else {
+//                    alert('Error while posting.');
+//                }
             });
 
         });
