@@ -24,6 +24,7 @@ $report_list = [
     5 => 'It insults or attacks someone based on their religion, ethnicity or sexual orientation',
     6 => 'It describes buying or selling drugs, guns or regulated products',
 ];
+
 ?>
 <div class="title-fixed-wrap">
     <div class="container">
@@ -251,7 +252,7 @@ $report_list = [
                         <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
                         <div class="review-box-popup">
                             <h2 class="color-cd fs-18 text-uper font-600 mgB-20"><?=Yii::t('profile', 'REVIEW')?> <?= empty($model->name) ? strtoupper($user->username) : mb_strtoupper($model->name, "UTF-8") ?></h2>
-                            <p class="fs-13 mgB-10">Tell us about your experience with this agent. Your review will help other users find the agent that's right for them.</p>
+                            <p class="fs-13 mgB-10"><?=Yii::t("review","Tell us about your experience with this agent. Your review will help other users find the agent that's right for them.")?></p>
                             <form id="review-form"
                                   action="<?=Url::to(['/member/review', 'review_id' => $user->id,
                                             'name' => (empty(Yii::$app->user->identity->profile->name) ? (Yii::$app->user->isGuest ? "" : Yii::$app->user->identity->username) : Yii::$app->user->identity->profile->name),
@@ -308,15 +309,16 @@ $report_list = [
                         <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
                         <div class="review-box-popup">
                             <h2 class="color-cd fs-18 text-uper font-600 mgB-20"><?=Yii::t('profile', 'REPORT')?> <?= empty($model->name) ? strtoupper($user->username) : mb_strtoupper($model->name, "UTF-8") ?></h2>
-                            <p class="fs-13 mgB-10">Tell us about your experience with this agent. Your report will help other users review the agent that's right for them.</p>
-                            <form id="report-form"
+                            <p class="fs-13 mgB-10"><?=Yii::t("profile", "Tell us about your experience with this agent. Your report will help other users review the agent that's right for them.")?></p>
+                            <form id="report-form" class="fs-13"
                                   action="<?=Url::to(['/member/review', 'review_id' => $user->id,
                                       'name' => (empty(Yii::$app->user->identity->profile->name) ? (Yii::$app->user->isGuest ? "" : Yii::$app->user->identity->username) : Yii::$app->user->identity->profile->name),
                                       'username' => (Yii::$app->user->isGuest ? "" : Yii::$app->user->identity->username)])?>">
-                                <?=\yii\helpers\Html::radioList('type', null, $report_list, ['class' => 'fs-13 clearfix'])?>
+                                <?=\yii\helpers\Html::radioList('type', null, $report_list, ['class' => 'fs-13'])?>
+                                <label><input type="radio" name="type" value="-1"> <?=Yii::t('listing', 'Something else')?> </label>
+                                <textarea class="pd-5 mgB-5" name="report_content" id="report_content" cols="30" rows="5" placeholder="<?=Yii::t('profile','Content')?>"></textarea>
                                 <input type="hidden" name="ip" value="<?=Yii::$app->request->userIP ?>">
                                 <input type="hidden" name="is_report" value="1">
-                                <textarea class="pd-5 mgB-5" name="report_content" id="report_content" cols="30" rows="6" placeholder="<?=Yii::t('profile','Content')?>"></textarea>
                                 <div class="text-right">
                                     <button class="btn-common send_report"><?=Yii::t('profile','Send report')?></button>
                                 </div>

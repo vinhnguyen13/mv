@@ -157,47 +157,31 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
         </div>
     </div>
 </div>
+
 <div id="popup-map" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <a href="#" class="btn-close-map close" data-dismiss="modal" aria-label="Close"><?=Yii::t('project', 'Back')?></a>
+                <a href="#" class="btn-close-map close" data-dismiss="modal" aria-label="Close"><?=Yii::t('listing','Close')?></a>
                 <div id="map" data-lat="<?= $model->lat ?>" data-lng="<?= $model->lng ?>"></div>
             </div>
         </div>
     </div>
 </div>
 
-<div id="popup-share-social" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
-                <div class="wrap-popup">
-                    <div class="inner-popup">
-                        <div class="wrap-body-popup">
-                            <span><?=Yii::t('project', 'Share on Social Network')?></span>
-                            <ul class="clearfix">
-                                <li>
-                                    <a href="#" class="share-facebook">
-                                        <div class="circle"><div><span class="icon icon-face"></span></div></div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" data-toggle="modal" data-target="#popup-email" class="email-btn">
-                                        <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<?=$this->renderAjax('/ad/_partials/shareEmail',[ 'popup_email_name' => 'popup_email_share', 'project' => $model, 'yourEmail' => Yii::$app->user->isGuest ? '' : Yii::$app->user->identity->email, 'recipientEmail' => '', 'params' => ['your_email' => false, 'setValueToEmail' => false] ])?>
+<?php
+$content = strip_tags($model->description);
+$description = \yii\helpers\StringHelper::truncate($content, 500, $suffix = '...', $encoding = 'UTF-8');
+$description = str_replace("\r", "", $description);
+$description = str_replace("\n", "", $description);
+echo $this->render('/ad/_partials/shareSocial',[
+    'popup_email_name' => 'popup_email_share',
+    'project' => $model,
+    'url' => Url::to(["building-project/view", 'slug'=>$model->slug], true),
+    'title' => $model->name,
+    'description' => $description,
+    'image' => $model->logoUrl
+])?>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -209,18 +193,16 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
             prevButton: '.swiper-button-prev'
         });
 
-        /*$('#popup-map').popupMobi({
-            btnClickShow: ".icon-map-loca",
-            closeBtn: "#popup-map .btn-close-map",
-            effectShow: "show-hide",
-            funCallBack: function() {
+        $('#popup-map').on('show.bs.modal', function (e) {
+            setTimeout(function(){
                 var mapEl = $('#map');
                 var latLng = {lat: Number(mapEl.data('lat')), lng:  Number(mapEl.data('lng'))};
+
                 var map = new google.maps.Map(mapEl.get(0), {
                     center: latLng,
                     zoom: 16,
                     mapTypeControl: false,
-                    zoomControl: true,
+                    zoomControl: false,
                     streetViewControl: false
                 });
 
@@ -228,27 +210,15 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                     position: latLng,
                     map: map
                 });
-            }
+            }, 400);
         });
 
-        $('#popup-share-social').popupMobi({
-            btnClickShow: ".icons-detail .icon-share-td",
-            closeBtn: ".btn-close, .email-btn, .share-facebook",
-            styleShow: "center"
-        });
-
-        $('#popup-email').popupMobi({
-            btnClickShow: ".email-btn",
-            closeBtn: '#popup-email .btn-cancel',
-            styleShow: "full"
-        });*/
-
-        $(document).on('click', '.share-facebook', function() {
-            FB.ui({
-                method: 'share',
-                href: '<?=Yii::$app->request->absoluteUrl?>'
-            }, function(response){});
-        });
+//        $(document).on('click', '.share-facebook', function() {
+//            FB.ui({
+//                method: 'share',
+//                href: '<?//=Yii::$app->request->absoluteUrl?>//'
+//            }, function(response){});
+//        });
 
     });
 </script>

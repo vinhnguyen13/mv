@@ -76,7 +76,7 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
             <table class="tbl-review">
                 <tr>
                     <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10 fs-17"><span class="icon-eye-copy"></span></span><?=Yii::t('statistic','VIEW')?></th>
-                    <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10"><span class="icon-heart-icon-listing fs-19"></span></span><?=Yii::t('statistic','LIKE')?></th>
+                    <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10"><span class="icon-heart-icon-listing fs-19"></span></span><?=Yii::t('statistic','FAVORITE')?></th>
                 </tr>
                 <tr>
                     <td>

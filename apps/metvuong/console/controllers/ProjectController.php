@@ -20,6 +20,15 @@ class ProjectController extends Controller {
 			if(isset($parseLocation['homeNo']) && !isset($parseLocation['street']) && $parseLocation['remainSplit']) {
 				$parseLocation['street'] = $parseLocation['remainSplit'][0];
 			}
+			
+			if(!isset($parseLocation['street']) && !isset($parseLocation['ward']) && $parseLocation['remainSplit']) {
+				if(count($parseLocation['remainSplit']) >= 2) {
+					$parseLocation['street'] = $parseLocation['remainSplit'][0];
+					$parseLocation['ward'] = $parseLocation['remainSplit'][1];
+				} else {
+					$parseLocation['ward'] = $parseLocation['remainSplit'][0];
+				}
+			}
 		
 			$update = [];
 		

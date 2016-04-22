@@ -14,7 +14,7 @@ use yii\helpers\Url;
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header title-popup clearfix">
-                <div class="text-center"><?=$popup_email_name == "popup_email_share" ? Yii::t('send_email','SHARE VIA EMAIL') : "CONTACT" ?></div>
+                <div class="text-center"><?=$popup_email_name == "popup_email_share" ? Yii::t('send_email','SHARE VIA EMAIL') : Yii::t('send_email','CONTACT') ?></div>
                 <a href="#" class="txt-cancel btn-cancel close" data-dismiss="modal" aria-label="Close"><?=Yii::t('send_email','Cancel')?></a>
                 <a href="#" class="txt-done btn-done send_mail" data-alert="Gửi email thành công !"><?=Yii::t('send_email','Send')?></a>
             </div>
