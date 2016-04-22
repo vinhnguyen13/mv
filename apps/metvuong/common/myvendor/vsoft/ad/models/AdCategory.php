@@ -16,22 +16,6 @@ use common\models\AdCategory as AC;
  *
  * @property AdProduct[] $adProducts
  */
-
-/*
- * \Yii::t('ad', 'apartments');
- * \Yii::t('ad', 'houses');
- * \Yii::t('ad', 'condos/detached houses');
- * \Yii::t('ad', 'townhouses');
- * \Yii::t('ad', 'project lands');
- * \Yii::t('ad', 'lands');
- * \Yii::t('ad', 'farms/resorts');
- * \Yii::t('ad', 'warehouses');
- * \Yii::t('ad', 'other types');
- * \Yii::t('ad', 'houses/rooms');
- * \Yii::t('ad', 'offices');
- * \Yii::t('ad', 'shops/kiosks');
- * \Yii::t('ad', 'warehouses/Lands');
- */
 class AdCategory extends AC
 {
 	const TEMPLATE_SUGGEST_LIST = 1;
