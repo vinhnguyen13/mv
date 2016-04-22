@@ -5,7 +5,7 @@ use yii\console\Controller;
 
 class ProjectController extends Controller {
 	public function actionUpdate() {
-		$projects = \Yii::$app->db->createCommand("SELECT id, location, district_id FROM `ad_building_project`")->queryAll();
+		$projects = \Yii::$app->db->createCommand("SELECT id, location, district_id FROM `ad_building_project` WHERE id = 1329")->queryAll();
 			
 		$wards = \Yii::$app->db->createCommand("SELECT id, name, district_id FROM `ad_ward`")->queryAll();
 		$streets = \Yii::$app->db->createCommand("SELECT id, name, district_id FROM `ad_street`")->queryAll();
@@ -19,6 +19,15 @@ class ProjectController extends Controller {
 			
 			if(isset($parseLocation['homeNo']) && !isset($parseLocation['street']) && $parseLocation['remainSplit']) {
 				$parseLocation['street'] = $parseLocation['remainSplit'][0];
+			}
+			
+			if(!isset($parseLocation['street']) && !isset($parseLocation['ward']) && $parseLocation['remainSplit']) {
+				if(count($parseLocation['remainSplit']) >= 2) {
+					$parseLocation['street'] = $parseLocation['remainSplit'][0];
+					$parseLocation['ward'] = $parseLocation['remainSplit'][1];
+				} else {
+					$parseLocation['ward'] = $parseLocation['remainSplit'][0];
+				}
 			}
 		
 			$update = [];
