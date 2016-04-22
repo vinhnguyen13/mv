@@ -10047,6 +10047,9 @@ label:hover {
     .box-content iframe {
         max-width: 100%;
     }
+    .box-content iframe.fb_iframe_widget_lift {
+        max-width: inherit;
+    }
     .all-packege {
         padding: 0;
         background: inherit;
