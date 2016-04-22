@@ -15,11 +15,11 @@ $recipientEmail = empty($model->public_email) ? $user->email : $model->public_em
 // get user was been login
 $yourEmail = Yii::$app->user->isGuest ? "" : (empty(Yii::$app->user->identity->profile->public_email) ? Yii::$app->user->identity->email : Yii::$app->user->identity->profile->public_email);
 $count_product = $pagination->totalCount;
-$reviews = \frontend\models\UserReview::find()->where('review_id = :rid', [':rid' => $user->id])->orderBy(['created_at' => SORT_DESC])->all();
-$count_review = count($reviews);
 
+$reviews = \frontend\models\UserReview::find()->where('review_id = :rid', [':rid' => $user->id]);
+$count_review = $reviews->count();
+$reviews = $reviews->orderBy(['created_at' => SORT_DESC])->limit(3)->all();
 $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\ad\models\ReportType::report_user])->all();
-
 ?>
 <div class="title-fixed-wrap">
     <div class="container">
@@ -33,13 +33,13 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
                             <a href="#" class="chat-now tooltip-show" data-chat-user="<?=$user->username?>" data-placement="bottom" title="Chat">
                                 <span class="icon-mv"><span class="icon-bubbles-icon"></span></span>
                             </a>
-                            <a href="#" data-toggle="modal" data-placement="bottom" data-target="#popup-report-user" class="btn-report tooltip-show" title="<?= Yii::t('profile', 'Report') ?>">
+                            <a href="#" data-toggle="modal" data-placement="bottom" data-target="<?=Yii::$app->user->isGuest ? "" : "#popup-report-user" ?>" class="btn-report tooltip-show<?=Yii::$app->user->isGuest ? " user-login-link" : "" ?>" title="<?= Yii::t('profile', 'Report') ?>">
                                 <span class="icon-mv"><span class="icon-warning"></span></span>
                             </a>
                         </p>
                         <div class="stars">
                             <span id="rating-all" class="rateit" data-rateit-value="<?=$model->rating_point?>" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
-                            <span class="fs-13 font-600">(<?=$count_review?>)</span>
+                            <span class="fs-13 font-600 count_review" data-number="<?=$count_review?>">(<?=$count_review?>)</span>
                         </div>
                         <p class="location">
                             <span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
@@ -217,11 +217,19 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
                                    class="btn-review btn-common pull-right"><?= Yii::t('profile', 'Write Review') ?></a>
                         <?php } ?>
                     </div>
+                    <ul class="list-reivew">
                     <?php
-                    echo $this->render('/member/_partials/review', ['reviews' => $reviews]) ?>
-                    <div class="text-center">
-                        <a href="#" class="color-cd fs-13 font-600 read_more"><?=Yii::t('news','Read more')?></a>
+                    if(count($reviews) <= 0){ ?>
+                        <li>
+                            <p><?=Yii::t('profile', 'Review not found.')?></p>
+                        </li>
+                    <?php } else { echo $this->render('/member/_partials/review', ['reviews' => $reviews]); } ?>
+                    </ul>
+                    <?php if($count_review > 3){ ?>
+                    <div class="text-right">
+                        <a href="#" data-url="<?=Url::to(['/member/review-all', 'review_id' => $user->id])?>" class="color-cd fs-13 font-600 read_more"><?=Yii::t('review','View all reviews')?></a>
                     </div>
+                    <?php } ?>
                 </div>
             </div>
 
@@ -281,7 +289,7 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
     </div>
 </div>
 
-<div id="popup-login" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- div id="popup-login" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
@@ -296,7 +304,7 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
             </div>
         </div>
     </div>
-</div>
+</div -->
 
 <div id="popup-report-user" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -350,21 +358,6 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
             }
         });
 
-        $(document).on('click', '.user-login-link', function (e) {
-            e.preventDefault();
-            $('body').loading();
-            $.ajax({
-                type: "get",
-                url: "<?=Url::to(['/member/login'])?>",
-                success: function (data) {
-                    $('body').loading({done: true});
-                    $('#popup-login .wrap-body-popup').html(data);
-                    $('#popup-login').modal('show');
-                }
-            });
-
-        });
-
         $(document).on('click', '.send_review', function (e) {
             e.preventDefault();
             $('body').loading();
@@ -404,34 +397,25 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
             return false;
         });
 
-        $('#profile_send_mail .btn-send-email').click( function(){
-            var recipient_email = $('#profile_send_mail .recipient_email').val();
-            var your_email = $('#profile_send_mail .your_email').val();
-            if(recipient_email.length > 0 && your_email.length > 0) {
-                $('body').loading(recipient_email);
+        $(document).on('click', '#tab-review .read_more', function () {
+            $('body').loading();
+            var last_time = $('#tab-review .list-reivew>li:last').attr('class');
+            var url = $(this).data('url')+"&last_time="+last_time;
+            var count_review = parseInt($('.count_review').data('number'));
+            var current_review = $('#tab-review .list-reivew>li').length;
+            if(current_review < count_review){
                 $.ajax({
-                    type: "post",
-                    dataType: 'json',
-                    url: $('#profile_send_mail').attr('action'),
-                    data: $('#profile_send_mail').serializeArray(),
+                    type: "get",
+                    dataType: 'html',
+                    url: url,
                     success: function (data) {
-                        $('body').loading({done:true});
-                        if(data.status == 200){
-//                            $('.btn-cancel').trigger('click');
-                            $('#profile_send_mail .from_name').val("");
-                            $('#profile_send_mail .your_email').val("");
-                            $('#profile_send_mail textarea').val("");
-                        }
-                        else if(data.status == 404){
-                            var arr = [];
-                            $.each(data.parameters, function (idx, val) {
-                                var element = 'shareform-' + idx;
-                                arr[element] = lajax.t(val);
-                            });
-                            $('#profile_send_mail').yiiActiveForm('updateMessages', arr, true);
-//                            $('#popup-sent .btn-close').trigger('click');
-                        } else {
-                            console.log(data);
+                        if(data) {
+                            $('#tab-review .list-reivew').append(data);
+                            var current_review = $('#tab-review .list-reivew>li').length;
+                            if(current_review >= count_review) {
+                                $('#tab-review .read_more').parent().remove();
+                            }
+                            $('body').loading({done: true});
                         }
                         return true;
                     }
@@ -439,6 +423,42 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
             }
             return false;
         });
+
+//        $('#profile_send_mail .btn-send-email').click( function(){
+//            var recipient_email = $('#profile_send_mail .recipient_email').val();
+//            var your_email = $('#profile_send_mail .your_email').val();
+//            if(recipient_email.length > 0 && your_email.length > 0) {
+//                $('body').loading(recipient_email);
+//                $.ajax({
+//                    type: "post",
+//                    dataType: 'json',
+//                    url: $('#profile_send_mail').attr('action'),
+//                    data: $('#profile_send_mail').serializeArray(),
+//                    success: function (data) {
+//                        $('body').loading({done:true});
+//                        if(data.status == 200){
+////                            $('.btn-cancel').trigger('click');
+//                            $('#profile_send_mail .from_name').val("");
+//                            $('#profile_send_mail .your_email').val("");
+//                            $('#profile_send_mail textarea').val("");
+//                        }
+//                        else if(data.status == 404){
+//                            var arr = [];
+//                            $.each(data.parameters, function (idx, val) {
+//                                var element = 'shareform-' + idx;
+//                                arr[element] = lajax.t(val);
+//                            });
+//                            $('#profile_send_mail').yiiActiveForm('updateMessages', arr, true);
+////                            $('#popup-sent .btn-close').trigger('click');
+//                        } else {
+//                            console.log(data);
+//                        }
+//                        return true;
+//                    }
+//                });
+//            }
+//            return false;
+//        });
     });
     $(document).bind('chat/afterConnect', function (event, type) {
         var to_jid = chatUI.genJid('<?=$user->username?>');
