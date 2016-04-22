@@ -18,12 +18,7 @@ $count_product = $pagination->totalCount;
 $reviews = \frontend\models\UserReview::find()->where('review_id = :rid', [':rid' => $user->id])->orderBy(['created_at' => SORT_DESC])->all();
 $count_review = count($reviews);
 
-$report_list = [
-    3 => 'It is spam',
-    4 => 'It is inappropriate',
-    5 => 'It insults or attacks someone based on their religion, ethnicity or sexual orientation',
-    6 => 'It describes buying or selling drugs, guns or regulated products',
-];
+$report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\ad\models\ReportType::report_user])->all();
 
 ?>
 <div class="title-fixed-wrap">
@@ -224,6 +219,9 @@ $report_list = [
                     </div>
                     <?php
                     echo $this->render('/member/_partials/review', ['reviews' => $reviews]) ?>
+                    <div class="text-center">
+                        <a href="#" class="color-cd fs-13 font-600 read_more"><?=Yii::t('news','Read more')?></a>
+                    </div>
                 </div>
             </div>
 
@@ -257,10 +255,10 @@ $report_list = [
                                   action="<?=Url::to(['/member/review', 'review_id' => $user->id,
                                             'name' => (empty(Yii::$app->user->identity->profile->name) ? (Yii::$app->user->isGuest ? "" : Yii::$app->user->identity->username) : Yii::$app->user->identity->profile->name),
                                             'username' => (Yii::$app->user->isGuest ? "" : Yii::$app->user->identity->username)])?>">
-                                <p class="fs-13 mgB-5 font-600">Môi giới này đã</p>
+                                <p class="fs-13 mgB-5 font-600"><?=Yii::t('review', 'This agent')?></p>
                                 <select name="type" id="type" class="mgB-15">
-                                    <option value="1">Giúp tôi mua nhà</option>
-                                    <option value="2">Giúp tôi thuê nhà</option>
+                                    <option value="1"><?=Yii::t('review', 'Help me to buy')?></option>
+                                    <option value="2"><?=Yii::t('review', 'Help me to rent')?></option>
                                 </select>
                                 <div class="check-rating mgB-15">
                                     <span class="font-600 fs-13 pdR-10"><?=Yii::t('profile', 'Rate this agent')?></span>
@@ -309,12 +307,21 @@ $report_list = [
                         <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
                         <div class="review-box-popup">
                             <h2 class="color-cd fs-18 text-uper font-600 mgB-20"><?=Yii::t('profile', 'REPORT')?> <?= empty($model->name) ? strtoupper($user->username) : mb_strtoupper($model->name, "UTF-8") ?></h2>
-                            <p class="fs-13 mgB-10"><?=Yii::t("profile", "Tell us about your experience with this agent. Your report will help other users review the agent that's right for them.")?></p>
+                            <p class="fs-13 mgB-10"><?=Yii::t("report", "Tell us about your experience with this agent. Your report will help other users review the agent that's right for them.")?></p>
+                            <?php  if(count($report_list) > 0){?>
                             <form id="report-form" class="fs-13"
                                   action="<?=Url::to(['/member/review', 'review_id' => $user->id,
                                       'name' => (empty(Yii::$app->user->identity->profile->name) ? (Yii::$app->user->isGuest ? "" : Yii::$app->user->identity->username) : Yii::$app->user->identity->profile->name),
                                       'username' => (Yii::$app->user->isGuest ? "" : Yii::$app->user->identity->username)])?>">
-                                <?=\yii\helpers\Html::radioList('type', null, $report_list, ['class' => 'fs-13'])?>
+                                <?php // \yii\helpers\Html::radioList('type', null, $report_list, ['class' => 'fs-13'])
+                                Yii::t('report', 'It is spam');
+                                Yii::t('report', 'It is inappropriate');
+                                Yii::t('report', 'It insults or attacks someone based on their religion, ethnicity or sexual orientation');
+                                Yii::t('report', 'It describes buying or selling drugs, guns or regulated users');
+                                foreach($report_list as $key_report => $report){
+                                ?>
+                                <label><input type="radio" name="type" value="<?=$report->id?>" <?=$key_report == 0 ? "checked" : ""?>> <?=Yii::t('report', $report->name)?> </label>
+                                <?php } ?>
                                 <label><input type="radio" name="type" value="-1"> <?=Yii::t('listing', 'Something else')?> </label>
                                 <textarea class="pd-5 mgB-5" name="report_content" id="report_content" cols="30" rows="5" placeholder="<?=Yii::t('profile','Content')?>"></textarea>
                                 <input type="hidden" name="ip" value="<?=Yii::$app->request->userIP ?>">
@@ -323,6 +330,7 @@ $report_list = [
                                     <button class="btn-common send_report"><?=Yii::t('profile','Send report')?></button>
                                 </div>
                             </form>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>

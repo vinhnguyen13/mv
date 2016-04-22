@@ -233,12 +233,20 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 				                        <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
 				                        <div class="review-box-popup">
 				                            <h2 class="color-cd fs-18 text-uper font-600 mgB-20"><?=Yii::t('profile', 'REPORT')?></h2>
-				                            <p class="fs-13 mgB-10">Tell us about your experience with this agent. Your report will help other users review the agent that's right for them.</p>
-				                            <form id="report-form" action="<?=Url::to(['/ad/sendreport'])?>" class="fs-13">
-				                                <?php
-				                                $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\ad\models\ReportType::report_product])->all();
-				                                echo \yii\helpers\Html::radioList('optionsRadios', 1, ArrayHelper::map($report_list, 'id', 'name'));
-				                                ?>
+				                            <p class="fs-13 mgB-10"><?=Yii::t("report", "Tell us about your experience with this agent. Your report will help other users review the agent that's right for them.")?></p>
+                                            <?php
+                                            Yii::t('report', 'It is spam');
+                                            Yii::t('report', 'It is inappropriate');
+                                            Yii::t('report', 'It insults or attacks someone based on their religion, ethnicity or sexual orientation');
+                                            Yii::t('report', 'It describes buying or selling drugs, guns or regulated products');
+                                            $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\ad\models\ReportType::report_product])->all();
+//			                                echo \yii\helpers\Html::radioList('optionsRadios', 1, ArrayHelper::map($report_list, 'id', 'name'));
+                                            if(count($report_list) > 0){
+                                            ?>
+                                            <form id="report-form" action="<?=Url::to(['/ad/sendreport'])?>" class="fs-13">
+                                                <?php foreach($report_list as $key_report => $report){?>
+                                                <label><input type="radio" name="optionsRadios" value="<?=$report->id?>" <?=$key_report == 0 ? "checked" : ""?>> <?= Yii::t('report', $report->name)?></label>
+                                                <?php } ?>
 				                                <label><input type="radio" name="optionsRadios" value="-1"> <?=Yii::t('listing', 'Something else')?> </label>
 				                                <textarea class="pd-5 mgB-5" name="description" id="description" cols="30" rows="5" placeholder="<?=Yii::t('profile','Content')?>"></textarea>
 				                                <input type="hidden" id="pid" name="pid" value="<?=$product->id?>">
@@ -247,6 +255,7 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 				                                    <button class="btn-common send_report"><?=Yii::t('listing', 'Send report')?></button>
 				                                </div>
 				                            </form>
+                                            <?php } ?>
 				                        </div>
 				                    </div>
 				                </div>

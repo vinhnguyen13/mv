@@ -186,11 +186,23 @@ $banner = Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'. $news["b
         }
 
         $(document).on('click', '.detail-content .fb-share', function(){
-            var url = '<?= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>';
-            var image = '<?=$banner?>';
-            var name = '<?=str_replace("'", "\'", $news["title"]) ?>';
-            var descr = '<?=str_replace("'", "\'", $news["brief"])?>';
-            fbShare(url, name, descr, image, 800, 600);
+//            var url = '<?//= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>//';
+//            var image = '<?//=$banner?>//';
+//            var name = '<?//=str_replace("'", "\'", $news["title"]) ?>//';
+//            var descr = '<?//=str_replace("'", "\'", $news["brief"])?>//';
+//            fbShare(url, name, descr, image, 800, 600);
+
+            FB.ui({
+                method: 'share',
+                href: '<?=Yii::$app->request->absoluteUrl?>'
+            }, function(response){
+                if (response && !response.error_message) {
+                    alert('Posting completed.');
+                } else {
+                    alert('Error while posting.');
+                }
+            });
+
         });
 
 //        var timer;

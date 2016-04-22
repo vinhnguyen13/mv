@@ -30,9 +30,6 @@
         </li>
     <?php } ?>
 </ul>
-<!--div class="text-right">
-    <a href="#" class="color-cd fs-13 font-600 read_more">Read more</a>
-</div-->
 <script>
     $(function () { 
         $('.rating-review').rateit();
