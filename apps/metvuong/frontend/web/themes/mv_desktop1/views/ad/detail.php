@@ -169,7 +169,7 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 			<div class="infor-listing">
 				<div class="address-feat clearfix">
 					<p class="infor-by-up">
-						<?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?> <?= Yii::t('ad', 'by') ?> <a href="javascript:;"><?= $product->ownerString ?></a>
+						<?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= $types[$product->type] ?> <?= Yii::t('ad', 'by') ?> <a href="javascript:;"><?= $product->ownerString ?></a>
 					</p>
 					<div class="address-listing">
 						<p><?= $address ?></p>
