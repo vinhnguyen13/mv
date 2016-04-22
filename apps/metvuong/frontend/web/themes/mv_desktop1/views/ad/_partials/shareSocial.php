@@ -82,34 +82,9 @@ echo $this->renderAjax('/ad/_partials/shareEmail',[
         window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + url + '&p[title]=' + title + '&p[summary]=' + descr + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
     }
 
-    $('#popup-share-social ul li a').click(function (){
-        $('body').loading();
-        if($(this).attr('class') == 'share-facebook') {
-            $('body').loading({done:true});
-            fbShare('<?=$url ?>', '<?=$title ?>', '<?=$description ?>', '<?= $image ?>', 520, 350);
-            return true;
-        }
-
-        var url = $(this).data("url");
-        if(url != undefined && url.length > 0) {
-            $.ajax({
-                type: "get",
-                dataType: 'json',
-                url: url,
-                success: function (data) {
-                    $('#popup-share-social').modal('hide');
-                }
-            });
-            $('body').loading({done:true});
-            return true;
-        }
-
-        return false;
+    $('.share-facebook').click(function (){
+        $('#popup-share-social').modal('hide');
+        fbShare('<?=$url ?>', '<?=$title ?>', '<?=$description ?>', '<?= $image ?>', 800, 600);
     });
 
-    /*$('#popup-email').popupMobi({
-        btnClickShow: ".email-btn",
-        closeBtn: '#popup-email .btn-cancel',
-        styleShow: "full"
-    });*/
 </script>
