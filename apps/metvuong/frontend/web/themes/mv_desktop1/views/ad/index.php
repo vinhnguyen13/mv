@@ -110,7 +110,7 @@ $this->registerJs($script, View::POS_BEGIN);
 													foreach ($categories as $categoryId => $category):
 														if($category['apply_to_type'] == $searchModel->type || $category['apply_to_type'] == AdCategory::APPLY_TO_TYPE_BOTH):
 												?>
-												<li><a href="#" data-value="<?= $categoryId ?>" data-order="3"><?= $category['name'] ?></a></li>
+												<li><a href="#" data-value="<?= $categoryId ?>" data-order="3"><?= Yii::t('ad', $category['name']) ?></a></li>
 												<?php endif; endforeach; ?>
 											</ul>
 											<?= Html::activeHiddenInput($searchModel, 'category_id', ['id' => 'loai-bds']); ?>
