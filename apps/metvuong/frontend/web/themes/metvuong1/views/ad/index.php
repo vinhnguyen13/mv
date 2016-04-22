@@ -23,7 +23,6 @@ if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
     $fb_appId = '736950189771012';
 else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     $fb_appId = '891967050918314';
-/*
 
 Yii::t('ad', 'apartments');
 Yii::t('ad', 'houses');
@@ -39,7 +38,6 @@ Yii::t('ad', 'offices');
 Yii::t('ad', 'shops/kiosks');
 Yii::t('ad', 'warehouses/Lands');
 
-*/
 ?>
 <div class="list-filters-result">
 	<form id="map-search-form" action="<?= Url::to('/real-estate/result') ?>" method="post">
