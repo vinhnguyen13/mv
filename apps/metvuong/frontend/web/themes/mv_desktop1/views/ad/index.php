@@ -110,11 +110,29 @@ $this->registerJs($script, View::POS_BEGIN);
 													foreach ($categories as $categoryId => $category):
 														if($category['apply_to_type'] == $searchModel->type || $category['apply_to_type'] == AdCategory::APPLY_TO_TYPE_BOTH):
 												?>
-												<li><a href="#" data-value="<?= $categoryId ?>" data-order="3"><?= $category['name'] ?></a></li>
+												<li><a href="#" data-value="<?= $categoryId ?>" data-order="3"><?= Yii::t('ad', $category['name']) ?></a></li>
 												<?php endif; endforeach; ?>
 											</ul>
 											<?= Html::activeHiddenInput($searchModel, 'category_id', ['id' => 'loai-bds']); ?>
 										</div>
+									</div>
+								</div>
+								<div class="select-duan frm-item">
+									<div class="wrap-duan">
+										<?php
+											$items = [];
+											if($searchModel->district_id) {
+												$items = ($projects = AdBuildingProject::find()->where(['status' => 1, 'district_id' => $searchModel->district_id])->all()) ? ArrayHelper::map($projects, 'id', 'name') : [];
+											}
+											
+											$options = ['prompt' => $searchModel->getAttributeLabel('project_building_id'), 'class' => 'form-control select2'];
+											
+											if($searchModel->category_id != AdCategory::CATEGORY_CHCK) {
+												$options['class'] = $options['class'] . ' hide';
+											}
+											
+											echo Html::activeDropDownList($searchModel, 'project_building_id', $items, $options)
+										?>
 									</div>
 								</div>
 								<div class="frm-item num-phongngu">
@@ -181,24 +199,6 @@ $this->registerJs($script, View::POS_BEGIN);
 										</div>
 									</div>
 								</div> -->
-								<div class="select-duan frm-item">
-									<div class="wrap-duan">
-										<?php
-											$items = [];
-											if($searchModel->district_id) {
-												$items = ($projects = AdBuildingProject::find()->where(['status' => 1, 'district_id' => $searchModel->district_id])->all()) ? ArrayHelper::map($projects, 'id', 'name') : [];
-											}
-											
-											$options = ['prompt' => $searchModel->getAttributeLabel('project_building_id'), 'class' => 'form-control select2'];
-											
-											if($searchModel->category_id != AdCategory::CATEGORY_CHCK) {
-												$options['class'] = $options['class'] . ' hide';
-											}
-											
-											echo Html::activeDropDownList($searchModel, 'project_building_id', $items, $options)
-										?>
-									</div>
-								</div>
 									
 								<div class="frm-item choice_price_dt select-price">
 									<div class="box-dropdown" data-item-minmax="prices">
@@ -350,7 +350,7 @@ $this->registerJs($script, View::POS_BEGIN);
 															"-36 month" => "36 " . $tMonth,
 														];
 													?>
-													<?= Html::activeDropDownList($searchModel, 'created_before', $items, ['prompt' => Yii::t('ad', 'Any time'), 'class' => 'form-control']) ?>
+													<?= Html::activeDropDownList($searchModel, 'created_before', $items, ['prompt' => Yii::t('ad', 'Time posted'), 'class' => 'form-control']) ?>
 												</div>
 											</div>
 										</div>

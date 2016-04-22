@@ -96,7 +96,7 @@ $banner = Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'. $news["b
                             <div id="social<?=$news["id"]?>" class="share-social mgT-10 wrap-img">
                                 <div class="fb-like" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>" data-layout="button_count" style="margin-right: 10px;"></div>
                                 <div class="fb-send" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>" data-show-faces="false" style="margin-right: 10px;"></div>
-                                <a class="fb-share" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>" data-layout="button_count">share facebook</a><br>
+                                <a class="fb-share" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>" data-layout="button_count"><?=Yii::t('news','Share facebook')?></a><br>
                                 <div class="fb-comments" data-href="<?= Yii::$app->urlManager->createAbsoluteUrl(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]])?>" data-width="100%" data-numposts="3"></div>
                             </div>
                         </div>
@@ -188,8 +188,8 @@ $banner = Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'. $news["b
         $(document).on('click', '.detail-content .fb-share', function(){
             var url = '<?= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>';
             var image = '<?=$banner?>';
-            var name = '<?=$news["title"]?>';
-            var descr = '<?=$news["brief"]?>';
+            var name = '<?=str_replace("'", "\'", $news["title"]) ?>';
+            var descr = '<?=str_replace("'", "\'", $news["brief"])?>';
             fbShare(url, name, descr, image, 800, 600);
         });
 

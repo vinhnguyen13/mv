@@ -36,7 +36,7 @@
 }
 .wrap-logo {
 	width: 200px;
-	margin: 0 auto 15px;
+	margin: 0 auto 30px;
 }
 .wrap-logo img {
 	max-width: 100%;
@@ -61,6 +61,7 @@ p {
 p strong {
 	font-size: 20px;
 	display: block;
+	text-transform: uppercase;
 }
 .text-center {
 	text-align: center;

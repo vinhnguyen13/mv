@@ -174,7 +174,7 @@ $tabKeys = [
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <a href="#" class="btn-close-map close" data-dismiss="modal" aria-label="Close">trở lại</a>
+                <a href="#" class="btn-close-map close" data-dismiss="modal" aria-label="Close"><?=Yii::t('listing','Close')?></a>
                 <div id="map" data-lat="<?= $model->lat ?>" data-lng="<?= $model->lng ?>"></div>
             </div>
         </div>
@@ -217,18 +217,16 @@ echo $this->render('/ad/_partials/shareSocial',[
             prevButton: '.swiper-button-prev'
         });
 
-        /*$('#popup-map').popupMobi({
-            btnClickShow: ".icon-map-loca",
-            closeBtn: "#popup-map .btn-close-map",
-            effectShow: "show-hide",
-            funCallBack: function() {
+        $('#popup-map').on('show.bs.modal', function (e) {
+            setTimeout(function(){
                 var mapEl = $('#map');
                 var latLng = {lat: Number(mapEl.data('lat')), lng:  Number(mapEl.data('lng'))};
+
                 var map = new google.maps.Map(mapEl.get(0), {
                     center: latLng,
                     zoom: 16,
                     mapTypeControl: false,
-                    zoomControl: true,
+                    zoomControl: false,
                     streetViewControl: false
                 });
 
@@ -236,10 +234,10 @@ echo $this->render('/ad/_partials/shareSocial',[
                     position: latLng,
                     map: map
                 });
-            }
+            }, 400);
         });
 
-        $('#popup-share-social').popupMobi({
+        /*$('#popup-share-social').popupMobi({
             btnClickShow: ".icons-detail .icon-share-td",
             closeBtn: ".btn-close",
             styleShow: "center"

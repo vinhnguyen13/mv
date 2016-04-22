@@ -614,9 +614,28 @@ var form = {
 					form.lngEl.val(r.lng);
 					
 					form.fixHeight(2);
+					
+					form.wardEl.prop('disabled', false).val('');
+					form.streetEl.prop('disabled', false).val('');
+					form.homeEl.prop('disabled', false).val('');
+					
+					if(r.ward_id) {
+						form.wardEl.val(r.ward_id).prop('disabled', true);
+					}
+					
+					if(r.street_id) {
+						form.streetEl.val(r.street_id).prop('disabled', true);
+					}
+					
+					if(r.home_no) {
+						form.homeEl.val(r.home_no).prop('disabled', true);
+					}
 				});
 			} else {
 				form.projectInfoEl.hide();
+				form.wardEl.prop('disabled', false).val('');
+				form.streetEl.prop('disabled', false).val('');
+				form.homeEl.prop('disabled', false).val('');
 			}
 		});
 		
@@ -789,6 +808,10 @@ var form = {
 		});
 	},
 	appendProjectDropdown: function(projects) {
+		form.wardEl.prop('disabled', false).val('');
+		form.streetEl.prop('disabled', false).val('');
+		form.homeEl.prop('disabled', false).val('');
+		
 		form.projectInfoEl.hide();
 		form.appendDropdown(form.projectEl, projects);
 	},
