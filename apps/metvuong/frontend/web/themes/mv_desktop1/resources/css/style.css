@@ -6130,6 +6130,10 @@ footer li a {
         line-height: 100%;
         /* display: none; */
     }
+    .noti-alert .title-top,
+    .u-allduan .title-top {
+        display: none;
+    }
     .post-listing .title-top {
         display: block;
     }
@@ -9682,6 +9686,15 @@ input:-webkit-autofill {
     }
     .profile-user .item-sidebar .bottom-feat-box {
         padding: 0;
+    }
+    .chat-live {
+        padding-top: 0;
+    }
+    .search-history {
+        top: 0;
+    }
+    .chat-list {
+        padding-top: 60px
     }
 }
 .btn-slide .swiper-button-next span, 
