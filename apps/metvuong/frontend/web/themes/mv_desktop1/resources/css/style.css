@@ -7973,6 +7973,8 @@ footer li a {
     left: 50%;
     margin-left: -16px;
 }
+.detail-duan-moi .swiper-button-prev span,
+.detail-duan-moi .swiper-button-next span,
 .detail-listing-extra .swiper-button-next span,
 .detail-listing-extra .swiper-button-prev span,
 .detail-listing-dt .swiper-button-next span, 
@@ -9695,6 +9697,9 @@ input:-webkit-autofill {
     }
     .chat-list {
         padding-top: 60px
+    }
+    .box-feature-item .bottom-feat-box {
+        padding: 0 15px 10px;
     }
 }
 .btn-slide .swiper-button-next span, 
