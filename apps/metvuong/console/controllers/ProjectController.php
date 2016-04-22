@@ -5,7 +5,7 @@ use yii\console\Controller;
 
 class ProjectController extends Controller {
 	public function actionUpdate() {
-		$projects = \Yii::$app->db->createCommand("SELECT id, location, district_id FROM `ad_building_project` WHERE id = 1329")->queryAll();
+		$projects = \Yii::$app->db->createCommand("SELECT id, location, district_id FROM `ad_building_project`")->queryAll();
 			
 		$wards = \Yii::$app->db->createCommand("SELECT id, name, district_id FROM `ad_ward`")->queryAll();
 		$streets = \Yii::$app->db->createCommand("SELECT id, name, district_id FROM `ad_street`")->queryAll();
