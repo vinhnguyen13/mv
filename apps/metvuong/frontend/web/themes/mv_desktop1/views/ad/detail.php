@@ -62,8 +62,12 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 
 $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 
+if($owner){
 $reviews = \frontend\models\UserReview::find()->where('review_id = :rid', [':rid' => $owner->id]);
 $count_review = $reviews->count();
+} else {
+	$count_review = 0;
+}
 ?>
 <div class="title-fixed-wrap container">
 	<div class="detail-listing row detail-listing-extra">
@@ -155,14 +159,13 @@ $count_review = $reviews->count();
 								<div class="img-agent">
                                     <?php if(!empty($owner)) { ?>
                                         <a href="<?=Url::to(['member/profile', 'username' => $owner->username])?>" class="name-agent"><?= $owner->profile->name ?></a>
+                                        <div class="stars">
+	                                        <span id="rating-all" class="rateit" data-rateit-value="<?=$owner->profile->rating_point?>" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
+	                                        <span class="fs-13 font-600 count_review">(<?=$count_review?>)</span>
+	                                    </div>
                                     <?php } else {?>
                                         <span class="name-agent"><?= $product->adContactInfo->name ?></span>
-                                    <?php } ?>
-
-                                    <div class="stars">
-                                        <span id="rating-all" class="rateit" data-rateit-value="<?=$owner->profile->rating_point?>" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
-                                        <span class="fs-13 font-600 count_review">(<?=$count_review?>)</span>
-                                    </div>
+                                    <?php } ?>                                    
 
                                     <?php if($product->adContactInfo->mobile): ?>
                                         <div class="item-agent">
@@ -610,14 +613,15 @@ $count_review = $reviews->count();
 					            <div class="img-agent">
                                     <?php if(!empty($owner)) { ?>
 						            <a href="<?=Url::to(['member/profile', 'username' => $owner->username])?>" class="name-agent"><?= $owner->profile->name ?></a>
-                                    <?php } else {?>
-						            <span class="name-agent"><?= $product->adContactInfo->name ?></span>
-                                    <?php } ?>
-
                                     <div class="stars">
                                         <span id="rating-all-bottom" class="rateit" data-rateit-value="<?=$owner->profile->rating_point?>" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
                                         <span class="fs-13 font-600 count_review">(<?=$count_review?>)</span>
                                     </div>
+                                    <?php } else {?>
+						            <span class="name-agent"><?= $product->adContactInfo->name ?></span>
+                                    <?php } ?>
+
+                                    
 
 									<?php if($product->adContactInfo->mobile): ?>
 									<div class="item-agent">
