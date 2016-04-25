@@ -43,7 +43,7 @@ use vsoft\ad\models\AdProduct;
     ?>
     <section class="box-item box-feature-item">
         <div class="container">
-            <div class="title-sub"><?= Yii::t('listing', 'Featured properties') ?></div>
+            <div class="title-sub"><?= Yii::t('listing', 'Featured listings') ?></div>
             <div class="wrap-item wrap-lazy">
                 <ul class="clearfix">
                     <?php foreach ($products as $product): ?>
