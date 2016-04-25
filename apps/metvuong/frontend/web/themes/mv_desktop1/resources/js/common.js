@@ -1004,17 +1004,24 @@ $.fn.alertBox = function (options) {
 
     return this.each(function() {
         var defaults = {
-            
+            txt: ''
         },
         sc = {},
-        el = $(this),
-        wrap = '<div class="alert-item"><div class="wrap-alert">'+el.data('alert')+'</div></div>';
+        el = $(this), wrapAlert, txtShow;
 
         if ( el.length == 0 ) return el;
 
         sc.settings = $.extend({}, defaults, options);
 
-        $('body').append($(wrap));
+        if ( el.data('alert') != undefined ) {
+            txtShow = el.data('alert');
+        }else if ( sc.settings.txt != '' ) {
+            txtShow = sc.settings.txt;
+        }
+
+        wrapAlert = '<div class="alert-item"><div class="wrap-alert">'+txtShow+'</div></div>';
+
+        $('body').append($(wrapAlert));
         $('.alert-item').fadeIn(300);
 
         setTimeout(function () {

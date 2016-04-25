@@ -373,8 +373,11 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
                                     $('#report-listing').modal('hide');
                                     if (data == 200) {
                                         $('body').loading({done: true});
-                                        $('#popup-alert-report .report_text').text("<?=Yii::t('listing', 'Report has been sent.')?>");
-                                        $('#popup-alert-report').modal('show');
+                                        $('body').alertBox({
+                                        	txt: "<?=Yii::t('listing', 'Report has been sent.')?>"
+                                        });
+                                        //$('#popup-alert-report .report_text').text("<?=Yii::t('listing', 'Report has been sent.')?>");
+                                        //$('#popup-alert-report').modal('show');
 
                                         return true;
                                     }
