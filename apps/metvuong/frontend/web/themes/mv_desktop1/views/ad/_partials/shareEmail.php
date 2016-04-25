@@ -165,7 +165,10 @@ use yii\helpers\Url;
                     if(data.status == 200){
                         $('.btn-cancel').trigger('click');
                         setTimeout(function () {
-                            $('body').alertBox("Email has been sent to "+recipient_email);
+                            //"Email has been sent to "+recipient_email
+                            $('body').alertBox({
+                                txt: "<?=Yii::t('send_email', 'Email has been sent to ')?>"+recipient_email+""
+                            });
                         },300);
                     }
                     else if(data.status == 404){
