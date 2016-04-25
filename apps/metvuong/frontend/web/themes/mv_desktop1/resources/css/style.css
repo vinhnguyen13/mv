@@ -681,7 +681,8 @@ margin-top: 12px;
 }
 #listing-list .item-listing .address-listing {
     margin: 0 0 6px 0;
-    color: #3c3c3c;
+    /* color: #3c3c3c; */
+    color: #009455;
 }
 .item-listing .address-listing span {
     margin-right: 5px;
@@ -6131,6 +6132,7 @@ footer li a {
         line-height: 100%;
         /* display: none; */
     }
+    .profile-user .title-top,
     .noti-alert .title-top,
     .u-allduan .title-top {
         display: none;
