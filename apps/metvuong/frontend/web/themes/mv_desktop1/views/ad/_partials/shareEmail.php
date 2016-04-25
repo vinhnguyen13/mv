@@ -145,7 +145,7 @@ use yii\helpers\Url;
                             $('body').alertBox({
                                 txt: "<?=Yii::t('send_email', 'Email has been sent to ')?>"+recipient_email+""
                             });
-                        },500);
+                        },300);
                     }
                     else if(data.status == 404){
                         var arr = [];

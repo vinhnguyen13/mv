@@ -1028,7 +1028,7 @@ $.fn.alertBox = function (options) {
             $('.alert-item').fadeOut('slow', function() {
                 $(this).remove();
             });
-        },1500);
+        },2000);
     });
 }
 

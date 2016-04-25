@@ -10128,6 +10128,16 @@ label:hover {
     .col-left {
         padding-top: 30px;
     }
+    .alert-item {
+        max-width: 320px;
+    }
+    .infor-agent .wrap-img {
+        margin-right: 10px;
+    }
+    .wrap-swiper .icons-detail .popover .btn-common {
+        margin: 0 10px 0 0;
+        padding: 7px 15px;
+    }
 }
 .fb-share {
     background: #4c69ba;
