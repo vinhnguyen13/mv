@@ -115,13 +115,13 @@ $count_review = $reviews->count();
 						<a href="#" class="share-facebook" data-url="<?=Url::to(['/ad/tracking-share', 'product_id' => $product->id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_FACEBOOK], true)?>">
 							<span class="icon-mv"><span class="icon-facebook"></span></span>
 							<span><?= Yii::t('ad', 'Share Facebook') ?></span>
-						</a>	
+						</a>
 					</li>
 					<li class="color-3">
 						<a href="#" data-toggle="modal" data-target="#popup_email_share">
 							<span class="icon-mv fs-18"><span class="icon-mail-profile"></span></span>
 							<span><?= Yii::t('ad', 'Share Email') ?></span>
-						</a>	
+						</a>
 					</li>
 		            <?php if($product->user_id != Yii::$app->user->id){ ?>
 					<li class="color-4">
@@ -133,19 +133,19 @@ $count_review = $reviews->count();
 		            <?php } ?>
 					<li class="color-5">
 						<a href="#" data-toggle="modal" data-target="#popup-map">
-							<span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>	
+							<span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
 							<span><?= Yii::t('ad', 'Location') ?></span>
 						</a>
 					</li>
 					<li class="color-6">
 						<a href="#" class="report<?=Yii::$app->user->isGuest ? " user-login-link" : "" ?>">
-							<span class="icon-mv"><span class="icon-warning"></span></span>	
+							<span class="icon-mv"><span class="icon-warning"></span></span>
 							<span><?= Yii::t('ad', 'Report Abuse') ?></span>
 						</a>
 					</li>
 					<li class="color-8">
 						<a href="#" data-popover="true">
-							<span class="icon-mv"><span class="icon-phone-profile"></span></span>	
+							<span class="icon-mv"><span class="icon-phone-profile"></span></span>
 							<span><?= Yii::t('ad', 'Contact Agent') ?></span>
 						</a>
 						<div class="popover-append hide">
@@ -165,7 +165,7 @@ $count_review = $reviews->count();
 	                                    </div>
                                     <?php } else {?>
                                         <span class="name-agent"><?= $product->adContactInfo->name ?></span>
-                                    <?php } ?>                                    
+                                    <?php } ?>
 
                                     <?php if($product->adContactInfo->mobile): ?>
                                         <div class="item-agent">
@@ -217,7 +217,7 @@ $count_review = $reviews->count();
                             echo $product->adProductAdditionInfo->room_no ? '<li><span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
                             echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
                         } ?>
-					</ul>	
+					</ul>
 				</div>
 				<?=$this->renderAjax('/ad/_partials/shareEmail',[
                     'popup_email_name' => 'popup_email_contact',
@@ -366,7 +366,7 @@ $count_review = $reviews->count();
 							trigger: 'click hover',
 							html: true,
 							delay: {
-								show: 50, 
+								show: 50,
 								hide: 50
 							},
 							content: function () {
@@ -442,8 +442,8 @@ $count_review = $reviews->count();
                                             var winHeight = 350;
                                             var winTop = (screen.height / 2) - (winHeight / 2);
                                             var winLeft = (screen.width / 2) - (winWidth / 2);
-                                            window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(link), 'facebook-share-dialog', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
-//                                            window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + link + '&p[title]=' + title + '&p[summary]=' + descr + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+//                                            window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(link), 'facebook-share-dialog', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+                                            window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + link + '&p[title]=' + title + '&p[summary]=' + descr + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
                                         }
                                         $('body').loading({done:true});
                                         return true;
@@ -621,7 +621,7 @@ $count_review = $reviews->count();
 						            <span class="name-agent"><?= $product->adContactInfo->name ?></span>
                                     <?php } ?>
 
-                                    
+
 
 									<?php if($product->adContactInfo->mobile): ?>
 									<div class="item-agent">
