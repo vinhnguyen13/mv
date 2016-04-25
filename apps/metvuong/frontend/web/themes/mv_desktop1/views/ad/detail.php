@@ -342,10 +342,8 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
                                             var winHeight = 350;
                                             var winTop = (screen.height / 2) - (winHeight / 2);
                                             var winLeft = (screen.width / 2) - (winWidth / 2);
-                                            var title = '<?=$address?>';
-                                            var descr = '<?=$description?>';
-                                            var image = '<?=Yii::$app->request->hostInfo.$product->representImage?>';
-                                            window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + link + '&p[title]=' + title + '&p[summary]=' + descr + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+                                            window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(link), 'facebook-share-dialog', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+//                                            window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + link + '&p[title]=' + title + '&p[summary]=' + descr + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
                                         }
                                         $('body').loading({done:true});
                                         return true;
