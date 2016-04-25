@@ -9312,6 +9312,7 @@ footer li a {
     }
     .statis .tbl-review th {
         font-size: 13px !important;
+        padding: 15px 0;
     }
     .statis .tbl-review td {
         padding: 20px 5px;
@@ -9332,7 +9333,6 @@ footer li a {
 .all-packege .title-top {
     margin-bottom: 35px;
 }
-.statis .title-top,
 .edit-user-tt .title-top,
 .chat-history .title-top {
     display: none;
@@ -9943,8 +9943,8 @@ label:hover {
     padding: 0;
     display: inline-block;
 }
-.wrap-swiper .icons-detail .popover .name-agent {
-    margin-bottom: 15px;
+.wrap-swiper .popover .name-agent {
+    margin-bottom: 5px;
 }
 .wrap-swiper .icons-detail .popover .btn-common {
     display: block;
@@ -9961,8 +9961,8 @@ label:hover {
     margin-bottom: 0;
     display: block;
 }
-.wrap-swiper .icons-detail .popover .item-agent {
-    margin: 0 0 15px 0;
+.wrap-swiper .popover .item-agent {
+    margin: 0 0 5px 0;
     padding: 0;
     overflow: visible;
 }
@@ -10027,16 +10027,19 @@ label:hover {
     .detail-listing .panel-group {
         padding: 0;
     }
+    #popup-review.modal:before,
     #report-listing.modal:before,
     #popup_email_share.modal:before {
         display: none;
     }
+    #popup-review .modal-dialog,
     #report-listing .modal-dialog,
     #popup_email_share .modal-dialog {
         margin: 0;
         min-height: 100%;
         background: #fff;
     }
+    #popup-review .modal-dialog .modal-content,
     #report-listing .modal-dialog .modal-content,
     #popup_email_share .modal-dialog .modal-content {
         box-shadow: none;
@@ -10045,6 +10048,9 @@ label:hover {
         -ms-box-shadow: none;
         border: none;
         min-height: 100%;
+    }
+    #popup-review .wrap-popup {
+        width: 100%;
     }
     .user-avatar,
     .infor-priva,
@@ -10144,14 +10150,11 @@ label:hover {
         margin: 0 auto 10px;
         display: block;
     }
-    .popover .infor-agent .wrap-img img {
-        
-    }
     .popover .img-agent {
         overflow: inherit;
     }
     .wrap-swiper .icons-detail .popover .name-agent {
-        margin: 0 0 0 0;
+        margin: 0 0 5px 0;
     }
     .wrap-swiper .icons-detail .popover .item-agent {
         margin: 0 0 7px 0;
@@ -10170,6 +10173,39 @@ label:hover {
     }
     .wrap-swiper .popover .item-agent a {
         font-size: 14px;
+    }
+    .statis {
+        padding: 0 20px 20px;
+    }
+    .alert-warning {
+        font-size: 14px;
+    }
+    .wrapChart .name-post {
+        font-size: 13px;
+    }
+    .option-view-stats li a {
+        text-align: center;
+    }
+    .option-view-stats li a span.icon-mv {
+        display: block;
+        margin: 0 0 5px 0;
+    }
+    .option-view-stats li a {
+        padding: 10px 0;
+    }
+    .statis .title-top {
+        margin-bottom: 20px;
+    }
+    .profile-user .title-top {
+        margin: 0;
+    }
+    #popup-report-user.modal:before {
+        display: none;
+    }
+    .user-avatar .email-user {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }
 .fb-share {
