@@ -143,23 +143,54 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 						</a>
 						<div class="popover-append hide">
 							<div class="infor-agent clearfix">
-								<a href="#" class="wrap-img"><img src="/images/default-avatar.jpg" alt="porsche"></a>
+                                <?php if(!empty($owner)) { ?>
+                                    <a href="<?=Url::to(['member/profile', 'username' => $owner->username])?>" class="wrap-img">
+                                        <img src="<?= $avatar ?>" alt="<?=$owner->username;?>" /></a>
+                                <?php } else { ?>
+                                    <a class="wrap-img"><img src="<?= $avatar ?>" alt="" /></a>
+                                <?php } ?>
 								<div class="img-agent">
-									<a href="#" class="name-agent">Hao Do</a>
-									<div class="item-agent">
-										<div>
-											<span class="icon icon-phone"></span>
-										</div>
-										<a href="tel:0988888888">0988888888</a>
-									</div>
-									<div class="item-agent">
-										<div>
-											<span class="icon icon-email"></span>
-										</div>
-										porsche@gmail.com 
-									</div>
-									<a href="#" data-toggle="modal" data-target="#popup_email_contact" class="email-btn btn-common btn-small">Email</a>
-									<a href="#" id="" class="chat-btn btn-common btn-small chat-now" data-chat-user="porsche">Chat</a>
+                                    <?php if(!empty($owner)) { ?>
+                                        <a href="<?=Url::to(['member/profile', 'username' => $owner->username])?>" class="name-agent"><?= $owner->profile->name ?></a>
+                                    <?php } else {?>
+                                        <span class="name-agent"><?= $product->adContactInfo->name ?></span>
+                                    <?php } ?>
+
+                                    <div class="stars">
+                                        <span id="rating-all" class="rateit" data-rateit-value="<?=$owner->profile->rating_point?>" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
+                                    </div>
+
+                                    <?php if($product->adContactInfo->mobile): ?>
+                                        <div class="item-agent">
+                                            <div>
+                                                <span class="icon icon-phone"></span>
+                                            </div>
+                                            <a href="tel:<?= $product->adContactInfo->mobile ?>"><?= $product->adContactInfo->mobile ?></a>
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <?php if($product->adContactInfo->email): ?>
+                                        <div class="item-agent">
+                                            <div>
+                                                <span class="icon icon-email"></span>
+                                            </div>
+                                            <?= $product->adContactInfo->email ?>
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <?php if($owner){
+                                        if(!empty($owner->location)) {?>
+                                            <div class="item-agent">
+                                                <div>
+                                                    <span class="icon address-icon"></span>
+                                                </div>
+                                                <?= $owner->location->city?>
+                                            </div>
+                                        <?php } } ?>
+                                    <?php if(!empty($owner->username) && !$owner->isMe()) { ?>
+                                        <a href="#" data-toggle="modal" data-target="#popup_email_contact" class="email-btn btn-common btn-small">Email</a>
+                                        <a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
+                                    <?php }?>
 								</div>
 							</div>
 						</div>
@@ -176,9 +207,13 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 					</div>
 					<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
 					<ul class="clearfix list-attr-td">
-						<?= $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '' ?>
-						<?= $product->adProductAdditionInfo->room_no ? '<li> <span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
-						<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
+                        <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
+                            <li><?=Yii::t('listing','updating')?></li>
+                        <?php } else {
+                            echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '';
+                            echo $product->adProductAdditionInfo->room_no ? '<li><span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
+                            echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
+                        } ?>
 					</ul>	
 				</div>
 				<?=$this->renderAjax('/ad/_partials/shareEmail',[
@@ -264,8 +299,65 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 				    </div>
 				</div>
 
+                <?php
+                /**
+                 * notification
+                 */
+                if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
+                    $userVisit = Yii::$app->user->identity;
+                    $userTo = $owner;
+
+                    $nameUserTo = $userTo->profile->getDisplayName();
+                    $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
+                    ?>
+                    <script>
+                        $(document).ready(function () {
+                            $(document).on('click', '.save-item', function (e) {
+                                e.preventDefault();
+                                $(this).toggleClass('active');
+                                var timer = 0;
+                                clearTimeout(timer);
+                                var _id = $(this).attr('data-id');
+                                var _url = $(this).attr('data-url');
+                                var _stt = ($(this).hasClass('active')) ? 1 : 0;
+                                timer = setTimeout(function () {
+                                    $.ajax({
+                                        type: "post",
+                                        url: _url,
+                                        data: {id: _id, stt: _stt},
+                                        success: function (data) {
+                                            if(data.statusCode == 200){
+                                                var to_jid = chatUI.genJid('<?=$userTo->username?>');
+                                                Chat.sendMessage(to_jid , 'save product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: data.parameters.msg});
+                                            }
+                                        }
+                                    });
+                                }, 500);
+
+                            });
+                            $(document).bind('chat/afterConnect', function (event, data) {
+                                <?php if(Yii::$app->session->getFlash('notify_other')){?>
+                                var to_jid = chatUI.genJid('<?=$userTo->username?>');
+                                Chat.sendMessage(to_jid , 'view product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: <?=Yii::$app->session->getFlash('notify_other');?>});
+                                <?php }?>
+                            });
+                        });
+                    </script>
+                    <?php
+                }
+                ?>
+
 				<script>
 					$(document).ready(function () {
+
+                        $('#rating-all').rateit();
+                        $('#rating-all-bottom').rateit();
+
+                        $('#rating-review').rateit({
+                            clickRating: function (value_rating) {
+                                $('#val-rating').val(value_rating);
+                            }
+                        });
 
 						$('body').popover({
 							selector: '[data-popover]', 
@@ -394,6 +486,10 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 							$('#popup-share-social').addClass('hide-popup');
 							$('.email-btn').trigger('click');
 						});*/
+
+                        if($('.list-tienich-detail>li').length < 1){
+                            $('.list-tienich-detail').append("<li><?=Yii::t('listing','updating')?></li>");
+                        }
 					});
 				</script>
 
@@ -512,29 +608,11 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
                                     <?php } else {?>
 						            <span class="name-agent"><?= $product->adContactInfo->name ?></span>
                                     <?php } ?>
-									<div class="rating-start">
-										<fieldset class="rate">
-											<input type="radio" id="rating10" name="rating" value="10"> <label
-												for="rating10" title="5 stars"> </label> <input type="radio"
-												id="rating9" name="rating" value="9"> <label for="rating9"
-												class="half" title="5 stars"> </label> <input type="radio"
-												id="rating8" name="rating" value="8"> <label for="rating8"
-												title="4 stars"> </label> <input type="radio" id="rating7"
-												name="rating" value="7"> <label for="rating7" class="half"
-												title="4 stars"> </label> <input type="radio" id="rating6"
-												name="rating" value="6"> <label for="rating6" title="3 stars"> </label>
-											<input type="radio" id="rating5" name="rating" value="5"> <label
-												for="rating5" class="half" title="3 stars"> </label> <input
-												type="radio" id="rating4" name="rating" value="4"> <label
-												for="rating4" title="2 stars"> </label> <input type="radio"
-												id="rating3" name="rating" value="3"> <label for="rating3"
-												class="half" title="2 stars"> </label> <input type="radio"
-												id="rating2" name="rating" value="2"> <label for="rating2"
-												title="1 stars"> </label> <input type="radio" id="rating1"
-												name="rating" value="1"> <label for="rating1" class="half"
-												title="1 stars"> </label>
-										</fieldset>
-									</div>
+
+                                    <div class="stars">
+                                        <span id="rating-all-bottom" class="rateit" data-rateit-value="<?=$owner->profile->rating_point?>" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
+                                    </div>
+
 									<?php if($product->adContactInfo->mobile): ?>
 									<div class="item-agent">
 										<div>
@@ -562,7 +640,7 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
                                     <?php } } ?>
 									<?php if(!empty($owner->username) && !$owner->isMe()) { ?>
                                         <a href="#" data-toggle="modal" data-target="#popup_email_contact" class="email-btn btn-common btn-small">Email</a>
-										<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
+										<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
 									<?php }?>
 								</div>
 							</div>
@@ -582,50 +660,3 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
     </div>
 </div>
 
-<?php
-/**
- * notification
- */
-if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
-	$userVisit = Yii::$app->user->identity;
-	$userTo = $owner;
-
-	$nameUserTo = $userTo->profile->getDisplayName();
-	$nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
-	?>
-	<script>
-		$(document).ready(function () {
-            $(document).on('click', '.save-item', function (e) {
-                e.preventDefault();
-                $(this).toggleClass('active');
-                var timer = 0;
-                clearTimeout(timer);
-                var _id = $(this).attr('data-id');
-                var _url = $(this).attr('data-url');
-                var _stt = ($(this).hasClass('active')) ? 1 : 0;
-                timer = setTimeout(function () {
-                    $.ajax({
-                        type: "post",
-                        url: _url,
-                        data: {id: _id, stt: _stt},
-                        success: function (data) {
-                            if(data.statusCode == 200){
-                                var to_jid = chatUI.genJid('<?=$userTo->username?>');
-                                Chat.sendMessage(to_jid , 'save product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: data.parameters.msg});
-                            }
-                        }
-                    });
-                }, 500);
-
-            });
-			$(document).bind('chat/afterConnect', function (event, data) {
-				<?php if(Yii::$app->session->getFlash('notify_other')){?>
-					var to_jid = chatUI.genJid('<?=$userTo->username?>');
-					Chat.sendMessage(to_jid , 'view product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: <?=Yii::$app->session->getFlash('notify_other');?>});
-				<?php }?>
-			});
-		});
-	</script>
-	<?php
-}
-?>
