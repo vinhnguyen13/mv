@@ -61,6 +61,9 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 }
 
 $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
+
+$reviews = \frontend\models\UserReview::find()->where('review_id = :rid', [':rid' => $owner->id]);
+$count_review = $reviews->count();
 ?>
 <div class="title-fixed-wrap container">
 	<div class="detail-listing row detail-listing-extra">
@@ -158,6 +161,7 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 
                                     <div class="stars">
                                         <span id="rating-all" class="rateit" data-rateit-value="<?=$owner->profile->rating_point?>" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
+                                        <span class="fs-13 font-600 count_review">(<?=$count_review?>)</span>
                                     </div>
 
                                     <?php if($product->adContactInfo->mobile): ?>
@@ -611,6 +615,7 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 
                                     <div class="stars">
                                         <span id="rating-all-bottom" class="rateit" data-rateit-value="<?=$owner->profile->rating_point?>" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
+                                        <span class="fs-13 font-600 count_review">(<?=$count_review?>)</span>
                                     </div>
 
 									<?php if($product->adContactInfo->mobile): ?>
