@@ -79,7 +79,7 @@ $banner = Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'. $news["b
 <div class="title-fixed-wrap container">
     <div class="detail-news page-news">
         <?= $this->render('/news/_partials/menu', ['cat_id'=>$news["catalog_id"]]); ?>
-        <div class="wrap-detail-article wrap-news-page">
+        <div class="wrap-detail-article wrap-news-page clearfix">
             <div class="wrap-news col-xs-12 col-md-9">
                 <input id="current_id" type="hidden" value="<?=$news["id"]?>">
                 <input id="current_slug" type="hidden" value="<?=$news["slug"]?>">

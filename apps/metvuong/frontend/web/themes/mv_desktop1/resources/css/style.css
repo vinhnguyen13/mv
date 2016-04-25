@@ -6755,6 +6755,7 @@ footer li a {
         padding: 0;
     }
     .wrap-news {
+        padding-top: 0;
     }
     .swiper-button-prev,
     .swiper-button-next {
@@ -7621,7 +7622,7 @@ footer li a {
 }
 @media (max-width: 985px) {
     .wrap-news-page {
-        margin: 0;
+        padding: 15px 0;
     }
     .item-sidebar .item-hot-sidebar {
         float: left;
@@ -10208,6 +10209,19 @@ label:hover {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+    }
+    .wrap-detail-article .big-title {
+        font-size: 20px;
+    }
+    .wrap-detail-article .time-post .name-cate,
+    .wrap-detail-article .time-post {
+        font-size: 13px;
+    }
+    .page-news {
+        padding-top: 0
+    }
+    .list-menu-news a {
+        font-size: 14px;
     }
 }
 .fb-share {
