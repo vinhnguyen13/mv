@@ -53,7 +53,7 @@ use vsoft\ad\models\AdProduct;
                                 <div class="img-show">
                                     <div><img src="<?= $product->representImage ?>" data-original=""></div>
                                 </div>
-                                <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></div>
+                                <div class="title-item"><?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= $types[$product->type] ?></div>
                             </a>
                             <div class="info-item">
                                 <div class="address-feat clearfix">
