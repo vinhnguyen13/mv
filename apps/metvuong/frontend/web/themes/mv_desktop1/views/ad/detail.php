@@ -140,7 +140,7 @@ $count_review = $reviews->count();
 						</a>
 					</li>
 					<li class="color-8">
-						<a href="#" data-popover="true" data-placement="left">
+						<a href="#" data-popover="true">
 							<span class="icon-mv"><span class="icon-phone-profile"></span></span>	
 							<span><?= Yii::t('ad', 'Contact Agent') ?></span>
 						</a>
@@ -166,18 +166,16 @@ $count_review = $reviews->count();
 
                                     <?php if($product->adContactInfo->mobile): ?>
                                         <div class="item-agent">
-                                            <div>
-                                                <span class="icon icon-phone"></span>
-                                            </div>
+                                            <span class="icon-mv">
+                                            	<span class="icon-phone-profile"></span>
+                                            </span>
                                             <a href="tel:<?= $product->adContactInfo->mobile ?>"><?= $product->adContactInfo->mobile ?></a>
                                         </div>
                                     <?php endif; ?>
 
                                     <?php if($product->adContactInfo->email): ?>
                                         <div class="item-agent">
-                                            <div>
-                                                <span class="icon icon-email"></span>
-                                            </div>
+                                            <span class="icon-mv"><span class="icon-mail-profile"></span></span>
                                             <?= $product->adContactInfo->email ?>
                                         </div>
                                     <?php endif; ?>
@@ -185,9 +183,7 @@ $count_review = $reviews->count();
                                     <?php if($owner){
                                         if(!empty($owner->location)) {?>
                                             <div class="item-agent">
-                                                <div>
-                                                    <span class="icon address-icon"></span>
-                                                </div>
+                                                <span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
                                                 <?= $owner->location->city?>
                                             </div>
                                         <?php } } ?>
@@ -363,8 +359,7 @@ $count_review = $reviews->count();
                             }
                         });
 
-						$('body').popover({
-							selector: '[data-popover]', 
+						$('[data-popover]').popover({
 							trigger: 'click hover',
 							html: true,
 							delay: {
@@ -373,6 +368,12 @@ $count_review = $reviews->count();
 							},
 							content: function () {
 								return $('.popover-append').html();
+							},
+							placement: function ( context, source ) {
+								if ( checkMobile() ) {
+									return "top";
+								}
+								return "left";
 							}
 						});
 

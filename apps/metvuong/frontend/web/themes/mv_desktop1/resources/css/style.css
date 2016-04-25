@@ -3632,6 +3632,7 @@ html.mm-opening .mm-slideout {
     width: 20px;
     text-align: center;
     margin-right: 5px;
+    vertical-align: middle;
 }
 .item-agent a {
     color: #3c3c3c;
@@ -10137,6 +10138,38 @@ label:hover {
     .wrap-swiper .icons-detail .popover .btn-common {
         margin: 0 10px 0 0;
         padding: 7px 15px;
+    }
+    .wrap-swiper .icons-detail .popover a.wrap-img {
+        float:  none;
+        margin: 0 auto 10px;
+        display: block;
+    }
+    .popover .infor-agent .wrap-img img {
+        
+    }
+    .popover .img-agent {
+        overflow: inherit;
+    }
+    .wrap-swiper .icons-detail .popover .name-agent {
+        margin: 0 0 0 0;
+    }
+    .wrap-swiper .icons-detail .popover .item-agent {
+        margin: 0 0 7px 0;
+        line-height: 100%;
+    }
+    .wrap-swiper .icons-detail .popover .icon-mv {
+        width: 25px;
+        text-align: center;
+        margin-right: 5px;
+    }
+    .popover .icon-pin-active-copy-3 {
+        font-size: 18px;
+    }
+    .popover .img-agent .stars {
+        margin-bottom: 5px;
+    }
+    .wrap-swiper .popover .item-agent a {
+        font-size: 14px;
     }
 }
 .fb-share {
