@@ -24,6 +24,8 @@ use yii\widgets\ActiveForm;
     ]); ?>
 
     <?php
+    $languages = \lajax\translatemanager\models\Language::find()->where(['status'=>1])->all();
+    $language_list = ArrayHelper::map($languages, 'language_id', 'name');
     $parentCatalog = ArrayHelper::merge([20 => 'Homepage', 2 => 'News'], ArrayHelper::map(CmsCatalog::get(Yii::$app->params['newsCatID'], CmsCatalog::find()->where(['status' => Status::STATUS_ACTIVE])->asArray()->all()), 'id', 'label'));
 //    $catalog_data = ArrayHelper::map(CmsCatalog::find()->where(['status' => Status::STATUS_ACTIVE])->all(), 'id', 'title');
     $cat_id = $model->catalog_id > 0 ? $model->catalog_id : Yii::$app->params['newsCatID'];
@@ -75,6 +77,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'readOnly' => true]) ?>
 
     <?= $form->field($model, 'status')->dropDownList(\vsoft\news\models\Status::labels()) ?>
+
+    <?= $form->field($model, 'language_id')->dropDownList($language_list, ['options' => [$model->language_id => ['Selected ' => true]]])->label("Language") ?>
 
     <div class="form-group">
         <label class="col-lg-1 control-label"></label>

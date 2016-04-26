@@ -216,7 +216,7 @@ class BatdongsanV2 extends Component
                             $sequence_id = $sequence_id + 1;
                         }
                     } else {
-                        var_dump($productId);
+                        print_r($productId . " exists\n");
                     }
                 }
                 return ['data' => $log];
@@ -276,6 +276,14 @@ class BatdongsanV2 extends Component
         }
         return null;
     }
+    function getCityId2($cityName)
+    {
+        $city = AdCity::find()->select(['id'])->where(['like', 'name', '%'.$cityName, false])->one();
+        if($city) {
+            return $city->id;
+        }
+        return null;
+    }
 
     function getDistrictId($districtFile, $districtDB, $city_id)
     {
@@ -286,6 +294,17 @@ class BatdongsanV2 extends Component
                 if ($check == 0 && $obj->city_id == $city_id) {
                     return (int)$obj->id;
                 }
+            }
+        }
+        return null;
+    }
+    function getDistrictId2($districtName, $city_id)
+    {
+        if(!empty($city_id)) {
+            $district = AdDistrict::find()->select(['id'])->where(['like', 'name', '%'.$districtName, false])
+                ->andWhere('city_id = :c',[':c' => $city_id])->one();
+            if($district) {
+                return $district->id;
             }
         }
         return null;
@@ -303,6 +322,17 @@ class BatdongsanV2 extends Component
         }
         return null;
     }
+    function getWardId2($wardName, $district_id)
+    {
+        if(!empty($district_id)) {
+            $ward = AdWard::find()->select(['id'])->where(['like', 'name', '%'.$wardName, false])
+                ->andWhere('district_id = :d',[':d' => $district_id])->one();
+            if($ward) {
+                return $ward->id;
+            }
+        }
+        return null;
+    }
 
     function getStreetId($_file, $_data, $_id)
     {
@@ -316,6 +346,26 @@ class BatdongsanV2 extends Component
                 }
 
             }
+        }
+        return null;
+    }
+    function getStreetId2($streetName, $district_id)
+    {
+        if(!empty($district_id)) {
+            $street = AdStreet::find()->select(['id','name'])->where(['like', 'name', '%'.$streetName, false])
+                ->andWhere('district_id = :d',[':d' => $district_id])->one();
+            if($street) {
+                return $street->id;
+            }
+        }
+        return null;
+    }
+
+    function getProjectId($projectName)
+    {
+        $project = \vsoft\ad\models\AdBuildingProject::find()->select(['id','name'])->where(['like', 'name', '%'.$projectName.'%', false])->one();
+        if($project) {
+            return $project->id;
         }
         return null;
     }
@@ -878,18 +928,23 @@ class BatdongsanV2 extends Component
         $infoArray = array();
         $contactArray = array();
 
-        $projectData = AdBuildingProject::find()->all();
-        $cityData = \vsoft\craw\models\AdCity::find()->all();
-        $districtData = \vsoft\craw\models\AdDistrict::find()->all();
-        $wardData = \vsoft\craw\models\AdWard::find()->all();
-        $streetData = \vsoft\craw\models\AdStreet::find()->all();
+//        $projectData = AdBuildingProject::find()->all();
+//        $cityData = \vsoft\craw\models\AdCity::find()->all();
+//        $districtData = \vsoft\craw\models\AdDistrict::find()->all();
+//        $wardData = \vsoft\craw\models\AdWard::find()->all();
+//        $streetData = \vsoft\craw\models\AdStreet::find()->all();
         $tableName = \vsoft\craw\models\AdProduct::tableName();
         $break_type = false; // detect next type if it is false
+
+        $old_log = null; // used when insert error
+
         foreach ($types as $key_type => $type) {
             if ($key_type >= $last_type_import && !$break_type) {
                 $path = $path_folder."{$type}/{$folder}";
                 if (is_dir($path)) {
-                    $log_import = $this->loadImportLog($type, $path_folder);
+                    $old_log = $log_import = $this->loadImportLog($type, $path_folder);
+                    $this->writeLog($old_log, $path_folder."import/", "last_import_" .$type);
+
                     if (empty($log_import["files"]))
                         $log_import["files"] = array();
 
@@ -921,11 +976,23 @@ class BatdongsanV2 extends Component
                                     $infoArray[$count_file] = $value[$filename]["info"];
                                     $contactArray[$count_file] = $value[$filename]["contact"];
 
-                                    $project_id = $this->getIdExists($value[$filename]["project"], $projectData);
-                                    $city_id = $this->getCityId($value[$filename]["city"], $cityData);
-                                    $district_id = $this->getDistrictId($value[$filename]["district"], $districtData, $city_id);
-                                    $ward_id = $this->getWardId($value[$filename]["ward"], $wardData, $district_id);
-                                    $street_id = $this->getStreetId($value[$filename]["street"], $streetData, $district_id);
+                                    $project_id = null;
+                                    if(!empty($value[$filename]["project"])) {
+                                        $project_id = $this->getProjectId($value[$filename]["project"]);
+                                        if ($project_id > 0)
+                                            print_r("-" . $value[$filename]["project"] . "\n");
+                                    }
+//                                    $city_id = $this->getCityId($value[$filename]["city"], $cityData);
+                                    $city_id = $this->getCityId2($value[$filename]["city"]);
+
+//                                    $district_id = $this->getDistrictId($value[$filename]["district"], $districtData, $city_id);
+                                    $district_id = $this->getDistrictId2($value[$filename]["district"], $city_id);
+
+//                                    $ward_id = $this->getWardId($value[$filename]["ward"], $wardData, $district_id);
+                                    $ward_id = $this->getWardId2($value[$filename]["ward"], $district_id);
+
+//                                    $street_id = $this->getStreetId($value[$filename]["street"], $streetData, $district_id);
+                                    $street_id = $this->getStreetId2($value[$filename]["street"], $district_id);
 
                                     $area = $value[$filename]["dientich"];
                                     $price = $value[$filename]["price"];
@@ -968,7 +1035,7 @@ class BatdongsanV2 extends Component
                                     // source = 1 for Batdongsan.com.vn
                                     $bulkInsertArray[] = $record;
 
-                                    print_r(" Added.\n");
+//                                    print_r(" Added.\n");
                                     array_push($log_import["files"], $filename);
                                     $log_import["import_total"] = count($log_import["files"]);
                                     $log_import["import_time"] = date("d-m-Y H:i");
@@ -1089,6 +1156,7 @@ class BatdongsanV2 extends Component
                 }
             } else {
                 print_r("\nCannot insert ad_product!!");
+
             }
 
             if (!$break_type) {
@@ -1275,7 +1343,7 @@ class BatdongsanV2 extends Component
                 $ward = $detail->find('#divWardOptions .current', 0);
                 $ward = empty($ward) ? null : $ward->innertext;
 
-                $street = $detail->find('#divDistrictOptions .current', 0);
+                $street = $detail->find('#divStreetOptions .current', 0);
                 $street = empty($street) ? null : $street->innertext;
 
                 $direction = $detail->find('#divHomeDirectionOptions .current', 0);

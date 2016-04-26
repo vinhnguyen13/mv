@@ -681,7 +681,8 @@ margin-top: 12px;
 }
 #listing-list .item-listing .address-listing {
     margin: 0 0 6px 0;
-    color: #3c3c3c;
+    /* color: #3c3c3c; */
+    color: #009455;
 }
 .item-listing .address-listing span {
     margin-right: 5px;
@@ -3632,6 +3633,7 @@ html.mm-opening .mm-slideout {
     width: 20px;
     text-align: center;
     margin-right: 5px;
+    vertical-align: middle;
 }
 .item-agent a {
     color: #3c3c3c;
@@ -6130,6 +6132,7 @@ footer li a {
         line-height: 100%;
         /* display: none; */
     }
+    .profile-user .title-top,
     .noti-alert .title-top,
     .u-allduan .title-top {
         display: none;
@@ -6752,6 +6755,7 @@ footer li a {
         padding: 0;
     }
     .wrap-news {
+        padding-top: 0;
     }
     .swiper-button-prev,
     .swiper-button-next {
@@ -7618,7 +7622,7 @@ footer li a {
 }
 @media (max-width: 985px) {
     .wrap-news-page {
-        margin: 0;
+        padding: 15px 0;
     }
     .item-sidebar .item-hot-sidebar {
         float: left;
@@ -9311,6 +9315,7 @@ footer li a {
     }
     .statis .tbl-review th {
         font-size: 13px !important;
+        padding: 15px 0;
     }
     .statis .tbl-review td {
         padding: 20px 5px;
@@ -9331,7 +9336,6 @@ footer li a {
 .all-packege .title-top {
     margin-bottom: 35px;
 }
-.statis .title-top,
 .edit-user-tt .title-top,
 .chat-history .title-top {
     display: none;
@@ -9942,8 +9946,8 @@ label:hover {
     padding: 0;
     display: inline-block;
 }
-.wrap-swiper .icons-detail .popover .name-agent {
-    margin-bottom: 15px;
+.wrap-swiper .popover .name-agent {
+    margin-bottom: 5px;
 }
 .wrap-swiper .icons-detail .popover .btn-common {
     display: block;
@@ -9960,8 +9964,8 @@ label:hover {
     margin-bottom: 0;
     display: block;
 }
-.wrap-swiper .icons-detail .popover .item-agent {
-    margin: 0 0 15px 0;
+.wrap-swiper .popover .item-agent {
+    margin: 0 0 5px 0;
     padding: 0;
     overflow: visible;
 }
@@ -10026,16 +10030,19 @@ label:hover {
     .detail-listing .panel-group {
         padding: 0;
     }
+    #popup-review.modal:before,
     #report-listing.modal:before,
     #popup_email_share.modal:before {
         display: none;
     }
+    #popup-review .modal-dialog,
     #report-listing .modal-dialog,
     #popup_email_share .modal-dialog {
         margin: 0;
         min-height: 100%;
         background: #fff;
     }
+    #popup-review .modal-dialog .modal-content,
     #report-listing .modal-dialog .modal-content,
     #popup_email_share .modal-dialog .modal-content {
         box-shadow: none;
@@ -10044,6 +10051,9 @@ label:hover {
         -ms-box-shadow: none;
         border: none;
         min-height: 100%;
+    }
+    #popup-review .wrap-popup {
+        width: 100%;
     }
     .user-avatar,
     .infor-priva,
@@ -10127,6 +10137,91 @@ label:hover {
     }
     .col-left {
         padding-top: 30px;
+    }
+    .alert-item {
+        max-width: 320px;
+    }
+    .infor-agent .wrap-img {
+        margin-right: 10px;
+    }
+    .wrap-swiper .icons-detail .popover .btn-common {
+        margin: 0 10px 0 0;
+        padding: 7px 15px;
+    }
+    .wrap-swiper .icons-detail .popover a.wrap-img {
+        float:  none;
+        margin: 0 auto 10px;
+        display: block;
+    }
+    .popover .img-agent {
+        overflow: inherit;
+    }
+    .wrap-swiper .icons-detail .popover .name-agent {
+        margin: 0 0 5px 0;
+    }
+    .wrap-swiper .icons-detail .popover .item-agent {
+        margin: 0 0 7px 0;
+        line-height: 100%;
+    }
+    .wrap-swiper .icons-detail .popover .icon-mv {
+        width: 25px;
+        text-align: center;
+        margin-right: 5px;
+    }
+    .popover .icon-pin-active-copy-3 {
+        font-size: 18px;
+    }
+    .popover .img-agent .stars {
+        margin-bottom: 5px;
+    }
+    .wrap-swiper .popover .item-agent a {
+        font-size: 14px;
+    }
+    .statis {
+        padding: 0 20px 20px;
+    }
+    .alert-warning {
+        font-size: 14px;
+    }
+    .wrapChart .name-post {
+        font-size: 13px;
+    }
+    .option-view-stats li a {
+        text-align: center;
+    }
+    .option-view-stats li a span.icon-mv {
+        display: block;
+        margin: 0 0 5px 0;
+    }
+    .option-view-stats li a {
+        padding: 10px 0;
+    }
+    .statis .title-top {
+        margin-bottom: 20px;
+    }
+    .profile-user .title-top {
+        margin: 0;
+    }
+    #popup-report-user.modal:before {
+        display: none;
+    }
+    .user-avatar .email-user {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .wrap-detail-article .big-title {
+        font-size: 20px;
+    }
+    .wrap-detail-article .time-post .name-cate,
+    .wrap-detail-article .time-post {
+        font-size: 13px;
+    }
+    .page-news {
+        padding-top: 0
+    }
+    .list-menu-news a {
+        font-size: 14px;
     }
 }
 .fb-share {

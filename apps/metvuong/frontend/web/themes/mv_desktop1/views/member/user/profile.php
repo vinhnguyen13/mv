@@ -24,6 +24,9 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
 <div class="title-fixed-wrap">
     <div class="container">
         <div class="profile-user row">
+            <div class="title-top">
+                Profile
+            </div>
             <div class="col-xs-12 col-md-9 col-left">
                 <div class="user-avatar">
                     <div class="wrap-img avatar"><img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="<?=$model->avatar?>" alt="metvuong avatar" /></div>
@@ -33,7 +36,7 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
                             <a href="#" class="chat-now tooltip-show" data-chat-user="<?=$user->username?>" data-placement="bottom" title="Chat">
                                 <span class="icon-mv"><span class="icon-bubbles-icon"></span></span>
                             </a>
-                            <a href="#" data-toggle="modal" data-placement="bottom" data-target="<?=Yii::$app->user->isGuest ? "" : "#popup-report-user" ?>" class="btn-report tooltip-show<?=Yii::$app->user->isGuest ? " user-login-link" : "" ?>" title="<?= Yii::t('profile', 'Report') ?>">
+                            <a href="#" data-toggle="modal" data-placement="bottom" data-target="<?=Yii::$app->user->isGuest ? "" : "#report-listing" ?>" class="btn-report tooltip-show<?=Yii::$app->user->isGuest ? " user-login-link" : "" ?>" title="<?= Yii::t('profile', 'Report') ?>">
                                 <span class="icon-mv"><span class="icon-warning"></span></span>
                             </a>
                         </p>
@@ -306,7 +309,7 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
     </div>
 </div -->
 
-<div id="popup-report-user" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div id="report-listing" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
@@ -370,6 +373,9 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
                     $('#popup-review').modal('hide');
                     $('body').loading({done:true});
                     if(data.statusCode == 200) {
+                        $('body').alertBox({
+                            txt: "Review thành công !!!"
+                        });
                         window.location.reload();
                     }
                     return true;
@@ -386,10 +392,12 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
                 url: $('#report-form').attr('action'),
                 data: $('#report-form').serializeArray(),
                 success: function (data) {
-                    $('#popup-report-user').modal('hide');
+                    $('#report-listing').modal('hide');
                     $('body').loading({done:true});
                     if(data.statusCode == 200) {
-                        $('body').alertBox("<?=Yii::t('profile', 'Thanks for send report.')?>");
+                        $('body').alertBox({
+                            txt: "<?=Yii::t('listing', 'Report has been sent.')?>"
+                        });
                     }
                     return true;
                 }
