@@ -53,6 +53,18 @@ class CrawlerController extends Controller
     {
         BatdongsanV2::find()->updateData();
     }
+
+    public function actionCopytomain($price=0, $area=0)
+    {
+        if($price != 0){
+            echo "<pre>";
+            print_r($price);
+            echo "<pre>";
+            exit();
+        }
+//        BatdongsanV2::find()->copyToMainDb($price, $area);
+    }
+
     // Agent Batdongsan
     public function actionAgentbatdongsan()
     {

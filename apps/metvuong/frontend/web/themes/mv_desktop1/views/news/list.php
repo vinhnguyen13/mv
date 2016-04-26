@@ -61,9 +61,10 @@ Yii::t('news', 'Economy');
         <?php } else {?>
             <div class="row wrap-news-page">
                 <div class="wrap-news">
+                    <br><br>
                     <p class="text-center">
-                        <?=Yii::t('news','We are updating News more ...')?><br>
-                        <?=Yii::t('news', 'Please try again later')?><br>
+                        <?=Yii::t('news','We are updating News...')?>
+                        <?=Yii::t('news', 'Please try again later!')?><br>
                         <?=Yii::t('news', 'THANK YOU')?>
                     </p>
                 </div>

@@ -41,6 +41,7 @@ class NewsController extends Controller
             ->where('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
             ->andWhere('cms_catalog.status = :status', [':status' => Status::STATUS_ACTIVE])
             ->andWhere(['NOT IN', 'cms_show.catalog_id', [1]])
+            ->andWhere(['IN', 'cms_show.language_id', [Yii::$app->language]])
             ->orderBy('cms_show.created_at DESC');
 
         // get the total number of News (but do not fetch the News data yet)
@@ -85,6 +86,7 @@ class NewsController extends Controller
             ->where('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
             ->andWhere('cms_catalog.status = :status', [':status' => Status::STATUS_ACTIVE])
             ->andWhere(['IN', 'cms_show.catalog_id', [$cat_id]])
+            ->andWhere(['IN', 'cms_show.language_id', [Yii::$app->language]])
             ->orderBy('cms_show.created_at DESC');
         $count = (int)$query->count();
         $pagination = new Pagination(['totalCount' => $count]);
