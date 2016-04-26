@@ -8,6 +8,9 @@ use vsoft\express\components\StringHelper;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
+use yii\web\View;
+
+Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.rateit.js', ['position'=>View::POS_END]);
 
 // user get from username in address bar
 $user = $model->getUser();

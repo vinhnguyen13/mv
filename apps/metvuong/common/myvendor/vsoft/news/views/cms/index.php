@@ -74,11 +74,22 @@ $newsCatID = !empty(Yii::$app->params['newsCatID']) ? Yii::$app->params['newsCat
                 'filter' => Html::activeDropDownList($searchModel, 'status', \vsoft\news\models\Status::labels(),['class'=>'form-control','prompt' => 'All']),
             ],
             [
+                'label' => 'Language',
+                'attribute' => 'language_id',
+                'value' => function ($model) {
+                    if($model->language_id)
+                        return $model->getLanguage()->one()->name;
+                    return '';
+                },
+                'filter' => Html::activeDropDownList($searchModel, 'language_id', ArrayHelper::map(\lajax\translatemanager\models\Language::find()->where('status = :status', [':status' => 1])->all(), 'language_id', 'name'),['class'=>'form-control','prompt' => 'All']),
+            ],
+            [
                 'attribute' => 'updated_at',
                 'value' => function ($model) {
                     return $model->updated_at;
                 },
-                'format' => ['datetime', 'php: d/m/Y H:i a']
+                'format' => ['datetime', 'php: d/m/Y H:i a'],
+                'filter' => false
             ],
 
             ['class' => 'yii\grid\ActionColumn'],

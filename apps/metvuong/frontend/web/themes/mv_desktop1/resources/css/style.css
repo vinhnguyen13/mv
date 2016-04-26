@@ -10250,3 +10250,6 @@ label:hover {
     color: #fff;
     text-decoration: none;
 }
+.swiper-button-next.swiper-button-disabled, .swiper-button-prev.swiper-button-disabled {
+    display: none;
+}
