@@ -105,7 +105,7 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
                                             <div class="img-show"><div><img src="<?= $product->representImage ?>">
                                                     <input type="hidden" value="<?= $product->representImage ?>">
                                                 </div></div>
-                                            <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></div>
+                                            <div class="title-item"><?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= $types[$product->type] ?></div>
                                         </a>
                                         <div class="address-feat clearfix">
                                             <p class="date-post"><?=Yii::t('listing','Listing date')?>: <strong><?= date("d/m/Y H:i", $product->created_at) ?></strong></p>
