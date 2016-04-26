@@ -8,6 +8,9 @@
  */
 
 use yii\helpers\Url;
+use yii\web\View;
+
+Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/swiper.jquery.min.js', ['position'=>View::POS_END]);
 
 Yii::t('news', 'Real Estate');
 Yii::t('news', 'Financial & Banking');
