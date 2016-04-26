@@ -3,6 +3,7 @@
 namespace vsoft\news\models;
 
 use dektrium\user\models\User;
+use lajax\translatemanager\models\Language;
 use Yii;
 use yii\behaviors\AttributeBehavior;
 use yii\behaviors\SluggableBehavior;
@@ -102,6 +103,11 @@ class CmsShow extends \funson86\cms\models\CmsShow
     public function getCatalog()
     {
         return $this->hasOne(CmsCatalog::className(), ['id' => 'catalog_id']);
+    }
+
+    public function getLanguage()
+    {
+        return $this->hasOne(Language::className(), ['language_id' => 'language_id']);
     }
 
     public function getUserName($IDuser=NULL)

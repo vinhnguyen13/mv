@@ -15,7 +15,8 @@ class CmsShowSearch extends \funson86\cms\models\CmsShowSearch
     public function rules()
     {
         return array_merge(parent::rules(),[
-            [['created_by', 'updated_by'], 'integer']
+            [['created_by', 'updated_by'], 'integer'],
+            [['language_id'], 'string']
         ]);
     }
 
@@ -48,6 +49,7 @@ class CmsShowSearch extends \funson86\cms\models\CmsShowSearch
         $query->andFilterWhere([
             'id' => $this->id,
             'catalog_id' => $this->catalog_id,
+            'language_id' => $this->language_id,
             'click' => $this->click,
             'status' => $this->status,
             'created_at' => $this->created_at,
