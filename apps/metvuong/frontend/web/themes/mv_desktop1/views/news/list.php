@@ -1,6 +1,9 @@
 <?php
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
+use yii\web\View;
+
+Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/swiper.jquery.min.js', ['position'=>View::POS_END]);
 
 $newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatID"] : 0;
 $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID, 'status' => \vsoft\news\models\Status::STATUS_ACTIVE]);
@@ -58,9 +61,10 @@ Yii::t('news', 'Economy');
         <?php } else {?>
             <div class="row wrap-news-page">
                 <div class="wrap-news">
+                    <br><br>
                     <p class="text-center">
-                        <?=Yii::t('news','We are updating News more ...')?><br>
-                        <?=Yii::t('news', 'Please try again later')?><br>
+                        <?=Yii::t('news','We are updating News...')?>
+                        <?=Yii::t('news', 'Please try again later!')?><br>
                         <?=Yii::t('news', 'THANK YOU')?>
                     </p>
                 </div>

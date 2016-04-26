@@ -95,7 +95,7 @@ use frontend\models\AdProductSearch;
                 <div class="box-dropdown guest-dropdown">
                     <a href="#" class="icon-guest val-selected wrap-img">
                         <div><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg' ?>" alt=""></div>
-                        Guest
+                        <?= Yii::t('general', 'Guest') ?>
                     </a>
                     <div class="item-dropdown hide-dropdown">
                         <ul class="clearfix">

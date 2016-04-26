@@ -90,7 +90,8 @@ class CmsShow extends \funson86\cms\models\CmsShow
     {
         return array_merge(parent::rules(), [
             [['created_at', 'updated_at'], 'integer'],
-            [['created_by', 'updated_by'], 'integer']
+            [['created_by', 'updated_by'], 'integer'],
+            [['language_id'], 'string']
         ]);
     }
 

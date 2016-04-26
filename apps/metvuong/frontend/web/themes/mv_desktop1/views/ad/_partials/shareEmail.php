@@ -121,51 +121,30 @@ use yii\helpers\Url;
     </div>
 </div>
 
-<div id="popup-sent" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="wrap-popup">
-        <div class="inner-popup">
-            <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
-            <div class="overflow-all">
-                <p><?=Yii::t('send_email','Thanks for send mail to')?> <b class="user_name"></b></p>
-                <br />
-                <div><a style="color: #00a769;" href="<?=Url::home()?>" class=""><?=Yii::t('send_email','Return homepage')?></a></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="popup-error" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="wrap-popup">
-        <div class="inner-popup">
-            <a href="#" class="btn-close"><span class="icon icon-close"></span></a>
-            <div class="overflow-all">
-                <p>Send mail error. Please, try again later</p>
-                <br />
-                <div><a style="color: #00a769;" href="<?=Url::home()?>" class=""><?=Yii::t('send_email','Return homepage')?></a></div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
-    $(document).on('click', '.send_mail', function(e){
+    var popup_email_name = '#<?=$popup_email_name?> ';
+    $(document).on('click', popup_email_name +'.send_mail', function(e){
         e.preventDefault();
 //        var _this = $(this);
-        var recipient_email = $('#share_form .recipient_email').val();
-        var your_email = $('#share_form .your_email').val();
+        var recipient_email = $(popup_email_name + '#share_form .recipient_email').val();
+        var your_email = $(popup_email_name + '#share_form .your_email').val();
         if(recipient_email != null && your_email != null) {
             $('body').loading();
             $('#popup-sent .user_name').html(recipient_email);
             $.ajax({
                 type: "post",
                 dataType: 'json',
-                url: $('#share_form').attr('action'),
-                data: $('#share_form').serializeArray(),
+                url: $(popup_email_name + '#share_form').attr('action'),
+                data: $(popup_email_name + '#share_form').serializeArray(),
                 success: function (data) {
                     $('body').loading({done:true});
                     if(data.status == 200){
                         $('.btn-cancel').trigger('click');
                         setTimeout(function () {
-                            $('body').alertBox("Email has been sent to "+recipient_email);
+                            //"Email has been sent to "+recipient_email
+                            $('body').alertBox({
+                                txt: "<?=Yii::t('send_email', 'Email has been sent to ')?>"+recipient_email+""
+                            });
                         },300);
                     }
                     else if(data.status == 404){
@@ -174,7 +153,7 @@ use yii\helpers\Url;
                             var element = 'shareform-' + idx;
                             arr[element] = lajax.t(val);
                         });
-                        $('#share_form').yiiActiveForm('updateMessages', arr, true);
+                        $(popup_email_name + '#share_form').yiiActiveForm('updateMessages', arr, true);
 //                        $('#popup-sent .btn-close').trigger('click');
                     } else {
                         console.log(data);

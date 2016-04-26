@@ -61,6 +61,13 @@ if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']
 }
 
 $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
+
+if($owner){
+$reviews = \frontend\models\UserReview::find()->where('review_id = :rid', [':rid' => $owner->id]);
+$count_review = $reviews->count();
+} else {
+	$count_review = 0;
+}
 ?>
 <div class="title-fixed-wrap container">
 	<div class="detail-listing row detail-listing-extra">
@@ -108,13 +115,13 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 						<a href="#" class="share-facebook" data-url="<?=Url::to(['/ad/tracking-share', 'product_id' => $product->id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_FACEBOOK], true)?>">
 							<span class="icon-mv"><span class="icon-facebook"></span></span>
 							<span><?= Yii::t('ad', 'Share Facebook') ?></span>
-						</a>	
+						</a>
 					</li>
 					<li class="color-3">
 						<a href="#" data-toggle="modal" data-target="#popup_email_share">
 							<span class="icon-mv fs-18"><span class="icon-mail-profile"></span></span>
 							<span><?= Yii::t('ad', 'Share Email') ?></span>
-						</a>	
+						</a>
 					</li>
 		            <?php if($product->user_id != Yii::$app->user->id){ ?>
 					<li class="color-4">
@@ -126,40 +133,67 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 		            <?php } ?>
 					<li class="color-5">
 						<a href="#" data-toggle="modal" data-target="#popup-map">
-							<span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>	
+							<span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
 							<span><?= Yii::t('ad', 'Location') ?></span>
 						</a>
 					</li>
 					<li class="color-6">
 						<a href="#" class="report<?=Yii::$app->user->isGuest ? " user-login-link" : "" ?>">
-							<span class="icon-mv"><span class="icon-warning"></span></span>	
+							<span class="icon-mv"><span class="icon-warning"></span></span>
 							<span><?= Yii::t('ad', 'Report Abuse') ?></span>
 						</a>
 					</li>
 					<li class="color-8">
-						<a href="#" data-popover="true" data-placement="left">
-							<span class="icon-mv"><span class="icon-phone-profile"></span></span>	
+						<a href="#" data-popover="true">
+							<span class="icon-mv"><span class="icon-phone-profile"></span></span>
 							<span><?= Yii::t('ad', 'Contact Agent') ?></span>
 						</a>
 						<div class="popover-append hide">
 							<div class="infor-agent clearfix">
-								<a href="#" class="wrap-img"><img src="/images/default-avatar.jpg" alt="porsche"></a>
+                                <?php if(!empty($owner)) { ?>
+                                    <a href="<?=Url::to(['member/profile', 'username' => $owner->username])?>" class="wrap-img">
+                                        <img src="<?= $avatar ?>" alt="<?=$owner->username;?>" /></a>
+                                <?php } else { ?>
+                                    <a class="wrap-img"><img src="<?= $avatar ?>" alt="" /></a>
+                                <?php } ?>
 								<div class="img-agent">
-									<a href="#" class="name-agent">Hao Do</a>
-									<div class="item-agent">
-										<div>
-											<span class="icon icon-phone"></span>
-										</div>
-										<a href="tel:0988888888">0988888888</a>
-									</div>
-									<div class="item-agent">
-										<div>
-											<span class="icon icon-email"></span>
-										</div>
-										porsche@gmail.com 
-									</div>
-									<a href="#" data-toggle="modal" data-target="#popup_email_contact" class="email-btn btn-common btn-small">Email</a>
-									<a href="#" id="" class="chat-btn btn-common btn-small chat-now" data-chat-user="porsche">Chat</a>
+                                    <?php if(!empty($owner)) { ?>
+                                        <a href="<?=Url::to(['member/profile', 'username' => $owner->username])?>" class="name-agent"><?= $owner->profile->name ?></a>
+                                        <div class="stars">
+	                                        <span id="rating-all" class="rateit" data-rateit-value="<?=$owner->profile->rating_point?>" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
+	                                        <span class="fs-13 font-600 count_review">(<?=$count_review?>)</span>
+	                                    </div>
+                                    <?php } else {?>
+                                        <span class="name-agent"><?= $product->adContactInfo->name ?></span>
+                                    <?php } ?>
+
+                                    <?php if($product->adContactInfo->mobile): ?>
+                                        <div class="item-agent">
+                                            <span class="icon-mv">
+                                            	<span class="icon-phone-profile"></span>
+                                            </span>
+                                            <a href="tel:<?= $product->adContactInfo->mobile ?>"><?= $product->adContactInfo->mobile ?></a>
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <?php if($product->adContactInfo->email): ?>
+                                        <div class="item-agent">
+                                            <span class="icon-mv"><span class="icon-mail-profile"></span></span>
+                                            <?= $product->adContactInfo->email ?>
+                                        </div>
+                                    <?php endif; ?>
+
+                                    <?php if($owner){
+                                        if(!empty($owner->location)) {?>
+                                            <div class="item-agent">
+                                                <span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
+                                                <?= $owner->location->city?>
+                                            </div>
+                                        <?php } } ?>
+                                    <?php if(!empty($owner->username) && !$owner->isMe()) { ?>
+                                        <a href="#" data-toggle="modal" data-target="#popup_email_contact" class="email-btn btn-common btn-small">Email</a>
+                                        <a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
+                                    <?php }?>
 								</div>
 							</div>
 						</div>
@@ -169,17 +203,21 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 			<div class="infor-listing">
 				<div class="address-feat clearfix">
 					<p class="infor-by-up">
-						<?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?> <?= Yii::t('ad', 'by') ?> <a href="javascript:;"><?= $product->ownerString ?></a>
+						<?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= $types[$product->type] ?> <?= Yii::t('ad', 'by') ?> <a href="javascript:;"><?= $product->ownerString ?></a>
 					</p>
 					<div class="address-listing">
 						<p><?= $address ?></p>
 					</div>
 					<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
 					<ul class="clearfix list-attr-td">
-						<?= $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '' ?>
-						<?= $product->adProductAdditionInfo->room_no ? '<li> <span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '' ?>
-						<?= $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '' ?>
-					</ul>	
+                        <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
+                            <li><?=Yii::t('listing','updating')?></li>
+                        <?php } else {
+                            echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '';
+                            echo $product->adProductAdditionInfo->room_no ? '<li><span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
+                            echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
+                        } ?>
+					</ul>
 				</div>
 				<?=$this->renderAjax('/ad/_partials/shareEmail',[
                     'popup_email_name' => 'popup_email_contact',
@@ -233,12 +271,20 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 				                        <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
 				                        <div class="review-box-popup">
 				                            <h2 class="color-cd fs-18 text-uper font-600 mgB-20"><?=Yii::t('profile', 'REPORT')?></h2>
-				                            <p class="fs-13 mgB-10">Tell us about your experience with this agent. Your report will help other users review the agent that's right for them.</p>
-				                            <form id="report-form" action="<?=Url::to(['/ad/sendreport'])?>" class="fs-13">
-				                                <?php
-				                                $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\ad\models\ReportType::report_product])->all();
-				                                echo \yii\helpers\Html::radioList('optionsRadios', 1, ArrayHelper::map($report_list, 'id', 'name'));
-				                                ?>
+				                            <p class="fs-13 mgB-10"><?=Yii::t("report", "Tell us about your experience with this agent. Your report will help other users review the agent that's right for them.")?></p>
+                                            <?php
+                                            Yii::t('report', 'It is spam');
+                                            Yii::t('report', 'It is inappropriate');
+                                            Yii::t('report', 'It insults or attacks someone based on their religion, ethnicity or sexual orientation');
+                                            Yii::t('report', 'It describes buying or selling drugs, guns or regulated products');
+                                            $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\ad\models\ReportType::report_product])->all();
+//			                                echo \yii\helpers\Html::radioList('optionsRadios', 1, ArrayHelper::map($report_list, 'id', 'name'));
+                                            if(count($report_list) > 0){
+                                            ?>
+                                            <form id="report-form" action="<?=Url::to(['/ad/sendreport'])?>" class="fs-13">
+                                                <?php foreach($report_list as $key_report => $report){?>
+                                                <label><input type="radio" name="optionsRadios" value="<?=$report->id?>" <?=$key_report == 0 ? "checked" : ""?>> <?= Yii::t('report', $report->name)?></label>
+                                                <?php } ?>
 				                                <label><input type="radio" name="optionsRadios" value="-1"> <?=Yii::t('listing', 'Something else')?> </label>
 				                                <textarea class="pd-5 mgB-5" name="description" id="description" cols="30" rows="5" placeholder="<?=Yii::t('profile','Content')?>"></textarea>
 				                                <input type="hidden" id="pid" name="pid" value="<?=$product->id?>">
@@ -247,6 +293,7 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 				                                    <button class="btn-common send_report"><?=Yii::t('listing', 'Send report')?></button>
 				                                </div>
 				                            </form>
+                                            <?php } ?>
 				                        </div>
 				                    </div>
 				                </div>
@@ -255,19 +302,84 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 				    </div>
 				</div>
 
+                <?php
+                /**
+                 * notification
+                 */
+                if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
+                    $userVisit = Yii::$app->user->identity;
+                    $userTo = $owner;
+
+                    $nameUserTo = $userTo->profile->getDisplayName();
+                    $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
+                    ?>
+                    <script>
+                        $(document).ready(function () {
+                            $(document).on('click', '.save-item', function (e) {
+                                e.preventDefault();
+                                $(this).toggleClass('active');
+                                var timer = 0;
+                                clearTimeout(timer);
+                                var _id = $(this).attr('data-id');
+                                var _url = $(this).attr('data-url');
+                                var _stt = ($(this).hasClass('active')) ? 1 : 0;
+                                timer = setTimeout(function () {
+                                    $.ajax({
+                                        type: "post",
+                                        url: _url,
+                                        data: {id: _id, stt: _stt},
+                                        success: function (data) {
+                                            if(data.statusCode == 200){
+                                                var to_jid = chatUI.genJid('<?=$userTo->username?>');
+                                                Chat.sendMessage(to_jid , 'save product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: data.parameters.msg});
+                                            }
+                                        }
+                                    });
+                                }, 500);
+
+                            });
+                            $(document).bind('chat/afterConnect', function (event, data) {
+                                <?php if(Yii::$app->session->getFlash('notify_other')){?>
+                                var to_jid = chatUI.genJid('<?=$userTo->username?>');
+                                Chat.sendMessage(to_jid , 'view product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: <?=Yii::$app->session->getFlash('notify_other');?>});
+                                <?php }?>
+                            });
+                        });
+                    </script>
+                    <?php
+                }
+                Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/swiper.jquery.min.js', ['position'=>View::POS_END]);
+                Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.rateit.js', ['position'=>View::POS_END]);
+                Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/clipboard.min.js', ['position'=>View::POS_END]);
+                ?>
+				
 				<script>
 					$(document).ready(function () {
 
-						$('body').popover({
-							selector: '[data-popover]', 
+                        $('#rating-all').rateit();
+                        $('#rating-all-bottom').rateit();
+
+                        $('#rating-review').rateit({
+                            clickRating: function (value_rating) {
+                                $('#val-rating').val(value_rating);
+                            }
+                        });
+
+						$('[data-popover]').popover({
 							trigger: 'click hover',
 							html: true,
 							delay: {
-								show: 50, 
+								show: 50,
 								hide: 50
 							},
 							content: function () {
 								return $('.popover-append').html();
+							},
+							placement: function ( context, source ) {
+								if ( checkMobile() ) {
+									return "top";
+								}
+								return "left";
 							}
 						});
 
@@ -333,10 +445,8 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
                                             var winHeight = 350;
                                             var winTop = (screen.height / 2) - (winHeight / 2);
                                             var winLeft = (screen.width / 2) - (winWidth / 2);
-                                            var title = '<?=$address?>';
-                                            var descr = '<?=$description?>';
-                                            var image = '<?=Yii::$app->request->hostInfo.$product->representImage?>';
-                                            window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + link + '&p[title]=' + title + '&p[summary]=' + descr + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+                                            window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(link), 'facebook-share-dialog', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+//                                            window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + link + '&p[title]=' + title + '&p[summary]=' + descr + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
                                         }
                                         $('body').loading({done:true});
                                         return true;
@@ -366,8 +476,11 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
                                     $('#report-listing').modal('hide');
                                     if (data == 200) {
                                         $('body').loading({done: true});
-                                        $('#popup-alert-report .report_text').text("<?=Yii::t('listing', 'Report has been sent.')?>");
-                                        $('#popup-alert-report').modal('show');
+                                        $('body').alertBox({
+                                        	txt: "<?=Yii::t('listing', 'Report has been sent.')?>"
+                                        });
+                                        //$('#popup-alert-report .report_text').text("<?=Yii::t('listing', 'Report has been sent.')?>");
+                                        //$('#popup-alert-report').modal('show');
 
                                         return true;
                                     }
@@ -384,6 +497,10 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 							$('#popup-share-social').addClass('hide-popup');
 							$('.email-btn').trigger('click');
 						});*/
+
+                        if($('.list-tienich-detail>li').length < 1){
+                            $('.list-tienich-detail').append("<li><?=Yii::t('listing','updating')?></li>");
+                        }
 					});
 				</script>
 
@@ -499,32 +616,16 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 					            <div class="img-agent">
                                     <?php if(!empty($owner)) { ?>
 						            <a href="<?=Url::to(['member/profile', 'username' => $owner->username])?>" class="name-agent"><?= $owner->profile->name ?></a>
+                                    <div class="stars">
+                                        <span id="rating-all-bottom" class="rateit" data-rateit-value="<?=$owner->profile->rating_point?>" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
+                                        <span class="fs-13 font-600 count_review">(<?=$count_review?>)</span>
+                                    </div>
                                     <?php } else {?>
 						            <span class="name-agent"><?= $product->adContactInfo->name ?></span>
                                     <?php } ?>
-									<div class="rating-start">
-										<fieldset class="rate">
-											<input type="radio" id="rating10" name="rating" value="10"> <label
-												for="rating10" title="5 stars"> </label> <input type="radio"
-												id="rating9" name="rating" value="9"> <label for="rating9"
-												class="half" title="5 stars"> </label> <input type="radio"
-												id="rating8" name="rating" value="8"> <label for="rating8"
-												title="4 stars"> </label> <input type="radio" id="rating7"
-												name="rating" value="7"> <label for="rating7" class="half"
-												title="4 stars"> </label> <input type="radio" id="rating6"
-												name="rating" value="6"> <label for="rating6" title="3 stars"> </label>
-											<input type="radio" id="rating5" name="rating" value="5"> <label
-												for="rating5" class="half" title="3 stars"> </label> <input
-												type="radio" id="rating4" name="rating" value="4"> <label
-												for="rating4" title="2 stars"> </label> <input type="radio"
-												id="rating3" name="rating" value="3"> <label for="rating3"
-												class="half" title="2 stars"> </label> <input type="radio"
-												id="rating2" name="rating" value="2"> <label for="rating2"
-												title="1 stars"> </label> <input type="radio" id="rating1"
-												name="rating" value="1"> <label for="rating1" class="half"
-												title="1 stars"> </label>
-										</fieldset>
-									</div>
+
+
+
 									<?php if($product->adContactInfo->mobile): ?>
 									<div class="item-agent">
 										<div>
@@ -552,7 +653,7 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
                                     <?php } } ?>
 									<?php if(!empty($owner->username) && !$owner->isMe()) { ?>
                                         <a href="#" data-toggle="modal" data-target="#popup_email_contact" class="email-btn btn-common btn-small">Email</a>
-										<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
+										<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
 									<?php }?>
 								</div>
 							</div>
@@ -572,50 +673,3 @@ $userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
     </div>
 </div>
 
-<?php
-/**
- * notification
- */
-if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
-	$userVisit = Yii::$app->user->identity;
-	$userTo = $owner;
-
-	$nameUserTo = $userTo->profile->getDisplayName();
-	$nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
-	?>
-	<script>
-		$(document).ready(function () {
-            $(document).on('click', '.save-item', function (e) {
-                e.preventDefault();
-                $(this).toggleClass('active');
-                var timer = 0;
-                clearTimeout(timer);
-                var _id = $(this).attr('data-id');
-                var _url = $(this).attr('data-url');
-                var _stt = ($(this).hasClass('active')) ? 1 : 0;
-                timer = setTimeout(function () {
-                    $.ajax({
-                        type: "post",
-                        url: _url,
-                        data: {id: _id, stt: _stt},
-                        success: function (data) {
-                            if(data.statusCode == 200){
-                                var to_jid = chatUI.genJid('<?=$userTo->username?>');
-                                Chat.sendMessage(to_jid , 'save product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: data.parameters.msg});
-                            }
-                        }
-                    });
-                }, 500);
-
-            });
-			$(document).bind('chat/afterConnect', function (event, data) {
-				<?php if(Yii::$app->session->getFlash('notify_other')){?>
-					var to_jid = chatUI.genJid('<?=$userTo->username?>');
-					Chat.sendMessage(to_jid , 'view product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: <?=Yii::$app->session->getFlash('notify_other');?>});
-				<?php }?>
-			});
-		});
-	</script>
-	<?php
-}
-?>
