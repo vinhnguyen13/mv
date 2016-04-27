@@ -431,6 +431,11 @@ header {
     padding: 0;
     z-index: 5;
 }
+.suggest-search .content-suggest {
+    max-height: 310px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
 .content-suggest strong {
     margin-top: 10px;
     display: block;
@@ -5077,6 +5082,7 @@ html.mm-opening .mm-slideout {
     right: 0;
     padding: 10px;
     z-index: 10;
+    cursor: pointer;
 }
 #popup-share-social .inner-popup ul {
     display: inline-block;
@@ -5280,6 +5286,10 @@ html.mm-opening .mm-slideout {
 #listing-form .toggle-num-home {
     margin-top: -8px;
     margin-bottom: 0;
+}
+#listing-form .item-step .toggle-num-home label {
+    /* margin-top: 10px; */
+    padding-left: 19.666%;
 }
 #listing-list > ul > li {
     border-bottom: 1px solid #ededed;
@@ -5601,7 +5611,7 @@ html.mm-opening .mm-slideout {
         padding: 0 20px;
     }
     .search-wrap-home {
-        margin-top: -190px;
+        margin-top: -120px;
     }
 }
 @media (max-width: 985px) {
@@ -6271,7 +6281,6 @@ footer li a {
     .field-adproduct-city_id {
         /* width: 100%; */
     }
-    .dt-post,
     .field-adproduct-price,
     .field-adproduct-street_id,
     .field-adproduct-ward_id {
@@ -7565,7 +7574,7 @@ footer li a {
 }
 @media (min-width: 985px) {
     .suggest-search {
-        top: 40px;
+        top: 50px;
     }
     #listing-list {
         padding-bottom: 0;
@@ -8807,17 +8816,38 @@ footer li a {
 }
 .statis .tbl-review td > div {
     margin-bottom: 5px;
-}
-.statis .tbl-review th {
-    padding: 15px 50px
-}
-.statis .tbl-review a {
-    display: block;
+    position: relative;
+    text-align: left;
     padding: 5px;
 }
-.statis .tbl-review a:hover {
-    background: #EFEFEF;
-    color: #00a769;
+.statis .tbl-review td > div:hover {
+    background: #E8E8E8;
+}
+.statis .tbl-review td > div:hover a {
+    color: #009455;
+}
+.statis .tbl-review th {
+    padding: 15px 50px;
+    width: 50%;
+}
+.statis .tbl-review a {
+    display: inline-block;
+    line-height: 100%;
+}
+.statis .tbl-review .crt-item {
+    display: none;
+    margin-left: 15px;
+}
+.statis .tbl-review td > div:hover .crt-item {
+    display: inline-block;
+}
+.statis .tbl-review .crt-item a:hover {
+    color: #009455;
+}
+.statis .tbl-review .num-show {
+    font-size: 13px;
+    display: inline-block;
+    line-height: 25px;
 }
 .tbl-review a img {
     width: 27px;
@@ -8827,7 +8857,7 @@ footer li a {
 }
 .tbl-review td a .name-user {
     text-align: left;
-    display: block;
+    display: inline-block;
     line-height: 27px;
 }
 @font-face {
@@ -10302,7 +10332,7 @@ label:hover {
 #listing-form .item-step label {
     font-size: 13px;
     font-weight: 600;
-    margin-bottom: 5px;
+    /* margin-bottom: 5px; */
     text-align: left;
     padding-left: 0;
 }

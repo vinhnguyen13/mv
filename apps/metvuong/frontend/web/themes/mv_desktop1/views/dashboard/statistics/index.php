@@ -85,9 +85,21 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                 <div class="clearfix">
                                     <a class="fs-13" href="<?=Url::to(['member/profile', 'username'=>$key])?>">
                                         <img class="pull-left" src="<?=Url::to($value['avatar'], true)?>" alt="">
-                                        <span class="num-show pull-right color-cd font-600"><?=$value['count']?></span>
                                         <span class="name-user"><?=$key?></span>
                                     </a>
+                                    <div class="crt-item">
+                                        <a href="#" class="btn-email-item mgR-15">
+                                            <span class="icon-mv fs-16">
+                                                <span class="icon-mail-profile"></span>
+                                            </span>
+                                        </a>
+                                        <a href="#" class="chat-now" data-chat-user="">
+                                            <span class="icon-mv fs-18">
+                                                <span class="icon-bubbles-icon"></span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <span class="num-show pull-right color-cd font-600"><?=$value['count']?></span>
                                 </div>
                             <?php }
                         } else {?>
@@ -102,9 +114,21 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                 <div class="clearfix">
                                     <a class="fs-13" href="<?=Url::to(['member/profile', 'username'=>$key])?>">
                                         <img class="pull-left" src="<?=Url::to($value['avatar'], true)?>" alt="">
-                                        <span class="num-show pull-right color-cd font-600"><?=$value['count']?></span>
                                         <span class="name-user"><?=$key?></span>
                                     </a>
+                                    <div class="crt-item">
+                                        <a href="#" class="btn-email-item mgR-15">
+                                            <span class="icon-mv fs-16">
+                                                <span class="icon-mail-profile"></span>
+                                            </span>
+                                        </a>
+                                        <a href="#" class="chat-now" data-chat-user="">
+                                            <span class="icon-mv fs-18">
+                                                <span class="icon-bubbles-icon"></span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <span class="num-show pull-right color-cd font-600"><?=$value['count']?></span>
                                 </div>
                             <?php }
                         } else {?>
@@ -125,9 +149,21 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                 <div class="clearfix">
                                     <a class="fs-13" href="<?=Url::to(['member/profile', 'username'=>$key])?>">
                                         <img class="pull-left" src="<?=Url::to($finder['avatar'], true)?>" alt="">
-                                        <span class="num-show pull-right color-cd font-600"><?=$finder['count']?></span>
                                         <span class="name-user"><?=$key?></span>
                                     </a>
+                                    <div class="crt-item">
+                                        <a href="#" class="btn-email-item mgR-15">
+                                            <span class="icon-mv fs-16">
+                                                <span class="icon-mail-profile"></span>
+                                            </span>
+                                        </a>
+                                        <a href="#" class="chat-now" data-chat-user="">
+                                            <span class="icon-mv fs-18">
+                                                <span class="icon-bubbles-icon"></span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <span class="num-show pull-right color-cd font-600"><?=$finder['count']?></span>
                                 </div>
                             <?php }
                         } else {?>
@@ -142,9 +178,21 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                 <div class="clearfix">
                                     <a class="fs-13" href="<?=Url::to(['member/profile', 'username'=>$key])?>">
                                         <img class="pull-left" src="<?=Url::to($value['avatar'], true)?>" alt="">
-                                        <span class="num-show pull-right color-cd font-600"><?=$value['count']?></span>
                                         <span class="name-user"><?=$key?></span>
                                     </a>
+                                    <div class="crt-item">
+                                        <a href="#" class="btn-email-item mgR-15">
+                                            <span class="icon-mv fs-16">
+                                                <span class="icon-mail-profile"></span>
+                                            </span>
+                                        </a>
+                                        <a href="#" class="chat-now" data-chat-user="">
+                                            <span class="icon-mv fs-18">
+                                                <span class="icon-bubbles-icon"></span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <span class="num-show pull-right color-cd font-600"><?=$value['count']?></span>
                                 </div>
                             <?php }
                         } else {?>

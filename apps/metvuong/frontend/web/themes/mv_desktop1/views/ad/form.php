@@ -184,14 +184,14 @@ use vsoft\ad\models\AdFacility;
 								->label(false)
 								->checkbox(['data-set' => $product->isNewRecord ? '0' : '1']) ?>
 								
-								<div class="col-xs-12 form-group dt-post">
+								<div class="col-xs-6 form-group dt-post">
 									<?= $form->field($product, 'area', ['options' => ['class' => '']])
-										->label(false)
-										->textInput(['placeholder' => $product->getAttributeLabel('area')]) ?>
+										->label($product->getAttributeLabel('area'), [ 'class' => 'col-sm-5 control-label' ])
+										->textInput(['placeholder' => $product->getAttributeLabel('area'), 'class' => 'col-sm-7']) ?>
 									<span class="unit-dt">m2</span>
 								</div>
 								
-								<?= $form->field($product, 'price', ['options' => ['class' => 'col-xs-12 form-group'], 'template' => '{input}<span style="display: none;" id="price-format"></span>{error}'])
+								<?= $form->field($product, 'price', ['options' => ['class' => 'col-xs-6 form-group'], 'template' => '{input}<span style="display: none;" id="price-format"></span>{error}'])
 										->textInput(['placeholder' => $product->getAttributeLabel('price')]) ?>
 								
 								<?= $form->field($additionInfo, 'room_no', ['options' => ['class' => 'col-xs-6 form-group']])
