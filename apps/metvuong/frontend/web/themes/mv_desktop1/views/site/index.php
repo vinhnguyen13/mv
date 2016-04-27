@@ -113,7 +113,7 @@ use vsoft\ad\models\AdProduct;
 
     <section class="search-home">
         <div class="container">
-            <div class="title-sub">LIÊN HỆ</div>
+            <div class="title-sub"><?= Yii::t('general', 'LIÊN HỆ') ?></div>
             <div class="clearfix">
                 <div class="wrap-img map-location">
                     <div class="img-show"><iframe width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:EksyMSBOZ3V54buFbiBUcnVuZyBOZ-G6oW4sIELhur9uIE5naMOpLCBRdeG6rW4gMSwgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0&key=AIzaSyDgukAnWQNq0fitebULUbottG5gvK64OCQ" allowfullscreen></iframe></div>
