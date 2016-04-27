@@ -1001,7 +1001,7 @@ label {
 .step-check li a {
     display: block;
     background-color: #ffffff;
-    border: solid 1.5px #00a769;
+    border: solid 1px #868686;
     text-align: center;
     padding: 20px 0 15px;
     color: #171616;
@@ -1009,17 +1009,26 @@ label {
     height: 145px;
     /* overflow: hidden; */
     position: relative;
+    box-shadow: inset 0 0 1px #868686;
+    -webkit-box-shadow: inset 0 0 1px #868686;
+    -moz-box-shadow: inset 0 0 1px #868686;
+    -ms-box-shadow: inset 0 0 1px #868686;
 }
 .step-check li a:hover,
 .step-check li a.active {
-    background: #EFEFEF;
-    border: solid 3px #00a769;
+    /* background: #EFEFEF; */
+    border: solid 1px #00a769;
+    box-shadow: inset 0 0 1px #00a769;
+    -webkit-box-shadow: inset 0 0 1px #00a769;
+    -moz-box-shadow: inset 0 0 1px #00a769;
+    -ms-box-shadow: inset 0 0 1px #00a769;
 }
 .step-check li span {
     display: block;
     margin-bottom: 5px;
     font-weight: 600;
     text-transform: uppercase;
+    font-size: 14px;
 }
 .step-check li .icon-postlisting {
     position: static;
@@ -1612,21 +1621,15 @@ label {
     padding-top: 15px;
 }
 .section {
-    /* top: 80px; */
-    /* left: 0; */
     width: 100%;
-    /* position: absolute; */
-    padding: 0 15px 50px;
+    padding: 0 0 40px;
     background: #fff;
     margin-bottom: 0;
-    display: none;
 }
 .post-listing .section {
     
 }
 .select-type {
-    padding-bottom: 15px;
-    /* top: 0; */
 }
 @-webkit-keyframes slideouttoleft{
     from {
@@ -3770,7 +3773,7 @@ html.mm-opening .mm-slideout {
     font-size: 14px;
 }
 .select-type select {
-    font-size: 17px;
+    font-size: 14px;
     line-height: 100%;
     height: 37px;
     text-transform: capitalize;
@@ -4756,6 +4759,8 @@ html.mm-opening .mm-slideout {
 #listing-form .form-group {
     margin-bottom: 0;
     position: relative;
+    margin-right: 0;
+    margin-left: 0;
 }
 #listing-form .hinh-anh .files {
     margin: 0 -5px;
@@ -6132,6 +6137,7 @@ footer li a {
         line-height: 100%;
         /* display: none; */
     }
+    .statis .title-top,
     .profile-user .title-top,
     .noti-alert .title-top,
     .u-allduan .title-top {
@@ -6141,10 +6147,9 @@ footer li a {
         display: block;
     }
     .select-type {
-        padding: 0;
     }
     .section {
-        /* top: 0; */
+        display: block;
     }
     .post-listing .step-txt {
         display: none;
@@ -6165,24 +6170,22 @@ footer li a {
         display: inline-block;
         vertical-align: top;
         width: 30%;
+        display: none;
     }
     .select-type .dt-show {
-        display: inline-block;
-        vertical-align: top;
-        width: 69%;
-        text-align: center;
+        /* text-align: center; */
     }
     .step-check li {
         width: 50%;
         max-width: 200px;
-        height: 230px;
+        height: 150px;
     }
     .step-check li a {
         width: 100%;
         height: 100%;
     }
     .wrap-frm-listing {
-        width: 70%;
+        width: 880px;
         margin: 0 auto 0;
         height: 100%;
         position: relative;
@@ -6190,7 +6193,7 @@ footer li a {
         padding-bottom: 0;
     }
     .step-check li {
-        padding: 0 15px 60px;
+        padding: 0 15px 0;
         margin: 0 0 0 0;
         max-width: inherit;
     }
@@ -6214,7 +6217,7 @@ footer li a {
     }
     .step-check li .txt-type-post {
         position: absolute;
-        bottom: -40px;
+        bottom: -35px;
         width: 100%;
     }
     .fixed-prev-next a {
@@ -6247,7 +6250,7 @@ footer li a {
         color: #00a769;
     }
     .item-step .title-step {
-        font-size: 20px;
+        font-size: 15px;
         text-transform: uppercase;
         font-weight: 600;
         margin-bottom: 25px;
@@ -6256,6 +6259,8 @@ footer li a {
         background: none;
         border: solid 1px #979797;
         height: 40px;
+        font-size: 14px;
+        padding: 0 0 0 5px;
     }
     .item-step input[type=checkbox] {
         height: auto;
@@ -6277,6 +6282,8 @@ footer li a {
     }
     #listing-form .form-group .help-block {
         margin-bottom: 15px;
+        float: left;
+        width: 100%;
     }
     .step-link li .arrowLeft {
         background: #fff;
@@ -10030,11 +10037,13 @@ label:hover {
     .detail-listing .panel-group {
         padding: 0;
     }
+    #popup_email_contact.modal:before,
     #popup-review.modal:before,
     #report-listing.modal:before,
     #popup_email_share.modal:before {
         display: none;
     }
+    #popup_email_contact .modal-dialog,
     #popup-review .modal-dialog,
     #report-listing .modal-dialog,
     #popup_email_share .modal-dialog {
@@ -10042,6 +10051,7 @@ label:hover {
         min-height: 100%;
         background: #fff;
     }
+    #popup_email_contact .modal-dialog .modal-content,
     #popup-review .modal-dialog .modal-content,
     #report-listing .modal-dialog .modal-content,
     #popup_email_share .modal-dialog .modal-content {
@@ -10252,4 +10262,55 @@ label:hover {
 }
 .swiper-button-next.swiper-button-disabled, .swiper-button-prev.swiper-button-disabled {
     display: none;
+}
+.you-want,
+.you-are {
+    
+}
+.you-want .wrap-type-post,
+.you-are .wrap-type-post {
+    border: 1px solid #c2c2c2;
+    box-shadow: inset 0 0 1px #c2c2c2;
+    -webkit-box-shadow: inset 0 0 1px #c2c2c2;
+    -moz-box-shadow: inset 0 0 1px #c2c2c2;
+    -ms-box-shadow: inset 0 0 1px #c2c2c2;
+    padding: 30px 30px 60px 30px;
+}
+.you-want .wrap-type-post h3,
+.you-are .wrap-type-post h3 {
+    text-align: left;
+    margin: 0 0 20px 0;
+    font-size: 15px;
+    font-weight: 600;
+}
+.item-step .title-step .num-step {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #009455;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 27px;
+    vertical-align: middle;
+    margin-right: 20px;
+    font-weight: 600;
+    box-shadow: inset 0 0 1px #009455;
+    -webkit-box-shadow: inset 0 0 1px #009455;
+    -moz-box-shadow: inset 0 0 1px #009455;
+    -ms-box-shadow: inset 0 0 1px #009455;
+}
+#listing-form .item-step label {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    text-align: left;
+    padding-left: 0;
+}
+.wrap-step-item {
+    border: 1px solid #c2c2c2;
+    box-shadow: inset 0 0 1px #c2c2c2;
+    -webkit-box-shadow: inset 0 0 1px #c2c2c2;
+    -moz-box-shadow: inset 0 0 1px #c2c2c2;
+    -ms-box-shadow: inset 0 0 1px #c2c2c2;
+    padding: 40px 30px 25px 30px;
 }

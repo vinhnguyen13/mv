@@ -57,7 +57,7 @@ $count_product = count($products);
                             <?php } else { ?>
                             <p class="loca-duan"><a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>"><?= $product->address ?></a></p>
                             <?php } ?>
-                            <p class="fs-13 mgB-10 text-cappi"><span><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></span></p>
+                            <p class="fs-13 mgB-10 text-cappi"><span><?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= $types[$product->type] ?></span></p>
                             <p class="id-duan">
                                 ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id; ?></span>
                             </p>

@@ -56,6 +56,28 @@ Yii::$app->view->registerMetaTag([
     'content' => $description
 ]);
 
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:title',
+    'content' => $address
+]);
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:description',
+    'content' => $description
+]);
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:type',
+    'content' => 'article'
+]);
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:image',
+    'content' => strpos($product->representImage, "batdongsan") == true ? $product->representImage: Yii::$app->urlManager->createAbsoluteUrl($product->representImage)
+]);
+
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:url',
+    'content' => $product->urlDetail(true)
+]);
+
 if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']['all'] == true) && ($product->user_id != Yii::$app->user->id)) {
     Tracking::find()->productVisitor(Yii::$app->user->id, $product->id, time());
 }
