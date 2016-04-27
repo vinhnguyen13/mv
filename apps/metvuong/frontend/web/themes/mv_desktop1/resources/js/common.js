@@ -73,7 +73,7 @@ $(document).ready(function() {
     });
 
     $('.hFullScreen').css({
-        height: $('#hScreen').outerHeight() - 40 - 170
+        height: $('#hScreen').outerHeight() - 40 - 230
     });
     
     $('.page-home').css('visibility','visible');

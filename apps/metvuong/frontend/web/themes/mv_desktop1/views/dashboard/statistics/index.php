@@ -88,12 +88,12 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                         <span class="name-user"><?=$key?></span>
                                     </a>
                                     <div class="crt-item">
-                                        <a href="#" class="btn-email-item mgR-15">
+                                        <a href="#" class="btn-email-item mgR-15" title="Send email">
                                             <span class="icon-mv fs-16">
                                                 <span class="icon-mail-profile"></span>
                                             </span>
                                         </a>
-                                        <a href="#" class="chat-now" data-chat-user="">
+                                        <a href="#" class="chat-now" data-chat-user="" title="Send message">
                                             <span class="icon-mv fs-18">
                                                 <span class="icon-bubbles-icon"></span>
                                             </span>
@@ -117,12 +117,12 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                         <span class="name-user"><?=$key?></span>
                                     </a>
                                     <div class="crt-item">
-                                        <a href="#" class="btn-email-item mgR-15">
+                                        <a href="#" class="btn-email-item mgR-15" title="Send email">
                                             <span class="icon-mv fs-16">
                                                 <span class="icon-mail-profile"></span>
                                             </span>
                                         </a>
-                                        <a href="#" class="chat-now" data-chat-user="">
+                                        <a href="#" class="chat-now" data-chat-user="" title="Send message">
                                             <span class="icon-mv fs-18">
                                                 <span class="icon-bubbles-icon"></span>
                                             </span>
@@ -152,12 +152,12 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                         <span class="name-user"><?=$key?></span>
                                     </a>
                                     <div class="crt-item">
-                                        <a href="#" class="btn-email-item mgR-15">
+                                        <a href="#" class="btn-email-item mgR-15" title="Send email">
                                             <span class="icon-mv fs-16">
                                                 <span class="icon-mail-profile"></span>
                                             </span>
                                         </a>
-                                        <a href="#" class="chat-now" data-chat-user="">
+                                        <a href="#" class="chat-now" data-chat-user="" title="Send message">
                                             <span class="icon-mv fs-18">
                                                 <span class="icon-bubbles-icon"></span>
                                             </span>
@@ -181,13 +181,13 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                         <span class="name-user"><?=$key?></span>
                                     </a>
                                     <div class="crt-item">
-                                        <a href="#" class="btn-email-item mgR-15">
+                                        <a href="#" class="btn-email-item mgR-15" title="Send email">
                                             <span class="icon-mv fs-16">
                                                 <span class="icon-mail-profile"></span>
                                             </span>
                                         </a>
-                                        <a href="#" class="chat-now" data-chat-user="">
-                                            <span class="icon-mv fs-18">
+                                        <a href="#" class="chat-now" data-chat-user="" title="Send message">
+                                            <span class="icon-mv fs-19">
                                                 <span class="icon-bubbles-icon"></span>
                                             </span>
                                         </a>
@@ -196,7 +196,7 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                 </div>
                             <?php }
                         } else {?>
-                            <div class="clearfix fs-13">
+                            <div class="clearfix fs-13 text-center">
                                 <span><?=Yii::t('statistic','Not found')?>.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>"><?=Yii::t('statistic','Please, update your listing')?>.</a>
                             </div>
                         <?php }?>
