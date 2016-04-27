@@ -103,7 +103,7 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                 </div>
                             <?php }
                         } else {?>
-                            <div class="clearfix fs-13">
+                            <div class="clearfix fs-13 text-center">
                                 <span><?=Yii::t('statistic','Not found')?>.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>"><?=Yii::t('statistic','Please, update your listing')?>.</a>
                             </div>
                         <?php }?>
@@ -132,7 +132,7 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                 </div>
                             <?php }
                         } else {?>
-                            <div class="clearfix fs-13">
+                            <div class="clearfix fs-13 text-center">
                                 <span><?=Yii::t('statistic','Not found')?>.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>"><?=Yii::t('statistic','Please, update your listing')?>.</a>
                             </div>
                         <?php }?>
@@ -167,7 +167,7 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                 </div>
                             <?php }
                         } else {?>
-                            <div class="clearfix fs-13">
+                            <div class="clearfix fs-13 text-center">
                                 <span><?=Yii::t('statistic','Not found')?>.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>"><?=Yii::t('statistic','Please, update your listing')?>.</a>
                             </div>
                         <?php }?>
