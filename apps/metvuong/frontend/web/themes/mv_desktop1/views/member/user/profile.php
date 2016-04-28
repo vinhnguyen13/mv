@@ -39,9 +39,11 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
                             <a href="#" class="chat-now tooltip-show" data-chat-user="<?=$user->username?>" data-placement="bottom" title="Chat">
                                 <span class="icon-mv"><span class="icon-bubbles-icon"></span></span>
                             </a>
+                            <?php if(Yii::$app->user->id != $user->id) {?>
                             <a href="#" data-toggle="modal" data-placement="bottom" data-target="<?=Yii::$app->user->isGuest ? "" : "#report-listing" ?>" class="btn-report tooltip-show<?=Yii::$app->user->isGuest ? " user-login-link" : "" ?>" title="<?= Yii::t('profile', 'Report') ?>">
                                 <span class="icon-mv"><span class="icon-warning"></span></span>
                             </a>
+                            <?php }?>
                         </p>
                         <div class="stars">
                             <span id="rating-all" class="rateit" data-rateit-value="<?=$model->rating_point?>" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
