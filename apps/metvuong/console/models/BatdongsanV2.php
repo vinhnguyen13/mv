@@ -281,9 +281,13 @@ class BatdongsanV2 extends Component
     }
     function getCityId2($cityName)
     {
-        $city = AdCity::find()->select(['id'])->where(['like', 'name', '%'.$cityName, false])->one();
-        if($city) {
-            return $city->id;
+        if(!empty($cityName)) {
+//        $city = AdCity::find()->select(['id'])->where(['like', 'name', '%'.$cityName, false])->one();
+            $sql = "SELECT `id` FROM ad_city WHERE `name` LIKE '" . $cityName . "'";
+            $city = AdCity::getDb()->createCommand($sql)->queryScalar();
+            if ($city) {
+                return $city;
+            }
         }
         return null;
     }
@@ -301,13 +305,24 @@ class BatdongsanV2 extends Component
         }
         return null;
     }
-    function getDistrictId2($districtName, $city_id)
+    function getDistrictId2($prefix_list, $districtName, $city_id)
     {
-        if(!empty($city_id)) {
-            $district = AdDistrict::find()->select(['id'])->where(['like', 'name', '%'.$districtName, false])
-                ->andWhere('city_id = :c',[':c' => $city_id])->one();
-            if($district) {
-                return $district->id;
+        if(!empty($city_id) && !empty($districtName)) {
+            $districtName = "%".$districtName;
+            foreach($prefix_list as $prefix){
+                if(strpos($districtName, $prefix)){
+                    $districtName = $this->str_replace_first($prefix." ", "", $districtName);
+                    $districtName = trim($districtName);
+                }
+            }
+//            $district = AdDistrict::find()->select(['id'])
+//                ->where('name LIKE :query')->addParams([':query'=>$districtName])
+//                ->andWhere('city_id = :c',[':c' => $city_id])->one();
+            $sql = "SELECT `id` FROM ad_district WHERE `name` LIKE '".$districtName."' AND `city_id` = ".$city_id;
+//            $district = AdDistrict::findBySql($sql)->one();
+            $district_id = AdDistrict::getDb()->createCommand($sql)->queryScalar();
+            if($district_id) {
+                return $district_id;
             }
         }
         return null;
@@ -325,13 +340,24 @@ class BatdongsanV2 extends Component
         }
         return null;
     }
-    function getWardId2($wardName, $district_id)
+    function getWardId2($prefix_list, $wardName, $district_id)
     {
-        if(!empty($district_id)) {
-            $ward = AdWard::find()->select(['id'])->where(['like', 'name', '%'.$wardName, false])
-                ->andWhere('district_id = :d',[':d' => $district_id])->one();
+        if(!empty($district_id) && !empty($wardName)) {
+            foreach($prefix_list as $prefix){
+                if(!strpos($wardName, $prefix)){
+                    $wardName = "%".$wardName;
+                } else {
+                    $wardName = $this->str_replace_first($prefix." ", "", $wardName);
+                    $wardName = trim($wardName);
+                }
+            }
+//            $ward = AdWard::find()->select(['id'])
+//                ->where('name LIKE '.$wardName)
+//                ->andWhere('district_id = :d',[':d' => $district_id])->one();
+            $sql = "SELECT `id` FROM ad_ward WHERE `name` LIKE '".$wardName."' AND `district_id` = ".$district_id;
+            $ward = AdWard::getDb()->createCommand($sql)->queryScalar();
             if($ward) {
-                return $ward->id;
+                return $ward;
             }
         }
         return null;
@@ -352,13 +378,23 @@ class BatdongsanV2 extends Component
         }
         return null;
     }
-    function getStreetId2($streetName, $district_id)
+    function getStreetId2($prefix_list, $streetName, $district_id)
     {
-        if(!empty($district_id)) {
-            $street = AdStreet::find()->select(['id','name'])->where(['like', 'name', '%'.$streetName, false])
-                ->andWhere('district_id = :d',[':d' => $district_id])->one();
+        if(!empty($district_id) && !empty($streetName)) {
+//            $street = AdStreet::find()->select(['id'])->where(['like', 'name', '%'.$streetName, false])
+//                ->andWhere('district_id = :d',[':d' => $district_id])->one();
+            foreach($prefix_list as $prefix){
+                if(!strpos($streetName, $prefix)){
+                    $streetName = "%".$streetName;
+                } else {
+                    $streetName = $this->str_replace_first($prefix." ", "", $streetName);
+                    $streetName = trim($streetName);
+                }
+            }
+            $sql = "SELECT `id` FROM ad_street WHERE `name` LIKE '".$streetName."' AND `district_id` = ".$district_id;
+            $street = AdStreet::getDb()->createCommand($sql)->queryScalar();
             if($street) {
-                return $street->id;
+                return $street;
             }
         }
         return null;
@@ -936,6 +972,11 @@ class BatdongsanV2 extends Component
 //        $districtData = \vsoft\craw\models\AdDistrict::find()->all();
 //        $wardData = \vsoft\craw\models\AdWard::find()->all();
 //        $streetData = \vsoft\craw\models\AdStreet::find()->all();
+
+        $prefix_district_list = ArrayHelper::getColumn(AdDistrict::find()->select(['pre'])->where(['not', ['pre' => null]])->groupBy(['pre'])->all(), 'pre');
+        $prefix_ward_list = ArrayHelper::getColumn(AdWard::find()->select(['pre'])->where(['not', ['pre' => null]])->groupBy(['pre'])->all(), 'pre');
+        $prefix_street_list = ArrayHelper::getColumn(AdStreet::find()->select(['pre'])->where(['not', ['pre' => null]])->groupBy(['pre'])->all(), 'pre');
+
         $tableName = \vsoft\craw\models\AdProduct::tableName();
         $break_type = false; // detect next type if it is false
 
@@ -996,13 +1037,13 @@ class BatdongsanV2 extends Component
                                     $city_id = $this->getCityId2($value[$filename]["city"]);
 
 //                                    $district_id = $this->getDistrictId($value[$filename]["district"], $districtData, $city_id);
-                                    $district_id = $this->getDistrictId2($value[$filename]["district"], $city_id);
+                                    $district_id = $this->getDistrictId2($prefix_district_list, $value[$filename]["district"], $city_id);
 
 //                                    $ward_id = $this->getWardId($value[$filename]["ward"], $wardData, $district_id);
-                                    $ward_id = $this->getWardId2($value[$filename]["ward"], $district_id);
+                                    $ward_id = $this->getWardId2($prefix_ward_list, $value[$filename]["ward"], $district_id);
 
 //                                    $street_id = $this->getStreetId($value[$filename]["street"], $streetData, $district_id);
-                                    $street_id = $this->getStreetId2($value[$filename]["street"], $district_id);
+                                    $street_id = $this->getStreetId2($prefix_street_list, $value[$filename]["street"], $district_id);
 
                                     $area = $value[$filename]["dientich"];
                                     $price = $value[$filename]["price"];
@@ -1620,10 +1661,6 @@ class BatdongsanV2 extends Component
         $end = time();
         $time = $end - $begin;
         print_r("Time: {$time}s");
-    }
-
-    function beginWith($haystack, $needle) {
-        return substr($haystack, 0, strlen($needle)) === $needle;
     }
 
     public function updateData(){
@@ -2608,6 +2645,17 @@ class BatdongsanV2 extends Component
             return $json;
         }
         return null;
+    }
+
+    function beginWith($haystack, $needle) {
+        return substr($haystack, 0, strlen($needle)) === $needle;
+    }
+
+    function str_replace_first($from, $to, $subject)
+    {
+        $from = '/'.preg_quote($from, '/').'/';
+
+        return preg_replace($from, $to, $subject, 1);
     }
 
 }
