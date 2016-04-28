@@ -1006,7 +1006,7 @@ label {
 .step-check li a {
     display: block;
     background-color: #ffffff;
-    border: solid 1px #868686;
+    border: solid 1.5px #00a769;
     text-align: center;
     padding: 20px 0 15px;
     color: #171616;
@@ -1014,26 +1014,17 @@ label {
     height: 145px;
     /* overflow: hidden; */
     position: relative;
-    box-shadow: inset 0 0 1px #868686;
-    -webkit-box-shadow: inset 0 0 1px #868686;
-    -moz-box-shadow: inset 0 0 1px #868686;
-    -ms-box-shadow: inset 0 0 1px #868686;
 }
 .step-check li a:hover,
 .step-check li a.active {
-    /* background: #EFEFEF; */
-    border: solid 1px #00a769;
-    box-shadow: inset 0 0 1px #00a769;
-    -webkit-box-shadow: inset 0 0 1px #00a769;
-    -moz-box-shadow: inset 0 0 1px #00a769;
-    -ms-box-shadow: inset 0 0 1px #00a769;
+    background: #EFEFEF;
+    border: solid 3px #00a769;
 }
 .step-check li span {
     display: block;
     margin-bottom: 5px;
     font-weight: 600;
     text-transform: uppercase;
-    font-size: 14px;
 }
 .step-check li .icon-postlisting {
     position: static;
@@ -1590,6 +1581,9 @@ label {
     position: relative;
     background: #DEDEDE;
 }
+.infor-duan-suggest .img-intro {
+
+}
 .item-listing {
     /* padding: 25px 20px; */
 }
@@ -1627,15 +1621,21 @@ label {
     padding-top: 15px;
 }
 .section {
+    /* top: 80px; */
+    /* left: 0; */
     width: 100%;
-    padding: 0 0 40px;
+    /* position: absolute; */
+    padding: 0 15px 50px;
     background: #fff;
     margin-bottom: 0;
+    display: none;
 }
 .post-listing .section {
     
 }
 .select-type {
+    padding-bottom: 15px;
+    /* top: 0; */
 }
 @-webkit-keyframes slideouttoleft{
     from {
@@ -3353,6 +3353,9 @@ html.mm-opening .mm-slideout {
     right: 0;
     bottom: 0;
 }
+.infor-duan-suggest .wrap-img .img-intro > div {
+    overflow: hidden;
+}
 .infor-duan-suggest .wrap-img .img-intro > div img,
 .item-listing .img-intro > div img {
     position: absolute;
@@ -3365,7 +3368,7 @@ html.mm-opening .mm-slideout {
     transform: translate(-50%,-50%);
 }
 .infor-duan-suggest .wrap-img .img-intro:before {
-    padding-top: 60%;
+    padding-top: 70%;
 }
 .result-listing {
     position: relative;
@@ -4771,8 +4774,6 @@ html.mm-opening .mm-slideout {
 #listing-form .form-group {
     margin-bottom: 0;
     position: relative;
-    margin-right: 0;
-    margin-left: 0;
 }
 #listing-form .hinh-anh .files {
     margin: 0 -5px;
@@ -5293,10 +5294,6 @@ html.mm-opening .mm-slideout {
 #listing-form .toggle-num-home {
     margin-top: -8px;
     margin-bottom: 0;
-}
-#listing-form .item-step .toggle-num-home label {
-    /* margin-top: 10px; */
-    padding-left: 19.666%;
 }
 #listing-list > ul > li {
     border-bottom: 1px solid #ededed;
@@ -6164,9 +6161,10 @@ footer li a {
         display: block;
     }
     .select-type {
+        padding: 0;
     }
     .section {
-        display: block;
+        /* top: 0; */
     }
     .post-listing .step-txt {
         display: none;
@@ -6187,22 +6185,24 @@ footer li a {
         display: inline-block;
         vertical-align: top;
         width: 30%;
-        display: none;
     }
     .select-type .dt-show {
-        /* text-align: center; */
+        display: inline-block;
+        vertical-align: top;
+        width: 69%;
+        text-align: center;
     }
     .step-check li {
         width: 50%;
         max-width: 200px;
-        height: 150px;
+        height: 230px;
     }
     .step-check li a {
         width: 100%;
         height: 100%;
     }
     .wrap-frm-listing {
-        width: 880px;
+        width: 70%;
         margin: 0 auto 0;
         height: 100%;
         position: relative;
@@ -6210,7 +6210,7 @@ footer li a {
         padding-bottom: 0;
     }
     .step-check li {
-        padding: 0 15px 0;
+        padding: 0 15px 60px;
         margin: 0 0 0 0;
         max-width: inherit;
     }
@@ -6234,7 +6234,7 @@ footer li a {
     }
     .step-check li .txt-type-post {
         position: absolute;
-        bottom: -35px;
+        bottom: -40px;
         width: 100%;
     }
     .fixed-prev-next a {
@@ -6267,7 +6267,7 @@ footer li a {
         color: #00a769;
     }
     .item-step .title-step {
-        font-size: 15px;
+        font-size: 20px;
         text-transform: uppercase;
         font-weight: 600;
         margin-bottom: 25px;
@@ -6276,8 +6276,6 @@ footer li a {
         background: none;
         border: solid 1px #979797;
         height: 40px;
-        font-size: 14px;
-        padding: 0 0 0 5px;
     }
     .item-step input[type=checkbox] {
         height: auto;
@@ -6288,6 +6286,7 @@ footer li a {
     .field-adproduct-city_id {
         /* width: 100%; */
     }
+    .dt-post,
     .field-adproduct-price,
     .field-adproduct-street_id,
     .field-adproduct-ward_id {
@@ -6298,8 +6297,6 @@ footer li a {
     }
     #listing-form .form-group .help-block {
         margin-bottom: 15px;
-        float: left;
-        width: 100%;
     }
     .step-link li .arrowLeft {
         background: #fff;
