@@ -41,12 +41,20 @@ use vsoft\ad\models\AdCategory;
         <div class="col-lg-11"><div class="help-block"><?= $model->getErrors('apply_to_type') ? current($model->getErrors('apply_to_type')) : '' ?></div></div>
     </div>
     
-    <?= $form->field($model, 'categories_id', ['options' => ['class' => 'col-xs-12 form-group']])
-			->label(false)
-			->checkboxList(ArrayHelper::map(AdCategory::find()->all(), 'id', 'name')) ?>
+    <div class="form-group">
+        <div class="col-lg-11">
+        	<?= $form->field($model, 'categories_id', ['options' => ['class' => 'col-xs-12 form-group']])
+					->label(false)
+					->checkboxList(ArrayHelper::map(AdCategory::find()->all(), 'id', 'name')) ?>
+        </div>
+    </div>
     
-    <?= $form->field($model, 'status')->checkbox(['label' => 'Actived']) ?>
-    <?php var_dump($model->getErrors()) ?>
+    <div class="form-group">
+        <div class="col-lg-11">
+        	<?= $form->field($model, 'status')->checkbox(['label' => 'Actived']) ?>  
+        </div>
+    </div>
+    
     <div class="form-group">
         <label class="col-lg-1 control-label"></label>
         <div class="col-lg-11">

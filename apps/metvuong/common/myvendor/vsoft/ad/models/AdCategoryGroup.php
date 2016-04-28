@@ -20,12 +20,12 @@ class AdCategoryGroup extends ACG
 {
     public function rules()
     {
-        return [
-        	['categories_id', 'safe'],
-            [['id', 'name'], 'required'],
-            [['id', 'order', 'apply_to_type', 'status'], 'integer'],
-            [['name'], 'string', 'max' => 32]
-        ];
+    	return [
+        		['categories_id', 'safe'],
+    			[['name'], 'required'],
+    			[['order', 'apply_to_type', 'status'], 'integer'],
+    			[['name'], 'string', 'max' => 32]
+    	];
     }
 
 	public function attributeLabels()

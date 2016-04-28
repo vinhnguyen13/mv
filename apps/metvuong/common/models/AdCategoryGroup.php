@@ -30,8 +30,8 @@ class AdCategoryGroup extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'name'], 'required'],
-            [['id', 'order', 'apply_to_type', 'status'], 'integer'],
+            [['name'], 'required'],
+            [['order', 'apply_to_type', 'status'], 'integer'],
             [['name', 'categories_id'], 'string', 'max' => 32]
         ];
     }

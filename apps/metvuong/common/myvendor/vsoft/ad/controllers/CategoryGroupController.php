@@ -44,7 +44,7 @@ class CategoryGroupController extends Controller
 	}
 	
 	public function actionUpdate($id) {
-		$model = AdCategory::findOne($id);
+		$model = AdCategoryGroup::findOne($id);
 		
 		if(Yii::$app->request->isPost) {
 			$model->load(Yii::$app->request->post());
@@ -70,13 +70,13 @@ class CategoryGroupController extends Controller
 	
 	public function actionDelete($id)
 	{
-		AdCategory::findOne($id)->delete();
+		AdCategoryGroup::findOne($id)->delete();
 	
 		return $this->redirect(['index']);
 	}
 	
 	public function actionSort() {
-		$models = AdCategory::find()->orderBy('order')->all();
+		$models = AdCategoryGroup::find()->orderBy('order')->all();
 		$sort = new Sort($models);
 		
 		if(Yii::$app->request->isPost) {

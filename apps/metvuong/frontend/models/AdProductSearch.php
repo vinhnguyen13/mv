@@ -79,7 +79,7 @@ class AdProductSearch extends AdProduct {
 		}
 		
 		if($this->category_id) {
-			$where['category_id'] = intval($this->category_id);
+			$where['category_id'] = explode(',', $this->category_id);
 		}
 		
 		if($this->owner) {
