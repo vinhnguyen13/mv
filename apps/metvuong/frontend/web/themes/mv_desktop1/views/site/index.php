@@ -28,13 +28,14 @@ use vsoft\ad\models\AdProduct;
                     <button type="submit" id="btn-search"><span class="icon-mv"><span class="icon-icons-search"></span></span></button>
                     <div class="suggest-search hide">
                         <div class="content-suggest">
+                            <a class="btn-close"><span class="icon icon-close"></span></a>
                             <ul></ul>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-        <span class="arrow-down"></span>
+        <!-- <span class="arrow-down"></span> -->
     </section>
     <?php
     $categories = \vsoft\ad\models\AdCategory::find ()->indexBy ( 'id' )->asArray ( true )->all ();
