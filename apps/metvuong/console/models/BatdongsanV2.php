@@ -957,6 +957,7 @@ class BatdongsanV2 extends Component
 
                     if ($counter > 0) {
                         $filename = null;
+                        $count_project = 0;
                         for ($i = 0; $i <= $last_file_index; $i++) {
                             if ($count_file > 500) {
                                 $break_type = true;
@@ -980,10 +981,16 @@ class BatdongsanV2 extends Component
                                     $contactArray[$count_file] = $value[$filename]["contact"];
 
                                     $project_id = null;
-                                    if(!empty($value[$filename]["project"])) {
-                                        $project_id = $this->getProjectId($value[$filename]["project"]);
-                                        if ($project_id > 0)
-                                            print_r("-" . $value[$filename]["project"] . "\n");
+                                    $project_name = $value[$filename]["project"];
+                                    if(!empty($project_name)) {
+                                        if($project_name == "Vinhomes Ba Son") {
+                                            $project_name = "Vinhomes Golden River Ba Son";
+                                        }
+                                        $project_id = $this->getProjectId($project_name);
+                                        if ($project_id > 0) {
+                                            $count_project++;
+                                            print_r(" - " . $project_name);
+                                        }
                                     }
 //                                    $city_id = $this->getCityId($value[$filename]["city"], $cityData);
                                     $city_id = $this->getCityId2($value[$filename]["city"]);
@@ -1174,6 +1181,8 @@ class BatdongsanV2 extends Component
         print_r("\n" . "Time: ");
         print_r($end_time - $start_time);
         print_r("s - Total Record: " . $insertCount);
+        if($count_project > 0)
+            print_r(" - Total Project Listing: " . $count_project);
     }
 
     public function parseDetail($filename, $product_type=null)
@@ -1186,8 +1195,8 @@ class BatdongsanV2 extends Component
         if (!empty($detail)) {
 //            $title = $detail->find('h1', 0)->innertext;
 //            $href = $detail->find('#form1', 0)->action;
-            $project = $detail->find('#divProject .current', 0);
-            $project = empty($project) ? null : $project->innertext;
+            $project = $detail->find('#divProjectOptions .current', 0);
+            $project = empty($project) ? null : trim($project->innertext);
 
             $lat = $detail->find('#hdLat', 0)->value;
             $long = $detail->find('#hdLong', 0)->value;
@@ -1338,19 +1347,19 @@ class BatdongsanV2 extends Component
 
             if (count($arr_info) > 0) {
                 $city = $detail->find('#divCityOptions .current', 0);
-                $city = empty($city) ? null : $city->innertext;
+                $city = empty($city) ? null : trim($city->innertext);
 
                 $district = $detail->find('#divDistrictOptions .current', 0);
-                $district = empty($district) ? null : $district->innertext;
+                $district = empty($district) ? null : trim($district->innertext);
 
                 $ward = $detail->find('#divWardOptions .current', 0);
-                $ward = empty($ward) ? null : $ward->innertext;
+                $ward = empty($ward) ? null : trim($ward->innertext);
 
                 $street = $detail->find('#divStreetOptions .current', 0);
-                $street = empty($street) ? null : $street->innertext;
+                $street = empty($street) ? null : trim($street->innertext);
 
                 $direction = $detail->find('#divHomeDirectionOptions .current', 0);
-                $arr_info["direction"] = empty($direction) ? null : $direction->vl;
+                $arr_info["direction"] = empty($direction) ? null : trim($direction->vl);
 
 //                // set address with link emailregister
 //                $emailregister = trim($detail->find('#emailregister', 0)->href);
