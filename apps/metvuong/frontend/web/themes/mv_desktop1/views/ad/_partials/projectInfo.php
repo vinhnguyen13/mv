@@ -7,7 +7,7 @@ use yii\helpers\Url;
 			<div class="img-intro"><div><img src="<?= $project->logoUrl ?>"></div></div>
 		</span>
 		<div class="overflow-all">
-			<p class="name-duan"><a href="#"><?= $project->name ?></a></p>
+			<p class="name-duan"><?= $project->name ?></p>
 			<p class="address-listing"><?= $project->location ?></p>
 		</div>
 	</a>
