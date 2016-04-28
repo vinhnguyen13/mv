@@ -7,7 +7,7 @@ class m160428_040905_alter_ads_table extends Migration
     public function up()
     {
 		$this->execute("CREATE TABLE `ad_category_group`(
-		  `id` INT NOT NULL,
+		  `id` INT NOT NULL AUTO_INCREMENT,
 		  `name` VARCHAR(32) NOT NULL,
 		  `categories_id` VARCHAR(32),
 		  `order` INT NOT NULL DEFAULT 0,
