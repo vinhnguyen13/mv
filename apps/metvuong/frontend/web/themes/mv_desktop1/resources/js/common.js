@@ -72,9 +72,15 @@ $(document).ready(function() {
         duration        :  400
     });
 
-    $('.hFullScreen').css({
-        height: $('#hScreen').outerHeight() - 40 - 230
-    });
+    if ( checkMobile() ) {
+        $('.hFullScreen').css({
+            height: $('#hScreen').outerHeight() - 40
+        });
+    }else {
+        $('.hFullScreen').css({
+            height: $('#hScreen').outerHeight() - 40 - 230
+        });
+    }
     
     $('.page-home').css('visibility','visible');
 
