@@ -5,7 +5,6 @@ use frontend\models\Chart;
 $data = null;
 if($from > 0 && $to > 0)
     $data = Chart::find()->getDataVisitor($id, $from, $to);
-if(!empty($data) && count($data) > 0) {
     $dataChart = $data['dataChart'];
     $categories = $data['categories'];
 
@@ -112,18 +111,9 @@ if(!empty($data) && count($data) > 0) {
 //            }, 500);
 //        }
     </script>
-    <?php
-}else {
-    ?>
-    <div class="alert alert-warning">
-        <p class="text-center"><?=Yii::t('chart','No one visitor this listing')?>, <?=Yii::t('chart','please refresh')?> <a href="<?=$urlDetail?>"><?=Yii::t('chart','your listing')?></a>.</p>
-    </div>
-    <?php
-}?>
 <div class="statistic-info">
-    <a href="<?=$urlDetail?>" style="color: black;"><p class="name-post"><span class="icon address-icon"></span><?=$address?></p></a>
+    <a href="<?=$urlDetail?>" class="fs-14"><p class="name-post"><span class="icon address-icon"></span><?=$address?></p></a>
     <?php if($from > 0 && $to > 0) {?>
-    <p class="date-filter-chart text-center mgT-15"><?=Yii::t('chart', 'Statistic visitor from')?> <span class="from"><?=date('d/m/Y', $from)?></span> - <span class="to"><?=date('d/m/Y', $to)?></span></p>
+        <p class="date-filter-chart text-center mgT-15 fs-14"><?=Yii::t('chart', 'Statistic searching from')?> <span class="from"><?=date('d/m/Y', $from)?></span> - <span class="to"><?=date('d/m/Y', $to)?></span></p>
     <?php } ?>
 </div>
-
