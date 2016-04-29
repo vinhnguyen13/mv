@@ -2,9 +2,6 @@
 use yii\helpers\Url;
 use frontend\models\Chat;
 use yii\web\View;
-
-Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.slimscroll.min.js', ['position'=>View::POS_END]);
-
 $params = [':jid' => Chat::find()->getJid(Yii::$app->user->identity->username)];
 $jid_id = Yii::$app->dbChat->createCommand('SELECT jid_id FROM tig_ma_jids tmj WHERE jid=:jid')->bindValues($params)->queryOne();
 if(!empty($jid_id)){
