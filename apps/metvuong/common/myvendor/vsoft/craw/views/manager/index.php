@@ -142,6 +142,7 @@ $type = [
 ];
 
 $directionList = AdProductAdditionInfo::directionList();
+$projectList = ArrayHelper::map(\vsoft\craw\models\AdBuildingProject::find()->where(['city_id' =>  1])->orderBy(['city_id' => SORT_ASC, 'name' => SORT_ASC])->all(), 'name', 'name');
 ?>
 <div class="cms-show-index">
 	<div style="text-align: center; position: absolute; width: 100%;"><a style="font-size: 20px; display: inline-block; margin-top: 22px;" href="<?= Url::to(['/craw/manager']) ?>">Reset Filter</a></div>
@@ -156,7 +157,17 @@ $directionList = AdProductAdditionInfo::directionList();
 			['format' => 'raw', 'attribute' => 'content', 'value' => function($model) { return $model->content ? mb_substr($model->content, 0, 20, 'UTF-8') . '...' : '<span style="color: red; font-style: italic;">[null]</span>'; },
 				'filter' => Html::activeDropDownList($filterModel, 'content', ['1' => 'Có', '2' => 'Không'], ['class' => 'form-control', 'prompt' => 'Tất cả'])
 			],
-			['attribute' => 'project', 'value' => 'project.name', 'filter' => Html::activeDropDownList($filterModel, 'project', ArrayHelper::map(\vsoft\craw\models\AdBuildingProject::find()->orderBy("name ASC")->all(), 'name', 'name'), ['class' => 'form-control', 'prompt' => 'Chọn loại tin'])],
+			['attribute' => 'project', 'value' => 'project.name',
+                'filter' => \kartik\select2\Select2::widget([
+                    'model' => $filterModel,
+                    'attribute' => 'project',
+                    'data' => $projectList,
+                    'options' => ['placeholder' => 'Select a project ...'],
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ])
+            ],
     		['attribute' => 'home_no', 'value' => 'home_no', 'filter' => Html::activeDropDownList($filterModel, 'homeNoFilter', ['1' => 'Có', '2' => 'Không'], ['class' => 'form-control', 'prompt' => 'Tất cả'])],
     		['attribute' => 'ward', 'value' => 'ward.fullName', 'filter' =>
     			Html::activeTextInput($filterModel, 'ward', ['class' => 'form-control']) .
