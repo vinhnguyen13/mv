@@ -327,8 +327,4 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
         });
     });
 
-    $(document).bind('chat/afterConnect', function (event, type) {
-        var to_jid = chatUI.genJid('<?=$user->username?>');
-        Chat.sendMessage(to_jid , 1, 'headline', {sttOnline: 0});
-    });
 </script>
