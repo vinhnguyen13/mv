@@ -81,7 +81,6 @@ if($from > 0 && $to > 0)
                                         this.series.data[i].update({ color: '#909090' }, true, false);
                                     }
                                     this.update({ color: '#00a769' }, true, false);
-                                    //getDataVisitorByClick(this.category);
                                 }
                             }
                         }
@@ -93,23 +92,6 @@ if($from > 0 && $to > 0)
                 }
             });
         });
-//        function getDataVisitorByClick(date){
-//            var timer = 0;
-//            clearTimeout(timer);
-//            timer = setTimeout(function () {
-//                $.ajax({
-//                    type: "get",
-//                    dataType: 'html',
-//                    url: '<?//=Url::to(['/dashboard/clickchart','id' => $id])?>//' + '&date=' + date + '&view=_partials/visitor',
-//                    success: function (data) {
-//                        if(data){
-//                            $('.visitor .list-item').html(data);
-//                            $('.date-filter-chart').html('<?//=Yii::t('chart', 'Statistic visitor on')?>// <span>'+date+'</span>');
-//                        }
-//                    }
-//                });
-//            }, 500);
-//        }
     </script>
 <div class="statistic-info">
     <a href="<?=$urlDetail?>" class="fs-14"><p class="name-post"><span class="icon address-icon"></span><?=$address?></p></a>
