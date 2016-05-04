@@ -160,7 +160,8 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
         </div>
     </div>
 </div>
-
+<a href="<?=Url::to(['ad/index', 'project_building_id'=>$model->id, 'type'=>1])?>" title="<?=Yii::t('project', 'Listing of this project')?>"><?=Yii::t('project', 'For Buy')?></a>
+<a href="<?=Url::to(['ad/index', 'project_building_id'=>$model->id, 'type'=>2])?>" title="<?=Yii::t('project', 'Listing of this project')?>"><?=Yii::t('project', 'For Rent')?></a>
 <div id="popup-map" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
