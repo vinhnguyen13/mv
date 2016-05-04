@@ -8516,7 +8516,6 @@ footer li a {
 .wrap-list-duan .nav-tabs li.active a {
     border-bottom: none;
     color: #00a769;
-    border-left: solid 1px #a5a5a5;
 }
 .wrap-list-duan .nav-tabs li:first-child a {
     border-left: none;
