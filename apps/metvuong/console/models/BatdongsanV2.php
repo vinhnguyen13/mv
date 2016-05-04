@@ -1560,7 +1560,7 @@ class BatdongsanV2 extends Component
                     'verified' => $model->verified,
                     'created_at' => $model->created_at,
                     'source' => $model->source,
-                    'status' => 2 // SET status = 2 is copy from dbCraw
+                    'status' => 1 // SET status = 2 is copy from dbCraw
                 ];
                 $bulkInsertArray[] = $record;
             }
