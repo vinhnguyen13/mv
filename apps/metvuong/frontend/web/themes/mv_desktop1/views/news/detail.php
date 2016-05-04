@@ -91,7 +91,7 @@ $banner = Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'. $news["b
                 <article>
                     <h1 class="big-title"><?=$news["title"]?></h1>
                     <div class="time-post">
-                        <span class=""><?=date("d/m/Y",$news["created_at"])?></span>,
+                        <span class=""><?=date("d/m/Y H:i",$news["created_at"])?></span>,
                         <a href="#" class="name-cate"><?=mb_strtoupper(Yii::t('news', $news["cat_title"]), 'UTF-8')?></a>
                     </div>
                     <div class="detail-content">

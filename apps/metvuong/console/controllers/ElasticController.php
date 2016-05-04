@@ -134,6 +134,8 @@ class ElasticController extends Controller {
 	}
 	
 	private function countProducts($where) {
+		$where['status'] = '1';
+		
 		$products = AdProduct::find()->select('type')->where($where)->asArray(true)->all();
 		
 		$total = ['sell' => 0, 'rent' => 0];

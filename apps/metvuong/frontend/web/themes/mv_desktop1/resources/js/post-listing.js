@@ -749,6 +749,7 @@ var form = {
 				        nextButton: '.swiper-button-next',
 	        			prevButton: '.swiper-button-prev'
 				    });
+				    l(1);
 				} else {
 					swiperContainer.hide();
 				}

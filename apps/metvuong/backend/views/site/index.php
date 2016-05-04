@@ -46,6 +46,7 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
 			      <div class="panel-heading">Quản lý tin đăng</div>
 			      <div class="panel-body">
 			      	<ol class="list-unstyled">
+	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['ad/category-group/'])?>">Phân loại tin đăng them nhóm</a></li>
 	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['ad/category/'])?>">Phân loại tin đăng</a></li>
 	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['ad/report/'])?>">Báo cáo tin đăng</a></li>
 	                </ol>

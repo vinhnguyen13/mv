@@ -16,6 +16,7 @@
 use vsoft\ad\models\AdImages;
 use vsoft\ad\models\AdFacility;
 
+	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.jquery.min.js', ['position' => View::POS_END]);
 	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/string-helper.js', ['position' => View::POS_END]);
 	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/post-listing.js', ['position' => View::POS_END]);
 	$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
@@ -142,8 +143,8 @@ use vsoft\ad\models\AdFacility;
 							<div id="project-info" style="display: none;" data-url="<?= Url::to(['building-project/detail']) ?>">
 								<div class="loading-proccess"><span></span></div>
 								<div class="result">
-									<div>Vị trí: <span id="project-info-location"></span></div>
-									<a target="_blank" id="project-info-detail" href="#">Xem chi tiết dự án</a>
+									<div><?= Yii::t('ad', 'Vị trí') ?>: <span id="project-info-location"></span></div>
+									<a target="_blank" id="project-info-detail" href="#"><?= Yii::t('ad', 'Xem chi tiết dự án') ?></a>
 								</div>
 							</div>
 						</div>
@@ -285,21 +286,21 @@ use vsoft\ad\models\AdFacility;
 	</div>
 	<div id="success-notify" class="hide">
 		<?php if($product->isNewRecord): ?>
-			<div class="color-cd fs-20 font-600 mgB-15 text-uper">Đăng tin thành công !</div>
-			<p class="mgB-10 fs-14">Tin của bạn đang chờ xét duyệt và sẽ được hiển thị đến người mua sớm nhất.</p>
-			<p class="mgB-10 fs-14">Cảm ơn đã sử dụng dịch vụ của MetVuong</p>
+			<div class="color-cd fs-20 font-600 mgB-15 text-uper">Ðang tin thành công !</div>
+			<p class="mgB-10 fs-14">Tin c?a b?n dang ch? xét duy?t và s? du?c hi?n th? d?n ngu?i mua s?m nh?t.</p>
+			<p class="mgB-10 fs-14">C?m on dã s? d?ng d?ch v? c?a MetVuong</p>
 			<div class="text-center">
-				<a class="btn-common mgR-10" href="<?= Url::current() ?>">Tiếp tục đăng tin</a>
-				<a class="btn-common mgL-10" id="to-detail" href="#">Xem tin vừa đăng</a>	
+				<a class="btn-common mgR-10" href="<?= Url::current() ?>">Ti?p t?c dang tin</a>
+				<a class="btn-common mgL-10" id="to-detail" href="#">Xem tin v?a dang</a>	
 			</div>
 			
 		<?php else: ?>
-			<div class="color-cd fs-20 font-600 mgB-15 text-uper">Cập nhật thành công !</div>
-			<p class="mgB-10 fs-14">Tin của bạn sẽ chờ xét duyệt lại trước khi hiển thị đến người xem.</p>
-			<p class="mgB-10 fs-14">Cảm ơn đã sử dụng dịch vụ của MetVuong</p>
+			<div class="color-cd fs-20 font-600 mgB-15 text-uper">C?p nh?t thành công !</div>
+			<p class="mgB-10 fs-14">Tin c?a b?n s? ch? xét duy?t l?i tru?c khi hi?n th? d?n ngu?i xem.</p>
+			<p class="mgB-10 fs-14">C?m on dã s? d?ng d?ch v? c?a MetVuong</p>
 			<div class="text-center">
-				<a class="btn-common" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>">Quay trở về dashboard</a>
-				<a class="btn-common" id="to-detail" href="#">Xem tin vừa cập nhật</a>
+				<a class="btn-common" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>">Quay tr? v? dashboard</a>
+				<a class="btn-common" id="to-detail" href="#">Xem tin v?a c?p nh?t</a>
 			</div>
 		<?php endif; ?>
 	</div>
@@ -360,7 +361,7 @@ use vsoft\ad\models\AdFacility;
 				                </h4>
 				            </div>
 				            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-				                <div class="panel-body" name="about" placeholder="Vui lòng chia sẻ tiểu sử">
+				                <div class="panel-body" name="about" placeholder="Vui lòng chia s? ti?u s?">
 				                    <p class="content-show"></p>
 				                </div>
 				            </div>
@@ -400,7 +401,7 @@ use vsoft\ad\models\AdFacility;
 				                </h4>
 				            </div>
 				            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-				                <div class="panel-body" name="experience" placeholder="Vui lòng nhập chia sẻ kinh nghiệm">
+				                <div class="panel-body" name="experience" placeholder="Vui lòng nh?p chia s? kinh nghi?m">
 				                    <div class="facilities-show"></div>
 				                </div>
 				            </div>

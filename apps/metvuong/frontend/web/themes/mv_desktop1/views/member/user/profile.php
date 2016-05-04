@@ -8,6 +8,9 @@ use vsoft\express\components\StringHelper;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
+use yii\web\View;
+
+Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.rateit.js', ['position'=>View::POS_END]);
 
 // user get from username in address bar
 $user = $model->getUser();
@@ -36,9 +39,11 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
                             <a href="#" class="chat-now tooltip-show" data-chat-user="<?=$user->username?>" data-placement="bottom" title="Chat">
                                 <span class="icon-mv"><span class="icon-bubbles-icon"></span></span>
                             </a>
+                            <?php if(Yii::$app->user->id != $user->id) {?>
                             <a href="#" data-toggle="modal" data-placement="bottom" data-target="<?=Yii::$app->user->isGuest ? "" : "#report-listing" ?>" class="btn-report tooltip-show<?=Yii::$app->user->isGuest ? " user-login-link" : "" ?>" title="<?= Yii::t('profile', 'Report') ?>">
                                 <span class="icon-mv"><span class="icon-warning"></span></span>
                             </a>
+                            <?php }?>
                         </p>
                         <div class="stars">
                             <span id="rating-all" class="rateit" data-rateit-value="<?=$model->rating_point?>" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
@@ -53,7 +58,7 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
                             <?= empty($model->mobile) ?  "<a href='#'><i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i></a>" : "<a href='tel:".$model->mobile."'>".$model->mobile."</a>" ?>
                         </p>
                         <p class="email-user">
-                            <a href="#popup_email_contact" class="email-btn">
+                            <a href="#" data-toggle="modal" data-target="#popup_email_contact" class="email-btn">
                                 <span class="icon-mv"><span class="icon-mail-profile"></span></span>
                                 <?= empty($model->public_email) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->public_email ?>
                             </a>
@@ -102,7 +107,7 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
                                             <div class="img-show"><div><img src="<?= $product->representImage ?>">
                                                     <input type="hidden" value="<?= $product->representImage ?>">
                                                 </div></div>
-                                            <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></div>
+                                            <div class="title-item"><?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= $types[$product->type] ?></div>
                                         </a>
                                         <div class="address-feat clearfix">
                                             <p class="date-post"><?=Yii::t('listing','Listing date')?>: <strong><?= date("d/m/Y H:i", $product->created_at) ?></strong></p>

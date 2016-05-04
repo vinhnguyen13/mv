@@ -5,6 +5,8 @@ use yii\helpers\Json;
 use vsoft\ad\models\AdProduct;
 use frontend\models\UserActivity;
 use yii\helpers\Html;
+
+$owner = Yii::$app->user->identity;
 ?>
 <div class="title-fixed-wrap container">
 	
@@ -45,10 +47,10 @@ use yii\helpers\Html;
 		                            </div>
 	                                <div class="avatar"><a href="<?= $owner->urlProfile(); ?>"><img src="<?= Url::to(['member/avatar', 'usrn' => $owner->username]) ?>" alt="" width="40" height="40"></a></div>
 									<a href="#" class="name"><?= $owner->profile->getDisplayName(); ?></a>
-									<a href="#" class="pdL-10 pdR-10">
+									<a href="#" class="pdL-10 pdR-10 tooltip-show btn-email-item" data-placement="bottom" title="Send email" data-url="<?=Url::to(['member/profile-render-email', 'username'=>$owner->username])?>" data-user="<?=$owner->username?>">
 										<span class="icon-mv fs-18 color-cd"><span class="icon-mail-profile"></span></span>
 									</a>
-	                                <a href="#" class="chat-now" data-chat-user="<?=$owner->username?>">
+	                                <a href="#" class="chat-now tooltip-show" data-chat-user="<?=$owner->username?>" data-placement="bottom" title="Send message">
 	                                	<span class="icon-mv fs-20 color-cd"><span class="icon-bubbles-icon"></span></span>
 	                                </a>
 									<?php
@@ -94,6 +96,12 @@ use yii\helpers\Html;
 	</div>
 	
 </div>
+<?=$this->renderAjax('/ad/_partials/shareEmail', [
+    'popup_email_name' => 'popup_email_contact',
+    'user' => $owner,
+    'yourEmail' => empty($owner) ? "" : (empty($owner->profile->public_email) ? $owner->email : $owner->profile->public_email),
+    'recipientEmail' => null,
+    'params' => ['your_email' => false, 'recipient_email' => false]]);?>
 <script>
 	$(document).ready(function () {
 		$(document).on('click', '.item a', function(){
@@ -117,5 +125,28 @@ use yii\helpers\Html;
 				return false;
 			}
 		});
-	});
+
+        $(document).on('click', '.btn-email-item', function() {
+            var url = $(this).data('url');
+            if(url) {
+                $.ajax({
+                    type: "get",
+                    dataType: 'json',
+                    url: url,
+                    success: function (data) {
+                        if(data.email) {
+                            $('#share_form #shareform-recipient_email').attr('value', data.email);
+                            $('#share_form .img-show img').attr('src', data.ava);
+                            $('#share_form .infor-send .name a').text(data.name);
+                            $('#share_form .infor-send .address').text(data.address);
+                            $('#popup_email_contact').modal('show');
+                        }
+                    }
+                });
+            }
+            return false;
+        });
+
+
+    });
 </script>

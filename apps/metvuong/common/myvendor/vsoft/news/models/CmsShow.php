@@ -3,6 +3,7 @@
 namespace vsoft\news\models;
 
 use dektrium\user\models\User;
+use lajax\translatemanager\models\Language;
 use Yii;
 use yii\behaviors\AttributeBehavior;
 use yii\behaviors\SluggableBehavior;
@@ -104,6 +105,11 @@ class CmsShow extends \funson86\cms\models\CmsShow
         return $this->hasOne(CmsCatalog::className(), ['id' => 'catalog_id']);
     }
 
+    public function getLanguage()
+    {
+        return $this->hasOne(Language::className(), ['language_id' => 'language_id']);
+    }
+
     public function getUserName($IDuser=NULL)
     {
         if($IDuser!=NULL)
@@ -143,6 +149,7 @@ class CmsShow extends \funson86\cms\models\CmsShow
             ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
             ->where('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
             ->andWhere('cms_catalog.status = :status', [':status' => Status::STATUS_ACTIVE])
+            ->andWhere(['IN', 'cms_show.language_id', [Yii::$app->language]])
             ->andWhere(['NOT IN', 'cms_show.catalog_id', [1]])
             ->asArray()->orderBy('cms_show.created_at DESC')->limit($limit)->all();
         return $news;

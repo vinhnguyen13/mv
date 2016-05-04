@@ -101,7 +101,7 @@ use yii\helpers\Url;
                             if(isset($user) && !empty($user)){
                                 $address = empty($user->location) ? "" : $user->location->city;
                                 ?>
-                                <div class="img-show"><div><a href=""><img src="<?=$user->profile->avatar ?>" alt="<?=$address?>"></a></div></div>
+                                <div class="img-show"><div><a href=""><img src="<?=$user->profile->avatarUrl ?>" alt="<?=$address?>"></a></div></div>
                                 <div class="infor-send">
                                     <p class="name"><a href=""><?=$user->profile->name ?></a></p>
                                     <p class="address"><?=$address ?></p>

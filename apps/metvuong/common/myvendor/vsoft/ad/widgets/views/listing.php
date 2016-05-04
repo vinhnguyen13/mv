@@ -24,7 +24,7 @@ $types = AdProduct::getAdTypes();
                     <div class="img-show">
                         <div><img src="<?=$product->representImage?>" alt="<?=$product->getAddress($product->show_home_no)?>"></div>
                     </div>
-                    <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= strtolower($types[$product->type]) ?></div>
+                    <div class="title-item"><?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= strtolower($types[$product->type]) ?></div>
                 </a>
                 <div class="info-item">
                     <div class="address-feat clearfix">

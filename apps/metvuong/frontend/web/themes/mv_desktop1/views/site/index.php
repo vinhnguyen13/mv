@@ -28,13 +28,14 @@ use vsoft\ad\models\AdProduct;
                     <button type="submit" id="btn-search"><span class="icon-mv"><span class="icon-icons-search"></span></span></button>
                     <div class="suggest-search hide">
                         <div class="content-suggest">
+                            <a class="btn-close"><span class="icon icon-close"></span></a>
                             <ul></ul>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-        <span class="arrow-down"></span>
+        <!-- <span class="arrow-down"></span> -->
     </section>
     <?php
     $categories = \vsoft\ad\models\AdCategory::find ()->indexBy ( 'id' )->asArray ( true )->all ();
@@ -96,12 +97,12 @@ use vsoft\ad\models\AdProduct;
                     foreach($news as $n){
                 ?>
                 <div class="item clearfix">
-                    <a class="rippler rippler-default" href="<?= \yii\helpers\Url::to(['news/view', 'id' => $n['id'], 'slug' => $n['slug']], true) ?>">
-                        <div class="img-show"><div><img src="<?=Url::to('/store/news/show/' . $n['banner']) ?>"></div></div>
+                    <a class="rippler rippler-default" href="<?= \yii\helpers\Url::to(['news/view', 'id' => $n['id'], 'slug' => $n['slug']], true) ?>" title="<?=$n['title']?>">
+                        <div class="img-show"><div><img src="<?=Url::to('/store/news/show/' . $n['banner']) ?>" alt="<?=$n['title']?>"></div></div>
                         <span class="txt-short-news">
-                            <span class="title-news color-30a868"><?=$n['title']?></span>
+                            <span class="title-news color-30a868" title="<?=$n['title']?>"><?=StringHelper::truncate($n['title'], 60)?></span>
                             <span class="date-news"><?=date('d/m/Y, H:i', $n['created_at'])?></span>
-                            <?=StringHelper::truncate($n['brief'], 130)?>
+                            <span title="<?=$n['brief']?>"><?=StringHelper::truncate($n['brief'], 130)?></span>
                         </span>
                     </a>
                 </div>
@@ -113,7 +114,7 @@ use vsoft\ad\models\AdProduct;
 
     <section class="search-home">
         <div class="container">
-            <div class="title-sub">LIÊN HỆ</div>
+            <div class="title-sub"><?= Yii::t('general', 'LIÊN HỆ') ?></div>
             <div class="clearfix">
                 <div class="wrap-img map-location">
                     <div class="img-show"><iframe width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:EksyMSBOZ3V54buFbiBUcnVuZyBOZ-G6oW4sIELhur9uIE5naMOpLCBRdeG6rW4gMSwgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0&key=AIzaSyDgukAnWQNq0fitebULUbottG5gvK64OCQ" allowfullscreen></iframe></div>

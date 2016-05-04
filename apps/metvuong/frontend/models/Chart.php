@@ -51,10 +51,12 @@ class Chart extends Component
         $defaultData = array_map(function ($key, $date) {
             return ['y' => 0];
         }, array_keys($dateRange), $dateRange);
-        if(count($adProductFinders) > 0){
-            return $this->pushDataToChart($adProductFinders, $defaultData, $dateRange, 'finders');
-        }
-        return false;
+
+        return $this->pushDataToChart($adProductFinders, $defaultData, $dateRange, 'finders', $pid);
+//        if(count($adProductFinders) > 0){
+//            return $this->pushDataToChart($adProductFinders, $defaultData, $dateRange, 'finders');
+//        }
+//        return false;
     }
 
     // visitor
@@ -64,10 +66,12 @@ class Chart extends Component
         $defaultData = array_map(function ($key, $date) {
             return ['y' => 0];
         }, array_keys($dateRange), $dateRange);
-        if(count($adProductVisitors) > 0){
-            return $this->pushDataToChart($adProductVisitors, $defaultData, $dateRange, 'visitors');
-        }
-        return false;
+
+        return $this->pushDataToChart($adProductVisitors, $defaultData, $dateRange, 'visitors', $pid);
+//        if(count($adProductVisitors) > 0){
+//            return $this->pushDataToChart($adProductVisitors, $defaultData, $dateRange, 'visitors', $pid);
+//        }
+//        return false;
     }
 
     public function getDataShare($pid, $from, $to){
@@ -76,10 +80,12 @@ class Chart extends Component
         $defaultData = array_map(function ($key, $date) {
             return ['y' => 0];
         }, array_keys($dateRange), $dateRange);
-        if(count($adProductShares) > 0){
-            return $this->pushDataToChart($adProductShares, $defaultData, $dateRange, 'shares');
-        }
-        return false;
+
+        return $this->pushDataToChart($adProductShares, $defaultData, $dateRange, 'shares', $pid);
+//        if(count($adProductShares) > 0){
+//            return $this->pushDataToChart($adProductShares, $defaultData, $dateRange, 'shares', $pid);
+//        }
+//        return false;
     }
 
     // saved
@@ -93,23 +99,26 @@ class Chart extends Component
         $defaultData = array_map(function ($key, $date) {
             return ['y' => 0];
         }, array_keys($dateRange), $dateRange);
-        if(count($adProductSaveds) > 0){
-            return $this->pushDataToChart($adProductSaveds, $defaultData, $dateRange, 'saved');
-        }
-        return false;
+
+        return $this->pushDataToChart($adProductSaveds, $defaultData, $dateRange, 'saved', $pid);
+//        if(count($adProductSaveds) > 0){
+//            return $this->pushDataToChart($adProductSaveds, $defaultData, $dateRange, 'saved', $pid);
+//        }
+//        return false;
     }
 
-    private function pushDataToChart($adProductTypes, $defaultData, $dateRange, $view){
+    private function pushDataToChart($adProductTypes, $defaultData, $dateRange, $view, $pid){
         if(!empty($adProductTypes)){
             $tmpDataByPid = [];
             $infoData = [];
             $infoSaved = array();
             foreach($adProductTypes as $k => $item){
                 $day = date(self::DATE_FORMAT, $item->time);
+
                 if($view == "saved")
                     $day = date(self::DATE_FORMAT, $item->saved_at);
 
-                $key = $item->product_id;
+                $key = $pid;
                 if(empty($tmpDataByPid[$key]['data'])){
                     $tmpDataByPid[$key]['data'] = $defaultData;
                 }
@@ -139,13 +148,23 @@ class Chart extends Component
                     ];
                 }
 
-
-
                 $infoData[$view] = $infoSaved;
             }
-            return ['dataChart'=>$tmpDataByPid, 'categories'=>$dateRange, 'infoData' => $infoData];
+
+        } else {
+            foreach($dateRange as $key => $day){
+                $key = $pid;
+                if(empty($tmpDataByPid[$key]['data'])){
+                    $tmpDataByPid[$key]['data'] = $defaultData;
+                }
+                $kDate = array_search($day, $dateRange);
+                $tmpDataByPid[$key]['data'][$kDate]['y'] = 0;
+//                $tmpDataByPid[$key]['data'][$kDate]['color'] = '#00a769';
+
+                $infoData[$view] = array();
+            }
         }
-        return false;
+        return ['dataChart'=>$tmpDataByPid, 'categories'=>$dateRange, 'infoData' => $infoData];
     }
 
     public function getContacts(){
