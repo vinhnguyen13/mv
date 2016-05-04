@@ -14,6 +14,7 @@ use yii\widgets\LinkPager;
 use common\models\AdCity;
 use vsoft\ad\models\AdDistrict;
 use vsoft\ad\models\AdBuildingProject;
+use vsoft\ad\models\AdCategoryGroup;
 
 $this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/select2.min.css');
 $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/select2.full.min.js', ['position' => View::POS_END]);
@@ -111,11 +112,11 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 										<div class="item-dropdown hide-dropdown">
 											<ul class="clearfix loai-bds">
 												<?php
-													foreach ($categories as $categoryId => $category):
-														if($category['apply_to_type'] == $searchModel->type || $category['apply_to_type'] == AdCategory::APPLY_TO_TYPE_BOTH):
+													$groupCategory = AdCategoryGroup::find()->all();
+													foreach ($groupCategory as $category):
 												?>
-												<li><a href="#" data-value="<?= $categoryId ?>" data-order="3"><?= Yii::t('ad', $category['name']) ?></a></li>
-												<?php endif; endforeach; ?>
+												<li><a href="#" data-value="<?= implode(',', $category->categories_id) ?>" data-order="3"><?= Yii::t('ad', $category['name']) ?></a></li>
+												<?php endforeach; ?>
 											</ul>
 											<?= Html::activeHiddenInput($searchModel, 'category_id', ['id' => 'loai-bds']); ?>
 										</div>

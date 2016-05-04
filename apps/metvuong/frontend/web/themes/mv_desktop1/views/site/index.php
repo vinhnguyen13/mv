@@ -97,12 +97,12 @@ use vsoft\ad\models\AdProduct;
                     foreach($news as $n){
                 ?>
                 <div class="item clearfix">
-                    <a class="rippler rippler-default" href="<?= \yii\helpers\Url::to(['news/view', 'id' => $n['id'], 'slug' => $n['slug']], true) ?>">
-                        <div class="img-show"><div><img src="<?=Url::to('/store/news/show/' . $n['banner']) ?>"></div></div>
+                    <a class="rippler rippler-default" href="<?= \yii\helpers\Url::to(['news/view', 'id' => $n['id'], 'slug' => $n['slug']], true) ?>" title="<?=$n['title']?>">
+                        <div class="img-show"><div><img src="<?=Url::to('/store/news/show/' . $n['banner']) ?>" alt="<?=$n['title']?>"></div></div>
                         <span class="txt-short-news">
-                            <span class="title-news color-30a868"><?=$n['title']?></span>
+                            <span class="title-news color-30a868" title="<?=$n['title']?>"><?=StringHelper::truncate($n['title'], 60)?></span>
                             <span class="date-news"><?=date('d/m/Y, H:i', $n['created_at'])?></span>
-                            <?=StringHelper::truncate($n['brief'], 130)?>
+                            <span title="<?=$n['brief']?>"><?=StringHelper::truncate($n['brief'], 130)?></span>
                         </span>
                     </a>
                 </div>

@@ -47,7 +47,8 @@ class AdProductSearch extends AdProduct
     public $mobileFilter;
     public $email;
     public $emailFilter;
-    
+    public $file_name;
+
     public function rules()
     {
         return [
@@ -55,7 +56,7 @@ class AdProductSearch extends AdProduct
             'priceFilter', 'content', 'facadeWidth', 'facadeFilter', 'landWidth', 'landFilter',
             'homeDirection', 'homeDirectionFilter', 'facadeDirection', 'facadeDirectionFilter', 'floor', 'floorFilter', 'room', 'roomFilter',
             'toilet', 'toiletFilter', 'interior', 'wardFilter', 'name', 'nameFilter', 'address', 'addressFilter', 'mobile', 'mobileFilter', 'phone', 'phoneFilter',
-            'email', 'emailFilter', 'streetFilter'], 'safe'],
+            'email', 'emailFilter', 'streetFilter', 'file_name'], 'safe'],
         ];
     }
     
@@ -168,6 +169,11 @@ class AdProductSearch extends AdProduct
     	
 
     	$dataProvider->sort->attributes['email'] = [
+    		'asc' => ['ad_contact_info.email' => SORT_ASC],
+    		'desc' => ['ad_contact_info.email' => SORT_DESC]
+    	];
+
+        $dataProvider->sort->attributes['file_name'] = [
     		'asc' => ['ad_contact_info.email' => SORT_ASC],
     		'desc' => ['ad_contact_info.email' => SORT_DESC]
     	];

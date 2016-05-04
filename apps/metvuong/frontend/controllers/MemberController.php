@@ -317,6 +317,24 @@ class MemberController extends Controller
         ]);
     }
 
+    public function actionProfileRenderEmail($username){
+        if(Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $user = User::find()->where('username = :usrn', [':usrn' => $username])->one();
+            if($user) {
+                $profile = $user->profile;
+                $recipientEmail = empty($profile->public_email) ? $user->email : $profile->public_email;
+                return [
+                    'email' => $recipientEmail,
+                    'ava' => $profile->getAvatarUrl(),
+                    'name' => empty($profile->name) ? $recipientEmail : $profile->name,
+                    'address' => empty($user->location) ? "" : $user->location->city
+                ];
+            }
+        }
+        return null;
+    }
+
     public function actionUpdateProfile($username)
     {
         $this->view->params['menuUpdateProfile'] = true;

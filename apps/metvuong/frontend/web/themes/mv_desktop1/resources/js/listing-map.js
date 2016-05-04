@@ -720,9 +720,6 @@ var listing = {
 		}
 	},
 	resetProjectField: function() {
-		form.fields.projectBuildingId.val('');
-		$('#select2-' + form.fields.projectBuildingId.attr('id') + '-container').text(form.fields.projectBuildingId.find("option:first-child").text());
-		
 		listing.projectInfoEl.html('');
 	},
 	marker: function(position, map) {

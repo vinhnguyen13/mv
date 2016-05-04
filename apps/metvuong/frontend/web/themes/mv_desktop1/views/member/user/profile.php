@@ -58,7 +58,7 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
                             <?= empty($model->mobile) ?  "<a href='#'><i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i></a>" : "<a href='tel:".$model->mobile."'>".$model->mobile."</a>" ?>
                         </p>
                         <p class="email-user">
-                            <a href="#popup_email_contact" class="email-btn">
+                            <a href="#" data-toggle="modal" data-target="#popup_email_contact" class="email-btn">
                                 <span class="icon-mv"><span class="icon-mail-profile"></span></span>
                                 <?= empty($model->public_email) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->public_email ?>
                             </a>

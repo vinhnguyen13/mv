@@ -12,7 +12,7 @@ $id = $product->id;
 $address = $product->getAddress();
 $urlDetail = $product->urlDetail(true);
 $user = Yii::$app->user->identity;
-//$backUrl = empty($user) ? "#" : Url::to([$user->username."/ad"]);
+$email = empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email);
 
 $finderFrom = (!empty($finders) && isset($finders["from"])) ? $finders["from"] : 0;
 $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
@@ -88,12 +88,12 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                         <span class="name-user"><?=$key?></span>
                                     </a>
                                     <div class="crt-item">
-                                        <a href="#" class="btn-email-item mgR-15" title="Send email">
+                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-url="<?=Url::to(['member/profile-render-email', 'username'=>$key])?>" data-user="<?=$key?>">
                                             <span class="icon-mv fs-16">
                                                 <span class="icon-mail-profile"></span>
                                             </span>
                                         </a>
-                                        <a href="#" class="chat-now" data-chat-user="" title="Send message">
+                                        <a href="#" class="chat-now tooltip-show" data-chat-user="<?=$key?>" data-placement="bottom" title="Send message">
                                             <span class="icon-mv fs-18">
                                                 <span class="icon-bubbles-icon"></span>
                                             </span>
@@ -117,12 +117,12 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                         <span class="name-user"><?=$key?></span>
                                     </a>
                                     <div class="crt-item">
-                                        <a href="#" class="btn-email-item mgR-15" title="Send email">
+                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-url="<?=Url::to(['member/profile-render-email', 'username'=>$key])?>" data-user="<?=$key?>">
                                             <span class="icon-mv fs-16">
                                                 <span class="icon-mail-profile"></span>
                                             </span>
                                         </a>
-                                        <a href="#" class="chat-now" data-chat-user="" title="Send message">
+                                        <a href="#" class="chat-now tooltip-show" data-chat-user="<?=$key?>" data-placement="bottom" title="Send message">
                                             <span class="icon-mv fs-18">
                                                 <span class="icon-bubbles-icon"></span>
                                             </span>
@@ -152,12 +152,12 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                         <span class="name-user"><?=$key?></span>
                                     </a>
                                     <div class="crt-item">
-                                        <a href="#" class="btn-email-item mgR-15" title="Send email">
+                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-url="<?=Url::to(['member/profile-render-email', 'username'=>$key])?>" data-user="<?=$key?>">
                                             <span class="icon-mv fs-16">
                                                 <span class="icon-mail-profile"></span>
                                             </span>
                                         </a>
-                                        <a href="#" class="chat-now" data-chat-user="" title="Send message">
+                                        <a href="#" class="chat-now tooltip-show" data-chat-user="<?=$key?>" data-placement="bottom" title="Send message">
                                             <span class="icon-mv fs-18">
                                                 <span class="icon-bubbles-icon"></span>
                                             </span>
@@ -181,12 +181,12 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                         <span class="name-user"><?=$key?></span>
                                     </a>
                                     <div class="crt-item">
-                                        <a href="#" class="btn-email-item mgR-15" title="Send email">
+                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-url="<?=Url::to(['member/profile-render-email', 'username'=>$key])?>" data-user="<?=$key?>">
                                             <span class="icon-mv fs-16">
                                                 <span class="icon-mail-profile"></span>
                                             </span>
                                         </a>
-                                        <a href="#" class="chat-now" data-chat-user="" title="Send message">
+                                        <a href="#" title="Send message" class="chat-now tooltip-show" data-chat-user="<?=$key?>" data-placement="bottom">
                                             <span class="icon-mv fs-19">
                                                 <span class="icon-bubbles-icon"></span>
                                             </span>
@@ -206,13 +206,12 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
         </div>
     </div>
 </div>
-
-<?php
-//$this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/bootstrap-datepicker.min.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'datepicker');
-//Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/bootstrap-datepicker.min.js', ['position'=>View::POS_BEGIN]);
-//Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/bootstrap-datepicker.vi.min.js', ['position'=>View::POS_BEGIN]);
-?>
-
+<?=$this->renderAjax('/ad/_partials/shareEmail', [
+    'popup_email_name' => 'popup_email_contact',
+    'user' => $user,
+    'yourEmail' => $email,
+    'recipientEmail' => null,
+    'params' => ['your_email' => false, 'recipient_email' => false]]);?>
 <script>
     $(document).ready(function () {
 
@@ -296,11 +295,26 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
             return false;
         });
 
-        function fbShare(url, title, descr, image, winWidth, winHeight) {
-            var winTop = (screen.height / 2) - (winHeight / 2);
-            var winLeft = (screen.width / 2) - (winWidth / 2);
-            window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + url + '&p[title]=' + title + '&p[summary]=' + descr + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
-        }
+        $(document).on('click', '.btn-email-item', function() {
+            var url = $(this).data('url');
+            if(url) {
+                $.ajax({
+                    type: "get",
+                    dataType: 'json',
+                    url: url,
+                    success: function (data) {
+                        if(data.email) {
+                            $('#share_form #shareform-recipient_email').attr('value', data.email);
+                            $('#share_form .img-show img').attr('src', data.ava);
+                            $('#share_form .infor-send .name a').text(data.name);
+                            $('#share_form .infor-send .address').text(data.address);
+                            $('#popup_email_contact').modal('show');
+                        }
+                    }
+                });
+            }
+            return false;
+        });
 
         $('#filterChart').val('<?=$filter?>');
 
@@ -312,4 +326,5 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
             }
         });
     });
+
 </script>

@@ -5,9 +5,6 @@ use frontend\models\Chart;
 $data = null;
 if($from > 0 && $to > 0)
     $data = Chart::find()->getDataFinder($id, $from, $to);
-
-if(!empty($data) && count($data) > 0) {
-
     $dataChart = $data['dataChart'];
     $categories = $data['categories'];
 
@@ -84,7 +81,6 @@ if(!empty($data) && count($data) > 0) {
                                         this.series.data[i].update({color: '#909090'}, true, false);
                                     }
                                     this.update({color: '#00a769'}, true, false);
-//                                    getDataByClick(this.category);
                                 }
                             }
                         }
@@ -96,35 +92,11 @@ if(!empty($data) && count($data) > 0) {
                 }
             });
         });
-//        function getDataByClick(date, categories) {
-//            var timer = 0;
-//            clearTimeout(timer);
-//            timer = setTimeout(function () {
-//                $.ajax({
-//                    type: "get",
-//                    dataType: 'html',
-//                    url: '<?//=Url::to(['/dashboard/clickchart','id' => $id])?>//' + '&date=' + date + '&view=_partials/finder',
-//                    success: function (data) {
-//                        if (data) {
-//                            $('.finder .list-item').html(data);
-//                            $('.date-filter-chart').html('<?//=Yii::t('chart', 'Statistic searching on')?>//  <span>' + date + '</span>');
-//                        }
-//                    }
-//                });
-//            }, 500);
-//        }
+
     </script>
-    <?php
-} else {
-    ?>
-    <div class="alert alert-warning">
-        <p class="text-center"><?=Yii::t('chart','No one search this listing')?>, <?=Yii::t('chart','please refresh')?> <a href="<?=$urlDetail?>"><?=Yii::t('chart','your listing')?></a>.</p>
-    </div>
-    <?php
-}?>
 <div class="statistic-info">
-    <a href="<?=$urlDetail?>" style="color: black;"><p class="name-post"><span class="icon address-icon"></span><?=$address?></p></a>
+    <a href="<?=$urlDetail?>" class="fs-14"><p class="name-post"><span class="icon address-icon"></span><?=$address?></p></a>
     <?php if($from > 0 && $to > 0) {?>
-    <p class="date-filter-chart text-center mgT-15"><?=Yii::t('chart', 'Statistic searching from')?> <span class="from"><?=date('d/m/Y', $from)?></span> - <span class="to"><?=date('d/m/Y', $to)?></span></p>
+    <p class="date-filter-chart text-center mgT-15 fs-14"><?=Yii::t('chart', 'Statistic searching from')?> <span class="from"><?=date('d/m/Y', $from)?></span> - <span class="to"><?=date('d/m/Y', $to)?></span></p>
     <?php } ?>
 </div>

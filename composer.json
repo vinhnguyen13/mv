@@ -28,7 +28,8 @@
         "yiisoft/yii2-mongodb": "~2.0.0",
         "zelenin/yii2-slug-behavior": "~1.0@stable",
         "lajax/yii2-translate-manager": "1.*",
-        "rmrevin/yii2-minify-view": "~1.9"
+        "rmrevin/yii2-minify-view": "~1.9",
+        "kartik-v/yii2-widget-select2": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

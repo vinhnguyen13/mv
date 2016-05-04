@@ -38,6 +38,9 @@ $(document).ready(function(){
 				} else {
 					projectEl.addClass('hide');
 				}
+				
+				form.fields.projectBuildingId.val('');
+				$('#select2-' + form.fields.projectBuildingId.attr('id') + '-container').text(form.fields.projectBuildingId.find("option:first-child").text());
 			});
 			
 			form.fields.cityId.on('change', function(){
@@ -50,6 +53,9 @@ $(document).ready(function(){
 			
 			form.fields.districtId.change(function(){
 				form.resetLocation();
+
+				form.fields.projectBuildingId.val('');
+				$('#select2-' + form.fields.projectBuildingId.attr('id') + '-container').text(form.fields.projectBuildingId.find("option:first-child").text());
 				
 				$.get('/ad/list-swp', {districtId: $(this).val()}, function(response){
 					form.appendDropdown(form.fields.wardId, response.wards);
