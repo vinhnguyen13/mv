@@ -154,6 +154,8 @@ $tabKeys = [
                             </div>
                         </div>
                         <?php } ?>
+                        <a href="<?=Url::to(['ad/index', 'project_building_id'=>$model->id, 'type'=>1])?>" title="<?=Yii::t('project', 'Listing of this project')?>"><?=Yii::t('project', 'For Buy')?></a>
+                        <a href="<?=Url::to(['ad/index', 'project_building_id'=>$model->id, 'type'=>2])?>" title="<?=Yii::t('project', 'Listing of this project')?>"><?=Yii::t('project', 'For Rent')?></a>
     			    </div>
                     <?php } ?>
                 </div>
