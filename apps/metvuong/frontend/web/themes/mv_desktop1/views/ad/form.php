@@ -143,8 +143,8 @@ use vsoft\ad\models\AdFacility;
 							<div id="project-info" style="display: none;" data-url="<?= Url::to(['building-project/detail']) ?>">
 								<div class="loading-proccess"><span></span></div>
 								<div class="result">
-									<div>V? trí: <span id="project-info-location"></span></div>
-									<a target="_blank" id="project-info-detail" href="#">Xem chi ti?t d? án</a>
+									<div><?= Yii::t('ad', 'Vị trí') ?> ?>: <span id="project-info-location"></span></div>
+									<a target="_blank" id="project-info-detail" href="#"><?= Yii::t('ad', 'Xem chi tiết dự án') ?> ?></a>
 								</div>
 							</div>
 						</div>
