@@ -286,21 +286,21 @@ use vsoft\ad\models\AdFacility;
 	</div>
 	<div id="success-notify" class="hide">
 		<?php if($product->isNewRecord): ?>
-			<div class="color-cd fs-20 font-600 mgB-15 text-uper">Ðang tin thành công !</div>
-			<p class="mgB-10 fs-14">Tin c?a b?n dang ch? xét duy?t và s? du?c hi?n th? d?n ngu?i mua s?m nh?t.</p>
-			<p class="mgB-10 fs-14">C?m on dã s? d?ng d?ch v? c?a MetVuong</p>
+			<div class="color-cd fs-20 font-600 mgB-15 text-uper"><?= Yii::t('ad', 'Đăng tin thành công') ?></div>
+			<p class="mgB-10 fs-14"><?= Yii::t('ad', 'Tin của bạn đang chờ xét duyệt và sẽ hiển thị đến người xem sớm nhất') ?></p>
+			<p class="mgB-10 fs-14"><?= Yii::t('ad', 'Cảm ơn đã sử dụng dịch vụ của MetVuong') ?></p>
 			<div class="text-center">
-				<a class="btn-common mgR-10" href="<?= Url::current() ?>">Ti?p t?c dang tin</a>
-				<a class="btn-common mgL-10" id="to-detail" href="#">Xem tin v?a dang</a>	
+				<a class="btn-common mgR-10" href="<?= Url::current() ?>"><?= Yii::t('ad', 'Tiếp tục đăng tin') ?></a>
+				<a class="btn-common mgL-10" id="to-detail" href="#"><?= Yii::t('ad', 'Xem tin vừa đăng') ?></a>	
 			</div>
 			
 		<?php else: ?>
-			<div class="color-cd fs-20 font-600 mgB-15 text-uper">C?p nh?t thành công !</div>
-			<p class="mgB-10 fs-14">Tin c?a b?n s? ch? xét duy?t l?i tru?c khi hi?n th? d?n ngu?i xem.</p>
-			<p class="mgB-10 fs-14">C?m on dã s? d?ng d?ch v? c?a MetVuong</p>
+			<div class="color-cd fs-20 font-600 mgB-15 text-uper"><?= Yii::t('ad', 'Cập nhật thành công') ?></div>
+			<p class="mgB-10 fs-14"><?= Yii::t('ad', 'Tin của bạn sẽ được xét duyệt lại trước khi hiển thị đến người xem') ?></p>
+			<p class="mgB-10 fs-14"><?= Yii::t('ad', 'Cảm ơn đã sử dụng dịch vụ của MetVuong') ?></p>
 			<div class="text-center">
-				<a class="btn-common" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>">Quay tr? v? dashboard</a>
-				<a class="btn-common" id="to-detail" href="#">Xem tin v?a c?p nh?t</a>
+				<a class="btn-common" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>"><?= Yii::t('ad', 'Quay trở về Dashboard') ?></a>
+				<a class="btn-common" id="to-detail" href="#"><?= Yii::t('ad', 'Xem tin vừa cập nhật') ?></a>
 			</div>
 		<?php endif; ?>
 	</div>
