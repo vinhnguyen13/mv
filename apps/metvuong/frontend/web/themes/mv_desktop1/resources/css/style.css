@@ -8911,6 +8911,15 @@ footer li a {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+.icon-M2_Logo_151210-01:before {
+    content: "\e92a";
+}
+.icon-fill-11:before {
+    content: "\e92b";
+}
+.icon-group1:before {
+    content: "\e92c";
+}
 .icon-warning:before {
     content: "\e929";
 }
@@ -9258,6 +9267,9 @@ footer li a {
     position: absolute;
     top: 10px;
     right: 0;
+}
+.btn-mani a {
+    margin-left: 10px;
 }
 .cancel-profile,
 .done-profile {
