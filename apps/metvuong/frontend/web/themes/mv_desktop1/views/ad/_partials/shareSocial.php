@@ -66,7 +66,7 @@ echo $this->renderAjax('/ad/_partials/shareEmail',[
     'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
     'recipientEmail' => null,
     'params' => ['your_email' => false, 'recipient_email' => true] ]);
-} else {
+} else if(isset($project) && !empty($project)){
     echo $this->renderAjax('/ad/_partials/shareEmail',[
         'popup_email_name' => 'popup_email_share',
         'project' => $project,

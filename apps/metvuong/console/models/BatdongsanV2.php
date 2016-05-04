@@ -1503,6 +1503,7 @@ class BatdongsanV2 extends Component
         if($price == "price=1")
             $models = $models->andWhere(['price_type' => 1]);
         $models = $models->limit(500)->all();
+        $insertCount = 0;
         if(count($models) > 0){
             $columnNameArray = ['category_id', 'project_building_id', 'user_id', 'home_no',
                 'city_id', 'district_id', 'ward_id', 'street_id',
@@ -1661,6 +1662,15 @@ class BatdongsanV2 extends Component
         $end = time();
         $time = $end - $begin;
         print_r("Time: {$time}s");
+
+        if($insertCount > 0){
+            $startElastic = time();
+            print_r("\nBuild elastic ...");
+            Yii::$app->runAction('elastic/build-index');
+            $stopElastic = time();
+            $timeElastic = $stopElastic - $startElastic;
+            print_r("\nBuild finish. ".$timeElastic."s");
+        }
     }
 
     public function updateData(){
