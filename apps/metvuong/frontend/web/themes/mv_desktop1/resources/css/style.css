@@ -7110,9 +7110,11 @@ footer li a {
     #listing-list .list-attr-td {
         margin-bottom: 4px;
     }
-    .detail-listing,
-    .wrap-duan-moi {
+    .detail-listing {
         padding: 0 0 100px 0;
+    }
+    .wrap-duan-moi {
+        padding: 0 0 30px 0;
     }
     .detail-listing-dt .detail-listing {
         width: auto;
@@ -7855,6 +7857,7 @@ footer li a {
 }
 .detail-duan-moi {
     padding-top: 50px;
+    padding-bottom: 50px;
 }
 .wrap-duan-moi .sidebar-col .list-post {
     margin: 0;
@@ -10215,6 +10218,7 @@ label:hover {
     }
     .col-left {
         padding-top: 30px;
+        margin-bottom: 30px;
     }
     .alert-item {
         max-width: 320px;
