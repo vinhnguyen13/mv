@@ -1204,12 +1204,14 @@ label {
 .radio-ui {
     width: 34px;
     height: 34px;
-    margin: 0 auto 0;
-    background-position: 0 -137px;
+    /* margin: 0 auto 0; */
+    /* background-position: 0 -137px; */
+    padding: 0;
 }
 .radio-ui.active {
     /* background-position: 0 -171px; */
 }
+.checkbox-ui input,
 .radio-ui input {
     display: none;
 }
@@ -3594,12 +3596,6 @@ html.mm-opening .mm-slideout {
     width: 19px;
     height: 22px;
 }
-.left-attr {
-    
-}
-.right-attr {
-    
-}
 .left-attr li .wrap-icon {
     display: inline-block;
     width: 40px;
@@ -3674,7 +3670,7 @@ html.mm-opening .mm-slideout {
     height: 16px;
 }
 .item-agent {
-    padding: 7px 0;
+    padding: 3px 0;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -3766,7 +3762,7 @@ html.mm-opening .mm-slideout {
     font-size: 18px;
     color: #3c3c3c;
     line-height: 27px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 .detail-listing .sidebar-col .address-listing {
     font-size: 15px;
@@ -4211,7 +4207,7 @@ html.mm-opening .mm-slideout {
     font-size: 13px;
     float: right;
     line-height: 100%;
-    margin-top: 3px;
+    /* margin-top: 3px; */
 }
 .id-duan span {
     font-weight: 700;
@@ -6204,7 +6200,7 @@ footer li a {
         height: 100%;
     }
     .wrap-frm-listing {
-        width: 70%;
+        width: 90%;
         margin: 0 auto 0;
         height: 100%;
         position: relative;
@@ -7172,9 +7168,9 @@ footer li a {
         padding: 0;
     }
     .price-td {
-        border-top: 1px solid #a5a5a5;
-        border-bottom: 1px solid #a5a5a5;
-        padding: 10px 0;
+        /* border-top: 1px solid #a5a5a5; */
+        /* border-bottom: 1px solid #a5a5a5; */
+        /* padding: 10px 0; */
     }
 }
 @media ( max-width: 1366px ) {
@@ -7240,6 +7236,9 @@ footer li a {
     .post-listing .title-top {
         margin: 0 -20px;
         width: auto;
+    }
+    .wrap-frm-listing {
+        padding-top: 30px;
     }
     .infor-duan .wrap-infor-duan {
         padding: 20px 0 0;
@@ -8914,6 +8913,21 @@ footer li a {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+.icon-check-square-o:before {
+    content: "\f046";
+}
+.icon-square-o:before {
+    content: "\f096";
+}
+.icon-file-image-o:before {
+    content: "\f1c5";
+}
+.icon-file-photo-o:before {
+    content: "\f1c5";
+}
+.icon-file-picture-o:before {
+    content: "\f1c5";
+}
 .icon-info-circle:before {
     content: "\f05a";
 }
@@ -9836,6 +9850,7 @@ input:-webkit-autofill {
     margin: 0;
     /* background: #ECECEC; */
     /* background: #00D078; */
+    border: 1px solid #979797;
 }
 .detail-listing .no-gallery,
 .detail-listing-extra .wrap-swiper .icons-detail {
@@ -9855,11 +9870,11 @@ height: 381px;
 .wrap-swiper .icons-detail li {
     float: none;
     margin: 0 0 0 0;
-    position: relative;
+    /* position: relative; */
     z-index: 1;
 }
 .wrap-swiper .icons-detail li:last-child {
-    /* border-bottom: 1px solid #00BD6D; */
+    border-bottom: none;
 }
 .wrap-swiper .icons-detail a {
     transition: background-color .1s linear;
@@ -9873,18 +9888,18 @@ height: 381px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    border: 1px solid #979797;
+    border-top: 1px solid #979797;
     margin-top: -1px;
 }
 .wrap-swiper .icons-detail li:hover {
     z-index: 2;
 }
 .wrap-swiper .icons-detail li:last-child a {
-    border-bottom: 1px solid #979797;
+    border-bottom: none;
 }
 .wrap-swiper .icons-detail li:last-child a:hover,
 .wrap-swiper .icons-detail a:hover {
-    border: 1px solid #009455;
+    /* border: 1px solid #009455; */
 }
 .wrap-swiper .icons-detail li:first-child a {
     margin-top: 0;
@@ -10437,4 +10452,208 @@ label:hover {
 #filterChart {
     width: 150px;
     height: 25px;
+}
+.left-attr-detail {
+    width: 40%;
+}
+.right-attr-detail .price-td {
+    font-size: 14px;
+    color: #3c3c3c;
+    line-height: 100%;
+}
+.right-attr-detail .price-td span {
+    font-size: 16px;
+    border: 1px solid #009445;
+    color: #009445;
+    display: inline-block;
+    padding: 6px 20px;
+    min-width: 100px;
+    text-align: center;
+    margin-top: 5px;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    -ms-border-radius: 2px;
+}
+.left-attr-detail .id-duan {
+    float: none;
+    margin: 0 0 10px 0;
+}
+.wrap-frm-listing select {
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+}
+.tienich-frm li {
+    float: left;
+    width: 25%;
+    margin-bottom: 10px;
+    padding-right: 5px;
+}
+.tienich-frm li label {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.upload-img {
+    border: 1px solid #c2c2c2;
+    padding: 30px 0;
+    text-align: center;
+    font-size: 13px;
+    color: #009445;
+}
+.agent-postlisting .icon-file-image-o,
+.upload-img .icon-file-image-o {
+    font-size: 40px;
+    color: #dcdcdc;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+.agent-postlisting .avatar {
+    border: 1px solid #c2c2c2;
+    text-align: center;
+    font-size: 13px;
+    color: #009445;
+    padding: 40px 0;
+}
+.price-unit {
+    position: absolute;
+    bottom: 0;
+    right: -110px;
+    font-size: 13px;
+}
+.agent-postlisting .radio-ui,
+.price-unit .radio-ui {
+    width: auto;
+    height: auto;
+    border: 1px solid #c2c2c2;
+    padding: 0 10px;
+    height: 34px;
+    min-width: 50px;
+    line-height: 30px;
+    text-align: center;
+    transition: all .2s ease-out;
+    -webkit-transition: all .2s ease-out;
+    -moz-transition: all .2s ease-out;
+    -ms-transition: all .2s ease-out;
+}
+.agent-postlisting .radio-ui:hover,
+.price-unit .radio-ui:hover {
+    background: #E2E2E2;
+}
+.agent-postlisting .radio-ui.active,
+.price-unit .radio-ui.active {
+    background: rgba(0, 218, 102, 0.16);
+    color: #009445;
+    font-weight: 600;
+    border: 1px solid rgba(0, 218, 102, 0.16);
+}
+.inner-checkpoint {
+    border: 1px solid #979797;
+    box-shadow: 0px 0px 5px #3c3c3c;
+    -webkit-box-shadow: 0px 0px 5px #3c3c3c;
+    -moz-box-shadow: 0px 0px 5px #3c3c3c;
+    -ms-box-shadow: 0px 0px 5px #3c3c3c;
+}
+.inner-checkpoint .title-point {
+    border-bottom: 1px solid #979797;
+    text-align: center;
+    padding: 10px 0;
+    color: #00a769;
+    font-size: 24px;
+}
+.btom-point {
+    border-top: 1px solid #979797;
+    text-align: center;
+    padding: 15px 20px;
+    font-size: 13px;
+}
+.point-select {
+    padding: 15px 20px;
+}
+.total-point span {
+    display: inline-block;
+    font-size: 30px;
+    color: #00a769;
+    font-weight: 600;
+    margin-right: 10px;
+}
+.proccess-point {
+    height: 8px;
+    background: #ececec;
+}
+.proccess-point div {
+    height: 8px;
+    background: #00a769;
+}
+.point-select ul {
+    padding-top: 10px;
+}
+.point-select ul li {
+    position: relative;
+    margin-top: 10px;
+    font-size: 13px;
+    padding-left: 30px;
+    font-weight: 600;
+}
+.point-select .icon-mv span {
+    display: inline-block;
+    width: 11px;
+    height: 11px;
+    background: #d8d8d8;
+    position: absolute;
+    top: 4px;
+    left: 0;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+}
+.point-select .icon-mv .selected-point {
+    width: auto;
+    height: auto;
+    background: 0;
+    font-size: 25px;
+    top: -3px;
+    color: #00a769;
+}
+.point-select .icon-mv .selected-point:before {
+        content: "\e900";
+}
+.checkbox-ui {
+    padding: 0;
+}
+.checkbox-ui.active {
+    color: #009445;
+}
+.checkbox-ui .icon-mv span {
+    font-size: 18px;
+    display: inline-block;
+    margin-right: 5px;
+}
+.checkbox-ui .icon-mv span:before {
+    content: "\f096";
+}
+.checkbox-ui.active .icon-mv span:before {
+    content: "\f046";
+}
+@media ( max-width: 985px ) {
+    .agent-postlisting .avatar {
+        margin-bottom: 15px;
+    }
+    .agent-postlisting [class^="col-"] {
+        padding: 0;
+    }
+    .agent-postlisting label {
+        margin-bottom: 10px;
+    }
+}
+@media ( min-width: 320px ) and ( max-width: 460px ) {
+    .wrap-frm-listing form > div {
+        width: 100%;
+    }
+    .wrap-frm-listing form .price-type {
+        width: 60%;
+    }
 }

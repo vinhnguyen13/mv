@@ -230,13 +230,13 @@ $.fn.radio = function (options) {
                 nameGroup = _this.find('input').attr('name');
 
             $('input[name="'+nameGroup+'"]').prop("checked", false);
-            $('input[name="'+nameGroup+'"]').closest('.frm-radio').removeClass('active');
+            $('input[name="'+nameGroup+'"]').closest('.radio-ui').removeClass('active');
 
             if ( _this.find('input[type=radio]').prop("checked") ) {
                 _this.find('input[type=radio]').prop("checked", false);
                 checkedItem(_this, false);
             }else {
-                _this.parent().find('input[type=radio]').prop("checked", true);
+                _this.find('input[type=radio]').prop("checked", true);
                 checkedItem(_this, true);
             }
 
@@ -266,23 +266,25 @@ $.fn.checkbox_ui = function (options) {
 
         sc.settings = $.extend({}, defaults, options);
 
+        el.on('click', toggleCheck);
+
         function toggleCheck (e) {
             e.preventDefault();
             var _this = $(this);
-            if ( _this.parent().find('input[type=checkbox]').prop("checked") ) {
-                _this.parent().find('input[type=checkbox]').prop("checked", false);
+            if ( _this.find('input[type=checkbox]').prop("checked") ) {
+                _this.find('input[type=checkbox]').prop("checked", false);
                 checkedItem(_this, false);
             }else {
-                _this.parent().find('input[type=checkbox]').prop("checked", true);
+                _this.find('input[type=checkbox]').prop("checked", true);
                 checkedItem(_this, true);
             }
         }
 
         function checkedItem (item, flagChecked) {
             if ( flagChecked ) {
-                item.parent().find('em').removeClass('fa-square-o').addClass('fa-check-square-o');
+                item.addClass('active');
             }else {
-                item.parent().find('em').removeClass('fa-check-square-o').addClass('fa-square-o');
+                item.removeClass('active');
             }
         }
 

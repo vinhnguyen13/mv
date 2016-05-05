@@ -230,16 +230,24 @@ $count_review = $reviews->count();
 					<div class="address-listing">
 						<p><?= $address ?></p>
 					</div>
-					<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
-					<ul class="clearfix list-attr-td">
-                        <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
-                            <li><?=Yii::t('listing','updating')?></li>
-                        <?php } else {
-                            echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '';
-                            echo $product->adProductAdditionInfo->room_no ? '<li><span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
-                            echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
-                        } ?>
-					</ul>
+					<div class="pull-left left-attr-detail">
+						<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
+						<ul class="clearfix list-attr-td">
+	                        <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
+	                            <li><?=Yii::t('listing','updating')?></li>
+	                        <?php } else {
+	                            echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '';
+	                            echo $product->adProductAdditionInfo->room_no ? '<li><span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
+	                            echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
+	                        } ?>
+						</ul>
+					</div>
+					<div class="overflow-all right-attr-detail">
+						<p class="price-td">
+							<?= Yii::t('ad', 'Price') ?><br>
+							<span><?= StringHelper::formatCurrency($product->price) ?></span>
+						</p>
+					</div>
 				</div>
 				<?=$this->renderAjax('/ad/_partials/shareEmail',[
                     'popup_email_name' => 'popup_email_contact',
@@ -525,11 +533,6 @@ $count_review = $reviews->count();
                         }
 					});
 				</script>
-
-				<p class="price-td">
-					<span><?= Yii::t('ad', 'Price') ?></span>
-					<?= StringHelper::formatCurrency($product->price) ?>
-				</p>
 			</div>
 			<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 		        <div class="panel panel-default">
