@@ -62,7 +62,7 @@ use vsoft\ad\models\AdStreet;
 						<label for="<?= Html::getInputId($product, 'street_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('street_id') ?><span class="require-hint">*</span></label>
 						<?= Html::activeDropDownList($product, 'street_id', ArrayHelper::map(AdStreet::getListByDistrict($product->district_id), 'id', 'name'), ['class' => 'form-control', 'prompt' => "..."]) ?>
 					</div>
-					<div class="form-group col-xs-6">
+					<div class="form-group col-xs-6 fild-address">
 						<label for="<?= Html::getInputId($product, 'home_no') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('home_no') ?></label>
 						<?= Html::activeTextInput($product, 'home_no', ['class' => 'form-control', 'placeholder' => '...']) ?>
 						<label class="checkbox-inline fs-13 checkbox-ui">
@@ -180,34 +180,25 @@ use vsoft\ad\models\AdStreet;
 							</span>
 						</div>
 					</div>
-					<div class="form-group col-xs-12">
-						<label for="" class="fs-13 mgB-10">Liên hệ <span class="color-cd pdL-15">+3 điểm</span></label>
+					<div class="form-group col-xs-12 mgT-30">
+						<label for="" class="fs-16 mgB-10 text-uper">Liên hệ <span class="color-cd pdL-15">+3 điểm</span></label>
 						<div class="clearfix agent-postlisting">
-							<div class="avatar col-sm-4">
-								<span class="icon-mv"><span class="icon-file-image-o"></span></span><br>Tải hình ảnh
-							</div>
-							<div class="col-sm-8 pdR-0 fs-13">
-								<div class="form-group clearfix">
-									<label for="" class="col-sm-4 control-label">Tên người đăng tin</label>
-									<div class="col-sm-8 pdR-0">
-										<input type="text" class="form-control" id="" placeholder="">
-									</div>
+							<div class="fs-13 row">
+								<div class="form-group col-xs-6">
+									<label for="" class="fs-13 mgB-10">Tên người đăng tin</label>
+									<input type="text" class="form-control" id="" placeholder="">
 								</div>
-								<div class="form-group clearfix">
-									<label for="" class="col-sm-4 control-label">Điện thoại</label>
-									<div class="col-sm-8 pdR-0">
-										<input type="text" class="form-control" id="" placeholder="">
-									</div>
+								<div class="form-group col-xs-6">
+									<label for="" class="fs-13 mgB-10">Điện thoại</label>
+									<input type="text" class="form-control" id="" placeholder="">
 								</div>
-								<div class="form-group clearfix">
-									<label for="" class="col-sm-4 control-label">Email</label>
-									<div class="col-sm-8 pdR-0">
-										<input type="email" class="form-control" id="" placeholder="">
-									</div>
+								<div class="form-group col-xs-6">
+									<label for="" class="fs-13 mgB-10">Email</label>
+									<input type="email" class="form-control" id="" placeholder="">
 								</div>
-								<div class="form-group clearfix">
-									<label for="" class="col-sm-4 control-label">Bạn là</label>
-									<div class="col-sm-8 pdR-0">
+								<div class="form-group col-xs-6">
+									<label for="" class="fs-13 mgB-10">Bạn là</label>
+									<div>
 										<label class="radio-inline radio-ui">
 											<input type="radio" name="agent-type" id="inlineRadio1" value="option1" checked="checked"> Chủ nhà
 										</label>

@@ -10675,10 +10675,18 @@ label:hover {
     width: 50%;
 }
 .agent-postlisting {
-    margin-top: 20px;
+    /* margin-top: 20px; */
 }
 .agent-postlisting label {
     padding-left: 0;
+}
+.fild-address input[type=text] {
+    width: 50%;
+}
+.fild-address .checkbox-ui {
+    position: absolute;
+    bottom: 0;
+    left: 54%;
 }
 @media ( max-width: 985px ) {
     .agent-postlisting .avatar {
@@ -10692,6 +10700,11 @@ label:hover {
     }
     .checkpoint-listing {
         margin-top: 50px;
+    }
+}
+@media ( max-width: 768px ) {
+    .wrap-frm-listing > div {
+        width: 100%;
     }
 }
 @media ( min-width: 320px ) and ( max-width: 460px ) {
