@@ -420,13 +420,11 @@ $count_review = $reviews->count();
 						    },500);
 						});
 
-						setTimeout(function () {
-							var swiper = new Swiper('.swiper-container', {
-								nextButton: '.swiper-button-next',
-						        prevButton: '.swiper-button-prev',
-						        spaceBetween: 0
-						    });
-						}, 5000);
+						var swiper = new Swiper('.swiper-container', {
+							nextButton: '.swiper-button-next',
+					        prevButton: '.swiper-button-prev',
+					        spaceBetween: 0
+					    });
 						
 						$('.tooltip-show').tooltip();
 
