@@ -81,9 +81,11 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
         if(!empty($this->action)){
             switch($this->action){
                 case self::ACTION_AD_FAVORITE;
+                    Yii::t('activity', '{owner} favorite {product}');
                     return "{owner} favorite {product}";
                     break;
                 case self::ACTION_AD_CLICK;
+                    Yii::t('activity', '{owner} view {product}');
                     return "{owner} view {product}";
                     break;
             }

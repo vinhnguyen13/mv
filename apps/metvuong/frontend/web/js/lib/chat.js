@@ -141,7 +141,9 @@ var Chat = {
             var body = msg.getElementsByTagName('msg')[0];
             if(msg.getElementsByTagName('notifyParams').length){
                 var params = msg.getElementsByTagName('notifyParams')[0];
-                $(document).trigger('chat/receiveMessage', [msg, {type: 'notify', from: Strophe.getBareJidFromJid(from), to: Strophe.getBareJidFromJid(to), fromName: params.getAttribute('fromName'), toName: params.getAttribute('toName'), total: params.getAttribute('total')}]);
+                $(document).trigger('chat/receiveMessage', [Strophe.getText(body), {type: 'notify', from: Strophe.getBareJidFromJid(from), to: Strophe.getBareJidFromJid(to), fromName: params.getAttribute('fromName'),
+                    toName: params.getAttribute('toName'), total: params.getAttribute('total'), product: params.getAttribute('product')
+                }]);
                 chatUI.typingMessage(from, 1);
             }
         }else if(type == 'headline'){

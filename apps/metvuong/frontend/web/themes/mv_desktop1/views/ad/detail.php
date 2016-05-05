@@ -332,12 +332,9 @@ $count_review = $reviews->count();
                 /**
                  * notification
                  */
-                if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
-                    $userVisit = Yii::$app->user->identity;
-                    $userTo = $owner;
-
-                    $nameUserTo = $userTo->profile->getDisplayName();
-                    $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
+                if(!Yii::$app->user->isGuest) {
+					$nameUserTo = !empty($owner) ? $owner->profile->getDisplayName() : $product->adContactInfo->name;
+					$nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
                     ?>
                     <script>
                         $(document).ready(function () {
@@ -356,8 +353,18 @@ $count_review = $reviews->count();
                                         data: {id: _id, stt: _stt},
                                         success: function (data) {
                                             if(data.statusCode == 200){
-                                                var to_jid = chatUI.genJid('<?=$userTo->username?>');
-                                                Chat.sendMessage(to_jid , 'save product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: data.parameters.msg});
+												<?php if(!empty($owner)){
+												?>
+                                                	var to_jid = chatUI.genJid('<?=$owner->username?>');
+                                                	Chat.sendMessage(to_jid , '{owner} favorite {product}', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: data.parameters.msg, product: '<?=$address?>'
+													});
+												<?php }?>
+												setTimeout(function () {
+													//"Email has been sent to "+recipient_email
+													$('body').alertBox({
+														txt: "<?=Yii::t('ad', 'Add to Favorites Success')?>"
+													});
+												},300);
                                             }
                                         }
                                     });
@@ -365,9 +372,11 @@ $count_review = $reviews->count();
 
                             });
                             $(document).bind('chat/afterConnect', function (event, data) {
-                                <?php if(Yii::$app->session->getFlash('notify_other')){?>
-                                var to_jid = chatUI.genJid('<?=$userTo->username?>');
-                                Chat.sendMessage(to_jid , 'view product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: <?=Yii::$app->session->getFlash('notify_other');?>});
+                                <?php if(Yii::$app->session->getFlash('notify_other') && !empty($owner)){
+                                ?>
+                                	var to_jid = chatUI.genJid('<?=$owner->username?>');
+                                	Chat.sendMessage(to_jid , '{owner} view {product}', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: <?=Yii::$app->session->getFlash('notify_other');?>, product: '<?=$address?>'
+									});
                                 <?php }?>
                             });
                         });
