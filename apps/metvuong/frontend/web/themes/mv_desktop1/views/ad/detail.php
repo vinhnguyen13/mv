@@ -112,8 +112,6 @@ $count_review = $reviews->count();
 						<?php endforeach; ?>
 					</div>
 
-					<div class="swiper-pagination"></div>
-
 					<div class="swiper-button-prev icon-mv"><span class=""></span></div>
 					<div class="swiper-button-next icon-mv"><span class=""></span></div>
 				</div>
@@ -422,14 +420,14 @@ $count_review = $reviews->count();
 						    },500);
 						});
 
-						var swiper = new Swiper('.swiper-container', {
-							pagination: '.swiper-pagination',
-							paginationClickable: true,
-					        nextButton: '.swiper-button-next',
-					        prevButton: '.swiper-button-prev',
-					        spaceBetween: 0
-					    });
-
+						setTimeout(function () {
+							var swiper = new Swiper('.swiper-container', {
+								nextButton: '.swiper-button-next',
+						        prevButton: '.swiper-button-prev',
+						        spaceBetween: 0
+						    });
+						}, 5000);
+						
 						$('.tooltip-show').tooltip();
 
 						$('#popup-map').on('show.bs.modal', function (e) {

@@ -8546,6 +8546,7 @@ footer li a {
 .wrap-list-duan .bottom-feat-box {
     padding: 10px 0 0;
     font-size: 13px;
+    border-top: 1px solid #CCCCCC;
 }
 .wrap-list-duan .bottom-feat-box .wrap-icon {
     margin-bottom: 7px;
@@ -9853,7 +9854,8 @@ input:-webkit-autofill {
     margin: 0;
     /* background: #ECECEC; */
     /* background: #00D078; */
-    border: 1px solid #979797;
+    border: 1px solid #E0E0E0;
+    border-top: none;
 }
 .detail-listing .no-gallery,
 .detail-listing-extra .wrap-swiper .icons-detail {
@@ -9894,10 +9896,10 @@ input:-webkit-autofill {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    border-top: 1px solid #979797;
+    border-top: 1px solid #E0E0E0;
     margin-top: -1px;
 }
-.save .icon-heart-icon-listing:before {
+.active .icon-heart-icon-listing:before {
     content: "\f004";
 }
 .wrap-swiper .icons-detail li:hover {
@@ -9908,7 +9910,10 @@ input:-webkit-autofill {
 }
 .wrap-swiper .icons-detail li:last-child a:hover,
 .wrap-swiper .icons-detail a:hover {
-    /* border: 1px solid #009455; */
+    background: #F7F7F7;
+}
+.wrap-swiper .icons-detail a:active {
+    background: #EAEAEA;
 }
 .wrap-swiper .icons-detail .popover  .item-agent a {
     border: none;
@@ -10047,7 +10052,7 @@ label:hover {
     /* background: #009858; */
 }
 .icons-detail .color-4 a {
-    /* background: #00A962; */
+    /* background: rgba(0, 169, 98, 0.08); */
 }
 .icons-detail .color-5 a {
     /* background: #00B569; */
