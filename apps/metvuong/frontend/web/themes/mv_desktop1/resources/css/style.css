@@ -10698,13 +10698,13 @@ label:hover {
     .agent-postlisting label {
         margin-bottom: 10px;
     }
-    .checkpoint-listing {
-        margin-top: 50px;
-    }
 }
 @media ( max-width: 768px ) {
     .wrap-frm-listing > div {
         width: 100%;
+    }
+    .checkpoint-listing {
+        margin-top: 50px;
     }
 }
 @media ( min-width: 320px ) and ( max-width: 460px ) {
