@@ -3762,7 +3762,7 @@ html.mm-opening .mm-slideout {
     font-size: 18px;
     color: #3c3c3c;
     line-height: 27px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 .detail-listing .sidebar-col .address-listing {
     font-size: 15px;
@@ -9332,7 +9332,7 @@ footer li a {
     bottom: 20px;
     left: 20px;
     z-index: 9999;
-    background: #009544;
+    background: #fff;
     padding: 10px 20px;
     box-shadow: 0px 0px 5px #333;
     -webkit-box-shadow: 0px 0px 5px #333;
@@ -9342,9 +9342,25 @@ footer li a {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
-    font-size: 14px;
-    min-width: 200px;
-    color: #fff;
+    font-size: 13px;
+    color: #3c3c3c;
+    width: auto;
+    max-width: 300px;
+}
+.alert-item .btn-close-alert {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 3px 5px;
+    border-radius: 0 3px 0 0;
+    -moz-border-radius: 0 3px 0 0;
+    -ms-border-radius: 0 3px 0 0;
+}
+.alert-item .btn-close-alert:hover {
+    background: #F1F1F1;
+}
+.alert-item a {
+    text-decoration: underline;
 }
 @media ( max-width: 1024px ) {
     .list-menu li a {

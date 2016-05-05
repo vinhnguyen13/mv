@@ -1017,7 +1017,8 @@ $.fn.alertBox = function (options) {
 
     return this.each(function() {
         var defaults = {
-            txt: ''
+            txt: '',
+            duration: 3000
         },
         sc = {},
         el = $(this), wrapAlert, txtShow;
@@ -1032,16 +1033,22 @@ $.fn.alertBox = function (options) {
             txtShow = sc.settings.txt;
         }
 
-        wrapAlert = '<div class="alert-item"><div class="wrap-alert">'+txtShow+'</div></div>';
+        wrapAlert = '<div class="alert-item"><a class="btn-close-alert" href="#"><span class="icon-mv fs-12"><span class="icon-close-icon"></span></span></a><div class="wrap-alert">'+txtShow+'</div></div>';
 
         $('body').append($(wrapAlert));
         $('.alert-item').fadeIn(300);
 
-        setTimeout(function () {
-            $('.alert-item').fadeOut('slow', function() {
-                $(this).remove();
-            });
-        },2000);
+        var timeOutHide = setTimeout(function () {
+                            $('.alert-item').fadeOut('slow', function() {
+                                $(this).remove();
+                            });
+                        },sc.settings.duration);
+
+        $('.alert-item .btn-close-alert').on('click', function (e) {
+            e.preventDefault();
+            clearTimeout(timeOutHide);
+            $('.alert-item').remove();
+        });
     });
 }
 

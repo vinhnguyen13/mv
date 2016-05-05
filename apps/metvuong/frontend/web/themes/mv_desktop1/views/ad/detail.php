@@ -510,11 +510,10 @@ $count_review = $reviews->count();
                                     if (data == 200) {
                                         $('body').loading({done: true});
                                         $('body').alertBox({
-                                        	txt: "<?=Yii::t('listing', 'Report has been sent.')?>"
+                                        	txt: "<?=Yii::t('listing', 'Report has been sent.')?>",
+                                        	duration: 2000
                                         });
-                                        //$('#popup-alert-report .report_text').text("<?=Yii::t('listing', 'Report has been sent.')?>");
-                                        //$('#popup-alert-report').modal('show');
-
+                                        
                                         return true;
                                     }
                                 },
@@ -525,11 +524,6 @@ $count_review = $reviews->count();
                             });
                             return false;
                         });
-
-						/*$(document).on('click', '#popup-share-social .icon-email-1', function (e) {
-							$('#popup-share-social').addClass('hide-popup');
-							$('.email-btn').trigger('click');
-						});*/
 
                         if($('.list-tienich-detail>li').length < 1){
                             $('.list-tienich-detail').append("<li><?=Yii::t('listing','updating')?></li>");
