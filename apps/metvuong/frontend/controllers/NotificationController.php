@@ -35,13 +35,13 @@ class NotificationController extends Controller
                     return true;
                 }
             }
-            if($output = Cache::me()->get(Cache::PRE_NOTIFICATION.'ajax'.Yii::$app->user->id)){
-                return $output;
-            }else{
+//            if($output = Cache::me()->get(Cache::PRE_NOTIFICATION.'ajax'.Yii::$app->user->id)){
+//                return $output;
+//            }else{
                 $output = $this->renderAjax('index', []);
                 Cache::me()->set(Cache::PRE_NOTIFICATION.'ajax'.Yii::$app->user->id, $output);
                 return $output;
-            }
+//            }
         }
             if($output = Cache::me()->get(Cache::PRE_NOTIFICATION.Yii::$app->user->id)){
                 return $output;
