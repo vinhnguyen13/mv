@@ -1,52 +1,74 @@
+<?php 
+	use yii\widgets\ActiveForm;
+	use yii\helpers\Html;
+use vsoft\ad\models\AdCategory;
+use yii\helpers\ArrayHelper;
+use vsoft\ad\models\AdCity;
+use vsoft\ad\models\AdProduct;
+use vsoft\ad\models\AdDistrict;
+use vsoft\ad\models\AdWard;
+use vsoft\ad\models\AdStreet;
+	
+	/**
+	 * @var $product vsoft\ad\models\AdProduct
+	 * @var $this yii\web\View
+	 */
+
+	$this->registerCss(".require-hint {color: red; margin-left: 4px;}");
+			
+	$categories = AdCategory::find()->orderBy('order')->all();
+	$categoriesDropdown = ArrayHelper::map($categories, 'id', function($model){return ucfirst(Yii::t('ad', $model->name));});
+	$categoriesOptions = ArrayHelper::map($categories, 'id', function($category){ return ['data-type' => $category->apply_to_type, 'data-limit' => $category->limit_area]; });
+	
+	$cities = AdCity::find()->all();
+	$citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
+	$citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != AdProduct::DEFAULT_CITY)]; });
+?>
 <div class="title-fixed-wrap container">
 	<div class="post-listing">
 		<div class="title-top">Post Listing</div>
 		<div class="wrap-frm-listing row">
 			<div class="col-sm-8">
-				<form class="row">
-					<div class="form-group col-xs-12">
+				<?php $form = ActiveForm::begin() ?>
+					<div class="form-group col-xs-6">
+						<label for="<?= Html::getInputId($product, 'type') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('type') ?><span class="require-hint">*</span></label>
+						<?= Html::activeDropDownList($product, 'type', $product->getAdTypes(), ['class' => 'form-control']) ?>
+					</div>
+					<div class="form-group col-xs-6">
+						<label for="<?= Html::getInputId($product, 'category_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('category_id') ?><span class="require-hint">*</span></label>
+						<?= Html::activeDropDownList($product, 'category_id', $categoriesDropdown, ['options' => $categoriesOptions, 'class' => 'form-control', 'prompt' => "..."]) ?>
+					</div>
+					<div class="form-group col-xs-6">
+						<label for="<?= Html::getInputId($product, 'city_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('city_id') ?><span class="require-hint">*</span></label>
+						<?= Html::activeDropDownList($product, 'city_id', $citiesDropdown, ['class' => 'form-control', 'options' => $citiesOptions, 'prompt' => "..."]) ?>
+					</div>
+					<div class="form-group col-xs-6">
 						<label for="" class="fs-13 mgB-10">Tên dự án <span class="color-cd pdL-15">+3 điểm</span></label>
-						<input type="text" class="form-control" id="" placeholder="">
+						<input type="text" class="form-control" id="" placeholder="...">
 					</div>
 					<div class="form-group col-xs-6">
-						<label for="" class="fs-13 mgB-10">Thành phố <span class="color-cd pdL-15">+3 điểm</span></label>
-						<select name="" id="" class="form-control">
-							<option value="">Hồ Chí Minh</option>
-							<option value="">Hồ Chí Minh</option>
-							<option value="">Hồ Chí Minh</option>
-						</select>
+						<label for="<?= Html::getInputId($product, 'district_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('district_id') ?><span class="require-hint">*</span></label>
+						<?= Html::activeDropDownList($product, 'district_id', ArrayHelper::map(AdDistrict::getListByCity($product->city_id), 'id', 'name'), ['class' => 'form-control', 'prompt' => "..."]) ?>
 					</div>
 					<div class="form-group col-xs-6">
-						<label for="" class="fs-13 mgB-10">Quận <span class="color-cd pdL-15">+3 điểm</span></label>
-						<select name="" id="" class="form-control">
-							<option value="">Hồ Chí Minh</option>
-							<option value="">Hồ Chí Minh</option>
-							<option value="">Hồ Chí Minh</option>
-						</select>
+						<label for="<?= Html::getInputId($product, 'ward_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('ward_id') ?><span class="require-hint">*</span></label>
+						<?= Html::activeDropDownList($product, 'ward_id', ArrayHelper::map(AdWard::getListByDistrict($product->district_id), 'id', 'name'), ['class' => 'form-control', 'prompt' => "..."]) ?>
 					</div>
 					<div class="form-group col-xs-6">
-						<label for="" class="fs-13 mgB-10">Đường <span class="color-cd pdL-15">+3 điểm</span></label>
-						<input type="text" class="form-control" id="" placeholder="">
+						<label for="<?= Html::getInputId($product, 'street_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('street_id') ?><span class="require-hint">*</span></label>
+						<?= Html::activeDropDownList($product, 'street_id', ArrayHelper::map(AdStreet::getListByDistrict($product->district_id), 'id', 'name'), ['class' => 'form-control', 'prompt' => "..."]) ?>
 					</div>
 					<div class="form-group col-xs-6">
-						<label for="" class="fs-13 mgB-10">Số nhà <span class="color-cd pdL-15">+3 điểm</span></label>
-						<select name="" id="" class="form-control">
-							<option value="">Hồ Chí Minh</option>
-							<option value="">Hồ Chí Minh</option>
-							<option value="">Hồ Chí Minh</option>
-						</select>
+						<label for="<?= Html::getInputId($product, 'home_no') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('home_no') ?></label>
+						<?= Html::activeTextInput($product, 'home_no', ['class' => 'form-control', 'placeholder' => '...']) ?>
+						<label class="checkbox-inline fs-13 checkbox-ui">
+							<?= Html::activeCheckbox($product, 'show_home_no', ['label' => false]) ?>
+							<span class="icon-mv"><span class="icon-checkbox"></span></span> <?= $product->getAttributeLabel('show_home_no') ?>
+						</label>
 					</div>
 					<div class="form-group col-xs-6">
 						<label for="" class="fs-13 mgB-10">Diện tích <span class="color-cd pdL-15">+3 điểm</span></label>
 						<input type="text" class="form-control" id="" placeholder="">
-					</div>
-					<div class="form-group col-xs-6">
-						<label for="" class="fs-13 mgB-10">Loại bất động sản <span class="color-cd pdL-15">+3 điểm</span></label>
-						<select name="" id="" class="form-control">
-							<option value="">Hồ Chí Minh</option>
-							<option value="">Hồ Chí Minh</option>
-							<option value="">Hồ Chí Minh</option>
-						</select>
 					</div>
 					<div class="form-group col-xs-6 price-type">
 						<label for="" class="fs-13 mgB-10">Giá <span class="color-cd pdL-15">+3 điểm</span></label>
@@ -196,7 +218,7 @@
 					<div class="text-right col-xs-12 pdT-50">
 						<button class="btn-common">Preview <span class="icon-mv"><span class="icon-angle-right"></span></span></button>
 					</div>
-				</form>
+				<?php $form->end() ?>
 			</div>
 			<div class="col-sm-4 checkpoint-listing">
 				<div class="inner-checkpoint">
