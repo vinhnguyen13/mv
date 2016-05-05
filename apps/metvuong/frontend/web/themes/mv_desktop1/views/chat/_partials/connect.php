@@ -37,7 +37,7 @@ if(!Yii::$app->user->isGuest) {
                         if($('.wrap-history-item').length == 0){
                             $(document).trigger('chat/showBoxChat', [chatUI.usrFromJid(params.from)]);
                         }
-//                        chatUI.notify(chatUI.NOTIFY_CHAT, 1);
+                        chatUI.notify(chatUI.NOTIFY_CHAT, 1);
                     }
                     chatUI.loadMessageToBox(msg, params);
                 }else if(params.type == 'notify'){
@@ -56,9 +56,9 @@ if(!Yii::$app->user->isGuest) {
                 }else if(params.type == 'online'){
                     console.log('------------------', params);
                 }
-//                if(!checkMobile()){
-//                    $('.wrapNotifyTotal').find('#notifyTotal').hide();
-//                }
+                if(!checkMobile()){
+                    $('.wrapNotifyTotal').find('#notifyTotal').hide();
+                }
 
             });
 

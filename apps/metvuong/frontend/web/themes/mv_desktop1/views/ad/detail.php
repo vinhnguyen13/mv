@@ -214,7 +214,7 @@ $count_review = $reviews->count();
                                         <?php } } ?>
                                     <?php if(!empty($owner->username) && !$owner->isMe()) { ?>
                                         <a href="#" data-toggle="modal" data-target="#popup_email_contact" class="email-btn btn-common btn-small">Email</a>
-                                        <a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
+                                        <a href="#" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
                                     <?php }?>
 								</div>
 							</div>
@@ -675,7 +675,7 @@ $count_review = $reviews->count();
                                     <?php } } ?>
 									<?php if(!empty($owner->username) && !$owner->isMe()) { ?>
                                         <a href="#" data-toggle="modal" data-target="#popup_email_contact" class="email-btn btn-common btn-small">Email</a>
-										<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
+										<a href="#" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
 									<?php }?>
 								</div>
 							</div>
