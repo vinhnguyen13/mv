@@ -9329,7 +9329,7 @@ footer li a {
 .alert-item {
     display: none;
     position: fixed;
-    bottom: 20px;
+    bottom: 40px;
     left: 20px;
     z-index: 9999;
     background: #fff;
