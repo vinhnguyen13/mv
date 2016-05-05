@@ -8,10 +8,15 @@ use vsoft\ad\models\AdProduct;
 use vsoft\ad\models\AdDistrict;
 use vsoft\ad\models\AdWard;
 use vsoft\ad\models\AdStreet;
-	
+use vsoft\ad\models\AdProductAdditionInfo;
+use vsoft\ad\models\AdFacility;
+use common\widgets\fileupload\FileUpload;
+use yii\helpers\Url;
+
 	/**
 	 * @var $product vsoft\ad\models\AdProduct
 	 * @var $this yii\web\View
+	 * @var $additionInfo vsoft\ad\models\AdProductAdditionInfo
 	 */
 
 	$this->registerCss(".require-hint {color: red; margin-left: 4px;}");
@@ -71,12 +76,12 @@ use vsoft\ad\models\AdStreet;
 						</label>
 					</div>
 					<div class="form-group col-xs-6">
-						<label for="" class="fs-13 mgB-10">Diện tích <span class="color-cd pdL-15">+3 điểm</span></label>
-						<input type="text" class="form-control" id="" placeholder="">
+						<label for="<?= Html::getInputId($product, 'area') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('area') ?></label>
+						<?= Html::activeTextInput($product, 'area', ['class' => 'form-control', 'placeholder' => '...']) ?>
 					</div>
 					<div class="form-group col-xs-6 price-type">
-						<label for="" class="fs-13 mgB-10">Giá <span class="color-cd pdL-15">+3 điểm</span></label>
-						<input type="text" class="form-control text-right" id="" placeholder="">
+						<label for="<?= Html::getInputId($product, 'price') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('price') ?></label>
+						<?= Html::activeTextInput($product, 'price', ['class' => 'form-control text-right', 'placeholder' => '...']) ?>
 						<div class="price-unit">
 							<label class="radio-inline radio-ui">
 								<input type="radio" name="price-unit" id="inlineRadio1" value="" checked="checked"> Triệu
@@ -87,90 +92,58 @@ use vsoft\ad\models\AdStreet;
 						</div>
 					</div>
 					<div class="form-group col-xs-12">
-						<label for="" class="fs-13 mgB-10">Mô tả chi tiết <span class="color-cd pdL-15">+3 điểm</span></label>
-						<textarea class="form-control" rows="5"></textarea>
+						<label for="<?= Html::getInputId($product, 'content') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('content') ?></label>
+						<?= Html::activeTextarea($product, 'content', ['class' => 'form-control', 'rows' => 5]) ?>
 					</div>
 					<div class="form-group col-xs-4">
-						<label for="" class="fs-13 mgB-10">Phòng ngủ <span class="color-cd pdL-15">+3 điểm</span></label>
-						<input type="text" class="form-control" id="" placeholder="">
+						<label for="<?= Html::getInputId($additionInfo, 'room_no') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('room_no') ?></label>
+						<?= Html::activeTextInput($additionInfo, 'room_no', ['class' => 'form-control', 'placeholder' => '...']) ?>
 					</div>
 					<div class="form-group col-xs-4">
-						<label for="" class="fs-13 mgB-10">Phòng tắm <span class="color-cd pdL-15">+3 điểm</span></label>
-						<input type="text" class="form-control" id="" placeholder="">
+						<label for="<?= Html::getInputId($additionInfo, 'toilet_no') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('toilet_no') ?></label>
+						<?= Html::activeTextInput($additionInfo, 'toilet_no', ['class' => 'form-control', 'placeholder' => '...']) ?>
 					</div>
 					<div class="form-group col-xs-4">
-						<label for="" class="fs-13 mgB-10">Số tầng <span class="color-cd pdL-15">+3 điểm</span></label>
-						<input type="text" class="form-control" id="" placeholder="">
+						<label for="<?= Html::getInputId($additionInfo, 'floor_no') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('floor_no') ?></label>
+						<?= Html::activeTextInput($additionInfo, 'floor_no', ['class' => 'form-control', 'placeholder' => '...']) ?>
+					</div>
+					<div class="form-group col-xs-4">
+						<label for="<?= Html::getInputId($additionInfo, 'facade_width') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('facade_width') ?></label>
+						<?= Html::activeTextInput($additionInfo, 'facade_width', ['class' => 'form-control', 'placeholder' => '...']) ?>
+					</div>
+					<div class="form-group col-xs-4">
+						<label for="<?= Html::getInputId($additionInfo, 'land_width') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('land_width') ?></label>
+						<?= Html::activeTextInput($additionInfo, 'land_width', ['class' => 'form-control', 'placeholder' => '...']) ?>
+					</div>
+					<div class="form-group col-xs-4">
+						<label for="<?= Html::getInputId($additionInfo, 'home_direction') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('home_direction') ?></label>
+						<?= Html::activeDropDownList($additionInfo, 'home_direction', AdProductAdditionInfo::directionList(), ['class' => 'form-control', 'prompt' => "..."]) ?>
+					</div>
+					<div class="form-group col-xs-4">
+						<label for="<?= Html::getInputId($additionInfo, 'facade_direction') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('facade_direction') ?></label>
+						<?= Html::activeDropDownList($additionInfo, 'facade_direction', AdProductAdditionInfo::directionList(), ['class' => 'form-control', 'prompt' => "..."]) ?>
+					</div>
+					<div class="form-group col-xs-12">
+						<label for="<?= Html::getInputId($additionInfo, 'interior') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('interior') ?></label>
+						<?= Html::activeTextarea($additionInfo, 'interior', ['class' => 'form-control', 'rows' => 2]) ?>
 					</div>
 					<div class="form-group col-xs-12 tienich-frm">
 						<label for="" class="fs-13 mgB-10">Tiện ích <span class="color-cd pdL-15">+3 điểm</span></label>
+						<?php
+							$facilities = AdFacility::find()->all();
+							$activeFacility = $additionInfo->facility ? $additionInfo->facility : [];
+							$facilityName = $additionInfo->formName() . '[facility][]';
+						?>
 						<ul class="clearfix">
+							<?php foreach ($facilities as $facility): ?>
 							<li>
 								<label class="checkbox-inline fs-13 checkbox-ui">
-									<input type="checkbox" id="inlineCheckbox1" value="option1">
-									<span class="icon-mv"><span class="icon-checkbox"></span></span> Spa
+									<?= Html::checkbox($facilityName, in_array($facility->id, $activeFacility)) ?>
+									<span class="icon-mv"><span class="icon-checkbox"></span></span> <?= Yii::t('ad', $facility->name) ?>
 								</label>
 							</li>
-							<li>
-								<label class="checkbox-inline fs-13 checkbox-ui">
-									<input type="checkbox" id="inlineCheckbox1" value="option1"><span class="icon-mv"><span class="icon-checkbox"></span></span> Spa
-								</label>
-							</li>
-							<li>
-								<label class="checkbox-inline fs-13 checkbox-ui">
-									<input type="checkbox" id="inlineCheckbox1" value="option1"><span class="icon-mv"><span class="icon-checkbox"></span></span> Spa
-								</label>
-							</li>
-							<li>
-								<label class="checkbox-inline fs-13 checkbox-ui">
-									<input type="checkbox" id="inlineCheckbox1" value="option1"><span class="icon-mv"><span class="icon-checkbox"></span></span> Spa
-								</label>
-							</li>
-							<li>
-								<label class="checkbox-inline fs-13 checkbox-ui">
-									<input type="checkbox" id="inlineCheckbox1" value="option1"><span class="icon-mv"><span class="icon-checkbox"></span></span> Spa
-								</label>
-							</li>
-							<li>
-								<label class="checkbox-inline fs-13 checkbox-ui">
-									<input type="checkbox" id="inlineCheckbox1" value="option1"><span class="icon-mv"><span class="icon-checkbox"></span></span> Spa
-								</label>
-							</li>
-							<li>
-								<label class="checkbox-inline fs-13 checkbox-ui">
-									<input type="checkbox" id="inlineCheckbox1" value="option1"><span class="icon-mv"><span class="icon-checkbox"></span></span> Spa
-								</label>
-							</li>
-							<li>
-								<label class="checkbox-inline fs-13 checkbox-ui">
-									<input type="checkbox" id="inlineCheckbox1" value="option1"><span class="icon-mv"><span class="icon-checkbox"></span></span> Spa
-								</label>
-							</li>
-							<li>
-								<label class="checkbox-inline fs-13 checkbox-ui">
-									<input type="checkbox" id="inlineCheckbox1" value="option1"><span class="icon-mv"><span class="icon-checkbox"></span></span> Spa
-								</label>
-							</li>
-							<li>
-								<label class="checkbox-inline fs-13 checkbox-ui">
-									<input type="checkbox" id="inlineCheckbox1" value="option1"><span class="icon-mv"><span class="icon-checkbox"></span></span> Spa
-								</label>
-							</li>
-							<li>
-								<label class="checkbox-inline fs-13 checkbox-ui">
-									<input type="checkbox" id="inlineCheckbox1" value="option1"><span class="icon-mv"><span class="icon-checkbox"></span></span> Spa
-								</label>
-							</li>
-							<li>
-								<label class="checkbox-inline fs-13 checkbox-ui">
-									<input type="checkbox" id="inlineCheckbox1" value="option1"><span class="icon-mv"><span class="icon-checkbox"></span></span> Spa
-								</label>
-							</li>
+							<?php endforeach; ?>
 						</ul>
-					</div>
-					<div class="form-group col-xs-12">
-						<label for="" class="fs-13 mgB-10">Mô tả khu vực <span class="color-cd pdL-15">+3 điểm</span></label>
-						<textarea class="form-control" rows="5"></textarea>
 					</div>
 					<div class="form-group col-xs-12">
 						<label for="" class="fs-13 mgB-10">Tải hình ảnh dư án <span class="color-cd pdL-15">+3 điểm</span></label>
@@ -178,10 +151,34 @@ use vsoft\ad\models\AdStreet;
 							<span class="icon-mv">
 								<span class="icon-file-image-o"></span><br>Tải hình ảnh
 							</span>
+							<?php
+								$files = [];
+								foreach ($product->adImages as $image) {
+									$files[] = [
+										'deleteType' => "DELETE",
+										'deleteUrl'	=> Url::to(['/ad/delete-file', 'file' => $image->file_name]),
+										'thumbnailUrl' => $image->getUrl(AdImages::SIZE_THUMB),
+										'name' => $image->file_name,
+										'url' => $image->getUrl(AdImages::SIZE_LARGE)
+									];
+								}
+							?>
+							<?= FileUpload::widget([
+									'files' => $files,
+									'name' => 'images', 
+									'url' => Url::to(['upload']),
+									'clientOptions' => [
+										'previewMinWidth' => 130,
+										'previewMinHeight' => 98,
+										'previewMaxWidth' => 130,
+										'previewMaxHeight' => 98,
+										'previewCrop' => true,
+									]
+								]) ?>
 						</div>
 					</div>
 					<div class="form-group col-xs-12 mgT-30">
-						<label for="" class="fs-16 mgB-10 text-uper">Liên hệ <span class="color-cd pdL-15">+3 điểm</span></label>
+						<label for="" class="fs-16 mgB-10 text-uper">Liên hệ</label>
 						<div class="clearfix agent-postlisting">
 							<div class="fs-13 row">
 								<div class="form-group col-xs-6">
