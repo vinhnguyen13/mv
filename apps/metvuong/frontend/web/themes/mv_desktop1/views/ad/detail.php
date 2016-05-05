@@ -145,14 +145,12 @@ $count_review = $reviews->count();
 							<span><?= Yii::t('ad', 'Share Email') ?></span>
 						</a>
 					</li>
-		            <?php if($product->user_id != Yii::$app->user->id){ ?>
 					<li class="color-4">
-						<a href="#" class="save-item <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>">
+						<a href="#" class="save-item <?=!empty($product->productSaved->saved_at) ? 'active' : '';?> <?=Yii::$app->user->isGuest ? " user-login-link" : "" ?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>">
 							<span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
 							<span><?= Yii::t('ad', 'Add to Favorites') ?></span>
 						</a>
 					</li>
-		            <?php } ?>
 					<li class="color-5">
 						<a href="#" data-toggle="modal" data-target="#popup-map">
 							<span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
@@ -382,7 +380,7 @@ $count_review = $reviews->count();
                 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.rateit.js', ['position'=>View::POS_END]);
                 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/clipboard.min.js', ['position'=>View::POS_END]);
                 ?>
-				
+
 				<script>
 					$(document).ready(function () {
 
