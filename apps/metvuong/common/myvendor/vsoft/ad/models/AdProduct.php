@@ -82,7 +82,7 @@ class AdProduct extends AP
 			'created_at' => 'Created At',
 			'updated_at' => 'Updated At',
 			'status' => 'Status',
-            'show_home_no' => Yii::t('ad', 'Show address to viewers'),
+            'show_home_no' => Yii::t('ad', 'Show address'),
 		];
 	}
 	
