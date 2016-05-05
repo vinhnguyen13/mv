@@ -193,6 +193,9 @@
 							</div>
 						</div>
 					</div>
+					<div class="text-right col-xs-12 pdT-50">
+						<button class="btn-common">Preview <span class="icon-mv"><span class="icon-angle-right"></span></span></button>
+					</div>
 				</form>
 			</div>
 			<div class="col-sm-4 checkpoint-listing">

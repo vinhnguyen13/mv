@@ -986,8 +986,8 @@ label {
     width: 100%;
     /* overflow: hidden; */
 }
-.post-listing form {
-    
+.post-listing form button {
+    line-height: 100%;
 }
 .post-listing .step-txt {
     font-weight: 400;
@@ -9859,9 +9859,12 @@ input:-webkit-autofill {
 .detail-listing-extra .wrap-swiper .icons-detail {
     height: 336px;
 }
+.detail-listing-extra .no-gallery {
+    height: auto;
+    margin-bottom: 15px;
+}
 .detail-listing-extra .wrap-swiper .icons-detail {
-    
-height: 381px;
+    height: 381px;
 }
 
 .detail-listing-dt .no-gallery {
