@@ -266,6 +266,10 @@ $.fn.checkbox_ui = function (options) {
 
         sc.settings = $.extend({}, defaults, options);
 
+        if ( el.find('input[type=checkbox]').attr('checked') ) {
+            el.addClass('active');
+        }
+
         el.on('click', toggleCheck);
 
         function toggleCheck (e) {

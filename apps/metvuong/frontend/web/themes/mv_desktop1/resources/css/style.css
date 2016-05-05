@@ -10550,18 +10550,11 @@ label:hover {
     margin-bottom: 5px;
     display: inline-block;
 }
-.agent-postlisting .avatar {
-    border: 1px solid #c2c2c2;
-    text-align: center;
-    font-size: 13px;
-    color: #009445;
-    padding: 40px 0 40px 0;
-}
 .price-unit {
     position: absolute;
     bottom: 0;
-    right: -110px;
     font-size: 13px;
+    left: 55%;
 }
 .agent-postlisting .radio-ui,
 .price-unit .radio-ui {
@@ -10678,6 +10671,15 @@ label:hover {
 .checkbox-ui.active .icon-mv span:before {
     content: "\f046";
 }
+.price-type input[type=text] {
+    width: 50%;
+}
+.agent-postlisting {
+    margin-top: 20px;
+}
+.agent-postlisting label {
+    padding-left: 0;
+}
 @media ( max-width: 985px ) {
     .agent-postlisting .avatar {
         margin-bottom: 15px;
@@ -10688,12 +10690,16 @@ label:hover {
     .agent-postlisting label {
         margin-bottom: 10px;
     }
+    .checkpoint-listing {
+        margin-top: 50px;
+    }
 }
 @media ( min-width: 320px ) and ( max-width: 460px ) {
-    .wrap-frm-listing form > div {
-        width: 100%;
-    }
     .wrap-frm-listing form .price-type {
         width: 60%;
+    }
+    .wrap-frm-listing form .price-type,
+    .wrap-frm-listing form > div {
+        width: 100%;
     }
 }

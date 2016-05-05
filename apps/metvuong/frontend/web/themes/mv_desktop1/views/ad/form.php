@@ -29,7 +29,11 @@ use vsoft\ad\models\AdStreet;
 		<div class="title-top">Post Listing</div>
 		<div class="wrap-frm-listing row">
 			<div class="col-sm-8">
-				<?php $form = ActiveForm::begin() ?>
+				<?php $form = ActiveForm::begin([
+						'options' => [
+							'class' => 'clearfix row'
+						]
+					]) ?>
 					<div class="form-group col-xs-6">
 						<label for="<?= Html::getInputId($product, 'type') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('type') ?><span class="require-hint">*</span></label>
 						<?= Html::activeDropDownList($product, 'type', $product->getAdTypes(), ['class' => 'form-control']) ?>
