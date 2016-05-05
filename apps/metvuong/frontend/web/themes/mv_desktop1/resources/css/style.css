@@ -768,7 +768,7 @@ margin-top: 12px;
     width: 100px;
     height: 100px;
     float: left;
-    margin-right: 25px;
+    margin-right: 15px;
     padding: 3px;
     background: #fff;
     border: 1px solid #BFBFBF;
@@ -3676,7 +3676,7 @@ html.mm-opening .mm-slideout {
     overflow: hidden;
 }
 .item-agent .icon-mv {
-    width: 35px;
+    width: 28px;
 }
 .item-agent .icon-phone-profile {
     font-size: 20px;
@@ -7068,7 +7068,7 @@ footer li a {
 .detail-listing-dt .detail-listing .wrap-swiper {
     /* margin: 0 -20px; */
 }
-.detail-listing-dt .btn-close {
+.detail-listing-dt .close-slide-detail {
     opacity: 1;
     padding: 13px 15px 12px;
     line-height: 100%;
@@ -8913,6 +8913,9 @@ footer li a {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+.icon-heart:before {
+    content: "\f004";
+}
 .icon-check-square-o:before {
     content: "\f046";
 }
@@ -9891,6 +9894,9 @@ height: 381px;
     border-top: 1px solid #979797;
     margin-top: -1px;
 }
+.save .icon-heart-icon-listing:before {
+    content: "\f004";
+}
 .wrap-swiper .icons-detail li:hover {
     z-index: 2;
 }
@@ -9900,6 +9906,11 @@ height: 381px;
 .wrap-swiper .icons-detail li:last-child a:hover,
 .wrap-swiper .icons-detail a:hover {
     /* border: 1px solid #009455; */
+}
+.wrap-swiper .icons-detail .popover  .item-agent a {
+    border: none;
+    margin: 0;
+    vertical-align: middle;
 }
 .wrap-swiper .icons-detail li:first-child a {
     margin-top: 0;
@@ -10081,15 +10092,20 @@ label:hover {
     font-weight: 600;
     margin: 0 10px 0 0;
     float: left;
+    border: none;
 }
 .wrap-swiper .icons-detail .popover .infor-agent {
     margin-bottom: 0;
     display: block;
 }
+.wrap-swiper .popover .stars {
+    margin-bottom: 5px;
+}
 .wrap-swiper .popover .item-agent {
-    margin: 0 0 5px 0;
+    margin: 0 0 7px 0;
     padding: 0;
     overflow: visible;
+    line-height: 100%;
 }
 .wrap-swiper .icons-detail .popover-content {
     padding: 15px;
@@ -10515,7 +10531,7 @@ label:hover {
     text-align: center;
     font-size: 13px;
     color: #009445;
-    padding: 40px 0;
+    padding: 40px 0 40px 0;
 }
 .price-unit {
     position: absolute;

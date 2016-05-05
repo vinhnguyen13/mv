@@ -32,7 +32,7 @@ var listing = {
 		events.attachDesktopEvent(form.fields.projectBuildingId, 'change', listing.loadProject);
 		events.attachDesktopEvent(form.fields.categoryId, 'change', listing.resetProjectField);
 		events.attachDesktopEvent(form.fields.districtId, 'change', listing.resetProjectField);
-		events.attachDesktopEvent($('.btn-close'), 'click', listing.closeDetail);
+		events.attachDesktopEvent($('.close-slide-detail'), 'click', listing.closeDetail);
 		
 		for(var i in form.fields) {
 			events.attachDesktopEvent(form.fields[i], 'change', listing.fieldChange);
