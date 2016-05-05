@@ -10,11 +10,11 @@ use yii\helpers\StringHelper;
 use yii\helpers\Url;
 
 ?>
-<div id="<?=$popup_email_name?>" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div id="popup_email" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header title-popup clearfix">
-                <div class="text-center"><?=$popup_email_name == "popup_email_share" ? Yii::t('send_email','SHARE VIA EMAIL') : Yii::t('send_email','CONTACT') ?></div>
+                <div class="text-center popup_title"><?= Yii::t('send_email','CONTACT') ?></div>
                 <a href="#" class="txt-cancel btn-cancel close" data-dismiss="modal" aria-label="Close"><?=Yii::t('send_email','Cancel')?></a>
                 <a href="#" class="txt-done btn-done send_mail" data-alert="Gửi email thành công !"><?=Yii::t('send_email','Send')?></a>
             </div>
@@ -42,23 +42,25 @@ use yii\helpers\Url;
                         </div>
                         <?php }
 
-                        if(isset($params['recipient_email']) && $params['recipient_email'] == false && !empty($recipientEmail)) {
-                            echo $f->field($share_form, 'recipient_email')->hiddenInput(['class'=>'recipient_email', 'value'=> $recipientEmail])->label(false);
-                        } else {
+//                        if(isset($params['recipient_email']) && $params['recipient_email'] == false && !empty($recipientEmail)) {
+//                            echo $f->field($share_form, 'recipient_email')->hiddenInput(['class'=>'recipient_email', 'value'=> $recipientEmail])->label(false);
+//                        } else {
                         ?>
                         <div class="frm-item frm-email">
-                            <?= $f->field($share_form, 'recipient_email')->textInput(['class'=>'recipient_email', 'value' => isset($params['setValueToEmail']) ? $recipientEmail : "", 'placeholder'=>Yii::t('send_email', 'To email ...')])->label(false) ?>
+                            <?= $f->field($share_form, 'recipient_email')->textInput(['class'=>'recipient_email', 'value'=> $recipientEmail, 'placeholder'=>Yii::t('send_email', 'To email ...')])->label(false) ?>
                         </div>
-                        <?php }  ?>
 
-                        <div class="frm-item frm-email">
-                            <?= $f->field($share_form, 'subject')->textInput(['class'=>'subject2', 'placeholder'=>Yii::t('send_email', 'Subject...')])->label(false)?>
+                        <div class="frm-item frm-email hide">
+                            <?= $f->field($share_form, 'subject')->hiddenInput(['class'=>'subject2', 'placeholder'=>Yii::t('send_email', 'Subject...')])->label(false)?>
                         </div>
                         <div class="frm-item frm-email">
                             <?= $f->field($share_form, 'content')->textarea(['class'=>'content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('send_email', 'Content...')])->label(false) ?>
                         </div>
                         <div class="item-send">
                             <?php
+                            echo $f->field($share_form, 'type')->hiddenInput(['class' => 'type', 'value'=> 'contact'])->label(false);
+                            echo $f->field($share_form, 'from_name')->hiddenInput(['class' => 'from_name', 'value'=> (isset($from_name) && !empty($from_name)) ? $from_name : null])->label(false);
+                            echo $f->field($share_form, 'to_name')->hiddenInput(['class' => 'to_name', 'value'=>(isset($to_name) && !empty($to_name)) ? $to_name : null])->label(false);
                             if(isset($product) && !empty($product)){
                                 $address = $product->getAddress();
                             ?>
@@ -70,33 +72,36 @@ use yii\helpers\Url;
                                 <p class="send-by">BY METVUONG.COM</p>
                             </div>
 
+                            <?= $f->field($share_form, 'pid')->hiddenInput(['class' => 'pid', 'value'=> Yii::$app->params['listing_prefix_id'] . $product->id])->label(false); ?>
                             <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=>$address])->label(false) ?>
                             <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> $product->urlDetail(true) ])->label(false) ?>
                             <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
                             <?php
                             }
                             else if(isset($project) && !empty($project)){
-                                $image = '/themes/metvuong2/resources/images/default-ads.jpg';
-                                $gallery = array();
-                                if($project->gallery)
-                                    $gallery = explode(',', $project->gallery);
-                                if (count($gallery) > 0) {
-                                    $imageUrl = Yii::getAlias('@store')."/building-project-images/". $gallery[0];
-                                    if(file_exists($imageUrl)){
-                                        $image = Url::to('/store/building-project-images/' . $gallery[0]);
-                                    }
-                                }
+//                                $image = '/themes/metvuong2/resources/images/default-ads.jpg';
+//                                $gallery = array();
+//                                if($project->gallery)
+//                                    $gallery = explode(',', $project->gallery);
+//                                if (count($gallery) > 0) {
+//                                    $imageUrl = Yii::getAlias('@store')."/building-project-images/". $gallery[0];
+//                                    if(file_exists($imageUrl)){
+//                                        $image = Url::to('/store/building-project-images/' . $gallery[0]);
+//                                    }
+//                                }
                                 ?>
-                                <div class="img-show"><div><a href="<?= Url::to(["building/$project->slug"],true) ?>"><img src="<?= $image ?>" alt="<?=Url::to(["building/$project->slug"],true)?>"></a></div></div>
+                                <div class="img-show"><div><a href="<?= Url::to(["building-project/view", 'slug'=>$project->slug], true) ?>"><img src="<?= $project->logoUrl ?>" alt="<?=Url::to(["building/$project->slug"],true)?>"></a></div></div>
                                 <div class="infor-send">
-                                    <p class="name"><a href="<?= Url::to(["building/$project->slug"],true) ?>"><?=mb_strtoupper($project->name)?></a></p>
+                                    <p class="name"><a href="<?= Url::to(["building-project/view", 'slug'=>$project->slug], true) ?>"><?=mb_strtoupper($project->name)?></a></p>
                                     <p class="address"></p>
                                     <p><?=StringHelper::truncate($project->description, 150)?></p>
                                     <p class="send-by">BY METVUONG.COM</p>
                                 </div>
-                                <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=> Url::to(["building/$project->slug"],true) ])->label(false) ?>
-                                <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> Url::to(["building/$project->slug"],true) ])->label(false) ?>
+                                <?= $f->field($share_form, 'pid')->hiddenInput(['class' => 'pid', 'value'=> $project->id])->label(false); ?>
+                                <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=> Url::to(["building-project/view", 'slug'=>$project->slug], true) ])->label(false) ?>
+                                <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> Url::to(["building-project/view", 'slug'=>$project->slug], true) ])->label(false) ?>
                                 <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
+
                             <?php }
                             if(isset($user) && !empty($user)){
                                 $address = empty($user->location) ? "" : $user->location->city;
@@ -107,7 +112,7 @@ use yii\helpers\Url;
                                     <p class="address"><?=$address ?></p>
                                     <p class="send-by">METVUONG.COM</p>
                                 </div>
-
+                                <?= $f->field($share_form, 'pid')->hiddenInput(['class' => 'pid', 'value'=> $user->id])->label(false); ?>
                                 <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=>$address])->label(false) ?>
                                 <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> Yii::$app->request->absoluteUrl ])->label(false) ?>
                                 <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
@@ -122,26 +127,24 @@ use yii\helpers\Url;
 </div>
 
 <script>
-    var popup_email_name = '#<?=$popup_email_name?> ';
-    $(document).on('click', popup_email_name +'.send_mail', function(e){
+    $(document).on('click', '.send_mail', function(e){
         e.preventDefault();
 //        var _this = $(this);
-        var recipient_email = $(popup_email_name + '#share_form .recipient_email').val();
-        var your_email = $(popup_email_name + '#share_form .your_email').val();
+        var recipient_email = $('#share_form .recipient_email').val();
+        var your_email = $('#share_form .your_email').val();
         if(recipient_email != null && your_email != null) {
             $('body').loading();
             $('#popup-sent .user_name').html(recipient_email);
             $.ajax({
                 type: "post",
                 dataType: 'json',
-                url: $(popup_email_name + '#share_form').attr('action'),
-                data: $(popup_email_name + '#share_form').serializeArray(),
+                url: $('#share_form').attr('action'),
+                data: $('#share_form').serializeArray(),
                 success: function (data) {
                     $('body').loading({done:true});
                     if(data.status == 200){
                         $('.btn-cancel').trigger('click');
                         setTimeout(function () {
-                            //"Email has been sent to "+recipient_email
                             $('body').alertBox({
                                 txt: "<?=Yii::t('send_email', 'Email has been sent to ')?>"+recipient_email+""
                             });
@@ -153,8 +156,7 @@ use yii\helpers\Url;
                             var element = 'shareform-' + idx;
                             arr[element] = lajax.t(val);
                         });
-                        $(popup_email_name + '#share_form').yiiActiveForm('updateMessages', arr, true);
-//                        $('#popup-sent .btn-close').trigger('click');
+                        $('#share_form').yiiActiveForm('updateMessages', arr, true);
                     } else {
                         console.log(data);
                     }

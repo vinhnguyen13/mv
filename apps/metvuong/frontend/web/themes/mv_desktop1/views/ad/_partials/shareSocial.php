@@ -44,7 +44,7 @@ $user = Yii::$app->user->identity;
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" data-toggle="modal" data-target="#popup_email_share" class="email-btn">
+                                    <a href="#" data-toggle="modal" data-target="#popup_email" data-type="share" class="email-btn">
                                         <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
                                     </a>
                                 </li>

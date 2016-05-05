@@ -138,7 +138,7 @@ $count_review = $reviews->count();
 						</a>
 					</li>
 					<li class="color-3">
-						<a href="#" data-toggle="modal" data-target="#popup_email_share">
+						<a href="#" data-toggle="modal" data-target="#popup_email" data-type="share" class="email-btn">
 							<span class="icon-mv fs-18"><span class="icon-mail-profile"></span></span>
 							<span><?= Yii::t('ad', 'Share Email') ?></span>
 						</a>
@@ -209,7 +209,7 @@ $count_review = $reviews->count();
                                             </div>
                                         <?php } } ?>
                                     <?php if(!empty($owner->username) && !$owner->isMe()) { ?>
-                                        <a href="#" data-toggle="modal" data-target="#popup_email_contact" class="email-btn btn-common btn-small">Email</a>
+                                        <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn btn-common btn-small">Email</a>
                                         <a href="#" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
                                     <?php }?>
 								</div>
@@ -249,16 +249,10 @@ $count_review = $reviews->count();
                     'popup_email_name' => 'popup_email_contact',
                     'product' => $product,
                     'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
-                    'recipientEmail' => null,
+                    'from_name' => empty($user) ? "" : (empty($user->profile->name) ? $user->username : $user->profile->name),
+                    'recipientEmail' => empty($owner) ? "" : (empty($owner->profile->public_email) ? $owner->email : $owner->profile->public_email),
+                    'to_name' => empty($owner) ? "" : (empty($owner->profile->name) ? $owner->username : $owner->profile->name),
                     'params' => ['your_email' => false, 'recipient_email' => false] ])?>
-
-                <?=$this->renderAjax('/ad/_partials/shareEmail',[
-                    'popup_email_name' => 'popup_email_share',
-                    'product' => $product,
-                    'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
-                    'recipientEmail' => null,
-                    'params' => ['your_email' => false, 'recipient_email' => false] ])?>
-
 
 				<div id="popup-map" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 					<div class="modal-dialog" role="document">
@@ -489,6 +483,19 @@ $count_review = $reviews->count();
                             return false;
                         });
 
+                        $(document).on('click','.email-btn', function () {
+                            var type = $(this).data('type');
+                            if(type == 'share'){
+                                $('#popup_email .popup_title').text('<?=Yii::t('send_email','SHARE VIA EMAIL')?>');
+                                $('#share_form .type').attr('value', 'share');
+                                $('#share_form .recipient_email').attr('value', '');
+
+                            } else if(type == 'contact'){
+                                $('#popup_email .popup_title').text('<?=Yii::t('send_email','CONTACT')?>');
+                                $('#share_form .type').attr('value', 'contact');
+                            }
+                        });
+
                         $(document).on('click','.report', function () {
                         	var _user_id = parseInt($('#report-form #uid').val());
 	                            if(_user_id != 0) {
@@ -674,7 +681,7 @@ $count_review = $reviews->count();
 									</div>
                                     <?php } } ?>
 									<?php if(!empty($owner->username) && !$owner->isMe()) { ?>
-                                        <a href="#" data-toggle="modal" data-target="#popup_email_contact" class="email-btn btn-common btn-small">Email</a>
+                                        <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn btn-common btn-small">Email</a>
 										<a href="#" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
 									<?php }?>
 								</div>

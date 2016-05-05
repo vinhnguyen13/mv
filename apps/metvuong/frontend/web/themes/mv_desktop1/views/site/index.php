@@ -62,7 +62,7 @@ use vsoft\ad\models\AdProduct;
                                     <div class="address-listing">
                                         <a title="<?= $product->getAddress(true) ?>" href="<?= $product->urlDetail(true) ?>"><?= $product->getAddress(true) ?></a>
                                     </div>
-                                    <p class="id-duan">ID:<span><?=$product->id;?></span></p>
+                                    <p class="id-duan">ID:<span><?=Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
                                     <ul class="clearfix list-attr-td">
                                         <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
                                             <li><span><?=Yii::t('listing','updating')?></span></li>

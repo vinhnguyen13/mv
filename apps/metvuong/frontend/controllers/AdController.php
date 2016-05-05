@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 use frontend\components\Controller;
 use frontend\models\Ad;
+use frontend\models\Profile;
 use frontend\models\ShareForm;
 use frontend\models\Tracking;
 use frontend\models\UserActivity;
@@ -615,22 +616,26 @@ class AdController extends Controller
             ]);
             $model->load($post);
             $model->validate();
+
             if (!$model->hasErrors()) {
-                $from_user = isset($post["from_name"]) ? $post["from_name"] : null;
+
+                $from_name = !empty($model->from_name) ? $model->from_name : $model->your_email;
+                $type_email = $model->type == "share" ? "chia sẻ" : "liên hệ với bạn qua";
+
                 // send to
-                $subEmail = empty($model->subject) ? $from_user . " [".$model->your_email."]" . " sent a message from Metvuong.com" : "Metvuong.com - ". $model->subject;
+                $subjectEmail = "Metvuong.com - {$from_name} {$type_email} tin {$model->pid}";
                 $result = Yii::$app->mailer->compose(['html' => '../mail/notifyReceivedEmail-html',], ['contact' => $model])
                 ->setFrom(Yii::$app->params['adminEmail'])
-                ->setTo([$model->recipient_email])
-                ->setSubject($subEmail)
+                ->setTo([trim($model->recipient_email)])
+                ->setSubject($subjectEmail)
                 ->send();
                 if($result){
                     $send_from = isset($post["send_from"]) ? $post["send_from"] : null;
-                    $from_email = $model->your_email;
-                    $to_email = $model->recipient_email;
-                    $subject = $model->subject;
-                    $content = $model->content;
-                    Tracking::find()->saveEmailLog($from_user, $from_email, $to_email, $subject, $content, $send_from);
+                    $from_email = trim($model->your_email);
+                    $to_email = trim($model->recipient_email);
+                    $subject = trim($model->subject);
+                    $content = trim($model->content);
+                    Tracking::find()->saveEmailLog($from_name, $from_email, $to_email, $subject, $content, $send_from);
                 }
                 return ['status' => 200, 'result' => $result];
             } else {
