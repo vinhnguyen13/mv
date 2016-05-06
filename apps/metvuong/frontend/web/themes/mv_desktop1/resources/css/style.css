@@ -10673,12 +10673,12 @@ label:hover {
     width: auto;
     height: auto;
     background: 0;
-    font-size: 25px;
+    font-size: 19px;
     top: -3px;
     color: #00a769;
 }
 .point-select .icon-mv .selected-point:before {
-        content: "\e900";
+    content: "\e908";
 }
 .checkbox-ui {
     padding: 0;
