@@ -227,7 +227,11 @@ var stringHelper = {
         var urls = stringHelper.findUrls(text);
         if(urls.length > 0){
             $.each(urls, function( index, value ) {
-                text = text.replace($.trim(value), "<a href='" + value + "'>" + value + "</a>");
+                var htmlRender = "<a href='" + value + "'>" + value + "</a>";
+                /*$.get('',function(data) {
+                    var image = $(data).find('meta[property="og:image"]').attr("content");
+                });*/
+                text = text.replace($.trim(value), htmlRender);
             });
             return text;
         }else{
