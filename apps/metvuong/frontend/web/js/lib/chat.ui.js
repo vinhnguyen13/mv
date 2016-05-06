@@ -92,6 +92,10 @@
         },
         buildMessageToBox: function (username, msg, type, params) {
             msg = chatUI.decodeEntities(msg);
+            /**
+             * replace message
+             */
+            msg = stringHelper.replaceURLWithHTMLLinks(msg);
             var timestamp = (params.ts) ? params.ts : 0;
             var _time = formatTime(timestamp);
             if(type == chatUI.MSG_SEND_ME){
@@ -216,5 +220,17 @@ var formatTime = function(unixTimestamp) {
     var seconds = date.getSeconds();
     return hour + ":" + minute + ":" + seconds + " " + day + "-" + month + "-" + year ;
 }
+
+
+var stringHelper = {
+    replaceURLWithHTMLLinks: function (text) {
+        var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i;
+        return text.replace(exp,"<a href='$1'>$1</a>");
+    },
+    onlineList: function () {
+
+    }
+}
+
 
 //})();

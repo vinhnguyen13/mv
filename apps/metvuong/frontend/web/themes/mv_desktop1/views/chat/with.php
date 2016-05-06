@@ -17,7 +17,7 @@ $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 	<div class="item box-me">
 		<div class="chat-txt">
 			<div class="txt-detail">
-				<p>{{msg}}</p>
+				<p>{{{msg}}}</p>
 			</div>
 			<div class="time-detail">{{time}}</div>
 		</div>
@@ -28,7 +28,7 @@ $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
 		<a href="#" class="avatar wrap-img"><img src="{{avatarUrl}}" alt=""></a>
 		<div class="chat-txt">
 			<div class="txt-detail">
-				<p>{{msg}}</p>
+				<p>{{{msg}}}</p>
 			</div>
 			<div class="time-detail">{{time}}</div>
 		</div>
