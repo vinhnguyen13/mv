@@ -18,16 +18,107 @@ $(document).ready(function(){
 		attachEvents: function() {
 			form.fields.type.on('change', form.filterCategories);
 			
-			form.fields.cityId.on('change', function(){
-				form.cityChange();
+			form.fields.cityId.on('change', function(e, eventData){
+				if(eventData) {
+					form.cityChange(function(r){
+						form.select(form.fields.districtId, eventData.district_id, eventData);
+					});
+				} else {
+					form.cityChange();
+				}
 			});
 			
-			form.fields.districtId.on('change', function(){
-				form.districtChange();
+			form.fields.districtId.on('change', function(e, eventData){
+				if(eventData) {
+					form.districtChange(function(r){
+						form.select(form.fields.wardId, eventData.ward_id);
+						form.select(form.fields.streetId, eventData.street_id);
+						form.fields.homeNo.val(eventData.home_no);
+					});
+				} else {
+					form.districtChange();
+				}
 			});
 			
 			form.fields.categoryId.on('change', function(){
+				if($(this).val() == CHCK) {
+					form.getWrap(form.fields.projectBuildingId).fadeIn();
+				} else {
+					form.getWrap(form.fields.projectBuildingId).fadeOut();
+					form.removeProject();
+				}
+			});
+			
+			var ss = $('#search-list');
+			
+			form.fields.projectMask.on('keyup', function(){
+				var self = $(this);
+				var val = self.val().trim();
 				
+		    	if(val.length > 1) {
+		    		if(self.data('v') != val) {
+		    			self.data('v', val);
+		            	
+		    			if($.data(this, 'ajax')) {
+		    				$.data(this, 'ajax').abort();
+		    			}
+		    			
+		    			$.data(this, 'ajax', $.get('/ad/list-project', {v: val}, function(response){
+		            		if(response.length) {
+		            			showSearchProject();
+		            			
+		            			var list = ss.find('ul').html('');
+		            			
+		            			for(var i in response) {
+		            				list.append('<li data-id="' + response[i].id + '">' + response[i].full_name + '</li>');
+		                      	}
+		            		} else {
+		            			ss.addClass('hide');
+		            		}
+		            	}));
+		            }
+		    	} else {
+		    		form.fields.projectMask.data('v', '');
+		    		ss.addClass('hide');
+		    	}
+			}).on('blur', function(){
+				form.fields.projectMask.data('v', '').val('');
+			});
+			
+			function showSearchProject(items) {
+				ss.removeClass('hide');
+				$(document).on('click', hideSearchProject);
+			}
+			
+			function hideSearchProject(e) {
+				if($(e.target).attr('id') != 'projectMask') {
+		    		ss.addClass('hide');
+					$(document).off('click', hideSearchProject);
+				}
+			}
+			
+			var projectValue = $('#project-value');
+			var projectWrap = $('.project-wrap');
+			
+			ss.on('click', 'li', function(){
+				var self = $(this);
+				var val = self.data('id');
+				
+				form.fields.projectBuildingId.val(self.data('id'));
+				projectWrap.addClass('has-project');
+				projectValue.find('.name').text(self.text());
+				
+				$.get('/building-project/detail', {id: val}, function(r){
+					projectValue.attr('href', r.url);
+					form.select(form.fields.cityId, r.city_id, r);
+				});
+			});
+			
+			projectValue.find('.icon-mv').on('click', function(e){
+				projectWrap.removeClass('has-project');
+				form.fields.projectBuildingId.val('');
+				
+				e.preventDefault();
 			});
 			
 			
@@ -62,6 +153,9 @@ $(document).ready(function(){
 					priceShow.parent().hide();
 				}
 			}
+		},
+		removeProject: function() {
+			console.log('remove Project');
 		},
 		filterCategories: function() {
 			var type = form.fields.type.val();
@@ -106,7 +200,7 @@ $(document).ready(function(){
 		cityChange: function(fn) {
 			$.get('/ad/list-district', {cityId: form.fields.cityId.val()}, function(districts){
 				form.appendDropdown(form.fields.districtId, districts);
-				
+
 				if(fn) {
 					fn(districts);
 				}
@@ -116,13 +210,19 @@ $(document).ready(function(){
 			form.appendDropdown(form.fields.wardId, []);
 			form.appendDropdown(form.fields.streetId, []);
 			
-			$.get('/ad/list-sw', {districtId: form.fields.districtId.val()}, function(response){
-				form.appendDropdown(form.fields.wardId, response.wards);
-				form.appendDropdown(form.fields.streetId, response.streets);
-			});
+			if(form.fields.districtId.val()) {
+				$.get('/ad/list-sw', {districtId: form.fields.districtId.val()}, function(response){
+					form.appendDropdown(form.fields.wardId, response.wards);
+					form.appendDropdown(form.fields.streetId, response.streets);
+
+					if(fn) {
+						fn(response);
+					}
+				});
+			}
 		},
-		select: function(el, val) {
-			el.val(val).trigger('change');
+		select: function(el, val, params) {
+			el.val(val).trigger('change', params);
 		},
 		appendDropdown: function(el, items) {
 			el.find("option:not(:first-child)").remove();

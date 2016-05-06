@@ -38,6 +38,7 @@ use vsoft\ad\models\AdStreet;
 use vsoft\ad\models\AdBuildingProject;
 use frontend\models\AdProductSearch;
 use yii\db\ActiveRecord;
+use frontend\models\Elastic;
 
 class AdController extends Controller
 {
@@ -719,5 +720,39 @@ class AdController extends Controller
             return Tracking::find()->productShare($uid, $pid, time(), $type);
         }
         return false;
+    }
+
+    public function actionListProject() {
+    	$v = \Yii::$app->request->get('v');
+    	$v = Elastic::transform($v);
+    	$response = [];
+    	
+    	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    	
+    	$params = [
+			'query' => [
+				'match_phrase_prefix' => [
+					'search_field' => [
+						'query' => $v,
+						'max_expansions' => 100
+					]
+				],
+			],
+			'_source' => ['full_name']
+    	];
+    	
+    	$ch = curl_init(Yii::$app->params['elastic']['config']['hosts'][0] . '/term/project_building/_search');
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    		 
+		$result = json_decode(curl_exec($ch), true);
+		
+		foreach ($result['hits']['hits'] as $k => $hit) {
+			$response[$k]['full_name'] = $hit['_source']['full_name'];
+			$response[$k]['id'] = $hit['_id'];
+		}
+		
+		return $response;
     }
 }
