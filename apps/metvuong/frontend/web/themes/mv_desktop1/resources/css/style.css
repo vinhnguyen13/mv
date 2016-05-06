@@ -10592,12 +10592,18 @@ label:hover {
     margin: 0 0 10px 10px;
 }
 .upload-img-listing .progress {
-    position: absolute;
-    width: 100%;
-    bottom: 3px;
-    margin: 0;
-    border-radius: 0;
-    height: 10px;
+    
+position: absolute;
+    
+width: 100%;
+    
+bottom: 3px;
+    
+margin: 0;
+    
+border-radius: 0;
+    
+height: 10px;
 }
 .upload-img-listing .preview {
     margin: 0;
@@ -10708,14 +10714,16 @@ label:hover {
 }
 .agent-postlisting .radio-ui:hover,
 .price-unit .radio-ui:hover {
-    background: #E2E2E2;
+    color: #009445;
+    border: 1px solid rgb(0, 218, 102);
+    box-shadow: 0px 0px 2px #009445 inset;
 }
 .agent-postlisting .radio-ui.active,
 .price-unit .radio-ui.active {
-    background: rgba(0, 218, 102, 0.16);
+    /* background: rgb(0, 218, 102); */
     color: #009445;
-    font-weight: 600;
-    border: 1px solid rgba(0, 218, 102, 0.16);
+    border: 1px solid rgb(0, 218, 102);
+    box-shadow: 0px 0px 2px #009445 inset;
 }
 .inner-checkpoint {
     border: 1px solid #979797;

@@ -58,6 +58,7 @@ class AdController extends Controller
 	}
     
     public function actionUpload() {
+        //sleep(500);
         if($_FILES) {
     		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     		
