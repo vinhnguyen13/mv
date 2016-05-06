@@ -171,10 +171,6 @@ if(!Yii::$app->user->isGuest) {
                 </div>
             </div>
         </div>
-        $('.option-chat-box .box-dropdown').dropdown({
-            styleShow: 0,
-            selectedValue: false
-        });
     </script>
     <?php
 }

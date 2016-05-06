@@ -78,7 +78,7 @@ $(document).ready(function() {
         });
     }else {
         $('.hFullScreen').css({
-            height: $('#hScreen').outerHeight() - 40 - 180
+            height: $('#hScreen').outerHeight() - 40 - 130
         });
     }
     
