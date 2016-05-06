@@ -2847,7 +2847,7 @@ html.mm-opening .mm-slideout {
     transform: translate3d(80%,0,0);
 }
 .chat-list {
-    width: 40%;
+    width: 50%;
     border-right: 1px solid #a5a5a5;
     /* overflow-x: hidden; */
     /* overflow-y: auto; */
@@ -2855,7 +2855,7 @@ html.mm-opening .mm-slideout {
     padding-left: 40px;
 }
 .chat-live {
-    width: 60%;
+    width: 50%;
     padding-left: 30px;
     padding-bottom: 40px;
 }
@@ -7139,7 +7139,7 @@ footer li a {
     .detail-listing .collapse {
         display: block;
         visibility: visible;
-        border-bottom: solid 1px #a5a5a5;
+        border-bottom: solid 1px #ECECEC;
         margin-bottom: 20px;
         height: auto !important;
     }
@@ -8154,7 +8154,7 @@ footer li a {
 .detail-listing-extra .list-post > li {
     margin-bottom: 25px;
     padding-bottom: 25px;
-    border-bottom: solid 0.5px #dcdcdc;
+    border-bottom: solid 0.5px #ECECEC;
 }
 @media ( min-width: 640px ) and ( max-width: 985px ) {
     .profile-user .list-post > li,
@@ -9174,14 +9174,28 @@ footer li a {
 .box-chat-footer.show-hide-chat {
     top: 0;
 }
-.close-box {
+.option-chat-box {
     position: absolute;
     top: 0;
     right: 0;
-    padding: 7px 10px;
     font-size: 13px;
-    color: #FFFFFF;
     z-index: 999;
+}
+.option-chat-box .box-dropdown {
+    float: left;
+}
+.option-chat-box a {
+    color: #FFFFFF;
+    padding: 7px 10px;
+    min-width: 35px;
+    text-align: center;
+    /* background: #00BB76; */
+    float: left;
+    height: 34px;
+    /* border-left: 1px solid #FFFFFF; */
+}
+.option-chat-box a:active {
+    background: #00BB76;
 }
 .close-box:hover .icon-mv {
     transition: all .1s ease-out;
@@ -9215,7 +9229,7 @@ footer li a {
     font-size: 11px;
     color: #fff;
     display: inline-block;
-    max-width: 60%;
+    max-width: 50%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -9891,7 +9905,7 @@ input:-webkit-autofill {
     margin: 0;
     /* background: #ECECEC; */
     /* background: #00D078; */
-    border: 1px solid #E0E0E0;
+    border: 1px solid #ECECEC;
     border-top: none;
 }
 .detail-listing .no-gallery,
@@ -9933,8 +9947,9 @@ input:-webkit-autofill {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    border-top: 1px solid #E0E0E0;
+    border-top: 1px solid #ECECEC;
     margin-top: -1px;
+    margin-right: 0;
 }
 .active .icon-heart-icon-listing:before {
     content: "\f004";
@@ -10123,6 +10138,7 @@ label:hover {
     color: #3c3c3c;
     padding: 0;
     display: inline-block;
+    margin-right: 15px;
 }
 .wrap-swiper .popover .name-agent {
     margin-bottom: 5px;
@@ -10523,7 +10539,7 @@ label:hover {
     height: 25px;
 }
 .left-attr-detail {
-    width: 40%;
+    /* width: 50%; */
 }
 .right-attr-detail .price-td {
     font-size: 14px;

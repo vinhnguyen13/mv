@@ -153,12 +153,28 @@ if(!Yii::$app->user->isGuest) {
     <script class="item-box-chat-template" type="text/x-handlebars-template">
         <div class="item-box-chat" chat-from="<?=Yii::$app->user->identity->username?>" chat-to="">
             <div class="box-chat-footer">
-                <a href="#" class="close-box">
-                    <span class="icon-mv"><span class="icon-close-icon"></span></span>
-                </a>
-
+                <div class="option-chat-box">
+                    <div class="box-dropdown guest-dropdown">
+                        <a href="#" class="icon-guest val-selected wrap-img">
+                            <span class="icon-mv"><span class="icon-caret-down"></span></span>
+                        </a>
+                        <div class="item-dropdown hide-dropdown">
+                            <ul class="clearfix">
+                                <li><a href="#">test 1</a></li>
+                                <li><a href="#">test 2</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <a href="#" class="close-box">
+                        <span class="icon-mv"><span class="icon-close-icon"></span></span>
+                    </a>
+                </div>
             </div>
         </div>
+        $('.option-chat-box .box-dropdown').dropdown({
+            styleShow: 0,
+            selectedValue: false
+        });
     </script>
     <?php
 }
