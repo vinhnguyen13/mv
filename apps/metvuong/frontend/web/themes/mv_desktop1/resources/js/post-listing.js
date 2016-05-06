@@ -13,6 +13,7 @@ $(document).ready(function(){
 				}
 			});
 			
+			form.projectWrap = $('.project-wrap');
 			form.attachEvents();
 		},
 		attachEvents: function() {
@@ -31,9 +32,19 @@ $(document).ready(function(){
 			form.fields.districtId.on('change', function(e, eventData){
 				if(eventData) {
 					form.districtChange(function(r){
-						form.select(form.fields.wardId, eventData.ward_id);
-						form.select(form.fields.streetId, eventData.street_id);
-						form.fields.homeNo.val(eventData.home_no);
+						if(eventData.ward_id) {
+							form.select(form.fields.wardId, eventData.ward_id);
+							form.fields.wardId.prop('disabled', true);
+						}
+						
+						if(eventData.street_id) {
+							form.select(form.fields.streetId, eventData.street_id);
+							form.fields.streetId.prop('disabled', true);
+						}
+						
+						if(eventData.home_no) {
+							form.fields.homeNo.val(eventData.home_no).prop('disabled', true);
+						}
 					});
 				} else {
 					form.districtChange();
@@ -44,8 +55,9 @@ $(document).ready(function(){
 				if($(this).val() == CHCK) {
 					form.getWrap(form.fields.projectBuildingId).fadeIn();
 				} else {
-					form.getWrap(form.fields.projectBuildingId).fadeOut();
-					form.removeProject();
+					form.getWrap(form.fields.projectBuildingId).fadeOut(function(){
+						form.removeProject();
+					});
 				}
 			});
 			
@@ -98,25 +110,25 @@ $(document).ready(function(){
 			}
 			
 			var projectValue = $('#project-value');
-			var projectWrap = $('.project-wrap');
 			
 			ss.on('click', 'li', function(){
 				var self = $(this);
 				var val = self.data('id');
 				
 				form.fields.projectBuildingId.val(self.data('id'));
-				projectWrap.addClass('has-project');
+				form.projectWrap.addClass('has-project');
 				projectValue.find('.name').text(self.text());
 				
 				$.get('/building-project/detail', {id: val}, function(r){
 					projectValue.attr('href', r.url);
 					form.select(form.fields.cityId, r.city_id, r);
+					form.fields.cityId.prop("disabled", true);
+					form.fields.districtId.prop("disabled", true);
 				});
 			});
 			
 			projectValue.find('.icon-mv').on('click', function(e){
-				projectWrap.removeClass('has-project');
-				form.fields.projectBuildingId.val('');
+				form.removeProject();
 				
 				e.preventDefault();
 			});
@@ -155,7 +167,15 @@ $(document).ready(function(){
 			}
 		},
 		removeProject: function() {
-			console.log('remove Project');
+
+			form.projectWrap.removeClass('has-project');
+			form.fields.projectBuildingId.val('');
+			
+			form.fields.cityId.prop("disabled", false);
+			form.fields.districtId.prop("disabled", false);
+			form.fields.wardId.prop("disabled", false);
+			form.fields.streetId.prop("disabled", false);
+			form.fields.homeNo.prop("disabled", false);
 		},
 		filterCategories: function() {
 			var type = form.fields.type.val();
