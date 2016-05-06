@@ -1,3 +1,5 @@
+var allow = [46, 8, 9, 27, 13, 110, 116];
+
 $(document).ready(function(){
 	var form = {
 		el: $('#w0'),
@@ -27,6 +29,39 @@ $(document).ready(function(){
 			form.fields.categoryId.on('change', function(){
 				
 			});
+			
+			
+			$('.radio-ui').radio({
+				done: function (item) {
+					if(item.attr('name') == 'price-unit') {
+						var unit = Number(item.val());
+						var mask = Number(form.fields.priceMask.val().replace(',', '.'));
+
+						calPrice(unit, mask);
+					}
+				}
+			});
+			
+			form.fields.priceMask.on('keyup', function(e){
+				var self = $(this);
+				
+				var unit = Number(form.el.find('input[name=price-unit]').filter(':checked').val());
+				var mask = Number(self.val().replace(',', '.'));
+				
+				calPrice(unit, mask);
+			});
+			
+			function calPrice(unit, mask) {
+				var price = mask * unit;
+				var priceFormat = formatNumber(Math.round(price) + '');
+				var priceShow = $('#price-show');
+				
+				if(priceFormat) {
+					priceShow.text(priceFormat).parent().show();
+				} else {
+					priceShow.parent().hide();
+				}
+			}
 		},
 		filterCategories: function() {
 			var type = form.fields.type.val();
@@ -119,8 +154,31 @@ $(document).ready(function(){
 		
 		self.select2(options);
 	});
+	
+	form.el.find('.number-only').on('keydown', numnberOnly);
 });
 
 function camel(str) {
 	return str.replace(/adproduct-|adproductadditioninfo-|adcontactinfo-/, '').replace(/_([a-z])/g, function (g) { return g[1].toUpperCase(); });
+}
+
+function numnberOnly(e) {
+	if($(this).hasClass('number-float')) {
+		if($(this).val().indexOf(',') === -1 && $(this).val() !== '') {
+			allow.push(188);
+		}
+	} else {
+		if(e.keyCode == 48 && $(this).val() == '' && !$(this).data('zero-first')) {
+			e.preventDefault();
+		}
+	}
+	
+    if ($.inArray(e.keyCode, allow) !== -1 ||
+        (e.ctrlKey === true) ||
+        (e.keyCode >= 35 && e.keyCode <= 39)) {
+             return;
+    }
+    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+        e.preventDefault();
+    }
 }

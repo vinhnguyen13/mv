@@ -20,9 +20,10 @@ use yii\web\View;
 	 * @var $additionInfo vsoft\ad\models\AdProductAdditionInfo
 	 */
 
-	$this->registerCss(".require-hint {color: red; margin-left: 4px;} .select2-container--default .select2-selection--single {height: 34px;} .select2-container--default .select2-selection--single {border-radius: 0px;}");
+	$this->registerCss(".price-show-wrap {color: #00a769; margin-left: 12px; display: none; font-size: 14px;} .price-show-wrap .vnd {margin-left: 6px;} .require-hint {color: red; margin-left: 3px; font-size: 11px;} .select2-container--default .select2-selection--single {height: 34px;} .select2-container--default .select2-selection--single {border-radius: 0px;}");
 	$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/select2.min.css');
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/select2.full.min.js', ['position' => View::POS_END]);
+	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/string-helper.js', ['position' => View::POS_END]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/post-listing.js', ['position' => View::POS_END]);
 	
 	$cities = AdCity::find()->all();
@@ -98,17 +99,18 @@ use yii\web\View;
 					</div>
 					<div class="form-group col-xs-6">
 						<label for="<?= Html::getInputId($product, 'area') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('area') ?></label>
-						<?= Html::activeTextInput($product, 'area', ['class' => 'form-control', 'placeholder' => '...']) ?>
+						<?= Html::activeTextInput($product, 'area', ['class' => 'form-control number-only number-float', 'placeholder' => '...']) ?>
 					</div>
 					<div class="form-group col-xs-6 price-type">
-						<label for="<?= Html::getInputId($product, 'price') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('price') ?></label>
-						<?= Html::activeTextInput($product, 'price', ['class' => 'form-control text-right', 'placeholder' => '...']) ?>
+						<label for="<?= Html::getInputId($product, 'price') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('price') ?><span class="require-hint">*</span></label><span class="price-show-wrap"><span id="price-show"></span><span class="vnd"><?= Yii::t('ad', 'VND') ?></span></span>
+						<?= Html::activeHiddenInput($product, 'price', ['class' => 'form-control text-right', 'placeholder' => '...']) ?>
+						<input type="text" id="priceMask" class="form-control text-right number-only number-float" placeholder="...">
 						<div class="price-unit">
 							<label class="radio-inline radio-ui">
-								<input type="radio" name="price-unit" id="inlineRadio1" value="" checked="checked"> Triệu
+								<input type="radio" name="price-unit" id="price-unit-mil" value="1000000" checked="checked"> Triệu
 							</label>
 							<label class="radio-inline radio-ui">
-								<input type="radio" name="price-unit" id="inlineRadio1" value=""> Tỷ
+								<input type="radio" name="price-unit" id="price-unit-bil" value="1000000000"> Tỷ
 							</label>
 						</div>
 					</div>
@@ -264,7 +266,6 @@ use yii\web\View;
 
 <script>
 	$(document).ready(function () {
-		$('.radio-ui').radio();
 		$('.checkbox-ui').checkbox_ui();
 	});
 </script>
