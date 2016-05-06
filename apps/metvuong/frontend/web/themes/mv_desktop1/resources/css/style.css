@@ -10577,17 +10577,17 @@ label:hover {
     padding-top: 20px;
 }
 .upload-img-listing .files {
-    margin: 0 0 0 -10px;
+    /* margin: 0 0 0 -10px; */
     /* position: relative; */
     /* z-index: 2; */
-    display: inline-block;
+    /* display: inline-block; */
     vertical-align: top;
     /* width: 100%; */
 }
 .upload-img-listing #w1-fileupload {}
 .upload-img-listing .files li {
     position: relative;
-    display: inline-block;
+    float: left;
     vertical-align: top;
     margin: 0 0 10px 10px;
 }
@@ -10644,7 +10644,7 @@ label:hover {
    position: relative;
    /* z-index: 1; */
    display: inline-block;
-   overflow: hidden;
+   float: left;
 }
 .upload-img-listing .fileinput-button-wrap:before {
     content: '';
