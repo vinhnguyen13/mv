@@ -21,14 +21,11 @@ use vsoft\ad\models\AdProductAdditionInfo;
 use vsoft\ad\models\AdStreet;
 use vsoft\ad\models\AdWard;
 use vsoft\craw\models\AdAgent;
-use vsoft\craw\models\AdBuildingProject;
-use vsoft\craw\models\AdContractor;
 use vsoft\craw\models\AdInvestor;
 use vsoft\craw\models\AdProductToolMap;
 use Yii;
 use yii\base\Component;
 use yii\base\Exception;
-use yii\db\mysql\Schema;
 use yii\helpers\ArrayHelper;
 
 class BatdongsanV2 extends Component
@@ -283,7 +280,7 @@ class BatdongsanV2 extends Component
     {
         if(!empty($cityName)) {
 //        $city = AdCity::find()->select(['id'])->where(['like', 'name', '%'.$cityName, false])->one();
-            $sql = "SELECT `id` FROM ad_city WHERE `name` LIKE '" . $cityName . "'";
+            $sql = "SELECT `id` FROM ad_city WHERE `name` LIKE '" . $cityName . "' LIMIT 1";
             $city = AdCity::getDb()->createCommand($sql)->queryScalar();
             if ($city) {
                 return $city;
@@ -305,21 +302,10 @@ class BatdongsanV2 extends Component
         }
         return null;
     }
-    function getDistrictId2($prefix_list, $districtName, $city_id)
+    function getDistrictId2($districtName, $city_id)
     {
         if(!empty($city_id) && !empty($districtName)) {
-            $districtName = "%".$districtName;
-            foreach($prefix_list as $prefix){
-                if(strpos($districtName, $prefix)){
-                    $districtName = $this->str_replace_first($prefix." ", "", $districtName);
-                    $districtName = trim($districtName);
-                }
-            }
-//            $district = AdDistrict::find()->select(['id'])
-//                ->where('name LIKE :query')->addParams([':query'=>$districtName])
-//                ->andWhere('city_id = :c',[':c' => $city_id])->one();
-            $sql = "SELECT `id` FROM ad_district WHERE `name` LIKE '".$districtName."' AND `city_id` = ".$city_id;
-//            $district = AdDistrict::findBySql($sql)->one();
+            $sql = "SELECT `id` FROM ad_district WHERE (`name` LIKE '".$districtName."' OR '".$districtName."' LIKE CONCAT(pre, ' ', name)) AND `city_id` = ".$city_id. " LIMIT 1";
             $district_id = AdDistrict::getDb()->createCommand($sql)->queryScalar();
             if($district_id) {
                 return $district_id;
@@ -340,21 +326,10 @@ class BatdongsanV2 extends Component
         }
         return null;
     }
-    function getWardId2($prefix_list, $wardName, $district_id)
+    function getWardId2($wardName, $district_id)
     {
         if(!empty($district_id) && !empty($wardName)) {
-            foreach($prefix_list as $prefix){
-                if(!strpos($wardName, $prefix)){
-                    $wardName = "%".$wardName;
-                } else {
-                    $wardName = $this->str_replace_first($prefix." ", "", $wardName);
-                    $wardName = trim($wardName);
-                }
-            }
-//            $ward = AdWard::find()->select(['id'])
-//                ->where('name LIKE '.$wardName)
-//                ->andWhere('district_id = :d',[':d' => $district_id])->one();
-            $sql = "SELECT `id` FROM ad_ward WHERE `name` LIKE '".$wardName."' AND `district_id` = ".$district_id;
+            $sql = "SELECT `id` FROM ad_ward WHERE (`name` LIKE '".$wardName."' OR '".$wardName."' LIKE CONCAT(pre, ' ', name)) AND `district_id` = ".$district_id. " LIMIT 1";
             $ward = AdWard::getDb()->createCommand($sql)->queryScalar();
             if($ward) {
                 return $ward;
@@ -378,20 +353,12 @@ class BatdongsanV2 extends Component
         }
         return null;
     }
-    function getStreetId2($prefix_list, $streetName, $district_id)
+    function getStreetId2($streetName, $district_id)
     {
         if(!empty($district_id) && !empty($streetName)) {
 //            $street = AdStreet::find()->select(['id'])->where(['like', 'name', '%'.$streetName, false])
 //                ->andWhere('district_id = :d',[':d' => $district_id])->one();
-            foreach($prefix_list as $prefix){
-                if(!strpos($streetName, $prefix)){
-                    $streetName = "%".$streetName;
-                } else {
-                    $streetName = $this->str_replace_first($prefix." ", "", $streetName);
-                    $streetName = trim($streetName);
-                }
-            }
-            $sql = "SELECT `id` FROM ad_street WHERE `name` LIKE '".$streetName."' AND `district_id` = ".$district_id;
+            $sql = "SELECT `id` FROM ad_street WHERE (`name` LIKE '".$streetName."' OR '".$streetName."' LIKE CONCAT(pre, ' ', name)) AND `district_id` = ".$district_id. " LIMIT 1";
             $street = AdStreet::getDb()->createCommand($sql)->queryScalar();
             if($street) {
                 return $street;
@@ -402,9 +369,11 @@ class BatdongsanV2 extends Component
 
     function getProjectId($projectName)
     {
-        $project = \vsoft\ad\models\AdBuildingProject::find()->select(['id','name'])->where(['like', 'name', '%'.$projectName.'%', false])->one();
+//        $project = \vsoft\ad\models\AdBuildingProject::find()->select(['id','name'])->where(['like', 'name', '%'.$projectName.'%', false])->one(); // Sai dự án Cao Ốc BMC
+        $sql = "SELECT * FROM ad_building_project WHERE `name` LIKE '" . $projectName . "' LIMIT 1";
+        $project = (int)\vsoft\ad\models\AdBuildingProject::getDb()->createCommand($sql)->queryScalar();
         if($project) {
-            return $project->id;
+            return $project;
         }
         return null;
     }
@@ -626,309 +595,6 @@ class BatdongsanV2 extends Component
         return $address;
     }
 
-    public function importData($product_type)
-    {
-        $types = $product_type == 1 ? $this->types : $this->rent_types;
-        $start_time = time();
-        $insertCount = 0;
-        $count_file = 1;
-
-        $bds_import_log = $this->loadBdsImportLog("bds_import_log.json");
-        if(empty($bds_import_log["type"])){
-            $bds_import_log["type"] = array();
-        }
-
-        $last_type_import = empty($bds_import_log["last_type_index"]) ? 0 : ($bds_import_log["last_type_index"] + 1);
-        $file_imported = empty($bds_import_log["file_imported"]) ? false : $bds_import_log["file_imported"];
-
-        if(!$file_imported) {
-            $columnNameArray = ['category_id', 'user_id', 'home_no',
-                'city_id', 'district_id', 'ward_id', 'street_id',
-                'type', 'content', 'area', 'price', 'lat', 'lng',
-                'start_date', 'end_date', 'verified', 'created_at', 'source'];
-            $bulkInsertArray = array();
-            $imageArray = array();
-            $infoArray = array();
-            $contactArray = array();
-
-            $cityData = AdCity::find()->all();
-            $districtData = AdDistrict::find()->all();
-            $wardData = AdWard::find()->all();
-            $streetData = AdStreet::find()->all();
-            $tableName = AdProduct::tableName();
-            $break_type = false; // detect next type if it is false
-            foreach ($types as $key_type => $type) {
-                if ($key_type >= $last_type_import && !$break_type) {
-
-                    $path = Yii::getAlias('@console') . "/data/bds_html/{$type}/files";
-                    if (is_dir($path)) {
-                        $log_import = $this->loadImportLog($type,"");
-                        if (empty($log_import["files"]))
-                            $log_import["files"] = array();
-
-                        $files = scandir($path, 1);
-                        $counter = count($files) - 2;
-                        $last_file_index = $counter - 1;
-                        if ($counter > 0) {
-                            $filename = null;
-                            for ($i = 0; $i <= $last_file_index; $i++) {
-                                if ($count_file > 500) {
-                                    $break_type = true;
-                                    break;
-                                }
-                                $filename = $files[$i];
-                                if (in_array($filename, $log_import["files"])) {
-                                    continue;
-                                } else {
-                                    $filePath = $path . "/" . $filename;
-                                    if (file_exists($filePath)) {
-                                        print_r("\n".$count_file." - Prepare data {$type}: {$filename}");
-                                        $value = $this->parseDetail($filePath);
-                                        if(empty($value)){
-                                            if (!in_array($filename, $log_import["files"]))
-                                                array_push($log_import["files"], $filename);
-                                            if (empty($log_import["NoContent"])) $log_import["NoContent"] = array();
-                                            if(!in_array($filename, $log_import["NoContent"]))
-                                                array_push($log_import["NoContent"], $filename);
-                                            print_r(" Error: no content\n");
-                                            continue;
-                                        }
-
-                                        if(count($value[$filename]["thumbs"]) <= 0){
-                                            if (empty($log_import["NoImage"])) $log_import["NoImage"] = array();
-                                            if(!in_array($filename, $log_import["NoImage"]))
-                                                array_push($log_import["NoImage"], $filename);
-//                                            print_r(" [No Image]");
-                                        }
-                                        $imageArray[$count_file] = $value[$filename]["thumbs"];
-                                        $infoArray[$count_file] = $value[$filename]["info"];
-                                        $contactArray[$count_file] = $value[$filename]["contact"];
-
-                                        $city_id = $this->getCityId($value[$filename]["city"], $cityData);
-                                        if (empty($city_id)) {
-                                            if (!in_array($filename, $log_import["files"]))
-                                                array_push($log_import["files"], $filename);
-                                            if (empty($log_import["NoCity"])) $log_import["NoCity"] = array();
-                                            if (!in_array($filename, $log_import["NoCity"]))
-                                                array_push($log_import["NoCity"], $filename);
-                                            print_r(" Error: no city\n");
-                                            continue;
-                                        }
-                                        $district_id = $this->getDistrictId($value[$filename]["district"], $districtData, $city_id);
-                                        if (empty($district_id)) {
-                                            if (!in_array($filename, $log_import["files"]))
-                                                array_push($log_import["files"], $filename);
-                                            if (empty($log_import["NoDistrict"])) $log_import["NoDistrict"] = array();
-                                            if (!in_array($filename, $log_import["NoDistrict"]))
-                                                array_push($log_import["NoDistrict"], $filename);
-                                            print_r(" Error: no district\n");
-                                            continue;
-                                        }
-
-                                        $ward_id = $this->getWardId($value[$filename]["ward"], $wardData, $district_id);
-                                        if (empty($ward_id)) {
-                                            if (empty($log_import["NoWard"])) $log_import["NoWard"] = array();
-                                            if (!in_array($filename, $log_import["NoWard"]))
-                                                array_push($log_import["NoWard"], $filename);
-//                                            print_r(" [No Ward]");
-                                        }
-
-                                        $street_id = $this->getStreetId($value[$filename]["street"], $streetData, $district_id);
-                                        if (empty($street_id)) {
-                                            if (empty($log_import["NoStreet"])) $log_import["NoStreet"] = array();
-                                            if (!in_array($filename, $log_import["NoStreet"]))
-                                                array_push($log_import["NoStreet"], $filename);
-//                                            print_r(" [No Street]");
-                                        }
-
-                                        $area = $value[$filename]["dientich"];
-                                        $price = $value[$filename]["price"];
-                                        if ($price == 0) { // gia thoa thuan, gia trieu/m2 * 0 dien tich
-                                            if ($area > 0) {
-                                                if (empty($log_import["NoPrice"])) $log_import["NoPrice"] = array();
-                                                if (!in_array($filename, $log_import["NoPrice"]))
-                                                    array_push($log_import["NoPrice"], $filename);
-                                                print_r(" Error: no price\n");
-                                            } else {
-                                                if (empty($log_import["NoArea"])) $log_import["NoArea"] = array();
-                                                if (!in_array($filename, $log_import["NoArea"]))
-                                                    array_push($log_import["NoArea"], $filename);
-                                                print_r(" Error: no area\n");
-                                            }
-                                            if (!in_array($filename, $log_import["files"]))
-                                                array_push($log_import["files"], $filename);
-                                            continue;
-                                        }
-
-                                        $desc = $value[$filename]["description"];
-                                        $content = null;
-                                        if (!empty($desc)) {
-                                            $content = strip_tags($desc, '<br>');
-                                            $pos = strpos($content, 'Tìm kiếm theo từ khóa');
-                                            if ($pos) {
-                                                $content = substr($content, 0, $pos);
-                                                $content = str_replace('Tìm kiếm theo từ khóa', '', $content);
-                                            }
-                                            $content = str_replace('<br/>', PHP_EOL, $content);
-                                            $content = trim($content);
-                                        }
-
-                                        $record = [
-                                            'category_id' => $value[$filename]["loai_tai_san"],
-                                            'user_id' => null,
-                                            'home_no' => $value[$filename]["home_no"],
-                                            'city_id' => $city_id,
-                                            'district_id' => $district_id,
-                                            'ward_id' => $ward_id,
-                                            'street_id' => $street_id,
-                                            'type' => $product_type,
-                                            'content' => $content,
-                                            'area' => $area,
-                                            'price' => $price,
-                                            'lat' => $value[$filename]["lat"],
-                                            'lng' => $value[$filename]["lng"],
-                                            'start_date' => $value[$filename]["start_date"],
-                                            'end_date' => $value[$filename]["end_date"],
-                                            'verified' => 1,
-                                            'created_at' => $value[$filename]["start_date"],
-                                            'source' => 1
-                                        ];
-                                        // source = 1 for Batdongsan.com.vn
-                                        $bulkInsertArray[] = $record;
-
-                                        print_r(" Added.\n");
-                                        array_push($log_import["files"], $filename);
-                                        $count_file++;
-                                    }
-                                }
-                            } // end file loop
-
-                            $log_import["import_total"] = count($log_import["files"]);
-                            $log_import["import_time"] = date("d-m-Y H:i");
-                            $this->writeImportLog($type, $log_import, "");
-
-                            if ($break_type == false && count($bulkInsertArray) > 0) {
-                                if (!in_array($type, $bds_import_log["type"])) {
-                                    array_push($bds_import_log["type"], $type);
-                                }
-                                $bds_import_log["last_type_index"] = $key_type;
-                                $this->writeBdsImportLog("", "bds_import_log.json", $bds_import_log);
-                                print_r("\nADD: {$type} DONE!\n");
-                            }
-                        }
-                    }
-                }
-            } // end types
-            if (count($bulkInsertArray) > 0) {
-                print_r("\nInsert data...");
-                // below line insert all your record and return number of rows inserted
-                $insertCount = Yii::$app->db->createCommand()
-                    ->batchInsert($tableName, $columnNameArray, $bulkInsertArray)->execute();
-                print_r(" DONE!");
-
-                if ($insertCount > 0) {
-                    $ad_image_columns = ['user_id', 'product_id', 'file_name', 'uploaded_at'];
-                    $ad_info_columns = ['product_id', 'floor_no', 'room_no', 'toilet_no'];
-                    $ad_contact_columns = ['product_id', 'name', 'phone', 'mobile', 'address', 'email'];
-
-                    $bulkImage = array();
-                    $bulkInfo = array();
-                    $bulkContact = array();
-
-                    $fromProductId = Yii::$app->db->getLastInsertID();
-                    $toProductId = $fromProductId + $insertCount - 1;
-
-                    $index = 1;
-                    for ($i = $fromProductId; $i <= $toProductId; $i++) {
-                        $ad_product = AdProduct::findOne($i);
-                        if (!empty($ad_product)) {
-                            if (count($imageArray) > 0) {
-                                foreach ($imageArray[$index] as $imageValue) {
-                                    if (!empty($imageValue)) {
-                                        $imageRecord = [
-                                            'user_id' => null,
-                                            'product_id' => $i,
-                                            'file_name' => $imageValue,
-                                            'uploaded_at' => time()
-                                        ];
-                                        $bulkImage[] = $imageRecord;
-                                    }
-                                }
-                            }
-
-                            if (count($infoArray) > 0) {
-                                $floor_no = empty($infoArray[$index]["Số tầng"]) == false ? trim(str_replace('(tầng)', '', $infoArray[$index]["Số tầng"])) : 0;
-                                $room_no = empty($infoArray[$index]["Số phòng ngủ"]) == false ? trim(str_replace('(phòng)', '', $infoArray[$index]["Số phòng ngủ"])) : 0;
-                                $toilet_no = empty($infoArray[$index]["Số toilet"]) == false ? trim($infoArray[$index]["Số toilet"]) : 0;
-                                $infoRecord = [
-                                    'product_id' => $i,
-                                    'floor_no' => $floor_no,
-                                    'room_no' => $room_no,
-                                    'toilet_no' => $toilet_no
-                                ];
-                                $bulkInfo[] = $infoRecord;
-                            }
-                            if (count($contactArray) > 0) {
-                                $name = empty($contactArray[$index]["Tên liên lạc"]) == false ? trim($contactArray[$index]["Tên liên lạc"]) : null;
-                                $phone = empty($contactArray[$index]["Điện thoại"]) == false ? trim($contactArray[$index]["Điện thoại"]) : null;
-                                $mobile = empty($contactArray[$index]["Mobile"]) == false ? trim($contactArray[$index]["Mobile"]) : null;
-                                $address = empty($contactArray[$index]["Địa chỉ"]) == false ? trim($contactArray[$index]["Địa chỉ"]) : null;
-                                $email = empty($contactArray[$index]["Email"]) == false ? trim($contactArray[$index]["Email"]) : null;
-                                $contactRecord = [
-                                    'product_id' => $i,
-                                    'name' => $name,
-                                    'phone' => $phone,
-                                    'mobile' => $mobile,
-                                    'address' => $address,
-                                    'email' => $email
-                                ];
-                                $bulkContact[] = $contactRecord;
-                            }
-                            $index = $index + 1;
-                        }
-                    }
-
-                    // execute image, info, contact
-                    if (count($bulkImage) > 0) {
-                        $imageCount = Yii::$app->db->createCommand()
-                            ->batchInsert(AdImages::tableName(), $ad_image_columns, $bulkImage)
-                            ->execute();
-                        if ($imageCount > 0)
-                            print_r("\nInser image done");
-                    }
-                    if (count($bulkInfo) > 0) {
-                        $infoCount = Yii::$app->db->createCommand()
-                            ->batchInsert(AdProductAdditionInfo::tableName(), $ad_info_columns, $bulkInfo)
-                            ->execute();
-                        if ($infoCount > 0)
-                            print_r("\nInser product addition info done");
-                    }
-                    if (count($bulkContact) > 0) {
-                        $contactCount = Yii::$app->db->createCommand()
-                            ->batchInsert(AdContactInfo::tableName(), $ad_contact_columns, $bulkContact)
-                            ->execute();
-                        if ($contactCount > 0)
-                            print_r("\nInser contact info done");
-                    }
-                } else {
-                    print_r("\nCannot insert ad_product!!");
-                }
-
-                if (!$break_type) {
-                    $bds_import_log["file_imported"] = true;
-                    $this->writeBdsImportLog("", "bds_import_log.json",$bds_import_log);
-                }
-            }
-        }
-
-        print_r("\n\n------------------------------");
-        print_r("\nFiles have been imported!\n");
-        $end_time = time();
-        print_r("\n"."Time: ");
-        print_r($end_time-$start_time);
-        print_r("s - Total Record: ". $insertCount);
-    }
-
     public function importDataForTool($product_type)
     {
         $types = $this->types;
@@ -967,22 +633,13 @@ class BatdongsanV2 extends Component
         $infoArray = array();
         $contactArray = array();
 
-//        $projectData = AdBuildingProject::find()->all();
-//        $cityData = \vsoft\craw\models\AdCity::find()->all();
-//        $districtData = \vsoft\craw\models\AdDistrict::find()->all();
-//        $wardData = \vsoft\craw\models\AdWard::find()->all();
-//        $streetData = \vsoft\craw\models\AdStreet::find()->all();
-
-        $prefix_district_list = ArrayHelper::getColumn(AdDistrict::find()->select(['pre'])->where(['not', ['pre' => null]])->groupBy(['pre'])->all(), 'pre');
-        $prefix_ward_list = ArrayHelper::getColumn(AdWard::find()->select(['pre'])->where(['not', ['pre' => null]])->groupBy(['pre'])->all(), 'pre');
-        $prefix_street_list = ArrayHelper::getColumn(AdStreet::find()->select(['pre'])->where(['not', ['pre' => null]])->groupBy(['pre'])->all(), 'pre');
-
         $tableName = \vsoft\craw\models\AdProduct::tableName();
         $break_type = false; // detect next type if it is false
 
         $old_log = null; // used when insert error
-
+        $last_type = null;
         foreach ($types as $key_type => $type) {
+            $last_type = $type;
             if ($key_type >= $last_type_import && !$break_type) {
                 $path = $path_folder."{$type}/{$folder}";
                 if (is_dir($path)) {
@@ -998,7 +655,6 @@ class BatdongsanV2 extends Component
 
                     if ($counter > 0) {
                         $filename = null;
-                        $count_project = 0;
                         for ($i = 0; $i <= $last_file_index; $i++) {
                             if ($count_file > 500) {
                                 $break_type = true;
@@ -1022,28 +678,36 @@ class BatdongsanV2 extends Component
                                     $contactArray[$count_file] = $value[$filename]["contact"];
 
                                     $project_id = null;
+                                    $home_no = null;
+                                    $city_id = null;
+                                    $district_id = null;
+                                    $ward_id = null;
+                                    $street_id = null;
+
                                     $project_name = $value[$filename]["project"];
                                     if(!empty($project_name)) {
                                         if($project_name == "Vinhomes Ba Son") {
                                             $project_name = "Vinhomes Golden River Ba Son";
                                         }
-                                        $project_id = $this->getProjectId($project_name);
-                                        if ($project_id > 0) {
+//                                        $project_id = $this->getProjectId($project_name);
+                                        $project = \vsoft\ad\models\AdBuildingProject::find()->where('name = :n', [':n' => $project_name])->one();
+                                        if (count($project) > 0) {
+                                            $project_id = $project->id;
+                                            $city_id = $project->city_id;
+                                            $district_id = $project->district_id;
+                                            $ward_id = $project->ward_id;
+                                            $street_id = $project->street_id;
+                                            $home_no = $project->home_no;
                                             $count_project++;
                                             print_r(" - " . $project_name);
                                         }
+                                    } else {
+                                        $city_id = $this->getCityId2($value[$filename]["city"]);
+                                        $district_id = $this->getDistrictId2($value[$filename]["district"], $city_id);
+                                        $ward_id = $this->getWardId2($value[$filename]["ward"], $district_id);
+                                        $street_id = $this->getStreetId2($value[$filename]["street"], $district_id);
+                                        $home_no = $value[$filename]["home_no"];
                                     }
-//                                    $city_id = $this->getCityId($value[$filename]["city"], $cityData);
-                                    $city_id = $this->getCityId2($value[$filename]["city"]);
-
-//                                    $district_id = $this->getDistrictId($value[$filename]["district"], $districtData, $city_id);
-                                    $district_id = $this->getDistrictId2($prefix_district_list, $value[$filename]["district"], $city_id);
-
-//                                    $ward_id = $this->getWardId($value[$filename]["ward"], $wardData, $district_id);
-                                    $ward_id = $this->getWardId2($prefix_ward_list, $value[$filename]["ward"], $district_id);
-
-//                                    $street_id = $this->getStreetId($value[$filename]["street"], $streetData, $district_id);
-                                    $street_id = $this->getStreetId2($prefix_street_list, $value[$filename]["street"], $district_id);
 
                                     $area = $value[$filename]["dientich"];
                                     $price = $value[$filename]["price"];
@@ -1065,7 +729,7 @@ class BatdongsanV2 extends Component
                                         'category_id' => $value[$filename]["loai_tai_san"],
                                         'project_building_id' => $project_id,
                                         'user_id' => null,
-                                        'home_no' => $value[$filename]["home_no"],
+                                        'home_no' => $home_no,
                                         'city_id' => $city_id,
                                         'district_id' => $district_id,
                                         'ward_id' => $ward_id,
@@ -1097,7 +761,7 @@ class BatdongsanV2 extends Component
                         $this->writeImportLog($type, $log_import, $path_folder);
                         if ($break_type == false && count($bulkInsertArray) > 0) {
                             if (!in_array($type, $bds_import_log["type"])) {
-                                array_push($bds_import_log["type"], $type);
+                                array_push($bds_import_log["type"], $last_type);
                             }
                             $bds_import_log["last_type_index"] = $key_type;
                             $this->writeLog($bds_import_log, $path_folder."import/", $bds_import_filename);
@@ -1561,7 +1225,7 @@ class BatdongsanV2 extends Component
                     'verified' => $model->verified,
                     'created_at' => $model->created_at,
                     'source' => $model->source,
-                    'status' => 1 // SET status = 2 is copy from dbCraw
+                    'status' => 1
                 ];
                 $bulkInsertArray[] = $record;
             }
@@ -2248,13 +1912,16 @@ class BatdongsanV2 extends Component
 
         $columnNameArray = ['city_id', 'district_id', 'name', 'logo',
             'location', 'description', 'investment_type', 'hotline', 'website',
-            'lng', 'lat', 'slug', 'status', 'created_at', 'file_name', 'is_crawl', 'data_html'];
+            'lng', 'lat', 'slug', 'status', 'created_at', 'file_name', 'is_crawl', 'data_html',
+            'home_no', 'street_id', 'ward_id'];
         $bulkInsertArray = array();
 
         $listContractorProject = [];
 
-        $cityData = \vsoft\craw\models\AdCity::find()->all();
-        $districtData = \vsoft\craw\models\AdDistrict::find()->all();
+//        $cityData = \vsoft\craw\models\AdCity::find()->all();
+//        $districtData = \vsoft\craw\models\AdDistrict::find()->all();
+        $wards = \Yii::$app->db->createCommand("SELECT id, name, district_id FROM `ad_ward`")->queryAll();
+        $streets = \Yii::$app->db->createCommand("SELECT id, name, district_id FROM `ad_street`")->queryAll();
         $contractorData = \vsoft\craw\models\AdInvestor::find()->all();
 
         foreach($types as $key_type => $type){
@@ -2287,15 +1954,28 @@ class BatdongsanV2 extends Component
                                         print_r(" Error: no content\n");
                                         continue;
                                     }
-                                    $city_id = $this->getCityId($value[$filename]["city"], $cityData);
-                                    $district_id = $this->getDistrictId($value[$filename]["district"], $districtData, $city_id);
+//                                    $city_id = $this->getCityId($value[$filename]["city"], $cityData);
+//                                    $district_id = $this->getDistrictId($value[$filename]["district"], $districtData, $city_id);
+                                    $city_id = $this->getCityId2($value[$filename]["city"]);
+                                    $district_id = $this->getDistrictId2($value[$filename]["district"], $city_id);
+
+                                    $street_id = null;
+                                    $ward_id = null;
+                                    $home_no = null;
+                                    $location = $value[$filename]["location"];
+                                    $ws = $this->getWardAndStreet($location, $streets, $wards, $district_id);
+                                    if(count($ws) > 0) {
+                                        $street_id = (isset($ws["street_id"]) && !empty($ws["street_id"])) ? $ws["street_id"] : null;
+                                        $ward_id = (isset($ws["ward_id"]) && !empty($ws["ward_id"])) ? $ws["ward_id"] : null;
+                                        $home_no = (isset($ws["home_no"]) && !empty($ws["home_no"])) ? $ws["home_no"] : null;
+                                    }
 
                                     $record = [
                                         'city_id' => $city_id,
                                         'district_id' => $district_id,
                                         'name' => $value[$filename]["name"],
                                         'logo' => $value[$filename]["logo"],
-                                        'location' => $value[$filename]["location"],
+                                        'location' => $location,
                                         'description' => $value[$filename]["description"],
                                         'investment_type' => $value[$filename]["investment_type"],
                                         'hotline' => $value[$filename]["hotline"],
@@ -2308,6 +1988,9 @@ class BatdongsanV2 extends Component
                                         'file_name' => $type."/".$filename,
                                         'is_crawl' => 1,
                                         'data_html' => $value[$filename]["data_html"],
+                                        'home_no' => $home_no,
+                                        'street_id' => $street_id,
+                                        'ward_id' => $ward_id
                                     ];
                                     $bulkInsertArray[] = $record;
 
@@ -2380,13 +2063,13 @@ class BatdongsanV2 extends Component
             $columnContractorProject = ['building_project_id', 'investor_id'];
             $bulkInsertContractorProject = array();
             $buildingProjectData = \vsoft\craw\models\AdBuildingProject::find()->all();
-            $contractorDataNew = AdInvestor::find()->all();
+            $investorDataNew = AdInvestor::find()->all();
             foreach($listContractorProject as $k => $v){
                 $buildingProject_id = $this->getIdExists($k, $buildingProjectData);
-                $contractor_id = $this->getIdExists($v, $contractorDataNew);
+                $investor_id = $this->getIdExists($v, $investorDataNew);
                 $recordContractorProject = [
                     'building_project_id' => $buildingProject_id,
-                    'investor_id' => $contractor_id
+                    'investor_id' => $investor_id
                 ];
                 $bulkInsertContractorProject[] = $recordContractorProject;
             }
@@ -2504,6 +2187,145 @@ class BatdongsanV2 extends Component
         print_r($end_time-$start);
         print_r("s");
 
+    }
+
+    public function parseLocation($location){
+        preg_match('/^(((ngõ )|(số )|(((lô )|(Lô đất ))[a-z]*)|[a-z])?[0-9]\S*( (–|-) [a-z]?[0-9]\S*)?( ngõ [a-z]*[0-9]\S*)?)/i', $location, $matches);
+
+        $return = [];
+
+        if($matches) {
+            $return['homeNo'] = preg_replace('/số /i', '', rtrim($matches[0], ','));
+            $remain = trim(str_replace($matches[0], '', $location));
+        } else {
+            $remain = $location;
+        }
+
+        $remainSplit = array_map('trim', explode(',', $remain));
+        $streetKey = $this->streetDetect($remainSplit);
+
+        if($streetKey !== null) {
+            $return['street'] = trim(preg_replace('/^((đường)|(Đường)|(phố))\s?/i', '', $remainSplit[$streetKey]));
+            $remainSplit = array_slice($remainSplit, $streetKey + 1);
+        }
+
+        $wardKey = $this->wardDetect($remainSplit);
+
+        if($wardKey !== null) {
+            $return['ward'] = trim(preg_replace('/^((phường)|(thị trấn)|(xã)|(x\.)|(p\.))\s?/i', '', $remainSplit[$wardKey]));
+
+            if($streetKey === null && $wardKey > 0) {
+                $return['street'] = $remainSplit[$wardKey - 1];
+            }
+        }
+
+        $return['remainSplit'] = $remainSplit;
+
+        return $return;
+    }
+
+    public function streetDetect($remainSplit) {
+        foreach ($remainSplit as $k => $rs) {
+            if(preg_match('/^((đ|Đường)|(phố))/i', $rs)) {
+                return $k;
+            }
+        }
+        return null;
+    }
+
+    public function wardDetect($remainSplit) {
+        foreach ($remainSplit as $k => $rs) {
+            if(preg_match('/^((phường)|(thị trấn)|(xã)|(x\.)|(p\.))/i', $rs)) {
+                return $k;
+            }
+        }
+        return null;
+    }
+
+    function slug($str) {
+        $str = trim(mb_strtolower($str, 'UTF-8'));
+        $str = preg_replace('/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/', 'a', $str);
+        $str = preg_replace('/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/', 'e', $str);
+        $str = preg_replace('/(ì|í|ị|ỉ|ĩ)/', 'i', $str);
+        $str = preg_replace('/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/', 'o', $str);
+        $str = preg_replace('/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/', 'u', $str);
+        $str = preg_replace('/(ỳ|ý|ỵ|ỷ|ỹ)/', 'y', $str);
+        $str = preg_replace('/(đ)/', 'd', $str);
+        $str = preg_replace('/[^a-z0-9-\s]/', '', $str);
+        $str = preg_replace('/([\s]+)/', '-', $str);
+        return $str;
+    }
+
+    public function getWardAndStreet($location, $streets, $wards, $district_id){
+        $parseLocation = $this->parseLocation($location);
+
+        if(isset($parseLocation['street']) && !isset($parseLocation['ward']) && $parseLocation['remainSplit']) {
+            $parseLocation['ward'] = $parseLocation['remainSplit'][0];
+        }
+
+        if(isset($parseLocation['homeNo']) && !isset($parseLocation['street']) && $parseLocation['remainSplit']) {
+            $parseLocation['street'] = $parseLocation['remainSplit'][0];
+
+            if(!isset($parseLocation['ward']) && count($parseLocation['remainSplit']) > 1) {
+                $parseLocation['ward'] = $parseLocation['remainSplit'][1];
+            }
+        }
+
+        if(!isset($parseLocation['street']) && !isset($parseLocation['ward']) && $parseLocation['remainSplit']) {
+            if(count($parseLocation['remainSplit']) >= 2) {
+                $parseLocation['street'] = $parseLocation['remainSplit'][0];
+                $parseLocation['ward'] = $parseLocation['remainSplit'][1];
+            } else {
+                $parseLocation['ward'] = $parseLocation['remainSplit'][0];
+            }
+        }
+
+        $update = [];
+
+        if(isset($parseLocation['homeNo'])) {
+            $update['home_no'] = $parseLocation['homeNo'];
+        }
+
+        if(isset($parseLocation['street'])) {
+            if(stripos($parseLocation['street'], ' và ')) {
+                $parseLocation['street'] = explode(' và ', $parseLocation['street']);
+                $parseLocation['street'] = $parseLocation['street'][0];
+            }
+            if(stripos($parseLocation['street'], ' – ')) {
+                $parseLocation['street'] = explode(' – ', $parseLocation['street']);
+                $parseLocation['street'] = $parseLocation['street'][0];
+            }
+            if(stripos($parseLocation['street'], ' - ')) {
+                $parseLocation['street'] = explode(' - ', $parseLocation['street']);
+                $parseLocation['street'] = $parseLocation['street'][0];
+            }
+
+            $parseLocation['street'] = str_ireplace([' nối dài', ' kéo dài'], '', $parseLocation['street']);
+
+            foreach ($streets as $street) {
+                if(strcasecmp($parseLocation['street'], $street['name']) === 0 && $street['district_id'] == $district_id) {
+                    $update['street_id'] = $street['id'];
+                    break;
+                } else if($this->slug($parseLocation['street']) == $this->slug($street['name']) && $street['district_id'] == $district_id) {
+                    $update['street_id'] = $street['id'];
+                    break;
+                }
+            }
+        }
+
+        if(isset($parseLocation['ward'])) {
+            foreach ($wards as $ward) {
+                if(strcasecmp($parseLocation['ward'], $ward['name']) === 0 && $ward['district_id'] == $district_id) {
+                    $update['ward_id'] = $ward['id'];
+                    break;
+                } else if($this->slug($parseLocation['ward']) == $this->slug($ward['name']) && $ward['district_id'] == $district_id) {
+                    $update['ward_id'] = $ward['id'];
+                    break;
+                }
+            }
+        }
+
+        return $update;
     }
 
     function getIdExists($name, $data)

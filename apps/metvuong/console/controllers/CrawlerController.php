@@ -43,7 +43,7 @@ class CrawlerController extends Controller
     }
     public function actionImportbatdongsan()
     {
-        BatdongsanV2::find()->importData(1);
+//        BatdongsanV2::find()->importData(1);
     }
     public function actionImportbatdongsan2()
     {
@@ -85,6 +85,10 @@ class CrawlerController extends Controller
     }
     public function actionImportprojectbds(){
         BatdongsanV2::find()->importProjects();
+    }
+    // db chinh
+    public function actionImportProjectPrimary(){
+        BatdongsanV2::find()->importProjectPrimary();
     }
     public function actionUpdateProjectPrimary(){
         BatdongsanV2::find()->updateProjects();
