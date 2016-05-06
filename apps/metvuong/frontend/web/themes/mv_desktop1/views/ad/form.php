@@ -27,7 +27,8 @@ use yii\web\View;
 	
 	$cities = AdCity::find()->all();
 	$citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
-	$citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != AdProduct::DEFAULT_CITY)]; });
+	// $citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != AdProduct::DEFAULT_CITY)]; });
+	$citiesOptions = [];
 	
 	$categories = AdCategory::find()->orderBy('order')->all();
 	$categoriesDropDown = [];

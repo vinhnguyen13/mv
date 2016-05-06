@@ -61,7 +61,7 @@ $(document).ready(function(){
 		getWrap: function(el) {
 			return el.closest('.form-group');
 		},
-		changeCategory: function() {
+		cityChange: function() {
 			
 		}
 	};
