@@ -281,7 +281,6 @@ $(document).ready(function(){
 			el.select2('val');
 		},
 		fileuploadcompleted: function(e, d, t) {
-			console.log('s');
 			form.files.sortable('refreshPositions');
 		}
 	};

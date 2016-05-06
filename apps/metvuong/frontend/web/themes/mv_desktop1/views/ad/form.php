@@ -20,6 +20,13 @@ use yii\web\View;
 	 * @var $additionInfo vsoft\ad\models\AdProductAdditionInfo
 	 */
 
+$product->category_id = AdCategory::CATEGORY_CHCK;
+$product->project_building_id = 1491;
+$product->city_id = 1;
+$product->district_id = 19;
+$product->ward_id = 253;
+$product->street_id = 2755;
+
 	$this->registerCss(".has-project #projectMask {display: none;} .has-project #project-value {display: block;} #project-value .icon-mv {float: right} #project-value .name {display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 10px; } #project-value {display: none; background-color: #e4e4e4; border: 1px solid #aaa; padding: 0 5px; line-height: 31px;} #search-list ul li:hover {background: rgba(0, 167, 105, 0.2);} #search-list ul li {padding: 4px 8px; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer;} #search-list ul {background: #FFF; box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.26); border: 1px solid rgba(0, 0, 0, 0.2);} #search-list {position: absolute; z-index: 1; padding-right: 40px; width: 100%;} .price-show-wrap {color: #00a769; margin-left: 12px; display: none; font-size: 14px;} .price-show-wrap .vnd {margin-left: 6px;} .require-hint {color: red; margin-left: 3px; font-size: 11px;} .select2-container--default .select2-selection--single {height: 34px;} .select2-container--default .select2-selection--single {border-radius: 0px;}");
 	$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/select2.min.css');
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/jquery-ui.min.js', ['position' => View::POS_END]);
@@ -31,6 +38,8 @@ use yii\web\View;
 	$citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
 	// $citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != AdProduct::DEFAULT_CITY)]; });
 	$citiesOptions = [];
+	
+	$districtDropdown = ArrayHelper::map(AdDistrict::getListByCity($product->city_id), 'id', 'name');
 	
 	$categories = AdCategory::find()->orderBy('order')->all();
 	$categoriesDropDown = [];
@@ -51,8 +60,6 @@ use yii\web\View;
 	}
 	
 	$this->registerJs("var categories = " . json_encode($categoriesJs) . "; var APPLY_TO_TYPE_BOTH = " . AdCategory::APPLY_TO_TYPE_BOTH . "; var CHCK = " . AdCategory::CATEGORY_CHCK . ";", View::POS_HEAD);
-	
-	$product->category_id = AdCategory::CATEGORY_CHCK;
 ?>
 <div class="title-fixed-wrap container">
 	<div class="post-listing">
@@ -72,32 +79,32 @@ use yii\web\View;
 						<label for="<?= Html::getInputId($product, 'category_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('category_id') ?><span class="require-hint">*</span></label>
 						<?= Html::activeDropDownList($product, 'category_id', $categoriesDropDown, ['options' => $categoriesDropDownOptions, 'class' => 'form-control', 'prompt' => "..."]) ?>
 					</div>
-					<div class="form-group col-xs-6 project-wrap"<?= $product->category_id == AdCategory::CATEGORY_CHCK ? '' : ' style="display: none;"' ?>>
+					<div class="form-group col-xs-6 project-wrap<?= $product->projectBuilding ? ' has-project' : '' ?>"<?= $product->category_id == AdCategory::CATEGORY_CHCK ? '' : ' style="display: none;"' ?>>
 						<label for="" class="fs-13 mgB-10">Tên dự án <span class="color-cd pdL-15">+3 điểm</span></label>
 						<?= Html::activeHiddenInput($product, 'project_building_id') ?>
-						<a target="_blank" href="#" id="project-value"><span class="icon-mv fs-12 mgR-5"><span class="icon-close-icon"></span></span><span class="name"></span></a>
+						<a target="_blank" href="#" id="project-value"><span class="icon-mv fs-12 mgR-5"><span class="icon-close-icon"></span></span><span class="name"><?= $product->projectBuilding ? $product->projectBuilding->name . ', ' . $districtDropdown[$product->projectBuilding->district_id] . ', ' . $citiesDropdown[$product->projectBuilding->city_id] : '' ?></span></a>
 						<input type="text" class="form-control" id="projectMask" placeholder="...">
 						<div id="search-list" class="hide"><ul></ul></div>
 					</div>
 					<div class="form-group col-xs-6">
 						<label for="<?= Html::getInputId($product, 'city_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('city_id') ?><span class="require-hint">*</span></label>
-						<?= Html::activeDropDownList($product, 'city_id', $citiesDropdown, ['class' => 'form-control search', 'options' => $citiesOptions, 'prompt' => "..."]) ?>
+						<?= Html::activeDropDownList($product, 'city_id', $citiesDropdown, ['class' => 'form-control search', 'options' => $citiesOptions, 'prompt' => "...", 'disabled' => ($product->projectBuilding && $product->projectBuilding->city_id) ? true : false]) ?>
 					</div>
 					<div class="form-group col-xs-6">
 						<label for="<?= Html::getInputId($product, 'district_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('district_id') ?><span class="require-hint">*</span></label>
-						<?= Html::activeDropDownList($product, 'district_id', ArrayHelper::map(AdDistrict::getListByCity($product->city_id), 'id', 'name'), ['class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose City to show Districts')]) ?>
+						<?= Html::activeDropDownList($product, 'district_id', $districtDropdown, ['class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose City to show Districts'), 'disabled' => ($product->projectBuilding && $product->projectBuilding->district_id) ? true : false]) ?>
 					</div>
 					<div class="form-group col-xs-6">
 						<label for="<?= Html::getInputId($product, 'ward_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('ward_id') ?><span class="require-hint">*</span></label>
-						<?= Html::activeDropDownList($product, 'ward_id', ArrayHelper::map(AdWard::getListByDistrict($product->district_id), 'id', 'name'), ['class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose District to show Wards')]) ?>
+						<?= Html::activeDropDownList($product, 'ward_id', ArrayHelper::map(AdWard::getListByDistrict($product->district_id), 'id', 'name'), ['class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose District to show Wards'), 'disabled' => ($product->projectBuilding && $product->projectBuilding->ward_id) ? true : false]) ?>
 					</div>
 					<div class="form-group col-xs-6">
 						<label for="<?= Html::getInputId($product, 'street_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('street_id') ?><span class="require-hint">*</span></label>
-						<?= Html::activeDropDownList($product, 'street_id', ArrayHelper::map(AdStreet::getListByDistrict($product->district_id), 'id', 'name'), ['class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose District to show Streets')]) ?>
+						<?= Html::activeDropDownList($product, 'street_id', ArrayHelper::map(AdStreet::getListByDistrict($product->district_id), 'id', 'name'), ['class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose District to show Streets'), 'disabled' => ($product->projectBuilding && $product->projectBuilding->street_id) ? true : false]) ?>
 					</div>
 					<div class="form-group col-xs-6 fild-address">
 						<label for="<?= Html::getInputId($product, 'home_no') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('home_no') ?></label>
-						<?= Html::activeTextInput($product, 'home_no', ['class' => 'form-control', 'placeholder' => '...']) ?>
+						<?= Html::activeTextInput($product, 'home_no', ['class' => 'form-control', 'placeholder' => '...', 'disabled' => ($product->projectBuilding && $product->projectBuilding->home_no) ? true : false]) ?>
 						<label class="checkbox-inline fs-13 checkbox-ui">
 							<?= Html::activeCheckbox($product, 'show_home_no', ['label' => false]) ?>
 							<span class="icon-mv"><span class="icon-checkbox"></span></span> <?= $product->getAttributeLabel('show_home_no') ?>
