@@ -1,7 +1,8 @@
 var allow = [46, 8, 9, 27, 13, 110, 116];
+var form;
 
 $(document).ready(function(){
-	var form = {
+	form = {
 		el: $('#w0'),
 		fields: {},
 		init: function() {
@@ -12,11 +13,15 @@ $(document).ready(function(){
 					form.fields[camel(self.attr('id'))] = self;
 				}
 			});
-			
+
+			form.files = $(".files" );
 			form.projectWrap = $('.project-wrap');
 			form.attachEvents();
 		},
 		attachEvents: function() {
+			form.files.sortable({cancel: '.template-upload'});
+			form.files.disableSelection();
+			
 			form.fields.type.on('change', form.filterCategories);
 			
 			form.fields.cityId.on('change', function(e, eventData){
@@ -124,6 +129,17 @@ $(document).ready(function(){
 					form.select(form.fields.cityId, r.city_id, r);
 					form.fields.cityId.prop("disabled", true);
 					form.fields.districtId.prop("disabled", true);
+					
+					if(r.facilities) {
+						var fa = r.facilities.split(',');
+
+						$('.tienich-frm input').each(function(){
+							var self = $(this);
+							if($.inArray(self.val(), fa) != -1) {
+								self.parent().addClass('active');
+							}
+						});
+					}
 				});
 			});
 			
@@ -165,6 +181,18 @@ $(document).ready(function(){
 					priceShow.parent().hide();
 				}
 			}
+			
+			form.el.submit(function(e){
+				var disabled = form.el.find(':input:disabled').prop('disabled', false);
+				
+				$.post(form.el.attr('action'), form.el.serialize(), function(){
+					
+				});
+				
+				disabled.prop('disabled', true);
+				
+				e.preventDefault();
+			});
 		},
 		removeProject: function() {
 
@@ -251,6 +279,10 @@ $(document).ready(function(){
 			}
 			
 			el.select2('val');
+		},
+		fileuploadcompleted: function(e, d, t) {
+			console.log('s');
+			form.files.sortable('refreshPositions');
 		}
 	};
 	

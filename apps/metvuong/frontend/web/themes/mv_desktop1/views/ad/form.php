@@ -22,6 +22,7 @@ use yii\web\View;
 
 	$this->registerCss(".has-project #projectMask {display: none;} .has-project #project-value {display: block;} #project-value .icon-mv {float: right} #project-value .name {display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 10px; } #project-value {display: none; background-color: #e4e4e4; border: 1px solid #aaa; padding: 0 5px; line-height: 31px;} #search-list ul li:hover {background: rgba(0, 167, 105, 0.2);} #search-list ul li {padding: 4px 8px; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer;} #search-list ul {background: #FFF; box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.26); border: 1px solid rgba(0, 0, 0, 0.2);} #search-list {position: absolute; z-index: 1; padding-right: 40px; width: 100%;} .price-show-wrap {color: #00a769; margin-left: 12px; display: none; font-size: 14px;} .price-show-wrap .vnd {margin-left: 6px;} .require-hint {color: red; margin-left: 3px; font-size: 11px;} .select2-container--default .select2-selection--single {height: 34px;} .select2-container--default .select2-selection--single {border-radius: 0px;}");
 	$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/select2.min.css');
+	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/jquery-ui.min.js', ['position' => View::POS_END]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/select2.full.min.js', ['position' => View::POS_END]);
 	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/string-helper.js', ['position' => View::POS_END]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/post-listing.js', ['position' => View::POS_END]);
@@ -166,7 +167,7 @@ use yii\web\View;
 							<?php foreach ($facilities as $facility): ?>
 							<li>
 								<label class="checkbox-inline fs-13 checkbox-ui">
-									<?= Html::checkbox($facilityName, in_array($facility->id, $activeFacility)) ?>
+									<?= Html::checkbox($facilityName, in_array($facility->id, $activeFacility), ['value' => $facility->id]) ?>
 									<span class="icon-mv"><span class="icon-checkbox"></span></span> <?= Yii::t('ad', $facility->name) ?>
 								</label>
 							</li>
@@ -198,6 +199,9 @@ use yii\web\View;
 										'previewMaxWidth' => 130,
 										'previewMaxHeight' => 98,
 										'previewCrop' => true,
+									],
+									'clientEvents' => [
+										'fileuploadcompleted' => 'function(e, data) {form.fileuploadcompleted(e, data, this);}'
 									]
 								]) ?>
 						</div>
@@ -233,7 +237,7 @@ use yii\web\View;
 						</div>
 					</div>
 					<div class="text-right col-xs-12 pdT-50">
-						<button class="btn-common">Preview <span class="icon-mv"><span class="icon-angle-right"></span></span></button>
+						<button type="button" class="btn-common">Preview <span class="icon-mv"><span class="icon-angle-right"></span></span></button>
 					</div>
 				<?php $form->end() ?>
 			</div>
