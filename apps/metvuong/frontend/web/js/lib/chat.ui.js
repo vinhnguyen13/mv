@@ -113,6 +113,7 @@
             if(!chatBoxExist){
                 return false;
             }
+            msg = stringHelper.replaceURLWithHTMLLinks(msg);
             if(type == chatUI.MSG_SEND_ME){
                 if(chatBoxExist.find('.wrap-chat .item:last').hasClass('box-me') == true){
                     chatBoxExist.find('.wrap-chat .item:last').find('.txt-detail p').append("<br/>"+msg);
@@ -227,7 +228,7 @@ var stringHelper = {
         var urls = stringHelper.findUrls(text);
         if(urls.length > 0){
             $.each(urls, function( index, value ) {
-                var htmlRender = "<a href='" + value + "'>" + value + "</a>";
+                var htmlRender = "<a href='" + value + "' target='_blank'>" + value + "</a>";
                 /*$.get('',function(data) {
                     var image = $(data).find('meta[property="og:image"]').attr("content");
                 });*/
