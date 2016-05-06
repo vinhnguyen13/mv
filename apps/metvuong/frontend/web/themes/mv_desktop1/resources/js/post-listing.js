@@ -70,7 +70,15 @@ $(document).ready(function(){
 	
 	form.el.find('select').each(function(){
 		var self = $(this);
-		var options = {width: '100%', placeholder: '...'};
+		var options = {
+			width: '100%',
+			placeholder: '...',
+			language: {
+				'noResults': function() {
+					return self.data('no-results');
+				}
+			}
+		};
 		
 		if(!self.hasClass('search')) {
 			options.minimumResultsForSearch = Infinity;

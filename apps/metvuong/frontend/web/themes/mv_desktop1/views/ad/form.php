@@ -77,15 +77,15 @@ use yii\web\View;
 					</div>
 					<div class="form-group col-xs-6">
 						<label for="<?= Html::getInputId($product, 'district_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('district_id') ?><span class="require-hint">*</span></label>
-						<?= Html::activeDropDownList($product, 'district_id', ArrayHelper::map(AdDistrict::getListByCity($product->city_id), 'id', 'name'), ['class' => 'form-control search', 'prompt' => "..."]) ?>
+						<?= Html::activeDropDownList($product, 'district_id', ArrayHelper::map(AdDistrict::getListByCity($product->city_id), 'id', 'name'), ['class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose City to show Districts')]) ?>
 					</div>
 					<div class="form-group col-xs-6">
 						<label for="<?= Html::getInputId($product, 'ward_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('ward_id') ?><span class="require-hint">*</span></label>
-						<?= Html::activeDropDownList($product, 'ward_id', ArrayHelper::map(AdWard::getListByDistrict($product->district_id), 'id', 'name'), ['class' => 'form-control search', 'prompt' => "..."]) ?>
+						<?= Html::activeDropDownList($product, 'ward_id', ArrayHelper::map(AdWard::getListByDistrict($product->district_id), 'id', 'name'), ['class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose District to show Wards')]) ?>
 					</div>
 					<div class="form-group col-xs-6">
 						<label for="<?= Html::getInputId($product, 'street_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('street_id') ?><span class="require-hint">*</span></label>
-						<?= Html::activeDropDownList($product, 'street_id', ArrayHelper::map(AdStreet::getListByDistrict($product->district_id), 'id', 'name'), ['class' => 'form-control search', 'prompt' => "..."]) ?>
+						<?= Html::activeDropDownList($product, 'street_id', ArrayHelper::map(AdStreet::getListByDistrict($product->district_id), 'id', 'name'), ['class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose District to show Streets')]) ?>
 					</div>
 					<div class="form-group col-xs-6 fild-address">
 						<label for="<?= Html::getInputId($product, 'home_no') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('home_no') ?></label>
@@ -167,7 +167,10 @@ use yii\web\View;
 					</div>
 					<div class="form-group col-xs-12">
 						<label for="" class="fs-13 mgB-10">Tải hình ảnh dư án <span class="color-cd pdL-15">+3 điểm</span></label>
-						<div class="upload-img-listing clearfix">
+						<div class="upload-img">
+							<span class="icon-mv">
+								<span class="icon-file-image-o"></span><br>Tải hình ảnh
+							</span>
 							<?php
 								$files = [];
 								foreach ($product->adImages as $image) {
