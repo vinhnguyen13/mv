@@ -10875,16 +10875,24 @@ height: 10px;
     }
     .wrap-items-chat .item-box-chat {
         width: 100%;
-        height: 100%;
+        /* height: 100%; */
         margin-left: 0;
         float: none;
-        position: fixed;
+        /* position: fixed; */
         top: 0;
         left: 0;
+        height: auto;
     }
     .box-chat-footer {
         height: 100%;
         box-shadow: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
+    .box-chat-footer.show-hide-chat {
+        top: 100%;
+        margin-top: -37px;
     }
 }
 @media ( min-width: 320px ) and ( max-width: 460px ) {
