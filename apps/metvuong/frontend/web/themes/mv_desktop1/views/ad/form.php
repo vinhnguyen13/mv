@@ -167,10 +167,7 @@ use yii\web\View;
 					</div>
 					<div class="form-group col-xs-12">
 						<label for="" class="fs-13 mgB-10">Tải hình ảnh dư án <span class="color-cd pdL-15">+3 điểm</span></label>
-						<div class="upload-img">
-							<span class="icon-mv">
-								<span class="icon-file-image-o"></span><br>Tải hình ảnh
-							</span>
+						<div class="upload-img-listing clearfix">
 							<?php
 								$files = [];
 								foreach ($product->adImages as $image) {

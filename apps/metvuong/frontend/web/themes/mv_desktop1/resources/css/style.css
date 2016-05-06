@@ -8913,7 +8913,7 @@ footer li a {
     font-weight: normal;
     font-style: normal;
 }
-
+.upload-img-listing .glyphicon,
 .icon-mv [class^="icon-"],
 .icon-mv [class*=" icon-"] {
     /* use !important to prevent issues with browser extensions that change fonts */
@@ -8928,6 +8928,9 @@ footer li a {
     /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+.icon-trash-o:before {
+    content: "\f014";
 }
 .icon-heart:before {
     content: "\f004";
@@ -10562,12 +10565,117 @@ label:hover {
     text-overflow: ellipsis;
     overflow: hidden;
 }
-.upload-img {
-    border: 1px solid #c2c2c2;
-    padding: 30px 0;
-    text-align: center;
+.upload-img-listing {
+    /* border: 1px solid #c2c2c2; */
+    /* padding: 20px; */
+    /* text-align: center; */
     font-size: 13px;
     color: #009445;
+    position: relative;
+    /* overflow: hidden; */
+    /* min-height: 120px; */
+    padding-top: 20px;
+}
+.upload-img-listing .files {
+    margin: 0 0 0 -10px;
+    /* position: relative; */
+    /* z-index: 2; */
+    display: inline-block;
+    vertical-align: top;
+    /* width: 100%; */
+}
+.upload-img-listing #w1-fileupload {}
+.upload-img-listing .files li {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 0 10px 10px;
+}
+.upload-img-listing .progress {
+    position: absolute;
+    width: 100%;
+    bottom: 3px;
+    margin: 0;
+    border-radius: 0;
+    height: 10px;
+}
+.upload-img-listing .preview {
+    margin: 0;
+    display: block;
+}
+.upload-img-listing .preview a {
+    display: block;
+    width: 130px;
+    height: 98px;
+}
+.upload-img-listing .preview a img {
+    width: 100%;
+    height: 100%;
+}
+.upload-img-listing .files .delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 3px 4px;
+    background: rgba(0, 0, 0, 0.27);
+    border-radius: 0;
+}
+.upload-img-listing .files .delete:hover .glyphicon-trash {
+    color: #009455;
+}
+.upload-img-listing .btn {
+    position: static;
+    background: none;
+    border: none;
+    vertical-align: middle;
+}
+.upload-img-listing .btn span {
+    color: #00a769;
+    font-weight: 600;
+}
+.upload-img-listing .fileinput-button-wrap {
+   margin-left: 10px;
+   height: 98px;
+   border: 1px dashed #B9B9B9;
+   border-radius: 5px;
+   -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   -msborder-radius: 5px;
+   position: relative;
+   /* z-index: 1; */
+   display: inline-block;
+   overflow: hidden;
+}
+.upload-img-listing .fileinput-button-wrap:before {
+    content: '';
+    width: 1px;
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+.upload-img-listing .fileinput-button-wrap:hover {
+    background: #F3F3F3;
+}
+.upload-img-listing .glyphicon {
+    font-size: 30px;
+    color: #dcdcdc;
+    display: block;
+    margin-bottom: 3px;
+}
+.upload-img-listing input[type=file] {
+    
+}
+.upload-img-listing .glyphicon:before {
+    content: "\f1c5";
+}
+.upload-img-listing .files button span {
+    display: none;
+}
+.upload-img-listing .files .glyphicon-trash {
+    font-size: 25px;
+}
+.upload-img-listing .files .glyphicon-trash:before {
+    content: "\f014";
 }
 .agent-postlisting .icon-file-image-o,
 .upload-img .icon-file-image-o {
