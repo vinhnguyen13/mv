@@ -65,6 +65,10 @@
             for(i=0;i<length;i++) {
                 var item = child.eq(i);
                 var body = item.find('body').text();
+                /**
+                 * replace message
+                 */
+                body = stringHelper.replaceURLWithHTMLLinks(body);
                 if(item.is('to')) {
                     if(chatBoxExist.find('.wrap-chat .item:last').hasClass('box-me') == true){
                         chatBoxExist.find('.wrap-chat .item:last').find('.txt-detail p').append("<br/>"+body);
@@ -92,10 +96,6 @@
         },
         buildMessageToBox: function (username, msg, type, params) {
             msg = chatUI.decodeEntities(msg);
-            /**
-             * replace message
-             */
-            msg = stringHelper.replaceURLWithHTMLLinks(msg);
             var timestamp = (params.ts) ? params.ts : 0;
             var _time = formatTime(timestamp);
             if(type == chatUI.MSG_SEND_ME){
@@ -224,8 +224,34 @@ var formatTime = function(unixTimestamp) {
 
 var stringHelper = {
     replaceURLWithHTMLLinks: function (text) {
-        var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/i;
-        return text.replace(exp,"<a href='$1'>$1</a>");
+        var urls = stringHelper.findUrls(text);
+        if(urls.length > 0){
+            $.each(urls, function( index, value ) {
+                text = text.replace($.trim(value), "<a href='" + value + "'>" + value + "</a>");
+            });
+            return text;
+        }else{
+            return text;
+        }
+    },
+    findUrls: function findUrls( text )
+    {
+        var source = (text || '').toString();
+        var urlArray = [];
+        var url;
+        var matchArray;
+
+        // Regular expression to find FTP, HTTP(S) and email URLs.
+        var regexToken = /(((ftp|https?):\/\/)[\-\w@:%_\+.~#?,&\/\/=]+)|((mailto:)?[_.\w-]+@([\w][\w\-]+\.)+[a-zA-Z]{2,3})/g;
+
+        // Iterate through any URLs in the text.
+        while( (matchArray = regexToken.exec( source )) !== null )
+        {
+            var token = matchArray[0];
+            urlArray.push( token );
+        }
+
+        return urlArray;
     },
     onlineList: function () {
 
