@@ -14,9 +14,16 @@ $(document).ready(function(){
 			form.attachEvents();
 		},
 		attachEvents: function() {
-			form.fields.type.on('change', function(){
-				form.filterCategories();
+			form.fields.type.on('change', form.filterCategories);
+			
+			form.fields.cityId.on('change', function(){
+				form.cityChange();
 			});
+			
+			form.fields.districtId.on('change', function(){
+				form.districtChange();
+			});
+			
 			form.fields.categoryId.on('change', function(){
 				
 			});
@@ -61,8 +68,34 @@ $(document).ready(function(){
 		getWrap: function(el) {
 			return el.closest('.form-group');
 		},
-		cityChange: function() {
+		cityChange: function(fn) {
+			$.get('/ad/list-district', {cityId: form.fields.cityId.val()}, function(districts){
+				form.appendDropdown(form.fields.districtId, districts);
+				
+				if(fn) {
+					fn(districts);
+				}
+			});
+		},
+		districtChange: function(fn) {
+			form.appendDropdown(form.fields.wardId, []);
+			form.appendDropdown(form.fields.streetId, []);
 			
+			$.get('/ad/list-sw', {districtId: form.fields.districtId.val()}, function(response){
+				form.appendDropdown(form.fields.wardId, response.wards);
+				form.appendDropdown(form.fields.streetId, response.streets);
+			});
+		},
+		select: function(el, val) {
+			el.val(val).trigger('change');
+		},
+		appendDropdown: function(el, items) {
+			el.find("option:not(:first-child)").remove();
+			for(var i in items) {
+				el.append('<option value="' + items[i]['id'] + '">' + items[i]['name'] + '</option>');
+			}
+			
+			el.select2('val');
 		}
 	};
 	

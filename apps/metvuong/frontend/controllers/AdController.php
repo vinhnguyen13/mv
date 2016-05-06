@@ -699,6 +699,17 @@ class AdController extends Controller
 		return $response;
 	}
 
+	public function actionListSw($districtId) {
+		Yii::$app->response->format = Response::FORMAT_JSON;
+	
+		$response = [];
+	
+		$response['wards'] = AdWard::getListByDistrict($districtId);
+		$response['streets'] = AdStreet::getListByDistrict($districtId);
+	
+		return $response;
+	}
+
     public function actionTrackingShare(){
         Yii::$app->response->format = Response::FORMAT_JSON;
         $uid = Yii::$app->user->isGuest ? null : Yii::$app->user->id;
