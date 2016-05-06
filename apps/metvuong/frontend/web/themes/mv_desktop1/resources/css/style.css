@@ -10645,6 +10645,7 @@ label:hover {
    /* z-index: 1; */
    display: inline-block;
    float: left;
+   overflow: hidden;
 }
 .upload-img-listing .fileinput-button-wrap:before {
     content: '';
