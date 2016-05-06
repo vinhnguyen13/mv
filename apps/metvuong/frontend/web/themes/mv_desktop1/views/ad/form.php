@@ -12,6 +12,7 @@ use vsoft\ad\models\AdProductAdditionInfo;
 use vsoft\ad\models\AdFacility;
 use common\widgets\fileupload\FileUpload;
 use yii\helpers\Url;
+use yii\web\View;
 
 	/**
 	 * @var $product vsoft\ad\models\AdProduct
@@ -19,15 +20,34 @@ use yii\helpers\Url;
 	 * @var $additionInfo vsoft\ad\models\AdProductAdditionInfo
 	 */
 
-	$this->registerCss(".require-hint {color: red; margin-left: 4px;}");
-			
-	$categories = AdCategory::find()->orderBy('order')->all();
-	$categoriesDropdown = ArrayHelper::map($categories, 'id', function($model){return ucfirst(Yii::t('ad', $model->name));});
-	$categoriesOptions = ArrayHelper::map($categories, 'id', function($category){ return ['data-type' => $category->apply_to_type, 'data-limit' => $category->limit_area]; });
+	$this->registerCss(".require-hint {color: red; margin-left: 4px;} .select2-container--default .select2-selection--single {height: 34px;} .select2-container--default .select2-selection--single {border-radius: 0px;}");
+	$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/select2.min.css');
+	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/select2.full.min.js', ['position' => View::POS_END]);
+	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/post-listing.js', ['position' => View::POS_END]);
 	
 	$cities = AdCity::find()->all();
 	$citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
 	$citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != AdProduct::DEFAULT_CITY)]; });
+	
+	$categories = AdCategory::find()->orderBy('order')->all();
+	$categoriesDropDown = [];
+	$categoriesDropDownOptions = [];
+	$categoriesJs = [];
+	
+	foreach ($categories as $category) {
+		if(adCategory::APPLY_TO_TYPE_BOTH == $category->apply_to_type || $category->apply_to_type == $product->type) {
+			$categoriesDropDown[$category->id] = ucfirst(Yii::t('ad', $category->name));
+			$categoriesDropDownOptions[$category->id] = ['data-limit' => $category->limit_area];
+		}
+		$categoriesJs[] = [
+			'id' => $category->id,
+			'name' => ucfirst(Yii::t('ad', $category->name)),
+			'apply_to_type' => $category->apply_to_type,
+			'limit_area' => $category->limit_area,
+		];
+	}
+	
+	$this->registerJs("var categories = " . json_encode($categoriesJs) . "; var APPLY_TO_TYPE_BOTH = " . AdCategory::APPLY_TO_TYPE_BOTH . ";", View::POS_HEAD);
 ?>
 <div class="title-fixed-wrap container">
 	<div class="post-listing">
@@ -45,11 +65,11 @@ use yii\helpers\Url;
 					</div>
 					<div class="form-group col-xs-6">
 						<label for="<?= Html::getInputId($product, 'category_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('category_id') ?><span class="require-hint">*</span></label>
-						<?= Html::activeDropDownList($product, 'category_id', $categoriesDropdown, ['options' => $categoriesOptions, 'class' => 'form-control', 'prompt' => "..."]) ?>
+						<?= Html::activeDropDownList($product, 'category_id', $categoriesDropDown, ['options' => $categoriesDropDownOptions, 'class' => 'form-control', 'prompt' => "..."]) ?>
 					</div>
 					<div class="form-group col-xs-6">
 						<label for="<?= Html::getInputId($product, 'city_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('city_id') ?><span class="require-hint">*</span></label>
-						<?= Html::activeDropDownList($product, 'city_id', $citiesDropdown, ['class' => 'form-control', 'options' => $citiesOptions, 'prompt' => "..."]) ?>
+						<?= Html::activeDropDownList($product, 'city_id', $citiesDropdown, ['class' => 'form-control search', 'options' => $citiesOptions, 'prompt' => "..."]) ?>
 					</div>
 					<div class="form-group col-xs-6">
 						<label for="" class="fs-13 mgB-10">Tên dự án <span class="color-cd pdL-15">+3 điểm</span></label>
@@ -57,15 +77,15 @@ use yii\helpers\Url;
 					</div>
 					<div class="form-group col-xs-6">
 						<label for="<?= Html::getInputId($product, 'district_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('district_id') ?><span class="require-hint">*</span></label>
-						<?= Html::activeDropDownList($product, 'district_id', ArrayHelper::map(AdDistrict::getListByCity($product->city_id), 'id', 'name'), ['class' => 'form-control', 'prompt' => "..."]) ?>
+						<?= Html::activeDropDownList($product, 'district_id', ArrayHelper::map(AdDistrict::getListByCity($product->city_id), 'id', 'name'), ['class' => 'form-control search', 'prompt' => "..."]) ?>
 					</div>
 					<div class="form-group col-xs-6">
 						<label for="<?= Html::getInputId($product, 'ward_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('ward_id') ?><span class="require-hint">*</span></label>
-						<?= Html::activeDropDownList($product, 'ward_id', ArrayHelper::map(AdWard::getListByDistrict($product->district_id), 'id', 'name'), ['class' => 'form-control', 'prompt' => "..."]) ?>
+						<?= Html::activeDropDownList($product, 'ward_id', ArrayHelper::map(AdWard::getListByDistrict($product->district_id), 'id', 'name'), ['class' => 'form-control search', 'prompt' => "..."]) ?>
 					</div>
 					<div class="form-group col-xs-6">
 						<label for="<?= Html::getInputId($product, 'street_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('street_id') ?><span class="require-hint">*</span></label>
-						<?= Html::activeDropDownList($product, 'street_id', ArrayHelper::map(AdStreet::getListByDistrict($product->district_id), 'id', 'name'), ['class' => 'form-control', 'prompt' => "..."]) ?>
+						<?= Html::activeDropDownList($product, 'street_id', ArrayHelper::map(AdStreet::getListByDistrict($product->district_id), 'id', 'name'), ['class' => 'form-control search', 'prompt' => "..."]) ?>
 					</div>
 					<div class="form-group col-xs-6 fild-address">
 						<label for="<?= Html::getInputId($product, 'home_no') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('home_no') ?></label>
@@ -182,16 +202,16 @@ use yii\helpers\Url;
 						<div class="clearfix agent-postlisting">
 							<div class="fs-13 row">
 								<div class="form-group col-xs-6">
-									<label for="" class="fs-13 mgB-10">Tên người đăng tin</label>
-									<input type="text" class="form-control" id="" placeholder="">
+									<label for="<?= Html::getInputId($contactInfo, 'name') ?>" class="fs-13 mgB-10"><?= $contactInfo->getAttributeLabel('name') ?></label>
+									<?= Html::activeTextInput($contactInfo, 'name', ['class' => 'form-control', 'placeholder' => '...']) ?>
 								</div>
 								<div class="form-group col-xs-6">
-									<label for="" class="fs-13 mgB-10">Điện thoại</label>
-									<input type="text" class="form-control" id="" placeholder="">
+									<label for="<?= Html::getInputId($contactInfo, 'mobile') ?>" class="fs-13 mgB-10"><?= $contactInfo->getAttributeLabel('mobile') ?></label>
+									<?= Html::activeTextInput($contactInfo, 'mobile', ['class' => 'form-control', 'placeholder' => '...']) ?>
 								</div>
 								<div class="form-group col-xs-6">
-									<label for="" class="fs-13 mgB-10">Email</label>
-									<input type="email" class="form-control" id="" placeholder="">
+									<label for="<?= Html::getInputId($contactInfo, 'email') ?>" class="fs-13 mgB-10"><?= $contactInfo->getAttributeLabel('email') ?></label>
+									<?= Html::activeTextInput($contactInfo, 'email', ['class' => 'form-control', 'placeholder' => '...']) ?>
 								</div>
 								<div class="form-group col-xs-6">
 									<label for="" class="fs-13 mgB-10">Bạn là</label>
