@@ -18,7 +18,12 @@ $(document).ready(function(){
 					form.fields[camel(self.attr('id'))] = self;
 				}
 			});
-
+			
+			for(var i in form.fields) {
+				form.fields[i].on('change', function(){
+					form.hideError($(this));
+				});
+			}
 			
 			form.files = $(".files" );
 			form.projectWrap = $('.project-wrap');
@@ -189,19 +194,29 @@ $(document).ready(function(){
 				var self = $(this);
 				
 				var unit = Number(form.el.find('input[name=price-unit]').filter(':checked').val());
-				var mask = Number(self.val().replace(',', '.'));
+				var mask = self.val() ? Number(self.val().replace(',', '.')) : '';
 				
 				calPrice(unit, mask);
 			});
 			
 			function calPrice(unit, mask) {
-				var price = mask * unit;
-				var priceFormat = formatNumber(Math.round(price) + '');
 				var priceShow = $('#price-show');
 				
-				if(priceFormat) {
-					priceShow.text(priceFormat).parent().show();
+				if(mask) {
+					var price = Math.round(mask * unit);
+					
+					form.fields.price.val(price);
+					
+					var priceFormat = formatNumber(price + '');
+					
+					
+					if(priceFormat) {
+						priceShow.text(priceFormat).parent().show();
+					} else {
+						priceShow.parent().hide();
+					}
 				} else {
+					form.fields.price.val('');
 					priceShow.parent().hide();
 				}
 			}
@@ -219,7 +234,9 @@ $(document).ready(function(){
 			});
 			
 			$('#preview').click(function(){
-				
+				if(form.validate()) {
+					
+				}
 			});
 		},
 		removeProject: function() {
@@ -337,6 +354,89 @@ $(document).ready(function(){
 			if(form.files.find('.template-download').length < 2) {
 				$('#upload-hint').fadeOut();
 			}
+		},
+		validate: function() {
+			form.require(form.fields.categoryId, lajax.t('Choose property types'));
+			form.require(form.fields.cityId, lajax.t('Choose city'));
+			
+			if(!form.isHidden(form.fields.districtId)) {
+				form.require(form.fields.districtId, lajax.t('Choose district'));
+			}
+			
+			if(!form.isHidden(form.fields.wardId)) {
+				form.require(form.fields.wardId, lajax.t('Choose ward'));
+			}
+			
+			if(!form.isHidden(form.fields.streetId)) {
+				form.require(form.fields.streetId, lajax.t('Choose street'));
+			}
+			
+			form.require(form.fields.area, lajax.t('Enter home size'));
+			form.require(form.fields.price, lajax.t('Enter price'));
+			form.require(form.fields.content, lajax.t('Enter content'));
+			form.require(form.fields.mobile, lajax.t('Enter mobile number'));
+			
+			if(!form.hasError(form.fields.area)) {
+				var val = form.fields.area.val();
+				
+				if(!form.isNumber(val) || val < 0) {
+					form.showError(form.fields.area, lajax.t('Home size is invalid'));
+				} else {
+					if(form.getSelectedCatEl()) {
+						var limit = form.getSelectedCatEl().data('limit');
+						
+						if(limit && Number(limit) < Number(val)) {
+							form.showError(form.fields.area, lajax.t('Home size must be not greater %s').replace('%s', limit));
+						}
+					}
+				}
+			}
+			
+			if(!form.hasError(form.fields.price)) {
+				if(!form.isNumber(form.fields.price.val())) {
+					form.showError(form.fields.price, lajax.t('Price is invalid'));
+				}
+			}
+			
+			if(!form.hasError(form.fields.mobile)) {
+				var val = form.fields.mobile.val();
+				
+				if(!form.isDigit(val)) {
+					form.showError(form.fields.mobile, lajax.t('Mobile number is invalid'));
+				} else if(val.length < 7 || val.length > 11) {
+					form.showError(form.fields.mobile, lajax.t('Số di động phải từ 7 đến 11 số.'));
+				}
+			}
+		},
+		require: function(el, m) {
+			if(el.val()) {
+				form.hideError(el);
+			} else {
+				form.showError(el, m);
+			}
+		},
+		showError: function(el, m) {
+			form.getWrap(el).addClass('has-error').find('.help-block').text(m);
+		},
+		hideError: function(el) {
+			form.getWrap(el).removeClass('has-error').find('.help-block').text('');
+		},
+		hasError: function(el) {
+			return form.getWrap(el).hasClass('has-error');
+		},
+		isHidden: function(el) {
+			return (form.getWrap(el).css('display') == 'none');
+		},
+		isNumber: function(number) {
+			var format = form.formatNumber(number);
+
+			return !isNaN(format);
+		},
+		isDigit: function(digit) {
+			return /^\d+$/.test(digit);
+		},
+		formatNumber: function(number) {
+			return number.replace('.', 'A').replace(',', '.');
 		}
 	};
 	
