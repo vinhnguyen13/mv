@@ -235,7 +235,10 @@ $(document).ready(function(){
 			
 			$('#preview').click(function(){
 				if(form.validate()) {
-					
+					$('.error-hint').fadeOut();
+				} else {
+					$('.error-hint').fadeIn();
+					console.log('s');
 				}
 			});
 		},
@@ -407,6 +410,12 @@ $(document).ready(function(){
 					form.showError(form.fields.mobile, lajax.t('Số di động phải từ 7 đến 11 số.'));
 				}
 			}
+			
+			if(form.el.find('.has-error').length > 0) {
+				return false;
+			}
+			
+			return true;
 		},
 		require: function(el, m) {
 			if(el.val()) {

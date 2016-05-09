@@ -257,6 +257,7 @@ use yii\web\View;
 							</div>
 						</div>
 					</div>
+					<div class="error-hint form-group col-xs-12 mgT-30" style="display: none;"><?= Yii::t('ad', 'Có lỗi xảy ra, vui lòng kiểm tra lại các trường bên trên') ?></div>
 					<div class="text-right col-xs-12 pdT-50">
 						<button id="preview" type="button" class="btn-common"><?= Yii::t('ad', 'Preview') ?> <span class="icon-mv"><span class="icon-angle-right"></span></span></button>
 					</div>
