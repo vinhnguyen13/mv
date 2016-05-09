@@ -2,11 +2,16 @@ var allow = [46, 8, 9, 27, 13, 110, 116];
 var form;
 
 $(document).ready(function(){
+	var excludeFields = {
+		'10': ['homeNo', 'roomNo', 'toiletNo', 'floorNo', 'homeDirection', 'facadeDirection', 'interior'],
+		'11': ['homeNo', 'roomNo', 'toiletNo', 'floorNo', 'homeDirection', 'facadeDirection', 'interior']
+	};
+	
 	form = {
 		el: $('#w0'),
 		fields: {},
 		init: function() {
-			form.el.find('select, input').each(function(){
+			form.el.find('select, input, textarea').each(function(){
 				var self = $(this);
 				
 				if(self.attr('id')) {
@@ -14,9 +19,12 @@ $(document).ready(function(){
 				}
 			});
 
+			
 			form.files = $(".files" );
 			form.projectWrap = $('.project-wrap');
 			form.attachEvents();
+			
+			form.oldCat = form.fields.categoryId.val();
 		},
 		attachEvents: function() {
 			form.files.sortable({cancel: '.template-upload'});
@@ -57,13 +65,29 @@ $(document).ready(function(){
 			});
 			
 			form.fields.categoryId.on('change', function(){
-				if($(this).val() == CHCK) {
+				var val = $(this).val();
+				
+				if(val == CHCK) {
 					form.getWrap(form.fields.projectBuildingId).fadeIn();
 				} else {
 					form.getWrap(form.fields.projectBuildingId).fadeOut(function(){
 						form.removeProject();
 					});
 				}
+				
+				if(typeof excludeFields[form.oldCat] !== 'undefined') {
+					for(var i = 0; i < excludeFields[form.oldCat].length; i++) {
+						form.getWrap(form.fields[excludeFields[form.oldCat][i]]).fadeIn();
+					}
+				}
+				
+				if(typeof excludeFields[val] !== 'undefined') {
+					for(var i = 0; i < excludeFields[val].length; i++) {
+						form.getWrap(form.fields[excludeFields[val][i]]).fadeOut();
+					}
+				}
+
+				form.oldCat = val;
 			});
 			
 			var ss = $('#search-list');
