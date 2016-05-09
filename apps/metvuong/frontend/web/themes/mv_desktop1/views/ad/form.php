@@ -113,7 +113,7 @@ use vsoft\ad\models\AdImages;
 						<div class="help-block"></div>
 					</div>
 					<div class="form-group col-xs-6 project-wrap<?= $product->projectBuilding ? ' has-project' : '' ?>"<?= $product->category_id == AdCategory::CATEGORY_CHCK ? '' : ' style="display: none;"' ?>>
-						<label for="" class="fs-13 mgB-10">Tên dự án <span class="color-cd pdL-15">+3 điểm</span></label>
+						<label for="" class="fs-13 mgB-10"><?= $product->getAttributeLabel('project_building_id') ?> <span class="color-cd pdL-15">+3 điểm</span></label>
 						<?= Html::activeHiddenInput($product, 'project_building_id') ?>
 						<input type="hidden" id="project-name" value="<?= $product->projectBuilding ? $product->projectBuilding->name : '' ?>" />
 						<a target="_blank" href="<?= $product->projectBuilding ? Url::to(['building-project/view', 'slug' => $product->projectBuilding->slug]) : '#'; ?>" id="project-value"><span class="icon-mv fs-12 mgR-5"><span class="icon-close-icon"></span></span><span class="name"><?= $product->projectBuilding ? $product->projectBuilding->name . ', ' . $districtDropdown[$product->projectBuilding->district_id] . ', ' . $citiesDropdown[$product->projectBuilding->city_id] : '' ?></span></a>
@@ -464,24 +464,28 @@ use vsoft\ad\models\AdImages;
 			</div>
 			<div class="col-sm-4 checkpoint-listing">
 				<div class="inner-checkpoint">
-					<div class="title-point">Metvuong chấm điểm</div>
+					<div class="title-point"><?= Yii::t('ad', 'Metvuong chấm điểm') ?></div>
 					<div class="point-select">
 						<div class="text-center total-point">
-							<span>30/100</span>điểm
+							<span><span id="score">0</span>/100</span>điểm
 							<div class="proccess-point">
-								<div style="width: 50%"></div>
+								<div id="score-percent" style="width: 0%"></div>
 							</div>
 						</div>
 						<ul>
-							<li><span class="icon-mv"><span class="selected-point icon-checked"></span></span>Tên dự án</li>
-							<li><span class="icon-mv"><span class="selected-point icon-checked"></span></span>Địa chỉ</li>
-							<li><span class="icon-mv"><span class="selected-point icon-checked"></span></span>Diện tích</li>
-							<li><span class="icon-mv"><span class="selected-point icon-checked"></span></span>Giá</li>
-							<li><span class="icon-mv"><span class="icon-checked"></span></span>Tiện ích</li>
-							<li><span class="icon-mv"><span class="icon-checked"></span></span>Mô tả chi tiết</li>
-							<li><span class="icon-mv"><span class="icon-checked"></span></span>Mô tả khu vực</li>
-							<li><span class="icon-mv"><span class="icon-checked"></span></span>Hình ảnh</li>
-							<li><span class="icon-mv"><span class="icon-checked"></span></span>Thông tin liên hệ</li>
+							<li data-id="project"<?= $product->category_id == AdCategory::CATEGORY_CHCK ? '' : ' style="display: none;"' ?>>
+								<span class="icon-mv"><span class="icon-checked<?= $product->projectBuilding ? ' selected-point' : '' ?>"></span></span><?= $product->getAttributeLabel('project_building_id') ?>
+							</li>
+							<li data-id="address"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Địa chỉ') ?></li>
+							<li data-id="room"><span class="icon-mv"><span class="icon-checked"></span></span><?= $additionInfo->getAttributeLabel('room_no') ?></li>
+							<li data-id="toilet"><span class="icon-mv"><span class="icon-checked"></span></span><?= $additionInfo->getAttributeLabel('toilet_no') ?></li>
+							<li data-id="floor"><span class="icon-mv"><span class="icon-checked"></span></span><?= $additionInfo->getAttributeLabel('floor_no') ?></li>
+							<li data-id="facadeW"><span class="icon-mv"><span class="icon-checked"></span></span><?= $additionInfo->getAttributeLabel('facade_width') ?></li>
+							<li data-id="land"><span class="icon-mv"><span class="icon-checked"></span></span><?= $additionInfo->getAttributeLabel('land_width') ?></li>
+							<li data-id="home"><span class="icon-mv"><span class="icon-checked"></span></span><?= $additionInfo->getAttributeLabel('home_direction') ?></li>
+							<li data-id="facadeD"><span class="icon-mv"><span class="icon-checked"></span></span><?= $additionInfo->getAttributeLabel('facade_direction') ?></li>
+							<li data-id=interior><span class="icon-mv"><span class="icon-checked"></span></span><?= $additionInfo->getAttributeLabel('interior') ?></li>
+							<li data-id=photo><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Hình ảnh') ?></li>
 						</ul>
 						
 					</div>

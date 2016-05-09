@@ -7,6 +7,13 @@ $(document).ready(function(){
 		'11': ['homeNo', 'roomNo', 'toiletNo', 'floorNo', 'homeDirection', 'facadeDirection', 'interior']
 	};
 	
+	var point = {};
+	
+	$('.point-select').find('.icon-checked').each(function(){
+		var self = $(this);
+		point[self.closest('li').data('id')] = self;
+	});
+	
 	form = {
 		el: $('#w0'),
 		fields: {},
@@ -44,6 +51,14 @@ $(document).ready(function(){
 			form.fields.streetId.on('change', form.resetLatLng);
 			form.fields.homeNo.on('change', form.resetLatLng);
 			form.fields.wardId.on('change', form.resetLatLng);
+			
+			form.fields.homeNo.on('change', function(){
+				if(form.fields.homeNo.val()) {
+					point.address.addClass('selected-point');
+				} else {
+					point.address.removeClass('selected-point');
+				}
+			});
 			
 			form.fields.type.on('change', form.filterCategories);
 			
