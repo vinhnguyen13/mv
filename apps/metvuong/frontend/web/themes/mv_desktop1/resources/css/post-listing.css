@@ -122,22 +122,31 @@ header.mm-slideout {
     background: rgba(0, 0, 0, 0.5);
     display: none;
 }
-.preview #review-listing {
+.previewing #review-listing {
 	display: block;
 }
-html.preview, body.preview {
+html.previewing, body.previewing {
 	overflow: hidden;
 }
 #review-listing .popup-wrap {
 	position: absolute;
-    max-width: 900px;
+    max-width: 985px;
+    width: 100%;
     left: 50%;
     transform: translateX(-50%);
 	background: #FFF;
 	margin: 42px 0;
-	padding: 22px;
+	padding: 20px;
 }
 #review-listing .detail-listing-extra {
 	padding-top: 0;
 	padding-bottom: 0;
+}
+
+@media (max-width: 985px) {
+	#review-listing .popup-wrap {
+    	left: 0;
+    	transform: translateX(0%);
+		margin: 0;
+	}
 }
