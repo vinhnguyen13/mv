@@ -31,9 +31,19 @@ $(document).ready(function(){
 			
 			form.oldCat = form.fields.categoryId.val();
 		},
+		resetLatLng: function(e) {
+			if(!form.projectWrap.hasClass('has-project')) {
+				form.fields.lat.val('');
+				form.fields.lng.val('');
+			}
+		},
 		attachEvents: function() {
 			form.files.sortable({cancel: '.template-upload'});
 			form.files.disableSelection();
+			
+			form.fields.streetId.on('change', form.resetLatLng);
+			form.fields.homeNo.on('change', form.resetLatLng);
+			form.fields.wardId.on('change', form.resetLatLng);
 			
 			form.fields.type.on('change', form.filterCategories);
 			
@@ -88,7 +98,7 @@ $(document).ready(function(){
 				
 				if(typeof excludeFields[val] !== 'undefined') {
 					for(var i = 0; i < excludeFields[val].length; i++) {
-						form.getWrap(form.fields[excludeFields[val][i]]).fadeOut();
+						form.getWrap(form.fields[excludeFields[val][i]]).fadeOut().val('');
 					}
 				}
 
@@ -158,6 +168,9 @@ $(document).ready(function(){
 					form.select(form.fields.cityId, r.city_id, r);
 					form.fields.cityId.prop("disabled", true);
 					form.fields.districtId.prop("disabled", true);
+					
+					form.fields.lat.val(r.lat);
+					form.fields.lng.val(r.lng);
 					
 					if(r.facilities) {
 						var fa = r.facilities.split(',');
@@ -236,11 +249,114 @@ $(document).ready(function(){
 			$('#preview').click(function(){
 				if(form.validate()) {
 					$('.error-hint').fadeOut();
+					
+					if(!form.fields.lat.val()) {
+						form.geoLocation(form.buildAddress());
+					}
+					
+					form.showPreview();
 				} else {
 					$('.error-hint').fadeIn();
-					console.log('s');
 				}
 			});
+			
+			$('#review-listing').click(function(e){
+				if($(e.target).attr('id') == 'review-listing') {
+					form.hidePreview();
+				}
+			});
+		},
+		showPreview: function() {
+			$('html, body').addClass('preview');
+			
+			var previewEls = form.getPreviewEls();
+			
+			previewEls.swiperWrapper.html('');
+			
+			if(tempSlide) {
+				previewEls.galleryDetail.show();
+				previewEls.noGallery.hide();
+				
+				for(var i in tempSlide) {
+					previewEls.swiperWrapper.append('<div class="swiper-slide"> <div class="img-show"> <div> <img src="' + tempSlide[i] + '"> </div> </div> </div>');
+				}
+				
+				tempSlide = false;
+			} else {
+				var galleries = form.files.find('.template-download');
+				
+				if(galleries.length > 0) {
+					previewEls.galleryDetail.show();
+					previewEls.noGallery.hide();
+					
+					galleries.each(function(){
+						previewEls.swiperWrapper.append('<div class="swiper-slide"> <div class="img-show"> <div> <img src="' + $(this).find('a').attr('href') + '"> </div> </div> </div>');
+					});
+				} else {
+					previewEls.galleryDetail.hide();
+					previewEls.noGallery.show();
+				}
+			}
+			
+			if(previewEls.swiperWrapper.html() != '') {
+				form.swiper = new Swiper('.swiper-container', {
+			        spaceBetween: 0,
+			        nextButton: '.swiper-button-next',
+	    			prevButton: '.swiper-button-prev'
+			    });
+			}
+		},
+		hidePreview: function() {
+			$('html, body').removeClass('preview');
+			
+			if(form.swiper) {
+				form.swiper.destroy(false, true);
+				form.swiper = null;
+			}
+		},
+		getPreviewEls: function() {
+			return {
+				galleryDetail: $('.gallery-detail'),
+				noGallery: $('.no-gallery'),
+				swiperWrapper: $('.swiper-wrapper')
+			};
+		},
+		geoLocation: function(address) {
+			if(address) {
+				var geoCode = new google.maps.Geocoder;
+				geoCode.geocode({address: address}, function(results) {
+					if(results.length) {
+						form.fields.lat.val(results[0].geometry.location.lat());
+						form.fields.lng.val(results[0].geometry.location.lng());
+					} else {
+						form.geoLocation(form.splitAddress(address));
+					}
+				});
+			}
+		},
+		splitAddress: function(address) {
+			address = address.split(', ');
+			address.shift();
+			return address.join(', ');
+		},
+		buildAddress: function() {
+			var address = [];
+			
+			if(form.fields.homeNo.val() && form.fields.showHomeNo.prop('checked')) {
+				address.push(form.fields.homeNo.val());
+			}
+
+			
+			var street = form.fields.streetId.find('option').filter(':selected');
+			address.push(street.data('pre') + ' ' + street.text());
+			
+			var ward = form.fields.wardId.find('option').filter(':selected');
+			address.push(ward.data('pre') + ' ' + ward.text());
+			
+			address.push(form.fields.districtId.find('option').filter(':selected').text());
+			address.push(form.fields.cityId.find('option').filter(':selected').text());
+			
+			return address.join(', ');
 		},
 		removeProject: function() {
 
@@ -339,7 +455,11 @@ $(document).ready(function(){
 		appendDropdown: function(el, items) {
 			el.find("option:not(:first-child)").remove();
 			for(var i in items) {
-				el.append('<option value="' + items[i]['id'] + '">' + items[i]['name'] + '</option>');
+				if(items[i]['pre']) {
+					el.append('<option data-pre="' + items[i]['pre'] + '" value="' + items[i]['id'] + '">' + items[i]['name'] + '</option>');
+				} else {
+					el.append('<option value="' + items[i]['id'] + '">' + items[i]['name'] + '</option>');
+				}
 			}
 			
 			el.select2('val');
@@ -477,7 +597,7 @@ $(document).ready(function(){
 	var offtop = form.el.offset().top - ($('header').outerHeight() + 12);
 
 	if(Number(cl.css('margin-top').replace('px', '')) == 0) {
-		w.on('scroll', wScroll);
+		w.on('scroll', wScroll).trigger('scroll');
 	}
 	
 	function wScroll() {
@@ -499,6 +619,10 @@ $(document).ready(function(){
 			w.off('scroll', wScroll);
 		}
 	});
+	
+	if(!isNewRecord) {
+		form.showPreview();
+	}
 });
 
 function camel(str) {

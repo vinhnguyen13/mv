@@ -33,6 +33,7 @@ class AdWard extends AW
 			foreach($wards as $ward) {
 				$items[] = [
 					'id' => $ward['id'],
+					'pre' => $ward['pre'],
 					'name' => $ward['name']
 				];
 			}

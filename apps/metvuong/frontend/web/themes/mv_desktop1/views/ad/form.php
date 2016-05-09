@@ -13,6 +13,7 @@ use vsoft\ad\models\AdFacility;
 use common\widgets\fileupload\FileUpload;
 use yii\helpers\Url;
 use yii\web\View;
+use vsoft\ad\models\AdImages;
 
 	/**
 	 * @var $product vsoft\ad\models\AdProduct
@@ -27,8 +28,11 @@ use yii\web\View;
 // $product->ward_id = 253;
 // $product->street_id = 2755;
 
-	$this->registerCss(".has-error .help-block {display: block;} .help-block {display: none;} .fileinput-button:active {box-shadow: none;} .upload-img-listing .progress {bottom: 0px;} canvas {vertical-align: middle;} #upload-hint {display: none; position: absolute; top: -4px; left: 10px;} .has-project #projectMask {display: none;} .has-project #project-value {display: block;} #project-value .icon-mv {float: right} #project-value .name {display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 10px; } #project-value {display: none; background-color: #e4e4e4; border: 1px solid #aaa; padding: 0 5px; line-height: 31px;} #search-list ul li:hover {background: rgba(0, 167, 105, 0.2);} #search-list ul li {padding: 4px 8px; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer;} #search-list ul {background: #FFF; box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.26); border: 1px solid rgba(0, 0, 0, 0.2);} #search-list {position: absolute; z-index: 1; padding-right: 40px; width: 100%;} .price-show-wrap {color: #00a769; margin-left: 12px; display: none; font-size: 14px;} .price-show-wrap .vnd {margin-left: 6px;} .require-hint {color: red; margin-left: 3px; font-size: 11px;} .select2-container--default .select2-selection--single {height: 34px;} .select2-container--default .select2-selection--single {border-radius: 0px;}");
 	$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/select2.min.css');
+	$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/swiper.min.css');
+	$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/post-listing.css');
+	$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
+	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.jquery.min.js', ['position' => View::POS_END]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/jquery-ui.min.js', ['position' => View::POS_END]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/select2.full.min.js', ['position' => View::POS_END]);
 	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/string-helper.js', ['position' => View::POS_END]);
@@ -38,6 +42,14 @@ use yii\web\View;
 	$citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
 	// $citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != AdProduct::DEFAULT_CITY)]; });
 	$citiesOptions = [];
+	
+	$wards = AdWard::getListByDistrict($product->district_id);
+	$wardsDropdown = ArrayHelper::map($wards, 'id', 'name');
+	$wardsOptions = ArrayHelper::map($wards, 'id', function($ward){ return ['data-pre' => $ward['pre']]; });
+	
+	$streets = AdStreet::getListByDistrict($product->district_id);
+	$streetsDropdown = ArrayHelper::map($streets, 'id', 'name');
+	$streetsOptions = ArrayHelper::map($streets, 'id', function($street){ return ['data-pre' => $street['pre']]; });
 	
 	$districtDropdown = ArrayHelper::map(AdDistrict::getListByCity($product->city_id), 'id', 'name');
 	
@@ -59,7 +71,7 @@ use yii\web\View;
 		];
 	}
 	
-	$this->registerJs("var categories = " . json_encode($categoriesJs) . "; var APPLY_TO_TYPE_BOTH = " . AdCategory::APPLY_TO_TYPE_BOTH . "; var CHCK = " . AdCategory::CATEGORY_CHCK . ";", View::POS_HEAD);
+	$this->registerJs("var tempSlide = " . ($product->adImages ? json_encode(ArrayHelper::map($product->adImages, 'id', 'url')) : 'false') . "; var isNewRecord = " . ($product->isNewRecord ? 'true' : 'false') . "; var categories = " . json_encode($categoriesJs) . "; var APPLY_TO_TYPE_BOTH = " . AdCategory::APPLY_TO_TYPE_BOTH . "; var CHCK = " . AdCategory::CATEGORY_CHCK . ";", View::POS_HEAD);
 ?>
 <div class="title-fixed-wrap container">
 	<div class="post-listing">
@@ -99,12 +111,12 @@ use yii\web\View;
 					</div>
 					<div class="form-group col-xs-6"<?= $product->district_id ? '' : ' style="display: none;"' ?>>
 						<label for="<?= Html::getInputId($product, 'ward_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('ward_id') ?><span class="require-hint">*</span></label>
-						<?= Html::activeDropDownList($product, 'ward_id', ArrayHelper::map(AdWard::getListByDistrict($product->district_id), 'id', 'name'), ['class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose District to show Wards'), 'disabled' => ($product->projectBuilding && $product->projectBuilding->ward_id) ? true : false]) ?>
+						<?= Html::activeDropDownList($product, 'ward_id', $wardsDropdown, ['options' => $wardsOptions, 'class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose District to show Wards'), 'disabled' => ($product->projectBuilding && $product->projectBuilding->ward_id) ? true : false]) ?>
 						<div class="help-block"></div>
 					</div>
 					<div class="form-group col-xs-6"<?= $product->district_id ? '' : ' style="display: none;"' ?>>
 						<label for="<?= Html::getInputId($product, 'street_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('street_id') ?><span class="require-hint">*</span></label>
-						<?= Html::activeDropDownList($product, 'street_id', ArrayHelper::map(AdStreet::getListByDistrict($product->district_id), 'id', 'name'), ['class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose District to show Streets'), 'disabled' => ($product->projectBuilding && $product->projectBuilding->street_id) ? true : false]) ?>
+						<?= Html::activeDropDownList($product, 'street_id', $streetsDropdown, ['options' => $streetsOptions, 'class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose District to show Streets'), 'disabled' => ($product->projectBuilding && $product->projectBuilding->street_id) ? true : false]) ?>
 						<div class="help-block"></div>
 					</div>
 					<div class="form-group col-xs-6 fild-address"<?= $product->district_id ? '' : ' style="display: none;"' ?>>
@@ -261,7 +273,338 @@ use yii\web\View;
 					<div class="text-right col-xs-12 pdT-50">
 						<button id="preview" type="button" class="btn-common"><?= Yii::t('ad', 'Preview') ?> <span class="icon-mv"><span class="icon-angle-right"></span></span></button>
 					</div>
-					<div id="review-listing-post"></div>
+					<?= Html::activeHiddenInput($product, 'lat') ?>
+					<?= Html::activeHiddenInput($product, 'lng') ?>
+					<div id="review-listing">
+						<div class="overlay"></div>
+						<div class="popup-wrap">
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+							<div class="detail-listing detail-listing-extra">	
+								<div id="detail-wrap">
+									<div class="wrap-swiper clearfix">
+										<div class="no-gallery pull-left">
+											<div class="img-show">
+												<div>
+													<img alt="" src="/themes/metvuong2/resources/images/default-ads.jpg">
+												</div>
+											</div>
+										</div>
+									
+										<div class="gallery-detail swiper-container pull-left">
+											<div class="swiper-wrapper"></div>
+											<div class="swiper-button-prev icon-mv"><span class=""></span></div>
+											<div class="swiper-button-next icon-mv"><span class=""></span></div>
+										</div>
+								<ul class="pull-right icons-detail">
+					<li class="color-1">
+						<a href="#" data-toggle="tooltip" data-placement="bottom" title="Sao chép đường dẫn" data-title-success="Đã sao chép" class="btn-copy" data-clipboard-text="http://local.metvuong.com/real-estate/detail/25074-phuong-ben-nghe-quan-1-ho-chi-minh">
+							<span class="icon-mv"><span class="icon-link"></span></span>
+							<span>Sao chép đường dẫn</span>
+						</a>
+					</li>
+					<li class="color-2">
+						<a href="#" class="share-facebook" data-url="http://local.metvuong.com/ad/tracking-share?product_id=25074&amp;type=1">
+							<span class="icon-mv"><span class="icon-facebook"></span></span>
+							<span>Chia sẻ Facebook</span>
+						</a>
+					</li>
+					<li class="color-3">
+						<a href="#" data-toggle="modal" data-target="#popup_email" data-type="share" class="email-btn">
+							<span class="icon-mv fs-18"><span class="icon-mail-profile"></span></span>
+							<span>Chia sẻ Email</span>
+						</a>
+					</li>
+					<li class="color-4">
+						<a href="#" class="save-item  " data-id="25074" data-url="/ad/favorite">
+							<span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
+							<span>Thêm yêu thích</span>
+						</a>
+					</li>
+					<li class="color-5">
+						<a href="#" data-toggle="modal" data-target="#popup-map">
+							<span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
+							<span>Vị trí</span>
+						</a>
+					</li>
+					<li class="color-6">
+						<a href="#" class="report">
+							<span class="icon-mv"><span class="icon-warning"></span></span>
+							<span>Báo cáo</span>
+						</a>
+					</li>
+					<li class="color-8">
+						<a href="#" data-popover="true">
+							<span class="icon-mv"><span class="icon-phone-profile"></span></span>
+							<span>Liên hệ Môi giới</span>
+						</a>
+						<div class="popover-append hide">
+							<div class="infor-agent clearfix">
+                                                                    <a href="/demo" class="wrap-img">
+                                        <img src="/images/default-avatar.jpg" alt="demo"></a>
+                                								<div class="img-agent">
+                                                                            <a href="/demo" class="name-agent">Demo</a>
+                                        <div class="stars">
+	                                        <span id="rating-all" class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
+	                                        <span class="fs-13 font-600 count_review">(0)</span>
+	                                    </div>
+                                    
+                                                                            <div class="item-agent">
+                                            <span class="icon-mv">
+                                            	<span class="icon-phone-profile"></span>
+                                            </span>
+                                            <a href="tel:12345678">12345678</a>
+                                        </div>
+                                    
+                                                                            <div class="item-agent">
+                                            <span class="icon-mv"><span class="icon-mail-profile"></span></span>
+                                            vinh@dwm.vn                                        </div>
+                                    
+                                                                                <div class="item-agent">
+                                                <span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
+                                                Hồ Chí Minh                                            </div>
+                                                                                                                    <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn btn-common btn-small">Email</a>
+                                        <a href="#" class="chat-btn btn-common btn-small chat-now" data-chat-user="demo">Chat</a>
+                                    								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="infor-listing">
+				<div class="address-feat clearfix">
+					<p class="infor-by-up">
+						Căn hộ chung cư Bán bởi <a href="javascript:;">Chủ nhà</a>
+					</p>
+					<div class="address-listing">
+						<p>Phường Bến Nghé, Quận 1, Hồ Chí Minh</p>
+					</div>
+					<div class="pull-left left-attr-detail">
+						<p class="id-duan">Mã tin:<span>MV25074</span></p>
+						<ul class="clearfix list-attr-td">
+	                        <li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>100m2 </li><li><span class="icon-mv"><span class="icon-bed-search"></span></span>2 </li><li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>2 </li>						</ul>
+					</div>
+					<div class="overflow-all right-attr-detail">
+						<p class="price-td">
+							Giá<br>
+							<span>9 tỷ</span>
+						</p>
+					</div>
+				</div>
+				<meta name="keywords" content="Phường Bến Nghé, Quận 1, Hồ Chí Minh">
+<meta name="description" content="jdaklsfjldasjfljasdlf">
+<meta property="og:title" content="Phường Bến Nghé, Quận 1, Hồ Chí Minh">
+<meta property="og:description" content="jdaklsfjldasjfljasdlf">
+<meta property="og:type" content="article">
+<meta property="og:image" content="http://local.metvuong.com/store/ad/2016/05/04/480x360/5729cea37ef4b.jpg">
+<meta property="og:url" content="http://local.metvuong.com/real-estate/detail/25074-phuong-ben-nghe-quan-1-ho-chi-minh">
+<style>.map-wrap {position: relative;} .map-wrap:after {display: block; content: ""; padding-top: 75%;} .map-inside {position: absolute; width: 100%; height: 100%;} #map {height: 100%;}</style><div id="popup_email" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header title-popup clearfix">
+                <div class="text-center popup_title">LIÊN HỆ</div>
+                <a href="#" class="txt-cancel btn-cancel close" data-dismiss="modal" aria-label="Close">Hủy bỏ</a>
+                <a href="#" class="txt-done btn-done send_mail" data-alert="Gửi email thành công !">Gửi</a>
+            </div>
+            <div class="modal-body">
+                <div class="wrap-popup">
+                    <div class="inner-popup">
+                        <form id="share_form" action="/ad/sendmail" method="post" role="form">
+<input type="hidden" name="_csrf" value="bzBSR2V2QjAqfjA9UzAjRBp3HCoCBxtEA3IoNlFECGIcYBMVNikoYA=="><div class="form-group field-shareform-your_email required">
+
+<input type="hidden" id="shareform-your_email" class="your_email" name="ShareForm[your_email]" value="lenh.quach@trungthuygroup.vn">
+
+<p class="help-block help-block-error"></p>
+</div>                        <div class="frm-item frm-email">
+                            <div class="form-group field-shareform-recipient_email required">
+
+<input type="text" id="shareform-recipient_email" class="recipient_email" name="ShareForm[recipient_email]" value="vinh@dwm.vn" placeholder="Email người nhận">
+
+<p class="help-block help-block-error"></p>
+</div>                        </div>
+
+                        <div class="frm-item frm-email hide">
+                            <div class="form-group field-shareform-subject">
+
+<input type="hidden" id="shareform-subject" class="subject2" name="ShareForm[subject]" placeholder="Tiêu đề...">
+
+<p class="help-block help-block-error"></p>
+</div>                        </div>
+                        <div class="frm-item frm-email">
+                            <div class="form-group field-shareform-content">
+
+<textarea id="shareform-content" class="content" name="ShareForm[content]" rows="5" cols="30" placeholder="Nội dung"></textarea>
+
+<p class="help-block help-block-error"></p>
+</div>                        </div>
+                        <div class="item-send">
+                            <div class="form-group field-shareform-type">
+
+<input type="hidden" id="shareform-type" class="type" name="ShareForm[type]" value="contact">
+
+<p class="help-block help-block-error"></p>
+</div><div class="form-group field-shareform-from_name">
+
+<input type="hidden" id="shareform-from_name" class="from_name" name="ShareForm[from_name]" value="TTG | METVUONG QUACH TUAN LENH">
+
+<p class="help-block help-block-error"></p>
+</div><div class="form-group field-shareform-to_name">
+
+<input type="hidden" id="shareform-to_name" class="to_name" name="ShareForm[to_name]" value="Demo">
+
+<p class="help-block help-block-error"></p>
+</div>                            <div class="img-show"><div><a href="http://local.metvuong.com/real-estate/detail/25074-phuong-ben-nghe-quan-1-ho-chi-minh"><img src="/store/ad/2016/05/04/480x360/5729cea37ef4b.jpg" alt="Phường Bến Nghé, Quận 1, Hồ Chí Minh"></a></div></div>
+                            <div class="infor-send">
+                                <p class="name"><a href="http://local.metvuong.com/real-estate/detail/25074-phuong-ben-nghe-quan-1-ho-chi-minh">Phường Bến Nghé, Quận 1, Hồ Chí Minh</a></p>
+                                <p class="address"></p>
+                                <p>jdaklsfjldasjfljasdlf</p>
+                                <p class="send-by">BY METVUONG.COM</p>
+                            </div>
+
+                            <div class="form-group field-shareform-pid">
+
+<input type="hidden" id="shareform-pid" class="pid" name="ShareForm[pid]" value="MV25074">
+
+<p class="help-block help-block-error"></p>
+</div>                            <div class="form-group field-shareform-address">
+
+<input type="hidden" id="shareform-address" class="_address" name="ShareForm[address]" value="Phường Bến Nghé, Quận 1, Hồ Chí Minh">
+
+<p class="help-block help-block-error"></p>
+</div>                            <div class="form-group field-shareform-detailurl">
+
+<input type="hidden" id="shareform-detailurl" class="_detailUrl" name="ShareForm[detailUrl]" value="http://local.metvuong.com/real-estate/detail/25074-phuong-ben-nghe-quan-1-ho-chi-minh">
+
+<p class="help-block help-block-error"></p>
+</div>                            <div class="form-group field-shareform-domain">
+
+<input type="hidden" id="shareform-domain" class="_domain" name="ShareForm[domain]" value="http://local.metvuong.com">
+
+<p class="help-block help-block-error"></p>
+</div>                                                    </div>
+                        </form>                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+			</div>
+			<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+		        <div class="panel panel-default">
+		            <div class="panel-heading" role="tab" id="headingOne">
+		                <h4 class="panel-title">
+		                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+		                        Mô tả		                        <span class="icon-mv"><span class="icon-plus"></span></span>
+		                    </a>
+		                </h4>
+		            </div>
+		            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+		                <div class="panel-body" name="about" placeholder="Vui lòng chia sẻ tiểu sử">
+		                    <p>jdaklsfjldasjfljasdlf</p>
+		                </div>
+		            </div>
+		        </div>
+		        <div class="panel panel-default">
+		            <div class="panel-heading" role="tab" id="headingTwo">
+		                <h4 class="panel-title">
+		                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+		                        Thông tin chi tiết		                        <span class="icon-mv"><span class="icon-plus"></span></span>
+		                    </a>
+		                </h4>
+		            </div>
+		            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+		                <div class="panel-body" name="activity">
+		                	<ul class="clearfix list-tienich-detail">
+			                    								<li><strong>Dự án:</strong> <a href="/du-an/ben-thanh-times-square">Ben Thanh Times Square</a></li>
+																								<li><strong>Mặt tiền:</strong> 22m</li>
+																								<li><strong>Đường vào:</strong> 22m</li>
+																								<li><strong>Tầng cao:</strong> 23  Tầng</li>
+																								<li><strong>Hướng nhà:</strong> Tây</li>
+																								<li><strong>Hướng ban công:</strong> Tây</li>
+																								<li><strong>Nội thất:</strong> 34234234</li>
+															</ul>
+		                </div>
+		            </div>
+		        </div>
+		        		        <div class="panel panel-default">
+		            <div class="panel-heading" role="tab" id="headingSeven">
+		                <h4 class="panel-title">
+		                    <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEght" aria-expanded="false" aria-controls="collapseSeven">
+		                        Liên hệ		                        <span class="icon-mv"><span class="icon-plus"></span></span>
+		                    </a>
+		                </h4>
+		            </div>
+		            <div id="collapseEght" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven">
+		                <div class="panel-body text-center">
+		            	    <div class="infor-agent clearfix">
+					            								    <a href="/demo" class="wrap-img">
+					                <img src="/images/default-avatar.jpg" alt="demo"></a>
+					            					            <div class="img-agent">
+                                    						            <a href="/demo" class="name-agent">Demo</a>
+                                    <div class="stars">
+                                        <span id="rating-all-bottom" class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="true"></span>
+                                        <span class="fs-13 font-600 count_review">(0)</span>
+                                    </div>
+                                    
+
+
+																		<div class="item-agent">
+										<div>
+											<span class="icon icon-phone"></span>
+										</div>
+										<a href="tel:12345678">12345678</a>
+									</div>
+																											<div class="item-agent">
+										<div>
+											<span class="icon icon-email"></span>
+										</div>
+										vinh@dwm.vn									</div>
+									                                    									<div class="item-agent">
+										<div>
+											<span class="icon address-icon"></span>
+										</div>
+										Hồ Chí Minh									</div>
+                                    									                                        
+																	</div>
+							</div>
+
+		                </div>
+		            </div>
+
+		        </div>
+		    </div>
+		</div>	
+		</div>			
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+							<div class="text-center">
+								<button id="post" type="button" class="btn-common"><?= Yii::t('ad', 'Back') ?></button>
+								<button id="close" type="button" class="btn-common"><?= $product->isNewRecord ? Yii::t('ad', 'Post') : Yii::t('ad', 'Update') ?></button>
+							</div>
+						</div>
+					</div>
 				<?php $form->end() ?>
 			</div>
 			<div class="col-sm-4 checkpoint-listing">

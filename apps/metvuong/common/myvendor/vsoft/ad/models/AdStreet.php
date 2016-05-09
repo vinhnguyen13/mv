@@ -33,6 +33,7 @@ class AdStreet extends ASt
 			foreach($streets as $street) {
 				$items[] = [
 					'id' => $street['id'],
+					'pre' => $street['pre'],
 					'name' => $street['name']
 				];
 			}
