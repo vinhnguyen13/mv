@@ -115,6 +115,7 @@ use vsoft\ad\models\AdImages;
 					<div class="form-group col-xs-6 project-wrap<?= $product->projectBuilding ? ' has-project' : '' ?>"<?= $product->category_id == AdCategory::CATEGORY_CHCK ? '' : ' style="display: none;"' ?>>
 						<label for="" class="fs-13 mgB-10">Tên dự án <span class="color-cd pdL-15">+3 điểm</span></label>
 						<?= Html::activeHiddenInput($product, 'project_building_id') ?>
+						<input type="hidden" id="project-name" value="<?= $product->projectBuilding ? $product->projectBuilding->name : '' ?>" />
 						<a target="_blank" href="<?= $product->projectBuilding ? Url::to(['building-project/view', 'slug' => $product->projectBuilding->slug]) : '#'; ?>" id="project-value"><span class="icon-mv fs-12 mgR-5"><span class="icon-close-icon"></span></span><span class="name"><?= $product->projectBuilding ? $product->projectBuilding->name . ', ' . $districtDropdown[$product->projectBuilding->district_id] . ', ' . $citiesDropdown[$product->projectBuilding->city_id] : '' ?></span></a>
 						<input type="text" class="form-control" id="projectMask" placeholder="...">
 						<div id="search-list" class="hide"><ul></ul></div>
@@ -297,7 +298,6 @@ use vsoft\ad\models\AdImages;
 					<?= Html::activeHiddenInput($product, 'lat') ?>
 					<?= Html::activeHiddenInput($product, 'lng') ?>
 					<div id="review-listing">
-						<div class="overlay"></div>
 						<div class="popup-wrap">
 							<div class="detail-listing detail-listing-extra">	
 								<div id="detail-wrap">
@@ -412,7 +412,7 @@ use vsoft\ad\models\AdImages;
 								            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
 								                <div class="panel-body" name="activity">
 								                	<ul class="clearfix list-tienich-detail">
-									                	<li><strong>Dự án:</strong> <a href="/du-an/ben-thanh-times-square">Ben Thanh Times Square</a></li>
+									                	<li><strong><?= $product->getAttributeLabel('project_building_id') ?>:</strong> <a href="javascript:;" class="ref" data-ref="#project-name"></a></li>
 														<li><strong><?= $additionInfo->getAttributeLabel('floor_no') ?>:</strong> <span class="ref" data-ref="#adproductadditioninfo-floor_no"></span> Tầng</li>
 														<li><strong><?= $additionInfo->getAttributeLabel('facade_width') ?>:</strong> <span class="ref" data-ref="#adproductadditioninfo-facade_width"></span>m</li>
 														<li><strong><?= $additionInfo->getAttributeLabel('land_width') ?>:</strong> <span class="ref" data-ref="#adproductadditioninfo-land_width"></span>m</li>

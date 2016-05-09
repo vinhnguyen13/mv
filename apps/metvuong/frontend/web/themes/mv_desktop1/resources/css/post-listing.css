@@ -129,13 +129,10 @@ html.previewing, body.previewing {
 	overflow: hidden;
 }
 #review-listing .popup-wrap {
-	position: absolute;
     max-width: 985px;
     width: 100%;
-    left: 50%;
-    transform: translateX(-50%);
 	background: #FFF;
-	margin: 42px 0;
+	margin: 42px auto;
 	padding: 20px;
 }
 #review-listing .detail-listing-extra {
