@@ -193,6 +193,10 @@ $(document).ready(function(){
 				
 				e.preventDefault();
 			});
+			
+			$('#preview').click(function(){
+				
+			});
 		},
 		removeProject: function() {
 
@@ -246,6 +250,12 @@ $(document).ready(function(){
 			return el.closest('.form-group');
 		},
 		cityChange: function(fn) {
+			if(form.fields.cityId.val()) {
+				form.getWrap(form.fields.districtId).fadeIn();
+			} else {
+				form.getWrap(form.fields.districtId).fadeOut();
+			}
+			
 			$.get('/ad/list-district', {cityId: form.fields.cityId.val()}, function(districts){
 				form.appendDropdown(form.fields.districtId, districts);
 
@@ -257,6 +267,16 @@ $(document).ready(function(){
 		districtChange: function(fn) {
 			form.appendDropdown(form.fields.wardId, []);
 			form.appendDropdown(form.fields.streetId, []);
+			
+			if(form.fields.districtId.val()) {
+				form.getWrap(form.fields.wardId).fadeIn();
+				form.getWrap(form.fields.streetId).fadeIn();
+				form.getWrap(form.fields.homeNo).fadeIn();
+			} else {
+				form.getWrap(form.fields.wardId).fadeOut();
+				form.getWrap(form.fields.streetId).fadeOut();
+				form.getWrap(form.fields.homeNo).fadeOut();
+			}
 			
 			if(form.fields.districtId.val()) {
 				$.get('/ad/list-sw', {districtId: form.fields.districtId.val()}, function(response){
@@ -282,6 +302,17 @@ $(document).ready(function(){
 		},
 		fileuploadcompleted: function(e, d, t) {
 			form.files.sortable('refreshPositions');
+			
+			if(form.files.find('.template-download').length > 1) {
+				$('#upload-hint').fadeIn();
+			}
+		},
+		fileuploaddestroyed: function(e, d, t) {
+			form.files.sortable('refreshPositions');
+			
+			if(form.files.find('.template-download').length < 2) {
+				$('#upload-hint').fadeOut();
+			}
 		}
 	};
 	
