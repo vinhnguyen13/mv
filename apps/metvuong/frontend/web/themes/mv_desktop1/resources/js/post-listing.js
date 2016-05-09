@@ -338,6 +338,34 @@ $(document).ready(function(){
 	});
 	
 	form.el.find('.number-only').on('keydown', numnberOnly);
+	
+	var w = $(window);
+	var cl = $('.checkpoint-listing');
+	var offtop = form.el.offset().top - ($('header').outerHeight() + 12);
+
+	if(Number(cl.css('margin-top').replace('px', '')) == 0) {
+		w.on('scroll', wScroll);
+	}
+	
+	function wScroll() {
+		var st = w.scrollTop();
+		if(st >= offtop) {
+			cl.css('top', st - offtop);
+		} else {
+			cl.css('top', 0);
+		}
+	}
+	
+	w.on('resize', function(){
+		offtop = form.el.offset().top - ($('header').outerHeight() + 12);
+		
+		if(Number(cl.css('margin-top').replace('px', '')) == 0) {
+			w.on('scroll', wScroll);
+		} else {
+			cl.removeAttr('style');
+			w.off('scroll', wScroll);
+		}
+	});
 });
 
 function camel(str) {
