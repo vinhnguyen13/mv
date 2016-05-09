@@ -80,10 +80,28 @@ if(!Yii::$app->user->isGuest) {
             $(document).bind('chat/showBoxChat', function (event, user) {
                 if (user) {
                     var chatBoxExist = chatUI.getBoxChat('.item-box-chat', '<?=Yii::$app->user->identity->username?>', user);
+                    var totalWidth = 0;
+                    $.map($('.wrap-items-chat .item-box-chat'),function(val){
+                        totalWidth += $(val).width();
+                    });
+                    var widthAccept = $(window).width() - 260;
+                    if(totalWidth > widthAccept){
+                        $('.more-box-chat').removeClass('hide');
+                    }
                     if(!chatBoxExist){
                         $(document).trigger('chat/addBoxChat', [user]);
-                        chatBoxExist = chatUI.getBoxChat('.item-box-chat', '<?=Yii::$app->user->identity->username?>', user);
+                    }else{
+                        $(document).trigger('chat/activeBoxChat', [chatBoxExist]);
                     }
+
+                }
+            });
+
+            $(document).bind('chat/activeBoxChat', function (event, chatBoxExist) {
+                $('.item-box-chat .title-top').css({"background-color": "#00a769"});
+                if(chatBoxExist){
+                    chatBoxExist.find('input').focus();
+                    chatBoxExist.find('.title-top').css({"background-color": "#008A57"});
                 }
             });
 
@@ -102,6 +120,7 @@ if(!Yii::$app->user->isGuest) {
                         success: function (data) {
                             Chat.historyMessage(user + '@<?=Chat::DOMAIN?>');
                             chatBoxExist.find('.box-chat-footer').append(data);
+                            $(document).trigger('chat/activeBoxChat', [chatBoxExist]);
                             $('body').loading({done:true});
                         }
                     });
