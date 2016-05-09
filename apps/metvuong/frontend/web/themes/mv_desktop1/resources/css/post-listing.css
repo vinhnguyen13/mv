@@ -17,11 +17,11 @@ header.mm-slideout {
 	box-shadow: none;
 }
 
-.upload-img-listing .progress {
+#w0 .upload-img-listing .progress {
 	bottom: 0px;
 }
 
-canvas {
+#w0 canvas {
 	vertical-align: middle;
 }
 
@@ -50,6 +50,7 @@ canvas {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	padding-right: 10px;
+	font-size: 13px;
 }
 
 #project-value {

@@ -300,7 +300,6 @@ $(document).ready(function(){
 			
 			if(previewEls.swiperWrapper.html() != '') {
 				form.swiper = new Swiper('.swiper-container', {
-			        spaceBetween: 0,
 			        nextButton: '.swiper-button-next',
 	    			prevButton: '.swiper-button-prev'
 			    });
