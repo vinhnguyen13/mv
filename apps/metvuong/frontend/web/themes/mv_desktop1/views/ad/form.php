@@ -112,7 +112,7 @@ use yii\web\View;
 					</div>
 					<div class="clearfix"></div>
 					<div class="form-group col-xs-6">
-						<label for="<?= Html::getInputId($product, 'area') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('area') ?></label>
+						<label for="<?= Html::getInputId($product, 'area') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('area') ?><span class="require-hint">*</span></label>
 						<?= Html::activeTextInput($product, 'area', ['class' => 'form-control number-only number-float', 'placeholder' => '...']) ?>
 					</div>
 					<div class="form-group col-xs-6 price-type">
@@ -129,7 +129,7 @@ use yii\web\View;
 						</div>
 					</div>
 					<div class="form-group col-xs-12">
-						<label for="<?= Html::getInputId($product, 'content') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('content') ?></label>
+						<label for="<?= Html::getInputId($product, 'content') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('content') ?><span class="require-hint">*</span></label>
 						<?= Html::activeTextarea($product, 'content', ['class' => 'form-control', 'rows' => 5]) ?>
 					</div>
 					<div class="form-group col-xs-4">
@@ -225,7 +225,7 @@ use yii\web\View;
 									<?= Html::activeTextInput($contactInfo, 'name', ['class' => 'form-control', 'placeholder' => '...']) ?>
 								</div>
 								<div class="form-group col-xs-6">
-									<label for="<?= Html::getInputId($contactInfo, 'mobile') ?>" class="fs-13 mgB-10"><?= $contactInfo->getAttributeLabel('mobile') ?></label>
+									<label for="<?= Html::getInputId($contactInfo, 'mobile') ?>" class="fs-13 mgB-10"><?= $contactInfo->getAttributeLabel('mobile') ?><span class="require-hint">*</span></label>
 									<?= Html::activeTextInput($contactInfo, 'mobile', ['class' => 'form-control', 'placeholder' => '...']) ?>
 								</div>
 								<div class="form-group col-xs-6">
@@ -249,6 +249,7 @@ use yii\web\View;
 					<div class="text-right col-xs-12 pdT-50">
 						<button id="preview" type="button" class="btn-common">Preview <span class="icon-mv"><span class="icon-angle-right"></span></span></button>
 					</div>
+					<div id="review-listing-post"></div>
 				<?php $form->end() ?>
 			</div>
 			<div class="col-sm-4 checkpoint-listing">
