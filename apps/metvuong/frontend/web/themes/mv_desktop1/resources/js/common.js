@@ -3,6 +3,17 @@ $(window).on('load', function () {
 });
 
 $(document).ready(function() {
+
+    $(document).on('click', '.option-chat-box .val-selected', function (e) {
+        /*e.preventDefault();
+        var _this = $(this);
+        
+        $('.option-chat-box .box-dropdown').dropdown({
+            styleShow: 0,
+            selectedValue: false
+        });
+        _this.trigger('click');*/
+    });
     
     $(document).on('click', '.box-chat-footer .close-box', function (e) {
         e.preventDefault();
@@ -282,6 +293,7 @@ $.fn.checkbox_ui = function (options) {
                 _this.find('input[type=checkbox]').prop("checked", true);
                 checkedItem(_this, true);
             }
+            _this.find('input[type=checkbox]').trigger('change');
         }
 
         function checkedItem (item, flagChecked) {
@@ -1022,7 +1034,8 @@ $.fn.alertBox = function (options) {
     return this.each(function() {
         var defaults = {
             txt: '',
-            duration: 3000
+            duration: 3000,
+            position: 'bottom-left' // bottom-left, center
         },
         sc = {},
         el = $(this), wrapAlert, txtShow;
@@ -1040,6 +1053,25 @@ $.fn.alertBox = function (options) {
         wrapAlert = '<div class="alert-item"><a class="btn-close-alert" href="#"><span class="icon-mv fs-12"><span class="icon-close-icon"></span></span></a><div class="wrap-alert">'+txtShow+'</div></div>';
 
         $('body').append($(wrapAlert));
+
+        var aBox = $('.alert-item'),
+            wB = aBox.outerWidth(),
+            hB = aBox.outerHeight(),
+            wWin = $(window).outerWidth(),
+            hWin = $(window).outerHeight();
+
+        if ( sc.settings.position == 'bottom-left' ) {
+            aBox.css({
+                bottom: '40px',
+                left: '20px'
+            });
+        }else if ( sc.settings.position == 'center' ) {
+            aBox.css({
+                top: hWin/2 - hB/2,
+                left: wWin/2 - wB/2
+            });
+        }
+
         $('.alert-item').fadeIn(300);
 
         var timeOutHide = setTimeout(function () {
