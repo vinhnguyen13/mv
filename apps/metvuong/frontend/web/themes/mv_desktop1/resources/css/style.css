@@ -2785,6 +2785,7 @@ footer {
 }
 .list-noti .user-get {
     font-size: 13px;
+    padding-right: 30px;
 }
 .list-noti .avatar {
     position: absolute;
@@ -9118,7 +9119,7 @@ footer li a {
 .wrap-items-chat {
     position: fixed;
     bottom: 0;
-    right: 10px;
+    right: 0;
     z-index: 9999;
 }
 .wrap-items-chat .item-box-chat {
@@ -9127,11 +9128,13 @@ footer li a {
     height: 34px;
     float: left;
     margin-left: 12px;
+    z-index: 1;
 }
 .wrap-items-chat .more-box-chat {
     float: left;
     position: relative;
     height: 34px;
+    z-index: 2;
 }
 .wrap-items-chat .more-box-chat .dropdown {
     position: absolute;
@@ -9157,6 +9160,7 @@ footer li a {
     font-size: 24px;
     float: left;
     margin-right: 7px;
+    line-height: 100%;
 }
 .wrap-items-chat .more-box-chat a:hover {
     color: #3c3c3c;
@@ -9174,7 +9178,7 @@ footer li a {
     height: 350px;
     bottom: 0;
 }
-.box-chat-footer.show-hide-chat {
+.wrap-items-chat.toggle-show-hide .box-chat-footer {
     top: 0;
 }
 .option-chat-box {
@@ -9206,7 +9210,7 @@ footer li a {
     position: absolute;
     top: 37px;
     width: 130px;
-    right: 0;
+    right: -1px;
     background: #fff;
     border: 1px solid #CDCDCD;
     border-top: none;
@@ -9234,7 +9238,7 @@ footer li a {
     background: #fff;
 }
 .option-chat-box a:active {
-    background: #00BB76;
+    /* background: #00BB76; */
 }
 .close-box:hover .icon-mv {
     transition: all .1s ease-out;
@@ -9263,6 +9267,7 @@ footer li a {
     margin: 0;
     width: 100%;
     text-align: left;
+    z-index: 1;
 }
 .box-chat-footer .title-top a {
     font-size: 11px;
@@ -10372,7 +10377,7 @@ label:hover {
     }
     .list-noti .user-get .name {
         font-size: 13px;
-        display: block;
+        display: inline-block;
     }
     .wrap-infor-duan .bottom-feat-box {
         padding-top: 0;
@@ -10885,6 +10890,13 @@ height: 10px;
     bottom: 0;
     left: 54%;
 }
+.show-hide .hide-dropdown {
+    display: block;
+}
+.show-hide .val-selected {
+    background: #fff;
+    color: #3c3c3c;
+}
 @media ( max-width: 985px ) {
     .agent-postlisting .avatar {
         margin-bottom: 15px;
@@ -10902,22 +10914,6 @@ height: 10px;
     }
     .checkpoint-listing {
         margin-top: 50px;
-    }
-    .wrap-items-chat {
-        right: 0;
-    }
-    .wrap-items-chat .item-box-chat {
-        /* min-width: 100%; */
-        margin-left: 0;
-    }
-    .box-chat-footer {
-        right: 0;
-        bottom: 0;
-    }
-    .box-chat-footer.show-hide-chat {
-        top: 100%;
-        margin-top: -37px;
-        width: auto;
     }
 }
 @media (max-width: 460px) and (min-width: 320px) {
@@ -10965,5 +10961,55 @@ height: 10px;
         top: 50%;
         margin-top: -10px;
         background-position: 0px center;
+    }
+    .wrap-items-chat {
+        width: 100%;
+        position: static;
+    }
+    .wrap-items-chat.toggle-show-hide .box-chat-footer {
+        top: 100%;
+        bottom: inherit;
+        margin-top: -38px;
+    }
+    .wrap-items-chat .item-box-chat {
+        margin-left: 0;
+        position: static;
+        width: 100%;
+        height: 100%;
+    }
+    .box-chat-footer {
+        top: 0;
+        height: 100%;
+    }
+    .box-chat-footer.show-hide-chat {
+        top: 100%;
+        margin-top: -37px;
+        right: 0;
+    }
+    .wrap-items-chat .more-box-chat {
+        position: fixed;
+        bottom: 15%;
+        left: 0;
+        z-index: 9999;
+        height: auto;
+    }
+    .wrap-items-chat .more-box-chat .dropdown {
+        position: static;
+    }
+    .wrap-items-chat .more-box-chat a {
+        border: 1px solid #B9B9B9;
+        border-left: none;
+        border-radius: 0 3px 3px 0;
+        padding: 12px 8px;
+        width: auto;
+        text-align: center;
+    }
+    .wrap-items-chat .more-box-chat .icon-mv {
+        font-size: 18px;
+        margin: 0;
+    }
+    .wrap-items-chat .more-box-chat span {
+        display: block;
+        margin: 0;
     }
 }
