@@ -822,7 +822,7 @@ $(document).ready(function(){
 			form.fields.priceUnitMil.parent().trigger('click');
 		}
 		
-		form.showPreview();
+		// form.showPreview();
 	}
 	
 	$('#back').click(function(){
