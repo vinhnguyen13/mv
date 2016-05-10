@@ -227,6 +227,8 @@ $return['components']['urlManager']['rules'] = [
     'mvuser/join/<action>' => 'user/registration/<action>',
     'mvuser/forgot/<action>' => 'user/recovery/<action>',
 
+    'listing/<action>' => 'ad/<action>',
+
 ];
 
 //echo "<pre>";
