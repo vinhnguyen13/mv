@@ -228,7 +228,7 @@ $(document).ready(function(){
 		    				$.data(this, 'ajax').abort();
 		    			}
 		    			
-		    			$.data(this, 'ajax', $.get('/ad/list-project', {v: val}, function(response){
+		    			$.data(this, 'ajax', $.get('/listing/list-project', {v: val}, function(response){
 		            		if(response.length) {
 		            			showSearchProject();
 		            			
@@ -593,7 +593,7 @@ $(document).ready(function(){
 				form.getWrap(form.fields.districtId).fadeOut();
 			}
 			
-			$.get('/ad/list-district', {cityId: form.fields.cityId.val()}, function(districts){
+			$.get('/listing/list-district', {cityId: form.fields.cityId.val()}, function(districts){
 				form.appendDropdown(form.fields.districtId, districts);
 
 				if(fn) {
@@ -616,7 +616,7 @@ $(document).ready(function(){
 			}
 			
 			if(form.fields.districtId.val()) {
-				$.get('/ad/list-sw', {districtId: form.fields.districtId.val()}, function(response){
+				$.get('/listing/list-sw', {districtId: form.fields.districtId.val()}, function(response){
 					form.appendDropdown(form.fields.wardId, response.wards);
 					form.appendDropdown(form.fields.streetId, response.streets);
 

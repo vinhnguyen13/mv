@@ -46,7 +46,7 @@ $(document).ready(function(){
 			form.fields.cityId.on('change', function(){
 				form.resetLocation();
 				
-				$.get('/ad/list-district', {cityId: $(this).val()}, function(districts){
+				$.get('/listing/list-district', {cityId: $(this).val()}, function(districts){
 					form.appendDropdown(form.fields.districtId, districts);
 				});
 			});
@@ -57,7 +57,7 @@ $(document).ready(function(){
 				form.fields.projectBuildingId.val('');
 				$('#select2-' + form.fields.projectBuildingId.attr('id') + '-container').text(form.fields.projectBuildingId.find("option:first-child").text());
 				
-				$.get('/ad/list-swp', {districtId: $(this).val()}, function(response){
+				$.get('/listing/list-swp', {districtId: $(this).val()}, function(response){
 					form.appendDropdown(form.fields.wardId, response.wards);
 					form.appendDropdown(form.fields.streetId, response.streets);
 					form.appendDropdown(form.fields.projectBuildingId, response.projects);

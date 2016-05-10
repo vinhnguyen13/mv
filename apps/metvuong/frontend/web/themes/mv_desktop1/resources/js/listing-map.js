@@ -499,7 +499,7 @@ var listing = {
 			left: -wWrapList +'px'
 		});
 		
-		$.get('/ad/detail', {id: id}, function(r){
+		$.get('/listing/detail', {id: id}, function(r){
 
 			var temp = $(r).find('#detail-wrap');
 
