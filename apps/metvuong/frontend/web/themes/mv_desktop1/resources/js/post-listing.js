@@ -335,7 +335,11 @@ $(document).ready(function(){
 				var val;
 				
 				if(refEl.is('select')) {
-					val = refEl.children().filter(':selected').text();
+					var selected = refEl.children().filter(':selected');
+					
+					if(selected.attr('value')) {
+						val = refEl.children().filter(':selected').text();
+					}
 				} else if(refEl.is(':radio')) {
 					var checkedEl = refEl.filter(':checked');
 					val = checkedEl.closest('.radio-ui').text();

@@ -444,7 +444,7 @@ use vsoft\ad\models\AdImages;
 															</div>
 															<div class="item-agent">
 																<div><span class="icon icon-email"></span></div>
-																<a class="ref" data-ref="#adcontactinfo-email" href="javascript:;"></a>
+																<a data-parent=".item-agent" class="ref" data-ref="#adcontactinfo-email" href="javascript:;"></a>
 															</div>					                                        
 														</div>
 													</div>
