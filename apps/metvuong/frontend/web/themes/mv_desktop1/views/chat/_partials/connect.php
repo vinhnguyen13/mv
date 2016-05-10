@@ -80,29 +80,23 @@ if(!Yii::$app->user->isGuest) {
             $(document).bind('chat/showBoxChat', function (event, user) {
                 if (user) {
                     var chatBoxExist = chatUI.getBoxChat('.item-box-chat', '<?=Yii::$app->user->identity->username?>', user);
-                    var totalWidth = 0;
-                    $.map($('.wrap-items-chat .item-box-chat'),function(val){
-                        totalWidth += $(val).width();
-                    });
-                    var widthAccept = $(window).width() - 260;
-                    if(totalWidth > widthAccept){
-                        $('.more-box-chat').removeClass('hide');
-                    }
                     if(!chatBoxExist){
                         $(document).trigger('chat/addBoxChat', [user]);
                     }else{
                         $(document).trigger('chat/activeBoxChat', [chatBoxExist]);
                     }
-
                 }
             });
 
             $(document).bind('chat/activeBoxChat', function (event, chatBoxExist) {
                 $('.item-box-chat .title-top').css({"background-color": "#00a769"});
+                $('.item-box-chat').removeClass('active');
                 if(chatBoxExist){
                     chatBoxExist.find('input').focus();
+                    chatBoxExist.addClass('active');
                     chatBoxExist.find('.title-top').css({"background-color": "#008A57"});
                 }
+                $(document).trigger('chat/showHideMultiBox');
             });
 
             $(document).bind('chat/addBoxChat', function (event, user) {
@@ -135,6 +129,41 @@ if(!Yii::$app->user->isGuest) {
                 $('body').append(html);
             });
 
+            $(document).bind('chat/readNotify', function (event, type) {
+                if(type == chatUI.NOTIFY_CHAT){
+                    $('#notifyChat').remove();
+                    $('#notifyTotal').remove();
+                }
+            });
+
+            $(document).bind('chat/showHideMultiBox', function (event, type) {
+                var totalBox = 0, widthMoreEl = 80, heightMoreEl = 60, widthBox = 260;
+                $('.wrap-items-chat .item-box-chat').removeClass('hide');
+                totalBox = $('.wrap-items-chat .item-box-chat').length;
+                var widthWindow = $(window).width();
+                var totalBoxOnWindow = parseInt(widthWindow / widthBox) - 1;
+                console.log('totalBoxOnWindow: '+totalBoxOnWindow,
+                    'totalBox: '+totalBox
+                );
+                if(totalBoxOnWindow < totalBox){
+                    var totalHide = 0, htmlHide = '';
+                    $.each($('.wrap-items-chat .item-box-chat'),function(index, val){
+                        if(!$(val).hasClass('active') && totalHide < (totalBox - totalBoxOnWindow)){
+                            $(val).addClass('hide');
+                            totalHide += 1;
+                            htmlHide += '<li><a class="chat-now" data-chat-user="'+$(val).attr('chat-to')+'" href="javascript:;">'+$(val).attr('chat-to')+'</a></li>';
+                        }
+                    });
+                    console.log('totalHide: '+totalHide);
+                    $('.more-box-chat').removeClass('hide');
+                    $('.more-box-chat').find('.dropdown-menu').html(htmlHide);
+                    $('.more-box-chat').find('.dropdown-menu').css({"margin-top": "-"+($('.more-box-chat').find('.dropdown-menu').height() + heightMoreEl)+"px"});
+                    $('.more-box-chat').find('.box-hide').html(totalHide);
+                }else{
+                    $('.more-box-chat').addClass('hide');
+                }
+            });
+
             $(document).on('click', '.chat-now', function (e) {
                 user = $(this).attr('data-chat-user');
                 if (user) {
@@ -142,12 +171,16 @@ if(!Yii::$app->user->isGuest) {
                 }
                 return false;
             });
-
-            $(document).bind('chat/readNotify', function (event, type) {
-                if(type == chatUI.NOTIFY_CHAT){
-                    $('#notifyChat').remove();
-                    $('#notifyTotal').remove();
+            $(document).on('click', '.typingMsg', function (e) {
+                var chatBoxExist = $(this).closest('.item-box-chat');
+                if (chatBoxExist) {
+                    $(document).trigger('chat/activeBoxChat', [chatBoxExist]);
                 }
+                return false;
+            });
+
+            $( window ).resize(function() {
+                $(document).trigger('chat/showHideMultiBox');
             });
         });
     </script>
@@ -156,13 +189,9 @@ if(!Yii::$app->user->isGuest) {
             <div class="more-box-chat hide">
                 <div class="dropdown">
                     <a href="#" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="icon-mv"><span class="icon-bubbles-icon"></span></span>5
+                        <span class="icon-mv"><span class="icon-bubbles-icon"></span></span><span class="box-hide"></span>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dLabel">
-                        <li>a</li>
-                        <li>a</li>
-                        <li>a</li>
-                        <li>a</li>
                     </ul>
                 </div>
             </div>
