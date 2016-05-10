@@ -1861,11 +1861,11 @@ label {
     -moz-border-radius: 0;
     -ms-border-radius: 0;
     background: none;
-    border-bottom: solid 1px #a5a5a5;
+    border-bottom: solid 1px #ECECEC;
     position: relative;
 }
 #headingOne {
-    border-top: solid 1px #a5a5a5;
+    border-top: solid 1px #ECECEC;
 }
 .panel-heading a {
     display: block;
@@ -8288,6 +8288,7 @@ footer li a {
     width: auto;
 }
 @media (max-width: 985px) {
+    #popup_email .modal-dialog,
     #popup-login .modal-dialog,
     #popup-email .modal-dialog,
     #popup-map .modal-dialog {
@@ -8297,6 +8298,7 @@ footer li a {
         margin: 0;
         height: 100%;
     }
+    #popup_email.modal:before,
     #popup-login.modal:before,
     #review-listing-post.modal:before,
     #popup-email.modal:before,
@@ -8306,6 +8308,7 @@ footer li a {
     #map_detail {
         height: 100%;
     }
+    #popup_email .modal-content,
     #popup-login .modal-content,
     #review-listing-post .modal-content,
     #popup-email .modal-content,
@@ -10925,5 +10928,25 @@ height: 10px;
     .wrap-frm-listing form > div {
         width: 100%;
     }
-    
+    .left-attr-detail {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .right-attr-detail {
+        overflow: visible !important;
+    }
+    .id-duan {
+        float: none;
+        margin-bottom: 10px;
+    }
+    .list-attr-td {
+        overflow: hidden;
+        float: none;
+    }
+    .box-item .address-feat {
+        height: auto;
+    }
+    .box-item .address-feat {
+        margin-bottom: 1px;
+    }
 }
