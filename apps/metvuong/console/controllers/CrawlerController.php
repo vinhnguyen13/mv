@@ -5,6 +5,7 @@ use console\models\Batdongsan;
 use console\models\BatdongsanV2;
 use console\models\Homefinder;
 use console\models\Muaban_net;
+use vsoft\ad\models\AdCity;
 use yii\console\Controller;
 
 /**
@@ -54,9 +55,9 @@ class CrawlerController extends Controller
         BatdongsanV2::find()->updateData();
     }
 
-    public function actionCopytomain($price=0)
+    public function actionCopytomain($price=0, $build='build=false')
     {
-        BatdongsanV2::find()->copyToMainDb($price);
+        BatdongsanV2::find()->copyToMainDb($price, $build);
     }
 
     // Agent Batdongsan
