@@ -246,18 +246,18 @@ $(document).ready(function(){
 	});
 });
 
+function toogleScroll() {
+	var hFrm = $('#search-form').outerHeight(),
+	hWrap = $('.wrap-listing-item .inner-wrap').outerHeight();
+	$('.wrap-listing').css('height',(hWrap-hFrm)+'px');
+}
+
 function codeMigrate() {
 	toogleScroll();
 	
 	$(window).on('resize', function () {
 		toogleScroll();
 	});
-	
-	function toogleScroll() {
-		var hFrm = $('#search-form').outerHeight(),
-		hWrap = $('.wrap-listing-item .inner-wrap').outerHeight();
-		$('.wrap-listing').css('height',(hWrap-hFrm)+'px');
-	}
 	
 	$('.advande-search').toggleShowMobi({
         btnEvent: '.btn-submit',

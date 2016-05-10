@@ -5930,9 +5930,10 @@ footer li a {
         background: #fff;
     }
     .wrap-listing {
+        padding: 0;
+        max-height: 100%;
         overflow-x: hidden;
         overflow-y: auto;
-        padding: 0;
     }
     #listing-list > ul > li {
         width: 100%;
@@ -6005,8 +6006,10 @@ footer li a {
         padding: 10px 0 0 0;
     }
     #search-form {
-        top: 0;
+        /* top: 0; */
         z-index: 11;
+        /* position: absolute; */
+        background: #fff;
     }
     .top-listing {
         top: 65px;
@@ -7058,6 +7061,7 @@ footer li a {
     position: relative;
     z-index: 2;
     background: #fff;
+    /* height: 100%; */
 }
 .detail-listing-dt .detail-listing .container {
     width: auto;

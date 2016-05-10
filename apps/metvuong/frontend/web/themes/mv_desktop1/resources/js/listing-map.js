@@ -635,6 +635,7 @@ var listing = {
 				listing.currentDrawLevel = listing.reDraw();
 			});
 		}
+		toogleScroll();
 	},
 	updateListing: function() {
 
@@ -716,8 +717,10 @@ var listing = {
 		if(id) {
 			$.get(loadProjectUrl, {id: id}, function(r) {
 				listing.projectInfoEl.html(r);
+				toogleScroll();
 			});
 		}
+		
 	},
 	resetProjectField: function() {
 		listing.projectInfoEl.html('');
