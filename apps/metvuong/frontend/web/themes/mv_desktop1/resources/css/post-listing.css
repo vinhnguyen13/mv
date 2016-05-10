@@ -143,6 +143,9 @@ html.previewing, body.previewing {
 	padding-top: 0;
 	padding-bottom: 0;
 }
+#back {
+	margin-right: 8px;	
+}
 
 @media (max-width: 985px) {
 	#review-listing .popup-wrap {
