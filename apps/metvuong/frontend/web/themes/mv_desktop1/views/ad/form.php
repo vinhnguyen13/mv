@@ -71,7 +71,7 @@ use vsoft\ad\models\AdImages;
 		];
 	}
 	
-	$this->registerJs("var tempSlide = " . ($product->adImages ? json_encode(ArrayHelper::map($product->adImages, 'id', 'url')) : 'false') . "; var isNewRecord = " . ($product->isNewRecord ? 'true' : 'false') . "; var categories = " . json_encode($categoriesJs) . "; var APPLY_TO_TYPE_BOTH = " . AdCategory::APPLY_TO_TYPE_BOTH . "; var CHCK = " . AdCategory::CATEGORY_CHCK . ";", View::POS_HEAD);
+	$this->registerJs("var tempSlide = " . ($product->adImages ? json_encode(ArrayHelper::map($product->adImages, 'id', function($im) { return $im->getUrl(AdImages::SIZE_LARGE);})) : 'false') . "; var isNewRecord = " . ($product->isNewRecord ? 'true' : 'false') . "; var categories = " . json_encode($categoriesJs) . "; var APPLY_TO_TYPE_BOTH = " . AdCategory::APPLY_TO_TYPE_BOTH . "; var CHCK = " . AdCategory::CATEGORY_CHCK . ";", View::POS_HEAD);
 ?>
 <div class="title-fixed-wrap container">
 	<div class="post-listing">
