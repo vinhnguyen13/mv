@@ -694,7 +694,15 @@ $(document).ready(function(){
 		}
 	});
 	
-	if(!isNewRecord) {
+	if(isNewRecord) {
+		form.data = form.el.serialize();
+	} else {
+		function serialize(e, data) {
+			form.data = form.el.serialize();
+			jQuery('#w1-fileupload').off('fileuploadcompleted', serialize);
+		}
+		
+		jQuery('#w1-fileupload').on('fileuploadcompleted', serialize);
 		
 		var maskValue = Number(form.fields.price.val()) / Number(form.fields.priceUnitMil.val());
 		
@@ -712,6 +720,12 @@ $(document).ready(function(){
 	$('#back').click(function(){
 		form.hidePreview();
 	});
+	
+	window.onbeforeunload = function() {
+		if(form.data != form.el.serialize()) {
+			return lajax.t("Are you sure you want to navigate away from this page and discard all changes ?");
+		}
+	};
 });
 
 function camel(str) {
