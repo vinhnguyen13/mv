@@ -150,12 +150,12 @@ use vsoft\ad\models\AdImages;
 					</div>
 					<div class="clearfix"></div>
 					<div class="form-group col-xs-6">
-						<label for="<?= Html::getInputId($product, 'area') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('area') ?><span class="require-hint">*</span></label>
+						<label for="<?= Html::getInputId($product, 'area') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('area') ?> (m2)<span class="require-hint">*</span></label>
 						<?= Html::activeTextInput($product, 'area', ['class' => 'form-control number-only number-float', 'placeholder' => '...']) ?>
 						<div class="help-block"></div>
 					</div>
 					<div class="form-group col-xs-6 price-type">
-						<label for="<?= Html::getInputId($product, 'price') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('price') ?><span class="require-hint">*</span></label><span class="price-show-wrap"><span id="price-show"></span><span class="vnd"><?= Yii::t('ad', 'VND') ?></span></span>
+						<label for="<?= Html::getInputId($product, 'price') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('price') ?> (<?= Yii::t('ad', 'VND') ?>)<span class="require-hint">*</span></label><span class="price-show-wrap"><span id="price-show"></span></span>
 						<?= Html::activeHiddenInput($product, 'price', ['class' => 'form-control text-right', 'placeholder' => '...']) ?>
 						<div style="position: relative;">
 							<input type="text" id="priceMask" class="form-control text-right number-only number-float" placeholder="...">
@@ -188,11 +188,11 @@ use vsoft\ad\models\AdImages;
 						<?= Html::activeTextInput($additionInfo, 'floor_no', ['class' => 'form-control number-only', 'placeholder' => '...']) ?>
 					</div>
 					<div class="form-group col-xs-4">
-						<label for="<?= Html::getInputId($additionInfo, 'facade_width') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('facade_width') ?></label>
+						<label for="<?= Html::getInputId($additionInfo, 'facade_width') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('facade_width') ?> (m)</label>
 						<?= Html::activeTextInput($additionInfo, 'facade_width', ['class' => 'form-control number-only number-float', 'placeholder' => '...']) ?>
 					</div>
 					<div class="form-group col-xs-4">
-						<label for="<?= Html::getInputId($additionInfo, 'land_width') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('land_width') ?></label>
+						<label for="<?= Html::getInputId($additionInfo, 'land_width') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('land_width') ?> (m)</label>
 						<?= Html::activeTextInput($additionInfo, 'land_width', ['class' => 'form-control number-only number-float', 'placeholder' => '...']) ?>
 					</div>
 					<div class="form-group col-xs-4">
@@ -444,7 +444,7 @@ use vsoft\ad\models\AdImages;
 															</div>
 															<div class="item-agent">
 																<div><span class="icon icon-email"></span></div>
-																<a data-parent=".item-agent" class="ref" data-ref="#adcontactinfo-email" href="javascript:;"></a>
+																<a class="ref" data-ref="#adcontactinfo-email" href="javascript:;"></a>
 															</div>					                                        
 														</div>
 													</div>

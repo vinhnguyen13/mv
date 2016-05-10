@@ -326,6 +326,17 @@ $(document).ready(function(){
 			
 			form.updateRef($('#review-listing'));
 			
+			$('.list-attr-td, .list-tienich-detail').find('.ref').each(function(){
+				var self = $(this);
+				var li = self.closest('li');
+				
+				if(self.text()) {
+					li.show();
+				} else {
+					li.hide();
+				}
+			});
+			
 			$('.address-show').text(form.buildAddress());
 		},
 		updateRef: function(container) {
