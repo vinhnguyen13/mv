@@ -171,6 +171,9 @@ if(!Yii::$app->user->isGuest) {
                 }
                 return false;
             });
+            $(document).on('click', '.item-box-chat .close-box', function (e) {
+                $(document).trigger('chat/showHideMultiBox');
+            });
             $(document).on('click', '.typingMsg', function (e) {
                 var chatBoxExist = $(this).closest('.item-box-chat');
                 if (chatBoxExist) {
