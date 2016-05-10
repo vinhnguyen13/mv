@@ -32,6 +32,10 @@ header.mm-slideout {
 	left: 10px;
 }
 
+.has-error .select2-container--default .select2-selection--single {
+	border-color: #a94442;
+}
+
 .has-project #projectMask {
 	display: none;
 }
