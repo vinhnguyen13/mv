@@ -334,6 +334,7 @@ $count_review = $reviews->count();
                         $(document).ready(function () {
                             $(document).on('click', '.save-item', function (e) {
                                 e.preventDefault();
+                                var _this = $(this);
                                 $(this).toggleClass('active');
                                 var timer = 0;
                                 clearTimeout(timer);
@@ -353,12 +354,9 @@ $count_review = $reviews->count();
                                                 	Chat.sendMessage(to_jid , '{owner} favorite {product}', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: data.parameters.msg, product: '<?=$address?>'
 													});
 												<?php }?>
-												setTimeout(function () {
-													//"Email has been sent to "+recipient_email
-													$('body').alertBox({
-														txt: "<?=Yii::t('ad', 'Add to Favorites Success')?>"
-													});
-												},300);
+												_this.alertBox({
+													txt: "<?=Yii::t('ad', 'Add to Favorites Success')?>"
+												});
                                             }
                                         }
                                     });
@@ -516,6 +514,7 @@ $count_review = $reviews->count();
                                     $('#report-listing').modal('hide');
                                     if (data == 200) {
                                         $('body').loading({done: true});
+                                        
                                         $('body').alertBox({
                                         	txt: "<?=Yii::t('listing', 'Report has been sent.')?>",
                                         	duration: 2000
