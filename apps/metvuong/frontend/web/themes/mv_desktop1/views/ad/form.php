@@ -40,8 +40,7 @@ use vsoft\ad\models\AdImages;
 	
 	$cities = AdCity::find()->all();
 	$citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
-	// $citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != AdProduct::DEFAULT_CITY)]; });
-	$citiesOptions = [];
+	$citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != AdProduct::DEFAULT_CITY)]; });
 	
 	$wards = AdWard::getListByDistrict($product->district_id);
 	$wardsDropdown = ArrayHelper::map($wards, 'id', 'name');
