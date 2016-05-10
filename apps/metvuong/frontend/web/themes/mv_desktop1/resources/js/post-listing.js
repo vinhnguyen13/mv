@@ -376,6 +376,8 @@ $(document).ready(function(){
 						$('#success-notify').removeClass('hide');
 						
 						$('#to-detail').attr('href', r.url);
+						
+						window.onbeforeunload = function() {};
 					} else {
 						
 					}
