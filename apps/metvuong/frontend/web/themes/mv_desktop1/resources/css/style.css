@@ -10920,7 +10920,7 @@ height: 10px;
         width: auto;
     }
 }
-@media ( min-width: 320px ) and ( max-width: 460px ) {
+@media (max-width: 460px) and (min-width: 320px) {
     .wrap-frm-listing form .price-type {
         width: 60%;
     }
@@ -10948,5 +10948,22 @@ height: 10px;
     }
     .box-item .address-feat {
         margin-bottom: 1px;
+    }
+    .swiper-button-next span,
+    .swiper-button-prev span {
+        width: 16px;
+        margin: 0;
+    }
+    .swiper-button-next span {
+        left: 6px;
+        top: 50%;
+        margin-top: -10px;
+        background-position: -14px center;
+    }
+    .swiper-button-prev span {
+        left: 6px;
+        top: 50%;
+        margin-top: -10px;
+        background-position: 0px center;
     }
 }
