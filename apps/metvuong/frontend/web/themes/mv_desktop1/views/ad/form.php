@@ -207,7 +207,7 @@ use vsoft\ad\models\AdImages;
 						<?= Html::activeTextarea($additionInfo, 'interior', ['class' => 'form-control', 'rows' => 2]) ?>
 					</div>
 					<div class="form-group col-xs-12 tienich-frm">
-						<label for="" class="fs-13 mgB-10">Tiện ích <span class="color-cd pdL-15">+3 điểm</span></label>
+						<label for="" class="fs-13 mgB-10">Tiện ích</label>
 						<?php
 							$facilities = AdFacility::find()->all();
 							$activeFacility = $additionInfo->facility ? $additionInfo->facility : [];
@@ -466,7 +466,7 @@ use vsoft\ad\models\AdImages;
 					<div class="title-point"><?= Yii::t('ad', 'Metvuong chấm điểm') ?></div>
 					<div class="point-select">
 						<div class="text-center total-point">
-							<span><span id="score">0</span>/100</span>điểm
+							<span><span id="score">0</span>/100</span><?= Yii::t('ad', 'điểm') ?>
 							<div class="proccess-point">
 								<div id="score-percent" style="width: 0%"></div>
 							</div>
@@ -482,9 +482,7 @@ use vsoft\ad\models\AdImages;
 						</ul>
 						
 					</div>
-					<div class="btom-point">
-						* Điểm số cụ thể sẽ được quyết định sau khi ban điều hành kiểm tra thông tin chi tiết dự án.
-					</div>
+					<div class="btom-point"><?= Yii::t('ad', '* Điểm số cụ thể sẽ được quyết định sau khi ban điều hành kiểm tra thông tin chi tiết tin đăng.') ?></div>
 				</div>
 			</div>
 		</div>
