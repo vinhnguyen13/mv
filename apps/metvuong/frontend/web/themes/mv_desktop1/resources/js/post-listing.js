@@ -105,7 +105,7 @@ $(document).ready(function(){
 				point.fields.photoIcon.removeClass('selected-point');
 			}
 			
-			if(form.fields.name.val() && form.fields.email.val()) {
+			if(form.fields.name.val() && form.fields.email.val() && form.fields.mobile.val()) {
 				p += point.checkPoint('contact');
 			} else {
 				point.fields.contactIcon.removeClass('selected-point');
