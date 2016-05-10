@@ -337,6 +337,17 @@ $(document).ready(function(){
 				}
 			});
 			
+			$('.item-agent .ref').each(function(){
+				var self = $(this);
+				var item = self.closest('.item-agent');
+				
+				if(self.text()) {
+					item.show();
+				} else {
+					item.hide();
+				}
+			});
+			
 			$('.address-show').text(form.buildAddress());
 		},
 		updateRef: function(container) {
