@@ -731,11 +731,22 @@ class AdController extends Controller
     	
     	$params = [
 			'query' => [
-				'match_phrase_prefix' => [
-					'search_field' => [
-						'query' => $v,
-						'max_expansions' => 100
-					]
+				'bool' => [
+					'must' => [
+						[
+							'match_phrase_prefix' => [
+								'search_field' => [
+									'query' => $v,
+									'max_expansions' => 100
+								]
+							],
+						],	
+						[
+							'match' => [
+								'city_id' => AdProduct::DEFAULT_CITY,	
+							],
+						]
+					],
 				],
 			],
 			'_source' => ['full_name']

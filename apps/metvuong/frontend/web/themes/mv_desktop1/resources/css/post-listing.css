@@ -108,6 +108,10 @@ header.mm-slideout {
 	height: 34px;
 }
 
+#score-percent {
+	transition: 1s all;
+}
+
 .select2-container--default .select2-selection--single {
 	border-radius: 0px;
 }
