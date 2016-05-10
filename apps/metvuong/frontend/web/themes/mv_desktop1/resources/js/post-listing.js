@@ -751,7 +751,9 @@ $(document).ready(function(){
 	point.init();
 	form.init();
 	
-	point.calc();
+	setTimeout(function(){
+		point.calc();
+	}, 1000);
 	
 	form.el.find('select').each(function(){
 		var self = $(this);
