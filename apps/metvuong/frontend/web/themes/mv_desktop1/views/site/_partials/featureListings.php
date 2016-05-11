@@ -13,6 +13,8 @@ if(!empty($products)) {
         <?php foreach ($products as $product):
             $url = $product->urlDetail(true);
             $address = $product->getAddress(true);
+            $room_no = $product->adProductAdditionInfo->room_no;
+            $toilet_no = $product->adProductAdditionInfo->toilet_no;
             ?>
             <li>
                 <div class="item">
@@ -36,12 +38,12 @@ if(!empty($products)) {
                             <p class="id-duan">
                                 ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id; ?></span></p>
                             <ul class="clearfix list-attr-td">
-                                <?php if (empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)) { ?>
+                                <?php if (empty($product->area) && empty($room_no) && empty($toilet_no)) { ?>
                                     <li><span><?= Yii::t('listing', 'updating') ?></span></li>
                                 <?php } else {
                                     echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '';
-                                    echo $product->adProductAdditionInfo->room_no ? '<li> <span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
-                                    echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
+                                    echo $room_no ? '<li> <span class="icon-mv"><span class="icon-bed-search"></span></span>' . $room_no . ' </li>' : '';
+                                    echo $toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span> ' . $toilet_no . ' </li>' : '';
                                 } ?>
                             </ul>
                         </div>
