@@ -160,7 +160,7 @@ class BatdongsanV2 extends Component
                                     $this->writeFileLog($list_return["data"], $path_folder."/".$type."/", "bds_log_{$type}.json");
                                     print_r("\n\n{$type}: Page " . $i . " done!\n");
                                 }
-                                sleep(1);
+                                sleep(5);
                                 ob_flush();
                             }
 
@@ -205,32 +205,36 @@ class BatdongsanV2 extends Component
                             $productId = $matches[1];
                         }
                     }
-
-                    if(!empty($productId)) {
-                        $res = $this->getProjectDetail($type, $item->href, $product_type, $path_folder);
-                        if (!empty($res)) {
-                            $log["files"][$sequence_id] = $res;
-                            $log["last_id"] = $sequence_id;
-                            $sequence_id = $sequence_id + 1;
-                            $checkExists = in_array($productId, $log["files"]);
-                            if($checkExists)
-                                print_r("\n{$type}: ".$productId." override");
-                            else
-                                array_push($log["files"], $productId);
-                        }
-                    }
-                    // Ko check exists de ghi de len file moi lay ve
-//                    $checkExists = false;
-//                    if ($checkExists == false) {
+                    // Check exists do chan IP
+//                    if(!empty($productId)) {
 //                        $res = $this->getProjectDetail($type, $item->href, $product_type, $path_folder);
 //                        if (!empty($res)) {
 //                            $log["files"][$sequence_id] = $res;
 //                            $log["last_id"] = $sequence_id;
 //                            $sequence_id = $sequence_id + 1;
+//                            $checkExists = in_array($productId, $log["files"]);
+//                            if($checkExists)
+//                                print_r("\n{$type}: ".$productId." override");
+//                            else
+//                                array_push($log["files"], $productId);
 //                        }
-//                    } else {
-//                        print_r($productId . " exists\n");
 //                    }
+                    // check exists Ko ghi de len file lay ve
+                    $checkExists = false;
+                    if(!empty($productId) && !empty($log["files"])) {
+                        $checkExists = in_array($productId, $log["files"]);
+                    }
+
+                    if ($checkExists == false) {
+                        $res = $this->getProjectDetail($type, $item->href, $product_type, $path_folder);
+                        if (!empty($res)) {
+                            $log["files"][$sequence_id] = $res;
+                            $log["last_id"] = $sequence_id;
+                            $sequence_id = $sequence_id + 1;
+                        }
+                    } else {
+                        print_r($productId . " exists\n");
+                    }
                 }
                 return ['data' => $log];
             } else {
@@ -678,42 +682,42 @@ class BatdongsanV2 extends Component
                             $filePath = $path . "/" . $filename;
                             print_r("\n" . $count_file . " {$type}: {$filename}");
                             if (in_array($filename, $log_import["files"])) {
-//                                continue;
-                                $value = $this->parseDetail($filePath);
-                                $project_name = !empty($value[$filename]["project"]) ? $value[$filename]["project"] : null;
-                                if(!empty($project_name)) {
-                                    /**
-                                     * SELECT id FROM ad_product a INNER JOIN ad_building_project b ON a.project_building_id = b.id WHERE b.name = :name a.district_id != b.district_id AND file_name = :f
-                                     */
-                                    $project = AdBuildingProject::find()->where('name = :n', [':n' => $project_name])->one();
-                                    if(count($project) > 0){
-                                        $project_id = $project->id;
-                                        $city_id = $project->city_id;
-                                        $district_id = $project->district_id;
-                                        $ward_id = $project->ward_id;
-                                        $street_id = $project->street_id;
-                                        $home_no = $project->home_no;
-                                        $listing = \vsoft\craw\models\AdProduct::find()->where('file_name = :f', [':f' => $filename])->one();
-                                        if(count($listing) > 0){
-                                            if($listing->project_building_id == $project_id && $listing->city_id == $city_id && $listing->district_id == $district_id && $listing->street_id == $street_id){
-                                                print_r(" - {$project_name} true.\n");
-                                                continue;
-                                            }
-
-                                            $listing->project_building_id = $project_id;
-                                            $listing->city_id = $city_id;
-                                            $listing->district_id = $district_id;
-                                            $listing->ward_id = $ward_id;
-                                            $listing->street_id = $street_id;
-                                            $listing->home_no = $home_no;
-                                            $listing->update(false);
-                                            print_r(" - {$project_name} updated.\n");
-                                            continue;
-                                        }
-                                    }
-                                } else {
-                                    continue;
-                                }
+                                continue;
+//                                $value = $this->parseDetail($filePath);
+//                                $project_name = !empty($value[$filename]["project"]) ? $value[$filename]["project"] : null;
+//                                if(!empty($project_name)) {
+//                                    /**
+//                                     * SELECT id FROM ad_product a INNER JOIN ad_building_project b ON a.project_building_id = b.id WHERE b.name = :name a.district_id != b.district_id AND file_name = :f
+//                                     */
+//                                    $project = AdBuildingProject::find()->where('name = :n', [':n' => $project_name])->one();
+//                                    if(count($project) > 0){
+//                                        $project_id = $project->id;
+//                                        $city_id = $project->city_id;
+//                                        $district_id = $project->district_id;
+//                                        $ward_id = $project->ward_id;
+//                                        $street_id = $project->street_id;
+//                                        $home_no = $project->home_no;
+//                                        $listing = \vsoft\craw\models\AdProduct::find()->where('file_name = :f', [':f' => $filename])->one();
+//                                        if(count($listing) > 0){
+//                                            if($listing->project_building_id == $project_id && $listing->city_id == $city_id && $listing->district_id == $district_id && $listing->street_id == $street_id){
+//                                                print_r(" - {$project_name} true.\n");
+//                                                continue;
+//                                            }
+//
+//                                            $listing->project_building_id = $project_id;
+//                                            $listing->city_id = $city_id;
+//                                            $listing->district_id = $district_id;
+//                                            $listing->ward_id = $ward_id;
+//                                            $listing->street_id = $street_id;
+//                                            $listing->home_no = $home_no;
+//                                            $listing->update(false);
+//                                            print_r(" - {$project_name} updated.\n");
+//                                            continue;
+//                                        }
+//                                    }
+//                                } else {
+//                                    continue;
+//                                }
                             } else {
                                 if (file_exists($filePath)) {
                                     $value = $this->parseDetail($filePath);
@@ -1600,7 +1604,7 @@ class BatdongsanV2 extends Component
                             $log["current_page"] = $i;
                             $this->writeLog($log, $path, $file_log);
                             print_r("\nPage {$i} done.\n");
-                            sleep(1);
+                            sleep(5);
                         }
                     } else {
                         print_r("\nCannot access {$url}");
@@ -1851,7 +1855,7 @@ class BatdongsanV2 extends Component
                                     $this->writeLog($log, $path_folder.$type."/", "{$type}.json");
                                     print_r("\n{$type}-page " . $i . " done!\n");
                                 }
-                                sleep(1);
+                                sleep(5);
                                 ob_flush();
                             }
 
@@ -1895,26 +1899,34 @@ class BatdongsanV2 extends Component
                             $id = $matches[1];
                         }
                     }
-//                    $checkExists = false;
-                    if(!empty($id)) {
-                        $res = $this->projectDetail($type, $id, $item->href, $path_folder);
-                        if (!empty($res)) {
-                            $checkExists = in_array($id, $log["files"]);
-                            if($checkExists)
-                                print_r("\n".$id." override");
-                            else
-                                array_push($log["files"], $id);
-                        }
-                    }
-//
-//                    if ($checkExists == false) {
+                    // Override file name not check exists
+//                    if(!empty($id)) {
 //                        $res = $this->projectDetail($type, $id, $item->href, $path_folder);
 //                        if (!empty($res)) {
-//                            array_push($log["files"], $id);
+//                            $checkExists = in_array($id, $log["files"]);
+//                            if($checkExists)
+//                                print_r("\n".$id." override");
+//                            else
+//                                array_push($log["files"], $id);
 //                        }
-//                    } else {
-//                        var_dump($id);
 //                    }
+                    // Check exists
+                    $checkExists = false;
+                    if(!empty($id) && !empty($log["files"])) {
+                        $checkExists = in_array($id, $log["files"]);
+                    }
+
+                    if ($checkExists == false) {
+                        $res = $this->projectDetail($type, $id, $item->href, $path_folder);
+                        if (!empty($res)) {
+                            array_push($log["files"], $id);
+//                            $log["files"][$sequence_id] = $res;
+//                            $log["files_last_id"] = $sequence_id;
+//                            $sequence_id = $sequence_id + 1;
+                        }
+                    } else {
+                        var_dump($id);
+                    }
                 }
                 return ['data' => $log];
             } else {
