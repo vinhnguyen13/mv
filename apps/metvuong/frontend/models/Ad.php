@@ -175,7 +175,7 @@ class Ad extends Component
 //        $where = ['ad_product.status' => 1];
 //        $query->leftJoin('ad_product_addition_info', '`ad_product_addition_info`.`product_id` = `ad_product`.`id`');
 //        $query->with('adProductAdditionInfo');
-        $query->innerJoin(AdImages::tableName(), "ad_product.id = ad_images.product_id");
+//        $query->innerJoin(AdImages::tableName(), "ad_product.id = ad_images.product_id");
         $products = $query->limit(6)->orderBy(['id' => SORT_DESC])->all();
 //        $products = $query->limit(6)->orderBy("RAND()")->all();
         return $products;
