@@ -144,14 +144,16 @@ class CmsShow extends \funson86\cms\models\CmsShow
 //        $newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatID"] : 0;
 //        $homepageCatID = isset(Yii::$app->params["homepageCatID"]) ? Yii::$app->params["homepageCatID"] : 0;
 //        $metvuongCatID = isset(Yii::$app->params["metvuongCatID"]) ? Yii::$app->params["metvuongCatID"] : 0;
-
-        $news = CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief', 'cms_show.created_at','cms_show.catalog_id', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
-            ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
-            ->where('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
-            ->andWhere('cms_catalog.status = :status', [':status' => Status::STATUS_ACTIVE])
-            ->andWhere(['IN', 'cms_show.language_id', [Yii::$app->language]])
-            ->andWhere(['NOT IN', 'cms_show.catalog_id', [1]])
-            ->asArray()->orderBy('cms_show.created_at DESC')->limit($limit)->all();
+        $newsDb = CmsShow::getDb();
+        $news = $newsDb->cache(function($newsDb) use($limit){
+            return CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief', 'cms_show.created_at','cms_show.catalog_id', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
+                ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
+                ->where('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
+                ->andWhere('cms_catalog.status = :status', [':status' => Status::STATUS_ACTIVE])
+                ->andWhere(['IN', 'cms_show.language_id', [Yii::$app->language]])
+                ->andWhere(['NOT IN', 'cms_show.catalog_id', [1]])
+                ->asArray()->orderBy('cms_show.created_at DESC')->limit($limit)->all();
+        });
         return $news;
     }
 

@@ -1,15 +1,22 @@
 <?php
 use frontend\models\Ad;
-$categories = \vsoft\ad\models\AdCategory::find ()->indexBy ( 'id' )->asArray ( true )->all ();
-$types = \vsoft\ad\models\AdProduct::getAdTypes ();
+
+$categoriesDb = \vsoft\ad\models\AdCategory::getDb();
+$categories = $categoriesDb->cache(function($categoriesDb){
+    return \vsoft\ad\models\AdCategory::find()->indexBy('id')->asArray(true)->all();
+});
+$types = \vsoft\ad\models\AdProduct::getAdTypes();
 $products = Ad::find()->homePageRandom();
 if(!empty($products)) {
     ?>
     <ul class="clearfix">
-        <?php foreach ($products as $product): ?>
+        <?php foreach ($products as $product):
+            $url = $product->urlDetail(true);
+            $address = $product->getAddress(true);
+            ?>
             <li>
                 <div class="item">
-                    <a href="<?= $product->urlDetail(true) ?>" class="pic-intro rippler rippler-default">
+                    <a href="<?= $url ?>" class="pic-intro rippler rippler-default">
                         <div class="img-show">
                             <div><img src="<?= $product->representImage ?>" data-original=""></div>
                         </div>
@@ -23,8 +30,8 @@ if(!empty($products)) {
                                 <strong><?= date("d/m/Y", $product->created_at) ?></strong></p>
 
                             <div class="address-listing">
-                                <a title="<?= $product->getAddress(true) ?>"
-                                   href="<?= $product->urlDetail(true) ?>"><?= $product->getAddress(true) ?></a>
+                                <a title="<?= $address ?>"
+                                   href="<?= $url ?>"><?= $address ?></a>
                             </div>
                             <p class="id-duan">
                                 ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id; ?></span></p>
@@ -39,7 +46,7 @@ if(!empty($products)) {
                             </ul>
                         </div>
                         <div class="bottom-feat-box clearfix">
-                            <a href="<?= $product->urlDetail(true) ?>" class="pull-right color-cd-hover">Chi tiết</a>
+                            <a href="<?= $url ?>" class="pull-right color-cd-hover">Chi tiết</a>
 
                             <p><?= Yii::t('listing', 'Price') ?>
                                 <strong><?= vsoft\express\components\StringHelper::formatCurrency($product->price) ?>
