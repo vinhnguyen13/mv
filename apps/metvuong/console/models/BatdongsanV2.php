@@ -1231,7 +1231,7 @@ class BatdongsanV2 extends Component
         if($price == "price=1")
             $models = $models->andWhere(['price_type' => 1]);
 
-        $models = $models->limit(10)->all();
+        $models = $models->limit(300)->all();
 
         $insertCount = 0;
         if(count($models) > 0){
@@ -1261,13 +1261,9 @@ class BatdongsanV2 extends Component
             $street_id = null;
             $home_no = null;
 
-            foreach ($models as $model) {
-//                if($price == 1){
-//                    if(empty($model->price) || $model->price < 0){
-//                        continue;
-//                    }
-//                }
-
+            foreach ($models as $key=>$model) {
+                $no = $key+1;
+                print_r("\n{$no}-Copy listing: {$model->file_name}");
                 array_push($imageArray, $model->adImages);
                 if (count($model->adProductAdditionInfo) > 0) {
                     array_push($infoArray, $model->adProductAdditionInfo);
@@ -1290,6 +1286,12 @@ class BatdongsanV2 extends Component
                     $ward_id = empty($project->ward_id) ? (empty($model->ward_id) ? null : $model->ward_id) : $project->ward_id;
                     $street_id = empty($project->street_id) ? (empty($model->street_id) ? null : $model->street_id) : $project->street_id;
                     $home_no = empty($project->home_no) ? (empty($model->home_no) ? null : $model->home_no) : $project->home_no;
+                } else {
+                    $city_id = empty($model->city_id) ? null : $model->city_id;
+                    $district_id = empty($model->district_id) ? null : $model->district_id;
+                    $ward_id = empty($model->ward_id) ? null : $model->ward_id;
+                    $street_id = empty($model->street_id) ? null : $model->street_id;
+                    $home_no = empty($model->home_no) ? null : $model->home_no;
                 }
 
                 $record = [
@@ -1404,7 +1406,7 @@ class BatdongsanV2 extends Component
                     }
 
                     if($imageCount > 0 && $infoCount > 0 && $contactCount > 0 && $ptmCount > 0) {
-                        print_r("\nCopied {$insertCount} records to main database\n");
+                        print_r("\nCopied {$insertCount} records to main database success.\n");
                     }
                 }
             }
