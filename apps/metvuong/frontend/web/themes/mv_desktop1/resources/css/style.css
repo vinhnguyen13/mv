@@ -10901,6 +10901,13 @@ height: 10px;
     background: #fff;
     color: #3c3c3c;
 }
+.wrap-items-chat .more-box-chat ul {
+    padding: 0;
+}
+.wrap-items-chat .more-box-chat li a {
+    width: 100%;
+    border: none;
+}
 @media ( max-width: 985px ) {
     .agent-postlisting .avatar {
         margin-bottom: 15px;

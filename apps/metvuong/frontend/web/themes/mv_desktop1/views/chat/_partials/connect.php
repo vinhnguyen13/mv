@@ -206,13 +206,14 @@ if(!Yii::$app->user->isGuest) {
             <div class="box-chat-footer">
                 <div class="option-chat-box">
                     <div class="box-dropdown guest-dropdown">
-                        <a href="#" class="val-selected">
+                        <a href="#" class="icon-guest val-selected wrap-img">
                             <span class="icon-mv"><span class="icon-caret-down"></span></span>
                         </a>
-                        <div class="item-dropdown">
+                        <div class="item-dropdown hide-dropdown">
                             <ul class="clearfix">
-                                <li><a href="#">test 1</a></li>
-                                <li><a href="#">test 2</a></li>
+                                <li><a href="#">About</a></li>
+                                <li><a href="#">Listings</a></li>
+                                <li><a href="#">Reviews</a></li>
                             </ul>
                         </div>
                     </div>
