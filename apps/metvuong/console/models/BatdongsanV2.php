@@ -31,8 +31,9 @@ use yii\helpers\ArrayHelper;
 
 class BatdongsanV2 extends Component
 {
-    const DOMAIN = 'http://batdongsan.com.vn';
-    protected $domain = 'http://batdongsan.com.vn';
+    const DOMAIN = 'http://webcache.googleusercontent.com/search?q=cache:batdongsan.com.vn';
+    protected $domain = 'http://webcache.googleusercontent.com/search?q=cache:http://batdongsan.com.vn';
+
     protected $types = ['nha-dat-ban-quan-1','nha-dat-ban-quan-2','nha-dat-ban-quan-3','nha-dat-ban-quan-4','nha-dat-ban-quan-5','nha-dat-ban-quan-6',
         'nha-dat-ban-quan-7','nha-dat-ban-quan-8', 'nha-dat-ban-quan-9','nha-dat-ban-quan-10','nha-dat-ban-quan-11','nha-dat-ban-quan-12',
         'nha-dat-ban-binh-chanh','nha-dat-ban-binh-tan','nha-dat-ban-binh-thanh','nha-dat-ban-can-gio','nha-dat-ban-cu-chi','nha-dat-ban-go-vap',
@@ -174,10 +175,10 @@ class BatdongsanV2 extends Component
                             print_r("\nLast file of {$type} done.");
                         }
                     } else {
-                        echo "\nCannot find listing. End page!" . self::DOMAIN;
+                        echo "\nCannot find listing. End page!" . self::DOMAIN."/".$type;
                     }
                 } else {
-                    echo "\nCannot access in get pages of " . self::DOMAIN;
+                    echo "\nCannot access in get pages of " . self::DOMAIN."/".$type;
                 }
 
                 if(!in_array($type, $bds_log["type"])) {
@@ -193,6 +194,11 @@ class BatdongsanV2 extends Component
     public function getListProject($type, $current_page, $sequence_id, $log, $product_type, $path_folder)
     {
         $href = "/".$type."/p".$current_page;
+        echo "<pre>";
+        print_r(self::DOMAIN . $href);
+        echo "<pre>";
+        exit();
+
         $page = $this->getUrlContent(self::DOMAIN . $href);
         if(!empty($page)) {
             $html = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
@@ -506,7 +512,7 @@ class BatdongsanV2 extends Component
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.1.4322)');
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36');
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_REFERER, self::DOMAIN);
@@ -680,9 +686,9 @@ class BatdongsanV2 extends Component
                             }
                             $filename = $files[$i];
                             $filePath = $path . "/" . $filename;
-                            print_r("\n" . $count_file . " {$type}: {$filename}");
                             if (in_array($filename, $log_import["files"])) {
                                 continue;
+                                // comment not update project address to listing address
 //                                $value = $this->parseDetail($filePath);
 //                                $project_name = !empty($value[$filename]["project"]) ? $value[$filename]["project"] : null;
 //                                if(!empty($project_name)) {
@@ -720,6 +726,7 @@ class BatdongsanV2 extends Component
 //                                }
                             } else {
                                 if (file_exists($filePath)) {
+                                    print_r("\n" . $count_file . " {$type}: {$filename}");
                                     $value = $this->parseDetail($filePath);
                                     if (empty($value)) {
                                         print_r(" Error: no content\n");
@@ -738,9 +745,13 @@ class BatdongsanV2 extends Component
                                     $street_id = null;
 
                                     $project_name = !empty($value[$filename]["project"]) ? $value[$filename]["project"] : null;
+                                    // neu co du an thi lay dia chi cua du an gan cho tin dang
                                     if(!empty($project_name)) {
 //                                        $project_id = $this->getProjectId($project_name);
-                                        $project = AdBuildingProject::find()->where('name = :n', [':n' => $project_name])->one();
+                                        $projectDb = AdBuildingProject::getDb();
+                                        $project = $projectDb->cache(function($projectDb) use($project_name){
+                                            return AdBuildingProject::find()->where('name = :n', [':n' => $project_name])->one();
+                                        });
                                         if (count($project) > 0) {
                                             $project_id = $project->id;
                                             $city_id = $project->city_id;
@@ -1220,7 +1231,7 @@ class BatdongsanV2 extends Component
         if($price == "price=1")
             $models = $models->andWhere(['price_type' => 1]);
 
-        $models = $models->limit(1)->all();
+        $models = $models->limit(10)->all();
 
         $insertCount = 0;
         if(count($models) > 0){
@@ -1244,6 +1255,12 @@ class BatdongsanV2 extends Component
             $bulkContact = array();
             $bulkProductToolMap = array();
 
+            $city_id = null;
+            $district_id = null;
+            $ward_id = null;
+            $street_id = null;
+            $home_no = null;
+
             foreach ($models as $model) {
 //                if($price == 1){
 //                    if(empty($model->price) || $model->price < 0){
@@ -1259,15 +1276,31 @@ class BatdongsanV2 extends Component
                     array_push($contactArray, $model->adContactInfo);
                 }
                 array_push($productToolMaps, $model->id);
+
+                $project_name = $model->project->name;
+                $projectDb = \vsoft\ad\models\AdBuildingProject::getDb();
+                $project = $projectDb->cache(function($projectDb) use($project_name){
+                    return \vsoft\ad\models\AdBuildingProject::find()->where('name = :n', [':n' => $project_name])->one();
+                });
+
+                if (count($project) > 0) {
+                    $project_id = $project->id;
+                    $city_id = empty($project->city_id) ? (empty($model->city_id) ? null : $model->city_id) : $project->city_id;
+                    $district_id = empty($project->district_id) ? (empty($model->district_id) ? null : $model->district_id) : $project->district_id;
+                    $ward_id = empty($project->ward_id) ? (empty($model->ward_id) ? null : $model->ward_id) : $project->ward_id;
+                    $street_id = empty($project->street_id) ? (empty($model->street_id) ? null : $model->street_id) : $project->street_id;
+                    $home_no = empty($project->home_no) ? (empty($model->home_no) ? null : $model->home_no) : $project->home_no;
+                }
+
                 $record = [
                     'category_id' => $model->category_id,
-                    'project_building_id' => empty($model->project_building_id) ? null : $model->project_building_id,
+                    'project_building_id' => empty($project_id) ? null : $project->id,
                     'user_id' => empty($model->user_id) ? null : $model->user_id,
-                    'home_no' => empty($model->home_no) ? null : $model->home_no,
-                    'city_id' => empty($model->city_id) ? null : $model->city_id,
-                    'district_id' => empty($model->district_id) ? null : $model->district_id,
-                    'ward_id' => empty($model->ward_id) ? null : $model->ward_id,
-                    'street_id' => empty($model->street_id) ? null : $model->street_id,
+                    'home_no' => $home_no,
+                    'city_id' => $city_id,
+                    'district_id' => $district_id,
+                    'ward_id' => $ward_id,
+                    'street_id' => $street_id,
                     'type' => $model->type,
                     'content' => $model->content,
                     'area' => $model->area,
