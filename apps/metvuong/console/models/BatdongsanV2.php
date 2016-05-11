@@ -682,6 +682,9 @@ class BatdongsanV2 extends Component
                                 $value = $this->parseDetail($filePath);
                                 $project_name = !empty($value[$filename]["project"]) ? $value[$filename]["project"] : null;
                                 if(!empty($project_name)) {
+                                    /**
+                                     * SELECT id FROM ad_product a INNER JOIN ad_building_project b ON a.project_building_id = b.id WHERE b.name = :name a.district_id != b.district_id AND file_name = :f
+                                     */
                                     $project = AdBuildingProject::find()->where('name = :n', [':n' => $project_name])->one();
                                     if(count($project) > 0){
                                         $project_id = $project->id;
