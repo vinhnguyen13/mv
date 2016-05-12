@@ -57,10 +57,9 @@ $(document).ready(function(){
 			var pp = $(point.counterFields[field].d);
 			var ppp = pp.parent();
 			
+			clearTimeout(ppp.data('timeout'));
 			ppp.data('timeout', setTimeout(function(){
-				if(pp.text() == '0') {
-					ppp.fadeOut();
-				}
+				ppp.fadeOut();
 			}, 500));
 		},
 		calc: function() {
@@ -91,7 +90,7 @@ $(document).ready(function(){
 					addressPoint += 5;
 				}
 			}
-			
+			console.log(addressPoint);
 			if(addressPoint) {
 				p += point.checkPoint('address', addressPoint);
 			} else {
