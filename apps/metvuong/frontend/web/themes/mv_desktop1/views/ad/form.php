@@ -97,6 +97,11 @@ use vsoft\ad\models\AdImages;
 		</div>
 		<div class="wrap-frm-listing row">
 			<div class="col-sm-8">
+				<div class="alert alert-success alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h2>METVUONG khuyến khích các tin rao chất lượng</h2>
+					<p>Quý vị nhập thông tin chi tiết càng nhiều, thì tin rao này sẽ hiển thị lên kết quả tìm kiếm nhiều hơn và sẽ có nhiều khách hàng liên lạc hơn.</p>
+				</div>
 				<?php $form = ActiveForm::begin([
 						'options' => [
 							'class' => 'clearfix row'

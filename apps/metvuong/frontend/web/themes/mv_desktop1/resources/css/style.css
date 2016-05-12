@@ -6208,7 +6208,7 @@ footer li a {
         margin: 0 auto 0;
         height: 100%;
         position: relative;
-        padding-top: 65px;
+        padding-top: 40px;
         padding-bottom: 0;
     }
     .step-check li {
@@ -10869,7 +10869,7 @@ height: 10px;
     height: auto;
     background: 0;
     font-size: 19px;
-    top: -3px;
+    top: -1px;
     color: #00a769;
 }
 .point-select .icon-mv .selected-point:before {
@@ -11060,4 +11060,13 @@ height: 10px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
+}
+.alert-success {
+    font-size: 14px;
+    margin-bottom: 35px;
+}
+.alert-success h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 10px 0;
 }
