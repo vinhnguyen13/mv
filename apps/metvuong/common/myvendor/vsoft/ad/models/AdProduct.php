@@ -92,7 +92,7 @@ class AdProduct extends AP
 			
 			$this->created_at = $this->created_at ? $this->created_at : $now;
 			$this->start_date = $this->start_date ? $this->start_date : $now;
-			$this->end_date = $now + self::EXPIRED;
+			$this->end_date = $now + (self::EXPIRED * 30);
 		} else {
 			$this->updated_at = time();
 		}
