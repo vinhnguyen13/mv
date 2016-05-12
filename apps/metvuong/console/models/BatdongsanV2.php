@@ -769,7 +769,7 @@ class BatdongsanV2 extends Component
                                         'verified' => 1,
                                         'created_at' => $value[$filename]["start_date"],
                                         'source' => 1,
-                                        'file_name' => $type."/files/".$filename
+                                        'file_name' => $filename
                                     ];
                                     // source = 1 for Batdongsan.com.vn
                                     $bulkInsertArray[] = $record;
@@ -1402,7 +1402,7 @@ class BatdongsanV2 extends Component
             $project_table_name = AdBuildingProject::tableName();
             return \vsoft\craw\models\AdProduct::find()
                 ->innerJoin($project_table_name, "{$product_table_name}.project_building_id = {$project_table_name}.id")
-                ->where("{$product_table_name}.district_id <> {$project_table_name}.district_id")->all();
+                ->where("{$product_table_name}.district_id != {$project_table_name}.district_id")->all();
         });
         if(count($products) > 0){
             foreach($products as $product){
