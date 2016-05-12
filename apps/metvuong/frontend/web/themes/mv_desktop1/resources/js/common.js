@@ -1086,6 +1086,13 @@ $.fn.alertBox = function (options) {
                     },sc.settings.duration);
         });
 
+        timeOutHide = setTimeout(function () {
+                        $('.alert-item').fadeOut('slow', function() {
+                            $(this).remove();
+                            $('#alert-noti').html('');
+                        });
+                    },sc.settings.duration);
+
         $('.alert-item .btn-close-alert').on('click', function (e) {
             e.preventDefault();
             clearTimeout(timeOutHide);
