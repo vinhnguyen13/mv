@@ -8417,6 +8417,9 @@ footer li a {
 }
 .chat-real .title-top {
     font-size: 15px;
+    line-height: 100%;
+    font-weight: 600;
+    border: none;
 }
 .address-feat {
     margin-bottom: 7px;
@@ -9304,7 +9307,7 @@ footer li a {
     text-decoration: underline;
 }
 .box-chat-footer .chat-real {
-    padding-top: 36px;
+    padding-top: 35px;
     height: 100%;
     padding-bottom: 55px;
 }
@@ -11046,6 +11049,8 @@ height: 10px;
     .wrap-items-chat .more-box-chat span {
         display: block;
         margin: 0;
+    }
+    .box-chat-footer .chat-real {
     }
 }
 .title-frm {
