@@ -780,7 +780,7 @@ $(document).ready(function(){
 	
 	var w = $(window);
 	var cl = $('.checkpoint-listing');
-	var offtop = form.el.offset().top - ($('header').outerHeight() + 12);
+	var offtop = $('.wrap-frm-listing').offset().top - ($('header').outerHeight()) + parseInt($('.wrap-frm-listing').css('padding-top')) - 12;
 
 	if(Number(cl.css('margin-top').replace('px', '')) == 0) {
 		w.on('scroll', wScroll).trigger('scroll');
@@ -796,7 +796,7 @@ $(document).ready(function(){
 	}
 	
 	w.on('resize', function(){
-		offtop = form.el.offset().top - ($('header').outerHeight() + 12);
+		offtop = $('.wrap-frm-listing').offset().top - ($('header').outerHeight()) + parseInt($('.wrap-frm-listing').css('padding-top')) - 12;
 		
 		if(Number(cl.css('margin-top').replace('px', '')) == 0) {
 			w.on('scroll', wScroll);
