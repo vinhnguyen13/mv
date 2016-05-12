@@ -768,7 +768,8 @@ class BatdongsanV2 extends Component
                                         'end_date' => $value[$filename]["end_date"],
                                         'verified' => 1,
                                         'created_at' => $value[$filename]["start_date"],
-                                        'source' => 1, 'file_name' => $filename
+                                        'source' => 1,
+                                        'file_name' => $type."/files/".$filename
                                     ];
                                     // source = 1 for Batdongsan.com.vn
                                     $bulkInsertArray[] = $record;
@@ -1389,47 +1390,45 @@ class BatdongsanV2 extends Component
         }
     }
 
-//    public function updateToProjectAddress(){
-////        $value = $this->parseDetail($filePath);
-////        $project_name = !empty($value[$filename]["project"]) ? $value[$filename]["project"] : null;
-//        if(!empty($project_name)) {
-//            /**
-//             * SELECT id FROM ad_product a INNER JOIN ad_building_project b ON a.project_building_id = b.id WHERE b.name = :name a.district_id != b.district_id AND file_name = :f
-//             */
-//            $productDb = \vsoft\craw\models\AdProduct::getDb();
-//            $products = $productDb->cache(function($productDb){
-//                return $productDb->
-//            });
-//            $project = AdBuildingProject::find()->where('name = :n', [':n' => $project_name])->one();
-//            if(count($project) > 0){
-//                $project_id = $project->id;
-//                $city_id = $project->city_id;
-//                $district_id = $project->district_id;
-//                $ward_id = $project->ward_id;
-//                $street_id = $project->street_id;
-//                $home_no = $project->home_no;
-//                $listing = \vsoft\craw\models\AdProduct::find()->where('file_name = :f', [':f' => $filename])->one();
-//                if(count($listing) > 0){
-//                    if($listing->project_building_id == $project_id && $listing->city_id == $city_id && $listing->district_id == $district_id && $listing->street_id == $street_id){
-//                        print_r(" - {$project_name} true.\n");
-//                        continue;
-//                    }
-//
-//                    $listing->project_building_id = $project_id;
-//                    $listing->city_id = $city_id;
-//                    $listing->district_id = $district_id;
-//                    $listing->ward_id = $ward_id;
-//                    $listing->street_id = $street_id;
-//                    $listing->home_no = $home_no;
-//                    $listing->update(false);
-//                    print_r(" - {$project_name} updated.\n");
-//                    continue;
-//                }
-//            }
-//        } else {
-//            continue;
-//        }
-//    }
+    // update address for product by project address
+    public function updateAddressByProject(){
+        /***
+         * SELECT id FROM ad_product a INNER JOIN ad_building_project b ON a.project_building_id = b.id WHERE b.name = :name a.district_id != b.district_id AND file_name = :f
+         */
+        $productDb = \vsoft\craw\models\AdProduct::getDb();
+        $products = $productDb->cache(function($productDb){
+//            return $productDb->createCommand("SELECT a.* FROM ad_product a INNER JOIN ad_building_project b ON a.project_building_id = b.id WHERE a.district_id != b.district_id ")->queryAll();
+            $product_table_name = \vsoft\craw\models\AdProduct::tableName();
+            $project_table_name = AdBuildingProject::tableName();
+            return \vsoft\craw\models\AdProduct::find()
+                ->innerJoin($project_table_name, "{$product_table_name}.project_building_id = {$project_table_name}.id")
+                ->where("{$product_table_name}.district_id <> {$project_table_name}.district_id")->all();
+        });
+        if(count($products) > 0){
+            foreach($products as $product){
+                if(!empty($product["file_name"])) {
+                    $project = $product->project;
+                    if (count($project) > 0) {
+                        $city_id = $project->city_id;
+                        $district_id = $project->district_id;
+                        $ward_id = $project->ward_id;
+                        $street_id = $project->street_id;
+                        $home_no = $project->home_no;
+
+                        $product->city_id = $city_id;
+                        $product->district_id = $district_id;
+                        $product->ward_id = $ward_id;
+                        $product->street_id = $street_id;
+                        $product->home_no = $home_no;
+                        $product->update(false);
+                        print_r("Updated: ". $product["file_name"] . " - " .$project->name ."\n");
+                    }
+                }
+            }
+        } else {
+            print_r("Don't have incorrect products");
+        }
+    }
 
     // update address ids from lat long by Google API Geocode
     public function updateData(){

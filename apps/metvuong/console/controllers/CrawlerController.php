@@ -52,7 +52,13 @@ class CrawlerController extends Controller
     }
     public function actionUpdatebatdongsan()
     {
+        // update address from Google API Geocode
         BatdongsanV2::find()->updateData();
+    }
+
+    public function actionUpdateAddressByProject(){
+        // update address from project address
+        BatdongsanV2::find()->updateAddressByProject();
     }
 
     public function actionCopytomain($price=0, $build='build=false')
