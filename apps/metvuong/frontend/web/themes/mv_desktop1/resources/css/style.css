@@ -4504,6 +4504,9 @@ html.mm-opening .mm-slideout {
     color: #3c3c3c;
     margin-right: 10px;
 }
+#popup_email .inner-popup .btn-cancel {
+    background: #C4C4C4;
+}
 .btn-close.btn-cancel {
     margin-right: 0;
 }

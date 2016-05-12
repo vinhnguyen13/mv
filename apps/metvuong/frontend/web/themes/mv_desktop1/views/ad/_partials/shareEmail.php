@@ -119,6 +119,13 @@ use yii\helpers\Url;
                             <?php } ?>
                         </div>
                         <?php $f->end(); ?>
+
+
+                        <div class="text-center">
+                            <a href="#" class="txt-cancel btn-cancel btn-common" data-dismiss="modal" aria-label="Close"><?=Yii::t('send_email','Cancel')?></a>
+                            <a href="#" class="txt-done btn-done send_mail btn-common" data-alert="Gửi email thành công !"><?=Yii::t('send_email','Send')?></a>
+                        </div>
+
                     </div>
                 </div>
             </div>
