@@ -104,119 +104,133 @@ use vsoft\ad\models\AdImages;
 				</div>
 				<?php $form = ActiveForm::begin([
 						'options' => [
-							'class' => 'clearfix row'
+							'class' => 'clearfix'
 						]
 					]) ?>
-					<div class="form-group col-xs-6">
-						<label for="<?= Html::getInputId($product, 'type') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('type') ?><span class="require-hint">*</span></label>
-						<?= Html::activeDropDownList($product, 'type', $product->getAdTypes(), ['class' => 'form-control']) ?>
+					<div class="group-frm">
+						<div class="title-frm">Loại BĐS <span class="pdL-10">+10 điểm</span></div>
+						<div class="row">
+							<div class="form-group col-xs-6">
+								<label for="<?= Html::getInputId($product, 'type') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('type') ?><span class="require-hint">*</span></label>
+								<?= Html::activeDropDownList($product, 'type', $product->getAdTypes(), ['class' => 'form-control']) ?>
+							</div>
+							<div class="form-group col-xs-6">
+								<label for="<?= Html::getInputId($product, 'category_id') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('category_id') ?><span class="require-hint">*</span></label>
+								<?= Html::activeDropDownList($product, 'category_id', $categoriesDropDown, ['options' => $categoriesDropDownOptions, 'class' => 'form-control', 'prompt' => "..."]) ?>
+								<div class="help-block"></div>
+							</div>
+							<div class="form-group col-xs-12 project-wrap<?= $product->projectBuilding ? ' has-project' : '' ?>"<?= $product->category_id == AdCategory::CATEGORY_CHCK ? '' : ' style="display: none;"' ?>>
+								<label for="" class="fs-13 mgB-5"><?= $product->getAttributeLabel('project_building_id') ?></label>
+								<?= Html::activeHiddenInput($product, 'project_building_id') ?>
+								<input type="hidden" id="project-name" value="<?= $product->projectBuilding ? $product->projectBuilding->name : '' ?>" />
+								<a target="_blank" href="<?= $product->projectBuilding ? Url::to(['building-project/view', 'slug' => $product->projectBuilding->slug]) : '#'; ?>" id="project-value"><span class="icon-mv fs-12 mgR-5"><span class="icon-close-icon"></span></span><span class="name"><?= $product->projectBuilding ? $product->projectBuilding->name . ', ' . $districtDropdown[$product->projectBuilding->district_id] . ', ' . $citiesDropdown[$product->projectBuilding->city_id] : '' ?></span></a>
+								<input type="text" class="form-control" id="projectMask" placeholder="...">
+								<div id="search-list" class="hide"><ul></ul></div>
+							</div>
+						</div>
 					</div>
-					<div class="form-group col-xs-6">
-						<label for="<?= Html::getInputId($product, 'category_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('category_id') ?><span class="require-hint">*</span></label>
-						<?= Html::activeDropDownList($product, 'category_id', $categoriesDropDown, ['options' => $categoriesDropDownOptions, 'class' => 'form-control', 'prompt' => "..."]) ?>
-						<div class="help-block"></div>
-					</div>
-					<div class="form-group col-xs-6 project-wrap<?= $product->projectBuilding ? ' has-project' : '' ?>"<?= $product->category_id == AdCategory::CATEGORY_CHCK ? '' : ' style="display: none;"' ?>>
-						<label for="" class="fs-13 mgB-10"><?= $product->getAttributeLabel('project_building_id') ?></label>
-						<?= Html::activeHiddenInput($product, 'project_building_id') ?>
-						<input type="hidden" id="project-name" value="<?= $product->projectBuilding ? $product->projectBuilding->name : '' ?>" />
-						<a target="_blank" href="<?= $product->projectBuilding ? Url::to(['building-project/view', 'slug' => $product->projectBuilding->slug]) : '#'; ?>" id="project-value"><span class="icon-mv fs-12 mgR-5"><span class="icon-close-icon"></span></span><span class="name"><?= $product->projectBuilding ? $product->projectBuilding->name . ', ' . $districtDropdown[$product->projectBuilding->district_id] . ', ' . $citiesDropdown[$product->projectBuilding->city_id] : '' ?></span></a>
-						<input type="text" class="form-control" id="projectMask" placeholder="...">
-						<div id="search-list" class="hide"><ul></ul></div>
-					</div>
-					<div class="form-group col-xs-6">
-						<label for="<?= Html::getInputId($product, 'city_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('city_id') ?><span class="require-hint">*</span></label>
-						<?= Html::activeDropDownList($product, 'city_id', $citiesDropdown, ['class' => 'form-control search', 'options' => $citiesOptions, 'prompt' => "...", 'disabled' => ($product->projectBuilding && $product->projectBuilding->city_id) ? true : false]) ?>
-						<div class="help-block"></div>
-					</div>
-					<div class="form-group col-xs-6"<?= $product->city_id ? '' : ' style="display: none;"' ?>>
-						<label for="<?= Html::getInputId($product, 'district_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('district_id') ?><span class="require-hint">*</span></label>
-						<?= Html::activeDropDownList($product, 'district_id', $districtDropdown, ['class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose City to show Districts'), 'disabled' => ($product->projectBuilding && $product->projectBuilding->district_id) ? true : false]) ?>
-						<div class="help-block"></div>
-					</div>
-					<div class="form-group col-xs-6"<?= $product->district_id ? '' : ' style="display: none;"' ?>>
-						<label for="<?= Html::getInputId($product, 'ward_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('ward_id') ?><span class="require-hint">*</span></label>
-						<?= Html::activeDropDownList($product, 'ward_id', $wardsDropdown, ['options' => $wardsOptions, 'class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose District to show Wards'), 'disabled' => ($product->projectBuilding && $product->projectBuilding->ward_id) ? true : false]) ?>
-						<div class="help-block"></div>
-					</div>
-					<div class="form-group col-xs-6"<?= $product->district_id ? '' : ' style="display: none;"' ?>>
-						<label for="<?= Html::getInputId($product, 'street_id') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('street_id') ?><span class="require-hint">*</span></label>
-						<?= Html::activeDropDownList($product, 'street_id', $streetsDropdown, ['options' => $streetsOptions, 'class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose District to show Streets'), 'disabled' => ($product->projectBuilding && $product->projectBuilding->street_id) ? true : false]) ?>
-						<div class="help-block"></div>
-					</div>
-					<div class="form-group col-xs-6 fild-address"<?= $product->district_id ? '' : ' style="display: none;"' ?>>
-						<label for="<?= Html::getInputId($product, 'home_no') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('home_no') ?></label>
-						<?= Html::activeTextInput($product, 'home_no', ['class' => 'form-control', 'placeholder' => '...', 'disabled' => ($product->projectBuilding && $product->projectBuilding->home_no) ? true : false]) ?>
-						<label class="checkbox-inline fs-13 checkbox-ui">
-							<?= Html::activeCheckbox($product, 'show_home_no', ['label' => false]) ?>
-							<span class="icon-mv"><span class="icon-checkbox"></span></span> <?= $product->getAttributeLabel('show_home_no') ?>
-						</label>
-					</div>
-					<div class="clearfix"></div>
-					<div class="form-group col-xs-6">
-						<label for="<?= Html::getInputId($product, 'area') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('area') ?> (m2)<span class="require-hint">*</span></label>
-						<?= Html::activeTextInput($product, 'area', ['class' => 'form-control number-only number-float', 'placeholder' => '...']) ?>
-						<div class="help-block"></div>
-					</div>
-					<div class="form-group col-xs-6 price-type">
-						<label for="<?= Html::getInputId($product, 'price') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('price') ?> (<?= Yii::t('ad', 'VND') ?>)<span class="require-hint">*</span></label><span class="price-show-wrap"><span id="price-show"></span></span>
-						<?= Html::activeHiddenInput($product, 'price', ['class' => 'form-control text-right', 'placeholder' => '...']) ?>
-						<div style="position: relative;">
-							<input type="text" id="priceMask" class="form-control text-right number-only number-float" placeholder="...">
-							<div class="price-unit">
-								<label class="radio-inline radio-ui">
-									<input type="radio" name="price-unit" id="price-unit-mil" value="1000000" checked="checked"> Triệu
-								</label>
-								<label class="radio-inline radio-ui">
-									<input type="radio" name="price-unit" id="price-unit-bil" value="1000000000"> Tỷ
+
+					<div class="group-frm">
+						<div class="title-frm">Địa chỉ <span class="pdL-10">+15 điểm</span></div>
+						<div class="row">
+							<div class="form-group col-xs-6">
+								<label for="<?= Html::getInputId($product, 'city_id') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('city_id') ?><span class="require-hint">*</span></label>
+								<?= Html::activeDropDownList($product, 'city_id', $citiesDropdown, ['class' => 'form-control search', 'options' => $citiesOptions, 'prompt' => "...", 'disabled' => ($product->projectBuilding && $product->projectBuilding->city_id) ? true : false]) ?>
+								<div class="help-block"></div>
+							</div>
+							<div class="form-group col-xs-6"<?= $product->city_id ? '' : ' style="display: none;"' ?>>
+								<label for="<?= Html::getInputId($product, 'district_id') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('district_id') ?><span class="require-hint">*</span></label>
+								<?= Html::activeDropDownList($product, 'district_id', $districtDropdown, ['class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose City to show Districts'), 'disabled' => ($product->projectBuilding && $product->projectBuilding->district_id) ? true : false]) ?>
+								<div class="help-block"></div>
+							</div>
+							<div class="form-group col-xs-6"<?= $product->district_id ? '' : ' style="display: none;"' ?>>
+								<label for="<?= Html::getInputId($product, 'ward_id') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('ward_id') ?><span class="require-hint">*</span></label>
+								<?= Html::activeDropDownList($product, 'ward_id', $wardsDropdown, ['options' => $wardsOptions, 'class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose District to show Wards'), 'disabled' => ($product->projectBuilding && $product->projectBuilding->ward_id) ? true : false]) ?>
+								<div class="help-block"></div>
+							</div>
+							<div class="form-group col-xs-6"<?= $product->district_id ? '' : ' style="display: none;"' ?>>
+								<label for="<?= Html::getInputId($product, 'street_id') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('street_id') ?><span class="require-hint">*</span></label>
+								<?= Html::activeDropDownList($product, 'street_id', $streetsDropdown, ['options' => $streetsOptions, 'class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose District to show Streets'), 'disabled' => ($product->projectBuilding && $product->projectBuilding->street_id) ? true : false]) ?>
+								<div class="help-block"></div>
+							</div>
+							<div class="form-group col-xs-6 fild-address"<?= $product->district_id ? '' : ' style="display: none;"' ?>>
+								<label for="<?= Html::getInputId($product, 'home_no') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('home_no') ?></label>
+								<?= Html::activeTextInput($product, 'home_no', ['class' => 'form-control', 'placeholder' => '...', 'disabled' => ($product->projectBuilding && $product->projectBuilding->home_no) ? true : false]) ?>
+								<label class="checkbox-inline fs-13 checkbox-ui">
+									<?= Html::activeCheckbox($product, 'show_home_no', ['label' => false]) ?>
+									<span class="icon-mv"><span class="icon-checkbox"></span></span> <?= $product->getAttributeLabel('show_home_no') ?>
 								</label>
 							</div>
 						</div>
-						<div class="help-block"></div>
 					</div>
-					<div class="form-group col-xs-12">
-						<label for="<?= Html::getInputId($product, 'content') ?>" class="fs-13 mgB-10"><?= $product->getAttributeLabel('content') ?><span class="require-hint">*</span></label>
-						<?= Html::activeTextarea($product, 'content', ['class' => 'form-control', 'rows' => 5]) ?>
-						<div class="help-block"></div>
+					<div class="group-frm">
+						<div class="title-frm">Thông tin chung <span class="pdL-10">+15 điểm</span></div>
+						<div class="row">
+							<div class="form-group col-xs-6">
+								<label for="<?= Html::getInputId($product, 'area') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('area') ?> (m2)<span class="require-hint">*</span></label>
+								<?= Html::activeTextInput($product, 'area', ['class' => 'form-control number-only number-float', 'placeholder' => '...']) ?>
+								<div class="help-block"></div>
+							</div>
+							<div class="form-group col-xs-6 price-type">
+								<label for="<?= Html::getInputId($product, 'price') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('price') ?> (<?= Yii::t('ad', 'VND') ?>)<span class="require-hint">*</span></label><span class="price-show-wrap"><span id="price-show"></span></span>
+								<?= Html::activeHiddenInput($product, 'price', ['class' => 'form-control text-right', 'placeholder' => '...']) ?>
+								<div style="position: relative;">
+									<input type="text" id="priceMask" class="form-control text-right number-only number-float" placeholder="...">
+									<div class="price-unit">
+										<label class="radio-inline radio-ui">
+											<input type="radio" name="price-unit" id="price-unit-mil" value="1000000" checked="checked"> Triệu
+										</label>
+										<label class="radio-inline radio-ui">
+											<input type="radio" name="price-unit" id="price-unit-bil" value="1000000000"> Tỷ
+										</label>
+									</div>
+								</div>
+								<div class="help-block"></div>
+							</div>
+							<div class="form-group col-xs-12">
+								<label for="<?= Html::getInputId($product, 'content') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('content') ?><span class="require-hint">*</span></label>
+								<?= Html::activeTextarea($product, 'content', ['class' => 'form-control', 'rows' => 5]) ?>
+								<div class="help-block"></div>
+							</div>
+						</div>
 					</div>
-					
-					<div class="form-group group-frm col-xs-12">
-						<div class="title-frm">Thông tin khác <span class="color-cd pdL-10">+2 - 24 điểm</span></div>
+					<div class="group-frm">
+						<div class="title-frm">Thông tin khác <span class="pdL-10">+2 - 24 điểm</span></div>
 						<div class="row">
 							<div class="form-group col-xs-4">
-								<label for="<?= Html::getInputId($additionInfo, 'room_no') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('room_no') ?></label>
+								<label for="<?= Html::getInputId($additionInfo, 'room_no') ?>" class="fs-13 mgB-5"><?= $additionInfo->getAttributeLabel('room_no') ?></label>
 								<?= Html::activeTextInput($additionInfo, 'room_no', ['class' => 'form-control number-only', 'placeholder' => '...']) ?>
 							</div>
 							<div class="form-group col-xs-4">
-								<label for="<?= Html::getInputId($additionInfo, 'toilet_no') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('toilet_no') ?></label>
+								<label for="<?= Html::getInputId($additionInfo, 'toilet_no') ?>" class="fs-13 mgB-5"><?= $additionInfo->getAttributeLabel('toilet_no') ?></label>
 								<?= Html::activeTextInput($additionInfo, 'toilet_no', ['class' => 'form-control number-only', 'placeholder' => '...']) ?>
 							</div>
 							<div class="form-group col-xs-4">
-								<label for="<?= Html::getInputId($additionInfo, 'floor_no') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('floor_no') ?></label>
+								<label for="<?= Html::getInputId($additionInfo, 'floor_no') ?>" class="fs-13 mgB-5"><?= $additionInfo->getAttributeLabel('floor_no') ?></label>
 								<?= Html::activeTextInput($additionInfo, 'floor_no', ['class' => 'form-control number-only', 'placeholder' => '...']) ?>
 							</div>
 							<div class="form-group col-xs-4">
-								<label for="<?= Html::getInputId($additionInfo, 'facade_width') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('facade_width') ?> (m)</label>
+								<label for="<?= Html::getInputId($additionInfo, 'facade_width') ?>" class="fs-13 mgB-5"><?= $additionInfo->getAttributeLabel('facade_width') ?> (m)</label>
 								<?= Html::activeTextInput($additionInfo, 'facade_width', ['class' => 'form-control number-only number-float', 'placeholder' => '...']) ?>
 							</div>
 							<div class="form-group col-xs-4">
-								<label for="<?= Html::getInputId($additionInfo, 'land_width') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('land_width') ?> (m)</label>
+								<label for="<?= Html::getInputId($additionInfo, 'land_width') ?>" class="fs-13 mgB-5"><?= $additionInfo->getAttributeLabel('land_width') ?> (m)</label>
 								<?= Html::activeTextInput($additionInfo, 'land_width', ['class' => 'form-control number-only number-float', 'placeholder' => '...']) ?>
 							</div>
 							<div class="form-group col-xs-4">
-								<label for="<?= Html::getInputId($additionInfo, 'home_direction') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('home_direction') ?></label>
+								<label for="<?= Html::getInputId($additionInfo, 'home_direction') ?>" class="fs-13 mgB-5"><?= $additionInfo->getAttributeLabel('home_direction') ?></label>
 								<?= Html::activeDropDownList($additionInfo, 'home_direction', AdProductAdditionInfo::directionList(), ['class' => 'form-control', 'prompt' => "..."]) ?>
 							</div>
 							<div class="form-group col-xs-4">
-								<label for="<?= Html::getInputId($additionInfo, 'facade_direction') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('facade_direction') ?></label>
+								<label for="<?= Html::getInputId($additionInfo, 'facade_direction') ?>" class="fs-13 mgB-5"><?= $additionInfo->getAttributeLabel('facade_direction') ?></label>
 								<?= Html::activeDropDownList($additionInfo, 'facade_direction', AdProductAdditionInfo::directionList(), ['class' => 'form-control', 'prompt' => "..."]) ?>
 							</div>
 							<div class="form-group col-xs-12">
-								<label for="<?= Html::getInputId($additionInfo, 'interior') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('interior') ?></label>
+								<label for="<?= Html::getInputId($additionInfo, 'interior') ?>" class="fs-13 mgB-5"><?= $additionInfo->getAttributeLabel('interior') ?></label>
 								<?= Html::activeTextarea($additionInfo, 'interior', ['class' => 'form-control', 'rows' => 2]) ?>
 							</div>
 							<div class="form-group col-xs-12 tienich-frm">
-								<label for="" class="fs-13 mgB-10">Tiện ích</label>
+								<label for="" class="fs-13 mgB-5">Tiện ích</label>
 								<?php
 									$facilities = AdFacility::find()->all();
 									$activeFacility = $additionInfo->facility ? $additionInfo->facility : [];
@@ -235,9 +249,9 @@ use vsoft\ad\models\AdImages;
 							</div>
 						</div>
 					</div>
-					<div class="form-group col-xs-12 group-frm">
-						<div class="title-frm">Hình ảnh <span class="color-cd pdL-10">+4 - 10 điểm</span></div>
-						<label for="" class="fs-13 mgB-10">Tải hình ảnh dư án</label>
+					<div class="group-frm clearfix">
+						<div class="title-frm">Hình ảnh <span class="pdL-10">+4 - 10 điểm</span></div>
+						<label for="" class="fs-13 mgB-5">Tải hình ảnh dư án</label>
 						<div class="upload-img-listing">
 							<span id="upload-hint"><?= Yii::t('ad', 'Change the position of images by dragging the image into the right position you want!') ?></span>
 							<?php
@@ -270,25 +284,25 @@ use vsoft\ad\models\AdImages;
 								]) ?>
 						</div>
 					</div>
-					<div class="form-group col-xs-12 mgT-30 group-frm">
-						<div class="title-frm">Thông tin liên hệ <span class="color-cd pdL-10">+4 điểm</span></div>
+					<div class="group-frm">
+						<div class="title-frm">Thông tin liên hệ <span class="pdL-10">+4 điểm</span></div>
 						<div class="clearfix agent-postlisting">
 							<div class="fs-13 row">
 								<div class="form-group col-xs-6">
-									<label for="<?= Html::getInputId($contactInfo, 'name') ?>" class="fs-13 mgB-10"><?= $contactInfo->getAttributeLabel('name') ?></label>
+									<label for="<?= Html::getInputId($contactInfo, 'name') ?>" class="fs-13 mgB-5"><?= $contactInfo->getAttributeLabel('name') ?></label>
 									<?= Html::activeTextInput($contactInfo, 'name', ['class' => 'form-control', 'placeholder' => '...']) ?>
 								</div>
 								<div class="form-group col-xs-6">
-									<label for="<?= Html::getInputId($contactInfo, 'mobile') ?>" class="fs-13 mgB-10"><?= $contactInfo->getAttributeLabel('mobile') ?><span class="require-hint">*</span></label>
+									<label for="<?= Html::getInputId($contactInfo, 'mobile') ?>" class="fs-13 mgB-5"><?= $contactInfo->getAttributeLabel('mobile') ?><span class="require-hint">*</span></label>
 									<?= Html::activeTextInput($contactInfo, 'mobile', ['class' => 'form-control number-only', 'placeholder' => '...']) ?>
 									<div class="help-block"></div>
 								</div>
 								<div class="form-group col-xs-6">
-									<label for="<?= Html::getInputId($contactInfo, 'email') ?>" class="fs-13 mgB-10"><?= $contactInfo->getAttributeLabel('email') ?></label>
+									<label for="<?= Html::getInputId($contactInfo, 'email') ?>" class="fs-13 mgB-5"><?= $contactInfo->getAttributeLabel('email') ?></label>
 									<?= Html::activeTextInput($contactInfo, 'email', ['class' => 'form-control', 'placeholder' => '...']) ?>
 								</div>
 								<div class="form-group col-xs-6">
-									<label for="" class="fs-13 mgB-10"><?= Yii::t('ad', 'You are') ?></label>
+									<label for="" class="fs-13 mgB-5"><?= Yii::t('ad', 'You are') ?></label>
 									<div>
 										<?php $ownerName = Html::getInputName($product, 'owner') ?>
 										<label class="radio-inline radio-ui">

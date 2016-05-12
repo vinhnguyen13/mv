@@ -11042,16 +11042,32 @@ height: 10px;
 .title-frm {
     font-weight: 700;
     font-size: 14px;
-    border-bottom: 2px solid #B9B9B9;
-    margin-bottom: 20px;
-    padding-bottom: 5px;
-    text-transform: uppercase;
+    position: absolute;
+    top: -16px;
+    left: 15px;
+    background: #00a769;
+    padding: 4px 10px;
+    color: #fff;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
 }
 .title-frm span {
     text-transform: none;
 }
 .wrap-frm-listing .group-frm {
-    margin-bottom: 20px;
+    margin-bottom: 45px;
+    padding: 20px;
+    border: 1px solid #00a769;
+    position: relative;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+}
+.wrap-frm-listing .group-frm .form-group {
+    margin-bottom: 5px;
 }
 .wrap-frm-listing select,
 .wrap-frm-listing input {
