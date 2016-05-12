@@ -23,7 +23,7 @@ use yii\helpers\Html;
                         <table cellspacing="0" cellpadding="0" border="0" width="100%">
                             <tbody><tr>
                                 <td><a href="#"><img style="width: 150px;" alt="" src="<?=\yii\helpers\Url::home(true)?>images/logo-white.png"></a></td>
-                                <td style="text-align:right; color: #fff;font-size: 14px;font-weight: bold;">Kênh mua sắm bất động sản hàng đầu!</td>
+                                <td style="text-align:right; color: #fff;font-size: 14px;font-weight: bold;">Kênh mua sắm bất động sản hàng đầu Việt Nam!</td>
                             </tr>
                             </tbody></table>
                     </td>
@@ -31,7 +31,7 @@ use yii\helpers\Html;
                 <tr>
                     <td style="padding: 40px 30px;border: 1px solid #e7e7e7;">
                         <a href="<?=\yii\helpers\Url::home(true)?>" style="text-decoration: none;"><p style="color: #00a769;font-size: 16px;font-weight: bold;margin-bottom: 15px;">Thông báo từ metvuong.com</p></a>
-                        <p style="margin-bottom: 10px;"><strong style="color: #222;font-size: 13px;">Xin chào, <?=!empty($contact->to_name) ? $contact->to_name : $contact->recipient_email?>!</strong></p>
+                        <p style="margin-bottom: 10px;"><strong style="color: #222;font-size: 13px;">Xin chào, <?= $contact->recipient_email ?>!</strong></p>
                         <p style="font-size: 13px;margin-bottom: 35px;line-height:20px"><?= str_replace(PHP_EOL, "<br>", $contact->content)?></p>
                         <p style="margin-bottom: 45px;"><a style="background: #00a769;font-size:13px;font-weight: bold;text-decoration:none;color:#fff;padding: 5px 15px;" href="<?= $contact->detailUrl ?>">Xem chi tiết tin đăng</a></p>
                         <p style="font-size: 13px;margin-bottom:5px;">Trân trọng,</p>
