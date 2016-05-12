@@ -83,7 +83,7 @@ use yii\helpers\Url;
                             <p class="mgB-5">Tin đăng của bạn còn <span class="font-600 color-cd">0 ngày</span></p>
                             <p class="mgB-25">Nâng cấp tin đăng thêm <span class="font-600 color-cd">30 ngày </span>?</p>
                             <a href="#" class="btn-common btn-cancel" data-dismiss="modal" aria-label="Close">Từ chối</a>
-                            <a href="#" class="btn-common btn-ok">Đồng ý</a>
+                            <a href="#" class="btn-common btn-ok" data-dismiss="modal" aria-label="Close">Đồng ý</a>
                         </div>
                     </div>
                 </div>
@@ -100,6 +100,25 @@ use yii\helpers\Url;
          styleShow: 'center',
          closeBtn: '#nang-cap .btn-cancel, #nang-cap .btn-ok',
          });*/
+        $(document).on('click', '.btn-nang-cap', function (e) {
+            var product = $(this).attr('data-product');
+            $('#upgrade-time').find('.btn-ok').attr('data-product', product);
+        });
+
+        $(document).on('click', '#upgrade-time .btn-ok', function (e) {
+            var product = $(this).attr('data-product');
+            if(product){
+                $.ajax({
+                    type: "get",
+                    dataType: 'html',
+                    url: '<?=Url::to(['dashboard/upgrade'])?>?id=' + product,
+                    success: function (data) {
+                        location.reload();
+                    }
+                });
+            }
+        });
+
         $("#tags").click(function() {
             var list = <?=json_encode(array_values($search))?>;
             $("#tags").autocomplete({

@@ -121,6 +121,19 @@ class DashboardController extends Controller
 //        }
     }
 
+    public function actionUpgrade()
+    {
+        if(Yii::$app->request->isAjax) {
+            $id = (int)Yii::$app->request->get("id");
+            $product = AdProduct::findOne($id);
+            if(!empty($product)){
+                $product->start_date = time();
+                $product->end_date = strtotime("+30 days");
+                $product->save();
+            }
+        }
+    }
+
     public function actionClickchart(){
         if(Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_HTML;

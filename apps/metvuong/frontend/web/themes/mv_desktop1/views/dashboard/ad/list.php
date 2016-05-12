@@ -95,7 +95,7 @@ $count_product = count($products);
                                         <strong><?= $day_number > 1 ? $day_number . " " . Yii::t('statistic', 'days') : $day_number . " " . Yii::t('statistic', 'day') ?></strong>
                                     </p>
                                 <?php } ?>
-                                <a href="#" data-toggle="modal" data-target="#upgrade-time" class="btn-nang-cap"><?= Yii::t('statistic', 'Upgrade') ?></a>
+                                <a href="#" data-product="<?=$product->id;?>" data-toggle="modal" data-target="#upgrade-time" class="btn-nang-cap"><?= Yii::t('statistic', 'Upgrade') ?></a>
                                 <div class="clearfix"></div>
                                 <a href="<?=$product->urlDetail(true)?>" class="see-detail-listing fs-13 font-600 color-cd-hover mgT-10"><span class="text-decor"><?=Yii::t('statistic', 'Go detail page')?></span><span class="icon-mv mgL-10"><span class="icon-angle-right"></span></span></a>
                             </div>
