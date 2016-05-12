@@ -64,19 +64,6 @@ use yii\helpers\Url;
                     <?php } ?>
                 </div>
             </div>
-            <div id="nang-cap" class="popup-common hide-popup">
-                <div class="wrap-popup">
-                    <div class="inner-popup">
-                        <a href="#" class="btn-close btn-cancel"><span class="icon icon-close"></span></a>
-                        <p class="alert-num-date">Tin đăng còn <span>0 ngày</span></p>
-                        <p>Nâng cấp tin đăng thêm 30 ngày?  </p>
-                        <div class="text-center">
-                            <a href="#" class="btn-common btn-cancel">Từ chối</a>
-                            <a href="#" class="btn-common btn-ok">Đồng ý</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <!-- <div class="ui-widget">
                 <input id="tags">
             </div> -->
@@ -84,6 +71,27 @@ use yii\helpers\Url;
         <?php } ?>
     </div>
 </div>
+
+<div id="upgrade-time" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="wrap-popup">
+                    <div class="inner-popup">
+                        <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
+                        <div class="text-center fs-15">
+                            <p class="mgB-5">Tin đăng của bạn còn <span class="font-600 color-cd">0 ngày</span></p>
+                            <p class="mgB-25">Nâng cấp tin đăng thêm <span class="font-600 color-cd">30 ngày </span>?</p>
+                            <a href="#" class="btn-common btn-cancel" data-dismiss="modal" aria-label="Close">Từ chối</a>
+                            <a href="#" class="btn-common btn-ok">Đồng ý</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script>
 	$(document).ready(function () {

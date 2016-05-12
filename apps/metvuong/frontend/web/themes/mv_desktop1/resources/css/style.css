@@ -2269,6 +2269,7 @@ label {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+#upgrade-time .btn-cancel,
 .btn-cancel {
     background: #C4C4C4;
 }
@@ -4064,6 +4065,13 @@ html.mm-opening .mm-slideout {
     padding: 1px 20px;
     display: block;
     float: right;
+}
+.push-price .btn-nang-cap:hover {
+    background: rgba(0, 167, 105, 0.12);
+    color: #3c3c3c;
+}
+.push-price .btn-nang-cap:active {
+    background: rgba(0, 167, 105, 0.36);
 }
 .push-price .see-detail-listing {
     letter-spacing: 0;
@@ -11112,4 +11120,7 @@ height: 10px;
 }
 .close-alert span {
     margin: 0 ;
+}
+#upgrade-time .modal-dialog {
+    width: 350px;
 }
