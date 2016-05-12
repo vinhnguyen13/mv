@@ -2058,55 +2058,56 @@ class BatdongsanV2 extends Component
                             $filename = $files[$i];
 
                             if (in_array($filename, $log_import["files"])) {
-//                                continue;
+//                                print_r("\n{$type}: {$filename}");
+                                continue;
                                 // neu co ton tai trong db và ten file trong log roi thi cap nhat lai
-                                $value = $this->parseProjectDetail($path . $type. "/files/" , $filename);
-                                $project = null;
-                                $project_name = !empty($value[$filename]["name"]) ? $value[$filename]["name"] : null;
-                                if(!empty($project_name))
-                                    $project = AdBuildingProject::find()->where('name = :n', [':n' => $project_name])->one();
-                                if (count($project) > 0) {
-                                    // comment empty to update all project
-                                    if(!empty($project->data_html) && (!empty($project->street_id) || !empty($project->ward_id))) {
-                                        print_r("\n{$type}: {$filename} continue");
-                                        continue;
-                                    }
-
-                                    $city_id = !empty($project->city_id) ? $project->city_id : $this->getCityId($value[$filename]["city"], $cityData);
-                                    if(empty($city_id)) {
-                                        $city_id = !empty($project->city_id) ? $project->city_id : $this->getCityId2($value[$filename]["city"]);
-                                    }
-
-                                    $district_id = !empty($project->district_id) ? $project->district_id : $this->getDistrictId2($value[$filename]["district"], $city_id);
-                                    if(empty($district_id)) {
-                                        $districtData = \vsoft\ad\models\AdDistrict::find()->select(['id','city_id','name'])->where(['city_id' => $city_id])->all();
-                                        $district_id = !empty($project->district_id) ? $project->district_id : $this->getDistrictId($value[$filename]["district"], $districtData, $city_id);
-                                    }
-
-                                    $project->city_id = $city_id;
-                                    $project->district_id = $district_id;
-                                    $location = $value[$filename]["location"];
-                                    $ws = $this->getWardAndStreet($location, $streets, $wards, $district_id);
-                                    if (count($ws) > 0) {
-                                        $project->street_id = (isset($ws["street_id"]) && !empty($ws["street_id"])) ? $ws["street_id"] : null;
-                                        $project->ward_id = (isset($ws["ward_id"]) && !empty($ws["ward_id"])) ? $ws["ward_id"] : null;
-                                        $project->home_no = (isset($ws["home_no"]) && !empty($ws["home_no"])) ? $ws["home_no"] : null;
-                                    }
-
-                                    $project->file_name = $type . "/" . $filename;
-                                    $project->is_crawl = 1;
-                                    $project->data_html = $value[$filename]["data_html"];
-                                    $project->update(false);
-                                    print_r("\n{$type}: {$filename} - ".$project_name." updated - {$project->city_id} - {$project->district_id}\n");
-                                }
+//                                $value = $this->parseProjectDetail($path . $type. "/files/" , $filename);
+//                                $project = null;
+//                                $project_name = !empty($value[$filename]["name"]) ? $value[$filename]["name"] : null;
+//                                if(!empty($project_name))
+//                                    $project = AdBuildingProject::find()->where('name = :n', [':n' => $project_name])->one();
+//                                if (count($project) > 0) {
+//                                    // comment empty to update all project
+//                                    if(!empty($project->data_html) && (!empty($project->street_id) || !empty($project->ward_id))) {
+//                                        print_r("\n{$type}: {$filename} continue");
+//                                        continue;
+//                                    }
+//
+//                                    $city_id = !empty($project->city_id) ? $project->city_id : $this->getCityId($value[$filename]["city"], $cityData);
+//                                    if(empty($city_id)) {
+//                                        $city_id = !empty($project->city_id) ? $project->city_id : $this->getCityId2($value[$filename]["city"]);
+//                                    }
+//
+//                                    $district_id = !empty($project->district_id) ? $project->district_id : $this->getDistrictId2($value[$filename]["district"], $city_id);
+//                                    if(empty($district_id)) {
+//                                        $districtData = \vsoft\ad\models\AdDistrict::find()->select(['id','city_id','name'])->where(['city_id' => $city_id])->all();
+//                                        $district_id = !empty($project->district_id) ? $project->district_id : $this->getDistrictId($value[$filename]["district"], $districtData, $city_id);
+//                                    }
+//
+//                                    $project->city_id = $city_id;
+//                                    $project->district_id = $district_id;
+//                                    $location = $value[$filename]["location"];
+//                                    $ws = $this->getWardAndStreet($location, $streets, $wards, $district_id);
+//                                    if (count($ws) > 0) {
+//                                        $project->street_id = (isset($ws["street_id"]) && !empty($ws["street_id"])) ? $ws["street_id"] : null;
+//                                        $project->ward_id = (isset($ws["ward_id"]) && !empty($ws["ward_id"])) ? $ws["ward_id"] : null;
+//                                        $project->home_no = (isset($ws["home_no"]) && !empty($ws["home_no"])) ? $ws["home_no"] : null;
+//                                    }
+//
+//                                    $project->file_name = $type . "/" . $filename;
+//                                    $project->is_crawl = 1;
+//                                    $project->data_html = $value[$filename]["data_html"];
+//                                    $project->update(false);
+//                                    print_r("\n{$type}: {$filename} - ".$project_name." updated - {$project->city_id} - {$project->district_id}\n");
+//                                }
                             }
                             else {
                                 $filePath = $path . $type. "/files/" . $filename;
                                 if (file_exists($filePath)) {
+                                    print_r("\n{$type}: {$filename}");
                                     $street_id = null;
                                     $ward_id = null;
                                     $home_no = null;
-
                                     $value = $this->parseProjectDetail($path . $type. "/files/" , $filename);
                                     if (empty($value)) {
                                         print_r(" Error: no content\n");
@@ -2144,11 +2145,11 @@ class BatdongsanV2 extends Component
                                         $project->is_crawl = 1;
                                         $project->data_html = $value[$filename]["data_html"];
                                         $project->update(false);
-                                        print_r("{$type}: {$filename} - ". $project_name." - ". "updated\n");
+                                        print_r(" - ". $project_name." - ". "updated\n");
 
-                                    } else
-                                    {
-                                        // add new project
+                                    }
+                                    // add new project
+                                    else {
                                         $city_id = $this->getCityId($value[$filename]["city"], $cityData);
                                         if(empty($city_id))
                                             $city_id = !empty($project->city_id) ? $project->city_id : $this->getCityId2($value[$filename]["city"]);
