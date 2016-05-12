@@ -20,7 +20,7 @@ $(document).ready(function() {
         }
     });
     $(document).on('click', '.box-chat-footer .title-top', function () {
-        $(this).closest('.wrap-items-chat').toggleClass('toggle-show-hide');
+        $(this).closest('.item-box-chat').toggleClass('toggle-show-hide');
     });
 
     if ( !checkMobile() ) {

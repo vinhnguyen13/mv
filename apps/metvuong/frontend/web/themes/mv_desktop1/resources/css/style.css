@@ -3035,6 +3035,15 @@ html.mm-opening .mm-slideout {
     -ms-box-shadow: -1px 1px 1px #ADADAD;
     -moz-box-shadow: -1px 1px 1px #ADADAD;
 }
+.container-chat .item.box-me .txt-detail a {
+    color: #337ab7;
+    text-decoration: underline;
+    padding: 5px 0;
+    display: inline-block;
+}
+.container-chat .item.box-me .txt-detail a:hover {
+    color: #00A769;
+}
 .container-chat .chat-txt .time-detail {
     text-transform: uppercase;
     font-weight: 600;
@@ -9191,7 +9200,7 @@ footer li a {
     height: 350px;
     bottom: 0;
 }
-.wrap-items-chat.toggle-show-hide .box-chat-footer {
+.toggle-show-hide .box-chat-footer {
     top: 0;
 }
 .option-chat-box {
@@ -9295,7 +9304,7 @@ footer li a {
     text-decoration: underline;
 }
 .box-chat-footer .chat-real {
-    padding-top: 32px;
+    padding-top: 36px;
     height: 100%;
     padding-bottom: 55px;
 }
@@ -10992,7 +11001,7 @@ height: 10px;
         width: 100%;
         position: static;
     }
-    .wrap-items-chat.toggle-show-hide .box-chat-footer {
+    .toggle-show-hide .box-chat-footer {
         top: 100%;
         bottom: inherit;
         margin-top: -38px;
