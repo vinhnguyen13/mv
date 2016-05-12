@@ -174,57 +174,63 @@ use vsoft\ad\models\AdImages;
 						<?= Html::activeTextarea($product, 'content', ['class' => 'form-control', 'rows' => 5]) ?>
 						<div class="help-block"></div>
 					</div>
-					<div class="form-group col-xs-4">
-						<label for="<?= Html::getInputId($additionInfo, 'room_no') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('room_no') ?></label>
-						<?= Html::activeTextInput($additionInfo, 'room_no', ['class' => 'form-control number-only', 'placeholder' => '...']) ?>
+					<div class="form-group group-frm col-xs-12">
+						<div class="title-frm">Thông tin khác <span class="color-cd pdL-10">+2 - 24 điểm</span></div>
+						<div class="row">
+							<div class="form-group col-xs-4">
+								<label for="<?= Html::getInputId($additionInfo, 'room_no') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('room_no') ?></label>
+								<?= Html::activeTextInput($additionInfo, 'room_no', ['class' => 'form-control number-only', 'placeholder' => '...']) ?>
+							</div>
+							<div class="form-group col-xs-4">
+								<label for="<?= Html::getInputId($additionInfo, 'toilet_no') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('toilet_no') ?></label>
+								<?= Html::activeTextInput($additionInfo, 'toilet_no', ['class' => 'form-control number-only', 'placeholder' => '...']) ?>
+							</div>
+							<div class="form-group col-xs-4">
+								<label for="<?= Html::getInputId($additionInfo, 'floor_no') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('floor_no') ?></label>
+								<?= Html::activeTextInput($additionInfo, 'floor_no', ['class' => 'form-control number-only', 'placeholder' => '...']) ?>
+							</div>
+							<div class="form-group col-xs-4">
+								<label for="<?= Html::getInputId($additionInfo, 'facade_width') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('facade_width') ?> (m)</label>
+								<?= Html::activeTextInput($additionInfo, 'facade_width', ['class' => 'form-control number-only number-float', 'placeholder' => '...']) ?>
+							</div>
+							<div class="form-group col-xs-4">
+								<label for="<?= Html::getInputId($additionInfo, 'land_width') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('land_width') ?> (m)</label>
+								<?= Html::activeTextInput($additionInfo, 'land_width', ['class' => 'form-control number-only number-float', 'placeholder' => '...']) ?>
+							</div>
+							<div class="form-group col-xs-4">
+								<label for="<?= Html::getInputId($additionInfo, 'home_direction') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('home_direction') ?></label>
+								<?= Html::activeDropDownList($additionInfo, 'home_direction', AdProductAdditionInfo::directionList(), ['class' => 'form-control', 'prompt' => "..."]) ?>
+							</div>
+							<div class="form-group col-xs-4">
+								<label for="<?= Html::getInputId($additionInfo, 'facade_direction') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('facade_direction') ?></label>
+								<?= Html::activeDropDownList($additionInfo, 'facade_direction', AdProductAdditionInfo::directionList(), ['class' => 'form-control', 'prompt' => "..."]) ?>
+							</div>
+							<div class="form-group col-xs-12">
+								<label for="<?= Html::getInputId($additionInfo, 'interior') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('interior') ?></label>
+								<?= Html::activeTextarea($additionInfo, 'interior', ['class' => 'form-control', 'rows' => 2]) ?>
+							</div>
+							<div class="form-group col-xs-12 tienich-frm">
+								<label for="" class="fs-13 mgB-10">Tiện ích</label>
+								<?php
+									$facilities = AdFacility::find()->all();
+									$activeFacility = $additionInfo->facility ? $additionInfo->facility : [];
+									$facilityName = $additionInfo->formName() . '[facility][]';
+								?>
+								<ul class="clearfix">
+									<?php foreach ($facilities as $facility): ?>
+									<li>
+										<label class="checkbox-inline fs-13 checkbox-ui">
+											<?= Html::checkbox($facilityName, in_array($facility->id, $activeFacility), ['value' => $facility->id]) ?>
+											<span class="icon-mv"><span class="icon-checkbox"></span></span> <?= Yii::t('ad', $facility->name) ?>
+										</label>
+									</li>
+									<?php endforeach; ?>
+								</ul>
+							</div>
+						</div>
 					</div>
-					<div class="form-group col-xs-4">
-						<label for="<?= Html::getInputId($additionInfo, 'toilet_no') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('toilet_no') ?></label>
-						<?= Html::activeTextInput($additionInfo, 'toilet_no', ['class' => 'form-control number-only', 'placeholder' => '...']) ?>
-					</div>
-					<div class="form-group col-xs-4">
-						<label for="<?= Html::getInputId($additionInfo, 'floor_no') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('floor_no') ?></label>
-						<?= Html::activeTextInput($additionInfo, 'floor_no', ['class' => 'form-control number-only', 'placeholder' => '...']) ?>
-					</div>
-					<div class="form-group col-xs-4">
-						<label for="<?= Html::getInputId($additionInfo, 'facade_width') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('facade_width') ?> (m)</label>
-						<?= Html::activeTextInput($additionInfo, 'facade_width', ['class' => 'form-control number-only number-float', 'placeholder' => '...']) ?>
-					</div>
-					<div class="form-group col-xs-4">
-						<label for="<?= Html::getInputId($additionInfo, 'land_width') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('land_width') ?> (m)</label>
-						<?= Html::activeTextInput($additionInfo, 'land_width', ['class' => 'form-control number-only number-float', 'placeholder' => '...']) ?>
-					</div>
-					<div class="form-group col-xs-4">
-						<label for="<?= Html::getInputId($additionInfo, 'home_direction') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('home_direction') ?></label>
-						<?= Html::activeDropDownList($additionInfo, 'home_direction', AdProductAdditionInfo::directionList(), ['class' => 'form-control', 'prompt' => "..."]) ?>
-					</div>
-					<div class="form-group col-xs-4">
-						<label for="<?= Html::getInputId($additionInfo, 'facade_direction') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('facade_direction') ?></label>
-						<?= Html::activeDropDownList($additionInfo, 'facade_direction', AdProductAdditionInfo::directionList(), ['class' => 'form-control', 'prompt' => "..."]) ?>
-					</div>
-					<div class="form-group col-xs-12">
-						<label for="<?= Html::getInputId($additionInfo, 'interior') ?>" class="fs-13 mgB-10"><?= $additionInfo->getAttributeLabel('interior') ?></label>
-						<?= Html::activeTextarea($additionInfo, 'interior', ['class' => 'form-control', 'rows' => 2]) ?>
-					</div>
-					<div class="form-group col-xs-12 tienich-frm">
-						<label for="" class="fs-13 mgB-10">Tiện ích</label>
-						<?php
-							$facilities = AdFacility::find()->all();
-							$activeFacility = $additionInfo->facility ? $additionInfo->facility : [];
-							$facilityName = $additionInfo->formName() . '[facility][]';
-						?>
-						<ul class="clearfix">
-							<?php foreach ($facilities as $facility): ?>
-							<li>
-								<label class="checkbox-inline fs-13 checkbox-ui">
-									<?= Html::checkbox($facilityName, in_array($facility->id, $activeFacility), ['value' => $facility->id]) ?>
-									<span class="icon-mv"><span class="icon-checkbox"></span></span> <?= Yii::t('ad', $facility->name) ?>
-								</label>
-							</li>
-							<?php endforeach; ?>
-						</ul>
-					</div>
-					<div class="form-group col-xs-12">
+					<div class="form-group col-xs-12 group-frm">
+						<div class="title-frm">Hình ảnh <span class="color-cd pdL-10">+4 - 10 điểm</span></div>
 						<label for="" class="fs-13 mgB-10">Tải hình ảnh dư án</label>
 						<div class="upload-img-listing">
 							<span id="upload-hint"><?= Yii::t('ad', 'Change the position of images by dragging the image into the right position you want!') ?></span>
@@ -258,8 +264,8 @@ use vsoft\ad\models\AdImages;
 								]) ?>
 						</div>
 					</div>
-					<div class="form-group col-xs-12 mgT-30">
-						<label for="" class="fs-16 mgB-10 text-uper">Liên hệ</label>
+					<div class="form-group col-xs-12 mgT-30 group-frm">
+						<div class="title-frm">Thông tin liên hệ <span class="color-cd pdL-10">+4 điểm</span></div>
 						<div class="clearfix agent-postlisting">
 							<div class="fs-13 row">
 								<div class="form-group col-xs-6">
