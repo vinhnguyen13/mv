@@ -54,11 +54,10 @@ if(!Yii::$app->user->isGuest) {
                         });
                     }, 500);
                     if(params.fromName && params.product) {
-                        setTimeout(function () {
-                            $('body').alertBox({
-                                txt: lajax.t(msg, {owner: '<a href="#">'+params.fromName+'</a>', product: '<a href="#">'+params.product+'</a>'})
-                            });
-                        }, 3000);
+                        $('body').alertBox({
+                            txt: lajax.t(msg, {owner: '<a href="#">'+params.fromName+'</a>', product: '<a href="#">'+params.product+'</a>'}),
+                            duration: 4000
+                        });
                     }
                 }else if(params.type == 'online'){
                     console.log('------------------', params);

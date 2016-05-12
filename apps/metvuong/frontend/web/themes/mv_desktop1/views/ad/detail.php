@@ -332,37 +332,64 @@ $count_review = $reviews->count();
                     ?>
                     <script>
                         $(document).ready(function () {
-                            $(document).on('click', '.save-item', function (e) {
-                                e.preventDefault();
-                                var _this = $(this);
+                        	$('.save-item').on('click', function (e) {
+                        		e.preventDefault();
+                        		var _this = $(this);
                                 $(this).toggleClass('active');
-                                var timer = 0;
-                                clearTimeout(timer);
+                                
                                 var _id = $(this).attr('data-id');
                                 var _url = $(this).attr('data-url');
                                 var _stt = ($(this).hasClass('active')) ? 1 : 0;
-                                timer = setTimeout(function () {
-                                    $.ajax({
-                                        type: "post",
-                                        url: _url,
-                                        data: {id: _id, stt: _stt},
-                                        success: function (data) {
-                                            if(data.statusCode == 200){
-												<?php if(!empty($owner)){
-												?>
-                                                	var to_jid = chatUI.genJid('<?=$owner->username?>');
-                                                	Chat.sendMessage(to_jid , '{owner} favorite {product}', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: data.parameters.msg, product: '<?=$address?>'
-													});
-												<?php }?>
-												_this.alertBox({
-													txt: "<?=Yii::t('ad', 'Add to Favorites Success')?>"
+                                
+                                $.ajax({
+                                    type: "post",
+                                    url: _url,
+                                    data: {id: _id, stt: _stt},
+                                    success: function (data) {
+                                        if(data.statusCode == 200){
+											<?php if(!empty($owner)){
+											?>
+                                            	var to_jid = chatUI.genJid('<?=$owner->username?>');
+                                            	Chat.sendMessage(to_jid , '{owner} favorite {product}', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: data.parameters.msg, product: '<?=$address?>'
 												});
-                                            }
+											<?php }?>
+											_this.alertBox({
+												txt: "<?=Yii::t('ad', 'Add to Favorites Success')?>"
+											});
                                         }
-                                    });
-                                }, 500);
-
-                            });
+                                    }
+                                });
+                        	});
+                        	/*$(document).on('click', '.save-item', function (e) {
+                            	alert(1);
+                            	e.preventDefault();
+                                
+                                var _this = $(this);
+                                $(this).toggleClass('active');
+                                
+                                var _id = $(this).attr('data-id');
+                                var _url = $(this).attr('data-url');
+                                var _stt = ($(this).hasClass('active')) ? 1 : 0;
+                                
+                                $.ajax({
+                                    type: "post",
+                                    url: _url,
+                                    data: {id: _id, stt: _stt},
+                                    success: function (data) {
+                                        if(data.statusCode == 200){
+											<?php if(!empty($owner)){
+											?>
+                                            	var to_jid = chatUI.genJid('<?=$owner->username?>');
+                                            	Chat.sendMessage(to_jid , '{owner} favorite {product}', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: data.parameters.msg, product: '<?=$address?>'
+												});
+											<?php }?>
+											_this.alertBox({
+												txt: "<?=Yii::t('ad', 'Add to Favorites Success')?>"
+											});
+                                        }
+                                    }
+                                });
+                            });*/
                             $(document).bind('chat/afterConnect', function (event, data) {
                                 <?php if(Yii::$app->session->getFlash('notify_other') && !empty($owner)){
                                 ?>

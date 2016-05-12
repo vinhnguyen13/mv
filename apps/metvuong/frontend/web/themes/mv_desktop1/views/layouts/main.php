@@ -28,6 +28,9 @@ AppAsset::register($this);
     <?php $this->endBody() ?>
     <?php $this->beginContent('@app/views/chat/_partials/connect.php'); ?><?php $this->endContent();?>
     <?php $this->beginContent('@app/views/layouts/_partials/analyticstracking.php'); ?><?php $this->endContent();?>
+
+    <div id="alert-noti"></div>
+    
 </body>
 </html>
 <?php $this->endPage() ?>

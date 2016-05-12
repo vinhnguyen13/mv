@@ -1047,6 +1047,7 @@ $.fn.alertBox = function (options) {
             position: 'bottom-left' // bottom-left, center
         },
         sc = {},
+        timeOutHide,
         el = $(this), wrapAlert, txtShow;
 
         if ( el.length == 0 ) return el;
@@ -1059,9 +1060,10 @@ $.fn.alertBox = function (options) {
             txtShow = sc.settings.txt;
         }
 
+        //<div class="alert-item"><a class="btn-close-alert" href="#"><span class="icon-mv fs-12"><span class="icon-close-icon"></span></span></a><div class="wrap-alert">'+txtShow+'</div></div>
         wrapAlert = '<div class="alert-item"><a class="btn-close-alert" href="#"><span class="icon-mv fs-12"><span class="icon-close-icon"></span></span></a><div class="wrap-alert">'+txtShow+'</div></div>';
 
-        $('body').append($(wrapAlert));
+        $('#alert-noti').prepend($(wrapAlert));
 
         var aBox = $('.alert-item'),
             wB = aBox.outerWidth(),
@@ -1069,30 +1071,21 @@ $.fn.alertBox = function (options) {
             wWin = $(window).outerWidth(),
             hWin = $(window).outerHeight();
 
-        if ( sc.settings.position == 'bottom-left' ) {
-            aBox.css({
-                bottom: '40px',
-                left: '20px'
-            });
-        }else if ( sc.settings.position == 'center' ) {
-            aBox.css({
-                top: hWin/2 - hB/2,
-                left: wWin/2 - wB/2
-            });
-        }
-
         $('.alert-item').fadeIn(300);
 
-        var timeOutHide = setTimeout(function () {
-                            $('.alert-item').fadeOut('slow', function() {
-                                $(this).remove();
-                            });
-                        },sc.settings.duration);
+        clearTimeout(timeOutHide);
+
+        timeOutHide = setTimeout(function () {
+                        $('.alert-item').fadeOut('slow', function() {
+                            $(this).remove();
+                            $('#alert-noti').html('');
+                        });
+                    },sc.settings.duration);
 
         $('.alert-item .btn-close-alert').on('click', function (e) {
             e.preventDefault();
             clearTimeout(timeOutHide);
-            $('.alert-item').remove();
+            $(this).parent().remove();
         });
     });
 }
