@@ -11070,3 +11070,13 @@ height: 10px;
     font-weight: 600;
     margin: 0 0 10px 0;
 }
+.close-alert {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    line-height: 100%;
+    padding: 8px;
+}
+.close-alert span {
+    margin: 0 ;
+}

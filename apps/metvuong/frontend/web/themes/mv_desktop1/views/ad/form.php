@@ -98,7 +98,7 @@ use vsoft\ad\models\AdImages;
 		<div class="wrap-frm-listing row">
 			<div class="col-sm-8">
 				<div class="alert alert-success alert-dismissible" role="alert">
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<a href="#" class="font-700 fs-14 color-cd-hover close-alert"><span class="icon-mv fs-12"><span class="icon-close-icon"></span></span></a>
 					<h2>METVUONG khuyến khích các tin rao chất lượng</h2>
 					<p>Quý vị nhập thông tin chi tiết càng nhiều, thì tin rao này sẽ hiển thị lên kết quả tìm kiếm nhiều hơn và sẽ có nhiều khách hàng liên lạc hơn.</p>
 				</div>
