@@ -68,6 +68,7 @@
                 /**
                  * replace message
                  */
+                body = chatUI.decodeEntities(body);
                 body = stringHelper.replaceURLWithHTMLLinks(body);
                 if(item.is('to')) {
                     if(chatBoxExist.find('.wrap-chat .item:last').hasClass('box-me') == true){
@@ -95,7 +96,6 @@
             $('.chat-group').find('.typingMsg').focus();
         },
         buildMessageToBox: function (username, msg, type, params) {
-            msg = chatUI.decodeEntities(msg);
             var timestamp = (params.ts) ? params.ts : 0;
             var _time = formatTime(timestamp);
             if(type == chatUI.MSG_SEND_ME){
@@ -113,6 +113,7 @@
             if(!chatBoxExist){
                 return false;
             }
+            msg = chatUI.decodeEntities(msg);
             msg = stringHelper.replaceURLWithHTMLLinks(msg);
             if(type == chatUI.MSG_SEND_ME){
                 if(chatBoxExist.find('.wrap-chat .item:last').hasClass('box-me') == true){
@@ -201,15 +202,42 @@
         onlineList: function () {
             return Chat.presenceMessage;
         },
-        decodeEntities: function (encodedString) {
+        decodeEntities_2: function (encodedString) {
+            return encodedString;
             var textArea = document.createElement('textarea');
             textArea.innerHTML = encodedString;
             return textArea.value;
+        },
+        decodeEntities_: function (string) {
+            var entityMap = {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': '&quot;',
+                "'": '&#39;',
+                "/": '&#x2F;'
+            };
+            return String(string).replace(/[&<>"'\/]/g, function (s) {
+                return entityMap[s];
+            });
+        },
+        decodeEntities: function (str) {
+            if (typeof(str) == "string") {
+                str = str.replace(/&/g, "&amp;"); /* must do &amp; first */
+                str = str.replace(/"/g, "&quot;");
+                str = str.replace(/'/g, "&#039;");
+                str = str.replace(/</g, "&lt;");
+                str = str.replace(/>/g, "&gt;");
+            }
+            console.log(str);
+            return str;
         },
         formatOutPut: function (encodedString) {
 
         }
     };
+
+
 
 var formatTime = function(unixTimestamp) {
     var date = new Date(parseInt(unixTimestamp));
