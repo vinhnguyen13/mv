@@ -54,10 +54,13 @@ $(document).ready(function(){
 			point.fields[field + 'Icon'].removeClass('selected-point');
 			point.counterFields[field].update(0);
 			
-			var ppp = $(point.counterFields[field].d).parent();
+			var pp = $(point.counterFields[field].d);
+			var ppp = pp.parent();
 			
 			ppp.data('timeout', setTimeout(function(){
-				ppp.fadeOut();
+				if(pp.text() == '0') {
+					ppp.fadeOut();
+				}
 			}, 500));
 		},
 		calc: function() {
