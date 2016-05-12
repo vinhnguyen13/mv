@@ -507,12 +507,17 @@ class BatdongsanV2 extends Component
 
     function getUrlContent($url)
     {
+        $agent = "Mozilla/5.0 (X11; U; Linux i686; en-US) " .
+            "AppleWebKit/532.4 (KHTML, like Gecko) " .
+            "Chrome/4.0.233.0 Safari/532.4";
+        $referer = "http://www.google.com/";
+
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36');
+        curl_setopt($ch, CURLOPT_USERAGENT, $agent);
         curl_setopt($ch, CURLOPT_HEADER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_REFERER, self::DOMAIN);
+        curl_setopt($ch, CURLOPT_REFERER, $referer);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
         curl_setopt($ch, CURLOPT_TIMEOUT, 100);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
