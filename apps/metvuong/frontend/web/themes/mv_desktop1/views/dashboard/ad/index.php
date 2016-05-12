@@ -113,6 +113,10 @@ use yii\helpers\Url;
                     dataType: 'html',
                     url: '<?=Url::to(['dashboard/upgrade'])?>?id=' + product,
                     success: function (data) {
+                        $('body').alertBox({
+                            txt: lajax.t('Upgrade success'),
+                            duration: 4000
+                        });
                         location.reload();
                     }
                 });
