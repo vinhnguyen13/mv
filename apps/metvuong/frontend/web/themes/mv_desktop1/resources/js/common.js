@@ -1038,6 +1038,7 @@ function checkMobile () {
     return false;
 }
 
+var timeOutHide;
 $.fn.alertBox = function (options) {
 
     return this.each(function() {
@@ -1047,7 +1048,6 @@ $.fn.alertBox = function (options) {
             position: 'bottom-left' // bottom-left, center
         },
         sc = {},
-        timeOutHide,
         el = $(this), wrapAlert, txtShow;
 
         if ( el.length == 0 ) return el;
@@ -1075,12 +1075,16 @@ $.fn.alertBox = function (options) {
 
         clearTimeout(timeOutHide);
 
-        timeOutHide = setTimeout(function () {
+        $('#alert-noti').hover(function () {
+            clearTimeout(timeOutHide);
+        }, function () {
+            timeOutHide = setTimeout(function () {
                         $('.alert-item').fadeOut('slow', function() {
                             $(this).remove();
                             $('#alert-noti').html('');
                         });
                     },sc.settings.duration);
+        });
 
         $('.alert-item .btn-close-alert').on('click', function (e) {
             e.preventDefault();
