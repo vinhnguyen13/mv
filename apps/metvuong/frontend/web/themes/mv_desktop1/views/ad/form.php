@@ -174,6 +174,7 @@ use vsoft\ad\models\AdImages;
 						<?= Html::activeTextarea($product, 'content', ['class' => 'form-control', 'rows' => 5]) ?>
 						<div class="help-block"></div>
 					</div>
+					
 					<div class="form-group group-frm col-xs-12">
 						<div class="title-frm">Thông tin khác <span class="color-cd pdL-10">+2 - 24 điểm</span></div>
 						<div class="row">
