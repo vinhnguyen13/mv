@@ -133,7 +133,7 @@ use vsoft\ad\models\AdImages;
 					</div>
 
 					<div class="group-frm">
-						<div class="title-frm"><?= Yii::t('ad', 'Địa chỉ') ?> <span class="pdL-10">10-15 điểm</span></div>
+						<div class="title-frm"><?= Yii::t('ad', 'Địa chỉ') ?> <span class="pdL-10">8-15 điểm</span></div>
 						<div class="row">
 							<div class="form-group col-xs-6">
 								<label for="<?= Html::getInputId($product, 'city_id') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('city_id') ?><span class="require-hint">*</span></label>
