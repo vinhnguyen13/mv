@@ -164,7 +164,7 @@ use vsoft\ad\models\AdImages;
 						</div>
 					</div>
 					<div class="group-frm">
-						<div class="title-frm">Thông tin chung <span class="pdL-10">+15 điểm</span></div>
+						<div class="title-frm">Thông tin chung <span class="pdL-10">+20 điểm</span></div>
 						<div class="row">
 							<div class="form-group col-xs-6">
 								<label for="<?= Html::getInputId($product, 'area') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('area') ?> (m2)<span class="require-hint">*</span></label>
@@ -195,7 +195,7 @@ use vsoft\ad\models\AdImages;
 						</div>
 					</div>
 					<div class="group-frm">
-						<div class="title-frm">Thông tin khác <span class="pdL-10">+2 - 24 điểm</span></div>
+						<div class="title-frm">Thông tin chi tiết <span class="pdL-10">+30 điểm</span></div>
 						<div class="row">
 							<div class="form-group col-xs-4">
 								<label for="<?= Html::getInputId($additionInfo, 'room_no') ?>" class="fs-13 mgB-5"><?= $additionInfo->getAttributeLabel('room_no') ?></label>
@@ -250,7 +250,7 @@ use vsoft\ad\models\AdImages;
 						</div>
 					</div>
 					<div class="group-frm clearfix">
-						<div class="title-frm">Hình ảnh <span class="pdL-10">+4 - 10 điểm</span></div>
+						<div class="title-frm">Hình ảnh <span class="pdL-10">+15 điểm</span></div>
 						<label for="" class="fs-13 mgB-5">Tải hình ảnh dư án</label>
 						<div class="upload-img-listing">
 							<span id="upload-hint"><?= Yii::t('ad', 'Change the position of images by dragging the image into the right position you want!') ?></span>
@@ -285,7 +285,7 @@ use vsoft\ad\models\AdImages;
 						</div>
 					</div>
 					<div class="group-frm">
-						<div class="title-frm">Thông tin liên hệ <span class="pdL-10">+4 điểm</span></div>
+						<div class="title-frm">Thông tin liên hệ <span class="pdL-10">+10 điểm</span></div>
 						<div class="clearfix agent-postlisting">
 							<div class="fs-13 row">
 								<div class="form-group col-xs-6">
