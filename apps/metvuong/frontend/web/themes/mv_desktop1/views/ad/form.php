@@ -97,18 +97,20 @@ use vsoft\ad\models\AdImages;
 		</div>
 		<div class="wrap-frm-listing row">
 			<div class="col-sm-8">
+				<?php if(!isset($_COOKIE['cpl'])): ?>
 				<div class="alert alert-success alert-dismissible" role="alert">
 					<a href="#" class="font-700 fs-14 color-cd-hover close-alert"><span class="icon-mv fs-12"><span class="icon-close-icon"></span></span></a>
 					<h2>METVUONG khuyến khích các tin rao chất lượng</h2>
 					<p>Quý vị nhập thông tin chi tiết càng nhiều, thì tin rao này sẽ hiển thị lên kết quả tìm kiếm nhiều hơn và sẽ có nhiều khách hàng liên lạc hơn.</p>
 				</div>
+				<?php endif; ?>
 				<?php $form = ActiveForm::begin([
 						'options' => [
 							'class' => 'clearfix'
 						]
 					]) ?>
 					<div class="group-frm">
-						<div class="title-frm">Loại BĐS <span class="pdL-10">+10 điểm</span></div>
+						<div class="title-frm"><?= Yii::t('ad', 'Loại tin') ?> <span class="pdL-10">10 điểm</span></div>
 						<div class="row">
 							<div class="form-group col-xs-6">
 								<label for="<?= Html::getInputId($product, 'type') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('type') ?><span class="require-hint">*</span></label>
@@ -131,7 +133,7 @@ use vsoft\ad\models\AdImages;
 					</div>
 
 					<div class="group-frm">
-						<div class="title-frm">Địa chỉ <span class="pdL-10">+15 điểm</span></div>
+						<div class="title-frm"><?= Yii::t('ad', 'Địa chỉ') ?> <span class="pdL-10">10-15 điểm</span></div>
 						<div class="row">
 							<div class="form-group col-xs-6">
 								<label for="<?= Html::getInputId($product, 'city_id') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('city_id') ?><span class="require-hint">*</span></label>
@@ -164,7 +166,7 @@ use vsoft\ad\models\AdImages;
 						</div>
 					</div>
 					<div class="group-frm">
-						<div class="title-frm">Thông tin chung <span class="pdL-10">+20 điểm</span></div>
+						<div class="title-frm"><?= Yii::t('ad', 'General Information') ?> <span class="pdL-10">10-20 điểm</span></div>
 						<div class="row">
 							<div class="form-group col-xs-6">
 								<label for="<?= Html::getInputId($product, 'area') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('area') ?> (m2)<span class="require-hint">*</span></label>
@@ -195,7 +197,7 @@ use vsoft\ad\models\AdImages;
 						</div>
 					</div>
 					<div class="group-frm">
-						<div class="title-frm">Thông tin chi tiết <span class="pdL-10">+30 điểm</span></div>
+						<div class="title-frm"><?= Yii::t('ad', 'Detail Information') ?> <span class="pdL-10">3-30 điểm</span></div>
 						<div class="row">
 							<div class="form-group col-xs-4">
 								<label for="<?= Html::getInputId($additionInfo, 'room_no') ?>" class="fs-13 mgB-5"><?= $additionInfo->getAttributeLabel('room_no') ?></label>
@@ -250,8 +252,8 @@ use vsoft\ad\models\AdImages;
 						</div>
 					</div>
 					<div class="group-frm clearfix">
-						<div class="title-frm">Hình ảnh <span class="pdL-10">+15 điểm</span></div>
-						<label for="" class="fs-13 mgB-5">Tải hình ảnh dư án</label>
+						<div class="title-frm"><?= Yii::t('ad', 'Hình ảnh') ?> <span class="pdL-10">3-15 điểm</span></div>
+						<label for="" class="fs-13 mgB-5">Tải hình ảnh dư án<span class="hint">1-3 ảnh(+4 điểm), 4-6(+8 điểm), 7-9(+12 điểm), 10+ (+15 điểm)</span></label>
 						<div class="upload-img-listing">
 							<span id="upload-hint"><?= Yii::t('ad', 'Change the position of images by dragging the image into the right position you want!') ?></span>
 							<?php
@@ -285,7 +287,7 @@ use vsoft\ad\models\AdImages;
 						</div>
 					</div>
 					<div class="group-frm">
-						<div class="title-frm">Thông tin liên hệ <span class="pdL-10">+10 điểm</span></div>
+						<div class="title-frm"><?= Yii::t('ad', 'Contact Information') ?> <span class="pdL-10">10 điểm</span></div>
 						<div class="clearfix agent-postlisting">
 							<div class="fs-13 row">
 								<div class="form-group col-xs-6">
@@ -300,6 +302,7 @@ use vsoft\ad\models\AdImages;
 								<div class="form-group col-xs-6">
 									<label for="<?= Html::getInputId($contactInfo, 'email') ?>" class="fs-13 mgB-5"><?= $contactInfo->getAttributeLabel('email') ?></label>
 									<?= Html::activeTextInput($contactInfo, 'email', ['class' => 'form-control', 'placeholder' => '...']) ?>
+									<div class="help-block"></div>
 								</div>
 								<div class="form-group col-xs-6">
 									<label for="" class="fs-13 mgB-5"><?= Yii::t('ad', 'You are') ?></label>
@@ -498,13 +501,12 @@ use vsoft\ad\models\AdImages;
 							</div>
 						</div>
 						<ul>
-							<li data-point="5" data-id="project"<?= $product->category_id == AdCategory::CATEGORY_CHCK ? '' : ' style="display: none;"' ?>>
-								<span class="icon-mv"><span class="icon-checked<?= $product->projectBuilding ? ' selected-point' : '' ?>"></span></span><?= $product->getAttributeLabel('project_building_id') ?><span class="color-cd pdL-15">5 điểm</span>
-							</li>
-							<li data-point-1="5" data-point-2="10" data-id="address"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Địa chỉ') ?><span class="color-cd pdL-15">5-10 điểm</span></li>
-							<li data-id="additionInfo"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Thông tin khác') ?><span class="color-cd pdL-15">2-24 điểm</span></li>
-							<li data-id="photo"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Hình ảnh') ?><span class="color-cd pdL-15">4-10 điểm</span></li>
-							<li data-point="4" data-id="contact"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Thông tin liên hệ') ?><span class="color-cd pdL-15">4 điểm</span></li>
+							<li data-id="type"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Loại tin') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> điểm</span></li>
+							<li data-id="address"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Địa chỉ') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> điểm</span></li>
+							<li data-id="info"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'General Information') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> điểm</span></li>
+							<li data-id="additionInfo"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Detail Information') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> điểm</span></li>
+							<li data-id="photo"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Hình ảnh') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> điểm</span></li>
+							<li data-id="contact"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Contact Information') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> điểm</span></li>
 						</ul>
 						
 					</div>

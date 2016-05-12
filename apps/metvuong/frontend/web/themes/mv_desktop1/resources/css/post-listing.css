@@ -147,6 +147,16 @@ html.previewing, body.previewing {
 	margin-left: 8px;	
 }
 
+.hint {
+	color: rgba(0, 167, 105, 0.84);
+	display: inline-block;
+	margin-left: 10px;
+}
+
+.btom-point {
+	font-weight: bold;
+}
+
 @media (max-width: 985px) {
 	#review-listing .popup-wrap {
     	left: 0;
