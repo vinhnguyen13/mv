@@ -31,8 +31,9 @@ use yii\helpers\ArrayHelper;
 
 class BatdongsanV2 extends Component
 {
-    const DOMAIN = 'http://webcache.googleusercontent.com/search?q=cache:batdongsan.com.vn';
-    protected $domain = 'http://webcache.googleusercontent.com/search?q=cache:http://batdongsan.com.vn';
+//    const DOMAIN = 'http://webcache.googleusercontent.com/search?q=cache:batdongsan.com.vn';
+    const DOMAIN = 'batdongsan.com.vn';
+    protected $domain = 'http://batdongsan.com.vn';
 
     protected $types = ['nha-dat-ban-quan-1','nha-dat-ban-quan-2','nha-dat-ban-quan-3','nha-dat-ban-quan-4','nha-dat-ban-quan-5','nha-dat-ban-quan-6',
         'nha-dat-ban-quan-7','nha-dat-ban-quan-8', 'nha-dat-ban-quan-9','nha-dat-ban-quan-10','nha-dat-ban-quan-11','nha-dat-ban-quan-12',
@@ -194,10 +195,6 @@ class BatdongsanV2 extends Component
     public function getListProject($type, $current_page, $sequence_id, $log, $product_type, $path_folder)
     {
         $href = "/".$type."/p".$current_page;
-        echo "<pre>";
-        print_r(self::DOMAIN . $href);
-        echo "<pre>";
-        exit();
 
         $page = $this->getUrlContent(self::DOMAIN . $href);
         if(!empty($page)) {
@@ -585,6 +582,7 @@ class BatdongsanV2 extends Component
         $this->writeFileJson($file_name, $log_data);
     }
 
+    // Google API geocode from latitude and longitude
     public function getAddress($lat, $long){
         $api_key1 = 'AIzaSyCTwptkS584b_mcZWt0j_86ZFYLL0j-1Yw';
         $url = "https://maps.googleapis.com/maps/api/geocode/json?latlng={$lat},{$long}&key={$api_key1}";
@@ -688,42 +686,6 @@ class BatdongsanV2 extends Component
                             $filePath = $path . "/" . $filename;
                             if (in_array($filename, $log_import["files"])) {
                                 continue;
-                                // comment not update project address to listing address
-//                                $value = $this->parseDetail($filePath);
-//                                $project_name = !empty($value[$filename]["project"]) ? $value[$filename]["project"] : null;
-//                                if(!empty($project_name)) {
-//                                    /**
-//                                     * SELECT id FROM ad_product a INNER JOIN ad_building_project b ON a.project_building_id = b.id WHERE b.name = :name a.district_id != b.district_id AND file_name = :f
-//                                     */
-//                                    $project = AdBuildingProject::find()->where('name = :n', [':n' => $project_name])->one();
-//                                    if(count($project) > 0){
-//                                        $project_id = $project->id;
-//                                        $city_id = $project->city_id;
-//                                        $district_id = $project->district_id;
-//                                        $ward_id = $project->ward_id;
-//                                        $street_id = $project->street_id;
-//                                        $home_no = $project->home_no;
-//                                        $listing = \vsoft\craw\models\AdProduct::find()->where('file_name = :f', [':f' => $filename])->one();
-//                                        if(count($listing) > 0){
-//                                            if($listing->project_building_id == $project_id && $listing->city_id == $city_id && $listing->district_id == $district_id && $listing->street_id == $street_id){
-//                                                print_r(" - {$project_name} true.\n");
-//                                                continue;
-//                                            }
-//
-//                                            $listing->project_building_id = $project_id;
-//                                            $listing->city_id = $city_id;
-//                                            $listing->district_id = $district_id;
-//                                            $listing->ward_id = $ward_id;
-//                                            $listing->street_id = $street_id;
-//                                            $listing->home_no = $home_no;
-//                                            $listing->update(false);
-//                                            print_r(" - {$project_name} updated.\n");
-//                                            continue;
-//                                        }
-//                                    }
-//                                } else {
-//                                    continue;
-//                                }
                             } else {
                                 if (file_exists($filePath)) {
                                     print_r("\n" . $count_file . " {$type}: {$filename}");
@@ -1427,6 +1389,49 @@ class BatdongsanV2 extends Component
         }
     }
 
+//    public function updateToProjectAddress(){
+////        $value = $this->parseDetail($filePath);
+////        $project_name = !empty($value[$filename]["project"]) ? $value[$filename]["project"] : null;
+//        if(!empty($project_name)) {
+//            /**
+//             * SELECT id FROM ad_product a INNER JOIN ad_building_project b ON a.project_building_id = b.id WHERE b.name = :name a.district_id != b.district_id AND file_name = :f
+//             */
+//            $productDb = \vsoft\craw\models\AdProduct::getDb();
+//            $products = $productDb->cache(function($productDb){
+//                return $productDb->
+//            });
+//            $project = AdBuildingProject::find()->where('name = :n', [':n' => $project_name])->one();
+//            if(count($project) > 0){
+//                $project_id = $project->id;
+//                $city_id = $project->city_id;
+//                $district_id = $project->district_id;
+//                $ward_id = $project->ward_id;
+//                $street_id = $project->street_id;
+//                $home_no = $project->home_no;
+//                $listing = \vsoft\craw\models\AdProduct::find()->where('file_name = :f', [':f' => $filename])->one();
+//                if(count($listing) > 0){
+//                    if($listing->project_building_id == $project_id && $listing->city_id == $city_id && $listing->district_id == $district_id && $listing->street_id == $street_id){
+//                        print_r(" - {$project_name} true.\n");
+//                        continue;
+//                    }
+//
+//                    $listing->project_building_id = $project_id;
+//                    $listing->city_id = $city_id;
+//                    $listing->district_id = $district_id;
+//                    $listing->ward_id = $ward_id;
+//                    $listing->street_id = $street_id;
+//                    $listing->home_no = $home_no;
+//                    $listing->update(false);
+//                    print_r(" - {$project_name} updated.\n");
+//                    continue;
+//                }
+//            }
+//        } else {
+//            continue;
+//        }
+//    }
+
+    // update address ids from lat long by Google API Geocode
     public function updateData(){
         $products = AdProduct::find()->where(['ward_id' => null])->andWhere(['verified' => 1])->all();
         if(count($products) > 0){
