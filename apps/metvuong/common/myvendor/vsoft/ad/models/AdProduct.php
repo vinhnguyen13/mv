@@ -200,6 +200,11 @@ class AdProduct extends AP
 	{
 		return Url::to(['/ad/detail', 'id' => $this->id, 'slug' => \common\components\Slug::me()->slugify($this->getAddress($this->show_home_no))], $scheme);
 	}
+
+    public function getExpired(){
+        $d = $this->end_date - time();
+        return floor($d / (60 * 60 * 24));
+    }
 	
 	public function afterSave($insert, $changedAttributes) {
 		$totalType = ($this->type == self::TYPE_FOR_SELL) ? self::TYPE_FOR_SELL_TOTAL : self::TYPE_FOR_RENT_TOTAL;

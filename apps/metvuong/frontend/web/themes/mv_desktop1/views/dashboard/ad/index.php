@@ -39,7 +39,7 @@ use yii\helpers\Url;
                     </ul>
                     <input type="hidden" class="last_id" value="<?=$last_id?>">
                     <div class="text-center">
-                        <a href="javascript:void();" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 0])?>" class="load_listing btn-common"><?=Yii::t('listing','More listing')?>...</a>
+                        <a href="#" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 0])?>" class="load_listing btn-common"><?=Yii::t('listing','More listing')?>...</a>
                     </div>
                     <span class="that_all pull-right hide">That's all listing.</span>
                 </div>
@@ -48,7 +48,7 @@ use yii\helpers\Url;
                     <input type="hidden" class="last_id" value="0">
                     <?php if($sell > 6){?>
                     <div class="text-center">
-                        <a href="javascript:void();" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 1])?>" class="load_listing btn-common"><?=Yii::t('listing','More listing')?>...</a>
+                        <a href="#" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 1])?>" class="load_listing btn-common"><?=Yii::t('listing','More listing')?>...</a>
                     </div>
                     <span class="that_all pull-right hide">That's all listing.</span>
                     <?php } ?>
@@ -58,15 +58,12 @@ use yii\helpers\Url;
                     <input type="hidden" class="last_id" value="0">
                     <?php if($rent > 6){?>
                     <div class="text-center">
-                        <a href="javascript:void();" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 2])?>" class="load_listing btn-common"><?=Yii::t('listing','More listing')?>...</a>
+                        <a href="#" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 2])?>" class="load_listing btn-common"><?=Yii::t('listing','More listing')?>...</a>
                     </div>
                     <span class="that_all pull-right hide">That's all listing.</span>
                     <?php } ?>
                 </div>
             </div>
-            <!-- <div class="ui-widget">
-                <input id="tags">
-            </div> -->
         </div>
         <?php } ?>
     </div>
@@ -110,14 +107,25 @@ use yii\helpers\Url;
             if(product){
                 $.ajax({
                     type: "get",
-                    dataType: 'html',
+                    dataType: 'json',
                     url: '<?=Url::to(['dashboard/upgrade'])?>?id=' + product,
                     success: function (data) {
                         $('body').alertBox({
                             txt: lajax.t('Upgrade success'),
                             duration: 4000
                         });
-                        location.reload();
+//                        location.reload();
+                        if(data.expired > 0) {
+                            if($('.p' + product + ' .intro-detail p.expired').length > 0){
+                                $('.p' + product + ' .intro-detail p.expired strong').text(data.expired + " <?=Yii::t('statistic', 'days')?>");
+                            } else {
+                                $('.p' + product + ' .intro-detail .status-duan .status-get-point span').removeClass('icon-inactive-pro').addClass('icon-active-pro');
+                                $('.p' + product + ' .intro-detail .status-duan .status-get-point strong').text('<?= Yii::t('statistic', 'Active Project') ?>');
+                                $('.p' + product + ' .intro-detail .status-duan').after(function () {
+                                    return "<p class=\"expired\"><?= Yii::t('statistic', 'Expired in the last') ?><strong>" + data.expired + " <?=Yii::t('statistic', 'days')?></strong></p>";
+                                });
+                            }
+                        }
                     }
                 });
             }

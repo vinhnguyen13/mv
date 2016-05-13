@@ -35,7 +35,7 @@ $count_product = count($products);
             }
             ?>
             <li class="col-xs-12 col-md-6 col-sm-6">
-                <div class="item">
+                <div class="item p<?=$product->id?>">
                     <div class="img-show">
                         <div>
                             <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>" title="<?=Yii::t('statistic', 'View statistic detail')?>">
@@ -89,9 +89,8 @@ $count_product = count($products);
                                     <?php endif; ?>
                                 </div>
                                 <?php if ($product->end_date > time()) {
-                                    $d = $product->end_date - time();
-                                    $day_number = floor($d / (60 * 60 * 24)); ?>
-                                    <p><?= Yii::t('statistic', 'Expired in the last') ?>
+                                    $day_number = $product->expired; ?>
+                                    <p class="expired"><?= Yii::t('statistic', 'Expired in the last') ?>
                                         <strong><?= $day_number > 1 ? $day_number . " " . Yii::t('statistic', 'days') : $day_number . " " . Yii::t('statistic', 'day') ?></strong>
                                     </p>
                                 <?php } ?>
