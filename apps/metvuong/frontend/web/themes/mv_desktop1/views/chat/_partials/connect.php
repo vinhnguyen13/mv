@@ -105,7 +105,7 @@ if(!Yii::$app->user->isGuest) {
                 $('.wrap-items-chat').append(html);
                 var chatBoxExist = chatUI.getBoxChat('.item-box-chat', '<?=Yii::$app->user->identity->username?>', user);
                 if(chatBoxExist) {
-                    $('.box-chat-footer').loading({full: false});
+                    chatBoxExist.find('.box-chat-footer').loading({full: false});
                     $.ajax({
                         type: "get",
                         dataType: 'html',

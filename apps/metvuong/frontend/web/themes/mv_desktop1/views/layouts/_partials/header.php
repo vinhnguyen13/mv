@@ -128,52 +128,8 @@ use frontend\models\AdProductSearch;
                                     <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
                                 <?php }?>
                             </a>
-                            <div class="item-dropdown hide-dropdown">
-                                <ul class="clearfix">
-                                    <li>
-                                        <a href="#">
-                                            <div class="wrap-alert">
-                                                <span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
-                                                <strong>Dien Truong</strong> favorite <span>12, Phố Bà Huyện Thanh Quan, Phường Bến Nghé, Quận 1, Hồ Chí Minh</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <div class="wrap-alert">
-                                                <span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
-                                                <strong>Dien Truong</strong> favorite <span>12, Phố Bà Huyện Thanh Quan, Phường Bến Nghé, Quận 1, Hồ Chí Minh</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <div class="wrap-alert">
-                                                <span class="icon-mv"><span class="icon-eye-copy"></span></span>
-                                                <strong>Dien Truong</strong> favorite <span>12, Phố Bà Huyện Thanh Quan, Phường Bến Nghé, Quận 1, Hồ Chí Minh</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <div class="wrap-alert">
-                                                <span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
-                                                <strong>Dien Truong</strong> favorite <span>12, Phố Bà Huyện Thanh Quan, Phường Bến Nghé, Quận 1, Hồ Chí Minh</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <div class="wrap-alert">
-                                                <span class="icon-mv"><span class="icon-eye-copy"></span></span>
-                                                <strong>Dien Truong</strong> favorite <span>12, Phố Bà Huyện Thanh Quan, Phường Bến Nghé, Quận 1, Hồ Chí Minh</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="view-more">Xem thêm</a>
-                                    </li>
-                                </ul>
+                            <div class="item-dropdown hide-dropdown list-notify">
+                                <ul style="min-height: 80px;"></ul>
                             </div>
                         </li>
                         <li>
@@ -278,11 +234,6 @@ use frontend\models\AdProductSearch;
 
         });
 
-        $(document).on('click', '.tooltip-show.wrapNotifyOther', function (e) {
-            $(this).next().loading({full: false});
-            return false;
-        });
-
         $(document).on('click', '.user-signup-link', function (e) {
             /*if(checkMobile()){
                 return true;
@@ -304,20 +255,22 @@ use frontend\models\AdProductSearch;
             styleShow: 0,
             selectedValue: false
         });
-
+        <?php if(!Yii::$app->user->isGuest){?>
         $('.user-login .list-redire .box-dropdown').dropdown({
             styleShow: 0,
             selectedValue: false,
             ajaxSubmit: function () {
+                $('.list-notify').loading({full: true});
                 $.ajax({
                     type: 'GET',
-                    url: 'https://dl.dropboxusercontent.com/u/43486987/test.txt',
-                    success: function (res) {
-                        l(res);
+                    url: '<?=Url::to(['/notification/list', 'username'=> Yii::$app->user->identity->username])?>',
+                    success: function (response) {
+                        $('body').loading({done: true});
+                        $('.list-notify').html(response);
                     }
                 });
             }
         });
-
+        <?php }?>
     });
 </script>
