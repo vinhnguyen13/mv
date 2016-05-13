@@ -1061,7 +1061,7 @@ $.fn.alertBox = function (options) {
         }
 
         //<div class="alert-item"><a class="btn-close-alert" href="#"><span class="icon-mv fs-12"><span class="icon-close-icon"></span></span></a><div class="wrap-alert">'+txtShow+'</div></div>
-        wrapAlert = '<div class="alert-item"><a class="btn-close-alert" href="#"><span class="icon-mv fs-12"><span class="icon-close-icon"></span></span></a><div class="wrap-alert">'+txtShow+'</div></div>';
+        wrapAlert = '<div class="alert-item hide"><a class="btn-close-alert" href="#"><span class="icon-mv fs-12"><span class="icon-close-icon"></span></span></a><div class="wrap-alert">'+txtShow+'</div></div>';
 
         $('#alert-noti').prepend($(wrapAlert));
 
@@ -1071,7 +1071,10 @@ $.fn.alertBox = function (options) {
             wWin = $(window).outerWidth(),
             hWin = $(window).outerHeight();
 
-        $('.alert-item').fadeIn(300);
+        $('.alert-item').removeClass('hide');
+        setTimeout(function() {
+            $('.alert-item').addClass('active')
+        }, 300);
 
         clearTimeout(timeOutHide);
 
