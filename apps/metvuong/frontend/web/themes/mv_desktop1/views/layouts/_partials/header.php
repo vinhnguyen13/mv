@@ -277,6 +277,12 @@ use frontend\models\AdProductSearch;
             });
 
         });
+
+        $(document).on('click', '.tooltip-show.wrapNotifyOther', function (e) {
+            $(this).next().loading({full: false});
+            return false;
+        });
+
         $(document).on('click', '.user-signup-link', function (e) {
             /*if(checkMobile()){
                 return true;

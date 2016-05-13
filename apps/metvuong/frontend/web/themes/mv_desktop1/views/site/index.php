@@ -58,25 +58,25 @@ use vsoft\ad\models\AdProduct;
 
     <script>
         $(document).ready(function () {
-//            $('.box-feature-item').loading({full: false});
+            $('.box-feature-item').loading({full: false});
             $.ajax({
                 type: "get",
                 dataType: 'html',
                 url: '<?=Url::to(['site/feature-listings'])?>',
                 success: function (data) {
                     $( ".box-feature-item .wrap-item").html(data);
-//                    $('.box-feature-item').loading({done:true});
+                    $('.box-feature-item').loading({done:true});
                 }
             });
 
-//            $('.news-item').loading({full: false});
+            $('.news-item').loading({full: false});
             $.ajax({
                 type: "get",
                 dataType: 'html',
                 url: '<?=Url::to(['site/news'])?>',
                 success: function (data) {
                     $( ".news-item .wrap-item").html(data);
-//                    $('.news-item').loading({done:true});
+                    $('.news-item').loading({done:true});
                 }
             });
         });
