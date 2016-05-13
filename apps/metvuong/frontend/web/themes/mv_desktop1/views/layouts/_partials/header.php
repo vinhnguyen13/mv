@@ -114,7 +114,7 @@ use frontend\models\AdProductSearch;
                 <?php } else{?>
                     <ul class="pull-left list-redire">
                         <li>
-                            <a class="tooltip-show wrapNotifyChat" href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('chat', 'Chat')?>">
+                            <a class="wrapNotifyChat" href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('chat', 'Chat')?>">
                                 <span class="icon-mv"><span class="icon-bubbles-icon"></span></span>
                                 <?php if(!empty($this->params['notify_chat'])){?>
                                     <span id="notifyChat" class="notifi"><?=$this->params['notify_chat'];?></span>
@@ -122,7 +122,7 @@ use frontend\models\AdProductSearch;
                             </a>
                         </li>
                         <li class="box-dropdown">
-                            <a class="val-selected tooltip-show wrapNotifyOther" href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('activity', 'Notification')?>">
+                            <a class="val-selected wrapNotifyOther" href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('activity', 'Notification')?>">
                                 <span class="icon-mv"><span class="icon-icons-bell"></span></span>
                                 <?php if(!empty($this->params['notify_other'])){?>
                                     <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
@@ -133,13 +133,13 @@ use frontend\models\AdProductSearch;
                             </div>
                         </li>
                         <li>
-                            <a class="tooltip-show" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="Dashboard">
+                            <a class="" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="Dashboard">
                                 <span class="icon-mv"><span class="icon-barometer"></span></span>
                             </a>
                         </li>
                     </ul>
                     <div class="user-edit box-dropdown">
-                        <a class="val-selected wrapNotifyTotal tooltip-show" data-toggle="tooltip" data-placement="bottom" href="#" title="<?=Yii::t('user', 'Profile')?>">
+                        <a class="val-selected wrapNotifyTotal" data-toggle="tooltip" data-placement="bottom" href="#" title="<?=Yii::t('user', 'Profile')?>">
                             <span class="wrap-img"><img src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="" width="40" height="40"></span>
                             <div>
                                 <p><span class="name-user"><?=Yii::$app->user->identity->profile->getDisplayName();?></span>

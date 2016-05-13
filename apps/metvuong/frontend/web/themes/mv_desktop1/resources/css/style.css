@@ -329,6 +329,7 @@ header {
     padding: 35px 20px 30px;
     margin-bottom: 0;
     /* background: red; */
+    /* min-height: 500px; */
 }
 .search-home .txt-intro {
     
@@ -6367,7 +6368,7 @@ footer li a {
         float: left;
     }
     .user-login .box-dropdown .dropdown-up-style {
-        top: 31.5px;
+        top: 63px;
         width: 200px;
         left: inherit;
         right: 0;
