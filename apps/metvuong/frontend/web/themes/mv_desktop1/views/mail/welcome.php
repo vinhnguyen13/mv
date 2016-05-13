@@ -19,11 +19,9 @@ use yii\helpers\Html;
  */
 
 ?>
-<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; font-weight: normal; margin: 0 0 10px; padding: 0;">
-    <?= Yii::t('user', 'Hello') ?>,
-</p>
+<p style="font-size: 13px;margin-bottom: 10px;"><?= Yii::t('user', 'Hello') ?> <strong style="color: #222;font-size: 13px;"><?=$user->email?></strong>,</p>
 
-<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; font-weight: normal; margin: 0 0 10px; padding: 0;">
+<p style="font-size: 13px;margin-bottom: 35px;line-height:20px">
     <?= Yii::t('user', 'Your account on {0} has been created', Yii::$app->name) ?>.
     <?php if ($showPassword || $module->enableGeneratingPassword): ?>
         <?= Yii::t('user', 'We have generated a password for you') ?>:
@@ -33,17 +31,16 @@ use yii\helpers\Html;
 </p>
 
 <?php if ($token !== null): ?>
-<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; font-weight: normal; margin: 0 0 10px; padding: 0;">
+<p style="font-size: 13px;margin-bottom: 35px;line-height:20px">
     <?= Yii::t('user', 'In order to complete your registration, please click the link below') ?>.
 </p>
-<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; font-weight: normal; margin: 0 0 10px; padding: 0;">
+<p style="font-size: 13px;margin-bottom: 35px;line-height:20px">
     <?= Html::a(Html::encode($token->url), $token->url); ?>
 </p>
-<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; font-weight: normal; margin: 0 0 10px; padding: 0;">
+<p style="font-size: 13px;margin-bottom: 35px;line-height:20px">
     <?= Yii::t('user', 'If you cannot click the link, please try pasting the text into your browser') ?>.
     <?php endif ?>
 </p>
-
-<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; font-weight: normal; margin: 0 0 10px; padding: 0;">
+<p style="font-size: 13px;margin-bottom: 35px;line-height:20px">
     <?= Yii::t('user', 'If you did not make this request you can ignore this email') ?>.
 </p>

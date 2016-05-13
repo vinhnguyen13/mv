@@ -167,7 +167,7 @@ use yii\helpers\Url;
                         $('.btn-cancel').trigger('click');
                         setTimeout(function () {
                             $('body').alertBox({
-                                txt: "<?=Yii::t('send_email', 'Email has been sent to ')?>"+recipient_email+""
+                                txt: "<?=Yii::t('send_email', 'Email has been sent to ')?> "+recipient_email+""
                             });
                         },300);
                     }
@@ -207,7 +207,7 @@ use yii\helpers\Url;
                         $('.btn-cancel').trigger('click');
                         setTimeout(function () {
                             $('body').alertBox({
-                                txt: "<?=Yii::t('send_email', 'Email has been sent to ')?>"+recipient_email+""
+                                txt: "<?=Yii::t('send_email', 'Email has been sent to ')?> "+recipient_email+""
                             });
                         },300);
                     }
