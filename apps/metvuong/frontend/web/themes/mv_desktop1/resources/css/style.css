@@ -2909,7 +2909,7 @@ html.mm-opening .mm-slideout {
 }
 .chat-list .item a.active,
 .chat-list .item a:hover {
-    background-color: #D6D6D6;
+    background-color: rgb(249, 249, 249);
 }
 .chat-live .item .name,
 .chat-list .item .name {
@@ -9229,7 +9229,7 @@ footer li a {
     color: #3c3c3c;
 }
 .box-chat-footer {
-    position: absolute;
+    position: absolute !important;
     width: 100%;
     background: #fff;
     z-index: 999;
@@ -9261,7 +9261,7 @@ footer li a {
     text-align: center;
     /* background: #00BB76; */
     float: left;
-    height: 37px;
+    height: 34px;
     /* border-left: 1px solid #FFFFFF; */
 }
 .option-chat-box .dropdown-up-style {
