@@ -14,8 +14,12 @@
 	use common\models\AdCity;
 	use vsoft\ad\models\AdDistrict;
 	use vsoft\ad\models\AdBuildingProject;
-	
-	$types = AdProduct::getAdTypes ();
+
+$categoriesDb = \vsoft\ad\models\AdCategory::getDb();
+$categories = $categoriesDb->cache(function($categoriesDb){
+    return \vsoft\ad\models\AdCategory::find()->indexBy('id')->asArray(true)->all();
+});
+$types = AdProduct::getAdTypes();
 ?>
 <?php foreach ($products as $product): ?>
 <li>

@@ -5,11 +5,12 @@
  * Date: 4/15/2016 1:53 PM
  */
 
-use vsoft\ad\models\AdCategory;
 use vsoft\ad\models\AdProduct;
 use vsoft\express\components\StringHelper;
 
-$categories = AdCategory::find()->indexBy( 'id' )->asArray( true )->all();
+$categories = \vsoft\ad\models\AdCategory::getDb()->cache(function(){
+    return \vsoft\ad\models\AdCategory::find()->indexBy('id')->asArray(true)->all();
+});
 $types = AdProduct::getAdTypes();
 
 ?>

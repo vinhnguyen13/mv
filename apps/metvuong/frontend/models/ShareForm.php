@@ -19,6 +19,14 @@ class ShareForm extends Model
     public $from_name;
     public $to_name;
 
+    public $category;
+    public $area;
+    public $room_no;
+    public $toilet_no;
+    public $price;
+    public $imageUrl;
+
+
     public function __construct($config = [])
     {
         parent::__construct($config);
@@ -28,7 +36,9 @@ class ShareForm extends Model
     public function scenarios()
     {
         return [
-            'share' => ['recipient_email', 'your_email', 'subject', 'content', 'address', 'detailUrl', 'domain', 'type', 'pid', 'from_name','to_name'],
+            'share' => ['recipient_email', 'your_email', 'subject', 'content', 'address', 'detailUrl', 'domain', 'type', 'pid', 'from_name','to_name',
+                'category', 'area', 'room_no', 'toilet_no', 'price', 'imageUrl'
+            ],
         ];
     }
 
@@ -45,7 +55,8 @@ class ShareForm extends Model
             [['recipient_email', 'your_email'], 'required'],
             [['recipient_email', 'your_email'], 'email'],
             [['recipient_email', 'your_email'], 'string', 'max' => 255],
-            [['address', 'content', 'detailUrl', 'domain', 'subject', 'type', 'pid', 'from_name','to_name'], 'string'],
+            [['address', 'content', 'detailUrl', 'domain', 'subject', 'type', 'pid', 'from_name',
+                'to_name','category', 'area', 'room_no', 'toilet_no', 'price', 'imageUrl'], 'string'],
         ];
     }
 

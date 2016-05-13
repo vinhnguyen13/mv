@@ -17,7 +17,9 @@ use vsoft\ad\models\AdFacility;
 	$this->registerCss('.map-wrap {position: relative;} .map-wrap:after {display: block; content: ""; padding-top: 75%;} .map-inside {position: absolute; width: 100%; height: 100%;} #map {height: 100%;}');
 
     $user = Yii::$app->user->identity;
-	$categories = AdCategory::find()->indexBy('id')->asArray(true)->all();
+    $categories = \vsoft\ad\models\AdCategory::getDb()->cache(function(){
+        return \vsoft\ad\models\AdCategory::find()->indexBy('id')->asArray(true)->all();
+    });
 	$types = AdProduct::getAdTypes();
 
 	$owner = User::findOne($product->user_id);

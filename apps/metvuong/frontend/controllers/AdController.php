@@ -609,10 +609,6 @@ class AdController extends Controller
 		if(Yii::$app->request->isPost && Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
 			$post = Yii::$app->request->post();
-            echo "<pre>";
-            print_r($post);
-            echo "<pre>";
-            exit();
             if(count($post) <= 0)
                 return ['status' => 400, 'parameters' => 'Post variable not found'];
 
