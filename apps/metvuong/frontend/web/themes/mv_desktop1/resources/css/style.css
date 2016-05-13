@@ -6469,10 +6469,37 @@ footer li a {
         font-size: 25px;
         color: #009455;
     }
+    .user-login .item-dropdown a > .wrap-alert {
+        font-size: inherit;
+        color: #3c3c3c;
+        font-size: 13px;
+        width: auto;
+        display: block;
+    }
     .user-login .item-dropdown a {
         text-transform: uppercase;
         border-bottom: solid 1px #c8c8c8;
         padding-top: 8px;
+    }
+    .user-login .list-redire .item-dropdown a {
+        text-transform: capitalize;
+        padding: 7px 15px 7px 15px;
+        text-overflow: inherit;
+        overflow: visible;
+        white-space: inherit;
+        position: relative;
+    }
+    .user-login .list-redire .item-dropdown .view-more {
+        text-transform: none;
+        text-align: center;
+        padding: 6px 0;
+        margin: 0;
+        background-color: #f6f7f9;
+        border-top: 1px solid #c5c5c5;
+        font-weight: bold;
+        font-size: 13px;
+        color: #009544;
+        text-decoration: underline;
     }
     .user-login .item-dropdown a:hover {
         text-decoration: none;
@@ -11123,4 +11150,35 @@ height: 10px;
 }
 #upgrade-time .modal-dialog {
     width: 350px;
+}
+.user-login .list-redire .box-dropdown .val-selected {
+    background: none;
+    height: auto;
+    line-height: inherit;
+    padding: 0;
+}
+.user-login .list-redire .box-dropdown .dropdown-up-style {
+    top: 46px;
+    width: 300px;
+}
+.user-login .list-redire .box-dropdown li {
+    margin-left: 0;
+}
+.user-login .list-redire .wrap-alert span {
+    text-decoration: underline;
+}
+.user-login .list-redire .item-dropdown a .icon-mv span,
+.user-login .list-redire .item-dropdown a .icon-mv {
+    text-decoration: none;
+}
+.user-login .list-redire .item-dropdown a .icon-mv {
+    font-size: 15px;
+    line-height: 100%;
+    /* position: absolute; */
+    /* top: 11px; */
+    /* left: 7px; */
+    color: #009455;
+}
+.list-redire .box-dropdown .dropdown-up-style .icon-heart-icon-listing:before {
+    content: "\e91f";
 }

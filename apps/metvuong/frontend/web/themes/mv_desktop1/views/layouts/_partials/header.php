@@ -121,13 +121,60 @@ use frontend\models\AdProductSearch;
                                 <?php }?>
                             </a>
                         </li>
-                        <li>
-                            <a class="tooltip-show wrapNotifyOther" href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('activity', 'Notification')?>">
+                        <li class="box-dropdown">
+                            <a class="val-selected tooltip-show wrapNotifyOther" href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('activity', 'Notification')?>">
                                 <span class="icon-mv"><span class="icon-icons-bell"></span></span>
                                 <?php if(!empty($this->params['notify_other'])){?>
                                     <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
                                 <?php }?>
                             </a>
+                            <div class="item-dropdown hide-dropdown">
+                                <ul class="clearfix">
+                                    <li>
+                                        <a href="#">
+                                            <div class="wrap-alert">
+                                                <span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
+                                                <strong>Dien Truong</strong> favorite <span>12, Phố Bà Huyện Thanh Quan, Phường Bến Nghé, Quận 1, Hồ Chí Minh</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="wrap-alert">
+                                                <span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
+                                                <strong>Dien Truong</strong> favorite <span>12, Phố Bà Huyện Thanh Quan, Phường Bến Nghé, Quận 1, Hồ Chí Minh</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="wrap-alert">
+                                                <span class="icon-mv"><span class="icon-eye-copy"></span></span>
+                                                <strong>Dien Truong</strong> favorite <span>12, Phố Bà Huyện Thanh Quan, Phường Bến Nghé, Quận 1, Hồ Chí Minh</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="wrap-alert">
+                                                <span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
+                                                <strong>Dien Truong</strong> favorite <span>12, Phố Bà Huyện Thanh Quan, Phường Bến Nghé, Quận 1, Hồ Chí Minh</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <div class="wrap-alert">
+                                                <span class="icon-mv"><span class="icon-eye-copy"></span></span>
+                                                <strong>Dien Truong</strong> favorite <span>12, Phố Bà Huyện Thanh Quan, Phường Bến Nghé, Quận 1, Hồ Chí Minh</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="view-more">Xem thêm</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
                         <li>
                             <a class="tooltip-show" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="Dashboard">
