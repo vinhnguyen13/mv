@@ -305,5 +305,19 @@ use frontend\models\AdProductSearch;
             selectedValue: false
         });
 
+        $('.user-login .list-redire .box-dropdown').dropdown({
+            styleShow: 0,
+            selectedValue: false,
+            ajaxSubmit: function () {
+                $.ajax({
+                    type: 'GET',
+                    url: 'https://dl.dropboxusercontent.com/u/43486987/test.txt',
+                    success: function (res) {
+                        l(res);
+                    }
+                });
+            }
+        });
+
     });
 </script>

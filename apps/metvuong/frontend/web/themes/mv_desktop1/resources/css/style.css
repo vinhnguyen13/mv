@@ -6367,7 +6367,7 @@ footer li a {
         float: left;
     }
     .user-login .box-dropdown .dropdown-up-style {
-        top: 63px;
+        top: 31.5px;
         width: 200px;
         left: inherit;
         right: 0;
@@ -11158,7 +11158,7 @@ height: 10px;
     padding: 0;
 }
 .user-login .list-redire .box-dropdown .dropdown-up-style {
-    top: 46px;
+    top: 23px;
     width: 300px;
 }
 .user-login .list-redire .box-dropdown li {
