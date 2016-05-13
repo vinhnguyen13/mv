@@ -203,7 +203,7 @@ class AdProduct extends AP
 
     public function getExpired(){
         $d = $this->end_date - time();
-        return floor($d / (60 * 60 * 24));
+        return ceil($d / (60 * 60 * 24));
     }
 	
 	public function afterSave($insert, $changedAttributes) {
