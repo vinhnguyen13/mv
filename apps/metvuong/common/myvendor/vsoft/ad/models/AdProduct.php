@@ -244,7 +244,7 @@ class AdProduct extends AP
 		parent::afterSave($insert, $changedAttributes);
 	}
 	
-	public function updateElasticCounter($type, $id, $totalType, $increase = true) {
+	public static function updateElasticCounter($type, $id, $totalType, $increase = true) {
 		$sign = $increase ? '+' : '-';
 		$script = '{"script" : "ctx._source.' . $totalType . $sign . '=1"}';
 		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/term/$type/$id/_update");

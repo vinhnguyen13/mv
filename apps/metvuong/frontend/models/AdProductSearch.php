@@ -46,7 +46,7 @@ class AdProductSearch extends AdProduct {
 		
 		$query->innerJoin('ad_product_addition_info', 'ad_product_addition_info.product_id = ad_product.id');
 		
-		$where = ['status' => 1];
+		$where = ['status' => 1, 'verified' => 1, 'is_expired' => 0];
 		
 		if($this->street_id) {
 			$where['street_id'] = intval($this->street_id);
@@ -60,11 +60,11 @@ class AdProductSearch extends AdProduct {
 			$where['project_building_id'] = intval($this->project_building_id);
 		}
 		
-		if(count($where) == 1 && $this->district_id) {
+		if(count($where) == 3 && $this->district_id) {
 			$where['district_id'] = intval($this->district_id);
 		}
 		
-		if(count($where) == 1) {
+		if(count($where) == 3) {
 			if($this->city_id) {
 				$where['city_id'] = intval($this->city_id);
 			} else {
