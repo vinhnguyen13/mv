@@ -1231,7 +1231,7 @@ class BatdongsanV2 extends Component
 
             foreach ($models as $key=>$model) {
                 $no = $key+1;
-                print_r("\n{$no}-Copy listing: {$model->file_name}");
+                print_r("\n{$no}-Copy: {$model->file_name}");
                 array_push($imageArray, $model->adImages);
                 if (count($model->adProductAdditionInfo) > 0) {
                     array_push($infoArray, $model->adProductAdditionInfo);
@@ -1261,6 +1261,11 @@ class BatdongsanV2 extends Component
                     $street_id = empty($model->street_id) ? null : $model->street_id;
                     $home_no = empty($model->home_no) ? null : $model->home_no;
                 }
+
+                if(empty($city_id) || empty($district_id)) {
+                    continue;
+                }
+
                 $is_expired = $model->end_date > time() ? 0 : 1;
                 $record = [
                     'category_id' => $model->category_id,
@@ -1280,7 +1285,7 @@ class BatdongsanV2 extends Component
                     'lng' => $model->lng,
                     'start_date' => $model->start_date,
                     'end_date' => $model->end_date,
-                    'verified' => $model->verified,
+                    'verified' => 1,
                     'created_at' => $model->created_at,
                     'source' => $model->source,
                     'status' => 1,
@@ -1306,6 +1311,10 @@ class BatdongsanV2 extends Component
                         AdProduct::updateElasticCounter('project_building', $record['project_building_id'], $totalType);
                     }
                 }
+//                else {
+//                    $dateEnd = date('d-m-Y', $model->end_date);
+//                    print_r(" -> Expired({$dateEnd})");
+//                }
             }
 
             $countBulkProduct = count($bulkInsertArray);
