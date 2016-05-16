@@ -25,7 +25,7 @@ var listing = {
 		
 		listing.limit = Number(listing.countToEl.text()) - Number(listing.countFromEl.text()) + 1;
 		
-		events.attachDesktopEvent(listing.listEl, 'click', '.item-listing > a', listing.detailEvent);
+		events.attachDesktopEvent(listing.listEl, 'click', '.item > a', listing.detailEvent);
 		events.attachDesktopEvent(listing.listEl, 'mouseenter', '.item-listing > a', listing.mouseenterEvent);
 		events.attachDesktopEvent(listing.listEl, 'mouseleave', '.item-listing > a', listing.mouseleaveEvent);
 		events.attachDesktopEvent($('.wrap-listing'), 'scroll', listing.more);
