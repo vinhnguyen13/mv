@@ -9,7 +9,7 @@ use vsoft\ad\models\AdProduct;
 class ProductController extends Controller {
 	public function actionCheckExpired() {
 		$now = time();
-		$products = AdProduct::find()->where("`end_date` < $now AND `is_expired` = 0")->limit(10000)->asArray(true)->all();
+		$products = AdProduct::find()->where("`end_date` < $now AND `is_expired` = 0")->limit(1000)->asArray(true)->all();
 		
 		$connection = \Yii::$app->db;
 		
