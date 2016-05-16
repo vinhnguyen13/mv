@@ -22,20 +22,18 @@ $categories = $categoriesDb->cache(function($categoriesDb){
 $types = AdProduct::getAdTypes();
 ?>
 <?php foreach ($products as $product): ?>
-<li>
-	<div class="item-listing">
+<li class="col-xs-12 col-sm-6 col-lg-4">
+	<div class="item">
 		<a data-id="<?= $product->id ?>" class="clearfix" href="<?= $product->urlDetail(); ?>" title="<?= $product->getAddress($product->show_home_no) ?>">
-			<div class="bgcover img-intro">
-				<div>
-					<img src="<?= $product->file_name ? AdImages::getImageUrl($product->folder, $product->file_name, AdImages::SIZE_THUMB) : AdImages::defaultImage() ?>" />
-				</div>
+			<div class="pic-intro">
+				<img src="<?= $product->file_name ? AdImages::getImageUrl($product->folder, $product->file_name, AdImages::SIZE_THUMB) : AdImages::defaultImage() ?>" />
 			</div>
-			<div class="attrs-item">
-			<div class="wrap-attr-item">
-				<p class="date-post"><strong><?= date("d/m/Y H:i", $product->created_at) ?></strong></p>
-				<p class="address-listing">
+			<div class="info-item clearfix">
+				<p class="date-post"><?= Yii::t('statistic', 'Date of posting') ?>:
+					<strong><?= date("d/m/Y H:i", $product->created_at) ?></strong></p>
+				<div class="address-listing">
 					<?= $product->getAddress($product->show_home_no) ?>
-				</p>
+				</div>
 				<p class="infor-by-up">
 					<strong><?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= strtolower($types[$product->type]) ?></strong>
 				</p>
@@ -49,18 +47,15 @@ $types = AdProduct::getAdTypes();
                         echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
                     } ?>
 				</ul>
-			</div>
-			<div class="wrap-attr-bottom">
-				<span class="price"><span><?= Yii::t('ad', 'Price') ?></span><?= StringHelper::formatCurrency($product->price) ?></span>
-							</div>
-		                </div>
-					</a>
-                    <?php
-                    // tracking finder
-                    if($product->user_id != Yii::$app->user->id && isset(Yii::$app->params['tracking']['all']) && Yii::$app->params['tracking']['all'] == true) {
-                        Tracking::find()->productFinder(Yii::$app->user->id, (int)$product->id, time());
-                    }
-                    ?>
+		        <p class="price-item"><?= Yii::t('listing', 'Price') ?><strong><?= StringHelper::formatCurrency($product->price) ?></strong></p>   
+		    </div>
+		</a>
+        <?php
+        // tracking finder
+        if($product->user_id != Yii::$app->user->id && isset(Yii::$app->params['tracking']['all']) && Yii::$app->params['tracking']['all'] == true) {
+            Tracking::find()->productFinder(Yii::$app->user->id, (int)$product->id, time());
+        }
+        ?>
 	</div>
 </li>
 <?php endforeach; ?>

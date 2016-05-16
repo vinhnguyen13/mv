@@ -878,8 +878,7 @@ label {
 }
 .infor-by-up {
     font-size: 14px;
-    line-height: 100%;
-    margin-bottom: 5px;
+    margin-bottom: 7px;
 }
 .infor-by-up strong {
     font-weight: 600;
@@ -891,9 +890,6 @@ label {
     padding: 0;
     margin: 0 0 10px 0;
     line-height: 100%;
-}
-#listing-list .list-attr-td {
-    margin: 0 0 0 0;
 }
 .infor-duan .address-listing,
 .name-duan {
@@ -3207,6 +3203,12 @@ html.mm-opening .mm-slideout {
     width: 100%;
     height: 230px;
 }
+#listing-list .pic-intro {
+    float: left;
+    width: 180px;
+    height: 137px;
+    margin-bottom: 0;
+}
 .pic-intro img {
     width: 100%;
     height: 100%;
@@ -3216,6 +3218,11 @@ html.mm-opening .mm-slideout {
 .info-item {
     padding: 0 15px 15px;
     font-size: 13px;
+}
+#listing-list .info-item {
+    overflow: hidden;
+    padding-bottom: 0;
+    padding-right: 0;
 }
 .box-item .address-feat .address-icon {
     position: relative;
@@ -4212,6 +4219,13 @@ html.mm-opening .mm-slideout {
     font-size: 15px;
     margin-bottom: 8px;
     font-weight: 600;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    color: #00a769;
+}
+#listing-list .address-listing {
+    margin-bottom: 3px;
 }
 .address-listing a {
     display: block;
@@ -7115,9 +7129,6 @@ footer li a {
     width: 100%;
 }
 @media ( min-width: 985px ) {
-    #listing-list .list-attr-td {
-        margin-bottom: 4px;
-    }
     .detail-listing {
         padding: 0 0 100px 0;
     }
@@ -7142,9 +7153,6 @@ footer li a {
     .detail-listing-extra.detail-listing .panel-group,
     .detail-listing-extra .infor-listing {
         padding: 0;
-    }
-    .infor-by-up {
-        margin-bottom: 5px;
     }
     .detail-listing .infor-listing .list-attr-td {
         margin-bottom: 15px;
@@ -11157,4 +11165,12 @@ height: 190px;
         text-overflow: inherit;
         white-space: inherit;
     }
+}
+#listing-list > ul > li a {
+    padding: 15px;
+    display: block;
+}
+#listing-list > ul > li a:hover {
+    color: inherit;
+    background: #FBFBFB;
 }
