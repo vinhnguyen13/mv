@@ -295,26 +295,6 @@ class MemberController extends Controller
             $products = $query->offset($pagination->offset)->limit($pagination->limit)
                 ->orderBy(['district_id' => SORT_ASC, 'city_id'=> SORT_ASC, 'id' => SORT_DESC])->all();
         }
-
-        if(Yii::$app->request->isAjax) {
-            if(Yii::$app->request->isPost){
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                $post = Yii::$app->request->post();
-                $model->load($post);
-                $model->validate();
-                if (!$model->hasErrors() && $username == Yii::$app->user->identity->username) {
-                    if($post["type"])
-                        $model->$post["type"] = strip_tags(html_entity_decode($post["txt"]));
-                    $res = $model->updateProfile();
-                    return ['statusCode'=>true, 'username'=>$username];
-                }else{
-                    return ['statusCode'=> false, 'parameters' => $model->errors, 'user'=> 'error'];
-                }
-            }
-            return $this->renderAjax('user/profile', [
-                'model' => $model, 'username'=>$username, 'products' => $products
-            ]);
-        }
         return $this->render('user/profile', [
             'model' => $model, 'username'=>$username,
             'products' => $products, 'pagination' => $pagination,
