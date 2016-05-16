@@ -3,6 +3,7 @@ namespace frontend\controllers;
 
 use frontend\components\Finder;
 use dektrium\user\helpers\Password;
+use frontend\models\AdProductSearch;
 use frontend\models\LoginForm;
 use frontend\models\Profile;
 use frontend\models\RegistrationForm;
@@ -272,7 +273,11 @@ class MemberController extends Controller
         $rent_products = array();
         $model = $model->loadProfile($username, 'updateprofile');
         if($model) {
-            $query = AdProduct::find()->where('user_id = :uid', [':uid' => $model->user_id]);
+            $AdProductSearch = new AdProductSearch();
+            $query = $AdProductSearch->search(\Yii::$app->request->get());
+            $query->addSelect('ad_product.created_at, ad_product.category_id, ad_product.type, ad_images.file_name, ad_images.folder');
+            $query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id')->groupBy('ad_product.id');
+            $query->where('ad_product.user_id = :uid', [':uid' => $model->user_id]);
             $detectProducts = $query->orderBy(['district_id' => SORT_ASC, 'city_id'=> SORT_ASC, 'id' => SORT_DESC])->all();
             if(count($detectProducts) > 0){
                 foreach($detectProducts as $product){

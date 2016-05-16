@@ -21,7 +21,8 @@ $categories = $categoriesDb->cache(function($categoriesDb){
 });
 $types = AdProduct::getAdTypes();
 ?>
-<?php foreach ($products as $product): ?>
+<?php foreach ($products as $product):
+	?>
 <li class="col-xs-12 col-sm-6 col-lg-4">
 	<div class="item">
 		<a data-id="<?= $product->id ?>" class="clearfix" href="<?= $product->urlDetail(); ?>" title="<?= $product->getAddress($product->show_home_no) ?>">

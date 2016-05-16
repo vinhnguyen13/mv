@@ -7,6 +7,7 @@
  */
 namespace vsoft\ad\widgets;
 
+use frontend\models\AdProductSearch;
 use vsoft\ad\models\AdImages;
 use vsoft\ad\models\AdProduct;
 use yii\base\Widget;
@@ -39,18 +40,18 @@ class ListingWidget extends Widget
         $result = null;
         $limit = $this->limit;
         $offset = 0;
-//        $order_by = ['id' => SORT_DESC];
-
-        $products = AdProduct::find()->innerJoin(AdImages::tableName(), "ad_product.id = ad_images.product_id")
-                    ->where(["city_id" => $city_id, "district_id" => $district_id]);
+        $model = new AdProductSearch();
+        $query = $model->search(\Yii::$app->request->get());
+        $query->addSelect('ad_product.created_at, ad_product.category_id, ad_product.type, ad_images.file_name, ad_images.folder');
+        $query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id')->groupBy('ad_product.id');
 
         if(!empty($this->type))
-            $products->andWhere(["type" => $this->type]);
+            $query->andWhere(["type" => $this->type]);
 
         if(!empty($user_id))
-            $products->andWhere('user_id != :uid',[':uid' => $user_id]);
+            $query->andWhere('user_id != :uid',[':uid' => $user_id]);
 
-        $result = $products->limit($limit)->offset($offset)->orderBy("RAND()")->all();
+        $result = $query->limit($limit)->offset($offset)->orderBy(['ad_product.id' => SORT_DESC])->all();
 
         return $this->render($view, ['products' => $result, 'title' => $this->title]);
     }
