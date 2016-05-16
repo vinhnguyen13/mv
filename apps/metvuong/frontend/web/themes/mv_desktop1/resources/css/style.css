@@ -3189,6 +3189,7 @@ html.mm-opening .mm-slideout {
     background: rgba(0, 167, 105, 0.55);
     color: #fff;
     padding: 3px 10px;
+    text-transform: uppercase;
 }
 .listing-item > li {
     padding: 0 15px;
@@ -6745,10 +6746,6 @@ footer li a {
         border: none;
         padding: 0;
     }
-    .list-duan ul {
-        margin-left: 0;
-        margin: 0;
-    }
     .list-duan .col-left ul li {
         margin-bottom: 40px;
         padding-bottom: 40px;
@@ -6757,8 +6754,14 @@ footer li a {
     .list-duan .col-left ul li:first-child {
         border-bottom: solid 1px #969696;
     }
-    .wrap-infor-duan .wrap-item .img-show:before {
-        /* padding-top: 60%; */
+    .list-duan .col-left .pagination li:first-child {
+        border: none;
+    }
+    .list-duan .col-left .pagination li {
+        
+margin-bottom: 0;
+        
+padding-bottom: 0;
     }
 }
 .select-location .dropdown-up-style .item-dropdown,
@@ -7306,6 +7309,13 @@ footer li a {
         padding-left: 0;
         padding-right: 0;
         margin-bottom: 20px;
+    }
+    .wrap-item-post p,
+    .list-duan .sidebar-col .name-post a {
+        display: block;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 }
 @media ( max-width: 985px ) {
@@ -7880,8 +7890,6 @@ footer li a {
 .infor-duan {
     padding-top: 50px;
 }
-.sidebar-col ul li {
-}
 .sidebar-col .list-attr-td li {
     margin: 0 10px 0 0;
     padding-right: 10px;
@@ -7947,6 +7955,7 @@ footer li a {
 }
 .list-duan .col-left li:first-child .wrap-item > a {
     width: 60%;
+    height: 300px;
 }
 .col-left {
     padding-right: 50px;
@@ -7990,6 +7999,7 @@ footer li a {
         float: none;
         display: block;
         margin-bottom: 10px;
+        height: 230px;
     }
     .list-duan .col-left .wrap-item .info-item {
         overflow: inherit;
@@ -8022,6 +8032,9 @@ footer li a {
         width: 50%;
         float: left;
         padding: 0 10px;
+    }
+    .infor-duan .list-duan .pagination li {
+        padding: 0;
     }
     .wrap-duan-moi .sidebar-col .list-post {
         margin: 0 -10px;
@@ -9890,6 +9903,7 @@ footer li a {
     }
     .list-duan .col-left li:first-child .wrap-item > a {
         width: 100%;
+        height: 230px;
     }
     .wrap-infor-duan .wrap-item {
         border-radius: 4px;
@@ -10447,6 +10461,9 @@ label:hover {
     }
     .wrap-infor-duan .bottom-feat-box {
         padding-top: 0;
+        height: 73px;
+        overflow: hidden;
+        padding-bottom: 0;
     }
     .col-right,
     .col-left {
