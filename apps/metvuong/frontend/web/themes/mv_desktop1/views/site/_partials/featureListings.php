@@ -9,7 +9,7 @@ $types = \vsoft\ad\models\AdProduct::getAdTypes();
 $products = Ad::find()->homePageRandom();
 if(!empty($products)) {
     ?>
-    <ul class="clearfix">
+    <ul class="clearfix listing-item">
         <?= $this->render('/ad/_partials/list', ['products' => $products, 'categories' => $categories]) ?>
     </ul>
     <?php

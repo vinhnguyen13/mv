@@ -96,7 +96,7 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
                     </div>
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane fade in active" id="list-all">
-                            <ul class="clearfix list-post">
+                            <ul class="clearfix listing-item">
                                 <?= $this->render('/ad/_partials/list', ['products' => $products]) ?>
                             </ul>
                             <nav class="text-center">
@@ -108,12 +108,12 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
                             </nav>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="list-by">
-                            <ul class="clearfix list-post">
+                            <ul class="clearfix listing-item">
                                 <?= $this->render('/ad/_partials/list', ['products' => $sale_products]) ?>
                             </ul>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="list-rent">
-                            <ul class="clearfix list-post">
+                            <ul class="clearfix listing-item">
                                 <?= $this->render('/ad/_partials/list', ['products' => $rent_products]) ?>
                             </ul>
                         </div>

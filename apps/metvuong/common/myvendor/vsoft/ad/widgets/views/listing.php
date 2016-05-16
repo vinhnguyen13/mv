@@ -16,6 +16,6 @@ $types = AdProduct::getAdTypes();
 ?>
 
 <div class="title-sidebar"><?=$title?></div>
-<ul class="clearfix list-post">
+<ul class="clearfix listing-item">
     <?= $this->render('/ad/_partials/list', ['products' => $products]) ?>
 </ul>
