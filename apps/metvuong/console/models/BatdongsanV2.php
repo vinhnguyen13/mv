@@ -1206,7 +1206,7 @@ class BatdongsanV2 extends Component
             $columnNameArray = ['category_id', 'project_building_id', 'user_id', 'home_no',
                 'city_id', 'district_id', 'ward_id', 'street_id',
                 'type', 'content', 'area', 'price', 'price_type', 'lat', 'lng',
-                'start_date', 'end_date', 'verified', 'created_at', 'source', 'status'];
+                'start_date', 'end_date', 'verified', 'created_at', 'source', 'status', 'is_expired'];
             $ad_image_columns = ['user_id', 'product_id', 'file_name', 'uploaded_at'];
             $ad_info_columns = ['product_id', 'facade_width', 'land_width', 'home_direction', 'facade_direction', 'floor_no', 'room_no', 'toilet_no', 'interior'];
             $ad_contact_columns = ['product_id', 'name', 'phone', 'mobile', 'address', 'email'];
@@ -1261,7 +1261,7 @@ class BatdongsanV2 extends Component
                     $street_id = empty($model->street_id) ? null : $model->street_id;
                     $home_no = empty($model->home_no) ? null : $model->home_no;
                 }
-
+                $is_expired = $model->end_date > time() ? 0 : 1;
                 $record = [
                     'category_id' => $model->category_id,
                     'project_building_id' => empty($project_id) ? null : $project->id,
@@ -1283,23 +1283,28 @@ class BatdongsanV2 extends Component
                     'verified' => $model->verified,
                     'created_at' => $model->created_at,
                     'source' => $model->source,
-                    'status' => 1
+                    'status' => 1,
+                    'is_expired' => $is_expired
                 ];
                 $bulkInsertArray[] = $record;
-                // update elastic counter
-                $totalType = ($record['type'] == AdProduct::TYPE_FOR_SELL) ? AdProduct::TYPE_FOR_SELL_TOTAL : AdProduct::TYPE_FOR_RENT_TOTAL;
 
-                AdProduct::updateElasticCounter('city', $record['city_id'], $totalType);
-                AdProduct::updateElasticCounter('district', $record['district_id'], $totalType);
+                // tin hoat dong con ngay su dung
+                if($is_expired == 0) {
+                    // update elastic counter - increment elastic
+                    $totalType = ($record['type'] == AdProduct::TYPE_FOR_SELL) ? AdProduct::TYPE_FOR_SELL_TOTAL : AdProduct::TYPE_FOR_RENT_TOTAL;
 
-                if($record['ward_id']) {
-                    AdProduct::updateElasticCounter('ward', $record['ward_id'], $totalType);
-                }
-                if($record['street_id']) {
-                    AdProduct::updateElasticCounter('street', $record['street_id'], $totalType);
-                }
-                if($record['project_building_id']) {
-                    AdProduct::updateElasticCounter('project_building', $record['project_building_id'], $totalType);
+                    AdProduct::updateElasticCounter('city', $record['city_id'], $totalType);
+                    AdProduct::updateElasticCounter('district', $record['district_id'], $totalType);
+
+                    if ($record['ward_id']) {
+                        AdProduct::updateElasticCounter('ward', $record['ward_id'], $totalType);
+                    }
+                    if ($record['street_id']) {
+                        AdProduct::updateElasticCounter('street', $record['street_id'], $totalType);
+                    }
+                    if ($record['project_building_id']) {
+                        AdProduct::updateElasticCounter('project_building', $record['project_building_id'], $totalType);
+                    }
                 }
             }
 
