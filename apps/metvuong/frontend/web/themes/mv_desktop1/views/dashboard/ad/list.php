@@ -74,7 +74,7 @@ $count_product = count($products);
                         <div class="bottom-feat-box clearfix">
                             <div class="pull-right push-price">
                                 <div class="status-duan">
-                                    <?php if ($product->end_date < time()): ?>
+                                    <?php if ($product->is_expired > 0): ?>
                                         <div class="wrap-icon status-get-point">
                                             <div><span class="icon icon-inactive-pro"></span>
                                             </div>
@@ -88,7 +88,7 @@ $count_product = count($products);
                                         </div>
                                     <?php endif; ?>
                                 </div>
-                                <?php if ($product->end_date > time()) {
+                                <?php if ($product->is_expired <= 0) {
                                     $day_number = $product->expired; ?>
                                     <p class="expired"><?= Yii::t('statistic', 'Expired in the last') ?>
                                         <strong><?= $day_number > 1 ? $day_number . " " . Yii::t('statistic', 'days') : $day_number . " " . Yii::t('statistic', 'day') ?></strong>

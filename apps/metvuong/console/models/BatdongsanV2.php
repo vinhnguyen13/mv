@@ -1199,7 +1199,7 @@ class BatdongsanV2 extends Component
         if($price == "price=1")
             $models = $models->andWhere(['price_type' => 1]);
 
-        $models = $models->limit(300)->all();
+        $models = $models->limit(1)->all();
 
         $insertCount = 0;
         if(count($models) > 0){
@@ -1286,6 +1286,21 @@ class BatdongsanV2 extends Component
                     'status' => 1
                 ];
                 $bulkInsertArray[] = $record;
+                // update elastic counter
+                $totalType = ($record['type'] == AdProduct::TYPE_FOR_SELL) ? AdProduct::TYPE_FOR_SELL_TOTAL : AdProduct::TYPE_FOR_RENT_TOTAL;
+
+                AdProduct::updateElasticCounter('city', $record['city_id'], $totalType);
+                AdProduct::updateElasticCounter('district', $record['district_id'], $totalType);
+
+                if($record['ward_id']) {
+                    AdProduct::updateElasticCounter('ward', $record['ward_id'], $totalType);
+                }
+                if($record['street_id']) {
+                    AdProduct::updateElasticCounter('street', $record['street_id'], $totalType);
+                }
+                if($record['project_building_id']) {
+                    AdProduct::updateElasticCounter('project_building', $record['project_building_id'], $totalType);
+                }
             }
 
             $countBulkProduct = count($bulkInsertArray);
@@ -2288,10 +2303,9 @@ class BatdongsanV2 extends Component
     }
 
     public function copyProjects(){
-        $tool_projects = AdBuildingProject::find()->all();
-        foreach($tool_projects as $tool_project){
-
-        }
+        $models = \vsoft\craw\models\AdBuildingProject::getDb()->cache(function(){
+            return AdBuildingProject::findAll();
+        });
     }
 
     public function updateProjects(){

@@ -133,7 +133,26 @@ class DashboardController extends Controller
                     $product->end_date = time();
                 $end = strtotime("+30 days", $product->end_date );
                 $product->end_date = $end;
+                $product->is_expired = 0;
                 $product->save(false);
+
+                // update elastic counter
+                $totalType = ($product->type == AdProduct::TYPE_FOR_SELL) ? AdProduct::TYPE_FOR_SELL_TOTAL : AdProduct::TYPE_FOR_RENT_TOTAL;
+
+                AdProduct::updateElasticCounter('city', $product->city_id, $totalType);
+                AdProduct::updateElasticCounter('district', $product->district_id, $totalType);
+
+                if($product->ward_id) {
+                    AdProduct::updateElasticCounter('ward', $product->ward_id, $totalType);
+                }
+                if($product->street_id) {
+                    AdProduct::updateElasticCounter('street', $product->street_id, $totalType);
+                }
+                if($product->project_building_id) {
+                    AdProduct::updateElasticCounter('project_building', $product->project_building_id, $totalType);
+                }
+                // end update elastic
+
                 return ['expired' => $product->expired];
             }
         }

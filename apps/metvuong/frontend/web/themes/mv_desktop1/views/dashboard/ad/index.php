@@ -124,7 +124,7 @@ use yii\helpers\Url;
                                 $('.p' + product + ' .intro-detail .status-duan .status-get-point span').removeClass('icon-inactive-pro').addClass('icon-active-pro');
                                 $('.p' + product + ' .intro-detail .status-duan .status-get-point strong').text('<?= Yii::t('statistic', 'Active Project') ?>');
                                 $('.p' + product + ' .intro-detail .status-duan').after(function () {
-                                    return "<p class=\"expired\"><?= Yii::t('statistic', 'Expired in the last') ?><strong>" + data.expired + " <?=Yii::t('statistic', 'days')?></strong></p>";
+                                    return "<p class=\"expired\"><?= Yii::t('statistic', 'Expired in the last') ?><strong> " + data.expired + " <?=Yii::t('statistic', 'days')?></strong></p>";
                                 });
                             }
                         }
