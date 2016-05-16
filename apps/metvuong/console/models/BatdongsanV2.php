@@ -1199,7 +1199,7 @@ class BatdongsanV2 extends Component
         if($price == "price=1")
             $models = $models->andWhere(['price_type' => 1]);
 
-        $models = $models->limit(1)->all();
+        $models = $models->limit(300)->all();
 
         $insertCount = 0;
         if(count($models) > 0){
