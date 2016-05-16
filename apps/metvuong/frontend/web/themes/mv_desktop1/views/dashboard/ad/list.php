@@ -35,12 +35,10 @@ $count_product = count($products);
             }
             ?>
             <li class="col-xs-12 col-md-6 col-sm-6">
-                <div class="item p<?=$product->id?>">
-                    <div class="img-show">
-                        <div>
-                            <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>" title="<?=Yii::t('statistic', 'View statistic detail')?>">
-                                <img src="<?=$thumb ?>" alt="<?=Yii::t('statistic', 'View statistic detail')?>"></a>
-                        </div>
+                <div class="item p<?=$product->id?> clearfix">
+                    <div class="wrap-img-list">
+                        <a class="pic-intro" href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>" title="<?=Yii::t('statistic', 'View statistic detail')?>">
+                            <img src="<?=$thumb ?>" alt="<?=Yii::t('statistic', 'View statistic detail')?>"></a>
                         <a href="<?= Url::to(['/ad/update', 'id' => $product->id]) ?>" class="edit-duan">
                             <span class="icon-mv"><span class="icon-edit-copy-4"></span></span>
                         </a>
