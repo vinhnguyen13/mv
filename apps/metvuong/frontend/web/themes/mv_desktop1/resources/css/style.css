@@ -3987,10 +3987,11 @@ html.mm-opening .mm-slideout {
 }
 .price-item {
     text-transform: uppercase;
-    border: 1px solid #00a769;
-    padding: 6px 10px;
+    border: solid 1px #8e8e8e;
+    padding: 10px 15px;
     float: left;
     font-size: 13px;
+    line-height: 100%;
 }
 .price-item strong {
     padding-left: 5px;
@@ -5324,13 +5325,11 @@ html.mm-opening .mm-slideout {
     margin-top: -8px;
     margin-bottom: 0;
 }
-#listing-list > ul > li {
-    border-bottom: 1px solid #ededed;
-    padding: 20px 0; */
-}
 @media (min-width: 640px) {
     #listing-list > ul > li {
         border: none;
+        padding: 0 15px;
+        margin-bottom: 30px;
     }
     #listing-list .item-listing {
         border: 1px solid #ededed;
@@ -7202,9 +7201,6 @@ footer li a {
     .item-listing .infor-by-up {
         margin-bottom: 8px;
     }
-    #listing-list .list-attr-td {
-        margin-bottom: 0;
-    }
 }
 @media ( max-width: 1366px ) {
     .wrap-listing-item {
@@ -7324,7 +7320,6 @@ footer li a {
         padding: 0 10px;
         margin-bottom: 20px;
     }
-    #listing-list > ul,
     .wrap-list-duan ul {
         margin: 0 -10px;
     }
@@ -7555,9 +7550,7 @@ footer li a {
 .select2-duan {
     margin-top: 10px;
 }
-.detail-listing-dt .infor-by-up {
-    margin-top: 10px;
-}
+.detail-listing-dt .infor-by-up {margin-top: 5px;}
 @media ( max-width: 985px ) {
     .select-duan .wrap-duan .select2 {
         padding-right: 0;
@@ -10644,7 +10637,7 @@ label:hover {
 }
 .left-attr-detail .id-duan {
     float: none;
-    margin: 0 0 10px 0;
+    margin: 0 0 14px 0;
 }
 .wrap-frm-listing select {
     border-radius: 0;
@@ -11173,4 +11166,27 @@ height: 190px;
 #listing-list > ul > li a:hover {
     color: inherit;
     background: #FBFBFB;
+}
+@media (max-width: 985px) {
+    #listing-list .pic-intro {
+        width: 100%;
+        height: 250px;
+        margin-bottom: 8px;
+    }
+    #listing-list > ul > li a {
+        padding: 0;
+        box-shadow: 0px 0px 10px #ABABAB;
+        -webkit-box-shadow: 0px 0px 10px #ABABAB;
+        -moz-box-shadow: 0px 0px 10px #ABABAB;
+        -ms-box-shadow: 0px 0px 10px #ABABAB;
+    }
+    #listing-list .info-item {
+        padding: 0 15px 15px;
+    }
+    #listing-list > ul > li {
+        margin-bottom: 30px;
+    }
+    #listing-list > ul {
+        margin: 0 -15px;
+    }
 }

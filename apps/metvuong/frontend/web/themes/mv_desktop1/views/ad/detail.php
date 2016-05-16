@@ -240,11 +240,8 @@ $count_review = $reviews->count();
 	                        } ?>
 						</ul>
 					</div>
-					<div class="overflow-all right-attr-detail">
-						<p class="price-td">
-							<?= Yii::t('ad', 'Price') ?><br>
-							<span><?= StringHelper::formatCurrency($product->price) ?></span>
-						</p>
+					<div class="pull-left mgT-10 right-attr-detail">
+						<p class="price-item"><?= Yii::t('ad', 'Price') ?><strong><?= StringHelper::formatCurrency($product->price) ?></strong></p>
 					</div>
 				</div>
 				<?=$this->renderAjax('/ad/_partials/shareEmail',[
