@@ -17,7 +17,7 @@ use yii\helpers\Html;
 ?>
 <p style="font-size: 13px;margin-bottom: 10px;"><?= Yii::t('user', 'Hello') ?>,</p>
 <p style="font-size: 13px;margin-bottom: 35px;line-height:20px;">
-    <?= Yii::t('user', 'We have received a request to change the email address for your account on {0}', Yii::$app->name) ?>.
+    <?= Yii::t('user', 'We have received a request to change the email address for your account on {0}', ['0' => Yii::$app->name]) ?>.
     <?= Yii::t('user', 'In order to complete your request, please click the link below') ?>.
 </p>
 <p style="font-size: 13px;margin-bottom: 35px;line-height:20px;">

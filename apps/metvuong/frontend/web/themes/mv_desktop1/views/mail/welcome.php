@@ -22,7 +22,7 @@ use yii\helpers\Html;
 <p style="font-size: 13px;margin-bottom: 10px;"><?= Yii::t('user', 'Hello') ?> <strong style="color: #222;font-size: 13px;"><?=$user->email?></strong>,</p>
 
 <p style="font-size: 13px;margin-bottom: 35px;line-height:20px">
-    <?= Yii::t('user', 'Your account on {0} has been created', Yii::$app->name) ?>.
+    <?= Yii::t('user', 'Your account on {0} has been created',['0' => Yii::$app->name]) ?>.
     <?php if ($showPassword || $module->enableGeneratingPassword): ?>
         <?= Yii::t('user', 'We have generated a password for you') ?>:
         <strong><?= $user->password ?></strong>

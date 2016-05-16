@@ -16,7 +16,7 @@
 ?>
 <?= Yii::t('user', 'Hello') ?>,
 
-<?= Yii::t('user', 'We have received a request to reset the password for your account on {0}', Yii::$app->name) ?>.
+<?= Yii::t('user', 'We have received a request to reset the password for your account on {0}', ['0' => Yii::$app->name]) ?>.
 <?= Yii::t('user', 'Please click the link below to complete your password reset') ?>.
 
 <?= $token->url ?>
