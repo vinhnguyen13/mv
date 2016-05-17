@@ -1266,7 +1266,8 @@ class BatdongsanV2 extends Component
                     continue;
                 }
 
-                $is_expired = $model->end_date > time() ? 0 : 1;
+//                $is_expired = $model->end_date > time() ? 0 : 1;
+                $is_expired = 0;
                 $record = [
                     'category_id' => $model->category_id,
                     'project_building_id' => empty($project_id) ? null : $project->id,
@@ -1292,7 +1293,7 @@ class BatdongsanV2 extends Component
                     'is_expired' => $is_expired
                 ];
                 $bulkInsertArray[] = $record;
-
+AdProduct::calcScore()
                 // tin hoat dong con ngay su dung
                 if($is_expired == 0) {
                     // update elastic counter - increment elastic
