@@ -20,7 +20,7 @@ Yii::t('news', 'Economy');
                 <div class="wrap-news col-xs-12 col-md-9">
                     <ul class="clearfix row list-news">
                         <?php foreach($news as $n) {
-                            $banner = "/store/news/show/".$n["banner"];
+                            $banner = "/store/news/show/".\vsoft\news\models\CmsShow::THUMB400x0.$n["banner"];
                             $checkBanner = file_exists(Yii::getAlias('@store')."/news/show/".$n["banner"]);
                             if($checkBanner == false)
                                 $banner = '/themes/metvuong2/resources/images/default-ads.jpg';

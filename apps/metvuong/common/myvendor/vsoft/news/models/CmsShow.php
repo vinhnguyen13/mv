@@ -11,6 +11,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\helpers\Url;
+use yii\image\drivers\Image;
 
 /**
  * This is the model class for table "cms_show".
@@ -39,6 +40,8 @@ use yii\helpers\Url;
  */
 class CmsShow extends \funson86\cms\models\CmsShow
 {
+    const THUMB400x0 = 'thumb400x0_';
+
     /**
      * @inheritdoc
      */
@@ -168,6 +171,16 @@ class CmsShow extends \funson86\cms\models\CmsShow
             $imgPath = Url::to( '/frontend/web/themes/metvuong2/resources/images/default-ads.jpg');// /frontend/web/themes/metvuong1/resources/images/default-ads.jpg
         }
         return $imgPath;
+    }
+
+    public static function saveThumbnail($filePath, $size){
+        $resource = \Yii::$app->image->load($filePath);
+        if($resource) {
+            $path = pathinfo($filePath);
+            $thumbPath = $path["dirname"]."/". CmsShow::THUMB400x0 . $path["basename"];
+            $resizingConstraints = ($resource->width > $resource->height) ? Image::HEIGHT : Image::WIDTH;
+            $resource->resize($size[0], $size[1], $resizingConstraints)->crop($size[0], $size[1])->save($thumbPath);
+        }
     }
 
 }
