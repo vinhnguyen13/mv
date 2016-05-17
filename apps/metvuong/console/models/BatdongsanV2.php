@@ -653,7 +653,7 @@ class BatdongsanV2 extends Component
         $columnNameArray = ['category_id', 'project_building_id', 'user_id', 'home_no',
             'city_id', 'district_id', 'ward_id', 'street_id',
             'type', 'content', 'area', 'price', 'price_type', 'lat', 'lng',
-            'start_date', 'end_date', 'verified', 'created_at', 'source', 'file_name'];
+            'start_date', 'end_date', 'verified', 'created_at', 'updated_at', 'source', 'file_name'];
         $bulkInsertArray = array();
         $imageArray = array();
         $infoArray = array();
@@ -773,6 +773,7 @@ class BatdongsanV2 extends Component
                                         'end_date' => $value[$filename]["end_date"],
                                         'verified' => 1,
                                         'created_at' => $value[$filename]["start_date"],
+                                        'updated_at' => $value[$filename]["start_date"],
                                         'source' => 1,
                                         'file_name' => $filename
                                     ];
@@ -1206,7 +1207,7 @@ class BatdongsanV2 extends Component
             $columnNameArray = ['category_id', 'project_building_id', 'user_id', 'home_no',
                 'city_id', 'district_id', 'ward_id', 'street_id',
                 'type', 'content', 'area', 'price', 'price_type', 'lat', 'lng',
-                'start_date', 'end_date', 'verified', 'created_at', 'source', 'status', 'is_expired'];
+                'start_date', 'end_date', 'verified', 'created_at', 'updated_at', 'source', 'status', 'is_expired'];
             $ad_image_columns = ['user_id', 'product_id', 'file_name', 'uploaded_at'];
             $ad_info_columns = ['product_id', 'facade_width', 'land_width', 'home_direction', 'facade_direction', 'floor_no', 'room_no', 'toilet_no', 'interior'];
             $ad_contact_columns = ['product_id', 'name', 'phone', 'mobile', 'address', 'email'];
@@ -1288,12 +1289,13 @@ class BatdongsanV2 extends Component
                     'end_date' => $model->end_date,
                     'verified' => 1,
                     'created_at' => $model->created_at,
+                    'updated_at' => $model->created_at,
                     'source' => $model->source,
                     'status' => 1,
                     'is_expired' => $is_expired
                 ];
                 $bulkInsertArray[] = $record;
-                
+
                 // tin hoat dong con ngay su dung
                 if($is_expired == 0) {
                     // update elastic counter - increment elastic
@@ -1406,6 +1408,8 @@ class BatdongsanV2 extends Component
                     if($imageCount > 0 && $infoCount > 0 && $contactCount > 0 && $ptmCount > 0) {
                         print_r("\nCopied {$insertCount} records to main database success.\n");
                     }
+
+//                    AdProduct::calcScore($bulkInsertArray[], $ad_info_columns, $ad_contact_columns, $ìno)
                 }
             }
         } else {
