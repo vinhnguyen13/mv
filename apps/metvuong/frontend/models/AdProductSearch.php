@@ -117,7 +117,7 @@ class AdProductSearch extends AdProduct {
 		}
 		
 		if($order) {
-			$sort = $this->order_by ? $this->order_by : '-created_at';
+			$sort = $this->order_by ? $this->order_by : '-updated_at';
 			$doa = 'ASC';
 			if(StringHelper::startsWith($sort, '-')) {
 				$sort = str_replace('-', '', $sort);

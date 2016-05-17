@@ -380,7 +380,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 						<div class="val-selected style-click clearfix">
 							<?php
 								$items = [
-									'-created_at' => Yii::t('ad', 'Newest'),
+									'-updated_at' => Yii::t('ad', 'Newest'),
 									'-price' =>Yii::t('ad', 'Price (High to Low)'),
 									'price' =>Yii::t('ad', 'Price (Low to Hight)'),
 								];
