@@ -121,7 +121,7 @@ use vsoft\ad\models\AdImages;
 								<?= Html::activeDropDownList($product, 'category_id', $categoriesDropDown, ['options' => $categoriesDropDownOptions, 'class' => 'form-control', 'prompt' => "..."]) ?>
 								<div class="help-block"></div>
 							</div>
-							<div class="form-group col-xs-12 col-sm-6 project-wrap<?= $product->projectBuilding ? ' has-project' : '' ?>"<?= $product->category_id == AdCategory::CATEGORY_CHCK ? '' : ' style="display: none;"' ?>>
+							<div class="form-group col-xs-12 project-wrap<?= $product->projectBuilding ? ' has-project' : '' ?>"<?= $product->category_id == AdCategory::CATEGORY_CHCK ? '' : ' style="display: none;"' ?>>
 								<label for="" class="fs-13 mgB-5"><?= $product->getAttributeLabel('project_building_id') ?></label>
 								<?= Html::activeHiddenInput($product, 'project_building_id') ?>
 								<input type="hidden" id="project-name" value="<?= $product->projectBuilding ? $product->projectBuilding->name : '' ?>" />
