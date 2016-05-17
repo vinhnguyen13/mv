@@ -504,12 +504,12 @@ use vsoft\ad\models\AdImages;
 							</div>
 						</div>
 						<ul>
-							<li data-id="type"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Loại tin') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> điểm</span></li>
-							<li data-id="address"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Địa chỉ') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> điểm</span></li>
-							<li data-id="info"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'General Information') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> điểm</span></li>
-							<li data-id="additionInfo"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Detail Information') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> điểm</span></li>
-							<li data-id="photo"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Hình ảnh') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> điểm</span></li>
-							<li data-id="contact"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Contact Information') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> điểm</span></li>
+							<li data-id="type"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Loại tin') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> <?= Yii::t('ad', 'điểm') ?></span></li>
+							<li data-id="address"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Địa chỉ') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> <?= Yii::t('ad', 'điểm') ?></span></li>
+							<li data-id="info"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'General Information') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> <?= Yii::t('ad', 'điểm') ?></span></li>
+							<li data-id="additionInfo"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Detail Information') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> <?= Yii::t('ad', 'điểm') ?></span></li>
+							<li data-id="photo"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Hình ảnh') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> <?= Yii::t('ad', 'điểm') ?></span></li>
+							<li data-id="contact"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Contact Information') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> <?= Yii::t('ad', 'điểm') ?></span></li>
 						</ul>
 						
 					</div>
