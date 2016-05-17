@@ -31,7 +31,7 @@ $types = AdProduct::getAdTypes();
 			</div>
 			<div class="info-item clearfix">
 				<p class="date-post"><?= Yii::t('statistic', 'Date of posting') ?>:
-					<strong><?= date("d/m/Y H:i", $product->created_at) ?></strong></p>
+					<strong><?= date("d/m/Y H:i", $product->updated_at) ?></strong></p>
 				<div class="address-listing">
 					<?= $product->getAddress($product->show_home_no) ?>
 				</div>
