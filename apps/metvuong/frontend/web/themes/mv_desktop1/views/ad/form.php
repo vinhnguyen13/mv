@@ -117,7 +117,8 @@ use vsoft\ad\models\AdImages;
 								<?= Html::activeDropDownList($product, 'type', $product->getAdTypes(), ['class' => 'form-control']) ?>
 							</div>
 							<div class="form-group col-xs-12 col-sm-6">
-								<label for="<?= Html::getInputId($product, 'category_id') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('category_id') ?><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">5</span>') ?></span></label>
+								<?php $catP = ($product->category_id == AdCategory::CATEGORY_CHCK) ? 2 : 5 ?>
+								<label for="<?= Html::getInputId($product, 'category_id') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('category_id') ?><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">' . $catP . '</span>') ?></span></label>
 								<?= Html::activeDropDownList($product, 'category_id', $categoriesDropDown, ['options' => $categoriesDropDownOptions, 'class' => 'form-control', 'prompt' => "..."]) ?>
 								<div class="help-block"></div>
 							</div>

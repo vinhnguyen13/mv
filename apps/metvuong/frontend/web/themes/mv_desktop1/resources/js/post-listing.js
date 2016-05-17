@@ -70,7 +70,7 @@ $(document).ready(function(){
 			pType += form.fields.type.val() ? form.getPoint(form.fields.type) : 0;
 			pType += form.fields.categoryId.val() ? form.getPoint(form.fields.categoryId) : 0;
 			pType += form.fields.projectBuildingId.val() ? form.getPoint(form.fields.projectBuildingId) : 0;
-			
+
 			if(pType) {
 				p += point.checkPoint('type', pType);
 			} else {
@@ -99,7 +99,7 @@ $(document).ready(function(){
 			infoP += form.fields.roomNo.val() ? form.getPoint(form.fields.roomNo) : 0;
 			infoP += form.fields.toiletNo.val() ? form.getPoint(form.fields.toiletNo) : 0;
 			
-			var words = form.fields.content.val().trim().split(' ');
+			var words = form.fields.content.val().trim().split(/\s+/);
 			
 			if(words.length >= 30) {
 				infoP += 15;
