@@ -1293,7 +1293,7 @@ class BatdongsanV2 extends Component
                     'is_expired' => $is_expired
                 ];
                 $bulkInsertArray[] = $record;
-AdProduct::calcScore()
+                
                 // tin hoat dong con ngay su dung
                 if($is_expired == 0) {
                     // update elastic counter - increment elastic
