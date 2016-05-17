@@ -153,7 +153,7 @@ $return =  [
                     'sourceMessageTable' => '{{%language_source}}',
                     'messageTable' => '{{%language_translate}}',
                     'cachingDuration' => 86400,
-                    'enableCaching' => false,
+                    'enableCaching' => true,
                 ],
                 'user*' => [
                     'class' => 'yii\i18n\DbMessageSource',
@@ -162,7 +162,7 @@ $return =  [
                     'sourceMessageTable' => '{{%language_source}}',
                     'messageTable' => '{{%language_translate}}',
                     'cachingDuration' => 86400,
-                    'enableCaching' => false,
+                    'enableCaching' => true,
                 ],
             ]
         ],
