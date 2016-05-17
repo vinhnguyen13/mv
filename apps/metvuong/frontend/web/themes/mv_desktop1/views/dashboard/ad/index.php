@@ -113,7 +113,7 @@ use yii\helpers\Url;
                     }
                 });
             }
-
+            return false;
         });
         $(document).on('click', '.btn-upgrade', function (e) {
             var product = $(this).attr('data-product');
