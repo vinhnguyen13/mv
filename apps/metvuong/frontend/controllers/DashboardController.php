@@ -159,6 +159,22 @@ class DashboardController extends Controller
         return false;
     }
 
+    public function actionUp()
+    {
+        if(Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $id = (int)Yii::$app->request->get("id");
+            $product = AdProduct::findOne($id);
+            if(!empty($product)){
+                if($product->updated_at/* < strtotime("-5 days")*/) {
+                    $product->updated_at = time();
+                    $product->save();
+                }
+                return $product->attributes;
+            }
+        }
+    }
+
     public function actionClickchart(){
         if(Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_HTML;

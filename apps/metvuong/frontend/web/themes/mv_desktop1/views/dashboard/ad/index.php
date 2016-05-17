@@ -99,7 +99,23 @@ use yii\helpers\Url;
          styleShow: 'center',
          closeBtn: '#nang-cap .btn-cancel, #nang-cap .btn-ok',
          });*/
-        $(document).on('click', '.btn-nang-cap', function (e) {
+        $(document).on('click', '.btn-up', function (e) {
+            var btn = $(this);
+            var product = btn.attr('data-product');
+            btn.html(lajax.t('Loading'));
+            if(product){
+                $.ajax({
+                    type: "get",
+                    dataType: 'json',
+                    url: '<?=Url::to(['dashboard/up'])?>?id=' + product,
+                    success: function (data) {
+                        btn.html(lajax.t('Up'));
+                    }
+                });
+            }
+
+        });
+        $(document).on('click', '.btn-upgrade', function (e) {
             var product = $(this).attr('data-product');
             $('#upgrade-time').find('.btn-ok').attr('data-product', product);
         });

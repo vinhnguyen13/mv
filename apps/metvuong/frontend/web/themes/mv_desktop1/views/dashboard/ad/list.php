@@ -90,8 +90,8 @@ $count_product = count($products);
                                         </p>
                                     <?php endif; ?>
                                 </div>
-                                <a href="#" data-product="<?=$product->id;?>" data-toggle="modal" data-target="#upgrade-time" class="btn-nang-cap mgL-10"><?= Yii::t('statistic', 'Up') ?></a>
-                                <a href="#" data-product="<?=$product->id;?>" data-toggle="modal" data-target="#upgrade-time" class="btn-nang-cap"><?= Yii::t('statistic', 'Upgrade') ?></a>
+                                <a href="javascript:;" data-product="<?=$product->id;?>" class="btn-nang-cap mgL-10 btn-up"><?= Yii::t('statistic', 'Up') ?></a>
+                                <a href="javascript:;" data-product="<?=$product->id;?>" data-toggle="modal" data-target="#upgrade-time" class="btn-nang-cap btn-upgrade"><?= Yii::t('statistic', 'Upgrade') ?></a>
                                 <div class="clearfix"></div>
                                 <a href="<?=$product->urlDetail(true)?>" class="see-detail-listing fs-13 font-600 color-cd-hover mgT-10"><span class="text-decor"><?=Yii::t('statistic', 'Go detail page')?></span><span class="icon-mv mgL-10"><span class="icon-angle-right"></span></span></a>
                             </div>
