@@ -64,44 +64,50 @@ $(document).ready(function(){
 		},
 		calc: function() {
 			var p = 0;
+
+			var pType = 0;
+
+			pType += form.fields.type.val() ? form.getPoint(form.fields.type) : 0;
+			pType += form.fields.categoryId.val() ? form.getPoint(form.fields.categoryId) : 0;
+			pType += form.fields.projectBuildingId.val() ? form.getPoint(form.fields.projectBuildingId) : 0;
 			
-			if(form.fields.categoryId.val()) {
-				p += point.checkPoint('type', 10);
+			if(pType) {
+				p += point.checkPoint('type', pType);
 			} else {
 				point.uncheckPoint('type');
 			}
 			
 			var addressPoint = 0;
 			
-			if(form.fields.cityId.val() && form.fields.districtId.val() && form.fields.wardId.val() && form.fields.streetId.val()) {
-				addressPoint += 8;
-				
-				if(typeof excludeFields[form.fields.categoryId.val()] !== 'undefined') {
-					addressPoint += 7;
-				}
-			}
+			addressPoint += form.fields.cityId.val() ? form.getPoint(form.fields.cityId) : 0;
+			addressPoint += form.fields.districtId.val() ? form.getPoint(form.fields.districtId) : 0;
+			addressPoint += form.fields.wardId.val() ? form.getPoint(form.fields.wardId) : 0;
+			addressPoint += form.fields.streetId.val() ? form.getPoint(form.fields.streetId) : 0;
+			addressPoint += form.fields.homeNo.val() ? form.getPoint(form.fields.homeNo) : 0;
 			
-			if(typeof excludeFields[form.fields.categoryId.val()] === 'undefined') {
-				if(form.fields.homeNo.val()) {
-					addressPoint += 2;
-				}
-
-				if(form.fields.homeNo.val() && form.fields.showHomeNo.prop('checked')) {
-					addressPoint += 5;
-				}
-			}
-			console.log(addressPoint);
 			if(addressPoint) {
 				p += point.checkPoint('address', addressPoint);
 			} else {
 				point.uncheckPoint('address');
 			}
 			
+			
 			var infoP = 0;
 			
-			infoP += form.fields.area.val() ? 5 : 0;
-			infoP += form.fields.priceMask.val() ? 5 : 0;
-			infoP += (form.fields.content.val().length > 30) ? 10 : 0;
+			infoP += form.fields.area.val() ? form.getPoint(form.fields.area) : 0;
+			infoP += form.fields.priceMask.val() ? form.getPoint(form.fields.priceMask) : 0;
+			infoP += form.fields.roomNo.val() ? form.getPoint(form.fields.roomNo) : 0;
+			infoP += form.fields.toiletNo.val() ? form.getPoint(form.fields.toiletNo) : 0;
+			
+			var words = form.fields.content.val().trim().split(' ');
+			
+			if(words.length >= 30) {
+				infoP += 15;
+			} else if(words.length >= 20) {
+				infoP += 10;
+			} else if(words.length >= 10) {
+				infoP += 5;
+			}
 			
 			if(infoP) {
 				p += point.checkPoint('info', infoP);
@@ -111,16 +117,15 @@ $(document).ready(function(){
 			
 			var additionP = 0;
 			
-			additionP += (form.fields.roomNo.val()) ? 4 : 0;
-			additionP += (form.fields.toiletNo.val()) ? 4 : 0;
-			additionP += (form.fields.floorNo.val()) ? 4 : 0;
+			additionP += (form.fields.floorNo.val()) ? form.getPoint(form.fields.floorNo) : 0;
+			additionP += (form.fields.facadeWidth.val()) ? form.getPoint(form.fields.facadeWidth) : 0;
+			additionP += (form.fields.landWidth.val()) ? form.getPoint(form.fields.landWidth) : 0;
+			additionP += (form.fields.homeDirection.val()) ? form.getPoint(form.fields.homeDirection) : 0;
+			additionP += (form.fields.facadeDirection.val()) ? form.getPoint(form.fields.facadeDirection) : 0;
 			
-			additionP += (form.fields.facadeWidth.val()) ? 3 : 0;
-			additionP += (form.fields.landWidth.val()) ? 3 : 0;
-			additionP += (form.fields.homeDirection.val() && form.fields.homeDirection.val() != '0') ? 3 : 0;
-			additionP += (form.fields.facadeDirection.val() && form.fields.facadeDirection.val() != '0') ? 3 : 0;
-			additionP += (form.fields.interior.val()) ? 3 : 0;
-			additionP += ($('.tienich-frm input').filter(':checked').length) ? 3 : 0;
+			var facilityP = $('.tienich-frm input').filter(':checked').length;
+			
+			additionP += (facilityP > 5) ? 5 : facilityP;
 			
 			if(additionP) {
 				p += point.checkPoint('additionInfo', additionP);
@@ -131,14 +136,10 @@ $(document).ready(function(){
 			var totalImage = form.files.children().length;
 			var imageP = 0;
 			
-			if(totalImage >= 10) {
-				imageP += 15;
-			} else if(totalImage >= 7) {
-				imageP += 12;
-			} else if(totalImage >= 4) {
-				imageP += 8;
+			if(totalImage > 2) {
+				imageP += 10;
 			} else if(totalImage > 0) {
-				imageP += 4;
+				imageP += 5;
 			}
 			
 			if(imageP > 0) {
@@ -147,11 +148,13 @@ $(document).ready(function(){
 				point.uncheckPoint('photo');
 			}
 			
-			if(form.fields.name.val() && form.fields.email.val() && form.fields.mobile.val()) {
-				p += point.checkPoint('contact', 10);
-			} else {
-				point.uncheckPoint('contact');
-			}
+			var contactP = 5;
+			
+			contactP += (form.fields.name.val()) ? form.getPoint(form.fields.name) : 0;
+			contactP += (form.fields.email.val()) ? form.getPoint(form.fields.email) : 0;
+			contactP += (form.fields.mobile.val()) ? form.getPoint(form.fields.mobile) : 0;
+			
+			p += point.checkPoint('contact', contactP);
 				
 			point.update(p);
 		}
@@ -166,6 +169,26 @@ $(document).ready(function(){
 				
 				if(self.attr('id')) {
 					form.fields[camel(self.attr('id'))] = self;
+				}
+			});
+			
+
+			form.fields.categoryId.on('change', function(){
+				var self = $(this);
+				var val = self.val();
+				
+				if(val == CHCK) {
+					form.getWrap(self).find('.point').text(2);
+					form.getWrap(form.fields.projectBuildingId).find('.point').text(3);
+				} else {
+					form.getWrap(self).find('.point').text(5);
+					form.getWrap(form.fields.projectBuildingId).find('.point').text(0);
+				}
+				
+				if(excludeFields[val]) {
+					for(var i in excludeFields[val]) {
+						form.fields[excludeFields[val][i]].val('');
+					}
 				}
 			});
 			
@@ -811,6 +834,9 @@ $(document).ready(function(){
 		validateEmail: function (email) { 
 			var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 			return re.test(email);
+		},
+		getPoint: function(el) {
+			return Number(form.getWrap(el).find('.point').text());
 		}
 	};
 	
