@@ -100,8 +100,8 @@ use vsoft\ad\models\AdImages;
 				<?php if(!isset($_COOKIE['cpl'])): ?>
 				<div class="alert alert-success alert-dismissible" role="alert">
 					<a href="#" class="font-700 fs-14 color-cd-hover close-alert"><span class="icon-mv fs-12"><span class="icon-close-icon"></span></span></a>
-					<h2>METVUONG khuyến khích các tin rao chất lượng</h2>
-					<p>Quý vị nhập thông tin chi tiết càng nhiều, thì tin rao này sẽ hiển thị lên kết quả tìm kiếm nhiều hơn và sẽ có nhiều khách hàng liên lạc hơn.</p>
+					<h2><?= Yii::t('ad', 'METVUONG khuyến khích các tin rao chất lượng') ?></h2>
+					<p><?= Yii::t('ad', 'Quý vị nhập thông tin chi tiết càng nhiều, thì tin rao này sẽ hiển thị lên kết quả tìm kiếm nhiều hơn và sẽ có nhiều khách hàng liên lạc hơn.') ?></p>
 				</div>
 				<?php endif; ?>
 				<?php $form = ActiveForm::begin([
