@@ -167,7 +167,7 @@ use vsoft\ad\models\AdImages;
 						</div>
 					</div>
 					<div class="group-frm">
-						<div class="title-frm"><?= Yii::t('ad', 'General Information') ?> <span class="pdL-10">+35 điểm</span></div>
+						<div class="title-frm"><?= Yii::t('ad', 'General Information') ?> <span class="pdL-10"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="max-point">35</span>') ?></span></div>
 						<div class="row">
 							<div class="form-group col-xs-12 col-sm-6">
 								<label for="<?= Html::getInputId($product, 'area') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('area') ?> (m2)<span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">5</span>') ?></span></label>
@@ -208,7 +208,7 @@ use vsoft\ad\models\AdImages;
 						</div>
 					</div>
 					<div class="group-frm">
-						<div class="title-frm"><?= Yii::t('ad', 'Detail Information') ?> <span class="pdL-10">+15 điểm</span></div>
+						<div class="title-frm"><?= Yii::t('ad', 'Detail Information') ?> <span class="pdL-10"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="max-point">15</span>') ?></span></div>
 						<div class="row">
 							<div class="form-group col-xs-12 col-sm-4">
 								<label for="<?= Html::getInputId($additionInfo, 'floor_no') ?>" class="fs-13 mgB-5"><?= $additionInfo->getAttributeLabel('floor_no') ?><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">2</span>') ?></span></label>
@@ -256,7 +256,7 @@ use vsoft\ad\models\AdImages;
 						</div>
 					</div>
 					<div class="group-frm clearfix">
-						<div class="title-frm"><?= Yii::t('ad', 'Hình ảnh') ?> <span class="pdL-10">3-15 điểm</span></div>
+						<div class="title-frm"><?= Yii::t('ad', 'Hình ảnh') ?> <span class="pdL-10"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="max-point">10</span>') ?></span></div>
 						<label for="" class="fs-13 mgB-5">Tải hình ảnh dư án<span class="hint"><?= Yii::t('ad', '1-2 ảnh(+5), 3 ảnh trở lên(+10)') ?></span></label>
 						<div class="upload-img-listing">
 							<span id="upload-hint"><?= Yii::t('ad', 'Change the position of images by dragging the image into the right position you want!') ?></span>
@@ -291,7 +291,7 @@ use vsoft\ad\models\AdImages;
 						</div>
 					</div>
 					<div class="group-frm">
-						<div class="title-frm"><?= Yii::t('ad', 'Contact Information') ?> <span class="pdL-10">10 điểm</span></div>
+						<div class="title-frm"><?= Yii::t('ad', 'Contact Information') ?> <span class="pdL-10"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="max-point">20</span>') ?></span></div>
 						<div class="clearfix agent-postlisting">
 							<div class="fs-13 row">
 								<div class="form-group col-xs-12 col-sm-6">
