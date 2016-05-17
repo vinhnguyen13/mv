@@ -84,14 +84,13 @@ $count_product = count($products);
                                             </div>
                                             <strong><?= Yii::t('statistic', 'Active Project') ?></strong>
                                         </div>
+                                        <?php $day_number = !empty($product->expired && $product->expired > 0) ? $product->expired : 0; ?>
+                                        <p class="expired"><?= Yii::t('statistic', 'Expired in the last') ?>
+                                            <strong><?= $day_number > 1 ? $day_number . " " . Yii::t('statistic', 'days') : $day_number . " " . Yii::t('statistic', 'day') ?></strong>
+                                        </p>
                                     <?php endif; ?>
                                 </div>
-                                <?php if ($product->is_expired <= 0) {
-                                    $day_number = $product->expired; ?>
-                                    <p class="expired"><?= Yii::t('statistic', 'Expired in the last') ?>
-                                        <strong><?= $day_number > 1 ? $day_number . " " . Yii::t('statistic', 'days') : $day_number . " " . Yii::t('statistic', 'day') ?></strong>
-                                    </p>
-                                <?php } ?>
+                                <a href="#" data-product="<?=$product->id;?>" data-toggle="modal" data-target="#upgrade-time" class="btn-nang-cap"><?= Yii::t('statistic', 'Up') ?></a>
                                 <a href="#" data-product="<?=$product->id;?>" data-toggle="modal" data-target="#upgrade-time" class="btn-nang-cap"><?= Yii::t('statistic', 'Upgrade') ?></a>
                                 <div class="clearfix"></div>
                                 <a href="<?=$product->urlDetail(true)?>" class="see-detail-listing fs-13 font-600 color-cd-hover mgT-10"><span class="text-decor"><?=Yii::t('statistic', 'Go detail page')?></span><span class="icon-mv mgL-10"><span class="icon-angle-right"></span></span></a>
