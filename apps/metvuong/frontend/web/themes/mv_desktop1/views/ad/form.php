@@ -74,7 +74,7 @@ use vsoft\ad\models\AdImages;
 ?>
 <div class="title-fixed-wrap container">
 	<div class="post-listing">
-		<div class="title-top">Post Listing</div>
+		<div class="title-top"><?= Yii::t('ad', 'Post Listing') ?></div>
 		<div id="success-notify" class="hide">
 			<?php if($product->isNewRecord): ?>
 				<div class="color-cd fs-20 font-600 mgB-15 text-uper"><?= Yii::t('ad', 'Đăng tin thành công') ?></div>
