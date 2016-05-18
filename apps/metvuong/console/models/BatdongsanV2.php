@@ -1190,12 +1190,14 @@ class BatdongsanV2 extends Component
 
     public function copyToMainDB($price, $build){
         $begin = time();
-        $models = \vsoft\craw\models\AdProduct::find()->where(['not', ['file_name' => null]]);
+        $models = \vsoft\craw\models\AdProduct::find()
+            ->where(['not', ['file_name' => null]])
+            ->andWhere(['product_main_id' => 0]);
 
-        $product_tool_ids = AdProductToolMap::find()->select(['product_tool_id'])->all();
-        $product_tool_ids = ArrayHelper::getColumn($product_tool_ids, 'product_tool_id');
-        if(count($product_tool_ids) > 0)
-            $models = $models->where(['not in', 'id', $product_tool_ids]);
+//        $product_tool_ids = AdProductToolMap::find()->select(['product_tool_id'])->all();
+//        $product_tool_ids = ArrayHelper::getColumn($product_tool_ids, 'product_tool_id');
+//        if(count($product_tool_ids) > 0)
+//            $models = $models->where(['not in', 'id', $product_tool_ids]);
 
         if($price == "price=1")
             $models = $models->andWhere(['price_type' => 1]);
@@ -1207,11 +1209,12 @@ class BatdongsanV2 extends Component
             $columnNameArray = ['category_id', 'project_building_id', 'user_id', 'home_no',
                 'city_id', 'district_id', 'ward_id', 'street_id',
                 'type', 'content', 'area', 'price', 'price_type', 'lat', 'lng',
-                'start_date', 'end_date', 'verified', 'created_at', 'updated_at', 'source', 'status', 'is_expired'];
+                'start_date', 'end_date', 'verified', 'created_at', 'updated_at', 'source', 'status',
+                'is_expired'];
             $ad_image_columns = ['user_id', 'product_id', 'file_name', 'uploaded_at'];
             $ad_info_columns = ['product_id', 'facade_width', 'land_width', 'home_direction', 'facade_direction', 'floor_no', 'room_no', 'toilet_no', 'interior'];
             $ad_contact_columns = ['product_id', 'name', 'phone', 'mobile', 'address', 'email'];
-            $ad_product_tool_map_columns = ['product_main_id', 'product_tool_id'];
+//            $ad_product_tool_map_columns = ['product_main_id', 'product_tool_id'];
 
             $imageArray = array();
             $infoArray = array();
@@ -1222,7 +1225,7 @@ class BatdongsanV2 extends Component
             $bulkImage = array();
             $bulkInfo = array();
             $bulkContact = array();
-            $bulkProductToolMap = array();
+//            $bulkProductToolMap = array();
 
             $city_id = null;
             $district_id = null;
@@ -1314,11 +1317,7 @@ class BatdongsanV2 extends Component
                         AdProduct::updateElasticCounter('project_building', $record['project_building_id'], $totalType);
                     }
                 }
-//                else {
-//                    $dateEnd = date('d-m-Y', $model->end_date);
-//                    print_r(" -> Expired({$dateEnd})");
-//                }
-            }
+            } // end foreach models
 
             $countBulkProduct = count($bulkInsertArray);
             if ($countBulkProduct > 0) {
@@ -1370,13 +1369,17 @@ class BatdongsanV2 extends Component
                             $bulkContact[] = $contactRecord;
                         }
 
-                        if (count($productToolMaps) > 0 && isset($productToolMaps[$index])) {
-                            $ptmRecord = [
-                                'product_main_id' => $i,
-                                'product_tool_id' => $productToolMaps[$index]
-                            ];
-                            $bulkProductToolMap[] = $ptmRecord;
-                        }
+//                        if (count($productToolMaps) > 0 && isset($productToolMaps[$index])) {
+//                            $ptmRecord = [
+//                                'product_main_id' => $i,
+//                                'product_tool_id' => $productToolMaps[$index]
+//                            ];
+//                            $bulkProductToolMap[] = $ptmRecord;
+//                        }
+                        // update product_main_id from DB Main Product ID
+                        $crawl_product = \vsoft\craw\models\AdProduct::findOne($productToolMaps[$index]);
+                        $crawl_product->product_main_id = $i;
+                        $crawl_product->update(false);
 
                         $index = $index + 1;
                     }
@@ -1399,13 +1402,13 @@ class BatdongsanV2 extends Component
                     }
 
                     // update product tool map
-                    if (count($bulkProductToolMap) > 0) {
-                        $ptmCount = AdProductToolMap::getDb()->createCommand()
-                            ->batchInsert(AdProductToolMap::tableName(), $ad_product_tool_map_columns, $bulkProductToolMap)
-                            ->execute();
-                    }
+//                    if (count($bulkProductToolMap) > 0) {
+//                        $ptmCount = AdProductToolMap::getDb()->createCommand()
+//                            ->batchInsert(AdProductToolMap::tableName(), $ad_product_tool_map_columns, $bulkProductToolMap)
+//                            ->execute();
+//                    }
 
-                    if($imageCount > 0 && $infoCount > 0 && $contactCount > 0 && $ptmCount > 0) {
+                    if($imageCount > 0 && $infoCount > 0 && $contactCount > 0) {
                         print_r("\nCopied {$insertCount} records to main database success.\n");
                     }
 

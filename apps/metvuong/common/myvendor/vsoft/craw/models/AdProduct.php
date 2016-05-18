@@ -75,7 +75,7 @@ class AdProduct extends AP
     public function rules()
     {
         return [
-            [['category_id', 'project_building_id', 'user_id', 'city_id', 'district_id', 'ward_id', 'street_id', 'type', 'price', 'price_type', 'start_date', 'end_date', 'score', 'view', 'verified', 'created_at', 'updated_at', 'status', 'source'], 'integer'],
+            [['category_id', 'project_building_id', 'user_id', 'city_id', 'district_id', 'ward_id', 'street_id', 'type', 'price', 'price_type', 'start_date', 'end_date', 'score', 'view', 'verified', 'created_at', 'updated_at', 'status', 'source', 'product_main_id'], 'integer'],
             [['area', 'price_input', 'lng', 'lat', 'rating'], 'number'],
             [['home_no'], 'string', 'max' => 32],
             [['content'], 'string', 'max' => 3200]
@@ -132,6 +132,7 @@ class AdProduct extends AP
             'status' => 'Status',
             'source' => 'Source',
             'rating' => 'Rating',
+            'product_main_id' => 'Main ID',
         ];
     }
 
