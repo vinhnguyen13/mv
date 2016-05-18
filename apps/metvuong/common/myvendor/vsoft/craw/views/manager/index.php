@@ -153,6 +153,7 @@ $projectList = ArrayHelper::map(\vsoft\craw\models\AdBuildingProject::find()->wh
     	'formatter' => ['class' => 'yii\i18n\Formatter','nullDisplay' => '<span style="color: red; font-style: italic;">[null]</span>'],
     	'summary' => '<div class="summary">Hiển thị <b>{begin}-{end}</b> của <b>{totalCount}</b> tin.</div><div id="filter-column" style="clear: both;"></div>',
         'columns' => [
+            'id',
 			['attribute' => 'category_id', 'value' => 'category.name', 'filter' => Html::activeDropDownList($filterModel, 'category_id', ArrayHelper::map(AdCategory::find()->all(), 'id', 'name'), ['class' => 'form-control', 'prompt' => 'Chọn loại tin'])],
 			['format' => 'raw', 'attribute' => 'content', 'value' => function($model) { return $model->content ? mb_substr($model->content, 0, 20, 'UTF-8') . '...' : '<span style="color: red; font-style: italic;">[null]</span>'; },
 				'filter' => Html::activeDropDownList($filterModel, 'content', ['1' => 'Có', '2' => 'Không'], ['class' => 'form-control', 'prompt' => 'Tất cả'])
