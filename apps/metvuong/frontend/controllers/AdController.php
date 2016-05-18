@@ -399,7 +399,7 @@ class AdController extends Controller
     		if($product->validate() && $additionInfo->validate() && $contactInfo->validate()) {
     			$product->user_id = Yii::$app->user->id;
     			$totalImage = empty($post['images']) ? 0 : count($post['images']);
-    			$product->score = AdProduct::calcScore($product, $additionInfo, $contactInfo, $post['images']);
+    			$product->score = AdProduct::calcScore($product, $additionInfo, $contactInfo, $totalImage);
     			$product->save(false);
     			
     			$additionInfo->product_id = $product->id;
