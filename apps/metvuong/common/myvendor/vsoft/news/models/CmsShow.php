@@ -161,15 +161,15 @@ class CmsShow extends \funson86\cms\models\CmsShow
     }
 
     public static function getBanner($banner){
-        $imgPath = Url::to("/frontend/web/themes/mv_desktop1/resources/images/default-ads.jpg");
+        $imgPath = Url::to("/frontend/web/themes/mv_desktop1/resources/images/default-ads.jpg", true);
         if($banner) {
             $checkThumbFile = file_exists(Yii::getAlias('@store')."/news/show/".CmsShow::THUMB400x0.$banner);
             if($checkThumbFile)
-                $imgPath = Url::to('/store/news/show/'.CmsShow::THUMB400x0.$banner);
+                $imgPath = Url::to('/store/news/show/'.CmsShow::THUMB400x0.$banner, true);
             else {
                 $checkFile = file_exists(Yii::getAlias('@store')."/news/show/".$banner);
                 if($checkFile)
-                    $imgPath = Url::to('/store/news/show/'.$banner);
+                    $imgPath = Url::to('/store/news/show/'.$banner, true);
             }
 
         }
