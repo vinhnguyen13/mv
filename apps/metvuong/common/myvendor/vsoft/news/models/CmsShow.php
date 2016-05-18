@@ -160,15 +160,18 @@ class CmsShow extends \funson86\cms\models\CmsShow
         return $news;
     }
 
-    public static function getBanner($id){
-        $model = CmsShow::findOne($id);
-        $imgPath = Url::to("/frontend/web/themes/metvuong2/resources/images/default-ads.jpg");
-        if($model->banner) {
-            $checkFile = file_exists(Yii::getAlias('@store')."/news/show/".$model->banner);
-            if($checkFile)
-                $imgPath = Url::to('/store/news/show/' . $model->banner);
-        } else {
-            $imgPath = Url::to( '/frontend/web/themes/metvuong2/resources/images/default-ads.jpg');// /frontend/web/themes/metvuong1/resources/images/default-ads.jpg
+    public static function getBanner($banner){
+        $imgPath = Url::to("/frontend/web/themes/mv_desktop1/resources/images/default-ads.jpg");
+        if($banner) {
+            $checkThumbFile = file_exists(Yii::getAlias('@store')."/news/show/".CmsShow::THUMB400x0.$banner);
+            if($checkThumbFile)
+                $imgPath = Url::to('/store/news/show/'.CmsShow::THUMB400x0.$banner);
+            else {
+                $checkFile = file_exists(Yii::getAlias('@store')."/news/show/".$banner);
+                if($checkFile)
+                    $imgPath = Url::to('/store/news/show/'.$banner);
+            }
+
         }
         return $imgPath;
     }
