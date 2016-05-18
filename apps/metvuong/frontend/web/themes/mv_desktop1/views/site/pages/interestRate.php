@@ -10,10 +10,10 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 ?>
 <script type="text/javascript">var base_url = '<?=\yii\helpers\Url::home()?>';</script>
 
-<div class="title-fixed-wrap">
+<div class="title-fixed-wrap container">
     <div class="tool-cacu">
         <div class="news_blocks_contain">
-            <div class="tool-hdr"> Tính lãi suất vay vốn </div>
+            <div class="title-top"> Tính lãi suất vay vốn </div>
             <div class="sum"> Cho phép bạn tính toán tiền tiết kiệm khi gửi một số tiền theo một kỳ hạn nhất định và so sánh lãi suất, tiền được hưởng giữa các ngân hàng </div>
             <table class="funding-tbl">
                 <tbody id="thongTinVayVon">

@@ -1,7 +1,7 @@
 <?php
 $themeBaseUrl = Yii::$app->view->theme->baseUrl;
 ?>
-<div class="title-fixed-wrap">
+<div class="title-fixed-wrap container">
 	<div class="page-about-us">
 		<div class="title-top">VỀ CHÚNG TÔI</div>
 		<div class="inner-page">
