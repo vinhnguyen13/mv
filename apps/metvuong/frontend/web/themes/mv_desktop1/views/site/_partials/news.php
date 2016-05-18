@@ -19,7 +19,7 @@ $news = CmsShow::getLatestNews(4);
                 <div class="item clearfix">
                     <a class="rippler rippler-default" href="<?= Url::to(['news/view', 'id' => $n['id'], 'slug' => $n['slug']], true) ?>" title="<?=$n['title']?>">
                         <div class="wrap-img-news">
-                            <img src="<?=Url::to('/store/news/show/' .CmsShow::THUMB400x0. $n['banner']) ?>" alt="<?=$n['title']?>">
+                            <img src="<?=Url::to('/store/news/show/' . $n['banner']) ?>" alt="<?=$n['title']?>">
                         </div>
                         <span class="txt-short-news">
                             <span class="title-news color-30a868" title="<?=$n['title']?>"><?=StringHelper::truncate($n['title'], 60)?></span>
