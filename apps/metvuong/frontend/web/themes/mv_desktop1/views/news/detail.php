@@ -27,6 +27,10 @@ Yii::$app->view->registerMetaTag([
 ]);
 
 Yii::$app->view->registerMetaTag([
+    'property' => 'og:site_name',
+    'content' => Yii::$app->name
+]);
+Yii::$app->view->registerMetaTag([
     'property' => 'og:title',
     'content' => $news["title"]
 ]);
@@ -40,7 +44,7 @@ Yii::$app->view->registerMetaTag([
 ]);
 Yii::$app->view->registerMetaTag([
     'property' => 'og:image',
-    'content' => Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'.\vsoft\news\models\CmsShow::THUMB400x0. $news["banner"])
+    'content' => Yii::$app->urlManager->createAbsoluteUrl(\vsoft\news\models\CmsShow::getBanner($news["banner"]))
 ]);
 
 Yii::$app->view->registerMetaTag([
