@@ -748,6 +748,8 @@ margin-top: 12px;
     font-size: 14px;
     text-align: left;
     line-height: 18px;
+    min-width: 150px;
+    float: left;
 }
 .infor-agent .wrap-img {
     display: block;
@@ -4012,6 +4014,7 @@ html.mm-opening .mm-slideout {
 }
 .list-attr-td {
     margin-bottom: 10px;
+    height: 21px; /*fix firefox*/
 }
 .price-item {
     text-transform: uppercase;
@@ -10272,6 +10275,7 @@ label:hover {
 }
 .wrap-swiper .icons-detail .popover {
     max-width: inherit;
+    min-width: 300px;
 }
 .wrap-swiper .icons-detail .popover a {
     background: none;
@@ -10287,13 +10291,14 @@ label:hover {
     display: block;
     background: #00a769;
     color: #fff;
-    padding: 10px 30px;
+    padding: 10px 0;
     font-size: 13px;
     text-align: center;
     font-weight: 600;
     margin: 0 10px 0 0;
     float: left;
     border: none;
+    width: 43%;
 }
 .wrap-swiper .icons-detail .popover .infor-agent {
     margin-bottom: 0;
@@ -10755,7 +10760,7 @@ label:hover {
 }
 .upload-img-listing .files li > div {
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
     width: 100%;
     font-size: 11px;
@@ -10764,8 +10769,8 @@ label:hover {
     white-space: -pre-wrap;     /* Opera <7 */
     white-space: -o-pre-wrap;   /* Opera 7 */
     word-wrap: break-word;      /* IE */
-    height: 100%;
-    padding: 25px 5px 0 5px;
+    /* height: 100%; */
+    /* padding: 25px 5px 0 5px; */
     overflow: hidden;
 }
 .upload-img-listing .progress {
