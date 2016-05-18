@@ -148,7 +148,7 @@ use yii\helpers\Url;
 </div>
 
 <script>
-    $(document).on('click', '.send_mail', function(e){
+    $(document).on('click', '.send_mail,.send_mail_bottom', function(e){
         e.preventDefault();
 //        var _this = $(this);
         var recipient_email = $('#share_form .recipient_email').val();
@@ -188,7 +188,7 @@ use yii\helpers\Url;
         return false;
     });
 
-    $(document).on('click', '.send_mail_bottom', function(e){
+    /*$(document).on('click', '.send_mail_bottom', function(e){
         e.preventDefault();
 //        var _this = $(this);
         var recipient_email = $('#share_form .recipient_email').val();
@@ -226,6 +226,6 @@ use yii\helpers\Url;
             });
         }
         return false;
-    });
+    });*/
 
 </script>
