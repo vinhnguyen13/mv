@@ -46,8 +46,8 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                 </div>
                 <div class="box-edit-show wrap-attr-detail clearfix">
                     <div class="posi_absolute btn-mani">
-                        <a href="#" class="done-profile btn-common">Xong</a>    
-                        <a href="#" class="cancel-profile btn-common btn-cancel">Hủy</a>    
+                        <a href="#" class="done-profile btn-common"><?= Yii::t('user', 'Xong') ?></a>    
+                        <a href="#" class="cancel-profile btn-common btn-cancel"><?= Yii::t('user', 'Hủy') ?></a>    
                     </div>
                     <div class="avatar wrap-img pull-left mgR-15 text-center">
                         <img class="mgB-10" id="profileAvatar" src="<?=$model->avatar?>" alt="metvuong avatar" />

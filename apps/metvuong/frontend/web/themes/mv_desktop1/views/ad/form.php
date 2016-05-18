@@ -257,7 +257,7 @@ use vsoft\ad\models\AdImages;
 					</div>
 					<div class="group-frm clearfix">
 						<div class="title-frm"><?= Yii::t('ad', 'Hình ảnh') ?> <span class="pdL-10"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="max-point">10</span>') ?></span></div>
-						<label for="" class="fs-13 mgB-5">Tải hình ảnh dư án<span class="hint"><?= Yii::t('ad', '1-2 ảnh(+5), 3 ảnh trở lên(+10)') ?></span></label>
+						<label for="" class="fs-13 mgB-5"><?= Yii::t('ad', 'Tải hình ảnh') ?><span class="hint"><?= Yii::t('ad', '1-2 ảnh(+5), 3 ảnh trở lên(+10)') ?></span></label>
 						<div class="upload-img-listing">
 							<span id="upload-hint"><?= Yii::t('ad', 'Change the position of images by dragging the image into the right position you want!') ?></span>
 							<?php

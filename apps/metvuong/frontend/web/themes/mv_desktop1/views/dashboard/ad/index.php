@@ -9,8 +9,8 @@ use yii\helpers\Url;
         <?php if($total <= 0){?>
             <div class="no-duan">
                 <div>
-                    <p>Hiện tại, bạn không có tin đăng nào.</p>
-                    <a href="<?= Url::to(['/ad/post']) ?>" class="btn-common">Đăng Dự Án</a>
+                    <p><?= Yii::t('ad', 'Hiện tại, bạn không có tin đăng nào.') ?></p>
+                    <a href="<?= Url::to(['/ad/post']) ?>" class="btn-common"><?= Yii::t('ad', 'Đăng Dự Án') ?></a>
                 </div>
             </div>
         <?php } else { ?>
