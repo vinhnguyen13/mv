@@ -44,7 +44,7 @@ $user = Yii::$app->user->identity;
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" data-toggle="modal" data-target="#popup_email_share" class="email-btn">
+                                    <a href="#" data-toggle="modal" data-target="#popup_email" data-type="share" class="email-btn">
                                         <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
                                     </a>
                                 </li>
@@ -66,7 +66,7 @@ echo $this->renderAjax('/ad/_partials/shareEmail',[
     'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
     'recipientEmail' => null,
     'params' => ['your_email' => false, 'recipient_email' => true] ]);
-} else {
+} else if(isset($project) && !empty($project)){
     echo $this->renderAjax('/ad/_partials/shareEmail',[
         'popup_email_name' => 'popup_email_share',
         'project' => $project,

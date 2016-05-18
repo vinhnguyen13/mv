@@ -1,0 +1,166 @@
+#mm-0 {
+	position: static;
+}
+header.mm-slideout {
+	z-index: 999;
+}
+
+.has-error .help-block {
+	display: block;
+}
+
+.help-block {
+	display: none;
+}
+
+#w0 .fileinput-button:active {
+	box-shadow: none;
+}
+
+#w0 .upload-img-listing .progress {
+	bottom: 0px;
+}
+
+#w0 canvas {
+	vertical-align: middle;
+}
+
+#upload-hint {
+	display: none;
+	position: absolute;
+	top: -4px;
+	left: 10px;
+}
+
+.has-error .select2-container--default .select2-selection--single {
+	border-color: #a94442;
+}
+
+.has-project #projectMask {
+	display: none;
+}
+
+.has-project #project-value {
+	display: block;
+}
+
+#project-value .icon-mv {
+	float: right
+}
+
+#project-value .name {
+	display: block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding-right: 10px;
+	font-size: 13px;
+}
+
+#project-value {
+	display: none;
+	background-color: #e4e4e4;
+	border: 1px solid #aaa;
+	padding: 0 5px;
+	line-height: 31px;
+}
+
+#search-list ul li:hover {
+	background: rgba(0, 167, 105, 0.2);
+}
+
+#search-list ul li {
+	padding: 4px 8px;
+	font-size: 14px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	cursor: pointer;
+}
+
+#search-list ul {
+	background: #FFF;
+	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.26);
+	border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+#search-list {
+	position: absolute;
+	z-index: 1;
+	padding-right: 40px;
+	width: 100%;
+}
+
+.price-show-wrap {
+	color: #00a769;
+	margin-left: 12px;
+	display: none;
+	font-size: 14px;
+}
+
+.require-hint {
+	color: red;
+	margin-left: 3px;
+	font-size: 11px;
+}
+
+.select2-container--default .select2-selection--single {
+	height: 34px;
+}
+
+#score-percent {
+	transition: 1s all;
+}
+
+.select2-container--default .select2-selection--single {
+	border-radius: 0px;
+}
+#review-listing {
+	position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 9999;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+}
+.previewing #review-listing {
+	display: block;
+}
+html.previewing, body.previewing {
+	overflow: hidden;
+}
+#review-listing .popup-wrap {
+    max-width: 985px;
+    width: 100%;
+	background: #FFF;
+	margin: 42px auto;
+	padding: 20px;
+}
+#review-listing .detail-listing-extra {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+#post, #to-detail {
+	margin-left: 8px;	
+}
+
+.hint {
+	color: rgba(0, 167, 105, 0.84);
+	display: inline-block;
+	margin-left: 10px;
+}
+
+.btom-point {
+	font-weight: bold;
+}
+
+@media (max-width: 985px) {
+	#review-listing .popup-wrap {
+    	left: 0;
+    	transform: translateX(0%);
+		margin: 0;
+	}
+}

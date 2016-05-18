@@ -34,10 +34,10 @@ if(!Yii::$app->user->isGuest) {
                 chatUI.setConservation(params.from, params.to);
                 if(params.type == 'chat'){
                     if(params.chatType != chatUI.MSG_SEND_ME){
-                        if($('.wrap-history-item').length == 0){
+//                        if($('.wrap-history-item').length == 0){
                             $(document).trigger('chat/showBoxChat', [chatUI.usrFromJid(params.from)]);
-                        }
-//                        chatUI.notify(chatUI.NOTIFY_CHAT, 1);
+//                        }
+                        chatUI.notify(chatUI.NOTIFY_CHAT, 1);
                     }
                     chatUI.loadMessageToBox(msg, params);
                 }else if(params.type == 'notify'){
@@ -53,12 +53,18 @@ if(!Yii::$app->user->isGuest) {
                             }
                         });
                     }, 500);
+                    if(params.fromName && params.product) {
+                        $('body').alertBox({
+                            txt: lajax.t(msg, {owner: '<a href="#">'+params.fromName+'</a>', product: '<a href="#">'+params.product+'</a>'}),
+                            duration: 4000
+                        });
+                    }
                 }else if(params.type == 'online'){
                     console.log('------------------', params);
                 }
-//                if(!checkMobile()){
-//                    $('.wrapNotifyTotal').find('#notifyTotal').hide();
-//                }
+                if(!checkMobile()){
+                    $('.wrapNotifyTotal').find('#notifyTotal').hide();
+                }
 
             });
 
@@ -75,9 +81,21 @@ if(!Yii::$app->user->isGuest) {
                     var chatBoxExist = chatUI.getBoxChat('.item-box-chat', '<?=Yii::$app->user->identity->username?>', user);
                     if(!chatBoxExist){
                         $(document).trigger('chat/addBoxChat', [user]);
-                        chatBoxExist = chatUI.getBoxChat('.item-box-chat', '<?=Yii::$app->user->identity->username?>', user);
+                    }else{
+                        $(document).trigger('chat/activeBoxChat', [chatBoxExist]);
                     }
                 }
+            });
+
+            $(document).bind('chat/activeBoxChat', function (event, chatBoxExist) {
+                $('.item-box-chat .title-top').css({"background-color": "#00a769"});
+                $('.item-box-chat').removeClass('active');
+                if(chatBoxExist){
+                    chatBoxExist.find('input').focus();
+                    chatBoxExist.addClass('active');
+                    chatBoxExist.find('.title-top').css({"background-color": "#008A57"});
+                }
+                $(document).trigger('chat/showHideMultiBox');
             });
 
             $(document).bind('chat/addBoxChat', function (event, user) {
@@ -87,7 +105,7 @@ if(!Yii::$app->user->isGuest) {
                 $('.wrap-items-chat').append(html);
                 var chatBoxExist = chatUI.getBoxChat('.item-box-chat', '<?=Yii::$app->user->identity->username?>', user);
                 if(chatBoxExist) {
-                    $('.box-chat-footer').loading();
+                    chatBoxExist.find('.box-chat-footer').loading({full: false});
                     $.ajax({
                         type: "get",
                         dataType: 'html',
@@ -95,6 +113,7 @@ if(!Yii::$app->user->isGuest) {
                         success: function (data) {
                             Chat.historyMessage(user + '@<?=Chat::DOMAIN?>');
                             chatBoxExist.find('.box-chat-footer').append(data);
+                            $(document).trigger('chat/activeBoxChat', [chatBoxExist]);
                             $('body').loading({done:true});
                         }
                     });
@@ -109,6 +128,41 @@ if(!Yii::$app->user->isGuest) {
                 $('body').append(html);
             });
 
+            $(document).bind('chat/readNotify', function (event, type) {
+                if(type == chatUI.NOTIFY_CHAT){
+                    $('#notifyChat').remove();
+                    $('#notifyTotal').remove();
+                }
+            });
+
+            $(document).bind('chat/showHideMultiBox', function (event, type) {
+                var totalBox = 0, widthMoreEl = 80, heightMoreEl = 60, widthBox = 260;
+                $('.wrap-items-chat .item-box-chat').removeClass('hide');
+                totalBox = $('.wrap-items-chat .item-box-chat').length;
+                var widthWindow = $(window).width();
+                var totalBoxOnWindow = parseInt(widthWindow / widthBox) - 1;
+                console.log('totalBoxOnWindow: '+totalBoxOnWindow,
+                    'totalBox: '+totalBox
+                );
+                if(totalBoxOnWindow < totalBox){
+                    var totalHide = 0, htmlHide = '';
+                    $.each($('.wrap-items-chat .item-box-chat'),function(index, val){
+                        if(!$(val).hasClass('active') && totalHide < (totalBox - totalBoxOnWindow)){
+                            $(val).addClass('hide');
+                            totalHide += 1;
+                            htmlHide += '<li><a class="chat-now" data-chat-user="'+$(val).attr('chat-to')+'" href="javascript:;">'+$(val).attr('chat-to')+'</a></li>';
+                        }
+                    });
+                    console.log('totalHide: '+totalHide);
+                    $('.more-box-chat').removeClass('hide');
+                    $('.more-box-chat').find('.dropdown-menu').html(htmlHide);
+                    $('.more-box-chat').find('.dropdown-menu').css({"margin-top": "-"+($('.more-box-chat').find('.dropdown-menu').height() + heightMoreEl)+"px"});
+                    $('.more-box-chat').find('.box-hide').html(totalHide);
+                }else{
+                    $('.more-box-chat').addClass('hide');
+                }
+            });
+
             $(document).on('click', '.chat-now', function (e) {
                 user = $(this).attr('data-chat-user');
                 if (user) {
@@ -116,12 +170,19 @@ if(!Yii::$app->user->isGuest) {
                 }
                 return false;
             });
-
-            $(document).bind('chat/readNotify', function (event, type) {
-                if(type == chatUI.NOTIFY_CHAT){
-                    $('#notifyChat').remove();
-                    $('#notifyTotal').remove();
+            $(document).on('click', '.item-box-chat .close-box', function (e) {
+                $(document).trigger('chat/showHideMultiBox');
+            });
+            $(document).on('click', '.typingMsg', function (e) {
+                var chatBoxExist = $(this).closest('.item-box-chat');
+                if (chatBoxExist) {
+                    $(document).trigger('chat/activeBoxChat', [chatBoxExist]);
                 }
+                return false;
+            });
+
+            $( window ).resize(function() {
+                $(document).trigger('chat/showHideMultiBox');
             });
         });
     </script>
@@ -130,13 +191,9 @@ if(!Yii::$app->user->isGuest) {
             <div class="more-box-chat hide">
                 <div class="dropdown">
                     <a href="#" id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="icon-mv"><span class="icon-bubbles-icon"></span></span>5
+                        <span class="icon-mv"><span class="icon-bubbles-icon"></span></span><span class="box-hide"></span>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dLabel">
-                        <li>a</li>
-                        <li>a</li>
-                        <li>a</li>
-                        <li>a</li>
                     </ul>
                 </div>
             </div>
@@ -146,10 +203,23 @@ if(!Yii::$app->user->isGuest) {
     <script class="item-box-chat-template" type="text/x-handlebars-template">
         <div class="item-box-chat" chat-from="<?=Yii::$app->user->identity->username?>" chat-to="">
             <div class="box-chat-footer">
-                <a href="#" class="close-box">
-                    <span class="icon-mv"><span class="icon-close-icon"></span></span>
-                </a>
-
+                <div class="option-chat-box">
+                    <div class="box-dropdown guest-dropdown">
+                        <a href="#" class="icon-guest val-selected wrap-img">
+                            <span class="icon-mv"><span class="icon-caret-down"></span></span>
+                        </a>
+                        <div class="item-dropdown hide-dropdown">
+                            <ul class="clearfix">
+                                <li><a href="#">About</a></li>
+                                <li><a href="#">Listings</a></li>
+                                <li><a href="#">Reviews</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <a href="#" class="close-box">
+                        <span class="icon-mv"><span class="icon-close-icon"></span></span>
+                    </a>
+                </div>
             </div>
         </div>
     </script>

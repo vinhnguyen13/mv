@@ -34,11 +34,7 @@ use yii\widgets\LinkPager;
                                 <li>
                                     <div class="wrap-item">
                                         <a href="<?= Url::to(["building-project/view", 'slug'=>$model->slug]); ?>" class="pic-intro rippler rippler-default">
-                                            <div class="img-show">
-                                                <div><img src="<?=$model->logoUrl?>"
-                                                          data-original="<?=$model->logoUrl?>"
-                                                          style="display: block;"></div>
-                                            </div>
+                                            <img src="<?=$model->logoUrl?>">
                                         </a>
 
                                         <div class="info-item">

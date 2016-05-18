@@ -94,12 +94,24 @@ class SiteController extends Controller
     public function actionIndex()
     {
         Yii::$app->meta->add(Yii::$app->request->absoluteUrl);
-        $homepage_news = CmsShow::getLatestNews(4);
-//        $metvuong_news = CmsShow::getShowForMetvuong();
-        return $this->render('index',['news' => $homepage_news]);
+        return $this->render('index');
     }
 
-    /**
+	public function actionFeatureListings()
+	{
+		if(Yii::$app->request->isAjax){
+			return $this->renderAjax('_partials/featureListings');
+		}
+	}
+
+	public function actionNews()
+	{
+		if(Yii::$app->request->isAjax){
+			return $this->renderAjax('_partials/news');
+		}
+	}
+
+	/**
      * Displays contact page.
      *
      * @return mixed

@@ -171,12 +171,12 @@ class Ad extends Component
     }
 
     public function homePageRandom(){
-        $query = AdProduct::find();
-//        $where = ['ad_product.status' => 1];
-        $query->leftJoin('ad_product_addition_info', '`ad_product_addition_info`.`product_id` = `ad_product`.`id`');
-        $query->with('adProductAdditionInfo');
-        $query->innerJoin(AdImages::tableName(), "ad_product.id = ad_images.product_id");
-        $products = $query->limit(6)->orderBy("RAND()")->all();
+        $model = new AdProductSearch();
+        $query = $model->search(Yii::$app->request->get());
+        $query->addSelect('ad_product.created_at, ad_product.category_id, ad_product.type, ad_images.file_name, ad_images.folder');
+        $query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
+        $query->groupBy('ad_product.id');
+        $products = $query->with(['city', 'district', 'ward', 'street'])->limit(6)->orderBy(['id' => SORT_DESC])->all();
         return $products;
     }
 }

@@ -7,6 +7,7 @@
  */
 
 namespace frontend\components;
+use frontend\models\User;
 use frontend\models\UserData;
 use Yii;
 use yii\helpers\Json;
@@ -23,6 +24,9 @@ class Login extends Component
          * test
          * @todo: remove if done
          */
+        if(($user = User::findOne($event->identity->id)) !== null){
+            $user->updateAttributes(['updated_at' => time()]);
+        }
         if(($userData = UserData::findOne(['user_id'=>$event->identity->id])) !== null){
             $alert = $userData->alert;
             if(!empty($alert[UserData::ALERT_OTHER])){

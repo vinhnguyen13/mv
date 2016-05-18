@@ -5,6 +5,7 @@ use console\models\Batdongsan;
 use console\models\BatdongsanV2;
 use console\models\Homefinder;
 use console\models\Muaban_net;
+use vsoft\ad\models\AdCity;
 use yii\console\Controller;
 
 /**
@@ -43,7 +44,7 @@ class CrawlerController extends Controller
     }
     public function actionImportbatdongsan()
     {
-        BatdongsanV2::find()->importData(1);
+//        BatdongsanV2::find()->importData(1);
     }
     public function actionImportbatdongsan2()
     {
@@ -51,12 +52,18 @@ class CrawlerController extends Controller
     }
     public function actionUpdatebatdongsan()
     {
+        // update address from Google API Geocode
         BatdongsanV2::find()->updateData();
     }
 
-    public function actionCopytomain($price=0)
+    public function actionUpdateAddressByProject(){
+        // update address from project address
+        BatdongsanV2::find()->updateAddressByProject();
+    }
+
+    public function actionCopytomain($price=0, $build='build=false')
     {
-        BatdongsanV2::find()->copyToMainDb($price);
+        BatdongsanV2::find()->copyToMainDb($price, $build);
     }
 
     // Agent Batdongsan
@@ -85,6 +92,10 @@ class CrawlerController extends Controller
     }
     public function actionImportprojectbds(){
         BatdongsanV2::find()->importProjects();
+    }
+    // db chinh
+    public function actionImportProjectPrimary(){
+        BatdongsanV2::find()->importProjectPrimary();
     }
     public function actionUpdateProjectPrimary(){
         BatdongsanV2::find()->updateProjects();

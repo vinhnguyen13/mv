@@ -1,7 +1,6 @@
 <?php
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
-use frontend\models\Ad;
 use frontend\models\AdProductSearch;
 use vsoft\ad\models\AdProduct;
 ?>
@@ -37,80 +36,51 @@ use vsoft\ad\models\AdProduct;
         </div>
         <!-- <span class="arrow-down"></span> -->
     </section>
-    <?php
-    $categories = \vsoft\ad\models\AdCategory::find ()->indexBy ( 'id' )->asArray ( true )->all ();
-    $types = \vsoft\ad\models\AdProduct::getAdTypes ();
-    $products = Ad::find()->homePageRandom();
-    ?>
+
     <section class="box-item box-feature-item">
         <div class="container">
             <div class="title-sub"><?= Yii::t('listing', 'Featured listings') ?></div>
             <div class="wrap-item wrap-lazy">
-                <ul class="clearfix">
-                    <?php foreach ($products as $product): ?>
-                    <li>
-                        <div class="item">
-                            <a href="<?= $product->urlDetail(true) ?>" class="pic-intro rippler rippler-default">
-                                <div class="img-show">
-                                    <div><img src="<?= $product->representImage ?>" data-original=""></div>
-                                </div>
-                                <div class="title-item"><?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= $types[$product->type] ?></div>
-                            </a>
-                            <div class="info-item">
-                                <div class="address-feat clearfix">
-                                    <p class="date-post"><?= Yii::t('statistic', 'Date of posting') ?>: <strong><?= date("d/m/Y", $product->created_at) ?></strong></p>
-                                    <div class="address-listing">
-                                        <a title="<?= $product->getAddress(true) ?>" href="<?= $product->urlDetail(true) ?>"><?= $product->getAddress(true) ?></a>
-                                    </div>
-                                    <p class="id-duan">ID:<span><?=$product->id;?></span></p>
-                                    <ul class="clearfix list-attr-td">
-                                        <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
-                                            <li><span><?=Yii::t('listing','updating')?></span></li>
-                                        <?php } else {
-                                            echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '';
-                                            echo $product->adProductAdditionInfo->room_no ? '<li> <span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
-                                            echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
-                                        } ?>
-                                    </ul>
-                                </div>
-                                <div class="bottom-feat-box clearfix">
-                                    <a href="<?= $product->urlDetail(true) ?>" class="pull-right color-cd-hover">Chi tiết</a>
-                                    <p><?=Yii::t('listing','Price')?> <strong><?= vsoft\express\components\StringHelper::formatCurrency($product->price) ?> vnd</strong></p>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <?php
-                    endforeach;
-                    ?>
-                </ul>
+
             </div>
         </div>
     </section>
 
-    <?php if(count($news) > 0) {?>
+
     <section class="box-item news-item">
         <div class="container">
             <div class="title-sub"><?=Yii::t('news','NEWS')?></div>
             <div class="wrap-item">
-                <?php
-                    foreach($news as $n){
-                ?>
-                <div class="item clearfix">
-                    <a class="rippler rippler-default" href="<?= \yii\helpers\Url::to(['news/view', 'id' => $n['id'], 'slug' => $n['slug']], true) ?>" title="<?=$n['title']?>">
-                        <div class="img-show"><div><img src="<?=Url::to('/store/news/show/' . $n['banner']) ?>" alt="<?=$n['title']?>"></div></div>
-                        <span class="txt-short-news">
-                            <span class="title-news color-30a868" title="<?=$n['title']?>"><?=StringHelper::truncate($n['title'], 60)?></span>
-                            <span class="date-news"><?=date('d/m/Y, H:i', $n['created_at'])?></span>
-                            <span title="<?=$n['brief']?>"><?=StringHelper::truncate($n['brief'], 130)?></span>
-                        </span>
-                    </a>
-                </div>
-                <?php } ?>
+
             </div>
         </div>
     </section>
-    <?php } ?>
+
+    <script>
+        $(document).ready(function () {
+            $('.box-feature-item').loading({full: false});
+            $.ajax({
+                type: "get",
+                dataType: 'html',
+                url: '<?=Url::to(['site/feature-listings'])?>',
+                success: function (data) {
+                    $( ".box-feature-item .wrap-item").html(data);
+                    $('.box-feature-item').loading({done:true});
+                }
+            });
+
+            $('.news-item').loading({full: false});
+            $.ajax({
+                type: "get",
+                dataType: 'html',
+                url: '<?=Url::to(['site/news'])?>',
+                success: function (data) {
+                    $( ".news-item .wrap-item").html(data);
+                    $('.news-item').loading({done:true});
+                }
+            });
+        });
+    </script>
 
     <section class="search-home">
         <div class="container">

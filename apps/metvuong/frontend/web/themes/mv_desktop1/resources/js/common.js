@@ -3,13 +3,24 @@ $(window).on('load', function () {
 });
 
 $(document).ready(function() {
+
+    $(document).on('click', '.option-chat-box .val-selected', function (e) {
+        $(this).closest('.box-dropdown').toggleClass('show-hide');
+    });
+
+    hideElOutSite('.option-chat-box .box-dropdown', function () {
+        $('.option-chat-box .box-dropdown').removeClass('show-hide');
+    });
     
     $(document).on('click', '.box-chat-footer .close-box', function (e) {
         e.preventDefault();
         $(this).closest('.item-box-chat').remove();
+        if ( $('.item-box-chat').length == 0 ) {
+            $('.wrap-items-chat').removeClass('toggle-show-hide');
+        }
     });
     $(document).on('click', '.box-chat-footer .title-top', function () {
-        $(this).closest('.box-chat-footer').toggleClass('show-hide-chat');
+        $(this).closest('.item-box-chat').toggleClass('toggle-show-hide');
     });
 
     if ( !checkMobile() ) {
@@ -78,7 +89,7 @@ $(document).ready(function() {
         });
     }else {
         $('.hFullScreen').css({
-            height: $('#hScreen').outerHeight() - 40 - 230
+            height: $('#hScreen').outerHeight() - 40 - 130
         });
     }
     
@@ -203,6 +214,15 @@ $(document).ready(function() {
     }).trigger('resize');
 });
 
+function hideElOutSite (el, callBackItem) {
+    $(document).on('click', function (e) {
+        var container = $(el);
+        if ( !container.is(e.target) && container.has(e.target).length === 0 ) {
+            callBackItem();
+        }
+    });
+}
+
 function l(x){console.log(x);}
 
 $.fn.radio = function (options) {
@@ -230,13 +250,13 @@ $.fn.radio = function (options) {
                 nameGroup = _this.find('input').attr('name');
 
             $('input[name="'+nameGroup+'"]').prop("checked", false);
-            $('input[name="'+nameGroup+'"]').closest('.frm-radio').removeClass('active');
+            $('input[name="'+nameGroup+'"]').closest('.radio-ui').removeClass('active');
 
             if ( _this.find('input[type=radio]').prop("checked") ) {
                 _this.find('input[type=radio]').prop("checked", false);
                 checkedItem(_this, false);
             }else {
-                _this.parent().find('input[type=radio]').prop("checked", true);
+                _this.find('input[type=radio]').prop("checked", true);
                 checkedItem(_this, true);
             }
 
@@ -266,23 +286,30 @@ $.fn.checkbox_ui = function (options) {
 
         sc.settings = $.extend({}, defaults, options);
 
+        if ( el.find('input[type=checkbox]').attr('checked') ) {
+            el.addClass('active');
+        }
+
+        el.on('click', toggleCheck);
+
         function toggleCheck (e) {
             e.preventDefault();
             var _this = $(this);
-            if ( _this.parent().find('input[type=checkbox]').prop("checked") ) {
-                _this.parent().find('input[type=checkbox]').prop("checked", false);
+            if ( _this.find('input[type=checkbox]').prop("checked") ) {
+                _this.find('input[type=checkbox]').prop("checked", false);
                 checkedItem(_this, false);
             }else {
-                _this.parent().find('input[type=checkbox]').prop("checked", true);
+                _this.find('input[type=checkbox]').prop("checked", true);
                 checkedItem(_this, true);
             }
+            _this.find('input[type=checkbox]').trigger('change');
         }
 
         function checkedItem (item, flagChecked) {
             if ( flagChecked ) {
-                item.parent().find('em').removeClass('fa-square-o').addClass('fa-check-square-o');
+                item.addClass('active');
             }else {
-                item.parent().find('em').removeClass('fa-check-square-o').addClass('fa-square-o');
+                item.removeClass('active');
             }
         }
 
@@ -1011,11 +1038,14 @@ function checkMobile () {
     return false;
 }
 
+var timeOutHide;
 $.fn.alertBox = function (options) {
 
     return this.each(function() {
         var defaults = {
-            txt: ''
+            txt: '',
+            duration: 3000,
+            position: 'bottom-left' // bottom-left, center
         },
         sc = {},
         el = $(this), wrapAlert, txtShow;
@@ -1030,16 +1060,47 @@ $.fn.alertBox = function (options) {
             txtShow = sc.settings.txt;
         }
 
-        wrapAlert = '<div class="alert-item"><div class="wrap-alert">'+txtShow+'</div></div>';
+        //<div class="alert-item"><a class="btn-close-alert" href="#"><span class="icon-mv fs-12"><span class="icon-close-icon"></span></span></a><div class="wrap-alert">'+txtShow+'</div></div>
+        wrapAlert = '<div class="alert-item hide"><a class="btn-close-alert" href="#"><span class="icon-mv fs-12"><span class="icon-close-icon"></span></span></a><div class="wrap-alert">'+txtShow+'</div></div>';
 
-        $('body').append($(wrapAlert));
-        $('.alert-item').fadeIn(300);
+        $('#alert-noti').prepend($(wrapAlert));
 
-        setTimeout(function () {
-            $('.alert-item').fadeOut('slow', function() {
-                $(this).remove();
-            });
-        },2000);
+        var aBox = $('.alert-item'),
+            wB = aBox.outerWidth(),
+            hB = aBox.outerHeight(),
+            wWin = $(window).outerWidth(),
+            hWin = $(window).outerHeight();
+
+        $('.alert-item').removeClass('hide');
+        setTimeout(function() {
+            $('.alert-item').addClass('active')
+        }, 300);
+
+        clearTimeout(timeOutHide);
+
+        $('#alert-noti').hover(function () {
+            clearTimeout(timeOutHide);
+        }, function () {
+            timeOutHide = setTimeout(function () {
+                        $('.alert-item').fadeOut('slow', function() {
+                            $(this).remove();
+                            $('#alert-noti').html('');
+                        });
+                    },sc.settings.duration);
+        });
+
+        timeOutHide = setTimeout(function () {
+                        $('.alert-item').fadeOut('slow', function() {
+                            $(this).remove();
+                            $('#alert-noti').html('');
+                        });
+                    },sc.settings.duration);
+
+        $('.alert-item .btn-close-alert').on('click', function (e) {
+            e.preventDefault();
+            clearTimeout(timeOutHide);
+            $(this).parent().remove();
+        });
     });
 }
 

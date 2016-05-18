@@ -598,4 +598,82 @@ class Batdongsan extends Component
         return ($httpcode >= 200 && $httpcode < 300) ? $data : null;
     }
 
+    function getProxy() {
+        $data = json_decode(file_get_contents('http://gimmeproxy.com/api/getProxy'), 1);
+        if(isset($data['error'])) { // there are no proxies left for this user-id and timeout
+            echo $data['error']."\n";
+        }
+        return isset($data['error']) ? false : $data['curl'];
+    }
+
+
+    function getUrlContent2($url)
+    {
+//        $url = 'http://alonhadat.com.vn/b-dat-so-hong-xay-dung-ngay-dien-tich-130m2-gia-485tr-1105264.html';
+        $url = 'http://dev.metvuong.com/test/mail';
+
+        $proxies = array(); // Declaring an array to store the proxy list
+
+// Adding list of proxies to the $proxies array
+        $proxies[] = '123.30.191.141:80';  // Some proxies only require IP
+//        $proxies[] = '61.135.217.7:80';  // Some proxies only require IP
+//        $proxies[] = '101.99.22.40:3128';
+//        $proxies[] = '116.193.70.38:3128'; // Some proxies require IP and port number
+//        $proxies[] = '123.30.75.115:443';
+//        $proxies[] = '123.30.146.148:3128';
+        if (isset($proxies)) {  // If the $proxies array contains items, then
+            $proxy = $proxies[array_rand($proxies)];    // Select a random proxy from the array and assign to $proxy variable
+        }
+
+
+
+        $proxy_ip = '118.114.77.116';
+        $proxy_port = '10032';
+        $proxy_sock_version = '5';
+        $agent = "Mozilla/5.0 (X11; U; Linux i686; en-US)
+            AppleWebKit/532.4 (KHTML, like Gecko)
+            Chrome/4.0.233.0 Safari/532.4";
+        $referer = "http://www.google.com/";
+
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPPROXYTUNNEL, 1);
+//        curl_setopt($ch, CURLOPT_PROXY, $proxy_ip . ':' . $proxy_port);
+//        $proxy = $this->getProxy();
+        curl_setopt($ch, CURLOPT_PROXY, $proxy);
+//        curl_setopt($ch, CURLOPT_PROXY, 'http://87.69.121.11:3128');
+//        if ($proxy_sock_version == '5'):
+//            curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
+//        else:
+//            curl_setopt($ch, CURLOPT_PROXYTYPE, CURLPROXY_SOCKS4);
+//        endif;
+        $ip = $proxy;
+//        curl_setopt( $ch, CURLOPT_HTTPHEADER, array("REMOTE_ADDR: $ip"));
+//        curl_setopt( $ch, CURLOPT_HTTPHEADER, array("REMOTE_ADDR: $ip", "HTTP_X_FORWARDED_FOR: $ip"));
+
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_REFERER, $referer);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        curl_setopt($ch, CURLOPT_MAXREDIRS, 2);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_USERAGENT, $agent);
+//        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        $data = curl_exec($ch);
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        echo "<pre>";
+        print_r($httpcode);
+        print_r(PHP_EOL);
+        if($httpcode >= 200){
+            print_r($data);
+            print_r(PHP_EOL);
+            print_r($proxy);
+        }
+        echo "</pre>";
+        exit;
+        return ($httpcode >= 200 && $httpcode < 300) ? $data : null;
+    }
+
 }

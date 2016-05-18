@@ -35,12 +35,10 @@ $count_product = count($products);
             }
             ?>
             <li class="col-xs-12 col-md-6 col-sm-6">
-                <div class="item">
-                    <div class="img-show">
-                        <div>
-                            <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>" title="<?=Yii::t('statistic', 'View statistic detail')?>">
-                                <img src="<?=$thumb ?>" alt="<?=Yii::t('statistic', 'View statistic detail')?>"></a>
-                        </div>
+                <div class="item p<?=$product->id?> clearfix">
+                    <div class="wrap-img-list">
+                        <a class="pic-intro" href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>" title="<?=Yii::t('statistic', 'View statistic detail')?>">
+                            <img src="<?=$thumb ?>" alt="<?=Yii::t('statistic', 'View statistic detail')?>"></a>
                         <a href="<?= Url::to(['/ad/update', 'id' => $product->id]) ?>" class="edit-duan">
                             <span class="icon-mv"><span class="icon-edit-copy-4"></span></span>
                         </a>
@@ -74,7 +72,7 @@ $count_product = count($products);
                         <div class="bottom-feat-box clearfix">
                             <div class="pull-right push-price">
                                 <div class="status-duan">
-                                    <?php if ($product->end_date < time()): ?>
+                                    <?php if ($product->is_expired > 0): ?>
                                         <div class="wrap-icon status-get-point">
                                             <div><span class="icon icon-inactive-pro"></span>
                                             </div>
@@ -86,17 +84,14 @@ $count_product = count($products);
                                             </div>
                                             <strong><?= Yii::t('statistic', 'Active Project') ?></strong>
                                         </div>
+                                        <?php $day_number = !empty($product->expired && $product->expired > 0) ? $product->expired : 0; ?>
+                                        <p class="expired"><?= Yii::t('statistic', 'Expired in the last') ?>
+                                            <strong><?= $day_number > 1 ? $day_number . " " . Yii::t('statistic', 'days') : $day_number . " " . Yii::t('statistic', 'day') ?></strong>
+                                        </p>
                                     <?php endif; ?>
                                 </div>
-                                <?php if ($product->end_date > time()) {
-                                    $d = $product->end_date - time();
-                                    $day_number = floor($d / (60 * 60 * 24)); ?>
-                                    <p><?= Yii::t('statistic', 'Expired in the last') ?>
-                                        <strong><?= $day_number > 1 ? $day_number . " " . Yii::t('statistic', 'days') : $day_number . " " . Yii::t('statistic', 'day') ?></strong>
-                                    </p>
-                                <?php } ?>
-                                <a href="#nang-cap"
-                                   class="btn-nang-cap"><?= Yii::t('statistic', 'Upgrade') ?></a>
+                                <a href="javascript:;" data-product="<?=$product->id;?>" class="btn-nang-cap mgL-10 btn-up"><?= Yii::t('statistic', 'Up') ?></a>
+                                <a href="javascript:;" data-product="<?=$product->id;?>" data-toggle="modal" data-target="#upgrade-time" class="btn-nang-cap btn-upgrade"><?= Yii::t('statistic', 'Upgrade') ?></a>
                                 <div class="clearfix"></div>
                                 <a href="<?=$product->urlDetail(true)?>" class="see-detail-listing fs-13 font-600 color-cd-hover mgT-10"><span class="text-decor"><?=Yii::t('statistic', 'Go detail page')?></span><span class="icon-mv mgL-10"><span class="icon-angle-right"></span></span></a>
                             </div>

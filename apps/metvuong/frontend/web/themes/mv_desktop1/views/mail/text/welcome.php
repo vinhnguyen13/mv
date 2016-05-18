@@ -15,7 +15,7 @@
 ?>
 <?= Yii::t('user', 'Hello') ?>,
 
-<?= Yii::t('user', 'Your account on {0} has been created', Yii::$app->name) ?>.
+<?= Yii::t('user', 'Your account on {0} has been created', ['0' => Yii::$app->name]) ?>.
 <?php if ($module->enableGeneratingPassword): ?>
 <?= Yii::t('user', 'We have generated a password for you') ?>:
 <?= $user->password ?>

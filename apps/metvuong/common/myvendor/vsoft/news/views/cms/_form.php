@@ -57,7 +57,10 @@ use yii\widgets\ActiveForm;
             'showUpload' => false,
             'browseLabel' => '',
             'removeLabel' => '',
-            'mainClass' => 'input-group-lg'
+            'mainClass' => 'input-group-lg',
+            'resizeImage'=> true,
+            'maxImageWidth'=> 200,
+            'resizePreference'=> 'width',
         ]
     ]) : $form->field($model, 'banner')->widget(\kartik\file\FileInput::classname(), [
         'options' => ['accept' => 'image/*'],
@@ -67,12 +70,16 @@ use yii\widgets\ActiveForm;
             'browseLabel' => '',
             'removeLabel' => '',
             'initialPreview' => [
-                Html::img("/store/news/show/" . $model->banner, ['class' => 'file-preview-image', 'alt' => 'Banner', 'title' => $model->banner]),
+            Html::img("/store/news/show/" . $model->banner, ['class' => 'file-preview-image', 'alt' => 'Banner', 'title' => $model->banner]),
             ],
             'initialCaption' => $model->banner,
 //            'overwriteInitial'=>false, // used in multi upload case
-            'mainClass' => 'input-group-lg'
-        ]]) ?>
+            'mainClass' => 'input-group-lg',
+            'resizeImage'=> true,
+            'maxImageWidth'=> 200,
+            'resizePreference'=> 'width',
+        ],
+    ]) ?>
 
     <?= $form->field($model, 'slug')->textInput(['maxlength' => true, 'readOnly' => true]) ?>
 

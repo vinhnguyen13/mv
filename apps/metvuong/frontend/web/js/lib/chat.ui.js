@@ -65,6 +65,11 @@
             for(i=0;i<length;i++) {
                 var item = child.eq(i);
                 var body = item.find('body').text();
+                /**
+                 * replace message
+                 */
+                body = chatUI.decodeEntities(body);
+                body = stringHelper.replaceURLWithHTMLLinks(body);
                 if(item.is('to')) {
                     if(chatBoxExist.find('.wrap-chat .item:last').hasClass('box-me') == true){
                         chatBoxExist.find('.wrap-chat .item:last').find('.txt-detail p').append("<br/>"+body);
@@ -91,7 +96,6 @@
             $('.chat-group').find('.typingMsg').focus();
         },
         buildMessageToBox: function (username, msg, type, params) {
-            msg = chatUI.decodeEntities(msg);
             var timestamp = (params.ts) ? params.ts : 0;
             var _time = formatTime(timestamp);
             if(type == chatUI.MSG_SEND_ME){
@@ -109,6 +113,8 @@
             if(!chatBoxExist){
                 return false;
             }
+            msg = chatUI.decodeEntities(msg);
+            msg = stringHelper.replaceURLWithHTMLLinks(msg);
             if(type == chatUI.MSG_SEND_ME){
                 if(chatBoxExist.find('.wrap-chat .item:last').hasClass('box-me') == true){
                     chatBoxExist.find('.wrap-chat .item:last').find('.txt-detail p').append("<br/>"+msg);
@@ -196,15 +202,42 @@
         onlineList: function () {
             return Chat.presenceMessage;
         },
-        decodeEntities: function (encodedString) {
+        decodeEntities_2: function (encodedString) {
+            return encodedString;
             var textArea = document.createElement('textarea');
             textArea.innerHTML = encodedString;
             return textArea.value;
+        },
+        decodeEntities_: function (string) {
+            var entityMap = {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': '&quot;',
+                "'": '&#39;',
+                "/": '&#x2F;'
+            };
+            return String(string).replace(/[&<>"'\/]/g, function (s) {
+                return entityMap[s];
+            });
+        },
+        decodeEntities: function (str) {
+            if (typeof(str) == "string") {
+                str = str.replace(/&/g, "&amp;"); /* must do &amp; first */
+                str = str.replace(/"/g, "&quot;");
+                str = str.replace(/'/g, "&#039;");
+                str = str.replace(/</g, "&lt;");
+                str = str.replace(/>/g, "&gt;");
+            }
+            console.log(str);
+            return str;
         },
         formatOutPut: function (encodedString) {
 
         }
     };
+
+
 
 var formatTime = function(unixTimestamp) {
     var date = new Date(parseInt(unixTimestamp));
@@ -216,5 +249,47 @@ var formatTime = function(unixTimestamp) {
     var seconds = date.getSeconds();
     return hour + ":" + minute + ":" + seconds + " " + day + "-" + month + "-" + year ;
 }
+
+
+var stringHelper = {
+    replaceURLWithHTMLLinks: function (text) {
+        var urls = stringHelper.findUrls(text);
+        if(urls.length > 0){
+            $.each(urls, function( index, value ) {
+                var htmlRender = "<a href='" + value + "' target='_blank'>" + value + "</a>";
+                /*$.get('',function(data) {
+                    var image = $(data).find('meta[property="og:image"]').attr("content");
+                });*/
+                text = text.replace($.trim(value), htmlRender);
+            });
+            return text;
+        }else{
+            return text;
+        }
+    },
+    findUrls: function findUrls( text )
+    {
+        var source = (text || '').toString();
+        var urlArray = [];
+        var url;
+        var matchArray;
+
+        // Regular expression to find FTP, HTTP(S) and email URLs.
+        var regexToken = /(((ftp|https?):\/\/)[\-\w@:%_\+.~#?,&\/\/=]+)|((mailto:)?[_.\w-]+@([\w][\w\-]+\.)+[a-zA-Z]{2,3})/g;
+
+        // Iterate through any URLs in the text.
+        while( (matchArray = regexToken.exec( source )) !== null )
+        {
+            var token = matchArray[0];
+            urlArray.push( token );
+        }
+
+        return urlArray;
+    },
+    onlineList: function () {
+
+    }
+}
+
 
 //})();

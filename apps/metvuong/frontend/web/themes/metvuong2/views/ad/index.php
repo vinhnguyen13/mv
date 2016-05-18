@@ -185,7 +185,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                 </div>
 	        </li>
 	        <li>
-	            <a href="#" data-symbol-unit="m<sup>2</sup>"><i class="pull-right"></i><span class="txt-tab">Diện tích</span><span class="txt-show"></span></a>
+	            <a href="#" data-symbol-unit="<?= htmlentities("m<sup>2</sup>") ?>"><i class="pull-right"></i><span class="txt-tab">Diện tích</span><span class="txt-show"></span></a>
                 <div class="filter-common filter-pane hidden-effect" data-filter="dt-min-max">
                     <div class="wrap-effect">
                         <div id="minmax-entries" class="minmax-entries search-entry">

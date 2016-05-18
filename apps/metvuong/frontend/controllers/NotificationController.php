@@ -35,22 +35,30 @@ class NotificationController extends Controller
                     return true;
                 }
             }
-            if($output = Cache::me()->get(Cache::PRE_NOTIFICATION.'ajax'.Yii::$app->user->id)){
-                return $output;
-            }else{
+//            if($output = Cache::me()->get(Cache::PRE_NOTIFICATION.'ajax'.Yii::$app->user->id)){
+//                return $output;
+//            }else{
                 $output = $this->renderAjax('index', []);
                 Cache::me()->set(Cache::PRE_NOTIFICATION.'ajax'.Yii::$app->user->id, $output);
                 return $output;
-            }
+//            }
+        }else {
+//            if($output = Cache::me()->get(Cache::PRE_NOTIFICATION.Yii::$app->user->id)){
+//                return $output;
+//            }else{
+            $output = $this->render('index', []);
+            Cache::me()->set(Cache::PRE_NOTIFICATION . Yii::$app->user->id, $output);
+            return $output;
+//            }
         }
-            if($output = Cache::me()->get(Cache::PRE_NOTIFICATION.Yii::$app->user->id)){
-                return $output;
-            }else{
-                $output = $this->render('index', []);
-                Cache::me()->set(Cache::PRE_NOTIFICATION.Yii::$app->user->id, $output);
-                return $output;
-            }
 
+    }
+
+    public function actionList()
+    {
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_partials/list', []);
+        }
     }
 
     public function actionUpdate()

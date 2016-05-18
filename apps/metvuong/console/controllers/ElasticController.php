@@ -134,7 +134,9 @@ class ElasticController extends Controller {
 	}
 	
 	private function countProducts($where) {
-		$where['status'] = '1';
+		$where['status'] = 1;
+		$where['is_expired'] = 0;
+		$where['verified'] = 1;
 		
 		$products = AdProduct::find()->select('type')->where($where)->asArray(true)->all();
 		

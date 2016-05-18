@@ -82,7 +82,7 @@ class AdProduct extends AP
 			'created_at' => 'Created At',
 			'updated_at' => 'Updated At',
 			'status' => 'Status',
-            'show_home_no' => Yii::t('ad', 'Show address to viewers'),
+            'show_home_no' => Yii::t('ad', 'Show address'),
 		];
 	}
 	
@@ -91,8 +91,9 @@ class AdProduct extends AP
 			$now = time();
 			
 			$this->created_at = $this->created_at ? $this->created_at : $now;
+			$this->updated_at = $this->updated_at ? $this->updated_at : $now;
 			$this->start_date = $this->start_date ? $this->start_date : $now;
-			$this->end_date = $now + self::EXPIRED;
+			$this->end_date = $now + (self::EXPIRED * 30);
 		} else {
 			$this->updated_at = time();
 		}
@@ -200,6 +201,11 @@ class AdProduct extends AP
 	{
 		return Url::to(['/ad/detail', 'id' => $this->id, 'slug' => \common\components\Slug::me()->slugify($this->getAddress($this->show_home_no))], $scheme);
 	}
+
+    public function getExpired(){
+        $d = $this->end_date - time();
+        return ceil($d / (60 * 60 * 24));
+    }
 	
 	public function afterSave($insert, $changedAttributes) {
 		$totalType = ($this->type == self::TYPE_FOR_SELL) ? self::TYPE_FOR_SELL_TOTAL : self::TYPE_FOR_RENT_TOTAL;
@@ -229,8 +235,13 @@ class AdProduct extends AP
 				foreach(self::$elasticUpdateFields as $field) {
 					$attr = $field . '_id';
 					if($this->oldAttr[$attr] != $this->attributes[$attr]) {
-						$this->updateElasticCounter($field, $this->attributes[$attr]);
-						$this->updateElasticCounter($field, $this->oldAttr[$attr], false);
+						if($this->attributes[$attr]) {
+							$this->updateElasticCounter($field, $this->attributes[$attr], $totalType);
+						}
+						
+						if($this->oldAttr[$attr]) {
+							$this->updateElasticCounter($field, $this->oldAttr[$attr], $totalType, false);
+						}
 					}
 				}
 			}
@@ -239,7 +250,7 @@ class AdProduct extends AP
 		parent::afterSave($insert, $changedAttributes);
 	}
 	
-	public function updateElasticCounter($type, $id, $totalType, $increase = true) {
+	public static function updateElasticCounter($type, $id, $totalType, $increase = true) {
 		$sign = $increase ? '+' : '-';
 		$script = '{"script" : "ctx._source.' . $totalType . $sign . '=1"}';
 		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/term/$type/$id/_update");
@@ -249,5 +260,97 @@ class AdProduct extends AP
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_exec($ch);
 		curl_close($ch);
+	}
+
+	public static function calcScore($product, $additionInfo = false, $contactInfo = false, $totalImage = false) {
+		
+		if(is_object($product)) {
+			if($additionInfo === false) {
+				$additionInfo = $product->adProductAdditionInfo;
+			}
+			if($contactInfo === false) {
+				$contactInfo = $product->adContactInfo;
+			}
+			if($totalImage === false) {
+				$totalImage = count($product->adImages);
+			}
+			
+			$product = $product->getAttributes();
+		}
+		
+		if(is_object($additionInfo)) {
+			$additionInfo = $additionInfo->getAttributes();
+		}
+		
+		if(is_object($contactInfo)) {
+			$contactInfo = $contactInfo->getAttributes();
+		}
+		
+		$score = 0;
+		
+		$score += empty($product['type']) ? 0 : 3;
+		
+		if(!empty($product['category_id'])) {
+			if($product['category_id'] == AdCategory::CATEGORY_CHCK) {
+				$score += 2;
+				$score += empty($product['project_building_id']) ? 0 : 3;
+			} else {
+				$score += 5;
+			}
+		}
+		
+		$score += empty($product['city_id']) ? 0 : 2;
+		$score += empty($product['district_id']) ? 0 : 2;
+		$score += empty($product['ward_id']) ? 0 : 2;
+		$score += empty($product['street_id']) ? 0 : 2;
+		
+		if(!empty($product['category_id']) && $product['category_id'] != 10 && $product['category_id'] != 11) {
+			$score += empty($product['home_no']) ? 0 : 4;
+			
+			$score += empty($additionInfo['room_no']) ? 0 : 5;
+			$score += empty($additionInfo['toilet_no']) ? 0 : 5;
+		}
+		
+		$score += empty($product['area']) ? 0 : 5;
+		$score += empty($product['price']) ? 0 : 5;
+		
+		if(!empty($product['content'])) {
+			$words = preg_split('/\s+/', $product['content']);
+			
+			if(count($words) >= 30) {
+				$score += 15;
+			} else if(count($words) >= 20) {
+				$score += 10;
+			} else if(count($words) >= 10) {
+				$score += 5;
+			}
+		}
+		
+		$score += empty($additionInfo['floor_no']) ? 0 : 2;
+		$score += empty($additionInfo['facade_width']) ? 0 : 2;
+		$score += empty($additionInfo['land_width']) ? 0 : 2;
+		$score += empty($additionInfo['home_direction']) ? 0 : 2;
+		$score += empty($additionInfo['facade_direction']) ? 0 : 2;
+		
+		if(!empty($additionInfo['facility'])) {
+			if (is_string($additionInfo['facility'])) {
+				$additionInfo['facility'] = explode(',', $additionInfo['facility']);
+			}
+			$facility = count($additionInfo['facility']);
+			$score += ($facility > 5) ? 5 : $facility;
+		}
+			
+		if($totalImage > 2) {
+			$score += 10;
+		} else if($totalImage > 0) {
+			$score += 5;
+		}
+
+		$score += empty($contactInfo['name']) ? 0 : 5;
+		$score += empty($contactInfo['mobile']) ? 0 : 5;
+		$score += empty($contactInfo['email']) ? 0 : 5;
+		$score += empty($product['owner']) ? 0 : 5;
+		
+		return $score;
 	}
 }

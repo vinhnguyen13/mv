@@ -17,7 +17,9 @@ use vsoft\ad\models\AdFacility;
 	$this->registerCss('.map-wrap {position: relative;} .map-wrap:after {display: block; content: ""; padding-top: 75%;} .map-inside {position: absolute; width: 100%; height: 100%;} #map {height: 100%;}');
 
     $user = Yii::$app->user->identity;
-	$categories = AdCategory::find()->indexBy('id')->asArray(true)->all();
+    $categories = \vsoft\ad\models\AdCategory::getDb()->cache(function(){
+        return \vsoft\ad\models\AdCategory::find()->indexBy('id')->asArray(true)->all();
+    });
 	$types = AdProduct::getAdTypes();
 
 	$owner = User::findOne($product->user_id);
@@ -112,8 +114,6 @@ $count_review = $reviews->count();
 						<?php endforeach; ?>
 					</div>
 
-					<div class="swiper-pagination"></div>
-
 					<div class="swiper-button-prev icon-mv"><span class=""></span></div>
 					<div class="swiper-button-next icon-mv"><span class=""></span></div>
 				</div>
@@ -140,19 +140,17 @@ $count_review = $reviews->count();
 						</a>
 					</li>
 					<li class="color-3">
-						<a href="#" data-toggle="modal" data-target="#popup_email_share">
+						<a href="#" data-toggle="modal" data-target="#popup_email" data-type="share" class="email-btn">
 							<span class="icon-mv fs-18"><span class="icon-mail-profile"></span></span>
 							<span><?= Yii::t('ad', 'Share Email') ?></span>
 						</a>
 					</li>
-		            <?php if($product->user_id != Yii::$app->user->id){ ?>
 					<li class="color-4">
-						<a href="#" class="save-item <?=!empty($product->productSaved->saved_at) ? 'active' : '';?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>">
+						<a href="#" class="save-item <?=!empty($product->productSaved->saved_at) ? 'active' : '';?> <?=Yii::$app->user->isGuest ? " user-login-link" : "" ?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>">
 							<span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
 							<span><?= Yii::t('ad', 'Add to Favorites') ?></span>
 						</a>
 					</li>
-		            <?php } ?>
 					<li class="color-5">
 						<a href="#" data-toggle="modal" data-target="#popup-map">
 							<span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
@@ -213,8 +211,8 @@ $count_review = $reviews->count();
                                             </div>
                                         <?php } } ?>
                                     <?php if(!empty($owner->username) && !$owner->isMe()) { ?>
-                                        <a href="#" data-toggle="modal" data-target="#popup_email_contact" class="email-btn btn-common btn-small">Email</a>
-                                        <a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
+                                        <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn btn-common btn-small">Email</a>
+                                        <a href="#" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
                                     <?php }?>
 								</div>
 							</div>
@@ -230,31 +228,30 @@ $count_review = $reviews->count();
 					<div class="address-listing">
 						<p><?= $address ?></p>
 					</div>
-					<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
-					<ul class="clearfix list-attr-td">
-                        <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
-                            <li><?=Yii::t('listing','updating')?></li>
-                        <?php } else {
-                            echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '';
-                            echo $product->adProductAdditionInfo->room_no ? '<li><span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
-                            echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
-                        } ?>
-					</ul>
+					<div class="pull-left left-attr-detail">
+						<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
+						<ul class="clearfix list-attr-td">
+	                        <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
+	                            <li><?=Yii::t('listing','updating')?></li>
+	                        <?php } else {
+	                            echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '';
+	                            echo $product->adProductAdditionInfo->room_no ? '<li><span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
+	                            echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
+	                        } ?>
+						</ul>
+					</div>
+					<div class="pull-left mgT-10 right-attr-detail">
+						<p class="price-item"><?= Yii::t('ad', 'Price') ?><strong><?= StringHelper::formatCurrency($product->price) ?></strong></p>
+					</div>
 				</div>
 				<?=$this->renderAjax('/ad/_partials/shareEmail',[
                     'popup_email_name' => 'popup_email_contact',
                     'product' => $product,
                     'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
-                    'recipientEmail' => null,
+                    'from_name' => empty($user) ? "" : (empty($user->profile->name) ? $user->username : $user->profile->name),
+                    'recipientEmail' => empty($owner) ? "" : (empty($owner->profile->public_email) ? $owner->email : $owner->profile->public_email),
+                    'to_name' => empty($owner) ? "" : (empty($owner->profile->name) ? $owner->username : $owner->profile->name),
                     'params' => ['your_email' => false, 'recipient_email' => false] ])?>
-
-                <?=$this->renderAjax('/ad/_partials/shareEmail',[
-                    'popup_email_name' => 'popup_email_share',
-                    'product' => $product,
-                    'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
-                    'recipientEmail' => null,
-                    'params' => ['your_email' => false, 'recipient_email' => false] ])?>
-
 
 				<div id="popup-map" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 					<div class="modal-dialog" role="document">
@@ -328,42 +325,76 @@ $count_review = $reviews->count();
                 /**
                  * notification
                  */
-                if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) {
-                    $userVisit = Yii::$app->user->identity;
-                    $userTo = $owner;
-
-                    $nameUserTo = $userTo->profile->getDisplayName();
-                    $nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
+                if(!Yii::$app->user->isGuest) {
+					$nameUserTo = !empty($owner) ? $owner->profile->getDisplayName() : $product->adContactInfo->name;
+					$nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
                     ?>
                     <script>
                         $(document).ready(function () {
-                            $(document).on('click', '.save-item', function (e) {
-                                e.preventDefault();
+                        	$('.save-item').on('click', function (e) {
+                        		e.preventDefault();
+                        		var _this = $(this);
                                 $(this).toggleClass('active');
-                                var timer = 0;
-                                clearTimeout(timer);
+                                
                                 var _id = $(this).attr('data-id');
                                 var _url = $(this).attr('data-url');
                                 var _stt = ($(this).hasClass('active')) ? 1 : 0;
-                                timer = setTimeout(function () {
-                                    $.ajax({
-                                        type: "post",
-                                        url: _url,
-                                        data: {id: _id, stt: _stt},
-                                        success: function (data) {
-                                            if(data.statusCode == 200){
-                                                var to_jid = chatUI.genJid('<?=$userTo->username?>');
-                                                Chat.sendMessage(to_jid , 'save product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: data.parameters.msg});
-                                            }
+                                
+                                $.ajax({
+                                    type: "post",
+                                    url: _url,
+                                    data: {id: _id, stt: _stt},
+                                    success: function (data) {
+                                        if(data.statusCode == 200){
+											<?php if(!empty($owner)){
+											?>
+                                            	var to_jid = chatUI.genJid('<?=$owner->username?>');
+                                            	Chat.sendMessage(to_jid , '{owner} favorite {product}', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: data.parameters.msg, product: '<?=$address?>'
+												});
+											<?php }?>
+											_this.alertBox({
+												txt: "<?=Yii::t('ad', 'Add to Favorites Success')?>"
+											});
                                         }
-                                    });
-                                }, 500);
-
-                            });
+                                    }
+                                });
+                        	});
+                        	/*$(document).on('click', '.save-item', function (e) {
+                            	alert(1);
+                            	e.preventDefault();
+                                
+                                var _this = $(this);
+                                $(this).toggleClass('active');
+                                
+                                var _id = $(this).attr('data-id');
+                                var _url = $(this).attr('data-url');
+                                var _stt = ($(this).hasClass('active')) ? 1 : 0;
+                                
+                                $.ajax({
+                                    type: "post",
+                                    url: _url,
+                                    data: {id: _id, stt: _stt},
+                                    success: function (data) {
+                                        if(data.statusCode == 200){
+											<?php if(!empty($owner)){
+											?>
+                                            	var to_jid = chatUI.genJid('<?=$owner->username?>');
+                                            	Chat.sendMessage(to_jid , '{owner} favorite {product}', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: data.parameters.msg, product: '<?=$address?>'
+												});
+											<?php }?>
+											_this.alertBox({
+												txt: "<?=Yii::t('ad', 'Add to Favorites Success')?>"
+											});
+                                        }
+                                    }
+                                });
+                            });*/
                             $(document).bind('chat/afterConnect', function (event, data) {
-                                <?php if(Yii::$app->session->getFlash('notify_other')){?>
-                                var to_jid = chatUI.genJid('<?=$userTo->username?>');
-                                Chat.sendMessage(to_jid , 'view product', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: <?=Yii::$app->session->getFlash('notify_other');?>});
+                                <?php if(Yii::$app->session->getFlash('notify_other') && !empty($owner)){
+                                ?>
+                                	var to_jid = chatUI.genJid('<?=$owner->username?>');
+                                	Chat.sendMessage(to_jid , '{owner} view {product}', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: <?=Yii::$app->session->getFlash('notify_other');?>, product: '<?=$address?>'
+									});
                                 <?php }?>
                             });
                         });
@@ -374,7 +405,7 @@ $count_review = $reviews->count();
                 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.rateit.js', ['position'=>View::POS_END]);
                 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/clipboard.min.js', ['position'=>View::POS_END]);
                 ?>
-				
+
 				<script>
 					$(document).ready(function () {
 
@@ -417,13 +448,11 @@ $count_review = $reviews->count();
 						});
 
 						var swiper = new Swiper('.swiper-container', {
-							pagination: '.swiper-pagination',
-							paginationClickable: true,
-					        nextButton: '.swiper-button-next',
+							nextButton: '.swiper-button-next',
 					        prevButton: '.swiper-button-prev',
 					        spaceBetween: 0
 					    });
-
+						
 						$('.tooltip-show').tooltip();
 
 						$('#popup-map').on('show.bs.modal', function (e) {
@@ -478,6 +507,19 @@ $count_review = $reviews->count();
                             return false;
                         });
 
+                        $(document).on('click','.email-btn', function () {
+                            var type = $(this).data('type');
+                            if(type == 'share'){
+                                $('#popup_email .popup_title').text('<?=Yii::t('send_email','SHARE VIA EMAIL')?>');
+                                $('#share_form .type').attr('value', 'share');
+                                $('#share_form .recipient_email').attr('value', '');
+
+                            } else if(type == 'contact'){
+                                $('#popup_email .popup_title').text('<?=Yii::t('send_email','CONTACT')?>');
+                                $('#share_form .type').attr('value', 'contact');
+                            }
+                        });
+
                         $(document).on('click','.report', function () {
                         	var _user_id = parseInt($('#report-form #uid').val());
 	                            if(_user_id != 0) {
@@ -498,12 +540,12 @@ $count_review = $reviews->count();
                                     $('#report-listing').modal('hide');
                                     if (data == 200) {
                                         $('body').loading({done: true});
+                                        
                                         $('body').alertBox({
-                                        	txt: "<?=Yii::t('listing', 'Report has been sent.')?>"
+                                        	txt: "<?=Yii::t('listing', 'Report has been sent.')?>",
+                                        	duration: 2000
                                         });
-                                        //$('#popup-alert-report .report_text').text("<?=Yii::t('listing', 'Report has been sent.')?>");
-                                        //$('#popup-alert-report').modal('show');
-
+                                        
                                         return true;
                                     }
                                 },
@@ -515,21 +557,11 @@ $count_review = $reviews->count();
                             return false;
                         });
 
-						/*$(document).on('click', '#popup-share-social .icon-email-1', function (e) {
-							$('#popup-share-social').addClass('hide-popup');
-							$('.email-btn').trigger('click');
-						});*/
-
                         if($('.list-tienich-detail>li').length < 1){
                             $('.list-tienich-detail').append("<li><?=Yii::t('listing','updating')?></li>");
                         }
 					});
 				</script>
-
-				<p class="price-td">
-					<span><?= Yii::t('ad', 'Price') ?></span>
-					<?= StringHelper::formatCurrency($product->price) ?>
-				</p>
 			</div>
 			<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 		        <div class="panel panel-default">
@@ -674,8 +706,8 @@ $count_review = $reviews->count();
 									</div>
                                     <?php } } ?>
 									<?php if(!empty($owner->username) && !$owner->isMe()) { ?>
-                                        <a href="#" data-toggle="modal" data-target="#popup_email_contact" class="email-btn btn-common btn-small">Email</a>
-										<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
+                                        <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn btn-common btn-small">Email</a>
+										<a href="#" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
 									<?php }?>
 								</div>
 							</div>

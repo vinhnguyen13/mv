@@ -117,7 +117,18 @@ if(!empty($jid_id)){
 			$('.wrap-history .chat-list .item a').removeClass('active');
 			$(this).addClass('active');
 			var user = $(this).parent().attr('chat-with');
-			$(document).trigger('chat/withAnother', [user]);
+//			if(!checkMobile()){
+			if(!1){
+				var chatBoxExist = chatUI.getBoxChat('.item-box-chat', '<?=Yii::$app->user->identity->username?>', user);
+				if(chatBoxExist)
+					chatBoxExist.remove();
+				$(document).trigger('chat/withAnother', [user]);
+			}else{
+				var chatBoxExist = chatUI.getBoxChat('.wrap-item-live .chat-container', '<?=Yii::$app->user->identity->username?>', user);
+				if(chatBoxExist)
+					chatBoxExist.remove();
+				$(document).trigger('chat/showBoxChat', [user]);
+			}
 			return false;
 		});
 		/*$(document).on('keyup', '#findConversation', function (e) {

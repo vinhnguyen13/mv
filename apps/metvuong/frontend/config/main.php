@@ -153,7 +153,7 @@ $return =  [
                     'sourceMessageTable' => '{{%language_source}}',
                     'messageTable' => '{{%language_translate}}',
                     'cachingDuration' => 86400,
-                    'enableCaching' => false,
+                    'enableCaching' => true,
                 ],
                 'user*' => [
                     'class' => 'yii\i18n\DbMessageSource',
@@ -162,7 +162,7 @@ $return =  [
                     'sourceMessageTable' => '{{%language_source}}',
                     'messageTable' => '{{%language_translate}}',
                     'cachingDuration' => 86400,
-                    'enableCaching' => false,
+                    'enableCaching' => true,
                 ],
             ]
         ],
@@ -226,6 +226,8 @@ $return['components']['urlManager']['rules'] = [
     'mvuser/protect/<action>' => 'user/security/<action>',
     'mvuser/join/<action>' => 'user/registration/<action>',
     'mvuser/forgot/<action>' => 'user/recovery/<action>',
+
+    'listing/<action>' => 'ad/<action>',
 
 ];
 

@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 use frontend\components\Controller;
 use frontend\models\Ad;
+use frontend\models\Profile;
 use frontend\models\ShareForm;
 use frontend\models\Tracking;
 use frontend\models\UserActivity;
@@ -37,6 +38,7 @@ use vsoft\ad\models\AdStreet;
 use vsoft\ad\models\AdBuildingProject;
 use frontend\models\AdProductSearch;
 use yii\db\ActiveRecord;
+use frontend\models\Elastic;
 
 class AdController extends Controller
 {
@@ -57,6 +59,7 @@ class AdController extends Controller
 	}
     
     public function actionUpload() {
+        //sleep(500);
         if($_FILES) {
     		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     		
@@ -294,6 +297,9 @@ class AdController extends Controller
     			$result = ['success' => true];
     			
     			if($product->validate() && $additionInfo->validate() && $contactInfo->validate()) {
+    				$totalImage = empty($post['images']) ? 0 : count($post['images']);
+    				
+    				$product->score = AdProduct::calcScore($product, $additionInfo, $contactInfo, $totalImage);
     				$product->save(false);
     				$additionInfo->save(false);
     				$contactInfo->save(false);
@@ -392,6 +398,8 @@ class AdController extends Controller
     		
     		if($product->validate() && $additionInfo->validate() && $contactInfo->validate()) {
     			$product->user_id = Yii::$app->user->id;
+    			$totalImage = empty($post['images']) ? 0 : count($post['images']);
+    			$product->score = AdProduct::calcScore($product, $additionInfo, $contactInfo, $post['images']);
     			$product->save(false);
     			
     			$additionInfo->product_id = $product->id;
@@ -615,22 +623,26 @@ class AdController extends Controller
             ]);
             $model->load($post);
             $model->validate();
+
             if (!$model->hasErrors()) {
-                $from_user = isset($post["from_name"]) ? $post["from_name"] : null;
+
+                $from_name = !empty($model->from_name) ? $model->from_name : $model->your_email;
+                $type_email = $model->type == "share" ? "chia sẻ" : "liên hệ với bạn qua";
+
                 // send to
-                $subEmail = empty($model->subject) ? $from_user . " [".$model->your_email."]" . " sent a message from Metvuong.com" : "Metvuong.com - ". $model->subject;
+                $subjectEmail = "Metvuong.com - {$from_name} {$type_email} tin {$model->pid}";
                 $result = Yii::$app->mailer->compose(['html' => '../mail/notifyReceivedEmail-html',], ['contact' => $model])
                 ->setFrom(Yii::$app->params['adminEmail'])
-                ->setTo([$model->recipient_email])
-                ->setSubject($subEmail)
+                ->setTo([trim($model->recipient_email)])
+                ->setSubject($subjectEmail)
                 ->send();
                 if($result){
                     $send_from = isset($post["send_from"]) ? $post["send_from"] : null;
-                    $from_email = $model->your_email;
-                    $to_email = $model->recipient_email;
-                    $subject = $model->subject;
-                    $content = $model->content;
-                    Tracking::find()->saveEmailLog($from_user, $from_email, $to_email, $subject, $content, $send_from);
+                    $from_email = trim($model->your_email);
+                    $to_email = trim($model->recipient_email);
+                    $subject = trim($model->subject);
+                    $content = trim($model->content);
+                    Tracking::find()->saveEmailLog($from_name, $from_email, $to_email, $subject, $content, $send_from);
                 }
                 return ['status' => 200, 'result' => $result];
             } else {
@@ -693,6 +705,17 @@ class AdController extends Controller
 		return $response;
 	}
 
+	public function actionListSw($districtId) {
+		Yii::$app->response->format = Response::FORMAT_JSON;
+	
+		$response = [];
+	
+		$response['wards'] = AdWard::getListByDistrict($districtId);
+		$response['streets'] = AdStreet::getListByDistrict($districtId);
+	
+		return $response;
+	}
+
     public function actionTrackingShare(){
         Yii::$app->response->format = Response::FORMAT_JSON;
         $uid = Yii::$app->user->isGuest ? null : Yii::$app->user->id;
@@ -702,5 +725,50 @@ class AdController extends Controller
             return Tracking::find()->productShare($uid, $pid, time(), $type);
         }
         return false;
+    }
+
+    public function actionListProject() {
+    	$v = \Yii::$app->request->get('v');
+    	$v = Elastic::transform($v);
+    	$response = [];
+    	
+    	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    	
+    	$params = [
+			'query' => [
+				'bool' => [
+					'must' => [
+						[
+							'match_phrase_prefix' => [
+								'search_field' => [
+									'query' => $v,
+									'max_expansions' => 100
+								]
+							],
+						],	
+						[
+							'match' => [
+								'city_id' => AdProduct::DEFAULT_CITY,	
+							],
+						]
+					],
+				],
+			],
+			'_source' => ['full_name']
+    	];
+    	
+    	$ch = curl_init(Yii::$app->params['elastic']['config']['hosts'][0] . '/term/project_building/_search');
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    		 
+		$result = json_decode(curl_exec($ch), true);
+		
+		foreach ($result['hits']['hits'] as $k => $hit) {
+			$response[$k]['full_name'] = $hit['_source']['full_name'];
+			$response[$k]['id'] = $hit['_id'];
+		}
+		
+		return $response;
     }
 }

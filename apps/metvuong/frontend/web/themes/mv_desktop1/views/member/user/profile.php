@@ -96,39 +96,8 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
                     </div>
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane fade in active" id="list-all">
-                            <ul class="clearfix list-post">
-                                <?php
-                                foreach ($products as $product) {
-                                ?>
-                                <li class="col-xs-12 col-sm-6">
-                                    <div class="wrap-item-post">
-                                        <a href="<?= Url::to(['/ad/update', 'id' => $product->id]) ?>" class="edit-listing"><span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
-                                        <a href="<?= $product->urlDetail() ?>" class="rippler rippler-default">
-                                            <div class="img-show"><div><img src="<?= $product->representImage ?>">
-                                                    <input type="hidden" value="<?= $product->representImage ?>">
-                                                </div></div>
-                                            <div class="title-item"><?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= $types[$product->type] ?></div>
-                                        </a>
-                                        <div class="address-feat clearfix">
-                                            <p class="date-post"><?=Yii::t('listing','Listing date')?>: <strong><?= date("d/m/Y H:i", $product->created_at) ?></strong></p>
-                                            <div class="address-listing"><a href="<?= $product->urlDetail() ?>"><?=$product->getAddress()?></a></div>
-                                            <p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
-                                            <ul class="clearfix list-attr-td">
-                                                <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
-                                                    <li><span><?=Yii::t('listing','updating')?></span></li>
-                                                <?php } else {
-                                                    echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '';
-                                                    echo $product->adProductAdditionInfo->room_no ? '<li> <span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
-                                                    echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
-                                                } ?>
-                                            </ul>    
-                                        </div>
-                                        <div class="bottom-item clearfix">
-                                            <p><?=Yii::t('listing','Price')?> <strong class="color-cd pdL-5"><?= StringHelper::formatCurrency($product->price) ?> vnd</strong></p>
-                                        </div>
-                                    </div>
-                                </li>
-                                <?php } ?>
+                            <ul class="clearfix listing-item">
+                                <?= $this->render('/ad/_partials/list', ['products' => $products]) ?>
                             </ul>
                             <nav class="text-center">
                                 <?php
@@ -139,75 +108,13 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
                             </nav>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="list-by">
-                            <ul class="clearfix list-post">
-                                <?php
-                                foreach ($sale_products as $product) {
-                                    ?>
-                                    <li class="col-xs-12 col-sm-6">
-                                        <div class="wrap-item-post">
-                                            <a phref="#" class="edit-listing"><span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
-                                            <a href="<?= $product->urlDetail() ?>" class="rippler rippler-default">
-                                                <div class="img-show"><div><img src="<?= $product->representImage ?>">
-                                                        <input type="hidden" value="<?= $product->representImage ?>">
-                                                    </div></div>
-                                                <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></div>
-                                            </a>
-                                            <div class="address-feat clearfix">
-                                                <p class="date-post"><?=Yii::t('listing','Listing date')?>: <strong><?= date("d/m/Y H:i", $product->created_at) ?></strong></p>
-                                                <div class="address-listing"><a href="<?= $product->urlDetail() ?>"><?=$product->getAddress()?></a></div>
-                                                <p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
-                                                <ul class="clearfix list-attr-td">
-                                                    <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
-                                                        <li><span><?=Yii::t('listing','updating')?></span></li>
-                                                    <?php } else {
-                                                        echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '';
-                                                        echo $product->adProductAdditionInfo->room_no ? '<li> <span class="icon-mv"><span class="icon-bed-search"></span></span> ' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
-                                                        echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
-                                                    } ?>
-                                                </ul>
-                                            </div>
-                                            <div class="bottom-item clearfix">
-                                                <p><?=Yii::t('listing','Price')?> <strong class="color-cd pdL-5"><?= StringHelper::formatCurrency($product->price) ?> vnd</strong></p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                <?php } ?>
+                            <ul class="clearfix listing-item">
+                                <?= $this->render('/ad/_partials/list', ['products' => $sale_products]) ?>
                             </ul>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="list-rent">
-                            <ul class="clearfix list-post">
-                                <?php
-                                foreach ($rent_products as $product) {
-                                    ?>
-                                    <li class="col-xs-12 col-sm-6">
-                                        <div class="wrap-item-post">
-                                            <a phref="#" class="edit-listing"><span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
-                                            <a href="<?= $product->urlDetail() ?>" class="rippler rippler-default">
-                                                <div class="img-show"><div><img src="<?= $product->representImage ?>">
-                                                        <input type="hidden" value="<?= $product->representImage ?>">
-                                                    </div></div>
-                                                <div class="title-item"><?= ucfirst($categories[$product->category_id]['name']) ?> <?= $types[$product->type] ?></div>
-                                            </a>
-                                            <div class="address-feat clearfix">
-                                                <p class="date-post"><?=Yii::t('listing','Listing date')?>: <strong><?= date("d/m/Y H:i", $product->created_at) ?></strong></p>
-                                                <div class="address-listing"><a href="<?= $product->urlDetail() ?>"><?=$product->getAddress()?></a></div>
-                                                <p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
-                                                <ul class="clearfix list-attr-td">
-                                                    <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
-                                                        <li><span><?=Yii::t('listing','updating')?></span></li>
-                                                    <?php } else {
-                                                        echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '';
-                                                        echo $product->adProductAdditionInfo->room_no ? '<li> <span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
-                                                        echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
-                                                    } ?>
-                                                </ul>
-                                            </div>
-                                            <div class="bottom-item clearfix">
-                                                <p><?=Yii::t('listing','Price')?> <strong class="color-cd pdL-5"><?= StringHelper::formatCurrency($product->price) ?> vnd</strong></p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                <?php } ?>
+                            <ul class="clearfix listing-item">
+                                <?= $this->render('/ad/_partials/list', ['products' => $rent_products]) ?>
                             </ul>
                         </div>
                     </div>

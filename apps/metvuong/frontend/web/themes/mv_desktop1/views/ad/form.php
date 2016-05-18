@@ -1,499 +1,528 @@
 <?php 
 	use yii\widgets\ActiveForm;
 	use yii\helpers\Html;
-	use vsoft\ad\models\AdProduct;
-	use yii\web\View;
-	use vsoft\ad\models\AdBuildingProject;
-	use yii\helpers\ArrayHelper;
-	use yii\helpers\Url;
-	use vsoft\ad\models\AdProductAdditionInfo;
-	use common\widgets\fileupload\FileUpload;
-	use vsoft\ad\models\AdCity;
-	use vsoft\ad\models\AdDistrict;
-	use vsoft\ad\models\AdWard;
-	use vsoft\ad\models\AdStreet;
-	use vsoft\ad\models\AdCategory;
-use vsoft\ad\models\AdImages;
+use vsoft\ad\models\AdCategory;
+use yii\helpers\ArrayHelper;
+use vsoft\ad\models\AdCity;
+use vsoft\ad\models\AdProduct;
+use vsoft\ad\models\AdDistrict;
+use vsoft\ad\models\AdWard;
+use vsoft\ad\models\AdStreet;
+use vsoft\ad\models\AdProductAdditionInfo;
 use vsoft\ad\models\AdFacility;
+use common\widgets\fileupload\FileUpload;
+use yii\helpers\Url;
+use yii\web\View;
+use vsoft\ad\models\AdImages;
 
-	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.jquery.min.js', ['position' => View::POS_END]);
-	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/string-helper.js', ['position' => View::POS_END]);
-	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/post-listing.js', ['position' => View::POS_END]);
+	/**
+	 * @var $product vsoft\ad\models\AdProduct
+	 * @var $this yii\web\View
+	 * @var $additionInfo vsoft\ad\models\AdProductAdditionInfo
+	 */
+
+// $product->category_id = AdCategory::CATEGORY_CHCK;
+// $product->project_building_id = 1491;
+// $product->city_id = 1;
+// $product->district_id = 19;
+// $product->ward_id = 253;
+// $product->street_id = 2755;
+
+	$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/select2.min.css');
+	$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/swiper.min.css');
+	$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/post-listing.css');
 	$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
-	$this->registerCss(".wrap-clone:after { display: block; content: ''; clear: both; } #project-info {position: relative;} #project-info .loading-proccess span {border-top-color: #8C7777; border-left-color: #8C7777;} #project-info .loading-proccess {display: none;} #project-info.loading .loading-proccess {display: block;} #project-info.loading .result {display: none;}");
-	$this->registerJs("var APPLY_TO_TYPE_BOTH = " . AdCategory::APPLY_TO_TYPE_BOTH . ";", View::POS_HEAD);
+	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.jquery.min.js', ['position' => View::POS_END]);
+	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/jquery-ui.min.js', ['position' => View::POS_END]);
+	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/select2.full.min.js', ['position' => View::POS_END]);
+	$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/string-helper.js', ['position' => View::POS_END]);
+	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/post-listing.js', ['position' => View::POS_END]);
 	
-	$listRoom = [];
-	for($i = 1; $i <= 10; $i++) {
-		$listRoom[$i] = $i;
+	$cities = AdCity::find()->all();
+	$citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
+	$citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != AdProduct::DEFAULT_CITY)]; });
+	
+	$wards = AdWard::getListByDistrict($product->district_id);
+	$wardsDropdown = ArrayHelper::map($wards, 'id', 'name');
+	$wardsOptions = ArrayHelper::map($wards, 'id', function($ward){ return ['data-pre' => $ward['pre']]; });
+	
+	$streets = AdStreet::getListByDistrict($product->district_id);
+	$streetsDropdown = ArrayHelper::map($streets, 'id', 'name');
+	$streetsOptions = ArrayHelper::map($streets, 'id', function($street){ return ['data-pre' => $street['pre']]; });
+	
+	$districtDropdown = ArrayHelper::map(AdDistrict::getListByCity($product->city_id), 'id', 'name');
+	
+	$categories = AdCategory::find()->orderBy('order')->all();
+	$categoriesDropDown = [];
+	$categoriesDropDownOptions = [];
+	$categoriesJs = [];
+	
+	foreach ($categories as $category) {
+		if(adCategory::APPLY_TO_TYPE_BOTH == $category->apply_to_type || $category->apply_to_type == $product->type) {
+			$categoriesDropDown[$category->id] = ucfirst(Yii::t('ad', $category->name));
+			$categoriesDropDownOptions[$category->id] = ['data-limit' => $category->limit_area];
+		}
+		$categoriesJs[] = [
+			'id' => $category->id,
+			'name' => ucfirst(Yii::t('ad', $category->name)),
+			'apply_to_type' => $category->apply_to_type,
+			'limit_area' => $category->limit_area,
+		];
 	}
 	
-	$owner =  Yii::$app->user->identity;
-	if($owner && $owner->profile) {
-		$avatar = $owner->profile->getAvatarUrl();
-	} else {
-		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
-	}
+	$this->registerJs("var tempSlide = " . ($product->adImages ? json_encode(ArrayHelper::map($product->adImages, 'id', function($im) { return $im->getUrl(AdImages::SIZE_LARGE);})) : 'false') . "; var isNewRecord = " . ($product->isNewRecord ? 'true' : 'false') . "; var categories = " . json_encode($categoriesJs) . "; var APPLY_TO_TYPE_BOTH = " . AdCategory::APPLY_TO_TYPE_BOTH . "; var CHCK = " . AdCategory::CATEGORY_CHCK . ";", View::POS_HEAD);
 ?>
 <div class="title-fixed-wrap container">
 	<div class="post-listing">
-		<div class="title-top"><?= $product->isNewRecord ? Yii::t('ad', 'Post Listing') : sprintf(Yii::t('ad', 'Update Listing MV%s'), $product->id) ?></div>
-		<div class="wrap-frm-listing clearfix">
-			<?php
-				$form = ActiveForm::begin ( [ 
-					'id' => 'listing-form',
-					'enableClientValidation' => false,
-					'options' => [ 
-						'autocomplete' => 'off',
-						'spellcheck' => 'false'
-					]
-				]);
-			?>
-				<input type="hidden" id="is-update" value="<?= $product->isNewRecord ? 0 : 1 ?>" />
-				<div class="step-link">
-					<ul class="clearfix">
-						<li><a data-active-section="tt-chung" class="active" href="#">1</a><span class="icon arrowLeft"></span></li>
-						<li><a data-active-section="tt-chitiet" href="#">2</a><span class="icon arrowLeft"></span></li>
-						<li><a data-active-section="hinh-anh" href="#">3</a><span class="icon arrowLeft"></span></li>
-						<li><a data-active-section="tien-ich" href="#">4</a><span class="icon arrowLeft"></span></li>
-					</ul>
+		<div class="title-top"><?= Yii::t('ad', 'Post Listing') ?></div>
+		<div id="success-notify" class="hide">
+			<?php if($product->isNewRecord): ?>
+				<div class="color-cd fs-20 font-600 mgB-15 text-uper"><?= Yii::t('ad', 'Đăng tin thành công') ?></div>
+				<p class="mgB-10 fs-14"><?= Yii::t('ad', 'Tin của bạn đang chờ xét duyệt và sẽ hiển thị đến người xem sớm nhất') ?></p>
+				<p class="mgB-10 fs-14"><?= Yii::t('ad', 'Cảm ơn đã sử dụng dịch vụ của MetVuong') ?></p>
+				<div class="text-center">
+					<a class="btn-common mgR-10" href="<?= Url::current() ?>"><?= Yii::t('ad', 'Tiếp tục đăng tin') ?></a>
+					<a class="btn-common mgL-10" id="to-detail" href="#"><?= Yii::t('ad', 'Xem tin vừa đăng') ?></a>	
 				</div>
-				<div id="step1" class="section select-type item-step clearfix">
-				<?php if($product->isNewRecord) :?>
-					<p class="text-center step-txt"><?= Yii::t('ad', '4 basic steps') ?></p>
-				<?php endif; ?>
-					<div class="dt-hide">
-						<ul class="clearfix">
-							<li><?= Yii::t('ad', 'YOU ARE?') ?></li>
-							<li><?= Yii::t('ad', 'YOU WANT TO?') ?></li>
-						</ul>
-					</div>
-					<div class="dt-show">
-						<ul class="clearfix step-check">
-							<li>
-								<a class="frm-radio" href="#">
-									<?php $ownerName = Html::getInputName($product, 'owner') ?>
-									<span class="radio-ui icon-postlisting icon-chunha">
-										<?= Html::radio($ownerName, ($product->owner == AdProduct::OWNER_HOST || !$product->owner), ['value' => AdProduct::OWNER_HOST, 'id' => 'owner-host']) ?>
-									</span>
-									<span class="txt-type-post"><?= Yii::t('ad', 'Owner') ?></span>
-								</a>
-							</li>
-							<li>
-								<a class="frm-radio" href="#">
-									<span class="radio-ui icon-postlisting icon-mogioi">
-										<?= Html::radio($ownerName, ($product->owner == AdProduct::OWNER_AGENT), ['value' => AdProduct::OWNER_AGENT, 'id' => 'owner-agent']) ?>
-									</span>
-									<span class="txt-type-post"><?= Yii::t('ad', 'Agent') ?></span>
-								</a>
-							</li>
-							<li>
-								<a class="frm-radio" href="#">
-									<span class="radio-ui icon-postlisting icon-ban-post">
-										<?php $typeName = Html::getInputName($product, 'type') ?>
-										<?= Html::radio($typeName, ($product->type == AdProduct::TYPE_FOR_SELL || !$product->type), ['value' => AdProduct::TYPE_FOR_SELL, 'id' => 'type-for-sell']) ?>
-									</span>
-									<span class="txt-type-post"><?= Yii::t('ad', 'Sell') ?></span>
-								</a>
-							</li>
-							<li>
-								<a class="frm-radio" href="#">
-									<span class="radio-ui icon-postlisting icon-chothue">
-										<?= Html::radio($typeName, ($product->type == AdProduct::TYPE_FOR_RENT), ['value' => AdProduct::TYPE_FOR_RENT, 'id' => 'type-for-rent']) ?>
-									</span>
-									<span class="txt-type-post"><?= Yii::t('ad', 'Rent') ?></span>
-								</a>
-							</li>
-						</ul>
-						
-						<?php
-							$categories = AdCategory::find()->all();
-							$categoriesDropdown = ArrayHelper::map($categories, 'id', function($model){return Yii::t('ad', $model->name);});
-							$categoriesOptions = ArrayHelper::map($categories, 'id', function($category){ return ['data-type' => $category->apply_to_type, 'data-limit' => $category->limit_area]; });
-								
-							echo $form->field($product, 'category_id')
-									 ->label(false)
-									 ->dropDownList($categoriesDropdown, ['prompt' => $product->getAttributeLabel('category_id'), 'options' => $categoriesOptions])
-						?>
-					</div>
+				
+			<?php else: ?>
+				<div class="color-cd fs-20 font-600 mgB-15 text-uper"><?= Yii::t('ad', 'Cập nhật thành công') ?></div>
+				<p class="mgB-10 fs-14"><?= Yii::t('ad', 'Tin của bạn sẽ được xét duyệt lại trước khi hiển thị đến người xem') ?></p>
+				<p class="mgB-10 fs-14"><?= Yii::t('ad', 'Cảm ơn đã sử dụng dịch vụ của MetVuong') ?></p>
+				<div class="text-center">
+					<a class="btn-common" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>"><?= Yii::t('ad', 'Quay trở về Dashboard') ?></a>
+					<a class="btn-common" id="to-detail" href="#"><?= Yii::t('ad', 'Xem tin vừa cập nhật') ?></a>
 				</div>
-
-				<div id="step2" class="tt-chung item-step section">
-					<div class="title-step"><?= Yii::t('ad', 'General Information') ?></div>
-					<div class="row">
-						<?php
-							$cities = AdCity::find()->all();
-							$citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
-							$citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != AdProduct::DEFAULT_CITY)]; });
-							echo $form->field($product, 'city_id', ['options' => ['class' => 'col-xs-6 form-group']])
-									  ->label(false)
-									  ->dropDownList($citiesDropdown, ['prompt' => $product->getAttributeLabel('city_id'), 'options' => $citiesOptions])
-						?>
-						<?= $form->field($product, 'district_id', ['options' => ['class' => 'col-xs-6 form-group']])
-								 ->label(false)
-								 ->dropDownList(ArrayHelper::map(AdDistrict::getListByCity($product->city_id), 'id', 'name'), ['prompt' => $product->getAttributeLabel('district_id')]) ?>
-						
-						<div id="project-info-wrap" class="col-xs-12">
-							<?php
-								$projects = $product->district_id ? AdBuildingProject::find()->where('district_id = :district_id', [':district_id' => $product->district_id])->all() : [];
-								echo $form->field($product, 'project_building_id', ['options' => ['class' => 'form-group']])
-									 ->label(false)
-									 ->dropDownList(ArrayHelper::map($projects, 'id', 'name'), ['prompt' => $product->getAttributeLabel('project_building_id')])
-							?>
-							<div id="project-info" style="display: none;" data-url="<?= Url::to(['building-project/detail']) ?>">
-								<div class="loading-proccess"><span></span></div>
-								<div class="result">
-									<div><?= Yii::t('ad', 'Vị trí') ?>: <span id="project-info-location"></span></div>
-									<a target="_blank" id="project-info-detail" href="#"><?= Yii::t('ad', 'Xem chi tiết dự án') ?></a>
-								</div>
-							</div>
-						</div>
-						
-						<?= $form->field($product, 'ward_id', ['options' => ['class' => 'col-xs-12 form-group']])
-							->label(false)
-							->dropDownList(ArrayHelper::map(AdWard::getListByDistrict($product->district_id), 'id', 'name'), ['prompt' => $product->getAttributeLabel('ward_id')]) ?>
-							
-						<?= $form->field($product, 'street_id', ['options' => ['class' => 'col-xs-12 form-group']])
-							->label(false)
-							->dropDownList(ArrayHelper::map(AdStreet::getListByDistrict($product->district_id), 'id', 'name'), ['prompt' => $product->getAttributeLabel('street_id')]) ?>
-						
-						<?= $form->field($product, 'home_no', ['options' => ['class' => 'col-xs-12 form-group']])
-								->label(false)
-								->textInput(['placeholder' => $product->getAttributeLabel('home_no')]) ?>
-							
-						<?= $form->field($product, 'show_home_no', ['options' => ['class' => 'col-xs-12 form-group toggle-num-home']])->label(false)->checkbox(['data-set' => $product->isNewRecord ? '0' : '1']) ?>
-						
-						<div class="col-xs-12 form-group dt-post">
-							<?= $form->field($product, 'area', ['options' => ['class' => '']])
-								->label(false)
-								->textInput(['placeholder' => $product->getAttributeLabel('area')]) ?>
-							<span class="unit-dt">m2</span>
-						</div>
-						
-						<?= $form->field($product, 'price', ['options' => ['class' => 'col-xs-12 form-group'], 'template' => '{input}<span style="display: none;" id="price-format"></span>{error}'])
-								->textInput(['placeholder' => $product->getAttributeLabel('price')]) ?>
-						
-						<?= $form->field($additionInfo, 'room_no', ['options' => ['class' => 'col-xs-6 form-group']])
-							->label(false)
-							->dropDownList($listRoom, ['prompt' => $additionInfo->getAttributeLabel('room_no')]) ?>
-						
-						<?= $form->field($additionInfo, 'toilet_no', ['options' => ['class' => 'col-xs-6 form-group']])
-							->label(false)
-							->dropDownList($listRoom, ['prompt' => $additionInfo->getAttributeLabel('toilet_no')]) ?>
-						
-						<?= Html::activeHiddenInput($product, 'lat') ?>
-						<?= Html::activeHiddenInput($product, 'lng') ?>
-					</div>
-				</div>
-
-				<div id="step3" class="tt-chitiet item-step section">
-					<div class="title-step"><?= Yii::t('ad', 'Detail Information') ?></div>
-					<div class="row">
-						<?= $form->field($product, 'content', ['options' => ['class' => 'col-xs-12 form-group']])
-								->label(false)
-								->textArea(['placeholder' => $product->getAttributeLabel('content')]) ?>
-						
-						<div class="col-xs-6 form-group">
-							<?= $form->field($additionInfo, 'facade_width')
-								->label(false)
-								->textInput(['placeholder' => $additionInfo->getAttributeLabel('facade_width')]) ?>
-							<span class="unit-dt">m</span>
-						</div>
-						
-						<div class="col-xs-6 form-group">		
-						<?= $form->field($additionInfo, 'land_width')
-								->label(false)
-								->textInput(['placeholder' => $additionInfo->getAttributeLabel('land_width')]) ?>
-							<span class="unit-dt">m</span>
-						</div>
-						
-						<?= $form->field($additionInfo, 'home_direction', ['options' => ['class' => 'col-xs-12 form-group']])
-								->label(false)
-								->dropDownList(AdProductAdditionInfo::directionList(), ['prompt' => $additionInfo->getAttributeLabel('home_direction'), 'data-default' => $additionInfo->home_direction]) ?>
-						
-						<?= $form->field($additionInfo, 'facade_direction', ['options' => ['class' => 'col-xs-12 form-group']])
-								->label(false)
-								->dropDownList(AdProductAdditionInfo::directionList(), ['prompt' => $additionInfo->getAttributeLabel('facade_direction'), 'data-default' => $additionInfo->facade_direction]) ?>
-								
-						<?= $form->field($additionInfo, 'floor_no', ['options' => ['class' => 'col-xs-12 form-group']])
-								->label(false)
-								->textInput(['placeholder' => $additionInfo->getAttributeLabel('floor_no')]) ?>
-								
-						<?= $form->field($additionInfo, 'interior', ['options' => ['class' => 'col-xs-12 form-group']])
-								->label(false)
-								->textArea(['placeholder' => $additionInfo->getAttributeLabel('interior')]) ?>
-						
-						<?= $form->field($additionInfo, 'facility', ['options' => ['class' => 'col-xs-12 form-group']])
-								->label(false)
-								->checkboxList(ArrayHelper::map(AdFacility::find()->all(), 'id', 'name')) ?>
-					</div>
-				</div>
-
-				<div id="step4" class="hinh-anh item-step section">
-					<div class="title-step"><?= Yii::t('ad', 'Upload Photo') ?></div>
-					<?php
-						$files = [];
-						foreach ($product->adImages as $image) {
-							$files[] = [
-								'deleteType' => "DELETE",
-								'deleteUrl'	=> Url::to(['/ad/delete-file', 'file' => $image->file_name]),
-								'thumbnailUrl' => $image->getUrl(AdImages::SIZE_THUMB),
-								'name' => $image->file_name,
-								'url' => $image->getUrl(AdImages::SIZE_LARGE)
-							];
-						}
-					?>
-					<?= FileUpload::widget([
-							'files' => $files,
-							'name' => 'images', 
-							'url' => Url::to(['upload']),
-							'clientOptions' => [
-								'previewMinWidth' => 130,
-								'previewMinHeight' => 98,
-								'previewMaxWidth' => 130,
-								'previewMaxHeight' => 98,
-								'previewCrop' => true,
-							],
-							'clientEvents' => [
-								'fileuploadadded' => 'function(e, data) {form.upload.fileuploadadded(e, data, this);}',
-								'fileuploadcompleted' => 'function(e, data) {form.upload.fileuploadcompleted(e, data, this);}'
-							]
-						]) ?>
-				</div>
-
-				<div id="step5" class="tt-lienhe item-step section">
-					<div class="title-step"><?= Yii::t('ad', 'Contact Information') ?></div>
-					<div class="row">
-						<?= $form->field($contactInfo, 'name', ['options' => ['class' => 'col-xs-12 form-group']])
-								->label(false)
-								->textInput(['placeholder' => $contactInfo->getAttributeLabel('name')]) ?>
-						<?= $form->field($contactInfo, 'mobile', ['options' => ['class' => 'col-xs-12 form-group']])
-								->label(false)
-								->textInput(['placeholder' => $contactInfo->getAttributeLabel('mobile')]) ?>
-						<?= $form->field($contactInfo, 'email', ['options' => ['class' => 'col-xs-12 form-group']])
-								->label(false)
-								->textInput(['placeholder' => $contactInfo->getAttributeLabel('email')]) ?>
-						<?= $form->field($contactInfo, 'address', ['options' => ['class' => 'col-xs-12 form-group']])
-								->label(false)
-								->textInput(['placeholder' => $contactInfo->getAttributeLabel('address')]) ?>
-					</div>
-					<div class="text-center pdT-25">
-						<button type="button" class="preview btn-common" data-toggle="modal" data-target="#review-listing-post">Preview</button>
-					</div>
-				</div>
-			<?php $form->end() ?>
+			<?php endif; ?>
 		</div>
-	</div>
-	<div id="success-notify" class="hide">
-		<?php if($product->isNewRecord): ?>
-			<div class="color-cd fs-20 font-600 mgB-15 text-uper"><?= Yii::t('ad', 'Đăng tin thành công') ?></div>
-			<p class="mgB-10 fs-14"><?= Yii::t('ad', 'Tin của bạn đang chờ xét duyệt và sẽ hiển thị đến người xem sớm nhất') ?></p>
-			<p class="mgB-10 fs-14"><?= Yii::t('ad', 'Cảm ơn đã sử dụng dịch vụ của MetVuong') ?></p>
-			<div class="text-center">
-				<a class="btn-common mgR-10" href="<?= Url::current() ?>"><?= Yii::t('ad', 'Tiếp tục đăng tin') ?></a>
-				<a class="btn-common mgL-10" id="to-detail" href="#"><?= Yii::t('ad', 'Xem tin vừa đăng') ?></a>	
-			</div>
-			
-		<?php else: ?>
-			<div class="color-cd fs-20 font-600 mgB-15 text-uper"><?= Yii::t('ad', 'Cập nhật thành công') ?></div>
-			<p class="mgB-10 fs-14"><?= Yii::t('ad', 'Tin của bạn sẽ được xét duyệt lại trước khi hiển thị đến người xem') ?></p>
-			<p class="mgB-10 fs-14"><?= Yii::t('ad', 'Cảm ơn đã sử dụng dịch vụ của MetVuong') ?></p>
-			<div class="text-center">
-				<a class="btn-common" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>"><?= Yii::t('ad', 'Quay trở về Dashboard') ?></a>
-				<a class="btn-common" id="to-detail" href="#"><?= Yii::t('ad', 'Xem tin vừa cập nhật') ?></a>
-			</div>
-		<?php endif; ?>
-	</div>
-</div>
-	
-<div id="review-listing-post" class="detail-listing modal fade popup-common" style="display: none;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-body">
-				<div class="inner-popup">
-					<div class="wrap-swiper">
-						<div class="gallery-detail swiper-container">
-							<div class="swiper-wrapper"></div>
-							<div class="swiper-pagination"></div>
-							<div class="swiper-button-next"><span></span></div>
-							<div class="swiper-button-prev"><span></span></div>
-						</div>	
-					</div>
-		            
-					<div class="infor-listing">
-						<div class="address-feat clearfix">
-							<div class="posi_relative">
-								<p class="infor-by-up"></p>
-								<span data-ref="editS1" class="icon-mv fs-16 color-cd edit-listing" style="top: -5px; display: none;"><span class="icon-edit-copy-4"></span></span>
+		<div class="wrap-frm-listing row">
+			<div class="col-sm-8">
+				<?php if(!isset($_COOKIE['cpl'])): ?>
+				<div class="alert alert-success alert-dismissible" role="alert">
+					<a href="#" class="font-700 fs-14 color-cd-hover close-alert"><span class="icon-mv fs-12"><span class="icon-close-icon"></span></span></a>
+					<h2><?= Yii::t('ad', 'METVUONG khuyến khích các tin rao chất lượng') ?></h2>
+					<p><?= Yii::t('ad', 'Quý vị nhập thông tin chi tiết càng nhiều, thì tin rao này sẽ hiển thị lên kết quả tìm kiếm nhiều hơn và sẽ có nhiều khách hàng liên lạc hơn.') ?></p>
+				</div>
+				<?php endif; ?>
+				<?php $form = ActiveForm::begin([
+						'options' => [
+							'class' => 'clearfix'
+						]
+					]) ?>
+					<div class="group-frm">
+						<div class="title-frm"><?= Yii::t('ad', 'Loại tin') ?> <span class="pdL-10"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="max-point">8</span>') ?></span></div>
+						<div class="row">
+							<div class="form-group col-xs-12 col-sm-6">
+								<label for="<?= Html::getInputId($product, 'type') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('type') ?><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">3</span>') ?></span></label>
+								<?= Html::activeDropDownList($product, 'type', $product->getAdTypes(), ['class' => 'form-control']) ?>
 							</div>
-							<div class="posi_relative">
-								<div class="address-listing">
-									<p></p>
+							<div class="form-group col-xs-12 col-sm-6">
+								<?php $catP = ($product->category_id == AdCategory::CATEGORY_CHCK) ? 2 : 5 ?>
+								<label for="<?= Html::getInputId($product, 'category_id') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('category_id') ?><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">' . $catP . '</span>') ?></span></label>
+								<?= Html::activeDropDownList($product, 'category_id', $categoriesDropDown, ['options' => $categoriesDropDownOptions, 'class' => 'form-control', 'prompt' => "..."]) ?>
+								<div class="help-block"></div>
+							</div>
+							<div class="form-group col-xs-12 col-sm-6 project-wrap<?= $product->projectBuilding ? ' has-project' : '' ?>"<?= $product->category_id == AdCategory::CATEGORY_CHCK ? '' : ' style="display: none;"' ?>>
+								<label for="" class="fs-13 mgB-5"><?= $product->getAttributeLabel('project_building_id') ?><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">3</span>') ?></span></label>
+								<?= Html::activeHiddenInput($product, 'project_building_id') ?>
+								<input type="hidden" id="project-name" value="<?= $product->projectBuilding ? $product->projectBuilding->name : '' ?>" />
+								<a target="_blank" href="<?= $product->projectBuilding ? Url::to(['building-project/view', 'slug' => $product->projectBuilding->slug]) : '#'; ?>" id="project-value"><span class="icon-mv fs-12 mgR-5"><span class="icon-close-icon"></span></span><span class="name"><?= $product->projectBuilding ? $product->projectBuilding->name . ', ' . $districtDropdown[$product->projectBuilding->district_id] . ', ' . $citiesDropdown[$product->projectBuilding->city_id] : '' ?></span></a>
+								<input type="text" class="form-control" id="projectMask" placeholder="...">
+								<div id="search-list" class="hide"><ul></ul></div>
+							</div>
+						</div>
+					</div>
+
+					<div class="group-frm">
+						<div class="title-frm"><?= Yii::t('ad', 'Địa chỉ') ?> <span class="pdL-10"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="max-point">12</span>') ?></span></div>
+						<div class="row">
+							<div class="form-group col-xs-12 col-sm-6">
+								<label for="<?= Html::getInputId($product, 'city_id') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('city_id') ?><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">2</span>') ?></span></label>
+								<?= Html::activeDropDownList($product, 'city_id', $citiesDropdown, ['class' => 'form-control search', 'options' => $citiesOptions, 'prompt' => "...", 'disabled' => ($product->projectBuilding && $product->projectBuilding->city_id) ? true : false]) ?>
+								<div class="help-block"></div>
+							</div>
+							<div class="form-group col-xs-12 col-sm-6"<?= $product->city_id ? '' : ' style="display: none;"' ?>>
+								<label for="<?= Html::getInputId($product, 'district_id') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('district_id') ?><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">2</span>') ?></span></label>
+								<?= Html::activeDropDownList($product, 'district_id', $districtDropdown, ['class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose City to show Districts'), 'disabled' => ($product->projectBuilding && $product->projectBuilding->district_id) ? true : false]) ?>
+								<div class="help-block"></div>
+							</div>
+							<div class="form-group col-xs-12 col-sm-6"<?= $product->district_id ? '' : ' style="display: none;"' ?>>
+								<label for="<?= Html::getInputId($product, 'ward_id') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('ward_id') ?><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">2</span>') ?></span></label>
+								<?= Html::activeDropDownList($product, 'ward_id', $wardsDropdown, ['options' => $wardsOptions, 'class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose District to show Wards'), 'disabled' => ($product->projectBuilding && $product->projectBuilding->ward_id) ? true : false]) ?>
+								<div class="help-block"></div>
+							</div>
+							<div class="form-group col-xs-12 col-sm-6"<?= $product->district_id ? '' : ' style="display: none;"' ?>>
+								<label for="<?= Html::getInputId($product, 'street_id') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('street_id') ?><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">2</span>') ?></span></label>
+								<?= Html::activeDropDownList($product, 'street_id', $streetsDropdown, ['options' => $streetsOptions, 'class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose District to show Streets'), 'disabled' => ($product->projectBuilding && $product->projectBuilding->street_id) ? true : false]) ?>
+								<div class="help-block"></div>
+							</div>
+							<div class="form-group col-xs-12 col-sm-6 fild-address"<?= $product->district_id ? '' : ' style="display: none;"' ?>>
+								<label for="<?= Html::getInputId($product, 'home_no') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('home_no') ?><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">4</span>') ?></span></label>
+								<?= Html::activeTextInput($product, 'home_no', ['class' => 'form-control', 'placeholder' => '...', 'disabled' => ($product->projectBuilding && $product->projectBuilding->home_no) ? true : false]) ?>
+								<label class="checkbox-inline fs-13 checkbox-ui">
+									<?= Html::activeCheckbox($product, 'show_home_no', ['label' => false]) ?>
+									<span class="icon-mv"><span class="icon-checkbox"></span></span> <?= $product->getAttributeLabel('show_home_no') ?>
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="group-frm">
+						<div class="title-frm"><?= Yii::t('ad', 'General Information') ?> <span class="pdL-10"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="max-point">35</span>') ?></span></div>
+						<div class="row">
+							<div class="form-group col-xs-12 col-sm-6">
+								<label for="<?= Html::getInputId($product, 'area') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('area') ?> (m2)<span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">5</span>') ?></span></label>
+								<?= Html::activeTextInput($product, 'area', ['class' => 'form-control number-only number-float', 'placeholder' => '...']) ?>
+								<div class="help-block"></div>
+							</div>
+							<div class="form-group col-xs-12 col-sm-6 price-type">
+								<label for="<?= Html::getInputId($product, 'price') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('price') ?> (<?= Yii::t('ad', 'VND') ?>)<span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">5</span>') ?></span></label><span class="price-show-wrap"><span id="price-show"></span></span>
+								<?= Html::activeHiddenInput($product, 'price', ['class' => 'form-control text-right', 'placeholder' => '...']) ?>
+								<div style="position: relative;">
+									<input type="text" id="priceMask" class="form-control text-right number-only number-float" placeholder="...">
+									<div class="price-unit">
+										<label class="radio-inline radio-ui">
+											<input type="radio" name="price-unit" id="price-unit-mil" value="1000000" checked="checked"> Triệu
+										</label>
+										<label class="radio-inline radio-ui">
+											<input type="radio" name="price-unit" id="price-unit-bil" value="1000000000"> Tỷ
+										</label>
+									</div>
 								</div>
-								<span data-ref="editS2" class="edit-listing icon-mv fs-16 color-cd" style="display: none;"><span class="icon-edit-copy-4"></span></span>
+								<div class="help-block"></div>
 							</div>
-							<div class="posi_relative mgT-5">
-								<ul class="clearfix list-attr-td">
-									<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span><span class="area-show"></span>m2 </li>
-									<li class="bed-li"> <span class="icon-mv"><span class="icon-bed-search"></span></span><span class="bed-show"></span> </li>
-									<li class="toilet-li"> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span><span class="toilet-show"></span> </li>
-								</ul>
-								<span data-ref="editS3" class="edit-listing icon-mv fs-16 color-cd"><span class="icon-edit-copy-4"></span></span>
+							<div class="form-group col-xs-12 col-sm-6">
+								<label for="<?= Html::getInputId($additionInfo, 'room_no') ?>" class="fs-13 mgB-5"><?= $additionInfo->getAttributeLabel('room_no') ?><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">5</span>') ?></span></label>
+								<?= Html::activeTextInput($additionInfo, 'room_no', ['class' => 'form-control number-only', 'placeholder' => '...']) ?>
+								<div class="help-block"></div>
 							</div>
-						</div>
-						<div class="posi_relative">
-							<p class="price-td">
-								<span><?= Yii::t('ad', 'Price') ?></span>
-								<span class="price-show"></span>
-							</p>
-							<span data-ref="editS4" class="edit-listing icon-mv fs-16 color-cd"><span class="icon-edit-copy-4"></span></span>
+							<div class="form-group col-xs-12 col-sm-6">
+								<label for="<?= Html::getInputId($additionInfo, 'toilet_no') ?>" class="fs-13 mgB-5"><?= $additionInfo->getAttributeLabel('toilet_no') ?><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">5</span>') ?></span></label>
+								<?= Html::activeTextInput($additionInfo, 'toilet_no', ['class' => 'form-control number-only', 'placeholder' => '...']) ?>
+								<div class="help-block"></div>
+							</div>
+							<div class="form-group col-xs-12">
+								<label for="<?= Html::getInputId($product, 'content') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('content') ?><span class="require-hint">*</span><span class="hint"><?= Yii::t('ad', '10 từ(+5), 20 từ(+10), 30 từ(+15)') ?></span></label>
+								<?= Html::activeTextarea($product, 'content', ['class' => 'form-control', 'rows' => 5]) ?>
+								<div class="help-block"></div>
+							</div>
 						</div>
 					</div>
-					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-				        <div class="panel panel-default">
-				            <div class="panel-heading" role="tab" id="headingOne">
-				                <h4 class="panel-title">
-				                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-				                        <?= Yii::t('ad', 'Content') ?>
-				                        <span data-ref="editS5" class="edit-listing icon-mv fs-16 color-cd"><span class="icon-edit-copy-4"></span></span>
-				                        <span class="icon-mv"><span class="icon-plus"></span></span>
-				                    </a>
-				                </h4>
-				            </div>
-				            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-				                <div class="panel-body" name="about" placeholder="Vui lòng chia s? ti?u s?">
-				                    <p class="content-show"></p>
-				                </div>
-				            </div>
-				        </div>
-				        <div class="panel panel-default">
-				            <div class="panel-heading" role="tab" id="headingTwo">
-				                <h4 class="panel-title">
-				                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-				                        <?= Yii::t('ad', 'Detail Information') ?>
-				                        <span data-ref="editS6" class="edit-listing icon-mv fs-16 color-cd"><span class="icon-edit-copy-4"></span></span>
-				                        <span class="icon-mv"><span class="icon-plus"></span></span>
-				                    </a>
-				                </h4>
-				            </div>
-				            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-				                <div class="panel-body" name="activity">
-				                	<ul class="clearfix list-tienich-detail">
-										<li class="project-item"><strong><?= Yii::t('ad', 'Project') ?>:</strong> <span class="project-show"></span></li>
-										<li class="facade-width-item"><strong><?= Yii::t('ad', 'Facade') ?>:</strong> <span class="facade-width-show"></span>m</li>
-										<li class="land-width-item"><strong><?= Yii::t('ad', 'Entry width') ?>:</strong> <span class="land-width-show"></span>m</li>
-										<li class="floor-no-item"><strong><span id="floor-no-text"></span>:</strong> <span class="floor-no-show"></span></li>
-										<li class="home-di-item"><strong><?= Yii::t('ad', 'House direction') ?>:</strong> <span class="home-di-show"></span></li>
-										<li class="facade-di-item"><strong><?= Yii::t('ad', 'Balcony direction') ?>:</strong> <span class="facade-di-show"></span></li>
-										<li class="interior-item"><strong><?= Yii::t('ad', 'Furniture') ?>:</strong> <span class="interior-show"></span></li>
-				                	</ul>
-				                </div>
-				            </div>
-				        </div>
-				        <div class="panel panel-default">
-				            <div class="panel-heading" role="tab" id="headingFour">
-				                <h4 class="panel-title">
-				                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-				                        <?= Yii::t('ad', 'Facilities') ?>
-				                        <span data-ref="editS8" class="edit-listing icon-mv fs-16 color-cd"><span class="icon-edit-copy-4"></span></span>
-				                        <span class="icon-mv"><span class="icon-plus"></span></span>
-				                    </a>
-				                </h4>
-				            </div>
-				            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
-				                <div class="panel-body" name="experience" placeholder="Vui lòng nh?p chia s? kinh nghi?m">
-				                    <div class="facilities-show"></div>
-				                </div>
-				            </div>
-				        </div>
-				        <div class="panel panel-default">
-				            <div class="panel-heading" role="tab" id="headingSeven">
-				                <h4 class="panel-title">
-				                    <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEght" aria-expanded="false" aria-controls="collapseSeven">
-				                        <?= Yii::t('ad', 'Contact') ?>
-				                        <span data-ref="editS7" class="edit-listing icon-mv fs-16 color-cd"><span class="icon-edit-copy-4"></span></span>
-				                        <span class="icon-mv"><span class="icon-plus"></span></span>
-				                    </a>
-				                </h4>
-				            </div>
-				            <div id="collapseEght" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven">
-				                <div class="panel-body text-center">
-				                	<div class="wrap-for-edit">
-					            	    <div class="infor-agent clearfix">
-								            <?php if(!empty($owner->username)) { ?>
-											<a href="#" class="wrap-img">
-								                <img src="<?= $avatar ?>" alt="" /></a>
-								            <?php } else { ?>
-								                <a class="wrap-img" href=""><img src="<?= $avatar ?>" alt="" /></a>
-								            <?php } ?>
-								            <div class="img-agent">
-									            <a href="" class="name-agent"></a>
-												<div class="rating-start">
-													<fieldset class="rate">
-														<input type="radio" id="rating10" name="rating" value="10"> <label
-															for="rating10" title="5 stars"> </label> <input type="radio"
-															id="rating9" name="rating" value="9"> <label for="rating9"
-															class="half" title="5 stars"> </label> <input type="radio"
-															id="rating8" name="rating" value="8"> <label for="rating8"
-															title="4 stars"> </label> <input type="radio" id="rating7"
-															name="rating" value="7"> <label for="rating7" class="half"
-															title="4 stars"> </label> <input type="radio" id="rating6"
-															name="rating" value="6"> <label for="rating6" title="3 stars"> </label>
-														<input type="radio" id="rating5" name="rating" value="5"> <label
-															for="rating5" class="half" title="3 stars"> </label> <input
-															type="radio" id="rating4" name="rating" value="4"> <label
-															for="rating4" title="2 stars"> </label> <input type="radio"
-															id="rating3" name="rating" value="3"> <label for="rating3"
-															class="half" title="2 stars"> </label> <input type="radio"
-															id="rating2" name="rating" value="2"> <label for="rating2"
-															title="1 stars"> </label> <input type="radio" id="rating1"
-															name="rating" value="1"> <label for="rating1" class="half"
-															title="1 stars"> </label>
-													</fieldset>
+					<div class="group-frm">
+						<div class="title-frm"><?= Yii::t('ad', 'Detail Information') ?> <span class="pdL-10"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="max-point">15</span>') ?></span></div>
+						<div class="row">
+							<div class="form-group col-xs-12 col-sm-4">
+								<label for="<?= Html::getInputId($additionInfo, 'floor_no') ?>" class="fs-13 mgB-5"><?= $additionInfo->getAttributeLabel('floor_no') ?><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">2</span>') ?></span></label>
+								<?= Html::activeTextInput($additionInfo, 'floor_no', ['class' => 'form-control number-only', 'placeholder' => '...']) ?>
+								<div class="help-block"></div>
+							</div>
+							<div class="form-group col-xs-12 col-sm-4">
+								<label for="<?= Html::getInputId($additionInfo, 'facade_width') ?>" class="fs-13 mgB-5"><?= $additionInfo->getAttributeLabel('facade_width') ?> (m)<span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">2</span>') ?></span></label>
+								<?= Html::activeTextInput($additionInfo, 'facade_width', ['class' => 'form-control number-only number-float', 'placeholder' => '...']) ?>
+								<div class="help-block"></div>
+							</div>
+							<div class="form-group col-xs-12 col-sm-4">
+								<label for="<?= Html::getInputId($additionInfo, 'land_width') ?>" class="fs-13 mgB-5"><?= $additionInfo->getAttributeLabel('land_width') ?> (m)<span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">2</span>') ?></span></label>
+								<?= Html::activeTextInput($additionInfo, 'land_width', ['class' => 'form-control number-only number-float', 'placeholder' => '...']) ?>
+								<div class="help-block"></div>
+							</div>
+							<div class="form-group col-xs-12 col-sm-4">
+								<label for="<?= Html::getInputId($additionInfo, 'home_direction') ?>" class="fs-13 mgB-5"><?= $additionInfo->getAttributeLabel('home_direction') ?><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">2</span>') ?></span></label>
+								<?= Html::activeDropDownList($additionInfo, 'home_direction', AdProductAdditionInfo::directionList(), ['class' => 'form-control', 'prompt' => "..."]) ?>
+								<div class="help-block"></div>
+							</div>
+							<div class="form-group col-xs-12 col-sm-4">
+								<label for="<?= Html::getInputId($additionInfo, 'facade_direction') ?>" class="fs-13 mgB-5"><?= $additionInfo->getAttributeLabel('facade_direction') ?><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">2</span>') ?></span></label>
+								<?= Html::activeDropDownList($additionInfo, 'facade_direction', AdProductAdditionInfo::directionList(), ['class' => 'form-control', 'prompt' => "..."]) ?>
+								<div class="help-block"></div>
+							</div>
+							<div class="form-group col-xs-12 tienich-frm">
+								<label for="" class="fs-13 mgB-5"><?= Yii::t('ad', 'Facilities') ?> / <?= $additionInfo->getAttributeLabel('interior') ?><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">1-5</span>') ?></span></label>
+								<?php
+									$facilities = AdFacility::find()->all();
+									$activeFacility = $additionInfo->facility ? $additionInfo->facility : [];
+									$facilityName = $additionInfo->formName() . '[facility][]';
+								?>
+								<ul class="clearfix">
+									<?php foreach ($facilities as $facility): ?>
+									<li>
+										<label class="checkbox-inline fs-13 checkbox-ui">
+											<?= Html::checkbox($facilityName, in_array($facility->id, $activeFacility), ['value' => $facility->id]) ?>
+											<span class="icon-mv"><span class="icon-checkbox"></span></span> <?= Yii::t('ad', $facility->name) ?>
+										</label>
+									</li>
+									<?php endforeach; ?>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="group-frm clearfix">
+						<div class="title-frm"><?= Yii::t('ad', 'Hình ảnh') ?> <span class="pdL-10"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="max-point">10</span>') ?></span></div>
+						<label for="" class="fs-13 mgB-5">Tải hình ảnh dư án<span class="hint"><?= Yii::t('ad', '1-2 ảnh(+5), 3 ảnh trở lên(+10)') ?></span></label>
+						<div class="upload-img-listing">
+							<span id="upload-hint"><?= Yii::t('ad', 'Change the position of images by dragging the image into the right position you want!') ?></span>
+							<?php
+								$files = [];
+								foreach ($product->adImages as $image) {
+									$files[] = [
+										'deleteType' => "DELETE",
+										'deleteUrl'	=> Url::to(['/ad/delete-file', 'file' => $image->file_name]),
+										'thumbnailUrl' => $image->getUrl(AdImages::SIZE_THUMB),
+										'name' => $image->file_name,
+										'url' => $image->getUrl(AdImages::SIZE_LARGE)
+									];
+								}
+							?>
+							<?= FileUpload::widget([
+									'files' => $files,
+									'name' => 'images', 
+									'url' => Url::to(['upload']),
+									'clientOptions' => [
+										'previewMinWidth' => 130,
+										'previewMinHeight' => 98,
+										'previewMaxWidth' => 130,
+										'previewMaxHeight' => 98,
+										'previewCrop' => true,
+									],
+									'clientEvents' => [
+										'fileuploadcompleted' => 'function(e, data) {form.fileuploadcompleted(e, data, this);}',
+										'fileuploaddestroyed' => 'function(e, data) {form.fileuploaddestroyed(e, data, this);}',
+									]
+								]) ?>
+						</div>
+					</div>
+					<div class="group-frm">
+						<div class="title-frm"><?= Yii::t('ad', 'Contact Information') ?> <span class="pdL-10"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="max-point">20</span>') ?></span></div>
+						<div class="clearfix agent-postlisting">
+							<div class="fs-13 row">
+								<div class="form-group col-xs-12 col-sm-6">
+									<label for="<?= Html::getInputId($contactInfo, 'name') ?>" class="fs-13 mgB-5"><?= $contactInfo->getAttributeLabel('name') ?><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">5</span>') ?></span></label>
+									<?= Html::activeTextInput($contactInfo, 'name', ['class' => 'form-control', 'placeholder' => '...']) ?>
+								</div>
+								<div class="form-group col-xs-12 col-sm-6">
+									<label for="<?= Html::getInputId($contactInfo, 'mobile') ?>" class="fs-13 mgB-5"><?= $contactInfo->getAttributeLabel('mobile') ?><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">5</span>') ?></span></label>
+									<?= Html::activeTextInput($contactInfo, 'mobile', ['class' => 'form-control number-only', 'placeholder' => '...']) ?>
+									<div class="help-block"></div>
+								</div>
+								<div class="form-group col-xs-12 col-sm-6">
+									<label for="<?= Html::getInputId($contactInfo, 'email') ?>" class="fs-13 mgB-5"><?= $contactInfo->getAttributeLabel('email') ?><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">5</span>') ?></span></label>
+									<?= Html::activeTextInput($contactInfo, 'email', ['class' => 'form-control', 'placeholder' => '...']) ?>
+									<div class="help-block"></div>
+								</div>
+								<div class="form-group col-xs-12 col-sm-6">
+									<label for="" class="fs-13 mgB-5"><?= Yii::t('ad', 'You are') ?><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">5</span>') ?></span></label>
+									<div>
+										<?php $ownerName = Html::getInputName($product, 'owner') ?>
+										<label class="radio-inline radio-ui">
+											<?= Html::radio($ownerName, ($product->owner == AdProduct::OWNER_HOST || !$product->owner), ['value' => AdProduct::OWNER_HOST, 'class' => 'owner']) ?> <?= Yii::t('ad', 'Owner') ?>
+										</label>
+										<label class="radio-inline radio-ui">
+											<?= Html::radio($ownerName, ($product->owner == AdProduct::OWNER_AGENT), ['value' => AdProduct::OWNER_AGENT, 'class' => 'owner']) ?> <?= Yii::t('ad', 'Agent') ?>
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="error-hint form-group col-xs-12 mgT-30" style="display: none;"><?= Yii::t('ad', 'Có lỗi xảy ra, vui lòng kiểm tra lại các trường bên trên') ?></div>
+					<div class="text-right col-xs-12 pdT-50">
+						<button id="preview" type="button" class="btn-common"><?= Yii::t('ad', 'Preview') ?> <span class="icon-mv"><span class="icon-angle-right"></span></span></button>
+					</div>
+					<?= Html::activeHiddenInput($product, 'lat') ?>
+					<?= Html::activeHiddenInput($product, 'lng') ?>
+					<div id="review-listing">
+						<div class="popup-wrap">
+							<div class="detail-listing detail-listing-extra">	
+								<div id="detail-wrap">
+									<div class="wrap-swiper clearfix">
+										<div class="no-gallery pull-left">
+											<div class="img-show">
+												<div>
+													<img alt="" src="/themes/metvuong2/resources/images/default-ads.jpg">
 												</div>
-												<div class="item-agent icon-phone-item">
-													<span class="icon-mv">
-														<span class="icon-phone-profile"></span>
-													</span>
-													<a class="phone-show" href="tel:"></a>
-												</div>
-												<div class="item-agent icon-email-item">
-													<span class="icon-mv">
-														<span class="icon-mail-profile"></span>
-													</span>
-													<span class="email-show"></span>
-												</div>
-												<div class="item-agent address-icon-item">
-													<span class="icon-mv">
-														<span class="icon-pin-active-copy-3"></span>
-													</span>
-													<span class="address-show"></span>
-												</div>
-												<?php if(!Yii::$app->user->isGuest && !empty($owner->username) && !$owner->isMe()) { ?>
-													<a href="<?=Url::to(['/chat/with', 'username'=>$owner->username])?>" id="" class="chat-btn btn-common btn-small">Chat</a>
-												<?php }?>
 											</div>
 										</div>
-									</div>	
 									
-				                </div>
-				            </div>
-
-				        </div>
-				    </div>
-					<div class="text-center">
-						<button type="button" class="back-form btn-common"><?= Yii::t('ad', 'Back') ?></button>
-						<button type="button" class="btn-post btn-common btn-post-preview"><?= $product->isNewRecord ? Yii::t('ad', 'Post') : Yii::t('ad', 'Update') ?></button>
+										<div class="gallery-detail swiper-container pull-left">
+											<div class="swiper-wrapper"></div>
+											<div class="swiper-button-prev icon-mv"><span class=""></span></div>
+											<div class="swiper-button-next icon-mv"><span class=""></span></div>
+										</div>
+										
+										<ul class="pull-right icons-detail">
+											<li class="color-1">
+												<a href="javascript:;" data-toggle="tooltip" data-placement="bottom" title="<?= Yii::t('ad', 'Copy link') ?>" class="btn-copy">
+													<span class="icon-mv"><span class="icon-link"></span></span>
+													<span><?= Yii::t('ad', 'Copy link') ?></span>
+												</a>
+											</li>
+											<li class="color-2">
+												<a href="javascript:;" class="share-facebook">
+													<span class="icon-mv"><span class="icon-facebook"></span></span>
+													<span><?= Yii::t('ad', 'Share Facebook') ?></span>
+												</a>
+											</li>
+											<li class="color-3">
+												<a href="javascript:;" data-toggle="modal" data-target="#popup_email" data-type="share" class="email-btn">
+													<span class="icon-mv fs-18"><span class="icon-mail-profile"></span></span>
+													<span><?= Yii::t('ad', 'Share Email') ?></span>
+												</a>
+											</li>
+											<li class="color-4">
+												<a href="javascript:;" class="save-item  " data-id="25074" data-url="/ad/favorite">
+													<span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
+													<span><?= Yii::t('ad', 'Add to Favorites') ?></span>
+												</a>
+											</li>
+											<li class="color-5">
+												<a href="javascript:;" data-toggle="modal" data-target="#popup-map">
+													<span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
+													<span><?= Yii::t('ad', 'Location') ?></span>
+												</a>
+											</li>
+											<li class="color-6">
+												<a href="javascript:;" class="report">
+													<span class="icon-mv"><span class="icon-warning"></span></span>
+													<span><?= Yii::t('ad', 'Report Abuse') ?></span>
+												</a>
+											</li>
+											<li class="color-8">
+												<a href="javascript:;" data-popover="true">
+													<span class="icon-mv"><span class="icon-phone-profile"></span></span>
+													<span><?= Yii::t('ad', 'Contact Agent') ?></span>
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="infor-listing">
+										<div class="address-feat clearfix">
+											<p class="infor-by-up">
+												<span class="ref" data-ref="#adproduct-category_id"></span>
+												<span class="ref" data-ref="#adproduct-type"></span>
+												<?= Yii::t('ad', 'by') ?>
+												<a class="ref" data-ref=".owner" href="javascript:;"></a>
+											</p>
+											<div class="address-listing"><p class="address-show"></p></div>
+											<div class="pull-left left-attr-detail">
+												<p class="id-duan">Mã tin:<span>MV0000</span></p>
+												<ul class="clearfix list-attr-td">
+							                        <li><span class="icon-mv"><span class="icon-page-1-copy"></span></span><span class="ref" data-ref="#adproduct-area"></span>m2</li>
+							                        <li><span class="icon-mv"><span class="icon-bed-search"></span></span><span class="ref" data-ref="#adproductadditioninfo-room_no"></span></li>
+							                        <li><span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span><span class="ref" data-ref="#adproductadditioninfo-toilet_no"></span></li>
+												</ul>
+											</div>
+											<div class="overflow-all right-attr-detail">
+												<p class="price-td">
+													<?= Yii::t('ad', 'Price') ?> <span class="ref" data-format="formatPrice" data-ref="#adproduct-price"></span>
+												</p>
+											</div>
+										</div>
+									</div>
+								
+									<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+								        <div class="panel panel-default">
+								            <div class="panel-heading" role="tab" id="headingOne">
+								                <h4 class="panel-title">
+								                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+								                        Mô tả<span class="icon-mv"><span class="icon-plus"></span></span>
+								                    </a>
+								                </h4>
+								            </div>
+								            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+								                <div class="panel-body" name="about" placeholder="Vui lòng chia sẻ tiểu sử">
+								                    <p class="ref" data-ref="#adproduct-content" data-format="formatContent" data-html="true"></p>
+								                </div>
+								            </div>
+								        </div>
+								        <div class="panel panel-default">
+								            <div class="panel-heading" role="tab" id="headingTwo">
+								                <h4 class="panel-title">
+								                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+								                        Thông tin chi tiết<span class="icon-mv"><span class="icon-plus"></span></span>
+								                    </a>
+								                </h4>
+								            </div>
+								            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+								                <div class="panel-body" name="activity">
+								                	<ul class="clearfix list-tienich-detail">
+									                	<li><strong><?= $product->getAttributeLabel('project_building_id') ?>:</strong> <a href="javascript:;" class="ref" data-ref="#project-name"></a></li>
+														<li><strong><?= $additionInfo->getAttributeLabel('floor_no') ?>:</strong> <span class="ref" data-ref="#adproductadditioninfo-floor_no"></span> Tầng</li>
+														<li><strong><?= $additionInfo->getAttributeLabel('facade_width') ?>:</strong> <span class="ref" data-ref="#adproductadditioninfo-facade_width"></span>m</li>
+														<li><strong><?= $additionInfo->getAttributeLabel('land_width') ?>:</strong> <span class="ref" data-ref="#adproductadditioninfo-land_width"></span>m</li>
+														<li><strong><?= $additionInfo->getAttributeLabel('home_direction') ?>:</strong> <span class="ref" data-ref="#adproductadditioninfo-home_direction"></span></li>
+														<li><strong><?= $additionInfo->getAttributeLabel('facade_direction') ?>:</strong> <span class="ref" data-ref="#adproductadditioninfo-facade_direction"></span></li>
+														<li><strong><?= $additionInfo->getAttributeLabel('interior') ?>:</strong> <span class="ref" data-ref="#adproductadditioninfo-interior"></span></li>
+													</ul>
+								                </div>
+								            </div>
+								        </div>
+										<div class="panel panel-default">
+								            <div class="panel-heading" role="tab" id="headingSeven">
+								                <h4 class="panel-title">
+								                    <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEght" aria-expanded="false" aria-controls="collapseSeven">
+								                        Liên hệ<span class="icon-mv"><span class="icon-plus"></span></span>
+								                    </a>
+								                </h4>
+								            </div>
+								            <div id="collapseEght" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven">
+								                <div class="panel-body text-center">
+								            	    <div class="infor-agent clearfix">
+														<a href="javascript:;" class="wrap-img"><img src="<?= "/member/" . Yii::$app->user->identity->username . "/avatar" ?>" alt="demo"></a>
+														<div class="img-agent">
+															<a href="javascript:;" class="name-agent ref" data-ref="#adcontactinfo-name"></a>
+						                                    <div class="stars"> <span id="rating-all-bottom" class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="true"><span id="rateit-range-2" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-2" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" aria-readonly="true" style="width: 105px; height: 18px;"><span class="rateit-selected rateit-preset" style="height: 18px; width: 0px;"></span><span class="rateit-hover" style="height:18px"></span></span></span> <span class="fs-13 font-600 count_review">(0)</span> </div>
+					                                    	<div class="item-agent">
+																<div><span class="icon icon-phone"></span></div>
+																<a class="ref" data-ref="#adcontactinfo-mobile" href="javascript:;">12345678</a>
+															</div>
+															<div class="item-agent">
+																<div><span class="icon icon-email"></span></div>
+																<a class="ref" data-ref="#adcontactinfo-email" href="javascript:;"></a>
+															</div>					                                        
+														</div>
+													</div>
+								                </div>
+								            </div>
+		        						</div>
+									</div>
+								</div>	
+							</div>
+							<div class="text-center">
+								<button id="back" type="button" class="btn-common"><?= Yii::t('ad', 'Back') ?></button>
+								<button id="post" type="button" class="btn-common"><?= $product->isNewRecord ? Yii::t('ad', 'Post') : Yii::t('ad', 'Update') ?></button>
+							</div>
+						</div>
 					</div>
-		        </div>
+				<?php $form->end() ?>
+			</div>
+			<div class="col-sm-4 checkpoint-listing">
+				<div class="inner-checkpoint">
+					<div class="title-point"><?= Yii::t('ad', 'Metvuong chấm điểm') ?></div>
+					<div class="point-select">
+						<div class="text-center total-point">
+							<span><span id="score">0</span>/100</span><?= Yii::t('ad', 'điểm') ?>
+							<div class="proccess-point">
+								<div id="score-percent" style="width: 0%"></div>
+							</div>
+						</div>
+						<ul>
+							<li data-id="type"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Loại tin') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> <?= Yii::t('ad', 'điểm') ?></span></li>
+							<li data-id="address"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Địa chỉ') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> <?= Yii::t('ad', 'điểm') ?></span></li>
+							<li data-id="info"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'General Information') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> <?= Yii::t('ad', 'điểm') ?></span></li>
+							<li data-id="additionInfo"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Detail Information') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> <?= Yii::t('ad', 'điểm') ?></span></li>
+							<li data-id="photo"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Hình ảnh') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> <?= Yii::t('ad', 'điểm') ?></span></li>
+							<li data-id="contact"><span class="icon-mv"><span class="icon-checked"></span></span><?= Yii::t('ad', 'Contact Information') ?><span style="display: none;" class="color-cd pdL-15">+<span class="count">0</span> <?= Yii::t('ad', 'điểm') ?></span></li>
+						</ul>
+						
+					</div>
+					<div class="btom-point"><?= Yii::t('ad', '* Điểm số cụ thể sẽ được quyết định sau khi ban điều hành kiểm tra thông tin chi tiết tin đăng.') ?></div>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
-<div class="fixed-prev-next">
-	<div>
-		<a href="#" id="back-screen"><span class="icon arrowRight-1"></span><?= Yii::t('ad', 'Back') ?></a>
-		<a href="#" id="next-screen" class=""><span class="icon arrowLeft-1"></span><?= Yii::t('ad', 'Next') ?></a>		
-	</div>
-</div>
+<script>
+	$(document).ready(function () {
+		$('.checkbox-ui').checkbox_ui();
+	});
+</script>

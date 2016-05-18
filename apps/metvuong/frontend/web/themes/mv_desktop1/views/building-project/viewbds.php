@@ -194,7 +194,7 @@ $description = \yii\helpers\StringHelper::truncate($content, 500, $suffix = '...
 $description = str_replace("\r", "", $description);
 $description = str_replace("\n", "", $description);
 echo $this->render('/ad/_partials/shareSocial',[
-    'popup_email_name' => 'popup_email_share',
+    'popup_email_name' => 'share',
     'project' => $model,
     'url' => Url::to(["building-project/view", 'slug'=>$model->slug], true),
     'title' => $model->name,

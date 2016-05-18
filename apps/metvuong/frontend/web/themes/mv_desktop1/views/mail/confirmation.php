@@ -16,19 +16,18 @@ use yii\helpers\Html;
  * @var dektrium\user\models\Token $token
  */
 ?>
-<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; font-weight: normal; margin: 0 0 10px; padding: 0;">
-    <?= Yii::t('user', 'Hello') ?>,
-</p>
-<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; font-weight: normal; margin: 0 0 10px; padding: 0;">
-    <?= Yii::t('user', 'Thank you for signing up on {0}', Yii::$app->name) ?>.
+<p style="font-size: 13px;margin-bottom: 10px;"><?= Yii::t('user', 'Hello') ?> <strong style="color: #222;font-size: 13px;"><?=$user->email?></strong>,</p>
+
+<p style="font-size: 13px;margin-bottom: 35px;line-height:20px;">
+    <?= Yii::t('user', 'Thank you for signing up on {0}', ['0' => Yii::$app->name]) ?>.
     <?= Yii::t('user', 'In order to complete your registration, please click the link below') ?>.
 </p>
-<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; font-weight: normal; margin: 0 0 10px; padding: 0;">
+<p style="font-size: 13px;margin-bottom: 35px;line-height:20px;">
     <?= Html::a(Html::encode($token->url), $token->url); ?>
 </p>
-<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; font-weight: normal; margin: 0 0 10px; padding: 0;">
+<p style="font-size: 13px;margin-bottom: 35px;line-height:20px;">
     <?= Yii::t('user', 'If you cannot click the link, please try pasting the text into your browser') ?>.
 </p>
-<p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; font-weight: normal; margin: 0 0 10px; padding: 0;">
+<p style="font-size: 13px;margin-bottom: 35px;line-height:20px;">
     <?= Yii::t('user', 'If you did not make this request you can ignore this email') ?>.
 </p>

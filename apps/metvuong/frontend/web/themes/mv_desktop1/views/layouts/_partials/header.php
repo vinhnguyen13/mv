@@ -114,29 +114,32 @@ use frontend\models\AdProductSearch;
                 <?php } else{?>
                     <ul class="pull-left list-redire">
                         <li>
-                            <a class="tooltip-show wrapNotifyChat" href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('chat', 'Chat')?>">
+                            <a class="wrapNotifyChat" href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('chat', 'Chat')?>">
                                 <span class="icon-mv"><span class="icon-bubbles-icon"></span></span>
                                 <?php if(!empty($this->params['notify_chat'])){?>
                                     <span id="notifyChat" class="notifi"><?=$this->params['notify_chat'];?></span>
                                 <?php }?>
                             </a>
                         </li>
-                        <li>
-                            <a class="tooltip-show wrapNotifyOther" href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('activity', 'Notification')?>">
+                        <li class="box-dropdown">
+                            <a class="val-selected wrapNotifyOther" href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('activity', 'Notification')?>">
                                 <span class="icon-mv"><span class="icon-icons-bell"></span></span>
                                 <?php if(!empty($this->params['notify_other'])){?>
                                     <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
                                 <?php }?>
                             </a>
+                            <div class="item-dropdown hide-dropdown list-notify">
+                                <ul style="min-height: 80px;"></ul>
+                            </div>
                         </li>
                         <li>
-                            <a class="tooltip-show" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="Dashboard">
+                            <a class="" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="Dashboard">
                                 <span class="icon-mv"><span class="icon-barometer"></span></span>
                             </a>
                         </li>
                     </ul>
                     <div class="user-edit box-dropdown">
-                        <a class="val-selected wrapNotifyTotal tooltip-show" data-toggle="tooltip" data-placement="bottom" href="#" title="<?=Yii::t('user', 'Profile')?>">
+                        <a class="val-selected wrapNotifyTotal" data-toggle="tooltip" data-placement="bottom" href="#" title="<?=Yii::t('user', 'Profile')?>">
                             <span class="wrap-img"><img src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="" width="40" height="40"></span>
                             <div>
                                 <p><span class="name-user"><?=Yii::$app->user->identity->profile->getDisplayName();?></span>
@@ -230,6 +233,7 @@ use frontend\models\AdProductSearch;
             });
 
         });
+
         $(document).on('click', '.user-signup-link', function (e) {
             /*if(checkMobile()){
                 return true;
@@ -251,6 +255,22 @@ use frontend\models\AdProductSearch;
             styleShow: 0,
             selectedValue: false
         });
-
+        <?php if(!Yii::$app->user->isGuest){?>
+        $('.user-login .list-redire .box-dropdown').dropdown({
+            styleShow: 0,
+            selectedValue: false,
+            ajaxSubmit: function () {
+                $('.list-notify').loading({full: true});
+                $.ajax({
+                    type: 'GET',
+                    url: '<?=Url::to(['/notification/list', 'username'=> Yii::$app->user->identity->username])?>',
+                    success: function (response) {
+                        $('body').loading({done: true});
+                        $('.list-notify').html(response);
+                    }
+                });
+            }
+        });
+        <?php }?>
     });
 </script>

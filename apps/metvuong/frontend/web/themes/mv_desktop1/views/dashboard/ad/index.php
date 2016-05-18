@@ -38,19 +38,21 @@ use yii\helpers\Url;
                         <?=$this->render('/dashboard/ad/list', ['products' => $products, 'type' => 0, 'last_id' => $last_id])?>
                     </ul>
                     <input type="hidden" class="last_id" value="<?=$last_id?>">
+                    <?php if($total > 6){?>
                     <div class="text-center">
-                        <a href="javascript:void();" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 0])?>" class="load_listing btn-common"><?=Yii::t('listing','More listing')?>...</a>
+                        <a href="#" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 0])?>" class="load_listing btn-common"><?=Yii::t('listing','More listing')?>...</a>
                     </div>
-                    <span class="that_all pull-right hide">That's all listing.</span>
+                    <span class="that_all pull-right hide fs-13">That's all listing.</span>
+                    <?php } ?>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="list-sell">
                     <ul class="clearfix list-item"></ul>
                     <input type="hidden" class="last_id" value="0">
                     <?php if($sell > 6){?>
                     <div class="text-center">
-                        <a href="javascript:void();" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 1])?>" class="load_listing btn-common"><?=Yii::t('listing','More listing')?>...</a>
+                        <a href="#" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 1])?>" class="load_listing btn-common"><?=Yii::t('listing','More listing')?>...</a>
                     </div>
-                    <span class="that_all pull-right hide">That's all listing.</span>
+                    <span class="that_all pull-right hide fs-13">That's all listing.</span>
                     <?php } ?>
                 </div>
                 <div role="tabpanel" class="tab-pane fade" id="list-rent">
@@ -58,32 +60,37 @@ use yii\helpers\Url;
                     <input type="hidden" class="last_id" value="0">
                     <?php if($rent > 6){?>
                     <div class="text-center">
-                        <a href="javascript:void();" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 2])?>" class="load_listing btn-common"><?=Yii::t('listing','More listing')?>...</a>
+                        <a href="#" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 2])?>" class="load_listing btn-common"><?=Yii::t('listing','More listing')?>...</a>
                     </div>
-                    <span class="that_all pull-right hide">That's all listing.</span>
+                    <span class="that_all pull-right hide fs-13">That's all listing.</span>
                     <?php } ?>
                 </div>
             </div>
-            <div id="nang-cap" class="popup-common hide-popup">
-                <div class="wrap-popup">
-                    <div class="inner-popup">
-                        <a href="#" class="btn-close btn-cancel"><span class="icon icon-close"></span></a>
-                        <p class="alert-num-date">Tin đăng còn <span>0 ngày</span></p>
-                        <p>Nâng cấp tin đăng thêm 30 ngày?  </p>
-                        <div class="text-center">
-                            <a href="#" class="btn-common btn-cancel">Từ chối</a>
-                            <a href="#" class="btn-common btn-ok">Đồng ý</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- <div class="ui-widget">
-                <input id="tags">
-            </div> -->
         </div>
         <?php } ?>
     </div>
 </div>
+
+<div id="upgrade-time" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="wrap-popup">
+                    <div class="inner-popup">
+                        <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
+                        <div class="text-center fs-15">
+                            <p class="mgB-5">Tin đăng của bạn còn <span class="font-600 color-cd">0 ngày</span></p>
+                            <p class="mgB-25">Nâng cấp tin đăng thêm <span class="font-600 color-cd">30 ngày </span>?</p>
+                            <a href="#" class="btn-common btn-cancel" data-dismiss="modal" aria-label="Close">Từ chối</a>
+                            <a href="#" class="btn-common btn-ok" data-dismiss="modal" aria-label="Close">Đồng ý</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script>
 	$(document).ready(function () {
@@ -92,6 +99,56 @@ use yii\helpers\Url;
          styleShow: 'center',
          closeBtn: '#nang-cap .btn-cancel, #nang-cap .btn-ok',
          });*/
+        $(document).on('click', '.btn-up', function (e) {
+            var btn = $(this);
+            var product = btn.attr('data-product');
+            btn.html(lajax.t('Loading'));
+            if(product){
+                $.ajax({
+                    type: "get",
+                    dataType: 'json',
+                    url: '<?=Url::to(['dashboard/up'])?>?id=' + product,
+                    success: function (data) {
+                        btn.html(lajax.t('Up'));
+                    }
+                });
+            }
+            return false;
+        });
+        $(document).on('click', '.btn-upgrade', function (e) {
+            var product = $(this).attr('data-product');
+            $('#upgrade-time').find('.btn-ok').attr('data-product', product);
+        });
+
+        $(document).on('click', '#upgrade-time .btn-ok', function (e) {
+            var product = $(this).attr('data-product');
+            if(product){
+                $.ajax({
+                    type: "get",
+                    dataType: 'json',
+                    url: '<?=Url::to(['dashboard/upgrade'])?>?id=' + product,
+                    success: function (data) {
+                        $('body').alertBox({
+                            txt: lajax.t('Upgrade success'),
+                            duration: 4000
+                        });
+//                        location.reload();
+                        if(data.expired > 0) {
+                            if($('.p' + product + ' .intro-detail p.expired').length > 0){
+                                $('.p' + product + ' .intro-detail p.expired strong').text(data.expired + " <?=Yii::t('statistic', 'days')?>");
+                            } else {
+                                $('.p' + product + ' .intro-detail .status-duan .status-get-point span').removeClass('icon-inactive-pro').addClass('icon-active-pro');
+                                $('.p' + product + ' .intro-detail .status-duan .status-get-point strong').text('<?= Yii::t('statistic', 'Active Project') ?>');
+                                $('.p' + product + ' .intro-detail .status-duan').after(function () {
+                                    return "<p class=\"expired\"><?= Yii::t('statistic', 'Expired in the last') ?><strong> " + data.expired + " <?=Yii::t('statistic', 'days')?></strong></p>";
+                                });
+                            }
+                        }
+                    }
+                });
+            }
+        });
+
         $("#tags").click(function() {
             var list = <?=json_encode(array_values($search))?>;
             $("#tags").autocomplete({

@@ -25,14 +25,14 @@ var listing = {
 		
 		listing.limit = Number(listing.countToEl.text()) - Number(listing.countFromEl.text()) + 1;
 		
-		events.attachDesktopEvent(listing.listEl, 'click', '.item-listing > a', listing.detailEvent);
+		events.attachDesktopEvent(listing.listEl, 'click', '.item > a', listing.detailEvent);
 		events.attachDesktopEvent(listing.listEl, 'mouseenter', '.item-listing > a', listing.mouseenterEvent);
 		events.attachDesktopEvent(listing.listEl, 'mouseleave', '.item-listing > a', listing.mouseleaveEvent);
 		events.attachDesktopEvent($('.wrap-listing'), 'scroll', listing.more);
 		events.attachDesktopEvent(form.fields.projectBuildingId, 'change', listing.loadProject);
 		events.attachDesktopEvent(form.fields.categoryId, 'change', listing.resetProjectField);
 		events.attachDesktopEvent(form.fields.districtId, 'change', listing.resetProjectField);
-		events.attachDesktopEvent($('.btn-close'), 'click', listing.closeDetail);
+		events.attachDesktopEvent($('.close-slide-detail'), 'click', listing.closeDetail);
 		
 		for(var i in form.fields) {
 			events.attachDesktopEvent(form.fields[i], 'change', listing.fieldChange);
@@ -499,7 +499,7 @@ var listing = {
 			left: -wWrapList +'px'
 		});
 		
-		$.get('/ad/detail', {id: id}, function(r){
+		$.get('/listing/detail', {id: id}, function(r){
 
 			var temp = $(r).find('#detail-wrap');
 
@@ -635,6 +635,7 @@ var listing = {
 				listing.currentDrawLevel = listing.reDraw();
 			});
 		}
+		toogleScroll();
 	},
 	updateListing: function() {
 
@@ -716,8 +717,10 @@ var listing = {
 		if(id) {
 			$.get(loadProjectUrl, {id: id}, function(r) {
 				listing.projectInfoEl.html(r);
+				toogleScroll();
 			});
 		}
+		
 	},
 	resetProjectField: function() {
 		listing.projectInfoEl.html('');
