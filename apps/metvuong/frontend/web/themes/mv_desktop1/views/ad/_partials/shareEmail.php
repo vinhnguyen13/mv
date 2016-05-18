@@ -148,9 +148,7 @@ use yii\helpers\Url;
 </div>
 
 <script>
-    $(document).on('click', '.send_mail,.send_mail_bottom', function(e){
-        e.preventDefault();
-//        var _this = $(this);
+    $('#popup_email .send_mail, #popup_email .send_mail_bottom').on('click', function(){
         var recipient_email = $('#share_form .recipient_email').val();
         var your_email = $('#share_form .your_email').val();
         if(recipient_email != null && your_email != null) {
@@ -187,45 +185,5 @@ use yii\helpers\Url;
         }
         return false;
     });
-
-    /*$(document).on('click', '.send_mail_bottom', function(e){
-        e.preventDefault();
-//        var _this = $(this);
-        var recipient_email = $('#share_form .recipient_email').val();
-        var your_email = $('#share_form .your_email').val();
-        if(recipient_email != null && your_email != null) {
-            $('body').loading();
-            $('#popup-sent .user_name').html(recipient_email);
-            $.ajax({
-                type: "post",
-                dataType: 'json',
-                url: $('#share_form').attr('action'),
-                data: $('#share_form').serializeArray(),
-                success: function (data) {
-                    $('body').loading({done:true});
-                    if(data.status == 200){
-                        $('.btn-cancel').trigger('click');
-                        setTimeout(function () {
-                            $('body').alertBox({
-                                txt: "<?=Yii::t('send_email', 'Email has been sent to ')?> "+recipient_email+""
-                            });
-                        },300);
-                    }
-                    else if(data.status == 404){
-                        var arr = [];
-                        $.each(data.parameters, function (idx, val) {
-                            var element = 'shareform-' + idx;
-                            arr[element] = lajax.t(val);
-                        });
-                        $('#share_form').yiiActiveForm('updateMessages', arr, true);
-                    } else {
-                        console.log(data);
-                    }
-                    return true;
-                }
-            });
-        }
-        return false;
-    });*/
 
 </script>
