@@ -41,7 +41,7 @@ class AdProductSearch extends AdProduct {
 		
 		$query = $this->find();
 		
-		$query->select('ad_product.id, ad_product.city_id, ad_product.district_id, ad_product.ward_id, ad_product.street_id, ad_product.lat, ad_product.lng,
+		$query->select('ad_product.id, ad_product.show_home_no, ad_product.city_id, ad_product.district_id, ad_product.ward_id, ad_product.street_id, ad_product.lat, ad_product.lng,
 			ad_product.price, ad_product.area, ad_product_addition_info.room_no, ad_product_addition_info.toilet_no');
 		
 		$query->innerJoin('ad_product_addition_info', 'ad_product_addition_info.product_id = ad_product.id');
