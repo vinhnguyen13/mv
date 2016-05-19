@@ -340,15 +340,15 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 											<div class="form-group col-xs-12 col-sm-6">
 												<div class="">
 													<?php
-														$tDay = Yii::t('ad', 'day');
+														$tDays = Yii::t('ad', 'days');
 														$tMonth = Yii::t('ad', 'month');
 														$items = [
-															"-1 day" => "1 " . $tDay,
-															"-7 day" => "7 " . $tDay,
-															"-14 day" => "14 " . $tDay,
-															"-30 day" => "30 " . $tDay,
-															"-60 day" => "60 " . $tDay,
-															"-90 day" => "90 " . $tDay,
+															"-1 day" => "1 " . Yii::t('ad', 'day'),
+															"-7 day" => "7 " . $tDays,
+															"-14 day" => "14 " . $tDays,
+															"-30 day" => "30 " . $tDays,
+															"-60 day" => "60 " . $tDays,
+															"-90 day" => "90 " . $tDays,
 															"-6 month" => "6 " . $tMonth,
 															"-12 month" => "12 " . $tMonth,
 															"-24 month" => "24 " . $tMonth,
