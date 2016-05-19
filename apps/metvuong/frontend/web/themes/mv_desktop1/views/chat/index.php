@@ -38,7 +38,7 @@ if(!empty($jid_id)){
 						?>
 								<div class="item" chat-with="<?=$user->username;?>">
 									<!--class="unread"-->
-									<a href="">
+									<a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>#<?=$user->username;?>">
 										<span class="wrap-img"><img src="<?=$user->profile->getAvatarUrl();?>" alt=""></span>
 										<div class="chat-detail">
 											<span class="pull-right time-chat"><?=date('H:i:s d-m-Y', strtotime($msg['ts']));?></span>
@@ -78,7 +78,6 @@ if(!empty($jid_id)){
 
 <script>
 	$(document).ready(function () {
-
 		$('.wrap-chat-list').slimscroll({
 			alwaysVisible: true,
 			height: '100%'
@@ -87,7 +86,7 @@ if(!empty($jid_id)){
 		var timer = 0;
 		$(document).unbind('chat/withAnother').bind('chat/withAnother', function (event, user) {
 			if(user){
-				$('body').loading();
+				$('.chat-live .wrap-item-live').loading({full: false});
 				$.ajax({
 					type: "get",
 					dataType: 'html',
@@ -102,7 +101,12 @@ if(!empty($jid_id)){
 		});
 
 		$(document).bind('chat/afterConnect', function (event, data) {
-			$(document).trigger('chat/listLoadDefault');
+			var hash = window.location.hash.substr(1);
+			if(hash.length > 0){
+				$('.wrap-history .chat-list .item[chat-with="' + hash + '"] a').trigger( "click" );
+			}else{
+				$(document).trigger('chat/listLoadDefault');
+			}
 			return false;
 		});
 

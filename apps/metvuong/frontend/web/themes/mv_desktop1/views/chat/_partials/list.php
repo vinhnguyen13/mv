@@ -49,7 +49,12 @@ if(!empty($msgs)) {
 <script>
 	$(document).ready(function () {
 		$(document).on('click', '.head-list-message li a', function (e) {
-			$(document).trigger('click')
+			$(document).trigger('click');
+			var hash = $(this).attr('href').split('#')[1];
+			if(hash.length > 0){
+				console.log(hash, '______________');
+				$('.wrap-history .chat-list .item[chat-with="' + hash + '"] a').trigger( "click" );
+			}
 		});
 	});
 </script>
