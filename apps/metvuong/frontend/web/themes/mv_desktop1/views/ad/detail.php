@@ -92,6 +92,15 @@ $count_review = $reviews->count();
 } else {
 	$count_review = 0;
 }
+
+Yii::t('ad', 'Parking');
+Yii::t('ad', 'Gym');
+Yii::t('ad', 'School');
+Yii::t('ad', 'Park');
+Yii::t('ad', 'Air conditioner');
+Yii::t('ad', 'Washing machine');
+Yii::t('ad', 'Refrigerator');
+Yii::t('ad', 'Television');
 ?>
 <div class="title-fixed-wrap container">
 	<div class="detail-listing row detail-listing-extra">
@@ -628,7 +637,16 @@ $count_review = $reviews->count();
 		            </div>
 		            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
 		                <div class="panel-body" name="experience">
-							<?= implode(', ', ArrayHelper::getColumn($product->projectBuilding->adFacilities, 'name')) ?>
+							<?php
+							 //implode(', ', ArrayHelper::getColumn($product->projectBuilding->adFacilities, 'name'))
+                            $facilities = ArrayHelper::getColumn($product->projectBuilding->adFacilities, 'name');
+                            foreach($facilities as $k => $facility){
+                                if($k == 0)
+                                    echo Yii::t('ad', $facility);
+                                else
+                                    echo ", ".Yii::t('ad', $facility);
+                            }
+                            ?>
 		                </div>
 		            </div>
 		        </div>
@@ -644,7 +662,16 @@ $count_review = $reviews->count();
 		            </div>
 		            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
 		                <div class="panel-body" name="experience">
-							<?= implode(', ', ArrayHelper::getColumn(AdFacility::find()->where(['id' => $product->adProductAdditionInfo->facility])->all(), 'name')) ?>
+							<?php
+//                            implode(', ', ArrayHelper::getColumn(AdFacility::find()->where(['id' => $product->adProductAdditionInfo->facility])->all(), 'name'))
+                            $additional_facilities = ArrayHelper::getColumn(AdFacility::find()->where(['id' => $product->adProductAdditionInfo->facility])->all(), 'name');
+                            foreach($additional_facilities as $k => $additional_facility){
+                                if($k == 0)
+                                    echo Yii::t('ad', $additional_facility);
+                                else
+                                    echo ", ".Yii::t('ad', $additional_facility);
+                            }
+                            ?>
 		                </div>
 		            </div>
 		        </div>

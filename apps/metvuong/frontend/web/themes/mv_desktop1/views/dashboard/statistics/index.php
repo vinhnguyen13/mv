@@ -48,7 +48,7 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
             </div>
         	<section class="clearfix mgB-40">
                 <div class="pull-right fs-13 mgB-15">
-                    Chọn lọc
+                    <?=Yii::t('statistic','Select')?>
                     <select id="filterChart" class="mgL-10">
                         <option value="week"><?=Yii::t('statistic','Week')?></option>
                         <option value="month"><?=Yii::t('statistic','Month')?></option>
