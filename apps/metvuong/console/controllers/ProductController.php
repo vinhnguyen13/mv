@@ -31,5 +31,38 @@ class ProductController extends Controller {
 		}
 		
 		echo 'Update Total: ' . count($products);
-	}	
+	}
+
+    public function actionCheckScore(){
+        $start = time();
+        $products = AdProduct::find()->where("`score` = 0")->orderBy(['updated_at' => SORT_DESC])->limit(1000)->all();
+        if(count($products) > 0) {
+            $no = 0;
+            foreach ($products as $product) {
+                $score = AdProduct::calcScore($product);
+                \Yii::$app->db->createCommand()->update(AdProduct::tableName(), ['score' => $score], 'id = ' . $product['id'])->execute();
+                if($no >0 && $no % 100 == 0) {
+                    print_r(PHP_EOL);
+                    print_r("Checked {$no} records...");
+                    print_r(PHP_EOL);
+                }
+                $no++;
+            }
+            $stop = time();
+            $time = $stop-$start;
+            print_r(PHP_EOL);
+            print_r("Checked {$no} records... DONE! - Time: {$time}s");
+        } else {
+//            print_r(PHP_EOL);
+            print_r(" Products have checked score!");
+        }
+    }
+
+    // Marketing contact send mail
+//    public function actionSendMailContact(){
+//        Metvuong::sendMailContact();
+//    }
+
+
+
 }
