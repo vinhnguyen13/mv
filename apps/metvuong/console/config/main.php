@@ -26,6 +26,49 @@ return [
         ],
     ],
     'components' => [
+        'urlManager' => [
+            'class' => 'yii\web\UrlManager',
+            'baseUrl' => 'http://metvuong.com/',
+            'scriptUrl' => 'http://metvuong.com/',
+            'hostInfo' => 'http://metvuong.com/',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'enableStrictParsing' => false,
+            'rules' => [
+                '/' => 'site/index',
+                'page/<view>' => 'site/page',
+
+                'tin-tuc' => 'news/index',
+                'tin-tuc/<cat_id:\d+>-<cat_slug>' => 'news/list',
+                'tin-tuc/chi-tiet/<id:\d+>-<slug>' => 'news/view',
+                'du-an' => 'building-project/index',
+                'du-an/<slug>' => 'building-project/view',
+                'can-mua-<type:1>-<city_id>-<district_id>' => 'ad/index',
+                'can-thue-<type:2>-<city_id>-<district_id>' => 'ad/index',
+                'real-estate/redirect' => 'ad/redirect',
+                'dang-tin' => 'ad/post',
+                'real-estate/post-listing' => 'ad/post-listing',
+                'real-estate/detail/<id:\d+>-<slug>' => 'ad/detail',
+                'real-estate/update/<id:\d+>' => 'ad/update',
+                'member/<usrn>/avatar' => 'member/avatar',
+                'chat/with/<username>' => 'chat/with',
+                'goi-gia' => 'payment/package',
+
+                '<username>' => 'member/profile',
+                '<username>/cap-nhat' => 'member/update-profile',
+                '<username>/thong-bao' => 'notification/index',
+                '<username>/thong-bao/cap-nhat' => 'notification/update',
+                '<username>/danh-sach-tin-dang' => 'dashboard/ad',
+                '<username>/tro-chuyen' => 'chat/index',
+
+                'mvuser/protect/<action>' => 'user/security/<action>',
+                'mvuser/join/<action>' => 'user/registration/<action>',
+                'mvuser/forgot/<action>' => 'user/recovery/<action>',
+
+                'listing/<action>' => 'ad/<action>',
+
+            ]
+        ],
         'log' => [
             'targets' => [
                 [
