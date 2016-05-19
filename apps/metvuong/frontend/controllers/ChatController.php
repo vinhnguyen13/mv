@@ -47,7 +47,7 @@ class ChatController extends Controller
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('with', ['username'=>$username]);
         }else{
-            return $this->render('with', ['username'=>$username]);
+            $this->redirect(Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username]));
         }
     }
 
