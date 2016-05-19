@@ -1,8 +1,6 @@
 <?php
 namespace console\controllers;
 
-
-
 use yii\console\Controller;
 use vsoft\ad\models\AdProduct;
 
