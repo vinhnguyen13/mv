@@ -118,20 +118,11 @@ $return =  [
             ]
         ],*/
         'urlManager' => [
-//            'class' => 'yii\web\UrlManager',
             'class' => 'frontend\components\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-                'site/login' => 'user/security/login',
-                'site/signup' => 'user/registration/register',
-//                'news/<action:\w+>' => 'news/<action>',
-                '<cat_id:\d+>-<cat_slug>/<id:\d+>-<slug>' => 'news/view',
-                '<cat_id:\d+>-<slug>' => 'news/list',
-//                '<controller:\w+>/<id:\d+>' => '<controller>/view',
-//                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
-//                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
 
             ],
             'languages' => ['en-US'=>'en-US', 'vi-VN'=>'vi-VN'],
@@ -201,9 +192,13 @@ $return =  [
     'params' => $params,
 ];
 
+//$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+//$segments = explode('/', $path);
 
 $return['components']['urlManager']['rules'] = [
     '/' => 'site/index',
+    'page/<view>' => 'site/page',
+
     'tin-tuc' => 'news/index',
     'tin-tuc/<cat_id:\d+>-<cat_slug>' => 'news/list',
     'tin-tuc/chi-tiet/<id:\d+>-<slug>' => 'news/view',
@@ -233,14 +228,9 @@ $return['components']['urlManager']['rules'] = [
 
     'listing/<action>' => 'ad/<action>',
 
+
+
 ];
 
-//echo "<pre>";
-//print_r($_REQUEST);
-//print_r(strpos($_COOKIE['language'], 'vi-VN'));
-//print_r(PHP_EOL);
-//print_r($return['components']['urlManager']['rules']);
-//echo "</pre>";
-//exit;
 return $return;
 
