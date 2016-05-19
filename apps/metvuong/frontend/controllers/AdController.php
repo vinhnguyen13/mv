@@ -53,6 +53,40 @@ class AdController extends Controller
 		
 		return parent::beforeAction($action);
 	}
+
+	public function actionEncodeGeometry() {
+
+		if(Yii::$app->request->isPost) {
+			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+			
+			$table = $_POST['table'];
+			$id = $_POST['id'];
+			
+			if($_POST['paths']) {
+				$connection = \Yii::$app->db;
+				$connection->createCommand()->update('ad_' . $table, ['geometry' => $_POST['paths']], 'id = ' . $id)->execute();
+			}
+			
+			if($table == 'district') {
+				$wards = AdWard::find()->where(['district_id' => $id])->asArray(true)->all();
+				
+				return ['wards' => $wards];
+			}
+			
+			return [];
+		} else {
+			if(isset($_GET['city'])) {
+				Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+			
+				$city = AdCity::find()->where(['id' => $_GET['city']])->asArray(true)->one();
+				$districts = AdDistrict::find()->where(['city_id' => $_GET['city']])->asArray(true)->all();
+			
+				return ['city' => $city, 'districts' => $districts];
+			} else {
+				return $this->render('encode-geometry');
+			}
+		}
+	}
     
     public function actionUpload() {
         if($_FILES) {
