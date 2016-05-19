@@ -410,7 +410,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 					            </nav>
 							</div>
 						</div>
-						<div class="container<?= count($products) > 0 ? ' hide' : '' ?>" id="no-result">Chưa có tin đăng theo tìm kiếm của bạn, <a href="#">đăng ký nhận thông báo khi có tin đăng phù hợp</a>.</div>
+						<div class="container<?= count($products) > 0 ? ' hide' : '' ?>" id="no-result"><?= sprintf(Yii::t('ad', 'Chưa có tin đăng theo tìm kiếm của bạn, %sđăng ký nhận thông báo khi có tin đăng phù hợp%s.'), '<a href="#">', '</a>') ?></div>
 					</div>
 					<div id="loading-list" class="hide" style="text-align: center; margin-top: 20px; margin-bottom: 15px;"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/loading-listing.gif' ?>" /></div>
 				</div>
