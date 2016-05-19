@@ -347,6 +347,10 @@ $count_review = $reviews->count();
                                     success: function (data) {
                                         if(data.statusCode == 200){
 											<?php if(!empty($owner)){
+											echo "<pre>";
+											print_r($owner);
+											echo "</pre>";
+											exit;
 											?>
                                             	var to_jid = chatUI.genJid('<?=$owner->username?>');
                                             	Chat.sendMessage(to_jid , '{owner} favorite {product}', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: data.parameters.msg, product: '<?=$address?>'

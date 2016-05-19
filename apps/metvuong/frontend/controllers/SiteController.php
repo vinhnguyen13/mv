@@ -78,6 +78,7 @@ class SiteController extends Controller
             ],
 			'page' => [
 				'class' => 'yii\web\ViewAction',
+				'viewPrefix' => 'pages/'.Yii::$app->language
 			],
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
