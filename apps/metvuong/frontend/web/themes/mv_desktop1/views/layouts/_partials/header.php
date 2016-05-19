@@ -124,39 +124,9 @@ use frontend\models\AdProductSearch;
                                 <div class="list-message">
                                     <div class="wrap-item-messa-head">
                                         <ul class="clearfix">
-                                            <li>
-                                                <a href="#">
-                                                    <span class="avatar"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/MV-Agent Photo.jpg' ?>" alt="" /></span>
-                                                    <div>
-                                                        <span class="name-user">Mét Vuông</span>
-                                                        <span class="txt-message">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</span>
-                                                        <span class="time-message">18:28</span>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <span class="avatar"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/MV-Agent Photo.jpg' ?>" alt="" /></span>
-                                                    <div>
-                                                        <span class="name-user">Mét Vuông</span>
-                                                        <span class="txt-message">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</span>
-                                                        <span class="time-message">18:28</span>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <span class="avatar"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/MV-Agent Photo.jpg' ?>" alt="" /></span>
-                                                    <div>
-                                                        <span class="name-user">Mét Vuông</span>
-                                                        <span class="txt-message">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</span>
-                                                        <span class="time-message">18:28</span>
-                                                    </div>
-                                                </a>
-                                            </li>
                                         </ul>
                                     </div>
-                                    <a href="#" class="view-more"><?=Yii::t('general', 'View more')?></a>
+                                    <a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" class="view-more"><?=Yii::t('general', 'View more')?></a>
                                 </div>
                             </div>
                         </li>
@@ -303,7 +273,18 @@ use frontend\models\AdProductSearch;
         
         $('.dropdown-message').dropdown({
             styleShow: 0,
-            selectedValue: false
+            selectedValue: false,
+            ajaxSubmit: function () {
+                $('.list-message').loading({full: true});
+                $.ajax({
+                    type: 'GET',
+                    url: '<?=Url::to(['/chat/list', 'username'=> Yii::$app->user->identity->username])?>',
+                    success: function (response) {
+                        $('body').loading({done: true});
+                        $('.wrap-item-messa-head').html(response);
+                    }
+                });
+            }
         });
 
         $('.dropdown-noti').dropdown({

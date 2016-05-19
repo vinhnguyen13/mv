@@ -30,6 +30,12 @@ class ChatController extends Controller
         }
     }
 
+    public function actionList(){
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_partials/list');
+        }
+    }
+
     public function actionIndex2(){
         return $this->render('index2');
     }
