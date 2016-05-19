@@ -3,17 +3,22 @@ $themeBaseUrl = Yii::$app->view->theme->baseUrl;
 ?>
 <div class="title-fixed-wrap container">
 	<div class="page-about-us">
-		<div class="title-top">VỀ CHÚNG TÔI</div>
+		<div class="title-top">ABOUT US</div>
 		<div class="inner-page">
 			<div class="text-center logo-search-box wrap-img">
 				<img src="<?=$themeBaseUrl?>/resources/images/logo.png" alt="">
 			</div>
 			<p>
-				<a href="/"><strong>Metvuong.com</strong></a> là cổng giao dịch trực tuyến về mua bán - cho thuê bất động sản. Chúng tôi cung cấp lên đến hàng chục ngàn các căn hộ cao cấp, nhà riêng và biệt thự cho thuê hoặc đang rao bán tại hầu hết các tỉnh thành trên cả nước. Với tiêu chí đề cao uy tín và chất lượng của sản phẩm dịch vụ, Metvuong.com luôn chú trọng việc kiểm duyệt nội dung các tin đăng nhà đất, đảm bảo mọi tin rao đều có thông tin đầy đủ và hình ảnh chân thật. Chúng tôi cam kết giúp khách hàng tìm được sản phẩm phù hợp nhất, một cách nhanh chóng và hiệu quả.
+				<a href="/"><strong>Metvuong.com</strong></a> is an online real estate community in Vietnam. We provide information for millions of luxury apartments, townhouses and mansions for rent and for sale across the country. We commit to providing customers with updated information of highest quality by strictly controlling the content of listings.
 			</p>
-			<p>
-				Ngoài ra, <a href="/"><strong>Metvuong.com</strong></a> còn liên tục cập nhật những thông tin mới nhất về thị trường nhà đất và các dự án sắp ra mắt, giúp độc giả có cái nhìn tổng quan hơn về thị trường bất động sản tại Việt Nam.
+			<p class="mgB-50">
+				Besides, <a href="/"><strong>Metvuong.com</strong></a> continuously updates thousands of news and articles on a wide range of subjects, including upcoming property projects, analysis about the movement of real estate market and information on Legal documents. We would like to help customers keep up with latest changes of Vietnam real estate market.
 			</p>
+			<p class="fs-20 font-600 mgB-15">Contact us:</p>
+			<div class="fs-14 mgB-10"><strong class="pdR-10 pull-left">Address:</strong> <div class="overflow-all">Level 12th, Miss Aodai Building, 21 Nguyen Trung Ngan, Ben Nghe Ward, District 1,<br>
+				Hochiminh City, Vietnam</div></div>
+			<p class="fs-14 mgB-10"><strong class="pdR-10">Tel:</strong> (+84) (8) 7309 9966 ­ (+84) (8) 3824 6810</p>
+			<p class="fs-14 mgB-10"><strong class="pdR-10">Email:</strong> <a href="mailto:info@metvuong.com" class="text-decor">info@metvuong.com</a></p>
 		</div>
 	</div>
 </div>

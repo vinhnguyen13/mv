@@ -13,7 +13,7 @@
 							<p class="mgB-10 pdL-10">•   Trong quá trình đăng tin, phải thực hiện đầy đủ các thao tác theo hướng dẫn</p>
 							<p class="mgB-10 pdL-10">•   Tin đăng sau 24h sẽ được hệ thống kiểm duyệt và cho hiển thị lên trang mạng.</p>
 							<p class="mgB-10 pdL-10">•   Tiêu đề và nội dung phải viết chữ có dấu, chuẩn chính tả, không viết tắt, viết trại chữ theo hình thức chat, tuổi teen, ngôn ngữ tối nghĩa và các quy định khác (có thể xem thêm ở link sau: http://metvuong.com/quy-dinh-su-dung).</p>
-							<p class="mgB-10 pdL-10">•   Điền đầy đủ thông tin vào các mục bắt buộc có đánh dấu “*”</p>
+							<p class="mgB-10 pdL-10">•   Điền đầy đủ thông tin vào các mục bắt buộc có đánh dấu <span style="color:red;">“*”</span></p>
 						</div>
 					</div>
 				</li>
