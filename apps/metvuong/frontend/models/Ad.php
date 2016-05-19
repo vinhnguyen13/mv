@@ -171,12 +171,16 @@ class Ad extends Component
     }
 
     public function homePageRandom(){
-        $model = new AdProductSearch();
-        $query = $model->search(Yii::$app->request->get());
-        $query->addSelect('ad_product.created_at, ad_product.category_id, ad_product.type, ad_images.file_name, ad_images.folder');
+        $query = AdProductSearch::find();
+        $query->select('ad_product.id, ad_product.show_home_no, ad_product.home_no, ad_product.city_id, ad_product.district_id, ad_product.ward_id, ad_product.street_id, ad_product.lat, ad_product.lng,
+			ad_product.price, ad_product.area, ad_product_addition_info.room_no, ad_product_addition_info.toilet_no, ad_product.created_at, ad_product.category_id, ad_product.type, ad_images.file_name,
+			 ad_images.folder');
+        $query->innerJoin('ad_product_addition_info', 'ad_product_addition_info.product_id = ad_product.id');
+        $where = ['status' => 1, 'verified' => 1, 'is_expired' => 0];
+        $query->where($where);
         $query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
         $query->groupBy('ad_product.id');
-        $products = $query->with(['city', 'district', 'ward', 'street'])->limit(6)->orderBy(['updated_at' => SORT_DESC])->all();
+        $products = $query->with(['city', 'district', 'ward', 'street'])->limit(6)->orderBy(['score' => SORT_DESC])->all();
         return $products;
     }
 }
