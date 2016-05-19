@@ -374,6 +374,7 @@ class UrlManager extends BaseUrlManager
         }
         Yii::trace("Redirecting to $url.", __METHOD__);
         Yii::$app->getResponse()->redirect($url);
+        Yii::$app->end();
         if (YII_ENV_TEST) {
             // Response::redirect($url) above will call `Url::to()` internally. So to really
             // test for the same final redirect URL here, we need to call Url::to(), too.
