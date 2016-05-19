@@ -228,9 +228,9 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 										</div>
 										<div class="item-dropdown hide-dropdown wrap-min-max">
 											<div class="box-input clearfix">
-												<span class="txt-min min-max active min-val" data-value="" data-text="Thấp nhất"><?= Yii::t('ad', 'Min') ?></span>
+												<span class="txt-min min-max active min-val" data-value="" data-text="<?= Yii::t('ad', 'Min') ?>"><?= Yii::t('ad', 'Min') ?></span>
 												<span class="text-center"><span></span></span>
-												<span class="txt-max min-max max-val" data-value="" data-text="Cao nhất"><?= Yii::t('ad', 'Max') ?></span>
+												<span class="txt-max min-max max-val" data-value="" data-text="<?= Yii::t('ad', 'Max') ?>"><?= Yii::t('ad', 'Max') ?></span>
 												<?= Html::activeHiddenInput($searchModel, 'price_min', ['id' => 'priceMin']); ?>
 												<?= Html::activeHiddenInput($searchModel, 'price_max', ['id' => 'priceMax']); ?>
 											</div>
