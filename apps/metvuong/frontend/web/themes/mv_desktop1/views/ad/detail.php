@@ -637,16 +637,20 @@ Yii::t('ad', 'Television');
 		            </div>
 		            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
 		                <div class="panel-body" name="experience">
+                            <ul>
 							<?php
 							 //implode(', ', ArrayHelper::getColumn($product->projectBuilding->adFacilities, 'name'))
                             $facilities = ArrayHelper::getColumn($product->projectBuilding->adFacilities, 'name');
-                            foreach($facilities as $k => $facility){
-                                if($k == 0)
-                                    echo Yii::t('ad', $facility);
-                                else
-                                    echo ", ".Yii::t('ad', $facility);
+                            if(count($facilities) > 0) {
+                                foreach ($facilities as $k => $facility) { ?>
+                                <li>
+                                    <span class="<?=$facility?>"></span>
+                                    <?=Yii::t('ad', $facility)?>
+                                </li>
+                                <?php }
                             }
                             ?>
+                            </ul>
 		                </div>
 		            </div>
 		        </div>
@@ -662,16 +666,20 @@ Yii::t('ad', 'Television');
 		            </div>
 		            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
 		                <div class="panel-body" name="experience">
+                            <ul>
 							<?php
 //                            implode(', ', ArrayHelper::getColumn(AdFacility::find()->where(['id' => $product->adProductAdditionInfo->facility])->all(), 'name'))
                             $additional_facilities = ArrayHelper::getColumn(AdFacility::find()->where(['id' => $product->adProductAdditionInfo->facility])->all(), 'name');
-                            foreach($additional_facilities as $k => $additional_facility){
-                                if($k == 0)
-                                    echo Yii::t('ad', $additional_facility);
-                                else
-                                    echo ", ".Yii::t('ad', $additional_facility);
+                            if(count($additional_facilities) > 0) {
+                                foreach ($additional_facilities as $k => $facility) { ?>
+                                    <li>
+                                        <span class="<?=$facility?>"></span>
+                                        <?=Yii::t('ad', $facility)?>
+                                    </li>
+                                <?php }
                             }
                             ?>
+                            </ul>
 		                </div>
 		            </div>
 		        </div>
