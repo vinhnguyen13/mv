@@ -176,7 +176,7 @@ class Ad extends Component
         $query->addSelect('ad_product.created_at, ad_product.category_id, ad_product.type, ad_images.file_name, ad_images.folder');
         $query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
         $query->groupBy('ad_product.id');
-        $products = $query->with(['city', 'district', 'ward', 'street'])->limit(6)->orderBy(['id' => SORT_DESC])->all();
+        $products = $query->with(['city', 'district', 'ward', 'street'])->limit(6)->orderBy(['updated_at' => SORT_DESC])->all();
         return $products;
     }
 }
