@@ -76,6 +76,7 @@ class MVBootstrap implements BootstrapInterface
             $params = array_merge(['/'.$parseRequest[0]], Yii::$app->request->getQueryParams());
         }
         if(!empty($params['language-change'])){
+            $params['language'] = $params['language-change'];
             unset($params['language-change']);
         }
         $url = Url::to($params);

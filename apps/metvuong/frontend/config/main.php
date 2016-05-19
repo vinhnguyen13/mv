@@ -80,7 +80,7 @@ $return =  [
                 ],
             ],
         ],
-        'urlManager' => [
+        /*'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -116,8 +116,8 @@ $return =  [
 //                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
 
             ]
-        ],
-        /*'urlManager' => [
+        ],*/
+        'urlManager' => [
 //            'class' => 'yii\web\UrlManager',
             'class' => 'frontend\components\UrlManager',
             'enablePrettyUrl' => true,
@@ -143,7 +143,7 @@ $return =  [
                 '#^store/news/show#' => '#^store/news/show#',
             ],
 //            'ruleConfig' => ['class' => frontend\components\LanguageUrlRule::className()]
-        ],*/
+        ],
         'i18n' => [
             'translations' => [
                 '*' => [
