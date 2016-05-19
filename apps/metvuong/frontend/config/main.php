@@ -136,6 +136,7 @@ $return =  [
                 '#^user/security/*#' => '#^user/security/*#',
                 '#^mvuser/protect/*#' => '#^mvuser/protect/*#',
                 '#^listing/detail#' => '#^listing/detail#',
+                '#^listing/get-area#' => '#^listing/get-area#',
             ],
 //            'ruleConfig' => ['class' => frontend\components\LanguageUrlRule::className()]
         ],
