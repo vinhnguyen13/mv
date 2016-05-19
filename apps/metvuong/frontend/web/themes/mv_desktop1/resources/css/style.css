@@ -3021,6 +3021,7 @@ html.mm-opening .mm-slideout {
     position: relative;
     z-index: 2;
     border: 1px solid #EFEFEF;
+    line-height: 20px;
 }
 .container-chat .item.box-me .txt-detail {
     box-shadow: -1px 1px 1px #ADADAD;
@@ -3028,18 +3029,21 @@ html.mm-opening .mm-slideout {
     -ms-box-shadow: -1px 1px 1px #ADADAD;
     -moz-box-shadow: -1px 1px 1px #ADADAD;
 }
-.container-chat .item.box-me .txt-detail a {
+.container-chat .txt-detail a {
     color: #337ab7;
     text-decoration: underline;
     padding: 5px 0;
-    display: block;
-    white-space: pre-wrap;      /* CSS3 */   
-	white-space: -moz-pre-wrap; /* Firefox */    
-	white-space: -pre-wrap;     /* Opera <7 */   
-	white-space: -o-pre-wrap;   /* Opera 7 */    
-	word-wrap: break-word;      /* IE */
+    display: inline;
+    white-space: pre-wrap;      /* CSS3 */
+    white-space: -moz-pre-wrap; /* Firefox */
+    white-space: -pre-wrap;     /* Opera <7 */
+    white-space: -o-pre-wrap;   /* Opera 7 */
+    word-wrap: break-word;      /* IE */
+    border: none;
+    float: none;
+    width: auto;
 }
-.container-chat .item.box-me .txt-detail a:hover {
+.container-chat .txt-detail a:hover {
     color: #00A769;
 }
 .container-chat .chat-txt .time-detail {
@@ -6815,6 +6819,7 @@ footer li a {
     }
     .user-login .list-redire .wrap-item-messa-head a {
         overflow: hidden;
+        text-transform: inherit;
     }
     .user-login .wrap-item-messa-head .avatar img {
         max-width: 100%;
@@ -6831,13 +6836,17 @@ footer li a {
     }
     .user-login .wrap-item-messa-head a > div .name-user {
         font-weight: 700;
-        line-height: 100%;    
+        line-height: 15px;
         margin-bottom: 2px;
+        text-transform: capitalize;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
     }
     .user-login .wrap-item-messa-head a > div .txt-message {
-        font-size: 12px;
+        font-size: 13px;
         line-height: 15px;
-        color: #ABABAB;
+        color: #3E3E3E;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -9396,12 +9405,6 @@ footer li a {
     /* background: #00BB76; */
 }
 .close-box:hover .icon-mv {
-    transition: all .1s ease-out;
-    -webkit-transition: all .1s ease-out;
-    -moz-transition: all .1s ease-out;
-    -ms-transition: all .1s ease-out;
-}
-.close-box:hover .icon-mv {
     font-size: 15px;
 }
 .box-chat-footer .title-top {
@@ -11383,4 +11386,7 @@ height: 190px;
 .page-about-us {
     padding-top: 50px;
     min-height: 768px;
+}
+.loading-chat {
+    font-size: 12px;
 }
