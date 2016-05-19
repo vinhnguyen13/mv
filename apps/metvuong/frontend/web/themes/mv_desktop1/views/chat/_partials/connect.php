@@ -7,7 +7,9 @@ if(!Yii::$app->user->isGuest) {
     $script = "var xmpp_jid = '" . Yii::$app->user->identity->username . "';" .
         "var xmpp_dm = '" . Chat::find()->getDomain() . "';" .
         "var xmpp_key = '" . Chat::find()->getKey() . "';" .
-        "var xmpp_debug = ".$debug.";";
+        "var xmpp_debug = ".$debug.";".
+        "var chat_url = ".Url::to(['chat/with']).''.";"
+    ;
 
     Yii::$app->getView()->registerJs($script, View::POS_HEAD);
 
@@ -109,7 +111,7 @@ if(!Yii::$app->user->isGuest) {
                     $.ajax({
                         type: "get",
                         dataType: 'html',
-                        url: '/chat/with/' + user,
+                        url: chat_url + '?username=' + user,
                         success: function (data) {
                             Chat.historyMessage(user + '@<?=Chat::DOMAIN?>');
                             chatBoxExist.find('.box-chat-footer').append(data);

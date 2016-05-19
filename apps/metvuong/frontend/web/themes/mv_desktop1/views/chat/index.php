@@ -38,7 +38,7 @@ if(!empty($jid_id)){
 						?>
 								<div class="item" chat-with="<?=$user->username;?>">
 									<!--class="unread"-->
-									<a href="<?= Url::to(['/chat/with', 'username' => $user->username]) ?>">
+									<a href="">
 										<span class="wrap-img"><img src="<?=$user->profile->getAvatarUrl();?>" alt=""></span>
 										<div class="chat-detail">
 											<span class="pull-right time-chat"><?=date('H:i:s d-m-Y', strtotime($msg['ts']));?></span>
@@ -91,7 +91,7 @@ if(!empty($jid_id)){
 				$.ajax({
 					type: "get",
 					dataType: 'html',
-					url: '/chat/with/'+user,
+					url: chat_url + '?username=' + user,
 					success: function (data) {
 						$('.wrap-item-live').html(data);
 						Chat.historyMessage(user+'@<?=Chat::DOMAIN?>');
