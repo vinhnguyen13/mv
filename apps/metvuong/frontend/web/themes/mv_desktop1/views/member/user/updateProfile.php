@@ -51,7 +51,7 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                     </div>
                     <div class="avatar wrap-img pull-left mgR-15 text-center">
                         <img class="mgB-10" id="profileAvatar" src="<?=$model->avatar?>" alt="metvuong avatar" />
-                        <a class="btn-common" href="#" data-toggle="modal" data-target="#avatar">Tải hình</a>
+                        <a class="btn-common" href="#" data-toggle="modal" data-target="#avatar"><?=Yii::t('user','upload image')?></a>
                     </div>
                     <div class="overflow-all">
                         <?php
@@ -121,8 +121,8 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                 </div>
                 <div class="box-edit-show wrap-attr-detail">
                     <div class="posi_absolute btn-mani">
-                        <a href="#" class="done-profile btn-common">Xong</a>    
-                        <a href="#" class="cancel-profile btn-common btn-cancel">Hủy</a>    
+                        <a href="#" class="done-profile btn-common"><?= Yii::t('user', 'Xong') ?></a>
+                        <a href="#" class="cancel-profile btn-common btn-cancel"><?= Yii::t('user', 'Hủy') ?></a>
                     </div>
                     <?php
                     $profile_form = Yii::createObject([
@@ -151,12 +151,12 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                     <a href="#" class="edit-profile"><span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
 <!--                    <a class="text-decor color-cd-hover fs-13 font-600 link-change-pass" href="#">Đổi mật khẩu</a> -->
                     <span class="pass_result"></span>
-                    <span class="last_changed">Password last changed <?=\frontend\models\ProfileForm::humanTiming($user->updated_at)?>.</span>
+                    <span class="last_changed">Password last changed <?=\frontend\models\ProfileForm::humanTiming($user->confirmed_at)?>.</span>
                 </div>
                 <div class="box-edit-show wrap-attr-detail">
                     <div class="posi_absolute btn-mani">
-                        <a href="#" class="done-profile btn-common">Xong</a>    
-                        <a href="#" class="cancel-profile btn-common btn-cancel">Hủy</a>    
+                        <a href="#" class="done-profile btn-common"><?= Yii::t('user', 'Xong') ?></a>
+                        <a href="#" class="cancel-profile btn-common btn-cancel"><?= Yii::t('user', 'Hủy') ?></a>
                     </div>
                     <div class="row">
                         <br>

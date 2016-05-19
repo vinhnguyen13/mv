@@ -66,7 +66,7 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
         			</div>
                     <ul class="option-view-stats clearfix">
                         <li><a href="#" class="btn-finder active" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $finderFrom, 'to' => $finderTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"> <span class="icon-mv fs-19"><span class="icon-icons-search"></span></span> <?=Yii::t('statistic','Search')?><span><?=$search_count ?></span></a></li>
-                        <li><a href="#" class="btn-visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $visitorFrom, 'to' => $visitorTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><span class="icon-mv"><span class="icon-eye-copy"></span></span><?=Yii::t('statistic','Click')?><span><?=$click_count ?></span></a></li>
+                        <li><a href="#" class="btn-visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $visitorFrom, 'to' => $visitorTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><span class="icon-mv"><span class="icon-eye-copy"></span></span><?=Yii::t('statistic','Visit')?><span><?=$click_count ?></span></a></li>
                         <li><a href="#" class="btn-favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'id' => $id, 'from' => $favouriteFrom, 'to' => $favouriteTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><span class="icon-mv"><span class="icon-heart-icon-listing"></span></span><?=Yii::t('statistic','Favourite')?><span><?=$fav_count ?></span></a></li>
                         <li><a href="#" class="btn-share" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/share', 'id' => $id, 'from' => $shareFrom, 'to' => $shareTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"> <span class="icon-mv"><span class="icon-share-social"></span></span> <?=Yii::t('statistic','Share')?> <span><?=$share_count?></span></a></li>
                     </ul>
@@ -75,10 +75,40 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
             <h2 class="text-uper fs-16 font-600 mgB-30 color-cd"><?=Yii::t('statistic','STATISTIC')?></h2>
             <table class="tbl-review">
                 <tr>
-                    <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10 fs-17"><span class="icon-eye-copy"></span></span><?=Yii::t('statistic','VIEW')?></th>
-                    <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10"><span class="icon-heart-icon-listing fs-19"></span></span><?=Yii::t('statistic','FAVORITE')?></th>
+                    <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10"><span class="icon-icons-search fs-19"></span></span><?=Yii::t('statistic','SEARCH')?></th>
+                    <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10 fs-17"><span class="icon-eye-copy"></span></span><?=Yii::t('statistic','VISIT')?></th>
+
                 </tr>
                 <tr>
+                    <td>
+                        <?php if(isset($finders["finders"]) && count($finders["finders"]) > 0){
+                            foreach($finders["finders"] as $key => $finder){?>
+                                <div class="clearfix">
+                                    <a class="fs-13" href="<?=Url::to(['member/profile', 'username'=>$key])?>">
+                                        <img class="pull-left" src="<?=Url::to($finder['avatar'], true)?>" alt="">
+                                        <span class="name-user"><?=$key?></span>
+                                    </a>
+                                    <div class="crt-item">
+                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-url="<?=Url::to(['member/profile-render-email', 'username'=>$key])?>" data-user="<?=$key?>">
+                                            <span class="icon-mv fs-16">
+                                                <span class="icon-mail-profile"></span>
+                                            </span>
+                                        </a>
+                                        <a href="#" class="chat-now tooltip-show" data-chat-user="<?=$key?>" data-placement="bottom" title="Send message">
+                                            <span class="icon-mv fs-18">
+                                                <span class="icon-bubbles-icon"></span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <span class="num-show pull-right color-cd font-600"><?=$finder['count']?></span>
+                                </div>
+                            <?php }
+                        } else {?>
+                            <div class="clearfix fs-13 text-center">
+                                <span><?=Yii::t('statistic','Not found')?>.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>"><?=Yii::t('statistic','Please, update your listing')?>.</a>
+                            </div>
+                        <?php }?>
+                    </td>
                     <td>
                         <?php if(isset($visitors["visitors"]) && count($visitors["visitors"]) > 0){
                             foreach($visitors["visitors"] as $key => $value){?>
@@ -108,6 +138,13 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                             </div>
                         <?php }?>
                     </td>
+
+                </tr>
+                <tr>
+                    <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10"><span class="icon-heart-icon-listing fs-19"></span></span><?=Yii::t('statistic','FAVORITE')?></th>
+                    <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10"><span class="icon-share-social fs-19"></span></span><?=Yii::t('statistic','SHARE')?></th>
+                </tr>
+                <tr>
                     <td>
                         <?php if(isset($favourites["saved"]) && count($favourites["saved"]) > 0){
                             foreach($favourites["saved"] as $key => $value){?>
@@ -129,41 +166,6 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                         </a>
                                     </div>
                                     <span class="num-show pull-right color-cd font-600"><?=$value['count']?></span>
-                                </div>
-                            <?php }
-                        } else {?>
-                            <div class="clearfix fs-13 text-center">
-                                <span><?=Yii::t('statistic','Not found')?>.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>"><?=Yii::t('statistic','Please, update your listing')?>.</a>
-                            </div>
-                        <?php }?>
-                    </td>
-                </tr>
-                <tr>
-                    <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10"><span class="icon-icons-search fs-19"></span></span><?=Yii::t('statistic','SEARCH')?></th>
-                    <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10"><span class="icon-share-social fs-19"></span></span><?=Yii::t('statistic','SHARE')?></th>
-                </tr>
-                <tr>
-                    <td>
-                        <?php if(isset($finders["finders"]) && count($finders["finders"]) > 0){
-                            foreach($finders["finders"] as $key => $finder){?>
-                                <div class="clearfix">
-                                    <a class="fs-13" href="<?=Url::to(['member/profile', 'username'=>$key])?>">
-                                        <img class="pull-left" src="<?=Url::to($finder['avatar'], true)?>" alt="">
-                                        <span class="name-user"><?=$key?></span>
-                                    </a>
-                                    <div class="crt-item">
-                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-url="<?=Url::to(['member/profile-render-email', 'username'=>$key])?>" data-user="<?=$key?>">
-                                            <span class="icon-mv fs-16">
-                                                <span class="icon-mail-profile"></span>
-                                            </span>
-                                        </a>
-                                        <a href="#" class="chat-now tooltip-show" data-chat-user="<?=$key?>" data-placement="bottom" title="Send message">
-                                            <span class="icon-mv fs-18">
-                                                <span class="icon-bubbles-icon"></span>
-                                            </span>
-                                        </a>
-                                    </div>
-                                    <span class="num-show pull-right color-cd font-600"><?=$finder['count']?></span>
                                 </div>
                             <?php }
                         } else {?>

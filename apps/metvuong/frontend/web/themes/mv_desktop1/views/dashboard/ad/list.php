@@ -109,7 +109,7 @@ $count_product = count($products);
                             </div>
                             <div class="wrap-icon">
                                 <span class="icon-mv"><span class="icon-share-social"></span></span>
-                                <strong><?= $share ?></strong>Chia sẻ
+                                <strong><?= $share ?></strong><?=Yii::t('statistic','Share')?>
                             </div>
                         </div>
                     </div>

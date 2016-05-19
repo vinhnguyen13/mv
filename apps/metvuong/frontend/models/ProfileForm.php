@@ -136,7 +136,7 @@ class ProfileForm extends Model
         if (!$this->hasErrors()) {
             $result = $user->resetPassword($this->new_password);
             if($result){
-                User::getDb()->createCommand()->update(User::tableName(), ['updated_at' => time()], 'id = :id', [':id' => Yii::$app->user->id])->execute();
+                User::getDb()->createCommand()->update(User::tableName(), ['confirmed_at' => time()], 'id = :id', [':id' => Yii::$app->user->id])->execute();
                 return $result;
             }
         }
