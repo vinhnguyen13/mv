@@ -51,15 +51,10 @@ class AdController extends Controller
 	{
 		$this->view->params['noFooter'] = true;
 		
-		if(!Yii::$app->request->isAjax) {
-			\lajax\translatemanager\helpers\Language::registerAssets();
-		}
-		
 		return parent::beforeAction($action);
 	}
     
     public function actionUpload() {
-        //sleep(500);
         if($_FILES) {
     		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     		
