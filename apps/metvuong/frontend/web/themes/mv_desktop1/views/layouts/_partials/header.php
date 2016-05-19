@@ -295,7 +295,7 @@ use frontend\models\AdProductSearch;
             });
         });
 
-        $('.guest-dropdown').dropdown({
+        $('.guest-dropdown,.user-edit').dropdown({
             styleShow: 0,
             selectedValue: false
         });

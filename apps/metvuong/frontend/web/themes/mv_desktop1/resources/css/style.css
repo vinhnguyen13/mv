@@ -6398,6 +6398,9 @@ footer li a {
         left: inherit;
         right: 0;
     }
+    .user-login .box-dropdown.user-edit .dropdown-up-style {
+        top: 63px;
+    }
     .user-login .box-dropdown.dropdown-message .dropdown-up-style,
     .user-login .box-dropdown.dropdown-noti .dropdown-up-style {
         top: 46px;
