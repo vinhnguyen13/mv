@@ -144,6 +144,7 @@ $return =  [
                 '#^store/news/show#' => '#^store/news/show#',
                 '#^user/security/*#' => '#^user/security/*#',
                 '#^mvuser/protect/*#' => '#^mvuser/protect/*#',
+                '#^listing/detail#' => '#^listing/detail#',
             ],
 //            'ruleConfig' => ['class' => frontend\components\LanguageUrlRule::className()]
         ],
