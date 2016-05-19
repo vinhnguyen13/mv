@@ -142,6 +142,8 @@ $return =  [
                 '#^express/upload/image#' => '#^express/upload/image#',
                 '#^express/upload/editor-image#' => '#^express/upload/editor-image#',
                 '#^store/news/show#' => '#^store/news/show#',
+                '#^user/security/*#' => '#^user/security/*#',
+                '#^mvuser/protect/*#' => '#^mvuser/protect/*#',
             ],
 //            'ruleConfig' => ['class' => frontend\components\LanguageUrlRule::className()]
         ],

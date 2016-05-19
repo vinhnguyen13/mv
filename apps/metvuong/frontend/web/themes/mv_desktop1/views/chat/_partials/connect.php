@@ -8,7 +8,7 @@ if(!Yii::$app->user->isGuest) {
         "var xmpp_dm = '" . Chat::find()->getDomain() . "';" .
         "var xmpp_key = '" . Chat::find()->getKey() . "';" .
         "var xmpp_debug = ".$debug.";".
-        "var chat_url = ".Url::to(['chat/with']).''.";"
+        "var chat_url = '".Url::to(['chat/with'])."';"
     ;
 
     Yii::$app->getView()->registerJs($script, View::POS_HEAD);
