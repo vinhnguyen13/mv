@@ -2351,6 +2351,7 @@ label {
     height: auto;
     line-height: inherit;
     background: inherit;
+    float: left;
 }
 .noti-all a:hover,
 .icon-settings:hover,
@@ -2433,13 +2434,20 @@ label {
     padding-left: 5px;
     /* padding-top: 5px; */
     height: 35px;
-    display: -webkit-flex;/* Safari */
-    -webkit-align-items: center;/* Safari 7.0+ */
-    display: flex;
-    align-items: center;
+    float: left;
+    max-width: 100px;
+}
+.user-edit .wrapNotifyTotal > div:before {
+    content: "";
+    height: 100%;
+    vertical-align: middle;
+    display: inline-block;
+    margin-left: -1px;
 }
 .user-edit .wrapNotifyTotal > div p {
     width: 100%;
+    display: inline-block;
+    vertical-align: middle;
 }
 .user-edit .name-user {
     font-weight: 700;
@@ -3024,7 +3032,12 @@ html.mm-opening .mm-slideout {
     color: #337ab7;
     text-decoration: underline;
     padding: 5px 0;
-    display: inline-block;
+    display: block;
+    white-space: pre-wrap;      /* CSS3 */   
+	white-space: -moz-pre-wrap; /* Firefox */    
+	white-space: -pre-wrap;     /* Opera <7 */   
+	white-space: -o-pre-wrap;   /* Opera 7 */    
+	word-wrap: break-word;      /* IE */
 }
 .container-chat .item.box-me .txt-detail a:hover {
     color: #00A769;
@@ -6377,14 +6390,24 @@ footer li a {
         display: block;
     }
     .user-edit {
-        max-width: 135px;
+        max-width: 150px;
         float: left;
     }
     .user-login .box-dropdown .dropdown-up-style {
-        top: 63px;
         width: 200px;
         left: inherit;
         right: 0;
+    }
+    .user-login .box-dropdown.dropdown-message .dropdown-up-style,
+    .user-login .box-dropdown.dropdown-noti .dropdown-up-style {
+        top: 46px;
+        width: 300px;
+    }
+    .list-message,
+    .list-notify {
+        position: relative;
+        min-height: 130px;
+        padding-bottom: 31px;
     }
     .user-login .chat-notifi .dropdown-up-style,
     .user-login .alert-notifi .dropdown-up-style {
@@ -6514,6 +6537,9 @@ footer li a {
         font-size: 13px;
         color: #009544;
         text-decoration: underline;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
     }
     .user-login .item-dropdown a:hover {
         text-decoration: none;
@@ -6768,10 +6794,55 @@ footer li a {
         border: none;
     }
     .list-duan .col-left .pagination li {
-        
-margin-bottom: 0;
-        
-padding-bottom: 0;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+    .user-login .wrap-item-messa-head li {
+        float: left;
+        width: 100%;
+    }
+    .user-login .wrap-item-messa-head li .avatar {
+        width: 45px;
+        display: block;
+        border: 1px solid #BFBFBF;
+        padding: 2px;
+        background: #fff;
+        float: left;
+    }
+    .user-login .list-redire .wrap-item-messa-head a {
+        overflow: hidden;
+    }
+    .user-login .wrap-item-messa-head .avatar img {
+        max-width: 100%;
+    }
+    .user-login .wrap-item-messa-head a > div {
+        float: left;
+        width: 223px;
+        font-size: 13px;
+        color: #3c3c3c;
+        padding-left: 10px;
+    }
+    .user-login .wrap-item-messa-head a > div span {
+        display: block;
+    }
+    .user-login .wrap-item-messa-head a > div .name-user {
+        font-weight: 700;
+        line-height: 100%;    
+        margin-bottom: 2px;
+    }
+    .user-login .wrap-item-messa-head a > div .txt-message {
+        font-size: 12px;
+        line-height: 15px;
+        color: #ABABAB;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 2px;
+    }
+    .user-login .wrap-item-messa-head a > div .time-message {
+        font-size: 11px;
+        line-height: 15px;
+        color: #ABABAB;
     }
 }
 .select-location .dropdown-up-style .item-dropdown,
@@ -11216,10 +11287,6 @@ height: 190px;
     height: auto;
     line-height: inherit;
     padding: 0;
-}
-.user-login .list-redire .box-dropdown .dropdown-up-style {
-    top: 23px;
-    width: 300px;
 }
 .user-login .list-redire .box-dropdown li {
     margin-left: 0;
