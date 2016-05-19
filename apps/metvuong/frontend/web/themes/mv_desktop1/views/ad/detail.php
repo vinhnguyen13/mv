@@ -642,9 +642,10 @@ Yii::t('ad', 'Television');
 							 //implode(', ', ArrayHelper::getColumn($product->projectBuilding->adFacilities, 'name'))
                             $facilities = ArrayHelper::getColumn($product->projectBuilding->adFacilities, 'name');
                             if(count($facilities) > 0) {
-                                foreach ($facilities as $k => $facility) { ?>
+                                foreach ($facilities as $k => $facility) {
+                                    $class = \common\components\Slug::me()->slugify($facility); ?>
                                 <li>
-                                    <span class="<?=$facility?>"></span>
+                                    <span class="<?=$class?>"></span>
                                     <?=Yii::t('ad', $facility)?>
                                 </li>
                                 <?php }
@@ -671,9 +672,10 @@ Yii::t('ad', 'Television');
 //                            implode(', ', ArrayHelper::getColumn(AdFacility::find()->where(['id' => $product->adProductAdditionInfo->facility])->all(), 'name'))
                             $additional_facilities = ArrayHelper::getColumn(AdFacility::find()->where(['id' => $product->adProductAdditionInfo->facility])->all(), 'name');
                             if(count($additional_facilities) > 0) {
-                                foreach ($additional_facilities as $k => $facility) { ?>
+                                foreach ($additional_facilities as $k => $facility) {
+                                    $class = \common\components\Slug::me()->slugify($facility); ?>
                                     <li>
-                                        <span class="<?=$facility?>"></span>
+                                        <span class="<?=$class?>"></span>
                                         <?=Yii::t('ad', $facility)?>
                                     </li>
                                 <?php }
