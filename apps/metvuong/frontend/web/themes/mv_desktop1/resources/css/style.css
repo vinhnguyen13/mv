@@ -5793,7 +5793,7 @@ html.mm-opening .mm-slideout {
 }
 .txt-location li p {
     overflow: hidden;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
 }
 .txt-location ul {
     margin-bottom: 15px;
