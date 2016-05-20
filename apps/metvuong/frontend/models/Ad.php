@@ -187,7 +187,7 @@ class Ad extends Component
         }
         $query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
         $query->groupBy('ad_product.id');
-        $products = $query->limit(6)->all();
+        $products = $query->orderBy(['ad_product.score'=>SORT_DESC])->limit(6)->all();
         return $products;
     }
 }
