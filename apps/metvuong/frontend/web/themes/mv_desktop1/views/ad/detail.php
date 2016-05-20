@@ -22,7 +22,10 @@ use vsoft\ad\models\AdFacility;
     });
 	$types = AdProduct::getAdTypes();
 
-	$owner = User::findOne($product->user_id);
+    $user_id = $product->user_id;
+	$owner = \vsoft\ad\models\AdProduct::getDb()->cache(function() use($user_id){
+        return \frontend\models\User::findOne($user_id);
+    });
 
 	$url = '#';
 	if($owner && $owner->profile) {
@@ -232,7 +235,7 @@ Yii::t('ad', 'Television');
 			<div class="infor-listing">
 				<div class="address-feat clearfix">
 					<p class="infor-by-up">
-						<?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= $types[$product->type] ?> <?= Yii::t('ad', 'by') ?> <a href="javascript:;"><?= $product->ownerString ?></a>
+						<?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= mb_strtolower($types[$product->type]) ?> <?= Yii::t('ad', 'by') ?> <a href="javascript:;"><?= $product->ownerString ?></a>
 					</p>
 					<div class="address-listing">
 						<p><?= $address ?></p>
@@ -253,6 +256,7 @@ Yii::t('ad', 'Television');
 						<p class="price-item"><?= Yii::t('ad', 'Price') ?><strong><?= StringHelper::formatCurrency($product->price) ?></strong></p>
 					</div>
 				</div>
+
 				<?=$this->renderAjax('/ad/_partials/shareEmail',[
                     'popup_email_name' => 'popup_email_contact',
                     'product' => $product,

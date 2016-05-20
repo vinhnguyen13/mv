@@ -1,12 +1,8 @@
 <?php
-use yii\bootstrap\ActiveForm;
-use yii\helpers\StringHelper;
 use yii\web\View;
 use yii\helpers\Url;
 
 Yii::$app->getView()->registerJsFile('http://code.highcharts.com/highcharts.js', ['position' => View::POS_BEGIN]);
-//Yii::$app->getView()->registerJsFile('http://code.highcharts.com/modules/exporting.js', ['position' => View::POS_BEGIN]);
-
 
 $id = $product->id;
 $address = $product->getAddress();
@@ -25,18 +21,6 @@ $favouriteTo = (!empty($favourites) && isset($favourites["to"])) ? $favourites["
 
 $shareFrom = (!empty($shares) && isset($shares["from"])) ? $shares["from"] : 0;
 $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
-
-//echo "<pre>";
-//var_dump(date('Y-m-d H:i:s',$shareFrom));
-//var_dump(date('Y-m-d H:i:s',$shareTo));
-//echo "<pre>";
-//exit();
-
-//$fb_appId = '680097282132293'; // stage.metvuong.com
-//if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
-//    $fb_appId = '736950189771012';
-//else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
-//    $fb_appId = '891967050918314';
 
 ?>
 
@@ -77,7 +61,6 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                 <tr>
                     <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10"><span class="icon-icons-search fs-19"></span></span><?=Yii::t('statistic','SEARCH')?></th>
                     <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10 fs-17"><span class="icon-eye-copy"></span></span><?=Yii::t('statistic','VISIT')?></th>
-
                 </tr>
                 <tr>
                     <td>
@@ -89,7 +72,7 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                         <span class="name-user"><?=$key?></span>
                                     </a>
                                     <div class="crt-item">
-                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-url="<?=Url::to(['member/profile-render-email', 'username'=>$key])?>" data-user="<?=$key?>">
+                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-target="#popup_email" data-type="contact" data-toggle="modal" data-url="<?=Url::to(['member/profile-render-email', 'username'=>$key])?>">
                                             <span class="icon-mv fs-16">
                                                 <span class="icon-mail-profile"></span>
                                             </span>
@@ -118,7 +101,7 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                         <span class="name-user"><?=$key?></span>
                                     </a>
                                     <div class="crt-item">
-                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-url="<?=Url::to(['member/profile-render-email', 'username'=>$key])?>" data-user="<?=$key?>">
+                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-target="#popup_email">
                                             <span class="icon-mv fs-16">
                                                 <span class="icon-mail-profile"></span>
                                             </span>
@@ -154,7 +137,7 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                         <span class="name-user"><?=$key?></span>
                                     </a>
                                     <div class="crt-item">
-                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-url="<?=Url::to(['member/profile-render-email', 'username'=>$key])?>" data-user="<?=$key?>">
+                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-target="#popup_email">
                                             <span class="icon-mv fs-16">
                                                 <span class="icon-mail-profile"></span>
                                             </span>
@@ -183,7 +166,7 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                         <span class="name-user"><?=$key?></span>
                                     </a>
                                     <div class="crt-item">
-                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-url="<?=Url::to(['member/profile-render-email', 'username'=>$key])?>" data-user="<?=$key?>">
+                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-target="#popup_email">
                                             <span class="icon-mv fs-16">
                                                 <span class="icon-mail-profile"></span>
                                             </span>
@@ -208,14 +191,43 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
         </div>
     </div>
 </div>
-<?=$this->renderAjax('/ad/_partials/shareEmail', [
+<?php
+
+echo $this->renderAjax('/ad/_partials/shareEmail',[
     'popup_email_name' => 'popup_email_contact',
-    'user' => $user,
+    'product' => $product,
     'yourEmail' => $email,
-    'recipientEmail' => null,
-    'params' => ['your_email' => false, 'recipient_email' => false]]);?>
+    'recipientEmail' => empty($owner) ? "" : (empty($owner->profile->public_email) ? $owner->email : $owner->profile->public_email),
+    'params' => ['your_email' => false, 'recipient_email' => false] ])?>
 <script>
     $(document).ready(function () {
+
+        $(document).on('click','.btn-email-item', function () {
+            var type = $(this).data('type');
+            if(type == 'share'){
+                $('#popup_email .popup_title').text('<?=Yii::t('send_email','SHARE VIA EMAIL')?>');
+                $('#share_form .type').attr('value', 'share');
+                $('#share_form .recipient_email').attr('value', '');
+
+            } else if(type == 'contact'){
+                $('#popup_email .popup_title').text('<?=Yii::t('send_email','CONTACT')?>');
+                $('#share_form .type').attr('value', 'contact');
+            }
+
+            var url = $(this).data('url');
+            if(url) {
+                $.ajax({
+                    type: "get",
+                    dataType: 'json',
+                    url: url,
+                    success: function (data) {
+                        if(data.email) {
+                            $('#share_form #shareform-recipient_email').attr('value', data.email);
+                        }
+                    }
+                });
+            }
+        });
 
         $(document).on('click', '.btn-finder', function() {
             var url = $(this).attr('data-url');
@@ -291,27 +303,6 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                         $('.option-view-stats li a').removeClass("active");
                         $('.btn-favourite').addClass("active");
                         $('.wrapChart').html(data);
-                    }
-                });
-            }
-            return false;
-        });
-
-        $(document).on('click', '.btn-email-item', function() {
-            var url = $(this).data('url');
-            if(url) {
-                $.ajax({
-                    type: "get",
-                    dataType: 'json',
-                    url: url,
-                    success: function (data) {
-                        if(data.email) {
-                            $('#share_form #shareform-recipient_email').attr('value', data.email);
-                            $('#share_form .img-show img').attr('src', data.ava);
-                            $('#share_form .infor-send .name a').text(data.name);
-                            $('#share_form .infor-send .address').text(data.address);
-                            $('#popup_email_contact').modal('show');
-                        }
                     }
                 });
             }
