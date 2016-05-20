@@ -7,11 +7,12 @@
 
 namespace console\models;
 
+use frontend\components\Mailer;
 use frontend\models\User;
-use vsoft\ad\models\AdContactInfo;
 use vsoft\ad\models\AdProduct;
 use Yii;
 use yii\base\Component;
+use yii\helpers\ArrayHelper;
 
 class Metvuong extends Component
 {
@@ -19,7 +20,7 @@ class Metvuong extends Component
     public static function sendMailContact(){
 //        $contacts = AdContactInfo::getDb()->cache(function(){
 //            $sql = "SELECT email, count(product_id) as total, group_concat(product_id) as list_id
-//                    FROM metvuong_dev.ad_contact_info where email is not null group by email order by count(product_id) desc limit 1000";
+//                    FROM metvuong_dev.ad_contact_info where email is not null group by email order by count(product_id) desc limit 2";
 //            return AdContactInfo::getDb()->createCommand($sql)->queryAll();
 //        });
         $contacts = [
@@ -53,7 +54,7 @@ class Metvuong extends Component
                     $product_list = array();
                     if (count($products) > 0) {
                         foreach ($products as $product) {
-                            $url = $product->urlDetail(); // loi ko the su dung Url::to()
+                            $url = $product->urlDetail(true); // loi ko the su dung Url::to()
                             $id = $product->id;
 //                        $slug = \common\components\Slug::me()->slugify($product->getAddress($product->show_home_no));
 //                        $url = "http://local.metvuong.com/real-estate/detail/{$id}-{$slug}";
@@ -61,23 +62,23 @@ class Metvuong extends Component
                         }
                     }
 
-                    $rest_total = intval($contact["total"]) > 3 ? (intval($contact["total"]) - 3) : intval($contact["total"]);
+                    $rest_total = intval($contact["total"]) - 3;
 
                     $params = [
                         'email' => $email,
-                        'profile_link' => $user->urlProfile(),
+                        'username' => $user->username,
                         'auth_key' => $auth_key,
                         'product_list' => $product_list,
                         'rest_total' => $rest_total,
                     ];
-                    $subjectEmail = "Thông báo tin đăng";
-                    $send = Yii::$app->mailer->compose(['html'=>'contactEmail'], ['params' => $params])
+
+                    $subjectEmail = "Thông báo tin đăng từ metvuong.com";
+                    $print = \Yii::$app->mailer->compose(['html'=>'contactEmail-html'], ['params' => $params])
                         ->setFrom(Yii::$app->params['adminEmail'])
                         ->setTo([$email])
                         ->setSubject($subjectEmail)
                         ->send();
-
-                    $send > 0 ? print_r("\nsent to ".$email) : 0;
+                    $print > 0 ? print_r("\nsent to {$email}") : "Send mail error.";
                     // update lai auth key
 //                $user->updateAttributes([
 //                    'auth_key' => Yii::$app->security->generateRandomString(),

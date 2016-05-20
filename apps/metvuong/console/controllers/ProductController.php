@@ -2,7 +2,6 @@
 namespace console\controllers;
 
 use console\models\Metvuong;
-use frontend\models\Ad;
 use yii\console\Controller;
 use vsoft\ad\models\AdProduct;
 
