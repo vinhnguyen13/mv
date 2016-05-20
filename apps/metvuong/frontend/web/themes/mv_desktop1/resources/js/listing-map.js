@@ -26,8 +26,8 @@ var listing = {
 		listing.limit = Number(listing.countToEl.text()) - Number(listing.countFromEl.text()) + 1;
 		
 		events.attachDesktopEvent(listing.listEl, 'click', '.item > a', listing.detailEvent);
-		events.attachDesktopEvent(listing.listEl, 'mouseenter', '.item-listing > a', listing.mouseenterEvent);
-		events.attachDesktopEvent(listing.listEl, 'mouseleave', '.item-listing > a', listing.mouseleaveEvent);
+		events.attachDesktopEvent(listing.listEl, 'mouseenter', '.item > a', listing.mouseenterEvent);
+		events.attachDesktopEvent(listing.listEl, 'mouseleave', '.item > a', listing.mouseleaveEvent);
 		events.attachDesktopEvent($('.wrap-listing'), 'scroll', listing.more);
 		events.attachDesktopEvent(form.fields.projectBuildingId, 'change', listing.loadProject);
 		events.attachDesktopEvent(form.fields.categoryId, 'change', listing.resetProjectField);

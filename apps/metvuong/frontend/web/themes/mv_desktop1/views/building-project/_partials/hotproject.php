@@ -17,7 +17,7 @@ use yii\helpers\Url;
                 <a href="<?= Url::to(["building-project/view", 'slug'=>$project->slug]); ?>" class="rippler rippler-default">
                     <div class="img-show"><div><img src="<?=$project->logoUrl?>" alt=""></div></div>
                 </a>
-                <p class="infor-by-up"><?=$project->investment_type?></p>
+                <p class="infor-by-up"><?=Yii::t('project', $project->investment_type)?></p>
                 <p class="name-post"><a href="<?= Url::to(["building-project/view", 'slug'=>$project->slug]); ?>"><?=$project->name?> </a></p>
                 <p class="fs-13 font-400"><?=$project->location?></p>
             </div>

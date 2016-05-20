@@ -30,6 +30,12 @@ class ChatController extends Controller
         }
     }
 
+    public function actionList(){
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_partials/list');
+        }
+    }
+
     public function actionIndex2(){
         return $this->render('index2');
     }
@@ -41,7 +47,7 @@ class ChatController extends Controller
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('with', ['username'=>$username]);
         }else{
-            return $this->render('with', ['username'=>$username]);
+            $this->redirect(Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username]));
         }
     }
 

@@ -53,6 +53,7 @@ class Controller extends \yii\web\Controller
                  */
                 switch($urlBase){
                     case 'notification/index':
+                    case 'notification/list':
                         UserData::me()->removeAlert(Yii::$app->user->id, UserData::ALERT_OTHER);
                         Yii::$app->session->remove("notifyOther");
                         break;

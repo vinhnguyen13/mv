@@ -4,7 +4,6 @@
  * User: Nhut Tran
  * Date: 3/3/2016 3:50 PM
  */
-use frontend\models\Tracking;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
@@ -66,8 +65,10 @@ use yii\helpers\Url;
                                     return \vsoft\ad\models\AdCategory::find()->indexBy('id')->asArray(true)->all();
                                 });
                                 $types = \vsoft\ad\models\AdProduct::getAdTypes();
+                                $product_type = $types[$product->type];
+
                                 $address = $product->getAddress();
-                                $category = ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])). " " .strtolower($types[$product->type]);
+                                $category = ucfirst(Yii::t('ad', $categories[$product->category_id]['name'], null, Yii::$app->language)). " " .mb_strtolower(Yii::t('ad', $product_type, null, Yii::$app->language));
                                 $area = $product->area;
                                 $room_no = $product->adProductAdditionInfo->room_no;
                                 $toilet_no = $product->adProductAdditionInfo->toilet_no;
@@ -93,16 +94,6 @@ use yii\helpers\Url;
                             <?php
                             }
                             else if(isset($project) && !empty($project)){
-//                                $image = '/themes/metvuong2/resources/images/default-ads.jpg';
-//                                $gallery = array();
-//                                if($project->gallery)
-//                                    $gallery = explode(',', $project->gallery);
-//                                if (count($gallery) > 0) {
-//                                    $imageUrl = Yii::getAlias('@store')."/building-project-images/". $gallery[0];
-//                                    if(file_exists($imageUrl)){
-//                                        $image = Url::to('/store/building-project-images/' . $gallery[0]);
-//                                    }
-//                                }
                                 ?>
                                 <div class="img-show"><div><a href="<?= Url::to(["building-project/view", 'slug'=>$project->slug], true) ?>"><img src="<?= $project->logoUrl ?>" alt="<?=Url::to(["building/$project->slug"],true)?>"></a></div></div>
                                 <div class="infor-send">
@@ -116,20 +107,6 @@ use yii\helpers\Url;
                                 <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> Url::to(["building-project/view", 'slug'=>$project->slug], true) ])->label(false) ?>
                                 <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
 
-                            <?php }
-                            if(isset($user) && !empty($user)){
-                                $address = empty($user->location) ? "" : $user->location->city;
-                                ?>
-                                <div class="img-show"><div><a href=""><img src="<?=$user->profile->avatarUrl ?>" alt="<?=$address?>"></a></div></div>
-                                <div class="infor-send">
-                                    <p class="name"><a href=""><?=$user->profile->name ?></a></p>
-                                    <p class="address"><?=$address ?></p>
-                                    <p class="send-by">METVUONG.COM</p>
-                                </div>
-                                <?= $f->field($share_form, 'pid')->hiddenInput(['class' => 'pid', 'value'=> $user->id])->label(false); ?>
-                                <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=>$address])->label(false) ?>
-                                <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> Yii::$app->request->absoluteUrl ])->label(false) ?>
-                                <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
                             <?php } ?>
                         </div>
                         <?php $f->end(); ?>

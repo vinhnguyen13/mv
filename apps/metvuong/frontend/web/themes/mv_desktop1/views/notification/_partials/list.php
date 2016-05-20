@@ -52,7 +52,4 @@ $owner = Yii::$app->user->identity;
 			<?php
 		}
 		?>
-	<li>
-		<a href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" class="view-more"><?=Yii::t('general', 'View more')?></a>
-	</li>
 </ul>

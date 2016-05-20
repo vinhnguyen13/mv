@@ -228,9 +228,9 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 										</div>
 										<div class="item-dropdown hide-dropdown wrap-min-max">
 											<div class="box-input clearfix">
-												<span class="txt-min min-max active min-val" data-value="" data-text="Thấp nhất"><?= Yii::t('ad', 'Min') ?></span>
+												<span class="txt-min min-max active min-val" data-value="" data-text="<?= Yii::t('ad', 'Min') ?>"><?= Yii::t('ad', 'Min') ?></span>
 												<span class="text-center"><span></span></span>
-												<span class="txt-max min-max max-val" data-value="" data-text="Cao nhất"><?= Yii::t('ad', 'Max') ?></span>
+												<span class="txt-max min-max max-val" data-value="" data-text="<?= Yii::t('ad', 'Max') ?>"><?= Yii::t('ad', 'Max') ?></span>
 												<?= Html::activeHiddenInput($searchModel, 'price_min', ['id' => 'priceMin']); ?>
 												<?= Html::activeHiddenInput($searchModel, 'price_max', ['id' => 'priceMax']); ?>
 											</div>
@@ -264,9 +264,9 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 										</div>
 										<div class="item-dropdown hide-dropdown wrap-min-max">
 											<div class="box-input clearfix">
-												<span class="txt-min min-max active min-val" data-value="">Thấp nhất</span>
+												<span class="txt-min min-max active min-val" data-value=""><?= Yii::t('ad', 'Min') ?></span>
 												<span class="text-center"><span></span></span>
-												<span class="txt-max min-max max-val" data-value="">Cao nhất</span>
+												<span class="txt-max min-max max-val" data-value=""><?= Yii::t('ad', 'Max') ?></span>
 												<?= Html::activeHiddenInput($searchModel, 'size_min', ['id' => 'dtMin']); ?>
 												<?= Html::activeHiddenInput($searchModel, 'size_max', ['id' => 'dtMax']); ?>
 											</div>
@@ -340,15 +340,15 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 											<div class="form-group col-xs-12 col-sm-6">
 												<div class="">
 													<?php
-														$tDay = Yii::t('ad', 'day');
+														$tDays = Yii::t('ad', 'days');
 														$tMonth = Yii::t('ad', 'month');
 														$items = [
-															"-1 day" => "1 " . $tDay,
-															"-7 day" => "7 " . $tDay,
-															"-14 day" => "14 " . $tDay,
-															"-30 day" => "30 " . $tDay,
-															"-60 day" => "60 " . $tDay,
-															"-90 day" => "90 " . $tDay,
+															"-1 day" => "1 " . Yii::t('ad', 'day'),
+															"-7 day" => "7 " . $tDays,
+															"-14 day" => "14 " . $tDays,
+															"-30 day" => "30 " . $tDays,
+															"-60 day" => "60 " . $tDays,
+															"-90 day" => "90 " . $tDays,
 															"-6 month" => "6 " . $tMonth,
 															"-12 month" => "12 " . $tMonth,
 															"-24 month" => "24 " . $tMonth,
@@ -410,7 +410,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 					            </nav>
 							</div>
 						</div>
-						<div class="container<?= count($products) > 0 ? ' hide' : '' ?>" id="no-result">Chưa có tin đăng theo tìm kiếm của bạn, <a href="#">đăng ký nhận thông báo khi có tin đăng phù hợp</a>.</div>
+						<div class="container<?= count($products) > 0 ? ' hide' : '' ?>" id="no-result"><?= sprintf(Yii::t('ad', 'Chưa có tin đăng theo tìm kiếm của bạn, %sđăng ký nhận thông báo khi có tin đăng phù hợp%s.'), '<a href="#">', '</a>') ?></div>
 					</div>
 					<div id="loading-list" class="hide" style="text-align: center; margin-top: 20px; margin-bottom: 15px;"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/loading-listing.gif' ?>" /></div>
 				</div>

@@ -442,7 +442,7 @@ $.fn.dropdown = function (options) {
         }
 
         function outsiteClick (el) {
-            $(document).unbind('click');
+            //$(document).unbind('click');
             $(document).on('click', function (e) {
                 var container = el;
 

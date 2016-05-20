@@ -22,7 +22,10 @@ use vsoft\ad\models\AdFacility;
     });
 	$types = AdProduct::getAdTypes();
 
-	$owner = User::findOne($product->user_id);
+    $user_id = $product->user_id;
+	$owner = \vsoft\ad\models\AdProduct::getDb()->cache(function() use($user_id){
+        return \frontend\models\User::findOne($user_id);
+    });
 
 	$url = '#';
 	if($owner && $owner->profile) {
@@ -92,6 +95,15 @@ $count_review = $reviews->count();
 } else {
 	$count_review = 0;
 }
+
+Yii::t('ad', 'Parking');
+Yii::t('ad', 'Gym');
+Yii::t('ad', 'School');
+Yii::t('ad', 'Park');
+Yii::t('ad', 'Air conditioner');
+Yii::t('ad', 'Washing machine');
+Yii::t('ad', 'Refrigerator');
+Yii::t('ad', 'Television');
 ?>
 <div class="title-fixed-wrap container">
 	<div class="detail-listing row detail-listing-extra">
@@ -223,7 +235,7 @@ $count_review = $reviews->count();
 			<div class="infor-listing">
 				<div class="address-feat clearfix">
 					<p class="infor-by-up">
-						<?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= $types[$product->type] ?> <?= Yii::t('ad', 'by') ?> <a href="javascript:;"><?= $product->ownerString ?></a>
+						<?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= mb_strtolower($types[$product->type]) ?> <?= Yii::t('ad', 'by') ?> <a href="javascript:;"><?= $product->ownerString ?></a>
 					</p>
 					<div class="address-listing">
 						<p><?= $address ?></p>
@@ -244,6 +256,7 @@ $count_review = $reviews->count();
 						<p class="price-item"><?= Yii::t('ad', 'Price') ?><strong><?= StringHelper::formatCurrency($product->price) ?></strong></p>
 					</div>
 				</div>
+
 				<?=$this->renderAjax('/ad/_partials/shareEmail',[
                     'popup_email_name' => 'popup_email_contact',
                     'product' => $product,
@@ -346,7 +359,7 @@ $count_review = $reviews->count();
                                     data: {id: _id, stt: _stt},
                                     success: function (data) {
                                         if(data.statusCode == 200){
-											<?php if(!empty($owner)){
+											<?php if(!empty($owner) && !$owner->isMe()){
 											?>
                                             	var to_jid = chatUI.genJid('<?=$owner->username?>');
                                             	Chat.sendMessage(to_jid , '{owner} favorite {product}', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: data.parameters.msg, product: '<?=$address?>'
@@ -628,7 +641,21 @@ $count_review = $reviews->count();
 		            </div>
 		            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
 		                <div class="panel-body" name="experience">
-							<?= implode(', ', ArrayHelper::getColumn($product->projectBuilding->adFacilities, 'name')) ?>
+                            <ul>
+							<?php
+							 //implode(', ', ArrayHelper::getColumn($product->projectBuilding->adFacilities, 'name'))
+                            $facilities = ArrayHelper::getColumn($product->projectBuilding->adFacilities, 'name');
+                            if(count($facilities) > 0) {
+                                foreach ($facilities as $k => $facility) {
+                                    $class = \common\components\Slug::me()->slugify($facility); ?>
+                                <li>
+                                    <span class="<?=$class?>"></span>
+                                    <?=Yii::t('ad', $facility)?>
+                                </li>
+                                <?php }
+                            }
+                            ?>
+                            </ul>
 		                </div>
 		            </div>
 		        </div>
@@ -644,7 +671,21 @@ $count_review = $reviews->count();
 		            </div>
 		            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
 		                <div class="panel-body" name="experience">
-							<?= implode(', ', ArrayHelper::getColumn(AdFacility::find()->where(['id' => $product->adProductAdditionInfo->facility])->all(), 'name')) ?>
+                            <ul>
+							<?php
+//                            implode(', ', ArrayHelper::getColumn(AdFacility::find()->where(['id' => $product->adProductAdditionInfo->facility])->all(), 'name'))
+                            $additional_facilities = ArrayHelper::getColumn(AdFacility::find()->where(['id' => $product->adProductAdditionInfo->facility])->all(), 'name');
+                            if(count($additional_facilities) > 0) {
+                                foreach ($additional_facilities as $k => $facility) {
+                                    $class = \common\components\Slug::me()->slugify($facility); ?>
+                                    <li>
+                                        <span class="<?=$class?>"></span>
+                                        <?=Yii::t('ad', $facility)?>
+                                    </li>
+                                <?php }
+                            }
+                            ?>
+                            </ul>
 		                </div>
 		            </div>
 		        </div>

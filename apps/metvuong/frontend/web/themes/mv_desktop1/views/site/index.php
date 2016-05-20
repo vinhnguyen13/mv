@@ -94,15 +94,15 @@ use vsoft\ad\models\AdProduct;
                     <ul class="clearfix">
                         <li>
                             <span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
-                            <p>Lầu 12 Tòa nhà Miss Aodai <br> 21 Nguyễn Trung Ngạn, Quận 1, thành phố Hồ Chí Minh.</p>
+                            <p><?=Yii::t('general','metvuong_place')?> <br> <?=Yii::t('general','metvuong_address')?></p>
                         </li>
                         <li>
                             <span class="icon-mv"><span class="icon-phone-profile"></span></span>
-                            <p><a href="tel:08345678">08. 345 678</a> - <a href="tel:0908123456">0908 123 456</a></p>
+                            <p><a href="tel:<?=Yii::t('general','metvuong_phone')?>"><?=Yii::t('general','metvuong_phone')?></a> - <a href="tel:<?=Yii::t('general','metvuong_mobile')?>"><?=Yii::t('general','metvuong_mobile')?></a></p>
                         </li>
                         <li>
                             <span class="icon-mv"><span class="icon-mail-profile"></span></span>
-                            <p>contact@metvuong.com</p>
+                            <p><?=Yii::t('general','metvuong_email')?></p>
                         </li>
                     </ul>
                     <p class="color-cd get-email"><?= Yii::t('general', 'SUBSCRIBED OUR NEWSLETTER') ?></p>

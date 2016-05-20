@@ -14,15 +14,14 @@ class MVBootstrap implements BootstrapInterface
 
     public function bootstrap($app)
     {
-        $preferredLanguage = isset($app->request->cookies['language']) ? (string)$app->request->cookies['language'] : null;
+        /*$preferredLanguage = isset($app->request->cookies['language']) ? (string)$app->request->cookies['language'] : null;
         // or in case of database:
         // $preferredLanguage = $app->user->language;
-
         if (empty($preferredLanguage)) {
             $preferredLanguage = $app->request->getPreferredLanguage($this->supportedLanguages);
         }
 
-        $app->language = $preferredLanguage;
+        $app->language = $preferredLanguage;*/
         $this->changeLanguage();
 
         if(Yii::$app->mobileDetect->isMobile() && false){
@@ -76,6 +75,7 @@ class MVBootstrap implements BootstrapInterface
             $params = array_merge(['/'.$parseRequest[0]], Yii::$app->request->getQueryParams());
         }
         if(!empty($params['language-change'])){
+            $params['language'] = $params['language-change'];
             unset($params['language-change']);
         }
         $url = Url::to($params);

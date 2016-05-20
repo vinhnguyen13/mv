@@ -122,7 +122,7 @@ use vsoft\ad\models\AdImages;
 								<?= Html::activeDropDownList($product, 'category_id', $categoriesDropDown, ['options' => $categoriesDropDownOptions, 'class' => 'form-control', 'prompt' => "..."]) ?>
 								<div class="help-block"></div>
 							</div>
-							<div class="form-group col-xs-12 col-sm-6 project-wrap<?= $product->projectBuilding ? ' has-project' : '' ?>"<?= $product->category_id == AdCategory::CATEGORY_CHCK ? '' : ' style="display: none;"' ?>>
+							<div class="form-group col-xs-12 project-wrap<?= $product->projectBuilding ? ' has-project' : '' ?>"<?= $product->category_id == AdCategory::CATEGORY_CHCK ? '' : ' style="display: none;"' ?>>
 								<label for="" class="fs-13 mgB-5"><?= $product->getAttributeLabel('project_building_id') ?><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">3</span>') ?></span></label>
 								<?= Html::activeHiddenInput($product, 'project_building_id') ?>
 								<input type="hidden" id="project-name" value="<?= $product->projectBuilding ? $product->projectBuilding->name : '' ?>" />
@@ -257,7 +257,7 @@ use vsoft\ad\models\AdImages;
 					</div>
 					<div class="group-frm clearfix">
 						<div class="title-frm"><?= Yii::t('ad', 'Hình ảnh') ?> <span class="pdL-10"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="max-point">10</span>') ?></span></div>
-						<label for="" class="fs-13 mgB-5">Tải hình ảnh dư án<span class="hint"><?= Yii::t('ad', '1-2 ảnh(+5), 3 ảnh trở lên(+10)') ?></span></label>
+						<label for="" class="fs-13 mgB-5"><?= Yii::t('ad', 'Tải hình ảnh') ?><span class="hint"><?= Yii::t('ad', '1-2 ảnh(+5), 3 ảnh trở lên(+10)') ?></span></label>
 						<div class="upload-img-listing">
 							<span id="upload-hint"><?= Yii::t('ad', 'Change the position of images by dragging the image into the right position you want!') ?></span>
 							<?php
@@ -403,7 +403,7 @@ use vsoft\ad\models\AdImages;
 											</p>
 											<div class="address-listing"><p class="address-show"></p></div>
 											<div class="pull-left left-attr-detail">
-												<p class="id-duan">Mã tin:<span>MV0000</span></p>
+												<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span>MV0000</span></p>
 												<ul class="clearfix list-attr-td">
 							                        <li><span class="icon-mv"><span class="icon-page-1-copy"></span></span><span class="ref" data-ref="#adproduct-area"></span>m2</li>
 							                        <li><span class="icon-mv"><span class="icon-bed-search"></span></span><span class="ref" data-ref="#adproductadditioninfo-room_no"></span></li>
@@ -423,7 +423,7 @@ use vsoft\ad\models\AdImages;
 								            <div class="panel-heading" role="tab" id="headingOne">
 								                <h4 class="panel-title">
 								                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-								                        Mô tả<span class="icon-mv"><span class="icon-plus"></span></span>
+								                        <?= Yii::t('ad', 'Content') ?><span class="icon-mv"><span class="icon-plus"></span></span>
 								                    </a>
 								                </h4>
 								            </div>
@@ -437,7 +437,7 @@ use vsoft\ad\models\AdImages;
 								            <div class="panel-heading" role="tab" id="headingTwo">
 								                <h4 class="panel-title">
 								                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-								                        Thông tin chi tiết<span class="icon-mv"><span class="icon-plus"></span></span>
+								                        <?= Yii::t('ad', 'Detail Information') ?><span class="icon-mv"><span class="icon-plus"></span></span>
 								                    </a>
 								                </h4>
 								            </div>
@@ -445,7 +445,7 @@ use vsoft\ad\models\AdImages;
 								                <div class="panel-body" name="activity">
 								                	<ul class="clearfix list-tienich-detail">
 									                	<li><strong><?= $product->getAttributeLabel('project_building_id') ?>:</strong> <a href="javascript:;" class="ref" data-ref="#project-name"></a></li>
-														<li><strong><?= $additionInfo->getAttributeLabel('floor_no') ?>:</strong> <span class="ref" data-ref="#adproductadditioninfo-floor_no"></span> Tầng</li>
+														<li><strong><?= $additionInfo->getAttributeLabel('floor_no') ?>:</strong> <span class="ref" data-ref="#adproductadditioninfo-floor_no"></span> <?= Yii::t('ad', 'storeys') ?></li>
 														<li><strong><?= $additionInfo->getAttributeLabel('facade_width') ?>:</strong> <span class="ref" data-ref="#adproductadditioninfo-facade_width"></span>m</li>
 														<li><strong><?= $additionInfo->getAttributeLabel('land_width') ?>:</strong> <span class="ref" data-ref="#adproductadditioninfo-land_width"></span>m</li>
 														<li><strong><?= $additionInfo->getAttributeLabel('home_direction') ?>:</strong> <span class="ref" data-ref="#adproductadditioninfo-home_direction"></span></li>
@@ -459,7 +459,7 @@ use vsoft\ad\models\AdImages;
 								            <div class="panel-heading" role="tab" id="headingSeven">
 								                <h4 class="panel-title">
 								                    <a class="" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseEght" aria-expanded="false" aria-controls="collapseSeven">
-								                        Liên hệ<span class="icon-mv"><span class="icon-plus"></span></span>
+								                        <?= Yii::t('ad', 'Contact') ?><span class="icon-mv"><span class="icon-plus"></span></span>
 								                    </a>
 								                </h4>
 								            </div>
@@ -472,7 +472,7 @@ use vsoft\ad\models\AdImages;
 						                                    <div class="stars"> <span id="rating-all-bottom" class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="true"><span id="rateit-range-2" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-2" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" aria-readonly="true" style="width: 105px; height: 18px;"><span class="rateit-selected rateit-preset" style="height: 18px; width: 0px;"></span><span class="rateit-hover" style="height:18px"></span></span></span> <span class="fs-13 font-600 count_review">(0)</span> </div>
 					                                    	<div class="item-agent">
 																<div><span class="icon icon-phone"></span></div>
-																<a class="ref" data-ref="#adcontactinfo-mobile" href="javascript:;">12345678</a>
+																<a class="ref" data-ref="#adcontactinfo-mobile" href="javascript:;"></a>
 															</div>
 															<div class="item-agent">
 																<div><span class="icon icon-email"></span></div>

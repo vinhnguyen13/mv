@@ -113,23 +113,37 @@ use frontend\models\AdProductSearch;
                 </div>
                 <?php } else{?>
                     <ul class="pull-left list-redire">
-                        <li>
-                            <a class="wrapNotifyChat" href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('chat', 'Chat')?>">
+                        <li class="dropdown-message box-dropdown">
+                            <a class="val-selected wrapNotifyChat" href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('chat', 'Chat')?>">
                                 <span class="icon-mv"><span class="icon-bubbles-icon"></span></span>
                                 <?php if(!empty($this->params['notify_chat'])){?>
                                     <span id="notifyChat" class="notifi"><?=$this->params['notify_chat'];?></span>
                                 <?php }?>
                             </a>
+                            <div class="item-dropdown hide-dropdown">
+                                <div class="list-message">
+                                    <div class="wrap-item-messa-head">
+                                        <ul class="clearfix">
+                                        </ul>
+                                    </div>
+                                    <a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>" class="view-more"><?=Yii::t('general', 'View more')?></a>
+                                </div>
+                            </div>
                         </li>
-                        <li class="box-dropdown">
+                        <li class="dropdown-noti box-dropdown">
                             <a class="val-selected wrapNotifyOther" href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('activity', 'Notification')?>">
                                 <span class="icon-mv"><span class="icon-icons-bell"></span></span>
                                 <?php if(!empty($this->params['notify_other'])){?>
                                     <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
                                 <?php }?>
                             </a>
-                            <div class="item-dropdown hide-dropdown list-notify">
-                                <ul style="min-height: 80px;"></ul>
+                            <div class="item-dropdown hide-dropdown">
+                                <div class="list-notify">
+                                    <div class="wrap-item-noti-head">
+                                        <ul class="clearfix"></ul>
+                                    </div>
+                                    <a href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>" class="view-more"><?=Yii::t('general', 'View more')?></a>
+                                </div>
                             </div>
                         </li>
                         <li>
@@ -251,12 +265,29 @@ use frontend\models\AdProductSearch;
             });
         });
 
-        $('.user-login .box-dropdown, .guest-dropdown').dropdown({
+        $('.guest-dropdown,.user-edit').dropdown({
             styleShow: 0,
             selectedValue: false
         });
         <?php if(!Yii::$app->user->isGuest){?>
-        $('.user-login .list-redire .box-dropdown').dropdown({
+        
+        $('.dropdown-message').dropdown({
+            styleShow: 0,
+            selectedValue: false,
+            ajaxSubmit: function () {
+                $('.list-message').loading({full: true});
+                $.ajax({
+                    type: 'GET',
+                    url: '<?=Url::to(['/chat/list', 'username'=> Yii::$app->user->identity->username])?>',
+                    success: function (response) {
+                        $('body').loading({done: true});
+                        $('.wrap-item-messa-head').html(response);
+                    }
+                });
+            }
+        });
+
+        $('.dropdown-noti').dropdown({
             styleShow: 0,
             selectedValue: false,
             ajaxSubmit: function () {
@@ -266,7 +297,7 @@ use frontend\models\AdProductSearch;
                     url: '<?=Url::to(['/notification/list', 'username'=> Yii::$app->user->identity->username])?>',
                     success: function (response) {
                         $('body').loading({done: true});
-                        $('.list-notify').html(response);
+                        $('.wrap-item-noti-head').html(response);
                     }
                 });
             }

@@ -96,7 +96,7 @@ if($from > 0 && $to > 0)
 <div class="statistic-info">
     <a href="<?=$urlDetail?>" class="fs-14"><p class="name-post"><span class="icon address-icon"></span><?=$address?></p></a>
     <?php if($from > 0 && $to > 0) {?>
-        <p class="date-filter-chart text-center mgT-15 fs-14"><?=Yii::t('chart', 'Statistic searching from')?> <span class="from"><?=date('d/m/Y', $from)?></span> - <span class="to"><?=date('d/m/Y', $to)?></span></p>
+        <p class="date-filter-chart text-center mgT-15 fs-14"><?=Yii::t('chart', 'Statistic share from')?> <span class="from"><?=date('d/m/Y', $from)?></span> - <span class="to"><?=date('d/m/Y', $to)?></span></p>
     <?php } ?>
 </div>
 

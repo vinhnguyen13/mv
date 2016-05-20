@@ -51,15 +51,44 @@ class AdController extends Controller
 	{
 		$this->view->params['noFooter'] = true;
 		
-		if(!Yii::$app->request->isAjax) {
-			\lajax\translatemanager\helpers\Language::registerAssets();
-		}
-		
 		return parent::beforeAction($action);
+	}
+
+	public function actionEncodeGeometry() {
+
+		if(Yii::$app->request->isPost) {
+			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+			
+			$table = $_POST['table'];
+			$id = $_POST['id'];
+			
+			if($_POST['paths']) {
+				$connection = \Yii::$app->db;
+				$connection->createCommand()->update('ad_' . $table, ['geometry' => $_POST['paths']], 'id = ' . $id)->execute();
+			}
+			
+			if($table == 'district') {
+				$wards = AdWard::find()->where(['district_id' => $id])->asArray(true)->all();
+				
+				return ['wards' => $wards];
+			}
+			
+			return [];
+		} else {
+			if(isset($_GET['city'])) {
+				Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+			
+				$city = AdCity::find()->where(['id' => $_GET['city']])->asArray(true)->one();
+				$districts = AdDistrict::find()->where(['city_id' => $_GET['city']])->asArray(true)->all();
+			
+				return ['city' => $city, 'districts' => $districts];
+			} else {
+				return $this->render('encode-geometry');
+			}
+		}
 	}
     
     public function actionUpload() {
-        //sleep(500);
         if($_FILES) {
     		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     		
@@ -172,7 +201,7 @@ class AdController extends Controller
 		
 		$model = new AdProductSearch();
 		$query = $model->search(Yii::$app->request->get());
-		$query->addSelect('ad_product.created_at, ad_product.category_id, ad_product.type, ad_images.file_name, ad_images.folder');
+		$query->addSelect('ad_product.updated_at, ad_product.category_id, ad_product.type, ad_images.file_name, ad_images.folder');
 		$query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
 		$query->groupBy('ad_product.id');
 		
@@ -399,7 +428,7 @@ class AdController extends Controller
     		if($product->validate() && $additionInfo->validate() && $contactInfo->validate()) {
     			$product->user_id = Yii::$app->user->id;
     			$totalImage = empty($post['images']) ? 0 : count($post['images']);
-    			$product->score = AdProduct::calcScore($product, $additionInfo, $contactInfo, $post['images']);
+    			$product->score = AdProduct::calcScore($product, $additionInfo, $contactInfo, $totalImage);
     			$product->save(false);
     			
     			$additionInfo->product_id = $product->id;
@@ -631,7 +660,7 @@ class AdController extends Controller
 
                 // send to
                 $subjectEmail = "Metvuong.com - {$from_name} {$type_email} tin {$model->pid}";
-                $result = Yii::$app->mailer->compose(['html' => '../mail/notifyReceivedEmail-html',], ['contact' => $model])
+                $result = Yii::$app->mailer->compose(['html' => "../mail/".Yii::$app->language."/product_share_contact"], ['contact' => $model])
                 ->setFrom(Yii::$app->params['adminEmail'])
                 ->setTo([trim($model->recipient_email)])
                 ->setSubject($subjectEmail)
