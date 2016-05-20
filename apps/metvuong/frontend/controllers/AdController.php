@@ -660,7 +660,7 @@ class AdController extends Controller
 
                 // send to
                 $subjectEmail = "Metvuong.com - {$from_name} {$type_email} tin {$model->pid}";
-                $result = Yii::$app->mailer->compose(['html' => '../mail/notifyReceivedEmail-html',], ['contact' => $model])
+                $result = Yii::$app->mailer->compose(['html' => '../mail/notifyReceivedEmail-html'], ['contact' => $model])
                 ->setFrom(Yii::$app->params['adminEmail'])
                 ->setTo([trim($model->recipient_email)])
                 ->setSubject($subjectEmail)

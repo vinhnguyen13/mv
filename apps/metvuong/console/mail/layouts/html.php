@@ -37,9 +37,9 @@ use yii\helpers\Html;
                 </tr>
                 <tr>
                     <td style="padding: 40px 30px;border: 1px solid #e7e7e7;">
-                        <?php $this->beginBody() ?>
-                        <?= $content ?>
-                        <?php $this->endBody() ?>
+                    <?php $this->beginBody() ?>
+                    <?= $content ?>
+                    <?php $this->endBody() ?>
                     </td>
                 </tr>
                 <tr>

@@ -1,6 +1,8 @@
 <?php
 namespace console\controllers;
 
+use console\models\Metvuong;
+use frontend\models\Ad;
 use yii\console\Controller;
 use vsoft\ad\models\AdProduct;
 
@@ -59,9 +61,9 @@ class ProductController extends Controller {
     }
 
     // Marketing contact send mail
-//    public function actionSendMailContact(){
-//        Metvuong::sendMailContact();
-//    }
+    public function actionSendMailContact(){
+        Metvuong::sendMailContact();
+    }
 
 
 
