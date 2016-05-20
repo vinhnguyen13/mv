@@ -73,6 +73,9 @@ use yii\helpers\Url;
                                 $room_no = $product->adProductAdditionInfo->room_no;
                                 $toilet_no = $product->adProductAdditionInfo->toilet_no;
                                 $price = vsoft\express\components\StringHelper::formatCurrency($product->price);
+                                $imageUrl = $product->representImage;
+                                if (!filter_var($imageUrl, FILTER_VALIDATE_URL))
+                                    $imageUrl = Yii::$app->urlManager->hostInfo . $product->representImage;
                             ?>
                             <div class="img-show"><div><a href="<?= $product->urlDetail(true) ?>"><img src="<?= $product->representImage ?>" alt="<?=$address?>"></a></div></div>
                             <div class="infor-send">
@@ -90,7 +93,7 @@ use yii\helpers\Url;
                                 <?= $f->field($share_form, 'room_no')->hiddenInput(['class' => 'room_no', 'value'=>$room_no])->label(false) ?>
                                 <?= $f->field($share_form, 'toilet_no')->hiddenInput(['class' => 'toilet_no', 'value'=>$toilet_no])->label(false) ?>
                                 <?= $f->field($share_form, 'price')->hiddenInput(['class' => 'price', 'value'=>$price])->label(false) ?>
-                                <?= $f->field($share_form, 'imageUrl')->hiddenInput(['class' => 'imageUrl', 'value'=>$product->representImage])->label(false) ?>
+                                <?= $f->field($share_form, 'imageUrl')->hiddenInput(['class' => 'imageUrl', 'value'=>$imageUrl])->label(false) ?>
                             <?php
                             }
                             else if(isset($project) && !empty($project)){
