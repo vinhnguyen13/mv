@@ -30,8 +30,8 @@ use yii\helpers\Html;
                         <td style="background: #00a769;padding: 10px 30px;">
                             <table width="100%" cellspacing="0" cellpadding="0" border="0">
                                 <tbody><tr>
-                                    <td><a href="#"><img style="width: 150px;" alt="" src="images/logo-white.png"></a></td>
-                                    <td style="text-align:right; color: #fff;font-size: 14px;font-weight: bold;">Kênh mua sắm bất động sản hàng đầu!</td>
+                                    <td><a href="<?=Yii::$app->urlManager->hostInfo?>"><img style="width: 150px;" alt="" src="images/logo-white.png"></a></td>
+                                    <td style="text-align:right; color: #fff;font-size: 14px;font-weight: bold;">Kênh mua sắm bất động sản hàng đầu Việt Nam!</td>
                                 </tr>
                                 </tbody></table>
                         </td>
@@ -49,7 +49,7 @@ use yii\helpers\Html;
                                 <tbody><tr>
                                     <td>
                                         <p style="margin-bottom: 5px;"><strong>Metvuong Team</strong></p>
-                                        <p style="margin-bottom: 5px;">21 Nguyễn Trung Ngạn, phường Bến Nghé, Q.1, Hồ Chí Minh</p>
+                                        <p style="margin-bottom: 5px;">21 Nguyễn Trung Ngạn, Bến Nghé, Quận 1, Hồ Chí Minh, Việt Nam</p>
                                         <p>(08) 789 456    |	support@metvuong.com</p>
                                     </td>
                                     <td style="text-align: right;">

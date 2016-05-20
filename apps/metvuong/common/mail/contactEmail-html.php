@@ -15,7 +15,7 @@
         <b><?=$id?></b>: <a href="<?=$link?>" style="color:#009445;"><?=$link?></a><br>
     <?php }
     if($params['rest_total'] > 0)
-        echo "và còn khoảng ".$params['rest_total']." tin đăng khác.";
+        echo "và ".$params['rest_total']." tin đăng khác.";
     ?>
 </p>
 
