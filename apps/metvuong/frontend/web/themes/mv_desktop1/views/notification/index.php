@@ -32,6 +32,8 @@ $owner = $current_user = Yii::$app->user->identity;
 						$buddy = $activity->getBuddy();
 						$params = $activity->params;
 						if($activity->isAction(UserActivity::ACTION_AD_FAVORITE) || $activity->isAction(UserActivity::ACTION_AD_CLICK)) {
+                            $product = AdProduct::findOne(['id' => $params['product']]);
+                            $pid = $product->id;
 							?>
 							<div
 								class="item <?= (!empty($activity->read_status) && $activity->read_status == UserActivity::READ_YES) ? 'read' : 'unread'; ?>"
@@ -49,15 +51,14 @@ $owner = $current_user = Yii::$app->user->identity;
 									<a href="#" class="name"><?= $owner->profile->getDisplayName(); ?></a>
 
 									<a href="#" class="pdL-10 pdR-10 tooltip-show btn-email-item" data-placement="bottom" title="Send email" data-target="#popup_email" data-type="contact" data-toggle="modal"
-                                       data-url="<?=Url::to(['member/profile-render-email', 'username'=>$owner->username, 'pid' => $product->id])?>">
+                                       data-url="<?=Url::to(['member/profile-render-email', 'username'=>$owner->username, 'pid' => $pid])?>">
 										<span class="icon-mv fs-18 color-cd"><span class="icon-mail-profile"></span></span>
 									</a>
 	                                <a href="#" class="chat-now tooltip-show" data-chat-user="<?=$owner->username?>" data-placement="bottom" title="Send message">
 	                                	<span class="icon-mv fs-20 color-cd"><span class="icon-bubbles-icon"></span></span>
 	                                </a>
 									<?php
-                                    $product = AdProduct::findOne(['id' => $params['product']]);
-                                    $pid = $product->id;
+
 									if (!empty($product)) {
 										$params['owner'] = '';
 										$params['product'] = Html::a($product->getAddress(), $product->urlDetail());
