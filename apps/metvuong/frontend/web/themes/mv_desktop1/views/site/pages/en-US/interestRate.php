@@ -13,12 +13,12 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 <div class="title-fixed-wrap container">
     <div class="tool-cacu">
         <div class="news_blocks_contain">
-            <div class="title-top"> Tính lãi suất vay vốn </div>
-            <div class="sum"> Cho phép bạn tính toán tiền tiết kiệm khi gửi một số tiền theo một kỳ hạn nhất định và so sánh lãi suất, tiền được hưởng giữa các ngân hàng </div>
+            <div class="title-top"> HOW TO CALCULATE THE INTEREST RATES? </div>
+            <div class="sum"> MetVuong set up a system which allow you calculate the interest rates from bank, therefore you can easily to make your current plan. </div>
             <table class="funding-tbl">
                 <tbody id="thongTinVayVon">
                 <tr>
-                    <td class="label"> Ngày bắt đầu </td>
+                    <td class="label"> Start date </td>
                     <td>
                         <?=\yii\jui\DatePicker::widget([
                             'language' => 'en',
@@ -33,69 +33,69 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
                     </td>
                 </tr>
                 <tr>
-                    <td class="label"> Số tiền vay </td>
+                    <td class="label"> Loan </td>
                     <td>
                         <input type="text" id="soTienVay" name="soTienVay" value="">
                         VND
                     </td>
                 </tr>
                 <tr>
-                    <td class="label"> Hình thức trả nợ </td>
+                    <td class="label"> Form of payment </td>
                     <td>
                         <select id="hinhThucTraNo" name="hinhThucTraNo">
-                            <option value=""> Chọn hình thức trả nợ </option>
-                            <option value="4"> Trả gốc đều hàng tháng, trả lãi theo dư nợ giảm dần </option>
-                            <option value="3"> Trả theo phương thức niêm kim cố định </option>
-                            <option value="2"> Trả gốc cuối kỳ, trả lãi hàng tháng theo dư nợ thực tế. </option>
+                            <option value=""> Choose options </option>
+                            <option value="4"> Pays principal monthly, pay interest rate with reducing balance Pay </option>
+                            <option value="3">Pay constantly yearly</option>
+                            <option value="2"> Pay principal at the last period, pay interest rate monthly with actual reducing balance. </option>
                         </select>
                     </td>
                 </tr>
                 <tr>
-                    <td class="label"> Lãi suất </td>
+                    <td class="label"> Interest rates </td>
                     <td>
                         <input type="text" id="laiSuat" name="laiSuat" value="">
                         <select id="theoThoiGian" name="theoThoiGian">
-                            <option value="thang"> Theo tháng </option>
-                            <option value="nam"> Theo năm </option>
+                            <option value="thang"> Monthly </option>
+                            <option value="nam"> Yearly </option>
                         </select>
                     </td>
                 </tr>
                 <tr>
-                    <td class="label"> Thời gian </td>
-                    <td> <input type="text" name="thoiGianVay" id="thoiGianVay" value=""> Tháng </td>
+                    <td class="label"> Time Duration </td>
+                    <td> <input type="text" name="thoiGianVay" id="thoiGianVay" value=""> Months </td>
                 </tr>
                 <tr>
                     <td class="label"> </td>
-                    <td> <a href="#" onclick="Tools.loan_calculate();" class="btn-form btn-common"> Tính nhanh <span class="arrow-icon"> </span> </a> </td>
+                    <td> <a href="#" onclick="Tools.loan_calculate();" class="btn-form btn-common"> Calculate <span class="arrow-icon"> </span> </a> </td>
                 </tr>
                 </tbody>
             </table>
-            <div class="tool-hdr black-hdr"> Kết quả </div>
+            <div class="tool-hdr black-hdr"> Result </div>
             <article>
                 <table class="funding-tbl">
                     <tbody>
                     <tr>
-                        <td class="label"> Ngày bắt đầu vay vốn </td>
+                        <td class="label"> Start date of loan </td>
                         <td id="inNgayBatDauVay"> </td>
                     </tr>
                     <tr>
-                        <td class="label"> Số tiền vay: </td>
+                        <td class="label"> Loan Amount: </td>
                         <td id="inSoTienVay"> </td>
                     </tr>
                     <tr>
-                        <td class="label"> Hình thức trả nợ: </td>
+                        <td class="label"> Form of payment: </td>
                         <td id="inHinhThucTraNo"> </td>
                     </tr>
                     <tr>
-                        <td class="label"> Lãi suất: </td>
+                        <td class="label"> Interest rate: </td>
                         <td id="inLaiXuatThucPhaiTra"> </td>
                     </tr>
                     <tr>
-                        <td class="label"> Thời gian: </td>
+                        <td class="label"> Time duration: </td>
                         <td id="inThoiGianVay"> </td>
                     </tr>
                     <tr>
-                        <td class="label"> Tổng số tiền phải trả: </td>
+                        <td class="label"> Amount need to repayment: </td>
                         <td id="inTongSoTienPhaiTra"> </td>
                     </tr>
                     </tbody>

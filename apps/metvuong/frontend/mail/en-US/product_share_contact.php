@@ -37,6 +37,6 @@ use yii\helpers\Html;
     </tbody>
 </table>
 
-<p style="margin-bottom: 45px;">View detail page <a style="font-size:13px;font-weight: bold;text-decoration:none;color:#009455;" href="<?= $contact->detailUrl ?>">here</a>.</p>
+<p style="margin-bottom: 45px;">View detail page is <a style="font-size:13px;font-weight: bold;text-decoration:none;color:#009455;" href="<?= $contact->detailUrl ?>">here</a>.</p>
 <p style="font-size: 13px;margin-bottom:5px;">Regards,</p>
 <p style="font-size: 13px;">Metvuong Team</p>
