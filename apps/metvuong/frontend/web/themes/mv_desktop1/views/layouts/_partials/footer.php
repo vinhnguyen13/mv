@@ -35,7 +35,7 @@ use yii\helpers\Url;
 		</div>
 	</div>
 	<div class="license container">
-		<p>Giấy phép CNDKDN số 0313814871 - ® Ghi rõ nguồn "metvuong.com" khi phát hành lại thông tin từ trang mạng này.</p>
-		<p>Phát triển bởi CT TNHH DTTMDV Mét Vuông</p>
+		<p><?=Yii::t('general', 'Permission No. 0313814871 - ® Copying information from this website should be included the tag “metvuong.com”')?></p>
+		<p><?=Yii::t('general', 'Developed by MetVuong LTD. Company')?></p>
 	</div>
 </footer>
