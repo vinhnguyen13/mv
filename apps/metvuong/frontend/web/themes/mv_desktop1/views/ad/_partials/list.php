@@ -45,7 +45,7 @@ $types = AdProduct::getAdTypes();
                     <?php if(empty($product->area) && empty($room_no) && empty($toilet_no)){ ?>
                         <li><?=Yii::t('listing','updating')?></li>
                     <?php } else {
-                        echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '';
+                        echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm<sup>2</sup> </li>' : '';
                         echo $room_no ? '<li><span class="icon-mv"><span class="icon-bed-search"></span></span>' . $room_no . ' </li>' : '';
                         echo $toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>' . $toilet_no . ' </li>' : '';
                     } ?>
