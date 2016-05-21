@@ -152,7 +152,8 @@ Yii::t('ad', 'Television');
 						</a>
 					</li>
 					<li class="color-3">
-						<a href="#" data-toggle="modal" data-target="#popup_email" data-type="share" class="email-btn">
+						<a href="#" data-toggle="modal" data-url="<?=Url::to(['/ad/tracking-share', 'product_id' => $product->id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_EMAIL], true)?>"
+                           data-target="#popup_email" data-type="share" class="email-btn">
 							<span class="icon-mv fs-18"><span class="icon-mail-profile"></span></span>
 							<span><?= Yii::t('ad', 'Share Email') ?></span>
 						</a>
@@ -243,12 +244,15 @@ Yii::t('ad', 'Television');
 					<div class="pull-left left-attr-detail">
 						<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
 						<ul class="clearfix list-attr-td">
-	                        <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
+	                        <?php
+                            $room_no = $product->adProductAdditionInfo->room_no;
+                            $toilet_no = $product->adProductAdditionInfo->toilet_no;
+                            if(empty($product->area) && empty($room_no) && empty($toilet_no)){ ?>
 	                            <li><?=Yii::t('listing','updating')?></li>
 	                        <?php } else {
 	                            echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '';
-	                            echo $product->adProductAdditionInfo->room_no ? '<li><span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
-	                            echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
+	                            echo $room_no ? '<li><span class="icon-mv"><span class="icon-bed-search"></span></span>' . $room_no . ' </li>' : '';
+	                            echo $toilet_no ? '<li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span>' . $toilet_no . ' </li>' : '';
 	                        } ?>
 						</ul>
 					</div>
@@ -259,7 +263,7 @@ Yii::t('ad', 'Television');
 
 				<?=$this->renderAjax('/ad/_partials/shareEmail',[
                     'popup_email_name' => 'popup_email_contact',
-                    'product' => $product,
+                    'pid' => $product->id,
                     'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
                     'from_name' => empty($user) ? "" : (empty($user->profile->name) ? $user->username : $user->profile->name),
                     'recipientEmail' => empty($owner) ? "" : (empty($owner->profile->public_email) ? $owner->email : $owner->profile->public_email),
@@ -372,36 +376,7 @@ Yii::t('ad', 'Television');
                                     }
                                 });
                         	});
-                        	/*$(document).on('click', '.save-item', function (e) {
-                            	alert(1);
-                            	e.preventDefault();
-                                
-                                var _this = $(this);
-                                $(this).toggleClass('active');
-                                
-                                var _id = $(this).attr('data-id');
-                                var _url = $(this).attr('data-url');
-                                var _stt = ($(this).hasClass('active')) ? 1 : 0;
-                                
-                                $.ajax({
-                                    type: "post",
-                                    url: _url,
-                                    data: {id: _id, stt: _stt},
-                                    success: function (data) {
-                                        if(data.statusCode == 200){
-											<?php if(!empty($owner)){
-											?>
-                                            	var to_jid = chatUI.genJid('<?=$owner->username?>');
-                                            	Chat.sendMessage(to_jid , '{owner} favorite {product}', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: data.parameters.msg, product: '<?=$address?>'
-												});
-											<?php }?>
-											_this.alertBox({
-												txt: "<?=Yii::t('ad', 'Add to Favorites Success')?>"
-											});
-                                        }
-                                    }
-                                });
-                            });*/
+
                             $(document).bind('chat/afterConnect', function (event, data) {
                                 <?php if(Yii::$app->session->getFlash('notify_other') && !empty($owner)){
                                 ?>
@@ -488,11 +463,11 @@ Yii::t('ad', 'Television');
 							}, 400);
 						});
 
-                        function fbShare(url, title, descr, image, winWidth, winHeight) {
-                            var winTop = (screen.height / 2) - (winHeight / 2);
-                            var winLeft = (screen.width / 2) - (winWidth / 2);
-                            window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + url + '&p[title]=' + title + '&p[summary]=' + descr + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
-                        }
+//                        function fbShare(url, title, descr, image, winWidth, winHeight) {
+//                            var winTop = (screen.height / 2) - (winHeight / 2);
+//                            var winLeft = (screen.width / 2) - (winWidth / 2);
+//                            window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + url + '&p[title]=' + title + '&p[summary]=' + descr + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+//                        }
 
                         $('.share-facebook').click(function (){
                             $('body').loading();
@@ -530,6 +505,16 @@ Yii::t('ad', 'Television');
                             } else if(type == 'contact'){
                                 $('#popup_email .popup_title').text('<?=Yii::t('send_email','CONTACT')?>');
                                 $('#share_form .type').attr('value', 'contact');
+                            }
+                            var url = $(this).data("url");
+                            if(url != undefined && url.length > 0) {
+                                $.ajax({
+                                    type: "get",
+                                    dataType: 'json',
+                                    url: url,
+                                    success: function (data) {
+                                    }
+                                });
                             }
                         });
 

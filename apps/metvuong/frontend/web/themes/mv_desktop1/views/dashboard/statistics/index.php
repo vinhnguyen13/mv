@@ -1,4 +1,5 @@
 <?php
+use vsoft\ad\models\AdProduct;
 use yii\web\View;
 use yii\helpers\Url;
 
@@ -72,7 +73,7 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                         <span class="name-user"><?=$key?></span>
                                     </a>
                                     <div class="crt-item">
-                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-target="#popup_email" data-type="contact" data-toggle="modal" data-url="<?=Url::to(['member/profile-render-email', 'username'=>$key])?>">
+                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-target="#popup_email" data-type="contact" data-toggle="modal" data-email="<?=$finder['email']?>">
                                             <span class="icon-mv fs-16">
                                                 <span class="icon-mail-profile"></span>
                                             </span>
@@ -101,7 +102,7 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                         <span class="name-user"><?=$key?></span>
                                     </a>
                                     <div class="crt-item">
-                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-target="#popup_email">
+                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-target="#popup_email" data-type="contact" data-toggle="modal" data-email="<?=$value['email']?>">
                                             <span class="icon-mv fs-16">
                                                 <span class="icon-mail-profile"></span>
                                             </span>
@@ -137,7 +138,7 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                         <span class="name-user"><?=$key?></span>
                                     </a>
                                     <div class="crt-item">
-                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-target="#popup_email">
+                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-target="#popup_email" data-type="contact" data-toggle="modal" data-email="<?=$value['email']?>">
                                             <span class="icon-mv fs-16">
                                                 <span class="icon-mail-profile"></span>
                                             </span>
@@ -166,7 +167,7 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                                         <span class="name-user"><?=$key?></span>
                                     </a>
                                     <div class="crt-item">
-                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-target="#popup_email">
+                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-target="#popup_email" data-type="contact" data-toggle="modal" data-email="<?=$value['email']?>">
                                             <span class="icon-mv fs-16">
                                                 <span class="icon-mail-profile"></span>
                                             </span>
@@ -192,40 +193,20 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
     </div>
 </div>
 <?php
-
+$id = empty($id) ? AdProduct::find()->select(['id'])->asArray()->one()['id'] : $id;
 echo $this->renderAjax('/ad/_partials/shareEmail',[
     'popup_email_name' => 'popup_email_contact',
-    'product' => $product,
+    'pid' => $id,
     'yourEmail' => $email,
-    'recipientEmail' => empty($owner) ? "" : (empty($owner->profile->public_email) ? $owner->email : $owner->profile->public_email),
+    'recipientEmail' => null,
     'params' => ['your_email' => false, 'recipient_email' => false] ])?>
 <script>
     $(document).ready(function () {
 
         $(document).on('click','.btn-email-item', function () {
-            var type = $(this).data('type');
-            if(type == 'share'){
-                $('#popup_email .popup_title').text('<?=Yii::t('send_email','SHARE VIA EMAIL')?>');
-                $('#share_form .type').attr('value', 'share');
-                $('#share_form .recipient_email').attr('value', '');
-
-            } else if(type == 'contact'){
-                $('#popup_email .popup_title').text('<?=Yii::t('send_email','CONTACT')?>');
-                $('#share_form .type').attr('value', 'contact');
-            }
-
-            var url = $(this).data('url');
-            if(url) {
-                $.ajax({
-                    type: "get",
-                    dataType: 'json',
-                    url: url,
-                    success: function (data) {
-                        if(data.email) {
-                            $('#share_form #shareform-recipient_email').attr('value', data.email);
-                        }
-                    }
-                });
+            var email = $(this).data('email');
+            if(email) {
+                $('#share_form #shareform-recipient_email').attr('value', email);
             }
         });
 

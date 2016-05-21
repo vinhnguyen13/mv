@@ -6,7 +6,7 @@ use vsoft\ad\models\AdProduct;
 use frontend\models\UserActivity;
 use yii\helpers\Html;
 
-$owner = Yii::$app->user->identity;
+$owner = $current_user = Yii::$app->user->identity;
 ?>
 <div class="title-fixed-wrap container">
 	
@@ -47,14 +47,17 @@ $owner = Yii::$app->user->identity;
 		                            </div>
 	                                <div class="avatar"><a href="<?= $owner->urlProfile(); ?>"><img src="<?= Url::to(['member/avatar', 'usrn' => $owner->username]) ?>" alt="" width="40" height="40"></a></div>
 									<a href="#" class="name"><?= $owner->profile->getDisplayName(); ?></a>
-									<a href="#" class="pdL-10 pdR-10 tooltip-show btn-email-item" data-placement="bottom" title="Send email" data-url="<?=Url::to(['member/profile-render-email', 'username'=>$owner->username])?>" data-user="<?=$owner->username?>">
+
+									<a href="#" class="pdL-10 pdR-10 tooltip-show btn-email-item" data-placement="bottom" title="Send email" data-target="#popup_email" data-type="contact" data-toggle="modal"
+                                       data-url="<?=Url::to(['member/profile-render-email', 'username'=>$owner->username, 'pid' => $product->id])?>">
 										<span class="icon-mv fs-18 color-cd"><span class="icon-mail-profile"></span></span>
 									</a>
 	                                <a href="#" class="chat-now tooltip-show" data-chat-user="<?=$owner->username?>" data-placement="bottom" title="Send message">
 	                                	<span class="icon-mv fs-20 color-cd"><span class="icon-bubbles-icon"></span></span>
 	                                </a>
 									<?php
-									$product = AdProduct::findOne(['id' => $params['product']]);
+                                    $product = AdProduct::findOne(['id' => $params['product']]);
+                                    $pid = $product->id;
 									if (!empty($product)) {
 										$params['owner'] = '';
 										$params['product'] = Html::a($product->getAddress(), $product->urlDetail());
@@ -96,10 +99,12 @@ $owner = Yii::$app->user->identity;
 	</div>
 	
 </div>
-<?=$this->renderAjax('/ad/_partials/shareEmail', [
+<?php
+$pid = empty($pid) ? AdProduct::find()->select(['id'])->asArray()->one()['id'] : $pid;
+echo $this->renderAjax('/ad/_partials/shareEmail', [
     'popup_email_name' => 'popup_email_contact',
-    'user' => $owner,
-    'yourEmail' => empty($owner) ? "" : (empty($owner->profile->public_email) ? $owner->email : $owner->profile->public_email),
+    'pid' => $pid,
+    'yourEmail' => empty($current_user) ? "" : (empty($current_user->profile->public_email) ? $current_user->email : $current_user->profile->public_email),
     'recipientEmail' => null,
     'params' => ['your_email' => false, 'recipient_email' => false]]);?>
 <script>
@@ -136,10 +141,18 @@ $owner = Yii::$app->user->identity;
                     success: function (data) {
                         if(data.email) {
                             $('#share_form #shareform-recipient_email').attr('value', data.email);
-                            $('#share_form .img-show img').attr('src', data.ava);
-                            $('#share_form .infor-send .name a').text(data.name);
-                            $('#share_form .infor-send .address').text(data.address);
-                            $('#popup_email_contact').modal('show');
+                            $('#share_form .img-show img').attr('src', data.product.imageUrl);
+                            $('#share_form .name').text(data.product.address);
+                            $('#share_form .description').text(data.product.description);
+
+                            $('#share_form #shareform-address').attr('value', data.product.address);
+                            $('#share_form #shareform-detailurl').attr('value', data.product.detailUrl);
+                            $('#share_form #shareform-domain').attr('value', data.product.domain);
+                            $('#share_form #shareform-area').attr('value', data.product.area);
+                            $('#share_form #shareform-room_no').attr('value', data.product.room_no);
+                            $('#share_form #shareform-toilet_no').attr('value', data.product.toilet_no);
+                            $('#share_form #shareform-price').attr('value', data.product.price);
+                            $('#share_form #shareform-imageurl').attr('value', data.product.imageUrl);
                         }
                     }
                 });

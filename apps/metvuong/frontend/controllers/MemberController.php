@@ -13,6 +13,7 @@ use frontend\models\User;
 use frontend\models\UserLocation;
 use frontend\models\UserReview;
 use vsoft\ad\models\AdProduct;
+use vsoft\express\components\StringHelper;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\data\Pagination;
@@ -302,18 +303,54 @@ class MemberController extends Controller
         ]);
     }
 
-    public function actionProfileRenderEmail($username){
+    public function actionProfileRenderEmail($username, $pid = null){
         if(Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             $user = User::find()->where('username = :usrn', [':usrn' => $username])->one();
             if($user) {
                 $profile = $user->profile;
                 $recipientEmail = empty($profile->public_email) ? $user->email : $profile->public_email;
+                $product = null;
+                if(!empty($pid)){
+                    $product = AdProduct::getDb()->cache(function() use($pid){
+                        return AdProduct::find()->where('id = :pid', [':pid' => $pid])->one();
+                    });
+                    $categories = \vsoft\ad\models\AdCategory::getDb()->cache(function(){
+                        return \vsoft\ad\models\AdCategory::find()->indexBy('id')->asArray(true)->all();
+                    });
+                    $types = \vsoft\ad\models\AdProduct::getAdTypes();
+                    $product_type = $types[$product->type];
+
+                    $address = $product->getAddress();
+                    $category = ucfirst(Yii::t('ad', $categories[$product->category_id]['name'], null, Yii::$app->language)). " " .mb_strtolower(Yii::t('ad', $product_type, null, Yii::$app->language));
+                    $area = $product->area;
+                    $room_no = $product->adProductAdditionInfo->room_no;
+                    $toilet_no = $product->adProductAdditionInfo->toilet_no;
+                    $price = StringHelper::formatCurrency($product->price);
+                    $imageUrl = $product->representImage;
+                    if (!filter_var($imageUrl, FILTER_VALIDATE_URL))
+                        $imageUrl = Yii::$app->urlManager->hostInfo . $product->representImage;
+                    $detailUrl = $product->urlDetail(true);
+                    $description = \yii\helpers\StringHelper::truncate($product->content, 150);
+                }
                 return [
                     'email' => $recipientEmail,
                     'ava' => $profile->getAvatarUrl(),
                     'name' => empty($profile->name) ? $recipientEmail : $profile->name,
-                    'address' => empty($user->location) ? "" : $user->location->city
+                    'address' => empty($user->location) ? "" : $user->location->city,
+                    'product' => [
+                        'pid' => $pid,
+                        'address' => $address,
+                        'domain' => Yii::$app->urlManager->getHostInfo(),
+                        'category' => $category,
+                        'area' => $area,
+                        'room_no' => $room_no,
+                        'toilet_no' => $toilet_no,
+                        'price' => $price,
+                        'imageUrl' => $imageUrl,
+                        'detailUrl' => $detailUrl,
+                        'description' => $description
+                    ]
                 ];
             }
         }

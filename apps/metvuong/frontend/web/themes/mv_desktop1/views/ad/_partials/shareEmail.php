@@ -4,6 +4,7 @@
  * User: Nhut Tran
  * Date: 3/3/2016 3:50 PM
  */
+use vsoft\ad\models\AdProduct;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
@@ -60,7 +61,11 @@ use yii\helpers\Url;
                             echo $f->field($share_form, 'type')->hiddenInput(['class' => 'type', 'value'=> 'contact'])->label(false);
                             echo $f->field($share_form, 'from_name')->hiddenInput(['class' => 'from_name', 'value'=> (isset($from_name) && !empty($from_name)) ? $from_name : null])->label(false);
                             echo $f->field($share_form, 'to_name')->hiddenInput(['class' => 'to_name', 'value'=>(isset($to_name) && !empty($to_name)) ? $to_name : null])->label(false);
-                            if(isset($product) && !empty($product)){
+
+                            if(isset($pid) && !empty($pid)){
+                                $product = AdProduct::getDb()->cache(function() use($pid){
+                                    return AdProduct::find()->where('id = :pid', [':pid' => $pid])->one();
+                                });
                                 $categories = \vsoft\ad\models\AdCategory::getDb()->cache(function(){
                                     return \vsoft\ad\models\AdCategory::find()->indexBy('id')->asArray(true)->all();
                                 });
@@ -76,17 +81,18 @@ use yii\helpers\Url;
                                 $imageUrl = $product->representImage;
                                 if (!filter_var($imageUrl, FILTER_VALIDATE_URL))
                                     $imageUrl = Yii::$app->urlManager->hostInfo . $product->representImage;
+                                $detailUrl = $product->urlDetail(true);
                             ?>
-                            <div class="img-show"><div><a href="<?= $product->urlDetail(true) ?>"><img src="<?= $product->representImage ?>" alt="<?=$address?>"></a></div></div>
+                            <div class="img-show"><div><a href="<?= $detailUrl ?>"><img src="<?= $imageUrl ?>" alt="<?=$address?>"></a></div></div>
                             <div class="infor-send">
-                                <p class="name"><a href="<?= $product->urlDetail(true) ?>"><?=$address?></a></p>
+                                <p class="name"><a href="<?= $detailUrl ?>"><?=$address?></a></p>
                                 <p class="address"></p>
-                                <p><?=StringHelper::truncate($product->content, 150)?></p>
+                                <p class="description"><?=StringHelper::truncate($product->content, 150)?></p>
                                 <p class="send-by">BY METVUONG.COM</p>
                             </div>
-                                <?= $f->field($share_form, 'pid')->hiddenInput(['class' => 'pid', 'value'=> Yii::$app->params['listing_prefix_id'] . $product->id])->label(false); ?>
+                                <?= $f->field($share_form, 'pid')->hiddenInput(['class' => 'pid', 'value'=> Yii::$app->params['listing_prefix_id'] . $pid])->label(false); ?>
                                 <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=>$address])->label(false) ?>
-                                <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> $product->urlDetail(true) ])->label(false) ?>
+                                <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> $detailUrl ])->label(false) ?>
                                 <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
                                 <?= $f->field($share_form, 'category')->hiddenInput(['class' => 'category', 'value'=>$category])->label(false) ?>
                                 <?= $f->field($share_form, 'area')->hiddenInput(['class' => 'area', 'value'=>$area])->label(false) ?>
