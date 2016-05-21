@@ -599,7 +599,7 @@ Yii::t('ad', 'Television');
 								<li><strong><?= Yii::t('ad', 'Entry width') ?>:</strong> <?= $product->adProductAdditionInfo->land_width ?>m</li>
 								<?php endif; ?>
 								<?php if($product->adProductAdditionInfo->floor_no): ?>
-								<li><strong><?= $product->projectBuilding ? Yii::t('ad', 'Floor plan') : Yii::t('ad', 'Number of storeys') ?>:</strong> <?= $product->adProductAdditionInfo->floor_no ?>  Tầng</li>
+								<li><strong><?= $product->projectBuilding ? Yii::t('ad', 'Floor plan') : Yii::t('ad', 'Number of storeys') ?>:</strong> <?= $product->adProductAdditionInfo->floor_no ?>  <?= Yii::t('ad', 'Floor') ?></li>
 								<?php endif; ?>
 								<?php if($product->adProductAdditionInfo->home_direction): ?>
 								<li><strong><?= Yii::t('ad', 'House direction') ?>:</strong> <?= $directionList[$product->adProductAdditionInfo->home_direction] ?></li>

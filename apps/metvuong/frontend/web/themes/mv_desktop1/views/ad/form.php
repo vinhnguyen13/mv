@@ -181,10 +181,10 @@ use vsoft\ad\models\AdImages;
 									<input type="text" id="priceMask" class="form-control text-right number-only number-float" placeholder="...">
 									<div class="price-unit">
 										<label class="radio-inline radio-ui">
-											<input type="radio" name="price-unit" id="price-unit-mil" value="1000000" checked="checked"> Triệu
+											<input type="radio" name="price-unit" id="price-unit-mil" value="1000000" checked="checked"> <?= Yii::t('ad', 'million') ?>
 										</label>
 										<label class="radio-inline radio-ui">
-											<input type="radio" name="price-unit" id="price-unit-bil" value="1000000000"> Tỷ
+											<input type="radio" name="price-unit" id="price-unit-bil" value="1000000000"> <?= Yii::t('ad', 'billion') ?>
 										</label>
 									</div>
 								</div>
