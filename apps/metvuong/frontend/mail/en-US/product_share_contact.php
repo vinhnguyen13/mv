@@ -24,7 +24,7 @@ use yii\helpers\Html;
             <?php } ?>
             <p style="font-size:13px;margin:0 0 10px 0;">
                 <?php if(!empty($contact->area) && intval($contact->area) > 0){?>
-                    <span style="font-weight:bold;">Home size: </span><?=$contact->area?>m2
+                    <span style="font-weight:bold;">Home size: </span><?=$contact->area?> m<sup>2</sup>
                 <?php }
                 if(!empty($contact->room_no) && intval($contact->room_no) > 0){?>
                     <span style="font-weight:bold;">Beds: </span><?=$contact->room_no?>
