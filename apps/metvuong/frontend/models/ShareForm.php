@@ -53,7 +53,7 @@ class ShareForm extends Model
     public function rules() {
         return [
             [['recipient_email', 'your_email'], 'required'],
-            [['recipient_email', 'your_email'], 'email'],
+            [['recipient_email', 'your_email'], 'email', 'message' => Yii::t('share', 'Recipient email is not a valid email address.')],
             [['recipient_email', 'your_email'], 'string', 'max' => 255],
             [['address', 'content', 'detailUrl', 'domain', 'subject', 'type', 'pid', 'from_name',
                 'to_name','category', 'area', 'room_no', 'toilet_no', 'price', 'imageUrl'], 'string'],

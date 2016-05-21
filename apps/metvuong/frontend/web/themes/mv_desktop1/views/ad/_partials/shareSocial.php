@@ -23,15 +23,15 @@ $user = Yii::$app->user->identity;
                             <?php if(isset($product) && !empty($product)) {?>
                             <ul class="clearfix">
                                 <li>
-                                    <a href="#" class="share-facebook" data-toggle="modal" data-target="#popup_email_share"
+                                    <a href="#" class="share-facebook"
                                        data-url="<?=Url::to(['/ad/tracking-share', 'product_id' => $product->id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_FACEBOOK], true)?>">
                                         <div class="circle"><div><span class="icon icon-face"></span></div></div>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#"
+                                    <a href="#" data-type="share"
                                        data-url="<?=Url::to(['/ad/tracking-share', 'product_id' => $product->id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_EMAIL], true)?>"
-                                       data-toggle="modal" data-target="#popup_email_share" class="email-btn">
+                                       data-toggle="modal" data-target="#popup_email" class="email-btn">
                                         <div class="circle"><div><span class="icon icon-email-1"></span></div></div>
                                     </a>
                                 </li>
@@ -60,15 +60,15 @@ $user = Yii::$app->user->identity;
 
 <?php
 if(isset($product) && !empty($product)){
-echo $this->renderAjax('/ad/_partials/shareEmail',[
-    'popup_email_name' => 'popup_email_share',
-    'product' => $product,
-    'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
-    'recipientEmail' => null,
-    'params' => ['your_email' => false, 'recipient_email' => true] ]);
+    echo $this->render('/ad/_partials/shareEmail',[
+        'popup_email_name' => 'product_share',
+        'product' => $product,
+        'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
+        'recipientEmail' => null,
+        'params' => ['your_email' => false, 'recipient_email' => true] ]);
 } else if(isset($project) && !empty($project)){
-    echo $this->renderAjax('/ad/_partials/shareEmail',[
-        'popup_email_name' => 'popup_email_share',
+    echo $this->render('/ad/_partials/shareEmail',[
+        'popup_email_name' => 'project_share',
         'project' => $project,
         'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
         'recipientEmail' => null,
@@ -84,8 +84,22 @@ echo $this->renderAjax('/ad/_partials/shareEmail',[
     }
 
     $('.share-facebook').click(function (){
-        $('#popup-share-social').modal('hide');
         fbShare('<?=$url ?>', '<?=$title ?>', '<?=$description ?>', '<?= $image ?>', 800, 600);
+        $('#popup-share-social').modal('hide');
+    });
+
+    $('.email-btn').click(function(){
+        var type = $(this).data('type');
+        if(type == 'share'){
+            $('#popup_email .popup_title').text('<?=Yii::t('send_email','SHARE VIA EMAIL')?>');
+            $('#share_form .type').attr('value', 'share');
+            $('#share_form .recipient_email').attr('value', '');
+
+        } else if(type == 'contact'){
+            $('#popup_email .popup_title').text('<?=Yii::t('send_email','CONTACT')?>');
+            $('#share_form .type').attr('value', 'contact');
+        }
+        $('#popup-share-social').modal('hide');
     });
 
 </script>

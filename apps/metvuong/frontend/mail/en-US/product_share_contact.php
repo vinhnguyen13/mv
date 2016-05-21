@@ -19,10 +19,12 @@ use yii\helpers\Html;
         <td style="vertical-align:top;padding-left:10px;">
             <a style="display:block;font-size:16px;font-weight:bold;margin:0 0 10px 0;color:#009455;text-decoration:none;" href="<?= $contact->detailUrl ?>"><?=$contact->address?></a>
             <p style="margin:0 0 10px 0;font-size:13px;text-transform:uppercase;"><?=$contact->category?></p>
+            <?php if(!empty($contact->pid)){?>
             <p style="font-size:13px;margin:0 0 10px 0;"><span style="font-weight:bold;">ID: </span><?=$contact->pid?> </p>
+            <?php } ?>
             <p style="font-size:13px;margin:0 0 10px 0;">
                 <?php if(!empty($contact->area) && intval($contact->area) > 0){?>
-                    <span style="font-weight:bold;">Home size: </span><?=$contact->area?>m2
+                    <span style="font-weight:bold;">Home size: </span><?=$contact->area?> m<sup>2</sup>
                 <?php }
                 if(!empty($contact->room_no) && intval($contact->room_no) > 0){?>
                     <span style="font-weight:bold;">Beds: </span><?=$contact->room_no?>
@@ -31,12 +33,14 @@ use yii\helpers\Html;
                     <span style="font-weight:bold;">Baths: </span><?=$contact->toilet_no?>
                 <?php } ?>
             </p>
+            <?php if(!empty($contact->price)) { ?>
             <p style="border:1px solid #009455;display:inline-block;padding: 7px 15px;font-size:16px;font-weight:bold;line-height:100%;margin:5px 0 0 0;">Price: <?=$contact->price?></p>
+            <?php } ?>
         </td>
     </tr>
     </tbody>
 </table>
 
-<p style="margin-bottom: 45px;">View detail page is <a style="font-size:13px;font-weight: bold;text-decoration:none;color:#009455;" href="<?= $contact->detailUrl ?>">here</a>.</p>
+<p style="margin-bottom: 45px;">View details are <a style="font-size:13px;font-weight: bold;text-decoration:none;color:#009455;" href="<?= $contact->detailUrl ?>">here.</a></p>
 <p style="font-size: 13px;margin-bottom:5px;">Regards,</p>
 <p style="font-size: 13px;">Metvuong Team</p>

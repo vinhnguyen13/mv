@@ -103,18 +103,24 @@ use yii\helpers\Url;
                             <?php
                             }
                             else if(isset($project) && !empty($project)){
+                                $imageUrl = $project->logoUrl;
+                                if (!filter_var($imageUrl, FILTER_VALIDATE_URL))
+                                    $imageUrl = Yii::$app->urlManager->hostInfo . $project->logoUrl;
+                                $project_name = mb_strtoupper($project->name);
+                                $description = StringHelper::truncate($project->description, 500);
                                 ?>
-                                <div class="img-show"><div><a href="<?= Url::to(["building-project/view", 'slug'=>$project->slug], true) ?>"><img src="<?= $project->logoUrl ?>" alt="<?=Url::to(["building/$project->slug"],true)?>"></a></div></div>
+                                <div class="img-show"><div><a href="<?= Url::to(["building-project/view", 'slug'=>$project->slug], true) ?>"><img src="<?= $imageUrl?>" alt="<?=Url::to(["building/$project->slug"],true)?>"></a></div></div>
                                 <div class="infor-send">
-                                    <p class="name"><a href="<?= Url::to(["building-project/view", 'slug'=>$project->slug], true) ?>"><?=mb_strtoupper($project->name)?></a></p>
+                                    <p class="name"><a href="<?= Url::to(["building-project/view", 'slug'=>$project->slug], true) ?>"><?=$project_name ?></a></p>
                                     <p class="address"></p>
-                                    <p><?=StringHelper::truncate($project->description, 150)?></p>
+                                    <p><?=$description ?></p>
                                     <p class="send-by">BY METVUONG.COM</p>
                                 </div>
-                                <?= $f->field($share_form, 'pid')->hiddenInput(['class' => 'pid', 'value'=> $project->id])->label(false); ?>
-                                <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=> Url::to(["building-project/view", 'slug'=>$project->slug], true) ])->label(false) ?>
+                                <?= $f->field($share_form, 'category')->hiddenInput(['class' => 'category', 'value'=>$description])->label(false) ?>
+                                <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=> $project_name ])->label(false) ?>
                                 <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> Url::to(["building-project/view", 'slug'=>$project->slug], true) ])->label(false) ?>
                                 <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>
+                                <?= $f->field($share_form, 'imageUrl')->hiddenInput(['class' => 'imageUrl', 'value'=>$imageUrl])->label(false) ?>
 
                             <?php } ?>
                         </div>
@@ -159,7 +165,7 @@ use yii\helpers\Url;
                         var arr = [];
                         $.each(data.parameters, function (idx, val) {
                             var element = 'shareform-' + idx;
-                            arr[element] = lajax.t(val);
+                            arr[element] = val;
                         });
                         $('#share_form').yiiActiveForm('updateMessages', arr, true);
                     } else {

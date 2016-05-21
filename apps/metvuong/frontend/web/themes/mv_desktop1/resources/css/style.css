@@ -5850,6 +5850,9 @@ html.mm-opening .mm-slideout {
 .dt-footer p {
     text-align: right;
 }
+.dt-footer .license p {
+    text-align: left;
+}
 .dt-footer ul {
     margin-bottom: 5px;
 }
@@ -9021,6 +9024,7 @@ footer li a {
 }
 .statis .tbl-review td {
     text-align: left;
+    vertical-align: top;
 }
 .statis .tbl-review td > div {
     margin-bottom: 5px;
@@ -11389,4 +11393,19 @@ height: 190px;
 }
 .loading-chat {
     font-size: 12px;
+}
+.license {
+    margin: 10px auto 0;
+    font-size: 13px;
+    text-align: left;
+    font-weight: 600;
+}
+.license p {
+    margin-bottom: 5px;
+}
+@media (max-width: 985px) {
+    .license {
+        text-align: center;
+        font-size: 14px;
+    }
 }

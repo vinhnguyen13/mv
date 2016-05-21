@@ -34,4 +34,8 @@ use yii\helpers\Url;
 			<p><?=Yii::t('general', 'Copyright {year} {domain}', ['year'=>2016, 'domain'=>'MetVuong.com'])?></p>
 		</div>
 	</div>
+	<div class="license container">
+		<p>Giấy phép CNDKDN số 0313814871 - ® Ghi rõ nguồn "metvuong.com" khi phát hành lại thông tin từ trang mạng này.</p>
+		<p>Phát triển bởi CT TNHH DTTMDV Mét Vuông</p>
+	</div>
 </footer>

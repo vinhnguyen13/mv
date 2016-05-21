@@ -35,30 +35,10 @@ Yii::$app->view->registerMetaTag([
 ]);
 
 $lbl_updating = Yii::t('general', 'Updating');
-
-$fb_appId = '680097282132293'; // stage.metvuong.com
-if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
-    $fb_appId = '736950189771012';
-else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
-    $fb_appId = '891967050918314';
+$user = Yii::$app->user->identity;
+$email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email));
 ?>
-<script>
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId      : <?=$fb_appId?>,
-            xfbml      : true,
-            version    : 'v2.5'
-        });
-    };
 
-    (function(d, s, id){
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/vi_VN/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-</script>
 <div class="title-fixed-wrap">
     <div class="container">
         <div class="detail-duan-moi">
@@ -99,12 +79,11 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
                         <div class="swiper-button-prev"><span></span></div>
                     </div>
                     <div class="item infor-address-duan">
-                        <p><?= $model->investment_type ?></p>
+                        <p><?=Yii::t('project', $model->investment_type) ?></p>
                         <strong><?= $model->name?></strong>
                         <?= empty($model->location) ? $lbl_updating : $model->location ?>
                         <ul class="pull-right icons-detail">
                             <li><a href="#" data-toggle="modal" data-target="#popup-share-social" class="icon icon-share-td"></a></li>
-        <!--                    <li><a href="#" class="icon save-item" data-id="4115" data-url="/ad/favorite"></a></li>-->
                             <li><a href="#" data-toggle="modal" data-target="#popup-map" class="icon icon-map-loca"></a></li>
                         </ul>
                     </div>
@@ -165,6 +144,13 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
     </div>
 </div>
 
+<?= $this->renderAjax('/ad/_partials/shareEmail',[
+    'popup_email_name' => 'popup_email_share',
+    'project' => $model,
+    'yourEmail' => $email,
+    'recipientEmail' => null,
+    'params' => ['your_email' => false, 'recipient_email' => true] ])?>
+
 <div id="popup-map" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -178,17 +164,21 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 
 <?php
 $content = strip_tags($model->description);
-$description = \yii\helpers\StringHelper::truncate($content, 500, $suffix = '...', $encoding = 'UTF-8');
+$description = \yii\helpers\StringHelper::truncate($content, 500);
 $description = str_replace("\r", "", $description);
 $description = str_replace("\n", "", $description);
+$imageUrl = $model->logoUrl;
+if (!filter_var($imageUrl, FILTER_VALIDATE_URL))
+    $imageUrl = Yii::$app->urlManager->hostInfo . $model->logoUrl;
 echo $this->render('/ad/_partials/shareSocial',[
     'popup_email_name' => 'share',
     'project' => $model,
     'url' => Url::to(["building-project/view", 'slug'=>$model->slug], true),
     'title' => $model->name,
     'description' => $description,
-    'image' => $model->logoUrl
-])?>
+    'image' => $imageUrl
+])
+?>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -219,13 +209,6 @@ echo $this->render('/ad/_partials/shareSocial',[
                 });
             }, 400);
         });
-
-//        $(document).on('click', '.share-facebook', function() {
-//            FB.ui({
-//                method: 'share',
-//                href: '<?//=Yii::$app->request->absoluteUrl?>//'
-//            }, function(response){});
-//        });
 
     });
 </script>

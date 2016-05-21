@@ -45,6 +45,8 @@ $tabKeys = [
     'ban-hang' => Yii::t('project','Business'),
     'ho-tro' => Yii::t('project','Support'),
 ];
+$user = Yii::$app->user->identity;
+$email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email));
 ?>
 <div class="title-fixed-wrap">
     <div class="container">
@@ -87,12 +89,12 @@ $tabKeys = [
                         <div class="swiper-button-prev"><span></span></div>
                     </div>
                     <div class="item infor-address-duan">
-                    	<p><?= $model->investment_type  ?></p>
+                    	<p><?=Yii::t('project', $model->investment_type) ?></p>
                         <strong><?= $model->name ?></strong>
                         <?= empty($model->location) ? $lbl_updating : $model->location ?>
                         <ul class="pull-right icons-detail">
-                            <li><a href="#" data-toggle="modal" data-target="#popup-share-social" class="icon icon-share-td"></a></li>
-                            <!--                    <li><a href="#" class="icon save-item" data-id="4115" data-url="/ad/favorite"></a></li>-->
+                             <li><a href="#" data-toggle="modal" data-target="#popup-share-social" class="icon icon-share-td"></a></li>
+                            <!--<li><a href="#" class="icon save-item" data-id="4115" data-url="/ad/favorite"></a></li>-->
                             <li><a href="#" data-toggle="modal" data-target="#popup-map" class="icon icon-map-loca"></a></li>
                         </ul>
                     </div>
@@ -190,17 +192,21 @@ $tabKeys = [
 
 <?php
 $content = strip_tags($model->description);
-$description = \yii\helpers\StringHelper::truncate($content, 500, $suffix = '...', $encoding = 'UTF-8');
+$description = \yii\helpers\StringHelper::truncate($content, 500);
 $description = str_replace("\r", "", $description);
 $description = str_replace("\n", "", $description);
+$imageUrl = $model->logoUrl;
+if (!filter_var($imageUrl, FILTER_VALIDATE_URL))
+    $imageUrl = Yii::$app->urlManager->hostInfo . $model->logoUrl;
 echo $this->render('/ad/_partials/shareSocial',[
     'popup_email_name' => 'share',
     'project' => $model,
     'url' => Url::to(["building-project/view", 'slug'=>$model->slug], true),
     'title' => $model->name,
     'description' => $description,
-    'image' => $model->logoUrl
-])?>
+    'image' => $imageUrl
+])
+?>
 
 <script type="text/javascript">
 	$(document).ready(function () {
@@ -243,17 +249,6 @@ echo $this->render('/ad/_partials/shareSocial',[
                 });
             }, 400);
         });
-
-        /*$('#popup-share-social').popupMobi({
-            btnClickShow: ".icons-detail .icon-share-td",
-            closeBtn: ".btn-close",
-            styleShow: "center"
-        });*/
-
-        /*$(document).on('click', '#popup-share-social .icon-email-1', function (e) {
-            $('#popup-share-social').addClass('hide-popup');
-            $('.email-btn').trigger('click');
-        });*/
 
     });
 </script>
