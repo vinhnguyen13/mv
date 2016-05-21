@@ -257,7 +257,7 @@ Yii::t('ad', 'Television');
 						</ul>
 					</div>
 					<div class="pull-left mgT-10 right-attr-detail">
-						<p class="price-item"><?= Yii::t('ad', 'Price') ?><strong><?= StringHelper::formatCurrency($product->price) ?></strong></p>
+						<p class="price-item"><?= Yii::t('ad', 'Price') ?><strong><?= StringHelper::formatCurrency($product->price) . ' ' . Yii::t('ad', 'VND') ?></strong></p>
 					</div>
 				</div>
 
