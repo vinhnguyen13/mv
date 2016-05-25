@@ -724,13 +724,30 @@ Yii::t('ad', 'Television');
 									<?php endif; ?>
                                     <?php if($owner){
                                         if(!empty($owner->location)) {?>
-									<div class="item-agent">
-										<div>
-											<span class="icon address-icon"></span>
+										<div class="item-agent">
+											<div>
+												<span class="icon address-icon"></span>
+											</div>
+											<?= $owner->location->city?>
 										</div>
-										<?= $owner->location->city?>
+										<?php  } ?>
+										<div class="profile-url">
+											<div>
+												<span class="icon-url-profile"></span>
+												<a href="<?=Url::to(['/member/profile', 'username'=>$owner->username], true)?>" class="email-btn">
+													<?= str_replace(Yii::$app->language.'/', '', Url::to(['/member/profile', 'username'=>$owner->username], true)) ?>
+												</a>
+											</div>
+										</div>
+                                    <?php } ?>
+									<div class="profile-url">
+										<div>
+											<span class="icon-url-profile"></span>
+											<a href="<?=$product->urlDetail(true)?>" class="email-btn">
+												<?= $product->urlDetail(true) ?>
+											</a>
+										</div>
 									</div>
-                                    <?php } } ?>
 									<?php if(!empty($owner->username) && !$owner->isMe()) { ?>
                                         <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn btn-common btn-small">Email</a>
 										<a href="#" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>

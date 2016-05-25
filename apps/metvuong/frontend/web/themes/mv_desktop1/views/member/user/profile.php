@@ -63,6 +63,12 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
                                 <?= empty($model->public_email) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->public_email ?>
                             </a>
                         </p>
+                        <p class="profile-url">
+                            <a href="<?=Url::to(['/member/profile', 'username'=>$user->username], true)?>" class="email-btn">
+                                <span class="icon-mv"><span class="icon-url-profile"></span></span>
+                                <?= str_replace(Yii::$app->language.'/', '', Url::to(['/member/profile', 'username'=>$user->username], true)) ?>
+                            </a>
+                        </p>
                     </div>
                 </div>
                 <ul class="clearfix tabs-scroll">
