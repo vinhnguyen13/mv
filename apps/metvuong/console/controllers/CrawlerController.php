@@ -93,6 +93,10 @@ class CrawlerController extends Controller
     public function actionImportprojectbds(){
         BatdongsanV2::find()->importProjects();
     }
+    public function actionCopyProject(){
+        BatdongsanV2::find()->copyProjects();
+    }
+
     // db chinh
     public function actionImportProjectPrimary(){
         BatdongsanV2::find()->importProjectPrimary();
