@@ -626,7 +626,7 @@ Yii::t('ad', 'Television');
 		            </div>
 		            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
 		                <div class="panel-body" name="experience">
-                            <ul>
+                            <ul class="clearfix list-tienich">
 							<?php
 							 //implode(', ', ArrayHelper::getColumn($product->projectBuilding->adFacilities, 'name'))
                             $facilities = ArrayHelper::getColumn($product->projectBuilding->adFacilities, 'name');
@@ -634,7 +634,7 @@ Yii::t('ad', 'Television');
                                 foreach ($facilities as $k => $facility) {
                                     $class = \common\components\Slug::me()->slugify($facility); ?>
                                 <li>
-                                    <span class="<?=$class?>"></span>
+                                    <span class="icon-mv"><span class="<?=$class?>"></span></span>
                                     <?=Yii::t('ad', $facility)?>
                                 </li>
                                 <?php }
@@ -656,7 +656,7 @@ Yii::t('ad', 'Television');
 		            </div>
 		            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
 		                <div class="panel-body" name="experience">
-                            <ul>
+                            <ul class="clearfix list-tienich">
 							<?php
 //                            implode(', ', ArrayHelper::getColumn(AdFacility::find()->where(['id' => $product->adProductAdditionInfo->facility])->all(), 'name'))
                             $additional_facilities = ArrayHelper::getColumn(AdFacility::find()->where(['id' => $product->adProductAdditionInfo->facility])->all(), 'name');
@@ -664,7 +664,7 @@ Yii::t('ad', 'Television');
                                 foreach ($additional_facilities as $k => $facility) {
                                     $class = \common\components\Slug::me()->slugify($facility); ?>
                                     <li>
-                                        <span class="<?=$class?>"></span>
+                                        <span class="icon-mv"><span class="icon-<?=$class?>"></span></span>
                                         <?=Yii::t('ad', $facility)?>
                                     </li>
                                 <?php }

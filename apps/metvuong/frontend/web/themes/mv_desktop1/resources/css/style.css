@@ -754,6 +754,9 @@ margin-top: 12px;
 .detail-listing .img-agent {
     width: 500px;
 }
+.detail-listing .popover-content .img-agent {
+    width: auto;
+}
 .infor-agent .wrap-img {
     display: block;
     overflow: hidden;
@@ -1133,12 +1136,13 @@ label {
     background-position: -151px -72px;
 }
 .list-tienich {
-    border-right: 1px solid #C1C1C1;
-    border-bottom: 1px solid #C1C1C1;
+    
 }
 .list-tienich li {
     float: left;
-    width: 50%;
+    width: 25%;
+    text-align: center;
+    margin-bottom: 35px;
 }
 .list-tienich li a {
     display: block;
@@ -1151,6 +1155,9 @@ label {
 }
 .list-tienich li span {
     display: block;
+    text-align: center;
+    font-size: 35px;
+    margin-bottom: 5px;
 }
 .list-tienich li .icon {
     width: 68px;
@@ -5465,6 +5472,10 @@ html.mm-opening .mm-slideout {
     float: left;
     width: 50%;
     margin-bottom: 5px;
+}
+.list-tienich-detail li strong {
+    display: inline-block;
+    width: 40%;
 }
 #signup-form label {
     font-size: 13px;
@@ -11444,4 +11455,37 @@ height: 190px;
         text-align: center;
         font-size: 14px;
     }
+}
+.icon-bathroom-search-copy-2 {
+    font-size: 25px;
+    position: relative;
+    top: -2px;
+}
+.icon-parking:before {
+    content: "\e937"
+}
+.icon-gym:before {
+    content: "\e936";
+}
+.icon-school:before {
+    content: "\e938";
+}
+.icon-park:before {
+    content: "\e935"
+}
+.icon-air-conditioner:before {
+    content: "\e934"
+}
+.icon-washing-machine:before {
+    content: "\e933"
+}
+.icon-refrigerator:before {
+    content: "\e932"
+}
+.icon-television:before {
+    content: "\e931"
+}
+.list-tienich li span.icon-refrigerator {
+    font-size: 65px;
+    margin-top: -15px;
 }
