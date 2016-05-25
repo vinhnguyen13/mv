@@ -10970,7 +10970,7 @@ label:hover {
     width: auto;
     height: auto;
     border: 1px solid #c2c2c2;
-    padding: 0 10px;
+    padding: 0 7px;
     height: 34px;
     min-width: 50px;
     line-height: 30px;
@@ -10979,6 +10979,9 @@ label:hover {
     -webkit-transition: all .2s ease-out;
     -moz-transition: all .2s ease-out;
     -ms-transition: all .2s ease-out;
+    font-size: 11px;
+    float: left;
+    margin-left: 0;
 }
 .agent-postlisting .radio-ui:hover,
 .price-unit .radio-ui:hover {
@@ -11395,13 +11398,16 @@ height: 190px;
     font-size: 12px;
 }
 .license {
-    margin: 10px auto 0;
+    margin: 0 auto 0;
     font-size: 13px;
-    text-align: left;
+    text-align: right;
     font-weight: 600;
 }
 .license p {
     margin-bottom: 5px;
+}
+.dt-footer .license p {
+    text-align: center;
 }
 @media (max-width: 985px) {
     .license {
