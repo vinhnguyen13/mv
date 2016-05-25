@@ -751,6 +751,9 @@ margin-top: 12px;
     min-width: 150px;
     float: left;
 }
+.detail-listing .img-agent {
+    width: 500px;
+}
 .infor-agent .wrap-img {
     display: block;
     overflow: hidden;
@@ -3247,7 +3250,7 @@ html.mm-opening .mm-slideout {
 #listing-list .pic-intro {
     float: left;
     width: 180px;
-    height: 137px;
+    height: 140px;
     margin-bottom: 0;
 }
 .pic-intro img {
@@ -4037,9 +4040,10 @@ html.mm-opening .mm-slideout {
     text-transform: uppercase;
     border: solid 1px #8e8e8e;
     padding: 10px 15px;
-    float: left;
+    /* float: left; */
     font-size: 13px;
     line-height: 100%;
+    display: inline-block;
 }
 .right-attr-detail .price-item {
     font-size: 15px;
@@ -6150,7 +6154,9 @@ footer li a {
 }
 .date-post {
     font-weight: 400;
-    margin-bottom: 5px;
+    /* margin-bottom: 5px; */
+    margin-top: 7px;
+    color: #999;
 }
 .wrap-news .date-post {
     margin-bottom: 10px;
@@ -7718,6 +7724,7 @@ footer li a {
     color: #009544;
     line-height: 20px;
     margin-bottom: 5px;
+    font-size: 20px;
 }
 .infor-duan-suggest .address-listing {
     /* padding-right: 100px; */
@@ -7729,6 +7736,9 @@ footer li a {
 }
 .infor-duan-suggest .address-listing {
     margin-bottom: 5px;
+    color: #3c3c3c;
+    font-size: 14px;
+    font-weight: 400;
 }
 .infor-duan-suggest a.view-more {
     color: #000000;
@@ -7879,6 +7889,9 @@ footer li a {
 .user-avatar .num-mobi {
     margin-bottom: 5px;
 }
+.user-avatar .email-user {
+    margin-bottom: 5px;
+}
 .user-avatar .icon-mv {
     width: 19px;
     font-size: 18px;
@@ -7988,8 +8001,8 @@ footer li a {
     padding-top: 50px;
 }
 .sidebar-col .list-attr-td li {
-    margin: 0 10px 0 0;
-    padding-right: 10px;
+    margin: 0 7px 0 0;
+    padding-right: 7px;
 }
 .detail-duan-moi .sidebar-col .name-post,
 .list-duan .sidebar-col .name-post {
@@ -11305,6 +11318,11 @@ height: 190px;
 .user-login .list-redire .box-dropdown li {
     margin-left: 0;
 }
+.user-login .list-redire .box-dropdown li p {
+    font-size: 14px;
+    padding: 10px;
+    text-align: center;
+}
 .user-login .list-redire .wrap-alert span {
     text-decoration: underline;
 }
@@ -11386,6 +11404,13 @@ height: 190px;
 @media (max-width: 640px) {
     .wrap-list-duan .list-item li.col-sm-6 {
         width: 100%;
+    }
+    #success-notify {
+        width: auto;
+    }
+    #success-notify a {
+        margin: 0 0 10px 0 !important;
+        display: block;
     }
 }
 .page-terms,

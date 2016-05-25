@@ -731,22 +731,22 @@ Yii::t('ad', 'Television');
 											<?= $owner->location->city?>
 										</div>
 										<?php  } ?>
-										<div class="profile-url">
+										<div class="item-agent">
 											<div>
-												<span class="icon-url-profile"></span>
-												<a href="<?=Url::to(['/member/profile', 'username'=>$owner->username], true)?>" class="email-btn">
-													<?= str_replace(Yii::$app->language.'/', '', Url::to(['/member/profile', 'username'=>$owner->username], true)) ?>
-												</a>
+												<span class="icon-mv"><span class="icon-link fs-16"></span></span>
 											</div>
-										</div>
-                                    <?php } ?>
-									<div class="profile-url">
-										<div>
-											<span class="icon-url-profile"></span>
-											<a href="<?=$product->urlDetail(true)?>" class="email-btn">
-												<?= $product->urlDetail(true) ?>
+											<a href="<?=Url::to(['/member/profile', 'username'=>$owner->username], true)?>" class="email-btn">
+												<?= str_replace(Yii::$app->language.'/', '', Url::to(['/member/profile', 'username'=>$owner->username], true)) ?>
 											</a>
 										</div>
+                                    <?php } ?>
+									<div class="item-agent">
+										<div>
+											<span class="icon-mv"><span class="icon-link fs-16"></span></span>
+										</div>
+										<a href="<?=$product->urlDetail(true)?>" class="email-btn">
+											<?= $product->urlDetail(true) ?>
+										</a>
 									</div>
 									<?php if(!empty($owner->username) && !$owner->isMe()) { ?>
                                         <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn btn-common btn-small">Email</a>

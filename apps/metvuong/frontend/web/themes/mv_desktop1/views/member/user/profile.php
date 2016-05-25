@@ -65,7 +65,7 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
                         </p>
                         <p class="profile-url">
                             <a href="<?=Url::to(['/member/profile', 'username'=>$user->username], true)?>" class="email-btn">
-                                <span class="icon-mv"><span class="icon-url-profile"></span></span>
+                                <span class="icon-mv"><span class="icon-link"></span></span>
                                 <?= str_replace(Yii::$app->language.'/', '', Url::to(['/member/profile', 'username'=>$user->username], true)) ?>
                             </a>
                         </p>

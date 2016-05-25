@@ -32,8 +32,8 @@ $types = AdProduct::getAdTypes();
 				<img src="<?= $product->file_name ? AdImages::getImageUrl($product->folder, $product->file_name, AdImages::SIZE_THUMB) : AdImages::defaultImage() ?>" />
 			</div>
 			<div class="info-item clearfix">
-				<p class="date-post"><?= Yii::t('statistic', 'Date of posting') ?>:
-					<strong><?= date("d/m/Y H:i", $product->updated_at) ?></strong></p>
+				<!-- <p class="date-post"><?= Yii::t('statistic', 'Date of posting') ?>:
+					<strong><?= date("d/m/Y H:i", $product->updated_at) ?></strong></p> -->
 				<div class="address-listing">
 					<?= $product->getAddress($product->show_home_no) ?>
 				</div>
@@ -51,6 +51,9 @@ $types = AdProduct::getAdTypes();
                     } ?>
 				</ul>
 		        <p class="price-item"><?= Yii::t('listing', 'Price') ?><strong><?= StringHelper::formatCurrency($product->price) . ' ' . Yii::t('ad', 'VND') ?></strong></p>   
+		    	<p class="date-post">
+		    		Chưa đầy 1 ngày trên MetVuong
+		    	</p>
 		    </div>
 		</a>
         <?php
