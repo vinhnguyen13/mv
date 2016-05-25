@@ -16,16 +16,18 @@ use vsoft\ad\models\AdDistrict;
 use vsoft\ad\models\AdBuildingProject;
 use vsoft\ad\models\AdCategoryGroup;
 
+$compress = Yii::$app->params['local'] ? '' : '.compress';
+
 $this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/select2.min.css');
 $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/select2.full.min.js', ['position' => View::POS_END]);
-$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/listing.js', ['position' => View::POS_END]);
+$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/listing' . $compress . '.js', ['position' => View::POS_END]);
 
 $categories = AdCategory::find ()->indexBy ( 'id' )->asArray ( true )->all ();
 
 $hideSearchForm = Yii::$app->request->get('s') || (Yii::$app->request->get('page', 1) != 1);
 
 
-$resourceListingMap = Html::encode(Yii::$app->view->theme->baseUrl . '/resources/js/listing-map.js');
+$resourceListingMap = Html::encode(Yii::$app->view->theme->baseUrl . '/resources/js/map' . $compress . '.js');
 $resourceGmapV2 = Html::encode(Yii::$app->view->theme->baseUrl . '/resources/js/gmap-v2.js');
 $resourceApi = Html::encode('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4');
 
