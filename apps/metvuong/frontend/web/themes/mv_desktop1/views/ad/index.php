@@ -15,14 +15,17 @@ use common\models\AdCity;
 use vsoft\ad\models\AdDistrict;
 use vsoft\ad\models\AdBuildingProject;
 use vsoft\ad\models\AdCategoryGroup;
-
+$db = Yii::$app->getDb();
 $compress = isset(Yii::$app->params['local']) ? '' : '.compress';
 
 $this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/select2.min.css');
 $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/select2.full.min.js', ['position' => View::POS_END]);
 $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/listing' . $compress . '.js', ['position' => View::POS_END]);
 
-$categories = AdCategory::find ()->indexBy ( 'id' )->asArray ( true )->all ();
+//$categories = AdCategory::find ()->indexBy ( 'id' )->asArray ( true )->all ();
+$categories = $db->cache(function(){
+	return AdCategory::find ()->indexBy ( 'id' )->asArray ( true )->all ();
+});
 
 $hideSearchForm = Yii::$app->request->get('s') || (Yii::$app->request->get('page', 1) != 1);
 
@@ -50,6 +53,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/swiper.jquery.min.js', ['position'=>View::POS_END]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.rateit.js', ['position'=>View::POS_END]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/clipboard.min.js', ['position'=>View::POS_END]);
+
 ?>
 
 <div class="result-listing clearfix">
@@ -70,8 +74,11 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 										<div class="item-dropdown hide-dropdown">
 											<div class="form-group col-xs-12 col-sm-6">
 												<div class="">
-													<?php 
-														$cities = AdCity::find()->all();
+													<?php
+														$cities = $db->cache(function(){
+															return AdCity::find()->all();
+														});
+//														$cities = AdCity::find()->all();
 														$citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
 														$citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != AdProduct::DEFAULT_CITY)]; });
 													?>
