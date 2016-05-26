@@ -32,6 +32,7 @@ class ProfileForm extends Model
     public $first_name;
     public $last_name;
     public $owner;
+    public $aliasname;
 
     /** @var string */
     public $old_password;
@@ -66,6 +67,7 @@ class ProfileForm extends Model
             'password' => ['old_password', 'new_password'],
             'updateavatar' => ['avatar', 'created_at'],
             'updatebio' => ['bio'],
+            'updatealias' => ['aliasname'],
         ];
     }
 
@@ -216,6 +218,7 @@ class ProfileForm extends Model
         $model->rating_no = $profile->rating_no;
         $model->created_at = Yii::$app->user->id;
         $model->user = $user;
+        $model->aliasname = $user->aliasname;
         return $model;
     }
 

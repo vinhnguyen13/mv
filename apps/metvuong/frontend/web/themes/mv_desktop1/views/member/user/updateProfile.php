@@ -195,6 +195,40 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                     </div>
                 </div>
             </section>
+            <section class="mtbt">
+                <div class="title-update-tt">
+                    <?=Yii::t('User', 'Alias Name')?>
+                </div>
+                <div class="wrap-attr-detail">
+                    <a href="#" class="edit-profile"><span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
+                    <div class="txt-wrap">
+                        <p class="txt-mota"><?=empty($model->aliasname) ? "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->aliasname ?></p>
+                    </div>
+                </div>
+                <div class="box-edit-show wrap-attr-detail">
+                    <div class="posi_absolute btn-mani">
+                        <a href="#" class="done-profile btn-common"><?= Yii::t('user', 'Xong') ?></a>
+                        <a href="#" class="cancel-profile btn-common btn-cancel"><?= Yii::t('user', 'Hủy') ?></a>
+                    </div>
+                    <?php
+                    $profile_form = Yii::createObject([
+                        'class'    => \frontend\models\ProfileForm::className(),
+                        'scenario' => 'updatealias',
+                    ]);
+                    $f = ActiveForm::begin([
+                        'id' => 'form-edit-mtbt',
+                        'enableAjaxValidation' => false,
+                        'enableClientValidation' => true,
+                        'action' => Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])
+                    ]);
+                    ?>
+                    <div class="txt-wrap">
+                        <?= $f->field($profile_form, 'aliasname')->textInput(['value' => $model->aliasname ])->label(false)?>
+                        <input type="hidden" name="scenario" value="updatebio">
+                    </div>
+                    <?php $f->end(); ?>
+                </div>
+            </section>
         </div>
     </div>
 </div>
