@@ -2333,6 +2333,7 @@ class BatdongsanV2 extends Component
     }
 
     public function copyProjects(){
+//        $start = time();
         $query = AdBuildingProject::find()->where('project_main_id = :pid', [':pid' => 0]);
         $count = (int)$query->count('id');
         if($count > 0){
@@ -2347,8 +2348,8 @@ class BatdongsanV2 extends Component
 
             $listInvestorProject = array();
             $projectToolMaps = array();
-
-            $models = $query->limit(5)->all();
+            $no = 0;
+            $models = $query->limit(300)->all();
             foreach ($models as $model) {
                 $project_name = $model->name;
                 $project = \vsoft\ad\models\AdBuildingProject::getDb()->cache(function() use($project_name){
@@ -2361,32 +2362,27 @@ class BatdongsanV2 extends Component
                     return AdInvestor::find()->where('id = :invid', [':invid' => $inv_id])->asArray()->one();
                 });
                 $investor_name = $investor["name"];
-                if(count($project) > 0){
-                    if(count($investorBuildingProject) > 0) {
-                        $inv_id = $investorBuildingProject->investor_id;
-                        $investor = AdInvestor::getDb()->cache(function() use($inv_id){
-                            return AdInvestor::find()->where('id = :invid', [':invid' => $inv_id])->asArray()->one();
-                        });
-
-                        $investor_name = $investor["name"];
-                        $ad_investor = \vsoft\ad\models\AdInvestor::getDb()->cache(function() use($investor_name){
-                            return \vsoft\ad\models\AdInvestor::find()->where('name = :n', [':n' => $investor_name])->asArray()->one();
-                        });
-                        if(count($ad_investor) <= 0){
-                            $recordInvestor = [
-                                'name' => $investor["name"],
-                                'address' => $investor["address"],
-                                'phone' => $investor["phone"],
-                                'fax' => $investor["fax"],
-                                'website' => $investor["website"],
-                                'email' => $investor["email"],
-                                'logo' => $investor["logo"],
-                                'status' => 1,
-                                'created_at' => time()
-                            ];
-                            $bulkInsertInvestor[] = $recordInvestor;
-                        }
+                if(count($investorBuildingProject) > 0) {
+                    $investor_name = $investor["name"];
+                    $ad_investor = \vsoft\ad\models\AdInvestor::getDb()->cache(function() use($investor_name){
+                        return \vsoft\ad\models\AdInvestor::find()->where('name = :n', [':n' => $investor_name])->asArray()->one();
+                    });
+                    if(count($ad_investor) <= 0){
+                        $recordInvestor = [
+                            'name' => $investor["name"],
+                            'address' => $investor["address"],
+                            'phone' => $investor["phone"],
+                            'fax' => $investor["fax"],
+                            'website' => $investor["website"],
+                            'email' => $investor["email"],
+                            'logo' => $investor["logo"],
+                            'status' => 1,
+                            'created_at' => time()
+                        ];
+                        $bulkInsertInvestor[] = $recordInvestor;
                     }
+                }
+                if(count($project) > 0){
                     $model->project_main_id = $project->id;
                     $model->update(false);
                 } else {
@@ -2406,7 +2402,7 @@ class BatdongsanV2 extends Component
                         'slug' => $model->slug,
                         'status' => $model->status,
                         'created_at' => $model->created_at,
-                        'file_name' => $model->filename,
+                        'file_name' => $model->file_name,
                         'is_crawl' => 1,
                         'data_html' => $model->data_html,
                         'home_no' => $model->home_no,
@@ -2418,6 +2414,12 @@ class BatdongsanV2 extends Component
                 }
                 // for ad_investor_building_project
                 $listInvestorProject[$project_name] = $investor_name;
+                if($no >0 && $no % 50 == 0) {
+                    print_r(PHP_EOL);
+                    print_r("Copy {$no} records...");
+                    print_r(PHP_EOL);
+                }
+                $no++;
             }
 
 //            $insertCount = 0;
@@ -2437,23 +2439,26 @@ class BatdongsanV2 extends Component
                         $crawl_project->update(false);
                         $index++;
                     }
-                    print_r("\nCopy {$insertCount} BUILDING PROJECT data ... DONE");
+                    print_r("\nCopy {$insertCount} Building Project data ... DONE");
                 }
+            } else {
+                print_r("\nBuilding Project updated.\nDon't have new Projects to copy");
             }
 
             if (count($bulkInsertInvestor) > 0) {
                 // below line insert all your record and return number of rows inserted
                 $insertCount = \vsoft\ad\models\AdInvestor::getDb()->createCommand()
                     ->batchInsert(\vsoft\ad\models\AdInvestor::tableName(), $columnInvestor, $bulkInsertInvestor)->execute();
-                print_r("\nCopy {$insertCount} INVESTOR data ... DONE");
+                print_r("\nCopy {$insertCount} Investor data ... DONE");
+            } else {
+                print_r("\nDon't have new Investors to copy");
             }
-
             if(count($listInvestorProject) > 0) {
                 $columnInvestorProject = ['building_project_id', 'investor_id'];
                 $bulkInsertInvestorProject = array();
                 foreach ($listInvestorProject as $key => $value) {
                     $new_project = \vsoft\ad\models\AdBuildingProject::getDb()->cache(function() use($key){
-                        return \vsoft\ad\models\AdBuildingProject::find()->select(['id'])->where('name = :n', [':n' => $key])->asArray()->one();
+                        return \vsoft\ad\models\AdBuildingProject::find()->select(['id','name'])->where('name = :n', [':n' => $key])->asArray()->one();
                     });
                     $count_new_project = count($new_project);
                     if($count_new_project <= 0)
@@ -2467,21 +2472,41 @@ class BatdongsanV2 extends Component
                         continue;
 
                     if($count_new_project > 0 && $count_new_investor > 0){
-                        $recordInvestorProject = [
-                            'building_project_id' => $new_project["id"],
-                            'investor_id' => $new_investor["id"]
-                        ];
-                        $bulkInsertInvestorProject[] = $recordInvestorProject;
-                    }
-                } // end for listInvestorProject
+                        $new_investor_id = $new_investor["id"];
+                        $new_project_id = $new_project["id"];
+                        $count_new_investor_project = \vsoft\ad\models\AdInvestor::getDb()->cache(function() use($new_project_id, $new_investor_id){
+                            return \vsoft\ad\models\AdInvestorBuildingProject::find()
+                                ->where(['building_project_id' => $new_project_id, 'investor_id' => $new_investor_id])
+                                ->count();
+                        });
 
-                $insertInvestorProject = \vsoft\ad\models\AdInvestorBuildingProject::getDb()->createCommand()
-                    ->batchInsert(\vsoft\ad\models\AdInvestorBuildingProject::tableName(), $columnInvestorProject, $bulkInsertInvestorProject)->execute();
-                if($insertInvestorProject > 0)
-                    print_r("\nCopy Map Investor Project DONE!");
+                        if($count_new_investor_project <= 0) {
+                            $recordInvestorProject = [
+                                'building_project_id' => $new_project_id,
+                                'investor_id' => $new_investor_id
+                            ];
+                            $bulkInsertInvestorProject[] = $recordInvestorProject;
+                        }
+//                        else {
+//                            print_r("\nMap ".$new_project["name"]." success");
+//                        }
+                    }
+                } // end foreach listInvestorProject
+
+                if(count($bulkInsertInvestorProject) > 0) {
+                    $insertInvestorProject = \vsoft\ad\models\AdInvestorBuildingProject::getDb()->createCommand()
+                        ->batchInsert(\vsoft\ad\models\AdInvestorBuildingProject::tableName(), $columnInvestorProject, $bulkInsertInvestorProject)->execute();
+                    if ($insertInvestorProject > 0)
+                        print_r("\nCopy Map Investor Project DONE!");
+                } else {
+                    print_r("\nDon't have Investor Project map!");
+                }
 
             }
         }
+//        $stop = time();
+//        $time = $stop - $start;
+//        print_r("\nTime: {$time}s");
     }
 
     public function updateProjects(){
