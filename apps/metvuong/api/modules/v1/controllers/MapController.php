@@ -61,7 +61,7 @@ class MapController extends Controller {
 		if($mapSearch->rl) {
 			$list = $mapSearch->getList($query);
 			
-			$response['rl'] = $this->renderPartial('@frontend/web/themes/mv_desktop1/views/ad/_partials/list', $list);
+			$response['rl'] = $this->renderPartial('@frontend/web/themes/mv_desktop1/views/ad/_partials/list', ['searchModel' => $mapSearch, 'list' => $list]);
 		}
 		
 		return $response;
