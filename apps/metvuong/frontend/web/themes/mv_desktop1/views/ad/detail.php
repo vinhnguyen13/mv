@@ -634,7 +634,7 @@ Yii::t('ad', 'Television');
                                 foreach ($facilities as $k => $facility) {
                                     $class = \common\components\Slug::me()->slugify($facility); ?>
                                 <li>
-                                    <span class="icon-mv"><span class="<?=$class?>"></span></span>
+                                    <span class="icon-mv"><span class="icon-<?=$class?>"></span></span>
                                     <?=Yii::t('ad', $facility)?>
                                 </li>
                                 <?php }
