@@ -35,6 +35,7 @@ use yii\web\IdentityInterface;
  * Database fields:
  * @property integer $id
  * @property string  $username
+ * @property string  $aliasname
  * @property string  $email
  * @property string  $unconfirmed_email
  * @property string  $password_hash
@@ -429,6 +430,7 @@ class User extends \dektrium\user\models\User
     {
         if ($insert) {
             $this->setAttribute('auth_key', Yii::$app->security->generateRandomString());
+            $this->setAttribute('aliasname', $this->username);
             if (Yii::$app instanceof WebApplication) {
                 $this->setAttribute('registration_ip', Yii::$app->request->userIP);
             }
