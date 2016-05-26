@@ -41,13 +41,13 @@ class ChatController extends Controller
     }
 
     public function actionWith($username){
-        if($username == Yii::$app->user->identity->username){
+        if($username == Yii::$app->user->identity->getUsername()){
             $this->redirect(Url::to(['/chat/index']));
         }
         if(Yii::$app->request->isAjax){
             return $this->renderAjax('with', ['username'=>$username]);
         }else{
-            $this->redirect(Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username]));
+            $this->redirect(Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->getUsername()]));
         }
     }
 
@@ -55,7 +55,7 @@ class ChatController extends Controller
         if(Yii::$app->request->isAjax && Yii::$app->request->isPost){
             $word = Yii::$app->request->post('word');
             Yii::$app->response->format = 'json';
-            return Chat::find()->searchUserFromConversation(Yii::$app->user->identity->username, $word);
+            return Chat::find()->searchUserFromConversation(Yii::$app->user->identity->getUsername(), $word);
         }
     }
 }

@@ -365,7 +365,7 @@ class MemberController extends Controller
             return $this->redirect(Url::to(['member/login']));
         }
 
-        if($username == Yii::$app->user->identity->username) {
+        if($username == Yii::$app->user->identity->getUsername()) {
             $model = Yii::createObject([
                 'class'    => ProfileForm::className(),
                 'scenario' => 'updateprofile',
@@ -517,19 +517,6 @@ class MemberController extends Controller
                 ->orderBy(['created_at' => SORT_DESC])->all();
             if(count($reviews) > 0){
                 return $this->renderAjax('/member/_partials/review', ['reviews' => $reviews]);
-//                $str = null;
-//                foreach($reviews as $review){
-//                    $str = $str . '<li class="'.$review->created_at.'">'.
-//                                '<div class="stars">'.
-//                                    '<span class="rateit rating-review" data-rateit-value="'.$review->rating.'" data-rateit-ispreset="true" data-rateit-readonly="true"></span>'.
-//                                '</div>'.
-//                                '<p class="infor-user-review">'.
-//                                    '<a href="/'.$review->username.'">'.$review->name.'</a>'. date("d/m/Y H:i", $review->created_at).' | '.
-//                                    $review->type==1 ? \frontend\models\UserReview::TYPE_1 : \frontend\models\UserReview::TYPE_2 .
-//                                '</p><p>'.$review->description.'</p>'.
-//                            '</li>';
-//                }
-//                return $str;
             }
         }
         return false;

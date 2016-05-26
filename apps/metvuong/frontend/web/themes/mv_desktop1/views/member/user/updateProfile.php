@@ -63,7 +63,7 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                             'id' => 'form-edit-ttcn',
                             'enableAjaxValidation' => false,
                             'enableClientValidation' => true,
-                            'action' => Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])
+                            'action' => Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->getUsername()])
                         ]);
                         ?>
                         <div class="name-user fs-18 font-600 color-cd text-uper mgB-5">
@@ -133,7 +133,7 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                         'id' => 'form-edit-mtbt',
                         'enableAjaxValidation' => false,
                         'enableClientValidation' => true,
-                        'action' => Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])
+                        'action' => Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->getUsername()])
                     ]);
                     ?>
                     <div class="txt-wrap">
@@ -193,40 +193,6 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                         </div>
                         <?php $f->end(); ?>
                     </div>
-                </div>
-            </section>
-            <section class="mtbt">
-                <div class="title-update-tt">
-                    <?=Yii::t('User', 'Alias Name')?>
-                </div>
-                <div class="wrap-attr-detail">
-                    <a href="#" class="edit-profile"><span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
-                    <div class="txt-wrap">
-                        <p class="txt-mota"><?=empty($model->aliasname) ? "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->aliasname ?></p>
-                    </div>
-                </div>
-                <div class="box-edit-show wrap-attr-detail">
-                    <div class="posi_absolute btn-mani">
-                        <a href="#" class="done-profile btn-common"><?= Yii::t('user', 'Xong') ?></a>
-                        <a href="#" class="cancel-profile btn-common btn-cancel"><?= Yii::t('user', 'Hủy') ?></a>
-                    </div>
-                    <?php
-                    $profile_form = Yii::createObject([
-                        'class'    => \frontend\models\ProfileForm::className(),
-                        'scenario' => 'updatealias',
-                    ]);
-                    $f = ActiveForm::begin([
-                        'id' => 'form-edit-mtbt',
-                        'enableAjaxValidation' => false,
-                        'enableClientValidation' => true,
-                        'action' => Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])
-                    ]);
-                    ?>
-                    <div class="txt-wrap">
-                        <?= $f->field($profile_form, 'aliasname')->textInput(['value' => $model->aliasname ])->label(false)?>
-                        <input type="hidden" name="scenario" value="updatebio">
-                    </div>
-                    <?php $f->end(); ?>
                 </div>
             </section>
         </div>
@@ -371,6 +337,28 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                    return false;
                 }
             });
+        });
+
+        $('.changeAlias .done-profile').on('click', function(){
+            var _this = $(this);
+            _this.closest('section').loading({
+                full: false
+            });
+            $('.edit-mtbt .error').addClass('hide');
+
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: $('#form-edit-alias').attr('action'),
+                data: $('#form-edit-alias').serializeArray(),
+                success: function (data) {
+
+                },
+                error: function (data) {
+                    return false;
+                }
+            });
+            return false;
         });
 
         $('.changepass .done-profile').on('click', function(){

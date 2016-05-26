@@ -155,6 +155,7 @@ class ProfileForm extends Model
             $profile->mobile = $this->mobile;
             $profile->address = $this->address;
             $profile->bio = $this->bio;
+            $profile->user->updateAttributes(['aliasname'=>$this->aliasname]);
             return $profile->save();
         }
         return false;
@@ -194,7 +195,7 @@ class ProfileForm extends Model
 
     public function loadProfile($username, $scenario = 'updateprofile'){
         $profile = null;
-        $user = User::find()->where('username = :usrn', [':usrn' => $username])->one();
+        $user = User::find()->where('aliasname = :usrn', [':usrn' => $username])->one();
         if($user){
             $profile = $user->profile;
             $profile->avatar = $profile->getAvatarUrl();
