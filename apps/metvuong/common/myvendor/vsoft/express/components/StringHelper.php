@@ -9,7 +9,7 @@ class StringHelper extends SH {
 		$Current = time();
 		if( $Time < $Yesterday ) {
 			$PreviousDay = floor( ( $Yesterday - $Time ) / 86400 ) + 2;
-			$String = $PreviousDay . ' ngày trước';
+			$String = sprintf(\Yii::t('ad', '%s ngày trước'), $PreviousDay);
 		} elseif( $Time < $StartDay ) {
 			$PreviousTime = date( 'H:i', $Time );
 			$String = 'hôm qua, lúc ' . $PreviousTime;
@@ -20,22 +20,22 @@ class StringHelper extends SH {
 			if( ( $Current > $Afternoon && $Time > $Afternoon ) || ( $Current < $Afternoon && $Time < $Afternoon ) ) {
 				$PreviousTime = $Current - $Time;
 				if( $PreviousTime <= 60 ) {
-					$String = 'mới đây';
+					$String = \Yii::t('ad', 'mới đây');
 				} else {
 					$Hours = floor( $PreviousTime / 3600 );
 					$Minutes = floor( ( $PreviousTime % 3600 ) / 60 );
 					if( $Hours == 0 )
-						$String = $Minutes . ' phút trước';
+						$String = sprintf(\Yii::t('ad', '%s phút trước'), $Minutes);
 					else {
 						if( 0 == $Minutes )
-							$String = $Hours . ' giờ trước';
+							$String = sprintf(\Yii::t('ad', '%s giờ trước'), $Hours);
 						else
-							$String = $Hours . ' giờ ' . $Minutes . ' phút trước';
+							$String = sprintf(\Yii::t('ad', '%s giờ %s phút trước'), $Hours, $Minutes);
 					}
 				}
 			} else {
 				$PreviousTime = date( 'h:i', $Time );
-				$String = 'hôm nay, lúc ' . $PreviousTime;
+				$String = sprintf(\Yii::t('ad', 'hôm nay, lúc %s'), $PreviousTime);
 			}
 	
 		}

@@ -51,9 +51,7 @@ $types = AdProduct::getAdTypes();
                     } ?>
 				</ul>
 		        <p class="price-item"><?= Yii::t('listing', 'Price') ?><strong><?= StringHelper::formatCurrency($product->price) . ' ' . Yii::t('ad', 'VND') ?></strong></p>   
-		    	<p class="date-post">
-		    		Chưa đầy 1 ngày trên MetVuong
-		    	</p>
+		    	<p class="date-post"><?= StringHelper::previousTime($product->updated_at) ?></p>
 		    </div>
 		</a>
         <?php
