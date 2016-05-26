@@ -1,6 +1,5 @@
 <?php
 return [
-	'listingLimit' => 24,
     'meta' => [
         'attributes' => [
             'name' => ['keywords', 'description'],
