@@ -8044,7 +8044,10 @@ footer li a {
 }
 .sidebar-col .list-attr-td li {
     margin: 0 7px 0 0;
-    padding-right: 7px;
+    padding-right: 3px;
+}
+.sidebar-col .list-attr-td li .icon-mv {
+    margin-right: 5px;
 }
 .detail-duan-moi .sidebar-col .name-post,
 .list-duan .sidebar-col .name-post {
