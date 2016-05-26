@@ -241,7 +241,7 @@ Yii::t('ad', 'Television');
 					<div class="address-listing">
 						<p><?= $address ?></p>
 					</div>
-					<div class="pull-left left-attr-detail">
+					<div class="left-attr-detail">
 						<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
 						<ul class="clearfix list-attr-td">
 	                        <?php
@@ -256,7 +256,7 @@ Yii::t('ad', 'Television');
 	                        } ?>
 						</ul>
 					</div>
-					<div class="pull-left mgT-10 right-attr-detail">
+					<div class="mgT-10 right-attr-detail">
 						<p class="price-item"><?= Yii::t('ad', 'Price') ?><strong><?= StringHelper::formatCurrency($product->price) . ' ' . Yii::t('ad', 'VND') ?></strong></p>
 					</div>
 				</div>

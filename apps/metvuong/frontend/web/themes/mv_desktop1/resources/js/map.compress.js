@@ -489,14 +489,15 @@ var listing = {
 	detail: function(id) {
 		clearTimeout(listing.closeTimeout);
 		
-		var wWrapList = listing.detailListing.outerWidth();
+		//var wWrapList = listing.detailListing.outerWidth();
+		var wWrapList = $('.wrap-listing-item .inner-wrap').outerWidth();
 		var detailListing = $('.detail-listing');
 		var wrapDetailListing = listing.detailListing;
 		
 		wrapDetailListing.loading({full: false});
 		
 		listing.detailListing.css({
-			left: -wWrapList +'px'
+			right: wWrapList +'px'
 		});
 		
 		$.get('/listing/detail', {id: id}, function(r){
@@ -536,9 +537,10 @@ var listing = {
 	},
 	_closeDetail: function() {
 		location.hash = '';
+		var wWrapList = $('.detail-listing-dt').outerWidth();
 		listing.closeTimeout = setTimeout(function(){
 			listing.detailListing.css({
-				left: '0px'
+				right: -wWrapList+'px'
 			});
 		}, 100);
 	},

@@ -425,12 +425,14 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 				</div>
 			</div>
 			<div class="detail-listing-dt">
-				<div class="bar-top-detail">
-					<a href="#" class="close-slide-detail font-700 fs-14 color-cd-hover"><span class="icon-mv fs-12 mgR-5"><span class="icon-close-icon"></span></span><?= Yii::t('ad', 'Close') ?></a>
-					<a href="#" class="btn-extra font-700 fs-14 color-cd-hover" target="_blank"><span class="icon-mv fs-14 mgR-5"><span class="icon-up-arrow"></span></span><?= Yii::t('ad', 'Expand') ?></a>
-				</div>
-				<div class="detail-listing" style="position: relative;">
-					<div class="container"></div>
+				<div class="inner-detail-listing">
+					<div class="bar-top-detail">
+						<a href="#" class="close-slide-detail font-700 fs-14 color-cd-hover"><span class="icon-mv fs-12 mgR-5"><span class="icon-close-icon"></span></span><?= Yii::t('ad', 'Close') ?></a>
+						<a href="#" class="btn-extra font-700 fs-14 color-cd-hover" target="_blank"><span class="icon-mv fs-14 mgR-5"><span class="icon-up-arrow"></span></span><?= Yii::t('ad', 'Expand') ?></a>
+					</div>
+					<div class="detail-listing" style="position: relative;">
+						<div class="container"></div>
+					</div>
 				</div>
 			</div>
 		</div>
