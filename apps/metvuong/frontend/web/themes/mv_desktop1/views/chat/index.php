@@ -38,7 +38,7 @@ if(!empty($jid_id)){
 						?>
 								<div class="item" chat-with="<?=$user->username;?>">
 									<!--class="unread"-->
-									<a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>#<?=$user->username;?>">
+									<a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->getUsername()])?>#<?=$user->username;?>">
 										<span class="wrap-img"><img src="<?=$user->profile->getAvatarUrl();?>" alt=""></span>
 										<div class="chat-detail">
 											<span class="pull-right time-chat"><?=date('H:i:s d-m-Y', strtotime($msg['ts']));?></span>
