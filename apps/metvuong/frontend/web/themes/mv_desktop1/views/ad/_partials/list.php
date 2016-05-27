@@ -32,10 +32,8 @@ $types = AdProduct::getAdTypes();
 				<img src="<?= $product->file_name ? AdImages::getImageUrl($product->folder, $product->file_name, AdImages::SIZE_THUMB) : AdImages::defaultImage() ?>" />
 			</div>
 			<div class="info-item clearfix">
-				<!-- <p class="date-post"><?= Yii::t('statistic', 'Date of posting') ?>:
-					<strong><?= date("d/m/Y H:i", $product->updated_at) ?></strong></p> -->
 				<div class="address-listing">
-					<?= $product->getAddress($product->show_home_no) ?>
+					<!-- <span class="icon-mv mgR-5" style=""><span class="icon-star-full"></span></span> --><?= $product->getAddress($product->show_home_no) ?>
 				</div>
 				<p class="infor-by-up">
 					<strong><?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= mb_strtolower($types[$product->type]) ?></strong>
@@ -51,7 +49,7 @@ $types = AdProduct::getAdTypes();
                     } ?>
 				</ul>
 		        <p class="price-item"><?= Yii::t('listing', 'Price') ?><strong><?= StringHelper::formatCurrency($product->price) . ' ' . Yii::t('ad', 'VND') ?></strong></p>   
-		    	<p class="date-post"><?= StringHelper::previousTime($product->updated_at) ?></p>
+		    	<p class="date-post"><?= StringHelper::previousTime($product->updated_at) ?><span class="pull-right">Điểm: 95</span></p>
 		    </div>
 		</a>
         <?php

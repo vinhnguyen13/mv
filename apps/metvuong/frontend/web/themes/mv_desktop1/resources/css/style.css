@@ -4307,6 +4307,9 @@ html.mm-opening .mm-slideout {
 #listing-list .address-listing {
     margin-bottom: 3px;
 }
+#listing-list .vip .address-listing {
+    color: #006D45;
+}
 .address-listing a {
     display: block;
     text-overflow: ellipsis;
@@ -7340,7 +7343,8 @@ footer li a {
         margin: 0 auto 0;
     }
     .dt-pagination {
-        display: none;
+        /* display: none; */
+        padding: 15px 0;
     }
     .infor-listing {
         margin: 0 0 25px 0;
@@ -9175,35 +9179,17 @@ margin-right: 5px;
 .icon-calendar:before {
     content: "\e92d";
 }
-.icon-trash-o:before {
-    content: "\f014";
+.icon-star-empty:before {
+    content: "\e90c";
 }
-.icon-heart:before {
-    content: "\f004";
+.icon-star-half:before {
+    content: "\e90e";
 }
-.icon-check-square-o:before {
-    content: "\f046";
-}
-.icon-square-o:before {
-    content: "\f096";
-}
-.icon-file-image-o:before {
-    content: "\f1c5";
-}
-.icon-file-photo-o:before {
-    content: "\f1c5";
-}
-.icon-file-picture-o:before {
-    content: "\f1c5";
-}
-.icon-info-circle:before {
-    content: "\f05a";
+.icon-star-full:before {
+    content: "\e930";
 }
 .icon-list-numbered:before {
     content: "\e92f";
-}
-.icon-bathroom:before {
-    content: "\e92d";
 }
 .icon-M2_Logo_151210-01:before {
     content: "\e92a";
@@ -9234,6 +9220,119 @@ margin-right: 5px;
 }
 .icon-facebook:before {
     content: "\e924";
+}
+.icon-icon-bathroom:before {
+    content: "\e917";
+}
+.icon-parking:before {
+    content: "\e937";
+}
+.icon-school:before {
+    content: "\e938";
+}
+.icon-television:before {
+    content: "\e931";
+}
+.icon-tu-lanh:before {
+    content: "\e932";
+}
+.icon-may-giat:before {
+    content: "\e933";
+}
+.icon-air-conditioner:before {
+    content: "\e934";
+}
+.icon-icon_nature_park_black:before {
+    content: "\e935";
+}
+.icon-icon-gym:before {
+    content: "\e936";
+}
+.icon-Hotel_Icon_Has_Indoor_Parking .path1:before {
+    content: "\e93d";
+    color: rgb(255, 255, 255);
+}
+.icon-Hotel_Icon_Has_Indoor_Parking .path2:before {
+    content: "\e93e";
+    margin-left: -1em;
+    color: rgb(0, 0, 0);
+}
+.icon-Hotel_Icon_Has_Indoor_Parking .path3:before {
+    content: "\e93f";
+    margin-left: -1em;
+    color: rgb(0, 0, 0);
+}
+.icon-Hotel_Icon_Has_Indoor_Parking .path4:before {
+    content: "\e940";
+    margin-left: -1em;
+    color: rgb(0, 0, 0);
+}
+.icon-Hotel_Icon_Has_Indoor_Parking .path5:before {
+    content: "\e941";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon-Hotel_Icon_Has_Indoor_Parking .path6:before {
+    content: "\e942";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon-Hotel_Icon_Has_Indoor_Parking .path7:before {
+    content: "\e943";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon-Hotel_Icon_Has_Indoor_Parking .path8:before {
+    content: "\e944";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon-Hotel_Icon_Has_Indoor_Parking .path9:before {
+    content: "\e945";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon-Hotel_Icon_Has_Indoor_Parking .path10:before {
+    content: "\e946";
+    margin-left: -1em;
+    color: rgb(0, 0, 0);
+}
+.icon-Hotel_Icon_Has_Indoor_Parking .path11:before {
+    content: "\e947";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+}
+.icon-Hotel_Icon_Has_Indoor_Parking .path12:before {
+    content: "\e948";
+    margin-left: -1em;
+    color: rgb(0, 0, 0);
+}
+.icon-sign-out:before {
+    content: "\f08b";
+}
+.icon-trash-o:before {
+    content: "\f014";
+}
+.icon-heart:before {
+    content: "\f004";
+}
+.icon-check-square-o:before {
+    content: "\f046";
+}
+.icon-square-o:before {
+    content: "\f096";
+}
+.icon-file-image-o:before {
+    content: "\f1c5";
+}
+.icon-file-photo-o:before {
+    content: "\f1c5";
+}
+.icon-file-picture-o:before {
+    content: "\f1c5";
+}
+.icon-info-circle:before {
+    content: "\f05a";
 }
 .icon-floppy-o:before {
     content: "\e922";
@@ -9274,14 +9373,8 @@ margin-right: 5px;
 .icon-menu:before {
     content: "\e90b";
 }
-.icon-star1:before {
-    content: "\e90c";
-}
 .icon-barometer:before {
     content: "\e90d";
-}
-.icon-star:before {
-    content: "\e90e";
 }
 .icon-mail-profile:before {
     content: "\e90f";
@@ -9306,9 +9399,6 @@ margin-right: 5px;
 }
 .icon-eye-copy:before {
     content: "\e916";
-}
-.icon-bathroom-search-copy-2:before {
-    content: "\e917";
 }
 .icon-edit-copy-4:before {
     content: "\e918";
@@ -9340,6 +9430,7 @@ margin-right: 5px;
 .icon-user-icon-profile1:before {
     content: "\e921";
 }
+
 .icon-mv {
     display: inline-block;
     vertical-align: middle;
@@ -11434,6 +11525,10 @@ height: 190px;
 #listing-list > ul > li a:hover {
     color: inherit;
     background: #FBFBFB;
+}
+#listing-list > ul > li a.vip {
+    /* background: #F3F3F3; */
+    /* border-top: 1px solid #fff; */
 }
 @media (max-width: 985px) {
     #listing-list .pic-intro {
