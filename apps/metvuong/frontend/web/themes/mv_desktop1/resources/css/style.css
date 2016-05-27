@@ -6683,6 +6683,10 @@ footer li a {
     .page-news {
         padding: 50px 0 50px 0;
     }
+    #signup-form .forgot-pass,
+    #login-form .forgot-pass {
+        padding: 0;
+    }
     .wrap-news ul.list-news {
         margin-left: 0;
         margin-right: 0;
