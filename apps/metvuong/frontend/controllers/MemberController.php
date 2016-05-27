@@ -1,7 +1,7 @@
 <?php
 namespace frontend\controllers;
 
-use frontend\components\Finder;
+use dektrium\user\Finder;
 use dektrium\user\helpers\Password;
 use frontend\models\AdProductSearch;
 use frontend\models\LoginForm;
@@ -158,6 +158,22 @@ class MemberController extends Controller
         }
         return $this->render('signup');
         throw new NotFoundHttpException('Not Found');
+    }
+    /**
+     * Used to redirect profile page not login
+     * @param $id mix
+     * @param $code random string
+     **/
+    public function actionConfirmLogin($id, $code)
+    {
+        $token = Token::find()->where(['MD5(CONCAT(user_id, code))' => $id, 'code' => $code, 'type' => Token::TYPE_CRAWL_USER_EMAIL])->one();
+        $user = $token->user;
+        $loginStatus = Yii::$app->getUser()->login($user, 0);
+        if($loginStatus)
+            $token->updateAttributes([
+                'code'   => Yii::$app->security->generateRandomString(),
+            ]);
+        $this->redirect(Url::to(['member/profile', 'username' => $user->username], true));
     }
 
     /**
