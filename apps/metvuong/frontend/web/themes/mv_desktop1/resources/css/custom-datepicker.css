@@ -164,3 +164,6 @@
     height: 29px;
     margin-bottom: 0;
 }
+.ui-datepicker {
+    display: none;
+}
