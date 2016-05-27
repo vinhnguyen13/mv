@@ -141,40 +141,54 @@ use yii\helpers\Url;
 <script>
 	$(document).ready(function () {
 
+        $(document).bind('boost/form_process', function (event, days) {
+            var checkMoney = days + ' ' + ((days > 1) ? lajax.t('days') :  lajax.t('day'));
+            $('.check-money').find('.day').html(checkMoney);
+            var total_budget = $('.total_budget').val();
+            $('.check-money').find('.money').html(Math.floor(total_budget/days));
+            $('.check-money').find('.money').text(function () {
+                var str = $(this).html() + '';
+                x = str.split('.');
+                x1 = x[0]; x2 = x.length > 1 ? '.' + x[1] : '';
+                var rgx = /(\d+)(\d{3})/;
+                while (rgx.test(x1)) {
+                    x1 = x1.replace(rgx, '$1' + ',' + '$2');
+                }
+                $(this).html(x1);
+            });
+            $(".date-picker").datepicker("setDate", '+'+days);
+            var _date = $.datepicker.formatDate( "M dd, yy", $(".date-picker").datepicker("getDate") );
+            $('.check-money').find('.date').html(_date);
+        });
+
         var dateToday = new Date();
         $(".date-picker").datepicker({
             minDate: dateToday,
             dayNamesMin: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
             monthNames: [ "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4","Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9","Tháng 10", "Tháng 11", "Tháng 12" ],
-            dateFormat: 'dd-mm-yy'
+            dateFormat: 'dd-mm-yy',
+            onSelect: function(dateText) {
+                var end = $(this).datepicker('getDate');
+                var days = Math.floor((end - dateToday) / (1000 * 60 * 60 * 24)) + 1;
+                var _date = $.datepicker.formatDate( "M dd, yy", end );
+                var checkMoney = days + ' ' + ((days > 1) ? lajax.t('days') :  lajax.t('day'));
+                $(document).trigger('boost/form_process', [days]);
+                $('.days-up input').parent().removeClass('active');
+                $('.days-up input[name="upgrade-time"][value="'+days+'"]').prop( "checked" );
+                $('.days-up input[name="upgrade-time"][value="'+days+'"]').parent().addClass('active');
+            }
         }).datepicker("setDate", '+1');
 
-        $('.check-money').html(lajax.t('You will spend {money} per day. This ad will run for {day}, ending on {end}', {money: '₫<strong class="money">'+$('.total_budget').val()+'</strong>', day: '<strong class="day">1 '+lajax.t('day')+'</strong>', end: '<strong class="date">'+$(".date-picker").val()+'</strong>'}))
+        $('.check-money').html(lajax.t('You will spend {money} per day. This ad will run for {day}, ending on {end}', {
+                money: '₫<strong class="money">'+$('.total_budget').val()+'</strong>',
+                day: '<strong class="day">1 '+lajax.t('day')+'</strong>',
+                end: '<strong class="date">'+$.datepicker.formatDate( "M dd, yy", $(".date-picker").datepicker("getDate") )+'</strong>'
+        }));
+        $(document).trigger('boost/form_process', [1]);
 
         $('.days-up li .radio-ui').radio({
             done: function (item) {
-                var checkMoney = '';
-                if($(item).val() > 1){
-                    checkMoney = $(item).val() + ' ' + lajax.t('days');
-                }else{
-                    checkMoney = $(item).val() + ' ' + lajax.t('day');
-                }
-                $('.check-money').find('.day').html(checkMoney);
-                var total_budget = $('.total_budget').val();
-                $('.check-money').find('.money').html(total_budget/$(item).val());
-                $('.check-money').find('.money').text(function () {
-                    var str = $(this).html() + '';
-                    x = str.split('.');
-                    x1 = x[0]; x2 = x.length > 1 ? '.' + x[1] : '';
-                    var rgx = /(\d+)(\d{3})/;
-                    while (rgx.test(x1)) {
-                        x1 = x1.replace(rgx, '$1' + ',' + '$2');
-                    }
-                    $(this).html(x1);
-                });
-                $(".date-picker").datepicker("setDate", '+'+$(item).val());
-                $('.check-money').find('.date').html($(".date-picker").val());
-
+                $(document).trigger('boost/form_process', [$(item).val()]);
             }
         });
 
