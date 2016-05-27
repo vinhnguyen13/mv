@@ -82,7 +82,7 @@ use yii\helpers\Url;
                     </div>
                     <div class="inner-popup">
                         <form id="">
-                            <p class="font-600 mgB-10">Duration:</p>
+                            <p class="font-600 mgB-10">Duration <span class="icon-mv mgL-5 tooltip-show" data-placement="right" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit"><span class="icon-info-circle"></span></span></p>
                             <div class="clearfix mgB-15">
                                 <ul class="days-up">
                                     <li>
@@ -131,22 +131,23 @@ use yii\helpers\Url;
     </div>
 </div>
 <?php 
-    $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/jquery-ui.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'jquery-ui');
     $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/custom-datepicker.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'jquery-ui');
+    Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery-ui.js', ['position'=>View::POS_END]);
 ?>    
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script>
 	$(document).ready(function () {
+
         var dateToday = new Date();
         $(".date-picker").datepicker({
             minDate: dateToday,
             dayNamesMin: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
+            monthNames: [ "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4","Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9","Tháng 10", "Tháng 11", "Tháng 12" ],
             dateFormat: 'dd-mm-yy'
         }).datepicker("setDate", dateToday);
 
         $('.days-up li .radio-ui').radio({
             done: function (item) {
-                
+                console.log(item);
             }
         });
 

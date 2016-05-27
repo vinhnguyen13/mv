@@ -3523,8 +3523,8 @@ html.mm-opening .mm-slideout {
     width: 20px;
     height: 20px;
     border: solid 3px transparent;
-    border-top-color: #FFF;
-    border-left-color: #FFF;
+    border-top-color: #009544;
+    border-left-color: #009544;
     border-radius: 10px;
     -webkit-animation: pace-spinner 400ms linear infinite;
     -moz-animation: pace-spinner 400ms linear infinite;
@@ -11553,7 +11553,7 @@ height: 190px;
 }
 .days-up li label {
     background: #F1F1F1;
-    width: auto;
+    width: 100%;
     height: auto;
     display: block;
     padding: 0px 15px;
@@ -11632,6 +11632,7 @@ height: 190px;
     text-shadow: 0px 0px 0px;
     filter: alpha(opacity=100);
     font-weight: 600;
+    border: none;
 }
 .bottom-popup .btn-common:hover {
     background: #07925F;
@@ -11641,4 +11642,11 @@ height: 190px;
 }
 .bottom-popup .btn-cancel:hover {
     background: #A2A2A2;
+}
+#upgrade-time .inner-popup .icon-info-circle {
+    color: #A2A2A2;
+}
+#upgrade-time .tooltip-inner {
+    white-space: normal;
+    text-align: left;
 }
