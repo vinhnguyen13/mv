@@ -7,38 +7,31 @@ $model = Yii::createObject([
     'scenario' => 'reset',
 ]);
 ?>
-<div class="frmManualForgot" id="frmForgot">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
+<div class="title-fixed-wrap container">
+    <div class="reset-pass clearfix">
+        <div class="title-top">Lấy lại mật khẩu</div>
+        <div class="frm-reset">
+            <?php $form = ActiveForm::begin([
+                'id' => 'recover-form',
+                'action' => Url::current(),
+                'options'=>['class' => 'frmIcon']
+            ]); ?>
+            <div class="form-group">
+                <input type="password" style="display:none">
+                <?= $form->field($model, 'password')->passwordInput(['class'=>'form-control', 'placeholder'=>Yii::t('user', 'Password')])->label(false) ?>
+                <em class="icon-envelope-open"></em>
             </div>
-            <div class="modal-body">
-                <div class="wrap-modal clearfix">
-                    <h3>Lấy lại mật khẩu</h3>
-                    <?php $form = ActiveForm::begin([
-                        'id' => 'recover-form',
-                        'action' => Url::current(),
-                        'options'=>['class' => 'frmIcon']
-                    ]); ?>
-                    <div class="form-group">
-                        <input type="password" style="display:none">
-                        <?= $form->field($model, 'password')->passwordInput(['class'=>'form-control', 'placeholder'=>Yii::t('user', 'Password')])->label(false) ?>
-                        <em class="icon-envelope-open"></em>
-                    </div>
-                    <div class="footer-modal clearfix">
-                        <div class="pull-right">
-                            <a class="showPopup" href="#" data-toggle="modal" data-target="#frmRegister">Đăng ký</a>
-                            <a class="showPopup" href="#" data-toggle="modal" data-target="#frmLogin">Đăng nhập</a>
-                        </div>
-                        <button type="button" class="btn btn-primary btn-common btn-recover">Send</button>
-                    </div>
-                    <?php ActiveForm::end(); ?>
+            <div class="footer-modal clearfix">
+                <div class="pull-right fs-14 mgB-15">
+                    <a class="showPopup pdR-10" href="#" data-toggle="modal" data-target="#frmRegister">Đăng ký</a>/
+                    <a class="showPopup pdL-10" href="#" data-toggle="modal" data-target="#frmLogin">Đăng nhập</a>
                 </div>
+                <button type="button" class="btn-common">Send</button>
             </div>
+            <?php ActiveForm::end(); ?>
         </div>
     </div>
 </div>
-
 <script>
     $(document).ready(function(){
         var timer = 0;

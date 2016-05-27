@@ -6675,6 +6675,8 @@ footer li a {
         width: auto;
         margin: 0;
     }
+    .reset-pass,
+    .forgot-pass,
     .page-news {
         padding: 50px 0 50px 0;
     }
@@ -6905,6 +6907,18 @@ footer li a {
         font-size: 11px;
         line-height: 15px;
         color: #ABABAB;
+    }
+    .frm-reset,
+    .frm-forgot {
+        width: 50%;
+        margin: 0 auto 0;
+        padding-top: 30px;
+    }
+    .frm-reset button,
+    .frm-forgot button {
+        width: 100%;
+        text-transform: uppercase;
+        font-size: 15px;
     }
 }
 .select-location .dropdown-up-style .item-dropdown,
@@ -11647,6 +11661,8 @@ height: 190px;
     color: #A2A2A2;
 }
 #upgrade-time .tooltip-inner {
-    white-space: normal;
-    text-align: left;
+    
+white-space: normal;
+    
+text-align: left;
 }
