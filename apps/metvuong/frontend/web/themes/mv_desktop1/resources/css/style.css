@@ -9095,25 +9095,30 @@ margin-right: 5px;
 .statis .tbl-review td {
     border: 1px solid #dbdbdb;
     text-align: center;
+}
+.statis .tbl-review .user-inter {
     padding: 20px 50px;
+    overflow: hidden;
+    overflow-y: auto;
+    height: 225px;
 }
 .statis .tbl-review td {
     text-align: left;
     vertical-align: top;
 }
-.statis .tbl-review td > div {
+.statis .tbl-review td .user-inter > div {
     margin-bottom: 5px;
     position: relative;
     text-align: left;
     padding: 5px;
 }
-.statis .tbl-review td > div.text-center {
+.statis .tbl-review td .user-inter > div.text-center {
     text-align: center;
 }
-.statis .tbl-review td > div:hover {
+.statis .tbl-review td .user-inter > div:hover {
     background: #E8E8E8;
 }
-.statis .tbl-review td > div:hover a {
+.statis .tbl-review td .user-inter > div:hover a {
     color: #009455;
 }
 .statis .tbl-review th {
@@ -9128,7 +9133,7 @@ margin-right: 5px;
     display: none;
     margin-left: 15px;
 }
-.statis .tbl-review td > div:hover .crt-item {
+.statis .tbl-review td .user-inter > div:hover .crt-item {
     display: inline-block;
 }
 .statis .tbl-review .crt-item a:hover {
