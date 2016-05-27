@@ -81,41 +81,48 @@ use yii\helpers\Url;
                         <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
                     </div>
                     <div class="inner-popup">
-                        <p class="font-600 mgB-10">Duration:</p>
-                        <div class="clearfix mgB-15">
-                            <ul class="days-up">
-                                <li>
-                                    <label class="radio-inline radio-ui active">
-                                        <input type="radio" name="upgrade-time" id="" value="1 ngày" checked="checked"> 1 ngày                                      
-                                    </label>
-                                </li>
-                                <li>
-                                    <label class="radio-inline radio-ui">
-                                        <input type="radio" name="upgrade-time" id="" value="7 ngày"> 7 ngày                                      
-                                    </label>
-                                </li>
-                                <li>
-                                    <label class="radio-inline radio-ui">
-                                        <input type="radio" name="upgrade-time" id="" value="14 ngày"> 14 ngày                                      
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="date-select mgB-15">
-                            Tiếp tục chạy tới ngày:
-                            <div class="wrap-calen">
-                                <span class="icon-mv"><span class="icon-calendar"></span></span>
-                                <input type="text" class="date-picker" readonly='true' />
+                        <form id="">
+                            <p class="font-600 mgB-10">Duration:</p>
+                            <div class="clearfix mgB-15">
+                                <ul class="days-up">
+                                    <li>
+                                        <label class="radio-inline radio-ui active">
+                                            <input type="radio" name="upgrade-time" id="" value="1"> 1 ngày
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="radio-inline radio-ui">
+                                            <input type="radio" name="upgrade-time" id="" value="7"> 7 ngày
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="radio-inline radio-ui">
+                                            <input type="radio" name="upgrade-time" id="" value="14"> 14 ngày
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="radio-inline radio-ui">
+                                            <input type="radio" name="upgrade-time" id="" value="30"> 30 ngày
+                                        </label>
+                                    </li>
+                                </ul>
                             </div>
-                        </div>
-                        <div class="check-money">
-                            You will spend <strong>3,285 vnd</strong> per day. This ad will run for 7 days, ending on Jun 2, 2016
-                        </div>
+                            <div class="date-select mgB-15">
+                                Tiếp tục chạy tới ngày:
+                                <div class="wrap-calen">
+                                    <span class="icon-mv"><span class="icon-calendar"></span></span>
+                                    <input type="text" class="date-picker" readonly='true' />
+                                </div>
+                            </div>
+                            <div class="check-money">
+                                You will spend <strong>3,285 vnd</strong> per day. This ad will run for 7 days, ending on Jun 2, 2016
+                            </div>
+                        </form>
                     </div>
                     <div class="bottom-popup">
                         <div class="text-right">
-                            <a href="#" class="btn-cancel btn close" data-dismiss="modal" aria-label="Close">Cancel</a>
-                            <a href="#" class="btn-common btn">Boots</a>
+                            <a href="#" class="btn-cancel btn close" data-dismiss="modal" aria-label="Close"><?=Yii::t('listing', 'Cancel')?></a>
+                            <a href="#" class="btn-common btn"><?=Yii::t('listing', 'Boost')?></a>
                         </div>
                     </div>
                 </div>
@@ -146,8 +153,8 @@ use yii\helpers\Url;
         $(document).on('click', '.btn-up', function (e) {
             var btn = $(this);
             var product = btn.attr('data-product');
-            btn.html(lajax.t('Loading'));
             if(product && false){
+                btn.html(lajax.t('Loading'));
                 $.ajax({
                     type: "get",
                     dataType: 'json',
