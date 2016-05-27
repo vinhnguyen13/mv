@@ -123,12 +123,14 @@ class DashboardController extends Controller
         if(Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             $id = (int)Yii::$app->request->get("id");
+            $days = (int)Yii::$app->request->get("upgrade-time");
+            $total_budget = (int)Yii::$app->request->get("total_budget");
             $product = AdProduct::findOne($id);
+            $time = time();
             if(!empty($product)){
-//                $product->start_date = time();
-                if($product->end_date < time())
-                    $product->end_date = time();
-                $end = strtotime("+30 days", $product->end_date );
+                $product->start_date = $time;
+                $product->updated_at = $time;
+                $end = strtotime("+$days days", $time);
                 $product->end_date = $end;
                 $product->is_expired = 0;
                 $product->save(false);

@@ -77,17 +77,22 @@ use yii\helpers\Url;
             <div class="modal-body">
                 <div class="wrap-popup">
                     <div class="title-popup">
-                        Upgrade time
+                        <?=Yii::t('listing', 'Boost listing')?>
                         <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
                     </div>
                     <div class="inner-popup">
-                        <form id="">
-                            <p class="font-600 mgB-10">Duration <span class="icon-mv mgL-5 tooltip-show" data-placement="right" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit"><span class="icon-info-circle"></span></span></p>
+                        <form id="boostListing">
+                            <p class="font-600 mgB-10"><?=Yii::t('listing', 'Total budget')?> <span class="icon-mv mgL-5 tooltip-show" data-placement="right" title="<?=Yii::t('listing', 'The maximum you`ll spend on your promotion until you stop your ad')?>"><span class="icon-info-circle"></span></span></p>
+                            <select name="total_budget" class="total_budget">
+                                <option value="23000">₫23,000</option>
+                                <option value="226000">₫226,000</option>
+                            </select>
+                            <p class="font-600 mgB-10"><?=Yii::t('listing', 'Duration')?> <span class="icon-mv mgL-5 tooltip-show" data-placement="right" title="<?=Yii::t('listing', 'Choose how long you want your promotion to run')?>"><span class="icon-info-circle"></span></span></p>
                             <div class="clearfix mgB-15">
                                 <ul class="days-up">
                                     <li>
                                         <label class="radio-inline radio-ui active">
-                                            <input type="radio" name="upgrade-time" id="" value="1"> 1 ngày
+                                            <input type="radio" name="upgrade-time" id="" value="1" checked="checked"> 1 ngày
                                         </label>
                                     </li>
                                     <li>
@@ -108,21 +113,20 @@ use yii\helpers\Url;
                                 </ul>
                             </div>
                             <div class="date-select mgB-15">
-                                Tiếp tục chạy tới ngày:
+                                <?=Yii::t('listing', 'Run this ad until')?>
                                 <div class="wrap-calen">
                                     <span class="icon-mv"><span class="icon-calendar"></span></span>
                                     <input type="text" class="date-picker" readonly='true' />
                                 </div>
                             </div>
                             <div class="check-money">
-                                You will spend <strong>3,285 vnd</strong> per day. This ad will run for 7 days, ending on Jun 2, 2016
                             </div>
                         </form>
                     </div>
                     <div class="bottom-popup">
                         <div class="text-right">
                             <a href="#" class="btn-cancel btn close" data-dismiss="modal" aria-label="Close"><?=Yii::t('listing', 'Cancel')?></a>
-                            <a href="#" class="btn-common btn"><?=Yii::t('listing', 'Boost')?></a>
+                            <a href="#" class="btn-common btn btn-boost"><?=Yii::t('listing', 'Boost')?></a>
                         </div>
                     </div>
                 </div>
@@ -143,33 +147,59 @@ use yii\helpers\Url;
             dayNamesMin: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
             monthNames: [ "Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4","Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9","Tháng 10", "Tháng 11", "Tháng 12" ],
             dateFormat: 'dd-mm-yy'
-        }).datepicker("setDate", dateToday);
+        }).datepicker("setDate", '+1');
+
+        $('.check-money').html(lajax.t('You will spend {money} per day. This ad will run for {day}, ending on {end}', {money: '₫<strong class="money">'+$('.total_budget').val()+'</strong>', day: '<strong class="day">1 '+lajax.t('day')+'</strong>', end: '<strong class="date">'+$(".date-picker").val()+'</strong>'}))
 
         $('.days-up li .radio-ui').radio({
             done: function (item) {
-                console.log(item);
+                var checkMoney = '';
+                if($(item).val() > 1){
+                    checkMoney = $(item).val() + ' ' + lajax.t('days');
+                }else{
+                    checkMoney = $(item).val() + ' ' + lajax.t('day');
+                }
+                $('.check-money').find('.day').html(checkMoney);
+                var total_budget = $('.total_budget').val();
+                $('.check-money').find('.money').html(total_budget/$(item).val());
+                $('.check-money').find('.money').text(function () {
+                    var str = $(this).html() + '';
+                    x = str.split('.');
+                    x1 = x[0]; x2 = x.length > 1 ? '.' + x[1] : '';
+                    var rgx = /(\d+)(\d{3})/;
+                    while (rgx.test(x1)) {
+                        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+                    }
+                    $(this).html(x1);
+                });
+                $(".date-picker").datepicker("setDate", '+'+$(item).val());
+                $('.check-money').find('.date').html($(".date-picker").val());
+
             }
         });
 
-        $(document).on('click', '.btn-up', function (e) {
+        $(document).on('click', '.btn-nang-cap', function (e) {
             var btn = $(this);
             var product = btn.attr('data-product');
-            if(product && false){
+            $('#upgrade-time').find('.btn-boost').attr('data-product', product);
+        });
+
+        $(document).on('click', '#upgrade-time .btn-boost', function (e) {
+            var btn = $(this);
+            var product = $(this).attr('data-product');
+            if(product){
                 btn.html(lajax.t('Loading'));
                 $.ajax({
                     type: "get",
                     dataType: 'json',
-                    url: '<?=Url::to(['dashboard/up'])?>?id=' + product,
+                    url: '<?=Url::to(['dashboard/upgrade'])?>?id=' + product,
+                    data: $('#boostListing').serialize(),
                     success: function (data) {
-                        btn.html(lajax.t('Up'));
+                        location.reload();
                     }
                 });
             }
             return false;
-        });
-        $(document).on('click', '.btn-upgrade', function (e) {
-            var product = $(this).attr('data-product');
-            $('#upgrade-time').find('.btn-ok').attr('data-product', product);
         });
 
         $(document).on('click', '#upgrade-time .btn-ok', function (e) {
