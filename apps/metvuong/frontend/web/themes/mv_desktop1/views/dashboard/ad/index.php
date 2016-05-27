@@ -105,11 +105,17 @@ use yii\helpers\Url;
                             Tiếp tục chạy tới ngày:
                             <div class="wrap-calen">
                                 <span class="icon-mv"><span class="icon-calendar"></span></span>
-                                <input type="text" class="date-picker" />
+                                <input type="text" class="date-picker" readonly='true' />
                             </div>
                         </div>
                         <div class="check-money">
                             You will spend <strong>3,285 vnd</strong> per day. This ad will run for 7 days, ending on Jun 2, 2016
+                        </div>
+                    </div>
+                    <div class="bottom-popup">
+                        <div class="text-right">
+                            <a href="#" class="btn-cancel btn close" data-dismiss="modal" aria-label="Close">Cancel</a>
+                            <a href="#" class="btn-common btn">Boots</a>
                         </div>
                     </div>
                 </div>
@@ -129,7 +135,7 @@ use yii\helpers\Url;
             minDate: dateToday,
             dayNamesMin: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
             dateFormat: 'dd-mm-yy'
-        });
+        }).datepicker("setDate", dateToday);
 
         $('.days-up li .radio-ui').radio({
             done: function (item) {
