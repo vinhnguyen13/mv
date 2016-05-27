@@ -800,4 +800,11 @@ class AdController extends Controller
 		
 		return $response;
     }
+
+    public function actionLoadListingWidget($pid = 0){
+        if($pid > 0)
+            return \vsoft\ad\widgets\ListingWidget::widget(['title' => Yii::t('listing','SIMILAR LISTINGS'), 'limit' => 4, 'pid' => $pid]);
+
+        return \vsoft\ad\widgets\ListingWidget::widget(['title' => Yii::t('listing','SIMILAR LISTINGS'), 'limit' => 4]);
+    }
 }

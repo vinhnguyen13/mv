@@ -156,7 +156,7 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
 
             <div class="col-xs-12 col-md-3 col-right sidebar-col">
                 <div class="item-sidebar">
-                    <?=\vsoft\ad\widgets\ListingWidget::widget(['user_id' => $user->id, 'title' => Yii::t('listing','SIMILAR LISTINGS'), 'limit' => 4])?>
+
                 </div>
             </div>
 
@@ -276,6 +276,17 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
         $('#rating-review').rateit({
             clickRating: function (value_rating) {
                 $('#val-rating').val(value_rating);
+            }
+        });
+
+        $('.item-sidebar').loading({full: false});
+        $.ajax({
+            type: "get",
+            dataType: 'html',
+            url: '<?=Url::to(['ad/load-listing-widget'])?>',
+            success: function (data) {
+                $(".item-sidebar").html(data);
+                $('.item-sidebar').loading({done: true});
             }
         });
 

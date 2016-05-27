@@ -22,6 +22,8 @@ class ListingWidget extends Widget
     public $city_id;
     public $district_id;
     public $type;
+    public $pid;
+    public $loadAjax;
 
     public function run()
     {
@@ -50,6 +52,9 @@ class ListingWidget extends Widget
 
         if(!empty($user_id))
             $query->andWhere('user_id != :uid',[':uid' => $user_id]);
+
+        if(!empty($this->pid)) // load nhung product khac ko phai product hien tai
+            $query->andWhere('`ad_product`.`id` != :id',[':id' => $this->pid]);
 
         $result = $query->limit($limit)->offset($offset)->orderBy(['ad_product.id' => SORT_DESC])->all();
 

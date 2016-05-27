@@ -763,9 +763,23 @@ Yii::t('ad', 'Television');
 		</div>
         <div class="col-xs-12 col-md-3 col-right sidebar-col">
             <div class="item-sidebar">
-                <?=\vsoft\ad\widgets\ListingWidget::widget(['title' => Yii::t('listing','SIMILAR LISTINGS'), 'limit' => 4])?>
+
             </div>
         </div>
+        <script>
+            $(document).ready(function () {
+                $('.item-sidebar').loading({full: false});
+                $.ajax({
+                    type: "get",
+                    dataType: 'html',
+                    url: '<?=Url::to(['ad/load-listing-widget'])?>?pid='+<?=$product->id?>,
+                    success: function (data) {
+                        $(".item-sidebar").html(data);
+                        $('.item-sidebar').loading({done: true});
+                    }
+                });
+            });
+        </script>
 
     </div>
 </div>
