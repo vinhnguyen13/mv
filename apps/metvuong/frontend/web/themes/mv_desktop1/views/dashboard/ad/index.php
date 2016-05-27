@@ -76,13 +76,40 @@ use yii\helpers\Url;
         <div class="modal-content">
             <div class="modal-body">
                 <div class="wrap-popup">
-                    <div class="inner-popup">
+                    <div class="title-popup">
+                        Upgrade time
                         <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
-                        <div class="text-center fs-15">
-                            <p class="mgB-5"><?= Yii::t('statistic', 'Expired in the last') ?> <span class="font-600 color-cd">0 <?=Yii::t('statistic', 'day')?></span></p>
-                            <p class="mgB-25"><?= Yii::t('ad','Nâng cấp tin đăng thêm')?> <span class="font-600 color-cd">30 <?=Yii::t('statistic', 'days')?> </span>?</p>
-                            <a href="#" class="btn-common btn-cancel" data-dismiss="modal" aria-label="Close"><?=Yii::t('ad', 'Từ chối')?></a>
-                            <a href="#" class="btn-common btn-ok" data-dismiss="modal" aria-label="Close"><?=Yii::t('ad', 'Đồng ý')?></a>
+                    </div>
+                    <div class="inner-popup">
+                        <p class="font-600 mgB-10">Duration:</p>
+                        <div class="clearfix mgB-15">
+                            <ul class="days-up">
+                                <li>
+                                    <label class="radio-inline radio-ui active">
+                                        <input type="radio" name="upgrade-time" id="" value="1 ngày" checked="checked"> 1 ngày                                      
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="radio-inline radio-ui">
+                                        <input type="radio" name="upgrade-time" id="" value="7 ngày"> 7 ngày                                      
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="radio-inline radio-ui">
+                                        <input type="radio" name="upgrade-time" id="" value="14 ngày"> 14 ngày                                      
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="date-select mgB-15">
+                            Tiếp tục chạy tới ngày:
+                            <div class="wrap-calen">
+                                <span class="icon-mv"><span class="icon-calendar"></span></span>
+                                <input type="text" class="date-picker" />
+                            </div>
+                        </div>
+                        <div class="check-money">
+                            You will spend <strong>3,285 vnd</strong> per day. This ad will run for 7 days, ending on Jun 2, 2016
                         </div>
                     </div>
                 </div>
@@ -90,20 +117,31 @@ use yii\helpers\Url;
         </div>
     </div>
 </div>
-
+<?php 
+    $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/jquery-ui.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'jquery-ui');
+    $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/custom-datepicker.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'jquery-ui');
+?>    
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script>
 	$(document).ready(function () {
-        /*$('#nang-cap').popupMobi({
-         btnClickShow: '.btn-nang-cap',
-         styleShow: 'center',
-         closeBtn: '#nang-cap .btn-cancel, #nang-cap .btn-ok',
-         });*/
+        var dateToday = new Date();
+        $(".date-picker").datepicker({
+            minDate: dateToday,
+            dayNamesMin: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
+            dateFormat: 'dd-mm-yy'
+        });
+
+        $('.days-up li .radio-ui').radio({
+            done: function (item) {
+                
+            }
+        });
+
         $(document).on('click', '.btn-up', function (e) {
             var btn = $(this);
             var product = btn.attr('data-product');
             btn.html(lajax.t('Loading'));
-            if(product){
+            if(product && false){
                 $.ajax({
                     type: "get",
                     dataType: 'json',

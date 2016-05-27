@@ -74,13 +74,13 @@ $count_product = count($products);
                                 <div class="status-duan">
                                     <?php if ($product->is_expired > 0): ?>
                                         <div class="wrap-icon status-get-point">
-                                            <div><span class="icon icon-inactive-pro"></span>
+                                            <div class="mgR-5"><span class="icon icon-inactive-pro"></span>
                                             </div>
                                             <strong><?= Yii::t('statistic', 'Inactive Project') ?></strong>
                                         </div>
                                     <?php else: ?>
                                         <div class="wrap-icon status-get-point">
-                                            <div><span class="icon icon-active-pro"></span>
+                                            <div class="mgR-5"><span class="icon icon-active-pro"></span>
                                             </div>
                                             <strong><?= Yii::t('statistic', 'Active Project') ?></strong>
                                         </div>
@@ -90,7 +90,7 @@ $count_product = count($products);
                                         </p>
                                     <?php endif; ?>
                                 </div>
-                                <a href="javascript:;" data-product="<?=$product->id;?>" class="btn-nang-cap mgL-10 btn-up"><?= Yii::t('statistic', 'Up') ?></a>
+                                <a href="#"  data-toggle="modal" data-target="#upgrade-time" data-product="<?=$product->id;?>" class="btn-nang-cap mgL-10 btn-up"><?= Yii::t('statistic', 'Up') ?></a>
                                 <div class="clearfix"></div>
                                 <a href="<?=$product->urlDetail(true)?>" class="see-detail-listing fs-13 font-600 color-cd-hover mgT-10"><span class="text-decor"><?=Yii::t('statistic', 'Go detail page')?></span><span class="icon-mv mgL-10"><span class="icon-angle-right"></span></span></a>
                             </div>

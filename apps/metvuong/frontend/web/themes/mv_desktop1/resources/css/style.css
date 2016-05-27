@@ -1714,10 +1714,10 @@ label {
     position: relative;
 }
 .modal-content {
-    border-radius: 0;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    -ms-border-radius: 0;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
     height: 100%;
 }
 #select-area .modal-body {
@@ -4483,7 +4483,6 @@ html.mm-opening .mm-slideout {
 }
 .title-popup {
     color: #00a769;
-    text-align: center;
     font-size: 15px;
     font-weight: 600;
     border-bottom: solid 0.5px #969696;
@@ -4492,11 +4491,14 @@ html.mm-opening .mm-slideout {
     left: 0;
     width: 100%;
     z-index: 10;
-    background: #fff;
+    background: #F1F1F1;
     height: 45px;
     line-height: 45px;
     text-transform: uppercase;
-    padding: 0;
+    padding: 0 0 0 15px;
+    border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    -ms-border-radius: 5px 5px 0 0;
 }
 .center-popup .wrap-popup {
     position: absolute;
@@ -8047,7 +8049,8 @@ footer li a {
     padding-right: 3px;
 }
 .sidebar-col .list-attr-td li .icon-mv {
-    margin-right: 5px;
+    
+margin-right: 5px;
 }
 .detail-duan-moi .sidebar-col .name-post,
 .list-duan .sidebar-col .name-post {
@@ -9155,6 +9158,9 @@ footer li a {
     /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+.icon-calendar:before {
+    content: "\e92d";
 }
 .icon-trash-o:before {
     content: "\f014";
@@ -11537,4 +11543,75 @@ height: 190px;
     .left-attr-detail .id-duan {
         display: inline-block;
     }
+}
+.days-up li {
+    float: left;
+}
+.days-up {
+    border: 1px solid #CECECE;
+    float: left;
+    box-shadow: 1px 1px 0px #CECECE;
+}
+.days-up li label {
+    background: #F1F1F1;
+    width: auto;
+    height: auto;
+    display: block;
+    padding: 0px 15px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 14px;
+    border-right: 1px solid #fff;
+}
+.days-up li label:hover {
+    background: #D8D8D8;
+}
+.days-up li label:active {
+    background: #D0D0D0;
+}
+.days-up li label.active {
+    background: #E2E2E2;
+    font-weight: 600;
+    color: #009455;
+}
+.days-up li {
+    border-right: 1px solid #CECECE;
+}
+.days-up li:last-child,
+.days-up li:last-child label {
+    border-right: none;
+}
+#upgrade-time .inner-popup {
+    font-size: 14px;
+}
+.date-select .wrap-calen {
+    display: inline-block;
+    margin-left: 10px;
+    position: relative;
+}
+.date-select .wrap-calen input {
+    border: 1px solid #CCC;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    height: 30px;
+    width: 159px;
+    padding-left: 30px;
+    position: relative;
+    z-index: 99999;
+    background: none;
+    cursor: pointer;
+}
+.date-select .wrap-calen .icon-mv {
+    position: absolute;
+    top: 6px;
+    left: 10px;
+    z-index: 1;
+}
+.check-money {
+    background: #F1F1F1;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    padding: 5px 10px;
 }
