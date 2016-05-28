@@ -141,7 +141,7 @@ use yii\helpers\Url;
 <script>
 	$(document).ready(function () {
 
-        $(document).bind('boost/form_process', function (event, days) {
+        $(document).bind('boost/form_process', function (event, days, rebuildPicker) {
             var checkMoney = days + ' ' + ((days > 1) ? lajax.t('days') :  lajax.t('day'));
             $('.check-money').find('.day').html(checkMoney);
             var total_budget = $('.total_budget').val();
@@ -156,7 +156,9 @@ use yii\helpers\Url;
                 }
                 $(this).html(x1);
             });
-            $(".date-picker").datepicker("setDate", '+'+days);
+            if(rebuildPicker == true){
+                $(".date-picker").datepicker("setDate", '+'+days);
+            }
             var _date = $.datepicker.formatDate( "M dd, yy", $(".date-picker").datepicker("getDate") );
             $('.check-money').find('.date').html(_date);
         });
@@ -184,11 +186,11 @@ use yii\helpers\Url;
                 day: '<strong class="day">1 '+lajax.t('day')+'</strong>',
                 end: '<strong class="date">'+$.datepicker.formatDate( "M dd, yy", $(".date-picker").datepicker("getDate") )+'</strong>'
         }));
-        $(document).trigger('boost/form_process', [1]);
+        $(document).trigger('boost/form_process', [1, true]);
 
         $('.days-up li .radio-ui').radio({
             done: function (item) {
-                $(document).trigger('boost/form_process', [$(item).val()]);
+                $(document).trigger('boost/form_process', [$(item).val(), true]);
             }
         });
 
