@@ -179,6 +179,7 @@ use vsoft\ad\models\AdImages;
 								<?= Html::activeHiddenInput($product, 'price', ['class' => 'form-control text-right', 'placeholder' => '...']) ?>
 								<div style="position: relative;">
 									<input type="text" id="priceMask" class="form-control text-right number-only number-float" placeholder="...">
+									<span class="small-text">VD: 1,5 triệu hoặc 1,5 tỷ</span>
 									<div class="price-unit">
 										<label class="radio-inline radio-ui">
 											<input type="radio" name="price-unit" id="price-unit-mil" value="1000000" checked="checked"> <?= Yii::t('ad', 'million') ?>
