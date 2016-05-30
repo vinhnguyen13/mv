@@ -178,9 +178,10 @@ class ProfileForm extends Model
         foreach ($tokens as $unit => $text) {
             if ($time < $unit) continue;
             $numberOfUnits = floor($time / $unit);
-            return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'');
+            $timing = $text.(($numberOfUnits>1)?'s':'');
+            return $numberOfUnits.' '.Yii::t('time', $timing);
         }
-
+        return null;
     }
 
 //    public function slugify($string, $replacement = '-', $lowercase = true, $transliterateOptions = null){

@@ -13,6 +13,12 @@ use yii\helpers\Url;
 
 $user = $model->getUser();
 $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii::$app->user->id])->one();
+Yii::t('time','years');
+Yii::t('time','year');
+Yii::t('time','months');
+Yii::t('time','month');
+Yii::t('time','weeks');
+Yii::t('time','week');
 ?>
 <div class="title-fixed-wrap container" xmlns="http://www.w3.org/1999/html">
     <div class="edit-user-tt">
@@ -151,7 +157,7 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                     <a href="#" class="edit-profile"><span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
 <!--                    <a class="text-decor color-cd-hover fs-13 font-600 link-change-pass" href="#">Đổi mật khẩu</a> -->
                     <span class="pass_result"></span>
-                    <span class="last_changed">Password last changed <?=\frontend\models\ProfileForm::humanTiming($user->confirmed_at)?>.</span>
+                    <span class="last_changed"><?=Yii::t('profile','Password last changed')?> <?=\frontend\models\ProfileForm::humanTiming($user->confirmed_at)?>.</span>
                 </div>
                 <div class="box-edit-show wrap-attr-detail">
                     <div class="posi_absolute btn-mani">

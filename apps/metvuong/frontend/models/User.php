@@ -378,7 +378,7 @@ class User extends \dektrium\user\models\User
      */
     public function resetPassword($password)
     {
-        return (bool)$this->updateAttributes(['password_hash' => Password::hash($password)]);
+        return (bool)$this->updateAttributes(['password_hash' => Password::hash($password), 'confirmed_at' => time()]);
     }
 
     /**
