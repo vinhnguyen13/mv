@@ -520,6 +520,8 @@ var listing = {
 		        spaceBetween: 0
 		    });
 
+			$('.inner-detail-listing').scrollTop(0);
+
 			wrapDetailListing.loading({done: true});
 			
 			$('.btn-extra').attr('href', detailListing.find('.btn-copy').data('clipboard-text'));

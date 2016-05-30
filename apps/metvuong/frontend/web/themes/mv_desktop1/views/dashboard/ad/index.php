@@ -83,7 +83,7 @@ use yii\helpers\Url;
                     <div class="inner-popup">
                         <form id="boostListing">
                             <p class="font-600 mgB-10"><?=Yii::t('listing', 'Total budget')?> <span class="icon-mv mgL-5 tooltip-show" data-placement="right" title="<?=Yii::t('listing', 'The maximum you`ll spend on your promotion until you stop your ad')?>"><span class="icon-info-circle"></span></span></p>
-                            <select name="total_budget" class="total_budget">
+                            <select name="total_budget" class="total_budget mgB-10">
                                 <option value="23000">₫23,000</option>
                                 <option value="226000">₫226,000</option>
                             </select>
