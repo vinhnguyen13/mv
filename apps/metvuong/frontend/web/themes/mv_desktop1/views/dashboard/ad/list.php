@@ -53,7 +53,7 @@ $count_product = count($products);
                             <?php if ($product->projectBuilding){ ?>
                                 <p class="loca-duan"><a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>"><?= $product->projectBuilding->name ?></a></p>
                             <?php } else { ?>
-                            <p class="loca-duan"><a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>"><?= $product->address ?></a></p>
+                            <p class="loca-duan"><a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>" title="<?= $product->address ?>"><?= $product->address ?></a></p>
                             <?php } ?>
                             <p class="fs-13 mgB-10 text-cappi"><span><?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= $types[$product->type] ?></span></p>
                             <p class="id-duan">
