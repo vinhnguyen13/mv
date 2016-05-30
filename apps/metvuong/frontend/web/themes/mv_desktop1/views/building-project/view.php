@@ -129,15 +129,7 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3 col-right sidebar-col">
-                    <?php
-//                    $hotproject = \vsoft\ad\models\AdBuildingProject::getHotProject();
-//                    if(count($hotproject) > 0)
-//                        echo $this->render('/building-project/_partials/hotproject',['projects' => $hotproject]);
 
-                    $topproject = \vsoft\ad\models\AdBuildingProject::getTopProject();
-                    if(count($topproject) > 0)
-                        echo $this->render('/building-project/_partials/topproject',['projects' => $topproject]);
-                    ?>
                 </div>
             </div>
         </div>
@@ -188,6 +180,17 @@ echo $this->render('/ad/_partials/shareSocial',[
             spaceBetween: 0,
             nextButton: '.swiper-button-next',
             prevButton: '.swiper-button-prev'
+        });
+
+        $('.sidebar-col').loading({full: false});
+        $.ajax({
+            type: "get",
+            dataType: 'html',
+            url: '<?=Url::to(['building-project/load-sidebar'])?>'+'?limit=6',
+            success: function (data) {
+                $(".sidebar-col").html(data);
+                $('.sidebar-col').loading({done: true});
+            }
         });
 
         $('#popup-map').on('show.bs.modal', function (e) {

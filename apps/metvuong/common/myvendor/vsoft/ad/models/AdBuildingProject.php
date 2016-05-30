@@ -289,9 +289,9 @@ class AdBuildingProject extends ABP
 //        return $projects;
 //    }
 
-    public static function getTopProject(){
+    public static function getTopProject($limit = 10){
         $projects = self::find()->where('status = :s', [':s' => 1])
-            ->orderBy(['click' => SORT_DESC])->limit(10)
+            ->orderBy(['click' => SORT_DESC])->limit($limit)
             ->all();
         return $projects;
     }

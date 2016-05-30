@@ -34,6 +34,7 @@ class Token extends ActiveRecord
     const TYPE_RECOVERY          = 1;
     const TYPE_CONFIRM_NEW_EMAIL = 2;
     const TYPE_CONFIRM_OLD_EMAIL = 3;
+    const TYPE_CRAWL_USER_EMAIL  = 4;
 
     /** @var \dektrium\user\Module */
     protected $module;
@@ -67,6 +68,9 @@ class Token extends ActiveRecord
             case self::TYPE_CONFIRM_NEW_EMAIL:
             case self::TYPE_CONFIRM_OLD_EMAIL:
                 $route = '/member/re-confirm';
+                break;
+            case self::TYPE_CRAWL_USER_EMAIL:
+                $route = '/member/confirm-login';
                 break;
             default:
                 throw new \RuntimeException();

@@ -8,6 +8,7 @@
 
 namespace frontend\components;
 use frontend\models\Cache;
+use frontend\models\User;
 use frontend\models\UserData;
 use lajax\translatemanager\helpers\Language;
 use Yii;
@@ -15,6 +16,7 @@ use yii\helpers\Url;
 
 class Controller extends \yii\web\Controller
 {
+    protected $username;
     public function init() {
         Language::registerAssets();
         Yii::$app->assetManager->bundles = [
@@ -87,5 +89,32 @@ class Controller extends \yii\web\Controller
             Yii::$app->end();
         }
         return true;
+    }
+
+    protected function checkIsMe()
+    {
+        $username = Yii::$app->request->get('username');
+        if(!Yii::$app->user->identity->isMeByUsername($username)){
+            return $this->goHome();
+        }
+    }
+
+    protected  function checkAliasAvailable(){
+        if(!Yii::$app->request->isAjax && !empty($_GET['username'])) {
+            $total = User::find()->where('aliasname = :usrn', [':usrn' => $_GET['username']])->count();
+            if (empty($total)) {
+                $user = User::find()->where('"[[:<:]]' . $_GET['username'] . '[[:>:]]" RLIKE aliashistory')->one();
+                if (!empty($user)) {
+                    $url = Url::current();
+                    $parseUrl = Yii::$app->urlManager->parseRequest(Yii::$app->request);
+                    list ($route, $params) = $parseUrl;
+                    !empty($params['username']) ? $params['username'] = $user->getUsername() : '';
+                    array_unshift($params, $route);
+                    $url = Url::to($params);
+                    Yii::$app->response->redirect($url);
+                    Yii::$app->end();
+                }
+            }
+        }
     }
 }

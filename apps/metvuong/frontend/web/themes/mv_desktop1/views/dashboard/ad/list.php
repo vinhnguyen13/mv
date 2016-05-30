@@ -53,7 +53,7 @@ $count_product = count($products);
                             <?php if ($product->projectBuilding){ ?>
                                 <p class="loca-duan"><a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>"><?= $product->projectBuilding->name ?></a></p>
                             <?php } else { ?>
-                            <p class="loca-duan"><a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>"><?= $product->address ?></a></p>
+                            <p class="loca-duan"><a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>" title="<?= $product->address ?>"><?= $product->address ?></a></p>
                             <?php } ?>
                             <p class="fs-13 mgB-10 text-cappi"><span><?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= $types[$product->type] ?></span></p>
                             <p class="id-duan">
@@ -74,13 +74,13 @@ $count_product = count($products);
                                 <div class="status-duan">
                                     <?php if ($product->is_expired > 0): ?>
                                         <div class="wrap-icon status-get-point">
-                                            <div><span class="icon icon-inactive-pro"></span>
+                                            <div class="mgR-5"><span class="icon icon-inactive-pro"></span>
                                             </div>
                                             <strong><?= Yii::t('statistic', 'Inactive Project') ?></strong>
                                         </div>
                                     <?php else: ?>
                                         <div class="wrap-icon status-get-point">
-                                            <div><span class="icon icon-active-pro"></span>
+                                            <div class="mgR-5"><span class="icon icon-active-pro"></span>
                                             </div>
                                             <strong><?= Yii::t('statistic', 'Active Project') ?></strong>
                                         </div>
@@ -90,8 +90,7 @@ $count_product = count($products);
                                         </p>
                                     <?php endif; ?>
                                 </div>
-                                <a href="javascript:;" data-product="<?=$product->id;?>" class="btn-nang-cap mgL-10 btn-up"><?= Yii::t('statistic', 'Up') ?></a>
-                                <a href="javascript:;" data-product="<?=$product->id;?>" data-toggle="modal" data-target="#upgrade-time" class="btn-nang-cap btn-upgrade"><?= Yii::t('statistic', 'Upgrade') ?></a>
+                                <a href="#"  data-toggle="modal" data-target="#upgrade-time" data-product="<?=$product->id;?>" class="btn-nang-cap mgL-10 btn-up"><?= Yii::t('statistic', 'Up') ?></a>
                                 <div class="clearfix"></div>
                                 <a href="<?=$product->urlDetail(true)?>" class="see-detail-listing fs-13 font-600 color-cd-hover mgT-10"><span class="text-decor"><?=Yii::t('statistic', 'Go detail page')?></span><span class="icon-mv mgL-10"><span class="icon-angle-right"></span></span></a>
                             </div>

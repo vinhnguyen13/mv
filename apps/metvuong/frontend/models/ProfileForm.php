@@ -32,6 +32,7 @@ class ProfileForm extends Model
     public $first_name;
     public $last_name;
     public $owner;
+    public $aliasname;
 
     /** @var string */
     public $old_password;
@@ -66,6 +67,7 @@ class ProfileForm extends Model
             'password' => ['old_password', 'new_password'],
             'updateavatar' => ['avatar', 'created_at'],
             'updatebio' => ['bio'],
+            'updatealias' => ['aliasname'],
         ];
     }
 
@@ -153,6 +155,7 @@ class ProfileForm extends Model
             $profile->mobile = $this->mobile;
             $profile->address = $this->address;
             $profile->bio = $this->bio;
+            $profile->user->updateAttributes(['aliasname'=>$this->aliasname]);
             return $profile->save();
         }
         return false;
@@ -175,9 +178,10 @@ class ProfileForm extends Model
         foreach ($tokens as $unit => $text) {
             if ($time < $unit) continue;
             $numberOfUnits = floor($time / $unit);
-            return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'');
+            $timing = $text.(($numberOfUnits>1)?'s':'');
+            return $numberOfUnits.' '.Yii::t('time', $timing);
         }
-
+        return null;
     }
 
 //    public function slugify($string, $replacement = '-', $lowercase = true, $transliterateOptions = null){
@@ -192,7 +196,7 @@ class ProfileForm extends Model
 
     public function loadProfile($username, $scenario = 'updateprofile'){
         $profile = null;
-        $user = User::find()->where('username = :usrn', [':usrn' => $username])->one();
+        $user = User::find()->where('aliasname = :usrn', [':usrn' => $username])->one();
         if($user){
             $profile = $user->profile;
             $profile->avatar = $profile->getAvatarUrl();
@@ -216,6 +220,7 @@ class ProfileForm extends Model
         $model->rating_no = $profile->rating_no;
         $model->created_at = Yii::$app->user->id;
         $model->user = $user;
+        $model->aliasname = $user->aliasname;
         return $model;
     }
 

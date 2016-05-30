@@ -893,7 +893,7 @@ $.fn.loading = function (options) {
                 width: '100%',
                 height: '100%',
                 'z-index': 999999,
-                background: 'rgba(0, 0, 0, 0.51)'
+                background: 'rgba(0, 0, 0, 0.20)'
             });
             el.append($loading);
             return;
@@ -905,7 +905,7 @@ $.fn.loading = function (options) {
                 width: '100%',
                 height: '100%',
                 'z-index': 999,
-                background: 'rgba(0, 0, 0, 0.51)'
+                background: 'rgba(0, 0, 0, 0.20)'
             });
 
             el.css('position','relative');

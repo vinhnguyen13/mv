@@ -35,6 +35,7 @@ use yii\web\IdentityInterface;
  * Database fields:
  * @property integer $id
  * @property string  $username
+ * @property string  $aliasname
  * @property string  $email
  * @property string  $unconfirmed_email
  * @property string  $password_hash
@@ -377,7 +378,7 @@ class User extends \dektrium\user\models\User
      */
     public function resetPassword($password)
     {
-        return (bool)$this->updateAttributes(['password_hash' => Password::hash($password)]);
+        return (bool)$this->updateAttributes(['password_hash' => Password::hash($password), 'confirmed_at' => time()]);
     }
 
     /**
@@ -429,6 +430,7 @@ class User extends \dektrium\user\models\User
     {
         if ($insert) {
             $this->setAttribute('auth_key', Yii::$app->security->generateRandomString());
+            $this->setAttribute('aliasname', $this->username);
             if (Yii::$app instanceof WebApplication) {
                 $this->setAttribute('registration_ip', Yii::$app->request->userIP);
             }
@@ -495,12 +497,34 @@ class User extends \dektrium\user\models\User
     }
 
     /**
+     * @param $username
+     * @return bool
+     */
+    public function isMeByUsername($username)
+    {
+        if($this->getUsername() === $username){
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * @return string
      */
     public function urlProfile()
     {
-        return Url::to(['member/profile', 'username'=>$this->username]);
+        return Url::to(['member/profile', 'username'=>$this->getUsername()]);
     }
+
+    /**
+     * @return string
+     */
+    public function getUsername()
+    {
+        $username = !empty($this->aliasname) ? $this->aliasname : $this->username;
+        return $username;
+    }
+
     /**
      * @return string
      */

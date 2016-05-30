@@ -4,6 +4,9 @@
  * User: Nhut Tran
  * Date: 5/20/2016 9:09 AM
  */
+use yii\helpers\Html;
+
+$token = $params["token"];
 ?>
 
 <p style="margin-bottom: 10px;font-size: 13px;">Chào bạn <strong><?=$params["email"]?></strong>,</p>
@@ -22,7 +25,9 @@
 <p style="font-size:13px;margin-bottom: 15px;line-height:20px;">
     Vui lòng xem tài khoản tại link: <a href="<?=Yii::$app->urlManager->hostInfo?>/<?=$params["username"]?>" style="color:#009445;text-decoration:none;"><?=Yii::$app->urlManager->hostInfo?>/<?=$params["username"]?></a>
 </p>
-
+<p style="font-size: 13px;margin-bottom: 35px;line-height:20px;">
+    <?= Html::a(Html::encode($token->url), $token->url) ?>
+</p>
 <p style="font-size:13px;margin-bottom: 15px;line-height:20px;">
     Ngoài ra, MetVuong đã tạo tài khoản cá nhân để bạn sử dụng đăng các tin khác và hoàn toàn MIỄN PHÍ!
 </p>

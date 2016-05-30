@@ -8,11 +8,13 @@
 namespace console\models;
 
 use frontend\components\Mailer;
+use frontend\models\Token;
 use frontend\models\User;
 use vsoft\ad\models\AdProduct;
 use Yii;
 use yii\base\Component;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 
 class Metvuong extends Component
 {
@@ -24,11 +26,11 @@ class Metvuong extends Component
 //            return AdContactInfo::getDb()->createCommand($sql)->queryAll();
 //        });
         $contacts = [
-            [
-                'email' => 'nhut.love@live.com',
-                'total' => 6,
-                'list_id' => '501,503,516,517,518,520'
-            ],
+//            [
+//                'email' => 'nhut.love@live.com',
+//                'total' => 6,
+//                'list_id' => '501,503,516,517,518,520'
+//            ],
             [
                 'email' => 'nhuttranm@gmail.com',
                 'total' => 2,
@@ -42,10 +44,24 @@ class Metvuong extends Component
                     return User::find()->where(['email' => $email])->one();
                 });
 
-                if (count($user) > 0 && ($user->updated_at > $user->created_at)) {
-                    continue;
-                } else {
-                    $auth_key = $user->auth_key;
+//                if (count($user) > 0 && ($user->updated_at > $user->created_at)) {
+//                    continue;
+//                } else {
+                if(true){
+                    $token = Token::find()->where(['user_id' => $user->id])->one();
+                    if(count($token) <= 0){
+                        /** @var Token $token */
+                        $token = new Token();
+                        $token->user_id = $user->id;
+                        $token->code = Yii::$app->security->generateRandomString();
+                        $token->type = Token::TYPE_CRAWL_USER_EMAIL;
+                        $token->created_at = time();
+                        $res = $token->save();
+                        if($res == false){
+                            print_r("{$email} cannot create new token");
+                            continue;
+                        }
+                    }
 
                     $array_product_id = explode(",", $contact["list_id"]);
                     $products = AdProduct::getDb()->cache(function () use ($array_product_id) {
@@ -67,9 +83,9 @@ class Metvuong extends Component
                     $params = [
                         'email' => $email,
                         'username' => $user->username,
-                        'auth_key' => $auth_key,
+                        'token' => $token,
                         'product_list' => $product_list,
-                        'rest_total' => $rest_total,
+                        'rest_total' => $rest_total
                     ];
 
                     $subjectEmail = "Thông báo tin đăng từ metvuong.com";
@@ -79,10 +95,6 @@ class Metvuong extends Component
                         ->setSubject($subjectEmail)
                         ->send();
                     $print > 0 ? print_r("\nsent to {$email}") : "Send mail error.";
-                    // update lai auth key
-//                $user->updateAttributes([
-//                    'auth_key' => Yii::$app->security->generateRandomString(),
-//                ]);
                 }
             }
         } else

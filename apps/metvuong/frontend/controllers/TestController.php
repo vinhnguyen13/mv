@@ -172,9 +172,9 @@ class TestController extends \yii\web\Controller
 
     public function actionActivity(){
         UserActivity::find()->saveActivity(UserActivity::ACTION_AD_FAVORITE, "{owner} favorite {product} of {buddy}", [
-            'user'=>Yii::$app->user->identity->username,
+            'user'=>Yii::$app->user->identity->getUsername(),
             'product'=>5071,
-            'product_owner'=>Yii::$app->user->identity->username
+            'product_owner'=>Yii::$app->user->identity->getUsername()
         ], 5071);
     }
 

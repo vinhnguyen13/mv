@@ -69,9 +69,10 @@ class AdBuildingProject extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['city_id', 'district_id', 'created_at', 'updated_at', 'status'], 'integer'],
+            [['city_id', 'district_id', 'created_at', 'updated_at', 'status', 'is_crawl', 'hot_project', 'click', 'project_main_id'], 'integer'],
             [['name', 'slug', 'created_at'], 'required'],
-            [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video', 'progress', 'name', 'description'], 'string'],
+            [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video', 'progress',
+                'name', 'description', 'file_name', 'data_html'], 'string'],
             [['lng', 'lat'], 'number'],
             [['land_area', 'apartment_no', 'floor_no', 'start_time', 'estimate_finished', 'hotline'], 'string', 'max' => 32],
             [['location', 'investment_type', 'commercial_leasing_area', 'owner_type', 'facilities', 'website', 'logo', 'slug'], 'string', 'max' => 255]
@@ -115,6 +116,7 @@ class AdBuildingProject extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'status' => 'Status',
+            'project_main_id' => 'Main ID',
         ];
     }
 

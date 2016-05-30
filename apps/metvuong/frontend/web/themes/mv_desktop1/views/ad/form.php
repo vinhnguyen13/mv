@@ -90,7 +90,7 @@ use vsoft\ad\models\AdImages;
 				<p class="mgB-10 fs-14"><?= Yii::t('ad', 'Tin của bạn sẽ được xét duyệt lại trước khi hiển thị đến người xem') ?></p>
 				<p class="mgB-10 fs-14"><?= Yii::t('ad', 'Cảm ơn đã sử dụng dịch vụ của MetVuong') ?></p>
 				<div class="text-center">
-					<a class="btn-common" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->username])?>"><?= Yii::t('ad', 'Quay trở về Dashboard') ?></a>
+					<a class="btn-common" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->getUsername()])?>"><?= Yii::t('ad', 'Quay trở về Dashboard') ?></a>
 					<a class="btn-common" id="to-detail" href="#"><?= Yii::t('ad', 'Xem tin vừa cập nhật') ?></a>
 				</div>
 			<?php endif; ?>
@@ -466,7 +466,7 @@ use vsoft\ad\models\AdImages;
 								            <div id="collapseEght" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven">
 								                <div class="panel-body text-center">
 								            	    <div class="infor-agent clearfix">
-														<a href="javascript:;" class="wrap-img"><img src="<?= "/member/" . Yii::$app->user->identity->username . "/avatar" ?>" alt="demo"></a>
+														<a href="javascript:;" class="wrap-img"><img src="<?= "/member/" . Yii::$app->user->identity->getUsername() . "/avatar" ?>" alt="demo"></a>
 														<div class="img-agent">
 															<a href="javascript:;" class="name-agent ref" data-ref="#adcontactinfo-name"></a>
 						                                    <div class="stars"> <span id="rating-all-bottom" class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="true"><span id="rateit-range-2" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-2" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" aria-readonly="true" style="width: 105px; height: 18px;"><span class="rateit-selected rateit-preset" style="height: 18px; width: 0px;"></span><span class="rateit-hover" style="height:18px"></span></span></span> <span class="fs-13 font-600 count_review">(0)</span> </div>

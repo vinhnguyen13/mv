@@ -25,7 +25,7 @@ if(!empty($msgs)) {
 		if(!empty($user->profile)){
 	?>
 			<li chat-with="<?=$user->username;?>">
-				<a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->username])?>#<?=$user->username;?>">
+				<a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->getUsername()])?>#<?=$user->username;?>">
 					<span class="avatar"><img src="<?=$user->profile->getAvatarUrl();?>" alt="" /></span>
 					<div>
 						<span class="name-user"><?=$user->profile->getDisplayName();?></span>

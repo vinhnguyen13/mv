@@ -125,8 +125,9 @@ $return =  [
             'rules' => [
 
             ],
-            'languages' => ['en-US'=>'en-US', 'vi-VN'=>'vi-VN'],
+            'languages' => ['vi-VN'=>'vi-VN', 'en-US'=>'en-US'],
             'enableDefaultLanguageUrlCode'=>true,
+            'enableLanguageDetection'=>false,
             'enableLocaleUrls'=>true,
             'ignoreLanguageUrlPatterns'=>[
                 '#^site/language#' => '#^site/language#',

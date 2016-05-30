@@ -20,7 +20,12 @@ class UserLocation extends \vsoft\user\models\base\UserLocation
     }
 
     public function getCity(){
-        $city = \vsoft\ad\models\AdCity::find()->where(['id' => $this->city_id])->one();
+        $db = $this->getDb();
+        $city_id = $this->city_id;
+        $city = $db->cache(function($db) use ($city_id){
+            return \vsoft\ad\models\AdCity::find()->where(['id' => $city_id])->one();
+        });
+//        $city = \vsoft\ad\models\AdCity::find()->where(['id' => $this->city_id])->one();
         return empty($city) ? "" : $city->name;
     }
 

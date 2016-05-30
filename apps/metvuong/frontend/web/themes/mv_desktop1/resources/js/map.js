@@ -496,7 +496,7 @@ var listing = {
 		wrapDetailListing.loading({full: false});
 		
 		listing.detailListing.css({
-			left: -wWrapList +'px'
+			right: wWrapList +'px'
 		});
 		
 		$.get('/listing/detail', {id: id}, function(r){

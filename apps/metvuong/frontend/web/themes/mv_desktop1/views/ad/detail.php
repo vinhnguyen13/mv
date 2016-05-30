@@ -241,7 +241,7 @@ Yii::t('ad', 'Television');
 					<div class="address-listing">
 						<p><?= $address ?></p>
 					</div>
-					<div class="pull-left left-attr-detail">
+					<div class="left-attr-detail">
 						<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
 						<ul class="clearfix list-attr-td">
 	                        <?php
@@ -256,7 +256,7 @@ Yii::t('ad', 'Television');
 	                        } ?>
 						</ul>
 					</div>
-					<div class="pull-left mgT-10 right-attr-detail">
+					<div class="mgT-10 right-attr-detail">
 						<p class="price-item"><?= Yii::t('ad', 'Price') ?><strong><?= StringHelper::formatCurrency($product->price) . ' ' . Yii::t('ad', 'VND') ?></strong></p>
 					</div>
 				</div>
@@ -626,7 +626,7 @@ Yii::t('ad', 'Television');
 		            </div>
 		            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
 		                <div class="panel-body" name="experience">
-                            <ul>
+                            <ul class="clearfix list-tienich">
 							<?php
 							 //implode(', ', ArrayHelper::getColumn($product->projectBuilding->adFacilities, 'name'))
                             $facilities = ArrayHelper::getColumn($product->projectBuilding->adFacilities, 'name');
@@ -634,7 +634,7 @@ Yii::t('ad', 'Television');
                                 foreach ($facilities as $k => $facility) {
                                     $class = \common\components\Slug::me()->slugify($facility); ?>
                                 <li>
-                                    <span class="<?=$class?>"></span>
+                                    <span class="icon-mv"><span class="icon-<?=$class?>"></span></span>
                                     <?=Yii::t('ad', $facility)?>
                                 </li>
                                 <?php }
@@ -656,7 +656,7 @@ Yii::t('ad', 'Television');
 		            </div>
 		            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
 		                <div class="panel-body" name="experience">
-                            <ul>
+                            <ul class="clearfix list-tienich">
 							<?php
 //                            implode(', ', ArrayHelper::getColumn(AdFacility::find()->where(['id' => $product->adProductAdditionInfo->facility])->all(), 'name'))
                             $additional_facilities = ArrayHelper::getColumn(AdFacility::find()->where(['id' => $product->adProductAdditionInfo->facility])->all(), 'name');
@@ -664,7 +664,7 @@ Yii::t('ad', 'Television');
                                 foreach ($additional_facilities as $k => $facility) {
                                     $class = \common\components\Slug::me()->slugify($facility); ?>
                                     <li>
-                                        <span class="<?=$class?>"></span>
+                                        <span class="icon-mv"><span class="icon-<?=$class?>"></span></span>
                                         <?=Yii::t('ad', $facility)?>
                                     </li>
                                 <?php }
@@ -724,13 +724,30 @@ Yii::t('ad', 'Television');
 									<?php endif; ?>
                                     <?php if($owner){
                                         if(!empty($owner->location)) {?>
+										<div class="item-agent">
+											<div>
+												<span class="icon address-icon"></span>
+											</div>
+											<?= $owner->location->city?>
+										</div>
+										<?php  } ?>
+										<div class="item-agent">
+											<div>
+												<span class="icon-mv"><span class="icon-link fs-16"></span></span>
+											</div>
+											<a href="<?=Url::to(['/member/profile', 'username'=>$owner->username], true)?>" class="email-btn">
+												<?= str_replace(Yii::$app->language.'/', '', Url::to(['/member/profile', 'username'=>$owner->username], true)) ?>
+											</a>
+										</div>
+                                    <?php } ?>
 									<div class="item-agent">
 										<div>
-											<span class="icon address-icon"></span>
+											<span class="icon-mv"><span class="icon-link fs-16"></span></span>
 										</div>
-										<?= $owner->location->city?>
+										<a href="<?=$product->urlDetail(true)?>" class="email-btn">
+											<?= $product->urlDetail(true) ?>
+										</a>
 									</div>
-                                    <?php } } ?>
 									<?php if(!empty($owner->username) && !$owner->isMe()) { ?>
                                         <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn btn-common btn-small">Email</a>
 										<a href="#" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
@@ -746,9 +763,23 @@ Yii::t('ad', 'Television');
 		</div>
         <div class="col-xs-12 col-md-3 col-right sidebar-col">
             <div class="item-sidebar">
-                <?=\vsoft\ad\widgets\ListingWidget::widget(['title' => Yii::t('listing','SIMILAR LISTINGS'), 'limit' => 4])?>
+
             </div>
         </div>
+        <script>
+            $(document).ready(function () {
+                $('.item-sidebar').loading({full: false});
+                $.ajax({
+                    type: "get",
+                    dataType: 'html',
+                    url: '<?=Url::to(['ad/load-listing-widget'])?>?pid='+<?=$product->id?>,
+                    success: function (data) {
+                        $(".item-sidebar").html(data);
+                        $('.item-sidebar').loading({done: true});
+                    }
+                });
+            });
+        </script>
 
     </div>
 </div>

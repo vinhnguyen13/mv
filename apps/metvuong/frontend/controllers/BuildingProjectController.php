@@ -148,4 +148,10 @@ class BuildingProjectController extends Controller
         }
     }
 
+    public function actionLoadSidebar($limit = 10){
+        $topproject = \vsoft\ad\models\AdBuildingProject::getTopProject($limit);
+        if(count($topproject) > 0)
+            echo $this->renderAjax('/building-project/_partials/topproject',['projects' => $topproject]);
+    }
+
 }

@@ -120,7 +120,7 @@ echo $this->renderAjax('/ad/_partials/shareEmail', [
 				timer = setTimeout(function () {
 					$.ajax({
 						type: "post",
-						url: "<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->username])?>",
+						url: "<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->getUsername()])?>",
 						data: {id: _id, stt: 'read'},
 						success: function (data) {
 							location.href = href;

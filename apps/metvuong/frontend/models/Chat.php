@@ -28,14 +28,21 @@ class Chat extends Component
     public function getTigUser(){
         if (!Yii::$app->user->isGuest) {
             $user_id = $this->getJid(Yii::$app->user->identity->username);
-            if(($tigUser = TigUsers::findOne(['user_id'=>$user_id])) === null){
+            $db = Yii::$app->getDb();
+            $tigUser = $db->cache(function() use ($user_id){
+                return TigUsers::findOne(['user_id'=>$user_id]);
+            });
+            if(empty($tigUser)){
                 $tigUser = new TigUsers();
                 $tigUser->user_id = $user_id;
                 $tigUser->sha1_user_id = sha1($user_id);
                 $tigUser->user_pw = $this->generateKey();
                 $tigUser->save();
             }
-            if(($userJid = UserJid::findOne(['username'=>Yii::$app->user->identity->username])) === null){
+            $userJid = $db->cache(function(){
+                return UserJid::findOne(['username'=>Yii::$app->user->identity->username]);
+            });
+            if(empty($userJid)){
                 $jid_id = Yii::$app->dbChat->createCommand('SELECT jid_id FROM tig_ma_jids tmj WHERE jid=:jid')->bindValues([':jid' => $tigUser->user_id])->queryOne();
                 if(!empty($jid_id['jid_id'])){
                     $userJid = new UserJid();

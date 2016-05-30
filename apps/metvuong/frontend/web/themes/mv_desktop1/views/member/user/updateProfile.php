@@ -13,6 +13,12 @@ use yii\helpers\Url;
 
 $user = $model->getUser();
 $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii::$app->user->id])->one();
+Yii::t('time','years');
+Yii::t('time','year');
+Yii::t('time','months');
+Yii::t('time','month');
+Yii::t('time','weeks');
+Yii::t('time','week');
 ?>
 <div class="title-fixed-wrap container" xmlns="http://www.w3.org/1999/html">
     <div class="edit-user-tt">
@@ -63,7 +69,7 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                             'id' => 'form-edit-ttcn',
                             'enableAjaxValidation' => false,
                             'enableClientValidation' => true,
-                            'action' => Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])
+                            'action' => Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->getUsername()])
                         ]);
                         ?>
                         <div class="name-user fs-18 font-600 color-cd text-uper mgB-5">
@@ -133,7 +139,7 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                         'id' => 'form-edit-mtbt',
                         'enableAjaxValidation' => false,
                         'enableClientValidation' => true,
-                        'action' => Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->username])
+                        'action' => Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->getUsername()])
                     ]);
                     ?>
                     <div class="txt-wrap">
@@ -151,7 +157,7 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                     <a href="#" class="edit-profile"><span class="icon-mv"><span class="icon-edit-copy-4"></span></span></a>
 <!--                    <a class="text-decor color-cd-hover fs-13 font-600 link-change-pass" href="#">Đổi mật khẩu</a> -->
                     <span class="pass_result"></span>
-                    <span class="last_changed">Password last changed <?=\frontend\models\ProfileForm::humanTiming($user->confirmed_at)?>.</span>
+                    <span class="last_changed"><?=Yii::t('profile','Password last changed')?> <?=\frontend\models\ProfileForm::humanTiming($user->confirmed_at)?>.</span>
                 </div>
                 <div class="box-edit-show wrap-attr-detail">
                     <div class="posi_absolute btn-mani">
@@ -337,6 +343,28 @@ $user_location = \frontend\models\UserLocation::find()->where(['user_id' => Yii:
                    return false;
                 }
             });
+        });
+
+        $('.changeAlias .done-profile').on('click', function(){
+            var _this = $(this);
+            _this.closest('section').loading({
+                full: false
+            });
+            $('.edit-mtbt .error').addClass('hide');
+
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: $('#form-edit-alias').attr('action'),
+                data: $('#form-edit-alias').serializeArray(),
+                success: function (data) {
+
+                },
+                error: function (data) {
+                    return false;
+                }
+            });
+            return false;
         });
 
         $('.changepass .done-profile').on('click', function(){

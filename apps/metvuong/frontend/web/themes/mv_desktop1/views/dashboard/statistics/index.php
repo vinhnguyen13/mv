@@ -65,62 +65,66 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                 </tr>
                 <tr>
                     <td>
-                        <?php if(isset($finders["finders"]) && count($finders["finders"]) > 0){
-                            foreach($finders["finders"] as $key => $finder){?>
-                                <div class="clearfix">
-                                    <a class="fs-13" href="<?=Url::to(['member/profile', 'username'=>$key])?>">
-                                        <img class="pull-left" src="<?=Url::to($finder['avatar'], true)?>" alt="">
-                                        <span class="name-user"><?=$key?></span>
-                                    </a>
-                                    <div class="crt-item">
-                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-target="#popup_email" data-type="contact" data-toggle="modal" data-email="<?=$finder['email']?>">
-                                            <span class="icon-mv fs-16">
-                                                <span class="icon-mail-profile"></span>
-                                            </span>
+                        <div class="user-inter">
+                            <?php if(isset($finders["finders"]) && count($finders["finders"]) > 0){
+                                foreach($finders["finders"] as $key => $finder){?>
+                                    <div class="clearfix">
+                                        <a class="fs-13" href="<?=Url::to(['member/profile', 'username'=>$key])?>">
+                                            <img class="pull-left" src="<?=Url::to($finder['avatar'], true)?>" alt="">
+                                            <span class="name-user"><?=$key?></span>
                                         </a>
-                                        <a href="#" class="chat-now tooltip-show" data-chat-user="<?=$key?>" data-placement="bottom" title="Send message">
-                                            <span class="icon-mv fs-18">
-                                                <span class="icon-bubbles-icon"></span>
-                                            </span>
-                                        </a>
+                                        <div class="crt-item">
+                                            <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-target="#popup_email" data-type="contact" data-toggle="modal" data-email="<?=$finder['email']?>">
+                                                <span class="icon-mv fs-16">
+                                                    <span class="icon-mail-profile"></span>
+                                                </span>
+                                            </a>
+                                            <a href="#" class="chat-now tooltip-show" data-chat-user="<?=$key?>" data-placement="bottom" title="Send message">
+                                                <span class="icon-mv fs-18">
+                                                    <span class="icon-bubbles-icon"></span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                        <span class="num-show pull-right color-cd font-600"><?=$finder['count']?></span>
                                     </div>
-                                    <span class="num-show pull-right color-cd font-600"><?=$finder['count']?></span>
+                                <?php }
+                            } else {?>
+                                <div class="clearfix fs-13 text-center">
+                                    <span><?=Yii::t('statistic','Not found')?>.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>"><?=Yii::t('statistic','Please, update your listing')?>.</a>
                                 </div>
-                            <?php }
-                        } else {?>
-                            <div class="clearfix fs-13 text-center">
-                                <span><?=Yii::t('statistic','Not found')?>.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>"><?=Yii::t('statistic','Please, update your listing')?>.</a>
-                            </div>
-                        <?php }?>
+                            <?php }?>
+                        </div>
                     </td>
                     <td>
-                        <?php if(isset($visitors["visitors"]) && count($visitors["visitors"]) > 0){
-                            foreach($visitors["visitors"] as $key => $value){?>
-                                <div class="clearfix">
-                                    <a class="fs-13" href="<?=Url::to(['member/profile', 'username'=>$key])?>">
-                                        <img class="pull-left" src="<?=Url::to($value['avatar'], true)?>" alt="">
-                                        <span class="name-user"><?=$key?></span>
-                                    </a>
-                                    <div class="crt-item">
-                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-target="#popup_email" data-type="contact" data-toggle="modal" data-email="<?=$value['email']?>">
-                                            <span class="icon-mv fs-16">
-                                                <span class="icon-mail-profile"></span>
-                                            </span>
+                        <div class="user-inter">
+                            <?php if(isset($visitors["visitors"]) && count($visitors["visitors"]) > 0){
+                                foreach($visitors["visitors"] as $key => $value){?>
+                                    <div class="clearfix">
+                                        <a class="fs-13" href="<?=Url::to(['member/profile', 'username'=>$key])?>">
+                                            <img class="pull-left" src="<?=Url::to($value['avatar'], true)?>" alt="">
+                                            <span class="name-user"><?=$key?></span>
                                         </a>
-                                        <a href="#" class="chat-now tooltip-show" data-chat-user="<?=$key?>" data-placement="bottom" title="Send message">
-                                            <span class="icon-mv fs-18">
-                                                <span class="icon-bubbles-icon"></span>
-                                            </span>
-                                        </a>
+                                        <div class="crt-item">
+                                            <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-target="#popup_email" data-type="contact" data-toggle="modal" data-email="<?=$value['email']?>">
+                                                <span class="icon-mv fs-16">
+                                                    <span class="icon-mail-profile"></span>
+                                                </span>
+                                            </a>
+                                            <a href="#" class="chat-now tooltip-show" data-chat-user="<?=$key?>" data-placement="bottom" title="Send message">
+                                                <span class="icon-mv fs-18">
+                                                    <span class="icon-bubbles-icon"></span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                        <span class="num-show pull-right color-cd font-600"><?=$value['count']?></span>
                                     </div>
-                                    <span class="num-show pull-right color-cd font-600"><?=$value['count']?></span>
+                                <?php }
+                            } else {?>
+                                <div class="clearfix fs-13 text-center">
+                                    <span><?=Yii::t('statistic','Not found')?>.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>"><?=Yii::t('statistic','Please, update your listing')?>.</a>
                                 </div>
-                            <?php }
-                        } else {?>
-                            <div class="clearfix fs-13 text-center">
-                                <span><?=Yii::t('statistic','Not found')?>.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>"><?=Yii::t('statistic','Please, update your listing')?>.</a>
-                            </div>
-                        <?php }?>
+                            <?php }?>
+                        </div>
                     </td>
 
                 </tr>
@@ -130,62 +134,66 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                 </tr>
                 <tr>
                     <td>
-                        <?php if(isset($favourites["saved"]) && count($favourites["saved"]) > 0){
-                            foreach($favourites["saved"] as $key => $value){?>
-                                <div class="clearfix">
-                                    <a class="fs-13" href="<?=Url::to(['member/profile', 'username'=>$key])?>">
-                                        <img class="pull-left" src="<?=Url::to($value['avatar'], true)?>" alt="">
-                                        <span class="name-user"><?=$key?></span>
-                                    </a>
-                                    <div class="crt-item">
-                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-target="#popup_email" data-type="contact" data-toggle="modal" data-email="<?=$value['email']?>">
-                                            <span class="icon-mv fs-16">
-                                                <span class="icon-mail-profile"></span>
-                                            </span>
+                        <div class="user-inter">
+                            <?php if(isset($favourites["saved"]) && count($favourites["saved"]) > 0){
+                                foreach($favourites["saved"] as $key => $value){?>
+                                    <div class="clearfix">
+                                        <a class="fs-13" href="<?=Url::to(['member/profile', 'username'=>$key])?>">
+                                            <img class="pull-left" src="<?=Url::to($value['avatar'], true)?>" alt="">
+                                            <span class="name-user"><?=$key?></span>
                                         </a>
-                                        <a href="#" class="chat-now tooltip-show" data-chat-user="<?=$key?>" data-placement="bottom" title="Send message">
-                                            <span class="icon-mv fs-18">
-                                                <span class="icon-bubbles-icon"></span>
-                                            </span>
-                                        </a>
+                                        <div class="crt-item">
+                                            <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-target="#popup_email" data-type="contact" data-toggle="modal" data-email="<?=$value['email']?>">
+                                                <span class="icon-mv fs-16">
+                                                    <span class="icon-mail-profile"></span>
+                                                </span>
+                                            </a>
+                                            <a href="#" class="chat-now tooltip-show" data-chat-user="<?=$key?>" data-placement="bottom" title="Send message">
+                                                <span class="icon-mv fs-18">
+                                                    <span class="icon-bubbles-icon"></span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                        <span class="num-show pull-right color-cd font-600"><?=$value['count']?></span>
                                     </div>
-                                    <span class="num-show pull-right color-cd font-600"><?=$value['count']?></span>
+                                <?php }
+                            } else {?>
+                                <div class="clearfix fs-13 text-center">
+                                    <span><?=Yii::t('statistic','Not found')?>.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>"><?=Yii::t('statistic','Please, update your listing')?>.</a>
                                 </div>
-                            <?php }
-                        } else {?>
-                            <div class="clearfix fs-13 text-center">
-                                <span><?=Yii::t('statistic','Not found')?>.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>"><?=Yii::t('statistic','Please, update your listing')?>.</a>
-                            </div>
-                        <?php }?>
+                            <?php }?>
+                        </div>
                     </td>
                     <td>
-                        <?php if(isset($shares["shares"]) && count($shares["shares"]) > 0){
-                            foreach($shares["shares"] as $key => $value){?>
-                                <div class="clearfix">
-                                    <a class="fs-13" href="<?=Url::to(['member/profile', 'username'=>$key])?>">
-                                        <img class="pull-left" src="<?=Url::to($value['avatar'], true)?>" alt="">
-                                        <span class="name-user"><?=$key?></span>
-                                    </a>
-                                    <div class="crt-item">
-                                        <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-target="#popup_email" data-type="contact" data-toggle="modal" data-email="<?=$value['email']?>">
-                                            <span class="icon-mv fs-16">
-                                                <span class="icon-mail-profile"></span>
-                                            </span>
+                        <div class="user-inter">
+                            <?php if(isset($shares["shares"]) && count($shares["shares"]) > 0){
+                                foreach($shares["shares"] as $key => $value){?>
+                                    <div class="clearfix">
+                                        <a class="fs-13" href="<?=Url::to(['member/profile', 'username'=>$key])?>">
+                                            <img class="pull-left" src="<?=Url::to($value['avatar'], true)?>" alt="">
+                                            <span class="name-user"><?=$key?></span>
                                         </a>
-                                        <a href="#" title="Send message" class="chat-now tooltip-show" data-chat-user="<?=$key?>" data-placement="bottom">
-                                            <span class="icon-mv fs-19">
-                                                <span class="icon-bubbles-icon"></span>
-                                            </span>
-                                        </a>
+                                        <div class="crt-item">
+                                            <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="Send email" data-target="#popup_email" data-type="contact" data-toggle="modal" data-email="<?=$value['email']?>">
+                                                <span class="icon-mv fs-16">
+                                                    <span class="icon-mail-profile"></span>
+                                                </span>
+                                            </a>
+                                            <a href="#" title="Send message" class="chat-now tooltip-show" data-chat-user="<?=$key?>" data-placement="bottom">
+                                                <span class="icon-mv fs-19">
+                                                    <span class="icon-bubbles-icon"></span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                        <span class="num-show pull-right color-cd font-600"><?=$value['count']?></span>
                                     </div>
-                                    <span class="num-show pull-right color-cd font-600"><?=$value['count']?></span>
+                                <?php }
+                            } else {?>
+                                <div class="clearfix fs-13 text-center">
+                                    <span><?=Yii::t('statistic','Not found')?>.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>"><?=Yii::t('statistic','Please, update your listing')?>.</a>
                                 </div>
-                            <?php }
-                        } else {?>
-                            <div class="clearfix fs-13 text-center">
-                                <span><?=Yii::t('statistic','Not found')?>.</span><a href="<?= Url::to(['/ad/update', 'id' => $id]) ?>"><?=Yii::t('statistic','Please, update your listing')?>.</a>
-                            </div>
-                        <?php }?>
+                            <?php }?>
+                        </div>
                     </td>
                 </tr>
             </table>
@@ -202,6 +210,11 @@ echo $this->renderAjax('/ad/_partials/shareEmail',[
     'params' => ['your_email' => false, 'recipient_email' => false] ])?>
 <script>
     $(document).ready(function () {
+
+        $('.user-inter').slimscroll({
+            alwaysVisible: true,
+            height: '225px'
+        });
 
         $(document).on('click','.btn-email-item', function () {
             var email = $(this).data('email');

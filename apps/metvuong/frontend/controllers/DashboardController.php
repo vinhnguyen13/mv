@@ -31,9 +31,6 @@ class DashboardController extends Controller
     {
         $this->checkAccess();
         $this->view->params = ['noFooter' => true, 'menuDashboard' => true, 'isDashboard' => true];
-        if(Yii::$app->user->isGuest){
-            $this->redirect(['/member/login']);
-        }
         return parent::beforeAction($action);
     }
 
@@ -126,12 +123,14 @@ class DashboardController extends Controller
         if(Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             $id = (int)Yii::$app->request->get("id");
+            $days = (int)Yii::$app->request->get("upgrade-time");
+            $total_budget = (int)Yii::$app->request->get("total_budget");
             $product = AdProduct::findOne($id);
+            $time = time();
             if(!empty($product)){
-//                $product->start_date = time();
-                if($product->end_date < time())
-                    $product->end_date = time();
-                $end = strtotime("+30 days", $product->end_date );
+                $product->start_date = $time;
+                $product->updated_at = $time;
+                $end = strtotime("+$days days", $time);
                 $product->end_date = $end;
                 $product->is_expired = 0;
                 $product->save(false);
@@ -203,7 +202,7 @@ class DashboardController extends Controller
                 if(count($finders) > 0)
                     foreach($finders as $key_finder => $finder) {
                         $classPopupUser = 'popup_enable';
-                        if($key_finder == Yii::$app->user->identity->username)
+                        if($key_finder == Yii::$app->user->identity->getUsername())
                             $classPopupUser = '';
                         $li = '<li><a class="'.$classPopupUser.'" href="#popup-user-inter" data-email="'.$finder["email"].'" data-ava="'.Url::to($finder['avatar'], true).'">'.
                                     '<img src="'.$finder['avatar'].'"> '.$key_finder.'</a>'.
@@ -219,7 +218,7 @@ class DashboardController extends Controller
                 if(count($visitors) > 0)
                     foreach ($visitors as $key_visitor => $val_visitor) {
                         $classPopupUser = 'popup_enable';
-                        if($key_visitor == Yii::$app->user->identity->username)
+                        if($key_visitor == Yii::$app->user->identity->getUsername())
                             $classPopupUser = '';
                         $li = '<li><a class="'.$classPopupUser.'" href="#popup-user-inter" data-email="'.$val_visitor["email"].'" data-ava="'.Url::to($val_visitor['avatar'], true).'">'.
                             '<img src="'.$val_visitor['avatar'].'"> '.$key_visitor.'</a>'.
@@ -249,16 +248,7 @@ class DashboardController extends Controller
 
     public function actionAd()
     {
-        if (Yii::$app->user->isGuest) {
-            return $this->redirect(Url::to(['member/login']));
-        }
-
-        $requestUrl = Yii::$app->request->absoluteUrl;
-        $username = Yii::$app->user->identity->username;
-        $checkUsername = strpos($requestUrl, $username);
-        if($checkUsername == false)
-            return $this->goHome();
-
+        $this->checkIsMe();
         $products = array();
         $search = array();
         $last_id = empty(Yii::$app->request->get('last_id')) ? 0 : (int)Yii::$app->request->get('last_id');
