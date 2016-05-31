@@ -94,7 +94,7 @@ use vsoft\ad\models\AdProduct;
                     <ul class="clearfix">
                         <li>
                             <span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
-                            <p><?=Yii::t('general','metvuong_place')?> <br> <?=Yii::t('general','metvuong_address')?></p>
+                            <p><?=Yii::t('general','metvuong_address')?></p>
                         </li>
                         <li>
                             <span class="icon-mv"><span class="icon-phone-profile"></span></span>

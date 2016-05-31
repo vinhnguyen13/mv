@@ -179,6 +179,7 @@ use vsoft\ad\models\AdImages;
 								<?= Html::activeHiddenInput($product, 'price', ['class' => 'form-control text-right', 'placeholder' => '...']) ?>
 								<div style="position: relative;">
 									<input type="text" id="priceMask" class="form-control text-right number-only number-float" placeholder="...">
+									<span class="small-text">VD: 1,5 triệu hoặc 1,5 tỷ</span>
 									<div class="price-unit">
 										<label class="radio-inline radio-ui">
 											<input type="radio" name="price-unit" id="price-unit-mil" value="1000000" checked="checked"> <?= Yii::t('ad', 'million') ?>
@@ -407,7 +408,7 @@ use vsoft\ad\models\AdImages;
 												<ul class="clearfix list-attr-td">
 							                        <li><span class="icon-mv"><span class="icon-page-1-copy"></span></span><span class="ref" data-ref="#adproduct-area"></span>m2</li>
 							                        <li><span class="icon-mv"><span class="icon-bed-search"></span></span><span class="ref" data-ref="#adproductadditioninfo-room_no"></span></li>
-							                        <li><span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span><span class="ref" data-ref="#adproductadditioninfo-toilet_no"></span></li>
+							                        <li><span class="icon-mv"><span class="icon-icon-bathroom"></span></span><span class="ref" data-ref="#adproductadditioninfo-toilet_no"></span></li>
 												</ul>
 											</div>
 											<div class="overflow-all right-attr-detail">

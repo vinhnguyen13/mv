@@ -3803,7 +3803,7 @@ html.mm-opening .mm-slideout {
     font-size: 20px;
     margin-right: 8px;
 }
-.list-attr-td li .icon-mv .icon-bathroom-search-copy-2 {
+.list-attr-td li .icon-mv .icon-icon-bathroom {
     font-size: 27px;
     position: relative;
     top: -4px;
@@ -11147,7 +11147,7 @@ label:hover {
 }
 .price-unit {
     position: absolute;
-    bottom: 0;
+    top: 0;
     font-size: 13px;
     left: 55%;
     width: 100%;
@@ -11618,7 +11618,7 @@ height: 190px;
         font-size: 14px;
     }
 }
-.icon-bathroom-search-copy-2 {
+.icon-icon-bathroom {
     font-size: 25px;
     position: relative;
     top: -2px;
@@ -11774,8 +11774,11 @@ height: 190px;
     color: #A2A2A2;
 }
 #upgrade-time .tooltip-inner {
-    
-white-space: normal;
-    
-text-align: left;
+    white-space: normal;
+    text-align: left;
+}
+.small-text {
+    font-size: 12px;
+    color: #A0A0A0;
+    font-style: italic;
 }
