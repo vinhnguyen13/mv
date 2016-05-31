@@ -3803,7 +3803,7 @@ html.mm-opening .mm-slideout {
     font-size: 20px;
     margin-right: 8px;
 }
-.list-attr-td li .icon-mv .icon-bathroom-search-copy-2 {
+.list-attr-td li .icon-mv .icon-icon-bathroom {
     font-size: 27px;
     position: relative;
     top: -4px;
@@ -11618,7 +11618,7 @@ height: 190px;
         font-size: 14px;
     }
 }
-.icon-bathroom-search-copy-2 {
+.icon-icon-bathroom {
     font-size: 25px;
     position: relative;
     top: -2px;

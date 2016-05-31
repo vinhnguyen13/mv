@@ -408,7 +408,7 @@ use vsoft\ad\models\AdImages;
 												<ul class="clearfix list-attr-td">
 							                        <li><span class="icon-mv"><span class="icon-page-1-copy"></span></span><span class="ref" data-ref="#adproduct-area"></span>m2</li>
 							                        <li><span class="icon-mv"><span class="icon-bed-search"></span></span><span class="ref" data-ref="#adproductadditioninfo-room_no"></span></li>
-							                        <li><span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span><span class="ref" data-ref="#adproductadditioninfo-toilet_no"></span></li>
+							                        <li><span class="icon-mv"><span class="icon-icon-bathroom"></span></span><span class="ref" data-ref="#adproductadditioninfo-toilet_no"></span></li>
 												</ul>
 											</div>
 											<div class="overflow-all right-attr-detail">
