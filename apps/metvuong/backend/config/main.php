@@ -54,6 +54,9 @@ return [
         'news' => [
             'class' => 'vsoft\news\Module',
         ],
+        'coupon' => [
+            'class' => 'vsoft\coupon\Module',
+        ],
         'ad' => [
             'class' => 'vsoft\ad\Module',
         ],
