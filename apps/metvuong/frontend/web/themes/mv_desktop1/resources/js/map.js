@@ -685,6 +685,7 @@ var m2Map = {
 				buildingProjects.push(new Product(r.rm[i]));
 			}
 			
+			marker.addListener('click', m2Map.markerClick);
 			marker.set('products', buildingProjects);
 			m2Map.setIcon(marker, buildingProjects.length, 0);
 			
@@ -804,11 +805,22 @@ var m2Map = {
 					position: product.getPosition()
 				});
 				
+				marker.addListener('click', m2Map.markerClick);
 				marker.set('products', [product]);
 				m2Map.setIcon(marker, 1, 0);
 				
 				markers[key] = marker;
 			}
+		}
+	},
+	markerClick: function() {
+		var products = this.get('products');
+		
+		if(products.length == 1) {
+			var product = products[0];
+			m2Map.showDetail(product.attrs.id);
+		} else {
+			
 		}
 	},
 	removeAllDetail: function() {
@@ -931,6 +943,13 @@ var m2Map = {
 	focusMarker: function(marker) {
 		m2Map.setIcon(marker, marker.get('products').length, 1);
 		marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
+	},
+	showDetail: function(id) {
+		m2Map.detail(id);
+		
+		form.af.filter(s.did).val(id);
+		
+		m2Map.pushState();
 	},
 	detail: function(id) {
 		var wWrapList = $('.wrap-listing-item .inner-wrap').outerWidth();
@@ -1288,11 +1307,7 @@ form.itemClick = function(e) {
 	
 	var id = $(this).data('id');
 	
-	m2Map.detail(id);
-	
-	form.af.filter(s.did).val(id);
-	
-	m2Map.pushState();
+	m2Map.showDetail(id);
 };
 form.itemMouseEnter = function(e) {
 	var id = $(this).data('id');
