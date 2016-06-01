@@ -39,6 +39,8 @@ use vsoft\ad\models\AdBuildingProject;
 use frontend\models\AdProductSearch;
 use yii\db\ActiveRecord;
 use frontend\models\Elastic;
+use frontend\models\MapSearch;
+use yii\db\Query;
 
 class AdController extends Controller
 {
@@ -190,38 +192,129 @@ class AdController extends Controller
 		return $response;
     }
     
+    public function getArea($area, $where) {
+    	$query = new Query();
+    
+    	$select = ['id', 'center', 'name', 'geometry'];
+    
+    	if(($area != 'city')) {
+    		$select[] = 'pre';
+    	}
+    
+    	$areas = $query->from('ad_' . $area)->select($select)->where($where)->all();
+    
+    	return $areas;
+    }
+    
     public function actionIndex() {
-		$this->view->params['body'] = [
-			'class' => 'ad-listing'
-		];
-		if($type = Yii::$app->request->get('type')) {
-			$this->view->params['menuBuy'] = (!empty($type) && $type==1) ? true : false;
-			$this->view->params['menuRent'] = (!empty($type) && $type==2) ? true : false;
-		}
-		
-		$model = new AdProductSearch();
-		$query = $model->search(Yii::$app->request->get());
-		$query->addSelect('ad_product.updated_at, ad_product.category_id, ad_product.type, ad_images.file_name, ad_images.folder');
-		$query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
-		$query->groupBy('ad_product.id');
-		
-		$countQuery = clone $query;
-		$pages = new Pagination(['totalCount' => $countQuery->count()]);
-		$pages->setPageSize(Yii::$app->params['listingLimit']);
-			
-		$products = $query->with(['city', 'district', 'ward', 'street'])->offset($pages->offset)->limit($pages->limit)->all();
-		
-		if(Yii::$app->request->isAjax) {
-			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-			
-			$categories = AdCategory::find ()->indexBy ( 'id' )->asArray ( true )->all ();
-			
-			return ['items' => $this->renderPartial('_partials/list', ['products' => $products, 'categories' => $categories]), 'total' => intval($pages->totalCount)];
-		} else {
-			$model->fetchValues();
-			
-			return $this->render('index', ['searchModel' => $model, 'pages' => $pages, 'products' => $products]);
-		}
+    	$mapSearch = new MapSearch();
+    	
+    	$mapSearch->type = (\Yii::$app->request->get('urlSeg') == Yii::t('ad', 'nha-dat-ban')) ? AdProduct::TYPE_FOR_SELL : AdProduct::TYPE_FOR_RENT;
+
+    	if(Yii::$app->request->isAjax) {
+    		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    		
+    		$query = $mapSearch->search(\Yii::$app->request->get());
+    		
+    		$response = [];
+    		
+    		if($mapSearch->ra) {
+    			$areaQuery = clone $query;
+    		
+    			$allowArea = [
+    					'city' => ['id'],
+    					'district' => ['id', 'city_id'],
+    					'ward' => ['id', 'district_id', 'city_id'],
+    					'street' => ['id']
+    			];
+    		
+    			if(in_array($mapSearch->ra, array_keys($allowArea))) {
+    				$allowKey = $allowArea[$mapSearch->ra];
+    				$key = $mapSearch->ra_k;
+    		
+    				if(in_array($key, $allowKey)) {
+    					$value = ($key == 'id') ? $mapSearch->getAttribute($mapSearch->ra . '_id') : $mapSearch->getAttribute($key);
+    					$areas = $this->getArea($mapSearch->ra, [$key => $value]);
+    		
+    					if($key == 'id') {
+    						$counts = [$value => ['total' => $areaQuery->count()]];
+    					} else {
+    						$group = $mapSearch->ra . '_id';
+    							
+    						$counts = $areaQuery->select([$group, 'COUNT(*) AS total'])->groupBy($group)->indexBy($group)->all();
+    					}
+    		
+    					foreach($areas as &$area) {
+    						$area['total'] = isset($counts[$area['id']]['total']) ? $counts[$area['id']]['total'] : 0;
+    					}
+    		
+    					$response['ra'] = $areas;
+    				}
+    			}
+    		}
+    		
+    		if($mapSearch->rm || $mapSearch->rl) {
+    			
+    			if($mapSearch->rect) {
+    				$rect = explode(',', $mapSearch->rect);
+    					
+    				$query->andWhere(['>=', 'ad_product.lat', $rect[0]]);
+    				$query->andWhere(['<=', 'ad_product.lat', $rect[2]]);
+    				$query->andWhere(['>=', 'ad_product.lng', $rect[1]]);
+    				$query->andWhere(['<=', 'ad_product.lng', $rect[3]]);
+    			}
+    				
+    			if($mapSearch->rm) {
+    				$markerQuery = clone $query;
+    				
+    				$sort = $mapSearch->order_by ? $mapSearch->order_by : '-score';
+    				$doa = StringHelper::startsWith($sort, '-') ? 'DESC' : 'ASC';
+    				$sort = str_replace('-', '', $sort);
+    				
+    				$markerQuery->orderBy("$sort $doa");
+    					
+    				$markerQuery->limit(500);
+    					
+    				$response['rm'] = $markerQuery->all();
+    			}
+    				
+    			if($mapSearch->rl) {
+    				$list = $mapSearch->getList($query);
+    				
+    				$mapSearch->fetchValues();
+    					
+    				$response['rl'] = $this->renderPartial('@frontend/web/themes/mv_desktop1/views/ad/_partials/side-list', ['searchModel' => $mapSearch, 'list' => $list]);
+    			}
+    		}
+    		
+    		return $response;
+    	} else {
+    		$this->view->params['body'] = [
+    				'class' => 'ad-listing'
+    		];
+    		 
+    		if($type = Yii::$app->request->get('type')) {
+    			$this->view->params['menuBuy'] = ($type==1) ? true : false;
+    			$this->view->params['menuRent'] = ($type==2) ? true : false;
+    		}
+    		 
+    		$query = $mapSearch->search(Yii::$app->request->get());
+    		
+    		if($mapSearch->rect) {
+    			$rect = explode(',', $mapSearch->rect);
+    				
+    			$query->andWhere(['>=', 'ad_product.lat', $rect[0]]);
+    			$query->andWhere(['<=', 'ad_product.lat', $rect[2]]);
+    			$query->andWhere(['>=', 'ad_product.lng', $rect[1]]);
+    			$query->andWhere(['<=', 'ad_product.lng', $rect[3]]);
+    		}
+    		 
+    		$list = $mapSearch->getList($query);
+    		 
+    		$mapSearch->fetchValues();
+    		 
+    		return $this->render('index', ['searchModel' => $mapSearch, 'list' => $list]);
+    	}
     }
     
     public function actionSavedListing() {
