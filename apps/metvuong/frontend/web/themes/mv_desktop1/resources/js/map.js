@@ -255,10 +255,12 @@ Area.prototype.mouseout = function() {
 };
 
 Area.prototype.nextZoomLevel = function() {
-	var nextZoom = m2Map.map.getZoom() + 1;
+	var zoom = m2Map.map.getZoom();
+	var nextZoom = zoom + 1;
 	var initZoom = form.af.filter(s.iz).val();
-	var currentfocusAreaType = form.af.filter(s.ra).val();
-	var focusAreaType = form.getFocusLocation().type;
+	var currentFocus = form.getFocusLocation();
+	var currentfocusAreaType = m2Map.getZoomAreaLevel(zoom, initZoom, currentFocus.type);
+	var focusAreaType = currentFocus.type;
 	
 	while(m2Map.getZoomAreaLevel(nextZoom, initZoom, focusAreaType) == currentfocusAreaType && nextZoom < m2Map.detailZoomLevel) {
 		nextZoom++;
@@ -437,7 +439,7 @@ var m2Map = {
 		form.afRect.val(m2Map.getBounds(0, 0, 0, 0).toUrlValue());
 		
 		m2Map.boundsChangedEvent = m2Map.map.addListener('bounds_changed', m2Map.boundsChanged);
-		console.log('attachZoom change');
+
 		m2Map.zoomChangedEvent = m2Map.map.addListener('zoom_changed', m2Map.zoomChanged);
 	},
 	initMapFresh: function(fn) {
@@ -551,8 +553,6 @@ var m2Map = {
 		}, 100));
 	},
 	zoomChanged: function() {
-		console.log('zoom changed');
-		
 		var zoom = m2Map.map.getZoom();
 		
 		if(m2Map.currentDrawState == 'project_building' || m2Map.currentDrawState == 'street') {
@@ -879,7 +879,7 @@ var m2Map = {
 		var loadingList = form.af.filter(s.rl).val();
 		
 		if(form.af.filter(s.ra).val() || form.af.filter(s.rm).val()) {
-			console.log('load map');
+			// console.log('load map');
 		}
 		
 		if(loadingList) {
@@ -990,8 +990,6 @@ var m2Map = {
 		});
 	},
 	closeDetail: function(e) {
-		console.log('close');
-		
 		if(e.preventDefault) {
 			e.preventDefault();
 		}
@@ -1140,7 +1138,6 @@ form.formChange = function(e) {
 		m2Map.boundsChangedEvent = null;
 		google.maps.event.removeListener(m2Map.zoomChangedEvent);
 		m2Map.zoomChangedEvent = null;
-		console.log('remove zoom change');
 		
 		google.maps.event.addListenerOnce(m2Map.map, 'bounds_changed', m2Map.setInitLocationProps);
 		
@@ -1458,8 +1455,6 @@ function initInfoBox() {
 		 var iwEastLng = boundsInfoBox.getNorthEast().lng();
 		 var iwNorthLat = boundsInfoBox.getNorthEast().lat();
 		 var iwSouthLat = boundsInfoBox.getSouthWest().lat();
-
-		 console.log(iwWestLng, iwEastLng, iwNorthLat, iwSouthLat);
 		 
 		 var shiftLng = (iwWestLng < mapWestLng ? mapWestLng - iwWestLng : 0) + (iwEastLng > mapEastLng ? mapEastLng - iwEastLng : 0);
 		 var shiftLat = (iwNorthLat > mapNorthLat ? mapNorthLat - iwNorthLat : 0) + (iwSouthLat < mapSouthLat ? mapSouthLat - iwSouthLat : 0);

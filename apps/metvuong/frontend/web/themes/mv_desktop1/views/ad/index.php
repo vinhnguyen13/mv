@@ -47,7 +47,7 @@ EOD;
 										<input class="exclude" type="text" id="map-search" value="<?= $autoFillValue ?>" data-val="<?= $autoFillValue ?>" autocomplete="off" />
 										<div id="search-list" class="hide">
 											<div class="hint-wrap">
-												<div class="hint"><?= Yii::t('ad', 'Nhập tên dự án, thành phố, quận, phường... cần tìm') ?></div>
+												<div class="hint"><?= Yii::t('general', 'Quick Search') ?></div>
 												<div class="center"><?= Yii::t('ad', 'Tìm kiếm gần đây') ?></div>
 											</div>
 											<ul></ul>
