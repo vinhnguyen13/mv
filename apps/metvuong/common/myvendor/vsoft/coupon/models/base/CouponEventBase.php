@@ -2,6 +2,7 @@
 
 namespace vsoft\coupon\models\base;
 
+use vsoft\coupon\models\CouponCode;
 use Yii;
 
 /**
@@ -15,7 +16,7 @@ use Yii;
  * @property integer $created_by
  *
  */
-class CouponEvent extends \yii\db\ActiveRecord
+class CouponEventBase extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -33,6 +34,7 @@ class CouponEvent extends \yii\db\ActiveRecord
         return [
             [['status', 'created_at', 'created_by'], 'integer'],
             [['name'], 'string', 'max' => 255],
+            [['name'], 'required'],
             [['description'], 'string', 'max' => 3200],
         ];
     }
@@ -55,8 +57,8 @@ class CouponEvent extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-//    public function getCpCodes()
-//    {
-//        return $this->hasMany(CpCode::className(), ['cp_event_id' => 'id']);
-//    }
+    public function getCouponCodes()
+    {
+        return $this->hasMany(CouponCode::className(), ['cp_event_id' => 'id']);
+    }
 }

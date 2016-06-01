@@ -25,6 +25,7 @@ class m160531_081856_create_cp_code_table extends Migration
                           `created_at` INT NULL COMMENT '',
                           `updated_at` INT NULL COMMENT '',
                           PRIMARY KEY (`id`)  COMMENT '',
+                          UNIQUE KEY `code_UNIQUE` (`code`),
                           KEY `cp_event_idx` (`cp_event_id`),
                           CONSTRAINT `cp_code_event` FOREIGN KEY (`cp_event_id`) REFERENCES `cp_event` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION);");
         }

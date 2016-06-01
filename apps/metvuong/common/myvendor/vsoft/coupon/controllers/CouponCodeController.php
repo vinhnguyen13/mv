@@ -2,18 +2,20 @@
 
 namespace vsoft\coupon\controllers;
 
+use vsoft\coupon\models\Coupon;
 use Yii;
-use vsoft\coupon\models\CouponEvent;
-use vsoft\coupon\models\CouponEventSearch;
+use vsoft\coupon\models\CouponCode;
+use vsoft\coupon\models\CouponCodeSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
- * CouponEventController implements the CRUD actions for CouponEvent model.
+ * CouponCodeController implements the CRUD actions for CouponCode model.
  */
-class CouponEventController extends Controller
+class CouponCodeController extends Controller
 {
     /**
      * @inheritdoc
@@ -40,12 +42,12 @@ class CouponEventController extends Controller
     }
 
     /**
-     * Lists all CouponEvent models.
+     * Lists all CouponCode models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new CouponEventSearch();
+        $searchModel = new CouponCodeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -55,7 +57,7 @@ class CouponEventController extends Controller
     }
 
     /**
-     * Displays a single CouponEvent model.
+     * Displays a single CouponCode model.
      * @param integer $id
      * @return mixed
      */
@@ -67,25 +69,61 @@ class CouponEventController extends Controller
     }
 
     /**
-     * Creates a new CouponEvent model.
+     * Creates a new CouponCode model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new CouponEvent();
-        $post = Yii::$app->request->post();
-        if ($model->load($post) && $model->save()) {
+        $model = new CouponCode();
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect('index');
         } else {
             return $this->render('create', [
                 'model' => $model,
             ]);
         }
+
+    }
+
+    public function actionCreateRandom()
+    {
+        $model = new CouponCode();
+        $post = Yii::$app->request->post();
+        if(isset($post['length'])){
+            $no_of_coupons = intval($post['no_of_coupons']);
+            $length = $post['length'];
+            $prefix = $post['prefix'];
+            $suffix = $post['suffix'];
+            $numbers = $post['numbers'];
+            $letters = $post['letters'];
+            $symbols = $post['symbols'];
+            $random_register = $post['random_register'] == 'false' ? false : true;
+            $mask = $post['mask'] == '' ? false : $post['mask'];
+            for ($i = 0; $i < $no_of_coupons; $i++) {
+                $coupon_code = Coupon::generate($length, $prefix, $suffix, $numbers, $letters, $symbols, $random_register, $mask);
+                $code = CouponCode::checkCodeExists($coupon_code, $length, $prefix, $suffix, $numbers, $letters, $symbols, $random_register, $mask);
+                if(!empty($code)){
+                    $event_id = (isset($post["CouponCode"]["cp_event_id"])) ? intval($post["CouponCode"]["cp_event_id"]) : 0;
+                    $type = (isset($post["CouponCode"]["type"])) ? intval($post["CouponCode"]["type"]) : 2;
+                    $model = new CouponCode();
+                    $model->code = $code;
+                    $model->cp_event_id = $event_id;
+                    $model->type = $type;
+                    $model->save(false);
+                }
+            }
+            return $this->redirect('index');
+        }
+
+        return $this->render('create_random', [
+            'model' => $model,
+        ]);
+
     }
 
     /**
-     * Updates an existing CouponEvent model.
+     * Updates an existing CouponCode model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -104,7 +142,7 @@ class CouponEventController extends Controller
     }
 
     /**
-     * Deletes an existing CouponEvent model.
+     * Deletes an existing CouponCode model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -117,18 +155,20 @@ class CouponEventController extends Controller
     }
 
     /**
-     * Finds the CouponEvent model based on its primary key value.
+     * Finds the CouponCode model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return CouponEvent the loaded model
+     * @return CouponCode the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = CouponEvent::findOne($id)) !== null) {
+        if (($model = CouponCode::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+
 }

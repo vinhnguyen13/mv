@@ -2,6 +2,7 @@
 
 namespace vsoft\coupon\models;
 
+use vsoft\coupon\models\base\CouponEventBase;
 use Yii;
 use yii\behaviors\AttributeBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -19,7 +20,7 @@ use yii\db\Expression;
  * @property integer $created_by
  *
  */
-class CouponEvent extends \vsoft\coupon\models\base\CouponEvent
+class CouponEvent extends CouponEventBase
 {
     public function behaviors()
     {
