@@ -103,7 +103,7 @@
 								<?= $address ?>
 							</div>
 							<p class="infor-by-up">
-								<strong><?= ucfirst(Yii::t('ad', $categories[$product['category_id']]['name'])) ?> <?= mb_strtolower($types[$product['type']]) ?></strong>
+								<strong><?= ucfirst(Yii::t('ad', $categories[$product['category_id']]['name'])) ?> <?= mb_strtolower($types[$product['type']], 'utf8') ?></strong>
 							</p>
 							<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product['id'] ?></span></p>
 							<ul class="clearfix list-attr-td">
@@ -116,7 +116,7 @@
 			                    <?php endif; ?>
 							</ul>
 					        <p class="price-item"><?= Yii::t('listing', 'Price') ?><strong><?= StringHelper::formatCurrency($product['price']) . ' ' . Yii::t('ad', 'VND') ?></strong></p>   
-					    	<p class="date-post"><?= StringHelper::previousTime($product['updated_at']) ?></p>
+					    	<p class="date-post"><?= StringHelper::previousTime($product['updated_at']) ?><span class="pull-right"><?= Yii::t('ad', 'Điểm') ?>: <?= $product['score'] ?></span></p>
 					    </div>
 					</a>
 			        <?php /* tracking finder

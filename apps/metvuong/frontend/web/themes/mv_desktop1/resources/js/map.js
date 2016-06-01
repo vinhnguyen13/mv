@@ -207,6 +207,10 @@ Area.prototype.draw = function(map) {
 				}
 				self.mouseout();
 			});
+
+			this.poly.addListener("click", function() {
+				self.nextZoomLevel();
+			});
 		}
 		
 		var center = this.getCenter();
@@ -221,6 +225,9 @@ Area.prototype.draw = function(map) {
 
 			this.marker.addListener("mouseover", function() {self.mouseover();});
 			this.marker.addListener("mouseout", function() {self.mouseout();});
+			this.marker.addListener("click", function() {
+				self.nextZoomLevel();
+			});
 		}
 	}
 };
@@ -245,6 +252,20 @@ Area.prototype.mouseover = function() {
 };
 Area.prototype.mouseout = function() {
 	m2Map.infoBoxHover.close();
+};
+
+Area.prototype.nextZoomLevel = function() {
+	var nextZoom = m2Map.map.getZoom() + 1;
+	var initZoom = form.af.filter(s.iz).val();
+	var currentfocusAreaType = form.af.filter(s.ra).val();
+	var focusAreaType = form.getFocusLocation().type;
+	
+	while(m2Map.getZoomAreaLevel(nextZoom, initZoom, focusAreaType) == currentfocusAreaType && nextZoom < m2Map.detailZoomLevel) {
+		nextZoom++;
+	}
+
+	m2Map.map.setCenter(this.getCenter());
+	m2Map.map.setZoom(nextZoom);
 };
 
 
@@ -276,8 +297,10 @@ s.iz = '#iz';
 s.z = '#z';
 s.c = '#c';
 s.page = '#page';
+s.did = '#did';
 
 var contentHolder = $('#content-holder');
+var detailListingWrap = $('.detail-listing-dt');
 
 var m2Map = {
 	mapEl: $('#map'),
@@ -291,6 +314,7 @@ var m2Map = {
 	infoBoxHover: null,
 	boundsChangedEvent: null,
 	zoomChangedEvent: null,
+	closeDetailListener: null,
 	currentDrawState: null,
 	markerIconCached: {},
 	initMap: function() {
@@ -312,9 +336,19 @@ var m2Map = {
 		
 		if(initZoom && initCenter) {
 			m2Map.initMapRe(initZoom, initCenter);
+			m2Map.hasMapInstance();
 		} else {
-			m2Map.initMapFresh();
+			m2Map.initMapFresh(m2Map.hasMapInstance);
 		}
+	},
+	hasMapInstance: function() {
+		var did = form.af.filter(s.did).val();
+		
+		if(did) {
+			m2Map.detail(did);
+		}
+		
+		m2Map.addDrawControl();
 	},
 	stateChange: function() {
 		
@@ -403,10 +437,14 @@ var m2Map = {
 		form.afRect.val(m2Map.getBounds(0, 0, 0, 0).toUrlValue());
 		
 		m2Map.boundsChangedEvent = m2Map.map.addListener('bounds_changed', m2Map.boundsChanged);
+		console.log('attachZoom change');
 		m2Map.zoomChangedEvent = m2Map.map.addListener('zoom_changed', m2Map.zoomChanged);
 	},
-	initMapFresh: function() {
-		m2Map.changeLocation(m2Map.drawMap);
+	initMapFresh: function(fn) {
+		m2Map.changeLocation(function(r){
+			m2Map.drawMap(r);
+			fn();
+		});
 	},
 	drawMap: function(r) {
 		var map = m2Map.map = new google.maps.Map(m2Map.mapEl.get(0), m2Map.mapOptions);
@@ -428,8 +466,47 @@ var m2Map = {
 		});
 		
 		google.maps.event.addListenerOnce(m2Map.map, 'idle', function(){
-			if(map.getZoom() != z || map.getCenter().toString() != c) {
-				console.log('has change');
+			var zoom = map.getZoom();
+			
+			if(zoom != z || map.getCenter().toString() != c) {
+				var focusLocation = form.getFocusLocation();
+				
+				if(focusLocation.type == 'project_building') {
+					m2Map.currentDrawState == 'project_building';
+				} else if(focusLocation.type == 'street') {
+					m2Map.currentDrawState == 'street';
+				} else {
+					if(zoom < m2Map.detailZoomLevel) {
+						m2Map.zoomChanged();
+						m2Map.removeAllDetail();
+					} else {
+						m2Map.currentDrawState = 'detail';
+						m2Map.removeAreas();
+						
+						if(m2Map.ajaxRequest) {
+							m2Map.ajaxRequest.abort();
+							m2Map.ajaxRequest = null;
+						}
+						
+						m2Map.infoBoxHover.close();
+						
+						form.af.filter(s.page).val('');
+						form.af.filter(s.ra).val('');
+						form.af.filter(s.rm).val(1);
+						form.af.filter(s.rl).val(1);
+						
+						m2Map.ajaxRequest = m2Map.get(function(r){
+							m2Map.removeAreas();
+							m2Map.drawDetailCallBack(r);
+						});
+					}
+				}
+				
+				form.afRect.val(m2Map.getBounds(0, 0, 0, 0).toUrlValue());
+				form.afZoom.val(m2Map.map.getZoom());
+				form.afCenter.val(m2Map.getCenter().toUrlValue());
+				
+				m2Map.pushState();
 			}
 		});
 	},
@@ -516,7 +593,7 @@ var m2Map = {
 				var rect = form.fields.filter(s.rect).prop('disabled', true);
 				
 				m2Map.ajaxRequest = m2Map.get(function(r) {
-					if(r.ra.length) {
+					if(r.ra) {
 						m2Map.drawAreas(r.ra, currentRa);
 					}
 					
@@ -575,7 +652,7 @@ var m2Map = {
 				}
 			}
 		}
-		
+
 		google.maps.event.addListenerOnce(m2Map.map, 'idle', m2Map.drawLocationCallback);
 	},
 	drawBuildingProject: function(r, setCenter) {
@@ -615,8 +692,13 @@ var m2Map = {
 		}
 	},
 	drawLocationCallback: function() {
-		m2Map.boundsChangedEvent = m2Map.map.addListener('bounds_changed', m2Map.boundsChanged);
-		m2Map.zoomChangedEvent = m2Map.map.addListener('zoom_changed', m2Map.zoomChanged);
+		if(m2Map.boundsChangedEvent == null) {
+			m2Map.boundsChangedEvent = m2Map.map.addListener('bounds_changed', m2Map.boundsChanged);
+		}
+		
+		if(m2Map.zoomChangedEvent == null) {
+			m2Map.zoomChangedEvent = m2Map.map.addListener('zoom_changed', m2Map.zoomChanged);
+		}
 	},
 	drawAndFitArea: function(area) {
 		var bounds = area.getBounds();
@@ -782,7 +864,27 @@ var m2Map = {
 			serialize = form.serialize();
 		}
 		
-		return $.get(form.el.attr('action'), serialize, fn);
+		var loadingList = form.af.filter(s.rl).val();
+		
+		if(form.af.filter(s.ra).val() || form.af.filter(s.rm).val()) {
+			console.log('load map');
+		}
+		
+		if(loadingList) {
+			$('.items-list').loading({full: false});
+		}
+		
+		return $.ajax({
+			  url: form.el.attr('action'),
+			  data: serialize,
+			  success: fn,
+			  complete: function() {
+				  if(loadingList) {
+					  $('.items-list').loading({done: true});
+					  $('.wrap-listing').scrollTop(0);
+				  }
+			  }
+		});
 	},
 	urlValueToLatLng: function(str) {
 		var sa = str.split(',');
@@ -810,6 +912,188 @@ var m2Map = {
 		} else {
 			return 'city';
 		}
+	},
+	getFocusMarker: function(id) {
+		var markers = m2Map.markers;
+		
+		for(var i in markers) {
+			var marker = markers[i];
+			var products = marker.get('products');
+			var pl = products.length;
+
+			for(var j = 0; j < pl; j++) {
+				if(products[j].attrs.id == id) {
+					return marker;
+				}
+			}
+		}
+	},
+	focusMarker: function(marker) {
+		m2Map.setIcon(marker, marker.get('products').length, 1);
+		marker.setZIndex(google.maps.Marker.MAX_ZINDEX++);
+	},
+	detail: function(id) {
+		var wWrapList = $('.wrap-listing-item .inner-wrap').outerWidth();
+		var detailListing = $('.detail-listing');
+		
+		detailListingWrap.loading({full: false});
+		
+		detailListingWrap.css({
+			right: wWrapList +'px'
+		});
+		
+		google.maps.event.removeListener(m2Map.closeDetailListener);
+		m2Map.closeDetailListener = m2Map.map.addListener('click', m2Map.closeDetail);
+		
+		$.get('/listing/detail', {id: id}, function(r){
+			var temp = $(r).find('#detail-wrap');
+			
+			temp.find('.popup-common').each(function () {
+				var _this = $(this),
+					idThis = _this.attr('id');
+				$('body').find('#'+idThis).remove();
+			});
+			
+			detailListing.find('.container').html($(r).find('#detail-wrap').html());
+			detailListing.find('.popup-common').appendTo('body');
+			
+			var swiper = new Swiper('.swiper-container', {
+				pagination: '.swiper-pagination',
+				paginationClickable: true,
+		        spaceBetween: 0
+		    });
+
+			detailListingWrap.loading({done: true});
+			
+			$('.inner-detail-listing').scrollTop(0);
+
+			$('.btn-extra').attr('href', detailListing.find('.btn-copy').data('clipboard-text'));
+		});
+	},
+	closeDetail: function(e) {
+		console.log('close');
+		
+		if(e.preventDefault) {
+			e.preventDefault();
+		}
+		
+		var wWrapList = $('.wrap-listing-item .inner-wrap').outerWidth();
+		
+		detailListingWrap.css({
+			right: -wWrapList + 'px'
+		});
+		
+		form.af.filter(s.did).val('');
+		m2Map.pushState();
+	},
+	addDrawControl: function() {
+		var div = document.createElement('div');
+		div.className = 'draw-wrap';
+		div.index = 1;
+		
+		var drawButton = document.createElement('a');
+		drawButton.className = 'button draw-button';
+		drawButton.innerHTML = '<span class="icon-mv"><span class="icon-edit-copy-4"></span></span>Vẽ khoanh vùng';
+
+		var removeButton = document.createElement('a');
+		removeButton.className = 'button remove-button';
+		removeButton.innerHTML = '<span class="icon-mv"><span class="icon-close-icon"></span></span>Xóa khoanh vùng';
+		
+		div.appendChild(drawButton);
+		div.appendChild(removeButton);
+//		
+//		drawButton.addEventListener('click', function() {
+//			div.className = 'draw-wrap draw-wrap-drawing';
+//			
+//			for(var i in listing.polygons) {
+//				listing.polygons[i].set('clickable', false);
+//			}
+//			
+//			listing.map.set('draggable', false);
+//			listing.map.set('draggableCursor', 'crosshair');
+//			
+//			var down = google.maps.event.addDomListener(listing.map.getDiv(), 'mousedown', function(e) {
+//				listing.drawPoly = new google.maps.Polyline({
+//					map: listing.map,
+//					clickable: false,
+//			        strokeWeight: 1.5,
+//			        strokeColor: '#00a769'
+//				});
+//				
+//				var move = google.maps.event.addListener(listing.map, 'mousemove', function(e) {
+//					listing.drawPoly.getPath().push(e.latLng);
+//				});
+//				
+//				google.maps.event.addListenerOnce(listing.map, 'mouseup', function(e) {
+//					google.maps.event.removeListener(move);
+//					var path = listing.drawPoly.getPath();
+//					listing.drawPoly.setMap(null);
+//
+//					var worldCoords = [ new google.maps.LatLng(-85.1054596961173, -180),
+//					                    new google.maps.LatLng(85.1054596961173, -180),
+//									    new google.maps.LatLng(85.1054596961173, 180),
+//									    new google.maps.LatLng(-85.1054596961173, 180),
+//									    new google.maps.LatLng(-85.1054596961173, 0)];
+//					
+//					var focusArea = listing.focusArea();
+//					var w = listing.parseGeometry(listing.area[focusArea.collection][focusArea.id].geometry);
+//
+//					for(var i in listing.polygons) {
+//						listing.polygons[i].setMap(null);
+//					}
+//					
+//					listing.drawPoly = new google.maps.Polygon({
+//						map: listing.map,
+//						paths: [w[0], path],
+//						strokeColor: listing.color,
+//				        strokeOpacity: 0.8,
+//				        strokeWeight: 1,
+//				        fillColor: listing.color,
+//				        fillOpacity: 0.2
+//					});
+//					
+//					listing.drawPolyWorld = new google.maps.Polygon({
+//						map: listing.map,
+//						paths: [worldCoords, path],
+//						strokeColor: listing.color,
+//				        strokeOpacity: 0.8,
+//				        strokeWeight: 1,
+//				        fillColor: listing.color,
+//				        fillOpacity: 0.2
+//					});
+//					
+//					polyDetect = new google.maps.Polygon({path: path});
+//					
+//					google.maps.event.removeListener(down);
+//					
+//					// console.log(google.maps.geometry.poly.containsLocation(new google.maps.LatLng(-34, 151), polyDetect));
+//					
+//					listing.map.set('draggable', true);
+//					listing.map.set('draggableCursor', 'url(http://maps.google.com/mapfiles/openhand.cur), move');
+//				});
+//			});
+//		});
+//
+//		removeButton.addEventListener('click', function() {
+//			div.className = 'draw-wrap';
+//			
+//			if(listing.drawPoly) {
+//				listing.drawPoly.setMap(null);
+//				listing.drawPolyWorld.setMap(null);
+//				listing.drawPoly = null;
+//				listing.drawPolyWorld = null;
+//			}
+//			
+//			for(var i in listing.polygons) {
+//				listing.polygons[i].set('clickable', true);
+//				listing.polygons[i].setMap(listing.map);
+//			}
+//			
+//			listing.map.set('draggable', true);
+//			listing.map.set('draggableCursor', 'url(http://maps.google.com/mapfiles/openhand.cur), move');
+//		});
+//		
+		m2Map.map.controls[google.maps.ControlPosition.TOP_LEFT].push(div);
 	}
 };
 
@@ -820,8 +1104,10 @@ form.af = $('#af-wrap').children();
 form.afRect = form.af.filter(s.rect);
 form.afZoom = form.af.filter(s.z);
 form.afCenter = form.af.filter(s.c);
+form.projectInfoEl = $('#project-info');
 
 form.formChange = function(e) {
+	
 	var t = $(e.target);
 	
 	form.af.filter(s.rl).val(1);
@@ -832,11 +1118,28 @@ form.formChange = function(e) {
 		form.af.filter(s.rl).val(1);
 		
 		google.maps.event.removeListener(m2Map.boundsChangedEvent);
+		m2Map.boundsChangedEvent = null;
 		google.maps.event.removeListener(m2Map.zoomChangedEvent);
+		m2Map.zoomChangedEvent = null;
+		console.log('remove zoom change');
 		
 		google.maps.event.addListenerOnce(m2Map.map, 'bounds_changed', m2Map.setInitLocationProps);
 		
 		m2Map.removeAllDetail();
+		
+		if(t.data('type') == 'project_building') {
+			form.projectInfoEl.html('');
+			
+			var id = t.data('id');
+			
+			$.get(loadProjectUrl, {id: id}, function(r) {
+				form.projectInfoEl.html(r);
+				toogleScroll();
+			});
+		} else {
+			form.projectInfoEl.html('');
+			toogleScroll();
+		}
 		
 		m2Map.changeLocation(function(r){
 			m2Map.removeAreas();
@@ -848,7 +1151,7 @@ form.formChange = function(e) {
 			}
 		});
 	} else if(t.attr('id') == 'order_by') {
-		form.af.filter(s.rl).val(1);
+		
 		form.af.filter(s.ra).val('');
 		form.af.filter(s.raK).val('');
 		form.af.filter(s.page).val('');
@@ -863,8 +1166,10 @@ form.formChange = function(e) {
 			form.af.filter(s.rm).val(1);
 		}
 		
-		m2Map.get(m2Map.drawDetailCallBack);
+		form.af.filter(s.rl).val(1);
 		
+		m2Map.get(m2Map.drawDetailCallBack);
+
 		rect.prop('disabled', false);
 	} else {
 		form.af.filter(s.rl).val(1);
@@ -944,7 +1249,7 @@ form.getFocusLocation = function() {
 form.pagination = function(e) {
 	e.preventDefault();
 	
-	form.af.filter(s.rl).val(1);
+	
 	form.af.filter(s.rm).val('');
 	form.af.filter(s.ra).val('');
 	form.af.filter(s.raK).val('');
@@ -966,8 +1271,11 @@ form.pagination = function(e) {
 		rect.prop('disabled', true);
 	}
 	
-	m2Map.get(form.paginationCallback);
+	form.af.filter(s.rl).val(1);
 	
+	m2Map.get(form.paginationCallback);
+
+	form.af.filter(s.rl).val('');
 	rect.prop('disabled', false);
 };
 
@@ -975,9 +1283,45 @@ form.paginationCallback = function(r) {
 	m2Map.drawList(r.rl);
 };
 
+form.itemClick = function(e) {
+	e.preventDefault();
+	
+	var id = $(this).data('id');
+	
+	m2Map.detail(id);
+	
+	form.af.filter(s.did).val(id);
+	
+	m2Map.pushState();
+};
+form.itemMouseEnter = function(e) {
+	var id = $(this).data('id');
+	
+	$.data(this, 'mouseenterTimer', setTimeout(function(){
+		var marker = m2Map.getFocusMarker(id);
+
+		if(marker) {
+			m2Map.focusMarker(marker);
+		}
+	}, 300));
+};
+form.itemMouseLeave = function(e) {
+	clearTimeout($.data(this, 'mouseenterTimer'));
+	
+	var marker = m2Map.getFocusMarker($(this).data('id'));
+	
+	if(marker) {
+		m2Map.setIcon(marker, marker.get('products').length, 0);
+	}
+};
+
 events.attachDesktopEvent(form.fields, 'change', form.formChange);
 events.attachDesktopEvent(form.listSearchEl, 'click', 'a', form.formChange);
 events.attachDesktopEvent(contentHolder, 'click', '.pagination a', form.pagination);
+events.attachDesktopEvent(contentHolder, 'click', '.item a', form.itemClick);
+events.attachDesktopEvent($('.close-slide-detail'), 'click', m2Map.closeDetail);
+events.attachDesktopEvent(contentHolder, 'mouseenter', '.item a', form.itemMouseEnter);
+events.attachDesktopEvent(contentHolder, 'mouseleave', '.item a', form.itemMouseLeave);
 events.attachDesktopEvent($window, 'resize', form.toggleConditionFields);
 
 

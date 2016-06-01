@@ -17,13 +17,16 @@
 	
 	$autoFillValue = $searchModel->getAutoFillValue();
 	$actionId = \Yii::$app->request->get('urlSeg', Yii::t('ad', 'nha-dat-ban'));
+	$loadProjectUrl = Url::to(['/ad/get-project']);
 	
 	$script = <<<EOD
 	var resources = ['$resourceHistoryJs', '$resourceListingMap', '$resourceApi'];
 	var actionId = '$actionId';
+	var loadProjectUrl = '$loadProjectUrl';
 EOD;
 	
-	$this->registerCss('.gm-style {font-family: "open-sans", monospace} .dt-pagination { display: block; margin-top: 12px; margin-bottom: 6px; } #map-search-wrap {position: relative; width: 220px;} #map-search {height: 40px; line-height: 40px; font-size: 14px; padding: 0 8px 0 8px; width: 100%;} #search-list {position: absolute; background: #FFF; box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.3); font-size: 15px; white-space: nowrap; z-index: 1;} #search-list a {display: block; padding: 4px 12px;} @media (max-width: 985px) {#map-search-wrap {width: 100%;} #search-list{ width: 100%; white-space: initial;}}');
+	$this->registerCss('#search-list .center {text-align: center; margin: 10px 0; opacity: 0.6;} #search-list .hint {padding: 8px 20px; display: block; background: #00a769; color: #FFF;} .gm-style-mtc {opacity: 0.8;} .gm-style-mtc:hover {opacity: 1;} .gm-style {font-family: "open-sans", monospace} .dt-pagination { display: block; margin-top: 12px; margin-bottom: 6px; } #map-search-wrap {position: relative; width: 220px;} #map-search {height: 40px; line-height: 40px; font-size: 14px; padding: 0 8px 0 8px; width: 100%;} #search-list {position: absolute; background: #FFF; box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.3); font-size: 15px; white-space: nowrap; z-index: 1;} #search-list a {display: block; padding: 6px 12px; border-top: 1px solid rgba(0, 0, 0, 0.1);} @media (max-width: 985px) {#map-search-wrap {width: 100%;} #search-list{ width: 100%; white-space: initial;}}');
+	$this->registerCss(".draw-wrap{padding-top: 10px; opacity: 0.8;} .draw-wrap:hover {opacity: 1;} .draw-wrap .button {text-decoration: none; cursor: pointer; display: block; font-family: Roboto, Arial, sans-serif; -webkit-user-select: none; font-size: 11px; height: 31px; border-radius: 2px; -webkit-background-clip: padding-box; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; font-weight: 500; background-color: rgb(255, 255, 255); background-clip: padding-box; line-height: 31px; overflow: hidden; padding: 0 8px;} .draw-wrap .icon-edit-copy-4 {font-size: 14px; vertical-align: middle;}.draw-wrap .icon-mv {margin-right: 4px; float:left;}.draw-wrap .remove-button {display: none;}.draw-wrap-drawing .draw-button {display: none}.draw-wrap-drawing .remove-button {display: block}");
 	$this->registerJs($script, View::POS_BEGIN);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-helper.js', ['position'=>View::POS_HEAD]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/listing' . $compress . '.js', ['position' => View::POS_END]);
@@ -42,7 +45,13 @@ EOD;
 								<div class="frm-item select-location show-num-frm">
 									<div id="map-search-wrap">
 										<input class="exclude" type="text" id="map-search" value="<?= $autoFillValue ?>" data-val="<?= $autoFillValue ?>" autocomplete="off" />
-										<div id="search-list" class="hide"><ul></ul></div>
+										<div id="search-list" class="hide">
+											<div class="hint-wrap">
+												<div class="hint"><?= Yii::t('ad', 'Nhập tên dự án, thành phố, quận, phường... cần tìm') ?></div>
+												<div class="center"><?= Yii::t('ad', 'Tìm kiếm gần đây') ?></div>
+											</div>
+											<ul></ul>
+										</div>
 										<?= Html::activeHiddenInput($searchModel, 'city_id', ['class' => 'auto-fill']); ?>
 										<?= Html::activeHiddenInput($searchModel, 'district_id', ['class' => 'auto-fill']); ?>
 										<?= Html::activeHiddenInput($searchModel, 'ward_id', ['class' => 'auto-fill']); ?>
@@ -233,7 +242,7 @@ EOD;
 					<input type="hidden" name="s" value="1" />
 					<div style="display: none;" id="af-wrap">
 						<?= Html::activeHiddenInput($searchModel, 'rm', ['disabled' => true]); ?>
-						<?= Html::activeHiddenInput($searchModel, 'rl', ['disabled' => true]); ?>
+						<input type="hidden" id="rl" name="rl" />
 						<?= Html::activeHiddenInput($searchModel, 'ra', ['disabled' => true]); ?>
 						<?= Html::activeHiddenInput($searchModel, 'rect', ['disabled' => true]); ?>
 						<?= Html::activeHiddenInput($searchModel, 'ra_k', ['disabled' => true]); ?>

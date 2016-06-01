@@ -300,7 +300,7 @@ class AdController extends Controller
     		 
     		$query = $mapSearch->search(Yii::$app->request->get());
     		
-    		if($mapSearch->rect) {
+    		if($mapSearch->rect && $mapSearch->rm) {
     			$rect = explode(',', $mapSearch->rect);
     				
     			$query->andWhere(['>=', 'ad_product.lat', $rect[0]]);

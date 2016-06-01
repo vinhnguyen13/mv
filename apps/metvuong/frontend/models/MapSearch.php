@@ -170,6 +170,7 @@ class MapSearch extends AdProduct {
 		$listQuery->orderBy("$sort $doa");
 		
 		$listQuery->addSelect([
+			"ad_product.score",
 			"ad_product.updated_at",
 			"ad_product.show_home_no",
 			"ad_product.home_no",
