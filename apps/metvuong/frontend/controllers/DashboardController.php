@@ -9,7 +9,10 @@ use frontend\models\Tracking;
 use frontend\models\User;
 use frontend\models\ProfileForm;
 use frontend\models\UserActivity;
+use vsoft\coupon\models\CouponCode;
+use vsoft\coupon\models\CouponHistory;
 use vsoft\express\components\ImageHelper;
+use vsoft\news\models\Status;
 use vsoft\tracking\models\base\AdProductFinder;
 use vsoft\tracking\models\base\AdProductVisitor;
 use Yii;
@@ -377,5 +380,47 @@ class DashboardController extends Controller
         return false;
     }
 
+    // Check use code coupon
+    public function actionPayWithCoupon($code)
+    {
+        $this->checkAccess();
+        $coupon = Yii::$app->db->cache(function() use($code){
+            return CouponCode::find()->where('code = :c', [':c' => $code])->andWhere(['status' => Status::STATUS_ACTIVE])->one();
+        });
+
+        if(count($coupon) > 0){
+            $check = true;
+            $user_id = Yii::$app->user->id;
+            $coupon_id = $coupon->id;
+
+            $history = CouponHistory::find()->where(['cp_code_id' => $coupon_id, 'user_id' => $user_id])->asArray()->one();
+
+            if(count($history) > 0) {
+                $check = false;
+            }
+
+            if($coupon->type == 1 && $coupon->count >= 1) {
+                $check = false;
+            }
+
+            if($check){
+                $cp_history = new CouponHistory();
+                $cp_history->user_id = $user_id;
+                $cp_history->cp_code_id = $coupon_id;
+                $cp_history->cp_event_id = $coupon->cp_event_id;
+                $cp_history->created_at = time();
+                if ($cp_history->save()) {
+                    $coupon->count = $coupon->count + 1;
+                    $coupon->update(false);
+                }
+                return "Thank you.";
+            } else {
+                return "Code: {$code} was used.";
+            }
+        }
+        else {
+            return "Coupon not found in system or expired coupon.";
+        }
+    }
 
 }

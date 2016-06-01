@@ -169,6 +169,4 @@ class CouponCodeController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-
-
 }
