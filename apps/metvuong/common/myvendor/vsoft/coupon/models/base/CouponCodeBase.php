@@ -38,7 +38,7 @@ class CouponCodeBase extends \yii\db\ActiveRecord
             [['cp_event_id', 'status', 'count', 'type', 'created_at', 'updated_at'], 'integer'],
             [['code'], 'string', 'max' => 32],
             [['code'], 'unique'],
-            [['cp_event_id'], 'required'],
+            [['code','cp_event_id'], 'required'],
             [['cp_event_id'], 'exist', 'skipOnError' => true, 'targetClass' => CouponEvent::className(), 'targetAttribute' => ['cp_event_id' => 'id']],
         ];
     }
