@@ -1209,8 +1209,8 @@ form.formChange = function(e) {
 		m2Map.pushState();
 		
 		var rect = form.fields.filter(s.rect);
-		
-		if(m2Map.currentDrawState == 'city' || m2Map.currentDrawState == 'district' || m2Map.currentDrawState == 'ward') {
+
+		if(m2Map.currentDrawState == 'city' || m2Map.currentDrawState == 'district' || m2Map.currentDrawState == 'ward' || m2Map.currentDrawState == 'project_building') {
 			rect.prop('disabled', true);
 		} else {
 			form.af.filter(s.rm).val(1);
