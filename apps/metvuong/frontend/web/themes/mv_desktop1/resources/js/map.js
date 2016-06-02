@@ -319,6 +319,7 @@ var m2Map = {
 	closeDetailListener: null,
 	currentDrawState: null,
 	markerIconCached: {},
+	shape: {coords: [0, 0, 24, 28], type: 'rect'},
 	initMap: function() {
 		History.Adapter.bind(window, 'statechange', m2Map.stateChange);
 		
@@ -395,10 +396,11 @@ var m2Map = {
 				}
 			});
 		} else {
-			var initZoom = form.af.filter(s.iz).val();
+			var initZoom = Number(form.af.filter(s.iz).val());
 			var zoom = m2Map.mapOptions.zoom;
+			var areasLevel = {ward: 0, district: 1, city: 2};
 			
-			if(initZoom >= m2Map.deteilZoomLevelDefault) {
+			if(initZoom + areasLevel[focusLocation.type] >= m2Map.deteilZoomLevelDefault) {
 				if(focusLocation.type == 'city') {
 					m2Map.detailZoomLevel = initZoom + 3;
 				} else if(focusLocation.type == 'district') {
@@ -520,7 +522,9 @@ var m2Map = {
 		
 		form.af.filter(s.iz).val(zoom);
 		
-		if(zoom >= m2Map.deteilZoomLevelDefault) {
+		var areasLevel = {ward: 0, district: 1, city: 2};
+		
+		if(zoom + areasLevel[focusLocation.type] >= m2Map.deteilZoomLevelDefault) {
 			if(focusLocation.type == 'city') {
 				m2Map.detailZoomLevel = zoom + 3;
 			} else if(focusLocation.type == 'district') {
@@ -850,7 +854,7 @@ var m2Map = {
 	setIcon: function(marker, count, hover) {
 		if(count == 1) {
 			var icon = '/images/marker-' + hover + '.png';
-			var shape = {coords: [0, 0, 24, 28], type: 'rect'};
+			marker.setShape(m2Map.shape);
 		} else {
 			var cachedKey = count + '-' + hover;
 			var iconCached = m2Map.markerIconCached[cachedKey];
@@ -864,9 +868,10 @@ var m2Map = {
 			
 			var icon = i.icon;
 			var shape = {coords: [0, 0, i.width, i.height], type: 'rect'};
+			
+			marker.setShape(shape);
 		}
 		marker.setIcon(icon);
-		marker.setShape(shape);
 	},
 	resetAf: function() {
 		

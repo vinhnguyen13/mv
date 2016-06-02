@@ -88,7 +88,7 @@ $(document).ready(function() {
 				var lsLength = listSearch.length;
 				
 				for(var i = 0; i < lsLength; i++) {
-					form.listSearchUl.append('<li><a data-history="1" class="search-item" href="javascript:;" data-id="' + listSearch[i].i + '" data-type="' + listSearch[i].t + '">' + listSearch[i].v + '</a></li>');
+					form.listSearchUl.append('<li><a class="search-item" href="javascript:;" data-id="' + listSearch[i].i + '" data-type="' + listSearch[i].t + '">' + listSearch[i].v + '</a></li>');
 				}
 			} else {
 				form.listSearchEl.find('.center').hide();
@@ -137,30 +137,30 @@ $(document).ready(function() {
 			
 			// push search history
 			
-			if(!self.data('history')) {
-				var searchHistory = getCookie('sh');
-				var listSearch = searchHistory ? JSON.parse(searchHistory) : [];
-				var isExist = false;
+			var searchHistory = getCookie('sh');
+			var listSearch = searchHistory ? JSON.parse(searchHistory) : [];
+			var isExist = false;
+			
+			for(var i = 0; i < listSearch.length; i++) {
+				var sli = listSearch[i];
 				
-				for(var i = 0; i < listSearch.length; i++) {
-					var sli = listSearch[i];
-					
-					if(sli.i == id && sli.t == type) {
-						isExist = true;
-						break;
-					}
-				}
-				
-				if(!isExist) {
-					if(listSearch.length > 4) {
-						listSearch.pop();
-					}
-					
-					listSearch.unshift({v: val, i: id, t: type});
-					
-					setCookie('sh', JSON.stringify(listSearch));
+				if(sli.i == id && sli.t == type) {
+					isExist = true;
+					break;
 				}
 			}
+			
+			if(isExist) {
+				move(listSearch, i, 0);
+			} else {
+				if(listSearch.length > 4) {
+					listSearch.pop();
+				}
+				
+				listSearch.unshift({v: val, i: id, t: type});
+			}
+			
+			setCookie('sh', JSON.stringify(listSearch));
 		},
 		searchListMouseEnter: function() {
 			form.mapSearchEl.off('blur', form.searchBlur);
@@ -353,3 +353,15 @@ function getShowNumFrm(e) {
 		});
 	}
 }
+
+function move(array, old_index, new_index) {
+    if (new_index >= array.length) {
+        var k = new_index - array.length;
+        while ((k--) + 1) {
+            array.push(undefined);
+        }
+    }
+    array.splice(new_index, 0, array.splice(old_index, 1)[0]);
+    
+    return array;
+};
