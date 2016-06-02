@@ -10,6 +10,7 @@ namespace console\models;
 use frontend\components\Mailer;
 use frontend\models\Token;
 use frontend\models\User;
+use vsoft\ad\models\AdContactInfo;
 use vsoft\ad\models\AdProduct;
 use Yii;
 use yii\base\Component;
@@ -20,23 +21,23 @@ class Metvuong extends Component
 {
 
     public static function sendMailContact(){
-//        $contacts = AdContactInfo::getDb()->cache(function(){
-//            $sql = "SELECT email, count(product_id) as total, group_concat(product_id) as list_id
-//                    FROM metvuong_dev.ad_contact_info where email is not null group by email order by count(product_id) desc limit 2";
-//            return AdContactInfo::getDb()->createCommand($sql)->queryAll();
-//        });
-        $contacts = [
+        $contacts = AdContactInfo::getDb()->cache(function(){
+            $sql = "SELECT email, count(product_id) as total, group_concat(product_id) as list_id
+                    FROM metvuong_dev.ad_contact_info where email is not null group by email order by count(product_id) desc limit 200";
+            return AdContactInfo::getDb()->createCommand($sql)->queryAll();
+        });
+//        $contacts = [
 //            [
 //                'email' => 'nhut.love@live.com',
 //                'total' => 6,
 //                'list_id' => '501,503,516,517,518,520'
 //            ],
-            [
-                'email' => 'nhuttranm@gmail.com',
-                'total' => 2,
-                'list_id' => '521,522'
-            ]
-        ];
+//            [
+//                'email' => 'nhuttranm@gmail.com',
+//                'total' => 2,
+//                'list_id' => '521,522'
+//            ]
+//        ];
         if(count($contacts) > 0) {
             foreach ($contacts as $contact) {
                 $email = trim($contact["email"]);
