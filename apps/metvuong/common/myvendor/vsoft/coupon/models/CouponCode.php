@@ -42,13 +42,13 @@ class CouponCode extends CouponCodeBase
         }
     }
 
-    public static function checkCodeExists($code, $length, $prefix, $suffix, $numbers, $letters, $symbols, $random_register, $mask)
+    public static function generateCodeExists($code, $length, $prefix, $suffix, $numbers, $letters, $symbols, $random_register, $mask)
     {
         if(!empty($code)){
             $coupon = CouponCode::find()->where('code = :c',[':c' => $code])->one();
             if(count($coupon) > 0) {
                 $code = Coupon::generate($length, $prefix, $suffix, $numbers, $letters, $symbols, $random_register, $mask);
-                return CouponCode::checkCodeExists($code, $length, $prefix, $suffix, $numbers, $letters, $symbols, $random_register, $mask);
+                return CouponCode::generateCodeExists($code, $length, $prefix, $suffix, $numbers, $letters, $symbols, $random_register, $mask);
             }
             else {
                 return $code;

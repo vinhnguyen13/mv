@@ -23,13 +23,12 @@ $token = $params["token"];
 </p>
 
 <p style="font-size:13px;margin-bottom: 15px;line-height:20px;">
-    Vui lòng xem tài khoản tại link: <a href="<?=Yii::$app->urlManager->hostInfo?>/<?=$params["username"]?>" style="color:#009445;text-decoration:none;"><?=Yii::$app->urlManager->hostInfo?>/<?=$params["username"]?></a>
+    Ngoài ra, MetVuong.com đã tạo tài khoản cá nhân để bạn đăng các tin khác.
+    <?= !empty($params["code"]) ? "Sử dụng mã khuyến mãi <b>" .$params["code"]. "</b> để tin đăng lên đầu và hoàn toàn MIỄN PHÍ!" : "" ?>
 </p>
-<p style="font-size: 13px;margin-bottom: 35px;line-height:20px;">
-    <?= Html::a(Html::encode($token->url), $token->url) ?>
-</p>
+
 <p style="font-size:13px;margin-bottom: 15px;line-height:20px;">
-    Ngoài ra, MetVuong đã tạo tài khoản cá nhân để bạn sử dụng đăng các tin khác và hoàn toàn MIỄN PHÍ!
+    Vui lòng xem tài khoản tại link: <?= Html::a(Html::encode(Yii::$app->urlManager->hostInfo."/".$params["username"]), $token->url) ?>
 </p>
 
 <p style="font-size:13px;line-height:20px;margin-bottom:15px;">

@@ -102,7 +102,7 @@ class CouponCodeController extends Controller
             $mask = $post['mask'] == '' ? false : $post['mask'];
             for ($i = 0; $i < $no_of_coupons; $i++) {
                 $coupon_code = Coupon::generate($length, $prefix, $suffix, $numbers, $letters, $symbols, $random_register, $mask);
-                $code = CouponCode::checkCodeExists($coupon_code, $length, $prefix, $suffix, $numbers, $letters, $symbols, $random_register, $mask);
+                $code = CouponCode::generateCodeExists($coupon_code, $length, $prefix, $suffix, $numbers, $letters, $symbols, $random_register, $mask);
                 if(!empty($code)){
                     $event_id = (isset($post["CouponCode"]["cp_event_id"])) ? intval($post["CouponCode"]["cp_event_id"]) : 0;
                     $type = (isset($post["CouponCode"]["type"])) ? intval($post["CouponCode"]["type"]) : 2;
