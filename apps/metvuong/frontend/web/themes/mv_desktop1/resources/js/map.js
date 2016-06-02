@@ -320,6 +320,7 @@ var m2Map = {
 	currentDrawState: null,
 	markerIconCached: {},
 	shape: {coords: [0, 0, 24, 28], type: 'rect'},
+	wrapListing: $('.wrap-listing'),
 	initMap: function() {
 		History.Adapter.bind(window, 'statechange', m2Map.stateChange);
 		
@@ -888,7 +889,7 @@ var m2Map = {
 		}
 		
 		if(loadingList) {
-			$('.items-list').loading({full: false});
+			m2Map.wrapListing.loading({full: false});
 		}
 		
 		return $.ajax({
@@ -897,8 +898,8 @@ var m2Map = {
 			  success: fn,
 			  complete: function() {
 				  if(loadingList) {
-					  $('.items-list').loading({done: true});
-					  $('.wrap-listing').scrollTop(0);
+					  m2Map.wrapListing.loading({done: true});
+					  m2Map.wrapListing.scrollTop(0);
 				  }
 			  }
 		});
@@ -1270,8 +1271,6 @@ form.getFocusLocation = function() {
 form.pagination = function(e) {
 	e.preventDefault();
 	
-	
-	form.af.filter(s.rm).val('');
 	form.af.filter(s.ra).val('');
 	form.af.filter(s.raK).val('');
 	
@@ -1293,10 +1292,12 @@ form.pagination = function(e) {
 	}
 	
 	form.af.filter(s.rl).val(1);
+	form.af.filter(s.rm).prop('disabled', true);
 	
 	m2Map.get(form.paginationCallback);
 
 	form.af.filter(s.rl).val('');
+	form.af.filter(s.rm).prop('disabled', false);
 	rect.prop('disabled', false);
 };
 
