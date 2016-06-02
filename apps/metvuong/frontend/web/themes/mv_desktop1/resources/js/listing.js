@@ -173,6 +173,9 @@ $(document).ready(function() {
 	    	}
 		},
 		searchItemMouseEnter: function() {
+			var currentActive = form.listSearchUl.find('.active');
+			
+			currentActive.removeClass('active');
 			$(this).parent().addClass('active');
 		},
 		searchItemMouseLeave: function() {
