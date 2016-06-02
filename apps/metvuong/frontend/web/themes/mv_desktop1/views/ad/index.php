@@ -62,7 +62,7 @@ EOD;
 								<div class="frm-item select-loaibds">
 									<div class="box-dropdown dropdown-common">
 										<div class="val-selected style-click">
-											<span class="selected" data-placeholder="<?= Yii::t('ad', 'Property Types') ?>"><?= Yii::t('ad', 'Property Types') ?></span>
+											<span class="selected" data-placeholder="<?= Yii::t('ad', 'Property Types') ?>"><?= Yii::t('ad', 'Nhập tên dự án, đường, phường, quận hoặc thành phố.') ?></span>
 											<span class="arrowDownFillFull"></span>
 										</div>
 										<div class="item-dropdown hide-dropdown">
