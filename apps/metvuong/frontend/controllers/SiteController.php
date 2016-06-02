@@ -98,6 +98,24 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+	public function actionError2()
+	{
+		$exception = Yii::$app->getErrorHandler()->exception;
+		if($exception->statusCode == 404){
+			$pathInfo = Yii::$app->request->pathInfo;
+			if(!empty($pathInfo)){
+				$c = explode("/", $pathInfo);
+				if(!empty($c[0]) && in_array($c[0], Yii::$app->bootstrap['MVBootstrap']['supportedLanguages'])){
+					$url = str_replace($c[0], '', $pathInfo);
+					$this->redirect(Url::to([$url]));
+					Yii::$app->end();
+				}
+			}
+			$this->redirect('/');
+			Yii::$app->end();
+		}
+	}
+
 	public function actionFeatureListings()
 	{
 		if(Yii::$app->request->isAjax){

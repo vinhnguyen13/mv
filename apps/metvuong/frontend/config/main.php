@@ -16,7 +16,7 @@ $return =  [
         'log',
         'MVBootstrap' => [
             'class' => 'frontend\components\MVBootstrap',
-            'supportedLanguages' => ['en-US', 'vi-VN'],
+            'supportedLanguages' => ['vi-VN', 'en-US'],
         ],
     ],
     'controllerNamespace' => 'frontend\controllers',
@@ -68,7 +68,7 @@ $return =  [
             ],
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+            'errorAction' => 'site/error2',
         ],
         'view' => [
             'theme' => [
@@ -80,7 +80,7 @@ $return =  [
                 ],
             ],
         ],
-        /*'urlManager' => [
+        'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -116,8 +116,8 @@ $return =  [
 //                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
 
             ]
-        ],*/
-        'urlManager' => [
+        ],
+        /*'urlManager' => [
             'class' => 'frontend\components\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -140,7 +140,7 @@ $return =  [
                 '#^listing/get-area#' => '#^listing/get-area#',
             ],
 //            'ruleConfig' => ['class' => frontend\components\LanguageUrlRule::className()]
-        ],
+        ],*/
         'i18n' => [
             'translations' => [
                 '*' => [
@@ -160,6 +160,15 @@ $return =  [
                     'messageTable' => '{{%language_translate}}',
                     'cachingDuration' => 86400,
                     'enableCaching' => true,
+                ],
+                'url' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@frontend/messages',
+//                    'sourceLanguage' => 'vi-VN',
+                    'fileMap' => [
+                        'url' => 'url.php',
+                        'app/error' => 'error.php',
+                    ],
                 ],
             ]
         ],
