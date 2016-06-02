@@ -8,6 +8,7 @@ use frontend\models\SignupForm;
 use funson86\cms\models\Status;
 use vsoft\news\models\CmsShow;
 use Yii;
+use yii\base\Exception;
 use yii\base\InvalidParamException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -21,6 +22,7 @@ use vsoft\ad\models\AdWard;
 use vsoft\ad\models\AdStreet;
 use yii\helpers\ArrayHelper;
 use vsoft\ad\models\AdBuildingProject;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use vsoft\ad\models\AdCategory;
@@ -100,8 +102,31 @@ class SiteController extends Controller
 
 	public function actionError2()
 	{
-		$exception = Yii::$app->getErrorHandler()->exception;
-		if($exception->statusCode == 404){
+		if (($exception = Yii::$app->getErrorHandler()->exception) === null) {
+			// action has been invoked not from error handler, but by direct route, so we display '404 Not Found'
+			$exception = new HttpException(404, Yii::t('yii', 'Page not found.'));
+		}
+
+		if ($exception instanceof HttpException) {
+			$code = $exception->statusCode;
+		} else {
+			$code = $exception->getCode();
+		}
+		if ($exception instanceof Exception) {
+			$name = $exception->getName();
+		} else {
+			$name = Yii::t('yii', 'Error');
+		}
+		if ($code) {
+			$name .= " (#$code)";
+		}
+
+		if ($exception instanceof UserException) {
+			$message = $exception->getMessage();
+		} else {
+			$message = Yii::t('yii', 'An internal server error occurred.');
+		}
+		if(!empty($exception->statusCode) && $exception->statusCode == 404){
 			$pathInfo = Yii::$app->request->pathInfo;
 			if(!empty($pathInfo)){
 				$c = explode("/", $pathInfo);
@@ -113,6 +138,15 @@ class SiteController extends Controller
 			}
 			$this->redirect('/');
 			Yii::$app->end();
+		}
+		if (Yii::$app->getRequest()->getIsAjax()) {
+			return "$name: $message";
+		} else {
+			return $this->render('error', [
+				'name' => $name,
+				'message' => $message,
+				'exception' => $exception,
+			]);
 		}
 	}
 
