@@ -59,9 +59,19 @@ class ProductController extends Controller {
         }
     }
 
+    public $code;
+    public function options()
+    {
+        return ['code'];
+    }
+    public function optionAliases()
+    {
+        return ['code' => 'code'];
+    }
+
     // Marketing contact send mail
     public function actionSendMailContact(){
-        Metvuong::sendMailContact();
+        Metvuong::sendMailContact($this->code);
     }
 
 
