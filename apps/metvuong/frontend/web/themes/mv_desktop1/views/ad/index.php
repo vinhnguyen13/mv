@@ -47,7 +47,7 @@ EOD;
 										<input class="exclude" type="text" id="map-search" value="<?= $autoFillValue ?>" data-val="<?= $autoFillValue ?>" autocomplete="off" />
 										<div id="search-list" class="hide">
 											<div class="hint-wrap">
-												<div class="hint"><?= Yii::t('general', 'Quick Search') ?></div>
+												<div class="hint"><?= Yii::t('ad', 'Nhập tên dự án, đường, phường, quận hoặc thành phố.') ?></div>
 												<div class="center"><?= Yii::t('ad', 'Tìm kiếm gần đây') ?></div>
 											</div>
 											<ul></ul>
@@ -62,7 +62,7 @@ EOD;
 								<div class="frm-item select-loaibds">
 									<div class="box-dropdown dropdown-common">
 										<div class="val-selected style-click">
-											<span class="selected" data-placeholder="<?= Yii::t('ad', 'Property Types') ?>"><?= Yii::t('ad', 'Nhập tên dự án, đường, phường, quận hoặc thành phố.') ?></span>
+											<span class="selected" data-placeholder="<?= Yii::t('ad', 'Property Types') ?>"><?= Yii::t('ad', 'Property Types') ?></span>
 											<span class="arrowDownFillFull"></span>
 										</div>
 										<div class="item-dropdown hide-dropdown">
