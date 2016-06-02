@@ -25,7 +25,7 @@
 	var loadProjectUrl = '$loadProjectUrl';
 EOD;
 	
-	$this->registerCss('#map-wrap {position: relative;} #progress-bar {transition: width 0.1s; display: none; top:0; position: absolute; width: 0%; height: 2px; background: #00a769;} #search-list .center {text-align: center; margin: 10px 0; opacity: 0.6;} #search-list .hint {padding: 8px 20px; display: block; background: #00a769; color: #FFF;} .gm-style-mtc {opacity: 0.8;} .gm-style-mtc:hover {opacity: 1;} .gm-style {font-family: "open-sans", monospace} .dt-pagination { display: block; margin-top: 12px; margin-bottom: 6px; } #map-search-wrap {position: relative; width: 220px;} #map-search {height: 40px; line-height: 40px; font-size: 14px; padding: 0 8px 0 8px; width: 100%;} #search-list {position: absolute; background: #FFF; box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.3); font-size: 15px; white-space: nowrap; z-index: 1;} #search-list a {display: block; padding: 6px 12px; border-top: 1px solid rgba(0, 0, 0, 0.1);} @media (max-width: 985px) {#map-search-wrap {width: 100%;} #search-list{ width: 100%; white-space: initial;}}');
+	$this->registerCss('.infor-duan-suggest .img-intro {margin-bottom: -6px;} #map-wrap {position: relative;} #progress-bar {transition: width 0.1s; display: none; top:0; position: absolute; width: 0%; height: 2px; background: #00a769;} #search-list .center {text-align: center; margin: 10px 0; opacity: 0.6;} #search-list .hint {padding: 8px 20px; display: block; background: #00a769; color: #FFF;} .gm-style-mtc {opacity: 0.8;} .gm-style-mtc:hover {opacity: 1;} .gm-style {font-family: "open-sans", monospace} .dt-pagination { display: block; margin-top: 12px; margin-bottom: 6px; } #map-search-wrap {position: relative; width: 220px;} #map-search {height: 40px; line-height: 40px; font-size: 14px; padding: 0 8px 0 8px; width: 100%;} #search-list {position: absolute; background: #FFF; box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.3); font-size: 15px; white-space: nowrap; z-index: 1;} #search-list a {display: block; padding: 6px 12px; border-top: 1px solid rgba(0, 0, 0, 0.1);} @media (max-width: 985px) {#map-search-wrap {width: 100%;} #search-list{ width: 100%; white-space: initial;}}');
 	$this->registerCss(".draw-wrap{padding-top: 10px; opacity: 0.8;} .draw-wrap:hover {opacity: 1;} .draw-wrap .button {text-decoration: none; cursor: pointer; display: block; font-family: Roboto, Arial, sans-serif; -webkit-user-select: none; font-size: 11px; height: 31px; border-radius: 2px; -webkit-background-clip: padding-box; box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px; font-weight: 500; background-color: rgb(255, 255, 255); background-clip: padding-box; line-height: 31px; overflow: hidden; padding: 0 8px;} .draw-wrap:hover .button {background: rgb(235, 235, 235), color: #000;} .draw-wrap .icon-edit-copy-4 {font-size: 14px; vertical-align: middle;}.draw-wrap .icon-mv {margin-right: 4px; float:left;}.draw-wrap .remove-button {display: none;}.draw-wrap-drawing .draw-button {display: none}.draw-wrap-drawing .remove-button {display: block}");
 	$this->registerJs($script, View::POS_BEGIN);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-helper.js', ['position'=>View::POS_HEAD]);
@@ -253,12 +253,12 @@ EOD;
 						<?= Html::activeHiddenInput($searchModel, 'page', ['disabled' => true]); ?>
 					</div>
 				</form>
-				
-				<div class="wrap-listing clearfix">
-					<div id="content-holder"><?= $this->render('_partials/side-list', ['searchModel' => $searchModel, 'list' => $list]) ?></div>
-					<div id="loading-list" class="hide" style="text-align: center; margin-top: 20px; margin-bottom: 15px;"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/loading-listing.gif' ?>" /></div>
+				<div style="position: relative;">
+					<div class="wrap-listing clearfix">
+						<div id="content-holder"><?= $this->render('_partials/side-list', ['searchModel' => $searchModel, 'list' => $list]) ?></div>
+						<div id="loading-list" class="loading-proccess" style="display: none; position: absolute;top: 0px;left: 0px;right: 0;bottom: 0;z-index: 999;background: rgba(0, 0, 0, 0.5);"><span></span></div>
+					</div>
 				</div>
-				
 			</div>
 			<div class="detail-listing-dt">
 				<div class="inner-detail-listing">

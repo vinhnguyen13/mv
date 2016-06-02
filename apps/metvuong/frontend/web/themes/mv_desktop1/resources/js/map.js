@@ -306,6 +306,7 @@ var detailListingWrap = $('.detail-listing-dt');
 
 var m2Map = {
 	loadingTimeout: null,
+	loadingList: $('#loading-list'),
 	progressBar: $('#progress-bar'),
 	mapEl: $('#map'),
 	polygonColor: '#00a769',
@@ -892,7 +893,7 @@ var m2Map = {
 		}
 		
 		if(loadingList) {
-			m2Map.wrapListing.loading({full: false});
+			m2Map.loadingList.show();
 		}
 		
 		return $.ajax({
@@ -901,7 +902,7 @@ var m2Map = {
 			success: fn,
 			complete: function() {
 				if(loadingList) {
-					m2Map.wrapListing.loading({done: true});
+					m2Map.loadingList.hide();
 					m2Map.wrapListing.scrollTop(0);
 				}
 				if(loadingMap) {
