@@ -96,7 +96,55 @@ $(document).ready(function() {
 		searchBlur: function() {
 			form.mapSearchEl.val(form.mapSearchEl.data('val'));
 		},
-		searchTyping: function() {
+		searchTyping: function(e) {
+			if(e.keyCode == 13) {
+				var currentActive = form.listSearchUl.find('.active');
+				
+				if(currentActive) {
+					form.mapSearchEl.blur();
+					currentActive.find('a').trigger('click');
+					
+					return;
+				}
+			}
+			
+			if(e.keyCode == 38 || e.keyCode == 40) {
+				var storeText = form.listSearchUl.data('text');
+				
+				if(typeof storeText != 'string') {
+					form.listSearchUl.data('text', form.mapSearchEl.val());
+				}
+				
+				var items = form.listSearchUl.children();
+				var direction = (e.keyCode == 40) ? 1 : -1;
+				var currentActive = form.listSearchUl.find('.active');
+				var currentActiveIndex = items.index(currentActive);
+				var nextIndex = currentActiveIndex + direction;
+				var totalItems = items.length;
+				
+				if(nextIndex == totalItems) {
+					nextIndex = -1;
+				} else if(nextIndex == -2) {
+					nextIndex = totalItems - 1;
+				}
+				
+				if(nextIndex == -1) {
+					if(typeof storeText == 'string') {
+						form.mapSearchEl.val(storeText);
+					}
+				} else {
+					var nextActiveItem = items.eq(nextIndex).addClass('active');
+					
+					form.mapSearchEl.val(nextActiveItem.text());
+				}
+				
+				currentActive.removeClass('active');
+				
+				return;
+			}
+			
+			form.listSearchUl.data('text', false);
+
 			var val = form.mapSearchEl.val().trim();
 			var type = form.fields.filter(s.type).val();
 			
@@ -123,6 +171,12 @@ $(document).ready(function() {
 	    	} else {
 				form.hideSearchList_();
 	    	}
+		},
+		searchItemMouseEnter: function() {
+			$(this).parent().addClass('active');
+		},
+		searchItemMouseLeave: function() {
+			$(this).parent().removeClass('active');
 		},
 		searchItemClick: function() {
 			var self = $(this);
@@ -202,7 +256,7 @@ $(document).ready(function() {
 	form.listSearchUl = form.listSearchEl.find('ul');
 	
 	form.mapSearchEl.on('focus', form.searchFocus).on('keyup', form.searchTyping).on('blur', form.searchBlur).on('keydown', form.preventEnterSubmit);
-	form.listSearchEl.on('click', 'a', form.searchItemClick);
+	form.listSearchEl.on('click', 'a', form.searchItemClick).on('mouseenter', 'a', form.searchItemMouseEnter).on('mouseleave', 'a', form.searchItemMouseLeave);
 	form.listSearchEl.on('mouseenter', form.searchListMouseEnter).on('mouseleave', form.searchListMouseLeave);
 	
 	/*
