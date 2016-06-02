@@ -305,6 +305,8 @@ var contentHolder = $('#content-holder');
 var detailListingWrap = $('.detail-listing-dt');
 
 var m2Map = {
+	loadingTimeout: null,
+	progressBar: $('#progress-bar'),
 	mapEl: $('#map'),
 	polygonColor: '#00a769',
 	map: null,
@@ -883,9 +885,10 @@ var m2Map = {
 		}
 		
 		var loadingList = form.af.filter(s.rl).val();
+		var loadingMap = form.af.filter(s.ra).val() || form.af.filter(s.rm).val();
 		
-		if(form.af.filter(s.ra).val() || form.af.filter(s.rm).val()) {
-			// console.log('load map');
+		if(loadingMap) {
+			m2Map.loading(10);
 		}
 		
 		if(loadingList) {
@@ -893,15 +896,18 @@ var m2Map = {
 		}
 		
 		return $.ajax({
-			  url: form.el.attr('action'),
-			  data: serialize,
-			  success: fn,
-			  complete: function() {
-				  if(loadingList) {
-					  m2Map.wrapListing.loading({done: true});
-					  m2Map.wrapListing.scrollTop(0);
-				  }
-			  }
+			url: form.el.attr('action'),
+			data: serialize,
+			success: fn,
+			complete: function() {
+				if(loadingList) {
+					m2Map.wrapListing.loading({done: true});
+					m2Map.wrapListing.scrollTop(0);
+				}
+				if(loadingMap) {
+					m2Map.loaded();
+				}
+			}
 		});
 	},
 	urlValueToLatLng: function(str) {
@@ -1008,6 +1014,27 @@ var m2Map = {
 		
 		form.af.filter(s.did).val('');
 		m2Map.pushState();
+	},
+	loading: function(n) {
+		m2Map.progressBar.show()
+		m2Map.loading_(n);
+	},
+	loading_: function(n) {
+		m2Map.progressBar.width(n + '%');
+		if(n < 90) {
+			m2Map.loadingTimeout = setTimeout(function(){
+				m2Map.loading_(n + 10);
+			}, n * 10);
+		}
+	},
+	loaded: function() {
+		clearTimeout(m2Map.loadingTimeout);
+		
+		m2Map.progressBar.width('100%');
+		
+		m2Map.loadingTimeout = setTimeout(function(){
+			m2Map.progressBar.hide().width('0%');
+		}, 150);
 	},
 	addDrawControl: function() {
 		var div = document.createElement('div');
