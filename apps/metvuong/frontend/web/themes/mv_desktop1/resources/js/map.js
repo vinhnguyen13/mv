@@ -385,6 +385,7 @@ var m2Map = {
 		var focusLocation = form.getFocusLocation();
 		
 		if(focusLocation.type == 'project_building') {
+			m2Map.currentDrawState = 'project_building';
 			m2Map.changeLocation(m2Map.drawBuildingProject);
 		} else if(focusLocation.type == 'street') {
 			m2Map.currentDrawState = focusLocation.type;
@@ -1212,6 +1213,7 @@ form.formChange = function(e) {
 
 		if(m2Map.currentDrawState == 'city' || m2Map.currentDrawState == 'district' || m2Map.currentDrawState == 'ward' || m2Map.currentDrawState == 'project_building') {
 			rect.prop('disabled', true);
+			form.af.filter(s.rm).prop('disabled', true);
 		} else {
 			form.af.filter(s.rm).val(1);
 		}
@@ -1221,6 +1223,7 @@ form.formChange = function(e) {
 		m2Map.get(m2Map.drawDetailCallBack);
 
 		rect.prop('disabled', false);
+		form.af.filter(s.rm).prop('disabled', false);
 	} else {
 		form.af.filter(s.rl).val(1);
 		form.af.filter(s.page).val('');
