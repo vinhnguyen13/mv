@@ -43,25 +43,30 @@ class MVBootstrap implements BootstrapInterface
         if(true){
             $langActive = $app->language;
             if($app->language == $this->supportedLanguages[0]){
-                $rules1 = $this->getRules($this->supportedLanguages[0]);
-                $rules2 = $this->getRules($this->supportedLanguages[1]);
+                $rules1 = $this->getTopRules($this->supportedLanguages[0]);
+                $rules2 = $this->getTopRules($this->supportedLanguages[1]);
+                $rules3 = $this->getBottomRules($this->supportedLanguages[0]);
+                $rules4 = $this->getBottomRules($this->supportedLanguages[1]);
             }elseif($app->language == $this->supportedLanguages[1]){
-                $rules1 = $this->getRules($this->supportedLanguages[1]);
-                $rules2 = $this->getRules($this->supportedLanguages[0]);
+                $rules1 = $this->getTopRules($this->supportedLanguages[1]);
+                $rules2 = $this->getTopRules($this->supportedLanguages[0]);
+                $rules3 = $this->getBottomRules($this->supportedLanguages[1]);
+                $rules4 = $this->getBottomRules($this->supportedLanguages[0]);
             }
-            $rules = ArrayHelper::merge($rules1, $rules2);
+            $rules_1 = ArrayHelper::merge($rules1, $rules2);
+            $rules_2 = ArrayHelper::merge($rules3, $rules4);
             Yii::$app->set('urlManager', [
                 'class' => 'yii\web\UrlManager',
                 'enablePrettyUrl' => true,
                 'showScriptName' => false,
                 'enableStrictParsing' => false,
-                'rules' => $rules
+                'rules' => ArrayHelper::merge($rules_1, $rules_2)
             ]);
         }
 
     }
 
-    private function getRules($language)
+    private function getTopRules($language)
     {
         return [
             '/' => 'site/index',
@@ -85,19 +90,21 @@ class MVBootstrap implements BootstrapInterface
             Yii::t('url', 'tro-chuyen', [], $language).'/with/<username>' => 'chat/with',
             Yii::t('url', 'goi-gia', [], $language).'' => 'payment/package',
 
+            'mvuser/protect/<action>' => 'user/security/<action>',
+            'mvuser/join/<action>' => 'user/registration/<action>',
+            'mvuser/forgot/<action>' => 'user/recovery/<action>',
+            'listing/<action>' => 'ad/<action>',
+        ];
+    }
+
+    private function getBottomRules($language){
+        return [
             '<username>' => 'member/profile',
             '<username>/'.Yii::t('url', 'cai-dat', [], $language) => 'member/update-profile',
             '<username>/'.Yii::t('url', 'thong-bao', [], $language) => 'notification/index',
             '<username>/'.Yii::t('url', 'thong-bao', [], $language).'/'.Yii::t('url', 'cap-nhat', [], $language) => 'notification/update',
             '<username>/'.Yii::t('url', 'danh-sach-tin-dang', [], $language) => 'dashboard/ad',
             '<username>/'.Yii::t('url', 'tro-chuyen', [], $language) => 'chat/index',
-
-            'mvuser/protect/<action>' => 'user/security/<action>',
-            'mvuser/join/<action>' => 'user/registration/<action>',
-            'mvuser/forgot/<action>' => 'user/recovery/<action>',
-
-            'listing/<action>' => 'ad/<action>',
-
         ];
     }
 
