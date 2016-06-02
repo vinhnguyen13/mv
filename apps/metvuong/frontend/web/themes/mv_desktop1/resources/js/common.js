@@ -223,7 +223,7 @@ $(document).ready(function() {
 				listSearch.pop();
 			}
 			
-			listSearch.unshift({v: val, i: id, t: type});
+			listSearch.unshift({v: encodeURIComponent(val), i: id, t: type});
 		}
 		
 		setCookie('sh', JSON.stringify(listSearch));

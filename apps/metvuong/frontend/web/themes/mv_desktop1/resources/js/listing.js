@@ -87,7 +87,7 @@ $(document).ready(function() {
 				form.listSearchUl.html('');
 				
 				for(var i = 0; i < lsLength; i++) {
-					form.listSearchUl.append('<li><a class="search-item" href="javascript:;" data-id="' + listSearch[i].i + '" data-type="' + listSearch[i].t + '">' + listSearch[i].v + '</a></li>');
+					form.listSearchUl.append('<li><a class="search-item" href="javascript:;" data-id="' + listSearch[i].i + '" data-type="' + listSearch[i].t + '">' + decodeURIComponent(listSearch[i].v) + '</a></li>');
 				}
 			} else {
 				form.listSearchEl.find('.center').hide();
@@ -156,7 +156,7 @@ $(document).ready(function() {
 					listSearch.pop();
 				}
 				
-				listSearch.unshift({v: val, i: id, t: type});
+				listSearch.unshift({v: encodeURIComponent(val), i: id, t: type});
 			}
 			
 			setCookie('sh', JSON.stringify(listSearch));
