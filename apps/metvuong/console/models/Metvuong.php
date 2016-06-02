@@ -22,23 +22,23 @@ class Metvuong extends Component
 {
 
     public static function sendMailContact($code=null){
-//        $contacts = AdContactInfo::getDb()->cache(function(){
-//            $sql = "SELECT email, count(product_id) as total, group_concat(product_id) as list_id
-//                    FROM metvuong_dev.ad_contact_info where email is not null group by email order by count(product_id) desc limit 200";
-//            return AdContactInfo::getDb()->createCommand($sql)->queryAll();
-//        });
-        $contacts = [
-            [
-                'email' => 'nhuttranm@gmail.com',
-                'total' => 6,
-                'list_id' => '501,503,516,517,518,520'
-            ],
-            [
-                'email' => 'nhut.love@live.com',
-                'total' => 2,
-                'list_id' => '521,522'
-            ]
-        ];
+        $contacts = AdContactInfo::getDb()->cache(function(){
+            $sql = "SELECT email, count(product_id) as total, group_concat(product_id) as list_id
+                    FROM metvuong_dev.ad_contact_info where email is not null group by email order by count(product_id) desc limit 200";
+            return AdContactInfo::getDb()->createCommand($sql)->queryAll();
+        });
+//        $contacts = [
+//            [
+//                'email' => 'nhuttranm@gmail.com',
+//                'total' => 6,
+//                'list_id' => '501,503,516,517,518,520'
+//            ],
+//            [
+//                'email' => 'nhut.love@live.com',
+//                'total' => 2,
+//                'list_id' => '521,522'
+//            ]
+//        ];
         if(count($contacts) > 0) {
             $count_code = CouponCode::getDb()->cache(function() use($code){
                 return CouponCode::find()->where('code = :c',[':c' => $code])->count('code');
