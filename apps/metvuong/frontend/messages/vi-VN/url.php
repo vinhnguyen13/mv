@@ -18,7 +18,7 @@
  */
 return [
     'can-mua' => 'can-mua',
-    'can-thue' => 'tin',
+    'can-thue' => 'can-thue',
     'du-an' => 'du-an',
     'dang-tin' => 'dang-tin',
     'tin-tuc' => 'tin-tuc',
