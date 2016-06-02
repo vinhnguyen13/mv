@@ -361,6 +361,8 @@ class SiteController extends Controller
 	    			$response[$k] = $hit['_source'];
 	    			$response[$k]['url_sale'] = Url::to(['/ad/index', 'urlSeg'=>Yii::t('ad', 'nha-dat-ban'), $hit['_type'] . '_id' => $hit['_id'], 's' => 1]);
 	    			$response[$k]['url_rent'] = Url::to(['/ad/index', 'urlSeg'=>Yii::t('ad', 'nha-dat-cho-thue'), $hit['_type'] . '_id' => $hit['_id'], 's' => 1]);
+	    			$response[$k]['type'] = $hit['_type'];
+	    			$response[$k]['id'] = $hit['_id'];
 	    		}
 	    		
 	    		if(!$response && is_numeric($v)) {
