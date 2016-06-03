@@ -17,20 +17,93 @@ class MapController extends Controller {
     	
     	$response = [];
     	
-    	$sort = ($t == AdProduct::TYPE_FOR_SELL) ? [AdProduct::TYPE_FOR_SELL_TOTAL => 'desc'] : [AdProduct::TYPE_FOR_RENT_TOTAL => 'desc'];
+//     	$sort = ($t == AdProduct::TYPE_FOR_SELL) ? [AdProduct::TYPE_FOR_SELL_TOTAL => 'desc'] : [AdProduct::TYPE_FOR_RENT_TOTAL => 'desc'];
+    	
+//     	$params = [
+// 			'query' => [
+// 				'match_phrase_prefix' => [
+// 					'search_field' => [
+// 						'query' => $v,
+//  						'max_expansions' => 100
+// 					]
+// 				]
+// 			],
+// 			'sort' => $sort,
+// 			'_source' => ['full_name', AdProduct::TYPE_FOR_SELL_TOTAL, AdProduct::TYPE_FOR_RENT_TOTAL]
+// 		];
+    	
+    	$sentence = explode(' ', $v);
+    	$firstWord = $sentence[0];
     	
     	$params = [
-			'query' => [
-				'match_phrase_prefix' => [
-					'search_field' => [
-						'query' => $v,
- 						'max_expansions' => 100
-					]
-				]
-			],
-			'sort' => $sort,
-			'_source' => ['full_name', AdProduct::TYPE_FOR_SELL_TOTAL, AdProduct::TYPE_FOR_RENT_TOTAL]
-		];
+    		"query" => [
+    			"bool" => [
+    				"must" => [
+    					"bool" => [
+    						"should" => [
+    							[
+    								"match" => [
+    									"search_name" => [
+    										"query" => $v,
+    										"operator" => "and"	
+    									]
+    								]
+    							],
+    							[
+    								"match_phrase_prefix" => [
+    									"search_name" => [
+    										"query" => $v,
+    										"operator" => "and",
+    										"slop" => 5
+    									]
+    								]
+    							],
+    							[
+    								"match_phrase_prefix" => [
+    									"search_field" => [
+    										"query" => $v,
+    										"operator" => "and",
+    										"slop" => 5
+    									]
+    								]
+    									
+    							]
+    						]	
+    					]
+    				],
+    				"should" => [
+    					[
+    						"match" => [
+    							"_type" => [
+    								"query" => "city",
+    								"boost" => 1	
+    							]	
+    						]
+    					],
+    					[
+    						"match" => [
+    							"city_id" => [
+    								"query" => 1,
+    								"boost" => 1	
+    							]	
+    						]
+    					],
+    					[
+    						"span_first" => [
+    							"match" => [
+    								"span_term" => [
+    									"search_name" => $firstWord
+    								]
+    							],
+    							"end" => 1,
+    							"boost" => 3
+    						]	
+    					]
+    				]
+    			]	
+    		],
+    		'_source' => ['full_name', AdProduct::TYPE_FOR_SELL_TOTAL, AdProduct::TYPE_FOR_RENT_TOTAL]
+    	];
     	
     	$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/term/_search');
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");

@@ -163,7 +163,7 @@ class ElasticController extends Controller {
 			'name'	=> $name,
 			'search_name' => Elastic::transform($name),
 			'full_name' => $fullName,
-			'search_full_name' => Elastic::transform($fullName),
+			'search_field' => Elastic::transform($fullName),
 			AdProduct::TYPE_FOR_SELL_TOTAL => $total['sell'],
 			AdProduct::TYPE_FOR_RENT_TOTAL => $total['rent']
 		];
