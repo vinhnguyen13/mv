@@ -41,6 +41,12 @@ class ElasticController extends Controller {
 			$this->batchInsert($indexName, 'district', $districtTermBulk);
 		}
 		
+		$totalCityBulk = count($cityTermBulk);
+		
+		for($i = 0; $i < $totalCityBulk; $i += 2) {
+			$cityTermBulk[$i+1]['city_id'] = $cityTermBulk[$i]['index']['_id'];
+		}
+		
 		$this->batchInsert($indexName, 'city', $cityTermBulk);
 	}
 	
@@ -99,7 +105,38 @@ class ElasticController extends Controller {
 	
 	public function createIndex($indexName) {
 		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/' . $indexName . '?pretty');
+		
+		$mapping = [
+			'mappings' => [
+				'_default_' => [
+					'properties' => [
+						'name' => [
+							'type' => 'string',
+							'index' => 'no'
+						],
+						'full_name' => [
+							'type' => 'string',
+							'index' => 'no'
+						],
+						'total_sell' => [
+							'type' => 'integer'
+						],
+						'total_rent' => [
+							'type' => 'integer'
+						],
+						'city_id' => [
+							'type' => 'integer'
+						],
+						'district_id' => [
+							'type' => 'integer'
+						]
+					]
+				]
+			]
+		];
+		
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($mapping));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_exec($ch);
 		curl_close($ch);
@@ -118,14 +155,15 @@ class ElasticController extends Controller {
 		
 		$term[] = [
 			'index' => [
-				'_id' => $id
+				'_id' => intval($id)
 			]
 		];
 		
 		$term[] = [
 			'name'	=> $name,
+			'search_name' => Elastic::transform($name),
 			'full_name' => $fullName,
-			'search_field' => Elastic::transform($fullName),
+			'search_full_name' => Elastic::transform($fullName),
 			AdProduct::TYPE_FOR_SELL_TOTAL => $total['sell'],
 			AdProduct::TYPE_FOR_RENT_TOTAL => $total['rent']
 		];
