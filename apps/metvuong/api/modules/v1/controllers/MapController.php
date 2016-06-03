@@ -31,9 +31,66 @@ class MapController extends Controller {
 // 			'sort' => $sort,
 // 			'_source' => ['full_name', AdProduct::TYPE_FOR_SELL_TOTAL, AdProduct::TYPE_FOR_RENT_TOTAL]
 // 		];
+
+    	$should = [
+    					[
+    						"match" => [
+    							"_type" => [
+    								"query" => "city",
+    								"boost" => 1	
+    							]	
+    						]
+    					],
+    					[
+    						"match" => [
+    							"city_id" => [
+    								"query" => 1,
+    								"boost" => 1	
+    							]	
+    						]
+    					]
+    	];
+
+    	if(strpos($v, "du an") !== false) {
+    		$sv = str_replace("du an", "", $v);
+    	
+    		if(trim($sv) != '') {
+    			$v = $sv;
+    			
+    			$should[] = [
+    						"match" => [
+    							"_type" => [
+    								"query" => "project_building",
+    								"boost" => 2	
+    							]	
+    						]
+    					];
+    		}
+    	} else {
+    		$should[] = [
+    				"match" => [
+    						"_type" => [
+    								"query" => "project_building",
+    								"boost" => 0.001
+    						]
+    				]
+    		];
+    	}
     	
     	$sentence = explode(' ', $v);
     	$firstWord = $sentence[0];
+    	
+    	$should[] = [
+    						"span_first" => [
+    							"match" => [
+    								"span_term" => [
+    									"search_name" => $firstWord
+    								]
+    							],
+    							"end" => 1,
+    							"boost" => 3
+    						]	
+    					];
     	
     	$params = [
     		"query" => [
@@ -63,7 +120,7 @@ class MapController extends Controller {
     									"search_field" => [
     										"query" => $v,
     										"operator" => "and",
-    										"slop" => 5
+    										"slop" => 8
     									]
     								]
     									
@@ -71,35 +128,7 @@ class MapController extends Controller {
     						]	
     					]
     				],
-    				"should" => [
-    					[
-    						"match" => [
-    							"_type" => [
-    								"query" => "city",
-    								"boost" => 1	
-    							]	
-    						]
-    					],
-    					[
-    						"match" => [
-    							"city_id" => [
-    								"query" => 1,
-    								"boost" => 1	
-    							]	
-    						]
-    					],
-    					[
-    						"span_first" => [
-    							"match" => [
-    								"span_term" => [
-    									"search_name" => $firstWord
-    								]
-    							],
-    							"end" => 1,
-    							"boost" => 3
-    						]	
-    					]
-    				]
+    				"should" => $should
     			]	
     		],
     		'_source' => ['full_name', AdProduct::TYPE_FOR_SELL_TOTAL, AdProduct::TYPE_FOR_RENT_TOTAL]
