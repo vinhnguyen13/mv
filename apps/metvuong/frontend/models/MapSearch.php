@@ -5,6 +5,9 @@ use yii\db\Query;
 use vsoft\ad\models\AdProduct;
 use yii\data\Pagination;
 use vsoft\express\components\StringHelper;
+use vsoft\ad\models\AdStreet;
+use vsoft\ad\models\AdWard;
+use vsoft\ad\models\AdBuildingProject;
 
 class MapSearch extends AdProduct {
 	
@@ -25,11 +28,16 @@ class MapSearch extends AdProduct {
 	public $ra;
 	public $ra_k;
 	public $rl;
+	public $iz;
+	public $z;
+	public $c;
+	public $did;
+	public $page;
 	
 	function rules() {
 		return array_merge(parent::rules(), [
-			[['order_by', 'rect', 'ra', 'ra_k'], 'string'],
-			[['price_min', 'price_max', 'size_min', 'size_max', 'created_before', 'room_no', 'toilet_no', 'rm', 'rl'], 'number']
+			[['order_by', 'rect', 'ra', 'ra_k', 'z', 'c'], 'string'],
+			[['price_min', 'price_max', 'size_min', 'size_max', 'created_before', 'room_no', 'toilet_no', 'rm', 'rl', 'page', 'iz', 'did'], 'number']
 		]);
 	}
 	
@@ -61,10 +69,15 @@ class MapSearch extends AdProduct {
 			$where['ad_product.project_building_id'] = intval($this->project_building_id);
 		}
 		
-		if(count($where) == $totalInitWhere && $this->district_id) {
-			$where['ad_product.district_id'] = intval($this->district_id);
+		if(count($where) == $totalInitWhere) {
+			if(!$this->district_id && !$this->city_id) {
+				$this->district_id = self::DEFAULT_DISTRICT;
+				$where['ad_product.district_id'] = self::DEFAULT_DISTRICT;
+			} else if($this->district_id) {
+				$where['ad_product.district_id'] = intval($this->district_id);
+			}
 		}
-		
+
 		if(count($where) == $totalInitWhere) {
 			if($this->city_id) {
 				$where['ad_product.city_id'] = intval($this->city_id);
@@ -117,23 +130,34 @@ class MapSearch extends AdProduct {
 			$query->andWhere(['>=', 'ad_product_addition_info.toilet_no', intval($this->toilet_no)]);
 		}
 		
-		if($this->rect) {
-			$rect = explode(',', $this->rect);
-			
-			$query->andWhere(['>=', 'ad_product.lat', $rect[0]]);
-			$query->andWhere(['<=', 'ad_product.lat', $rect[2]]);
-			$query->andWhere(['>=', 'ad_product.lng', $rect[1]]);
-			$query->andWhere(['<=', 'ad_product.lng', $rect[3]]);
+		return $query;
+	}
+	
+	public function getAutoFillValue() {
+		$fill = [];
+		
+		if($this->street_id) {
+			$fill[] = $this->street->pre . ' ' . $this->street->name;
+		} else if($this->ward_id) {
+			$fill[] = $this->ward->pre . ' ' . $this->ward->name;
+		} else if($this->project_building_id) {
+			$fill[] = $this->projectBuilding->name;
 		}
 		
-		return $query;
+		if($this->district_id) {
+			$fill[] = trim($this->district->pre . ' ' . $this->district->name);
+		}
+		
+		$fill[] = $this->city->name;
+		
+		return implode(', ', $fill);
 	}
 	
 	public function getList($query) {
 		$listQuery = clone $query;
 			
 		$countQuery = clone $listQuery;
-		$pages = new Pagination(['totalCount' => $countQuery->count()]);
+		$pages = new Pagination(['totalCount' => $countQuery->count(), 'defaultPageSize' => \Yii::$app->params['listingLimit']]);
 		$pages->setPageSize(\Yii::$app->params['listingLimit']);
 				
 		$listQuery->offset($pages->offset);
@@ -146,6 +170,7 @@ class MapSearch extends AdProduct {
 		$listQuery->orderBy("$sort $doa");
 		
 		$listQuery->addSelect([
+			"ad_product.score",
 			"ad_product.updated_at",
 			"ad_product.show_home_no",
 			"ad_product.home_no",
@@ -162,19 +187,19 @@ class MapSearch extends AdProduct {
 	function fetchValues() {
 		if(!$this->district_id) {
 			if($this->street_id) {
-				$this->district_id = $this->street->district->id;
+				$this->district_id = $this->street->district_id;
 			} else if($this->ward_id) {
-				$this->district_id = $this->ward->district->id;
+				$this->district_id = $this->ward->district_id;
 			} else if($this->project_building_id) {
 				if($this->projectBuilding->district) {
-					$this->district_id = $this->projectBuilding->district->id;
+					$this->district_id = $this->projectBuilding->district_id;
 				}
 			}
 		}
 	
 		if(!$this->city_id) {
 			if($this->district_id) {
-				$this->city_id = $this->district->city->id;
+				$this->city_id = $this->district->city_id;
 			} else {
 				$this->city_id = self::DEFAULT_CITY;
 			}

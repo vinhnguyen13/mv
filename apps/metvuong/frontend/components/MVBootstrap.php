@@ -79,6 +79,8 @@ class MVBootstrap implements BootstrapInterface
             Yii::t('url', 'du-an', [], $language) => 'building-project/index',
             Yii::t('url', 'du-an', [], $language).'/<slug>' => 'building-project/view',
 
+            Yii::t('url', 'nha-dat-ban', [], $language) => 'ad/index',
+            Yii::t('url', 'nha-dat-cho-thue', [], $language) => 'ad/index2',
             Yii::t('url', 'can-mua', [], $language).'/<type:1>-<city_id>-<district_id>' => 'ad/index',
             Yii::t('url', 'can-thue', [], $language).'/<type:2>-<city_id>-<district_id>' => 'ad/index',
             Yii::t('url', 'dang-tin', [], $language) => 'ad/post',
@@ -93,7 +95,7 @@ class MVBootstrap implements BootstrapInterface
             'mvuser/protect/<action>' => 'user/security/<action>',
             'mvuser/join/<action>' => 'user/registration/<action>',
             'mvuser/forgot/<action>' => 'user/recovery/<action>',
-            'listing/<action>' => 'ad/<action>',
+//            'listing/<action>' => 'ad/<action>',
         ];
     }
 
@@ -105,6 +107,7 @@ class MVBootstrap implements BootstrapInterface
             '<username>/'.Yii::t('url', 'thong-bao', [], $language).'/'.Yii::t('url', 'cap-nhat', [], $language) => 'notification/update',
             '<username>/'.Yii::t('url', 'danh-sach-tin-dang', [], $language) => 'dashboard/ad',
             '<username>/'.Yii::t('url', 'tro-chuyen', [], $language) => 'chat/index',
+
         ];
     }
 

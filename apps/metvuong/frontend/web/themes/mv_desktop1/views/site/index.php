@@ -3,6 +3,9 @@ use yii\helpers\StringHelper;
 use yii\helpers\Url;
 use frontend\models\AdProductSearch;
 use vsoft\ad\models\AdProduct;
+use yii\web\View;
+
+$this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-helper.js', ['position'=>View::POS_HEAD]);
 ?>
 <div class="page-home">
 

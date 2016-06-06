@@ -184,7 +184,7 @@ $(document).ready(function() {
             			var html = '';
             			
             			for(var i in response) {
-            				html += '<li>' + response[i].full_name + ' <a href="' + response[i].url_sale + '">' + lajax.t('Sale') + ' (' + response[i].total_sell + ')</a><a href="' + response[i].url_rent + '">' + lajax.t('Rent') + ' (' + response[i].total_rent + ')</a></li>';
+            				html += '<li data-type="' + response[i].type + '" data-id="' + response[i].id + '"><span>' + response[i].full_name + '</span> <a href="' + response[i].url_sale + '">' + lajax.t('Sale') + ' (' + response[i].total_sell + ')</a><a href="' + response[i].url_rent + '">' + lajax.t('Rent') + ' (' + response[i].total_rent + ')</a></li>';
                       	}
             			
             			$('.content-suggest ul').html(html);
@@ -198,6 +198,36 @@ $(document).ready(function() {
     		ss.addClass('hide');
     	}
     }).focus();
+    $('.content-suggest').on('click', 'a', function(e){
+    	var parentLi = $(this).closest('li');
+    	var id = parentLi.data('id');
+    	var val = parentLi.find('span').text();
+    	var type = parentLi.data('type');
+    	var searchHistory = getCookie('sh');
+		var listSearch = searchHistory ? JSON.parse(searchHistory) : [];
+		var isExist = false;
+		
+		for(var i = 0; i < listSearch.length; i++) {
+			var sli = listSearch[i];
+			
+			if(sli.i == id && sli.t == type) {
+				isExist = true;
+				break;
+			}
+		}
+		
+		if(isExist) {
+			move(listSearch, i, 0);
+		} else {
+			if(listSearch.length > 4) {
+				listSearch.pop();
+			}
+			
+			listSearch.unshift({v: encodeURIComponent(val), i: id, t: type});
+		}
+		
+		setCookie('sh', JSON.stringify(listSearch));
+    });
 
     $('.suggest-search .content-suggest .btn-close').on('click', function (e) {
         e.preventDefault();

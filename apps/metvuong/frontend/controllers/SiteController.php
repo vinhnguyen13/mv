@@ -136,8 +136,8 @@ class SiteController extends Controller
 					Yii::$app->end();
 				}
 			}
-			$this->redirect('/');
-			Yii::$app->end();
+//			$this->redirect('/');
+//			Yii::$app->end();
 		}
 		if (Yii::$app->getRequest()->getIsAjax()) {
 			return "$name: $message";
@@ -411,8 +411,10 @@ class SiteController extends Controller
 	    		 
 	    		foreach ($result['hits']['hits'] as $k => $hit) {
 	    			$response[$k] = $hit['_source'];
-	    			$response[$k]['url_sale'] = Url::to(['/ad/index', $hit['_type'] . '_id' => $hit['_id'], 'type' => AdProduct::TYPE_FOR_SELL, 's' => 1]);
-	    			$response[$k]['url_rent'] = Url::to(['/ad/index', $hit['_type'] . '_id' => $hit['_id'], 'type' => AdProduct::TYPE_FOR_RENT, 's' => 1]);
+	    			$response[$k]['url_sale'] = Url::to(['/ad/index', 'urlSeg'=>Yii::t('ad', 'nha-dat-ban'), $hit['_type'] . '_id' => $hit['_id'], 's' => 1]);
+	    			$response[$k]['url_rent'] = Url::to(['/ad/index', 'urlSeg'=>Yii::t('ad', 'nha-dat-cho-thue'), $hit['_type'] . '_id' => $hit['_id'], 's' => 1]);
+	    			$response[$k]['type'] = $hit['_type'];
+	    			$response[$k]['id'] = $hit['_id'];
 	    		}
 	    		
 	    		if(!$response && is_numeric($v)) {
