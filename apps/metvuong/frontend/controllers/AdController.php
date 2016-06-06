@@ -207,10 +207,16 @@ class AdController extends Controller
     }
     
     public function actionIndex2() {
+    	$this->view->params['menuBuy'] = false;
+    	$this->view->params['menuRent'] = true;
+    	
     	return $this->listing(AdProduct::TYPE_FOR_RENT);
     }
     
     public function actionIndex() {
+    	$this->view->params['menuBuy'] = true;
+    	$this->view->params['menuRent'] = false;
+    	
     	return $this->listing(AdProduct::TYPE_FOR_SELL);
     }
     
@@ -352,10 +358,16 @@ class AdController extends Controller
     }
     
     public function actionDetail1($id) {
+    	$this->view->params['menuBuy'] = true;
+    	$this->view->params['menuRent'] = false;
+    		
 		return $this->detail($id);
     }
     
     public function actionDetail2($id) {
+    	$this->view->params['menuBuy'] = false;
+    	$this->view->params['menuRent'] = true;
+    	
     	return $this->detail($id);
     }
     
@@ -367,10 +379,6 @@ class AdController extends Controller
     
     	$product = AdProduct::findOne($id);
     	try{
-    		if($type = $product->type) {
-    			$this->view->params['menuBuy'] = (!empty($type) && $type==1) ? true : false;
-    			$this->view->params['menuRent'] = (!empty($type) && $type==2) ? true : false;
-    		}
     		if(Yii::$app->user->id != $product->user_id) {
     			//                if(isset(Yii::$app->params['tracking']['all']) && Yii::$app->params['tracking']['all'] == true) {
     			//                    Tracking::find()->productVisitor(Yii::$app->user->id, $id, time());
