@@ -12,18 +12,13 @@ use yii\web\View;
 
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/swiper.jquery.min.js', ['position'=>View::POS_END]);
 
-Yii::t('news', 'Real Estate');
-Yii::t('news', 'Financial & Banking');
-Yii::t('news', 'Business');
-Yii::t('news', 'Economy');
-
 Yii::$app->view->registerMetaTag([
     'name' => 'keywords',
-    'content' => $news["title"]
+    'content' => empty($news["seo_keywords"]) ? $news["title"] : $news["seo_keywords"]
 ]);
 Yii::$app->view->registerMetaTag([
     'name' => 'description',
-    'content' => $news["brief"]
+    'content' => empty($news["seo_description"]) ? $news["brief"] : $news["seo_description"]
 ]);
 
 Yii::$app->view->registerMetaTag([
@@ -47,6 +42,11 @@ Yii::$app->view->registerMetaTag([
     'property' => 'og:url',
     'content' => \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true)
 ]);
+
+Yii::t('news', 'Real Estate');
+Yii::t('news', 'Financial & Banking');
+Yii::t('news', 'Business');
+Yii::t('news', 'Economy');
 
 $fb_appId = '680097282132293'; // stage.metvuong.com
 if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
