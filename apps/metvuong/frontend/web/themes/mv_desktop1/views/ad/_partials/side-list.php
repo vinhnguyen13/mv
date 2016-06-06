@@ -90,7 +90,7 @@
 				/*
 				 * Get Url
 				 */
-				$urlDetail = Url::to(['/ad/detail', 'id' => $product['id'], 'slug' => \common\components\Slug::me()->slugify($address)]);
+				$urlDetail = Url::to(['/ad/detail' . $product['type'], 'id' => $product['id'], 'slug' => \common\components\Slug::me()->slugify($address)]);
 			?>
 			<li class="col-xs-12 col-sm-6 col-lg-4">
 				<div class="item">

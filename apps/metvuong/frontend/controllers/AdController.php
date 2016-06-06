@@ -351,36 +351,48 @@ class AdController extends Controller
     	}
     }
     
+    public function actionDetail1($id) {
+		return $this->detail($id);
+    }
+    
+    public function actionDetail2($id) {
+    	return $this->detail($id);
+    }
+    
     public function actionDetail($id) {
-
+    	return $this->detail($id);
+    }
+    
+    public function detail($id) {
+    
     	$product = AdProduct::findOne($id);
-        try{
-			if($type = $product->type) {
-				$this->view->params['menuBuy'] = (!empty($type) && $type==1) ? true : false;
-				$this->view->params['menuRent'] = (!empty($type) && $type==2) ? true : false;
-			}
-            if(Yii::$app->user->id != $product->user_id) {
-//                if(isset(Yii::$app->params['tracking']['all']) && Yii::$app->params['tracking']['all'] == true) {
-//                    Tracking::find()->productVisitor(Yii::$app->user->id, $id, time());
-//                }
-				UserActivity::me()->saveActivity(UserActivity::ACTION_AD_CLICK, [
-					'owner' => Yii::$app->user->id,
-					'product' => $product->id,
-					'buddy' => $product->user_id
-				], $product->id);
-            }
-        } catch(Exception $ex){
-
-        }
-        
-        return $this->render('detail', ['product' => $product]);
-        
-// 		if(Yii::$app->request->isAjax){
-// 			return $this->renderAjax('_partials/detail', ['product' => $product]);
-// 		}else{
-// 			return $this->render('detail', ['product' => $product]);
-// 		}
-
+    	try{
+    		if($type = $product->type) {
+    			$this->view->params['menuBuy'] = (!empty($type) && $type==1) ? true : false;
+    			$this->view->params['menuRent'] = (!empty($type) && $type==2) ? true : false;
+    		}
+    		if(Yii::$app->user->id != $product->user_id) {
+    			//                if(isset(Yii::$app->params['tracking']['all']) && Yii::$app->params['tracking']['all'] == true) {
+    			//                    Tracking::find()->productVisitor(Yii::$app->user->id, $id, time());
+    			//                }
+    			UserActivity::me()->saveActivity(UserActivity::ACTION_AD_CLICK, [
+    					'owner' => Yii::$app->user->id,
+    					'product' => $product->id,
+    					'buddy' => $product->user_id
+    			], $product->id);
+    		}
+    	} catch(Exception $ex){
+    
+    	}
+    
+    	return $this->render('detail', ['product' => $product]);
+    
+    	// 		if(Yii::$app->request->isAjax){
+    	// 			return $this->renderAjax('_partials/detail', ['product' => $product]);
+    	// 		}else{
+    	// 			return $this->render('detail', ['product' => $product]);
+    	// 		}
+    
     }
 
     /**

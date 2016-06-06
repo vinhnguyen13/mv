@@ -199,7 +199,7 @@ class AdProduct extends AP
 
 	public function urlDetail($scheme = false)
 	{
-		return Url::to(['/ad/detail', 'id' => $this->id, 'slug' => \common\components\Slug::me()->slugify($this->getAddress($this->show_home_no))], $scheme);
+		return Url::to(['/ad/detail' . $this->type, 'id' => $this->id, 'slug' => \common\components\Slug::me()->slugify($this->getAddress($this->show_home_no))], $scheme);
 	}
 
     public function getExpired(){
