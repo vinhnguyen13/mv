@@ -16,7 +16,7 @@
 	$resourceApi = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=desktop.loadedResource&libraries=geometry';
 	
 	$autoFillValue = $searchModel->getAutoFillValue();
-	$actionId = \Yii::$app->request->get('urlSeg', Yii::t('ad', 'nha-dat-ban'));
+	$actionId = ($searchModel->type == AdProduct::TYPE_FOR_SELL) ? Yii::t('url', 'nha-dat-ban') : Yii::t('url', 'nha-dat-cho-thue');
 	$loadProjectUrl = Url::to(['/ad/get-project']);
 	
 	$script = <<<EOD
@@ -38,7 +38,7 @@ EOD;
 	<div class="wrap-listing-item">
 		<div class="items-list">
 			<div class="inner-wrap">
-				<form id="search-form" action="<?= Url::to(['/ad/index', 'urlSeg' => $actionId]) ?>" method="get">
+				<form id="search-form" action="<?= Url::current() ?>" method="get">
 					<div class="search-subpage">
 						<div class="advande-search clearfix">
 							<div class="toggle-search"<?= $hideSearchForm ? ' style="display: none"' : '' ?>>

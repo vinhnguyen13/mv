@@ -17,8 +17,8 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'can-mua' => 'for-sale',
-    'can-thue' => 'for-rent',
+    'nha-dat-ban' => 'for-sale',
+    'nha-dat-cho-thue' => 'for-rent',
     'du-an' => 'development',
     'dang-tin' => 'posting-a-listing',
     'tin-tuc' => 'news',
