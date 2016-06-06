@@ -1,0 +1,86 @@
+<html lang="vi-VN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetVuong</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300,700" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.rippler.min.js"></script>
+    <script src="js/jquery.mmenu.min.js"></script>
+    <script src="js/common.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.type-tin-dang .radio-ui').radio({
+                done: function (item) {
+                    
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div id="mm-0" class="mm-page mm-slideout">
+        <div id="container">
+            <div id="wrapper" class="">
+                <div class="contentContainer">
+                    <div class="type-tin-dang">
+                        <div class="title-box">Chọn hình thức tin đăng</div>
+                        <div class="wrap-box">
+                            <p class="mgB-15">Mã tin đăng: <strong class="mgL-10">MV05979</strong></p>
+                            <div class="clearfix mgB-15">
+                                <p class="pull-right">(Bạn còn 1 tin)</p>
+                                <label class="radio-inline radio-ui">
+                                    <input type="radio" name="type-tin-dang" checked>
+                                    <span class="icon-mv"><span class="icon-checkbox"></span></span>Tin miễn phí
+                                </label>
+                            </div>
+                            <div class="clearfix">
+                                <p class="pull-right">(20.000 VND/tin)</p>
+                                <label class="radio-inline radio-ui">
+                                    <input type="radio" name="type-tin-dang">
+                                    <span class="icon-mv"><span class="icon-checkbox"></span></span>Tin có phí
+                                </label>
+                            </div>
+                            <div class="text-center mgT-20">
+                                <button class="btn-common btn-cancel mgR-10">Hủy</button>
+                                <button class="btn-common">Đăng tin</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <header class="clearfix mm-slideout">
+        <div class="container wrap-header">
+            <div class="m-header">
+                <a href="#menu-header" id="menu-toggle" class="pull-left">
+                    <span class="icon-mv"><span class="icon-menu"></span></span>
+                </a>
+                <a href="#settings-user" id="avatar-user" class="wrap-img wrapNotifyTotal">
+                    <div>
+                        <img id="headAvatar" src="images/default-avatar.jpg" alt="">
+                    </div>
+                </a>
+                <div class="logo">
+                    <a href="/">metvuong</a>
+                </div>
+            </div>
+            <div class="dt-header clearfix">
+                <ul class="clearfix list-menu">
+                    <li class="dt-logo"><a href="/" class="wrap-img"><img src="images/logo.png" alt=""></a></li>
+                    <li class=""><a href="/nha-dat-ban?urlSeg=nha-dat-ban">Cần mua</a></li>
+                    <li class=""><a href="/nha-dat-ban?urlSeg=nha-dat-cho-thue">Cần thuê</a></li>
+                    <li class=""><a href="/dang-tin">Đăng tin</a></li>
+                    <li class=""><a href="/du-an">Dự án mới</a></li>
+                    <li class=""><a href="/tin-tuc">Tin tức</a></li>
+                    <li class=""><a href="/goi-gia">GIÁ DỊCH VỤ</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+</body>
+</html>
