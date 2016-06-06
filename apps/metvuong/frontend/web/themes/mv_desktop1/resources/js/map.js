@@ -887,7 +887,9 @@ var m2Map = {
 		}
 		
 		var loadingList = form.af.filter(s.rl).val();
-		var loadingMap = form.af.filter(s.ra).val() || form.af.filter(s.rm).val();
+		
+		var markerField = form.af.filter(s.rm);
+		var loadingMap = form.af.filter(s.ra).val() || (markerField.val() && !markerField.prop('disabled'));
 		
 		if(loadingMap) {
 			m2Map.loading(10);
