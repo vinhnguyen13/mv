@@ -151,7 +151,7 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
                     </ul>
                 </div>
             </div>
-            <div class=" col-md-2  col-sm-4  col-xs-12">
+            <div class=" col-md-2  col-sm-4  col-xs-12 disable">
                 <div class="keyword_col">
                     <h2><a href="#" title="Phòng trọ, nhà trọ tại Hà Nội"><span>Phòng trọ, nhà trọ</span> Hà Nội</a></h2>
                     <ul class="keyword_child_location clearfix">
@@ -187,7 +187,7 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
                     </ul>
                 </div>
             </div>
-            <div class=" col-md-2  col-sm-4  col-xs-12">
+            <div class=" col-md-2  col-sm-4  col-xs-12 disable">
                 <div class="keyword_col">
                     <h2><a href="#" title="Phòng trọ, nhà trọ tại Bình Dương"><span>Phòng trọ, nhà trọ</span> Bình Dương</a></h2>
                     <ul class="keyword_child_location clearfix">
@@ -221,7 +221,7 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
                     </ul>
                 </div>
             </div>
-            <div class=" col-md-2  col-sm-4  col-xs-12">
+            <div class=" col-md-2  col-sm-4  col-xs-12 disable">
                 <div class="keyword_col">
                     <h2><a href="#" title="Phòng trọ, nhà trọ tại Đà Nẵng"><span>Phòng trọ, nhà trọ</span> Đà Nẵng</a></h2>
                     <ul class="keyword_child_location clearfix">
@@ -250,7 +250,7 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
                     </ul>
                 </div>
             </div>
-            <div class=" col-md-2  col-sm-4  col-xs-12">
+            <div class=" col-md-2  col-sm-4  col-xs-12 disable">
                 <div class="keyword_col">
                     <h2><a href="#" title="Phòng trọ, nhà trọ tại Long An"><span>Phòng trọ, nhà trọ</span> Long An</a></h2>
                     <ul class="keyword_child_location clearfix">
