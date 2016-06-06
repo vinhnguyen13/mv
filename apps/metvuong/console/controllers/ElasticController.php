@@ -16,7 +16,8 @@ class ElasticController extends Controller {
 		
 		$this->createIndex($indexName);
 		
-		$cities = $this->getTermFromDb('ad_city');
+		// $cities = $this->getTermFromDb('ad_city');
+		$cities = $this->getTermFromDb('ad_city', ['id' => 1]);
 		
 		$cityTermBulk = [];
 		
