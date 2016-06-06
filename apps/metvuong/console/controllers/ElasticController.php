@@ -106,37 +106,66 @@ class ElasticController extends Controller {
 	public function createIndex($indexName) {
 		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/' . $indexName . '?pretty');
 		
-		$mapping = [
-			'mappings' => [
-				'_default_' => [
-					'properties' => [
-						'name' => [
-							'type' => 'string',
-							'index' => 'no'
-						],
-						'full_name' => [
-							'type' => 'string',
-							'index' => 'no'
-						],
-						'total_sell' => [
-							'type' => 'integer'
-						],
-						'total_rent' => [
-							'type' => 'integer'
-						],
-						'city_id' => [
-							'type' => 'integer'
-						],
-						'district_id' => [
-							'type' => 'integer'
-						]
+		$mappings = [
+			'_default_' => [
+				'properties' => [
+					'name' => [
+						'type' => 'string',
+						'index' => 'no'
+					],
+					'search_name' => [
+						'type' => 'string',
+						"analyzer" => "my_synonyms"
+					],
+					'full_name' => [
+						'type' => 'string',
+						'index' => 'no'
+					],
+					'search_field' => [
+						'type' => 'string',
+						"analyzer" => "my_synonyms"
+					],
+					'total_sell' => [
+						'type' => 'integer'
+					],
+					'total_rent' => [
+						'type' => 'integer'
+					],
+					'city_id' => [
+						'type' => 'integer'
+					],
+					'district_id' => [
+						'type' => 'integer'
 					]
 				]
 			]
 		];
 		
+		$synonyms = ["hcm,ho chi minh", "cmt,cach mang thang", "1,mot", "2,hai", "3,ba", "4,bon", "5,nam", "6,sau", "7,bay", "8,tam", "9,chin", "q,quan", "p,phuong"];
+		$settings = [
+			'analysis' => [
+				'filter' => [
+					'my_synonym_filter' => [
+						'type' => 'synonym',
+						'synonyms' => $synonyms
+					]
+				],
+				'analyzer' => [
+					'my_synonyms' => [
+						'tokenizer' => 'standard',
+						'filter' => ['lowercase', 'my_synonym_filter']
+					]
+				]
+			]	
+		];
+		
+		$config = [
+			'mappings' => $mappings,
+			'settings' => $settings
+		];
+		
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
-		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($mapping));
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($config));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_exec($ch);
 		curl_close($ch);
