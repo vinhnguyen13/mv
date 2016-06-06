@@ -50,7 +50,7 @@ class MapController extends Controller {
 				"match" => [
 					"_type" => [
 						"query" => "project_building",
-						"boost" => 2	
+						"boost" => 20000	
 					]	
 				]
 			];
@@ -60,6 +60,24 @@ class MapController extends Controller {
 					"_type" => [
 						"query" => "city",
 						"boost" => 1	
+					]	
+				],
+				"match" => [
+					"_type" => [
+						"query" => "district",
+						"boost" => 0.6	
+					]	
+				],
+				"match" => [
+					"_type" => [
+						"query" => "ward",
+						"boost" => 0.4	
+					]	
+				],
+				"match" => [
+					"_type" => [
+						"query" => "ward",
+						"boost" => 0.2	
 					]	
 				]
 			];
