@@ -131,13 +131,11 @@ class SiteController extends Controller
 			if(!empty($pathInfo)){
 				$c = explode("/", $pathInfo);
 				if(!empty($c[0]) && in_array($c[0], Yii::$app->bootstrap['MVBootstrap']['supportedLanguages'])){
-					$url = str_replace($c[0], '', $pathInfo);
+					$url = '/'.str_replace($c[0], '', $pathInfo);
 					$this->redirect(Url::to([$url]));
 					Yii::$app->end();
 				}
 			}
-			$this->redirect('/');
-			Yii::$app->end();
 		}
 		if (Yii::$app->getRequest()->getIsAjax()) {
 			return "$name: $message";
