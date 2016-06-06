@@ -206,18 +206,18 @@ class AdController extends Controller
     	return $areas;
     }
     
+    public function actionIndex1() {
+    	$this->view->params['menuBuy'] = true;
+    	$this->view->params['menuRent'] = false;
+    	
+    	return $this->listing(AdProduct::TYPE_FOR_SELL);
+    }
+    
     public function actionIndex2() {
     	$this->view->params['menuBuy'] = false;
     	$this->view->params['menuRent'] = true;
     	
     	return $this->listing(AdProduct::TYPE_FOR_RENT);
-    }
-    
-    public function actionIndex() {
-    	$this->view->params['menuBuy'] = true;
-    	$this->view->params['menuRent'] = false;
-    	
-    	return $this->listing(AdProduct::TYPE_FOR_SELL);
     }
     
     public function listing($type) {

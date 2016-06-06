@@ -79,10 +79,8 @@ class MVBootstrap implements BootstrapInterface
             Yii::t('url', 'du-an', [], $language) => 'building-project/index',
             Yii::t('url', 'du-an', [], $language).'/<slug>' => 'building-project/view',
 
-            Yii::t('url', 'nha-dat-ban', [], $language) => 'ad/index',
+            Yii::t('url', 'nha-dat-ban', [], $language) => 'ad/index1',
             Yii::t('url', 'nha-dat-cho-thue', [], $language) => 'ad/index2',
-            Yii::t('url', 'can-mua', [], $language).'/<type:1>-<city_id>-<district_id>' => 'ad/index',
-            Yii::t('url', 'can-thue', [], $language).'/<type:2>-<city_id>-<district_id>' => 'ad/index',
             Yii::t('url', 'dang-tin', [], $language) => 'ad/post',
             Yii::t('url', 'bat-dong-san', [], $language).'/redirect' => 'ad/redirect',
             Yii::t('url', 'bat-dong-san', [], $language).'/post-listing' => 'ad/post-listing',
