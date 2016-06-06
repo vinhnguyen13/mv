@@ -38,7 +38,7 @@ EOD;
 	<div class="wrap-listing-item">
 		<div class="items-list">
 			<div class="inner-wrap">
-				<form id="search-form" action="<?= Url::current() ?>" method="get">
+				<form id="search-form" action="/<?= $actionId ?>" method="get">
 					<div class="search-subpage">
 						<div class="advande-search clearfix">
 							<div class="toggle-search"<?= $hideSearchForm ? ' style="display: none"' : '' ?>>
