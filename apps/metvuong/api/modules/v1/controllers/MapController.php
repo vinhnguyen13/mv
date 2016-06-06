@@ -65,19 +65,7 @@ class MapController extends Controller {
 				"match" => [
 					"_type" => [
 						"query" => "district",
-						"boost" => 0.6	
-					]	
-				],
-				"match" => [
-					"_type" => [
-						"query" => "ward",
-						"boost" => 0.4	
-					]	
-				],
-				"match" => [
-					"_type" => [
-						"query" => "ward",
-						"boost" => 0.2	
+						"boost" => 0.8	
 					]	
 				]
 			];
