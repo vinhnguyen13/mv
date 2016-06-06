@@ -136,8 +136,8 @@ class SiteController extends Controller
 					Yii::$app->end();
 				}
 			}
-//			$this->redirect('/');
-//			Yii::$app->end();
+			$this->redirect('/');
+			Yii::$app->end();
 		}
 		if (Yii::$app->getRequest()->getIsAjax()) {
 			return "$name: $message";
