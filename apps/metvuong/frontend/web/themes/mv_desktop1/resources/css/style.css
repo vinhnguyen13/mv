@@ -11934,3 +11934,30 @@ height: 190px;
     font-size: 0;
     line-height: 0;
 }
+.vip_wrapper {
+    border: 2px solid #dedede;
+    border-radius: 5px;
+    margin: 20px 0;
+    padding: 0 0 10px;
+    background: #fff;
+}
+.vip_title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #666;
+    background: #f1f1f1;
+    padding: 10px;
+    margin: 0;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+.vip_wrapper .vip_content {
+    padding: 10px;
+    text-align: center;
+}
+.vip_button {
+    text-align: center;
+    padding: 10px;
+}
