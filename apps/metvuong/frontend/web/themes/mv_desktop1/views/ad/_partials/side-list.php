@@ -110,7 +110,7 @@
 			                    <?php if($product['area'] || $product['room_no'] || $product['toilet_no']) : ?>
 			                    	<?php if($product['area']): ?><li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span><?= $product['area'] ?>m<sup>2</sup> </li><?php endif; ?>
 			                    	<?php if($product['room_no']): ?><li><span class="icon-mv"><span class="icon-bed-search"></span></span><?= $product['room_no'] ?> </li><?php endif; ?>
-			                    	<?php if($product['toilet_no']): ?><li> <span class="icon-mv"><span class="icon-bathroom-search-copy-2"></span></span><?= $product['toilet_no'] ?> </li><?php endif; ?>
+			                    	<?php if($product['toilet_no']): ?><li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span><?= $product['toilet_no'] ?> </li><?php endif; ?>
 			                    <?php else: ?>
 			                    	<li><?=Yii::t('listing', 'updating')?></li>
 			                    <?php endif; ?>
