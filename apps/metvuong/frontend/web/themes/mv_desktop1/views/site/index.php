@@ -59,7 +59,7 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
         </div>
     </section>
 
-    <section class="box-item bg-f5f5f5 mh-450 pdT-50">
+    <section class="box-item bg-f5f5f5 mh-350 pdT-50">
         <div class="container">
             <div class="title-sub">Về MetVuong</div>
             <div class="wrap-item w-50 mg-center text-center">

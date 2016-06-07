@@ -10,6 +10,7 @@ ul,li{list-style:none;padding:0;margin:0}
 .overflow-all {
     overflow: hidden !important;
 }
+.color-gold{color: #FFD600 !important;}
 .row {
     margin-left: -20px;
     margin-right: -20px;
@@ -2314,6 +2315,7 @@ label {
     float: left;
     width: 100%;
 }
+#settings-user li.num-gold a,
 #settings-user li a {
     display: block;
     padding: 15px 0;
@@ -2325,6 +2327,12 @@ label {
     width: 100%;
     /* font-weight: 600; */
     position: relative;
+}
+#settings-user li.num-gold a {
+    font-size: 17px !important;
+}
+#settings-user .num-gold a .icon-mv {
+    margin-right: 0 !important;
 }
 #settings-user li:last-child a {
     border: none;
@@ -8959,6 +8967,7 @@ margin-right: 5px;
     position: relative;
     top: -1px;
 }
+.list-redire li a:hover,
 .list-redire li a:hover .icon-mv {
     color: #009544;
 }
@@ -9187,6 +9196,9 @@ margin-right: 5px;
     /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+.icon-coin-dollar:before {
+    content: "\e92e";
 }
 .icon-calendar:before {
     content: "\e92d";
@@ -11997,6 +12009,7 @@ height: 190px;
 .tabs-payment li {
     float: left;
     width: 25%;
+    border-right: 1px solid #DEDEDE;
 }
 .tabs-payment li a {
     display: block;
@@ -12008,6 +12021,9 @@ height: 190px;
     font-weight: 600;
     text-align: center;
     border-left: 1px solid #fff;
+}
+.tabs-payment li:last-child {
+    border-right: none;
 }
 .tabs-payment li a.active,
 .tabs-payment li a:hover {
