@@ -148,7 +148,7 @@ $(document).ready(function() {
 			var val = form.mapSearchEl.val().trim();
 			var type = form.fields.filter(s.type).val();
 			
-	    	if(val.length > 1) {
+	    	if(val != '') {
 	        	
 				if($.data(this, 'ajax')) {
 					$.data(this, 'ajax').abort();
@@ -169,7 +169,8 @@ $(document).ready(function() {
 					}
 	        	}));
 	    	} else {
-				form.hideSearchList_();
+	    		form.listSearchUl.html('');
+				form.searchFocus();
 	    	}
 		},
 		searchItemMouseEnter: function() {
