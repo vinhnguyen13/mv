@@ -100,14 +100,6 @@ class MapController extends Controller {
 			]
     	];
     	
-    	$consonantArr = ["ngh", "ph", "th", "tr", "gi", "ch", "nh", "ng", "kh", "gh"];
-    	
-    	$consonantLv = [
-			1 => "c|q|k|t|r|h|b|m|v|n|l|x|p|s|d|g",
-			2 => "ph|th|tr|gi|ch|nh|ng|kh|gh",
-			3 => "ngh"
-    	];
-    	
     	if($additionSearch != $v) {
     		if($additionSearch == '') {
     			$search[] = [
@@ -122,8 +114,7 @@ class MapController extends Controller {
     					"match" => [
     							"search_name" => [
     									"query" => $additionSearch,
-    									"operator" => "and",
-										"boost" => -0.09
+    									"operator" => "and"
     							]
     					]
     			];
@@ -132,8 +123,7 @@ class MapController extends Controller {
     							"search_name" => [
     									"query" => $additionSearch,
     									"operator" => "and",
-    									"slop" => 5,
-										"boost" => -0.09
+    									"slop" => 5
     							]
     					]
     			];
@@ -142,60 +132,67 @@ class MapController extends Controller {
     							"search_field" => [
     									"query" => $additionSearch,
     									"operator" => "and",
-    									"slop" => 8,
-										"boost" => -0.08
+    									"slop" => 8
     							]
     					]
     			];
     		}
     	}
     	
-    	$consonant = "(" . $consonantLv[3] . "|" . $consonantLv[2] . "|" . $consonantLv[1] . ")";
-    	$vowel = "(a|o|y|e|u|i)";
+//     	$consonantArr = ["ngh", "ph", "th", "tr", "gi", "ch", "nh", "ng", "kh", "gh"];
     	
-    	$correctText = preg_replace_callback("/$consonant(?=$consonant)/", function($matches) use ($consonantArr) {
-    		if(in_array($matches[0].$matches[2], $consonantArr)) {
-    			return $matches[0];
-    		} else {
-    			return $matches[0] . " ";
-    		}
-    	}, $additionSearch);
+//     	$consonantLv = [
+// 			1 => "c|q|k|t|r|h|b|m|v|n|l|x|p|s|d|g",
+// 			2 => "ph|th|tr|gi|ch|nh|ng|kh|gh",
+// 			3 => "ngh"
+//     	];
     	
-		$correctText = preg_replace_callback("/(?<=$vowel)$consonant(?=$vowel)/", function($matches) {
-			return " " . $matches[0];
-		}, $correctText);
+//     	$consonant = "(" . $consonantLv[3] . "|" . $consonantLv[2] . "|" . $consonantLv[1] . ")";
+//     	$vowel = "(a|o|y|e|u|i)";
     	
-    	if($correctText != $additionSearch) {
-    		$search[] = [
-				"match" => [
-					"search_name" => [
-						"query" => $correctText,
-						"operator" => "and",
-						"boost" => -0.08
-					]
-				]
-			];
-    		$search[] = [
-				"match_phrase_prefix" => [
-					"search_name" => [
-						"query" => $correctText,
-						"operator" => "and",
-						"slop" => 5,
-						"boost" => -0.08
-					]
-				]
-			];
-    		$search[] = [
-				"match_phrase_prefix" => [
-					"search_field" => [
-						"query" => $correctText,
-						"operator" => "and",
-						"slop" => 8,
-						"boost" => -0.07
-					]
-				]
-			];
-    	}
+//     	$correctText = preg_replace_callback("/$consonant(?=$consonant)/", function($matches) use ($consonantArr) {
+//     		if(in_array($matches[0].$matches[2], $consonantArr)) {
+//     			return $matches[0];
+//     		} else {
+//     			return $matches[0] . " ";
+//     		}
+//     	}, $additionSearch);
+    	
+// 		$correctText = preg_replace_callback("/(?<=$vowel)$consonant(?=$vowel)/", function($matches) {
+// 			return " " . $matches[0];
+// 		}, $correctText);
+    	
+//     	if($correctText != $additionSearch) {
+//     		$search[] = [
+// 				"match" => [
+// 					"search_name" => [
+// 						"query" => $correctText,
+// 						"operator" => "and",
+// 						"boost" => -0.08
+// 					]
+// 				]
+// 			];
+//     		$search[] = [
+// 				"match_phrase_prefix" => [
+// 					"search_name" => [
+// 						"query" => $correctText,
+// 						"operator" => "and",
+// 						"slop" => 5,
+// 						"boost" => -0.08
+// 					]
+// 				]
+// 			];
+//     		$search[] = [
+// 				"match_phrase_prefix" => [
+// 					"search_field" => [
+// 						"query" => $correctText,
+// 						"operator" => "and",
+// 						"slop" => 8,
+// 						"boost" => -0.07
+// 					]
+// 				]
+// 			];
+//     	}
     	
     	$params = [
     		"query" => [
