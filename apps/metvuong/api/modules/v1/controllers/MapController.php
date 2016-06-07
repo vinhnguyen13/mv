@@ -43,8 +43,8 @@ class MapController extends Controller {
     	$additionSearch = preg_replace("/(q|quan|p|phuong|cmt)([0-9])/", "$1 $2", $v);
     	$additionSearch = str_replace("thang", "", $additionSearch);
     	
-    	if(strpos($additionSearch, "du an ") !== false) {
-    		$additionSearch = str_replace("du an ", "", $v);
+    	if(strpos($additionSearch, "du an") !== false) {
+    		$additionSearch = str_replace("du an", "", $v);
     		
     		$boost[] = [
 				"match" => [
@@ -110,33 +110,43 @@ class MapController extends Controller {
     	];
     	
     	if($additionSearch != $v) {
-    		$search[] = [
-				"match" => [
-					"search_name" => [
-						"query" => $additionSearch,
-						"operator" => "and"	
-					]
-				]
-			];
-    		$search[] = [
-				"match_phrase_prefix" => [
-					"search_name" => [
-						"query" => $additionSearch,
-						"operator" => "and",
-						"slop" => 5
-					]
-				]
-			];
-    		$search[] = [
-				"match_phrase_prefix" => [
-					"search_field" => [
-						"query" => $additionSearch,
-						"operator" => "and",
-						"slop" => 8,
-						"boost" => -1
-					]
-				]
-			];
+    		if($additionSearch == '') {
+    			$search[] = [
+    					"match" => [
+    							"_type" => [
+    									"query" => "project_building"
+    							]
+    					]
+    			];
+    		} else {
+    			$search[] = [
+    					"match" => [
+    							"search_name" => [
+    									"query" => $additionSearch,
+    									"operator" => "and"
+    							]
+    					]
+    			];
+    			$search[] = [
+    					"match_phrase_prefix" => [
+    							"search_name" => [
+    									"query" => $additionSearch,
+    									"operator" => "and",
+    									"slop" => 5
+    							]
+    					]
+    			];
+    			$search[] = [
+    					"match_phrase_prefix" => [
+    							"search_field" => [
+    									"query" => $additionSearch,
+    									"operator" => "and",
+    									"slop" => 8,
+    									"boost" => -1
+    							]
+    					]
+    			];
+    		}
     	}
     	
     	$consonant = "(" . $consonantLv[3] . "|" . $consonantLv[2] . "|" . $consonantLv[1] . ")";
