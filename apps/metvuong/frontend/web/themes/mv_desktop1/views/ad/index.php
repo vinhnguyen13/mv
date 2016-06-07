@@ -67,6 +67,7 @@ EOD;
 										</div>
 										<div class="item-dropdown hide-dropdown">
 											<ul class="clearfix loai-bds">
+												<li><a href="#" data-value="" data-order="3"><?= Yii::t('ad', 'Property Types') ?></a></li>
 												<?php
 													$groupCategories = $db->cache(function(){
 														return AdCategoryGroup::find()->all();
@@ -86,6 +87,7 @@ EOD;
 										<div class="val-selected style-click" data-text-add="<?= Yii::t('ad', 'Beds') ?>"><span class="selected">0+ <?= Yii::t('ad', 'Beds') ?></span><span class="arrowDownFillFull"></span></div>
 										<div class="item-dropdown item-bed-bath hide-dropdown">
 											<ul class="clearfix">
+												<li><a href="#" data-value="">0+</a></li>
 												<li><a href="#" data-value="1">1+</a></li>
 												<li><a href="#" data-value="2">2+</a></li>
 												<li><a href="#" data-value="3">3+</a></li>
@@ -106,6 +108,7 @@ EOD;
 										<div class="val-selected style-click" data-text-add="<?= Yii::t('ad', 'Bath') ?>"><span class="selected">0+ <?= Yii::t('ad', 'Bath') ?></span><span class="arrowDownFillFull"></span></div>
 										<div class="item-dropdown item-bed-bath hide-dropdown">
 											<ul class="clearfix">
+												<li><a href="#" data-value="">0+</a></li>
 												<li><a href="#" data-value="1">1+</a></li>
 												<li><a href="#" data-value="2">2+</a></li>
 												<li><a href="#" data-value="3">3+</a></li>
