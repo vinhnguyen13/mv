@@ -74,30 +74,30 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
                 <div class="keyword_col">
                     <h2><a href="#" title="Nhà đất tại Hồ Chí Minh">Nhà Đất Hồ Chí Minh</a></h2>
                     <ul class="keyword_child_location clearfix">
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 1">Quận 1</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 2">Quận 2</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 3">Quận 3</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 4">Quận 4</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 5">Quận 5</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 6">Quận 6</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 7">Quận 7</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 8">Quận 8</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 9">Quận 9</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 10">Quận 10</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 11">Quận 11</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 12">Quận 12</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Bình Tân">Quận Bình Tân</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Bình Thạnh">Quận Bình Thạnh</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Gò Vấp">Quận Gò Vấp</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Phú Nhuận">Quận Phú Nhuận</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Tân Bình">Quận Tân Bình</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Tân Phú">Quận Tân Phú</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Thủ Đức">Quận Thủ Đức</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Bình Chánh">Huyện Bình Chánh</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Cần Giờ">Huyện Cần Giờ</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Củ Chi">Huyện Củ Chi</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Hóc Môn">Huyện Hóc Môn</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Nhà Bè">Huyện Nhà Bè</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>10])?>" title="Nhà đất tại Quận 1">Quận 1</a></h3></li>
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>14])?>" title="Nhà đất tại Quận 2">Quận 2</a></h3></li>
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>15])?>" title="Nhà đất tại Quận 3">Quận 3</a></h3></li>
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>16])?>" title="Nhà đất tại Quận 4">Quận 4</a></h3></li>
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>17])?>" title="Nhà đất tại Quận 5">Quận 5</a></h3></li>
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>18])?>" title="Nhà đất tại Quận 6">Quận 6</a></h3></li>
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>19])?>" title="Nhà đất tại Quận 7">Quận 7</a></h3></li>
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>20])?>" title="Nhà đất tại Quận 8">Quận 8</a></h3></li>
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>21])?>" title="Nhà đất tại Quận 9">Quận 9</a></h3></li>
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>11])?>" title="Nhà đất tại Quận 10">Quận 10</a></h3></li>
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>12])?>" title="Nhà đất tại Quận 11">Quận 11</a></h3></li>
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>13])?>" title="Nhà đất tại Quận 12">Quận 12</a></h3></li>
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>2])?>" title="Nhà đất tại Quận Bình Tân">Quận Bình Tân</a></h3></li>
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>3])?>" title="Nhà đất tại Quận Bình Thạnh">Quận Bình Thạnh</a></h3></li>
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>6])?>" title="Nhà đất tại Quận Gò Vấp">Quận Gò Vấp</a></h3></li>
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>9])?>" title="Nhà đất tại Quận Phú Nhuận">Quận Phú Nhuận</a></h3></li>
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>22])?>" title="Nhà đất tại Quận Tân Bình">Quận Tân Bình</a></h3></li>
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>23])?>" title="Nhà đất tại Quận Tân Phú">Quận Tân Phú</a></h3></li>
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>24])?>" title="Nhà đất tại Quận Thủ Đức">Quận Thủ Đức</a></h3></li>
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>1])?>" title="Nhà đất tại Huyện Bình Chánh">Huyện Bình Chánh</a></h3></li>
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>4])?>" title="Nhà đất tại Huyện Cần Giờ">Huyện Cần Giờ</a></h3></li>
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>5])?>" title="Nhà đất tại Huyện Củ Chi">Huyện Củ Chi</a></h3></li>
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>7])?>" title="Nhà đất tại Huyện Hóc Môn">Huyện Hóc Môn</a></h3></li>
+                        <li class="item"><h3><a class="link" href="<?=Url::to(['ad/index1', 'district_id'=>8])?>" title="Nhà đất tại Huyện Nhà Bè">Huyện Nhà Bè</a></h3></li>
                     </ul>
                 </div>
             </div>
