@@ -335,7 +335,7 @@ use vsoft\ad\models\AdImages;
                             </label>
                         </div>
                         <div class="clearfix">
-                            <p class="pull-right">(20.000 VND/tin)</p>
+                            <p class="pull-right">(20 Gold/tin)</p>
                             <label class="radio-inline radio-ui">
                                 <input type="radio" name="type-tin-dang" data-flag="true">
                                 <span class="icon-mv"><span class="icon-checkbox"></span></span>Tin có phí
