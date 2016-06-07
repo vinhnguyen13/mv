@@ -10,6 +10,7 @@ use vsoft\news\models\CmsShow;
 use Yii;
 use yii\base\Exception;
 use yii\base\InvalidParamException;
+use yii\base\UserException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
