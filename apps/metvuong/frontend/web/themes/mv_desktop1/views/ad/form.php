@@ -342,7 +342,7 @@ use vsoft\ad\models\AdImages;
                             </label>
                             <div class="ajax-loading-inner hide">
                             	<div class="w-100 mgT-10 inner-ajax hide">
-	                            	Số Gold của bạn không đủ để đăng tin. Vui lòng <a href="/themes/mv_desktop1/resources/loai-thanh-toan.html" class="text-decor color-cd-hover" target="_blank">nạp thêm Gold</a>.
+	                            	Số Gold của bạn không đủ để đăng tin. Vui lòng nạp thêm Gold.
 	                            	<?=$this->render('/payment/package/index')?>
 	                            </div>
                             </div>
