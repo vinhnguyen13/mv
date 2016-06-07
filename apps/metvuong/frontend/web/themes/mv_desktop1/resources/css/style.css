@@ -6,6 +6,7 @@ h2 {}body{margin:0;}article,aside,details,figcaption,figure,footer,header,hgroup
 ul,li{list-style:none;padding:0;margin:0}
 *{margin:0;padding:0;}
 .mg-center{margin:0 auto 0;}
+.color-red{color:red !important;}
 .overflow-all {
     overflow: hidden !important;
 }
@@ -11879,6 +11880,10 @@ height: 190px;
     text-transform: uppercase;
     font-weight: 600;
 }
+.method_napcard_inner img,
+.bank_item .bank_title2 img {
+    max-width: 100%;
+}
 .bank_item .bank_title {
     font-size: 13px;
 }
@@ -11959,7 +11964,7 @@ height: 190px;
 }
 .ajax-loading-inner {
     margin-top: 10px;
-    height: 20px;
+    /* height: 20px; */
 }
 .ajax-loading-inner .loading-proccess {
     position: static !important;
@@ -11969,4 +11974,77 @@ height: 190px;
 .ajax-loading-inner .loading-proccess span {
     top: 0;
     left: 0;
+}
+.ajax-loading-inner .type-payment {
+    padding-top: 10px;
+}
+.ajax-loading-inner .type-payment .container {
+    width: 100%;
+    padding: 0;
+}
+.ajax-loading-inner #sms .w-30 {
+    width: 100%;
+}
+.tabs-payment {
+    display: none;
+}
+.ajax-loading-inner .tabs-payment {
+    display: block;
+}
+.tabs-payment {
+    margin-bottom: 20px;
+}
+.tabs-payment li {
+    float: left;
+    width: 25%;
+}
+.tabs-payment li a {
+    display: block;
+    line-height: 100%;
+    padding: 15px 0;
+    background: #F5F5F5;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    border-left: 1px solid #fff;
+}
+.tabs-payment li a.active,
+.tabs-payment li a:hover {
+    background: #00a769;
+    color: #fff;
+}
+.ajax-loading-inner .item-payment {
+    display:none;
+}
+.ajax-loading-inner .item-payment.active {
+    display: block;
+    border: none;
+    margin-bottom: 0;
+}
+.ajax-loading-inner .item-payment .title-item {
+    background: none;
+    color: #3c3c3c;
+    padding: 0;
+    margin-bottom: 10px;
+}
+.ajax-loading-inner .item-payment .pd-20 {
+    padding: 0 !important;
+}
+.ajax-loading-inner .item-payment .text-left {
+    margin-top: 15px;
+}
+.ajax-loading-inner #sms .text-center {
+    text-align: left;
+}
+.ajax-loading-inner #credit-card .pdT-20 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 0 !important;
+}
+.ajax-loading-inner .vip_title {
+    font-size: 15px;
+}
+.ajax-loading-inner .vip_wrapper {
+    height: 150px;
 }
