@@ -64,7 +64,7 @@ use frontend\models\AdProductSearch;
                         </a>
                     </li>
                     <li class="num-gold">
-                        <a href="#" class="fs-14"><span class="icon-mv mgR-5 color-gold"><span class="icon-coin-dollar"></span></span>10 Gold</a>
+                        <a href="<?=Url::to(['/dashboard/payment', 'username'=> Yii::$app->user->identity->getUsername()])?>" class="fs-14"><span class="icon-mv mgR-5 color-gold"><span class="icon-coin-dollar"></span></span>10 Gold</a>
                     </li>
                     <!-- <li><a href="<?= Url::to(['/ad/post']) ?>"><em class="icon-plus"></em>Đăng tin mới</a></li> -->
                     <li><a href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->getUsername()])?>"><span class="icon-mv"><span class="icon-barometer"></span></span><?=Yii::t('ad', 'Dashboard')?></a></li>
@@ -117,7 +117,7 @@ use frontend\models\AdProductSearch;
                 <?php } else{?>
                     <ul class="pull-left list-redire">
                         <li class="num-gold">
-                            <a href="#" class="fs-14"><span class="icon-mv mgR-5 color-gold"><span class="icon-coin-dollar"></span></span>10 Gold</a>
+                            <a href="<?=Url::to(['/dashboard/payment', 'username'=> Yii::$app->user->identity->getUsername()])?>" class="fs-14"><span class="icon-mv mgR-5 color-gold"><span class="icon-coin-dollar"></span></span>10 Gold</a>
                         </li>
                         <li class="dropdown-message box-dropdown">
                             <a class="val-selected wrapNotifyChat" href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->getUsername()])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('chat', 'Chat')?>">

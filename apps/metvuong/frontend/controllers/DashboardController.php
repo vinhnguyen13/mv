@@ -423,4 +423,10 @@ class DashboardController extends Controller
         }
     }
 
+    public function actionPayment()
+    {
+        $this->view->params = ['noFooter' => true, 'menuPayment' => true, 'isDashboard' => true];
+        return $this->render('payment/index');
+    }
+
 }
