@@ -94,8 +94,7 @@ class MapController extends Controller {
 					"search_field" => [
 						"query" => $v,
 						"operator" => "and",
-						"slop" => 8,
-						"boost" => -1
+						"slop" => 8
 					]
 				]
 			]
@@ -123,7 +122,8 @@ class MapController extends Controller {
     					"match" => [
     							"search_name" => [
     									"query" => $additionSearch,
-    									"operator" => "and"
+    									"operator" => "and",
+										"boost" => -0.09
     							]
     					]
     			];
@@ -132,7 +132,8 @@ class MapController extends Controller {
     							"search_name" => [
     									"query" => $additionSearch,
     									"operator" => "and",
-    									"slop" => 5
+    									"slop" => 5,
+										"boost" => -0.09
     							]
     					]
     			];
@@ -142,7 +143,7 @@ class MapController extends Controller {
     									"query" => $additionSearch,
     									"operator" => "and",
     									"slop" => 8,
-    									"boost" => -1
+										"boost" => -0.08
     							]
     					]
     			];
@@ -169,7 +170,8 @@ class MapController extends Controller {
 				"match" => [
 					"search_name" => [
 						"query" => $correctText,
-						"operator" => "and"	
+						"operator" => "and",
+						"boost" => -0.08
 					]
 				]
 			];
@@ -178,7 +180,8 @@ class MapController extends Controller {
 					"search_name" => [
 						"query" => $correctText,
 						"operator" => "and",
-						"slop" => 5
+						"slop" => 5,
+						"boost" => -0.08
 					]
 				]
 			];
@@ -188,7 +191,7 @@ class MapController extends Controller {
 						"query" => $correctText,
 						"operator" => "and",
 						"slop" => 8,
-						"boost" => -1
+						"boost" => -0.07
 					]
 				]
 			];
