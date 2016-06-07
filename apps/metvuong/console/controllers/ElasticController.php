@@ -142,7 +142,7 @@ class ElasticController extends Controller {
 			]
 		];
 		
-		$synonyms = ["hcm,ho chi minh", "cmt,cach mang thang", "1,mot,nhat", "2,hai", "3,ba", "4,bon", "5,nam", "6,sau", "7,bay", "8,tam", "9,chin", "q,quan", "p,phuong"];
+		$synonyms = ["hcm,h c m,ho chi minh", "cmt, c m t,cach mang thang", "1,mot,nhat", "2,hai", "3,ba", "4,bon", "5,nam", "6,sau", "7,bay", "8,tam", "9,chin", "q,quan", "p,phuong"];
 		$settings = [
 			'analysis' => [
 				'filter' => [
