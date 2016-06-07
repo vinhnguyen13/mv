@@ -124,8 +124,7 @@ class ElasticController extends Controller {
 					],
 					'search_field' => [
 						'type' => 'string',
-						"analyzer" => "my_synonyms",
-						"index_options" => "docs"
+						"analyzer" => "my_synonyms"
 					],
 					'total_sell' => [
 						'type' => 'integer'
