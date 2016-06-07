@@ -40,7 +40,7 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
         <!-- <span class="arrow-down"></span> -->
     </section>
 
-    <section class="box-item box-feature-item">
+    <section class="box-item box-feature-item bg-f5f5f5">
         <div class="container">
             <div class="title-sub"><?= Yii::t('listing', 'Featured listings') ?></div>
             <div class="wrap-item wrap-lazy">
@@ -55,6 +55,184 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
             <div class="title-sub"><?=Yii::t('news','NEWS')?></div>
             <div class="wrap-item">
 
+            </div>
+        </div>
+    </section>
+
+    <section class="box-item bg-f5f5f5 mh-450 pdT-50">
+        <div class="container">
+            <div class="title-sub">Về MetVuong</div>
+            <div class="wrap-item w-50 mg-center text-center">
+                <p class="fs-14 lh-24">Metvuong.com là phương bất động sản. Tìm kiếm hay mua và bán Bất động sản sẽ dễ dàng hơn bao giờ hết với <a href="/" class="text-decor color-cd">metvuong.com</a>. Với hệ thống thông tin bát nháo hiện nay, ta dễ dàng thất lạc trong hàng đống dữ liệu. Nhưng với <a href="/" class="text-decor color-cd">metvuong.com</a>, mọi rắc rối sẽ không còn nữa. Việc tìm, thuê hay mua bán một căn nhà hay một căn hộ chưa bao giờ dễ dàng như thế. Chuẩn xác và đơn giản, bất động sản chẳng còn là một vấn đề nan giải. </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="box-item pdT-50 keyword_wrapper clearfix mgB-0">
+        <div class="container">
+            <div class=" col-md-2  col-sm-4  col-xs-12">
+                <div class="keyword_col">
+                    <h2><a href="#" title="Nhà đất tại Hồ Chí Minh">Nhà Đất Hồ Chí Minh</a></h2>
+                    <ul class="keyword_child_location clearfix">
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 1">Quận 1</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 2">Quận 2</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 3">Quận 3</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 4">Quận 4</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 5">Quận 5</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 6">Quận 6</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 7">Quận 7</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 8">Quận 8</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 9">Quận 9</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 10">Quận 10</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 11">Quận 11</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận 12">Quận 12</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Bình Tân">Quận Bình Tân</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Bình Thạnh">Quận Bình Thạnh</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Gò Vấp">Quận Gò Vấp</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Phú Nhuận">Quận Phú Nhuận</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Tân Bình">Quận Tân Bình</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Tân Phú">Quận Tân Phú</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Thủ Đức">Quận Thủ Đức</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Bình Chánh">Huyện Bình Chánh</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Cần Giờ">Huyện Cần Giờ</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Củ Chi">Huyện Củ Chi</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Hóc Môn">Huyện Hóc Môn</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Nhà Bè">Huyện Nhà Bè</a></h3></li>                
+                    </ul>
+                </div>
+            </div>
+            <div class=" col-md-2  col-sm-4  col-xs-12 disable">
+                <div class="keyword_col">
+                    <h2><a href="#" title="Nhà đất tại Hà Nội">Nhà Đất Hà Nội</a></h2>
+                    <ul class="keyword_child_location clearfix">
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Hoàn Kiếm">Quận Hoàn Kiếm</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Ba Đình">Quận Ba Đình</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Đống Đa">Quận Đống Đa</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Hai Bà Trưng">Quận Hai Bà Trưng</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Thanh Xuân">Quận Thanh Xuân</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Tây Hồ">Quận Tây Hồ</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Cầu Giấy">Quận Cầu Giấy</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Hoàng Mai">Quận Hoàng Mai</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Long Biên">Quận Long Biên</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Đông Anh">Huyện Đông Anh</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Gia Lâm">Huyện Gia Lâm</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Sóc Sơn">Huyện Sóc Sơn</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Thanh Trì">Huyện Thanh Trì</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Từ Liêm">Huyện Từ Liêm</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Hà Đông">Quận Hà Đông</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Thị Xã Sơn Tây">Thị Xã Sơn Tây</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Mê Linh">Huyện Mê Linh</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Ba Vì">Huyện Ba Vì</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Phúc Thọ">Huyện Phúc Thọ</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Đan Phượng">Huyện Đan Phượng</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Hoài Đức">Huyện Hoài Đức</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Quốc Oai">Huyện Quốc Oai</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Thạch Thất">Huyện Thạch Thất</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Chương Mỹ">Huyện Chương Mỹ</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Thanh Oai">Huyện Thanh Oai</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Thường Tín">Huyện Thường Tín</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Phú Xuyên">Huyện Phú Xuyên</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Ứng Hòa">Huyện Ứng Hòa</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Mỹ Đức">Huyện Mỹ Đức</a></h3></li>
+                    </ul>
+                </div>
+            </div>
+            <div class=" col-md-2  col-sm-4  col-xs-12 disable">
+                <div class="keyword_col">
+                    <h2><a href="#" title="Nhà đất tại Bình Dương">Nhà Đất Bình Dương</a></h2>
+                    <ul class="keyword_child_location clearfix">
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Thị Xã Thủ Dầu Một">Thị Xã Thủ Dầu Một</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Dầu Tiếng">Huyện Dầu Tiếng</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Bến Cát">Huyện Bến Cát</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Phú Giáo">Huyện Phú Giáo</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Tân Uyên">Huyện Tân Uyên</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Dĩ An">Huyện Dĩ An</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Thuận An">Huyện Thuận An</a></h3></li>    
+                    </ul>
+                </div>
+                <div class="keyword_col">
+                    <h2><a href="#" title="Nhà đất tại Hải Phòng">Nhà Đất Hải Phòng</a></h2>
+                    <ul class="keyword_child_location clearfix">
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Hồng Bàng">Quận Hồng Bàng</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Ngô Quyền">Quận Ngô Quyền</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Lê Chân">Quận Lê Chân</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Hải An">Quận Hải An</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Kiến An">Quận Kiến An</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Đồ Sơn">Quận Đồ Sơn</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Kinh Dương">Quận Kinh Dương</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Thuỷ Nguyên">Huyện Thuỷ Nguyên</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện An Dương">Huyện An Dương</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện An Lão">Huyện An Lão</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Kiến Thụy">Huyện Kiến Thụy</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Tiên Lãng">Huyện Tiên Lãng</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Vĩnh Bảo">Huyện Vĩnh Bảo</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Cát Hải">Huyện Cát Hải</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Bạch Long Vĩ">Huyện Bạch Long Vĩ</a></h3></li>
+                    </ul>
+                </div>
+            </div>
+            <div class=" col-md-2  col-sm-4  col-xs-12 disable">
+                <div class="keyword_col">
+                    <h2><a href="#" title="Nhà đất tại Đà Nẵng">Nhà Đất Đà Nẵng</a></h2>
+                    <ul class="keyword_child_location clearfix">
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Liên Chiểu">Quận Liên Chiểu</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Thanh Khê">Quận Thanh Khê</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Hải Châu">Quận Hải Châu</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Sơn Trà">Quận Sơn Trà</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Ngũ Hành Sơn">Quận Ngũ Hành Sơn</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Cẩm Lệ">Quận Cẩm Lệ</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Hoà Vang">Huyện Hoà Vang</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Hoàng Sa">Huyện Hoàng Sa</a></h3></li>
+                    </ul>
+                </div>
+                <div class="keyword_col">
+                    <h2><a href="#" title="Nhà đất tại Cần Thơ">Nhà Đất Cần Thơ</a></h2>
+                    <ul class="keyword_child_location clearfix">
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Ninh Kiều">Quận Ninh Kiều</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Ô Môn">Quận Ô Môn</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Bình Thuỷ">Quận Bình Thuỷ</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Cái Răng">Quận Cái Răng</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Quận Thốt Nốt">Quận Thốt Nốt</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Vĩnh Thạnh">Huyện Vĩnh Thạnh</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Cờ Đỏ">Huyện Cờ Đỏ</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Phong Điền">Huyện Phong Điền</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Thới Lai">Huyện Thới Lai</a></h3></li>
+                    </ul>
+                </div>
+            </div>
+            <div class=" col-md-2  col-sm-4  col-xs-12 disable">
+                <div class="keyword_col">
+                    <h2><a href="#" title="Nhà đất tại Long An">Nhà Đất Long An</a></h2>
+                    <ul class="keyword_child_location clearfix">
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Thành Phố Tân An">Thành Phố Tân An</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Tân Hưng">Huyện Tân Hưng</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Vĩnh Hưng">Huyện Vĩnh Hưng</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Mộc Hóa">Huyện Mộc Hóa</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Tân Thạnh">Huyện Tân Thạnh</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Đức Huệ">Huyện Đức Huệ</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Đức Hòa">Huyện Đức Hòa</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Bến Lức">Huyện Bến Lức</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Thủ Thừa">Huyện Thủ Thừa</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Tân Trụ">Huyện Tân Trụ</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Cần Đước">Huyện Cần Đước</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Cần Giuộc">Huyện Cần Giuộc</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Châu Thành Long An">Huyện Châu Thành</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Tân Thạnh">Huyện Tân Thạnh</a></h3></li>
+                    </ul>
+                </div>
+                <div class="keyword_col">
+                    <h2><a href="#" title="Nhà đất tại Bà Rịa Vũng Tàu">Nhà Đất Bà Rịa Vũng Tàu</a></h2>
+                    <ul class="keyword_child_location clearfix">
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Thành Phố Vũng Tầu">Thành Phố Vũng Tầu</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Thị Xã Bà Rịa">Thị Xã Bà Rịa</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Châu Đức">Huyện Châu Đức</a></h3></li>                
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Xuyên Mộc">Huyện Xuyên Mộc</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Long Điền">Huyện Long Điền</a></h3></li>              
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Đất Đỏ">Huyện Đất Đỏ</a></h3></li>    
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Tân Thành">Huyện Tân Thành</a></h3></li>      
+                        <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Côn Đảo">Huyện Côn Đảo</a></h3></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
@@ -85,7 +263,7 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
         });
     </script>
 
-    <section class="search-home">
+    <section class="search-home bg-f5f5f5">
         <div class="container">
             <div class="title-sub"><?= Yii::t('general', 'LIÊN HỆ') ?></div>
             <div class="clearfix">
@@ -113,175 +291,6 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
                         <input type="text" placeholder="<?= Yii::t('general', 'Your Email') ?>" />
                         <button type="submit" class="btn-common"><?= Yii::t('general', 'Subscribe') ?></button>
                     </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="keyword_wrapper clearfix">
-        <div class="container">
-            <div class=" col-md-2  col-sm-4  col-xs-12">
-                <div class="keyword_col">
-                    <h2><a href="#" title="Phòng trọ, nhà trọ tại Hồ Chí Minh"><span>Phòng trọ, nhà trọ</span> Hồ Chí Minh</a></h2>
-                    <ul class="keyword_child_location clearfix">
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận 1"><span>Phòng trọ, nhà trọ</span> Quận 1</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận 2"><span>Phòng trọ, nhà trọ</span> Quận 2</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận 3"><span>Phòng trọ, nhà trọ</span> Quận 3</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận 4"><span>Phòng trọ, nhà trọ</span> Quận 4</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận 5"><span>Phòng trọ, nhà trọ</span> Quận 5</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận 6"><span>Phòng trọ, nhà trọ</span> Quận 6</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận 7"><span>Phòng trọ, nhà trọ</span> Quận 7</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận 8"><span>Phòng trọ, nhà trọ</span> Quận 8</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận 9"><span>Phòng trọ, nhà trọ</span> Quận 9</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận 10"><span>Phòng trọ, nhà trọ</span> Quận 10</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận 11"><span>Phòng trọ, nhà trọ</span> Quận 11</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận 12"><span>Phòng trọ, nhà trọ</span> Quận 12</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Bình Tân"><span>Phòng trọ, nhà trọ</span> Quận Bình Tân</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Bình Thạnh"><span>Phòng trọ, nhà trọ</span> Quận Bình Thạnh</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Gò Vấp"><span>Phòng trọ, nhà trọ</span> Quận Gò Vấp</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Phú Nhuận"><span>Phòng trọ, nhà trọ</span> Quận Phú Nhuận</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Tân Bình"><span>Phòng trọ, nhà trọ</span> Quận Tân Bình</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Tân Phú"><span>Phòng trọ, nhà trọ</span> Quận Tân Phú</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Thủ Đức"><span>Phòng trọ, nhà trọ</span> Quận Thủ Đức</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Bình Chánh"><span>Phòng trọ, nhà trọ</span> Huyện Bình Chánh</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Cần Giờ"><span>Phòng trọ, nhà trọ</span> Huyện Cần Giờ</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Củ Chi"><span>Phòng trọ, nhà trọ</span> Huyện Củ Chi</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Hóc Môn"><span>Phòng trọ, nhà trọ</span> Huyện Hóc Môn</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Nhà Bè"><span>Phòng trọ, nhà trọ</span> Huyện Nhà Bè</a></h3></li>                
-                    </ul>
-                </div>
-            </div>
-            <div class=" col-md-2  col-sm-4  col-xs-12 disable">
-                <div class="keyword_col">
-                    <h2><a href="#" title="Phòng trọ, nhà trọ tại Hà Nội"><span>Phòng trọ, nhà trọ</span> Hà Nội</a></h2>
-                    <ul class="keyword_child_location clearfix">
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Hoàn Kiếm"><span>Phòng trọ, nhà trọ</span> Quận Hoàn Kiếm</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Ba Đình"><span>Phòng trọ, nhà trọ</span> Quận Ba Đình</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Đống Đa"><span>Phòng trọ, nhà trọ</span> Quận Đống Đa</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Hai Bà Trưng"><span>Phòng trọ, nhà trọ</span> Quận Hai Bà Trưng</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Thanh Xuân"><span>Phòng trọ, nhà trọ</span> Quận Thanh Xuân</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Tây Hồ"><span>Phòng trọ, nhà trọ</span> Quận Tây Hồ</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Cầu Giấy"><span>Phòng trọ, nhà trọ</span> Quận Cầu Giấy</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Hoàng Mai"><span>Phòng trọ, nhà trọ</span> Quận Hoàng Mai</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Long Biên"><span>Phòng trọ, nhà trọ</span> Quận Long Biên</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Đông Anh"><span>Phòng trọ, nhà trọ</span> Huyện Đông Anh</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Gia Lâm"><span>Phòng trọ, nhà trọ</span> Huyện Gia Lâm</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Sóc Sơn"><span>Phòng trọ, nhà trọ</span> Huyện Sóc Sơn</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Thanh Trì"><span>Phòng trọ, nhà trọ</span> Huyện Thanh Trì</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Từ Liêm"><span>Phòng trọ, nhà trọ</span> Huyện Từ Liêm</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Hà Đông"><span>Phòng trọ, nhà trọ</span> Quận Hà Đông</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Thị Xã Sơn Tây"><span>Phòng trọ, nhà trọ</span> Thị Xã Sơn Tây</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Mê Linh"><span>Phòng trọ, nhà trọ</span> Huyện Mê Linh</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Ba Vì"><span>Phòng trọ, nhà trọ</span> Huyện Ba Vì</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Phúc Thọ"><span>Phòng trọ, nhà trọ</span> Huyện Phúc Thọ</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Đan Phượng"><span>Phòng trọ, nhà trọ</span> Huyện Đan Phượng</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Hoài Đức"><span>Phòng trọ, nhà trọ</span> Huyện Hoài Đức</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Quốc Oai"><span>Phòng trọ, nhà trọ</span> Huyện Quốc Oai</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Thạch Thất"><span>Phòng trọ, nhà trọ</span> Huyện Thạch Thất</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Chương Mỹ"><span>Phòng trọ, nhà trọ</span> Huyện Chương Mỹ</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Thanh Oai"><span>Phòng trọ, nhà trọ</span> Huyện Thanh Oai</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Thường Tín"><span>Phòng trọ, nhà trọ</span> Huyện Thường Tín</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Phú Xuyên"><span>Phòng trọ, nhà trọ</span> Huyện Phú Xuyên</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Ứng Hòa"><span>Phòng trọ, nhà trọ</span> Huyện Ứng Hòa</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Mỹ Đức"><span>Phòng trọ, nhà trọ</span> Huyện Mỹ Đức</a></h3></li>
-                    </ul>
-                </div>
-            </div>
-            <div class=" col-md-2  col-sm-4  col-xs-12 disable">
-                <div class="keyword_col">
-                    <h2><a href="#" title="Phòng trọ, nhà trọ tại Bình Dương"><span>Phòng trọ, nhà trọ</span> Bình Dương</a></h2>
-                    <ul class="keyword_child_location clearfix">
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Thị Xã Thủ Dầu Một"><span>Phòng trọ, nhà trọ</span> Thị Xã Thủ Dầu Một</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Dầu Tiếng"><span>Phòng trọ, nhà trọ</span> Huyện Dầu Tiếng</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Bến Cát"><span>Phòng trọ, nhà trọ</span> Huyện Bến Cát</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Phú Giáo"><span>Phòng trọ, nhà trọ</span> Huyện Phú Giáo</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Tân Uyên"><span>Phòng trọ, nhà trọ</span> Huyện Tân Uyên</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Dĩ An"><span>Phòng trọ, nhà trọ</span> Huyện Dĩ An</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Thuận An"><span>Phòng trọ, nhà trọ</span> Huyện Thuận An</a></h3></li>    
-                    </ul>
-                </div>
-                <div class="keyword_col">
-                    <h2><a href="#" title="Phòng trọ, nhà trọ tại Hải Phòng"><span>Phòng trọ, nhà trọ</span> Hải Phòng</a></h2>
-                    <ul class="keyword_child_location clearfix">
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Hồng Bàng"><span>Phòng trọ, nhà trọ</span> Quận Hồng Bàng</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Ngô Quyền"><span>Phòng trọ, nhà trọ</span> Quận Ngô Quyền</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Lê Chân"><span>Phòng trọ, nhà trọ</span> Quận Lê Chân</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Hải An"><span>Phòng trọ, nhà trọ</span> Quận Hải An</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Kiến An"><span>Phòng trọ, nhà trọ</span> Quận Kiến An</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Đồ Sơn"><span>Phòng trọ, nhà trọ</span> Quận Đồ Sơn</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Kinh Dương"><span>Phòng trọ, nhà trọ</span> Quận Kinh Dương</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Thuỷ Nguyên"><span>Phòng trọ, nhà trọ</span> Huyện Thuỷ Nguyên</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện An Dương"><span>Phòng trọ, nhà trọ</span> Huyện An Dương</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện An Lão"><span>Phòng trọ, nhà trọ</span> Huyện An Lão</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Kiến Thụy"><span>Phòng trọ, nhà trọ</span> Huyện Kiến Thụy</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Tiên Lãng"><span>Phòng trọ, nhà trọ</span> Huyện Tiên Lãng</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Vĩnh Bảo"><span>Phòng trọ, nhà trọ</span> Huyện Vĩnh Bảo</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Cát Hải"><span>Phòng trọ, nhà trọ</span> Huyện Cát Hải</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Bạch Long Vĩ"><span>Phòng trọ, nhà trọ</span> Huyện Bạch Long Vĩ</a></h3></li>
-                    </ul>
-                </div>
-            </div>
-            <div class=" col-md-2  col-sm-4  col-xs-12 disable">
-                <div class="keyword_col">
-                    <h2><a href="#" title="Phòng trọ, nhà trọ tại Đà Nẵng"><span>Phòng trọ, nhà trọ</span> Đà Nẵng</a></h2>
-                    <ul class="keyword_child_location clearfix">
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Liên Chiểu"><span>Phòng trọ, nhà trọ</span> Quận Liên Chiểu</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Thanh Khê"><span>Phòng trọ, nhà trọ</span> Quận Thanh Khê</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Hải Châu"><span>Phòng trọ, nhà trọ</span> Quận Hải Châu</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Sơn Trà"><span>Phòng trọ, nhà trọ</span> Quận Sơn Trà</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Ngũ Hành Sơn"><span>Phòng trọ, nhà trọ</span> Quận Ngũ Hành Sơn</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Cẩm Lệ"><span>Phòng trọ, nhà trọ</span> Quận Cẩm Lệ</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Hoà Vang"><span>Phòng trọ, nhà trọ</span> Huyện Hoà Vang</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Hoàng Sa"><span>Phòng trọ, nhà trọ</span> Huyện Hoàng Sa</a></h3></li>
-                    </ul>
-                </div>
-                <div class="keyword_col">
-                    <h2><a href="#" title="Phòng trọ, nhà trọ tại Cần Thơ"><span>Phòng trọ, nhà trọ</span> Cần Thơ</a></h2>
-                    <ul class="keyword_child_location clearfix">
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Ninh Kiều"><span>Phòng trọ, nhà trọ</span> Quận Ninh Kiều</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Ô Môn"><span>Phòng trọ, nhà trọ</span> Quận Ô Môn</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Bình Thuỷ"><span>Phòng trọ, nhà trọ</span> Quận Bình Thuỷ</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Cái Răng"><span>Phòng trọ, nhà trọ</span> Quận Cái Răng</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Quận Thốt Nốt"><span>Phòng trọ, nhà trọ</span> Quận Thốt Nốt</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Vĩnh Thạnh"><span>Phòng trọ, nhà trọ</span> Huyện Vĩnh Thạnh</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Cờ Đỏ"><span>Phòng trọ, nhà trọ</span> Huyện Cờ Đỏ</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Phong Điền"><span>Phòng trọ, nhà trọ</span> Huyện Phong Điền</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Thới Lai"><span>Phòng trọ, nhà trọ</span> Huyện Thới Lai</a></h3></li>
-                    </ul>
-                </div>
-            </div>
-            <div class=" col-md-2  col-sm-4  col-xs-12 disable">
-                <div class="keyword_col">
-                    <h2><a href="#" title="Phòng trọ, nhà trọ tại Long An"><span>Phòng trọ, nhà trọ</span> Long An</a></h2>
-                    <ul class="keyword_child_location clearfix">
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Thành Phố Tân An"><span>Phòng trọ, nhà trọ</span> Thành Phố Tân An</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Tân Hưng"><span>Phòng trọ, nhà trọ</span> Huyện Tân Hưng</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Vĩnh Hưng"><span>Phòng trọ, nhà trọ</span> Huyện Vĩnh Hưng</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Mộc Hóa"><span>Phòng trọ, nhà trọ</span> Huyện Mộc Hóa</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Tân Thạnh"><span>Phòng trọ, nhà trọ</span> Huyện Tân Thạnh</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Đức Huệ"><span>Phòng trọ, nhà trọ</span> Huyện Đức Huệ</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Đức Hòa"><span>Phòng trọ, nhà trọ</span> Huyện Đức Hòa</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Bến Lức"><span>Phòng trọ, nhà trọ</span> Huyện Bến Lức</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Thủ Thừa"><span>Phòng trọ, nhà trọ</span> Huyện Thủ Thừa</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Tân Trụ"><span>Phòng trọ, nhà trọ</span> Huyện Tân Trụ</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Cần Đước"><span>Phòng trọ, nhà trọ</span> Huyện Cần Đước</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Cần Giuộc"><span>Phòng trọ, nhà trọ</span> Huyện Cần Giuộc</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Châu Thành Long An"><span>Phòng trọ, nhà trọ</span> Huyện Châu Thành</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Tân Thạnh"><span>Phòng trọ, nhà trọ</span> Huyện Tân Thạnh</a></h3></li>
-                    </ul>
-                </div>
-                <div class="keyword_col">
-                    <h2><a href="#" title="Phòng trọ, nhà trọ tại Bà Rịa Vũng Tàu"><span>Phòng trọ, nhà trọ</span> Bà Rịa Vũng Tàu</a></h2>
-                    <ul class="keyword_child_location clearfix">
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Thành Phố Vũng Tầu"><span>Phòng trọ, nhà trọ</span> Thành Phố Vũng Tầu</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Thị Xã Bà Rịa"><span>Phòng trọ, nhà trọ</span> Thị Xã Bà Rịa</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Châu Đức"><span>Phòng trọ, nhà trọ</span> Huyện Châu Đức</a></h3></li>                
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Xuyên Mộc"><span>Phòng trọ, nhà trọ</span> Huyện Xuyên Mộc</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Long Điền"><span>Phòng trọ, nhà trọ</span> Huyện Long Điền</a></h3></li>              
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Đất Đỏ"><span>Phòng trọ, nhà trọ</span> Huyện Đất Đỏ</a></h3></li>    
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Tân Thành"><span>Phòng trọ, nhà trọ</span> Huyện Tân Thành</a></h3></li>      
-                        <li class="item"><h3><a class="link" href="#" title="Phòng trọ, nhà trọ tại Huyện Côn Đảo"><span>Phòng trọ, nhà trọ</span> Huyện Côn Đảo</a></h3></li>
-                    </ul>
                 </div>
             </div>
         </div>
