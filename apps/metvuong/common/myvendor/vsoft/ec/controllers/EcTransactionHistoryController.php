@@ -51,6 +51,7 @@ class EcTransactionHistoryController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'user_id' => $user_id
         ]);
     }
 

@@ -3,9 +3,11 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
 /* @var $searchModel vsoft\ec\models\EcTransactionHistorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $user_id */
 
 $this->title = Yii::t('ec', 'Transaction history detail');
 $this->params['breadcrumbs'][] = $this->title;
@@ -13,7 +15,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="ec-transaction-history-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <p>
+        <a href="<?=Yii::$app->urlManager->createUrl(['ec/ec-balance', 'EcBalanceSearch[user_id]' => $user_id])?>" class="btn btn-success">Back to balance</a>
+    </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -57,9 +61,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Html::activeDropDownList($searchModel, 'object_type', \vsoft\ec\models\EcTransactionHistory::getObjectType(),['class'=>'form-control','prompt' => 'All']),
             ],
             [
+                'label' => Yii::t('ec', 'Charge'),
                 'attribute' => 'charge_id',
                 'value' => function ($model) {
-                    return $model->charge->charge." ".$model->charge->type;
+                    if($model->charge)
+                        return $model->charge->charge." ".$model->charge->type;
+                    else
+                        return null;
                 },
                 'filter' => false
             ],

@@ -54,16 +54,4 @@ class EcBalanceController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-
-
-    public function actionTransaction($user_id)
-    {
-        $searchModel = new EcTransactionHistory();
-        $dataProvider = $searchModel->getTransactions($user_id);
-
-        $this->render('transaction', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider
-        ]);
-    }
 }
