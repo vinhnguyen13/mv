@@ -327,7 +327,7 @@ use vsoft\ad\models\AdImages;
 					<div class="group-frm type-tin-dang fs-14">
 						<div class="title-frm">Chọn hình thức tin đăng</div>
 						<p class="mgB-10">Mã tin đăng: <strong class="mgL-10">MV05979</strong></p>
-                        <p>Số Gold của bạn không đủ để đăng tin. Vui lòng <a href="#" class="add-gold color-cd text-decor">nạp thêm Gold</a>.</p>
+                        <p>Số Keys của bạn không đủ để đăng tin. Vui lòng <a href="#" class="add-gold color-cd text-decor">nạp thêm Keys</a>.</p>
 						<div class="ajax-loading-inner">
 							<div class="w-100 mgT-10 inner-ajax">
 								<?=$this->render('/payment/package/index')?>
