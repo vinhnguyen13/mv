@@ -30,21 +30,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'filter' => false
             ],
-            'object_id',
-            'object_type',
-            [
-                'attribute' => 'object_type',
-                'value' => function ($model) {
-                    return \vsoft\ec\models\EcTransactionHistory::getObjectType($model->object_type);
-                },
-                'filter' => Html::activeDropDownList($searchModel, 'object_type', \vsoft\ec\models\EcTransactionHistory::getObjectType(),['class'=>'form-control','prompt' => 'All']),
-            ],
             [
                 'attribute' => 'amount',
                 'format' => 'raw',
                 'contentOptions'=>['style'=>'text-align:right'],
             ],
-
             [
                 'attribute' => 'action_type',
                 'value' => function ($model) {
@@ -58,6 +48,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     return \vsoft\ec\models\EcTransactionHistory::getActionDetail($model->action_detail);
                 },
                 'filter' => Html::activeDropDownList($searchModel, 'action_detail', \vsoft\ec\models\EcTransactionHistory::getActionDetail(),['class'=>'form-control','prompt' => 'All']),
+            ],
+            [
+                'attribute' => 'object_type',
+                'value' => function ($model) {
+                    return \vsoft\ec\models\EcTransactionHistory::getObjectType($model->object_type);
+                },
+                'filter' => Html::activeDropDownList($searchModel, 'object_type', \vsoft\ec\models\EcTransactionHistory::getObjectType(),['class'=>'form-control','prompt' => 'All']),
             ],
             [
                 'attribute' => 'charge_id',
