@@ -6265,6 +6265,7 @@ footer li a {
         line-height: 100%;
         /* display: none; */
     }
+    .giao-dich .title-top,
     .statis .title-top,
     .profile-user .title-top,
     .noti-alert .title-top,
@@ -6621,6 +6622,7 @@ footer li a {
         width: 680px;
         overflow: hidden;
     }
+    .wrap-giao-dich,
     .statis,
     .wrap-noti,
     .wrap-history,
@@ -6629,8 +6631,12 @@ footer li a {
         margin-left: 100px;
         padding-top: 65px;
     }
+    .wrap-giao-dich,
     .wrap-history {
         margin-left: 0;
+    }
+    .wrap-giao-dich {
+        padding-left: 30px;
     }
     .page-faqs, .page-terms, .noti-alert, .detail-news {
         padding: 0;
@@ -8705,13 +8711,13 @@ margin-right: 5px;
 .menuUser li a {
     display: block;
     border-bottom: 1px solid #DADADA;
-    padding: 0 30px 0 20px;
+    padding: 15px 30px 15px 20px;
     text-transform: uppercase;
     position: relative;
     color: #3c3c3c;
     font-size: 15px;
-    height: 60px;
-    line-height: 60px;
+    /* height: 60px; */
+    /* line-height: 60px; */
 }
 .menuUser li a > div {
     display: inline-block;
@@ -8727,7 +8733,6 @@ margin-right: 5px;
     font-size: 32px;
 }
 .menuUser li a > div .icon-settings {
-    font-size: 30px;
     color: #3c3c3c;
 }
 .menuUser li a:hover > div .icon-settings,
@@ -8743,6 +8748,7 @@ margin-right: 5px;
 .menuUser li a .notifi {
     left: 40px;
 }
+.giao-dich,
 .chat-history,
 .statis,
 .noti-alert,
@@ -12063,4 +12069,42 @@ height: 190px;
 }
 .ajax-loading-inner .vip_wrapper {
     height: 150px;
+}
+.wrap-giao-dich {
+    font-size: 14px;
+}
+.fixed_headers {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.fixed_headers tbody tr:nth-child(even) {
+  background-color: #F5F5F5;
+}
+.fixed_headers th {
+    padding-top: 1px;
+    border-left: 1px solid #BFBFBF;
+}
+.fixed_headers th span {
+    display: block;
+    padding: 7px 5px;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+}
+.fixed_headers th:first-child span,
+.fixed_headers th:first-child {
+    border-left: none;
+}
+.fixed_headers td {
+    padding: 10px 5px;
+}
+.fixed_headers thead {
+    background: #DDD;
+    border-bottom: 1px solid #B7B7B7;
+}
+.title-gd {
+    font-weight: 600;
+    font-size: 16px;
+    color: #00a769
 }

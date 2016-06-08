@@ -45,6 +45,12 @@ use yii\helpers\Url;
                         <?= Yii::t('user', 'Setting') ?>
                     </a>
                 </li>
+                <li>
+                    <a href="#">
+                        <div><span class="icon-mv"><span class="icon-coin-dollar"></span></span></div>
+                        Giao dịch
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
