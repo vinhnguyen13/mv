@@ -55,12 +55,14 @@ class MVBootstrap implements BootstrapInterface
             }
             $rules_1 = ArrayHelper::merge($rules1, $rules2);
             $rules_2 = ArrayHelper::merge($rules3, $rules4);
+            $apiRules = ['class' => 'yii\rest\UrlRule', 'controller' => 'map'];
+            
             Yii::$app->set('urlManager', [
                 'class' => 'yii\web\UrlManager',
                 'enablePrettyUrl' => true,
                 'showScriptName' => false,
                 'enableStrictParsing' => false,
-                'rules' => ArrayHelper::merge($rules_1, $rules_2)
+                'rules' => ArrayHelper::merge($rules_1, $rules_2, $apiRules)
             ]);
         }
 

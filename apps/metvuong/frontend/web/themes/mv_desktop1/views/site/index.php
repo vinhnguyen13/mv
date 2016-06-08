@@ -21,8 +21,8 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
             </div>
             <div class="search-homepage">
                 <ul class="clearfix">
-                    <li><a class="rippler rippler-default" href="<?= Url::to(['/ad/index1', 'city_id' => AdProductSearch::DEFAULT_CITY, 'district_id' => AdProductSearch::DEFAULT_DISTRICT]) ?>"><?=Yii::t('general', 'Buy')?></a></li>
-                    <li><a class="rippler rippler-default" href="<?= Url::to(['/ad/index2', 'city_id' => AdProductSearch::DEFAULT_CITY, 'district_id' => AdProductSearch::DEFAULT_DISTRICT]) ?>"><?=Yii::t('general', 'Rent')?></a></li>
+                    <li><a class="rippler rippler-default" href="<?= Url::to(['/ad/index1']) ?>"><?=Yii::t('general', 'Buy')?></a></li>
+                    <li><a class="rippler rippler-default" href="<?= Url::to(['/ad/index2']) ?>"><?=Yii::t('general', 'Rent')?></a></li>
                     <li><a class="rippler rippler-default" href="<?= Url::to(['/ad/post']) ?>"><?=Yii::t('general', 'Sell')?></a></li>
                 </ul>
                 <form id="search-form" action="<?= Url::to(['site/search']) ?>">
