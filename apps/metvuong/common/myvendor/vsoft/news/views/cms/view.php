@@ -64,10 +64,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => \vsoft\news\models\Status::labels($model->status)
             ],
             [
-                'attribute' => 'hot_news',
-                'value' => ($model->hot_news > 0) ? 'Yes' : 'No'
-            ],
-            [
                 'attribute' => 'created_by',
                 'value' =>  $model->getUserName($model->created_by)
             ],

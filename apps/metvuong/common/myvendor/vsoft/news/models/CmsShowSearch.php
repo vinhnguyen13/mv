@@ -56,7 +56,6 @@ class CmsShowSearch extends \funson86\cms\models\CmsShowSearch
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
-            'hot_news' => $this->hot_news,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])

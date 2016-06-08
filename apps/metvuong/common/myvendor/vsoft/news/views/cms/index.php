@@ -84,15 +84,6 @@ $newsCatID = !empty(Yii::$app->params['newsCatID']) ? Yii::$app->params['newsCat
                 'filter' => Html::activeDropDownList($searchModel, 'language_id', ArrayHelper::map(\lajax\translatemanager\models\Language::find()->where('status = :status', [':status' => 1])->all(), 'language_id', 'name'),['class'=>'form-control','prompt' => 'All']),
             ],
             [
-                'attribute' => 'hot_news',
-                'format' => 'raw',
-                'contentOptions'=>['style'=>'text-align:center'],
-                'value' => function ($model, $index, $widget) {
-                    return Html::checkbox('hot_news', $model->hot_news, ['value' => $index, 'disabled' => false]);
-                },
-                'filter' => Html::activeDropDownList($searchModel, 'hot_news', \vsoft\news\models\CmsShow::getHotNews(),['class'=>'form-control','prompt' => 'All']),
-            ],
-            [
                 'attribute' => 'updated_at',
                 'value' => function ($model) {
                     return $model->updated_at;
@@ -106,29 +97,3 @@ $newsCatID = !empty(Yii::$app->params['newsCatID']) ? Yii::$app->params['newsCat
     ]); ?>
     <?php Pjax::end(); ?>
 </div>
-<script src="/frontend/web/js/lib/jquery-2.0.3.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('input[type=checkbox]').each(function() {
-            $(this).change(function(){
-                var cms_id = $(this).val();
-                var ch = 0;
-                if($(this).is(":checked")) {
-                    ch = 1;
-                }
-                $.ajax({
-                    type: "get",
-                    dataType: 'json',
-                    url: '<?=Url::to(['cms/update-hotnews'])?>'+'?cms_id='+ cms_id +'&stage='+ch,
-                    success: function (data) {
-                        if(ch == 1)
-                            alert("Updated [" + data.title+"] to hot news.");
-                        else
-                            alert("Removed hot news for [" + data.title+"].");
-                    }
-                });
-
-            });
-        });
-    });
-</script>
