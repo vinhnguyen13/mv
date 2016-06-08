@@ -242,7 +242,7 @@ Area.prototype.remove = function() {
 };
 
 Area.prototype.mouseover = function() {
-	m2Map.infoBoxHover.setContent('<div class="info-wrap-single" style="margin-bottom: 12px;"><div style="padding: 6px 12px; font-weight: bold; font-size: 13px; white-space: nowrap">' + this.getName() + '</div><div class="arrow"></div></div>');
+	m2Map.infoBoxHover.setContent('<div class="info-wrap-single"><div style="padding: 6px 12px; font-weight: bold; font-size: 13px; white-space: nowrap">' + this.getName() + '</div><div class="info-arrow"></div></div>');
 	
 	if(this.marker) {
 		m2Map.infoBoxHover.open(this.marker);
@@ -329,7 +329,7 @@ var m2Map = {
 		
 		initInfoBox();
 		
-		m2Map.infoBoxHover = new InfoBox({disableAutoPan: true});
+		m2Map.infoBoxHover = new InfoBox({disableAutoPan: true, position: 'top'});
 		
 		var initZoom = form.afZoom.val();
 		var initCenter = form.afCenter.val();
@@ -1390,8 +1390,20 @@ function initInfoBox() {
 		}
 		
 		this.opts = opts;
+		
+		if(!this.opts.position) {
+			this.opts.position = 'top';
+		}
+		if(!this.opts.offsetLeft) {
+			this.opts.offsetLeft = 0;
+		}
+		if(!this.opts.panPadding) {
+			this.opts.panPadding = {top: 0, right: 0, bottom: 0, left: 0};
+		}
+		
 		this.viewHolder = document.createElement("div");
 		this.viewHolder.style.position = "absolute";
+		this.viewHolder.className = this.opts.position;
 		
 		if(this.opts.content) {
 			this.setContent(this.opts.content);
@@ -1402,14 +1414,19 @@ function initInfoBox() {
 
 	InfoBox.prototype.draw = function() {
 		var position = this.getProjection().fromLatLngToDivPixel(this.position);
-		this.viewHolder.style.left = (position.x - (this.viewHolder.offsetWidth / 2)) + "px";
+		
+		this.viewHolder.style.left = ((position.x - (this.viewHolder.offsetWidth / 2)) + this.opts.offsetLeft) + "px";
 		
 		var top = position.y - this.viewHolder.offsetHeight;
 		
-		if(this.anchor instanceof google.maps.Marker) {
-			top = top - this.anchor.getShape().coords[3];
+		if(this.opts.position == 'top') {
+			if(this.anchor instanceof google.maps.Marker) {
+				top = top - this.anchor.getShape().coords[3];
+			}
+		} else {
+			top = top + this.viewHolder.offsetHeight;
 		}
-
+		
 		this.viewHolder.style.top = top + "px";
 		
 		if(!this.opts.disableAutoPan) {
@@ -1488,7 +1505,7 @@ function initInfoBox() {
 		 var mapNorthLat = bounds.getNorthEast().lat();
 		 var mapSouthLat = bounds.getSouthWest().lat();
 		 
-		 var boundsInfoBox = this.getBounds(20, 20);
+		 var boundsInfoBox = this.getBounds();
 		 
 		 var iwWestLng = boundsInfoBox.getSouthWest().lng();
 		 var iwEastLng = boundsInfoBox.getNorthEast().lng();
@@ -1509,7 +1526,7 @@ function initInfoBox() {
 		 this.boundsChangedListener = null;
 	}
 
-	InfoBox.prototype.getBounds = function(padX, padY) {
+	InfoBox.prototype.getBounds = function() {
 		var map = this.getMap();
 		if (!map) return;
 		
@@ -1525,12 +1542,16 @@ function initInfoBox() {
 		var degPixelX = longSpan / mapWidth;
 		var degPixelY = latSpan / mapHeight;
 		
-		var offsetTop = (this.anchor instanceof google.maps.Marker) ? this.anchor.__gm.Gf.shape.coords[3] : 0;
+		if(this.opts.position == 'top') {
+			var offsetTop = (this.anchor instanceof google.maps.Marker) ? this.anchor.getShape().coords[3] : 0;
+		} else {
+			var offsetTop = (this.anchor instanceof google.maps.Marker) ? - this.viewHolder.offsetHeight : 0;
+		}
 		
-		var westLng = this.position.lng() + (-(this.viewHolder.offsetWidth/2) - padX) * degPixelX;
-		var eastLng = this.position.lng() + ((this.viewHolder.offsetWidth/2) + padX) * degPixelX;
-		var northLat = this.position.lat() - (-this.viewHolder.offsetHeight - offsetTop - padY) * degPixelY;
-		var southLat = this.position.lat() - (padY - offsetTop) * degPixelY;
+		var westLng = this.position.lng() + (-((this.viewHolder.offsetWidth/2) - this.opts.offsetLeft) - this.opts.panPadding.left) * degPixelX;
+		var eastLng = this.position.lng() + (((this.viewHolder.offsetWidth/2) + this.opts.offsetLeft) + this.opts.panPadding.right) * degPixelX;
+		var northLat = this.position.lat() - (-this.viewHolder.offsetHeight - offsetTop - this.opts.panPadding.top) * degPixelY;
+		var southLat = this.position.lat() - (this.opts.panPadding.bottom - offsetTop) * degPixelY;
 		
 		return new google.maps.LatLngBounds(new google.maps.LatLng(southLat, westLng), new google.maps.LatLng(northLat, eastLng));
 	}
