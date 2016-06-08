@@ -8,7 +8,7 @@ $params = array_merge(
 $baseUrl = str_replace('/frontend/web', '', (new \yii\web\Request())->getBaseUrl());
 $return =  [
     'id' => 'app-frontend',
-    'name'=>'MetVuong.com',
+    'name'=>'MetVuong',
     'language'=>'vi-VN',
 //    'language'=>'en-US',
     'basePath' => dirname(__DIR__),
@@ -16,7 +16,7 @@ $return =  [
         'log',
         'MVBootstrap' => [
             'class' => 'frontend\components\MVBootstrap',
-            'supportedLanguages' => ['vi-VN', 'en-US'],
+            'supportedLanguages' => ['en-US', 'vi-VN'],
         ],
     ],
     'controllerNamespace' => 'frontend\controllers',
@@ -68,7 +68,7 @@ $return =  [
             ],
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error2',
+            'errorAction' => 'site/error',
         ],
         'view' => [
             'theme' => [
@@ -80,7 +80,7 @@ $return =  [
                 ],
             ],
         ],
-        'urlManager' => [
+        /*'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
@@ -116,31 +116,34 @@ $return =  [
 //                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
 
             ]
-        ],
-        /*'urlManager' => [
+        ],*/
+        'urlManager' => [
+//            'class' => 'yii\web\UrlManager',
             'class' => 'frontend\components\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
+                'site/login' => 'user/security/login',
+                'site/signup' => 'user/registration/register',
+//                'news/<action:\w+>' => 'news/<action>',
+                '<cat_id:\d+>-<cat_slug>/<id:\d+>-<slug>' => 'news/view',
+                '<cat_id:\d+>-<slug>' => 'news/list',
+//                '<controller:\w+>/<id:\d+>' => '<controller>/view',
+//                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+//                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
 
             ],
-            'languages' => ['vi-VN'=>'vi-VN', 'en-US'=>'en-US'],
+            'languages' => ['en-US'=>'en-US', 'vi-VN'=>'vi-VN'],
             'enableDefaultLanguageUrlCode'=>true,
-            'enableLanguageDetection'=>false,
-            'enableLocaleUrls'=>true,
             'ignoreLanguageUrlPatterns'=>[
                 '#^site/language#' => '#^site/language#',
                 '#^express/upload/image#' => '#^express/upload/image#',
                 '#^express/upload/editor-image#' => '#^express/upload/editor-image#',
                 '#^store/news/show#' => '#^store/news/show#',
-                '#^user/security/*#' => '#^user/security/*#',
-                '#^mvuser/protect/*#' => '#^mvuser/protect/*#',
-//                '#^listing/detail#' => '#^listing/detail#',
-                '#^listing/get-area#' => '#^listing/get-area#',
             ],
 //            'ruleConfig' => ['class' => frontend\components\LanguageUrlRule::className()]
-        ],*/
+        ],
         'i18n' => [
             'translations' => [
                 '*' => [
@@ -160,23 +163,6 @@ $return =  [
                     'messageTable' => '{{%language_translate}}',
                     'cachingDuration' => 86400,
                     'enableCaching' => true,
-                ],
-                'url' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath' => '@frontend/messages',
-//                    'sourceLanguage' => 'vi-VN',
-                    'fileMap' => [
-                        'url' => 'url.php',
-                        'app/error' => 'error.php',
-                    ],
-                ],
-                'meta' => [
-                    'class' => 'yii\i18n\PhpMessageSource',
-                    'basePath' => '@frontend/messages',
-                    'fileMap' => [
-                        'url' => 'meta.php',
-                        'app/error' => 'error.php',
-                    ],
                 ],
             ]
         ],
@@ -211,19 +197,16 @@ $return =  [
     'params' => $params,
 ];
 
-//$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-//$segments = explode('/', $path);
 
 $return['components']['urlManager']['rules'] = [
     '/' => 'site/index',
-    'page/<view>' => 'site/page',
-
     'tin-tuc' => 'news/index',
     'tin-tuc/<cat_id:\d+>-<cat_slug>' => 'news/list',
     'tin-tuc/chi-tiet/<id:\d+>-<slug>' => 'news/view',
     'du-an' => 'building-project/index',
     'du-an/<slug>' => 'building-project/view',
-    '<urlSeg>' => 'ad/index',
+    'can-mua-<type:1>-<city_id>-<district_id>' => 'ad/index',
+    'can-thue-<type:2>-<city_id>-<district_id>' => 'ad/index',
     'real-estate/redirect' => 'ad/redirect',
     'dang-tin' => 'ad/post',
     'real-estate/post-listing' => 'ad/post-listing',
@@ -244,11 +227,14 @@ $return['components']['urlManager']['rules'] = [
     'mvuser/join/<action>' => 'user/registration/<action>',
     'mvuser/forgot/<action>' => 'user/recovery/<action>',
 
-    'listing/<action>' => 'ad/<action>',
-
-
-
 ];
 
+//echo "<pre>";
+//print_r($_REQUEST);
+//print_r(strpos($_COOKIE['language'], 'vi-VN'));
+//print_r(PHP_EOL);
+//print_r($return['components']['urlManager']['rules']);
+//echo "</pre>";
+//exit;
 return $return;
 
