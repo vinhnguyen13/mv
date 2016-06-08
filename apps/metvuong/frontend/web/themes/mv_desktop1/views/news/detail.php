@@ -12,6 +12,11 @@ use yii\web\View;
 
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/swiper.jquery.min.js', ['position'=>View::POS_END]);
 
+//Yii::t('news', 'Real Estate');
+//Yii::t('news', 'Financial & Banking');
+//Yii::t('news', 'Business');
+//Yii::t('news', 'Economy');
+
 Yii::$app->view->registerMetaTag([
     'name' => 'keywords',
     'content' => empty($news["seo_keywords"]) ? $news["title"] : $news["seo_keywords"]
@@ -21,6 +26,10 @@ Yii::$app->view->registerMetaTag([
     'content' => empty($news["seo_description"]) ? $news["brief"] : $news["seo_description"]
 ]);
 
+Yii::$app->view->registerMetaTag([
+    'property' => 'og:site_name',
+    'content' => Yii::$app->name
+]);
 Yii::$app->view->registerMetaTag([
     'property' => 'og:title',
     'content' => $news["title"]
@@ -35,18 +44,13 @@ Yii::$app->view->registerMetaTag([
 ]);
 Yii::$app->view->registerMetaTag([
     'property' => 'og:image',
-    'content' => Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'. $news["banner"])
+    'content' => Yii::$app->urlManager->createAbsoluteUrl(\vsoft\news\models\CmsShow::getBanner($news["banner"]))
 ]);
 
 Yii::$app->view->registerMetaTag([
     'property' => 'og:url',
     'content' => \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true)
 ]);
-
-Yii::t('news', 'Real Estate');
-Yii::t('news', 'Financial & Banking');
-Yii::t('news', 'Business');
-Yii::t('news', 'Economy');
 
 $fb_appId = '680097282132293'; // stage.metvuong.com
 if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
@@ -173,14 +177,16 @@ $banner = Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'. $news["b
             prevButton: '.swiper-button-prev'
         });
 
-//        $(document).on('click', '.detail-content .fb-share', function(){
-//            var href = $(this).data('href');
-//            FB.ui({
-//                method: 'share',
-//                href: href
-//            }, function(response){});
-//            return false;
-//        });
+        $('.sidebar-news').loading({full: false});
+        $.ajax({
+            type: "get",
+            dataType: 'html',
+            url: '<?=Url::to(['news/load-news-widget'])?>',
+            success: function (data) {
+                $(".sidebar-news").html(data);
+                $('.sidebar-news').loading({done: true});
+            }
+        });
 
         function fbShare(winWidth, winHeight) {
             var winTop = (screen.height / 2) - (winHeight / 2);
@@ -194,90 +200,5 @@ $banner = Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'. $news["b
             return false;
         });
 
-//        var timer;
-//        $(window).scroll(function () {
-//            var currentID = parseInt($('#current_id').val());
-//            var catID = parseInt($('#cat_id').val());
-//            var hArticle = $('.wrap-detail-article').outerHeight() + $('header').outerHeight();
-//
-//            $(window).scrollTop(function() {
-//                var scroll = $(this).scrollTop();
-//                if(hArticle - scroll <= 900 && currentID > 0){
-//                    $(".loading").show();
-//                    if ( timer ) clearTimeout(timer);
-//                    timer = setTimeout(function() {
-//                        console.log(currentID);
-//                        $.ajax({
-//                            url: '<?php //echo Yii::$app->getUrlManager()->createUrl(["news/getone?current_id="]); ?>//' + currentID + '&cat_id=' + catID,
-//                            type: 'POST',
-//                            success: function (data) {
-//                                if (data) {
-////                                    console.log(data);
-//                                    $(".loading").hide();
-//                                    $('#current_id').val(data.id);
-//                                    $('#current_slug').val(data.slug);
-//                                    $('#current_title').val(data.title);
-//                                    document.title = data.title;
-//                                    var time = timeConverter(data.created_at);
-//                                    var cat_id = data.catalog_id;
-//                                    window.history.pushState(data.slug, data.title, data.id + '-' + data.slug );
-//                                    $('.wrap-detail-article .wrap-news').append(
-//                                        '<article>' +
-//                                        '<h1 class="big-title">' + data.title + '</h1>' +
-//                                        '<div class="time-post">' +
-//                                        '<span>' + time + '</span>' +
-//                                        '</div>' +
-//                                        '<div class="detail-content">' +
-//                                        '<div class="box-content">' +
-//                                        '<div>' + data.content + '</div>' +
-//                                        '<div id="social' + data.id + '" class="share-social mgT-10 wrap-img">' +
-//                                        '<div class="fb-like" data-href="<?//= Yii::$app->urlManager->createAbsoluteUrl('news')?>///view/' +  data.id + '-' + data.slug + '" data-layout="button_count" style="margin-right: 10px;"></div>' +
-//                                        '<div class="fb-send" data-href="<?//= Yii::$app->urlManager->createAbsoluteUrl('news')?>///view/' +  data.id + '-' + data.slug + '" data-show-faces="false" style="margin-right: 10px;"></div>' +
-//                                        '<div class="fb-share-button" data-href="<?//= Yii::$app->urlManager->createAbsoluteUrl('news')?>//view/' +  data.id + '-' + data.slug + '" data-layout="button_count"></div><br>' +
-//                                        '<div class="fb-comments" data-href="<?//= Yii::$app->urlManager->createAbsoluteUrl('news')?>///view/' +  data.id + '-' + data.slug+ '" data-width="600" data-numposts="3" ></div>' +
-//                                        '</div>' +
-//                                        '</div>' +
-//                                        '</div>' +
-//                                        '</article>');
-//                                    // console.log(data);
-//                                }
-//                                FB.XFBML.parse();
-//                            },
-//                            error: function () {
-//                                $('#current_id').val(0);
-//                                $(".loading").hide();
-//                                $(".loading").remove();
-//                                var last_news = $('.wrap-detail-article').find(".last_news");
-//                                if(!last_news[0])
-//                                    $('.wrap-detail-article').append('<div class="last_news"><?//=Yii::t('news', 'This is last news in this categories')?>//</div>');
-//                            }
-//                        }); // end ajax
-//                    }, 800);
-//                }
-//            });
-//
-//        });
-
-
-
     });
-
-//    function timeConverter(UNIX_timestamp){
-//        var a = new Date(UNIX_timestamp * 1000);
-////        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-//        var year = a.getFullYear();
-////        var month = months[a.getMonth()];
-//        var month = a.getMonth()+1;
-//        var date = a.getDate();
-//        var dateFormatted = date < 10 ? "0"+date : date;
-//        var hour = a.getHours();
-//        var min = a.getMinutes();
-//        var hourFormatted = hour % 12 || 12; // hour returned in 24 hour format
-//        var minuteFormatted = min < 10 ? "0" + min : min;
-//        var morning = hour < 12 ? "am" : "pm";
-//
-//        var time = dateFormatted + '/' + month + '/' + year + ' ' + hourFormatted + ':' + minuteFormatted + ' ' + morning ;
-//        return time;
-//    }
-
 </script>
