@@ -373,7 +373,7 @@ class UrlManager extends BaseUrlManager
             $url = rtrim($url, '/').'/';
         }
         Yii::trace("Redirecting to $url.", __METHOD__);
-        Yii::$app->getResponse()->redirect($url, 302, false);
+        Yii::$app->getResponse()->redirect($url);
         Yii::$app->end();
         if (YII_ENV_TEST) {
             // Response::redirect($url) above will call `Url::to()` internally. So to really
