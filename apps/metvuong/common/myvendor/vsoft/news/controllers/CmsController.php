@@ -12,6 +12,7 @@ use yii\filters\VerbFilter;
 use yii\helpers\Inflector;
 use yii\image\drivers\Image;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 use yii\web\UploadedFile;
 
 /**
@@ -151,5 +152,18 @@ class CmsController extends CmsShowController
         $model->save();*/
 
         return $this->redirect(['index']);
+    }
+
+    public function actionUpdateHotnews($cms_id, $stage)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $cms = CmsShow::findOne($cms_id);
+        if(count($cms)> 0)
+        {
+            $cms->hot_news = $stage;
+            $cms->update();
+            return ['title' => $cms->title];
+        }
+        return false;
     }
 }

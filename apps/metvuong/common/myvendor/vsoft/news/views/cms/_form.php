@@ -85,7 +85,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'status')->dropDownList(\vsoft\news\models\Status::labels()) ?>
 
-    <?= $form->field($model, 'language_id')->dropDownList($language_list, ['options' => [$model->language_id => ['Selected ' => true]]])->label("Language") ?>
+    <?= $form->field($model, 'language_id')->dropDownList($language_list, ['options' => [$model->language_id => ['Selected ' => true]]])->label(Yii::t('cms',"Language")) ?>
+
+    <?= $form->field($model, 'hot_news')->checkbox([], null)->label(Yii::t('cms', 'Hot News')) ?>
 
     <div class="form-group">
         <label class="col-lg-1 control-label"></label>
@@ -98,3 +100,6 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 </div>
+<script>
+
+</script>
