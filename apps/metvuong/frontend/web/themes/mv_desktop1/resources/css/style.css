@@ -11994,6 +11994,7 @@ height: 190px;
 .ajax-loading-inner {
     margin-top: 10px;
     /* height: 20px; */
+    display: none;
 }
 .ajax-loading-inner .loading-proccess {
     position: static !important;

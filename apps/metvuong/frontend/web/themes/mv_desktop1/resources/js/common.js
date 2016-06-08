@@ -379,14 +379,15 @@ $.fn.dropdown = function (options) {
         
         function showSortLoad () {
             if ( $(el.find('input[type=hidden]')).val() != '' && $(el.find('input[type=hidden]')).length > 0 ) {
-                valGet = $(el.find('input[type=hidden]')).val();
+                var valGet = $(el.find('input[type=hidden]')).val();
                 if ( $(el.find('input[type=hidden]')).is('#tinh-thanh') ) {
                     sc.settings.funCallBack($(el.find('input[type=hidden]')));
                 }
                 itemList.each(function () {
                     var dataGet = $(this).data('value');
                     if ( dataGet == valGet ) {
-                        el.find('.val-selected .selected').text($(this).text());
+                        var txt = el.find('.val-selected').data('textAdd') != undefined ? $(this).text() +' '+ el.find('.val-selected').data('textAdd') : $(this).text();
+                        el.find('.val-selected .selected').text(txt);
                     }
                 });
             }
@@ -580,8 +581,8 @@ $.fn.toggleShowMobi = function (options) {
 
 $.fn.price_dt = function (options) {
 
-    var prices = {"thue": {"-1": "Giá bất kỳ","2000000" : "2 triệu","4000000" : "4 triệu","6000000" : "6 triệu","8000000" : "8 triệu","10000000": "10 triệu","12000000": "12 triệu","14000000": "14 triệu","16000000": "16 triệu","18000000": "18 triệu","20000000": "20 triệu",},"mua": {"-1": "Giá bất kỳ","2000000000" : "2 tỷ","4000000000" : "4 tỷ","6000000000" : "6 tỷ","8000000000" : "8 tỷ","10000000000": "10 tỷ","12000000000": "12 tỷ","14000000000": "14 tỷ","16000000000": "16 tỷ","18000000000": "18 tỷ","20000000000": "20 tỷ"}};
-    var dt = {"-1": "Bất kỳ", "10": "10m2", "20": "20m2", "30": "30m2", "40": "40m2", "50": "50m2", "60": "60m2", "70": "70m2", "80": "80m2", "90": "90m2", "100": "100m2"};
+    var prices = {"thue": {"-1": "Bất kỳ","0": 0,"2000000" : "2 triệu","4000000" : "4 triệu","6000000" : "6 triệu","8000000" : "8 triệu","10000000": "10 triệu","12000000": "12 triệu","14000000": "14 triệu","16000000": "16 triệu","18000000": "18 triệu","20000000": "20 triệu",},"mua": {"-1": "Giá bất kỳ","0": 0,"2000000000" : "2 tỷ","4000000000" : "4 tỷ","6000000000" : "6 tỷ","8000000000" : "8 tỷ","10000000000": "10 tỷ","12000000000": "12 tỷ","14000000000": "14 tỷ","16000000000": "16 tỷ","18000000000": "18 tỷ","20000000000": "20 tỷ"}};
+    var dt = {"-1": "Bất kỳ","0": 0, "10": "10m2", "20": "20m2", "30": "30m2", "40": "40m2", "50": "50m2", "60": "60m2", "70": "70m2", "80": "80m2", "90": "90m2", "100": "100m2"};
     
     return this.each(function() {
         var defaults = {
@@ -622,7 +623,6 @@ $.fn.price_dt = function (options) {
                 if ( parseInt(i) < 0 ) {
                     continue;
                 }
-                //var item = $('<li data-number="'+i+'"><a class="option">'+prices[sc.settings.hinhthuc][i]+'</a></li>');
                 var item = $('<li data-number="'+i+'"><a class="option">'+formatPrice(i)+'</a></li>');
                 el.find('.wrap-minmax').append(item);
             }
@@ -697,7 +697,8 @@ $.fn.price_dt = function (options) {
                 unitDT = 'm2';
             }
             for ( var i = 0; i < sc.settings.numRenderMax; i++ ) {
-                valMax += priceUnit(valMin);
+                //valMax += priceUnit(valMin);
+                valMax += valMin;
                 var item = $('<li data-number="'+valMax+'"><a class="option">'+formatPrice(''+valMax+'')+unitDT+'</a></li>');
                 item.find('a').on('click', seletedVal);
                 itemMax.append(item);

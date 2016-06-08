@@ -327,27 +327,12 @@ use vsoft\ad\models\AdImages;
 					<div class="group-frm type-tin-dang fs-14">
 						<div class="title-frm">Chọn hình thức tin đăng</div>
 						<p class="mgB-10">Mã tin đăng: <strong class="mgL-10">MV05979</strong></p>
-                        <div class="clearfix mgB-10">
-                            <p class="pull-right">(Bạn còn 1 tin)</p>
-                            <label class="radio-inline radio-ui">
-                                <input type="radio" name="type-tin-dang" checked="" data-flag="false">
-                                <span class="icon-mv"><span class="icon-checkbox"></span></span>Tin miễn phí
-                            </label>
-                        </div>
-                        <div class="clearfix">
-                            <p class="pull-right">(20 Gold/tin)</p>
-                            <label class="radio-inline radio-ui">
-                                <input type="radio" name="type-tin-dang" data-flag="true">
-                                <span class="icon-mv"><span class="icon-checkbox"></span></span>Tin có phí
-                            </label>
-                            <div class="ajax-loading-inner hide">
-                            	<div class="w-100 mgT-10 inner-ajax hide">
-	                            	Số Gold của bạn không đủ để đăng tin. Vui lòng nạp thêm Gold.
-	                            	<?=$this->render('/payment/package/index')?>
-	                            </div>
-                            </div>
-                            
-                        </div>
+                        <p>Số Gold của bạn không đủ để đăng tin. Vui lòng <a href="#" class="add-gold color-cd text-decor">nạp thêm Gold</a>.</p>
+						<div class="ajax-loading-inner">
+							<div class="w-100 mgT-10 inner-ajax">
+								<?=$this->render('/payment/package/index')?>
+							</div>
+						</div>
 					</div>
 					<div class="error-hint form-group col-xs-12 mgT-30" style="display: none;"><?= Yii::t('ad', 'Có lỗi xảy ra, vui lòng kiểm tra lại các trường bên trên') ?></div>
 					<div class="text-right col-xs-12 pdT-50">
@@ -550,23 +535,9 @@ use vsoft\ad\models\AdImages;
 <script>
 	$(document).ready(function () {
 		$('.checkbox-ui').checkbox_ui();
-		$('.type-tin-dang .radio-ui').radio({
-            done: function (item) {
-                if ( item.data('flag') ) {
-                	$('.ajax-loading-inner').removeClass('hide');
-                	$('.ajax-loading-inner').loading({
-                		full: false
-                	});
-                	setTimeout(function () {
-                		$('.ajax-loading-inner').loading({
-	                		done: true
-	                	});
-	                	$('.ajax-loading-inner .inner-ajax').removeClass('hide');
-                	},1000);
-                }else {
-                	$('.ajax-loading-inner,.ajax-loading-inner .inner-ajax').addClass('hide');
-                }
-            }
-        });
+		$('.add-gold').on('click', function (e) {
+			e.preventDefault();
+			$('.ajax-loading-inner').toggle();
+		});
 	});
 </script>
