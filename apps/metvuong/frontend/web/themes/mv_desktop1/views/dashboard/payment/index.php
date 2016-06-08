@@ -12,8 +12,8 @@ use yii\helpers\Html;
         <div class="wrap-giao-dich">
             <div class="title-gd mgB-15">Thông tin tài khoản</div>
             <div class="mgB-30">
-                Số Gold Còn Lại: <span class="d-ib mgL-20 font-700"><span class="icon-mv mgR-5 color-gold fs-20"><span class="icon-coin-dollar"></span></span>10 Gold</span>
-                <a href="#" class="d-ib btn mgL-20 pdT-5 pdB-5 font-600 fs-13">Nạp Gold</a>
+                Số Keys Còn Lại: <span class="d-ib mgL-20 font-700"><span class="icon-mv mgR-5 color-gold fs-20"><span class="icon-coin-dollar"></span></span>10 Keys</span>
+                <a href="#" class="d-ib btn mgL-20 pdT-5 pdB-5 font-600 fs-13">Nạp Keys</a>
             </div>
             <div class="title-gd mgB-5">Giao dịch gần đây</div>
             <table class="fixed_headers" cellspacing="0" cellpadding="0" border="0">
@@ -32,25 +32,25 @@ use yii\helpers\Html;
                         <td>1234</td>
                         <td>08/06/2016 10:15:00 AM</td>
                         <td><a href="#" class="color-cd">The Lancaster</a></td>
-                        <td>Up</td>
+                        <td>Post</td>
                         <td class="color-cd">Thành công</td>
-                        <td>20.000 VND</td>
+                        <td>5 Keys</td>
                     </tr>
                     <tr>
                         <td>1234</td>
                         <td>08/06/2016 10:15:00 AM</td>
                         <td><a href="#" class="color-cd">The Lancaster</a></td>
-                        <td>Up</td>
+                        <td>Boost</td>
                         <td class="color-red">Thất bại</td>
-                        <td>20.000 VND</td>
+                        <td>2 Keys</td>
                     </tr>
                     <tr>
                         <td>1234</td>
                         <td>08/06/2016 10:15:00 AM</td>
                         <td><a href="#" class="color-cd">The Lancaster</a></td>
-                        <td>Up</td>
+                        <td>Dashboard</td>
                         <td class="color-cd">Thành công</td>
-                        <td>20.000 VND</td>
+                        <td>3 Keys</td>
                     </tr>
                 </tbody>
             </table>
