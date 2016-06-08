@@ -17,11 +17,11 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'homepage' => 'Nơi Mua Bán & Cho Thuê Bất Động Sản, MetVuong.com',
-    'nha-dat-ban' => 'Mua Bán Nhà Đất, MetVuong.com',
-    'nha-dat-cho-thue' => 'Cho Thuê Nhà Đất, MetVuong.com',
-    'du-an' => 'Dự Án, Metvuong.com',
-    'dang-tin' => 'Đăng Tin và Quảng Cáo Nhà Đất Miễn Phí, Metvuong.com',
-    'tin-tuc' => 'Tin Tức Bất Động Sản, Metvuong.com',
-    'goi-gia' => 'Gói Giá Chìa Khóa, Metvuong.com',
+    'homepage' => 'Nơi Mua Bán & Cho Thuê Bất Động Sản',
+    'nha-dat-ban' => 'Mua Bán Nhà Đất',
+    'nha-dat-cho-thue' => 'Cho Thuê Nhà Đất',
+    'du-an' => 'Dự Án',
+    'dang-tin' => 'Đăng Tin và Quảng Cáo Nhà Đất Miễn Phí',
+    'tin-tuc' => 'Tin Tức Bất Động Sản',
+    'goi-gia' => 'Gói Giá Chìa Khóa',
 ];

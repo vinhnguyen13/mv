@@ -97,6 +97,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+		$this->view->title = Yii::t('meta', 'homepage');
         Yii::$app->meta->add(Yii::$app->request->absoluteUrl);
         return $this->render('index');
     }
