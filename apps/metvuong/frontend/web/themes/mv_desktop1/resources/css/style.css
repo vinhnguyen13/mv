@@ -2268,10 +2268,10 @@ label {
     text-overflow: ellipsis;
 }
 .btn-cancel {
-    /* background: #C4C4C4; */
-    background: #fff;
+    background: #C4C4C4;
+    /* background: #fff; */
     color: #00a769;
-    border: 1px solid #00a769;
+    /* border: 1px solid #00a769; */
 }
 .btn-small {
     padding: 7px 30px;
@@ -3902,12 +3902,12 @@ html.mm-opening .mm-slideout {
 .wrap-list-duan .list-item li {
     float: left;
     width: 100%;
-    padding: 30px 15px;
+    padding: 30px 0;
     border-bottom: solid 1px #a5a5a5;
     /* margin-bottom: 30px; */
 }
 .wrap-list-duan .list-item {
-    margin: 0 -15px 30px;
+    margin: 0 0 30px;
 }
 .wrap-list-duan .address-feat .list-attr-td {
     margin-left: 1px;
@@ -4609,7 +4609,7 @@ html.mm-opening .mm-slideout {
     border: 1px solid #3a5795;
 }
 .inner-popup .btn-cancel {
-    background: none;
+    background: #C4C4C4;
     color: #3c3c3c;
     margin-right: 10px;
 }
@@ -6622,6 +6622,10 @@ footer li a {
         width: 680px;
         overflow: hidden;
     }
+    .wrap-edit-tt,
+    .wrap-list-duan {
+        width: 100%;
+    }
     .wrap-giao-dich,
     .statis,
     .wrap-noti,
@@ -6631,10 +6635,15 @@ footer li a {
         margin-left: 100px;
         padding-top: 65px;
     }
+    .statis,
+    .wrap-edit-tt,
+    .wrap-list-duan,
     .wrap-giao-dich,
     .wrap-history {
         margin-left: 0;
     }
+    .wrap-edit-tt,
+    .wrap-list-duan,
     .wrap-giao-dich {
         padding-left: 30px;
     }
@@ -7192,9 +7201,9 @@ footer li a {
 }
 .btn-done:hover,
 .btn-cancel:hover {
-    background: none;
-    color: #3c3c3c;
-    border: 1px solid #3c3c3c;
+    /* background: none; */
+    /* color: #3c3c3c; */
+    /* border: 1px solid #3c3c3c; */
 }
 .info-wrap-single {
     position: relative;
@@ -8750,11 +8759,13 @@ margin-right: 5px;
 }
 .giao-dich,
 .chat-history,
-.statis,
 .noti-alert,
 .edit-user-tt,
 .u-allduan {
     padding-left: 240px;
+}
+.statis {
+    padding-left: 270px;
 }
 .wrap-list-duan .tab-content {
     padding: 0;
