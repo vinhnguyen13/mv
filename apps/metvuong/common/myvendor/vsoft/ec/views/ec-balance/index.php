@@ -18,10 +18,7 @@ $data_user = ArrayHelper::map(\frontend\models\User::find()->innerJoin('ec_balan
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?php //Html::a(Yii::t('ec', 'Create Ec Balance'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-<?php Pjax::begin(); ?>    <?= GridView::widget([
+ <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -50,12 +47,11 @@ $data_user = ArrayHelper::map(\frontend\models\User::find()->innerJoin('ec_balan
                 'format' => 'raw',
                 'contentOptions'=>['style'=>'text-align:right'],
             ],
-//            'amount_promotion',
             [
                 'format' => 'raw',
                 'contentOptions'=>['style'=>'text-decoration: none; text-align:center'],
                 'value' => function($model){
-                    return Html::a(Yii::t('ec','Transaction history detail'), \yii\helpers\Url::to(['ec-transaction-history/index', 'user_id' => $model->user_id], true));
+                    return Html::a(Yii::t('ec','Transaction history detail'), Yii::$app->urlManager->createUrl(['ec/ec-transaction-history/index', 'user_id' => $model->user_id]));
                 }
             ],
 
@@ -65,4 +61,3 @@ $data_user = ArrayHelper::map(\frontend\models\User::find()->innerJoin('ec_balan
 //            ],
         ],
     ]); ?>
-<?php Pjax::end(); ?></div>
