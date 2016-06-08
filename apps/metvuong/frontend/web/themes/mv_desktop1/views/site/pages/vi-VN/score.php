@@ -49,29 +49,10 @@
                 </tr>
                 </tbody>
             </table>
-            <div class="tool-hdr black-hdr"> Kết quả </div>
+            <div class="tool-hdr black-hdr"> Kết quả</div>
             <article id="inKetQua">
-<!--                <table class="savings-tbl">-->
-<!--                    <tbody>-->
-<!--                        <tr class="savings-tlt">-->
-<!--                            <td>Ngày</td>-->
-<!--                            <td>Điểm ngày trước</td>-->
-<!--                            <td>Điểm hiện tại</td>-->
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <td>6/7/2016</td>-->
-<!--                            <td class="saving_table saving_table_left">100</td>-->
-<!--                            <td class="saving_table">98</td>-->
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <td>6/7/2016</td>-->
-<!--                            <td class="saving_table saving_table_left">98</td>-->
-<!--                            <td class="saving_table">96.04</td>-->
-<!--                        </tr>-->
-<!--                    </tbody>-->
-<!--                </table>-->
-
             </article>
+            <span class="endScore"></span>
         </div>
     </div>
 </div>
@@ -85,20 +66,14 @@
         $(document).on('click', '.btn-tinhnhanh', function (e) {
             var score = $('#tongDiem').val();
             var percent = $('#tyle').val();
-
             var date1 = $('#ngayBatDau').datepicker('getDate');
             var date2 = new Date();
-
-
 
             if (date1 && date2) {
                 diff = Math.floor((date2.getTime() - date1.getTime()) / 86400000); // ms per day
             }
 
-            var d = new Date();
-
-            console.log(date1, '______________________', $.datepicker.formatDate( "dd/mm/yy", date1 ) );
-
+            $('.endScore').html(score * Math.pow((100-percent)/100, 7));
             var prevScore, curScore = score;
 
             var html = '<table class="savings-tbl"><tbody><tr class="savings-tlt"><td>Ngày</td><td>Điểm ngày trước</td><td>Điểm hiện tại</td></tr>';

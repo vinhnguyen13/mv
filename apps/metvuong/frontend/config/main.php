@@ -170,6 +170,14 @@ $return =  [
                         'app/error' => 'error.php',
                     ],
                 ],
+                'meta' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@frontend/messages',
+                    'fileMap' => [
+                        'url' => 'meta.php',
+                        'app/error' => 'error.php',
+                    ],
+                ],
             ]
         ],
         'meta' =>[
