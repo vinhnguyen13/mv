@@ -815,12 +815,31 @@ var m2Map = {
 				});
 				
 				marker.addListener('click', m2Map.markerClick);
+				marker.addListener('mouseover', m2Map.markerMouseOver);
 				marker.set('products', [product]);
 				m2Map.setIcon(marker, 1, 0);
 				
 				markers[key] = marker;
 			}
 		}
+	},
+	markerMouseOver: function(){
+		var mapBounds = m2Map.map.getBounds();
+		var mapDiv = m2Map.map.getDiv();
+		var mapWidth = mapDiv.offsetWidth;
+		var mapHeight = mapDiv.offsetHeight;
+		var boundsSpan = mapBounds.toSpan();
+		var latSpan = boundsSpan.lat();
+		var longSpan = boundsSpan.lng();
+		var degPixelX = longSpan / mapWidth;
+		var degPixelY = latSpan / mapHeight;
+
+		var top = (mapBounds.getNorthEast().lat() - this.getPosition().lat()) / degPixelY;
+		var bottom = (this.getPosition().lat() - mapBounds.getSouthWest().lat()) / degPixelY;
+		var right = (this.getPosition().lng() - mapBounds.getSouthWest().lng()) / degPixelX;
+		var left = (mapBounds.getNorthEast().lng() - this.getPosition().lng()) / degPixelX;
+		
+		console.log(top, bottom, right, left);
 	},
 	markerClick: function() {
 		var products = this.get('products');
@@ -877,9 +896,6 @@ var m2Map = {
 			marker.setShape(shape);
 		}
 		marker.setIcon(icon);
-	},
-	resetAf: function() {
-		
 	},
 	get: function(fn, serialize) {
 		if(!serialize) {
