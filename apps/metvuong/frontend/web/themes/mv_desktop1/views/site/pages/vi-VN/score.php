@@ -73,7 +73,7 @@
                 diff = Math.floor((date2.getTime() - date1.getTime()) / 86400000); // ms per day
             }
 
-            $('.endScore').html(score * Math.pow((100-percent)/100, 7));
+            $('.endScore').html('Điểm hôm nay: '+score * Math.pow((100-percent)/100, 7));
             var prevScore, curScore = score;
 
             var html = '<table class="savings-tbl"><tbody><tr class="savings-tlt"><td>Ngày</td><td>Điểm ngày trước</td><td>Điểm hiện tại</td></tr>';
