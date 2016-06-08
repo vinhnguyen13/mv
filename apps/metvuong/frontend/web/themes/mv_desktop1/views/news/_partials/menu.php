@@ -19,7 +19,7 @@ Yii::t('news', 'Economy');
             <?php if(!empty($catalogs)){?>
                 <?php foreach($catalogs as $catalog){?>
                     <div class="swiper-slide">
-                        <a <?=(!empty($cat_id) && $cat_id == $catalog->id) ? 'class="active"' : '';?> href="<?=Url::to(['news/list', 'cat_id'=>$catalog->id, 'cat_slug'=>$catalog->slug])?>"><?=Yii::t('news', trim($catalog->title))?></a>
+                        <a <?=(!empty($cat_id) && $cat_id == $catalog->id) ? 'class="active"' : '';?> href="<?=Url::to(['news/list', 'cat_id'=>$catalog->id, 'cat_slug'=>\yii\helpers\Inflector::slug(Yii::t('news', trim($catalog->title)))])?>"><?=Yii::t('news', trim($catalog->title))?></a>
                     </div>
                 <?php }?>
             <?php }?>

@@ -96,7 +96,7 @@ class NewsController extends Controller
             ->limit($pagination->limit)
             ->asArray()->all();
         if($count > 0){
-            $this->view->title = $news[0]["cat_title"];
+            $this->view->title = Yii::t('news', trim($news[0]["cat_title"]));
         }
         else {
             $catalog = CmsCatalog::findOne($cat_id);
