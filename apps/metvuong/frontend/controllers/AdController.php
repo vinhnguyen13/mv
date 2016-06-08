@@ -214,6 +214,7 @@ class AdController extends Controller
     }
     
     public function actionIndex1() {
+		$this->view->title = Yii::t('meta', 'nha-dat-ban');
     	$this->view->params['menuBuy'] = true;
     	$this->view->params['menuRent'] = false;
     	
@@ -221,6 +222,7 @@ class AdController extends Controller
     }
     
     public function actionIndex2() {
+		$this->view->title = Yii::t('meta', 'nha-dat-cho-thue');
     	$this->view->params['menuBuy'] = false;
     	$this->view->params['menuRent'] = true;
     	
@@ -421,6 +423,7 @@ class AdController extends Controller
 
     
     public function actionPost() {
+		$this->view->title = Yii::t('meta', 'dang-tin');
 		$this->view->params['menuSell'] = true;
 //     	if(Yii::$app->mobileDetect->isMobile()) {
 //     		return $this->postMobile();

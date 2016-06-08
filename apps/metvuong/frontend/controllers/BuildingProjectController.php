@@ -26,6 +26,7 @@ class BuildingProjectController extends Controller
     }
 
 	function actionIndex() {
+        $this->view->title = Yii::t('meta', 'du-an');
         $models = AdBuildingProject::find()->where('`status` = ' . AdBuildingProject::STATUS_ENABLED)
             ->andWhere('`city_id` is not null')
             ->orderBy(['hot_project' => SORT_DESC, 'district_id' => SORT_ASC, 'city_id'=> SORT_ASC, 'id' => SORT_DESC]);

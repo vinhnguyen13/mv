@@ -23,6 +23,13 @@ use vsoft\ad\models\AdFacility;
     $categories = \vsoft\ad\models\AdCategory::getDb()->cache(function(){
         return \vsoft\ad\models\AdCategory::find()->indexBy('id')->asArray(true)->all();
     });
+
+	if($product->type == AdProduct::TYPE_FOR_SELL){
+		$this->title = Yii::t('meta', 'nha-dat-ban').', '.$product->city->name.', '.trim("{$product->district->pre} {$product->district->name}").', '.ucfirst(Yii::t('ad', $categories[$product->category_id]['name']));
+	}elseif($product->type == AdProduct::TYPE_FOR_RENT){
+		$this->title = Yii::t('meta', 'nha-dat-cho-thue').', '.$product->city->name.', '.trim("{$product->district->pre} {$product->district->name}").', '.ucfirst(Yii::t('ad', $categories[$product->category_id]['name']));
+	}
+
 	$types = AdProduct::getAdTypes();
 
     $user_id = $product->user_id;

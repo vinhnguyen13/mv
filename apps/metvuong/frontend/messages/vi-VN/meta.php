@@ -17,15 +17,11 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'nha-dat-ban' => 'nha-dat-ban',
-    'nha-dat-cho-thue' => 'nha-dat-cho-thue',
-    'du-an' => 'du-an',
-    'dang-tin' => 'dang-tin',
-    'tin-tuc' => 'tin-tuc',
-    'goi-gia' => 'goi-gia',
-    'tro-chuyen' => 'tro-chuyen',
-    'thong-bao' => 'thong-bao',
-    'cai-dat' => 'cai-dat',
-    'cap-nhat' => 'cap-nhat',
-    'danh-sach-tin-dang' => 'danh-sach-tin-dang',
+    'homepage' => 'Nơi Mua Bán & Cho Thuê Bất Động Sản',
+    'nha-dat-ban' => 'Mua Bán Nhà Đất',
+    'nha-dat-cho-thue' => 'Cho Thuê Nhà Đất',
+    'du-an' => 'Dự Án',
+    'dang-tin' => 'Đăng Tin và Quảng Cáo Nhà Đất Miễn Phí',
+    'tin-tuc' => 'Tin Tức Bất Động Sản',
+    'goi-gia' => 'Gói Giá Chìa Khóa',
 ];

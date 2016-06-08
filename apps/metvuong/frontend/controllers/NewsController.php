@@ -54,7 +54,7 @@ class NewsController extends Controller
         $news = $query->offset($pagination->offset)
             ->limit($pagination->limit)
             ->asArray()->all();
-        $this->view->title = Yii::t('news','News');
+        $this->view->title = Yii::t('meta', 'tin-tuc');
         return $this->render('index',['news' => $news, 'pagination' => $pagination]);
     }
 

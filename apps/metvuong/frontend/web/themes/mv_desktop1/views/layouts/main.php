@@ -19,7 +19,7 @@ AppAsset::register($this);
 	<meta charset="<?= Yii::$app->charset ?>">
     <meta name='viewport' content='width=device-width, initial-scale=1.0' >
     <?= Html::csrfMetaTags() ?>
-    <title><?= Yii::$app->name . (!empty($this->title) ? ' - '.Html::encode($this->title) : '') ?></title>
+    <title><?= (!empty($this->title) ? Html::encode($this->title).', ' : '').Yii::$app->name ?></title>
     <?php $this->head() ?>
 </head>
 <body <?=!empty($this->params['body']) ? \common\components\Util::me()->arrayToHtmlAttributes($this->params['body']) : ''?>>
