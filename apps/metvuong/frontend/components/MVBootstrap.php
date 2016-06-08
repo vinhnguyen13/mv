@@ -2,6 +2,7 @@
 namespace frontend\components;
 use Yii;
 use yii\base\BootstrapInterface;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
 class MVBootstrap implements BootstrapInterface
@@ -17,7 +18,6 @@ class MVBootstrap implements BootstrapInterface
         $preferredLanguage = isset($app->request->cookies['language']) ? (string)$app->request->cookies['language'] : null;
         // or in case of database:
         // $preferredLanguage = $app->user->language;
-
         if (empty($preferredLanguage)) {
             $preferredLanguage = $app->request->getPreferredLanguage($this->supportedLanguages);
         }
@@ -39,6 +39,76 @@ class MVBootstrap implements BootstrapInterface
                 ],
             ]);
         }
+
+        if(true){
+            $langActive = $app->language;
+            if($app->language == $this->supportedLanguages[0]){
+                $rules1 = $this->getTopRules($this->supportedLanguages[0]);
+                $rules2 = $this->getTopRules($this->supportedLanguages[1]);
+                $rules3 = $this->getBottomRules($this->supportedLanguages[0]);
+                $rules4 = $this->getBottomRules($this->supportedLanguages[1]);
+            }elseif($app->language == $this->supportedLanguages[1]){
+                $rules1 = $this->getTopRules($this->supportedLanguages[1]);
+                $rules2 = $this->getTopRules($this->supportedLanguages[0]);
+                $rules3 = $this->getBottomRules($this->supportedLanguages[1]);
+                $rules4 = $this->getBottomRules($this->supportedLanguages[0]);
+            }
+            $rules_1 = ArrayHelper::merge($rules1, $rules2);
+            $rules_2 = ArrayHelper::merge($rules3, $rules4);
+            Yii::$app->set('urlManager', [
+                'class' => 'yii\web\UrlManager',
+                'enablePrettyUrl' => true,
+                'showScriptName' => false,
+                'enableStrictParsing' => false,
+                'rules' => ArrayHelper::merge($rules_1, $rules_2)
+            ]);
+        }
+
+    }
+
+    private function getTopRules($language)
+    {
+        return [
+            '/' => 'site/index',
+            Yii::t('url', 'page', [], $language).'/<view>' => 'site/page',
+
+            Yii::t('url', 'tin-tuc', [], $language) => 'news/index',
+            Yii::t('url', 'tin-tuc', [], $language).'/<cat_id:\d+>-<cat_slug>' => 'news/list',
+            Yii::t('url', 'tin-tuc', [], $language).'/chi-tiet/<id:\d+>-<slug>' => 'news/view',
+
+            Yii::t('url', 'du-an', [], $language) => 'building-project/index',
+            Yii::t('url', 'du-an', [], $language).'/<slug>' => 'building-project/view',
+
+            Yii::t('url', 'nha-dat-ban', [], $language) => 'ad/index1',
+            Yii::t('url', 'nha-dat-cho-thue', [], $language) => 'ad/index2',
+            Yii::t('url', 'dang-tin', [], $language) => 'ad/post',
+            Yii::t('url', 'bat-dong-san', [], $language).'/redirect' => 'ad/redirect',
+            Yii::t('url', 'bat-dong-san', [], $language).'/post-listing' => 'ad/post-listing',
+            Yii::t('url', 'nha-dat-ban', [], $language).'/<id:\d+>-<slug>' => 'ad/detail1',
+        	Yii::t('url', 'nha-dat-cho-thue', [], $language).'/<id:\d+>-<slug>' => 'ad/detail2',
+            Yii::t('url', 'bat-dong-san', [], $language).'/update/<id:\d+>' => 'ad/update',
+            Yii::t('url', 'thanh-vien', [], $language).'/<usrn>/avatar' => 'member/avatar',
+            Yii::t('url', 'tro-chuyen', [], $language).'/with/<username>' => 'chat/with',
+            Yii::t('url', 'goi-gia', [], $language).'' => 'payment/package',
+
+            'mvuser/protect/<action>' => 'user/security/<action>',
+            'mvuser/join/<action>' => 'user/registration/<action>',
+            'mvuser/forgot/<action>' => 'user/recovery/<action>',
+			'listing/<action>' => 'ad/<action>',
+        ];
+    }
+
+    private function getBottomRules($language){
+        return [
+            '<username>' => 'member/profile',
+            '<username>/'.Yii::t('url', 'cai-dat', [], $language) => 'member/update-profile',
+            '<username>/'.Yii::t('url', 'thong-bao', [], $language) => 'notification/index',
+            '<username>/'.Yii::t('url', 'thong-bao', [], $language).'/'.Yii::t('url', 'cap-nhat', [], $language) => 'notification/update',
+            '<username>/'.Yii::t('url', 'danh-sach-tin-dang', [], $language) => 'dashboard/ad',
+            '<username>/'.Yii::t('url', 'payment', [], $language) => 'dashboard/payment',
+            '<username>/'.Yii::t('url', 'tro-chuyen', [], $language) => 'chat/index',
+
+        ];
     }
 
     public function changeLanguage()
@@ -76,7 +146,7 @@ class MVBootstrap implements BootstrapInterface
             $params = array_merge(['/'.$parseRequest[0]], Yii::$app->request->getQueryParams());
         }
         if(!empty($params['language-change'])){
-            $params['language'] = $params['language-change'];
+//            $params['language'] = $params['language-change'];
             unset($params['language-change']);
         }
         $url = Url::to($params);
