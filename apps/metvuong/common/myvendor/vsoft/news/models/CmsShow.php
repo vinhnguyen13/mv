@@ -4,6 +4,7 @@ namespace vsoft\news\models;
 
 use dektrium\user\models\User;
 use lajax\translatemanager\models\Language;
+use vsoft\news\Module;
 use Yii;
 use yii\behaviors\AttributeBehavior;
 use yii\behaviors\SluggableBehavior;
@@ -41,6 +42,8 @@ use yii\image\drivers\Image;
 class CmsShow extends \funson86\cms\models\CmsShow
 {
     const THUMB400x0 = 'thumb400x0_';
+    const HOT_NEWS_YES = 1;
+    const HOT_NEWS_NO = 0;
 
     /**
      * @inheritdoc
@@ -93,8 +96,7 @@ class CmsShow extends \funson86\cms\models\CmsShow
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['created_at', 'updated_at'], 'integer'],
-            [['created_by', 'updated_by'], 'integer'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by', 'hot_news'], 'integer'],
             [['language_id'], 'string']
         ]);
     }
@@ -120,6 +122,19 @@ class CmsShow extends \funson86\cms\models\CmsShow
         else
             $username=User::findOne(Yii::$app->user->getId());
         return $username->username;
+    }
+
+    public static function getHotNews($id = NULL){
+        $data = [
+            self::HOT_NEWS_YES => Module::t('cms', 'Yes'),
+            self::HOT_NEWS_NO => Module::t('cms', 'No'),
+        ];
+
+        if ($id !== null && isset($data[$id])) {
+            return $data[$id];
+        } else {
+            return $data;
+        }
     }
 
     public static function getShowForHomepage(){
