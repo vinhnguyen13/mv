@@ -23,5 +23,5 @@ return [
     'du-an' => 'Dự Án',
     'dang-tin' => 'Đăng Tin và Quảng Cáo Nhà Đất Miễn Phí',
     'tin-tuc' => 'Tin Tức Bất Động Sản',
-    'goi-gia' => 'Gói Giá Chìa Khóa',
+    'services' => 'Gói Giá Chìa Khóa',
 ];

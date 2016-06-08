@@ -27,6 +27,7 @@ class PaymentController extends Controller
     }
 
     public function actionPackage(){
+        $this->view->title = Yii::t('meta', 'services');
         $this->view->params['menuPricing'] = true;
         return $this->render('package/index');
     }
