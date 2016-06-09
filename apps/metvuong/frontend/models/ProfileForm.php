@@ -6,11 +6,14 @@ namespace frontend\models;
  * Date: 12/14/2015
  * Time: 6:11 PM
  */
+use vsoft\ad\models\AdProduct;
 use dektrium\user\helpers\Password;
 use frontend\models\Profile;
 use frontend\models\User;
 use yii\base\Model;
 use Yii;
+use yii\helpers\StringHelper;
+use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 
 class ProfileForm extends Model
@@ -201,6 +204,14 @@ class ProfileForm extends Model
             $profile = $user->profile;
             $profile->avatar = $profile->getAvatarUrl();
         } else {
+            if(StringHelper::startsWith(strtolower($username), 'mv')) {
+                $id = str_replace('mv', '', strtolower($username));
+                $product = AdProduct::findOne($id);
+                if($product) {
+                    Yii::$app->response->redirect($product->urlDetail());
+                    Yii::$app->end();
+                }
+            }
             throw new NotFoundHttpException('Not Found');
         }
         $model = Yii::createObject([
