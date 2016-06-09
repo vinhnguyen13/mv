@@ -63,22 +63,6 @@ use frontend\models\AdProductSearch;
                             </div>
                         </a>
                     </li>
-                    <li class="num-gold">
-                        <a href="<?=Url::to(['/dashboard/payment', 'username'=> Yii::$app->user->identity->getUsername()])?>" class="fs-14"><span class="icon-mv mgR-5 color-gold"><span class="icon-coin-dollar"></span></span>10 Keys</a>
-                    </li>
-                    <!-- <li><a href="<?= Url::to(['/ad/post']) ?>"><em class="icon-plus"></em>Đăng tin mới</a></li> -->
-                    <li><a href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->getUsername()])?>"><span class="icon-mv"><span class="icon-barometer"></span></span><?=Yii::t('ad', 'Dashboard')?></a></li>
-                    <li><a href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->getUsername()])?>" class="wrapNotifyOther"><span class="icon-mv"><span class="icon-icons-bell"></span></span><?=Yii::t('activity', 'Notification')?>
-                            <?php if(!empty($this->params['notify_other'])){?>
-                                <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
-                            <?php }?>
-                        </a></li>
-                    <li><a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->getUsername()])?>" class="wrapNotifyChat"><span class="icon-mv"><span class="icon-bubbles-icon"></span></span><?=Yii::t('chat', 'Chat')?>
-                            <?php if(!empty($this->params['notify_chat'])){?>
-                                <span id="notifyChat" class="notifi"><?=$this->params['notify_chat'];?></span>
-                            <?php }?>
-                    </a></li>
-                    <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->getUsername()])?>"><span class="icon-mv"><span class="icon-settings"></span></span><?=Yii::t('user', 'Setting')?></a></li>
                     <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><span class="icon icon-logout"></span><?=Yii::t('user', 'Log Out')?></a></li>
                     <li class="flag-lang">
                         <p class="pull-right">
@@ -115,49 +99,6 @@ use frontend\models\AdProductSearch;
                     </div>
                 </div>
                 <?php } else{?>
-                    <ul class="pull-left list-redire">
-                        <li class="num-gold">
-                            <a href="<?=Url::to(['/dashboard/payment', 'username'=> Yii::$app->user->identity->getUsername()])?>" class="fs-14"><span class="icon-mv mgR-5 color-gold"><span class="icon-coin-dollar"></span></span>10 Keys</a>
-                        </li>
-                        <li class="dropdown-message box-dropdown">
-                            <a class="val-selected wrapNotifyChat" href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->getUsername()])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('chat', 'Chat')?>">
-                                <span class="icon-mv"><span class="icon-bubbles-icon"></span></span>
-                                <?php if(!empty($this->params['notify_chat'])){?>
-                                    <span id="notifyChat" class="notifi"><?=$this->params['notify_chat'];?></span>
-                                <?php }?>
-                            </a>
-                            <div class="item-dropdown hide-dropdown">
-                                <div class="list-message">
-                                    <div class="wrap-item-messa-head">
-                                        <ul class="clearfix">
-                                        </ul>
-                                    </div>
-                                    <a href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->getUsername()])?>" class="view-more"><?=Yii::t('general', 'View more')?></a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="dropdown-noti box-dropdown">
-                            <a class="val-selected wrapNotifyOther" href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->getUsername()])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('activity', 'Notification')?>">
-                                <span class="icon-mv"><span class="icon-icons-bell"></span></span>
-                                <?php if(!empty($this->params['notify_other'])){?>
-                                    <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
-                                <?php }?>
-                            </a>
-                            <div class="item-dropdown hide-dropdown">
-                                <div class="list-notify">
-                                    <div class="wrap-item-noti-head">
-                                        <ul class="clearfix"></ul>
-                                    </div>
-                                    <a href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->getUsername()])?>" class="view-more"><?=Yii::t('general', 'View more')?></a>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <a class="" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->getUsername()])?>" data-toggle="tooltip" data-placement="bottom" title="Dashboard">
-                                <span class="icon-mv"><span class="icon-barometer"></span></span>
-                            </a>
-                        </li>
-                    </ul>
                     <div class="user-edit box-dropdown">
                         <a class="val-selected wrapNotifyTotal" data-toggle="tooltip" data-placement="bottom" href="#" title="<?=Yii::t('user', 'Profile')?>">
                             <span class="wrap-img"><img src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="" width="40" height="40"></span>
@@ -176,7 +117,6 @@ use frontend\models\AdProductSearch;
                                         <?=Yii::t('user', 'Profile')?>
                                     </a>
                                 </li>
-                                <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->getUsername()])?>"><div><span class="icon-mv"><span class="icon-settings"></span></span></div><?=Yii::t('user', 'Setting')?></a></li>
                                 <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><div><span class="icon icon-logout"></span></div><?=Yii::t('user', 'Log Out')?></a></li>
                                 <li class="flag-lang">
                                     <div class="pull-right">
