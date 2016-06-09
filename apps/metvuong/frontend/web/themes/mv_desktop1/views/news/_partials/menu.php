@@ -10,7 +10,7 @@ Yii::t('news', 'Economy');
 <div class="title-top clearfix">
     <h2><?=Yii::t('news','NEWS')?></h2>
 </div>
-<div class="list-menu-news">
+<div class="list-menu-news" style="width: 500px;">
     <div class="swiper-container">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
@@ -21,7 +21,7 @@ Yii::t('news', 'Economy');
                     <div class="swiper-slide">
                         <a <?=(!empty($cat_id) && $cat_id == $catalog->id) ? 'class="active"' : '';?> href="<?=Url::to(['news/list', 'cat_id'=>$catalog->id, 'cat_slug'=>\yii\helpers\Inflector::slug(Yii::t('news', trim($catalog->title)))])?>"><?=Yii::t('news', trim($catalog->title))?></a>
                     </div>
-                <?php }?>
+                <?php break; }?>
             <?php }?>
         </div>
     </div>
