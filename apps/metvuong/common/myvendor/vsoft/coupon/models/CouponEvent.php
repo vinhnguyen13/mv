@@ -43,4 +43,11 @@ class CouponEvent extends CouponEventBase
             ],
         ];
     }
+
+    public function rules()
+    {
+        return array_merge(parent::rules(), [
+            [['start_date', 'end_date'], 'integer'],
+        ]);
+    }
 }

@@ -75,6 +75,13 @@ class CouponEventController extends Controller
     {
         $model = new CouponEvent();
         $post = Yii::$app->request->post();
+        $start = isset($post["CouponEvent"]["start_date"]) ? $post["CouponEvent"]["start_date"] : null;
+        $end = isset($post["CouponEvent"]["end_date"]) ? $post["CouponEvent"]["end_date"] : null;
+        if(!empty($start) && !empty($end)) {
+            $post["CouponEvent"]["start_date"] = strtotime($start);
+            $post["CouponEvent"]["end_date"] = strtotime($end." 23:59");
+        }
+
         if ($model->load($post) && $model->save()) {
             return $this->redirect('index');
         } else {
@@ -93,8 +100,15 @@ class CouponEventController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $post = Yii::$app->request->post();
+        $start = isset($post["CouponEvent"]["start_date"]) ? $post["CouponEvent"]["start_date"] : null;
+        $end = isset($post["CouponEvent"]["end_date"]) ? $post["CouponEvent"]["end_date"] : null;
+        if(!empty($start) && !empty($end)) {
+            $post["CouponEvent"]["start_date"] = strtotime($start);
+            $post["CouponEvent"]["end_date"] = strtotime($end." 23:59");
+        }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load($post) && $model->save()) {
             return $this->redirect('index');
         } else {
             return $this->render('update', [

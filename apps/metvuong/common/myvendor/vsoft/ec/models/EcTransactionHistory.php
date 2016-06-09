@@ -32,6 +32,9 @@ class EcTransactionHistory extends EcTransactionHistoryBase
     const OBJECT_TYPE_PACKAGE = 2;
     const OBJECT_TYPE_USER = 3;
 
+    const STATUS_SUCCESS = 1;
+    const STATUS_FAILED = 0;
+
     const ACTION_TYPE_BUY = 1;
     const ACTION_TYPE_RECEIVE = 2;
 
@@ -46,6 +49,20 @@ class EcTransactionHistory extends EcTransactionHistoryBase
             self::OBJECT_TYPE_PRODUCT => Module::t('ec', 'Product'),
             self::OBJECT_TYPE_PACKAGE => Module::t('ec', 'Package'),
             self::OBJECT_TYPE_USER => Module::t('ec', 'User'),
+        ];
+
+        if ($id !== null && isset($data[$id])) {
+            return $data[$id];
+        } else {
+            return $data;
+        }
+    }
+
+    public static function getTransactionStatus($id=null)
+    {
+        $data = [
+            self::STATUS_SUCCESS => Module::t('ec', 'Success'),
+            self::STATUS_FAILED => Module::t('ec', 'Failed'),
         ];
 
         if ($id !== null && isset($data[$id])) {
@@ -147,6 +164,24 @@ class EcTransactionHistory extends EcTransactionHistoryBase
     public function getTransactions($user_id)
     {
         return EcTransactionHistory::find()->where('user_id = :u',[':u' => $user_id])->all();
+    }
+
+    public static function createTransaction($user_id, $obj_id, $obj_type, $amount, $action_type, $action_detail, $charge_id, $status, $data_type, $created_at=null, $updated_at=null)
+    {
+        $transaction = new EcTransactionHistory();
+        $transaction->user_id = $user_id;
+        $transaction->object_id = $obj_id;
+        $transaction->object_type = $obj_type;
+        $transaction->amount = $amount;
+        $transaction->action_type = $action_type;
+        $transaction->action_detail = $action_detail;
+        $transaction->charge_id = $charge_id;
+        $transaction->status = $status;
+        $transaction->data_type = $data_type;
+        $transaction->created_at = empty($created_at) ? time() : $created_at;
+        $transaction->updated_at = empty($updated_at) ? time() : $updated_at;
+        $transaction->save(false);
+        return $transaction;
     }
 
 }
