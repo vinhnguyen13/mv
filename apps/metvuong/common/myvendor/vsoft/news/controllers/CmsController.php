@@ -3,13 +3,16 @@
 namespace vsoft\news\controllers;
 
 use funson86\cms\controllers\backend\CmsShowController;
+use vsoft\express\components\AdImageHelper;
 use vsoft\news\models\CmsShow;
 use vsoft\news\models\CmsShowSearch;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Inflector;
+use yii\image\drivers\Image;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 use yii\web\UploadedFile;
 
 /**
@@ -117,10 +120,12 @@ class CmsController extends CmsShowController
             $upload_image = UploadedFile::getInstance($model, 'banner');
             if (!empty($upload_image)) {
                 $image_name = Inflector::slug($upload_image->baseName);
-                $model->banner = 'news_' . strtolower($image_name) . '_' . date('mdY') . '.' . $upload_image->extension;
+                $model->banner = strtolower($image_name) . '_' . time() . '.' . $upload_image->extension;
             }
             if ($model->banner) {
-                $upload_image->saveAs(Yii::getAlias('@store'). '/news/show/' . $model->banner);
+                $filePath = Yii::getAlias('@store'). '/news/show/' . $model->banner;
+                $upload_image->saveAs($filePath);
+                CmsShow::saveThumbnail($filePath, [480, 360]);
             } else {
                 $model->banner = $oldBanner;
             }
@@ -147,5 +152,18 @@ class CmsController extends CmsShowController
         $model->save();*/
 
         return $this->redirect(['index']);
+    }
+
+    public function actionUpdateHotnews($cms_id, $stage)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $cms = CmsShow::findOne($cms_id);
+        if(count($cms)> 0)
+        {
+            $cms->hot_news = $stage;
+            $cms->update();
+            return ['title' => $cms->title];
+        }
+        return false;
     }
 }

@@ -4,6 +4,7 @@ namespace vsoft\news\models;
 
 use dektrium\user\models\User;
 use lajax\translatemanager\models\Language;
+use vsoft\news\Module;
 use Yii;
 use yii\behaviors\AttributeBehavior;
 use yii\behaviors\SluggableBehavior;
@@ -11,6 +12,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\helpers\Url;
+use yii\image\drivers\Image;
 
 /**
  * This is the model class for table "cms_show".
@@ -39,6 +41,10 @@ use yii\helpers\Url;
  */
 class CmsShow extends \funson86\cms\models\CmsShow
 {
+    const THUMB400x0 = 'thumb400x0_';
+    const HOT_NEWS_YES = 1;
+    const HOT_NEWS_NO = 0;
+
     /**
      * @inheritdoc
      */
@@ -90,8 +96,7 @@ class CmsShow extends \funson86\cms\models\CmsShow
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['created_at', 'updated_at'], 'integer'],
-            [['created_by', 'updated_by'], 'integer'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by', 'hot_news'], 'integer'],
             [['language_id'], 'string']
         ]);
     }
@@ -119,6 +124,19 @@ class CmsShow extends \funson86\cms\models\CmsShow
         return $username->username;
     }
 
+    public static function getHotNews($id = NULL){
+        $data = [
+            self::HOT_NEWS_YES => Module::t('cms', 'Yes'),
+            self::HOT_NEWS_NO => Module::t('cms', 'No'),
+        ];
+
+        if ($id !== null && isset($data[$id])) {
+            return $data[$id];
+        } else {
+            return $data;
+        }
+    }
+
     public static function getShowForHomepage(){
 //        $limit = Yii::$app->mobileDetect->isMobile() ? 3 : 4;
         $query = CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief', 'cms_show.created_at','cms_show.catalog_id', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
@@ -144,28 +162,43 @@ class CmsShow extends \funson86\cms\models\CmsShow
 //        $newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatID"] : 0;
 //        $homepageCatID = isset(Yii::$app->params["homepageCatID"]) ? Yii::$app->params["homepageCatID"] : 0;
 //        $metvuongCatID = isset(Yii::$app->params["metvuongCatID"]) ? Yii::$app->params["metvuongCatID"] : 0;
-
-        $news = CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief', 'cms_show.created_at','cms_show.catalog_id', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
-            ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
-            ->where('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
-            ->andWhere('cms_catalog.status = :status', [':status' => Status::STATUS_ACTIVE])
-            ->andWhere(['IN', 'cms_show.language_id', [Yii::$app->language]])
-            ->andWhere(['NOT IN', 'cms_show.catalog_id', [1]])
-            ->asArray()->orderBy('cms_show.created_at DESC')->limit($limit)->all();
+        $newsDb = CmsShow::getDb();
+        $news = $newsDb->cache(function($newsDb) use($limit){
+            return CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief', 'cms_show.created_at','cms_show.catalog_id', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
+                ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
+                ->where('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
+                ->andWhere('cms_catalog.status = :status', [':status' => Status::STATUS_ACTIVE])
+                ->andWhere(['IN', 'cms_show.language_id', [Yii::$app->language]])
+                ->andWhere(['NOT IN', 'cms_show.catalog_id', [1]])
+                ->asArray()->orderBy('cms_show.created_at DESC')->limit($limit)->all();
+        });
         return $news;
     }
 
-    public static function getBanner($id){
-        $model = CmsShow::findOne($id);
-        $imgPath = Url::to("/frontend/web/themes/metvuong2/resources/images/default-ads.jpg");
-        if($model->banner) {
-            $checkFile = file_exists(Yii::getAlias('@store')."/news/show/".$model->banner);
-            if($checkFile)
-                $imgPath = Url::to('/store/news/show/' . $model->banner);
-        } else {
-            $imgPath = Url::to( '/frontend/web/themes/metvuong2/resources/images/default-ads.jpg');// /frontend/web/themes/metvuong1/resources/images/default-ads.jpg
+    public static function getBanner($banner){
+        $imgPath = Url::to("/frontend/web/themes/mv_desktop1/resources/images/default-ads.jpg", true);
+        if($banner) {
+            $checkThumbFile = file_exists(Yii::getAlias('@store')."/news/show/".CmsShow::THUMB400x0.$banner);
+            if($checkThumbFile)
+                $imgPath = Url::to('/store/news/show/'.CmsShow::THUMB400x0.$banner, true);
+            else {
+                $checkFile = file_exists(Yii::getAlias('@store')."/news/show/".$banner);
+                if($checkFile)
+                    $imgPath = Url::to('/store/news/show/'.$banner, true);
+            }
+
         }
         return $imgPath;
+    }
+
+    public static function saveThumbnail($filePath, $size){
+        $resource = \Yii::$app->image->load($filePath);
+        if($resource) {
+            $path = pathinfo($filePath);
+            $thumbPath = $path["dirname"]."/". CmsShow::THUMB400x0 . $path["basename"];
+            $resizingConstraints = ($resource->width > $resource->height) ? Image::HEIGHT : Image::WIDTH;
+            $resource->resize($size[0], $size[1], $resizingConstraints)->crop($size[0], $size[1])->save($thumbPath);
+        }
     }
 
 }
