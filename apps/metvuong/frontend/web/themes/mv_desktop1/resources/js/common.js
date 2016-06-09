@@ -636,6 +636,7 @@ $.fn.price_dt = function (options) {
                 var item = $('<li data-number="'+i+'"><a class="option">'+formatPrice(i)+'</a></li>'),
                     itemClone = item.clone();
 
+                //item.on('click', seletedVal);
                 el.find('.wrap-minmax[data-wrap-minmax=min-val]').append(item);
             }
 
@@ -655,6 +656,7 @@ $.fn.price_dt = function (options) {
 
             if ( valHisMin != '' ) {
                 renderMax(parseInt(valHisMin));
+                renderTxtShow('min-val');
             }else {
                 temp = 0;
                 for ( var i in prices[sc.settings.hinhthuc] ) {
@@ -796,17 +798,22 @@ $.fn.price_dt = function (options) {
                     valMax += 2000000000;
                 }
                 itemMax.append(item);
+
+                item.find('a').on('click', seletedVal);
+
                 if ( i+1 == sc.settings.numRenderMax ) {
                     if ( el.data('itemMinmax') == 'area' ) {
                         item = $('<li data-number="-1"><a class="option">DT Bất Kỳ</a></li>');
                         itemMax.append(item);
+                        item.find('a').on('click', seletedVal);
                     }else if ( el.data('itemMinmax') == 'prices' ) {
                         item = $('<li data-number="-1"><a class="option">Giá Bất Kỳ</a></li>');
                         itemMax.append(item);
+                        item.find('a').on('click', seletedVal);
                     }
                 }
             }
-            itemMax.find('a').on('click', seletedVal);
+            //itemMax.find('a').on('click', seletedVal);
         }
 
         function toggleMinMax (item) {
@@ -838,9 +845,9 @@ $.fn.price_dt = function (options) {
         function renderTxtShow (minmax, txt) {
             var wrapTxt = el.find('.val-selected');
 
-            if ( minmax == 'min-val' ) {
+            if ( minmax == 'min-val' && txt != '' ) {
                 wrapTxt.find('.wrap-min').html(txt);
-            }else if ( minmax == 'max-val' ) {
+            }else if ( minmax == 'max-val' && txt != '' ) {
                 wrapTxt.find('.wrap-max').html(txt);
             }
 
