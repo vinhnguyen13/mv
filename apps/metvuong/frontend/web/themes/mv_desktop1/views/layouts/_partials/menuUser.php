@@ -15,6 +15,12 @@ use yii\helpers\Url;
                     </a>
                 </li>
                 <li>
+                    <a href="#">
+                        <div><span class="icon-mv"><span class="icon-coin-dollar"></span></span></div>
+                        Giao dịch
+                    </a>
+                </li>
+                <li>
                     <a href="<?= Url::to(['/notification/index', 'username' => Yii::$app->user->identity->getUsername()]) ?>"
                        class="wrapNotifyOther <?= !empty($this->params['menuNotification']) ? 'active' : ''; ?>">
                         <div>
@@ -46,9 +52,9 @@ use yii\helpers\Url;
                     </a>
                 </li>
                 <li>
-                    <a href="#">
-                        <div><span class="icon-mv"><span class="icon-coin-dollar"></span></span></div>
-                        Giao dịch
+                    <a data-method="post" href="<?=Url::to(['/member/logout'])?>">
+                        <div><span class="icon-mv"><span class="icon-sign-out"></span></span></div>
+                        <?=Yii::t('user', 'Log Out')?>
                     </a>
                 </li>
             </ul>

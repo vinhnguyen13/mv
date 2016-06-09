@@ -116,9 +116,9 @@ use frontend\models\AdProductSearch;
                 </div>
                 <?php } else{?>
                     <ul class="pull-left list-redire">
-                        <li class="num-gold">
+                        <!-- <li class="num-gold">
                             <a href="<?=Url::to(['/dashboard/payment', 'username'=> Yii::$app->user->identity->getUsername()])?>" class="fs-14"><span class="icon-mv mgR-5 color-gold"><span class="icon-coin-dollar"></span></span>10 Keys</a>
-                        </li>
+                        </li> -->
                         <li class="dropdown-message box-dropdown">
                             <a class="val-selected wrapNotifyChat" href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->getUsername()])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('chat', 'Chat')?>">
                                 <span class="icon-mv"><span class="icon-bubbles-icon"></span></span>
@@ -152,21 +152,21 @@ use frontend\models\AdProductSearch;
                                 </div>
                             </div>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a class="" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->getUsername()])?>" data-toggle="tooltip" data-placement="bottom" title="Dashboard">
                                 <span class="icon-mv"><span class="icon-barometer"></span></span>
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
                     <div class="user-edit box-dropdown">
-                        <a class="val-selected wrapNotifyTotal" data-toggle="tooltip" data-placement="bottom" href="#" title="<?=Yii::t('user', 'Profile')?>">
+                        <a class="val-selected wrapNotifyTotal" data-toggle="tooltip" data-placement="bottom" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->getUsername()])?>" title="<?=Yii::t('user', 'Profile')?>">
                             <span class="wrap-img"><img src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="" width="40" height="40"></span>
                             <div>
                                 <p><span class="name-user"><?=Yii::$app->user->identity->profile->getDisplayName();?></span>
                                     <span class="address"><?=empty(Yii::$app->user->identity->location) ? "" : Yii::$app->user->identity->location->city?></span></p>
                             </div>
                         </a>
-                        <div class="item-dropdown hide-dropdown">
+                        <!-- <div class="item-dropdown hide-dropdown">
                             <ul class="clearfix">
                                 <li>
                                     <a href="<?=Url::to(['member/profile', 'username'=>Yii::$app->user->identity->getUsername()])?>">
@@ -186,7 +186,7 @@ use frontend\models\AdProductSearch;
                                     <?=Yii::t('general', 'Language')?>
                                 </li>
                             </ul>
-                        </div>
+                        </div> -->
                     </div>
                 <?php } ?>
             </div>
@@ -271,7 +271,7 @@ use frontend\models\AdProductSearch;
             });
         });
 
-        $('.guest-dropdown,.user-edit').dropdown({
+        $('.guest-dropdown').dropdown({
             styleShow: 0,
             selectedValue: false
         });

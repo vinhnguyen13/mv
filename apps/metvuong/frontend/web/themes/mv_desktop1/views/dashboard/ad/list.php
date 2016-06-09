@@ -55,10 +55,11 @@ $count_product = count($products);
                             <?php } else { ?>
                             <p class="loca-duan"><a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>" title="<?= $product->address ?>"><?= $product->address ?></a></p>
                             <?php } ?>
-                            <p class="fs-13 mgB-10 text-cappi"><span><?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= $types[$product->type] ?></span></p>
+                            <p class="fs-13 text-cappi"><span><?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= $types[$product->type] ?></span></p>
                             <p class="id-duan">
                                 ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id; ?></span>
                             </p>
+                            <a href="<?=$product->urlDetail(true)?>" class="see-detail-listing fs-13 font-600 color-cd-hover pull-right"><span class="text-decor"><?=Yii::t('statistic', 'Go detail page')?></span><span class="icon-mv mgL-10 fs-17"><span class="icon-angle-right"></span></span></a>
                             <ul class="clearfix list-attr-td">
                                 <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
                                     <li><span><?=Yii::t('listing','updating')?></span></li>
@@ -92,7 +93,7 @@ $count_product = count($products);
                                 </div>
                                 <a href="#"  data-toggle="modal" data-target="#upgrade-time" data-product="<?=$product->id;?>" class="btn-nang-cap mgL-10 btn-up"><?= Yii::t('statistic', 'Up') ?></a>
                                 <div class="clearfix"></div>
-                                <a href="<?=$product->urlDetail(true)?>" class="see-detail-listing fs-13 font-600 color-cd-hover mgT-10"><span class="text-decor"><?=Yii::t('statistic', 'Go detail page')?></span><span class="icon-mv mgL-10"><span class="icon-angle-right"></span></span></a>
+                                <a href="#" class="see-detail-listing fs-13 font-600 color-cd-hover mgT-10"><span class="text-decor">Xem thống kê</span><span class="icon-mv mgL-10"><span class="icon-angle-right"></span></span></a>
                             </div>
                             <div class="wrap-icon">
                                 <span class="icon-mv"><span class="icon-icons-search"></span></span>
