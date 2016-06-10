@@ -336,7 +336,6 @@ header {
 .wrap-img img {
     max-width: 100%;
     display: block;
-    width: 120px;
 }
 .regis-home h2,
 .search-home h2 {
@@ -5904,7 +5903,7 @@ html.mm-opening .mm-slideout {
     text-align: right;
 }
 .dt-footer .license p {
-    text-align: left;
+    /* text-align: left; */
 }
 .dt-footer ul {
     margin-bottom: 5px;
@@ -5923,7 +5922,7 @@ html.mm-opening .mm-slideout {
     padding-right: 0;
 }
 .logo-footer {
-    width: 115px;
+    width: 200px;
 }
 footer li a {
     color: #fff;
@@ -11654,12 +11653,13 @@ height: 190px;
     margin-bottom: 5px;
 }
 .dt-footer .license p {
-    text-align: center;
+    /* text-align: center; */
 }
 @media (max-width: 985px) {
     .license {
         text-align: center;
         font-size: 14px;
+        margin-top: 10px;
     }
 }
 .icon-icon-bathroom {
@@ -11703,6 +11703,10 @@ height: 190px;
 @media (max-width: 985px) {
     .left-attr-detail .id-duan {
         display: inline-block;
+    }
+    .box-about .wrap-item {
+        width: 100%;
+        line-height: 26px;
     }
 }
 .days-up li {
