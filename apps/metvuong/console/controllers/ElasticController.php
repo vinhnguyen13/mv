@@ -118,7 +118,7 @@ class ElasticController extends Controller {
 			
 			$buildTerm = $this->buildTerm($term['id'], $cityId, $name, $fullName, $totalSell, $totalRent, $districtSlug . '/' . $p . '_' . $term['id']);
 			
-			$buildTerm[1]['district_id'] = $districtId;
+			$buildTerm[1]['district_id'] = intval($districtId);
 			
 			$termBulk = array_merge($termBulk, $buildTerm);
 		}
@@ -261,9 +261,9 @@ class ElasticController extends Controller {
 			'search_name' => Elastic::transform($name),
 			'full_name' => $fullName,
 			'search_field' => Elastic::transform(str_replace(',', '', $fullName)),
-			AdProduct::TYPE_FOR_SELL_TOTAL => $totalSell,
-			AdProduct::TYPE_FOR_RENT_TOTAL => $totalRent,
-			'city_id' => $cityId
+			AdProduct::TYPE_FOR_SELL_TOTAL => intval($totalSell),
+			AdProduct::TYPE_FOR_RENT_TOTAL => intval($totalRent),
+			'city_id' => intval($cityId)
 		];
 		
 		return $term;
