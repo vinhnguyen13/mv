@@ -11708,6 +11708,13 @@ height: 190px;
         width: 100%;
         line-height: 26px;
     }
+    .keyword_wrapper .container > div {
+        width: 100%;
+    }
+    .keyword_wrapper .keyword_child_location  li {
+        float: left;
+        margin-right: 20px;
+    }
 }
 .days-up li {
     float: left;

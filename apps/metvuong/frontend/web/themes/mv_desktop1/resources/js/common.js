@@ -636,7 +636,8 @@ $.fn.price_dt = function (options) {
                 var item = $('<li data-number="'+i+'"><a class="option">'+formatPrice(i)+'</a></li>'),
                     itemClone = item.clone();
 
-                //item.on('click', seletedVal);
+                item.find('a').on('click', seletedVal);
+
                 el.find('.wrap-minmax[data-wrap-minmax=min-val]').append(item);
             }
 
@@ -667,11 +668,13 @@ $.fn.price_dt = function (options) {
                     var item = $('<li data-number="'+i+'"><a class="option">'+formatPrice(i)+'</a></li>');
 
                     if ( parseInt(formatPrice(i)) > 0 ) {
+                        item.find('a').on('click', seletedVal);
                         el.find('.wrap-minmax[data-wrap-minmax=max-val]').append(item);
                     }
 
                     if ( temp == size ) {
                         item = $('<li data-number="-1"><a class="option">Giá Bất Kỳ</a></li>');
+                        item.find('a').on('click', seletedVal);
                         el.find('.wrap-minmax[data-wrap-minmax=max-val]').append(item);
                     }
                 }
@@ -687,23 +690,59 @@ $.fn.price_dt = function (options) {
                 var item = $('<li data-number="'+i+'"><a class="option">'+dt[i]+'</a></li>'),
                     itemClone = item.clone();
 
+                item.find('a').on('click', seletedVal);
                 el.find('.wrap-minmax[data-wrap-minmax=min-val]').append(item);
+            }
 
-                if ( parseInt(dt[i]) > 0 ) {
-                    el.find('.wrap-minmax[data-wrap-minmax=max-val]').append(itemClone);
+            //set value when reload page
+            var valHisMax = el.find('#dtMax').val(),
+                valHisMin = el.find('#dtMin').val();
+
+            if ( valHisMin != '' ) {
+                renderMax(parseInt(valHisMin));
+                //renderTxtShow('min-val');
+                el.find('.min-val').html(valHisMin+'m2');
+                el.find('.min-val').data('value',valHisMin);
+                renderTxtShow ('min-val', valHisMin+'m2');
+
+                if ( valHisMax != '' ) {
+                    el.find('.max-val').html(valHisMax+'m2');
+                    el.find('.max-val').data('value',valHisMax);
+                    renderTxtShow ('max-val', valHisMax+'m2');
                 }
-                if ( temp+1 == size ) {
-                    item = $('<li data-number="-1"><a class="option">DT Bất Kỳ</a></li>');
-                    el.find('.wrap-minmax[data-wrap-minmax=max-val]').append(item);
+            }else if ( valHisMax != '' ) {
+                el.find('.max-val').html(valHisMax+'m2');
+                el.find('.max-val').data('value',valHisMax);
+                renderTxtShow ('max-val', valHisMax+'m2');
+            }else {
+                temp = 0;
+                for ( var i in dt ) {
+                    temp += 1;
+                    if ( parseInt(i) < 0 ) {
+                        continue;
+                    }
+                    
+                    var item = $('<li data-number="'+i+'"><a class="option">'+dt[i]+'</a></li>');
+
+                    if ( parseInt(i) > 0 ) {
+                        item.find('a').on('click', seletedVal);
+                        el.find('.wrap-minmax[data-wrap-minmax=max-val]').append(item);
+                    }
+
+                    if ( temp+1 == size ) {
+                        item = $('<li data-number="-1"><a class="option">DT Bất Kỳ</a></li>');
+                        item.find('a').on('click', seletedVal);
+                        el.find('.wrap-minmax[data-wrap-minmax=max-val]').append(item);
+                    }
                 }
             }
         }
 
         el.find('ul[data-wrap-minmax=min-val]').show();
 
-        el.find('.filter-minmax li a').on('click', seletedVal);
-
         el.find('.min-max').on('click', clickInput);
+
+        //el.find('.filter-minmax li a').on('click', seletedVal);
 
         function seletedVal (e) {
             var _this = $(this),
@@ -748,8 +787,15 @@ $.fn.price_dt = function (options) {
                 $('#priceMin').trigger('change');
                 $('#priceMax').trigger('change');
             }else if ( el.data('itemMinmax') == 'area' ) {
-                minmax == 'min-val' ? $('#dtMin').val(valMin) : $('#dtMax').val(valMax);
+                /*minmax == 'min-val' ? $('#dtMin').val(valMin) : $('#dtMax').val(valMax);
+                $('#dtMin').trigger('change');*/
+                if ( valMax < 0 ) {
+                    valMax = '';
+                }
+                $('#dtMin').val(valMin);
+                $('#dtMax').val(valMax);
                 $('#dtMin').trigger('change');
+                $('#dtMax').trigger('change');
             }
 
             renderTxtShow(minmax, txt);
@@ -774,8 +820,12 @@ $.fn.price_dt = function (options) {
                 unitDT = 'm2';
                 if ( valMin == 0 ) {
                     valMin = 10;
+                    valMax = valMin;
+                }else {
+                    valMax = valMin + 10;
                 }
             }else {
+
                 if ( sc.settings.hinhthuc == 'thue' && valMin == 0 ) {
                     valMin = 2000000;
                 }else if ( sc.settings.hinhthuc == 'mua' && valMin == 0 ) {
@@ -789,31 +839,32 @@ $.fn.price_dt = function (options) {
                 }
             }
 
-            
             for ( var i = 0; i < sc.settings.numRenderMax; i++ ) {
                 var item = $('<li data-number="'+valMax+'"><a class="option">'+formatPrice(''+valMax+'')+unitDT+'</a></li>');
+                
                 if ( sc.settings.hinhthuc == 'thue') {
                     valMax += 2000000;
                 }else if ( sc.settings.hinhthuc == 'mua' ) {
                     valMax += 2000000000;
                 }
-                itemMax.append(item);
 
-                item.find('a').on('click', seletedVal);
+                if ( el.data('itemMinmax') == 'area' ) {
+                    valMax += valMin;
+                }
+
+                itemMax.append(item);
 
                 if ( i+1 == sc.settings.numRenderMax ) {
                     if ( el.data('itemMinmax') == 'area' ) {
                         item = $('<li data-number="-1"><a class="option">DT Bất Kỳ</a></li>');
                         itemMax.append(item);
-                        item.find('a').on('click', seletedVal);
                     }else if ( el.data('itemMinmax') == 'prices' ) {
                         item = $('<li data-number="-1"><a class="option">Giá Bất Kỳ</a></li>');
                         itemMax.append(item);
-                        item.find('a').on('click', seletedVal);
                     }
                 }
             }
-            //itemMax.find('a').on('click', seletedVal);
+            itemMax.find('li a').on('click', seletedVal);
         }
 
         function toggleMinMax (item) {
