@@ -14,15 +14,6 @@ $email = empty($user) ? "" : (empty($user->profile->public_email) ? $user->email
 $finderFrom = (!empty($finders) && isset($finders["from"])) ? $finders["from"] : 0;
 $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
 
-$visitorFrom = (!empty($visitors) && isset($visitors["from"])) ? $visitors["from"] : 0;
-$visitorTo = (!empty($visitors) && isset($visitors["to"])) ? $visitors["to"] : 0;
-
-$favouriteFrom = (!empty($favourites) && isset($favourites["from"])) ? $favourites["from"] : 0;
-$favouriteTo = (!empty($favourites) && isset($favourites["to"])) ? $favourites["to"] : 0;
-
-$shareFrom = (!empty($shares) && isset($shares["from"])) ? $shares["from"] : 0;
-$shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
-
 ?>
 
 <div class="title-fixed-wrap">
@@ -50,10 +41,10 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
                         </div>
         			</div>
                     <ul class="option-view-stats clearfix">
-                        <li><a href="#" class="btn-finder active" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/finder', 'id' => $id, 'from' => $finderFrom, 'to' => $finderTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"> <span class="icon-mv fs-19"><span class="icon-icons-search"></span></span> <?=Yii::t('statistic','Search')?><span><?=$search_count ?></span></a></li>
-                        <li><a href="#" class="btn-visitor" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/visitor', 'id' => $id, 'from' => $visitorFrom, 'to' => $visitorTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><span class="icon-mv"><span class="icon-eye-copy"></span></span><?=Yii::t('statistic','Visit')?><span><?=$click_count ?></span></a></li>
-                        <li><a href="#" class="btn-favourite" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/saved', 'id' => $id, 'from' => $favouriteFrom, 'to' => $favouriteTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"><span class="icon-mv"><span class="icon-heart-icon-listing"></span></span><?=Yii::t('statistic','Favourite')?><span><?=$fav_count ?></span></a></li>
-                        <li><a href="#" class="btn-share" data-url="<?=\yii\helpers\Url::to(['/dashboard/chart', 'view'=>'_partials/share', 'id' => $id, 'from' => $shareFrom, 'to' => $shareTo, 'address' => $address, 'urlDetail' => $urlDetail])?>"> <span class="icon-mv"><span class="icon-share-social"></span></span> <?=Yii::t('statistic','Share')?> <span><?=$share_count?></span></a></li>
+                        <li><a href="javascript:;" class="btn-finder"> <span class="icon-mv fs-19"><span class="icon-icons-search"></span></span> <?=Yii::t('statistic','Search')?><span><?=$search_count ?></span></a></li>
+                        <li><a href="javascript:;" class="btn-visitor"><span class="icon-mv"><span class="icon-eye-copy"></span></span><?=Yii::t('statistic','Visit')?><span><?=$click_count ?></span></a></li>
+                        <li><a href="javascript:;" class="btn-favourite"><span class="icon-mv"><span class="icon-heart-icon-listing"></span></span><?=Yii::t('statistic','Favourite')?><span><?=$fav_count ?></span></a></li>
+                        <li><a href="javascript:;" class="btn-share"> <span class="icon-mv"><span class="icon-share-social"></span></span> <?=Yii::t('statistic','Share')?> <span><?=$share_count?></span></a></li>
                     </ul>
         		</div>
         	</section>
@@ -200,6 +191,25 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
         </div>
     </div>
 </div>
+
+
+
+<div class="modal fade" id="frmListVisit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="wrap-modal clearfix">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php
 $id = empty($id) ? AdProduct::find()->select(['id'])->asArray()->one()['id'] : $id;
 echo $this->renderAjax('/ad/_partials/shareEmail',[
@@ -223,85 +233,6 @@ echo $this->renderAjax('/ad/_partials/shareEmail',[
             }
         });
 
-        $(document).on('click', '.btn-finder', function() {
-            var url = $(this).attr('data-url');
-            if(url != '') {
-                $('.wrapChart').html('');
-                $('body').loading();
-                $.ajax({
-                    type: "get",
-                    dataType: 'html',
-                    url: url,
-                    success: function (data) {
-                        $('body').loading({done: true});
-                        $('.option-view-stats li a').removeClass("active");
-                        $('.btn-finder').addClass("active");
-                        $('.wrapChart').html(data);
-                    }
-                });
-            }
-            return false;
-        });
-
-        $(document).on('click', '.btn-visitor', function() {
-            var url = $(this).attr('data-url');
-            if(url != '') {
-                $('.wrapChart').html('');
-                $('body').loading();
-                $.ajax({
-                    type: "get",
-                    dataType: 'html',
-                    url: url,
-                    success: function (data) {
-                        $('body').loading({done: true});
-                        $('.option-view-stats li a').removeClass("active");
-                        $('.btn-visitor').addClass("active");
-                        $('.wrapChart').html(data);
-                    }
-                });
-            }
-            return false;
-        });
-
-        $(document).on('click', '.btn-share', function() {
-            var url = $(this).attr('data-url');
-            if(url != '') {
-                $('.wrapChart').html('');
-                $('body').loading();
-                $.ajax({
-                    type: "get",
-                    dataType: 'html',
-                    url: url,
-                    success: function (data) {
-                        $('body').loading({done: true});
-                        $('.option-view-stats li a').removeClass("active");
-                        $('.btn-share').addClass("active");
-                        $('.wrapChart').html(data);
-                    }
-                });
-            }
-            return false;
-        });
-
-        $(document).on('click', '.btn-favourite', function() {
-            var url = $(this).attr('data-url');
-            if(url != '') {
-                $('.wrapChart').html('');
-                $('body').loading();
-                $.ajax({
-                    type: "get",
-                    dataType: 'html',
-                    url: url,
-                    success: function (data) {
-                        $('body').loading({done: true});
-                        $('.option-view-stats li a').removeClass("active");
-                        $('.btn-favourite').addClass("active");
-                        $('.wrapChart').html(data);
-                    }
-                });
-            }
-            return false;
-        });
 
         $('#filterChart').val('<?=$filter?>');
 

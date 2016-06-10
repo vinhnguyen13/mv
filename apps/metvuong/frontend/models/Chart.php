@@ -124,7 +124,8 @@ class Chart extends Component
                 }
                 $kDate = array_search($day, $dateRange);
                 $tmpDataByPid[$key]['data'][$kDate]['y']++;
-                $tmpDataByPid[$key]['data'][$kDate]['color'] = '#00a769';
+                $tmpDataByPid[$key]['data'][$kDate]['url'] = Url::to(['/user-management/chart', 'view'=>'_partials/listContact']);
+//                $tmpDataByPid[$key]['data'][$kDate]['color'] = '#00a769';
 
                 $user = User::findIdentity($item->user_id);
                 $username = $user->username;
