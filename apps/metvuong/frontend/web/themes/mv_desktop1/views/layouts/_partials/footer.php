@@ -36,6 +36,7 @@ use yii\helpers\Url;
 	</div>
 	<div class="license container">
 		<p><?=Yii::t('general', 'Permission No. 0313814871 - ® Copying information from this website should be included the tag “metvuong.com”')?></p>
+		<p>Cấp Bởi Sở Kế Hoạch và Đầu Tư Thành Phố Hồ Chí Minh, Ngày 19/05/2016</p>
 		<p><?=Yii::t('general', 'Developed by MetVuong LTD. Company')?></p>
 	</div>
 </footer>
