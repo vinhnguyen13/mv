@@ -197,10 +197,9 @@ $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
 <div class="modal fade popup-common" id="frmListVisit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+            <div class="modal-header title-popup clearfix">
+                <!-- <div class="text-center popup_title"></div> -->
+                <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
             </div>
             <div class="modal-body">
                 <div class="wrap-modal clearfix">

@@ -1,9 +1,11 @@
 <?php
 use yii\helpers\Url;
 ?>
-<h3><?=$view;?></h3>
-<p style="color: #4a933a;" class="desTotal"> Tổng số người: <?=count($favourites)?></p>
-<ul>
+<div class="clearfix mgB-15">
+    <h3><?=$view;?></h3>
+    <p style="color: #4a933a;" class="desTotal"> Tổng số người: <?=count($favourites)?></p>
+</div>
+<ul class="clearfix">
 <?php
 if(count($favourites) > 0) {
     foreach ($favourites as $key => $val) {

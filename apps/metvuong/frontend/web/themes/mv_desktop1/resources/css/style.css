@@ -4363,6 +4363,7 @@ html.mm-opening .mm-slideout {
 .profile-user {
     /* margin-bottom: 50px; */
     /* margin-top: 50px; */
+    padding-top: 50px;
 }
 .btn-chat {
     padding: 6px 55px 3px;
@@ -4688,6 +4689,7 @@ html.mm-opening .mm-slideout {
     margin-right: 15px;
     padding: 3px 30px 2px;
 }
+#frmListVisit .icon-close,
 .icon-close {
     background-position: 0px -1141px;
     width: 21px;
@@ -8687,6 +8689,9 @@ margin-right: 5px;
     font-weight: 600;
     border-left: solid 1px #a5a5a5;
     line-height: 30px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 .tabs-scroll li:first-child a {
     border-left: none;
@@ -8776,7 +8781,6 @@ margin-right: 5px;
     /* border-bottom: 1px solid #DADADA; */
     /* border-left: 1px solid #DADADA; */
 }
-.profile-user,
 .statis {
     padding-left: 270px;
 }
@@ -9890,7 +9894,7 @@ margin-right: 5px;
         overflow: inherit;
     }
     .wrap-list-duan .list-item {
-        margin: 0 -15px;
+        margin: 0;
     }
     .wrap-list-duan .nav-tabs {
         border: none;
@@ -9934,7 +9938,9 @@ margin-right: 5px;
         margin-bottom: 8px;
     }
     .wrap-list-duan .list-item li.col-sm-6 {
-        width: 50%;
+        width: 100%;
+        padding: 0 0 30px 0;
+        border-bottom: 2px solid #B9B9B9;
     }
 }
 .all-packege .title-top {
@@ -10806,6 +10812,7 @@ label:hover {
     }
     .profile-user {
         margin: 0;
+        padding: 0 20px;
     }
     .col-left {
         padding-top: 30px;
@@ -10873,7 +10880,7 @@ label:hover {
         margin-bottom: 20px;
     }
     .profile-user .title-top {
-        margin: 0;
+        /* margin: 0; */
     }
     #popup-report-user.modal:before {
         display: none;
@@ -11720,6 +11727,29 @@ height: 190px;
         float: left;
         margin-right: 20px;
     }
+    .tabs-scroll li a {
+        font-size: 12px;
+        padding: 0 5px;
+    }
+    .list-per-post .nav-tabs li a {
+        font-size: 12px;
+        overflow: hidden;
+        white-space: nowrap;
+        display: block;
+        text-overflow: ellipsis;
+    }
+    .col-right .item-sidebar,
+    #tab-review {
+        padding: 0;
+    }
+    #tab-list-post {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .user-avatar {
+        padding: 0 0 20px 0;
+    }
+    
 }
 .days-up li {
     float: left;
@@ -12145,9 +12175,147 @@ height: 190px;
 }
 .title-gd {
     font-weight: 600;
-    font-size: 16px;
-    color: #00a769
+    font-size: 15px;
+    color: #00a769;
+    text-transform: uppercase;
 }
 .see-detail-listing {
     line-height: 100%;
+}
+@media ( max-width: 500px ) {
+    .wrap-list-duan li .wrap-img-list .pic-intro {
+        height: 200px;
+    }
+    .wrap-list-duan .list-attr-td li {
+        margin-right: 5px;
+        padding-right: 5px;
+    }
+    .user-avatar .avatar {
+        margin-bottom: 10px;
+    }
+    .user-avatar .overflow-all {
+        overflow: inherit !important;
+        width: 100%;
+        float: left;
+        margin-bottom: 20px;
+    }
+}
+.thead {
+    border-bottom: 1px solid #B7B7B7;
+}
+.thead > div {
+    background: #DDD;
+    font-size: 13px;
+    border-left: 1px solid #BFBFBF;
+    padding: 1px 0 0;
+}
+.thead > div:first-child {
+    border-left: none;
+}
+.thead > div span {
+    display: block;
+    padding: 7px 10px;
+    font-weight: 700;
+    border-left: 1px solid #fff;
+    border-top: 1px solid #fff;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.thead > div:first-child span {
+    border-left: none;
+}
+.tbl-emu {
+    font-size: 13px;
+}
+.tbl-emu > div {
+    border-bottom: 1px solid #B7B7B7;
+}
+.tbl-emu > div,
+.tbl-emu > div span {
+    border-left: 1px solid transparent;
+}
+.tbl-emu > div span {
+    display: block;
+    padding: 15px 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+@media (max-width: 985px) {
+    .giao-dich {
+        padding-left: 0;
+    }
+    .wrap-giao-dich {
+        padding-top: 50px;
+    }
+}
+@media ( max-width: 500px ) {
+    .thead {
+        float: left;
+        width: 35%;
+        border: none;
+    }
+    .thead > div {
+        width: 100%;
+        border: none;
+        padding: 0;
+    }
+    .thead > div span {
+        border: none;
+        border-bottom: 1px solid #fff;
+        padding: 12px 10px;
+    }
+    .tbl-emu {
+        float: left;
+        width: 65%;
+    }
+    .tbl-emu > div {
+        width: 100%;
+    }
+    .tbl-emu > div span {
+        padding: 12px 10px;
+    }
+    .tbl-emu > div:last-child {
+        border-bottom: none;
+    }
+}
+#frmListVisit .modal-header .close {
+    width: auto;
+    height: auto;
+    top: 0;
+    right: 0;
+}
+#frmListVisit .wrap-modal {
+    padding: 20px;
+}
+#frmListVisit .wrap-modal h3 {
+    margin: 0 0 10px 0;
+    color: #00a769;
+    text-transform: capitalize;
+    float: left;
+}
+#frmListVisit .desTotal {
+    float: right;
+    font-size: 13px;
+    color: #333 !important;
+}
+#frmListVisit .wrap-modal li {
+    float: left;
+    width: 33.333%;
+    padding: 0 15px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+#frmListVisit .wrap-modal .popup_enable {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+#frmListVisit .wrap-modal .popup_enable img {
+    display: block;
+    margin: 0 auto 5px;
 }

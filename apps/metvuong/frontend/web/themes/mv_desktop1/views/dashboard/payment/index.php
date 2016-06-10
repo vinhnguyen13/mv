@@ -8,39 +8,70 @@
                 <a href="" class="d-ib btn mgL-20 pdT-5 pdB-5 font-600 fs-13 deposit">Nạp Keys</a>
             </div>
             <div class="title-gd mgB-5">Giao dịch gần đây</div>
-            <table class="fixed_headers" cellspacing="0" cellpadding="0" border="0">
-                <thead>
-                    <tr>
-                        <th class="w-10"><span>Mã GD</span></th>
-                        <th class="w-20"><span>Ngày/Giờ</span></th>
-                        <th class="w-20"><span>Tiêu đề</span></th>
-                        <th class="w-20"><span>Loại giao dịch</span></th>
-                        <th class="w-10"><span>Tình trạng</span></th>
-                        <th class="w-20"><span>Số tiền</span></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    if(count($transactions) > 0) {
-                        foreach ($transactions as $transaction) {
-                            $amount = $transaction->amount;
-                            ?>
-                            <tr>
-                                <td><?=$transaction->id?></td>
-                                <td><?=date('d/m/Y, H:i')?></td>
-                                <td><a href="#" class="color-cd"><?=\vsoft\ec\models\EcTransactionHistory::getObjectType($transaction->object_type)." ".Yii::t('ec', 'Transaction')?></a></td>
-                                <td><?=\vsoft\ec\models\EcTransactionHistory::getActionDetail($transaction->action_detail)?></td>
-                                <td class="color-cd"><?=\vsoft\ec\models\EcTransactionHistory::getTransactionStatus($transaction->status)?></td>
-                                <td><?= $amount > 1 ? $amount." Keys" : $amount." Key" ?> </td>
-                            </tr>
-                        <?php }
-                    } else {?>
-                    <tr>
-                        <td class="text-center">Không có giao dịch.</td>
-                    </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
+            <div class="tbl-wrap clearfix">
+                <div class="thead clearfix">
+                    <div class="pull-left w-15"><span>Mã GD</span></div>
+                    <div class="pull-left w-15"><span>Ngày/Giờ</span></div>
+                    <div class="pull-left w-20"><span>Tiêu đề</span></div>
+                    <div class="pull-left w-15"><span>Loại giao dịch</span></div>
+                    <div class="pull-left w-15"><span>Tình trạng</span></div>
+                    <div class="pull-left w-20"><span>Số tiền</span></div>
+                </div>
+                <?php
+                if(count($transactions) > 0) {
+                    foreach ($transactions as $transaction) {
+                        $amount = $transaction->amount;
+                        ?>
+                        <div class="clearfix tbl-emu">
+                            <div class="pull-left w-15"><span><?=$transaction->id?></span></div>
+                            <div class="pull-left w-15"><span><?=date('d/m/Y, H:i')?></span></div>
+                            <div class="pull-left w-20"><span><a href="#" class="color-cd"><?=\vsoft\ec\models\EcTransactionHistory::getObjectType($transaction->object_type)." ".Yii::t('ec', 'Transaction')?></a></span></div>
+                            <div class="pull-left w-15"><span><?=\vsoft\ec\models\EcTransactionHistory::getActionDetail($transaction->action_detail)?></span></div>
+                            <div class="pull-left w-15"><span class="color-cd"><?=\vsoft\ec\models\EcTransactionHistory::getTransactionStatus($transaction->status)?></span></div>
+                            <div class="pull-left w-20"><span><?= $amount > 1 ? $amount." Keys" : $amount." Key" ?></span></div>
+                        </div>
+                    <?php }
+                } else {?>
+                <div class="clearfix tbl-emu">
+                    <div class="text-center"><span>Không có giao dịch.</span></div>
+                </div>
+                <!-- <div class="wrap-tr-each clearfix">
+                    <div class="clearfix tbl-emu">
+                        <div class="pull-left w-15"><span>232323</span></div>
+                        <div class="pull-left w-15"><span>20/03/2016</span></div>
+                        <div class="pull-left w-20"><span>45, Đường Đỗ Xuân Hợp, Phường Phước Long</span></div>
+                        <div class="pull-left w-15"><span>Push</span></div>
+                        <div class="pull-left w-15"><span class="color-cd">done</span></div>
+                        <div class="pull-left w-20"><span>20.000 vnđ</span></div>
+                    </div>
+                    <div class="clearfix tbl-emu">
+                        <div class="pull-left w-15"><span>232323</span></div>
+                        <div class="pull-left w-15"><span>20/03/2016</span></div>
+                        <div class="pull-left w-20"><span>45, Đường Đỗ Xuân Hợp, Phường Phước Long</span></div>
+                        <div class="pull-left w-15"><span>Push</span></div>
+                        <div class="pull-left w-15"><span class="color-cd">done</span></div>
+                        <div class="pull-left w-20"><span>20.000 vnđ</span></div>
+                    </div>
+                    <div class="clearfix tbl-emu">
+                        <div class="pull-left w-15"><span>232323</span></div>
+                        <div class="pull-left w-15"><span>20/03/2016</span></div>
+                        <div class="pull-left w-20"><span>45, Đường Đỗ Xuân Hợp, Phường Phước Long</span></div>
+                        <div class="pull-left w-15"><span>Push</span></div>
+                        <div class="pull-left w-15"><span class="color-cd">done</span></div>
+                        <div class="pull-left w-20"><span>20.000 vnđ</span></div>
+                    </div>
+                    <div class="clearfix tbl-emu">
+                        <div class="pull-left w-15"><span>232323</span></div>
+                        <div class="pull-left w-15"><span>20/03/2016</span></div>
+                        <div class="pull-left w-20"><span>45, Đường Đỗ Xuân Hợp, Phường Phước Long</span></div>
+                        <div class="pull-left w-15"><span>Push</span></div>
+                        <div class="pull-left w-15"><span class="color-cd">done</span></div>
+                        <div class="pull-left w-20"><span>20.000 vnđ</span></div>
+                    </div>
+                </div> -->
+                <?php } ?>
+                
+            </div>
             <br>
             <nav class="text-center">
                 <?php

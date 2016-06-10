@@ -80,13 +80,13 @@ use frontend\models\AdProductSearch;
                     </a></li>
                     <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->getUsername()])?>"><span class="icon-mv"><span class="icon-settings"></span></span><?=Yii::t('user', 'Setting')?></a></li>
                     <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><span class="icon icon-logout"></span><?=Yii::t('user', 'Log Out')?></a></li>
-                    <li class="flag-lang">
+                    <!-- <li class="flag-lang">
                         <p class="pull-right">
                             <a href="<?=Url::current(['language-change'=>'en-US'])?>"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/flag-en.png' ?>" alt=""></a>
                             <a href="<?=Url::current(['language-change'=>'vi-VN'])?>"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/flag-vn.png' ?>" alt=""></a>
                         </p>
                         <?=Yii::t('general', 'Language')?>
-                    </li>
+                    </li> -->
                 </ul>
                 <?php } ?>
             </div>
