@@ -124,8 +124,18 @@ class Chart extends Component
                 }
                 $kDate = array_search($day, $dateRange);
                 $tmpDataByPid[$key]['data'][$kDate]['y']++;
-                $tmpDataByPid[$key]['data'][$kDate]['url'] = Url::to(['/user-management/chart', 'view'=>'_partials/listContact']);
-//                $tmpDataByPid[$key]['data'][$kDate]['color'] = '#00a769';
+                $tmpDataByPid[$key]['data'][$kDate]['url'] = Url::to(['/dashboard/clickchart', 'id'=>$pid, 'date'=>$dateRange[$kDate], 'view'=>$view]);
+                $color = '#00a769';
+                if($view == 'finders'){
+                    $color = '#337ab7';
+                }elseif($view == 'visitors'){
+                    $color = '#a94442';
+                }elseif($view == 'saved'){
+                    $color = '#00a769';
+                }elseif($view == 'shares'){
+                    $color = '#8a6d3b';
+                }
+                $tmpDataByPid[$key]['data'][$kDate]['color'] = $color;
 
                 $user = User::findIdentity($item->user_id);
                 $username = $user->username;
@@ -214,8 +224,7 @@ class Chart extends Component
     }
 
     public function getFinderWithLastTime($id, $useDate, $filter){
-
-        if(empty($useDate)) {
+        /*if(empty($useDate)) {
             $finder = AdProductFinder::find()->where(['product_id' => $id])->orderBy('time DESC')->one();
             if (count($finder) > 0)
                 $useDate = new \DateTime(date('Y-m-d', $finder->time));
@@ -223,10 +232,9 @@ class Chart extends Component
                 $useDate = new \DateTime(date('Y-m-d', time()));
         } else {
             $useDate = new \DateTime($useDate);
-        }
-
+        }*/
+        $useDate = new \DateTime(date('Y-m-d', time()));
         $days = $this->filter[$filter]." days";
-
         $f = date_format($useDate, 'Y-m-d 00:00:00');
         $dateFrom = new \DateTime($f);
         $from = strtotime($days, $dateFrom->getTimestamp());
@@ -248,7 +256,7 @@ class Chart extends Component
     }
 
     public function getVisitorWithLastTime($id, $useDate, $filter){
-        if(empty($useDate)) {
+        /*if(empty($useDate)) {
             $visitor = AdProductVisitor::find()->where(['product_id' => $id])->orderBy('time DESC')->one();
             if (count($visitor) > 0)
                 $useDate = new \DateTime(date('Y-m-d', $visitor->time));
@@ -256,7 +264,8 @@ class Chart extends Component
                 $useDate = new \DateTime(date('Y-m-d', time()));
         } else {
             $useDate = new \DateTime($useDate);
-        }
+        }*/
+        $useDate = new \DateTime(date('Y-m-d', time()));
 
         $days = $this->filter[$filter]." days";
 
@@ -277,7 +286,7 @@ class Chart extends Component
         return $infoDataVisitors;
     }
     public function getShareWithLastTime($id, $useDate, $filter){
-        if(empty($useDate)) {
+        /*if(empty($useDate)) {
             $share = AdProductShare::find()->where(['product_id' => $id])->orderBy('time DESC')->one();
             if (count($share) > 0)
                 $useDate = new \DateTime(date('Y-m-d', $share->time));
@@ -285,7 +294,8 @@ class Chart extends Component
                 $useDate = new \DateTime(date('Y-m-d', time()));
         } else {
             $useDate = new \DateTime($useDate);
-        }
+        }*/
+        $useDate = new \DateTime(date('Y-m-d', time()));
 
         $days = $this->filter[$filter]." days";
 
@@ -308,7 +318,7 @@ class Chart extends Component
 
     public function getSavedWithLastTime($id, $useDate, $filter )
     {
-        if(empty($useDate)) {
+        /*if(empty($useDate)) {
             $saved = AdProductSaved::find()->where(['product_id' => $id])->orderBy('saved_at DESC')->one();
             if (count($saved) > 0)
                 $useDate = new \DateTime(date('Y-m-d', $saved->saved_at));
@@ -316,8 +326,8 @@ class Chart extends Component
                 $useDate = new \DateTime(date('Y-m-d', time()));
         } else {
             $useDate = new \DateTime($useDate);
-        }
-
+        }*/
+        $useDate = new \DateTime(date('Y-m-d', time()));
         $days = $this->filter[$filter]." days";
 
         $f = date_format($useDate, 'Y-m-d 00:00:00');

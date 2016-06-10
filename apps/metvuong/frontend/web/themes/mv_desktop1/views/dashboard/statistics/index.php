@@ -48,8 +48,8 @@ $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
                     </ul>
         		</div>
         	</section>
-            <h2 class="text-uper fs-16 font-600 mgB-30 color-cd"><?=Yii::t('statistic','STATISTIC')?></h2>
-            <table class="tbl-review">
+<!--            <h2 class="text-uper fs-16 font-600 mgB-30 color-cd">--><?//=Yii::t('statistic','STATISTIC')?><!--</h2>-->
+            <table class="tbl-review" style="display: none;">
                 <tr>
                     <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10"><span class="icon-icons-search fs-19"></span></span><?=Yii::t('statistic','SEARCH')?></th>
                     <th class="text-uper fs-15 font-600"><span class="icon-mv color-cd mgR-10 fs-17"><span class="icon-eye-copy"></span></span><?=Yii::t('statistic','VISIT')?></th>

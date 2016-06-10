@@ -51,7 +51,8 @@ if($from > 0 && $to > 0)
     $dataChart = \yii\helpers\ArrayHelper::merge($dataChart, $dataChart2);
     $dataChart = \yii\helpers\ArrayHelper::merge($dataChart, $dataChart3);
     $dataChart = \yii\helpers\ArrayHelper::merge($dataChart, $dataChart4);
-    $categories = $categories3;
+//    $categories = array_merge($categories, $categories2, $categories3, $categories4);
+$categories = $categories3;
 
     ?>
     <div id="chartAds" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
@@ -128,10 +129,6 @@ if($from > 0 && $to > 0)
                                             url: _this.url,
                                             success: function (data) {
                                                 $('#frmListVisit .wrap-modal').html($(data));
-                                                $('#frmListVisit').find('h3').html('Thống kê');
-                                                $('#frmListVisit').find('.total').html(_this.y);
-                                                $('#frmListVisit').find('.totalNext').html(_this.y - 3);
-                                                $('#frmListVisit').find('.desTotal').html('Danh sách người tìm kiếm tin: <b>'+_this.series.name+'</b>');
                                             }
                                         });
                                     }, 500);

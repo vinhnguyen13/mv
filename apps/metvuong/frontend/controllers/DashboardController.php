@@ -198,54 +198,25 @@ class DashboardController extends Controller
             $dateTo = new \DateTime($t);
             $to = $dateTo->getTimestamp();
 
-            if($view == "_partials/finder") {
+            if($view == "finders") {
                 $data = Chart::find()->getDataFinder($id, $from, $to);
                 $infoData = empty($data) ? null : $data["infoData"];
-                $finders = empty($infoData["finders"]) ? null : $infoData["finders"];
-                $html = "";
-                if(count($finders) > 0)
-                    foreach($finders as $key_finder => $finder) {
-                        $classPopupUser = 'popup_enable';
-                        if($key_finder == Yii::$app->user->identity->getUsername())
-                            $classPopupUser = '';
-                        $li = '<li><a class="'.$classPopupUser.'" href="#popup-user-inter" data-email="'.$finder["email"].'" data-ava="'.Url::to($finder['avatar'], true).'">'.
-                                    '<img src="'.$finder['avatar'].'"> '.$key_finder.'</a>'.
-                                    '<span class="pull-right">'.$finder['count'].'</span></li>';
-                        $html .= $li;
-                    }
-                return $html;
-            } else if ($view == "_partials/visitor"){
+                $favourites = empty($infoData["finders"]) ? null : $infoData["finders"];
+                $html = "<li>finders</li>";
+            } else if ($view == "visitors"){
                 $data = Chart::find()->getDataVisitor($id, $from, $to);
                 $infoData = empty($data) ? null : $data["infoData"];
-                $visitors = empty($infoData["visitors"]) ? null : $infoData["visitors"];
-                $html = "";
-                if(count($visitors) > 0)
-                    foreach ($visitors as $key_visitor => $val_visitor) {
-                        $classPopupUser = 'popup_enable';
-                        if($key_visitor == Yii::$app->user->identity->getUsername())
-                            $classPopupUser = '';
-                        $li = '<li><a class="'.$classPopupUser.'" href="#popup-user-inter" data-email="'.$val_visitor["email"].'" data-ava="'.Url::to($val_visitor['avatar'], true).'">'.
-                            '<img src="'.$val_visitor['avatar'].'"> '.$key_visitor.'</a>'.
-                            '<span class="pull-right">'.$val_visitor['count'].'</span></li>';
-                        $html .= $li;
-                    }
-                return $html;
-            } else if ($view == "_partials/saved"){
+                $favourites = empty($infoData["visitors"]) ? null : $infoData["visitors"];
+            } else if ($view == "saved"){
                 $data = Chart::find()->getDataSaved($id, $from, $to);
                 $infoData = empty($data) ? null : $data["infoData"];
                 $favourites = empty($infoData["saved"]) ? null : $infoData["saved"];
-                $html = "";
-                if(count($favourites) > 0) {
-                    foreach ($favourites as $key => $val) {
-                        $classPopupUser = 'popup_enable';
-                        $li = '<li><a class="'.$classPopupUser.'" href="#popup-user-inter" data-email="'.$val["email"].'" data-ava="'.Url::to($val['avatar'], true).'">'.
-                            '<img src="'.$val['avatar'].'"> '.$key.'</a>'.
-                            '<span class="pull-right">'.$val['count'].'</span></li>';
-                        $html .= $li;
-                    }
-                }
-                return $html;
+            }else if ($view == "shares"){
+                $data = Chart::find()->getDataShare($id, $from, $to);
+                $infoData = empty($data) ? null : $data["infoData"];
+                $favourites = empty($infoData["shares"]) ? null : $infoData["shares"];
             }
+            return $this->renderAjax('chart/_partials/listContact',['view'=>$view, 'favourites'=>$favourites ]);
         }
         return false;
     }

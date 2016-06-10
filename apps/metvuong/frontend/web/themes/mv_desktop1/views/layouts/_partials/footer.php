@@ -19,7 +19,7 @@ use yii\helpers\Url;
 		</div>
 		<div class="license">
 			<p><?=Yii::t('general', 'Copyright {year} {domain}', ['year'=>2016, 'domain'=>'MetVuong.com'])?></p>
-			<p>Cấp Bởi Sở Kế Hoạch và Đầu Tư Thành Phố Hồ Chí Minh Ngày 19/05/2016</p>
+			<p><?=Yii::t('general', 'By granting the Department of Planning and Investment of Ho Chi Minh City, Date 05.19.2016')?></p>
 			<p><?=Yii::t('general', 'Permission No. 0313814871 - ® Copying information from this website should be included the tag “metvuong.com”')?></p>
 			<p><?=Yii::t('general', 'Developed by MetVuong LTD. Company')?></p>
 		</div>
@@ -36,7 +36,7 @@ use yii\helpers\Url;
 			<div class="clearfix"></div>
 			<div class="license">
 				<p><?=Yii::t('general', 'Copyright {year} {domain}', ['year'=>2016, 'domain'=>'MetVuong.com'])?></p>
-				<p>Cấp Bởi Sở Kế Hoạch và Đầu Tư Thành Phố Hồ Chí Minh Ngày 19/05/2016</p>
+				<p><?=Yii::t('general', 'By granting the Department of Planning and Investment of Ho Chi Minh City, Date 05.19.2016')?></p>
 				<p><?=Yii::t('general', 'Permission No. 0313814871 - ® Copying information from this website should be included the tag “metvuong.com”')?></p>
 				<p><?=Yii::t('general', 'Developed by MetVuong LTD. Company')?></p>
 			</div>
