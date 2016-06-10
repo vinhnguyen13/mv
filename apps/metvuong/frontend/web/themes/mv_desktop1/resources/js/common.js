@@ -441,7 +441,7 @@ $.fn.dropdown = function (options) {
                 dataValue = $(this).data('value') != undefined ? $(this).data('value') : txt;
 
                 if ( $(el.find('input[type=hidden]')).val() == dataValue ) {
-                    l('no change');
+                   // l('no change');
                 }else {
                     $(el.find('input[type=hidden]')).val(dataValue);
                     $(el.find('input[type=hidden]')).trigger('change');

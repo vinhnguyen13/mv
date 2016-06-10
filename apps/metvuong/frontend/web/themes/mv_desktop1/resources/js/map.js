@@ -1269,7 +1269,12 @@ form.formChange = function(e) {
 			
 			if(r.rm) {
 				m2Map.removeAllDetail();
-				m2Map.drawDetail(r.rm);
+				
+				if(m2Map.currentDrawState == 'project_building') {
+					m2Map.drawBuildingProject(r);
+				} else {
+					m2Map.drawDetail(r.rm);
+				}
 			}
 			
 			if(r.ra) {
