@@ -838,8 +838,6 @@ var m2Map = {
 		var bottom = (this.getPosition().lat() - mapBounds.getSouthWest().lat()) / degPixelY;
 		var right = (this.getPosition().lng() - mapBounds.getSouthWest().lng()) / degPixelX;
 		var left = (mapBounds.getNorthEast().lng() - this.getPosition().lng()) / degPixelX;
-		
-		console.log(top, bottom, right, left);
 	},
 	markerClick: function() {
 		var products = this.get('products');
