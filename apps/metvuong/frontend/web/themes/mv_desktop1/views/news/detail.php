@@ -44,7 +44,7 @@ Yii::$app->view->registerMetaTag([
 ]);
 Yii::$app->view->registerMetaTag([
     'property' => 'og:image',
-    'content' => Yii::$app->urlManager->createAbsoluteUrl(\vsoft\news\models\CmsShow::getBanner($news["banner"]))
+    'content' => \vsoft\news\models\CmsShow::getBanner($news["banner"])
 ]);
 
 Yii::$app->view->registerMetaTag([
@@ -52,7 +52,7 @@ Yii::$app->view->registerMetaTag([
     'content' => \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true)
 ]);
 
-$fb_appId = '680097282132293'; // stage.metvuong.com
+$fb_appId = '119696758407282'; // stage.metvuong.com
 if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
     $fb_appId = '736950189771012';
 else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
