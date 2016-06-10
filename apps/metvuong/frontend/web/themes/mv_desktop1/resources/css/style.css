@@ -6639,7 +6639,7 @@ footer li a {
     .wrap-list-duan,
     .wrap-edit-tt {
         margin-left: 100px;
-        padding-top: 65px;
+        padding-top: 40px;
     }
     .statis,
     .wrap-edit-tt,
@@ -8722,7 +8722,9 @@ margin-right: 5px;
     z-index: 10;
     width: 240px;
     /* left: 340px; */
-    margin-top: 128px;
+    /* margin-top: 128px; */
+    margin-top: 63px;
+    padding-top: 40px;
 }
 .menuUser li a {
     display: block;
@@ -8770,6 +8772,9 @@ margin-right: 5px;
 .edit-user-tt,
 .u-allduan {
     padding-left: 240px;
+    /* border-right: 1px solid #DADADA; */
+    /* border-bottom: 1px solid #DADADA; */
+    /* border-left: 1px solid #DADADA; */
 }
 .profile-user,
 .statis {
