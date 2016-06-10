@@ -297,10 +297,6 @@ class AdController extends Controller
     				$markerQuery->orderBy("$sort $doa");
     					
     				$markerQuery->limit(500);
-    				
-    				$markerQuery->addSelect(['`ad_images`.`file_name` AS f', '`ad_images`.`folder` AS d']);
-    				$markerQuery->leftJoin('`ad_images`', '`ad_images`.`product_id` = `ad_product`.`id` AND `ad_images`.`order` = 0');
-    				$markerQuery->groupBy('`ad_product`.`id`');
     					
     				$response['rm'] = $markerQuery->all();
     			}
