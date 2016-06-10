@@ -193,7 +193,7 @@ $banner = Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'. $news["b
             var winTop = (screen.height / 2) - (winHeight / 2);
             var winLeft = (screen.width / 2) - (winWidth / 2);
 //            window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + url + '&p[title]=' + title + '&p[summary]=' + descr + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
-            window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href), 'facebook-share-dialog', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+            window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href)+'&p[images][0]='+'<?=\vsoft\news\models\CmsShow::getBanner($news["banner"])?>', 'facebook-share-dialog', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
         }
 
         $(document).on('click', '.detail-content .fb-share', function(){
