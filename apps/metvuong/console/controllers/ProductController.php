@@ -4,8 +4,19 @@ namespace console\controllers;
 use console\models\Metvuong;
 use yii\console\Controller;
 use vsoft\ad\models\AdProduct;
+use vsoft\ad\models\AdBuildingProject;
 
 class ProductController extends Controller {
+	
+	public function actionCheckLatLng() {
+		$projects = AdBuildingProject::find()->asArray(true)->all();
+		$command = \Yii::$app->db->createCommand();
+		
+		foreach ($projects as $project) {
+			$command->update(AdProduct::tableName(), ['lat' => $project['lat'], 'lng' => $project['lng']], 'project_building_id = ' . $project['id'])->execute();
+		}
+	}
+	
 	public function actionCheckExpired() {
 		$now = time();
 		$products = AdProduct::find()->where("`end_date` < $now AND `is_expired` = 0")->limit(1000)->asArray(true)->all();
