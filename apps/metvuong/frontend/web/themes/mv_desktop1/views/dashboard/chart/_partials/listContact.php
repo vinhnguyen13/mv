@@ -34,3 +34,6 @@ if(count($favourites) > 0) {
 }
 ?>
 </ul>
+<p class="push-price">
+    Để tin đạt hiệu quả hơn vui lòng click vào đây <a href="#" data-toggle="modal" data-target="#upgrade-time" data-product="79110" class="btn-nang-cap mgL-10 btn-up">Boost</a>
+</p>
