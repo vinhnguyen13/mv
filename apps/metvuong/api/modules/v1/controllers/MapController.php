@@ -210,7 +210,7 @@ class MapController extends Controller {
     	
     	$response = [];
     	
-    	$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/term/_search');
+    	$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/' . \Yii::$app->params['indexName']['countTotal'] . '/_search');
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
 		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

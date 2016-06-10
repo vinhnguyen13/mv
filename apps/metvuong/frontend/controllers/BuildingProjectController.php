@@ -119,7 +119,7 @@ class BuildingProjectController extends Controller
                 'size' => 20
             ];
 
-            $ch = curl_init(Yii::$app->params['elastic']['config']['hosts'][0] . '/term/project_building/_search');
+            $ch = curl_init(Yii::$app->params['elastic']['config']['hosts'][0] . '/' . \Yii::$app->params['indexName']['countTotal'] . '/project_building/_search');
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
