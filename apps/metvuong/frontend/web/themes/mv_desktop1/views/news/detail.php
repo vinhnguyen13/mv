@@ -42,9 +42,10 @@ Yii::$app->view->registerMetaTag([
     'property' => 'og:type',
     'content' => 'article'
 ]);
+
 Yii::$app->view->registerMetaTag([
     'property' => 'og:image',
-    'content' => Yii::$app->urlManager->createAbsoluteUrl(\vsoft\news\models\CmsShow::getBanner($news["banner"]))
+    'content' => \vsoft\news\models\CmsShow::getBanner($news["banner"])
 ]);
 
 Yii::$app->view->registerMetaTag([
