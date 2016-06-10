@@ -25,7 +25,7 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
                     <li><a class="rippler rippler-default" href="<?= Url::to(['/ad/index2']) ?>"><?=Yii::t('general', 'Rent')?></a></li>
                     <li><a class="rippler rippler-default" href="<?= Url::to(['/ad/post']) ?>"><?=Yii::t('general', 'Sell')?></a></li>
                 </ul>
-                <form id="search-form" action="<?= Url::to(['site/search']) ?>">
+                <form id="search-form" action="<?= Url::to(['/map/search']) ?>">
                     <input autocomplete="off" id="search" name="v" type="text" placeholder="<?=Yii::t('general', 'Quick Search')?>" />
                     <button type="submit" id="btn-search"><span class="icon-mv"><span class="icon-icons-search"></span></span></button>
                     <div class="suggest-search hide">

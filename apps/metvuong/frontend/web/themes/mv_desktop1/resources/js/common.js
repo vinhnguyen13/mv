@@ -164,7 +164,7 @@ $(document).ready(function() {
     	var url = searchForm.attr('action');
     	var ss = $('.suggest-search');
     	
-    	if(val.length > 1) {
+    	if(val) {
     		if($.data(this, 'v') != val) {
     			$.data(this, 'v', val);
             	
