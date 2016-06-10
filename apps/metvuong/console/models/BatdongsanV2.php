@@ -710,6 +710,8 @@ class BatdongsanV2 extends Component
                                     $district_id = null;
                                     $ward_id = null;
                                     $street_id = null;
+                                    $lat = $value[$filename]["lat"];
+                                    $lng = $value[$filename]["lng"];
 
                                     $project_name = !empty($value[$filename]["project"]) ? $value[$filename]["project"] : null;
                                     // neu co du an thi lay dia chi cua du an gan cho tin dang
@@ -726,6 +728,8 @@ class BatdongsanV2 extends Component
                                             $ward_id = $project->ward_id;
                                             $street_id = $project->street_id;
                                             $home_no = $project->home_no;
+                                            $lat = $project->lat;
+                                            $lng - $project->lng;
                                             $count_project++;
                                             print_r(" - " . $project_name);
                                         }
@@ -767,8 +771,8 @@ class BatdongsanV2 extends Component
                                         'area' => $area,
                                         'price' => $price,
                                         'price_type' => empty($price) ? 0 : 1,
-                                        'lat' => $value[$filename]["lat"],
-                                        'lng' => $value[$filename]["lng"],
+                                        'lat' => $lat,
+                                        'lng' => $lng,
                                         'start_date' => $value[$filename]["start_date"],
                                         'end_date' => $value[$filename]["end_date"],
                                         'verified' => 1,
