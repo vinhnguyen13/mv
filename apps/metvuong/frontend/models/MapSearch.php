@@ -54,7 +54,11 @@ class MapSearch extends AdProduct {
 		$query->from('ad_product');
 		$query->innerJoin('ad_product_addition_info', 'ad_product_addition_info.product_id = ad_product.id');
 		
-		$where = ['ad_product.status' => 1, 'ad_product.is_expired' => 0, 'ad_product.verified' => 1];
+		$where = [
+			'ad_product.status' => 1,
+			'ad_product.is_expired' => 0,
+			//'ad_product.verified' => 1
+		];
 		$totalInitWhere = count($where);
 		
 		if($this->street_id) {

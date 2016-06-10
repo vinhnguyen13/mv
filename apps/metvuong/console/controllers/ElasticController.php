@@ -80,7 +80,7 @@ class ElasticController extends Controller {
 		$where = [
 			'status' => 1,
 			'is_expired' => 0,
-			'verified' => 1	
+			//'verified' => 1	
 		];
 		
 		$query = new Query();
