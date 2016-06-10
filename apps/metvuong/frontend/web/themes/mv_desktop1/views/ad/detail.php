@@ -129,7 +129,7 @@ Yii::t('ad', 'Television');
 						<div class="swiper-slide">
 							<div class="img-show">
 								<div>
-									<img src="<?= $image->getUrl(AdImages::SIZE_LARGE) ?>" alt="<?=$address?>">
+									<img src="<?= $image->getUrl(AdImages::SIZE_LARGE) ?>" alt="<?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= mb_strtolower($types[$product->type]) . ' - ' . $address?>">
 								</div>
 							</div>
 						</div>
