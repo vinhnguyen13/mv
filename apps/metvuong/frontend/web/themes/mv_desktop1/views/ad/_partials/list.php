@@ -24,19 +24,21 @@ $types = AdProduct::getAdTypes();
 <?php foreach ($products as $product):
     $room_no = $product->adProductAdditionInfo->room_no;
     $toilet_no = $product->adProductAdditionInfo->toilet_no;
+    $catType = ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) . ' ' . mb_strtolower($types[$product->type], 'utf8');
+    $alt = $catType . ' - ' . $product->getAddress($product->show_home_no);
 	?>
 <li class="col-xs-12 col-sm-6 col-lg-4">
 	<div class="item">
-		<a data-id="<?= $product->id ?>" class="clearfix" href="<?= $product->urlDetail(); ?>" title="<?= $product->getAddress($product->show_home_no) ?>">
+		<a data-id="<?= $product->id ?>" class="clearfix" href="<?= $product->urlDetail(); ?>" title="<?= $alt ?>">
 			<div class="pic-intro">
-				<img src="<?= $product->file_name ? AdImages::getImageUrl($product->folder, $product->file_name, AdImages::SIZE_THUMB) : AdImages::defaultImage() ?>" />
+				<img alt="<?= $alt ?>" src="<?= $product->file_name ? AdImages::getImageUrl($product->folder, $product->file_name, AdImages::SIZE_THUMB) : AdImages::defaultImage() ?>" />
 			</div>
 			<div class="info-item clearfix">
 				<div class="address-listing">
 					<!-- <span class="icon-mv mgR-5" style=""><span class="icon-star-full"></span></span> --><?= $product->getAddress($product->show_home_no) ?>
 				</div>
 				<p class="infor-by-up">
-					<strong><?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= mb_strtolower($types[$product->type]) ?></strong>
+					<strong><?= $catType ?></strong>
 				</p>
 				<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
 				<ul class="clearfix list-attr-td">

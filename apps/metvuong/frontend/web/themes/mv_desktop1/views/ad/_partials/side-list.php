@@ -96,7 +96,7 @@
 			?>
 			<li class="col-xs-12 col-sm-6 col-lg-4">
 				<div class="item">
-					<a data-id="<?= $product['id'] ?>" class="clearfix" href="<?= $urlDetail ?>">
+					<a data-id="<?= $product['id'] ?>" class="clearfix" href="<?= $urlDetail ?>" title="<?= $alt ?>">
 						<div class="pic-intro">
 							<img src="<?= $imateUrl ?>" alt="<?= $alt ?>" />
 						</div>
