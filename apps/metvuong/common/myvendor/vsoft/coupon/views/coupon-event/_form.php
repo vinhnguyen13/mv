@@ -26,12 +26,11 @@ use yii\widgets\ActiveForm;
 
 
     <?= $form->field($model, 'start_date')->widget(\yii\jui\DatePicker::classname(), [
-//        'language' => 'vi',
+        'options' => ['class' => 'form-control'],
 //        'dateFormat' => 'dd-MM-yyyy',
     ]) ?>
     <?= $form->field($model, 'end_date')->widget(\yii\jui\DatePicker::classname(), [
-//        'language' => 'vi',
-//        'dateFormat' => 'dd-MM-yyyy',
+        'options' => ['class' => 'form-control'],
     ]) ?>
     <?= $form->field($model, 'status')->dropDownList(\vsoft\news\models\Status::labels()) ?>
 
