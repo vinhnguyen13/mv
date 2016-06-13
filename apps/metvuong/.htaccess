@@ -14,15 +14,16 @@ AddDefaultCharset utf-8
 #SetEnvIf Request_URI ^/du-an require_auth=true
 #SetEnvIf Request_URI ^/goi-gia require_auth=true
 #
-#
-#AuthName "Restricted Area - Authorization Required"
-#AuthUserFile D:\Projects\TTG\ttgweb\apps\metvuong\.htpasswd
-#AuthType Basic
-#Order deny,allow
-#Require valid-user
-#Deny from all
-#Allow from env=!require_auth
-#Satisfy Any
+
+# Authorization for ALL
+AuthName "Restricted Area - Authorization Required"
+AuthUserFile /var/www/ttgweb/apps/metvuong/.htpasswd
+AuthType Basic
+Order deny,allow
+Require valid-user
+Deny from all
+Allow from env=!require_auth
+Satisfy Any
 
 
 <IfModule mod_rewrite.c>
