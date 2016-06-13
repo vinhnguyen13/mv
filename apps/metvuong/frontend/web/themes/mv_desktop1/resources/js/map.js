@@ -481,7 +481,7 @@ var m2Map = {
 		}
 	},
 	InitMapReIdle: function() {
-		form.afRect.val(m2Map.getBounds(0, 0, 0, 0).toUrlValue());
+		form.afRect.val(m2Map.getBounds(28, 12, 0, 12).toUrlValue());
 		
 		m2Map.boundsChangedEvent = m2Map.map.addListener('bounds_changed', m2Map.boundsChanged);
 
@@ -549,7 +549,7 @@ var m2Map = {
 					}
 				}
 				
-				form.afRect.val(m2Map.getBounds(0, 0, 0, 0).toUrlValue());
+				form.afRect.val(m2Map.getBounds(28, 12, 0, 12).toUrlValue());
 				form.afZoom.val(m2Map.map.getZoom());
 				form.afCenter.val(m2Map.getCenter().toUrlValue());
 				
@@ -585,7 +585,7 @@ var m2Map = {
 		clearTimeout(map.get('bounds_changed_timeout'));
 		
 		map.set('bounds_changed_timeout', setTimeout(function(){
-			form.afRect.val(m2Map.getBounds(0, 0, 0, 0).toUrlValue());
+			form.afRect.val(m2Map.getBounds(28, 12, 0, 12).toUrlValue());
 			form.afZoom.val(m2Map.map.getZoom());
 			form.afCenter.val(m2Map.getCenter().toUrlValue());
 			
@@ -611,6 +611,7 @@ var m2Map = {
 			form.af.filter(s.rl).val('');
 			
 			if(m2Map.currentDrawState == 'detail') {
+				m2Map.infoBoxDetailHover.close();
 				m2Map.removeAllDetail();
 				
 				form.af.filter(s.rm).val('');
@@ -622,6 +623,8 @@ var m2Map = {
 			var currentRa = m2Map.getZoomAreaLevel(m2Map.map.getZoom(), form.af.filter(s.iz).val(), currentFocus.type);
 			
 			if(m2Map.currentDrawState != currentRa) {
+
+				m2Map.infoBoxHover.close();
 				
 				if(m2Map.ajaxRequest) {
 					m2Map.ajaxRequest.abort();
@@ -652,6 +655,8 @@ var m2Map = {
 				rect.prop('disabled', false);
 			}
 		} else {
+			m2Map.infoBoxHover.close();
+			
 			m2Map.currentDrawState = 'detail';
 			m2Map.removeAreas();
 		}
@@ -863,36 +868,30 @@ var m2Map = {
 		}
 	},
 	markerMouseOver: function(){
-		var mapBounds = m2Map.map.getBounds();
-		var mapDiv = m2Map.map.getDiv();
-		var mapWidth = mapDiv.offsetWidth;
-		var mapHeight = mapDiv.offsetHeight;
-		var boundsSpan = mapBounds.toSpan();
-		var latSpan = boundsSpan.lat();
-		var longSpan = boundsSpan.lng();
-		var degPixelX = longSpan / mapWidth;
-		var degPixelY = latSpan / mapHeight;
-
-		var top = (mapBounds.getNorthEast().lat() - this.getPosition().lat()) / degPixelY;
-		var bottom = (this.getPosition().lat() - mapBounds.getSouthWest().lat()) / degPixelY;
-		var left = (this.getPosition().lng() - mapBounds.getSouthWest().lng()) / degPixelX;
-		var right = (mapBounds.getNorthEast().lng() - this.getPosition().lng()) / degPixelX;
+		clearTimeout(m2Map.markerMouseOutT);
+		
+		
 		
 		var products = this.get('products');
 		var product = products[0];
+		
+		m2Map.setIcon(this, products.length, 1);
+		this.setZIndex(google.maps.Marker.MAX_ZINDEX++);
 		
 		var img = product.getImage();
 		var price = product.getPrice();
 		var address = product.getAddress();
 		var addition = product.getAdditionInfo();
 		
-		if(left < m2Map.infoDetailWidth) {
-			var offsetLeft = (left < m2Map.infoDetailWidth) ? m2Map.infoDetailWidth - left + 6 : 0;
+		var padding = m2Map.getMarkerPadding(this);
+		
+		if(padding.left < m2Map.infoDetailWidth) {
+			var offsetLeft = (padding.left < m2Map.infoDetailWidth) ? m2Map.infoDetailWidth - padding.left + 6 : 0;
 		} else {
-			var offsetLeft = (right < m2Map.infoDetailWidth) ? right - m2Map.infoDetailWidth - 6 : 0;
+			var offsetLeft = (padding.right < m2Map.infoDetailWidth) ? padding.right - m2Map.infoDetailWidth - 6 : 0;
 		}
 		
-		if(top - this.getShape().coords[3] < m2Map.infoDetailHeight + 11) {
+		if(padding.top - this.getShape().coords[3] < m2Map.infoDetailHeight + 11) {
 			m2Map.infoBoxDetailHover.setPosition('bottom');
 		} else {
 			m2Map.infoBoxDetailHover.setPosition('top');
@@ -913,7 +912,13 @@ var m2Map = {
 		m2Map.infoBoxDetailHover.open(this);
 	},
 	markerMouseOut: function() {
-		m2Map.infoBoxDetailHover.close();
+		m2Map.markerMouseOutT = setTimeout(function(){
+			m2Map.infoBoxDetailHover.close();
+		}, 150);
+		
+		var products = this.get('products');
+		
+		m2Map.setIcon(this, products.length, 0);
 	},
 	markerClick: function() {
 		var products = this.get('products');
@@ -937,8 +942,42 @@ var m2Map = {
 	drawList: function(list) {
 		contentHolder.html(list);
 	},
-	getBounds: function(mvc, marginTop, marginRight, marginBottom, marginLeft) {
-		return m2Map.map.getBounds();
+	getBounds: function(marginTop, marginRight, marginBottom, marginLeft) {
+		var mapBounds = m2Map.map.getBounds();
+		var sw = mapBounds.getSouthWest();
+		var ne = mapBounds.getNorthEast();
+		var scaleOffset = m2Map.getScaleOffset(mapBounds);
+		
+		var southLat = sw.lat() + (marginBottom * scaleOffset.y);
+		var westLng = sw.lng() + (marginLeft * scaleOffset.x);
+		var northLat = ne.lat() - (marginTop * scaleOffset.y);
+		var eastLng = ne.lng() - (marginRight * scaleOffset.x);
+		
+		return new google.maps.LatLngBounds(new google.maps.LatLng(southLat, westLng), new google.maps.LatLng(northLat, eastLng));
+	},
+	getScaleOffset: function(mapBounds) {
+		var mapDiv = m2Map.map.getDiv();
+		var mapWidth = mapDiv.offsetWidth;
+		var mapHeight = mapDiv.offsetHeight;
+		var boundsSpan = mapBounds.toSpan();
+		var latSpan = boundsSpan.lat();
+		var longSpan = boundsSpan.lng();
+		var degPixelX = longSpan / mapWidth;
+		var degPixelY = latSpan / mapHeight;
+		
+		return {x: degPixelX, y: degPixelY};
+	},
+	getMarkerPadding: function(marker) {
+		var mapBounds = m2Map.map.getBounds();
+		var scaleOffset = m2Map.getScaleOffset(mapBounds);
+		
+		var padding = {
+			top: (mapBounds.getNorthEast().lat() - marker.getPosition().lat()) / scaleOffset.y,
+			bottom: (marker.getPosition().lat() - mapBounds.getSouthWest().lat()) / scaleOffset.y,
+			left: (marker.getPosition().lng() - mapBounds.getSouthWest().lng()) / scaleOffset.x,
+			right: (mapBounds.getNorthEast().lng() - marker.getPosition().lng()) / scaleOffset.x
+		};
+		return padding;
 	},
 	getCenter: function() {
 		return m2Map.map.getCenter();
