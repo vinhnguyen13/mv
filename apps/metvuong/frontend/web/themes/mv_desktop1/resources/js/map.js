@@ -286,6 +286,41 @@ Product.prototype.getPosition = function() {
 	return new google.maps.LatLng(this.attrs.lat, this.attrs.lng);
 }
 
+Product.prototype.getImage = function() {
+	if(this.attrs.f) {
+		if(this.attrs.d) {
+			return '/store/' + this.attrs.d + '/240x180/' + this.attrs.f;
+		} else {
+			return this.attrs.f;
+		}
+	} else {
+		return '/themes/metvuong2/resources/images/default-ads.jpg';
+	}
+}
+
+Product.prototype.getPrice = function() {
+	return formatPrice(this.attrs.price) + ' ' + lajax.t('VND');
+}
+
+Product.prototype.getAddress = function() {
+	return this.attrs.a;
+}
+
+Product.prototype.getAdditionInfo = function() {
+	var addition = [];
+	
+	addition.push('<span class="icon-mv"><span class="icon-page-1-copy"></span></span>' + this.attrs.area + 'm<sup>2</sup>');
+	
+	if(this.attrs.room_no && this.attrs.room_no != '0') {
+		addition.push('<span class="icon-mv"><span class="icon-bed-search"></span></span>' + this.attrs.room_no);
+	}
+	if(this.attrs.toilet_no && this.attrs.toilet_no != '0') {
+		addition.push('<span class="icon-mv"><span class="icon-icon-bathroom"></span></span>' + this.attrs.toilet_no);
+	}
+
+	return addition.join('<i class="s"></i>');
+}
+
 
 /*
  * M2Map
@@ -305,6 +340,8 @@ var contentHolder = $('#content-holder');
 var detailListingWrap = $('.detail-listing-dt');
 
 var m2Map = {
+	infoDetailWidth: 174,
+	infoDetailHeight: 98,
 	loadingTimeout: null,
 	loadingList: $('#loading-list'),
 	progressBar: $('#progress-bar'),
@@ -330,6 +367,7 @@ var m2Map = {
 		initInfoBox();
 		
 		m2Map.infoBoxHover = new ib({disableAutoPan: true, position: 'top'});
+		m2Map.infoBoxDetailHover = new ib({disableAutoPan: true, position: 'top'});
 		
 		var initZoom = form.afZoom.val();
 		var initCenter = form.afCenter.val();
@@ -816,6 +854,7 @@ var m2Map = {
 				
 				marker.addListener('click', m2Map.markerClick);
 				marker.addListener('mouseover', m2Map.markerMouseOver);
+				marker.addListener('mouseout', m2Map.markerMouseOut);
 				marker.set('products', [product]);
 				m2Map.setIcon(marker, 1, 0);
 				
@@ -836,8 +875,45 @@ var m2Map = {
 
 		var top = (mapBounds.getNorthEast().lat() - this.getPosition().lat()) / degPixelY;
 		var bottom = (this.getPosition().lat() - mapBounds.getSouthWest().lat()) / degPixelY;
-		var right = (this.getPosition().lng() - mapBounds.getSouthWest().lng()) / degPixelX;
-		var left = (mapBounds.getNorthEast().lng() - this.getPosition().lng()) / degPixelX;
+		var left = (this.getPosition().lng() - mapBounds.getSouthWest().lng()) / degPixelX;
+		var right = (mapBounds.getNorthEast().lng() - this.getPosition().lng()) / degPixelX;
+		
+		var products = this.get('products');
+		var product = products[0];
+		
+		var img = product.getImage();
+		var price = product.getPrice();
+		var address = product.getAddress();
+		var addition = product.getAdditionInfo();
+		
+		if(left < m2Map.infoDetailWidth) {
+			var offsetLeft = (left < m2Map.infoDetailWidth) ? m2Map.infoDetailWidth - left + 6 : 0;
+		} else {
+			var offsetLeft = (right < m2Map.infoDetailWidth) ? right - m2Map.infoDetailWidth - 6 : 0;
+		}
+		
+		if(top - this.getShape().coords[3] < m2Map.infoDetailHeight + 11) {
+			m2Map.infoBoxDetailHover.setPosition('bottom');
+		} else {
+			m2Map.infoBoxDetailHover.setPosition('top');
+		}
+		
+		m2Map.infoBoxDetailHover.opts.offsetLeft = offsetLeft;
+
+		var content = '<div class="info-wrap-detail info-wrap-single"><div class="clearfix">' + 
+								'<div class="img-show left"><div><img src="'+img+'"></div></div>' +
+								'<div class="right"><div class="rest-inside">' +
+									'<div class="address">' + address + '</div>' +
+									'<div class="price">' + price + '</div>' +
+									'<div class="addition">' + addition + '</div>' +
+								'</div></div>' +
+							'</div><div class="info-arrow" style="margin-left: ' + -Math.round(offsetLeft + 5) + 'px"></div></div>';
+		
+		m2Map.infoBoxDetailHover.setContent(content);
+		m2Map.infoBoxDetailHover.open(this);
+	},
+	markerMouseOut: function() {
+		m2Map.infoBoxDetailHover.close();
 	},
 	markerClick: function() {
 		var products = this.get('products');
@@ -1431,6 +1507,11 @@ function initInfoBox() {
 
 	ib.prototype = new google.maps.OverlayView();
 
+	ib.prototype.setPosition = function(position) {
+		this.opts.position = position;
+		this.viewHolder.className = this.opts.position;
+	};
+	
 	ib.prototype.draw = function() {
 		var position = this.getProjection().fromLatLngToDivPixel(this.position);
 		

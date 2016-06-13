@@ -8,6 +8,7 @@ use vsoft\express\components\StringHelper;
 use vsoft\ad\models\AdStreet;
 use vsoft\ad\models\AdWard;
 use vsoft\ad\models\AdBuildingProject;
+use vsoft\ad\models\AdDistrict;
 
 class MapSearch extends AdProduct {
 	

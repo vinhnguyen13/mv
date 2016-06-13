@@ -115,6 +115,9 @@ class MapController extends ActiveController {
 					$address = implode(', ', array_filter($address));
 					
 					$marker['a'] = $address;
+					
+					unset($marker['show_home_no']);
+					unset($marker['home_no']);
 				}
 				
 				$response['rm'] = $markers;
