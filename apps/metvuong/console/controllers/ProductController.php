@@ -2,6 +2,7 @@
 namespace console\controllers;
 
 use console\models\Metvuong;
+use vsoft\ad\models\AdImages;
 use yii\console\Controller;
 use vsoft\ad\models\AdProduct;
 use vsoft\ad\models\AdBuildingProject;
@@ -85,6 +86,32 @@ class ProductController extends Controller {
         Metvuong::sendMailContact($this->code);
     }
 
-
+    public function actionDownloadImage()
+    {
+        $images = \Yii::$app->db->cache( function() {
+            return AdImages::find()->where('folder = :f', [':f' => ''])->orWhere(['folder' => null])->limit(1000)->all();
+        });
+        if(count($images) > 0){
+            $no = 0;
+            foreach ($images as $image) {
+                $result = Metvuong::DownloadImage($image->file_name, $image->uploaded_at);
+                if(!empty($result)){
+                    $image->file_name = $result[0];
+                    $image->folder = $result[1];
+                    $image->update(false);
+                }
+                if($no > 0 && $no % 100 == 0) {
+                    print_r(PHP_EOL);
+                    print_r("Updated {$no} images...");
+                    print_r(PHP_EOL);
+                }
+                $no++;
+                sleep(1);
+            }
+            print_r(PHP_EOL);
+            print_r("Updated {$no} images...");
+            print_r(PHP_EOL);
+        }
+    }
 
 }

@@ -13,6 +13,7 @@ use frontend\models\User;
 use vsoft\ad\models\AdContactInfo;
 use vsoft\ad\models\AdProduct;
 use vsoft\coupon\models\CouponCode;
+use vsoft\express\components\AdImageHelper;
 use Yii;
 use yii\base\Component;
 use yii\helpers\ArrayHelper;
@@ -108,6 +109,36 @@ class Metvuong extends Component
             }
         } else
             print_r("No contact info");
+    }
+
+    public static function DownloadImage($link, $uploaded_at)
+    {
+        $helper = new AdImageHelper();
+        $uploaded_at = empty($uploaded_at) ? time() : $uploaded_at;
+        $folderColumn = $helper->getAbsoluteUploadFolderPath($uploaded_at);
+        $folder = Yii::getAlias('@store'). DIRECTORY_SEPARATOR . $folderColumn;
+        if (!is_dir($folder)) {
+            mkdir($folder, 0777, true);
+        }
+        if (!empty($link)) {
+            $ext = explode('.', $link);
+            $length = count($ext) - 1;
+            $fileName = uniqid() . '.' . $ext[$length];
+            $filePath = $folder . DIRECTORY_SEPARATOR . $fileName;
+            $content = file_get_contents($link);
+            file_put_contents($filePath, $content);
+
+            foreach ($helper::$sizes as $size) {
+                $sub_folder = $folder . DIRECTORY_SEPARATOR . $helper::makeFolderName($size);
+                if (!is_dir($sub_folder)) {
+                    mkdir($sub_folder, 0777, true);
+                }
+                $sub_filePath = $sub_folder . DIRECTORY_SEPARATOR . $fileName;
+                file_put_contents($sub_filePath, $content);
+            }
+            return [$fileName, $folderColumn];
+        }
+        return null;
     }
 
 }
