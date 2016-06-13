@@ -326,7 +326,7 @@ header {
     margin-top: 0px;
 }
 .search-home {
-    padding: 30px 20px 80px;
+    padding-top: 50px;
 }
 .box-item.box-feature-item {
     padding: 35px 20px 30px;
@@ -3205,7 +3205,7 @@ html.mm-opening .mm-slideout {
     color: #fff;
 }
 .box-item {
-    padding: 0 20px;
+    /* padding: 0 20px; */
     margin-bottom: 20px;
 }
 .listing-item {
@@ -5810,7 +5810,7 @@ html.mm-opening .mm-slideout {
     left: 0;
 }
 .map-location {
-    margin-bottom: 20px;
+    padding: 0;
 }
 .txt-location {
     font-size: 13px;
@@ -5873,15 +5873,16 @@ html.mm-opening .mm-slideout {
 @media (min-width: 985px) {
     .txt-location,
     .map-location {
-        float: left;
-        width: 50%;
-        margin-bottom: 0;
+        
     }
     .txt-location {
-        padding-left: 60px;
+        
+    }
+    .map-location .img-show {
+        height: 100%;
     }
     .map-location .img-show:before {
-        padding-top: 47%;
+        padding-top: inherit;
     }
     .m-footer {
         display: none;
@@ -12318,4 +12319,61 @@ height: 190px;
 #frmListVisit .wrap-modal .popup_enable img {
     display: block;
     margin: 0 auto 5px;
+}
+.txt-location,
+.map-location,
+.box-about {
+    width: 33.3333%;
+}
+.box-about {
+    float: left;
+    padding-right: 15px;
+}
+.txt-location {
+    float: right;
+    padding-left: 15px;
+}
+.map-location {
+    height: 250px;
+    float: left;
+}
+@media (max-width: 985px) {
+    .txt-location {
+        width: 100%;
+        float: left;
+        padding-left: 0;
+        margin-top: 30px;
+        margin-bottom: 50px;
+    }
+    .map-location {
+        float: right;
+    }
+    .map-location,
+    .box-about {
+        width: 50%;
+    }
+}
+@media (max-width: 768px) {
+    .txt-location,
+    .map-location,
+    .box-about {
+        width: 100%;
+        margin-bottom: 30px;
+        float: left;
+        margin-top: 0;
+    }
+    .map-location .img-show {
+        height: 100%;
+    }
+    .map-location .img-show:before {
+        padding-top: inherit;
+    }
+    .txt-location .get-email {
+        font-size: 13px;
+    }
+}
+@media (max-width: 460px) {
+    .license {
+        font-size: 12px;
+    }
 }
