@@ -15,28 +15,6 @@
 		return AdCategory::find()->indexBy('id')->all();
 	});
 	
-	if($searchModel->street_id) {
-		$streets = [$searchModel->street_id => $searchModel->street->getAttributes()];
-	} else if($searchModel->district_id) {
-		$streets = AdStreet::find()->asArray(true)->where(['district_id' => $searchModel->district_id])->indexBy('id')->all();
-	} else if($searchModel->city_id) {
-		$streets = AdStreet::find()->asArray(true)->where(['city_id' => $searchModel->city_id])->indexBy('id')->all();
-	}
-	
-	if($searchModel->ward_id) {
-		$wards = [$searchModel->ward_id => $searchModel->ward->getAttributes()];
-	} else if($searchModel->district_id) {
-		$wards = AdWard::find()->asArray(true)->where(['district_id' => $searchModel->district_id])->indexBy('id')->all();
-	} else if($searchModel->city_id) {
-		$wards = AdWard::find()->asArray(true)->where(['city_id' => $searchModel->city_id])->indexBy('id')->all();
-	}
-	
-	if($searchModel->district_id) {
-		$districts = [$searchModel->district_id => $searchModel->district->getAttributes()];
-	} else if($searchModel->city_id) {
-		$districts = AdDistrict::find()->asArray(true)->where(['city_id' => $searchModel->city_id])->indexBy('id')->all();
-	}
-	
 	$types = AdProduct::getAdTypes();
 	
 	$products = $list['products'];
@@ -61,20 +39,20 @@
 					$address[] = $product['home_no'];
 				}
 				
-				if(isset($streets[$product['street_id']])) {
-					$street = $streets[$product['street_id']];
+				if(isset($searchModel->streets[$product['street_id']])) {
+					$street = $searchModel->streets[$product['street_id']];
 					
 					$address[] = $street['pre'] . ' ' . $street['name'];
 				}
 				
-				if(isset($wards[$product['ward_id']])) {
-					$ward = $wards[$product['ward_id']];
+				if(isset($searchModel->wards[$product['ward_id']])) {
+					$ward = $searchModel->wards[$product['ward_id']];
 					
 					$address[] = $ward['pre'] . ' ' . $ward['name'];
 				}
 				
-				if(isset($districts[$product['district_id']])) {
-					$district = $districts[$product['district_id']];
+				if(isset($searchModel->districts[$product['district_id']])) {
+					$district = $searchModel->districts[$product['district_id']];
 					
 					$address[] = trim($district['pre'] . ' ' . $district['name']);
 				}

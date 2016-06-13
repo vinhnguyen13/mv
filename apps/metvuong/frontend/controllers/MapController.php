@@ -59,6 +59,8 @@ class MapController extends ActiveController {
 		 
 		if($mapSearch->rm || $mapSearch->rl) {
 		
+			$mapSearch->fetchValues();
+			
 			if($mapSearch->rect) {
 				$rect = explode(',', $mapSearch->rect);
 					
@@ -76,16 +78,50 @@ class MapController extends ActiveController {
 				$sort = str_replace('-', '', $sort);
 				 
 				$markerQuery->orderBy("$sort $doa");
+				
+				$markerQuery->addSelect(['`ad_images`.`file_name` AS f', '`ad_images`.`folder` AS d']);
+				$markerQuery->leftJoin('`ad_images`', '`ad_images`.`product_id` = `ad_product`.`id` AND `ad_images`.`order` = 0');
+				$markerQuery->groupBy('`ad_product`.`id`');
 					
 				$markerQuery->limit(500);
 					
-				$response['rm'] = $markerQuery->all();
+				$markers = $markerQuery->all();
+				
+				foreach ($markers as &$marker) {
+					$address = [];
+				
+					if($marker['show_home_no'] && $marker['home_no']) {
+						$address[] = $marker['home_no'];
+					}
+					
+					if(isset($mapSearch->streets[$marker['street_id']])) {
+						$street = $mapSearch->streets[$marker['street_id']];
+						
+						$address[] = $street['pre'] . ' ' . $street['name'];
+					}
+					
+					if(isset($mapSearch->wards[$marker['ward_id']])) {
+						$ward = $mapSearch->wards[$marker['ward_id']];
+						
+						$address[] = $ward['pre'] . ' ' . $ward['name'];
+					}
+					
+					if(isset($mapSearch->districts[$marker['district_id']])) {
+						$district = $mapSearch->districts[$marker['district_id']];
+						
+						$address[] = trim($district['pre'] . ' ' . $district['name']);
+					}
+					
+					$address = implode(', ', array_filter($address));
+					
+					$marker['a'] = $address;
+				}
+				
+				$response['rm'] = $markers;
 			}
 			 
 			if($mapSearch->rl) {
 				$list = $mapSearch->getList($query);
-				 
-				$mapSearch->fetchValues();
 					
 				$response['rl'] = $this->renderPartial('@frontend/web/themes/mv_desktop1/views/ad/_partials/side-list', ['searchModel' => $mapSearch, 'list' => $list]);
 			}

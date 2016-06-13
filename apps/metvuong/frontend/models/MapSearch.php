@@ -34,6 +34,10 @@ class MapSearch extends AdProduct {
 	public $did;
 	public $page;
 	
+	public $streets;
+	public $wards;
+	public $districts;
+	
 	function rules() {
 		return array_merge(parent::rules(), [
 			[['order_by', 'rect', 'ra', 'ra_k', 'z', 'c'], 'string'],
@@ -50,7 +54,7 @@ class MapSearch extends AdProduct {
 
 		$query = new Query();
 
-		$query->select('ad_product.id, ad_product.area, ad_product.price, ad_product.lng, ad_product.lat, ad_product_addition_info.room_no, ad_product_addition_info.toilet_no');
+		$query->select('ad_product.show_home_no, ad_product.home_no, ad_product.street_id, ad_product.ward_id, ad_product.district_id, ad_product.id, ad_product.area, ad_product.price, ad_product.lng, ad_product.lat, ad_product_addition_info.room_no, ad_product_addition_info.toilet_no');
 		$query->from('ad_product');
 		$query->innerJoin('ad_product_addition_info', 'ad_product_addition_info.product_id = ad_product.id');
 		
@@ -176,11 +180,6 @@ class MapSearch extends AdProduct {
 		$listQuery->addSelect([
 			"ad_product.score",
 			"ad_product.updated_at",
-			"ad_product.show_home_no",
-			"ad_product.home_no",
-			"ad_product.street_id",
-			"ad_product.ward_id",
-			"ad_product.district_id",
 			"ad_product.category_id",
 			"ad_product.type",
 		]);
@@ -211,6 +210,28 @@ class MapSearch extends AdProduct {
 	
 		if(!$this->type) {
 			$this->type = AdProduct::TYPE_FOR_SELL;
+		}
+		
+		if($this->street_id) {
+			$this->streets = [$this->street_id => $this->street->getAttributes()];
+		} else if($this->district_id) {
+			$this->streets = AdStreet::find()->asArray(true)->where(['district_id' => $this->district_id])->indexBy('id')->all();
+		} else if($this->city_id) {
+			$this->streets = AdStreet::find()->asArray(true)->where(['city_id' => $this->city_id])->indexBy('id')->all();
+		}
+		
+		if($this->ward_id) {
+			$this->wards = [$this->ward_id => $this->ward->getAttributes()];
+		} else if($this->district_id) {
+			$this->wards = AdWard::find()->asArray(true)->where(['district_id' => $this->district_id])->indexBy('id')->all();
+		} else if($this->city_id) {
+			$this->wards = AdWard::find()->asArray(true)->where(['city_id' => $this->city_id])->indexBy('id')->all();
+		}
+		
+		if($this->district_id) {
+			$this->districts = [$this->district_id => $this->district->getAttributes()];
+		} else if($this->city_id) {
+			$this->districts = AdDistrict::find()->asArray(true)->where(['city_id' => $this->city_id])->indexBy('id')->all();
 		}
 	}
 }
