@@ -16,14 +16,13 @@ AddDefaultCharset utf-8
 #
 
 # Authorization for ALL
-AuthName "Restricted Area - Authorization Required"
-AuthUserFile /var/www/ttgweb/apps/metvuong/.htpasswd
-AuthType Basic
-Order deny,allow
-Require valid-user
-Deny from all
-Allow from env=!require_auth
-Satisfy Any
+#Order deny,allow
+#Deny from all
+#AuthName "Restricted Area - Authorization Required"
+#AuthUserFile /var/www/ttgweb/apps/metvuong/.htpasswd
+#AuthType Basic
+#Require valid-user
+#Satisfy Any
 
 
 <IfModule mod_rewrite.c>
