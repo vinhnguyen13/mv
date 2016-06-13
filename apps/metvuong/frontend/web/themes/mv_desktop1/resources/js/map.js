@@ -914,7 +914,7 @@ var m2Map = {
 		}
 		
 		return $.ajax({
-			url: form.el.attr('action'),
+			url: '/map/get',
 			data: serialize,
 			success: fn,
 			complete: function() {

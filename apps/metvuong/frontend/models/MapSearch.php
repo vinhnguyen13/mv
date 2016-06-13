@@ -161,7 +161,7 @@ class MapSearch extends AdProduct {
 		$listQuery = clone $query;
 			
 		$countQuery = clone $listQuery;
-		$pages = new Pagination(['totalCount' => $countQuery->count(), 'defaultPageSize' => \Yii::$app->params['listingLimit']]);
+		$pages = new Pagination(['totalCount' => $countQuery->count(), 'defaultPageSize' => \Yii::$app->params['listingLimit'], 'route' => '/ad/index' . $this->type]);
 		$pages->setPageSize(\Yii::$app->params['listingLimit']);
 				
 		$listQuery->offset($pages->offset);

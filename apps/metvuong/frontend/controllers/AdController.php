@@ -192,20 +192,6 @@ class AdController extends Controller
 		return $response;
     }
     
-    public function getArea($area, $where) {
-    	$query = new Query();
-    
-    	$select = ['id', 'center', 'name', 'geometry'];
-    
-    	if(($area != 'city')) {
-    		$select[] = 'pre';
-    	}
-    
-    	$areas = $query->from('ad_' . $area)->select($select)->where($where)->all();
-    
-    	return $areas;
-    }
-    
     public function actionIndex() {
     	$this->view->params['menuBuy'] = true;
     	$this->view->params['menuRent'] = false;
@@ -234,110 +220,31 @@ class AdController extends Controller
     	
     	$mapSearch->type = $type;
     	
-    	if(Yii::$app->request->isAjax) {
-    		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    	
-    		$query = $mapSearch->search(\Yii::$app->request->get());
-    	
-    		$response = [];
-    	
-    		if($mapSearch->ra) {
-    			$areaQuery = clone $query;
-    	
-    			$allowArea = [
-    					'city' => ['id'],
-    					'district' => ['id', 'city_id'],
-    					'ward' => ['id', 'district_id', 'city_id'],
-    					'street' => ['id']
-    			];
-    	
-    			if(in_array($mapSearch->ra, array_keys($allowArea))) {
-    				$allowKey = $allowArea[$mapSearch->ra];
-    				$key = $mapSearch->ra_k;
-    	
-    				if(in_array($key, $allowKey)) {
-    					$value = ($key == 'id') ? $mapSearch->getAttribute($mapSearch->ra . '_id') : $mapSearch->getAttribute($key);
-    					$areas = $this->getArea($mapSearch->ra, [$key => $value]);
-    	
-    					if($key == 'id') {
-    						$counts = [$value => ['total' => $areaQuery->count()]];
-    					} else {
-    						$group = $mapSearch->ra . '_id';
-    							
-    						$counts = $areaQuery->select([$group, 'COUNT(*) AS total'])->groupBy($group)->indexBy($group)->all();
-    					}
-    	
-    					foreach($areas as &$area) {
-    						$area['total'] = isset($counts[$area['id']]['total']) ? $counts[$area['id']]['total'] : 0;
-    					}
-    	
-    					$response['ra'] = $areas;
-    				}
-    			}
-    		}
-    	
-    		if($mapSearch->rm || $mapSearch->rl) {
-    			 
-    			if($mapSearch->rect) {
-    				$rect = explode(',', $mapSearch->rect);
-    					
-    				$query->andWhere(['>=', 'ad_product.lat', $rect[0]]);
-    				$query->andWhere(['<=', 'ad_product.lat', $rect[2]]);
-    				$query->andWhere(['>=', 'ad_product.lng', $rect[1]]);
-    				$query->andWhere(['<=', 'ad_product.lng', $rect[3]]);
-    			}
-    	
-    			if($mapSearch->rm) {
-    				$markerQuery = clone $query;
-    	
-    				$sort = $mapSearch->order_by ? $mapSearch->order_by : '-score';
-    				$doa = StringHelper::startsWith($sort, '-') ? 'DESC' : 'ASC';
-    				$sort = str_replace('-', '', $sort);
-    	
-    				$markerQuery->orderBy("$sort $doa");
-    					
-    				$markerQuery->limit(500);
-    					
-    				$response['rm'] = $markerQuery->all();
-    			}
-    	
-    			if($mapSearch->rl) {
-    				$list = $mapSearch->getList($query);
-    	
-    				$mapSearch->fetchValues();
-    					
-    				$response['rl'] = $this->renderPartial('@frontend/web/themes/mv_desktop1/views/ad/_partials/side-list', ['searchModel' => $mapSearch, 'list' => $list]);
-    			}
-    		}
-    	
-    		return $response;
-    	} else {
-    		$this->view->params['body'] = [
-    				'class' => 'ad-listing'
-    		];
+    	$this->view->params['body'] = [
+			'class' => 'ad-listing'
+		];
     		 
-    		if($type = Yii::$app->request->get('type')) {
-    			$this->view->params['menuBuy'] = ($type==1) ? true : false;
-    			$this->view->params['menuRent'] = ($type==2) ? true : false;
-    		}
+		if($type = Yii::$app->request->get('type')) {
+			$this->view->params['menuBuy'] = ($type==1) ? true : false;
+			$this->view->params['menuRent'] = ($type==2) ? true : false;
+		}
     		 
-    		$query = $mapSearch->search(Yii::$app->request->get());
+		$query = $mapSearch->search(Yii::$app->request->get());
     	
-    		if($mapSearch->rect && $mapSearch->rm) {
-    			$rect = explode(',', $mapSearch->rect);
+		if($mapSearch->rect && $mapSearch->rm) {
+			$rect = explode(',', $mapSearch->rect);
     	
-    			$query->andWhere(['>=', 'ad_product.lat', $rect[0]]);
-    			$query->andWhere(['<=', 'ad_product.lat', $rect[2]]);
-    			$query->andWhere(['>=', 'ad_product.lng', $rect[1]]);
-    			$query->andWhere(['<=', 'ad_product.lng', $rect[3]]);
-    		}
+			$query->andWhere(['>=', 'ad_product.lat', $rect[0]]);
+			$query->andWhere(['<=', 'ad_product.lat', $rect[2]]);
+			$query->andWhere(['>=', 'ad_product.lng', $rect[1]]);
+			$query->andWhere(['<=', 'ad_product.lng', $rect[3]]);
+		}
     		 
-    		$list = $mapSearch->getList($query);
+		$list = $mapSearch->getList($query);
     		 
-    		$mapSearch->fetchValues();
+		$mapSearch->fetchValues();
     		 
-    		return $this->render('index', ['searchModel' => $mapSearch, 'list' => $list]);
-    	}
+		return $this->render('index', ['searchModel' => $mapSearch, 'list' => $list]);
     }
     
     public function actionSavedListing() {
