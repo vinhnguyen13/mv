@@ -85,16 +85,16 @@
 </div>
 <script>
     $(document).ready(function () {
-        $('.deposit').click(function () {
-            $.ajax({
-                type: "get",
-                dataType: 'html',
-                url: '<?=yii\helpers\Url::to(['dashboard/create-transaction']) ?>',
-                success: function (data) {
-                    if(data)
-                        window.location.reload();
-                }
-            });
-        });
+//        $('.deposit').click(function () {
+//            $.ajax({
+//                type: "get",
+//                dataType: 'html',
+//                url: '<?//=yii\helpers\Url::to(['dashboard/create-transaction']) ?>//',
+//                success: function (data) {
+//                    if(data)
+//                        window.location.reload();
+//                }
+//            });
+//        });
     });
 </script>
