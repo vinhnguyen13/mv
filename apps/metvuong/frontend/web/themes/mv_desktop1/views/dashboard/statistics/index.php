@@ -25,11 +25,14 @@ $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
         	<section class="clearfix mgB-40">
                 <div class="pull-right fs-13 mgB-15">
                     <?=Yii::t('statistic','Select')?>
-                    <select id="filterChart" class="mgL-10">
+                    <!-- <select id="filterChart" class="mgL-10">
                         <option value="week"><?=Yii::t('statistic','Week')?></option>
                         <option value="month"><?=Yii::t('statistic','Month')?></option>
                         <option value="quarter"><?=Yii::t('statistic','Quarter')?></option>
-                    </select>
+                    </select> -->
+                    <button class="btn-common btn-small mgL-20 btn-bd-radius">Wekk</button>
+                    <button class="btn-common btn-small mgL-10 btn-bd-radius">Month</button>
+                    <button class="btn-common btn-small mgL-10 btn-bd-radius">Quarter</button>
                 </div>
                 <div class="clearfix"></div>
         		<div class="summary clearfix">
@@ -42,12 +45,10 @@ $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
         			</div>
                     <ul class="option-view-stats clearfix">
                         <li>
-                            <a href="javascript:;" class="btn-finder radio-ui"> 
+                            <a href="javascript:;" class="btn-finder"> 
                                 <span class="icon-mv fs-19"><span class="icon-icons-search"></span></span> 
                                 <?=Yii::t('statistic','Search')?>
                                 <span><?=$search_count ?></span>
-                                <input type="checkbox" name="toggle-chart" value="1000000" checked="checked">  
-                                <span class="icon-mv toggle-ui-check"><span class="icon-checkbox"></span></span> 
                             </a>
                         </li>
                         <li>
@@ -254,7 +255,7 @@ echo $this->renderAjax('/ad/_partials/shareEmail',[
 
         $('.option-view-stats .radio-ui').checkbox_ui({
             done: function (item) {
-                
+                console.log(item);
             }
         });
 

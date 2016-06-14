@@ -333,6 +333,8 @@ $.fn.checkbox_ui = function (options) {
                 checkedItem(_this, true);
             }
             _this.find('input[type=checkbox]').trigger('change');
+
+            sc.settings.done(_this.find('input[type=checkbox]'));
         }
 
         function checkedItem (item, flagChecked) {
