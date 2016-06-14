@@ -397,6 +397,8 @@ var m2Map = {
 		m2Map.mapOptions = {
 			center: {lat: 10.783091, lng: 106.704899},
 			zoom: 18,
+			zoomControl: false,
+			streetViewControl: false,
 			mapTypeControl: true,
 			mapTypeControlOptions: { style: google.maps.MapTypeControlStyle.DROPDOWN_MENU }
 		};
@@ -415,7 +417,7 @@ var m2Map = {
 			m2Map.detail(did);
 		}
 		
-		m2Map.addDrawControl();
+		// m2Map.addDrawControl();
 	},
 	stateChange: function() {
 		
