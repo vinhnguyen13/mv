@@ -18,6 +18,7 @@ return [
         '@common' => dirname(dirname(__DIR__)) . '/common',
         '@keltstr/simplehtmldom' => dirname(dirname(__DIR__)) . '/common/myvendor/keltstr/simplehtmldom',
         '@linslin/yii2/curl' => dirname(dirname(__DIR__)) . '/common/myvendor/linslin/yii2-curl',
+        '@funson86' => dirname(dirname(__DIR__)) . '/common/myvendor/funson86',
         '@vsoft' => dirname(dirname(__DIR__)) . '/common/myvendor/vsoft',
     ),
     'controllerMap' => [
@@ -76,6 +77,9 @@ return [
                     'levels' => ['error', 'warning'],
                 ],
             ],
+        ],
+        'setting' => [
+            'class' => 'funson86\setting\Setting',
         ],
     ],
     'params' => $params,
