@@ -7,7 +7,7 @@
 	
 	$db = Yii::$app->getDb();
 	
-	$hideSearchForm = Yii::$app->request->get('s') || (Yii::$app->request->get('page', 1) != 1);
+	$hideSearchForm = Yii::$app->request->get();
 	
 	$compress = isset(Yii::$app->params['local']) ? '' : '.compress';
 	
@@ -241,7 +241,6 @@ EOD;
 							<?= Html::activeDropDownList($searchModel, 'order_by', $items, ['prompt' => Yii::t('ad', 'Sort by'), 'class' => 'form-control']) ?>
 						</div>
 					</div>
-					<input type="hidden" name="s" value="1" />
 					<div style="display: none;" id="af-wrap">
 						<?= Html::activeHiddenInput($searchModel, 'rm', ['disabled' => true]); ?>
 						<input type="hidden" id="rl" name="rl" />

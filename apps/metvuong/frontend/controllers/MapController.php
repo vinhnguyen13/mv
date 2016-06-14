@@ -200,8 +200,8 @@ class MapController extends ActiveController {
 				
 				foreach ($result['hits']['hits'] as $k => $hit) {
 	    			$response[$k] = $hit['_source'];
-	    			$response[$k]['url_sale'] = Url::to(['/ad/index1', $hit['_type'] . '_id' => $hit['_id'], 's' => 1]);
-	    			$response[$k]['url_rent'] = Url::to(['/ad/index2', $hit['_type'] . '_id' => $hit['_id'], 's' => 1]);
+	    			$response[$k]['url_sale'] = Url::to(['/ad/index1', $hit['_type'] . '_id' => $hit['_id']]);
+	    			$response[$k]['url_rent'] = Url::to(['/ad/index2', $hit['_type'] . '_id' => $hit['_id']]);
 	    			$response[$k]['type'] = $hit['_type'];
 	    			$response[$k]['id'] = $hit['_id'];
 	    		}
