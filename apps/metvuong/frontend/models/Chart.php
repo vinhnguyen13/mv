@@ -135,7 +135,7 @@ class Chart extends Component
                 }elseif($view == 'shares'){
                     $color = '#8a6d3b';
                 }
-                $tmpDataByPid[$key]['data'][$kDate]['color'] = $color;
+                $tmpDataByPid[$key]['color'] = $color;
 
                 $user = User::findIdentity($item->user_id);
                 $username = $user->username;

@@ -26,7 +26,7 @@ $shareTo = (!empty($shares) && isset($shares["to"])) ? $shares["to"] : 0;
 if($from > 0 && $to > 0)
     $data = Chart::find()->getDataFinder($id, $from, $to);
     ksort($data['dataChart']);
-    $dataChart = array_values($data['dataChart']);
+    $dataChart1 = array_values($data['dataChart']);
     ksort($data['categories']);
     $categories = array_values($data['categories']);
 
@@ -48,17 +48,18 @@ if($from > 0 && $to > 0)
     ksort($data4['categories']);
     $categories4 = array_values($data4['categories']);
 
-    $dataChart = \yii\helpers\ArrayHelper::merge($dataChart, $dataChart2);
-    $dataChart = \yii\helpers\ArrayHelper::merge($dataChart, $dataChart3);
+//    $dataChart = \yii\helpers\ArrayHelper::merge($dataChart1, $dataChart2);
+    $dataChart = \yii\helpers\ArrayHelper::merge($dataChart2, $dataChart3);
     $dataChart = \yii\helpers\ArrayHelper::merge($dataChart, $dataChart4);
 //    $categories = array_merge($categories, $categories2, $categories3, $categories4);
-$categories = $categories3;
+    $categories = $categories2;
+
 
     ?>
     <div id="chartAds" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     <script>
         $(function () {
-            $('#chartAds').highcharts({
+            var chart = $('#chartAds').highcharts({
                 chart: {
                     type: 'line'
                 },

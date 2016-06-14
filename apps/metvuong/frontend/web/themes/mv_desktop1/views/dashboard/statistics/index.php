@@ -24,16 +24,16 @@ $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
             </div>
         	<section class="clearfix mgB-40">
                 <div class="pull-right fs-13 mgB-15">
-                    <span class="d-ib mgR-20"><?=Yii::t('statistic','Select')?></span>
+<!--                    <span class="d-ib mgR-20">--><?//=Yii::t('statistic','Select')?><!--</span>-->
                     <!-- <select id="filterChart" class="mgL-10">
                         <option value="week"><?=Yii::t('statistic','Week')?></option>
                         <option value="month"><?=Yii::t('statistic','Month')?></option>
                         <option value="quarter"><?=Yii::t('statistic','Quarter')?></option>
                     </select> -->
                     <div class="clearfix d-ib ver-c">
-                        <button class="show-view-chart active">Wekk</button>
-                        <button class="show-view-chart">Month</button>
-                        <button class="show-view-chart">Quarter</button>
+                        <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id, 'filter'=>'week']) ?>" class="show-view-chart<?=($filter=='week' ? ' active' : '')?>"><?=Yii::t('statistic','Week')?></a>
+                        <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id, 'filter'=>'month']) ?>" class="show-view-chart<?=($filter=='month' ? ' active' : '')?>"><?=Yii::t('statistic','Month')?></a>
+                        <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id, 'filter'=>'quarter']) ?>" class="show-view-chart<?=($filter=='quarter' ? ' active' : '')?>"><?=Yii::t('statistic','Quarter')?></a>
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -257,7 +257,15 @@ echo $this->renderAjax('/ad/_partials/shareEmail',[
 
         $('.option-view-stats .radio-ui').checkbox_ui({
             done: function (item) {
-                console.log(item);
+                var index = item.parent().parent().index();
+                var chart = $('#chartAds').highcharts(),
+                    series = chart.series[(index-1)];
+                if (series.visible) {
+                    series.hide();
+                } else {
+                    series.show();
+                }
+
             }
         });
 
