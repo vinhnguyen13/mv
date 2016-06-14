@@ -5674,16 +5674,11 @@ html.mm-opening .mm-slideout {
 .option-view-stats li a span.icon-mv span {
     margin-top: 0;
 }
-.option-view-stats li a.active,
 .option-view-stats li a:hover {
-    /* border-top: 1px solid #fff; */
-    color: #00a769;
-    font-weight: 600;
-    /* background: none; */
+    opacity: .8;
 }
-.option-view-stats li a.active span,
-.option-view-stats li a:hover span {
-    color: #00a769;
+.option-view-stats li a:active {
+    opacity: .7;
 }
 @media (min-width: 985px) {
     .search-homepage > ul,
@@ -6660,7 +6655,7 @@ footer li a {
     .wrap-edit-tt {
         width: 100%;
         /* margin: 0 auto 0; */
-        width: 50%;
+        /* width: 50%; */
     }
     .page-faqs, .page-terms, .noti-alert, .detail-news {
         padding: 0;
@@ -12435,4 +12430,23 @@ height: 190px;
 }
 .option-view-stats a.active .toggle-ui-check .icon-checkbox:before {
     content: "\f046";
+}
+#review-listing .popup-wrap {
+    padding: 10px;
+}
+.option-view-stats li a.btn-finder {
+    background: #337ab7;
+    color: #fff;
+}
+.option-view-stats li a.btn-visitor {
+    background: #a94442;
+    color: #fff;
+}
+.option-view-stats li a.btn-favourite {
+    background: #00a769;
+    color: #fff;
+}
+.option-view-stats li a.btn-share {
+    background: #8a6d3b;
+    color: #fff;
 }
