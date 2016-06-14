@@ -222,6 +222,10 @@
 	padding: 4px;
 }
 
+.scroll .clearfix {
+	cursor: pointer;
+}
+
 @media ( max-width : 985px) {
 	#map-search-wrap {
 		width: 100%;

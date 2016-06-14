@@ -93,9 +93,6 @@ $(document).ready(function() {
 				form.listSearchEl.find('.center').hide();
 			}
 		},
-		searchBlur: function() {
-			form.mapSearchEl.val(form.mapSearchEl.data('val'));
-		},
 		searchTyping: function(e) {
 			if(e.keyCode == 13) {
 				var currentActive = form.listSearchUl.find('.active');
@@ -165,7 +162,7 @@ $(document).ready(function() {
 						form.showSearchList();
 						form.listSearchEl.find('.hint-wrap').hide();
 					} else {
-						form.hideSearchList_();
+						// form.hideSearchList_();
 					}
 	        	}));
 	    	} else {
@@ -219,12 +216,6 @@ $(document).ready(function() {
 			
 			setCookie('sh', JSON.stringify(listSearch));
 		},
-		searchListMouseEnter: function() {
-			form.mapSearchEl.off('blur', form.searchBlur);
-		},
-		searchListMouseLeave: function() {
-			form.mapSearchEl.on('blur', form.searchBlur);
-		},
 		showSearchList: function() {
 			if(form.listSearchEl.hasClass('hide')) {
 				form.listSearchEl.removeClass('hide');
@@ -242,6 +233,7 @@ $(document).ready(function() {
 			form.listSearchEl.addClass('hide');
 			form.listSearchUl.html('');
 			$(document).off('click', form.hideSearchList);
+			form.mapSearchEl.val(form.mapSearchEl.data('val'));
 		},
 		preventEnterSubmit: function(e) {
 			if(e.keyCode == 13) {
@@ -259,9 +251,8 @@ $(document).ready(function() {
 	
 	form.listSearchUl = form.listSearchEl.find('ul');
 	
-	form.mapSearchEl.on('focus', form.searchFocus).on('keyup', form.searchTyping).on('blur', form.searchBlur).on('keydown', form.preventEnterSubmit);
+	form.mapSearchEl.on('focus', form.searchFocus).on('keyup', form.searchTyping).on('keydown', form.preventEnterSubmit);
 	form.listSearchEl.on('click', 'a', form.searchItemClick).on('mouseenter', 'a', form.searchItemMouseEnter).on('mouseleave', 'a', form.searchItemMouseLeave);
-	form.listSearchEl.on('mouseenter', form.searchListMouseEnter).on('mouseleave', form.searchListMouseLeave);
 	
 	/*
 	 * Desktop

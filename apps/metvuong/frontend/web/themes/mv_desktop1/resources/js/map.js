@@ -280,36 +280,38 @@ function Product(attrs) {
 
 Product.prototype.getMarkerKey = function() {
 	return this.attrs.lat + '-' + this.attrs.lng;
-}
+};
 
 Product.prototype.getPosition = function() {
 	return new google.maps.LatLng(this.attrs.lat, this.attrs.lng);
-}
+};
 
 Product.prototype.getImage = function() {
 	if(this.attrs.f) {
 		if(this.attrs.d) {
 			return '/store/' + this.attrs.d + '/240x180/' + this.attrs.f;
 		} else {
-			return this.attrs.f;
+			return this.attrs.f.replace('745x510', '350x280');
 		}
 	} else {
 		return '/themes/metvuong2/resources/images/default-ads.jpg';
 	}
-}
+};
 
 Product.prototype.getPrice = function() {
 	return formatPrice(this.attrs.price) + ' ' + lajax.t('VND');
-}
+};
 
 Product.prototype.getAddress = function() {
 	return this.attrs.a;
-}
+};
 
 Product.prototype.getAdditionInfo = function() {
 	var addition = [];
 	
-	addition.push('<span class="icon-mv"><span class="icon-page-1-copy"></span></span>' + this.attrs.area + 'm<sup>2</sup>');
+	if(this.attrs.area) {
+		addition.push('<span class="icon-mv"><span class="icon-page-1-copy"></span></span>' + this.attrs.area + 'm<sup>2</sup>');
+	}
 	
 	if(this.attrs.room_no && this.attrs.room_no != '0') {
 		addition.push('<span class="icon-mv"><span class="icon-bed-search"></span></span>' + this.attrs.room_no);
@@ -319,7 +321,23 @@ Product.prototype.getAdditionInfo = function() {
 	}
 
 	return addition.join('<i class="s"></i>');
-}
+};
+
+Product.prototype.buildInfoContent = function() {
+	var img = this.getImage();
+	var price = this.getPrice();
+	var address = this.getAddress();
+	var addition = this.getAdditionInfo();
+	
+	return '<div data-id="' + this.attrs.id + '" class="clearfix item">' + 
+				'<div class="img-show left"><div><img src="'+img+'"></div></div>' +
+				'<div class="right"><div class="rest-inside">' +
+					'<div class="address">' + address + '</div>' +
+					'<div class="price">' + price + '</div>' +
+					'<div class="addition">' + addition + '</div>' +
+				'</div></div>' +
+			'</div>';
+};
 
 
 /*
@@ -354,6 +372,8 @@ var m2Map = {
 	deteilZoomLevelDefault: 16,
 	detailZoomLevel: 16,
 	infoBoxHover: null,
+	infoBoxDetailHover: null,
+	infoBoxDetailClick: null,
 	boundsChangedEvent: null,
 	zoomChangedEvent: null,
 	closeDetailListener: null,
@@ -367,7 +387,9 @@ var m2Map = {
 		initInfoBox();
 		
 		m2Map.infoBoxHover = new ib({disableAutoPan: true, position: 'top'});
-		m2Map.infoBoxDetailHover = new ib({disableAutoPan: true, position: 'top'});
+		m2Map.infoBoxDetailHover = new ib({disableAutoPan: true});
+		m2Map.infoBoxDetailClick = new ib({disableAutoPan: true, onDraw: m2Map.ibDrawed});
+		m2Map.infoBoxDetailClick.set('markers', []);
 		
 		var initZoom = form.afZoom.val();
 		var initCenter = form.afCenter.val();
@@ -738,6 +760,8 @@ var m2Map = {
 			}
 			
 			marker.addListener('click', m2Map.markerClick);
+			marker.addListener('mouseover', m2Map.markerMouseOver);
+			marker.addListener('mouseout', m2Map.markerMouseOut);
 			marker.set('products', buildingProjects);
 			m2Map.setIcon(marker, buildingProjects.length, 0);
 			
@@ -868,53 +892,46 @@ var m2Map = {
 		}
 	},
 	markerMouseOver: function(){
-		clearTimeout(m2Map.markerMouseOutT);
-		
-		
-		
 		var products = this.get('products');
-		var product = products[0];
 		
 		m2Map.setIcon(this, products.length, 1);
 		this.setZIndex(google.maps.Marker.MAX_ZINDEX++);
 		
-		var img = product.getImage();
-		var price = product.getPrice();
-		var address = product.getAddress();
-		var addition = product.getAdditionInfo();
-		
-		var padding = m2Map.getMarkerPadding(this);
-		
-		if(padding.left < m2Map.infoDetailWidth) {
-			var offsetLeft = (padding.left < m2Map.infoDetailWidth) ? m2Map.infoDetailWidth - padding.left + 6 : 0;
-		} else {
-			var offsetLeft = (padding.right < m2Map.infoDetailWidth) ? padding.right - m2Map.infoDetailWidth - 6 : 0;
-		}
-		
-		if(padding.top - this.getShape().coords[3] < m2Map.infoDetailHeight + 11) {
-			m2Map.infoBoxDetailHover.setPosition('bottom');
-		} else {
-			m2Map.infoBoxDetailHover.setPosition('top');
-		}
-		
-		m2Map.infoBoxDetailHover.opts.offsetLeft = offsetLeft;
+		if(!m2Map.isAttachingClickInfo(this)) {
+			var product = products[0];
+			
+			var padding = m2Map.getMarkerPadding(this);
+			
+			if(padding.left < m2Map.infoDetailWidth) {
+				var offsetLeft = (padding.left < m2Map.infoDetailWidth) ? m2Map.infoDetailWidth - padding.left + 6 : 0;
+			} else {
+				var offsetLeft = (padding.right < m2Map.infoDetailWidth) ? padding.right - m2Map.infoDetailWidth - 6 : 0;
+			}
+			
+			if(padding.top - this.getShape().coords[3] < m2Map.infoDetailHeight + 11) {
+				m2Map.infoBoxDetailHover.setPosition('bottom');
+			} else {
+				m2Map.infoBoxDetailHover.setPosition('top');
+			}
+			
+			m2Map.infoBoxDetailHover.opts.offsetLeft = offsetLeft;
 
-		var content = '<div class="info-wrap-detail info-wrap-single"><div class="clearfix">' + 
-								'<div class="img-show left"><div><img src="'+img+'"></div></div>' +
-								'<div class="right"><div class="rest-inside">' +
-									'<div class="address">' + address + '</div>' +
-									'<div class="price">' + price + '</div>' +
-									'<div class="addition">' + addition + '</div>' +
-								'</div></div>' +
-							'</div><div class="info-arrow" style="margin-left: ' + -Math.round(offsetLeft + 5) + 'px"></div></div>';
-		
-		m2Map.infoBoxDetailHover.setContent(content);
-		m2Map.infoBoxDetailHover.open(this);
+			var content = '<div class="info-wrap-detail info-wrap-single">' + product.buildInfoContent()
+							+ '<div class="info-arrow" style="margin-left: ' + -Math.round(offsetLeft + 5) + 'px"></div></div>';
+			
+			m2Map.infoBoxDetailHover.setContent(content);
+			m2Map.infoBoxDetailHover.open(this);
+		}
+	},
+	isAttachingClickInfo: function(marker) {
+		if(m2Map.infoBoxDetailClick.anchor) {
+			return m2Map.infoBoxDetailClick.anchor.getPosition().equals(marker.getPosition());
+		} else {
+			return false;
+		}		
 	},
 	markerMouseOut: function() {
-		m2Map.markerMouseOutT = setTimeout(function(){
-			m2Map.infoBoxDetailHover.close();
-		}, 150);
+		m2Map.infoBoxDetailHover.close();
 		
 		var products = this.get('products');
 		
@@ -922,13 +939,124 @@ var m2Map = {
 	},
 	markerClick: function() {
 		var products = this.get('products');
-		
+
 		if(products.length == 1) {
 			var product = products[0];
 			m2Map.showDetail(product.attrs.id);
 		} else {
-			
+			if(!m2Map.isAttachingClickInfo(this)) {
+				m2Map.infoBoxDetailHover.close();
+				
+				var padding = m2Map.getMarkerPadding(this);
+				var position = (padding.top > padding.bottom) ? 'top' : 'bottom';
+				var height = Math.round(padding[position]) - 12;
+				
+				if(position == 'top') {
+					height = height - this.getShape().coords[3];
+				}
+				
+				if(products.length * m2Map.infoDetailHeight < height) {
+					height = products.length * m2Map.infoDetailHeight;
+				}
+
+				if(padding.left < m2Map.infoDetailWidth) {
+					var offsetLeft = (padding.left < m2Map.infoDetailWidth) ? m2Map.infoDetailWidth - padding.left + 6 : 0;
+				} else {
+					var offsetLeft = (padding.right < m2Map.infoDetailWidth) ? padding.right - m2Map.infoDetailWidth - 6 : 0;
+				}
+				
+				var content = '<div class="info-wrap-detail info-wrap-single"><div class="scroll" style="height: ' + height + 'px; overflow: hidden;">';
+				
+				for(var i in products) {
+					content += products[i].buildInfoContent();
+				}
+				
+				content += '</div><div class="info-arrow" style="margin-left: ' + -Math.round(offsetLeft + 5) + 'px"></div></div>';
+				
+				m2Map.infoBoxDetailClick.opts.offsetLeft = offsetLeft;
+
+				m2Map.infoBoxDetailClick.setContent(content);
+				m2Map.infoBoxDetailClick.setPosition(position);
+				m2Map.infoBoxDetailClick.open(this);
+			}
 		}
+	},
+	ibDrawed: function() {
+		var self = this;
+		var holder = $(this.viewHolder);
+		var scroll = holder.find('.scroll');
+		var infoWrap = holder.find('.info-wrap-detail');
+		var close = holder.find('.close-detail');
+		
+		scroll.slimScroll({
+	        height: scroll.height() + 'px',
+	        allowPageScroll: false,
+	        borderRadius: 0
+	    });
+		
+		infoWrap.mouseenter(function(){
+			m2Map.map.set('scrollwheel', false);
+
+			var markers = self.get('markers');
+			var ml = markers.length;
+			for(var i = 0; i < ml; i++) {
+				markers[i].set('clickable', false);
+			}
+		});
+		
+		infoWrap.mouseleave(function(e){
+			m2Map.map.set('scrollwheel', true);
+
+			var markers = self.get('markers');
+			var ml = markers.length;
+			for(var i = 0; i < ml; i++) {
+				markers[i].set('clickable', true);
+			}
+		});
+		
+		scroll.find('.item').click(function(e){
+			m2Map.showDetail($(this).data('id'));
+			e.stopPropagation();
+		});
+		
+		var tempEventBound = google.maps.event.addListenerOnce(m2Map.map, 'bounds_changed', function(){
+			detachE();
+		});
+
+		var tempEventClick = google.maps.event.addListenerOnce(m2Map.map, 'click', function(){
+			detachE();
+		});
+		
+		function detachE() {
+			self.close();
+			google.maps.event.removeListener(tempEventBound);
+			google.maps.event.removeListener(tempEventClick);
+		}
+		
+		var bounds = self.getBounds();
+		
+		var mapBounds = m2Map.map.getBounds();
+		var sw = bounds.getSouthWest();
+		var ne = bounds.getNorthEast();
+		var scaleOffset = m2Map.getScaleOffset(mapBounds);
+		
+		var southLat = sw.lat() + (-mi.MAX_HEIGHT * scaleOffset.y);
+		var westLng = sw.lng() + (-(mi.MAX_WIDTH/2) * scaleOffset.x);
+		var northLat = ne.lat();
+		var eastLng = ne.lng() + ((mi.MAX_WIDTH/2) * scaleOffset.x);
+		
+		var newBounds = new google.maps.LatLngBounds(new google.maps.LatLng(southLat, westLng), new google.maps.LatLng(northLat, eastLng));
+		var markers = [];
+		
+		for(var i in m2Map.markers) {
+			var marker = m2Map.markers[i];
+
+			if(newBounds.contains(marker.getPosition())) {
+				markers.push(marker);
+			}
+		}
+		
+		self.set('markers', markers);
 	},
 	removeAllDetail: function() {
 		var markers = m2Map.markers;
