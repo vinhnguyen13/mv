@@ -3531,8 +3531,8 @@ html.mm-opening .mm-slideout {
     width: 20px;
     height: 20px;
     border: solid 3px transparent;
-    border-top-color: #009544;
-    border-left-color: #009544;
+    border-top-color: #ffffff;
+    border-left-color: #ffffff;
     border-radius: 10px;
     -webkit-animation: pace-spinner 400ms linear infinite;
     -moz-animation: pace-spinner 400ms linear infinite;
@@ -6631,7 +6631,6 @@ footer li a {
         width: 680px;
         overflow: hidden;
     }
-    .wrap-edit-tt,
     .wrap-list-duan {
         width: 100%;
     }
@@ -6656,6 +6655,11 @@ footer li a {
     .wrap-list-duan,
     .wrap-giao-dich {
         padding-left: 30px;
+    }
+    .wrap-edit-tt {
+        width: 100%;
+        /* margin: 0 auto 0; */
+        width: 50%;
     }
     .page-faqs, .page-terms, .noti-alert, .detail-news {
         padding: 0;
@@ -11918,6 +11922,8 @@ height: 190px;
     padding-top: 50px;
     padding-bottom: 50px;
     /* background: #F9F9F9; */
+    width: 45%;
+    margin: 0 auto 0;
 }
 .type-payment h1 {
     margin: 0 0 15px 0;
@@ -12041,6 +12047,9 @@ height: 190px;
     margin: 0;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .vip_wrapper .vip_content {
     padding: 10px;
@@ -12201,6 +12210,17 @@ height: 190px;
         margin-bottom: 20px;
     }
 }
+.tbl-wrap {
+    position: relative;
+}
+.tbl-wrap .swiper-pagination {
+    top: -15px;
+    right: 0;
+    line-height: 100%;
+}
+.tbl-wrap .swiper-pagination .swiper-pagination-bullet {
+    margin-left: 5px;
+}
 .thead {
     border-bottom: 1px solid #B7B7B7;
 }
@@ -12269,7 +12289,7 @@ height: 190px;
     }
     .tbl-emu {
         float: left;
-        width: 65%;
+        /* width: 65%; */
     }
     .tbl-emu > div {
         width: 100%;
@@ -12280,6 +12300,10 @@ height: 190px;
     .tbl-emu > div:last-child {
         border-bottom: none;
     }
+    .wrap-tr-each {
+        width: 65%;
+    }
+    
 }
 #frmListVisit .modal-header .close {
     width: auto;
@@ -12377,3 +12401,17 @@ height: 190px;
         font-size: 12px;
     }
 }
+@media (min-width: 500px) {
+    .wrap-tr-each .swiper-slide {
+        webkit-flex-shrink: inherit;
+        -ms-flex: inherit;
+        flex-shrink: inherit;
+    }
+    .wrap-tr-each .swiper-wrapper {
+        display: block;
+    }
+    .tbl-wrap .swiper-pagination {
+        display: none;
+    }
+}
+
