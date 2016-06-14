@@ -1032,6 +1032,7 @@ var m2Map = {
 		
 		function detachE() {
 			self.close();
+			m2Map.map.set('scrollwheel', true);
 			google.maps.event.removeListener(tempEventBound);
 			google.maps.event.removeListener(tempEventClick);
 		}
