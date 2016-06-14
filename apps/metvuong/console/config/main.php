@@ -19,8 +19,8 @@ return [
         '@keltstr/simplehtmldom' => dirname(dirname(__DIR__)) . '/common/myvendor/keltstr/simplehtmldom',
         '@linslin/yii2/curl' => dirname(dirname(__DIR__)) . '/common/myvendor/linslin/yii2-curl',
         '@funson86' => dirname(dirname(__DIR__)) . '/common/myvendor/funson86',
-        '@funson86/cms' => dirname(__DIR__) . '/myvendor/funson86/yii2-cms',
-        '@funson86/setting' => dirname(__DIR__) . '/myvendor/funson86/yii2-setting',
+        '@funson86/cms' => dirname(dirname(__DIR__)) . '/common/myvendor/funson86/yii2-cms',
+        '@funson86/setting' => dirname(dirname(__DIR__)) . '/common/myvendor/funson86/yii2-setting',
         '@vsoft' => dirname(dirname(__DIR__)) . '/common/myvendor/vsoft',
     ),
     'controllerMap' => [

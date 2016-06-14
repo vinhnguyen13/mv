@@ -7,6 +7,7 @@
 
 namespace console\models;
 
+use dektrium\user\helpers\Password;
 use frontend\components\Mailer;
 use frontend\models\Token;
 use frontend\models\User;
@@ -21,25 +22,14 @@ use yii\helpers\Html;
 
 class Metvuong extends Component
 {
-
     public static function sendMailContact($code=null){
         $contacts = AdContactInfo::getDb()->cache(function(){
             $sql = "SELECT email, count(product_id) as total, group_concat(product_id) as list_id
                     FROM metvuong_dev.ad_contact_info where email is not null group by email order by count(product_id) desc limit 200";
+
             return AdContactInfo::getDb()->createCommand($sql)->queryAll();
         });
-//        $contacts = [
-//            [
-//                'email' => 'nhuttranm@gmail.com',
-//                'total' => 6,
-//                'list_id' => '501,503,516,517,518,520'
-//            ],
-//            [
-//                'email' => 'nhut.love@live.com',
-//                'total' => 2,
-//                'list_id' => '521,522'
-//            ]
-//        ];
+
         if(count($contacts) > 0) {
             $count_code = CouponCode::getDb()->cache(function() use($code){
                 return CouponCode::find()->where('code = :c',[':c' => $code])->count('code');
@@ -49,14 +39,17 @@ class Metvuong extends Component
 
             foreach ($contacts as $contact) {
                 $email = trim($contact["email"]);
-                $user = User::getDb()->cache(function () use ($email) {
-                    return User::find()->where(['email' => $email])->one();
-                });
+//                $user = User::getDb()->cache(function () use ($email) {
+//                    return User::find()->where(['email' => $email])->one();
+//                });
 
-//                if (count($user) > 0 && ($user->updated_at > $user->created_at)) {
-//                    continue;
-//                } else {
-                if(true){
+                // check user exists or create new user
+                $adContactInfo = AdContactInfo::find()->where(['email' => $email])->one();
+                $user = $adContactInfo->createUserInfo();
+
+                if (count($user) > 0 && ($user->updated_at > $user->created_at)) {
+                    continue;
+                } else {
                     $token = Token::find()->where(['user_id' => $user->id])->one();
                     if(count($token) <= 0){
                         /** @var Token $token */

@@ -98,4 +98,29 @@ class AdContactInfo extends ACI
 			}
 		}
 	}
+
+    public function createUserInfo(){
+        if(empty(Yii::$app->setting->get('generateAccount'))){
+            return false;
+        }
+        if(($user = User::findOne(['email'=>$this->email])) != null) {
+            return $user;
+        }else{
+            $user = Yii::createObject(User::className());
+            $user->setScenario('register');
+            $user->email = $this->email;
+            $user->password = Password::generate(8);
+            if(empty($user->username)){
+                $user->username = $user->generateUsername();
+            }
+            $user->setAttributes($this->attributes);
+            $user->validate();
+            if (!$user->hasErrors()) {
+                $user->register();
+                return $user;
+            }else{
+                return $user->errors;
+            }
+        }
+    }
 }

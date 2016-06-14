@@ -17,11 +17,14 @@ $model = Yii::createObject([
                 'options'=>['class' => 'frmIcon']
             ]); ?>
                 <div class="form-group">
-                    <input type="password" style="display:none">
+                    <p class="fs-14">
+                        <?=Yii::t('user','Để lấy lại mật khẩu bạn vui lòng nhập địa chỉ email của mình vào đây.')?>
+                    </p>
+                    <br>
                     <?= $form->field($model, 'email')->textInput(['class'=>'form-control', 'placeholder'=>Yii::t('user', 'Email')])->label(false) ?>
                 </div>
                 <div class="footer-modal clearfix">
-                    <button type="button" class="btn-common"><?=Yii::t('user', 'Send')?></button>
+                    <button type="button" class="btn-common btn-reset-password"><?=Yii::t('user', 'Send')?></button>
                 </div>
             <?php ActiveForm::end(); ?>
         </div>
@@ -30,7 +33,7 @@ $model = Yii::createObject([
 <script>
     $(document).ready(function(){
         $('#recovery-form-email').focus();
-        $(document).on('click', '.frmManualReset .btn-reset-password', function(){
+        $(document).on('click', '.btn-reset-password', function(){
             var _this = $(this);
             var recovery_email = $('#recovery-form-email').val();
             $('body').loading();
@@ -43,8 +46,11 @@ $model = Yii::createObject([
                     success: function (data) {
                         if (data.statusCode == 200) {
                             $('body').loading({done: true});
-                            $('ul.menu-home').prepend('<li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><em class="icon-user"></em>' + data.parameters.username + '</a></li>');
-                            location.href = '<?=Yii::$app->getUser()->getReturnUrl();?>';
+                            setTimeout(function () {
+                                $('body').alertBox({
+                                    txt: "<?=Yii::t('send_email', 'Email has been sent to ')?> "+recovery_email+""
+                                });
+                            },500);
                         } else if (data.statusCode == 404) {
                             var arr = [];
                             $.each(data.parameters, function (idx, val) {

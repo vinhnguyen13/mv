@@ -81,7 +81,9 @@ class ProductController extends Controller {
         return ['code' => 'code'];
     }
 
-    // Marketing contact send mail
+    /*
+        Marketing contact send mail: php yii product/send-mail-contact -code=123456
+    */
     public function actionSendMailContact(){
         Metvuong::sendMailContact($this->code);
     }

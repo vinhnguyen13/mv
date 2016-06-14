@@ -17,16 +17,15 @@ $model = Yii::createObject([
                 'options'=>['class' => 'frmIcon']
             ]); ?>
             <div class="form-group">
-                <input type="password" style="display:none">
+                <p class="fs-14">
+                    <?=Yii::t('profile','New password')?>
+                </p>
+                <br>
                 <?= $form->field($model, 'password')->passwordInput(['class'=>'form-control', 'placeholder'=>Yii::t('user', 'Password')])->label(false) ?>
                 <em class="icon-envelope-open"></em>
             </div>
             <div class="footer-modal clearfix">
-                <div class="pull-right fs-14 mgB-15">
-                    <a class="showPopup pdR-10" href="#" data-toggle="modal" data-target="#frmRegister">Đăng ký</a>/
-                    <a class="showPopup pdL-10" href="#" data-toggle="modal" data-target="#frmLogin">Đăng nhập</a>
-                </div>
-                <button type="button" class="btn-common">Send</button>
+                <button type="button" class="btn-common btn-recover"><?=Yii::t('user','Update')?></button>
             </div>
             <?php ActiveForm::end(); ?>
         </div>
@@ -35,7 +34,7 @@ $model = Yii::createObject([
 <script>
     $(document).ready(function(){
         var timer = 0;
-        $(document).on('click', '.frmManualForgot .btn-recover', function(){
+        $(document).on('click', '.btn-recover', function(){
             var _this = $(this);
             clearTimeout(timer);
             timer = setTimeout(function() {
@@ -46,14 +45,13 @@ $model = Yii::createObject([
                     data: $('#recover-form').serializeArray(),
                     success: function(data) {
                         if(data.statusCode == 200){
-                            $('ul.menu-home').prepend('<li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><em class="icon-user"></em>' + data.parameters.username + '</a></li>');
                             location.href = '/';
                         }else if(data.statusCode == 404){
                             var arr = [];
                             $.each(data.parameters, function(idx, val){
                                 var element = 'recover-form-'+idx;
                                 arr[element] = val;
-                            })
+                            });
                             $('#recover-form').yiiActiveForm('updateMessages', arr, true);
                         }else{
                             _this.html('Try again !');
