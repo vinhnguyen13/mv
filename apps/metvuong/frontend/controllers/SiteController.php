@@ -362,4 +362,24 @@ class SiteController extends Controller
 		fwrite ( $file, $content );
 		fclose ( $file );
 	}
+
+	public function actionAvg() {
+		if(Yii::$app->request->isAjax){
+			Yii::$app->response->format = 'json';
+			$city = Yii::$app->request->post('city', 1);
+			if(!empty($city)){
+				$where[] = "city_id = $city";
+			}
+			$district = Yii::$app->request->post('district');
+			if(!empty($district)){
+				$where[] = "district_id = $district";
+			}
+			$sql = "SELECT SUM(price) as sum, COUNT(*) as total FROM ad_product";
+			if(!empty($where)){
+				$sql .= " WHERE ".implode(' AND ', $where);
+			}
+			$result = Yii::$app->db->createCommand($sql)->queryOne();
+			return $result;
+		}
+	}
 }
