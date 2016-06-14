@@ -383,7 +383,7 @@ class SiteController extends Controller
 				$where[] = "ward_id = $wards";
 			}
 			$streets = Yii::$app->request->post('streets');
-			if(!empty($wards)){
+			if(!empty($streets)){
 				$where[] = "street_id = $streets";
 			}
 			$sql = "SELECT SUM(price) as sum, COUNT(*) as total FROM ad_product";
