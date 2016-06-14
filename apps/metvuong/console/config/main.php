@@ -83,6 +83,9 @@ return [
         'setting' => [
             'class' => 'funson86\setting\Setting',
         ],
+        'cache' => [
+            'class' => 'yii\caching\FileCache',
+        ],
         'i18n' => [
             'translations' => [
                 '*' => [
