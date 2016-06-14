@@ -22,7 +22,7 @@ class m160606_110033_create_ec_transaction_history extends Migration
                           `action_detail` tinyint(4) DEFAULT NULL COMMENT '1: Post\n2: Boost\n3: View user dashboard\n4: Transfer amount',
                           `charge_id` int(11) DEFAULT NULL,
                           `status` tinyint(4) DEFAULT '1',
-                          `params` text DEFAULT 'json',
+                          `params` text DEFAULT NULL,
                           `created_at` int(11) DEFAULT NULL,
                           `updated_at` int(11) DEFAULT NULL,
                           PRIMARY KEY (`id`),
