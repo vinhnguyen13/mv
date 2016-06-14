@@ -115,7 +115,7 @@ foreach ($categories as $category) {
         $(document).on('click', '.btn-tinhnhanh', function (e) {
             if($('.region_city').val()) {
                 $.post('/site/avg', $('#frmAvg').serialize(), function (response) {
-                    var html = '<table class="savings-tbl"><tbody><tr class="savings-tlt"><td>Đơn vị hành chính</td><td>Avg</td></tr>';
+                    var html = '<table class="savings-tbl"><tbody><tr class="savings-tlt"><td>Điều kiện</td><td>Avg</td></tr>';
                     var text = [];
                     func.pushOptionTextToArray('region_category', text);
                     func.pushOptionTextToArray('region_city', text);
