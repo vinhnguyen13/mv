@@ -83,6 +83,45 @@ return [
         'setting' => [
             'class' => 'funson86\setting\Setting',
         ],
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\DbMessageSource',
+                    'db' => 'db',
+                    'sourceLanguage' => 'en', /** with this language, is not translate **/
+                    'sourceMessageTable' => '{{%language_source}}',
+                    'messageTable' => '{{%language_translate}}',
+                    'cachingDuration' => 86400,
+                    'enableCaching' => true,
+                ],
+                'user*' => [
+                    'class' => 'yii\i18n\DbMessageSource',
+                    'db' => 'db',
+                    'sourceLanguage' => 'en', /** with this language, is not translate **/
+                    'sourceMessageTable' => '{{%language_source}}',
+                    'messageTable' => '{{%language_translate}}',
+                    'cachingDuration' => 86400,
+                    'enableCaching' => true,
+                ],
+                'url' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@frontend/messages',
+//                    'sourceLanguage' => 'vi-VN',
+                    'fileMap' => [
+                        'url' => 'url.php',
+                        'app/error' => 'error.php',
+                    ],
+                ],
+                'meta' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@frontend/messages',
+                    'fileMap' => [
+                        'url' => 'meta.php',
+                        'app/error' => 'error.php',
+                    ],
+                ],
+            ]
+        ],
     ],
     'params' => $params,
 ];
