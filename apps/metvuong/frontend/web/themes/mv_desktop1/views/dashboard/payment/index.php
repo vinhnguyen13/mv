@@ -1,3 +1,7 @@
+<?php 
+use yii\web\View;
+$this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.jquery.min.js', ['position' => View::POS_END]); 
+?>
 <div class="title-fixed-wrap container">
     <div class="giao-dich">
         <div class="title-top">Giao Dịch</div>
@@ -19,10 +23,14 @@
                 </div>
                 <?php
                 if(count($transactions) > 0) {
+                    ?>
+                        <div class="wrap-tr-each swiper-container">
+                            <div class="inner-tr clearfix swiper-wrapper">
+                    <?php
                     foreach ($transactions as $transaction) {
                         $amount = $transaction->amount;
                         ?>
-                        <div class="clearfix tbl-emu">
+                        <div class="clearfix tbl-emu swiper-slide">
                             <div class="pull-left w-15"><span><?=$transaction->id?></span></div>
                             <div class="pull-left w-15"><span><?=date('d/m/Y, H:i')?></span></div>
                             <div class="pull-left w-20"><span><a href="#" class="color-cd"><?=\vsoft\ec\models\EcTransactionHistory::getObjectType($transaction->object_type)." ".Yii::t('ec', 'Transaction')?></a></span></div>
@@ -31,44 +39,14 @@
                             <div class="pull-left w-20"><span><?= $amount > 1 ? $amount." Keys" : $amount." Key" ?></span></div>
                         </div>
                     <?php }
+                    ?>
+                    </div>
+                    </div>
+                    <?php
                 } else {?>
                 <div class="clearfix tbl-emu">
                     <div class="text-center"><span>Không có giao dịch.</span></div>
                 </div>
-                <!-- <div class="wrap-tr-each clearfix">
-                    <div class="clearfix tbl-emu">
-                        <div class="pull-left w-15"><span>232323</span></div>
-                        <div class="pull-left w-15"><span>20/03/2016</span></div>
-                        <div class="pull-left w-20"><span>45, Đường Đỗ Xuân Hợp, Phường Phước Long</span></div>
-                        <div class="pull-left w-15"><span>Push</span></div>
-                        <div class="pull-left w-15"><span class="color-cd">done</span></div>
-                        <div class="pull-left w-20"><span>20.000 vnđ</span></div>
-                    </div>
-                    <div class="clearfix tbl-emu">
-                        <div class="pull-left w-15"><span>232323</span></div>
-                        <div class="pull-left w-15"><span>20/03/2016</span></div>
-                        <div class="pull-left w-20"><span>45, Đường Đỗ Xuân Hợp, Phường Phước Long</span></div>
-                        <div class="pull-left w-15"><span>Push</span></div>
-                        <div class="pull-left w-15"><span class="color-cd">done</span></div>
-                        <div class="pull-left w-20"><span>20.000 vnđ</span></div>
-                    </div>
-                    <div class="clearfix tbl-emu">
-                        <div class="pull-left w-15"><span>232323</span></div>
-                        <div class="pull-left w-15"><span>20/03/2016</span></div>
-                        <div class="pull-left w-20"><span>45, Đường Đỗ Xuân Hợp, Phường Phước Long</span></div>
-                        <div class="pull-left w-15"><span>Push</span></div>
-                        <div class="pull-left w-15"><span class="color-cd">done</span></div>
-                        <div class="pull-left w-20"><span>20.000 vnđ</span></div>
-                    </div>
-                    <div class="clearfix tbl-emu">
-                        <div class="pull-left w-15"><span>232323</span></div>
-                        <div class="pull-left w-15"><span>20/03/2016</span></div>
-                        <div class="pull-left w-20"><span>45, Đường Đỗ Xuân Hợp, Phường Phước Long</span></div>
-                        <div class="pull-left w-15"><span>Push</span></div>
-                        <div class="pull-left w-15"><span class="color-cd">done</span></div>
-                        <div class="pull-left w-20"><span>20.000 vnđ</span></div>
-                    </div>
-                </div> -->
                 <?php } ?>
                 
             </div>
@@ -96,5 +74,22 @@
 //                }
 //            });
 //        });
+
+        var swiper = undefined;
+        $(window).on('resize', function () {
+             var wWindow = $(window).outerWidth();
+            if ( wWindow <= 500 && swiper == undefined ) {
+                swiper = new Swiper('.wrap-tr-each.swiper-container', {
+                    pagination: '.swiper-pagination',
+                    paginationClickable: true,
+                    spaceBetween: 0
+                });        
+            }else if ( wWindow > 500 && swiper != undefined ) {
+                swiper.destroy();
+                swiper = undefined;
+                $('.swiper-wrapper').removeAttr('style');
+                $('.swiper-slide').removeAttr('style');   
+            }
+        }).trigger('resize');
     });
 </script>

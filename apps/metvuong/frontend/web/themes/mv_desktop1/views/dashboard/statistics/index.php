@@ -41,10 +41,42 @@ $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
                         </div>
         			</div>
                     <ul class="option-view-stats clearfix">
-                        <li><a href="javascript:;" class="btn-finder"> <span class="icon-mv fs-19"><span class="icon-icons-search"></span></span> <?=Yii::t('statistic','Search')?><span><?=$search_count ?></span></a></li>
-                        <li><a href="javascript:;" class="btn-visitor"><span class="icon-mv"><span class="icon-eye-copy"></span></span><?=Yii::t('statistic','Visit')?><span><?=$click_count ?></span></a></li>
-                        <li><a href="javascript:;" class="btn-favourite"><span class="icon-mv"><span class="icon-heart-icon-listing"></span></span><?=Yii::t('statistic','Favourite')?><span><?=$fav_count ?></span></a></li>
-                        <li><a href="javascript:;" class="btn-share"> <span class="icon-mv"><span class="icon-share-social"></span></span> <?=Yii::t('statistic','Share')?> <span><?=$share_count?></span></a></li>
+                        <li>
+                            <a href="javascript:;" class="btn-finder radio-ui"> 
+                                <span class="icon-mv fs-19"><span class="icon-icons-search"></span></span> 
+                                <?=Yii::t('statistic','Search')?>
+                                <span><?=$search_count ?></span>
+                                <input type="checkbox" name="toggle-chart" value="1000000" checked="checked">  
+                                <span class="icon-mv toggle-ui-check"><span class="icon-checkbox"></span></span> 
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="btn-visitor radio-ui">
+                                <span class="icon-mv"><span class="icon-eye-copy"></span></span>
+                                <?=Yii::t('statistic','Visit')?>
+                                <span><?=$click_count ?></span>
+                                <input type="checkbox" name="toggle-chart" value="1000000" checked="checked">  
+                                <span class="icon-mv toggle-ui-check"><span class="icon-checkbox"></span></span> 
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="btn-favourite radio-ui">
+                                <span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
+                                <?=Yii::t('statistic','Favourite')?>
+                                <span><?=$fav_count ?></span>
+                                <input type="checkbox" name="toggle-chart" value="1000000" checked="checked">  
+                                <span class="icon-mv toggle-ui-check"><span class="icon-checkbox"></span></span> 
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:;" class="btn-share radio-ui"> 
+                                <span class="icon-mv"><span class="icon-share-social"></span></span> 
+                                <?=Yii::t('statistic','Share')?> 
+                                <span><?=$share_count?></span>
+                                <input type="checkbox" name="toggle-chart" value="1000000" checked="checked">  
+                                <span class="icon-mv toggle-ui-check"><span class="icon-checkbox"></span></span>    
+                            </a>
+                        </li>
                     </ul>
         		</div>
         	</section>
@@ -219,6 +251,12 @@ echo $this->renderAjax('/ad/_partials/shareEmail',[
     'params' => ['your_email' => false, 'recipient_email' => false] ])?>
 <script>
     $(document).ready(function () {
+
+        $('.option-view-stats .radio-ui').checkbox_ui({
+            done: function (item) {
+                
+            }
+        });
 
         $('.user-inter').slimscroll({
             alwaysVisible: true,

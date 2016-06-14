@@ -5655,6 +5655,7 @@ html.mm-opening .mm-slideout {
     border-left: none;
     line-height: 100%;
     background: #f8f8f8;
+    position: relative;
 }
 .option-view-stats li:first-child a {
     border-left: 1px solid #dbdbdb;
@@ -5675,10 +5676,10 @@ html.mm-opening .mm-slideout {
 }
 .option-view-stats li a.active,
 .option-view-stats li a:hover {
-    border-top: 1px solid #fff;
+    /* border-top: 1px solid #fff; */
     color: #00a769;
     font-weight: 600;
-    background: none;
+    /* background: none; */
 }
 .option-view-stats li a.active span,
 .option-view-stats li a:hover span {
@@ -12415,3 +12416,23 @@ height: 190px;
     }
 }
 
+.option-view-stats li a.radio-ui {
+    height: auto;
+    width: auto;
+}
+.option-view-stats li a.radio-ui .toggle-ui-check {
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    margin: 0;
+}
+.option-view-stats .toggle-ui-check .icon-checkbox:before {
+    content: "\f096";
+}
+.option-view-stats li a .icon-mv.toggle-ui-check span,
+.option-view-stats li a .icon-mv.toggle-ui-check {
+    margin: 0;
+}
+.option-view-stats a.active .toggle-ui-check .icon-checkbox:before {
+    content: "\f046";
+}
