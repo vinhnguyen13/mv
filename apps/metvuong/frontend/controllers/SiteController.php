@@ -378,6 +378,14 @@ class SiteController extends Controller
 			if(!empty($district)){
 				$where[] = "district_id = $district";
 			}
+			$wards = Yii::$app->request->post('wards');
+			if(!empty($wards)){
+				$where[] = "ward_id = $wards";
+			}
+			$streets = Yii::$app->request->post('streets');
+			if(!empty($wards)){
+				$where[] = "street_id = $streets";
+			}
 			$sql = "SELECT SUM(price) as sum, COUNT(*) as total FROM ad_product";
 			if(!empty($where)){
 				$sql .= " WHERE ".implode(' AND ', $where);

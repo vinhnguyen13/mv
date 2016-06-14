@@ -18,10 +18,10 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/select2.f
 $this->registerJsFile('https://cdnjs.cloudflare.com/ajax/libs/df-number-format/2.1.6/jquery.number.min.js', ['position' => View::POS_END]);
 
 
-$cities = AdCity::find()->all();
-$citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
-$district = AdDistrict::find()->all();
-$districtDropdown = ArrayHelper::map($district, 'id', 'name');
+$citiesDropdown = ArrayHelper::map(AdCity::find()->all(), 'id', 'name');
+
+$districtDropdown = ArrayHelper::map(AdDistrict::find()->all(), 'id', 'name');
+
 $categories = AdCategory::find()->orderBy('order')->all();
 foreach ($categories as $category) {
     $categoriesDropDown[$category->id] = ucfirst(Yii::t('ad', $category->name));
@@ -43,9 +43,17 @@ foreach ($categories as $category) {
                             <label>Thành Phố </label>
                             <?=Html::dropDownList('city', null, $citiesDropdown, ['class' => 'form-control search region_city', 'prompt' => "..."])?>
                         </div>
-                        <div class="form-group col-xs-12 col-sm-6">
+                        <div class="form-group col-xs-12 col-sm-6" style="display: none;">
                             <label>Quận </label>
                             <?=Html::dropDownList('district', null, $districtDropdown, ['class' => 'form-control search region_district', 'prompt' => "..."])?>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6" style="display: none;">
+                            <label>Phường </label>
+                            <?=Html::dropDownList('wards', null, [], ['class' => 'form-control search region_wards', 'prompt' => "..."])?>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6" style="display: none;">
+                            <label>Đường </label>
+                            <?=Html::dropDownList('streets', null, [], ['class' => 'form-control search region_streets', 'prompt' => "..."])?>
                         </div>
                     </div>
                     <a href="#" class="btn-form btn-common btn-tinhnhanh"> Tính nhanh <span class="arrow-icon"> </span> </a>
@@ -65,13 +73,14 @@ foreach ($categories as $category) {
             appendDropdown: function(el, items) {
                 el.find("option:not(:first-child)").remove();
                 for(var i in items) {
+                    console.log(items);
                     if(items[i]['pre']) {
                         el.append('<option data-pre="' + items[i]['pre'] + '" value="' + items[i]['id'] + '">' + items[i]['name'] + '</option>');
                     } else {
                         el.append('<option value="' + items[i]['id'] + '">' + items[i]['name'] + '</option>');
                     }
                 }
-
+                el.parent().show();
                 el.select2();
             },
             pushOptionTextToArray: function(elClass, text) {
@@ -90,6 +99,15 @@ foreach ($categories as $category) {
             if($(this).val()){
                 $.get('/listing/list-district', {cityId: $(this).val()}, function(districts){
                     func.appendDropdown($('.region_district'), districts);
+                });
+            }
+        });
+        $(document).on('change', '.region_district', function (e) {
+            var form = $('.region');
+            if($(this).val()){
+                $.get('/listing/list-sw', {districtId: $(this).val()}, function(districts){
+                    func.appendDropdown($('.region_wards'), districts.wards);
+                    func.appendDropdown($('.region_streets'), districts.streets);
                 });
             }
         });
