@@ -59,7 +59,7 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
         </div>
     </section>
 
-    <section class="box-item pdT-50 keyword_wrapper clearfix mgB-0">
+    <section class="box-item pdT-50 keyword_wrapper clearfix mgB-0 bg-f5f5f5">
         <div class="container">
             <div class=" col-md-2  col-sm-4  col-xs-12">
                 <div class="keyword_col">
@@ -254,7 +254,7 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
         });
     </script>
 
-    <section class="search-home bg-f5f5f5">
+    <section class="search-home">
         <div class="container">
             <!-- <div class="title-sub"><?= Yii::t('general', 'LIÊN HỆ') ?></div> -->
             <div class="clearfix">
