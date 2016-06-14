@@ -12477,3 +12477,30 @@ height: 190px;
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
 }
+.d-ib {display:inline-block !important;}
+.ver-c {vertical-align: middle;}
+
+.show-view-chart {
+    float: left;
+    cursor: pointer;
+    box-shadow: inset 0 10px 10px -10px #CACACA;
+    padding: 5px 17px;
+    color: #838383;
+    border: 1px solid #CCC;
+    background: none;
+    outline: 0;
+}
+.show-view-chart.active {
+    background: #00a769;
+    color: #fff;
+}
+.show-view-chart:first-child {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-right: none;
+}
+.show-view-chart:last-child {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-left: none;
+}

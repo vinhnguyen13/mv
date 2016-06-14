@@ -24,15 +24,17 @@ $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
             </div>
         	<section class="clearfix mgB-40">
                 <div class="pull-right fs-13 mgB-15">
-                    <?=Yii::t('statistic','Select')?>
+                    <span class="d-ib mgR-20"><?=Yii::t('statistic','Select')?></span>
                     <!-- <select id="filterChart" class="mgL-10">
                         <option value="week"><?=Yii::t('statistic','Week')?></option>
                         <option value="month"><?=Yii::t('statistic','Month')?></option>
                         <option value="quarter"><?=Yii::t('statistic','Quarter')?></option>
                     </select> -->
-                    <button class="btn-common btn-small mgL-20 btn-bd-radius">Wekk</button>
-                    <button class="btn-common btn-small mgL-10 btn-bd-radius">Month</button>
-                    <button class="btn-common btn-small mgL-10 btn-bd-radius">Quarter</button>
+                    <div class="clearfix d-ib ver-c">
+                        <button class="show-view-chart active">Wekk</button>
+                        <button class="show-view-chart">Month</button>
+                        <button class="show-view-chart">Quarter</button>
+                    </div>
                 </div>
                 <div class="clearfix"></div>
         		<div class="summary clearfix">
