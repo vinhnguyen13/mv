@@ -8,6 +8,7 @@
 use yii\helpers\Html;
 use vsoft\ad\models\AdCity;
 use vsoft\ad\models\AdDistrict;
+use vsoft\ad\models\AdCategory;
 use yii\helpers\ArrayHelper;
 use yii\web\View;
 
@@ -21,6 +22,11 @@ $cities = AdCity::find()->all();
 $citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
 $district = AdDistrict::find()->all();
 $districtDropdown = ArrayHelper::map($district, 'id', 'name');
+$categories = AdCategory::find()->orderBy('order')->all();
+foreach ($categories as $category) {
+    $categoriesDropDown[$category->id] = ucfirst(Yii::t('ad', $category->name));
+}
+//$categoriesDropDown = ArrayHelper::map($categories, 'id', 'name');
 ?>
 <div class="title-fixed-wrap container">
     <div class="tool-cacu">
@@ -29,6 +35,10 @@ $districtDropdown = ArrayHelper::map($district, 'id', 'name');
                 <form id="frmAvg">
                     <div class="title-frm">Thành phố / Quận-Huyện / Phường-Xã</div>
                     <div class="row region">
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <label>Loại </label>
+                            <?=Html::dropDownList('category', null, $categoriesDropDown, ['class' => 'form-control search region_category', 'prompt' => "..."])?>
+                        </div>
                         <div class="form-group col-xs-12 col-sm-6">
                             <label>Thành Phố </label>
                             <?=Html::dropDownList('city', null, $citiesDropdown, ['class' => 'form-control search region_city', 'prompt' => "..."])?>
@@ -64,6 +74,12 @@ $districtDropdown = ArrayHelper::map($district, 'id', 'name');
 
                 el.select2();
             },
+            pushOptionTextToArray: function(elClass, text) {
+                if($('.'+elClass).val()){
+                    text.push($('.'+elClass+' option:selected').text());
+                }
+                return text;
+            }
         };
         $('.region_city').select2();
 
@@ -82,12 +98,12 @@ $districtDropdown = ArrayHelper::map($district, 'id', 'name');
             if($('.region_city').val()) {
                 $.post('/site/avg', $('#frmAvg').serialize(), function (response) {
                     var html = '<table class="savings-tbl"><tbody><tr class="savings-tlt"><td>Đơn vị hành chính</td><td>Avg</td></tr>';
-                    var text = $('.region_city option:selected').text();
-                    if($('.region_district').val()){
-                        text += ', '+$('.region_district option:selected').text()
-                    }
+                    var text = [];
+                    func.pushOptionTextToArray('region_category', text);
+                    func.pushOptionTextToArray('region_city', text);
+                    func.pushOptionTextToArray('region_district', text);
                     var avg = response.sum / response.total;
-                    html += '<tr><td class="saving_table saving_table_left">' + text + '</td><td class="saving_table">' + $.number(avg) + ' VND</td></tr>';
+                    html += '<tr><td class="saving_table saving_table_left">' + text.join(', ') + '</td><td class="saving_table">' + $.number(avg) + ' VND</td></tr>';
                     html += '</tbody></table>';
                     $('#inKetQua').html(html);
                 });

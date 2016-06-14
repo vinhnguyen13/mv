@@ -366,6 +366,10 @@ class SiteController extends Controller
 	public function actionAvg() {
 		if(Yii::$app->request->isAjax){
 			Yii::$app->response->format = 'json';
+			$category = Yii::$app->request->post('category');
+			if(!empty($category)){
+				$where[] = "category_id = $category";
+			}
 			$city = Yii::$app->request->post('city', 1);
 			if(!empty($city)){
 				$where[] = "city_id = $city";
