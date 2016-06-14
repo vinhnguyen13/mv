@@ -16,7 +16,7 @@ use Yii;
  * @property integer $action_detail
  * @property integer $charge_id
  * @property integer $status
- * @property string $data_type
+ * @property string $params
  * @property integer $created_at
  * @property integer $updated_at
  *
@@ -41,7 +41,7 @@ class EcTransactionHistoryBase extends \yii\db\ActiveRecord
         return [
             [['user_id', 'object_id', 'object_type', 'action_type', 'action_detail', 'charge_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['amount'], 'number'],
-            [['data_type'], 'string', 'max' => 32],
+            [['params'], 'string', 'max' => 32],
             [['charge_id'], 'exist', 'skipOnError' => true, 'targetClass' => EcCharge::className(), 'targetAttribute' => ['charge_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -62,7 +62,7 @@ class EcTransactionHistoryBase extends \yii\db\ActiveRecord
             'action_detail' => Yii::t('ec', 'Action Detail'),
             'charge_id' => Yii::t('ec', 'Charge ID'),
             'status' => Yii::t('ec', 'Status'),
-            'data_type' => Yii::t('ec', 'Data Type'),
+            'params' => Yii::t('ec', 'Params'),
             'created_at' => Yii::t('ec', 'Created At'),
             'updated_at' => Yii::t('ec', 'Updated At'),
         ];

@@ -19,7 +19,7 @@ use Yii;
  * @property integer $action_detail
  * @property integer $charge_id
  * @property integer $status
- * @property string $data_type
+ * @property string $params
  * @property integer $created_at
  * @property integer $updated_at
  *
@@ -118,7 +118,7 @@ class EcTransactionHistory extends EcTransactionHistoryBase
         return [
             [['user_id', 'object_id', 'object_type', 'action_type', 'action_detail', 'charge_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['amount'], 'number'],
-            [['data_type'], 'string', 'max' => 32],
+            [['params'], 'string', 'max' => 32],
             [['charge_id'], 'exist', 'skipOnError' => true, 'targetClass' => EcCharge::className(), 'targetAttribute' => ['charge_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -139,7 +139,7 @@ class EcTransactionHistory extends EcTransactionHistoryBase
             'action_detail' => Yii::t('ec', 'Action Detail'),
             'charge_id' => Yii::t('ec', 'Charge ID'),
             'status' => Yii::t('ec', 'Status'),
-            'data_type' => Yii::t('ec', 'Data Type'),
+            'params' => Yii::t('ec', 'Data Type'),
             'created_at' => Yii::t('ec', 'Created At'),
             'updated_at' => Yii::t('ec', 'Updated At'),
         ];
@@ -166,7 +166,7 @@ class EcTransactionHistory extends EcTransactionHistoryBase
         return EcTransactionHistory::find()->where('user_id = :u',[':u' => $user_id])->all();
     }
 
-    public static function createTransaction($user_id, $obj_id, $obj_type, $amount, $action_type, $action_detail, $charge_id, $status, $data_type, $created_at=null, $updated_at=null)
+    public static function createTransaction($user_id, $obj_id, $obj_type, $amount, $action_type, $action_detail, $charge_id, $status, $params, $created_at=null, $updated_at=null)
     {
         $transaction = new EcTransactionHistory();
         $transaction->user_id = $user_id;
@@ -177,7 +177,7 @@ class EcTransactionHistory extends EcTransactionHistoryBase
         $transaction->action_detail = $action_detail;
         $transaction->charge_id = $charge_id;
         $transaction->status = $status;
-        $transaction->data_type = $data_type;
+        $transaction->params = $params;
         $transaction->created_at = empty($created_at) ? time() : $created_at;
         $transaction->updated_at = empty($updated_at) ? time() : $updated_at;
         $transaction->save(false);

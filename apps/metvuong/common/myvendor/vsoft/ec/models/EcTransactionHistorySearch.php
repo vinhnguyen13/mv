@@ -20,7 +20,7 @@ class EcTransactionHistorySearch extends EcTransactionHistory
         return [
             [['id', 'user_id', 'object_id', 'object_type', 'action_type', 'action_detail', 'charge_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['amount'], 'number'],
-            [['data_type'], 'safe'],
+            [['params'], 'safe'],
         ];
     }
 
@@ -75,7 +75,7 @@ class EcTransactionHistorySearch extends EcTransactionHistory
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'data_type', $this->data_type]);
+        $query->andFilterWhere(['like', 'params', $this->params]);
 
         return $dataProvider;
     }
