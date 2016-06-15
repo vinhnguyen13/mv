@@ -96,7 +96,7 @@
 			                    <?php endif; ?>
 							</ul>
 					        <p class="price-item"><?= Yii::t('listing', 'Price') ?><strong><?= StringHelper::formatCurrency($product['price']) . ' ' . Yii::t('ad', 'VND') ?></strong></p>   
-					    	<p class="date-post"><?= StringHelper::previousTime($product['updated_at']) ?><span class="pull-right"><?= Yii::t('ad', 'Điểm') ?>: <?= $product['score'] ?></span></p>
+					    	<p class="date-post"><?= Yii::t('ad', 'đăng') ?> <?= StringHelper::previousTime($product['updated_at']) ?><span class="pull-right"><?= Yii::t('ad', 'Điểm') ?>: <?= $product['score'] ?></span></p>
 					    </div>
 					</a>
 			        <?php /* tracking finder

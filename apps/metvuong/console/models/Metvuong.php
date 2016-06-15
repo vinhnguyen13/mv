@@ -38,10 +38,10 @@ class Metvuong extends Component
 
             foreach ($contacts as $contact) {
                 $email = trim($contact["email"]);
-                $email = mb_strtolower($email);
                 // check user exists or create new user
                 $user = $contact->createUserInfo();
                 if (count($user) > 0 && ($user->updated_at > $user->created_at)) {
+                    print_r("\n{$email} was disabled");
                     continue;
                 } else {
                     $token = Token::find()->where(['user_id' => $user->id])->one();
